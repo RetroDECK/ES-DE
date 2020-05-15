@@ -299,14 +299,14 @@ protected:
 		}
 
 		if(cursor != mCursor)
-			onScroll(absAmt);
+			onScroll();
 
 		mCursor = cursor;
 		onCursorChanged((mScrollTier > 0) ? CURSOR_SCROLLING : CURSOR_STOPPED);
 	}
 
 	virtual void onCursorChanged(const CursorState& /*state*/) {}
-	virtual void onScroll(int /*amt*/) {}
+	virtual void onScroll() {}
 };
 
 #endif // ES_CORE_COMPONENTS_ILIST_H

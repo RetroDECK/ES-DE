@@ -62,6 +62,9 @@ public:
 	std::vector<HelpPrompt> getHelpPrompts() override;
 	virtual HelpStyle getHelpStyle() override;
 
+	std::string mSelectSound;
+//	std::string mScrollSound;
+
 protected:
 	void onCursorChanged(const CursorState& state) override;
 
@@ -75,7 +78,6 @@ private:
 	void renderExtras(const Transform4x4f& parentTrans, float lower, float upper);
 	void renderInfoBar(const Transform4x4f& trans);
 	void renderFade(const Transform4x4f& trans);
-
 
 	SystemViewCarousel mCarousel;
 	TextComponent mSystemInfo;

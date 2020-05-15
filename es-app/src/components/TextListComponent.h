@@ -80,8 +80,9 @@ public:
 	inline void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
 
 protected:
-	virtual void onScroll(int /*amt*/) { if(!mScrollSound.empty()) Sound::get(mScrollSound)->play(); }
+	virtual void onScroll() { soundfile->play(); }
 	virtual void onCursorChanged(const CursorState& state);
+	std::shared_ptr<Sound> soundfile;
 
 private:
 	int mMarqueeOffset;
@@ -390,9 +391,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme, c
 	const float selectorHeight = Math::max(mFont->getHeight(1.0), (float)mFont->getSize()) * mLineSpacing;
 	setSelectorHeight(selectorHeight);
 
-	if(properties & SOUND && elem->has("scrollSound"))
-		mScrollSound = elem->get<std::string>("scrollSound");
-
+	soundfile = Sound::getFromTheme(theme, "navigationsounds", "scrollSound");
+	
 	if(properties & ALIGNMENT)
 	{
 		if(elem->has("alignment"))

@@ -6,6 +6,7 @@
 #include "CollectionSystemManager.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "Sound.h"
 #ifdef _RPI_
 #include "components/VideoPlayerComponent.h"
 #endif
@@ -146,6 +147,10 @@ std::string GridGameListView::getQuickSystemSelectLeftButton()
 
 bool GridGameListView::input(InputConfig* config, Input input)
 {
+	if (input.value == 0 and (config->isMappedLike("left", input) || config->isMappedLike("right", input)
+		|| (config->isMappedLike("up", input)) || (config->isMappedLike("down", input)) ))
+		Sound::getFromTheme(getTheme(), "navigationsounds", "scrollSound")->play();
+
 	if(config->isMappedLike("left", input) || config->isMappedLike("right", input))
 		return GuiComponent::input(config, input);
 

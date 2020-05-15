@@ -78,6 +78,8 @@ void ISimpleGameListView::onFileChanged(FileData* /*file*/, FileChangeType /*cha
 
 bool ISimpleGameListView::input(InputConfig* config, Input input)
 {
+	std::shared_ptr<Sound> soundfile;	
+
 	if(input.value != 0)
 	{
 		if(config->isMappedTo("a", input))
@@ -85,7 +87,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			FileData* cursor = getCursor();
 			if(cursor->getType() == GAME)
 			{
-				Sound::getFromTheme(getTheme(), getName(), "launch")->play();
+				soundfile = Sound::getFromTheme(getTheme(), "navigationsounds", "launchSound"); 
+				soundfile->play();
+				while(soundfile->isPlaying());
 				launch(cursor);
 			}else{
 				// it's a folder
@@ -106,8 +110,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 				populateList(mCursorStack.top()->getParent()->getChildren());
 				setCursor(mCursorStack.top());
 				mCursorStack.pop();
-				Sound::getFromTheme(getTheme(), getName(), "back")->play();
 			}else{
+				Sound::getFromTheme(getTheme(), "navigationsounds", "backSound")->play();
 				onFocusLost();
 				SystemData* systemToView = getCursor()->getSystem();
 				if (systemToView->isCollection())
@@ -122,6 +126,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
+				Sound::getFromTheme(getTheme(), "navigationsounds", "quicksysselectSound")->play();
 				onFocusLost();
 				ViewController::get()->goToNextGameList();
 				return true;
@@ -130,6 +135,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
+				Sound::getFromTheme(getTheme(), "navigationsounds", "quicksysselectSound")->play();
 				onFocusLost();
 				ViewController::get()->goToPrevGameList();
 				return true;
@@ -139,6 +145,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			if (mRoot->getSystem()->isGameSystem())
 			{
 				// go to random system game
+				Sound::getFromTheme(getTheme(), "navigationsounds", "scrollSound")->play();
 				FileData* randomGame = getCursor()->getSystem()->getRandomGame();
 				if (randomGame)
 				{
@@ -150,6 +157,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		{
 			if(mRoot->getSystem()->isGameSystem())
 			{
+				Sound::getFromTheme(getTheme(), "navigationsounds", "favoriteSound")->play();
 				if(CollectionSystemManager::get()->toggleGameInCollection(getCursor()))
 				{
 					return true;

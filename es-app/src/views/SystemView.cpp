@@ -8,6 +8,7 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "Window.h"
+#include "Sound.h"
 
 // buffer values for scrolling velocity (left, stopped, right)
 const int logoBuffersLeft[] = { -5, -2, -1 };
@@ -28,6 +29,8 @@ SystemView::SystemView(Window* window) : IList<SystemViewData, SystemData*>(wind
 void SystemView::populate()
 {
 	mEntries.clear();
+	mSelectSound = "";
+//	mScrollSound = "";
 
 	for(auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend(); it++)
 	{
@@ -124,6 +127,8 @@ void SystemView::populate()
 			mWindow->pushGui(new GuiMsgBox(mWindow, "The selected UI mode has nothing to show,\n returning to UI mode: FULL", "OK", nullptr));
 		}
 	}
+	
+
 }
 
 void SystemView::goToSystem(SystemData* system, bool animate)
@@ -136,6 +141,9 @@ void SystemView::goToSystem(SystemData* system, bool animate)
 
 bool SystemView::input(InputConfig* config, Input input)
 {
+	auto it = SystemData::sSystemVector.cbegin();
+	const std::shared_ptr<ThemeData>& theme = (*it)->getTheme();
+
 	if(input.value != 0)
 	{
 		if(config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r && SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug"))
@@ -151,11 +159,13 @@ bool SystemView::input(InputConfig* config, Input input)
 		case VERTICAL_WHEEL:
 			if (config->isMappedLike("up", input))
 			{
+				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("down", input))
 			{
+				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
 				listInput(1);
 				return true;
 			}
@@ -165,11 +175,13 @@ bool SystemView::input(InputConfig* config, Input input)
 		default:
 			if (config->isMappedLike("left", input))
 			{
+				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("right", input))
 			{
+				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
 				listInput(1);
 				return true;
 			}
@@ -178,6 +190,7 @@ bool SystemView::input(InputConfig* config, Input input)
 
 		if(config->isMappedTo("a", input))
 		{
+			Sound::getFromTheme(theme, "navigationsounds", "selectSound")->play();
 			stopScrolling();
 			ViewController::get()->goToGameList(getSelected());
 			return true;
@@ -186,6 +199,7 @@ bool SystemView::input(InputConfig* config, Input input)
 		{
 			// get random system
 			// go to system
+			Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
 			setCursor(SystemData::getRandomSystem());
 			return true;
 		}
