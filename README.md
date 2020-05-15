@@ -1,15 +1,34 @@
-EmulationStation
-================
+EmulationStation Desktop Edition
+================================
 
-This is a fork of EmulationStation for RetroPie.
-EmulationStation is a cross-platform graphical front-end for emulators with controller navigation.
+EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
+
+This is a fork intended for use on desktop computers rather than devices such as a Raspberry Pi. It's specifically intended to be
+used with RetroArch, but it's certainly possible to configure the software to be used with other emulators.
+
+It's based on the RetroPie fork with some functionality ported from the Batocera fork. New and hopefully useful functionality has also been added.
+
+As it's intended for RetroArch and for usage on desktop computers, there has been no effort spent on trying to create advanced emulator or system configuration tools in the frontend, it's better to let the emulator itself handle that. Rather the goal is to keep the code as clean and fast as possible and to avoid bloat.
+
+The following changes and improvements have been made as of the fork from retropie-emulationstation v2.9.1:
+
+* GUI-configurable ability to put favorite games on the top of the game lists
+* Favorites marked with stars in the game lists
+* Full navigation sound support, configurable per theme (seven different sounds can be defined)
+* Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch or other emulators
+* A GUI-configurable choice between normal fullscreen and borderless fullscreen mode (the latter disables alt-tab switching but is more seamless)
+* GUI options to disable menu entries for system reboot and system power off (normally not required on a desktop computer and accidents do happen!)
+* Default theme es-theme-rbsimple-DE based on Recalbox Multi, but greatly simplified and in my opinion improved
+* Two other themes, es-theme-carbon-DE and es-theme-fundamental-DE fully updated with the functionality from this Desktop Edition fork
+* All required fonts are now bundled with the software so that it's not necessary to install them separately in the operating system
+* Preconfigured for use with RetroArch, although you may want to modify the core settings if you prefer alternatives to the emulators configured
 
 Building
 ========
 
 EmulationStation uses some C++11 code, which means you'll need to use at least g++-4.7 on Linux, or VS2010 on Windows, to compile.
 
-EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, FreeImage, FreeType, cURL and RapidJSON.  You also should probably install the `fonts-droid` package which contains fallback fonts for Chinese/Japanese/Korean characters, but ES will still work fine without it (this package is only used at run-time).
+EmulationStation has a few dependencies. For building, you'll need CMake, SDL2, FreeImage, FreeType, cURL and RapidJSON.
 
 **On Debian/Ubuntu:**
 All of this be easily installed with `apt-get`:
@@ -103,21 +122,24 @@ The new configuration will be added to the `~/.emulationstation/es_input.cfg` fi
 
 You can use `--help` or `-h` to view a list of command-line options. Briefly outlined here:
 ```
---resolution [width] [height]   try and force a particular resolution
---gamelist-only                 skip automatic game search, only read from gamelist.xml
---ignore-gamelist               ignore the gamelist (useful for troubleshooting)
---draw-framerate                display the framerate
---no-exit                       don't show the exit option in the menu
---no-splash                     don't show the splash screen
---debug                         more logging, show console on Windows
---scrape                        scrape using command line interface
---windowed                      not fullscreen, should be used with --resolution
---vsync [1/on or 0/off]         turn vsync on or off (default is on)
+--resolution [width] [height]   Try and force a particular resolution
+--gamelist-only                 Skip automatic game search, only read from gamelist.xml
+--ignore-gamelist               Ignore the gamelist (useful for troubleshooting)
+--draw-framerate                Display the framerate
+--no-exit                       Don't show the exit option in the menu
+--no-splash                     Don't show the splash screen
+--debug                         More logging, show console on Windows
+--scrape                        Scrape using command line interface
+--windowed                      Not fullscreen, should be used with --resolution
+--fullscreen-normal             Run in normal fullscreen mode
+--fullscreen-borderless         Run in borderless fullscreen mode (always on top)
+--vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use in Mb before swapping. 0 for unlimited
---force-kid             Force the UI mode to be Kid
---force-kiosk           Force the UI mode to be Kiosk
+--force-kid                     Force the UI mode to be Kid
+--force-kiosk                   Force the UI mode to be Kiosk
 --force-disable-filters         Force the UI to ignore applied filters in gamelist
---help, -h                      summon a sentient, angry tuba
+--home [path]                   Directory to use as home path
+--help, -h                      Summon a sentient, angry tuba
 ```
 
 As long as ES hasn't frozen, you can always press F4 to close the application.

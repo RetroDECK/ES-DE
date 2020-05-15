@@ -49,7 +49,7 @@ Here is a very simple theme that changes the description text's color:
 
 ```xml
 <theme>
-	<formatVersion>3</formatVersion>
+	<formatVersion>5</formatVersion>
 	<view name="detailed">
 		<text name="description">
 			<color>00FF00</color>
@@ -69,7 +69,7 @@ How it works
 
 Everything must be inside a `<theme>` tag.
 
-**The `<formatVersion>` tag *must* be specified**.  This is the version of the theming system the theme was designed for.  The current version is 3.
+**The `<formatVersion>` tag *must* be specified**.  This is the version of the theming system the theme was designed for.  The current version is 5.
 
 
 
@@ -124,7 +124,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 `~/.emulationstation/all_themes.xml`:
 ```xml
 <theme>
-	<formatVersion>3</formatVersion>
+	<formatVersion>5</formatVersion>
 	<view name="detailed">
 		<text name="description">
 			<fontPath>./all_themes/myfont.ttf</fontPath>
@@ -137,7 +137,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 `~/.emulationstation/snes/theme.xml`:
 ```xml
 <theme>
-	<formatVersion>3</formatVersion>
+	<formatVersion>5</formatVersion>
 	<include>./../all_themes.xml</include>
 	<view name="detailed">
 		<text name="description">
@@ -150,7 +150,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 Is equivalent to this `snes/theme.xml`:
 ```xml
 <theme>
-	<formatVersion>3</formatVersion>
+	<formatVersion>5</formatVersion>
 	<view name="detailed">
 		<text name="description">
 			<fontPath>./all_themes/myfont.ttf</fontPath>
@@ -170,7 +170,7 @@ Sometimes you want to apply the same properties to the same elements across mult
 
 ```xml
 <theme>
-	<formatVersion>3</formatVersion>
+	<formatVersion>5</formatVersion>
 	<view name="basic, grid, system">
 		<image name="logo">
 			<path>./snes_art/snes_header.png</path>
@@ -187,7 +187,7 @@ Sometimes you want to apply the same properties to the same elements across mult
 This is equivalent to:
 ```xml
 <theme>
-	<formatVersion>3</formatVersion>
+	<formatVersion>5</formatVersion>
 	<view name="basic">
 		<image name="logo">
 			<path>./snes_art/snes_header.png</path>
@@ -220,7 +220,7 @@ You can theme multiple elements *of the same type* simultaneously.  The `name` a
 
 ```xml
 <theme>
-    <formatVersion>3</formatVersion>
+    <formatVersion>5</formatVersion>
     <view name="detailed">
     	<!-- Weird spaces/newline on purpose! -->
     	<text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, 
@@ -234,7 +234,7 @@ You can theme multiple elements *of the same type* simultaneously.  The `name` a
 Which is equivalent to:
 ```xml
 <theme>
-    <formatVersion>3</formatVersion>
+    <formatVersion>5</formatVersion>
     <view name="detailed">
     	<text name="md_lbl_rating">
     		<color>48474D</color>
@@ -269,6 +269,50 @@ Just remember, *this only works if the elements have the same type!*
 ### Element rendering order with z-index
 
 You can now change the order in which elements are rendered by setting `zIndex` values.  Default values correspond to the default rendering order while allowing elements to easily be shifted without having to set `zIndex` values for every element.  Elements will be rendered in order from smallest z-index to largest.
+
+#### Navigation sounds
+
+The navigation sounds are configured globally per theme, so it needs to be defined as a feature and with the view set to the special 'all' category.
+It's recommended to put these elements in a separate file and include it from the main theme file (e.g. <include>./navigationsounds.xml</include>).
+There are seven different navigation sounds that can be configured. The names as well as the element structure should be self-explanatory based
+on the example below.
+Starting EmulationStation with the --debug flag will provide feedback on whether the navigation sound elements were read correctly, as well as
+providing an error message if any of the .wav sound files could not be loaded.
+
+Example debug output:
+May 12 21:12:37 lvl2:   Sound::getFromTheme() looking for [all.selectSound]
+May 12 21:12:37 lvl2:   [selectSound] found, ready to play sound file
+
+Example navigationsounds.xml, to be included from the main theme file:
+
+<theme>
+	<formatVersion>5</formatVersion>
+	<feature supported="navigationsounds">
+		<view name="all">
+			<sound name="systembrowseSound">
+  				<path>./core/sounds/systembrowse.wav</path>
+			</sound>
+			<sound name="quicksysselectSound">
+				<path>./core/sounds/quicksysselect.wav</path>
+			</sound>
+			<sound name="selectSound">
+				<path>./core/sounds/select.wav</path>
+			</sound>
+			<sound name="backSound">
+				<path>./core/sounds/back.wav</path>
+			</sound>
+			<sound name="scrollSound">
+				<path>./core/sounds/scroll.wav</path>
+			</sound>
+			<sound name="favoriteSound">
+				<path>./core/sounds/favorite.wav</path>
+			</sound>
+			<sound name="launchSound">
+				<path>./core/sounds/launch.wav</path>
+			</sound>
+		</view>
+	</feature>
+</theme>
 
 #### Defaults
 
@@ -712,8 +756,6 @@ Can be created as an extra.
 	- Secondary color; what this means depends on the text list.  For example, for game lists, it is the color of a folder.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
-* `scrollSound` - type: PATH.
-	- Sound that is played when the list is scrolled.
 * `alignment` - type: STRING.
 	- Valid values are "left", "center", or "right".  Controls alignment on the X axis.
 * `horizontalMargin` - type: FLOAT.
@@ -793,11 +835,6 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 	- %M: The minute [00,59]
 	- %S: The second [00,59]
 
-#### sound
-
-* `path` - type: PATH.
-	- Path to the sound file.  Only .wav files are currently supported.
-
 #### helpsystem
 
 * `pos` - type: NORMALIZED_PAIR.  Default is "0.012 0.9515"
@@ -846,3 +883,6 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
 
 [*Check out the "official" themes for some more examples!*](http://aloshi.com/emulationstation#themes)
+
+
+This file was last updated for EmulationStation Desktop Edition v1.0.0
