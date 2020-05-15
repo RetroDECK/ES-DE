@@ -62,9 +62,9 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root) :
 	// Image
 	mImage.setOrigin(0.5f, 0.5f);
 	// Default to off the screen
-	mImage.setPosition(2.0f, 2.0f);
+	mImage.setPosition(mSize.x() * 0.25f, mList.getPosition().y() + mSize.y() * 0.2125f);
 	mImage.setVisible(false);
-	mImage.setMaxSize(1.0f, 1.0f);
+	mImage.setMaxSize(mSize.x() * (0.50f - 2*padding), mSize.y() * 0.4f);
 	mImage.setDefaultZIndex(30);
 	addChild(&mImage);
 

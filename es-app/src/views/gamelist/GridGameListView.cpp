@@ -99,7 +99,7 @@ GridGameListView::GridGameListView(Window* window, FileData* root) :
 
 	mImage.setOrigin(0.5f, 0.5f);
 	mImage.setPosition(2.0f, 2.0f);
-	mImage.setMaxSize(1.0f, 1.0f);
+	mImage.setMaxSize(mSize.x() * (0.50f - 2*padding), mSize.y() * 0.4f);
 	mImage.setDefaultZIndex(10);
 	mImage.setVisible(false);
 	addChild(&mImage);
