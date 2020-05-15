@@ -155,13 +155,13 @@ bool SystemView::input(InputConfig* config, Input input)
 		case VERTICAL_WHEEL:
 			if (config->isMappedLike("up", input))
 			{
-				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("down", input))
 			{
-				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(1);
 				return true;
 			}
@@ -171,13 +171,13 @@ bool SystemView::input(InputConfig* config, Input input)
 		default:
 			if (config->isMappedLike("left", input))
 			{
-				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("right", input))
 			{
-				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(1);
 				return true;
 			}
@@ -195,7 +195,7 @@ bool SystemView::input(InputConfig* config, Input input)
 		{
 			// get random system
 			// go to system
-			navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
+			navigationsounds.playThemeNavigationSound(SYSTEMBROWSESOUND);
 			setCursor(SystemData::getRandomSystem());
 			return true;
 		}

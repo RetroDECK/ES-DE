@@ -50,10 +50,10 @@ void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)
 
 	switch(soundID)
 	{
-		case SYSTEMBROWSE:
+		case SYSTEMBROWSESOUND:
 			navigationsounds.systembrowseSound->play();
 			break;
-		case QUICKSYSSELECT:
+		case QUICKSYSSELECTSOUND:
 			navigationsounds.quicksysselectSound->play();
 			break;
 		case SELECTSOUND:
@@ -77,10 +77,10 @@ bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
 {
 	switch(soundID)
 	{
-		case SYSTEMBROWSE:
+		case SYSTEMBROWSESOUND:
 			return navigationsounds.systembrowseSound->isPlaying();
 			break;
-		case QUICKSYSSELECT:
+		case QUICKSYSSELECTSOUND:
 			return navigationsounds.quicksysselectSound->isPlaying();
 			break;
 		case SELECTSOUND:

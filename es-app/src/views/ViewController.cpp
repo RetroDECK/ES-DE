@@ -105,7 +105,7 @@ void ViewController::goToNextGameList()
 	assert(mState.viewing == GAME_LIST);
 	SystemData* system = getState().getSystem();
 	assert(system);
-	navigationsounds.playThemeNavigationSound(QUICKSYSSELECT);
+	navigationsounds.playThemeNavigationSound(QUICKSYSSELECTSOUND);
 	goToGameList(system->getNext());
 }
 
@@ -114,7 +114,7 @@ void ViewController::goToPrevGameList()
 	assert(mState.viewing == GAME_LIST);
 	SystemData* system = getState().getSystem();
 	assert(system);
-	navigationsounds.playThemeNavigationSound(QUICKSYSSELECT);
+	navigationsounds.playThemeNavigationSound(QUICKSYSSELECTSOUND);
 	goToGameList(system->getPrev());
 }
 
