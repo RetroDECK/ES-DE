@@ -38,6 +38,7 @@ std::vector<const char*> settings_dont_save {
 
 Settings::Settings()
 {
+	mWasChanged = false;
 	setDefaults();
 	loadFile();
 }
@@ -138,6 +139,8 @@ void Settings::setDefaults()
 	mBoolMap["CollectionShowSystemInfo"] = true;
 	mBoolMap["SortAllSystems"] = false;
 	mBoolMap["UseCustomCollectionsSystem"] = true;
+
+	mBoolMap["FavoritesFirst"] = true;
 
 	mBoolMap["LocalArt"] = false;
 
@@ -251,9 +254,17 @@ void Settings::processBackwardCompatibility()
 	} \
 	return mapName[name]; \
 } \
-void Settings::setMethodName(const std::string& name, type value) \
+bool Settings::setMethodName(const std::string& name, type value) \
 { \
-	mapName[name] = value; \
+	if (mapName.count(name) == 0 || mapName[name] != value) { \
+		mapName[name] = value; \
+\
+		if (std::find(settings_dont_save.cbegin(), settings_dont_save.cend(), name) == settings_dont_save.cend()) \
+			mWasChanged = true; \
+\
+		return true; \
+	} \
+	return false; \
 }
 
 SETTINGS_GETSET(bool, mBoolMap, getBool, setBool);

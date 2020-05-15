@@ -45,9 +45,57 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
 	mHeaderText.setText(mRoot->getSystem()->getFullName());
 	if (files.size() > 0)
 	{
-		for(auto it = files.cbegin(); it != files.cend(); it++)
+
+		std::string systemName = mRoot->getSystem()->getName();
+
+		bool favoritesFirst = Settings::getInstance()->getBool("FavoritesFirst");
+		
+//		auto fav = Settings::getInstance()->getString(mRoot->getSystem()->getName() + ".FavoritesFirst");
+//		if (fav == "1") favoritesFirst = true;
+//		else if (fav == "0") favoritesFirst = false;
+		
+		bool showFavoriteIcon = (systemName != "favorites" && systemName != "recent");
+		if (!showFavoriteIcon)
+			favoritesFirst = false;
+
+		if (favoritesFirst)
 		{
-			mList.add((*it)->getName(), *it, ((*it)->getType() == FOLDER));
+			for (auto file : files)
+			{
+				if (!file->getFavorite())
+					continue;
+				
+				if (showFavoriteIcon)
+//					mList.add(("\uF006 ") + file->getName(), file, file->getType() == FOLDER);
+//					Quick fix for now until I've fixed the issue with Unicode rendering (Leon)
+					mList.add("** " + file->getName(), file, file->getType() == FOLDER);
+				else if (file->getType() == FOLDER)
+					mList.add(("\uF07C ") + file->getName(), file, true);
+				else
+					mList.add(file->getName(), file, false);
+			}
+		}
+
+		for (auto file : files)		
+		{
+			if (file->getFavorite())
+			{
+				if (favoritesFirst)
+					continue;
+
+				if (showFavoriteIcon)
+				{
+//					mList.add(("\uF006 ") + file->getName(), file, file->getType() == FOLDER);
+//					Quick fix for now until I've fixed the issue with Unicode rendering (Leon)
+					mList.add(("** ") + file->getName(), file, file->getType() == FOLDER);
+					continue;
+				}
+			}
+
+			if (file->getType() == FOLDER)
+				mList.add(("\uF07C ") + file->getName(), file, true);
+			else
+				mList.add(file->getName(), file, false);
 		}
 	}
 	else

@@ -258,6 +258,10 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 			if (name == "favorites" && file->metadata.get("favorite") == "false") {
 				// need to check if still marked as favorite, if not remove
 				ViewController::get()->getGameListView(curSys).get()->remove(collectionEntry, false);
+
+				// Send an event when removing from favorites
+				ViewController::get()->onFileChanged(file, FILE_METADATA_CHANGED);
+				ViewController::get()->getGameListView(curSys)->onFileChanged(collectionEntry, FILE_METADATA_CHANGED);
 			}
 			else
 			{

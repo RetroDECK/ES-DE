@@ -38,6 +38,7 @@ public:
 
 	virtual const std::string& getName();
 	virtual const std::string& getSortName();
+	virtual const bool getFavorite();
 	inline FileType getType() const { return mType; }
 	inline const std::string& getPath() const { return mPath; }
 	inline FileData* getParent() const { return mParent; }

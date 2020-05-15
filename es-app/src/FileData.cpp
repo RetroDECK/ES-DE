@@ -79,6 +79,7 @@ const std::string FileData::getThumbnailPath() const
 	return thumbnail;
 }
 
+
 const std::string& FileData::getName()
 {
 	return metadata.get("name");
@@ -90,6 +91,14 @@ const std::string& FileData::getSortName()
 		return metadata.get("name");
 	else
 		return metadata.get("sortname");
+}
+
+const bool FileData::getFavorite()
+{
+	if (metadata.get("favorite") == "true")
+		return true;
+	else
+		return false;
 }
 
 const std::vector<FileData*>& FileData::getChildrenListToDisplay() {

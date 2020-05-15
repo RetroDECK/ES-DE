@@ -372,6 +372,16 @@ void GuiMenu::openUISettings()
 	s->addWithLabel("DISABLE START MENU IN KID MODE", disable_start);
 	s->addSaveFunc([disable_start] { Settings::getInstance()->setBool("DisableKidStartMenu", disable_start->getState()); });
 
+	// Show favorites first in gamelists
+	auto favoritesFirstSwitch = std::make_shared<SwitchComponent>(mWindow);
+	favoritesFirstSwitch->setState(Settings::getInstance()->getBool("FavoritesFirst"));
+	s->addWithLabel("SHOW FAVORITES ON TOP OF GAMELIST", favoritesFirstSwitch);
+	s->addSaveFunc([favoritesFirstSwitch]
+	{
+	if (Settings::getInstance()->setBool("FavoritesFirst", favoritesFirstSwitch->getState()))
+		ViewController::get()->reloadAll(); 
+	});
+
 	mWindow->pushGui(s);
 
 }
@@ -487,6 +497,7 @@ void GuiMenu::openQuitMenu()
 	ComponentListRow row;
 	if (UIModeController::getInstance()->isUIModeFull())
 	{
+		
 		row.makeAcceptInputHandler([window] {
 			window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES",
 				[] {
@@ -514,6 +525,7 @@ void GuiMenu::openQuitMenu()
 			s->addRow(row);
 		}
 	}
+
 	row.elements.clear();
 	row.makeAcceptInputHandler([window] {
 		window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES",
@@ -526,6 +538,8 @@ void GuiMenu::openQuitMenu()
 	});
 	row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	s->addRow(row);
+
+
 
 	row.elements.clear();
 	row.makeAcceptInputHandler([window] {
