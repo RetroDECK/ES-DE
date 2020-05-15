@@ -238,7 +238,7 @@ void GuiMenu::openUISettings()
 	screenmode.push_back("borderless");
 	for(auto it = screenmode.cbegin(); it != screenmode.cend(); it++)
 		fullscreen_mode->add(*it, *it, Settings::getInstance()->getString("FullscreenMode") == *it);
-	s->addWithLabel("FULLSCREEN MODE (RESTART REQUIRED)", fullscreen_mode);
+	s->addWithLabel("FULLSCREEN MODE (REQUIRES RESTART)", fullscreen_mode);
 	s->addSaveFunc([fullscreen_mode] {
 		if (Settings::getInstance()->getString("FullscreenMode") == "normal"
 			&& fullscreen_mode->getSelected() != "normal")
@@ -390,17 +390,17 @@ void GuiMenu::openUISettings()
 	s->addWithLabel("DISABLE START MENU IN KID MODE", disable_start);
 	s->addSaveFunc([disable_start] { Settings::getInstance()->setBool("DisableKidStartMenu", disable_start->getState()); });
 
-	// hide Restart System option in the Quit menu
-	auto show_restartsystem = std::make_shared<SwitchComponent>(mWindow);
-	show_restartsystem->setState(Settings::getInstance()->getBool("ShowRestartSystem"));
-	s->addWithLabel("SHOW \"RESTART SYSTEM\" MENU ENTRY", show_restartsystem);
-	s->addSaveFunc([show_restartsystem] { Settings::getInstance()->setBool("ShowRestartSystem", show_restartsystem->getState()); });
+	// hide Reboot System option in the Quit menu
+	auto show_rebootsystem = std::make_shared<SwitchComponent>(mWindow);
+	show_rebootsystem->setState(Settings::getInstance()->getBool("ShowRebootSystem"));
+	s->addWithLabel("SHOW \"REBOOT SYSTEM\" MENU ENTRY", show_rebootsystem);
+	s->addSaveFunc([show_rebootsystem] { Settings::getInstance()->setBool("ShowRebootSystem", show_rebootsystem->getState()); });
 
-	// hide Shutdown System option in the Quit menu
-	auto show_shutdownsystem = std::make_shared<SwitchComponent>(mWindow);
-	show_shutdownsystem->setState(Settings::getInstance()->getBool("ShowShutdownSystem"));
-	s->addWithLabel("SHOW \"SHUTDOWN SYSTEM\" MENU ENTRY", show_shutdownsystem);
-	s->addSaveFunc([show_shutdownsystem] { Settings::getInstance()->setBool("ShowShutdownSystem", show_shutdownsystem->getState()); });
+	// hide Power Off System option in the Quit menu
+	auto show_poweroffsystem = std::make_shared<SwitchComponent>(mWindow);
+	show_poweroffsystem->setState(Settings::getInstance()->getBool("ShowPoweroffSystem"));
+	s->addWithLabel("SHOW \"POWER OFF SYSTEM\" MENU ENTRY", show_poweroffsystem);
+	s->addSaveFunc([show_poweroffsystem] { Settings::getInstance()->setBool("ShowPoweroffSystem", show_poweroffsystem->getState()); });
 
 	// Show favorites first in gamelists
 	auto favoritesFirstSwitch = std::make_shared<SwitchComponent>(mWindow);
@@ -527,23 +527,8 @@ void GuiMenu::openQuitMenu()
 	ComponentListRow row;
 	if (UIModeController::getInstance()->isUIModeFull())
 	{
-		
-		row.makeAcceptInputHandler([window] {
-			window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES",
-				[] {
-				Scripting::fireEvent("quit");
-				if(quitES(QuitMode::RESTART) != 0)
-					LOG(LogWarning) << "Restart terminated with non-zero result!";
-			}, "NO", nullptr));
-		});
-		row.addElement(std::make_shared<TextComponent>(window, "RESTART EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-		s->addRow(row);
-
-
-
 		if(Settings::getInstance()->getBool("ShowExit"))
 		{
-			row.elements.clear();
 			row.makeAcceptInputHandler([window] {
 				window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES",
 					[] {
@@ -556,35 +541,35 @@ void GuiMenu::openQuitMenu()
 		}
 	}
 
-	if(Settings::getInstance()->getBool("ShowRestartSystem"))
+	if(Settings::getInstance()->getBool("ShowRebootSystem"))
 	{
 		row.elements.clear();
 		row.makeAcceptInputHandler([window] {
-			window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES",
+			window->pushGui(new GuiMsgBox(window, "REALLY REBOOT?", "YES",
 				[] {
 				Scripting::fireEvent("quit", "reboot");
 				Scripting::fireEvent("reboot");
 				if (quitES(QuitMode::REBOOT) != 0)
-					LOG(LogWarning) << "Restart terminated with non-zero result!";
+					LOG(LogWarning) << "Reboot terminated with non-zero result!";
 			}, "NO", nullptr));
 		});
-		row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		row.addElement(std::make_shared<TextComponent>(window, "REBOOT SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 		s->addRow(row);
 	}
 
-	if(Settings::getInstance()->getBool("ShowShutdownSystem"))
+	if(Settings::getInstance()->getBool("ShowPoweroffSystem"))
 	{
 		row.elements.clear();
 		row.makeAcceptInputHandler([window] {
-			window->pushGui(new GuiMsgBox(window, "REALLY SHUTDOWN?", "YES",
+			window->pushGui(new GuiMsgBox(window, "REALLY POWER OFF?", "YES",
 				[] {
-				Scripting::fireEvent("quit", "shutdown");
-				Scripting::fireEvent("shutdown");
-				if (quitES(QuitMode::SHUTDOWN) != 0)
-					LOG(LogWarning) << "Shutdown terminated with non-zero result!";
+				Scripting::fireEvent("quit", "poweroff");
+				Scripting::fireEvent("poweroff");
+				if (quitES(QuitMode::POWEROFF) != 0)
+					LOG(LogWarning) << "Poweroff terminated with non-zero result!";
 			}, "NO", nullptr));
 		});
-		row.addElement(std::make_shared<TextComponent>(window, "SHUTDOWN SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		row.addElement(std::make_shared<TextComponent>(window, "POWER OFF SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 		s->addRow(row);
 	}
 

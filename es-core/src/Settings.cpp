@@ -60,8 +60,8 @@ void Settings::setDefaults()
 	mBoolMap["ShowHiddenFiles"] = false;
 	mBoolMap["DrawFramerate"] = false;
 	mBoolMap["ShowExit"] = true;
-	mBoolMap["ShowRestartSystem"] = true;
-	mBoolMap["ShowShutdownSystem"] = true;
+	mBoolMap["ShowRebootSystem"] = true;
+	mBoolMap["ShowPoweroffSystem"] = true;
 	mBoolMap["Windowed"] = false;
 	mBoolMap["SplashScreen"] = true;
 	mBoolMap["SplashScreenProgress"] = true;

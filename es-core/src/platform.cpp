@@ -10,21 +10,21 @@
 
 #include "Log.h"
 
-int runShutdownCommand()
-{
-#ifdef WIN32 // windows
-	return system("shutdown -s -t 0");
-#else // osx / linux
-	return system("sudo shutdown -h now");
-#endif
-}
-
-int runRestartCommand()
+int runRebootCommand()
 {
 #ifdef WIN32 // windows
 	return system("shutdown -r -t 0");
 #else // osx / linux
-	return system("sudo shutdown -r now");
+	return system("shutdown --reboot now");
+#endif
+}
+
+int runPoweroffCommand()
+{
+#ifdef WIN32 // windows
+	return system("shutdown -s -t 0");
+#else // osx / linux
+	return system("shutdown --poweroff now");
 #endif
 }
 
@@ -71,19 +71,13 @@ void processQuitMode()
 {
 	switch (quitMode)
 	{
-	case QuitMode::RESTART:
-		LOG(LogInfo) << "Restarting EmulationStation";
-		touch("/tmp/es-restart");
-		break;
 	case QuitMode::REBOOT:
 		LOG(LogInfo) << "Rebooting system";
-		touch("/tmp/es-sysrestart");
-		runRestartCommand();
+		runRebootCommand();
 		break;
-	case QuitMode::SHUTDOWN:
-		LOG(LogInfo) << "Shutting system down";
-		touch("/tmp/es-shutdown");
-		runShutdownCommand();
+	case QuitMode::POWEROFF:
+		LOG(LogInfo) << "Powering off system";
+		runPoweroffCommand();
 		break;
 	}
 }
