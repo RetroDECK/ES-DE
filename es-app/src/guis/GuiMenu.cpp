@@ -566,7 +566,7 @@ void GuiMenu::openQuitMenu()
 				Scripting::fireEvent("quit", "poweroff");
 				Scripting::fireEvent("poweroff");
 				if (quitES(QuitMode::POWEROFF) != 0)
-					LOG(LogWarning) << "Poweroff terminated with non-zero result!";
+					LOG(LogWarning) << "Power off terminated with non-zero result!";
 			}, "NO", nullptr));
 		});
 		row.addElement(std::make_shared<TextComponent>(window, "POWER OFF SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
@@ -578,11 +578,11 @@ void GuiMenu::openQuitMenu()
 
 void GuiMenu::addVersionInfo()
 {
-	std::string  buildDate = (Settings::getInstance()->getBool("Debug") ? std::string( "   (" + Utils::String::toUpper(PROGRAM_BUILT_STRING) + ")") : (""));
+//	std::string  buildDate = (Settings::getInstance()->getBool("Debug") ? std::string( "   (" + Utils::String::toUpper(PROGRAM_BUILT_STRING) + ")") : (""));
 
 	mVersion.setFont(Font::get(FONT_SIZE_SMALL));
 	mVersion.setColor(0x5E5E5EFF);
-	mVersion.setText("EMULATIONSTATION V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) + buildDate);
+	mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
 	mVersion.setHorizontalAlignment(ALIGN_CENTER);
 	addChild(&mVersion);
 }

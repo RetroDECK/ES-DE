@@ -138,9 +138,9 @@ bool parseArgs(int argc, char* argv[])
 			bool vsync = (strcmp(argv[i + 1], "on") == 0 || strcmp(argv[i + 1], "1") == 0) ? true : false;
 			Settings::getInstance()->setBool("VSync", vsync);
 			i++; // skip vsync value
-		}else if(strcmp(argv[i], "--scrape") == 0)
-		{
-			scrape_cmdline = true;
+//		}else if(strcmp(argv[i], "--scrape") == 0)
+//		{
+//			scrape_cmdline = true;
 		}else if(strcmp(argv[i], "--max-vram") == 0)
 		{
 			int maxVRAM = atoi(argv[i + 1]);
@@ -169,8 +169,7 @@ bool parseArgs(int argc, char* argv[])
 			freopen("CONOUT$", "wb", stdout);
 #endif
 			std::cout <<
-				"EmulationStation, a graphical front-end for ROM browsing.\n"
-				"Written by Alec \"Aloshi\" Lofquist.\n"
+				"EmulationStation Desktop Edition, a graphical front-end for ROM browsing.\n"
 				"Version " << PROGRAM_VERSION_STRING << ", built " << PROGRAM_BUILT_STRING << "\n\n"
 				"Command line arguments:\n"
 				"--resolution [width] [height]	Try and force a particular resolution\n"
@@ -180,7 +179,7 @@ bool parseArgs(int argc, char* argv[])
 				"--no-exit			Don't show the exit option in the menu\n"
 				"--no-splash			Don't show the splash screen\n"
 				"--debug				More logging, show console on Windows\n"
-				"--scrape			Scrape using command line interface\n"
+//				"--scrape			Scrape using command line interface\n"
 				"--windowed			Not fullscreen, should be used with --resolution\n"
 				"--fullscreen-normal             Run in normal fullscreen mode\n"
 				"--fullscreen-borderless         Run in borderless fullscreen mode (always on top)\n"
@@ -194,6 +193,14 @@ bool parseArgs(int argc, char* argv[])
 				"More information available in README.md.\n";
 			return false; //exit after printing help
 		}
+		else
+		{
+			std::string argv_unknown = argv[i];
+			std::cout << "Invalid command line argument '" << argv_unknown << "'\n";
+			std::cout << "Try 'emulationstation --help' for more information.\n";
+			return false; // exit after printing message
+		}
+		
 	}
 
 	return true;
