@@ -7,6 +7,7 @@
 #include "Settings.h"
 #include <vlc/vlc.h>
 #include <SDL_mutex.h>
+#include <SDL_timer.h>
 
 #ifdef WIN32
 #include <codecvt>
@@ -254,8 +255,24 @@ void VideoVlcComponent::startVideo()
 			if (mMedia)
 			{
 				unsigned track_count;
-				// Get the media metadata so we can find the aspect ratio
-				libvlc_media_parse(mMedia);
+				int parseResult;
+				libvlc_event_t vlcEvent;
+
+				// Asynchronous media parsing
+				libvlc_event_attach(libvlc_media_event_manager(mMedia), libvlc_MediaParsedChanged, VlcMediaParseCallback, 0);
+				parseResult = libvlc_media_parse_with_options(mMedia, libvlc_media_parse_local, -1);
+				
+				if (!parseResult)
+				{
+					// Wait for a maximum of 1 second for the media parsing
+					for(int i=0; i<200; i++)
+					{
+						if ((libvlc_media_get_parsed_status(mMedia)))
+							break;
+						SDL_Delay(5);
+					};
+				}
+
 				libvlc_media_track_t** tracks;
 				track_count = libvlc_media_tracks_get(mMedia, &tracks);
 				for (unsigned track = 0; track < track_count; ++track)

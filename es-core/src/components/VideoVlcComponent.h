@@ -3,6 +3,7 @@
 #define ES_CORE_COMPONENTS_VIDEO_VLC_COMPONENT_H
 
 #include "VideoComponent.h"
+#include <vlc/vlc.h>
 
 struct SDL_mutex;
 struct SDL_Surface;
@@ -60,6 +61,8 @@ private:
 
 	void setupContext();
 	void freeContext();
+
+	static void VlcMediaParseCallback(const libvlc_event_t *event, void *user_data) {};
 
 private:
 	static libvlc_instance_t*		mVLC;
