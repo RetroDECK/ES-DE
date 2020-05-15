@@ -66,9 +66,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
 					continue;
 				
 				if (showFavoriteIcon)
-//					mList.add(("\uF006 ") + file->getName(), file, file->getType() == FOLDER);
-//					Quick fix for now until I've fixed the issue with Unicode rendering (Leon)
-					mList.add("** " + file->getName(), file, file->getType() == FOLDER);
+					mList.add(("\uF005  ") + file->getName(), file, file->getType() == FOLDER);					
 				else if (file->getType() == FOLDER)
 					mList.add(("\uF07C ") + file->getName(), file, true);
 				else
@@ -85,9 +83,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
 
 				if (showFavoriteIcon)
 				{
-//					mList.add(("\uF006 ") + file->getName(), file, file->getType() == FOLDER);
-//					Quick fix for now until I've fixed the issue with Unicode rendering (Leon)
-					mList.add(("** ") + file->getName(), file, file->getType() == FOLDER);
+					mList.add(("\uF005  ") + file->getName(), file, file->getType() == FOLDER);
 					continue;
 				}
 			}

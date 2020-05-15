@@ -248,18 +248,18 @@ std::vector<std::string> getFallbackFontPaths()
 #else
 	// Linux
 
-	const char* paths[] = {
-		"/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-		"/usr/share/fonts/truetype/freefont/FreeMono.ttf",
-		"/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf" // japanese, chinese, present on Debian
-	};
-
 	std::vector<std::string> fontPaths;
-	for(unsigned int i = 0; i < sizeof(paths) / sizeof(paths[0]); i++)
-	{
-		if(ResourceManager::getInstance()->fileExists(paths[i]))
-			fontPaths.push_back(paths[i]);
-	}
+
+	// Vera sans Unicode:
+	fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/DejaVuSans.ttf"));
+	// Freefont monospaced:
+	fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/FreeMono.ttf"));
+	// Various languages, such as Japanese and Chinese:
+	fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/DroidSansFallbackFull.ttf"));
+	// Korean:
+	fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/NanumMyeongjo.ttf"));
+	// Font Awesome icon glyphs, used for star-flagging favorites in the gamelists:
+	fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/fontawesome-webfont.ttf"));
 
 	fontPaths.shrink_to_fit();
 	return fontPaths;
