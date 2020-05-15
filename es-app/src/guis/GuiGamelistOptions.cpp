@@ -10,6 +10,7 @@
 #include "FileSorts.h"
 #include "GuiMetaDataEd.h"
 #include "SystemData.h"
+#include "Sound.h"
 
 GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : GuiComponent(window),
 	mSystem(system), mMenu(window, "OPTIONS"), fromPlaceholder(false), mFiltersChanged(false)
@@ -81,9 +82,11 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 			{		
 				if(mJumpToLetterList->getSelected() == FAV_CHAR)
 				{
+					navigationsounds.playThemeNavigationSound(SCROLLSOUND);
 					jumpToFirstFavorite();
 					return true;
 				}
+				navigationsounds.playThemeNavigationSound(SCROLLSOUND);				
 				jumpToLetter();
 				return true;
 			}

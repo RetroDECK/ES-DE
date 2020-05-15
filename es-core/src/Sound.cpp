@@ -21,9 +21,6 @@ std::shared_ptr<Sound> Sound::get(const std::string& path)
 
 std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view, const std::string& element)
 {
-	if(!Settings::getInstance()->getBool("EnableSounds"))
-		return get("");
-
 	LOG(LogInfo) << "Sound::getFromTheme() looking for [" << view << "." << element << "]";
 
 	const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
@@ -35,6 +32,73 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
 	
 	LOG(LogInfo) << "[" << element << "] found, ready to play sound file";
 	return get(elem->get<std::string>("path"));
+}
+
+void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
+{
+			systembrowseSound = Sound::getFromTheme(theme, "all", "systembrowseSound"); 
+			quicksysselectSound = Sound::getFromTheme(theme, "all", "quicksysselectSound"); 
+			selectSound = Sound::getFromTheme(theme, "all", "selectSound"); 
+			backSound = Sound::getFromTheme(theme, "all", "backSound"); 
+			scrollSound = Sound::getFromTheme(theme, "all", "scrollSound"); 
+			favoriteSound = Sound::getFromTheme(theme, "all", "favoriteSound"); 
+			launchSound = Sound::getFromTheme(theme, "all", "launchSound"); 
+}
+
+void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)
+{
+
+	switch(soundID)
+	{
+		case SYSTEMBROWSE:
+			navigationsounds.systembrowseSound->play();
+			break;
+		case QUICKSYSSELECT:
+			navigationsounds.quicksysselectSound->play();
+			break;
+		case SELECTSOUND:
+			navigationsounds.selectSound->play();
+			break;
+		case BACKSOUND:
+			navigationsounds.backSound->play();
+			break;
+		case SCROLLSOUND:
+			navigationsounds.scrollSound->play();
+			break;		
+		case FAVORITESOUND:
+			navigationsounds.favoriteSound->play();
+			break;
+		case LAUNCHSOUND:
+			navigationsounds.launchSound->play();
+	}
+}
+
+bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
+{
+	switch(soundID)
+	{
+		case SYSTEMBROWSE:
+			return navigationsounds.systembrowseSound->isPlaying();
+			break;
+		case QUICKSYSSELECT:
+			return navigationsounds.quicksysselectSound->isPlaying();
+			break;
+		case SELECTSOUND:
+			return navigationsounds.selectSound->isPlaying();
+			break;
+		case BACKSOUND:
+			return navigationsounds.backSound->isPlaying();
+			break;
+		case SCROLLSOUND:
+			return navigationsounds.scrollSound->isPlaying();
+			break;
+		case FAVORITESOUND:
+			return navigationsounds.favoriteSound->isPlaying();
+			break;
+		case LAUNCHSOUND:
+			return navigationsounds.launchSound->isPlaying();
+	}		
+	return false;
 }
 
 Sound::Sound(const std::string & path) : mSampleData(NULL), mSamplePos(0), mSampleLength(0), playing(false)

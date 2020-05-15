@@ -10,18 +10,10 @@
 #include <pugixml/src/pugixml.hpp>
 #include <algorithm>
 
-std::vector<std::string> ThemeData::sSupportedViews { { "navigationsounds" }, { "system" }, { "basic" }, { "detailed" }, { "grid" }, { "video" } };
-std::vector<std::string> ThemeData::sSupportedFeatures { { "video" }, { "carousel" }, { "z-index" }, { "visible" } };
+std::vector<std::string> ThemeData::sSupportedViews { { "all" }, { "system" }, { "basic" }, { "detailed" }, { "grid" }, { "video" } };
+std::vector<std::string> ThemeData::sSupportedFeatures { { "navigationsounds" }, { "video" }, { "carousel" }, { "z-index" }, { "visible" } };
 
 std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> ThemeData::sElementMap {
-	{ "navigationsounds", {
-		{ "systembrowseSound", PATH },
-		{ "quicksysselectSound", PATH },
-		{ "selectSound", PATH },
-		{ "backSound", PATH },
-		{ "scrollSound", PATH },
-		{ "favoriteSound", PATH },
-		{ "launchSound", PATH } } },
 	{ "image", {
 		{ "pos", NORMALIZED_PAIR },
 		{ "size", NORMALIZED_PAIR },
@@ -94,7 +86,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
 		{ "secondaryColor", COLOR },
 		{ "fontPath", PATH },
 		{ "fontSize", FLOAT },
-		{ "scrollSound", PATH },
+		{ "scrollSound", PATH },		// need to keep this for backwards compatibility with old themes
 		{ "alignment", STRING },
 		{ "horizontalMargin", FLOAT },
 		{ "forceUppercase", BOOLEAN },
@@ -150,6 +142,14 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
 		{ "iconColor", COLOR },
 		{ "fontPath", PATH },
 		{ "fontSize", FLOAT } } },
+	{ "navigationsounds", {
+		{ "systembrowseSound", PATH },
+		{ "quicksysselectSound", PATH },
+		{ "selectSound", PATH },
+		{ "backSound", PATH },
+		{ "scrollSound", PATH },
+		{ "favoriteSound", PATH },
+		{ "launchSound", PATH } } },
 	{ "video", {
 		{ "pos", NORMALIZED_PAIR },
 		{ "size", NORMALIZED_PAIR },

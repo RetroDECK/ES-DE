@@ -87,9 +87,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			FileData* cursor = getCursor();
 			if(cursor->getType() == GAME)
 			{
-				soundfile = Sound::getFromTheme(getTheme(), "navigationsounds", "launchSound"); 
-				soundfile->play();
-				while(soundfile->isPlaying());
 				launch(cursor);
 			}else{
 				// it's a folder
@@ -111,7 +108,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 				setCursor(mCursorStack.top());
 				mCursorStack.pop();
 			}else{
-				Sound::getFromTheme(getTheme(), "navigationsounds", "backSound")->play();
+				navigationsounds.playThemeNavigationSound(BACKSOUND);
 				onFocusLost();
 				SystemData* systemToView = getCursor()->getSystem();
 				if (systemToView->isCollection())
@@ -126,7 +123,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
-				Sound::getFromTheme(getTheme(), "navigationsounds", "quicksysselectSound")->play();
 				onFocusLost();
 				ViewController::get()->goToNextGameList();
 				return true;
@@ -135,7 +131,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
-				Sound::getFromTheme(getTheme(), "navigationsounds", "quicksysselectSound")->play();
 				onFocusLost();
 				ViewController::get()->goToPrevGameList();
 				return true;
@@ -145,7 +140,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			if (mRoot->getSystem()->isGameSystem())
 			{
 				// go to random system game
-				Sound::getFromTheme(getTheme(), "navigationsounds", "scrollSound")->play();
+				navigationsounds.playThemeNavigationSound(SCROLLSOUND);
 				FileData* randomGame = getCursor()->getSystem()->getRandomGame();
 				if (randomGame)
 				{
@@ -157,7 +152,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		{
 			if(mRoot->getSystem()->isGameSystem())
 			{
-				Sound::getFromTheme(getTheme(), "navigationsounds", "favoriteSound")->play();
+				navigationsounds.playThemeNavigationSound(FAVORITESOUND);
 				if(CollectionSystemManager::get()->toggleGameInCollection(getCursor()))
 				{
 					return true;

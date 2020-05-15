@@ -2,8 +2,6 @@
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 #define ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 
-#define FAV_CHAR '*'
-
 #include "components/MenuComponent.h"
 #include "components/OptionListComponent.h"
 #include "FileData.h"
@@ -30,6 +28,8 @@ private:
 	void jumpToLetter();
 	void findFirstFavorite();
 	void jumpToFirstFavorite();
+
+	const char FAV_CHAR = '*';
 
 	long firstFavorite = -1;
 

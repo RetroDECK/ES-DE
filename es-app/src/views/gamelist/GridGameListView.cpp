@@ -149,7 +149,7 @@ bool GridGameListView::input(InputConfig* config, Input input)
 {
 	if (input.value == 0 and (config->isMappedLike("left", input) || config->isMappedLike("right", input)
 		|| (config->isMappedLike("up", input)) || (config->isMappedLike("down", input)) ))
-		Sound::getFromTheme(getTheme(), "navigationsounds", "scrollSound")->play();
+		navigationsounds.playThemeNavigationSound(SCROLLSOUND);
 
 	if(config->isMappedLike("left", input) || config->isMappedLike("right", input))
 		return GuiComponent::input(config, input);

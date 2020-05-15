@@ -29,8 +29,6 @@ SystemView::SystemView(Window* window) : IList<SystemViewData, SystemData*>(wind
 void SystemView::populate()
 {
 	mEntries.clear();
-	mSelectSound = "";
-//	mScrollSound = "";
 
 	for(auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend(); it++)
 	{
@@ -127,8 +125,6 @@ void SystemView::populate()
 			mWindow->pushGui(new GuiMsgBox(mWindow, "The selected UI mode has nothing to show,\n returning to UI mode: FULL", "OK", nullptr));
 		}
 	}
-	
-
 }
 
 void SystemView::goToSystem(SystemData* system, bool animate)
@@ -159,13 +155,13 @@ bool SystemView::input(InputConfig* config, Input input)
 		case VERTICAL_WHEEL:
 			if (config->isMappedLike("up", input))
 			{
-				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("down", input))
 			{
-				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
 				listInput(1);
 				return true;
 			}
@@ -175,13 +171,13 @@ bool SystemView::input(InputConfig* config, Input input)
 		default:
 			if (config->isMappedLike("left", input))
 			{
-				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("right", input))
 			{
-				Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
+				navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
 				listInput(1);
 				return true;
 			}
@@ -190,16 +186,16 @@ bool SystemView::input(InputConfig* config, Input input)
 
 		if(config->isMappedTo("a", input))
 		{
-			Sound::getFromTheme(theme, "navigationsounds", "selectSound")->play();
 			stopScrolling();
 			ViewController::get()->goToGameList(getSelected());
+			navigationsounds.playThemeNavigationSound(SELECTSOUND);
 			return true;
 		}
 		if (config->isMappedTo("x", input))
 		{
 			// get random system
 			// go to system
-			Sound::getFromTheme(theme, "navigationsounds", "systembrowseSound")->play();
+			navigationsounds.playThemeNavigationSound(SYSTEMBROWSE);
 			setCursor(SystemData::getRandomSystem());
 			return true;
 		}
@@ -246,7 +242,6 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 		endPos = target + posMax; // loop around the end (0 -> max)
 	if(abs(target - posMax - startPos) < dist)
 		endPos = target - posMax; // loop around the start (max - 1 -> -1)
-
 
 	// animate mSystemInfo's opacity (fade out, wait, fade back in)
 

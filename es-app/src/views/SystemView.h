@@ -62,9 +62,6 @@ public:
 	std::vector<HelpPrompt> getHelpPrompts() override;
 	virtual HelpStyle getHelpStyle() override;
 
-	std::string mSelectSound;
-//	std::string mScrollSound;
-
 protected:
 	void onCursorChanged(const CursorState& state) override;
 

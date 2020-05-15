@@ -16,8 +16,10 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "Window.h"
+#include "Sound.h"
 
 ViewController* ViewController::sInstance = NULL;
+NavigationSounds navigationsounds;
 
 ViewController* ViewController::get()
 {
@@ -103,6 +105,7 @@ void ViewController::goToNextGameList()
 	assert(mState.viewing == GAME_LIST);
 	SystemData* system = getState().getSystem();
 	assert(system);
+	navigationsounds.playThemeNavigationSound(QUICKSYSSELECT);
 	goToGameList(system->getNext());
 }
 
@@ -111,6 +114,7 @@ void ViewController::goToPrevGameList()
 	assert(mState.viewing == GAME_LIST);
 	SystemData* system = getState().getSystem();
 	assert(system);
+	navigationsounds.playThemeNavigationSound(QUICKSYSSELECT);
 	goToGameList(system->getPrev());
 }
 
@@ -224,6 +228,11 @@ void ViewController::launch(FileData* game, Vector3f center)
 	mLockInput = true;
 
 	std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
+
+	navigationsounds.playThemeNavigationSound(LAUNCHSOUND);
+	// let launch sound play to the end before launching game
+	while(navigationsounds.isPlayingThemeNavigationSound(LAUNCHSOUND));
+
 	if(transition_style == "fade")
 	{
 		// fade out, launch game, fade back in
@@ -452,6 +461,8 @@ void ViewController::preload()
 		(*it)->getIndex()->resetFilters();
 		getGameListView(*it);
 	}
+	// load navigation sounds
+	navigationsounds.loadThemeNavigationSounds(SystemData::sSystemVector[0]->getTheme());
 }
 
 void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
@@ -522,6 +533,9 @@ void ViewController::reloadAll()
 	}else{
 		goToSystemView(SystemData::sSystemVector.front());
 	}
+
+	// load navigation sounds
+	navigationsounds.loadThemeNavigationSounds(SystemData::sSystemVector[0]->getTheme());
 
 	updateHelpPrompts();
 }
