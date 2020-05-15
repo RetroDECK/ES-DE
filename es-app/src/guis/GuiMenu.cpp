@@ -231,6 +231,24 @@ void GuiMenu::openUISettings()
 		}
 	});
 
+	// fullscreen mode
+	auto fullscreen_mode = std::make_shared< OptionListComponent<std::string> >(mWindow, "FULLSCREEN MODE", false);
+	std::vector<std::string> screenmode;
+	screenmode.push_back("normal");
+	screenmode.push_back("borderless");
+	for(auto it = screenmode.cbegin(); it != screenmode.cend(); it++)
+		fullscreen_mode->add(*it, *it, Settings::getInstance()->getString("FullscreenMode") == *it);
+	s->addWithLabel("FULLSCREEN MODE (RESTART REQUIRED)", fullscreen_mode);
+	s->addSaveFunc([fullscreen_mode] {
+		if (Settings::getInstance()->getString("FullscreenMode") == "normal"
+			&& fullscreen_mode->getSelected() != "normal")
+		{
+			Settings::getInstance()->setString("PowerSaverMode", "default");
+			PowerSaver::init();
+		}
+		Settings::getInstance()->setString("FullscreenMode", fullscreen_mode->getSelected());
+	});
+
 	// screensaver
 	ComponentListRow screensaver_row;
 	screensaver_row.elements.clear();

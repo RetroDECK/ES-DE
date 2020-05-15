@@ -25,7 +25,6 @@ std::vector<const char*> settings_dont_save {
 	{ "SplashScreen" },
 	{ "SplashScreenProgress" },
 	{ "VSync" },
-	{ "FullscreenBorderless" },
 	{ "Windowed" },
 	{ "WindowWidth" },
 	{ "WindowHeight" },
@@ -63,7 +62,6 @@ void Settings::setDefaults()
 	mBoolMap["ShowExit"] = true;
 	mBoolMap["ShowRestartSystem"] = true;
 	mBoolMap["ShowShutdownSystem"] = true;
-	mBoolMap["FullscreenBorderless"] = false;
 	mBoolMap["Windowed"] = false;
 	mBoolMap["SplashScreen"] = true;
 	mBoolMap["SplashScreenProgress"] = true;
@@ -94,6 +92,7 @@ void Settings::setDefaults()
 		mIntMap["MaxVRAM"] = 100;
 	#endif
 
+	mStringMap["FullscreenMode"] = "normal";
 	mStringMap["TransitionStyle"] = "fade";
 	mStringMap["ThemeSet"] = "";
 	mStringMap["ScreenSaverBehavior"] = "dim";

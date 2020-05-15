@@ -124,9 +124,12 @@ bool parseArgs(int argc, char* argv[])
 			Settings::getInstance()->setBool("Debug", true);
 			Settings::getInstance()->setBool("HideConsole", false);
 			Log::setReportingLevel(LogDebug);
+		}else if(strcmp(argv[i], "--fullscreen-normal") == 0)
+		{
+			Settings::getInstance()->setString("FullscreenMode", "normal");
 		}else if(strcmp(argv[i], "--fullscreen-borderless") == 0)
 		{
-			Settings::getInstance()->setBool("FullscreenBorderless", true);
+			Settings::getInstance()->setString("FullscreenMode", "borderless");
 		}else if(strcmp(argv[i], "--windowed") == 0)
 		{
 			Settings::getInstance()->setBool("Windowed", true);
@@ -170,22 +173,24 @@ bool parseArgs(int argc, char* argv[])
 				"Written by Alec \"Aloshi\" Lofquist.\n"
 				"Version " << PROGRAM_VERSION_STRING << ", built " << PROGRAM_BUILT_STRING << "\n\n"
 				"Command line arguments:\n"
-				"--resolution [width] [height]	try and force a particular resolution\n"
-				"--gamelist-only			skip automatic game search, only read from gamelist.xml\n"
-				"--ignore-gamelist		ignore the gamelist (useful for troubleshooting)\n"
-				"--draw-framerate		display the framerate\n"
-				"--no-exit			don't show the exit option in the menu\n"
-				"--no-splash			don't show the splash screen\n"
-				"--debug				more logging, show console on Windows\n"
-				"--scrape			scrape using command line interface\n"
-				"--windowed			not fullscreen, should be used with --resolution\n"
-				"--vsync [1/on or 0/off]		turn vsync on or off (default is on)\n"
+				"--resolution [width] [height]	Try and force a particular resolution\n"
+				"--gamelist-only			Skip automatic game search, only read from gamelist.xml\n"
+				"--ignore-gamelist		Ignore the gamelist (useful for troubleshooting)\n"
+				"--draw-framerate		Display the framerate\n"
+				"--no-exit			Don't show the exit option in the menu\n"
+				"--no-splash			Don't show the splash screen\n"
+				"--debug				More logging, show console on Windows\n"
+				"--scrape			Scrape using command line interface\n"
+				"--windowed			Not fullscreen, should be used with --resolution\n"
+				"--fullscreen-normal             Run in normal fullscreen mode\n"
+				"--fullscreen-borderless         Run in borderless fullscreen mode (always on top)\n"
+				"--vsync [1/on or 0/off]		Turn vsync on or off (default is on)\n"
 				"--max-vram [size]		Max VRAM to use in Mb before swapping. 0 for unlimited\n"
-				"--force-kid		Force the UI mode to be Kid\n"
-				"--force-kiosk		Force the UI mode to be Kiosk\n"
+				"--force-kid		        Force the UI mode to be Kid\n"
+				"--force-kiosk		        Force the UI mode to be Kiosk\n"
 				"--force-disable-filters		Force the UI to ignore applied filters in gamelist\n"
-				"--home [path]		Directory to use as home path\n"
-				"--help, -h			summon a sentient, angry tuba\n\n"
+				"--home [path]		        Directory to use as home path\n"
+				"--help, -h			Summon a sentient, angry tuba\n\n"
 				"More information available in README.md.\n";
 			return false; //exit after printing help
 		}
@@ -322,7 +327,7 @@ int main(int argc, char* argv[])
 			LOG(LogError) << "Window failed to initialize!";
 			return 1;
 		}
-
+	
 		if(splashScreen)
 		{
 			std::string progressText = "Loading...";

@@ -79,9 +79,27 @@ namespace Renderer
 		screenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ? Settings::getInstance()->getInt("ScreenOffsetY") : 0;
 		screenRotate  = Settings::getInstance()->getInt("ScreenRotate")  ? Settings::getInstance()->getInt("ScreenRotate")  : 0;
 
+		// Prevent ES window from minimizing when switching windows
+		// (when launching games or when manually switching windows using task switcher)
+		SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
+
 		setupWindow();
 
-		unsigned int windowFlags = (Settings::getInstance()->getBool("Windowed") ? 0 : (Settings::getInstance()->getBool("FullscreenBorderless") ? SDL_WINDOW_BORDERLESS : SDL_WINDOW_FULLSCREEN)) | getWindowFlags();
+		unsigned int windowFlags;
+
+		if (Settings::getInstance()->getBool("Windowed"))
+		{
+			windowFlags = getWindowFlags();
+
+		}
+		else if (Settings::getInstance()->getString("FullscreenMode") == "borderless")
+		{
+			windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
+		}
+		else
+		{
+			windowFlags = SDL_WINDOW_FULLSCREEN | getWindowFlags();
+		}
 
 		if((sdlWindow = SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, windowFlags)) == nullptr)
 		{
