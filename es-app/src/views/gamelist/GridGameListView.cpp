@@ -316,11 +316,11 @@ void GridGameListView::updateInfoPanel()
 		//mDescription.setText("");
 		fadingOut = true;
 	}else{
-		if (!mVideo->setVideo(file->getVideoPath()))
-		{
-			mVideo->setDefaultVideo();
-		}
-		mVideoPlaying = true;
+//		if (!mVideo->setVideo(file->getVideoPath()))
+//		{
+//			mVideo->setDefaultVideo();
+//		}
+//		mVideoPlaying = true;
 
 		mVideo->setImage(file->getThumbnailPath());
 		mMarquee.setImage(file->getMarqueePath());
