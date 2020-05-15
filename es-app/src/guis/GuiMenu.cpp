@@ -372,6 +372,18 @@ void GuiMenu::openUISettings()
 	s->addWithLabel("DISABLE START MENU IN KID MODE", disable_start);
 	s->addSaveFunc([disable_start] { Settings::getInstance()->setBool("DisableKidStartMenu", disable_start->getState()); });
 
+	// hide Restart System option in the Quit menu
+	auto show_restartsystem = std::make_shared<SwitchComponent>(mWindow);
+	show_restartsystem->setState(Settings::getInstance()->getBool("ShowRestartSystem"));
+	s->addWithLabel("SHOW \"RESTART SYSTEM\" MENU ENTRY", show_restartsystem);
+	s->addSaveFunc([show_restartsystem] { Settings::getInstance()->setBool("ShowRestartSystem", show_restartsystem->getState()); });
+
+	// hide Shutdown System option in the Quit menu
+	auto show_shutdownsystem = std::make_shared<SwitchComponent>(mWindow);
+	show_shutdownsystem->setState(Settings::getInstance()->getBool("ShowShutdownSystem"));
+	s->addWithLabel("SHOW \"SHUTDOWN SYSTEM\" MENU ENTRY", show_shutdownsystem);
+	s->addSaveFunc([show_shutdownsystem] { Settings::getInstance()->setBool("ShowShutdownSystem", show_shutdownsystem->getState()); });
+
 	// Show favorites first in gamelists
 	auto favoritesFirstSwitch = std::make_shared<SwitchComponent>(mWindow);
 	favoritesFirstSwitch->setState(Settings::getInstance()->getBool("FavoritesFirst"));
@@ -526,33 +538,37 @@ void GuiMenu::openQuitMenu()
 		}
 	}
 
-	row.elements.clear();
-	row.makeAcceptInputHandler([window] {
-		window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES",
-			[] {
-			Scripting::fireEvent("quit", "reboot");
-			Scripting::fireEvent("reboot");
-			if (quitES(QuitMode::REBOOT) != 0)
-				LOG(LogWarning) << "Restart terminated with non-zero result!";
-		}, "NO", nullptr));
-	});
-	row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-	s->addRow(row);
+	if(Settings::getInstance()->getBool("ShowRestartSystem"))
+	{
+		row.elements.clear();
+		row.makeAcceptInputHandler([window] {
+			window->pushGui(new GuiMsgBox(window, "REALLY RESTART?", "YES",
+				[] {
+				Scripting::fireEvent("quit", "reboot");
+				Scripting::fireEvent("reboot");
+				if (quitES(QuitMode::REBOOT) != 0)
+					LOG(LogWarning) << "Restart terminated with non-zero result!";
+			}, "NO", nullptr));
+		});
+		row.addElement(std::make_shared<TextComponent>(window, "RESTART SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		s->addRow(row);
+	}
 
-
-
-	row.elements.clear();
-	row.makeAcceptInputHandler([window] {
-		window->pushGui(new GuiMsgBox(window, "REALLY SHUTDOWN?", "YES",
-			[] {
-			Scripting::fireEvent("quit", "shutdown");
-			Scripting::fireEvent("shutdown");
-			if (quitES(QuitMode::SHUTDOWN) != 0)
-				LOG(LogWarning) << "Shutdown terminated with non-zero result!";
-		}, "NO", nullptr));
-	});
-	row.addElement(std::make_shared<TextComponent>(window, "SHUTDOWN SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-	s->addRow(row);
+	if(Settings::getInstance()->getBool("ShowShutdownSystem"))
+	{
+		row.elements.clear();
+		row.makeAcceptInputHandler([window] {
+			window->pushGui(new GuiMsgBox(window, "REALLY SHUTDOWN?", "YES",
+				[] {
+				Scripting::fireEvent("quit", "shutdown");
+				Scripting::fireEvent("shutdown");
+				if (quitES(QuitMode::SHUTDOWN) != 0)
+					LOG(LogWarning) << "Shutdown terminated with non-zero result!";
+			}, "NO", nullptr));
+		});
+		row.addElement(std::make_shared<TextComponent>(window, "SHUTDOWN SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		s->addRow(row);
+	}
 
 	mWindow->pushGui(s);
 }
