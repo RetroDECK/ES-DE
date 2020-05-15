@@ -30,6 +30,9 @@ CMakeFiles
 cmake_install.cmake
 Makefile
 
+# TODO
+TODO.md
+
 # Eclipse
 .cproject
 .project

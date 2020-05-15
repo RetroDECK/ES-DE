@@ -1,2 +1,11 @@
+# CMake
+Makefile
+CTestTestfile.cmake
+DartConfiguration.tcl
+pugixml-config-version.cmake
+pugixml-config.cmake
+pugixml-targets.cmake
+pugixml.pc
+
 /build/
 /.vscode/
