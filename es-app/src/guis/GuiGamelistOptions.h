@@ -2,6 +2,8 @@
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 #define ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 
+#define FAV_CHAR '*'
+
 #include "components/MenuComponent.h"
 #include "components/OptionListComponent.h"
 #include "FileData.h"
@@ -26,6 +28,10 @@ private:
 	void startEditMode();
 	void exitEditMode();
 	void jumpToLetter();
+	void findFirstFavorite();
+	void jumpToFirstFavorite();
+
+	long firstFavorite = -1;
 
 	MenuComponent mMenu;
 

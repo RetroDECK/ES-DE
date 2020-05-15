@@ -35,6 +35,26 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 			curChar = startChar;
 
 		mJumpToLetterList = std::make_shared<LetterList>(mWindow, "JUMP TO...", false);
+
+		if(Settings::getInstance()->getBool("FavoritesFirst") && system->getName() != "favorites" && system->getName() != "recent")
+		{
+			// set firstFavorite to the numerical entry of the first favorite game in the list
+			// if no favorites are found set it to -1
+			findFirstFavorite();
+
+			// if the currently selected game is a favorite, set curChar to 0 so we don't get two current positions
+			if(getGamelist()->getCursor()->getFavorite())
+				curChar = 0;
+
+			if (firstFavorite != -1)
+			{
+				if (getGamelist()->getCursor()->getFavorite())
+					mJumpToLetterList->add(std::string(1, FAV_CHAR), FAV_CHAR, 1);
+				else
+					mJumpToLetterList->add(std::string(1, FAV_CHAR), FAV_CHAR, 0);
+			}
+		}
+
 		for (char c = startChar; c <= endChar; c++)
 		{
 			// check if c is a valid first letter in current list
@@ -44,6 +64,10 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 				char candidate = (char)toupper(file->getSortName()[0]);
 				if (c == candidate)
 				{
+					// if the game is a favorite, continue to the next entry in the list
+					if (firstFavorite != -1 && file->getFavorite())
+						continue;
+
 					mJumpToLetterList->add(std::string(1, c), c, c == curChar);
 					break;
 				}
@@ -54,7 +78,12 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		row.addElement(mJumpToLetterList, false);
 		row.input_handler = [&](InputConfig* config, Input input) {
 			if(config->isMappedTo("a", input) && input.value)
-			{
+			{		
+				if(mJumpToLetterList->getSelected() == FAV_CHAR)
+				{
+					jumpToFirstFavorite();
+					return true;
+				}
 				jumpToLetter();
 				return true;
 			}
@@ -228,10 +257,55 @@ void GuiGamelistOptions::jumpToLetter()
 		else if(checkLetter > letter || (mid > 0 && (letter == toupper(files.at(mid - 1)->getSortName()[0]))))
 			max = mid - 1;
 		else
-			break; //exact match found
+		{
+			// exact match found
+			// step through games to exclude favorites
+			if (firstFavorite != -1)
+			{
+				while(files[mid]->getFavorite())
+					mid++;
+			}
+			break; 
+		}
 	}
 
 	gamelist->setCursor(files.at(mid));
+
+	delete this;
+}
+
+void GuiGamelistOptions::findFirstFavorite()
+{
+	IGameListView* gamelist = getGamelist();
+
+	// this is a really shitty way to get a list of files
+	const std::vector<FileData*>& files = gamelist->getCursor()->getParent()->getChildrenListToDisplay();
+
+	long loop = 0;
+	long max = (long)files.size() - 1;
+
+	// Loop through the game list looking for the first game marked as a favorite
+	while (!files[loop]->getFavorite() and loop < max)
+		loop++;
+
+	// if the last entry in the game list was not a favorite then there were none for this system
+	if (!files[loop]->getFavorite())
+	{
+		firstFavorite = -1;
+		return;
+	}
+
+	firstFavorite = loop;
+}
+
+void GuiGamelistOptions::jumpToFirstFavorite()
+{
+	IGameListView* gamelist = getGamelist();
+
+	// this is a really shitty way to get a list of files
+	const std::vector<FileData*>& files = gamelist->getCursor()->getParent()->getChildrenListToDisplay();
+
+	gamelist->setCursor(files.at(firstFavorite));
 
 	delete this;
 }
