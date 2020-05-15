@@ -3,7 +3,7 @@
 #include "resources/TextureResource.h"
 #include "ThemeData.h"
 
-RatingComponent::RatingComponent(Window* window) : GuiComponent(window), mColorShift(0xFFFFFFFF)
+RatingComponent::RatingComponent(Window* window) : GuiComponent(window), mColorShift(0xFFFFFFFF), mUnfilledColor(0xFFFFFFFF)
 {
 	mFilledTexture = TextureResource::get(":/star_filled.svg", true);
 	mUnfilledTexture = TextureResource::get(":/star_unfilled.svg", true);
@@ -41,12 +41,16 @@ std::string RatingComponent::getValue() const
 void RatingComponent::setOpacity(unsigned char opacity)
 {
 	mOpacity = opacity;
+	mColorShift = (mColorShift >> 8 << 8) | mOpacity;
 	updateColors();
 }
 
 void RatingComponent::setColorShift(unsigned int color)
 {
 	mColorShift = color;
+	// Grab the opacity from the color shift because we may need to apply it if
+	// fading textures in
+	mOpacity = color & 0xff;
 	updateColors();
 }
 
@@ -71,22 +75,21 @@ void RatingComponent::onSizeChanged()
 
 void RatingComponent::updateVertices()
 {
-	const float numStars = NUM_RATING_STARS;
-	const float h        = getSize().y(); // is the same as a single star's width
-	const float w        = getSize().y() * mValue * numStars;
-	const float fw       = getSize().y() * numStars;
+	const float        numStars = NUM_RATING_STARS;
+	const float        h        = getSize().y(); // is the same as a single star's width
+	const float        w        = getSize().y() * mValue * numStars;
+	const float        fw       = getSize().y() * numStars;
+	const unsigned int color    = Renderer::convertColor(mColorShift);
 
-	mVertices[0] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, 0 };
-	mVertices[1] = { { 0.0f, h    }, { 0.0f,              0.0f }, 0 };
-	mVertices[2] = { { w,    0.0f }, { mValue * numStars, 1.0f }, 0 };
-	mVertices[3] = { { w,    h    }, { mValue * numStars, 0.0f }, 0 };
+	mVertices[0] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
+	mVertices[1] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
+	mVertices[2] = { { w,    0.0f }, { mValue * numStars, 1.0f }, color };
+	mVertices[3] = { { w,    h    }, { mValue * numStars, 0.0f }, color };
 
-	mVertices[4] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, 0 };
-	mVertices[5] = { { 0.0f, h    }, { 0.0f,              0.0f }, 0 };
-	mVertices[6] = { { fw,   0.0f }, { numStars,          1.0f }, 0 };
-	mVertices[7] = { { fw,   h    }, { numStars,          0.0f }, 0 };
-
-	updateColors();
+	mVertices[4] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
+	mVertices[5] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
+	mVertices[6] = { { fw,   0.0f }, { numStars,          1.0f }, color };
+	mVertices[7] = { { fw,   h    }, { numStars,          0.0f }, color };
 
 	// round vertices
 	for(int i = 0; i < 8; ++i)
@@ -95,8 +98,7 @@ void RatingComponent::updateVertices()
 
 void RatingComponent::updateColors()
 {
-	const float        opacity = mOpacity / 255.0;
-	const unsigned int color   = Renderer::convertColor(mColorShift & 0xFFFFFF00 | (unsigned char)((mColorShift & 0xFF) * opacity));
+	const unsigned int color = Renderer::convertColor(mColorShift);
 
 	for(int i = 0; i < 8; ++i)
 		mVertices[i].col = color;
@@ -104,18 +106,36 @@ void RatingComponent::updateColors()
 
 void RatingComponent::render(const Transform4x4f& parentTrans)
 {
-	if (!isVisible())
+	if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr)
 		return;
-
+		
 	Transform4x4f trans = parentTrans * getTransform();
+
 	Renderer::setMatrix(trans);
 
-	mFilledTexture->bind();
-	Renderer::drawTriangleStrips(&mVertices[0], 4);
+	if (mUnfilledTexture->bind())
+	{
+		if (mUnfilledColor != mColorShift)
+		{
+			const unsigned int color = Renderer::convertColor(mUnfilledColor);
+			for (int i = 0; i < 8; ++i)
+				mVertices[i].col = color;
+		}
 
-	mUnfilledTexture->bind();
-	Renderer::drawTriangleStrips(&mVertices[4], 4);
+		Renderer::drawTriangleStrips(&mVertices[4], 4);
+		Renderer::bindTexture(0);
 
+		if (mUnfilledColor != mColorShift)
+			updateColors();
+	}
+
+
+		if (mFilledTexture->bind())
+	{
+		Renderer::drawTriangleStrips(&mVertices[0], 4);
+		Renderer::bindTexture(0);
+	}
+	
 	renderChildren(trans);
 }
 
@@ -155,9 +175,16 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const 
 		imgChanged = true;
 	}
 
+	if (properties & COLOR)
+	{
+		if (elem->has("color"))
+			setColorShift(elem->get<unsigned int>("color"));
 
-	if(properties & COLOR && elem->has("color"))
-		setColorShift(elem->get<unsigned int>("color"));
+		if (elem->has("unfilledColor"))
+			mUnfilledColor = elem->get<unsigned int>("unfilledColor");
+		else
+			mUnfilledColor = mColorShift;
+	}
 
 	if(imgChanged)
 		onSizeChanged();
