@@ -169,7 +169,7 @@ bool parseArgs(int argc, char* argv[])
 			freopen("CONOUT$", "wb", stdout);
 #endif
 			std::cout <<
-				"EmulationStation Desktop Edition, a graphical front-end for ROM browsing.\n"
+				"EmulationStation Desktop Edition, an emulator front-end with controller navigation and theming support.\n"
 				"Version " << PROGRAM_VERSION_STRING << ", built " << PROGRAM_BUILT_STRING << "\n\n"
 				"Command line arguments:\n"
 				"--resolution [width] [height]	Try and force a particular resolution\n"
