@@ -19,7 +19,8 @@ void RatingComponent::setValue(const std::string& value)
 	{
 		mValue = 0.0f;
 	}else{
-		mValue = stof(value);
+		// Round up to the closest .1 value, i.e. to the closest half-star
+		mValue = Math::ceilf(stof(value) / 0.1) / 10;
 		if(mValue > 1.0f)
 			mValue = 1.0f;
 		else if(mValue < 0.0f)
@@ -143,8 +144,8 @@ bool RatingComponent::input(InputConfig* config, Input input)
 {
 	if(config->isMappedTo("a", input) && input.value != 0)
 	{
-		mValue += 1.f / NUM_RATING_STARS;
-		if(mValue > 1.0f)
+		mValue += (1.f/2) / NUM_RATING_STARS;
+		if(mValue > 1.05f)
 			mValue = 0.0f;
 
 		updateVertices();
