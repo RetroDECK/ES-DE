@@ -6,6 +6,7 @@
 #include "components/OptionListComponent.h"
 #include "FileData.h"
 #include "GuiComponent.h"
+#include "utils/StringUtil.h"
 
 class IGameListView;
 class SystemData;
@@ -29,13 +30,12 @@ private:
 	void findFirstFavorite();
 	void jumpToFirstFavorite();
 
-	const char FAV_CHAR = '*';
-
+	const std::string FAVORITE_CHAR = "\uF005";
 	long firstFavorite = -1;
 
 	MenuComponent mMenu;
 
-	typedef OptionListComponent<char> LetterList;
+	typedef OptionListComponent<std::string> LetterList;
 	std::shared_ptr<LetterList> mJumpToLetterList;
 
 	typedef OptionListComponent<const FileData::SortType*> SortList;

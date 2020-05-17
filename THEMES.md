@@ -285,6 +285,7 @@ May 12 21:12:37 lvl2:   [selectSound] found, ready to play sound file
 
 Example navigationsounds.xml, to be included from the main theme file:
 
+```xml
 <theme>
 	<formatVersion>5</formatVersion>
 	<feature supported="navigationsounds">
@@ -313,6 +314,7 @@ Example navigationsounds.xml, to be included from the main theme file:
 		</view>
 	</feature>
 </theme>
+```
 
 #### Defaults
 

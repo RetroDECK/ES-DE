@@ -31,6 +31,9 @@ protected:
 	virtual void addPlaceholder();
 
 	TextListComponent<FileData*> mList;
+
+	const std::string FAVORITE_GAME_CHAR = "\uF005";
+	const std::string FAVORITE_FOLDER_CHAR = "\uF07C";
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H

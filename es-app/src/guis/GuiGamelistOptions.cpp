@@ -50,9 +50,9 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 			if (firstFavorite != -1)
 			{
 				if (getGamelist()->getCursor()->getFavorite())
-					mJumpToLetterList->add(std::string(1, FAV_CHAR), FAV_CHAR, 1);
+					mJumpToLetterList->add(FAVORITE_CHAR, FAVORITE_CHAR, 1);
 				else
-					mJumpToLetterList->add(std::string(1, FAV_CHAR), FAV_CHAR, 0);
+					mJumpToLetterList->add(FAVORITE_CHAR, FAVORITE_CHAR, 0);
 			}
 		}
 
@@ -69,7 +69,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 					if (firstFavorite != -1 && file->getFavorite())
 						continue;
 
-					mJumpToLetterList->add(std::string(1, c), c, c == curChar);
+					mJumpToLetterList->add(std::string(1, c), std::string(1, c), c == curChar);
 					break;
 				}
 			}
@@ -80,7 +80,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system) : Gui
 		row.input_handler = [&](InputConfig* config, Input input) {
 			if(config->isMappedTo("a", input) && input.value)
 			{		
-				if(mJumpToLetterList->getSelected() == FAV_CHAR)
+				if(mJumpToLetterList->getSelected() == FAVORITE_CHAR)
 				{
 					navigationsounds.playThemeNavigationSound(SCROLLSOUND);
 					jumpToFirstFavorite();
@@ -235,7 +235,7 @@ void GuiGamelistOptions::openMetaDataEd()
 
 void GuiGamelistOptions::jumpToLetter()
 {
-	char letter = mJumpToLetterList->getSelected();
+	char letter = mJumpToLetterList->getSelected()[0];
 	IGameListView* gamelist = getGamelist();
 
 	// this is a really shitty way to get a list of files
