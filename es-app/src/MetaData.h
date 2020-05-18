@@ -28,7 +28,7 @@ struct MetaDataDecl
 	std::string key;
 	MetaDataType type;
 	std::string defaultValue;
-	bool isStatistic; //if true, ignore scraper values for this metadata
+	bool isStatistic; //if true, ignore values for this metadata
 	std::string displayName; // displayed as this in editors
 	std::string displayPrompt; // phrase displayed in editors when prompted to enter value (currently only for strings)
 };

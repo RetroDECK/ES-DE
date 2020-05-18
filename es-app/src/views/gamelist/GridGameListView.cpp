@@ -160,11 +160,16 @@ bool GridGameListView::input(InputConfig* config, Input input)
 const std::string GridGameListView::getImagePath(FileData* file)
 {
 	ImageSource src = mGrid.getImageSource();
+	FileData* returnFile;
 
 	if (src == ImageSource::IMAGE)
 		return file->getImagePath();
 	else if (src == ImageSource::MARQUEE)
 		return file->getMarqueePath();
+
+	// If no thumbnail was found, then use the image media type
+	if(file->getThumbnailPath() == "");
+		return file->getImagePath();
 
 	return file->getThumbnailPath();
 }
@@ -322,9 +327,9 @@ void GridGameListView::updateInfoPanel()
 //		}
 //		mVideoPlaying = true;
 
-		mVideo->setImage(file->getThumbnailPath());
+//		mVideo->setImage(file->getThumbnailPath());
 		mMarquee.setImage(file->getMarqueePath());
-		mImage.setImage(file->getImagePath());
+//		mImage.setImage(file->getImagePath());
  
 		mDescription.setText(file->metadata.get("desc"));
 		mDescContainer.reset();

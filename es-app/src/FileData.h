@@ -46,6 +46,7 @@ public:
 	inline const std::vector<FileData*>& getChildren() const { return mChildren; }
 	inline SystemData* getSystem() const { return mSystem; }
 	inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
+	virtual const std::string getMediaDirectory() const;
 	virtual const std::string getThumbnailPath() const;
 	virtual const std::string getVideoPath() const;
 	virtual const std::string getMarqueePath() const;

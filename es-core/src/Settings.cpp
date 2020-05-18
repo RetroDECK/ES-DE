@@ -67,6 +67,7 @@ void Settings::setDefaults()
 	mBoolMap["SplashScreenProgress"] = true;
 	mStringMap["StartupSystem"] = "";
 	mBoolMap["DisableKidStartMenu"] = true;
+	mStringMap["MediaDirectory"] = "";
 
 	mBoolMap["VSync"] = true;
 
@@ -96,7 +97,7 @@ void Settings::setDefaults()
 	mStringMap["TransitionStyle"] = "fade";
 	mStringMap["ThemeSet"] = "";
 	mStringMap["ScreenSaverBehavior"] = "dim";
-	mStringMap["Scraper"] = "TheGamesDB";
+	mStringMap["Scraper"] = "ScreenScraper";
 	mStringMap["GamelistViewStyle"] = "automatic";
 	mStringMap["SaveGamelistsMode"] = "on exit";
 

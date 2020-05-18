@@ -9,10 +9,6 @@ MetaDataDecl gameDecls[] = {
 	{"name",        MD_STRING,              "",                 false,      "name",                 "enter game name"},
 	{"sortname",    MD_STRING,              "",                 false,      "sortname",             "enter game sort name"},
 	{"desc",        MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description"},
-	{"image",       MD_PATH,                "",                 false,      "image",                "enter path to image"},
-	{"video",       MD_PATH     ,           "",                 false,      "video",                "enter path to video"},
-	{"marquee",     MD_PATH,                "",                 false,      "marquee",              "enter path to marquee"},
-	{"thumbnail",   MD_PATH,                "",                 false,      "thumbnail",            "enter path to thumbnail"},
 	{"rating",      MD_RATING,              "0.000000",         false,      "rating",               "enter rating"},
 	{"releasedate", MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date"},
 	{"developer",   MD_STRING,              "unknown",          false,      "developer",            "enter game developer"},
@@ -20,10 +16,13 @@ MetaDataDecl gameDecls[] = {
 	{"genre",       MD_STRING,              "unknown",          false,      "genre",                "enter game genre"},
 	{"players",     MD_INT,                 "1",                false,      "players",              "enter number of players"},
 	{"favorite",    MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on"},
+	{"completed",   MD_BOOL,                "false",            false,      "completed",            "enter completed off/on"},
 	{"hidden",      MD_BOOL,                "false",            false,      "hidden",               "enter hidden off/on" },
 	{"kidgame",     MD_BOOL,                "false",            false,      "kidgame",              "enter kidgame off/on" },
+	{"launcher",    MD_STRING,              "",                 false,      "launcher",             "enter launcher override"},
 	{"playcount",   MD_INT,                 "0",                false,      "play count",           "enter number of times played"},
 	{"lastplayed",  MD_TIME,                "0",                true,       "last played",          "enter last played date"}
+
 };
 const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
 
@@ -31,10 +30,6 @@ MetaDataDecl folderDecls[] = {
 	{"name",        MD_STRING,              "",                 false,      "name",                 "enter game name"},
 	{"sortname",    MD_STRING,              "",                 false,      "sortname",             "enter game sort name"},
 	{"desc",        MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description"},
-	{"image",       MD_PATH,                "",                 false,      "image",                "enter path to image"},
-	{"thumbnail",   MD_PATH,                "",                 false,      "thumbnail",            "enter path to thumbnail"},
-	{"video",       MD_PATH,                "",                 false,      "video",                "enter path to video"},
-	{"marquee",     MD_PATH,                "",                 false,      "marquee",              "enter path to marquee"},
 	{"rating",      MD_RATING,              "0.000000",         false,      "rating",               "enter rating"},
 	{"releasedate", MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date"},
 	{"developer",   MD_STRING,              "unknown",          false,      "developer",            "enter game developer"},

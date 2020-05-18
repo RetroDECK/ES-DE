@@ -40,8 +40,8 @@ FileData::~FileData()
 std::string FileData::getDisplayName() const
 {
 	std::string stem = Utils::FileSystem::getStem(mPath);
-	if(mSystem && mSystem->hasPlatformId(PlatformIds::ARCADE) || mSystem->hasPlatformId(PlatformIds::NEOGEO))
-		stem = MameNames::getInstance()->getRealName(stem);
+//	if(mSystem && mSystem->hasPlatformId(PlatformIds::ARCADE) || mSystem->hasPlatformId(PlatformIds::NEOGEO))
+//		stem = MameNames::getInstance()->getRealName(stem);
 
 	return stem;
 }
@@ -50,35 +50,6 @@ std::string FileData::getCleanName() const
 {
 	return Utils::String::removeParenthesis(this->getDisplayName());
 }
-
-const std::string FileData::getThumbnailPath() const
-{
-	std::string thumbnail = metadata.get("thumbnail");
-
-	// no thumbnail, try image
-	if(thumbnail.empty())
-	{
-		thumbnail = metadata.get("image");
-
-		// no image, try to use local image
-		if(thumbnail.empty() && Settings::getInstance()->getBool("LocalArt"))
-		{
-			const char* extList[2] = { ".png", ".jpg" };
-			for(int i = 0; i < 2; i++)
-			{
-				if(thumbnail.empty())
-				{
-					std::string path = mEnvData->mStartPath + "/images/" + getDisplayName() + "-image" + extList[i];
-					if(Utils::FileSystem::exists(path))
-						thumbnail = path;
-				}
-			}
-		}
-	}
-
-	return thumbnail;
-}
-
 
 const std::string& FileData::getName()
 {
@@ -101,7 +72,155 @@ const bool FileData::getFavorite()
 		return false;
 }
 
-const std::vector<FileData*>& FileData::getChildrenListToDisplay() {
+const std::string FileData::getMediaDirectory() const
+{
+	std::string mediaDirSetting = Settings::getInstance()->getString("MediaDirectory");
+	std::string mediaDirPath = "";
+
+	if(mediaDirSetting == "")
+	{
+		mediaDirPath = Utils::FileSystem::getHomePath() + "/.emulationstation/downloaded_media/";
+	}
+	else
+	{
+		mediaDirPath = mediaDirSetting;
+
+		// Expand home symbol if the path starts with ~
+		if(mediaDirPath[0] == '~')
+		{
+			mediaDirPath.erase(0, 1);
+			mediaDirPath.insert(0, Utils::FileSystem::getHomePath());
+		}
+
+		if(mediaDirPath.back() !=  '/')
+		{
+			mediaDirPath = mediaDirPath + "/";
+		}
+	}
+
+	return mediaDirPath;
+}
+
+const std::string FileData::getThumbnailPath() const
+{
+	const char* extList[2] = { ".png", ".jpg" };
+	std::string tempPath = getMediaDirectory() + mSystemName + "/thumbnails/" + getDisplayName();
+
+	// Look for media in the media directory
+	for(int i = 0; i < 2; i++)
+	{
+		std::string mediaPath = tempPath + extList[i];
+		if(Utils::FileSystem::exists(mediaPath))
+			return mediaPath;
+	}
+
+	// No media found in the media directory, so look for local art as well (if configured to do so)
+	if(Settings::getInstance()->getBool("LocalArt"))
+	{
+		for(int i = 0; i < 2; i++)
+		{
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-thumbnail" + extList[i];
+			if(Utils::FileSystem::exists(localMediaPath))
+				return localMediaPath;
+		}
+	}
+
+	return "";
+}
+
+const std::string FileData::getVideoPath() const
+{
+	const char* extList[5] = { ".avi", ".mkv", ".mov", ".mp4", ".wmv" };
+	std::string tempPath = getMediaDirectory() + mSystemName + "/videos/" + getDisplayName();
+
+	// Look for media in the media directory
+	for(int i = 0; i < 5; i++)
+	{
+		std::string mediaPath = tempPath + extList[i];
+		if(Utils::FileSystem::exists(mediaPath))
+			return mediaPath;
+	}
+
+	// No media found in the media directory, so look for local art as well (if configured to do so)
+	if(Settings::getInstance()->getBool("LocalArt"))
+	{
+		for(int i = 0; i < 5; i++)
+		{
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-video" + extList[i];
+			if(Utils::FileSystem::exists(localMediaPath))
+				return localMediaPath;
+		}
+	}
+
+	return "";
+}
+
+const std::string FileData::getMarqueePath() const
+{
+	const char* extList[2] = { ".png", ".jpg" };
+	std::string tempPath = getMediaDirectory() + mSystemName + "/marquees/" + getDisplayName();
+
+	// Look for media in the media directory
+	for(int i = 0; i < 2; i++)
+	{
+		std::string mediaPath = tempPath + extList[i];
+		if(Utils::FileSystem::exists(mediaPath))
+			return mediaPath;
+	}
+
+	// No media found in the media directory, so look for local art as well (if configured to do so)
+	if(Settings::getInstance()->getBool("LocalArt"))
+	{
+		for(int i = 0; i < 2; i++)
+		{
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-marquee" + extList[i];
+			if(Utils::FileSystem::exists(localMediaPath))
+				return localMediaPath;
+		}
+	}
+
+	return "";
+}
+
+const std::string FileData::getImagePath() const
+{
+	const char* extList[2] = { ".png", ".jpg" };
+
+	// Look for mix image (a combination of screenshot, 3D box and marquee) in the media directory
+	std::string tempPath = getMediaDirectory() + mSystemName + "/miximages/" + getDisplayName();
+	for(int i = 0; i < 2; i++)
+	{
+		std::string mediaPath = tempPath + extList[i];
+		if(Utils::FileSystem::exists(mediaPath))
+			return mediaPath;
+	}
+
+	// If no mix image exists, try normal screenshot
+	tempPath = getMediaDirectory() + mSystemName + "/screenshots/" + getDisplayName();
+
+	for(int i = 0; i < 2; i++)
+	{
+		std::string mediaPath = tempPath + extList[i];
+		if(Utils::FileSystem::exists(mediaPath))
+			return mediaPath;
+	}
+
+	// No media found in the media directory, so look for local art as well (if configured to do so)
+	if(Settings::getInstance()->getBool("LocalArt"))
+	{
+		for(int i = 0; i < 2; i++)
+		{
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-image" + extList[i];
+			if(Utils::FileSystem::exists(localMediaPath))
+				return localMediaPath;
+		}
+	}
+
+	return "";
+}
+
+const std::vector<FileData*>& FileData::getChildrenListToDisplay()
+{
 
 	FileFilterIndex* idx = CollectionSystemManager::get()->getSystemToView(mSystem)->getIndex();
 	if (idx->isFiltered()) {
@@ -119,65 +238,6 @@ const std::vector<FileData*>& FileData::getChildrenListToDisplay() {
 	{
 		return mChildren;
 	}
-}
-
-const std::string FileData::getVideoPath() const
-{
-	std::string video = metadata.get("video");
-
-	// no video, try to use local video
-	if(video.empty() && Settings::getInstance()->getBool("LocalArt"))
-	{
-		std::string path = mEnvData->mStartPath + "/images/" + getDisplayName() + "-video.mp4";
-		if(Utils::FileSystem::exists(path))
-			video = path;
-	}
-
-	return video;
-}
-
-const std::string FileData::getMarqueePath() const
-{
-	std::string marquee = metadata.get("marquee");
-
-	// no marquee, try to use local marquee
-	if(marquee.empty() && Settings::getInstance()->getBool("LocalArt"))
-	{
-		const char* extList[2] = { ".png", ".jpg" };
-		for(int i = 0; i < 2; i++)
-		{
-			if(marquee.empty())
-			{
-				std::string path = mEnvData->mStartPath + "/images/" + getDisplayName() + "-marquee" + extList[i];
-				if(Utils::FileSystem::exists(path))
-					marquee = path;
-			}
-		}
-	}
-
-	return marquee;
-}
-
-const std::string FileData::getImagePath() const
-{
-	std::string image = metadata.get("image");
-
-	// no image, try to use local image
-	if(image.empty())
-	{
-		const char* extList[2] = { ".png", ".jpg" };
-		for(int i = 0; i < 2; i++)
-		{
-			if(image.empty())
-			{
-				std::string path = mEnvData->mStartPath + "/images/" + getDisplayName() + "-image" + extList[i];
-				if(Utils::FileSystem::exists(path))
-					image = path;
-			}
-		}
-	}
-
-	return image;
 }
 
 std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask, bool displayedOnly) const
