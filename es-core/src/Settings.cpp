@@ -143,6 +143,7 @@ void Settings::setDefaults()
 	mBoolMap["UseCustomCollectionsSystem"] = true;
 
 	mBoolMap["FavoritesFirst"] = true;
+	mBoolMap["LaunchstringOverride"] = true;
 
 	mBoolMap["LocalArt"] = false;
 

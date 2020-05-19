@@ -54,6 +54,7 @@ set(CORE_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.h
 
 	# Math
 	${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.h
@@ -128,6 +129,7 @@ set(CORE_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.cpp
 
 	# Math
 	${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.cpp

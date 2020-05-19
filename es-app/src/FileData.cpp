@@ -344,7 +344,17 @@ void FileData::launchGame(Window* window)
 
 //	window->deinit();
 
-	std::string command = mEnvData->mLaunchCommand;
+	std::string command = "";
+
+	// Check if there is a launch string override for the game and the corresponding option has been set
+	if(Settings::getInstance()->getBool("LaunchstringOverride") && !metadata.get("launchstring").empty())
+	{
+		command = metadata.get("launchstring");
+	}
+	else
+	{
+		command = mEnvData->mLaunchCommand;
+	}
 
 	const std::string rom      = Utils::FileSystem::getEscapedPath(getPath());
 	const std::string basename = Utils::FileSystem::getStem(getPath());

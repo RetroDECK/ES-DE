@@ -470,6 +470,12 @@ void GuiMenu::openOtherSettings()
 	s->addWithLabel("SEARCH FOR LOCAL ART", local_art);
 	s->addSaveFunc([local_art] { Settings::getInstance()->setBool("LocalArt", local_art->getState()); });
 
+	// Allow overriding of the launch string per game (the option to disable this is intended primarily for testing purposes)
+	auto launchstring_override = std::make_shared<SwitchComponent>(mWindow);
+	launchstring_override->setState(Settings::getInstance()->getBool("LaunchstringOverride"));
+	s->addWithLabel("PER GAME OVERRIDE OF LAUNCH STRING", launchstring_override);
+	s->addSaveFunc([launchstring_override] { Settings::getInstance()->setBool("LaunchstringOverride", launchstring_override->getState()); });
+
 	// hidden files
 	auto hidden_files = std::make_shared<SwitchComponent>(mWindow);
 	hidden_files->setState(Settings::getInstance()->getBool("ShowHiddenFiles"));

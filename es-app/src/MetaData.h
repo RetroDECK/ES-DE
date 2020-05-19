@@ -17,6 +17,7 @@ enum MetaDataType
 
 	//specialized types
 	MD_MULTILINE_STRING,
+	MD_LAUNCHSTRING,
 	MD_PATH,
 	MD_RATING,
 	MD_DATE,

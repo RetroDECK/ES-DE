@@ -10,6 +10,7 @@
 #include "guis/GuiGameScraper.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiTextEditPopup.h"
+#include "guis/GuiComplexTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
@@ -54,6 +55,17 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 		// don't add statistics
 		if(iter->isStatistic)
 			continue;
+
+		// Don't show the launch string override entry if this option has been disabled in the settings
+		if(!Settings::getInstance()->getBool("LaunchstringOverride") && iter->type == MD_LAUNCHSTRING)
+		{
+			ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+			assert(ed);
+			ed->setValue(mMetaData->get(iter->key));
+			mEditors.push_back(ed);
+
+			continue;
+		}
 
 		// create ed and add it (and any related components) to mMenu
 		// ed's value will be set below
@@ -103,6 +115,32 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 			{
 				ed = std::make_shared<DateTimeEditComponent>(window, DateTimeEditComponent::DISP_RELATIVE_TO_NOW);
 				row.addElement(ed, false);
+				break;
+			}
+		case MD_LAUNCHSTRING:
+			{
+				ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+				row.addElement(ed, true);
+
+				auto spacer = std::make_shared<GuiComponent>(mWindow);
+				spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
+				row.addElement(spacer, false);
+
+				auto bracket = std::make_shared<ImageComponent>(mWindow);
+				bracket->setImage(":/arrow.svg");
+				bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
+				row.addElement(bracket, false);
+
+				bool multiLine = false;
+				const std::string title = iter->displayPrompt;
+				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); }; // ok callback (apply new value to ed)
+
+				std::string staticTextString = "Default value from es_systems.cfg:";
+				std::string defaultLaunchString = scraperParams.system->getSystemEnvData()->mLaunchCommand;
+
+				row.makeAcceptInputHandler([this, title, staticTextString, defaultLaunchString, ed, updateVal, multiLine] {
+					mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, title, staticTextString, defaultLaunchString, ed->getValue(), updateVal, multiLine));
+				});
 				break;
 			}
 		case MD_MULTILINE_STRING:
@@ -188,6 +226,7 @@ void GuiMetaDataEd::save()
 	{
 		if(mMetaDataDecl.at(i).isStatistic)
 			continue;
+
 		mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
 	}
 
