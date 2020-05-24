@@ -103,6 +103,7 @@ private:
 	std::map<std::string, CollectionSystemData> mCustomCollectionSystemsData;
 	Window* mWindow;
 	bool mIsEditingCustom;
+	bool mHasEnabledCustomCollection;
 	std::string mEditingCollection;
 	CollectionSystemData* mEditingCollectionSystemData;
 

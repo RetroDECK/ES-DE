@@ -447,7 +447,8 @@ void GuiMenu::openUISettings()
 				SystemData::sSystemVector.cend(); it++) {
 
 			// The favorites and recent gamelists never sort favorites on top.
-			if ((*it)->getName() == "favorites" || (*it)->getName() == "recent")
+			if ((*it)->getName() == "favorites" || (*it)->getName() == "recent" ||
+					(*it)->getName() == "collections")
 				continue;
 
 			// Don't re-sort custom collections as they have their own option

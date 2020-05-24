@@ -60,14 +60,14 @@ public:
 	virtual void onPositionChanged() {};
 
 	// Sets the origin as a percentage of this image.
-	// (e.g. (0, 0) is top left, (0.5, 0.5) is the center)
+	// (e.g. (0, 0) is top left, (0.5, 0.5) is the center.)
 	Vector2f getOrigin() const;
 	void setOrigin(float originX, float originY);
 	inline void setOrigin(Vector2f origin) { setOrigin(origin.x(), origin.y()); }
 	virtual void onOriginChanged() {};
 
 	// Sets the rotation origin as a percentage of this image.
-	// (e.g. (0, 0) is top left, (0.5, 0.5) is the center)
+	// (e.g. (0, 0) is top left, (0.5, 0.5) is the center.)
 	Vector2f getRotationOrigin() const;
 	void setRotationOrigin(float originX, float originY);
 	inline void setRotationOrigin(Vector2f origin)
@@ -159,15 +159,15 @@ public:
 
 	virtual HelpStyle getHelpStyle();
 
-	// Returns true if the component is busy doing background processing (e.g. HTTP downloads)
+	// Returns true if the component is busy doing background processing (e.g. HTTP downloads).
 	bool isProcessing() const;
 
 	const static unsigned char MAX_ANIMATIONS = 4;
 
 protected:
 	void renderChildren(const Transform4x4f& transform) const;
-	void updateSelf(int deltaTime); // Updates animations
-	void updateChildren(int deltaTime); // Updates animations
+	void updateSelf(int deltaTime); // Updates animations.
+	void updateChildren(int deltaTime); // Updates animations.
 
 	unsigned char mOpacity;
 	Window* mWindow;

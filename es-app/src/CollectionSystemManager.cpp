@@ -174,6 +174,8 @@ void CollectionSystemManager::loadEnabledListFromSettings()
 				autoSelected.cend(), it->first) != autoSelected.cend());
 	}
 
+	mHasEnabledCustomCollection = false;
+
 	// Parse the custom collection settings list.
 	std::vector<std::string> customSelected = Utils::String::commaStringToVector(
 			Settings::getInstance()->getString("CollectionSystemsCustom"), true);
@@ -185,6 +187,8 @@ void CollectionSystemManager::loadEnabledListFromSettings()
 
 		it->second.isEnabled = (std::find(customSelected.cbegin(),
 				customSelected.cend(), it->first) != customSelected.cend());
+		if (it->second.isEnabled)
+			mHasEnabledCustomCollection = true;
 	}
 }
 
@@ -196,12 +200,15 @@ void CollectionSystemManager::updateSystemsList()
 	// Add custom enabled collections.
 	addEnabledCollectionsToDisplayedSystems(&mCustomCollectionSystemsData);
 
-	// Sort the bundled custom collections.
-	if (mCustomCollectionsBundle->getRootFolder()->getChildren().size() > 0) {
-		mCustomCollectionsBundle->getRootFolder()->sort(getSortTypeFromString(
-				mCustomCollectionsBundle->getRootFolder()->getSortTypeString()),
-				Settings::getInstance()->getBool("FavFirstCustom"));
-		SystemData::sSystemVector.push_back(mCustomCollectionsBundle);
+	// Don't sort bundled collections unless at least one collection is enabled.
+	if (!mIsEditingCustom && mHasEnabledCustomCollection) {
+		// Sort the bundled custom collections.
+		if (mCustomCollectionsBundle->getRootFolder()->getChildren().size() > 0) {
+			mCustomCollectionsBundle->getRootFolder()->sort(getSortTypeFromString(
+					mCustomCollectionsBundle->getRootFolder()->getSortTypeString()),
+					Settings::getInstance()->getBool("FavFirstCustom"));
+			SystemData::sSystemVector.push_back(mCustomCollectionsBundle);
+		}
 	}
 
 	// Add auto enabled collections.
@@ -239,6 +246,7 @@ void CollectionSystemManager::refreshCollectionSystems(FileData* file)
 		realSys.isEnabled = true;
 		realSys.isPopulated = true;
 		realSys.needsSave = false;
+		realSys.decl.isCustom = false;
 
 		updateCollectionSystem(file, realSys);
 	}
@@ -251,7 +259,8 @@ void CollectionSystemManager::refreshCollectionSystems(FileData* file)
 
 	for (auto sysDataIt = allCollections.cbegin();
 			sysDataIt != allCollections.cend(); sysDataIt++) {
-		updateCollectionSystem(file, sysDataIt->second);
+		if (sysDataIt->second.isEnabled)
+			updateCollectionSystem(file, sysDataIt->second);
 	}
 }
 
@@ -263,6 +272,14 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 		std::string key = file->getFullPath();
 
 		SystemData* curSys = sysData.system;
+		bool mFavoritesSorting = false;
+
+		// Read the applicable favorite sorting setting depending on whether the
+		// system is a custom collection or not.
+		if (sysData.decl.isCustom)
+			mFavoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
+		else
+			mFavoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
 		const std::unordered_map<std::string, FileData*>&children =
 				curSys->getRootFolder()->getChildrenByFilename();
@@ -304,15 +321,25 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 			}
 		}
 
-		if (name == "recent")
+		if (name == "recent") {
 			rootFolder->sort(getSortTypeFromString("last played, descending"));
-		else if (sysData.decl.isCustom == true &&
-				!Settings::getInstance()->getBool("UseCustomCollectionsSystem"))
+		}
+		else if (sysData.decl.isCustom &&
+				!Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
 			rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
-				Settings::getInstance()->getBool("FavFirstCustom"));
-		else
+					mFavoritesSorting);
+		}
+		// If the game doesn't exist in the current system and it's a custom
+		// collection, then skip the sorting.
+		else if (sysData.decl.isCustom &&
+				children.find(file->getFullPath()) != children.cend()) {
 			rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
-				Settings::getInstance()->getBool("FavoritesFirst"));
+					mFavoritesSorting);
+		}
+		else if (!sysData.decl.isCustom) {
+			rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+					mFavoritesSorting);
+		}
 
 		if (name == "recent") {
 			trimCollectionCount(rootFolder, LAST_PLAYED_MAX);
@@ -330,7 +357,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 			std::string teststring1 = rootFolder->getPath();
 			// If it's a custom collection and the collections
 			// are grouped, update the parent instead.
-			if (sysData.decl.isCustom == true &&
+			if (sysData.decl.isCustom &&
 					Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
 				ViewController::get()->onFileChanged(
 						rootFolder->getParent(), FILE_METADATA_CHANGED);
@@ -547,7 +574,7 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
 					rootFolder->sort(getSortTypeFromString("last played, descending"));
 				else
 					rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
-							Settings::getInstance()->getBool("FavoritesFirst"));
+							Settings::getInstance()->getBool("FavFirstCustom"));
 
 				ViewController::get()->onFileChanged(systemViewToUpdate->
 						getRootFolder(), FILE_SORTED);
