@@ -98,6 +98,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			else {
 				// It's a folder.
 				if (cursor->getChildren().size() > 0) {
+					navigationsounds.playThemeNavigationSound(SELECTSOUND);
 					mCursorStack.push(cursor);
 					populateList(cursor->getChildrenListToDisplay());
 					FileData* cursor = getCursor();
@@ -109,6 +110,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		}
 		else if (config->isMappedTo("b", input)) {
 			if (mCursorStack.size()) {
+				navigationsounds.playThemeNavigationSound(BACKSOUND);
 				populateList(mCursorStack.top()->getParent()->getChildren());
 				setCursor(mCursorStack.top());
 				mCursorStack.pop();
