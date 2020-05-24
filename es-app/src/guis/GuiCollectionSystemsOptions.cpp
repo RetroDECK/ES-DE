@@ -71,9 +71,9 @@ void GuiCollectionSystemsOptions::initializeMenu()
 	bundleCustomCollections->setState(Settings::getInstance()->getBool("UseCustomCollectionsSystem"));
 	mMenu.addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", bundleCustomCollections);
 
-	sortAllSystemsSwitch = std::make_shared<SwitchComponent>(mWindow);
-	sortAllSystemsSwitch->setState(Settings::getInstance()->getBool("SortAllSystems"));
-	mMenu.addWithLabel("SORT CUSTOM COLLECTIONS AND SYSTEMS", sortAllSystemsSwitch);
+	sortFavFirstCustomSwitch = std::make_shared<SwitchComponent>(mWindow);
+	sortFavFirstCustomSwitch->setState(Settings::getInstance()->getBool("FavFirstCustom"));
+	mMenu.addWithLabel("SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS", sortFavFirstCustomSwitch);
 
 	toggleSystemNameInCollections = std::make_shared<SwitchComponent>(mWindow);
 	toggleSystemNameInCollections->setState(Settings::getInstance()->getBool("CollectionShowSystemInfo"));
@@ -170,8 +170,8 @@ void GuiCollectionSystemsOptions::applySettings()
 	std::string prevAuto = Settings::getInstance()->getString("CollectionSystemsAuto");
 	std::string outCustom = Utils::String::vectorToCommaString(customOptionList->getSelectedObjects());
 	std::string prevCustom = Settings::getInstance()->getString("CollectionSystemsCustom");
-	bool outSort = sortAllSystemsSwitch->getState();
-	bool prevSort = Settings::getInstance()->getBool("SortAllSystems");
+	bool outSort = sortFavFirstCustomSwitch->getState();
+	bool prevSort = Settings::getInstance()->getBool("FavFirstCustom");
 	bool outBundle = bundleCustomCollections->getState();
 	bool prevBundle = Settings::getInstance()->getBool("UseCustomCollectionsSystem");
 	bool prevShow = Settings::getInstance()->getBool("CollectionShowSystemInfo");
@@ -189,7 +189,7 @@ void GuiCollectionSystemsOptions::updateSettings(std::string newAutoSettings, st
 {
 	Settings::getInstance()->setString("CollectionSystemsAuto", newAutoSettings);
 	Settings::getInstance()->setString("CollectionSystemsCustom", newCustomSettings);
-	Settings::getInstance()->setBool("SortAllSystems", sortAllSystemsSwitch->getState());
+	Settings::getInstance()->setBool("FavFirstCustom", sortFavFirstCustomSwitch->getState());
 	Settings::getInstance()->setBool("UseCustomCollectionsSystem", bundleCustomCollections->getState());
 	Settings::getInstance()->setBool("CollectionShowSystemInfo", toggleSystemNameInCollections->getState());
 	Settings::getInstance()->saveFile();

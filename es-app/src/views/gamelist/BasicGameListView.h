@@ -1,3 +1,9 @@
+//
+//	BasicGameListView.h
+//
+//	Interface that defines a GameListView of the type 'basic'.
+//
+
 #pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
@@ -10,7 +16,7 @@ class BasicGameListView : public ISimpleGameListView
 public:
 	BasicGameListView(Window* window, FileData* root);
 
-	// Called when a FileData* is added, has its metadata changed, or is removed
+	// Called when a FileData* is added, has its metadata changed, or is removed.
 	virtual void onFileChanged(FileData* file, FileChangeType change);
 
 	virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme);

@@ -1,3 +1,9 @@
+//
+//	ISimpleGameListView.h
+//
+//	Interface that defines a simple GameListView.
+//
+
 #pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
@@ -11,9 +17,11 @@ class ISimpleGameListView : public IGameListView
 {
 public:
 	ISimpleGameListView(Window* window, FileData* root);
+
 	virtual ~ISimpleGameListView() {}
 
-	// Called when a new file is added, a file is removed, a file's metadata changes, or a file's children are sorted.
+	// Called when a new file is added, a file is removed, a file's metadata changes,
+	// or a file's children are sorted.
 	// NOTE: FILE_SORTED is only reported for the topmost FileData, where the sort started.
 	//       Since sorts are recursive, that FileData's children probably changed too.
 	virtual void onFileChanged(FileData* file, FileChangeType change);

@@ -1,3 +1,10 @@
+//
+//	MetaData.h
+//
+//	Static data for default metadata values as well as functions
+//	to read and write metadata from the gamelist files.
+//
+
 #pragma once
 #ifndef ES_APP_META_DATA_H
 #define ES_APP_META_DATA_H
@@ -7,35 +14,35 @@
 
 namespace pugi { class xml_node; }
 
-enum MetaDataType
-{
-	//generic types
+enum MetaDataType {
+	// Generic types
 	MD_STRING,
 	MD_INT,
 	MD_FLOAT,
 	MD_BOOL,
 
-	//specialized types
+	// Specialized types
 	MD_MULTILINE_STRING,
 	MD_LAUNCHSTRING,
 	MD_PATH,
 	MD_RATING,
 	MD_DATE,
-	MD_TIME //used for lastplayed
+	MD_TIME // Used for lastplayed
 };
 
-struct MetaDataDecl
-{
+struct MetaDataDecl {
 	std::string key;
 	MetaDataType type;
 	std::string defaultValue;
-	bool isStatistic; //if true, ignore values for this metadata
-	std::string displayName; // displayed as this in editors
-	std::string displayPrompt; // phrase displayed in editors when prompted to enter value (currently only for strings)
+	 // If true, ignore values for this metadata.
+	bool isStatistic;
+	// Displayed as this in editors.
+	std::string displayName;
+	// Phrase displayed in editors when prompted to enter value (currently only for strings).
+	std::string displayPrompt;
 };
 
-enum MetaDataListType
-{
+enum MetaDataListType {
 	GAME_METADATA,
 	FOLDER_METADATA
 };
@@ -45,8 +52,10 @@ const std::vector<MetaDataDecl>& getMDDByType(MetaDataListType type);
 class MetaDataList
 {
 public:
-	static MetaDataList createFromXML(MetaDataListType type, pugi::xml_node& node, const std::string& relativeTo);
-	void appendToXML(pugi::xml_node& parent, bool ignoreDefaults, const std::string& relativeTo) const;
+	static MetaDataList createFromXML(MetaDataListType type,
+			pugi::xml_node& node, const std::string& relativeTo);
+	void appendToXML(pugi::xml_node& parent, bool ignoreDefaults,
+			const std::string& relativeTo) const;
 
 	MetaDataList(MetaDataListType type);
 
@@ -65,6 +74,7 @@ public:
 private:
 	MetaDataListType mType;
 	std::map<std::string, std::string> mMap;
+	std::string mNoResult = "";
 	bool mWasChanged;
 };
 

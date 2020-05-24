@@ -1,3 +1,9 @@
+//
+//	GridGameListView.h
+//
+//	Interface that defines a GameListView of the type 'grid'.
+//
+
 #pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
@@ -46,7 +52,14 @@ private:
 	void initMDLabels();
 	void initMDValues();
 
-	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount;
+	TextComponent mLblRating;
+	TextComponent mLblReleaseDate;
+	TextComponent mLblDeveloper;
+	TextComponent mLblPublisher;
+	TextComponent mLblGenre;
+	TextComponent mLblPlayers;
+	TextComponent mLblLastPlayed;
+	TextComponent mLblPlayCount;
 
 	ImageComponent mMarquee;
 	VideoComponent* mVideo;

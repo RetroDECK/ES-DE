@@ -1,3 +1,22 @@
+//
+//	CollectionSystemManager.h
+//
+//	Manages collections of the following two types:
+//	1) Automatically populated (All games, Favorites and Recent/Last Played)
+//	2) Custom/user-created (could be any number of these)
+//
+//	The automatic collections are basically virtual systems that have no
+//	gamelist.xml files and that only exist in memory during the program session.
+//	SystemData sets up the basic data structures and CollectionSystemManager
+//	populates and manages the collections.
+//
+//	The custom collections have simple data files which are just lists of ROM files.
+//
+//	In addition to this, CollectionSystemManager also handles some logic for
+//	normal systems such as adding and removing favorite games, including triggering
+//	the required re-sort and refresh of the gamelists.
+//
+
 #pragma once
 #ifndef ES_APP_COLLECTION_SYSTEM_MANAGER_H
 #define ES_APP_COLLECTION_SYSTEM_MANAGER_H
@@ -11,26 +30,22 @@ class SystemData;
 class Window;
 struct SystemEnvironmentData;
 
-enum CollectionSystemType
-{
+enum CollectionSystemType {
 	AUTO_ALL_GAMES,
 	AUTO_LAST_PLAYED,
 	AUTO_FAVORITES,
 	CUSTOM_COLLECTION
 };
 
-struct CollectionSystemDecl
-{
-	CollectionSystemType type; // type of system
+struct CollectionSystemDecl {
+	CollectionSystemType type;
 	std::string name;
 	std::string longName;
-	std::string defaultSort;
 	std::string themeFolder;
 	bool isCustom;
 };
 
-struct CollectionSystemData
-{
+struct CollectionSystemData {
 	SystemData* system;
 	CollectionSystemDecl decl;
 	bool isEnabled;
@@ -57,8 +72,10 @@ public:
 	void updateCollectionSystem(FileData* file, CollectionSystemData sysData);
 	void deleteCollectionFiles(FileData* file);
 
-	inline std::map<std::string, CollectionSystemData> getAutoCollectionSystems() { return mAutoCollectionSystemsData; };
-	inline std::map<std::string, CollectionSystemData> getCustomCollectionSystems() { return mCustomCollectionSystemsData; };
+	inline std::map<std::string, CollectionSystemData> getAutoCollectionSystems()
+			{ return mAutoCollectionSystemsData; };
+	inline std::map<std::string, CollectionSystemData> getCustomCollectionSystems()
+			{ return mCustomCollectionSystemsData; };
 	inline SystemData* getCustomCollectionsBundle() { return mCustomCollectionsBundle; };
 	std::vector<std::string> getUnusedSystemsFromTheme();
 	SystemData* addNewCustomCollection(std::string name);
@@ -76,6 +93,8 @@ public:
 	SystemData* getSystemToView(SystemData* sys);
 	void updateCollectionFolderMetadata(SystemData* sys);
 
+	bool getIsCustomCollection(SystemData* system);
+
 private:
 	static CollectionSystemManager* sInstance;
 	SystemEnvironmentData* mCollectionEnvData;
@@ -90,12 +109,14 @@ private:
 	void initAutoCollectionSystems();
 	void initCustomCollectionSystems();
 	SystemData* getAllGamesCollection();
-	SystemData* createNewCollectionEntry(std::string name, CollectionSystemDecl sysDecl, bool index = true);
+	SystemData* createNewCollectionEntry(std::string name,
+			CollectionSystemDecl sysDecl, bool index = true);
 	void populateAutoCollection(CollectionSystemData* sysData);
 	void populateCustomCollection(CollectionSystemData* sysData);
 
 	void removeCollectionsFromDisplayedSystems();
-	void addEnabledCollectionsToDisplayedSystems(std::map<std::string, CollectionSystemData>* colSystemData);
+	void addEnabledCollectionsToDisplayedSystems(std::map<std::string,
+			CollectionSystemData>* colSystemData);
 
 	std::vector<std::string> getSystemsFromConfig();
 	std::vector<std::string> getSystemsFromTheme();

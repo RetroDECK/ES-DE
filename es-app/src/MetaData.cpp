@@ -1,3 +1,10 @@
+//
+//	MetaData.cpp
+//
+//	Static data for default metadata values as well as functions
+//	to read and write metadata from the gamelist files.
+//
+
 #include "MetaData.h"
 
 #include "utils/FileSystemUtil.h"
@@ -24,7 +31,8 @@ MetaDataDecl gameDecls[] = {
 	{"lastplayed",   MD_TIME,                "0",                true,       "last played",          "enter last played date"}
 
 };
-const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
+const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls +
+		sizeof(gameDecls) / sizeof(gameDecls[0]));
 
 MetaDataDecl folderDecls[] = {
 	{"name",         MD_STRING,              "",                 false,      "name",                 "enter game name"},
@@ -37,12 +45,12 @@ MetaDataDecl folderDecls[] = {
 	{"genre",        MD_STRING,              "unknown",          false,      "genre",                "enter game genre"},
 	{"players",      MD_INT,                 "1",                false,      "players",              "enter number of players"}
 };
-const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls + sizeof(folderDecls) / sizeof(folderDecls[0]));
+const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls +
+		sizeof(folderDecls) / sizeof(folderDecls[0]));
 
 const std::vector<MetaDataDecl>& getMDDByType(MetaDataListType type)
 {
-	switch(type)
-	{
+	switch(type) {
 	case GAME_METADATA:
 		return gameMDD;
 	case FOLDER_METADATA:
@@ -53,36 +61,31 @@ const std::vector<MetaDataDecl>& getMDDByType(MetaDataListType type)
 	return gameMDD;
 }
 
-
-
 MetaDataList::MetaDataList(MetaDataListType type)
-	: mType(type), mWasChanged(false)
+		: mType(type), mWasChanged(false)
 {
 	const std::vector<MetaDataDecl>& mdd = getMDD();
-	for(auto iter = mdd.cbegin(); iter != mdd.cend(); iter++)
+	for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++)
 		set(iter->key, iter->defaultValue);
 }
 
-
-MetaDataList MetaDataList::createFromXML(MetaDataListType type, pugi::xml_node& node, const std::string& relativeTo)
+MetaDataList MetaDataList::createFromXML(MetaDataListType type,
+		pugi::xml_node& node, const std::string& relativeTo)
 {
 	MetaDataList mdl(type);
 
 	const std::vector<MetaDataDecl>& mdd = mdl.getMDD();
 
-	for(auto iter = mdd.cbegin(); iter != mdd.cend(); iter++)
-	{
+	for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
 		pugi::xml_node md = node.child(iter->key.c_str());
-		if(md)
-		{
-			// if it's a path, resolve relative paths
+		if (md) {
+			// If it's a path, resolve relative paths.
 			std::string value = md.text().get();
 			if (iter->type == MD_PATH)
-			{
 				value = Utils::FileSystem::resolveRelativePath(value, relativeTo, true);
-			}
 			mdl.set(iter->key, value);
-		}else{
+		}
+		else {
 			mdl.set(iter->key, iter->defaultValue);
 		}
 	}
@@ -90,21 +93,20 @@ MetaDataList MetaDataList::createFromXML(MetaDataListType type, pugi::xml_node& 
 	return mdl;
 }
 
-void MetaDataList::appendToXML(pugi::xml_node& parent, bool ignoreDefaults, const std::string& relativeTo) const
+void MetaDataList::appendToXML(pugi::xml_node& parent, bool ignoreDefaults,
+		const std::string& relativeTo) const
 {
 	const std::vector<MetaDataDecl>& mdd = getMDD();
 
-	for(auto mddIter = mdd.cbegin(); mddIter != mdd.cend(); mddIter++)
-	{
+	for (auto mddIter = mdd.cbegin(); mddIter != mdd.cend(); mddIter++) {
 		auto mapIter = mMap.find(mddIter->key);
-		if(mapIter != mMap.cend())
-		{
-			// we have this value!
-			// if it's just the default (and we ignore defaults), don't write it
-			if(ignoreDefaults && mapIter->second == mddIter->defaultValue)
+		if (mapIter != mMap.cend()) {
+			// We have this value!
+			// If it's just the default (and we ignore defaults), don't write it.
+			if (ignoreDefaults && mapIter->second == mddIter->defaultValue)
 				continue;
 
-			// try and make paths relative if we can
+			// Try and make paths relative if we can.
 			std::string value = mapIter->second;
 			if (mddIter->type == MD_PATH)
 				value = Utils::FileSystem::createRelativePath(value, relativeTo, true);
@@ -122,7 +124,12 @@ void MetaDataList::set(const std::string& key, const std::string& value)
 
 const std::string& MetaDataList::get(const std::string& key) const
 {
-	return mMap.at(key);
+	// Check that the key actually exists, otherwise return empty string.
+	if (mMap.count(key) > 0)
+		return mMap.at(key);
+	else
+
+	return mNoResult;
 }
 
 int MetaDataList::getInt(const std::string& key) const

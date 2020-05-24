@@ -1,3 +1,9 @@
+//
+//	ISimpleGameListView.cpp
+//
+//	Interface that defines a simple GameListView.
+//
+
 #include "views/gamelist/ISimpleGameListView.h"
 
 #include "views/UIModeController.h"
@@ -7,8 +13,13 @@
 #include "Sound.h"
 #include "SystemData.h"
 
-ISimpleGameListView::ISimpleGameListView(Window* window, FileData* root) : IGameListView(window, root),
-	mHeaderText(window), mHeaderImage(window), mBackground(window)
+ISimpleGameListView::ISimpleGameListView(
+		Window* window,
+		FileData* root)
+		: IGameListView(window, root),
+		mHeaderText(window),
+		mHeaderImage(window),
+		mBackground(window)
 {
 	mHeaderText.setText("Logo Text");
 	mHeaderText.setSize(mSize.x(), 0);
@@ -35,7 +46,7 @@ void ISimpleGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme
 	mHeaderImage.applyTheme(theme, getName(), "logo", ALL);
 	mHeaderText.applyTheme(theme, getName(), "logoText", ALL);
 
-	// Remove old theme extras
+	// Remove old theme extras.
 	for (auto extra : mThemeExtras)
 	{
 		removeChild(extra);
@@ -43,18 +54,16 @@ void ISimpleGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme
 	}
 	mThemeExtras.clear();
 
-	// Add new theme extras
+	// Add new theme extras.
 	mThemeExtras = ThemeData::makeExtras(theme, getName(), mWindow);
 	for (auto extra : mThemeExtras)
-	{
 		addChild(extra);
-	}
 
-	if(mHeaderImage.hasImage())
-	{
+	if (mHeaderImage.hasImage()) {
 		removeChild(&mHeaderText);
 		addChild(&mHeaderImage);
-	}else{
+	}
+	else {
 		addChild(&mHeaderText);
 		removeChild(&mHeaderImage);
 	}
@@ -62,8 +71,8 @@ void ISimpleGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme
 
 void ISimpleGameListView::onFileChanged(FileData* /*file*/, FileChangeType /*change*/)
 {
-	// we could be tricky here to be efficient;
-	// but this shouldn't happen very often so we'll just always repopulate
+	// We could be tricky here to be efficient;
+	// but this shouldn't happen very often so we'll just always repopulate.
 	FileData* cursor = getCursor();
 	if (!cursor->isPlaceHolder()) {
 		populateList(cursor->getParent()->getChildrenListToDisplay());
@@ -78,20 +87,17 @@ void ISimpleGameListView::onFileChanged(FileData* /*file*/, FileChangeType /*cha
 
 bool ISimpleGameListView::input(InputConfig* config, Input input)
 {
-	std::shared_ptr<Sound> soundfile;	
+	std::shared_ptr<Sound> soundfile;
 
-	if(input.value != 0)
-	{
-		if(config->isMappedTo("a", input))
-		{
+	if (input.value != 0) {
+		if (config->isMappedTo("a", input)) {
 			FileData* cursor = getCursor();
-			if(cursor->getType() == GAME)
-			{
+			if (cursor->getType() == GAME) {
 				launch(cursor);
-			}else{
-				// it's a folder
-				if(cursor->getChildren().size() > 0)
-				{
+			}
+			else {
+				// It's a folder.
+				if (cursor->getChildren().size() > 0) {
 					mCursorStack.push(cursor);
 					populateList(cursor->getChildrenListToDisplay());
 					FileData* cursor = getCursor();
@@ -100,14 +106,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}
 
 			return true;
-		}else if(config->isMappedTo("b", input))
-		{
-			if(mCursorStack.size())
-			{
+		}
+		else if (config->isMappedTo("b", input)) {
+			if (mCursorStack.size()) {
 				populateList(mCursorStack.top()->getParent()->getChildren());
 				setCursor(mCursorStack.top());
 				mCursorStack.pop();
-			}else{
+			}
+			else {
 				navigationsounds.playThemeNavigationSound(BACKSOUND);
 				onFocusLost();
 				SystemData* systemToView = getCursor()->getSystem();
@@ -119,57 +125,40 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}
 
 			return true;
-		}else if(config->isMappedLike(getQuickSystemSelectRightButton(), input))
-		{
-			if(Settings::getInstance()->getBool("QuickSystemSelect"))
-			{
+		}
+		else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
+			if (Settings::getInstance()->getBool("QuickSystemSelect")) {
 				onFocusLost();
 				ViewController::get()->goToNextGameList();
 				return true;
 			}
-		}else if(config->isMappedLike(getQuickSystemSelectLeftButton(), input))
-		{
-			if(Settings::getInstance()->getBool("QuickSystemSelect"))
-			{
+		}
+		else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
+			if (Settings::getInstance()->getBool("QuickSystemSelect")) {
 				onFocusLost();
 				ViewController::get()->goToPrevGameList();
 				return true;
 			}
-		}else if (config->isMappedTo("x", input))
-		{
-			if (mRoot->getSystem()->isGameSystem())
-			{
-				// go to random system game
+		}
+		else if (config->isMappedTo("x", input)) {
+			if (mRoot->getSystem()->isGameSystem()) {
+				// Go to random system game.
 				navigationsounds.playThemeNavigationSound(SCROLLSOUND);
 				FileData* randomGame = getCursor()->getSystem()->getRandomGame();
 				if (randomGame)
-				{
 					setCursor(randomGame);
-				}
 				return true;
 			}
-		}else if (config->isMappedTo("y", input) && !UIModeController::getInstance()->isUIModeKid())
-		{
-			if(mRoot->getSystem()->isGameSystem())
-			{
+		}
+		else if (config->isMappedTo("y", input) &&
+				!UIModeController::getInstance()->isUIModeKid()) {
+			if (mRoot->getSystem()->isGameSystem()) {
 				navigationsounds.playThemeNavigationSound(FAVORITESOUND);
-				if(CollectionSystemManager::get()->toggleGameInCollection(getCursor()))
-				{
+				if (CollectionSystemManager::get()->toggleGameInCollection(getCursor()))
 					return true;
-				}
 			}
 		}
 	}
 
 	return IGameListView::input(config, input);
 }
-
-
-
-
-
-
-
-
-
-

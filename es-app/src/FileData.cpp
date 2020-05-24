@@ -1,3 +1,11 @@
+//
+//	FileData.cpp
+//
+//	Provides game file data structures and functions to access and sort this information.
+//	Also provides functions to look up paths to media files and for launching games
+//	(launching initiated by the ViewController).
+//
+
 #include "FileData.h"
 
 #include "utils/FileSystemUtil.h"
@@ -16,11 +24,22 @@
 #include "Window.h"
 #include <assert.h>
 
-FileData::FileData(FileType type, const std::string& path, SystemEnvironmentData* envData, SystemData* system)
-	: mType(type), mPath(path), mSystem(system), mEnvData(envData), mSourceFileData(NULL), mParent(NULL), metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA) // metadata is REALLY set in the constructor!
+FileData::FileData(
+		FileType type,
+		const std::string& path,
+		SystemEnvironmentData* envData,
+		SystemData* system)
+		: mType(type),
+		mPath(path),
+		mSystem(system),
+		mEnvData(envData),
+		mSourceFileData(nullptr),
+		mParent(nullptr),
+		// Metadata is REALLY set in the constructor!
+		metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
 {
-	// metadata needs at least a name field (since that's what getName() will return)
-	if(metadata.get("name").empty())
+	// Metadata needs at least a name field (since that's what getName() will return).
+	if (metadata.get("name").empty())
 		metadata.set("name", getDisplayName());
 	mSystemName = system->getName();
 	metadata.resetChangedFlag();
@@ -28,10 +47,10 @@ FileData::FileData(FileType type, const std::string& path, SystemEnvironmentData
 
 FileData::~FileData()
 {
-	if(mParent)
+	if (mParent)
 		mParent->removeChild(this);
 
-	if(mType == GAME)
+	if (mType == GAME)
 		mSystem->getIndex()->removeFromIndex(this);
 
 	mChildren.clear();
@@ -40,9 +59,6 @@ FileData::~FileData()
 std::string FileData::getDisplayName() const
 {
 	std::string stem = Utils::FileSystem::getStem(mPath);
-//	if(mSystem && mSystem->hasPlatformId(PlatformIds::ARCADE) || mSystem->hasPlatformId(PlatformIds::NEOGEO))
-//		stem = MameNames::getInstance()->getRealName(stem);
-
 	return stem;
 }
 
@@ -77,25 +93,19 @@ const std::string FileData::getMediaDirectory() const
 	std::string mediaDirSetting = Settings::getInstance()->getString("MediaDirectory");
 	std::string mediaDirPath = "";
 
-	if(mediaDirSetting == "")
-	{
+	if (mediaDirSetting == "") {
 		mediaDirPath = Utils::FileSystem::getHomePath() + "/.emulationstation/downloaded_media/";
 	}
-	else
-	{
+	else {
 		mediaDirPath = mediaDirSetting;
 
 		// Expand home symbol if the path starts with ~
-		if(mediaDirPath[0] == '~')
-		{
+		if (mediaDirPath[0] == '~') {
 			mediaDirPath.erase(0, 1);
 			mediaDirPath.insert(0, Utils::FileSystem::getHomePath());
 		}
-
-		if(mediaDirPath.back() !=  '/')
-		{
+		if (mediaDirPath.back() !=  '/')
 			mediaDirPath = mediaDirPath + "/";
-		}
 	}
 
 	return mediaDirPath;
@@ -106,21 +116,21 @@ const std::string FileData::getThumbnailPath() const
 	const char* extList[2] = { ".png", ".jpg" };
 	std::string tempPath = getMediaDirectory() + mSystemName + "/thumbnails/" + getDisplayName();
 
-	// Look for media in the media directory
-	for(int i = 0; i < 2; i++)
-	{
+	// Look for media in the media directory.
+	for (int i = 0; i < 2; i++) {
 		std::string mediaPath = tempPath + extList[i];
-		if(Utils::FileSystem::exists(mediaPath))
+		if (Utils::FileSystem::exists(mediaPath))
 			return mediaPath;
 	}
 
-	// No media found in the media directory, so look for local art as well (if configured to do so)
-	if(Settings::getInstance()->getBool("LocalArt"))
+	// No media found in the media directory, so look
+	// for local art as well (if configured to do so).
+	if (Settings::getInstance()->getBool("LocalArt"))
 	{
-		for(int i = 0; i < 2; i++)
-		{
-			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-thumbnail" + extList[i];
-			if(Utils::FileSystem::exists(localMediaPath))
+		for (int i = 0; i < 2; i++) {
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" +
+					getDisplayName() + "-thumbnail" + extList[i];
+			if (Utils::FileSystem::exists(localMediaPath))
 				return localMediaPath;
 		}
 	}
@@ -133,21 +143,21 @@ const std::string FileData::getVideoPath() const
 	const char* extList[5] = { ".avi", ".mkv", ".mov", ".mp4", ".wmv" };
 	std::string tempPath = getMediaDirectory() + mSystemName + "/videos/" + getDisplayName();
 
-	// Look for media in the media directory
-	for(int i = 0; i < 5; i++)
-	{
+	// Look for media in the media directory.
+	for (int i = 0; i < 5; i++) {
 		std::string mediaPath = tempPath + extList[i];
-		if(Utils::FileSystem::exists(mediaPath))
+		if (Utils::FileSystem::exists(mediaPath))
 			return mediaPath;
 	}
 
-	// No media found in the media directory, so look for local art as well (if configured to do so)
-	if(Settings::getInstance()->getBool("LocalArt"))
+	// No media found in the media directory, so look
+	// for local art as well (if configured to do so).
+	if (Settings::getInstance()->getBool("LocalArt"))
 	{
-		for(int i = 0; i < 5; i++)
-		{
-			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-video" + extList[i];
-			if(Utils::FileSystem::exists(localMediaPath))
+		for (int i = 0; i < 5; i++) {
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() +
+					"-video" + extList[i];
+			if (Utils::FileSystem::exists(localMediaPath))
 				return localMediaPath;
 		}
 	}
@@ -160,21 +170,21 @@ const std::string FileData::getMarqueePath() const
 	const char* extList[2] = { ".png", ".jpg" };
 	std::string tempPath = getMediaDirectory() + mSystemName + "/marquees/" + getDisplayName();
 
-	// Look for media in the media directory
-	for(int i = 0; i < 2; i++)
-	{
+	// Look for media in the media directory.
+	for (int i = 0; i < 2; i++) {
 		std::string mediaPath = tempPath + extList[i];
-		if(Utils::FileSystem::exists(mediaPath))
+		if (Utils::FileSystem::exists(mediaPath))
 			return mediaPath;
 	}
 
-	// No media found in the media directory, so look for local art as well (if configured to do so)
-	if(Settings::getInstance()->getBool("LocalArt"))
+	// No media found in the media directory, so look
+	// for local art as well (if configured to do so).
+	if (Settings::getInstance()->getBool("LocalArt"))
 	{
-		for(int i = 0; i < 2; i++)
-		{
-			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-marquee" + extList[i];
-			if(Utils::FileSystem::exists(localMediaPath))
+		for (int i = 0; i < 2; i++) {
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() +
+					"-marquee" + extList[i];
+			if (Utils::FileSystem::exists(localMediaPath))
 				return localMediaPath;
 		}
 	}
@@ -186,32 +196,30 @@ const std::string FileData::getImagePath() const
 {
 	const char* extList[2] = { ".png", ".jpg" };
 
-	// Look for mix image (a combination of screenshot, 3D box and marquee) in the media directory
+	// Look for mix image (a combination of screenshot, 3D box and marquee) in the media directory.
 	std::string tempPath = getMediaDirectory() + mSystemName + "/miximages/" + getDisplayName();
-	for(int i = 0; i < 2; i++)
-	{
+	for (int i = 0; i < 2; i++) {
 		std::string mediaPath = tempPath + extList[i];
-		if(Utils::FileSystem::exists(mediaPath))
+		if (Utils::FileSystem::exists(mediaPath))
 			return mediaPath;
 	}
 
-	// If no mix image exists, try normal screenshot
+	// If no mix image exists, try normal screenshot.
 	tempPath = getMediaDirectory() + mSystemName + "/screenshots/" + getDisplayName();
 
-	for(int i = 0; i < 2; i++)
-	{
+	for (int i = 0; i < 2; i++) {
 		std::string mediaPath = tempPath + extList[i];
-		if(Utils::FileSystem::exists(mediaPath))
+		if (Utils::FileSystem::exists(mediaPath))
 			return mediaPath;
 	}
 
-	// No media found in the media directory, so look for local art as well (if configured to do so)
-	if(Settings::getInstance()->getBool("LocalArt"))
-	{
-		for(int i = 0; i < 2; i++)
-		{
-			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() + "-image" + extList[i];
-			if(Utils::FileSystem::exists(localMediaPath))
+	// No media found in the media directory, so look
+	// for local art as well (if configured to do so).
+	if (Settings::getInstance()->getBool("LocalArt")) {
+		for (int i = 0; i < 2; i++) {
+			std::string localMediaPath = mEnvData->mStartPath + "/images/" +
+					getDisplayName() + "-image" + extList[i];
+			if (Utils::FileSystem::exists(localMediaPath))
 				return localMediaPath;
 		}
 	}
@@ -225,17 +233,14 @@ const std::vector<FileData*>& FileData::getChildrenListToDisplay()
 	FileFilterIndex* idx = CollectionSystemManager::get()->getSystemToView(mSystem)->getIndex();
 	if (idx->isFiltered()) {
 		mFilteredChildren.clear();
-		for(auto it = mChildren.cbegin(); it != mChildren.cend(); it++)
-		{
+		for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
 			if (idx->showFile((*it))) {
 				mFilteredChildren.push_back(*it);
 			}
 		}
-
 		return mFilteredChildren;
 	}
-	else
-	{
+	else {
 		return mChildren;
 	}
 }
@@ -245,16 +250,12 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask, bool d
 	std::vector<FileData*> out;
 	FileFilterIndex* idx = mSystem->getIndex();
 
-	for(auto it = mChildren.cbegin(); it != mChildren.cend(); it++)
-	{
-		if((*it)->getType() & typeMask)
-		{
+	for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+		if ((*it)->getType() & typeMask) {
 			if (!displayedOnly || !idx->isFiltered() || idx->showFile(*it))
 				out.push_back(*it);
 		}
-
-		if((*it)->getChildren().size() > 0)
-		{
+		if ((*it)->getChildren().size() > 0) {
 			std::vector<FileData*> subchildren = (*it)->getFilesRecursive(typeMask, displayedOnly);
 			out.insert(out.cend(), subchildren.cbegin(), subchildren.cend());
 		}
@@ -271,9 +272,10 @@ const bool FileData::isArcadeAsset()
 {
 	const std::string stem = Utils::FileSystem::getStem(mPath);
 	return (
-		(mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) || mSystem->hasPlatformId(PlatformIds::NEOGEO)))
-		&&
-		(MameNames::getInstance()->isBios(stem) || MameNames::getInstance()->isDevice(stem))
+		(mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
+				mSystem->hasPlatformId(PlatformIds::NEOGEO))) &&
+				(MameNames::getInstance()->isBios(stem) ||
+				MameNames::getInstance()->isDevice(stem))
 	);
 }
 
@@ -288,8 +290,7 @@ void FileData::addChild(FileData* file)
 	assert(file->getParent() == NULL);
 
 	const std::string key = file->getKey();
-	if (mChildrenByFilename.find(key) == mChildrenByFilename.cend())
-	{
+	if (mChildrenByFilename.find(key) == mChildrenByFilename.cend()) {
 		mChildrenByFilename[key] = file;
 		mChildren.push_back(file);
 		file->mParent = this;
@@ -301,10 +302,8 @@ void FileData::removeChild(FileData* file)
 	assert(mType == FOLDER);
 	assert(file->getParent() == this);
 	mChildrenByFilename.erase(file->getKey());
-	for(auto it = mChildren.cbegin(); it != mChildren.cend(); it++)
-	{
-		if(*it == file)
-		{
+	for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+		if (*it == file) {
 			file->mParent = NULL;
 			mChildren.erase(it);
 			return;
@@ -320,19 +319,59 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
 {
 	std::stable_sort(mChildren.begin(), mChildren.end(), comparator);
 
-	for(auto it = mChildren.cbegin(); it != mChildren.cend(); it++)
-	{
-		if((*it)->getChildren().size() > 0)
+	for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+		if ((*it)->getChildren().size() > 0)
 			(*it)->sort(comparator, ascending);
 	}
 
-	if(!ascending)
+	if (!ascending)
 		std::reverse(mChildren.begin(), mChildren.end());
 }
 
-void FileData::sort(const SortType& type)
+void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending)
 {
-	sort(*type.comparisonFunction, type.ascending);
+	std::vector<FileData*> mChildrenFavorites;
+	std::vector<FileData*> mChildrenOthers;
+
+	for (unsigned int i = 0; i < mChildren.size(); i++) {
+		if (mChildren[i]->getFavorite())
+			mChildrenFavorites.push_back(mChildren[i]);
+		else
+			mChildrenOthers.push_back(mChildren[i]);
+	}
+
+	// Sort favorite games and the other games separately.
+	std::stable_sort(mChildrenFavorites.begin(), mChildrenFavorites.end(), comparator);
+	std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
+
+	for (auto it = mChildrenFavorites.cbegin(); it != mChildrenFavorites.cend(); it++) {
+		if ((*it)->getChildren().size() > 0)
+			(*it)->sortFavoritesOnTop(comparator, ascending);
+	}
+
+	for (auto it = mChildrenOthers.cbegin(); it != mChildrenOthers.cend(); it++) {
+		if ((*it)->getChildren().size() > 0)
+			(*it)->sortFavoritesOnTop(comparator, ascending);
+	}
+
+	if (!ascending) {
+		std::reverse(mChildrenFavorites.begin(), mChildrenFavorites.end());
+		std::reverse(mChildrenOthers.begin(), mChildrenOthers.end());
+	}
+
+	// Combine the individually sorted favorite games and other games vectors.
+	mChildren.erase(mChildren.begin(), mChildren.end());
+	mChildren.reserve(mChildrenFavorites.size() + mChildrenOthers.size());
+	mChildren.insert(mChildren.end(), mChildrenFavorites.begin(), mChildrenFavorites.end());
+	mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
+}
+
+void FileData::sort(const SortType& type, bool mFavoritesOnTop)
+{
+	if (mFavoritesOnTop)
+		sortFavoritesOnTop(*type.comparisonFunction, type.ascending);
+	else
+		sort(*type.comparisonFunction, type.ascending);
 }
 
 void FileData::launchGame(Window* window)
@@ -346,15 +385,13 @@ void FileData::launchGame(Window* window)
 
 	std::string command = "";
 
-	// Check if there is a launch string override for the game and the corresponding option has been set
-	if(Settings::getInstance()->getBool("LaunchstringOverride") && !metadata.get("launchstring").empty())
-	{
+	// Check if there is a launch string override for the game
+	// and the corresponding option to use it has been set.
+	if (Settings::getInstance()->getBool("LaunchstringOverride") &&
+			!metadata.get("launchstring").empty())
 		command = metadata.get("launchstring");
-	}
 	else
-	{
 		command = mEnvData->mLaunchCommand;
-	}
 
 	const std::string rom      = Utils::FileSystem::getEscapedPath(getPath());
 	const std::string basename = Utils::FileSystem::getStem(getPath());
@@ -369,25 +406,23 @@ void FileData::launchGame(Window* window)
 	LOG(LogInfo) << "	" << command;
 	int exitCode = runSystemCommand(command);
 
-	if(exitCode != 0)
-	{
+	if (exitCode != 0)
 		LOG(LogWarning) << "...launch terminated with nonzero exit code " << exitCode << "!";
-	}
 
 	Scripting::fireEvent("game-end");
 
 //	window->init();
+
 	VolumeControl::getInstance()->init();
 	window->normalizeNextUpdate();
 
-	//update number of times the game has been launched
-
+	// Update number of times the game has been launched.
 	FileData* gameToUpdate = getSourceFileData();
 
 	int timesPlayed = gameToUpdate->metadata.getInt("playcount") + 1;
 	gameToUpdate->metadata.set("playcount", std::to_string(static_cast<long long>(timesPlayed)));
 
-	//update last played time
+	// Update last played time.
 	gameToUpdate->metadata.set("lastplayed", Utils::Time::DateTime(Utils::Time::now()));
 	CollectionSystemManager::get()->refreshCollectionSystems(gameToUpdate);
 
@@ -395,9 +430,10 @@ void FileData::launchGame(Window* window)
 }
 
 CollectionFileData::CollectionFileData(FileData* file, SystemData* system)
-	: FileData(file->getSourceFileData()->getType(), file->getSourceFileData()->getPath(), file->getSourceFileData()->getSystemEnvData(), system)
+	: FileData(file->getSourceFileData()->getType(), file->getSourceFileData()->getPath(),
+			file->getSourceFileData()->getSystemEnvData(), system)
 {
-	// we use this constructor to create a clone of the filedata, and change its system
+	// We use this constructor to create a clone of the filedata, and change its system.
 	mSourceFileData = file->getSourceFileData();
 	refreshMetadata();
 	mParent = NULL;
@@ -407,8 +443,8 @@ CollectionFileData::CollectionFileData(FileData* file, SystemData* system)
 
 CollectionFileData::~CollectionFileData()
 {
-	// need to remove collection file data at the collection object destructor
-	if(mParent)
+	// Need to remove collection file data at the collection object destructor.
+	if (mParent)
 		mParent->removeChild(this);
 	mParent = NULL;
 }
@@ -431,28 +467,28 @@ void CollectionFileData::refreshMetadata()
 const std::string& CollectionFileData::getName()
 {
 	if (mDirty) {
-		mCollectionFileName = Utils::String::removeParenthesis(mSourceFileData->metadata.get("name"));
-		mCollectionFileName += " [" + Utils::String::toUpper(mSourceFileData->getSystem()->getName()) + "]";
+		mCollectionFileName =
+				Utils::String::removeParenthesis(mSourceFileData->metadata.get("name"));
+		mCollectionFileName +=
+				" [" + Utils::String::toUpper(mSourceFileData->getSystem()->getName()) + "]";
 		mDirty = false;
 	}
 
 	if (Settings::getInstance()->getBool("CollectionShowSystemInfo"))
 		return mCollectionFileName;
+
 	return mSourceFileData->metadata.get("name");
 }
 
-// returns Sort Type based on a string description
+// Return sort type based on a string description.
 FileData::SortType getSortTypeFromString(std::string desc) {
 	std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
-	// find it
-	for(unsigned int i = 0; i < FileSorts::SortTypes.size(); i++)
-	{
+	// Find it
+	for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
 		const FileData::SortType& sort = FileSorts::SortTypes.at(i);
-		if(sort.description == desc)
-		{
+		if (sort.description == desc)
 			return sort;
-		}
 	}
-	// if not found default to name, ascending
+	// If no type found then default to "filename, ascending".
 	return FileSorts::SortTypes.at(0);
 }

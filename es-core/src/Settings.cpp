@@ -68,6 +68,7 @@ void Settings::setDefaults()
 	mStringMap["StartupSystem"] = "";
 	mBoolMap["DisableKidStartMenu"] = true;
 	mStringMap["MediaDirectory"] = "";
+	mStringMap["DefaultSortOrder"] = "";
 
 	mBoolMap["VSync"] = true;
 
@@ -139,9 +140,9 @@ void Settings::setDefaults()
 	mStringMap["CollectionSystemsAuto"] = "";
 	mStringMap["CollectionSystemsCustom"] = "";
 	mBoolMap["CollectionShowSystemInfo"] = true;
-	mBoolMap["SortAllSystems"] = false;
 	mBoolMap["UseCustomCollectionsSystem"] = true;
 
+	mBoolMap["FavFirstCustom"] = true;
 	mBoolMap["FavoritesFirst"] = true;
 	mBoolMap["LaunchstringOverride"] = true;
 

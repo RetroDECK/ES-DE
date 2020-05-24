@@ -1,3 +1,11 @@
+//
+//	FileData.h
+//
+//	Provides game file data structures and functions to access and sort this information.
+//	Also provides functions to look up paths to media files and for launching games
+//	(launching initiated by the ViewController).
+//
+
 #pragma once
 #ifndef ES_APP_FILE_DATA_H
 #define ES_APP_FILE_DATA_H
@@ -10,15 +18,13 @@ class SystemData;
 class Window;
 struct SystemEnvironmentData;
 
-enum FileType
-{
+enum FileType {
 	GAME = 1,   // Cannot have children.
 	FOLDER = 2,
 	PLACEHOLDER = 3
 };
 
-enum FileChangeType
-{
+enum FileChangeType {
 	FILE_ADDED,
 	FILE_METADATA_CHANGED,
 	FILE_REMOVED,
@@ -33,7 +39,11 @@ FileType stringToFileType(const char* str);
 class FileData
 {
 public:
-	FileData(FileType type, const std::string& path, SystemEnvironmentData* envData, SystemData* system);
+	FileData(FileType type,
+			const std::string& path,
+			SystemEnvironmentData* envData,
+			SystemData* system);
+
 	virtual ~FileData();
 
 	virtual const std::string& getName();
@@ -42,7 +52,8 @@ public:
 	inline FileType getType() const { return mType; }
 	inline const std::string& getPath() const { return mPath; }
 	inline FileData* getParent() const { return mParent; }
-	inline const std::unordered_map<std::string, FileData*>& getChildrenByFilename() const { return mChildrenByFilename; }
+	inline const std::unordered_map<std::string, FileData*>& getChildrenByFilename() const
+			{ return mChildrenByFilename; }
 	inline const std::vector<FileData*>& getChildren() const { return mChildren; }
 	inline SystemData* getSystem() const { return mSystem; }
 	inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
@@ -53,7 +64,8 @@ public:
 	virtual const std::string getImagePath() const;
 
 	const std::vector<FileData*>& getChildrenListToDisplay();
-	std::vector<FileData*> getFilesRecursive(unsigned int typeMask, bool displayedOnly = false) const;
+	std::vector<FileData*> getFilesRecursive(unsigned int typeMask,
+			bool displayedOnly = false) const;
 
 	void addChild(FileData* file); // Error if mType != FOLDER
 	void removeChild(FileData* file); //Error if mType != FOLDER
@@ -69,33 +81,42 @@ public:
 	virtual FileData* getSourceFileData();
 	inline std::string getSystemName() const { return mSystemName; };
 
-	// Returns our best guess at the "real" name for this file (will attempt to perform MAME name translation)
+	// Returns our best guess at the "real" name for this file
+	// (will attempt to perform MAME name translation).
 	std::string getDisplayName() const;
 
-	// As above, but also remove parenthesis
+	// As above, but also remove parenthesis.
 	std::string getCleanName() const;
 
 	void launchGame(Window* window);
 
 	typedef bool ComparisonFunction(const FileData* a, const FileData* b);
-	struct SortType
-	{
+	struct SortType {
 		ComparisonFunction* comparisonFunction;
 		bool ascending;
 		std::string description;
 
-		SortType(ComparisonFunction* sortFunction, bool sortAscending, const std::string & sortDescription)
-			: comparisonFunction(sortFunction), ascending(sortAscending), description(sortDescription) {}
+		SortType(ComparisonFunction* sortFunction,
+				bool sortAscending,
+				const std::string& sortDescription)
+				: comparisonFunction(sortFunction),
+				ascending(sortAscending),
+				description(sortDescription) {}
 	};
 
 	void sort(ComparisonFunction& comparator, bool ascending = true);
-	void sort(const SortType& type);
+	void sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending = true);
+	void sort(const SortType& type, bool mFavoritesOnTop = false);
 	MetaDataList metadata;
+
+	inline void setSortTypeString(std::string typestring) { mSortTypeString = typestring; }
+	inline std::string getSortTypeString() { return mSortTypeString; }
 
 protected:
 	FileData* mSourceFileData;
 	FileData* mParent;
 	std::string mSystemName;
+	std::string mSortTypeString = "";
 
 private:
 	FileType mType;
@@ -117,7 +138,7 @@ public:
 	FileData* getSourceFileData();
 	std::string getKey();
 private:
-	// needs to be updated when metadata changes
+	// Needs to be updated when metadata changes.
 	std::string mCollectionFileName;
 	bool mDirty;
 };

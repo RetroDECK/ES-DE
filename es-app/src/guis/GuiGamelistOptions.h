@@ -1,3 +1,10 @@
+//
+//	GuiGamelistOptions.h
+//
+//	Gamelist options menu for the 'Jump to...' quick selector,
+//	game sorting, game filters, and metadata edit.
+//
+
 #pragma once
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 #define ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
@@ -26,12 +33,11 @@ private:
 	void openMetaDataEd();
 	void startEditMode();
 	void exitEditMode();
+
 	void jumpToLetter();
-	void findFirstFavorite();
-	void jumpToFirstFavorite();
+	void jumpToFirstRow();
 
 	const std::string FAVORITE_CHAR = "\uF005";
-	long firstFavorite = -1;
 
 	MenuComponent mMenu;
 
@@ -43,6 +49,7 @@ private:
 
 	SystemData* mSystem;
 	IGameListView* getGamelist();
+	bool mFavoritesSorting;
 	bool fromPlaceholder;
 	bool mFiltersChanged;
 };

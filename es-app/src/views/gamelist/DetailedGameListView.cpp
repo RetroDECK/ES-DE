@@ -1,24 +1,44 @@
+//
+//	DetailedGameListView.cpp
+//
+//	Interface that defines a GameListView of the type 'detailed'.
+//
+
 #include "views/gamelist/DetailedGameListView.h"
 
 #include "animations/LambdaAnimation.h"
 #include "views/ViewController.h"
 
-DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
-	BasicGameListView(window, root),
-	mDescContainer(window), mDescription(window),
-	mThumbnail(window),
-	mMarquee(window),
-	mImage(window),
+DetailedGameListView::DetailedGameListView(
+		Window* window,
+		FileData* root)
+		: BasicGameListView(window, root),
+		mDescContainer(window),
+		mDescription(window),
 
-	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window),
-	mLblGenre(window), mLblPlayers(window), mLblLastPlayed(window), mLblPlayCount(window),
+		mThumbnail(window),
+		mMarquee(window),
+		mImage(window),
 
-	mRating(window), mReleaseDate(window), mDeveloper(window), mPublisher(window),
-	mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window),
-	mName(window)
+		mLblRating(window),
+		mLblReleaseDate(window),
+		mLblDeveloper(window),
+		mLblPublisher(window),
+		mLblGenre(window),
+		mLblPlayers(window),
+		mLblLastPlayed(window),
+		mLblPlayCount(window),
+
+		mRating(window),
+		mReleaseDate(window),
+		mDeveloper(window),
+		mPublisher(window),
+		mGenre(window),
+		mPlayers(window),
+		mLastPlayed(window),
+		mPlayCount(window),
+		mName(window)
 {
-	//mHeaderImage.setPosition(mSize.x() * 0.25f, 0);
-
 	const float padding = 0.01f;
 
 	mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y());
@@ -26,7 +46,7 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	mList.setAlignment(TextListComponent<FileData*>::ALIGN_LEFT);
 	mList.setCursorChangedCallback([&](const CursorState& /*state*/) { updateInfoPanel(); });
 
-	// Thumbnail
+	// Thumbnail.
 	mThumbnail.setOrigin(0.5f, 0.5f);
 	mThumbnail.setPosition(2.0f, 2.0f);
 	mThumbnail.setVisible(false);
@@ -34,23 +54,23 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	mThumbnail.setDefaultZIndex(25);
 	addChild(&mThumbnail);
 
-	// Marquee
+	// Marquee.
 	mMarquee.setOrigin(0.5f, 0.5f);
-	// Default to off the screen
+	// Default to off the screen.
 	mMarquee.setPosition(2.0f, 2.0f);
 	mMarquee.setVisible(false);
 	mMarquee.setMaxSize(mSize.x() * (0.5f - 2*padding), mSize.y() * 0.18f);
 	mMarquee.setDefaultZIndex(35);
 	addChild(&mMarquee);
 
-	// image
+	// Image.
 	mImage.setOrigin(0.5f, 0.5f);
 	mImage.setPosition(mSize.x() * 0.25f, mList.getPosition().y() + mSize.y() * 0.2125f);
 	mImage.setMaxSize(mSize.x() * (0.50f - 2*padding), mSize.y() * 0.4f);
 	mImage.setDefaultZIndex(30);
 	addChild(&mImage);
 
-	// metadata labels + values
+	// Metadata labels + values.
 	mLblRating.setText("Rating: ");
 	addChild(&mLblRating);
 	addChild(&mRating);
@@ -85,7 +105,8 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	addChild(&mName);
 
 	mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
-	mDescContainer.setSize(mSize.x() * (0.50f - 2*padding), mSize.y() - mDescContainer.getPosition().y());
+	mDescContainer.setSize(mSize.x() * (0.50f - 2*padding), mSize.y() -
+			mDescContainer.getPosition().y());
 	mDescContainer.setAutoScroll(true);
 	mDescContainer.setDefaultZIndex(40);
 	addChild(&mDescContainer);
@@ -93,7 +114,6 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	mDescription.setFont(Font::get(FONT_SIZE_SMALL));
 	mDescription.setSize(mDescContainer.getSize().x(), 0);
 	mDescContainer.addChild(&mDescription);
-
 
 	initMDLabels();
 	initMDValues();
@@ -105,9 +125,12 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 	BasicGameListView::onThemeChanged(theme);
 
 	using namespace ThemeFlags;
-	mThumbnail.applyTheme(theme, getName(), "md_thumbnail", POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
-	mMarquee.applyTheme(theme, getName(), "md_marquee", POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
-	mImage.applyTheme(theme, getName(), "md_image", POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+	mThumbnail.applyTheme(theme, getName(), "md_thumbnail",
+			POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+	mMarquee.applyTheme(theme, getName(), "md_marquee",
+			POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+	mImage.applyTheme(theme, getName(), "md_image",
+			POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
 	mName.applyTheme(theme, getName(), "md_name", ALL);
 
 	initMDLabels();
@@ -118,11 +141,8 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
 	};
 
-	for(unsigned int i = 0; i < labels.size(); i++)
-	{
+	for (unsigned int i = 0; i < labels.size(); i++)
 		labels[i]->applyTheme(theme, getName(), lblElements[i], ALL);
-	}
-
 
 	initMDValues();
 	std::vector<GuiComponent*> values = getMDValues();
@@ -132,14 +152,14 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 		"md_genre", "md_players", "md_lastplayed", "md_playcount"
 	};
 
-	for(unsigned int i = 0; i < values.size(); i++)
-	{
+	for (unsigned int i = 0; i < values.size(); i++)
 		values[i]->applyTheme(theme, getName(), valElements[i], ALL ^ ThemeFlags::TEXT);
-	}
 
-	mDescContainer.applyTheme(theme, getName(), "md_description", POSITION | ThemeFlags::SIZE | Z_INDEX | VISIBLE);
+	mDescContainer.applyTheme(theme, getName(), "md_description",
+			POSITION | ThemeFlags::SIZE | Z_INDEX | VISIBLE);
 	mDescription.setSize(mDescContainer.getSize().x(), 0);
-	mDescription.applyTheme(theme, getName(), "md_description", ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
+	mDescription.applyTheme(theme, getName(), "md_description",
+			ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
 
 	sortChildren();
 }
@@ -156,15 +176,14 @@ void DetailedGameListView::initMDLabels()
 	const float colSize = (mSize.x() * 0.48f) / colCount;
 	const float rowPadding = 0.01f * mSize.y();
 
-	for(unsigned int i = 0; i < components.size(); i++)
-	{
+	for (unsigned int i = 0; i < components.size(); i++) {
 		const unsigned int row = i % rowCount;
 		Vector3f pos(0.0f, 0.0f, 0.0f);
-		if(row == 0)
-		{
+		if (row == 0) {
 			pos = start + Vector3f(colSize * (i / rowCount), 0, 0);
-		}else{
-			// work from the last component
+		}
+		else {
+			// Work from the last component.
 			GuiComponent* lc = components[i-1];
 			pos = lc->getPosition() + Vector3f(0, lc->getSize().y() + rowPadding, 0);
 		}
@@ -193,20 +212,22 @@ void DetailedGameListView::initMDValues()
 	float bottom = 0.0f;
 
 	const float colSize = (mSize.x() * 0.48f) / 2;
-	for(unsigned int i = 0; i < labels.size(); i++)
-	{
+	for (unsigned int i = 0; i < labels.size(); i++) {
 		const float heightDiff = (labels[i]->getSize().y() - values[i]->getSize().y()) / 2;
-		values[i]->setPosition(labels[i]->getPosition() + Vector3f(labels[i]->getSize().x(), heightDiff, 0));
+		values[i]->setPosition(labels[i]->getPosition() +
+				Vector3f(labels[i]->getSize().x(), heightDiff, 0));
 		values[i]->setSize(colSize - labels[i]->getSize().x(), values[i]->getSize().y());
 		values[i]->setDefaultZIndex(40);
 
 		float testBot = values[i]->getPosition().y() + values[i]->getSize().y();
-		if(testBot > bottom)
+
+		if (testBot > bottom)
 			bottom = testBot;
 	}
 
 	mDescContainer.setPosition(mDescContainer.getPosition().x(), bottom + mSize.y() * 0.01f);
-	mDescContainer.setSize(mDescContainer.getSize().x(), mSize.y() - mDescContainer.getPosition().y());
+	mDescContainer.setSize(mDescContainer.getSize().x(), mSize.y() -
+			mDescContainer.getPosition().y());
 }
 
 void DetailedGameListView::updateInfoPanel()
@@ -214,12 +235,12 @@ void DetailedGameListView::updateInfoPanel()
 	FileData* file = (mList.size() == 0 || mList.isScrolling()) ? NULL : mList.getSelected();
 
 	bool fadingOut;
-	if(file == NULL)
-	{
+	if (file == nullptr) {
 		//mImage.setImage("");
 		//mDescription.setText("");
 		fadingOut = true;
-	}else{
+	}
+	else {
 		mThumbnail.setImage(file->getThumbnailPath());
 		mMarquee.setImage(file->getMarqueePath());
 		mImage.setImage(file->getImagePath());
@@ -234,8 +255,7 @@ void DetailedGameListView::updateInfoPanel()
 		mPlayers.setValue(file->metadata.get("players"));
 		mName.setValue(file->metadata.get("name"));
 
-		if(file->getType() == GAME)
-		{
+		if (file->getType() == GAME) {
 			mLastPlayed.setValue(file->metadata.get("lastplayed"));
 			mPlayCount.setValue(file->metadata.get("playcount"));
 		}
@@ -252,18 +272,13 @@ void DetailedGameListView::updateInfoPanel()
 	std::vector<TextComponent*> labels = getMDLabels();
 	comps.insert(comps.cend(), labels.cbegin(), labels.cend());
 
-	for(auto it = comps.cbegin(); it != comps.cend(); it++)
-	{
+	for (auto it = comps.cbegin(); it != comps.cend(); it++) {
 		GuiComponent* comp = *it;
-		// an animation is playing
-		//   then animate if reverse != fadingOut
-		// an animation is not playing
-		//   then animate if opacity != our target opacity
-		if((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
-			(!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255)))
-		{
-			auto func = [comp](float t)
-			{
+		// An animation is playing, then animate if reverse != fadingOut
+		// An animation is not playing, then animate if opacity != our target opacity
+		if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
+			(!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
+			auto func = [comp](float t) {
 				comp->setOpacity((unsigned char)(Math::lerp(0.0f, 1.0f, t)*255));
 			};
 			comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
@@ -274,7 +289,7 @@ void DetailedGameListView::updateInfoPanel()
 void DetailedGameListView::launch(FileData* game)
 {
 	Vector3f target(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f, 0);
-	if(mImage.hasImage())
+	if (mImage.hasImage())
 		target = Vector3f(mImage.getCenter().x(), mImage.getCenter().y(), 0);
 
 	ViewController::get()->launch(game, target);

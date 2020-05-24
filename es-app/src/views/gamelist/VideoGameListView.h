@@ -1,3 +1,9 @@
+//
+//	VideoGameListView.h
+//
+//	Interface that defines a GameListView of the type 'video'.
+//
+
 #pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
@@ -36,7 +42,14 @@ private:
 	VideoComponent* mVideo;
 	ImageComponent mImage;
 
-	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount;
+	TextComponent mLblRating;
+	TextComponent mLblReleaseDate;
+	TextComponent mLblDeveloper;
+	TextComponent mLblPublisher;
+	TextComponent mLblGenre;
+	TextComponent mLblPlayers;
+	TextComponent mLblLastPlayed;
+	TextComponent mLblPlayCount;
 
 	RatingComponent mRating;
 	DateTimeComponent mReleaseDate;
