@@ -95,12 +95,12 @@ void Settings::setDefaults()
 	#endif
 
 	mStringMap["FullscreenMode"] = "normal";
-	mStringMap["TransitionStyle"] = "fade";
+	mStringMap["TransitionStyle"] = "instant";
 	mStringMap["ThemeSet"] = "";
 	mStringMap["ScreenSaverBehavior"] = "dim";
 	mStringMap["Scraper"] = "ScreenScraper";
 	mStringMap["GamelistViewStyle"] = "automatic";
-	mStringMap["SaveGamelistsMode"] = "on exit";
+	mStringMap["SaveGamelistsMode"] = "always";
 
 	mBoolMap["ScreenSaverControls"] = true;
 	mStringMap["ScreenSaverGameInfo"] = "never";

@@ -2,6 +2,7 @@
 //	GuiMenu.h
 //
 //	Main menu.
+//	Some submenus are covered in separate source files.
 //
 
 #pragma once
