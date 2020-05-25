@@ -117,17 +117,17 @@ void GuiMenu::openSoundSettings()
 			setVolume((int)Math::round(volume->getValue())); });
 
 	if (UIModeController::getInstance()->isUIModeFull()) {
-#if defined(__linux__)
+		#if defined(__linux__)
 		// audio card
 		auto audio_card = std::make_shared< OptionListComponent<std::string>
 				>(mWindow, "AUDIO CARD", false);
 		std::vector<std::string> audio_cards;
-#ifdef _RPI_
+		#ifdef _RPI_
 		// RPi Specific  Audio Cards
 		audio_cards.push_back("local");
 		audio_cards.push_back("hdmi");
 		audio_cards.push_back("both");
-#endif
+		#endif
 		audio_cards.push_back("default");
 		audio_cards.push_back("sysdefault");
 		audio_cards.push_back("dmix");
@@ -172,7 +172,7 @@ void GuiMenu::openSoundSettings()
 			VolumeControl::getInstance()->deinit();
 			VolumeControl::getInstance()->init();
 		});
-#endif
+		#endif
 
 		// Video audio.
 		auto video_audio = std::make_shared<SwitchComponent>(mWindow);
@@ -196,7 +196,7 @@ void GuiMenu::openSoundSettings()
 			Settings::getInstance()->setBool("EnableSounds", sounds_enabled->getState());
 		});
 
-#ifdef _RPI_
+		#ifdef _RPI_
 		// OMX player Audio Device
 		auto omx_audio_dev = std::make_shared< OptionListComponent<std::string>
 				>(mWindow, "OMX PLAYER AUDIO DEVICE", false);
@@ -220,7 +220,7 @@ void GuiMenu::openSoundSettings()
 			if (Settings::getInstance()->getString("OMXAudioDev") != omx_audio_dev->getSelected())
 				Settings::getInstance()->setString("OMXAudioDev", omx_audio_dev->getSelected());
 		});
-#endif
+		#endif
 	}
 
 	mWindow->pushGui(s);
@@ -490,6 +490,26 @@ void GuiMenu::openOtherSettings()
 		PowerSaver::init();
 	});
 
+	#ifdef _RPI_
+	// Video Player - VideoOmxPlayer.
+	auto omx_player = std::make_shared<SwitchComponent>(mWindow);
+	omx_player->setState(Settings::getInstance()->getBool("VideoOmxPlayer"));
+	s->addWithLabel("USE OMX PLAYER (HW ACCELERATED)", omx_player);
+	s->addSaveFunc([omx_player]
+	{
+		// Need to reload all views to re-create the right video components.
+		bool needReload = false;
+		if (Settings::getInstance()->getBool("VideoOmxPlayer") != omx_player->getState())
+			needReload = true;
+
+		Settings::getInstance()->setBool("VideoOmxPlayer", omx_player->getState());
+
+		if (needReload)
+			ViewController::get()->reloadAll();
+	});
+
+	#endif
+
 	// When to save game metadata.
 	auto gamelistsSaveMode = std::make_shared< OptionListComponent<std::string>
 			>(mWindow, "SAVE METADATA", false);
@@ -522,7 +542,7 @@ void GuiMenu::openOtherSettings()
 
 	auto local_art = std::make_shared<SwitchComponent>(mWindow);
 	local_art->setState(Settings::getInstance()->getBool("LocalArt"));
-	s->addWithLabel("SEARCH FOR GAME ART IN \'%ROM%/IMAGES\'", local_art);
+	s->addWithLabel("SEARCH FOR GAME ART IN ROM DIRECTORIES", local_art);
 	s->addSaveFunc([local_art] { Settings::getInstance()->
 			setBool("LocalArt", local_art->getState()); });
 
@@ -553,26 +573,6 @@ void GuiMenu::openOtherSettings()
 	s->addWithLabel("SHOW \"POWER OFF SYSTEM\" MENU ENTRY", show_poweroffsystem);
 	s->addSaveFunc([show_poweroffsystem] { Settings::getInstance()->setBool("ShowPoweroffSystem",
 			show_poweroffsystem->getState()); });
-
-#ifdef _RPI_
-	// Video Player - VideoOmxPlayer.
-	auto omx_player = std::make_shared<SwitchComponent>(mWindow);
-	omx_player->setState(Settings::getInstance()->getBool("VideoOmxPlayer"));
-	s->addWithLabel("USE OMX PLAYER (HW ACCELERATED)", omx_player);
-	s->addSaveFunc([omx_player]
-	{
-		// Need to reload all views to re-create the right video components.
-		bool needReload = false;
-		if (Settings::getInstance()->getBool("VideoOmxPlayer") != omx_player->getState())
-			needReload = true;
-
-		Settings::getInstance()->setBool("VideoOmxPlayer", omx_player->getState());
-
-		if (needReload)
-			ViewController::get()->reloadAll();
-	});
-
-#endif
 
 	mWindow->pushGui(s);
 

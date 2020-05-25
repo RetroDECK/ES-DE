@@ -1,10 +1,18 @@
+//
+//	Settings.h
+//
+//	Functions to read from and write to the configuration file es_settings.cfg
+//	are included here. The default values for the application settings are
+//	defined here as well.
+//
+
 #pragma once
 #ifndef ES_CORE_SETTINGS_H
 #define ES_CORE_SETTINGS_H
 
 #include <map>
 
-//This is a singleton for storing settings.
+//	This is a singleton for storing settings.
 class Settings
 {
 public:
@@ -13,7 +21,7 @@ public:
 	void loadFile();
 	void saveFile();
 
-	//You will get a warning if you try a get on a key that is not already present.
+	//	You will get a warning if you try a get on a key that is not already present.
 	bool getBool(const std::string& name);
 	int getInt(const std::string& name);
 	float getFloat(const std::string& name);
@@ -29,12 +37,11 @@ private:
 
 	Settings();
 
-	//Clear everything and load default values.
+	//	Clear everything and load default values.
 	void setDefaults();
-	void processBackwardCompatibility();
 
 	bool mWasChanged;
-	
+
 	std::map<std::string, bool> mBoolMap;
 	std::map<std::string, int> mIntMap;
 	std::map<std::string, float> mFloatMap;

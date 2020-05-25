@@ -1,5 +1,18 @@
-//EmulationStation, a graphical front-end for ROM browsing. Created by Alec "Aloshi" Lofquist.
-//http://www.aloshi.com
+//
+//	EmulationStation Desktop Edition, an emulator front-end
+//	with controller navigation and theming support.
+//
+//	Originally created by Alec "Aloshi" Lofquist.
+//	http://www.aloshi.com
+//	Improved and extended by the RetroPie community.
+//	Desktop Edition fork by Leon Styhre.
+//
+//	main.cpp
+//
+//	Main program loop. Interprets command-line arguments, checks for the
+//	home folder and es_settings.cfg configuration file, sets up the application
+//	environment and starts listening to SDL events.
+//
 
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMsgBox.h"
@@ -33,29 +46,37 @@ bool parseArgs(int argc, char* argv[])
 {
 	Utils::FileSystem::setExePath(argv[0]);
 
-	// We need to process --home before any call to Settings::getInstance(), because settings are loaded from homepath
-	for(int i = 1; i < argc; i++)
-	{
-		if(strcmp(argv[i], "--home") == 0)
-		{
-			if(i >= argc - 1)
-			{
-				std::cerr << "Invalid home path supplied.";
+	// We need to process --home before any call to Settings::getInstance(),
+	// because settings are loaded from the home path.
+	for (int i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--home") == 0) {
+			if (i >= argc - 1) {
+				std::cerr << "Error: No home path supplied with \'--home'.\n";
 				return false;
 			}
-
+            if(!Utils::FileSystem::exists(argv[i + 1])) {
+                std::cerr << "Error: Home path \'" << argv[i + 1] << "\' does not exist.\n";
+                return false;
+            }
+            if(Utils::FileSystem::isRegularFile(argv[i + 1])) {
+                std::cerr << "Error: Home path \'" << argv[i + 1] <<
+                        "\' is a file and not a directory.\n";
+                return false;
+            }
 			Utils::FileSystem::setHomePath(argv[i + 1]);
 			break;
 		}
 	}
 
-	for(int i = 1; i < argc; i++)
-	{
-		if(strcmp(argv[i], "--resolution") == 0)
-		{
-			if(i >= argc - 2)
-			{
-				std::cerr << "Invalid resolution supplied.";
+	for(int i = 1; i < argc; i++) {
+        // Skip past --home flag as we already processed it.
+        if (strcmp(argv[i], "--home") == 0) {
+            i++;
+            continue;
+        }
+		if (strcmp(argv[i], "--resolution") == 0) {
+			if (i >= argc - 2) {
+				std::cerr << "Error: Invalid resolution values supplied.\n";
 				return false;
 			}
 
@@ -64,11 +85,10 @@ bool parseArgs(int argc, char* argv[])
 			i += 2; // skip the argument value
 			Settings::getInstance()->setInt("WindowWidth", width);
 			Settings::getInstance()->setInt("WindowHeight", height);
-		}else if(strcmp(argv[i], "--screensize") == 0)
-		{
-			if(i >= argc - 2)
-			{
-				std::cerr << "Invalid screensize supplied.";
+		}
+		else if (strcmp(argv[i], "--screensize") == 0) {
+			if (i >= argc - 2) {
+				std::cerr << "Error: Invalid screensize values supplied.\n";
 				return false;
 			}
 
@@ -77,11 +97,10 @@ bool parseArgs(int argc, char* argv[])
 			i += 2; // skip the argument value
 			Settings::getInstance()->setInt("ScreenWidth", width);
 			Settings::getInstance()->setInt("ScreenHeight", height);
-		}else if(strcmp(argv[i], "--screenoffset") == 0)
-		{
-			if(i >= argc - 2)
-			{
-				std::cerr << "Invalid screenoffset supplied.";
+		}
+		else if (strcmp(argv[i], "--screenoffset") == 0) {
+			if (i >= argc - 2) {
+				std::cerr << "Error: Invalid screenoffset values supplied.\n";
 				return false;
 			}
 
@@ -90,117 +109,126 @@ bool parseArgs(int argc, char* argv[])
 			i += 2; // skip the argument value
 			Settings::getInstance()->setInt("ScreenOffsetX", x);
 			Settings::getInstance()->setInt("ScreenOffsetY", y);
-		}else if (strcmp(argv[i], "--screenrotate") == 0)
-		{
-			if (i >= argc - 1)
-			{
-				std::cerr << "Invalid screenrotate supplied.";
+		}
+		else if (strcmp(argv[i], "--screenrotate") == 0) {
+			if (i >= argc - 1) {
+				std::cerr << "Error: Invalid screenrotate value supplied.\n";
 				return false;
 			}
 
 			int rotate = atoi(argv[i + 1]);
 			++i; // skip the argument value
 			Settings::getInstance()->setInt("ScreenRotate", rotate);
-		}else if(strcmp(argv[i], "--gamelist-only") == 0)
-		{
+		}
+		else if (strcmp(argv[i], "--max-vram") == 0) {
+            if (i >= argc - 1) {
+                std::cerr << "Error: Invalid VRAM value supplied.\n";
+				return false;
+            }
+			int maxVRAM = atoi(argv[i + 1]);
+			Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
+            ++i; // skip the argument value
+		}
+		else if (strcmp(argv[i], "--gamelist-only") == 0) {
 			Settings::getInstance()->setBool("ParseGamelistOnly", true);
-		}else if(strcmp(argv[i], "--ignore-gamelist") == 0)
-		{
+		}
+		else if (strcmp(argv[i], "--ignore-gamelist") == 0) {
 			Settings::getInstance()->setBool("IgnoreGamelist", true);
-		}else if(strcmp(argv[i], "--show-hidden-files") == 0)
-		{
+		}
+		else if (strcmp(argv[i], "--show-hidden-files") == 0) {
 			Settings::getInstance()->setBool("ShowHiddenFiles", true);
-		}else if(strcmp(argv[i], "--draw-framerate") == 0)
-		{
+		}
+		else if (strcmp(argv[i], "--draw-framerate") == 0) {
 			Settings::getInstance()->setBool("DrawFramerate", true);
-		}else if(strcmp(argv[i], "--no-exit") == 0)
-		{
+		}
+		else if (strcmp(argv[i], "--no-exit") == 0) {
 			Settings::getInstance()->setBool("ShowExit", false);
-		}else if(strcmp(argv[i], "--no-splash") == 0)
-		{
+		}
+		else if (strcmp(argv[i], "--no-splash") == 0) {
 			Settings::getInstance()->setBool("SplashScreen", false);
-		}else if(strcmp(argv[i], "--debug") == 0)
-		{
+		}
+		else if (strcmp(argv[i], "--debug") == 0) {
 			Settings::getInstance()->setBool("Debug", true);
 			Settings::getInstance()->setBool("HideConsole", false);
 			Log::setReportingLevel(LogDebug);
-		}else if(strcmp(argv[i], "--fullscreen-normal") == 0)
-		{
-			Settings::getInstance()->setString("FullscreenMode", "normal");
-		}else if(strcmp(argv[i], "--fullscreen-borderless") == 0)
-		{
-			Settings::getInstance()->setString("FullscreenMode", "borderless");
-		}else if(strcmp(argv[i], "--windowed") == 0)
-		{
-			Settings::getInstance()->setBool("Windowed", true);
-		}else if(strcmp(argv[i], "--vsync") == 0)
-		{
-			bool vsync = (strcmp(argv[i + 1], "on") == 0 || strcmp(argv[i + 1], "1") == 0) ? true : false;
-			Settings::getInstance()->setBool("VSync", vsync);
-			i++; // skip vsync value
-//		}else if(strcmp(argv[i], "--scrape") == 0)
-//		{
-//			scrape_cmdline = true;
-		}else if(strcmp(argv[i], "--max-vram") == 0)
-		{
-			int maxVRAM = atoi(argv[i + 1]);
-			Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
 		}
-		else if (strcmp(argv[i], "--force-kiosk") == 0)
-		{
+		else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
+			Settings::getInstance()->setString("FullscreenMode", "normal");
+		}
+		else if (strcmp(argv[i], "--fullscreen-borderless") == 0) {
+			Settings::getInstance()->setString("FullscreenMode", "borderless");
+		}
+		else if (strcmp(argv[i], "--windowed") == 0) {
+			Settings::getInstance()->setBool("Windowed", true);
+		}
+		else if (strcmp(argv[i], "--vsync") == 0) {
+			bool vsync = (strcmp(argv[i + 1], "on") == 0 ||
+					strcmp(argv[i + 1], "1") == 0) ? true : false;
+			Settings::getInstance()->setBool("VSync", vsync);
+			i++; // Skip vsync value.
+//		}
+//		else if (strcmp(argv[i], "--scrape") == 0) {
+//			scrape_cmdline = true;
+		}
+		else if (strcmp(argv[i], "--force-kiosk") == 0) {
 			Settings::getInstance()->setBool("ForceKiosk", true);
 		}
-		else if (strcmp(argv[i], "--force-kid") == 0)
-		{
+		else if (strcmp(argv[i], "--force-kid") == 0) {
 			Settings::getInstance()->setBool("ForceKid", true);
 		}
-		else if (strcmp(argv[i], "--force-disable-filters") == 0)
-		{
+		else if (strcmp(argv[i], "--force-disable-filters") == 0) {
 			Settings::getInstance()->setBool("ForceDisableFilters", true);
 		}
-		else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0)
-		{
+        else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0) {
+			std::cout <<
+            "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << "\n";
+            return false;
+		}
+		else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
 #ifdef WIN32
-			// This is a bit of a hack, but otherwise output will go to nowhere
-			// when the application is compiled with the "WINDOWS" subsystem (which we usually are).
+			// This is a bit of a hack, but otherwise output will go to nowhere when the
+			// application is compiled with the "WINDOWS" subsystem (which we usually are).
 			// If you're an experienced Windows programmer and know how to do this
 			// the right way, please submit a pull request!
 			AttachConsole(ATTACH_PARENT_PROCESS);
 			freopen("CONOUT$", "wb", stdout);
 #endif
 			std::cout <<
-				"EmulationStation Desktop Edition, an emulator front-end with controller navigation and theming support.\n"
-				"Version " << PROGRAM_VERSION_STRING << ", built " << PROGRAM_BUILT_STRING << "\n\n"
-				"Command line arguments:\n"
-				"--resolution [width] [height]	Try and force a particular resolution\n"
-				"--gamelist-only			Skip automatic game search, only read from gamelist.xml\n"
-				"--ignore-gamelist		Ignore the gamelist (useful for troubleshooting)\n"
-				"--draw-framerate		Display the framerate\n"
-				"--no-exit			Don't show the exit option in the menu\n"
-				"--no-splash			Don't show the splash screen\n"
-				"--debug				More logging, show console on Windows\n"
-//				"--scrape			Scrape using command line interface\n"
-				"--windowed			Not fullscreen, should be used with --resolution\n"
-				"--fullscreen-normal             Run in normal fullscreen mode\n"
-				"--fullscreen-borderless         Run in borderless fullscreen mode (always on top)\n"
-				"--vsync [1/on or 0/off]		Turn vsync on or off (default is on)\n"
-				"--max-vram [size]		Max VRAM to use in Mb before swapping. 0 for unlimited\n"
-				"--force-kid		        Force the UI mode to be Kid\n"
-				"--force-kiosk		        Force the UI mode to be Kiosk\n"
-				"--force-disable-filters		Force the UI to ignore applied filters in gamelist\n"
-				"--home [path]		        Directory to use as home path\n"
-				"--help, -h			Summon a sentient, angry tuba\n\n"
-				"More information available in README.md.\n";
-			return false; //exit after printing help
+"EmulationStation Desktop Edition\n"
+"An Emulator Front-end\n\n"
+"Options:\n"
+"--resolution [width] [height]   Try to force a particular resolution\n"
+"--gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
+"--ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
+"--draw-framerate                Display the framerate\n"
+"--no-exit                       Don't show the exit option in the menu\n"
+"--no-splash                     Don't show the splash screen\n"
+#ifdef WIN32
+"--debug                         Show console and print debug information\n"
+#else
+"--debug                         Print debug information\n"
+#endif
+//"--scrape                        Scrape using command line interface\n"
+"--windowed                      Windowed mode, should be combined with --resolution\n"
+"--fullscreen-normal             Normal fullscreen mode\n"
+"--fullscreen-borderless         Borderless fullscreen mode (always on top)\n"
+"--vsync [1/on or 0/off]         Turn vsync on or off (default is on)\n"
+"--max-vram [size]               Max VRAM to use in Mb before swapping\n"
+"                                Set to at least 20 to avoid unpredictable behavior\n"
+"--force-kid                     Force the UI mode to Kid\n"
+"--force-kiosk                   Force the UI mode to Kiosk\n"
+"--force-disable-filters         Force the UI to ignore applied filters in gamelist\n"
+"--home [path]                   Directory to use as home path\n"
+"--version, -v                   Displays version information\n"
+"--help, -h                      Summon a sentient, angry tuba\n";
+			return false; // Exit after printing help.
 		}
-		else
-		{
+		else {
 			std::string argv_unknown = argv[i];
-			std::cout << "Invalid command line argument '" << argv_unknown << "'\n";
+			std::cout << "Unknown option '" << argv_unknown << "'.\n";
 			std::cout << "Try 'emulationstation --help' for more information.\n";
-			return false; // exit after printing message
+			return false; // Exit after printing message.
 		}
-		
 	}
 
 	return true;
@@ -208,15 +236,13 @@ bool parseArgs(int argc, char* argv[])
 
 bool verifyHomeFolderExists()
 {
-	//make sure the config directory exists
+	// Make sure the config directory exists.
 	std::string home = Utils::FileSystem::getHomePath();
 	std::string configDir = home + "/.emulationstation";
-	if(!Utils::FileSystem::exists(configDir))
-	{
+	if (!Utils::FileSystem::exists(configDir)) {
 		std::cout << "Creating config directory \"" << configDir << "\"\n";
 		Utils::FileSystem::createDirectory(configDir);
-		if(!Utils::FileSystem::exists(configDir))
-		{
+		if (!Utils::FileSystem::exists(configDir)) {
 			std::cerr << "Config directory could not be created!\n";
 			return false;
 		}
@@ -225,22 +251,23 @@ bool verifyHomeFolderExists()
 	return true;
 }
 
-// Returns true if everything is OK,
+// Returns true if everything is OK.
 bool loadSystemConfigFile(const char** errorString)
 {
 	*errorString = NULL;
 
-	if(!SystemData::loadConfig())
-	{
+	if (!SystemData::loadConfig()) {
 		LOG(LogError) << "Error while parsing systems configuration file!";
-		*errorString = "IT LOOKS LIKE YOUR SYSTEMS CONFIGURATION FILE HAS NOT BEEN SET UP OR IS INVALID. YOU'LL NEED TO DO THIS BY HAND, UNFORTUNATELY.\n\n"
+		*errorString = "IT LOOKS LIKE YOUR SYSTEMS CONFIGURATION FILE HAS NOT BEEN SET UP "
+			"OR IS INVALID. YOU'LL NEED TO DO THIS BY HAND, UNFORTUNATELY.\n\n"
 			"VISIT EMULATIONSTATION.ORG FOR MORE INFORMATION.";
 		return false;
 	}
 
-	if(SystemData::sSystemVector.size() == 0)
+	if (SystemData::sSystemVector.size() == 0)
 	{
-		LOG(LogError) << "No systems found! Does at least one system have a game present? (check that extensions match!)\n(Also, make sure you've updated your es_systems.cfg for XML!)";
+		LOG(LogError) << "No systems found! Does at least one system have a game present? (check "
+		"that extensions match!)\n(Also, make sure you've updated your es_systems.cfg for XML!)";
 		*errorString = "WE CAN'T FIND ANY SYSTEMS!\n"
 			"CHECK THAT YOUR PATHS ARE CORRECT IN THE SYSTEMS CONFIGURATION FILE, "
 			"AND YOUR GAME DIRECTORY HAS AT LEAST ONE GAME WITH THE CORRECT EXTENSION.\n\n"
@@ -251,7 +278,7 @@ bool loadSystemConfigFile(const char** errorString)
 	return true;
 }
 
-//called on exit, assuming we get far enough to have the log initialized
+// Called on exit, assuming we get far enough to have the log initialized.
 void onExit()
 {
 	Log::close();
@@ -263,10 +290,10 @@ int main(int argc, char* argv[])
 
 	std::locale::global(std::locale("C"));
 
-	if(!parseArgs(argc, argv))
+	if (!parseArgs(argc, argv))
 		return 0;
 
-	// only show the console on Windows if HideConsole is false
+	// Only show the console on Windows if HideConsole is false.
 #ifdef WIN32
 	// MSVC has a "SubSystem" option, with two primary options: "WINDOWS" and "CONSOLE".
 	// In "WINDOWS" mode, no console is automatically created for us.  This is good,
@@ -277,43 +304,43 @@ int main(int argc, char* argv[])
 	// will leave a brief flash.
 	// TL;DR: You should compile ES under the "WINDOWS" subsystem.
 	// I have no idea how this works with non-MSVC compilers.
-	if(!Settings::getInstance()->getBool("HideConsole"))
-	{
-		// we want to show the console
-		// if we're compiled in "CONSOLE" mode, this is already done.
-		// if we're compiled in "WINDOWS" mode, no console is created for us automatically;
-		// the user asked for one, so make one and then hook stdin/stdout/sterr up to it
-		if(AllocConsole()) // should only pass in "WINDOWS" mode
-		{
+	if (!Settings::getInstance()->getBool("HideConsole")) {
+		// We want to show the console.
+		// If we're compiled in "CONSOLE" mode, this is already done.
+		// If we're compiled in "WINDOWS" mode, no console is created for us automatically;
+		// the user asked for one, so make one and then hook stdin/stdout/sterr up to it.
+		if (AllocConsole()) { // Should only pass in "WINDOWS" mode.
 			freopen("CONIN$", "r", stdin);
 			freopen("CONOUT$", "wb", stdout);
 			freopen("CONOUT$", "wb", stderr);
 		}
-	}else{
-		// we want to hide the console
-		// if we're compiled with the "WINDOWS" subsystem, this is already done.
-		// if we're compiled with the "CONSOLE" subsystem, a console is already created;
-		// it'll flash open, but we hide it nearly immediately
-		if(GetConsoleWindow()) // should only pass in "CONSOLE" mode
+	}
+	else {
+		// We want to hide the console.
+		// If we're compiled with the "WINDOWS" subsystem, this is already done.
+		// If we're compiled with the "CONSOLE" subsystem, a console is already created;
+		// it'll flash open, but we hide it nearly immediately.
+		if (GetConsoleWindow()) // Should only pass in "CONSOLE" mode.
 			ShowWindow(GetConsoleWindow(), SW_HIDE);
 	}
 #endif
 
-	// call this ONLY when linking with FreeImage as a static library
+	// Call this ONLY when linking with FreeImage as a static library.
 #ifdef FREEIMAGE_LIB
 	FreeImage_Initialise();
 #endif
 
-	//if ~/.emulationstation doesn't exist and cannot be created, bail
-	if(!verifyHomeFolderExists())
+	// If ~/.emulationstation doesn't exist and cannot be created, bail.
+	if (!verifyHomeFolderExists())
 		return 1;
 
-	//start the logger
+	// Start the logger.
 	Log::init();
 	Log::open();
-	LOG(LogInfo) << "EmulationStation - v" << PROGRAM_VERSION_STRING << ", built " << PROGRAM_BUILT_STRING;
+	LOG(LogInfo) << "EmulationStation - v" << PROGRAM_VERSION_STRING <<
+            ", built " << PROGRAM_BUILT_STRING;
 
-	//always close the log on exit
+	// Always close the log on exit.
 	atexit(&onExit);
 
 	Window window;
@@ -327,16 +354,13 @@ int main(int argc, char* argv[])
 	bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
 	bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
 
-	if(!scrape_cmdline)
-	{
-		if(!window.init())
-		{
+	if (!scrape_cmdline) {
+		if (!window.init()) {
 			LOG(LogError) << "Window failed to initialize!";
 			return 1;
 		}
-	
-		if(splashScreen)
-		{
+
+		if (splashScreen) {
 			std::string progressText = "Loading...";
 			if (splashScreenProgress)
 				progressText = "Loading system config...";
@@ -345,18 +369,18 @@ int main(int argc, char* argv[])
 	}
 
 	const char* errorMsg = NULL;
-	if(!loadSystemConfigFile(&errorMsg))
-	{
-		// something went terribly wrong
-		if(errorMsg == NULL)
+	if (!loadSystemConfigFile(&errorMsg)) {
+		// Something went terribly wrong.
+		if (errorMsg == NULL)
 		{
 			LOG(LogError) << "Unknown error occured while parsing system config file.";
-			if(!scrape_cmdline)
+			if (!scrape_cmdline)
 				Renderer::deinit();
 			return 1;
 		}
 
-		// we can't handle es_systems.cfg file problems inside ES itself, so display the error message then quit
+		// We can't handle es_systems.cfg file problems inside ES itself,
+        // so display the error message and then quit.
 		window.pushGui(new GuiMsgBox(&window,
 			errorMsg,
 			"QUIT", [] {
@@ -366,34 +390,36 @@ int main(int argc, char* argv[])
 			}));
 	}
 
-	//run the command line scraper then quit
-	if(scrape_cmdline)
+	// Run the command line scraper then quit.
+	if (scrape_cmdline)
 	{
 		return run_scraper_cmdline();
 	}
 
-	//dont generate joystick events while we're loading (hopefully fixes "automatically started emulator" bug)
+	// Dont generate joystick events while we're loading.
+	// (Hopefully fixes "automatically started emulator" bug.)
 	SDL_JoystickEventState(SDL_DISABLE);
 
-	// preload what we can right away instead of waiting for the user to select it
-	// this makes for no delays when accessing content, but a longer startup time
+	// Preload what we can right away instead of waiting for the user to select it.
+	// This makes for no delays when accessing content, but a longer startup time.
 	ViewController::get()->preload();
 
-	if(splashScreen && splashScreenProgress)
+	if (splashScreen && splashScreenProgress)
 		window.renderLoadingScreen("Done.");
 
-	//choose which GUI to open depending on if an input configuration already exists
-	if(errorMsg == NULL)
-	{
-		if(Utils::FileSystem::exists(InputManager::getConfigPath()) && InputManager::getInstance()->getNumConfiguredDevices() > 0)
-		{
+	// Choose which GUI to open depending on if an input configuration already exists.
+	if (errorMsg == NULL) {
+		if (Utils::FileSystem::exists(InputManager::getConfigPath()) &&
+				InputManager::getInstance()->getNumConfiguredDevices() > 0) {
 			ViewController::get()->goToStart();
-		}else{
-			window.pushGui(new GuiDetectDevice(&window, true, [] { ViewController::get()->goToStart(); }));
+		}
+		else {
+			window.pushGui(new GuiDetectDevice(&window, true, [] {
+					ViewController::get()->goToStart(); }));
 		}
 	}
 
-	//generate joystick events since we're done loading
+	// Generate joystick events since we're done loading.
 	SDL_JoystickEventState(SDL_ENABLE);
 
 	int lastTime = SDL_GetTicks();
@@ -401,49 +427,49 @@ int main(int argc, char* argv[])
 
 	bool running = true;
 
-	while(running)
-	{
+	while (running) {
 		SDL_Event event;
-		bool ps_standby = PowerSaver::getState() && (int) SDL_GetTicks() - ps_time > PowerSaver::getMode();
+		bool ps_standby = PowerSaver::getState() && (int) SDL_GetTicks() -
+				ps_time > PowerSaver::getMode();
 
-		if(ps_standby ? SDL_WaitEventTimeout(&event, PowerSaver::getTimeout()) : SDL_PollEvent(&event))
-		{
-			do
-			{
+		if (ps_standby ? SDL_WaitEventTimeout(&event, PowerSaver::getTimeout())
+				: SDL_PollEvent(&event)) {
+			do {
 				InputManager::getInstance()->parseEvent(event, &window);
 
-				if(event.type == SDL_QUIT)
+				if (event.type == SDL_QUIT)
 					running = false;
-			} while(SDL_PollEvent(&event));
+			}
+			while (SDL_PollEvent(&event));
 
-			// triggered if exiting from SDL_WaitEvent due to event
+			// Triggered if exiting from SDL_WaitEvent due to event.
 			if (ps_standby)
-				// show as if continuing from last event
+				// Show as if continuing from last event.
 				lastTime = SDL_GetTicks();
 
-			// reset counter
+			// Reset counter.
 			ps_time = SDL_GetTicks();
 		}
-		else if (ps_standby)
-		{
-			// If exitting SDL_WaitEventTimeout due to timeout. Trail considering
-			// timeout as an event
+		else if (ps_standby) {
+			// If exiting SDL_WaitEventTimeout due to timeout.
+			// Trail considering timeout as an event.
 			ps_time = SDL_GetTicks();
 		}
 
-		if(window.isSleeping())
-		{
+		if (window.isSleeping()) {
 			lastTime = SDL_GetTicks();
-			SDL_Delay(1); // this doesn't need to be accurate, we're just giving up our CPU time until something wakes us up
+			// This doesn't need to be accurate, we're just giving up
+			// our CPU time until something wakes us up.
 			continue;
+			SDL_Delay(1);
 		}
 
 		int curTime = SDL_GetTicks();
 		int deltaTime = curTime - lastTime;
 		lastTime = curTime;
 
-		// cap deltaTime if it ever goes negative
-		if(deltaTime < 0)
+		// Cap deltaTime if it ever goes negative.
+		if (deltaTime < 0)
 			deltaTime = 1000;
 
 		window.update(deltaTime);
@@ -453,7 +479,7 @@ int main(int argc, char* argv[])
 		Log::flush();
 	}
 
-	while(window.peekGui() != ViewController::get())
+	while (window.peekGui() != ViewController::get())
 		delete window.peekGui();
 	window.deinit();
 
@@ -461,7 +487,7 @@ int main(int argc, char* argv[])
 	CollectionSystemManager::deinit();
 	SystemData::deleteSystems();
 
-	// call this ONLY when linking with FreeImage as a static library
+	// Call this ONLY when linking with FreeImage as a static library.
 #ifdef FREEIMAGE_LIB
 	FreeImage_DeInitialise();
 #endif
