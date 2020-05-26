@@ -1,3 +1,12 @@
+//
+//	GuiScraperMulti.h
+//
+//	Multiple game scraping user interface.
+//	Shows the progress for the scraping as it's running.
+//	This interface is triggered from the GuiScraperStart menu.
+//	ScraperSearchComponent is called from here.
+//
+
 #pragma once
 #ifndef ES_APP_GUIS_GUI_SCRAPER_MULTI_H
 #define ES_APP_GUIS_GUI_SCRAPER_MULTI_H
@@ -13,7 +22,11 @@ class TextComponent;
 class GuiScraperMulti : public GuiComponent
 {
 public:
-	GuiScraperMulti(Window* window, const std::queue<ScraperSearchParams>& searches, bool approveResults);
+	GuiScraperMulti(
+			Window* window,
+			const std::queue<ScraperSearchParams>& searches,
+			bool approveResults);
+
 	virtual ~GuiScraperMulti();
 
 	void onSizeChanged() override;

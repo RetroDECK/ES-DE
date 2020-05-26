@@ -7,6 +7,8 @@
 //	Improved and extended by the RetroPie community.
 //	Desktop Edition fork by Leon Styhre.
 //
+//	The line length limit is 100 characters.
+//
 //	main.cpp
 //
 //	Main program loop. Interprets command-line arguments, checks for the

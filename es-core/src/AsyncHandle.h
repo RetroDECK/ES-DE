@@ -1,17 +1,22 @@
+//
+//	AsyncHandle.h
+//
+//	Asynchronous operations used by ScraperSearchComponent and Scraper.
+//
+
 #pragma once
 #ifndef ES_CORE_ASYNC_HANDLE_H
 #define ES_CORE_ASYNC_HANDLE_H
 
 #include <string>
 
-enum AsyncHandleStatus
-{
+enum AsyncHandleStatus {
 	ASYNC_IN_PROGRESS,
 	ASYNC_ERROR,
 	ASYNC_DONE
 };
 
-// Handle for some asynchronous operation.
+// Handle for some asynchronous operations.
 class AsyncHandle
 {
 public:
@@ -23,11 +28,11 @@ public:
 	// Update and return the latest status.
 	inline AsyncHandleStatus status() { update(); return mStatus; }
 
-	// User-friendly string of our current status.  Will return error message if status() == SEARCH_ERROR.
+	// User-friendly string of our current status.
+	// Will return error message if status() == SEARCH_ERROR.
 	inline std::string getStatusString()
 	{
-		switch(mStatus)
-		{
+		switch (mStatus) {
 		case ASYNC_IN_PROGRESS:
 			return "in progress";
 		case ASYNC_ERROR:

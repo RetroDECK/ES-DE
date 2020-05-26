@@ -1,3 +1,11 @@
+//
+//	GuiGamelistFilter.h
+//
+//	User interface for the gamelist filters.
+//	Triggered from the GuiGamelistOptions menu.
+//	Actual filter logic is covered by FileFilterIndex.
+//
+
 #pragma once
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
 #define ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
@@ -14,6 +22,7 @@ class GuiGamelistFilter : public GuiComponent
 {
 public:
 	GuiGamelistFilter(Window* window, SystemData* system);
+
 	~GuiGamelistFilter();
 	bool input(InputConfig* config, Input input) override;
 

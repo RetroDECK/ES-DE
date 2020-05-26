@@ -1,3 +1,12 @@
+//
+//	GuiMetaDataEd.h
+//
+//	Game metadata edit user interface.
+//	This interface is triggered from the GuiGamelistOptions menu.
+//	The scraping interface is handled by GuiGameScraper which calls
+//	ScraperSearchComponent.
+//
+
 #pragma once
 #ifndef ES_APP_GUIS_GUI_META_DATA_ED_H
 #define ES_APP_GUIS_GUI_META_DATA_ED_H
@@ -14,8 +23,13 @@ class TextComponent;
 class GuiMetaDataEd : public GuiComponent
 {
 public:
-	GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector<MetaDataDecl>& mdd, ScraperSearchParams params,
-		const std::string& header, std::function<void()> savedCallback, std::function<void()> deleteFunc);
+	GuiMetaDataEd(
+			Window* window,
+			MetaDataList* md, const std::vector<MetaDataDecl>&mdd,
+			ScraperSearchParams params,
+			const std::string& header,
+			std::function<void()> savedCallback,
+			std::function<void()> deleteFunc);
 
 	bool input(InputConfig* config, Input input) override;
 	void onSizeChanged() override;

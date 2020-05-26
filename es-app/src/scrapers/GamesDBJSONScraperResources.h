@@ -1,3 +1,10 @@
+//
+//	GamesDBJSONScraperResources.h
+//
+//	Functions specifically for scraping from thegamesdb.net
+//	Called from GamesDBJSONScraper.
+//
+
 #pragma once
 #ifndef ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_RESOURCES_H
 #define ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_RESOURCES_H
@@ -9,9 +16,7 @@
 
 #include "HttpReq.h"
 
-
-struct TheGamesDBJSONRequestResources
-{
+struct TheGamesDBJSONRequestResources {
 	TheGamesDBJSONRequestResources() = default;
 
 	void prepare();
@@ -25,12 +30,17 @@ struct TheGamesDBJSONRequestResources
   private:
 	bool checkLoaded();
 
-	bool saveResource(HttpReq* req, std::unordered_map<int, std::string>& resource, const std::string& resource_name,
-		const std::string& file_name);
-	std::unique_ptr<HttpReq> fetchResource(const std::string& endpoint);
+	bool saveResource(
+			HttpReq* req,
+			std::unordered_map<int, std::string>& resource,
+			const std::string& resource_name,
+			const std::string& file_name);
+			std::unique_ptr<HttpReq> fetchResource(const std::string& endpoint);
 
 	int loadResource(
-		std::unordered_map<int, std::string>& resource, const std::string& resource_name, const std::string& file_name);
+		std::unordered_map<int, std::string>& resource,
+		const std::string& resource_name,
+		const std::string& file_name);
 
 	std::unique_ptr<HttpReq> gamesdb_developers_resource_request;
 	std::unique_ptr<HttpReq> gamesdb_publishers_resource_request;
@@ -39,4 +49,4 @@ struct TheGamesDBJSONRequestResources
 
 std::string getScrapersResouceDir();
 
-#endif // ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_H
+#endif // ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_RESOURCES_H

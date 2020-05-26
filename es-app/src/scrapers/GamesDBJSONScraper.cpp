@@ -1,3 +1,10 @@
+//
+//	GamesDBJSONScraper.cpp
+//
+//	Functions specifically for scraping from thegamesdb.net
+//	Called from Scraper.
+//
+
 #include <exception>
 #include <map>
 
@@ -12,15 +19,14 @@
 #include "utils/TimeUtil.h"
 #include <pugixml/src/pugixml.hpp>
 
-/* When raspbian will get an up to date version of rapidjson we'll be
-   able to have it throw in case of error with the following:
-#ifndef RAPIDJSON_ASSERT
-#define RAPIDJSON_ASSERT(x)                                                    \
-  if (!(x)) {                                                                  \
-	throw std::runtime_error("rapidjson internal assertion failure: " #x);     \
-  }
-#endif // RAPIDJSON_ASSERT
-*/
+// When raspbian will get an up to date version of rapidjson we'll be
+// able to have it throw in case of error with the following:
+//ifndef RAPIDJSON_ASSERT
+//#define RAPIDJSON_ASSERT(x)                                                      \
+//	if (!(x)) {                                                                    \
+//		throw std::runtime_error("rapidjson internal assertion failure: " #x);     \
+//	}
+//#endif // RAPIDJSON_ASSERT
 
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
@@ -28,12 +34,11 @@
 using namespace PlatformIds;
 using namespace rapidjson;
 
-namespace
-{
+namespace {
 TheGamesDBJSONRequestResources resources;
 }
 
-const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
+const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
 	{ THREEDO, "25" },
 	{ AMIGA, "4911" },
 	{ AMSTRAD_CPC, "4914" },
@@ -88,8 +93,8 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
 	{ PLAYSTATION_VITA, "39" },
 	{ PLAYSTATION_PORTABLE, "13" },
 	{ SUPER_NINTENDO, "6" },
-	{ TURBOGRAFX_16, "34" },   // HuCards only
-	{ TURBOGRAFX_CD, "4955" }, // CD-ROMs only
+	{ TURBOGRAFX_16, "34" },   // HuCards only.
+	{ TURBOGRAFX_CD, "4955" }, // CD-ROMs only.
 	{ WONDERSWAN, "4925" },
 	{ WONDERSWAN_COLOR, "4926" },
 	{ ZX_SPECTRUM, "4913" },
@@ -99,16 +104,17 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
 	{ TANDY, "4941" },
 };
 
-void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params,
-	std::queue<std::unique_ptr<ScraperRequest>>& requests, std::vector<ScraperSearchResult>& results)
+void thegamesdb_generate_json_scraper_requests(
+		const ScraperSearchParams& params,
+		std::queue<std::unique_ptr<ScraperRequest>>& requests,
+		std::vector<ScraperSearchResult>& results)
 {
 	resources.prepare();
 	std::string path = "https://api.thegamesdb.net/v1";
 	bool usingGameID = false;
 	const std::string apiKey = std::string("apikey=") + resources.getApiKey();
 	std::string cleanName = params.nameOverride;
-	if (!cleanName.empty() && cleanName.substr(0, 3) == "id:")
-	{
+	if (!cleanName.empty() && cleanName.substr(0, 3) == "id:") {
 		std::string gameID = cleanName.substr(3);
 		path += "/Games/ByGameID?" + apiKey +
 				"&fields=players,publishers,genres,overview,last_updated,rating,"
@@ -116,42 +122,37 @@ void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params
 				"include=boxart&id=" +
 				HttpReq::urlEncode(gameID);
 		usingGameID = true;
-	} else
-	{
+	}
+	else {
 		if (cleanName.empty())
 			cleanName = params.game->getCleanName();
-		path += "/Games/ByGameName?" + apiKey +
-				"&fields=players,publishers,genres,overview,last_updated,rating,"
-				"platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&"
-				"include=boxart&name=" +
-				HttpReq::urlEncode(cleanName);
+			path += "/Games/ByGameName?" + apiKey +
+					"&fields=players,publishers,genres,overview,last_updated,rating,"
+					"platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&"
+					"include=boxart&name=" +
+					HttpReq::urlEncode(cleanName);
 	}
 
-	if (usingGameID)
-	{
-		// if we have the ID already, we don't need the GetGameList request
+	if (usingGameID) {
+		// Ff we have the ID already, we don't need the GetGameList request.
 		requests.push(std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(results, path)));
-	} else
-	{
+	}
+	else {
 		std::string platformQueryParam;
 		auto& platforms = params.system->getPlatformIds();
-		if (!platforms.empty())
-		{
+		if (!platforms.empty()) {
 			bool first = true;
 			platformQueryParam += "&filter%5Bplatform%5D=";
-			for (auto platformIt = platforms.cbegin(); platformIt != platforms.cend(); platformIt++)
-			{
+			for (auto platformIt = platforms.cbegin();
+					platformIt != platforms.cend(); platformIt++) {
 				auto mapIt = gamesdb_new_platformid_map.find(*platformIt);
-				if (mapIt != gamesdb_new_platformid_map.cend())
-				{
+				if (mapIt != gamesdb_new_platformid_map.cend()) {
 					if (!first)
-					{
 						platformQueryParam += ",";
-					}
 					platformQueryParam += HttpReq::urlEncode(mapIt->second);
 					first = false;
-				} else
-				{
+				}
+				else {
 					LOG(LogWarning) << "TheGamesDB scraper warning - no support for platform "
 									<< getPlatformName(*platformIt);
 				}
@@ -159,7 +160,8 @@ void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params
 			path += platformQueryParam;
 		}
 
-		requests.push(std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(requests, results, path)));
+		requests.push(std::unique_ptr<ScraperRequest>
+				(new TheGamesDBJSONRequest(requests, results, path)));
 	}
 }
 
@@ -168,26 +170,25 @@ namespace
 
 std::string getStringOrThrow(const Value& v, const std::string& key)
 {
-	if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsString())
-	{
-		throw std::runtime_error("rapidjson internal assertion failure: missing or non string key:" + key);
+	if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsString()) {
+		throw std::runtime_error(
+				"rapidjson internal assertion failure: missing or non string key:" + key);
 	}
 	return v[key.c_str()].GetString();
 }
 
 int getIntOrThrow(const Value& v, const std::string& key)
 {
-	if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsInt())
-	{
-		throw std::runtime_error("rapidjson internal assertion failure: missing or non int key:" + key);
+	if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsInt()) {
+		throw std::runtime_error(
+				"rapidjson internal assertion failure: missing or non int key:" + key);
 	}
 	return v[key.c_str()].GetInt();
 }
 
 int getIntOrThrow(const Value& v)
 {
-	if (!v.IsInt())
-	{
+	if (!v.IsInt()) {
 		throw std::runtime_error("rapidjson internal assertion failure: not an int");
 	}
 	return v.GetInt();
@@ -196,18 +197,14 @@ int getIntOrThrow(const Value& v)
 std::string getBoxartImage(const Value& v)
 {
 	if (!v.IsArray() || v.Size() == 0)
-	{
 		return "";
-	}
-	for (int i = 0; i < (int)v.Size(); ++i)
-	{
+
+	for (int i = 0; i < (int)v.Size(); ++i) {
 		auto& im = v[i];
 		std::string type = getStringOrThrow(im, "type");
 		std::string side = getStringOrThrow(im, "side");
 		if (type == "boxart" && side == "front")
-		{
 			return getStringOrThrow(im, "filename");
-		}
 	}
 	return getStringOrThrow(v[0], "filename");
 }
@@ -215,22 +212,19 @@ std::string getBoxartImage(const Value& v)
 std::string getDeveloperString(const Value& v)
 {
 	if (!v.IsArray())
-	{
 		return "";
-	}
+
 	std::string out = "";
 	bool first = true;
-	for (int i = 0; i < (int)v.Size(); ++i)
-	{
+	for (int i = 0; i < (int)v.Size(); ++i) {
 		auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
+
 		if (mapIt == resources.gamesdb_new_developers_map.cend())
-		{
 			continue;
-		}
+
 		if (!first)
-		{
 			out += ", ";
-		}
+
 		out += mapIt->second;
 		first = false;
 	}
@@ -240,22 +234,19 @@ std::string getDeveloperString(const Value& v)
 std::string getPublisherString(const Value& v)
 {
 	if (!v.IsArray())
-	{
 		return "";
-	}
+
 	std::string out = "";
 	bool first = true;
-	for (int i = 0; i < (int)v.Size(); ++i)
-	{
+	for (int i = 0; i < (int)v.Size(); ++i) {
 		auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
+
 		if (mapIt == resources.gamesdb_new_publishers_map.cend())
-		{
 			continue;
-		}
+
 		if (!first)
-		{
 			out += ", ";
-		}
+
 		out += mapIt->second;
 		first = false;
 	}
@@ -265,22 +256,18 @@ std::string getPublisherString(const Value& v)
 std::string getGenreString(const Value& v)
 {
 	if (!v.IsArray())
-	{
 		return "";
-	}
+
 	std::string out = "";
 	bool first = true;
-	for (int i = 0; i < (int)v.Size(); ++i)
-	{
+	for (int i = 0; i < (int)v.Size(); ++i) {
 		auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
 		if (mapIt == resources.gamesdb_new_genres_map.cend())
-		{
 			continue;
-		}
+
 		if (!first)
-		{
 			out += ", ";
-		}
+
 		out += mapIt->second;
 		first = false;
 	}
@@ -296,38 +283,27 @@ void processGame(const Value& game, const Value& boxart, std::vector<ScraperSear
 
 	result.mdl.set("name", getStringOrThrow(game, "game_title"));
 	if (game.HasMember("overview") && game["overview"].IsString())
-	{
 		result.mdl.set("desc", game["overview"].GetString());
-	}
+
 	if (game.HasMember("release_date") && game["release_date"].IsString())
-	{
-		result.mdl.set(
-			"releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(game["release_date"].GetString(), "%Y-%m-%d")));
-	}
+		result.mdl.set("releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(
+				game["release_date"].GetString(), "%Y-%m-%d")));
+
 	if (game.HasMember("developers") && game["developers"].IsArray())
-	{
 		result.mdl.set("developer", getDeveloperString(game["developers"]));
-	}
+
 	if (game.HasMember("publishers") && game["publishers"].IsArray())
-	{
 		result.mdl.set("publisher", getPublisherString(game["publishers"]));
-	}
+
 	if (game.HasMember("genres") && game["genres"].IsArray())
-	{
-
 		result.mdl.set("genre", getGenreString(game["genres"]));
-	}
+
 	if (game.HasMember("players") && game["players"].IsInt())
-	{
 		result.mdl.set("players", std::to_string(game["players"].GetInt()));
-	}
 
-
-	if (boxart.HasMember("data") && boxart["data"].IsObject())
-	{
+	if (boxart.HasMember("data") && boxart["data"].IsObject()) {
 		std::string id = std::to_string(getIntOrThrow(game, "id"));
-		if (boxart["data"].HasMember(id.c_str()))
-		{
+		if (boxart["data"].HasMember(id.c_str())) {
 		    std::string image = getBoxartImage(boxart["data"][id.c_str()]);
 		    result.thumbnailUrl = baseImageUrlThumb + "/" + image;
 		    result.imageUrl = baseImageUrlLarge + "/" + image;
@@ -338,32 +314,32 @@ void processGame(const Value& game, const Value& boxart, std::vector<ScraperSear
 }
 } // namespace
 
-void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req, std::vector<ScraperSearchResult>& results)
+void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
+		std::vector<ScraperSearchResult>& results)
 {
 	assert(req->status() == HttpReq::REQ_SUCCESS);
 
 	Document doc;
 	doc.Parse(req->getContent().c_str());
 
-	if (doc.HasParseError())
-	{
+	if (doc.HasParseError()) {
 		std::string err =
-			std::string("TheGamesDBJSONRequest - Error parsing JSON. \n\t") + GetParseError_En(doc.GetParseError());
+			std::string("TheGamesDBJSONRequest - Error parsing JSON. \n\t") +
+					GetParseError_En(doc.GetParseError());
 		setError(err);
 		LOG(LogError) << err;
 		return;
 	}
 
-	if (!doc.HasMember("data") || !doc["data"].HasMember("games") || !doc["data"]["games"].IsArray())
-	{
+	if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
+			!doc["data"]["games"].IsArray()) {
 		std::string warn = "TheGamesDBJSONRequest - Response had no game data.\n";
 		LOG(LogWarning) << warn;
 		return;
 	}
 	const Value& games = doc["data"]["games"];
 
-	if (!doc.HasMember("include") || !doc["include"].HasMember("boxart"))
-	{
+	if (!doc.HasMember("include") || !doc["include"].HasMember("boxart")) {
 		std::string warn = "TheGamesDBJSONRequest - Response had no include boxart data.\n";
 		LOG(LogWarning) << warn;
 		return;
@@ -371,8 +347,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req, std::ve
 
 	const Value& boxart = doc["include"]["boxart"];
 
-	if (!boxart.HasMember("base_url") || !boxart.HasMember("data") || !boxart.IsObject())
-	{
+	if (!boxart.HasMember("base_url") || !boxart.HasMember("data") || !boxart.IsObject()) {
 		std::string warn = "TheGamesDBJSONRequest - Response include had no usable boxart data.\n";
 		LOG(LogWarning) << warn;
 		return;
@@ -380,16 +355,12 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req, std::ve
 
 	resources.ensureResources();
 
-
-	for (int i = 0; i < (int)games.Size(); ++i)
-	{
+	for (int i = 0; i < (int)games.Size(); ++i) {
 		auto& v = games[i];
-		try
-		{
+		try {
 			processGame(v, boxart, results);
 		}
-		catch (std::runtime_error& e)
-		{
+		catch (std::runtime_error& e) {
 			LOG(LogError) << "Error while processing game: " << e.what();
 		}
 	}

@@ -1,9 +1,8 @@
 //
 //	Settings.cpp
 //
-//	Functions to read from and write to the configuration file es_settings.cfg
-//	are included here. The default values for the application settings are
-//	defined here as well.
+//	Functions to read from and write to the configuration file es_settings.cfg.
+//	The default values for the application settings are defined here as well.
 //
 
 #include "Settings.h"

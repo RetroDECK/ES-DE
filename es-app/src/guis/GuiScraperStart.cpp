@@ -1,3 +1,10 @@
+//
+//	GuiScraperStart.cpp
+//
+//	Submenu to the GuiMenu main menu.
+//	Configuration options for the scraper and start button to intiate the scraping.
+//
+
 #include "guis/GuiScraperStart.h"
 
 #include "components/OptionListComponent.h"
@@ -13,19 +20,22 @@ GuiScraperStart::GuiScraperStart(Window* window) : GuiComponent(window),
 {
 	addChild(&mMenu);
 
-	// add filters (with first one selected)
-	mFilters = std::make_shared< OptionListComponent<GameFilterFunc> >(mWindow, "SCRAPE THESE GAMES", false);
+	// Add filters (with first one selected).
+	mFilters = std::make_shared< OptionListComponent<GameFilterFunc>
+			>(mWindow, "SCRAPE THESE GAMES", false);
 	mFilters->add("All Games",
 		[](SystemData*, FileData*) -> bool { return true; }, false);
 	mFilters->add("Only missing image",
-		[](SystemData*, FileData* g) -> bool { return g->metadata.get("image").empty(); }, true);
+			[](SystemData*, FileData* g) -> bool {
+		return g->metadata.get("image").empty(); }, true);
 	mMenu.addWithLabel("Filter", mFilters);
 
-	//add systems (all with a platformid specified selected)
-	mSystems = std::make_shared< OptionListComponent<SystemData*> >(mWindow, "SCRAPE THESE SYSTEMS", true);
-	for(auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend(); it++)
-	{
-		if(!(*it)->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
+	// Add systems (all systems with an existing platform ID are listed).
+	mSystems = std::make_shared< OptionListComponent<SystemData*>
+			>(mWindow, "SCRAPE THESE SYSTEMS", true);
+	for (auto it = SystemData::sSystemVector.cbegin();
+			it != SystemData::sSystemVector.cend(); it++) {
+		if (!(*it)->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
 			mSystems->add((*it)->getFullName(), *it, !(*it)->getPlatformIds().empty());
 	}
 	mMenu.addWithLabel("Systems", mSystems);
@@ -37,18 +47,19 @@ GuiScraperStart::GuiScraperStart(Window* window) : GuiComponent(window),
 	mMenu.addButton("START", "start", std::bind(&GuiScraperStart::pressedStart, this));
 	mMenu.addButton("BACK", "back", [&] { delete this; });
 
-	mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2, Renderer::getScreenHeight() * 0.15f);
+	mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2,
+			Renderer::getScreenHeight() * 0.15f);
 }
 
 void GuiScraperStart::pressedStart()
 {
 	std::vector<SystemData*> sys = mSystems->getSelectedObjects();
-	for(auto it = sys.cbegin(); it != sys.cend(); it++)
-	{
-		if((*it)->getPlatformIds().empty())
-		{
+	for (auto it = sys.cbegin(); it != sys.cend(); it++) {
+		if ((*it)->getPlatformIds().empty()) {
 			mWindow->pushGui(new GuiMsgBox(mWindow,
-				Utils::String::toUpper("Warning: some of your selected systems do not have a platform set. Results may be even more inaccurate than usual!\nContinue anyway?"),
+				Utils::String::toUpper("Warning: some of your selected systems do not "
+				"have a platform set. Results may be even more inaccurate than "
+				"usual!\nContinue anyway?"),
 				"YES", std::bind(&GuiScraperStart::start, this),
 				"NO", nullptr));
 			return;
@@ -60,29 +71,28 @@ void GuiScraperStart::pressedStart()
 
 void GuiScraperStart::start()
 {
-	std::queue<ScraperSearchParams> searches = getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
+	std::queue<ScraperSearchParams> searches = getSearches(mSystems->getSelectedObjects(),
+			mFilters->getSelected());
 
-	if(searches.empty())
-	{
+	if (searches.empty()) {
 		mWindow->pushGui(new GuiMsgBox(mWindow,
 			"NO GAMES FIT THAT CRITERIA."));
-	}else{
+	}
+	else {
 		GuiScraperMulti* gsm = new GuiScraperMulti(mWindow, searches, mApproveResults->getState());
 		mWindow->pushGui(gsm);
 		delete this;
 	}
 }
 
-std::queue<ScraperSearchParams> GuiScraperStart::getSearches(std::vector<SystemData*> systems, GameFilterFunc selector)
+std::queue<ScraperSearchParams> GuiScraperStart::getSearches(
+		std::vector<SystemData*> systems, GameFilterFunc selector)
 {
 	std::queue<ScraperSearchParams> queue;
-	for(auto sys = systems.cbegin(); sys != systems.cend(); sys++)
-	{
+	for (auto sys = systems.cbegin(); sys != systems.cend(); sys++) {
 		std::vector<FileData*> games = (*sys)->getRootFolder()->getFilesRecursive(GAME);
-		for(auto game = games.cbegin(); game != games.cend(); game++)
-		{
-			if(selector((*sys), (*game)))
-			{
+		for (auto game = games.cbegin(); game != games.cend(); game++) {
+			if (selector((*sys), (*game))) {
 				ScraperSearchParams search;
 				search.game = *game;
 				search.system = *sys;
@@ -91,30 +101,26 @@ std::queue<ScraperSearchParams> GuiScraperStart::getSearches(std::vector<SystemD
 			}
 		}
 	}
-
 	return queue;
 }
 
 bool GuiScraperStart::input(InputConfig* config, Input input)
 {
 	bool consumed = GuiComponent::input(config, input);
-	if(consumed)
+	if (consumed)
 		return true;
 
-	if(input.value != 0 && config->isMappedTo("b", input))
-	{
+	if (input.value != 0 && config->isMappedTo("b", input)) {
 		delete this;
 		return true;
 	}
 
-	if(config->isMappedTo("start", input) && input.value != 0)
-	{
-		// close everything
+	if (config->isMappedTo("start", input) && input.value != 0) {
+		// Close everything.
 		Window* window = mWindow;
-		while(window->peekGui() && window->peekGui() != ViewController::get())
+		while (window->peekGui() && window->peekGui() != ViewController::get())
 			delete window->peekGui();
 	}
-
 
 	return false;
 }

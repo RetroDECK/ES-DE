@@ -1,3 +1,12 @@
+//
+//	GuiMetaDataEd.cpp
+//
+//	Game metadata edit user interface.
+//	This interface is triggered from the GuiGamelistOptions menu.
+//	The scraping interface is handled by GuiGameScraper which calls
+//	ScraperSearchComponent.
+//
+
 #include "guis/GuiMetaDataEd.h"
 
 #include "components/ButtonComponent.h"
@@ -20,25 +29,35 @@
 #include "SystemData.h"
 #include "Window.h"
 
-GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector<MetaDataDecl>& mdd, ScraperSearchParams scraperParams,
-	const std::string& /*header*/, std::function<void()> saveCallback, std::function<void()> deleteFunc) : GuiComponent(window),
-	mScraperParams(scraperParams),
+GuiMetaDataEd::GuiMetaDataEd(
+		Window* window,
+		MetaDataList* md,
+		const std::vector<MetaDataDecl>& mdd,
+		ScraperSearchParams scraperParams,
+		const std::string& /*header*/,
+		std::function<void()> saveCallback,
+		std::function<void()> deleteFunc)
+		: GuiComponent(window),
+		mScraperParams(scraperParams),
 
-	mBackground(window, ":/frame.png"),
-	mGrid(window, Vector2i(1, 3)),
+		mBackground(window, ":/frame.png"),
+		mGrid(window, Vector2i(1, 3)),
 
-	mMetaDataDecl(mdd),
-	mMetaData(md),
-	mSavedCallback(saveCallback), mDeleteFunc(deleteFunc)
+		mMetaDataDecl(mdd),
+		mMetaData(md),
+		mSavedCallback(saveCallback),
+		mDeleteFunc(deleteFunc)
 {
 	addChild(&mBackground);
 	addChild(&mGrid);
 
 	mHeaderGrid = std::make_shared<ComponentGrid>(mWindow, Vector2i(1, 5));
 
-	mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
-	mSubtitle = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(Utils::FileSystem::getFileName(scraperParams.game->getPath())),
-		Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+	mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA",
+			Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+	mSubtitle = std::make_shared<TextComponent>(mWindow,
+			Utils::String::toUpper(Utils::FileSystem::getFileName(scraperParams.game->
+			getPath())), Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
 	mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
 	mHeaderGrid->setEntry(mSubtitle, Vector2i(0, 3), false, true);
 
@@ -47,19 +66,19 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 	mList = std::make_shared<ComponentList>(mWindow);
 	mGrid.setEntry(mList, Vector2i(0, 1), true, true);
 
-	// populate list
-	for(auto iter = mdd.cbegin(); iter != mdd.cend(); iter++)
-	{
+	// Populate list.
+	for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
 		std::shared_ptr<GuiComponent> ed;
 
-		// don't add statistics
-		if(iter->isStatistic)
+		// Don't add statistics.
+		if (iter->isStatistic)
 			continue;
 
-		// Don't show the launch string override entry if this option has been disabled in the settings
-		if(!Settings::getInstance()->getBool("LaunchstringOverride") && iter->type == MD_LAUNCHSTRING)
-		{
-			ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+		// Don't show the launch string override entry if this option has been disabled.
+		if (!Settings::getInstance()->getBool("LaunchstringOverride") &&
+				iter->type == MD_LAUNCHSTRING) {
+			ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL,
+					FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
 			assert(ed);
 			ed->setValue(mMetaData->get(iter->key));
 			mEditors.push_back(ed);
@@ -67,22 +86,20 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 			continue;
 		}
 
-		// create ed and add it (and any related components) to mMenu
-		// ed's value will be set below
+		// Create ed and add it (and any related components) to mMenu.
+		// ed's value will be set below.
 		ComponentListRow row;
-		auto lbl = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(iter->displayName), Font::get(FONT_SIZE_SMALL), 0x777777FF);
-		row.addElement(lbl, true); // label
+		auto lbl = std::make_shared<TextComponent>(mWindow,
+				Utils::String::toUpper(iter->displayName), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+		row.addElement(lbl, true); // Label.
 
-		switch(iter->type)
-		{
-		case MD_BOOL:
-			{
+		switch (iter->type) {
+		case MD_BOOL: {
 				ed = std::make_shared<SwitchComponent>(window);
 				row.addElement(ed, false, true);
 				break;
 			}
-		case MD_RATING:
-			{
+		case MD_RATING: {
 				ed = std::make_shared<RatingComponent>(window);
 				const float height = lbl->getSize().y() * 0.71f;
 				ed->setSize(0, height);
@@ -92,13 +109,12 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 				spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
 				row.addElement(spacer, false);
 
-				// pass input to the actual RatingComponent instead of the spacer
-				row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1, std::placeholders::_2);
-
+				// Pass input to the actual RatingComponent instead of the spacer.
+				row.input_handler = std::bind(&GuiComponent::input,
+						ed.get(), std::placeholders::_1, std::placeholders::_2);
 				break;
 			}
-		case MD_DATE:
-			{
+		case MD_DATE: {
 				ed = std::make_shared<DateTimeEditComponent>(window);
 				row.addElement(ed, false);
 
@@ -106,20 +122,20 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 				spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
 				row.addElement(spacer, false);
 
-				// pass input to the actual DateTimeEditComponent instead of the spacer
-				row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1, std::placeholders::_2);
-
+				// Pass input to the actual DateTimeEditComponent instead of the spacer.
+				row.input_handler = std::bind(&GuiComponent::input, ed.get(),
+						std::placeholders::_1, std::placeholders::_2);
 				break;
 			}
-		case MD_TIME:
-			{
-				ed = std::make_shared<DateTimeEditComponent>(window, DateTimeEditComponent::DISP_RELATIVE_TO_NOW);
+		case MD_TIME: {
+				ed = std::make_shared<DateTimeEditComponent>(window,
+						DateTimeEditComponent::DISP_RELATIVE_TO_NOW);
 				row.addElement(ed, false);
 				break;
 			}
-		case MD_LAUNCHSTRING:
-			{
-				ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+		case MD_LAUNCHSTRING: {
+				ed = std::make_shared<TextComponent>(window, "",
+						Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
 				row.addElement(ed, true);
 
 				auto spacer = std::make_shared<GuiComponent>(mWindow);
@@ -133,21 +149,26 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 
 				bool multiLine = false;
 				const std::string title = iter->displayPrompt;
-				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); }; // ok callback (apply new value to ed)
+				auto updateVal = [ed](const std::string& newVal) {
+						ed->setValue(newVal); }; // OK callback (apply new value to ed).
 
 				std::string staticTextString = "Default value from es_systems.cfg:";
-				std::string defaultLaunchString = scraperParams.system->getSystemEnvData()->mLaunchCommand;
+				std::string defaultLaunchString = scraperParams.system->
+						getSystemEnvData()->mLaunchCommand;
 
-				row.makeAcceptInputHandler([this, title, staticTextString, defaultLaunchString, ed, updateVal, multiLine] {
-					mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, title, staticTextString, defaultLaunchString, ed->getValue(), updateVal, multiLine));
+				row.makeAcceptInputHandler([this, title, staticTextString,
+						defaultLaunchString, ed, updateVal, multiLine] {
+							mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, title,
+							staticTextString, defaultLaunchString, ed->getValue(),
+							updateVal, multiLine));
 				});
 				break;
 			}
 		case MD_MULTILINE_STRING:
-		default:
-			{
-				// MD_STRING
-				ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+		default: {
+				// MD_STRING.
+				ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL,
+						FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
 				row.addElement(ed, true);
 
 				auto spacer = std::make_shared<GuiComponent>(mWindow);
@@ -161,9 +182,12 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 
 				bool multiLine = iter->type == MD_MULTILINE_STRING;
 				const std::string title = iter->displayPrompt;
-				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); }; // ok callback (apply new value to ed)
+
+				 // OK callback (apply new value to ed).
+				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); };
 				row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
-					mWindow->pushGui(new GuiTextEditPopup(mWindow, title, ed->getValue(), updateVal, multiLine));
+					mWindow->pushGui(new GuiTextEditPopup(mWindow, title, ed->getValue(),
+							updateVal, multiLine));
 				});
 				break;
 			}
@@ -177,26 +201,33 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window, MetaDataList* md, const std::vector
 
 	std::vector< std::shared_ptr<ButtonComponent> > buttons;
 
-	if(!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape", std::bind(&GuiMetaDataEd::fetch, this)));
+	if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
+		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
+				std::bind(&GuiMetaDataEd::fetch, this)));
 
-	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save", [&] { save(); delete this; }));
-	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel", [&] { delete this; }));
+	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save",
+			[&] { save(); delete this; }));
+	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel",
+			[&] { delete this; }));
 
-	if(mDeleteFunc)
-	{
+	if (mDeleteFunc) {
 		auto deleteFileAndSelf = [&] { mDeleteFunc(); delete this; };
-		auto deleteBtnFunc = [this, deleteFileAndSelf] { mWindow->pushGui(new GuiMsgBox(mWindow, "THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE YOU SURE?", "YES", deleteFileAndSelf, "NO", nullptr)); };
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE", "delete", deleteBtnFunc));
+		auto deleteBtnFunc = [this, deleteFileAndSelf] { mWindow->pushGui(
+				new GuiMsgBox(mWindow, "THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE "
+						"YOU SURE?", "YES", deleteFileAndSelf, "NO", nullptr)); };
+		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
+				"delete", deleteBtnFunc));
 	}
 
 	mButtons = makeButtonGrid(mWindow, buttons);
 	mGrid.setEntry(mButtons, Vector2i(0, 2), true, false);
 
-	// resize + center
-	float width = (float)Math::min(Renderer::getScreenHeight(), (int)(Renderer::getScreenWidth() * 0.90f));
+	// Resize + center.
+	float width = (float)Math::min(Renderer::getScreenHeight(),
+			(int)(Renderer::getScreenWidth() * 0.90f));
 	setSize(width, Renderer::getScreenHeight() * 0.82f);
-	setPosition((Renderer::getScreenWidth() - mSize.x()) / 2, (Renderer::getScreenHeight() - mSize.y()) / 2);
+	setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
+			(Renderer::getScreenHeight() - mSize.y()) / 2);
 }
 
 void GuiMetaDataEd::onSizeChanged()
@@ -209,7 +240,8 @@ void GuiMetaDataEd::onSizeChanged()
 	const float subtitleHeight = mSubtitle->getFont()->getLetterHeight();
 	const float titleSubtitleSpacing = mSize.y() * 0.03f;
 
-	mGrid.setRowHeightPerc(0, (titleHeight + titleSubtitleSpacing + subtitleHeight + TITLE_VERT_PADDING) / mSize.y());
+	mGrid.setRowHeightPerc(0, (titleHeight + titleSubtitleSpacing + subtitleHeight +
+			TITLE_VERT_PADDING) / mSize.y());
 	mGrid.setRowHeightPerc(2, mButtons->getSize().y() / mSize.y());
 
 	mHeaderGrid->setRowHeightPerc(1, titleHeight / mHeaderGrid->getSize().y());
@@ -219,24 +251,23 @@ void GuiMetaDataEd::onSizeChanged()
 
 void GuiMetaDataEd::save()
 {
-	// remove game from index
+	// Remove game from index.
 	mScraperParams.system->getIndex()->removeFromIndex(mScraperParams.game);
 
-	for(unsigned int i = 0; i < mEditors.size(); i++)
-	{
-		if(mMetaDataDecl.at(i).isStatistic)
+	for (unsigned int i = 0; i < mEditors.size(); i++) {
+		if (mMetaDataDecl.at(i).isStatistic)
 			continue;
 
 		mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
 	}
 
-	// enter game in index
+	// Enter game in index.
 	mScraperParams.system->getIndex()->addToIndex(mScraperParams.game);
 
-	if(mSavedCallback)
+	if (mSavedCallback)
 		mSavedCallback();
 
-	// update respective Collection Entries
+	// Update respective Collection Entries.
 	CollectionSystemManager::get()->refreshCollectionSystems(mScraperParams.game);
 
 	mScraperParams.system->onMetaDataSavePoint();
@@ -244,15 +275,15 @@ void GuiMetaDataEd::save()
 
 void GuiMetaDataEd::fetch()
 {
-	GuiGameScraper* scr = new GuiGameScraper(mWindow, mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1));
+	GuiGameScraper* scr = new GuiGameScraper(mWindow, mScraperParams,
+			std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1));
 	mWindow->pushGui(scr);
 }
 
 void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 {
-	for(unsigned int i = 0; i < mEditors.size(); i++)
-	{
-		if(mMetaDataDecl.at(i).isStatistic)
+	for (unsigned int i = 0; i < mEditors.size(); i++) {
+		if (mMetaDataDecl.at(i).isStatistic)
 			continue;
 
 		const std::string& key = mMetaDataDecl.at(i).key;
@@ -262,52 +293,50 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 
 void GuiMetaDataEd::close(bool closeAllWindows)
 {
-	// find out if the user made any changes
+	// Find out if the user made any changes.
 	bool dirty = false;
-	for(unsigned int i = 0; i < mEditors.size(); i++)
-	{
+	for (unsigned int i = 0; i < mEditors.size(); i++) {
 		const std::string& key = mMetaDataDecl.at(i).key;
-		if(mMetaData->get(key) != mEditors.at(i)->getValue())
-		{
+		if (mMetaData->get(key) != mEditors.at(i)->getValue()) {
 			dirty = true;
 			break;
 		}
 	}
 
 	std::function<void()> closeFunc;
-	if(!closeAllWindows)
-	{
+	if (!closeAllWindows) {
 		closeFunc = [this] { delete this; };
-	}else{
+	}
+	else {
 		Window* window = mWindow;
 		closeFunc = [window, this] {
-			while(window->peekGui() != ViewController::get())
+			while (window->peekGui() != ViewController::get())
 				delete window->peekGui();
 		};
 	}
 
 
-	if(dirty)
+	if (dirty)
 	{
-		// changes were made, ask if the user wants to save them
+		// Changes were made, ask if the user wants to save them.
 		mWindow->pushGui(new GuiMsgBox(mWindow,
 			"SAVE CHANGES?",
 			"YES", [this, closeFunc] { save(); closeFunc(); },
 			"NO", closeFunc
 		));
-	}else{
+	}
+	else {
 		closeFunc();
 	}
 }
 
 bool GuiMetaDataEd::input(InputConfig* config, Input input)
 {
-	if(GuiComponent::input(config, input))
+	if (GuiComponent::input(config, input))
 		return true;
 
 	const bool isStart = config->isMappedTo("start", input);
-	if(input.value != 0 && (config->isMappedTo("b", input) || isStart))
-	{
+	if (input.value != 0 && (config->isMappedTo("b", input) || isStart)) {
 		close(isStart);
 		return true;
 	}

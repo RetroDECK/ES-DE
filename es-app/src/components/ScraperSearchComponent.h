@@ -1,3 +1,15 @@
+//
+//	ScraperSearchComponent.h
+//
+//	User interface component for the scraper where the user is able to see an overview
+//	of the game being scraped and an option to override the game search string.
+//	Used by both single-game scraping from the GuiMetaDataEd menu as well as
+//	to resolve scraping conflicts when run from GuiScraperStart.
+//
+//	This component is called from GuiGameScraper for single-game scraping and
+//	from GuiScraperMulti for multi-game scraping.
+//
+
 #pragma once
 #ifndef ES_APP_COMPONENTS_SCRAPER_SEARCH_COMPONENT_H
 #define ES_APP_COMPONENTS_SCRAPER_SEARCH_COMPONENT_H
@@ -17,8 +29,7 @@ class TextComponent;
 class ScraperSearchComponent : public GuiComponent
 {
 public:
-	enum SearchType
-	{
+	enum SearchType {
 		ALWAYS_ACCEPT_FIRST_RESULT,
 		ALWAYS_ACCEPT_MATCHING_CRC,
 		NEVER_AUTO_ACCEPT
@@ -31,10 +42,14 @@ public:
 	void stop();
 	inline SearchType getSearchType() const { return mSearchType; }
 
-	// Metadata assets will be resolved before calling the accept callback (e.g. result.mdl's "image" is automatically downloaded and properly set).
-	inline void setAcceptCallback(const std::function<void(const ScraperSearchResult&)>& acceptCallback) { mAcceptCallback = acceptCallback; }
-	inline void setSkipCallback(const std::function<void()>& skipCallback) { mSkipCallback = skipCallback; };
-	inline void setCancelCallback(const std::function<void()>& cancelCallback) { mCancelCallback = cancelCallback; }
+	// Metadata assets will be resolved before calling the accept callback
+	// (e.g. result.mdl's "image" is automatically downloaded and properly set).
+	inline void setAcceptCallback(const std::function<void(const ScraperSearchResult&)>&
+			acceptCallback) { mAcceptCallback = acceptCallback; }
+	inline void setSkipCallback(const std::function<void()>&
+			skipCallback) { mSkipCallback = skipCallback; };
+	inline void setCancelCallback(const std::function<void()>&
+			cancelCallback) { mCancelCallback = cancelCallback; }
 
 	bool input(InputConfig* config, Input input) override;
 	void update(int deltaTime) override;
@@ -56,7 +71,7 @@ private:
 
 	int getSelectedIndex();
 
-	// resolve any metadata assets that need to be downloaded and return
+	// Resolve any metadata assets that need to be downloaded and return.
 	void returnResult(ScraperSearchResult result);
 
 	ComponentGrid mGrid;
@@ -75,14 +90,15 @@ private:
 	std::shared_ptr<TextComponent> mMD_Genre;
 	std::shared_ptr<TextComponent> mMD_Players;
 
-	// label-component pair
-	struct MetaDataPair
-	{
+	// Label-component pair.
+	struct MetaDataPair {
 		std::shared_ptr<TextComponent> first;
 		std::shared_ptr<GuiComponent> second;
 		bool resize;
 
-		MetaDataPair(const std::shared_ptr<TextComponent>& f, const std::shared_ptr<GuiComponent>& s, bool r = true) : first(f), second(s), resize(r) {};
+		MetaDataPair(const std::shared_ptr<TextComponent>& f,
+				const std::shared_ptr<GuiComponent>& s, bool r = true)
+				: first(f), second(s), resize(r) {};
 	};
 
 	std::vector<MetaDataPair> mMD_Pairs;

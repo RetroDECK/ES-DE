@@ -1,3 +1,9 @@
+//
+//	AsyncReqComponent.cpp
+//
+//	Deprecated, not in use any longer?
+//
+
 #include "components/AsyncReqComponent.h"
 
 #include "renderers/Renderer.h"

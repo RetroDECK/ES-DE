@@ -4,6 +4,9 @@
 //	Gamelist options menu for the 'Jump to...' quick selector,
 //	game sorting, game filters, and metadata edit.
 //
+//	The filter interface is covered by GuiGamelistFilter and the
+//	metadata edit interface is covered by GuiMetaDataEd.
+//
 
 #include "GuiGamelistOptions.h"
 
