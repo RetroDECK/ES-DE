@@ -44,8 +44,7 @@ bool HttpReq::isUrl(const std::string& str)
 				std::string::npos || str.find("www.") != std::string::npos));
 }
 
-HttpReq::HttpReq(const std::string& url)
-		: mStatus(REQ_IN_PROGRESS), mHandle(NULL)
+HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(NULL)
 {
 	mHandle = curl_easy_init();
 

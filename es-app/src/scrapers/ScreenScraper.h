@@ -62,15 +62,19 @@ public:
 		// Note that not all games contain values for all these, so we default to "box-2D"
 		// since it's the most common.
 		//
-		std::string media_name = "box-2D";
+
+		std::string media_3dbox = "box-3D";
+		std::string media_cover = "box-2D";
+		std::string media_marquee = "wheel";
+		std::string media_screenshot = "ss";
 
 		// Which Region to use when selecting the artwork.
 		// Applies to: artwork, name of the game, date of release.
-		std::string region = "US";
+		// This is read from es_settings.cfg, setting 'ScraperRegion'.
 
 		// Which Language to use when selecting the textual information.
 		// Applies to: description, genre.
-		std::string language = "EN";
+		// This is read from es_settings.cfg, setting 'ScraperLanguage'.
 
 		ScreenScraperConfig() {};
 	} configuration;
@@ -81,6 +85,12 @@ protected:
 
 	void processList(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
 	void processGame(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
+	void processMedia(ScraperSearchResult& result,
+			const pugi::xml_node& media_list,
+			std::string mediaType,
+			std::string& fileURL,
+			std::string& fileFormat,
+			std::string region);
 	bool isGameRequest() { return !mRequestQueue; }
 
 	std::queue< std::unique_ptr<ScraperRequest> >* mRequestQueue;

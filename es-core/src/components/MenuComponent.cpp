@@ -1,6 +1,7 @@
 #include "components/MenuComponent.h"
 
 #include "components/ButtonComponent.h"
+#include "Settings.h"
 
 #define BUTTON_GRID_VERT_PADDING 32
 #define BUTTON_GRID_HORIZ_PADDING 10
@@ -30,6 +31,22 @@ MenuComponent::MenuComponent(Window* window, const char* title, const std::share
 	updateSize();
 
 	mGrid.resetCursor();
+}
+
+MenuComponent::~MenuComponent()
+{
+	save();
+}
+
+void MenuComponent::save()
+{
+	if(!mSaveFuncs.size())
+		return;
+
+	for(auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); it++)
+		(*it)();
+
+	Settings::getInstance()->saveFile();
 }
 
 void MenuComponent::setTitle(const char* title, const std::shared_ptr<Font>& font)

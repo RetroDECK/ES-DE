@@ -98,7 +98,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			else {
 				// It's a folder.
 				if (cursor->getChildren().size() > 0) {
-					navigationsounds.playThemeNavigationSound(SELECTSOUND);
+					NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
 					mCursorStack.push(cursor);
 					populateList(cursor->getChildrenListToDisplay());
 					FileData* cursor = getCursor();
@@ -110,13 +110,13 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		}
 		else if (config->isMappedTo("b", input)) {
 			if (mCursorStack.size()) {
-				navigationsounds.playThemeNavigationSound(BACKSOUND);
+				NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
 				populateList(mCursorStack.top()->getParent()->getChildren());
 				setCursor(mCursorStack.top());
 				mCursorStack.pop();
 			}
 			else {
-				navigationsounds.playThemeNavigationSound(BACKSOUND);
+				NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
 				onFocusLost();
 				SystemData* systemToView = getCursor()->getSystem();
 				if (systemToView->isCollection())
@@ -145,7 +145,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		else if (config->isMappedTo("x", input)) {
 			if (mRoot->getSystem()->isGameSystem()) {
 				// Go to random system game.
-				navigationsounds.playThemeNavigationSound(SCROLLSOUND);
+				NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 				FileData* randomGame = getCursor()->getSystem()->getRandomGame();
 				if (randomGame)
 					setCursor(randomGame);
@@ -155,7 +155,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		else if (config->isMappedTo("y", input) &&
 				!UIModeController::getInstance()->isUIModeKid()) {
 			if (mRoot->getSystem()->isGameSystem()) {
-				navigationsounds.playThemeNavigationSound(FAVORITESOUND);
+				NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
 				if (CollectionSystemManager::get()->toggleGameInCollection(getCursor()))
 					return true;
 			}

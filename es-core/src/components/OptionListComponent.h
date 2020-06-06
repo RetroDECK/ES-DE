@@ -250,6 +250,30 @@ public:
 		onSelectedChanged();
 	}
 
+	bool selectEntry(unsigned int entry)
+	{
+		if (entry > mEntries.size()) {
+			return false;
+		}
+		else {
+			mEntries.at(entry).selected = true;
+			onSelectedChanged();
+			return true;
+		}
+	}
+
+	bool unselectEntry(unsigned int entry)
+	{
+		if (entry > mEntries.size()) {
+			return false;
+		}
+		else {
+			mEntries.at(entry).selected = false;
+			onSelectedChanged();
+			return true;
+		}
+	}
+
 	void selectAll()
 	{
 		for(unsigned int i = 0; i < mEntries.size(); i++)

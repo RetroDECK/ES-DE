@@ -4,7 +4,8 @@
 //	User interface component for the scraper where the user is able to see an overview
 //	of the game being scraped and an option to override the game search string.
 //	Used by both single-game scraping from the GuiMetaDataEd menu as well as
-//	to resolve scraping conflicts when run from GuiScraperStart.
+//	to resolve scraping conflicts when run from GuiScraperMenu.
+//	The function to properly save scraped metadata is located here too.
 //
 //	This component is called from GuiGameScraper for single-game scraping and
 //	from GuiScraperMulti for multi-game scraping.
@@ -41,6 +42,7 @@ public:
 	void openInputScreen(ScraperSearchParams& from);
 	void stop();
 	inline SearchType getSearchType() const { return mSearchType; }
+	static bool saveMetadata(const ScraperSearchResult& result, MetaDataList& metadata);
 
 	// Metadata assets will be resolved before calling the accept callback
 	// (e.g. result.mdl's "image" is automatically downloaded and properly set).
@@ -70,6 +72,10 @@ private:
 	void onSearchDone(const std::vector<ScraperSearchResult>& results);
 
 	int getSelectedIndex();
+
+	// For TheGamesDB, retrieve URLs for the additional metadata assets
+	// that need to be downloaded.
+	void retrieveMediaURLs(ScraperSearchResult result);
 
 	// Resolve any metadata assets that need to be downloaded and return.
 	void returnResult(ScraperSearchResult result);
@@ -111,6 +117,7 @@ private:
 	bool mBlockAccept;
 
 	std::unique_ptr<ScraperSearchHandle> mSearchHandle;
+	std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;
 	std::unique_ptr<MDResolveHandle> mMDResolveHandle;
 	std::vector<ScraperSearchResult> mScraperResults;
 	std::unique_ptr<HttpReq> mThumbnailReq;

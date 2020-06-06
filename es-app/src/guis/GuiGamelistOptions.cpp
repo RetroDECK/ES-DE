@@ -103,7 +103,7 @@ GuiGamelistOptions::GuiGamelistOptions(
 		row.addElement(mJumpToLetterList, false);
 		row.input_handler = [&](InputConfig* config, Input input) {
 			if (config->isMappedTo("a", input) && input.value) {
-				navigationsounds.playThemeNavigationSound(SCROLLSOUND);
+				NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 				if (mJumpToLetterList->getSelected() == FAVORITE_CHAR)
 					jumpToFirstRow();
 				else
@@ -196,7 +196,7 @@ GuiGamelistOptions::~GuiGamelistOptions()
 
 		// If a new sorting type was selected, then sort and update mSortTypeString for the system.
 		if ((*mListSort->getSelected()).description != root->getSortTypeString()) {
-			navigationsounds.playThemeNavigationSound(SCROLLSOUND);
+			NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 
 			// This will also recursively sort children.
 			root->sort(*mListSort->getSelected(), mFavoritesSorting);

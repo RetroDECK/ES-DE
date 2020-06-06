@@ -3,7 +3,7 @@
 //
 //	Multiple game scraping user interface.
 //	Shows the progress for the scraping as it's running.
-//	This interface is triggered from the GuiScraperStart menu.
+//	This interface is triggered from GuiScraperMenu.
 //	ScraperSearchComponent is called from here.
 //
 
@@ -136,7 +136,8 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
 {
 	ScraperSearchParams& search = mSearchQueue.front();
 
-	search.game->metadata = result.mdl;
+	ScraperSearchComponent::saveMetadata(result, search.game->metadata);
+
 	updateGamelist(search.system);
 
 	mSearchQueue.pop();
@@ -157,15 +158,15 @@ void GuiScraperMulti::finish()
 {
 	std::stringstream ss;
 	if (mTotalSuccessful == 0) {
-		ss << "NO GAMES WERE SCRAPED.";
+		ss << "NO GAMES WERE SCRAPED";
 	}
 	else {
 		ss << mTotalSuccessful << " GAME" << ((mTotalSuccessful > 1) ? "S" : "") <<
-				" SUCCESSFULLY SCRAPED!";
+				" SUCCESSFULLY SCRAPED";
 
 		if (mTotalSkipped > 0)
 			ss << "\n" << mTotalSkipped << " GAME" << ((mTotalSkipped > 1) ? "S" : "") <<
-					" SKIPPED.";
+					" SKIPPED";
 	}
 
 	mWindow->pushGui(new GuiMsgBox(mWindow, ss.str(), "OK", [&] {

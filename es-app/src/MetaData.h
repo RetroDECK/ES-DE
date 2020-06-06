@@ -15,19 +15,19 @@
 namespace pugi { class xml_node; }
 
 enum MetaDataType {
-	// Generic types
+	// Generic types.
 	MD_STRING,
 	MD_INT,
 	MD_FLOAT,
 	MD_BOOL,
 
-	// Specialized types
+	// Specialized types.
 	MD_MULTILINE_STRING,
 	MD_LAUNCHSTRING,
 	MD_PATH,
 	MD_RATING,
 	MD_DATE,
-	MD_TIME // Used for lastplayed
+	MD_TIME // Used for lastplayed.
 };
 
 struct MetaDataDecl {
@@ -40,6 +40,8 @@ struct MetaDataDecl {
 	std::string displayName;
 	// Phrase displayed in editors when prompted to enter value (currently only for strings).
 	std::string displayPrompt;
+	// If set to false, the scraper will not overwrite this metadata.
+	bool shouldScrape;
 };
 
 enum MetaDataListType {

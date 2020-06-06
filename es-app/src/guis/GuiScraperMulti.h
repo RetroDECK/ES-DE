@@ -3,7 +3,7 @@
 //
 //	Multiple game scraping user interface.
 //	Shows the progress for the scraping as it's running.
-//	This interface is triggered from the GuiScraperStart menu.
+//	This interface is triggered from GuiScraperMenu.
 //	ScraperSearchComponent is called from here.
 //
 
@@ -15,6 +15,7 @@
 #include "components/NinePatchComponent.h"
 #include "scrapers/Scraper.h"
 #include "GuiComponent.h"
+#include "MetaData.h"
 
 class ScraperSearchComponent;
 class TextComponent;
@@ -44,6 +45,7 @@ private:
 	unsigned int mTotalSuccessful;
 	unsigned int mTotalSkipped;
 	std::queue<ScraperSearchParams> mSearchQueue;
+	std::vector<MetaDataDecl> mMetaDataDecl;
 
 	NinePatchComponent mBackground;
 	ComponentGrid mGrid;

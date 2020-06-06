@@ -20,7 +20,9 @@ class MenuComponent : public GuiComponent
 {
 public:
 	MenuComponent(Window* window, const char* title, const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
+	virtual ~MenuComponent(); // just calls save();
 
+	void save();
 	void onSizeChanged() override;
 
 	inline void addRow(const ComponentListRow& row, bool setCursorHere = false) { mList->addRow(row, setCursorHere); updateSize(); }
@@ -32,6 +34,8 @@ public:
 		row.addElement(comp, false, invert_when_selected);
 		addRow(row, setCursorHere);
 	}
+
+	inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
 
 	void addButton(const std::string& label, const std::string& helpText, const std::function<void()>& callback);
 
@@ -54,6 +58,7 @@ private:
 	std::shared_ptr<ComponentList> mList;
 	std::shared_ptr<ComponentGrid> mButtonGrid;
 	std::vector< std::shared_ptr<ButtonComponent> > mButtons;
+	std::vector< std::function<void()> > mSaveFuncs;
 };
 
 #endif // ES_CORE_COMPONENTS_MENU_COMPONENT_H

@@ -38,7 +38,8 @@ SystemData::SystemData(
 		mEnvData(envData),
 		mThemeFolder(themeFolder),
 		mIsCollectionSystem(CollectionSystem),
-		mIsGameSystem(true)
+		mIsGameSystem(true),
+		mScrapeFlag(false)
 {
 	mFilterIndex = new FileFilterIndex();
 

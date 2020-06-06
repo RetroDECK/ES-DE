@@ -58,6 +58,8 @@ private:
 	MetaDataList* mMetaData;
 	std::function<void()> mSavedCallback;
 	std::function<void()> mDeleteFunc;
+
+	bool mMetadataUpdated;
 };
 
 #endif // ES_APP_GUIS_GUI_META_DATA_ED_H

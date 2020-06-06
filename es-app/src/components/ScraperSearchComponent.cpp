@@ -4,7 +4,8 @@
 //	User interface component for the scraper where the user is able to see an overview
 //	of the game being scraped and an option to override the game search string.
 //	Used by both single-game scraping from the GuiMetaDataEd menu as well as
-//	to resolve scraping conflicts when run from GuiScraperStart.
+//	to resolve scraping conflicts when run from GuiScraperMenu.
+//	The function to properly save scraped metadata is located here too.
 //
 //	This component is called from GuiGameScraper for single-game scraping and
 //	from GuiScraperMulti for multi-game scraping.
@@ -22,6 +23,9 @@
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
+#include "PlatformId.h"
+#include "MameNames.h"
+#include "SystemData.h"
 #include "FileData.h"
 #include "Log.h"
 #include "Window.h"
@@ -69,8 +73,10 @@ ScraperSearchComponent::ScraperSearchComponent(
 	mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 	mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
-	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-			(mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
+	if (Settings::getInstance()->getBool("ScrapeRatings") &&
+			Settings::getInstance()->getString("Scraper") != "TheGamesDB")
+		mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
+				(mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
 	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
 			(mWindow, "RELEASED:", font, mdLblColor), mMD_ReleaseDate));
 	mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
@@ -144,7 +150,7 @@ void ScraperSearchComponent::onSizeChanged()
 			mGrid.getColWidth(2), mResultDesc->getFont()->getHeight() * 3);
 	else
 		mDescContainer->setSize(mGrid.getColWidth(3)*boxartCellScale,
-				mResultDesc->getFont()->getHeight() * 8);
+				mResultDesc->getFont()->getHeight() * 7);
 
 	// Make description text wrap at edge of container.
 	mResultDesc->setSize(mDescContainer->getSize().x(), 0);
@@ -184,9 +190,12 @@ void ScraperSearchComponent::resizeMetadata()
 
 		mMD_Grid->setColWidthPerc(0, maxLblWidth / mMD_Grid->getSize().x());
 
-		// Rating is manually sized.
-		mMD_Rating->setSize(mMD_Grid->getColWidth(1), fontLbl->getHeight() * 0.65f);
-		mMD_Grid->onSizeChanged();
+		if (Settings::getInstance()->getBool("ScrapeRatings") &&
+			Settings::getInstance()->getString("Scraper") != "TheGamesDB") {
+			// Rating is manually sized.
+			mMD_Rating->setSize(mMD_Grid->getColWidth(1), fontLbl->getHeight() * 0.65f);
+			mMD_Grid->onSizeChanged();
+		}
 
 		// Make result font follow label font.
 		mResultDesc->setFont(Font::get(fontHeight, FONT_PATH_REGULAR));
@@ -239,6 +248,7 @@ void ScraperSearchComponent::search(const ScraperSearchParams& params)
 
 	mResultList->clear();
 	mScraperResults.clear();
+	mMDRetrieveURLsHandle.reset();
 	mThumbnailReq.reset();
 	mMDResolveHandle.reset();
 	updateInfoPane();
@@ -252,6 +262,7 @@ void ScraperSearchComponent::stop()
 	mThumbnailReq.reset();
 	mSearchHandle.reset();
 	mMDResolveHandle.reset();
+	mMDRetrieveURLsHandle.reset();
 	mBlockAccept = false;
 }
 
@@ -297,15 +308,18 @@ void ScraperSearchComponent::onSearchDone(const std::vector<ScraperSearchResult>
 	mBlockAccept = false;
 	updateInfoPane();
 
+	// If there is no scraping result or if there is no game media to download
+	// as a thumbnail, then proceed directly.
 	if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
-		if (mScraperResults.size() == 0)
-			mSkipCallback();
-		else
-			returnResult(mScraperResults.front());
+		if (mScraperResults.size() == 0 || (mScraperResults.size() > 0 &&
+				mScraperResults.front().ThumbnailImageUrl == "")) {
+			if (mScraperResults.size() == 0)
+				mSkipCallback();
+			else
+				returnResult(mScraperResults.front());
+		}
 	}
-	else if (mSearchType == ALWAYS_ACCEPT_MATCHING_CRC) {
-		// TODO
-	}
+
 }
 
 void ScraperSearchComponent::onSearchError(const std::string& error)
@@ -338,14 +352,35 @@ void ScraperSearchComponent::updateInfoPane()
 		mDescContainer->reset();
 
 		mResultThumbnail->setImage("");
-		const std::string& thumb = res.thumbnailUrl.empty() ? res.imageUrl : res.thumbnailUrl;
-		if (!thumb.empty())
-			mThumbnailReq = std::unique_ptr<HttpReq>(new HttpReq(thumb));
-		else
-			mThumbnailReq.reset();
+		const std::string& thumb = res.screenshotUrl.empty() ? res.coverUrl : res.screenshotUrl;
+		mScraperResults[i].ThumbnailImageUrl = thumb;
+
+		// Cache the thumbnail image in mScraperResults so that we don't need to download
+		// it every time the list is scrolled back and forth.
+		if (mScraperResults[i].ThumbnailImageData.size() > 0) {
+			std::string content = mScraperResults[i].ThumbnailImageData;
+			mResultThumbnail->setImage(content.data(), content.length());
+			mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
+		}
+		// If it's not cached in mScraperResults it should mean that it's the first time
+		// we access the entry, and therefore we need to download the image.
+		else {
+			if (!thumb.empty()) {
+				// Make sure we don't attempt to download the same thumbnail twice.
+				if (!mThumbnailReq && mScraperResults[i].thumbnailDownloadStatus != IN_PROGRESS) {
+					mScraperResults[i].thumbnailDownloadStatus = IN_PROGRESS;
+					mThumbnailReq = std::unique_ptr<HttpReq>(new HttpReq(thumb));
+				}
+			}
+			else {
+				mThumbnailReq.reset();
+			}
+		}
 
 		// Metadata.
-		mMD_Rating->setValue(Utils::String::toUpper(res.mdl.get("rating")));
+		if (Settings::getInstance()->getBool("ScrapeRatings") &&
+				Settings::getInstance()->getString("Scraper") != "TheGamesDB")
+			mMD_Rating->setValue(Utils::String::toUpper(res.mdl.get("rating")));
 		mMD_ReleaseDate->setValue(Utils::String::toUpper(res.mdl.get("releasedate")));
 		mMD_Developer->setText(Utils::String::toUpper(res.mdl.get("developer")));
 		mMD_Publisher->setText(Utils::String::toUpper(res.mdl.get("publisher")));
@@ -359,7 +394,9 @@ void ScraperSearchComponent::updateInfoPane()
 		mResultThumbnail->setImage("");
 
 		// Metadata.
-		mMD_Rating->setValue("");
+		if (Settings::getInstance()->getBool("ScrapeRatings") &&
+				Settings::getInstance()->getString("Scraper") != "TheGamesDB")
+			mMD_Rating->setValue("");
 		mMD_ReleaseDate->setValue("");
 		mMD_Developer->setText("");
 		mMD_Publisher->setText("");
@@ -397,7 +434,8 @@ void ScraperSearchComponent::returnResult(ScraperSearchResult result)
 	mBlockAccept = true;
 
 	// Resolve metadata image before returning.
-	if (!result.imageUrl.empty()) {
+	if (result.mediaFilesDownloadStatus != COMPLETED) {
+		result.mediaFilesDownloadStatus = IN_PROGRESS;
 		mMDResolveHandle = resolveMetaDataAssets(result, mLastSearch);
 		return;
 	}
@@ -417,22 +455,69 @@ void ScraperSearchComponent::update(int deltaTime)
 
 	if (mSearchHandle && mSearchHandle->status() != ASYNC_IN_PROGRESS) {
 		auto status = mSearchHandle->status();
-		auto results = mSearchHandle->getResults();
+		mScraperResults = mSearchHandle->getResults();
 		auto statusString = mSearchHandle->getStatusString();
 
 		// We reset here because onSearchDone in auto mode can call mSkipCallback() which
 		// can call another search() which will set our mSearchHandle to something important.
 		mSearchHandle.reset();
 
-		if (status == ASYNC_DONE)
-			onSearchDone(results);
-		else if (status == ASYNC_ERROR)
+		if (status == ASYNC_DONE && mScraperResults.size() == 0)
+			onSearchDone(mScraperResults);
+
+		if (status == ASYNC_DONE && mScraperResults.size() > 0) {
+			if (mScraperResults.front().mediaURLFetch == COMPLETED) {
+				onSearchDone(mScraperResults);
+			}
+			else {
+				std::string gameIDs;
+				for (auto it = mScraperResults.cbegin(); it != mScraperResults.cend(); it++)
+					gameIDs += it->gameID + ',';
+
+				// Remove the last comma
+				gameIDs.pop_back();
+				mMDRetrieveURLsHandle = startMediaURLsFetch(gameIDs);
+			}
+		}
+		else if (status == ASYNC_ERROR) {
 			onSearchError(statusString);
+		}
+	}
+
+	if (mMDRetrieveURLsHandle && mMDRetrieveURLsHandle->status() != ASYNC_IN_PROGRESS) {
+		if (mMDRetrieveURLsHandle->status() == ASYNC_DONE) {
+			auto status_media = mMDRetrieveURLsHandle->status();
+			auto results_media = mMDRetrieveURLsHandle->getResults();
+			auto statusString_media = mMDRetrieveURLsHandle->getStatusString();
+			auto results_scrape = mScraperResults;
+			mMDRetrieveURLsHandle.reset();
+			mScraperResults.clear();
+
+			// Combine the intial scrape results with the media URL results.
+			for (auto it = results_media.cbegin(); it != results_media.cend(); it++) {
+				for (unsigned int i = 0; i < results_scrape.size(); i++) {
+					if (results_scrape[i].gameID == it->gameID) {
+						results_scrape[i].box3dUrl = it->box3dUrl;
+						results_scrape[i].coverUrl = it->coverUrl;
+						results_scrape[i].marqueeUrl = it->marqueeUrl;
+						results_scrape[i].screenshotUrl = it->screenshotUrl;
+						results_scrape[i].scraperRequestAllowance = it->scraperRequestAllowance;
+						results_scrape[i].mediaURLFetch = COMPLETED;
+					}
+				}
+			}
+			onSearchDone(results_scrape);
+		}
+		else if (mMDRetrieveURLsHandle->status() == ASYNC_ERROR) {
+			onSearchError(mMDRetrieveURLsHandle->getStatusString());
+			mMDRetrieveURLsHandle.reset();
+		}
 	}
 
 	if (mMDResolveHandle && mMDResolveHandle->status() != ASYNC_IN_PROGRESS) {
 		if (mMDResolveHandle->status() == ASYNC_DONE) {
 			ScraperSearchResult result = mMDResolveHandle->getResult();
+			result.mediaFilesDownloadStatus = COMPLETED;
 			mMDResolveHandle.reset();
 			// This might end in us being deleted, depending on mAcceptCallback -
 			// so make sure this is the last thing we do in update().
@@ -448,6 +533,15 @@ void ScraperSearchComponent::update(int deltaTime)
 void ScraperSearchComponent::updateThumbnail()
 {
 	if (mThumbnailReq && mThumbnailReq->status() == HttpReq::REQ_SUCCESS) {
+		// Save thumbnail to mScraperResults cache and set the flag that the
+		// thumbnail download has been completed for this game.
+		for (auto i = 0; i < mScraperResults.size(); i++) {
+			if (mScraperResults[i].thumbnailDownloadStatus == IN_PROGRESS) {
+				mScraperResults[i].ThumbnailImageData = mThumbnailReq->getContent();
+				mScraperResults[i].thumbnailDownloadStatus = COMPLETED;
+			}
+		}
+		// Activate the thumbnail in the GUI.
 		std::string content = mThumbnailReq->getContent();
 		mResultThumbnail->setImage(content.data(), content.length());
 		mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
@@ -458,6 +552,21 @@ void ScraperSearchComponent::updateThumbnail()
 	}
 
 	mThumbnailReq.reset();
+
+	// When the thumbnail has been downloaded and we are in non-interactive
+	// mode, we proceed to automatically download the rest of the media files.
+	// The reason to always complete the thumbnail download first is that it looks
+	// a lot more consistent in the GUI. And since the thumbnail is being cached
+	// anyway, this hardly takes any more time. Maybe rather the opposite as the
+	// image used for the thumbnail (cover or screenshot) would have had to be
+	// requested from the server again.
+	if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT &&
+			mScraperResults.front().thumbnailDownloadStatus == COMPLETED) {
+		if (mScraperResults.size() == 0)
+			mSkipCallback();
+		else
+			returnResult(mScraperResults.front());
+	}
 }
 
 void ScraperSearchComponent::openInputScreen(ScraperSearchParams& params)
@@ -468,10 +577,78 @@ void ScraperSearchComponent::openInputScreen(ScraperSearchParams& params)
 	};
 
 	stop();
-	mWindow->pushGui(new GuiTextEditPopup(mWindow, "SEARCH FOR",
-		// Initial value is last search if there was one, otherwise the clean path name.
-		params.nameOverride.empty() ? params.game->getCleanName() : params.nameOverride,
-		searchForFunc, false, "SEARCH"));
+
+	if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
+			params.system->hasPlatformId(PlatformIds::NEOGEO)) {
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, "SEARCH FOR",
+			// Initial value is last search if there was one, otherwise the clean path name.
+			// If it's a MAME or Neo Geo game, expand the game name accordingly.
+			params.nameOverride.empty() ?
+					MameNames::getInstance()->getCleanName(params.game->getCleanName()) :
+					params.nameOverride,
+			searchForFunc, false, "SEARCH"));
+	}
+	else {
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, "SEARCH FOR",
+			// Initial value is last search if there was one, otherwise the clean path name.
+			params.nameOverride.empty() ? params.game->getCleanName() : params.nameOverride,
+			searchForFunc, false, "SEARCH"));
+	}
+}
+
+bool ScraperSearchComponent::saveMetadata(
+		const ScraperSearchResult& result, MetaDataList& metadata)
+{
+	bool mMetadataUpdated = false;
+	std::vector<MetaDataDecl> mMetaDataDecl = metadata.getMDD();
+
+	for (unsigned int i = 0; i < mMetaDataDecl.size(); i++) {
+
+		// Skip elements that are tagged not to be scraped.
+		if (!mMetaDataDecl.at(i).shouldScrape)
+			continue;
+
+		const std::string& key = mMetaDataDecl.at(i).key;
+
+		// Skip element if the setting to not scrape metadata has been set,
+		// unless its type is rating or name.
+		if (!Settings::getInstance()->getBool("ScrapeMetadata") &&
+				(key != "rating" && key != "name"))
+			continue;
+
+		// Skip saving of rating if the corresponding option has been set to false.
+		if (key == "rating" && !Settings::getInstance()->getBool("ScrapeRatings"))
+			continue;
+
+		// Skip saving of game name if the corresponding option has been set to false.
+		if (key == "name" && !Settings::getInstance()->getBool("ScrapeGameNames"))
+			continue;
+
+		// Skip elements that are empty.
+		if (result.mdl.get(key) == "")
+			continue;
+
+		// Skip elements that are the same as the default metadata value.
+		if (result.mdl.get(key) == mMetaDataDecl.at(i).defaultValue)
+			continue;
+
+		// Skip elements that are identical to the existing value.
+		if (result.mdl.get(key) == metadata.get(key))
+			continue;
+
+		// Overwrite all the other values if the flag to overwrite data has been set.
+		if (Settings::getInstance()->getBool("ScraperOverwriteData")) {
+			metadata.set(key, result.mdl.get(key));
+			mMetadataUpdated = true;
+		}
+		// Else only update the value if it is set to the default metadata value.
+		else if (metadata.get(key) == mMetaDataDecl.at(i).defaultValue) {
+			metadata.set(key, result.mdl.get(key));
+			mMetadataUpdated = true;
+		}
+	}
+
+	return mMetadataUpdated;
 }
 
 std::vector<HelpPrompt> ScraperSearchComponent::getHelpPrompts()

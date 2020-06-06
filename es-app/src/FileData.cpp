@@ -39,8 +39,18 @@ FileData::FileData(
 		metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
 {
 	// Metadata needs at least a name field (since that's what getName() will return).
-	if (metadata.get("name").empty())
-		metadata.set("name", getDisplayName());
+	if (metadata.get("name").empty()) {
+		if ((system->hasPlatformId(PlatformIds::ARCADE) ||
+				system->hasPlatformId(PlatformIds::NEOGEO)) &&
+				metadata.getType() != FOLDER_METADATA) {
+			// If it's a MAME or Neo Geo game, expand the game name accordingly.
+			metadata.set("name",
+					MameNames::getInstance()->getCleanName(getCleanName()));
+		}
+		else {
+			metadata.set("name", getDisplayName());
+		}
+	}
 	mSystemName = system->getName();
 	metadata.resetChangedFlag();
 }
@@ -88,7 +98,7 @@ const bool FileData::getFavorite()
 		return false;
 }
 
-const std::string FileData::getMediaDirectory() const
+const std::string FileData::getMediaDirectory()
 {
 	std::string mediaDirSetting = Settings::getInstance()->getString("MediaDirectory");
 	std::string mediaDirPath = "";
@@ -111,12 +121,13 @@ const std::string FileData::getMediaDirectory() const
 	return mediaDirPath;
 }
 
-const std::string FileData::getThumbnailPath() const
+const std::string FileData::getMediafilePath(std::string subdirectory, std::string mediatype) const
 {
 	const char* extList[2] = { ".png", ".jpg" };
-	std::string tempPath = getMediaDirectory() + mSystemName + "/thumbnails/" + getDisplayName();
 
-	// Look for media in the media directory.
+	// Look for an image file in the media directory.
+	std::string tempPath = getMediaDirectory() + mSystemName + "/" +
+			subdirectory + "/" + getDisplayName();
 	for (int i = 0; i < 2; i++) {
 		std::string mediaPath = tempPath + extList[i];
 		if (Utils::FileSystem::exists(mediaPath))
@@ -125,17 +136,62 @@ const std::string FileData::getThumbnailPath() const
 
 	// No media found in the media directory, so look
 	// for local art as well (if configured to do so).
-	if (Settings::getInstance()->getBool("LocalArt"))
-	{
+	if (Settings::getInstance()->getBool("LocalArt")) {
 		for (int i = 0; i < 2; i++) {
 			std::string localMediaPath = mEnvData->mStartPath + "/images/" +
-					getDisplayName() + "-thumbnail" + extList[i];
+					getDisplayName() + "-" + mediatype + extList[i];
 			if (Utils::FileSystem::exists(localMediaPath))
 				return localMediaPath;
 		}
 	}
 
 	return "";
+}
+
+const std::string FileData::getImagePath() const
+{
+	// Look for a mix image (a combination of screenshot, 2D/3D box and marquee).
+	std::string image = getMediafilePath("miximages", "miximage");
+	if (image != "")
+		return image;
+
+	// If no mix image was found, try screenshot instead.
+	image = getMediafilePath("screenshots", "screenshot");
+	if (image != "")
+		return image;
+
+	// If no screenshot was found either, try cover.
+	return getMediafilePath("covers", "cover");
+}
+
+const std::string FileData::get3DBoxPath() const
+{
+	return getMediafilePath("3dboxes", "3dbox");
+}
+
+const std::string FileData::getCoverPath() const
+{
+	return getMediafilePath("covers", "cover");
+}
+
+const std::string FileData::getMarqueePath() const
+{
+	return getMediafilePath("marquees", "marquee");
+}
+
+const std::string FileData::getMiximagePath() const
+{
+	return getMediafilePath("miximages", "miximage");
+}
+
+const std::string FileData::getScreenshotPath() const
+{
+	return getMediafilePath("screenshots", "screenshot");
+}
+
+const std::string FileData::getThumbnailPath() const
+{
+	return getMediafilePath("thumbnails", "thumbnail");
 }
 
 const std::string FileData::getVideoPath() const
@@ -155,70 +211,8 @@ const std::string FileData::getVideoPath() const
 	if (Settings::getInstance()->getBool("LocalArt"))
 	{
 		for (int i = 0; i < 5; i++) {
-			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() +
+			std::string localMediaPath = mEnvData->mStartPath + "/videos/" + getDisplayName() +
 					"-video" + extList[i];
-			if (Utils::FileSystem::exists(localMediaPath))
-				return localMediaPath;
-		}
-	}
-
-	return "";
-}
-
-const std::string FileData::getMarqueePath() const
-{
-	const char* extList[2] = { ".png", ".jpg" };
-	std::string tempPath = getMediaDirectory() + mSystemName + "/marquees/" + getDisplayName();
-
-	// Look for media in the media directory.
-	for (int i = 0; i < 2; i++) {
-		std::string mediaPath = tempPath + extList[i];
-		if (Utils::FileSystem::exists(mediaPath))
-			return mediaPath;
-	}
-
-	// No media found in the media directory, so look
-	// for local art as well (if configured to do so).
-	if (Settings::getInstance()->getBool("LocalArt"))
-	{
-		for (int i = 0; i < 2; i++) {
-			std::string localMediaPath = mEnvData->mStartPath + "/images/" + getDisplayName() +
-					"-marquee" + extList[i];
-			if (Utils::FileSystem::exists(localMediaPath))
-				return localMediaPath;
-		}
-	}
-
-	return "";
-}
-
-const std::string FileData::getImagePath() const
-{
-	const char* extList[2] = { ".png", ".jpg" };
-
-	// Look for mix image (a combination of screenshot, 3D box and marquee) in the media directory.
-	std::string tempPath = getMediaDirectory() + mSystemName + "/miximages/" + getDisplayName();
-	for (int i = 0; i < 2; i++) {
-		std::string mediaPath = tempPath + extList[i];
-		if (Utils::FileSystem::exists(mediaPath))
-			return mediaPath;
-	}
-
-	// If no mix image exists, try normal screenshot.
-	tempPath = getMediaDirectory() + mSystemName + "/screenshots/" + getDisplayName();
-
-	for (int i = 0; i < 2; i++) {
-		std::string mediaPath = tempPath + extList[i];
-		if (Utils::FileSystem::exists(mediaPath))
-			return mediaPath;
-	}
-
-	// No media found in the media directory, so look
-	// for local art as well (if configured to do so).
-	if (Settings::getInstance()->getBool("LocalArt")) {
-		for (int i = 0; i < 2; i++) {
-			std::string localMediaPath = mEnvData->mStartPath + "/images/" +
-					getDisplayName() + "-image" + extList[i];
 			if (Utils::FileSystem::exists(localMediaPath))
 				return localMediaPath;
 		}
@@ -312,7 +306,6 @@ void FileData::removeChild(FileData* file)
 
 	// File somehow wasn't in our children.
 	assert(false);
-
 }
 
 void FileData::sort(ComparisonFunction& comparator, bool ascending)

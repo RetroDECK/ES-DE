@@ -20,6 +20,11 @@ void thegamesdb_generate_json_scraper_requests(
 		std::queue<std::unique_ptr<ScraperRequest>>& requests,
 		std::vector<ScraperSearchResult>& results);
 
+void thegamesdb_generate_json_scraper_requests(
+		const std::string& gameIDs,
+		std::queue<std::unique_ptr<ScraperRequest>>& requests,
+		std::vector<ScraperSearchResult>& results);
+
 class TheGamesDBJSONRequest : public ScraperHttpRequest
 {
   public:
@@ -42,6 +47,8 @@ class TheGamesDBJSONRequest : public ScraperHttpRequest
 	}
 
   protected:
+	//void retrieveMediaURLs()
+
 	void process(const std::unique_ptr<HttpReq>& req,
 			std::vector<ScraperSearchResult>& results) override;
 	bool isGameRequest() { return !mRequestQueue; }

@@ -4,6 +4,11 @@
 //	Functions specifically for scraping from thegamesdb.net
 //	Called from GamesDBJSONScraper.
 //
+//	Downloads these resource files to ~/.emulationstation/scrapers:
+//	gamesdb_developers.json
+//	gamesdb_genres.json
+//	gamesdb_publishers.json
+//
 
 #pragma once
 #ifndef ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_RESOURCES_H

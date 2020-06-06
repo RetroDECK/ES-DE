@@ -24,6 +24,12 @@
 class FileData;
 class SystemData;
 
+enum eDownloadStatus {
+	NOT_STARTED,
+	IN_PROGRESS,
+	COMPLETED
+};
+
 struct ScraperSearchParams {
 	SystemData* system;
 	FileData* game;
@@ -35,11 +41,29 @@ struct ScraperSearchResult {
 	ScraperSearchResult() : mdl(GAME_METADATA) {};
 
 	MetaDataList mdl;
-	std::string imageUrl;
-	std::string thumbnailUrl;
+	std::string gameID;
+
+	// How many more objects the scraper service allows to be downloaded
+	// within a given time period.
+	unsigned int scraperRequestAllowance;
+
+	enum eDownloadStatus mediaURLFetch = NOT_STARTED;
+	enum eDownloadStatus thumbnailDownloadStatus = NOT_STARTED;
+	enum eDownloadStatus mediaFilesDownloadStatus = NOT_STARTED;
+
+	std::string ThumbnailImageData; // Thumbnail cache, will containe entire image.
+	std::string ThumbnailImageUrl;
+
+	std::string box3dUrl;
+	std::string coverUrl;
+	std::string marqueeUrl;
+	std::string screenshotUrl;
 
 	// Needed to pre-set the image type.
-	std::string imageType;
+	std::string box3dFormat;
+	std::string coverFormat;
+	std::string marqueeFormat;
+	std::string screenshotFormat;
 };
 
 // So let me explain why I've abstracted this so heavily.
@@ -83,7 +107,6 @@ protected:
 	std::vector<ScraperSearchResult>& mResults;
 };
 
-
 // A single HTTP request that needs to be processed to get the results.
 class ScraperHttpRequest : public ScraperRequest
 {
@@ -113,12 +136,17 @@ protected:
 	friend std::unique_ptr<ScraperSearchHandle>
 			startScraperSearch(const ScraperSearchParams& params);
 
+	friend std::unique_ptr<ScraperSearchHandle>
+			startMediaURLsFetch(const std::string& gameIDs);
+
 	std::queue< std::unique_ptr<ScraperRequest> > mRequestQueue;
 	std::vector<ScraperSearchResult> mResults;
 };
 
 // Will use the current scraper settings to pick the result source.
 std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParams& params);
+
+std::unique_ptr<ScraperSearchHandle> startMediaURLsFetch(const std::string& gameIDs);
 
 // Returns a list of valid scraper names.
 std::vector<std::string> getScraperList();
@@ -127,7 +155,7 @@ std::vector<std::string> getScraperList();
 bool isValidConfiguredScraper();
 
 typedef void (*generate_scraper_requests_func)(const ScraperSearchParams& params,
-		std::queue< std::unique_ptr<ScraperRequest> >& requests,
+		std::queue<std::unique_ptr<ScraperRequest>>& requests,
 		std::vector<ScraperSearchResult>& results);
 
 // -------------------------------------------------------------------------
@@ -145,21 +173,26 @@ public:
 private:
 	ScraperSearchResult mResult;
 
-	typedef std::pair< std::unique_ptr<AsyncHandle>, std::function<void()> > ResolvePair;
+	typedef std::pair<std::unique_ptr<AsyncHandle>, std::function<void()>> ResolvePair;
 	std::vector<ResolvePair> mFuncs;
 };
 
 class ImageDownloadHandle : public AsyncHandle
 {
 public:
-	ImageDownloadHandle(const std::string& url, const std::string& path,
-			int maxWidth, int maxHeight);
+	ImageDownloadHandle(
+			const std::string& url,
+			const std::string& path,
+			const std::string& existingMediaPath,
+			int maxWidth,
+			int maxHeight);
 
 	void update() override;
 
 private:
 	std::unique_ptr<HttpReq> mReq;
 	std::string mSavePath;
+	std::string mExistingMediaFile;
 	int mMaxWidth;
 	int mMaxHeight;
 };
@@ -167,13 +200,13 @@ private:
 // About the same as:
 // "~/.emulationstation/downloaded_images/[system_name]/[game_name].[url's extension]".
 // Will create the "downloaded_images" and "subdirectory" directories if they do not exist.
-std::string getSaveAsPath(const ScraperSearchParams& params, const std::string& suffix,
-		const std::string& url);
+std::string getSaveAsPath(const ScraperSearchParams& params,
+		const std::string& filetypeSubdirectory, const std::string& url);
 
 // Will resize according to Settings::getInt("ScraperResizeWidth") and
 // Settings::getInt("ScraperResizeHeight").
 std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
-		const std::string& saveAs);
+		const std::string& saveAs, const std::string& existingMediaPath);
 
 // Resolves all metadata assets that need to be downloaded.
 std::unique_ptr<MDResolveHandle> resolveMetaDataAssets(const ScraperSearchResult& result,

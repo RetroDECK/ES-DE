@@ -28,7 +28,6 @@
 #include "Sound.h"
 
 ViewController* ViewController::sInstance = nullptr;
-NavigationSounds navigationsounds;
 
 ViewController* ViewController::get()
 {
@@ -117,7 +116,7 @@ void ViewController::goToNextGameList()
 	assert(mState.viewing == GAME_LIST);
 	SystemData* system = getState().getSystem();
 	assert(system);
-	navigationsounds.playThemeNavigationSound(QUICKSYSSELECTSOUND);
+	NavigationSounds::getInstance()->playThemeNavigationSound(QUICKSYSSELECTSOUND);
 	goToGameList(system->getNext());
 }
 
@@ -126,7 +125,7 @@ void ViewController::goToPrevGameList()
 	assert(mState.viewing == GAME_LIST);
 	SystemData* system = getState().getSystem();
 	assert(system);
-	navigationsounds.playThemeNavigationSound(QUICKSYSSELECTSOUND);
+	NavigationSounds::getInstance()->playThemeNavigationSound(QUICKSYSSELECTSOUND);
 	goToGameList(system->getPrev());
 }
 
@@ -239,9 +238,9 @@ void ViewController::launch(FileData* game, Vector3f center)
 
 	std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
 
-	navigationsounds.playThemeNavigationSound(LAUNCHSOUND);
+	NavigationSounds::getInstance()->playThemeNavigationSound(LAUNCHSOUND);
 	// Let launch sound play to the end before launching game.
-	while(navigationsounds.isPlayingThemeNavigationSound(LAUNCHSOUND));
+	while (NavigationSounds::getInstance()->isPlayingThemeNavigationSound(LAUNCHSOUND));
 
 	if (transition_style == "fade") {
 		// Fade out, launch game, fade back in.
@@ -472,7 +471,8 @@ void ViewController::preload()
 		getGameListView(*it);
 	}
 	// Load navigation sounds.
-	navigationsounds.loadThemeNavigationSounds(SystemData::sSystemVector[0]->getTheme());
+	NavigationSounds::getInstance()->loadThemeNavigationSounds(
+			SystemData::sSystemVector.front()->getTheme());
 }
 
 void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
@@ -539,7 +539,8 @@ void ViewController::reloadAll()
 	}
 
 	// Load navigation sounds.
-	navigationsounds.loadThemeNavigationSounds(SystemData::sSystemVector[0]->getTheme());
+	NavigationSounds::getInstance()->loadThemeNavigationSounds(
+			SystemData::sSystemVector.front()->getTheme());
 
 	updateHelpPrompts();
 }

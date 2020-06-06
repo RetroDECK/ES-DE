@@ -62,6 +62,8 @@ public:
 
 	unsigned int getGameCount() const;
 	unsigned int getDisplayedGameCount() const;
+	bool getScrapeFlag() { return mScrapeFlag; };
+	void setScrapeFlag(bool scrapeflag) { mScrapeFlag = scrapeflag; }
 
 	static void deleteSystems();
 	// Load the system config file at getConfigPath().
@@ -100,6 +102,7 @@ public:
 private:
 	bool mIsCollectionSystem;
 	bool mIsGameSystem;
+	bool mScrapeFlag;  // Only used by scraper GUI to remember which systems to scrape.
 	std::string mName;
 	std::string mFullName;
 	SystemEnvironmentData* mEnvData;

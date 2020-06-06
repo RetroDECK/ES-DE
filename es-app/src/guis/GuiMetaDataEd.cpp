@@ -46,7 +46,8 @@ GuiMetaDataEd::GuiMetaDataEd(
 		mMetaDataDecl(mdd),
 		mMetaData(md),
 		mSavedCallback(saveCallback),
-		mDeleteFunc(deleteFunc)
+		mDeleteFunc(deleteFunc),
+		mMetadataUpdated(false)
 {
 	addChild(&mBackground);
 	addChild(&mGrid);
@@ -82,7 +83,6 @@ GuiMetaDataEd::GuiMetaDataEd(
 			assert(ed);
 			ed->setValue(mMetaData->get(iter->key));
 			mEditors.push_back(ed);
-
 			continue;
 		}
 
@@ -282,22 +282,41 @@ void GuiMetaDataEd::fetch()
 
 void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 {
-	for (unsigned int i = 0; i < mEditors.size(); i++) {
-		if (mMetaDataDecl.at(i).isStatistic)
-			continue;
+	// Clone the mMetaData object.
+	MetaDataList* metadata = nullptr;
+	metadata = new MetaDataList(*mMetaData);
 
+	mMetadataUpdated = ScraperSearchComponent::saveMetadata(result, *metadata);
+
+	// Update the list with the scraped metadata values.
+	for (unsigned int i = 0; i < mEditors.size(); i++) {
 		const std::string& key = mMetaDataDecl.at(i).key;
-		mEditors.at(i)->setValue(result.mdl.get(key));
+//		if (mEditors.at(i)->getValue() != metadata->get(key)) {
+//				mEditors.at(i)->setOpacity(150);
+//		}
+		mEditors.at(i)->setValue(metadata->get(key));
 	}
+
+	delete metadata;
 }
 
 void GuiMetaDataEd::close(bool closeAllWindows)
 {
 	// Find out if the user made any changes.
-	bool dirty = false;
+	bool dirty = mMetadataUpdated;
 	for (unsigned int i = 0; i < mEditors.size(); i++) {
 		const std::string& key = mMetaDataDecl.at(i).key;
-		if (mMetaData->get(key) != mEditors.at(i)->getValue()) {
+		std::string mMetaDataValue = mMetaData->get(key);
+		std::string mEditorsValue = mEditors.at(i)->getValue();
+
+		// Incredibly ugly workaround to avoid the "SAVE CHANGES?" window for games
+		// with mising metadata for rating and release date.
+		if (key == "rating" && (mMetaDataValue == "" || mMetaDataValue == "0.000000"))
+			mMetaDataValue = "0";
+		if (key == "releasedate" && (mMetaDataValue == "" || mMetaDataValue == "not-a-date-time"))
+			mMetaDataValue = "19700101T010000";
+
+		if (mMetaDataValue != mEditorsValue) {
 			dirty = true;
 			break;
 		}
@@ -314,7 +333,6 @@ void GuiMetaDataEd::close(bool closeAllWindows)
 				delete window->peekGui();
 		};
 	}
-
 
 	if (dirty)
 	{

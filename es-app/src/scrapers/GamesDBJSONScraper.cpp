@@ -16,6 +16,7 @@
 #include "PlatformId.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "MameNames.h"
 #include "utils/TimeUtil.h"
 #include <pugixml/src/pugixml.hpp>
 
@@ -118,23 +119,30 @@ void thegamesdb_generate_json_scraper_requests(
 		std::string gameID = cleanName.substr(3);
 		path += "/Games/ByGameID?" + apiKey +
 				"&fields=players,publishers,genres,overview,last_updated,rating,"
-				"platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&"
-				"include=boxart&id=" +
+				"platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&id=" +
 				HttpReq::urlEncode(gameID);
 		usingGameID = true;
 	}
 	else {
 		if (cleanName.empty())
-			cleanName = params.game->getCleanName();
+			// If it's an arcade game (MAME or Neo Geo) then use the regular name.
+			if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
+					params.system->hasPlatformId(PlatformIds::NEOGEO)) {
+				cleanName = params.game->getName();
+
+				cleanName = MameNames::getInstance()->getCleanName(params.game->getCleanName());
+			}
+			else
+				cleanName = params.game->getCleanName();
+
 			path += "/Games/ByGameName?" + apiKey +
 					"&fields=players,publishers,genres,overview,last_updated,rating,"
-					"platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&"
-					"include=boxart&name=" +
+					"platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=" +
 					HttpReq::urlEncode(cleanName);
 	}
 
 	if (usingGameID) {
-		// Ff we have the ID already, we don't need the GetGameList request.
+		// If we have the ID already, we don't need the GetGameList request.
 		requests.push(std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(results, path)));
 	}
 	else {
@@ -165,6 +173,21 @@ void thegamesdb_generate_json_scraper_requests(
 	}
 }
 
+void thegamesdb_generate_json_scraper_requests(
+		const std::string& gameIDs,
+		std::queue<std::unique_ptr<ScraperRequest>>& requests,
+		std::vector<ScraperSearchResult>& results)
+{
+	resources.prepare();
+	std::string path = "https://api.thegamesdb.net/v1";
+	const std::string apiKey = std::string("apikey=") + resources.getApiKey();
+
+	path += "/Games/Images/GamesImages?" + apiKey + "&games_id=" + gameIDs;
+
+	requests.push(std::unique_ptr<ScraperRequest>
+				(new TheGamesDBJSONRequest(requests, results, path)));
+}
+
 namespace
 {
 
@@ -192,21 +215,6 @@ int getIntOrThrow(const Value& v)
 		throw std::runtime_error("rapidjson internal assertion failure: not an int");
 	}
 	return v.GetInt();
-}
-
-std::string getBoxartImage(const Value& v)
-{
-	if (!v.IsArray() || v.Size() == 0)
-		return "";
-
-	for (int i = 0; i < (int)v.Size(); ++i) {
-		auto& im = v[i];
-		std::string type = getStringOrThrow(im, "type");
-		std::string side = getStringOrThrow(im, "side");
-		if (type == "boxart" && side == "front")
-			return getStringOrThrow(im, "filename");
-	}
-	return getStringOrThrow(v[0], "filename");
 }
 
 std::string getDeveloperString(const Value& v)
@@ -274,12 +282,12 @@ std::string getGenreString(const Value& v)
 	return out;
 }
 
-void processGame(const Value& game, const Value& boxart, std::vector<ScraperSearchResult>& results)
+void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
 {
-	std::string baseImageUrlThumb = getStringOrThrow(boxart["base_url"], "thumb");
-	std::string baseImageUrlLarge = getStringOrThrow(boxart["base_url"], "large");
-
 	ScraperSearchResult result;
+
+	if (game.HasMember("id") && game["id"].IsInt())
+		result.gameID = std::to_string(getIntOrThrow(game, "id"));
 
 	result.mdl.set("name", getStringOrThrow(game, "game_title"));
 	if (game.HasMember("overview") && game["overview"].IsString())
@@ -301,18 +309,51 @@ void processGame(const Value& game, const Value& boxart, std::vector<ScraperSear
 	if (game.HasMember("players") && game["players"].IsInt())
 		result.mdl.set("players", std::to_string(game["players"].GetInt()));
 
-	if (boxart.HasMember("data") && boxart["data"].IsObject()) {
-		std::string id = std::to_string(getIntOrThrow(game, "id"));
-		if (boxart["data"].HasMember(id.c_str())) {
-		    std::string image = getBoxartImage(boxart["data"][id.c_str()]);
-		    result.thumbnailUrl = baseImageUrlThumb + "/" + image;
-		    result.imageUrl = baseImageUrlLarge + "/" + image;
-		}
-	}
-
+	result.mediaURLFetch = NOT_STARTED;
 	results.push_back(result);
 }
 } // namespace
+
+void processMediaURLs(const Value& images, const std::string& base_url,
+		std::vector<ScraperSearchResult>& results)
+{
+	ScraperSearchResult result;
+
+	// Step through each game ID in the JSON server response.
+	for (auto it = images.MemberBegin(); it != images.MemberEnd(); it++) {
+		result.gameID = it->name.GetString();
+		const Value& gameMedia = images[it->name];
+		result.coverUrl = "";
+		result.marqueeUrl = "";
+		result.screenshotUrl = "";
+
+		// Quite excessive testing for valid values, but you never know
+		// what the server has returned and we don't want to crash the
+		// program due to malformed data.
+		if (gameMedia.IsArray()) {
+			for (SizeType i = 0; i < gameMedia.Size(); i++) {
+				std::string mediatype;
+				std::string mediaside;
+				if (gameMedia[i]["type"].IsString())
+					mediatype = gameMedia[i]["type"].GetString();
+				if (gameMedia[i]["side"].IsString())
+					mediaside = gameMedia[i]["side"].GetString();
+
+				if (mediatype == "boxart" && mediaside == "front")
+					if (gameMedia[i]["filename"].IsString())
+						result.coverUrl = base_url + gameMedia[i]["filename"].GetString();
+				if (mediatype == "clearlogo")
+					if (gameMedia[i]["filename"].IsString())
+						result.marqueeUrl = base_url + gameMedia[i]["filename"].GetString();
+				if (mediatype == "screenshot")
+					if (gameMedia[i]["filename"].IsString())
+						result.screenshotUrl = base_url + gameMedia[i]["filename"].GetString();
+			}
+		}
+	result.mediaURLFetch = COMPLETED;
+	results.push_back(result);
+	}
+}
 
 void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
 		std::vector<ScraperSearchResult>& results)
@@ -331,34 +372,58 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
 		return;
 	}
 
+	// If the response contains the 'images' object, then it's a game media URL request.
+	if (doc.HasMember("data") && doc["data"].HasMember("images") &&
+			doc["data"]["images"].IsObject()) {
+
+		const Value& images = doc["data"]["images"];
+		const Value& base_url = doc["data"]["base_url"];
+		std::string baseImageUrlLarge;
+
+		if (base_url.HasMember("large") && base_url["large"].IsString()) {
+			baseImageUrlLarge = base_url["large"].GetString();
+		}
+		else {
+			std::string warn = "TheGamesDBJSONRequest - No URL path for large images.\n";
+			LOG(LogWarning) << warn;
+			return;
+		}
+
+		try {
+			processMediaURLs(images, baseImageUrlLarge, results);
+		}
+		catch (std::runtime_error& e) {
+			LOG(LogError) << "Error while processing media URLs: " << e.what();
+		}
+
+		// Find how many more requests we can make before the scraper
+		// request allowance counter is reset.
+		if (doc.HasMember("remaining_monthly_allowance") && doc.HasMember("extra_allowance")) {
+			for (auto i = 0; i < results.size(); i++) {
+				results[i].scraperRequestAllowance =
+						doc["remaining_monthly_allowance"].GetInt() +
+						doc["extra_allowance"].GetInt();
+			}
+		}
+
+		return;
+	}
+
+	// These process steps are for the initial scraping response.
 	if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
 			!doc["data"]["games"].IsArray()) {
 		std::string warn = "TheGamesDBJSONRequest - Response had no game data.\n";
 		LOG(LogWarning) << warn;
 		return;
 	}
+
 	const Value& games = doc["data"]["games"];
-
-	if (!doc.HasMember("include") || !doc["include"].HasMember("boxart")) {
-		std::string warn = "TheGamesDBJSONRequest - Response had no include boxart data.\n";
-		LOG(LogWarning) << warn;
-		return;
-	}
-
-	const Value& boxart = doc["include"]["boxart"];
-
-	if (!boxart.HasMember("base_url") || !boxart.HasMember("data") || !boxart.IsObject()) {
-		std::string warn = "TheGamesDBJSONRequest - Response include had no usable boxart data.\n";
-		LOG(LogWarning) << warn;
-		return;
-	}
-
 	resources.ensureResources();
 
 	for (int i = 0; i < (int)games.Size(); ++i) {
 		auto& v = games[i];
 		try {
-			processGame(v, boxart, results);
+			processGame(v, results);
 		}
 		catch (std::runtime_error& e) {
 			LOG(LogError) << "Error while processing game: " << e.what();

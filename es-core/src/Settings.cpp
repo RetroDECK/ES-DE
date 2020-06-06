@@ -132,7 +132,19 @@ void Settings::setDefaults()
 
 	// Scraper.
 	mStringMap["Scraper"] = "ScreenScraper";
+	mStringMap["ScraperRegion"] = "eu";
+	mStringMap["ScraperLanguage"] = "en";
+//	mBoolMap["ScraperGenerateMiximages"] = false;
+//	mBoolMap["ScraperGenerateThumbnails"] = false;
+	mBoolMap["ScraperInteractive"] = true;
+	mBoolMap["ScraperOverwriteData"] = false;
+	mBoolMap["ScrapeMetadata"] = true;
+	mBoolMap["ScrapeGameNames"] = true;
 	mBoolMap["ScrapeRatings"] = true;
+	mBoolMap["Scrape3DBoxes"] = true;
+	mBoolMap["ScrapeCovers"] = true;
+	mBoolMap["ScrapeMarquees"] = true;
+	mBoolMap["ScrapeScreenshots"] = true;
 
 	// Other settings.
 	#ifdef _RPI_
@@ -190,6 +202,16 @@ void Settings::setDefaults()
 	mIntMap["ScreenRotate"]  = 0;
 
 	//
+	// Settings that can be changed in es_settings.cfg
+	// but that are not configurable via the GUI (yet).
+	//
+
+	mStringMap["DefaultSortOrder"] = "filename, ascending";
+	mStringMap["MediaDirectory"] = "";
+	mIntMap["ScraperResizeWidth"] = 600;
+	mIntMap["ScraperResizeHeight"] = 0;
+
+	//
 	// Hardcoded or program-internal settings.
 	//
 
@@ -197,10 +219,6 @@ void Settings::setDefaults()
 	mBoolMap["DebugGrid"] = false;
 	mBoolMap["DebugText"] = false;
 	mBoolMap["DebugImage"] = false;
-	mStringMap["DefaultSortOrder"] = "filename, ascending";
-	mStringMap["MediaDirectory"] = "";
-	mIntMap["ScraperResizeWidth"] = 400;
-	mIntMap["ScraperResizeHeight"] = 0;
 	mBoolMap["SplashScreenProgress"] = true;
 	mStringMap["UIMode_passkey"] = "uuddlrlrba";
 }

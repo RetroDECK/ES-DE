@@ -14,7 +14,7 @@
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiGeneralScreensaverOptions.h"
 #include "guis/GuiMsgBox.h"
-#include "guis/GuiScraperStart.h"
+#include "guis/GuiScraperMenu.h"
 #include "guis/GuiSettings.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
@@ -37,6 +37,9 @@ GuiMenu::GuiMenu(
 	bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 
 	if (isFullUI)
+		addEntry("SCRAPER", 0x777777FF, true, [this] { openScraperSettings(); });
+
+	if (isFullUI)
 		addEntry("UI SETTINGS", 0x777777FF, true, [this] { openUISettings(); });
 
 	addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundSettings(); });
@@ -44,9 +47,6 @@ GuiMenu::GuiMenu(
 	if (isFullUI)
 		addEntry("GAME COLLECTION SETTINGS", 0x777777FF, true, [this] {
 				openCollectionSystemSettings(); });
-
-	if (isFullUI)
-		addEntry("SCRAPER", 0x777777FF, true, [this] { openScraperSettings(); });
 
 	if (isFullUI)
 		addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherSettings(); });
@@ -65,44 +65,8 @@ GuiMenu::GuiMenu(
 
 void GuiMenu::openScraperSettings()
 {
-	auto s = new GuiSettings(mWindow, "SCRAPER");
-
-	// Scrape from.
-	auto scraper_list = std::make_shared< OptionListComponent< std::string >
-			>(mWindow, "SCRAPE FROM", false);
-	std::vector<std::string> scrapers = getScraperList();
-
-	// Select either the first entry or the one read from the settings,
-	// just in case the scraper from settings has vanished.
-	for (auto it = scrapers.cbegin(); it != scrapers.cend(); it++)
-		scraper_list->add(*it, *it, *it == Settings::getInstance()->getString("Scraper"));
-
-	s->addWithLabel("SCRAPE FROM", scraper_list);
-	s->addSaveFunc([scraper_list] { Settings::getInstance()->setString("Scraper",
-			scraper_list->getSelected()); });
-
-	// Scrape ratings.
-	auto scrape_ratings = std::make_shared<SwitchComponent>(mWindow);
-	scrape_ratings->setState(Settings::getInstance()->getBool("ScrapeRatings"));
-	s->addWithLabel("SCRAPE RATINGS", scrape_ratings);
-	s->addSaveFunc([scrape_ratings] { Settings::getInstance()->setBool("ScrapeRatings",
-			scrape_ratings->getState()); });
-
-	// Scrape now.
-	ComponentListRow row;
-	auto openScrapeNow = [this] { mWindow->pushGui(new GuiScraperStart(mWindow)); };
-	std::function<void()> openAndSave = openScrapeNow;
-	openAndSave = [s, openAndSave] { s->save(); openAndSave(); };
-	row.makeAcceptInputHandler(openAndSave);
-
-	auto scrape_now = std::make_shared<TextComponent>
-			(mWindow, "SCRAPE NOW", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
-	auto bracket = makeArrow(mWindow);
-	row.addElement(scrape_now, true);
-	row.addElement(bracket, false);
-	s->addRow(row);
-
-	mWindow->pushGui(s);
+	// Open the scrape menu.
+	mWindow->pushGui(new GuiScraperMenu(mWindow));
 }
 
 void GuiMenu::openSoundSettings()
@@ -174,28 +138,6 @@ void GuiMenu::openSoundSettings()
 		});
 		#endif
 
-		// Video audio.
-		auto video_audio = std::make_shared<SwitchComponent>(mWindow);
-		video_audio->setState(Settings::getInstance()->getBool("VideoAudio"));
-		s->addWithLabel("ENABLE AUDIO FOR VIDEO FILES", video_audio);
-		s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("VideoAudio",
-				video_audio->getState()); });
-
-		// Navigation sounds.
-		auto sounds_enabled = std::make_shared<SwitchComponent>(mWindow);
-		sounds_enabled->setState(Settings::getInstance()->getBool("EnableSounds"));
-		s->addWithLabel("ENABLE NAVIGATION SOUNDS", sounds_enabled);
-		s->addSaveFunc([sounds_enabled] {
-			if (sounds_enabled->getState()
-				&& !Settings::getInstance()->getBool("EnableSounds")
-				&& PowerSaver::getMode() == PowerSaver::INSTANT)
-			{
-				Settings::getInstance()->setString("PowerSaverMode", "default");
-				PowerSaver::init();
-			}
-			Settings::getInstance()->setBool("EnableSounds", sounds_enabled->getState());
-		});
-
 		#ifdef _RPI_
 		// OMX player Audio Device
 		auto omx_audio_dev = std::make_shared< OptionListComponent<std::string>
@@ -221,6 +163,27 @@ void GuiMenu::openSoundSettings()
 				Settings::getInstance()->setString("OMXAudioDev", omx_audio_dev->getSelected());
 		});
 		#endif
+
+		// Video audio.
+		auto video_audio = std::make_shared<SwitchComponent>(mWindow);
+		video_audio->setState(Settings::getInstance()->getBool("VideoAudio"));
+		s->addWithLabel("ENABLE AUDIO FOR VIDEO FILES", video_audio);
+		s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("VideoAudio",
+				video_audio->getState()); });
+
+		// Navigation sounds.
+		auto sounds_enabled = std::make_shared<SwitchComponent>(mWindow);
+		sounds_enabled->setState(Settings::getInstance()->getBool("EnableSounds"));
+		s->addWithLabel("ENABLE NAVIGATION SOUNDS", sounds_enabled);
+		s->addSaveFunc([sounds_enabled] {
+			if (sounds_enabled->getState() &&
+					!Settings::getInstance()->getBool("EnableSounds") &&
+					PowerSaver::getMode() == PowerSaver::INSTANT) {
+				Settings::getInstance()->setString("PowerSaverMode", "default");
+				PowerSaver::init();
+			}
+			Settings::getInstance()->setBool("EnableSounds", sounds_enabled->getState());
+		});
 	}
 
 	mWindow->pushGui(s);
@@ -281,9 +244,9 @@ void GuiMenu::openUISettings()
 				getString("TransitionStyle") == *it);
 	s->addWithLabel("TRANSITION STYLE", transition_style);
 	s->addSaveFunc([transition_style] {
-		if (Settings::getInstance()->getString("TransitionStyle") == "instant"
-			&& transition_style->getSelected() != "instant"
-			&& PowerSaver::getMode() == PowerSaver::INSTANT) {
+		if (Settings::getInstance()->getString("TransitionStyle") == "instant" &&
+			transition_style->getSelected() != "instant" &&
+			PowerSaver::getMode() == PowerSaver::INSTANT) {
 			Settings::getInstance()->setString("PowerSaverMode", "default");
 			PowerSaver::init();
 		}
@@ -315,8 +278,7 @@ void GuiMenu::openUISettings()
 
 			Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
 
-			if (needReload)
-			{
+			if (needReload) {
 				Scripting::fireEvent("theme-changed", theme_set->getSelected(), oldTheme);
 				CollectionSystemManager::get()->updateSystemsList();
 				ViewController::get()->goToStart();
@@ -404,9 +366,9 @@ void GuiMenu::openUISettings()
 	move_carousel->setState(Settings::getInstance()->getBool("MoveCarousel"));
 	s->addWithLabel("CAROUSEL TRANSITIONS", move_carousel);
 	s->addSaveFunc([move_carousel] {
-		if (move_carousel->getState()
-			&& !Settings::getInstance()->getBool("MoveCarousel")
-			&& PowerSaver::getMode() == PowerSaver::INSTANT) {
+		if (move_carousel->getState() &&
+			!Settings::getInstance()->getBool("MoveCarousel") &&
+			PowerSaver::getMode() == PowerSaver::INSTANT) {
 			Settings::getInstance()->setString("PowerSaverMode", "default");
 			PowerSaver::init();
 		}
@@ -460,8 +422,8 @@ void GuiMenu::openOtherSettings()
 		fullscreen_mode->add(*it, *it, Settings::getInstance()->getString("FullscreenMode") == *it);
 	s->addWithLabel("FULLSCREEN MODE (REQUIRES RESTART)", fullscreen_mode);
 	s->addSaveFunc([fullscreen_mode] {
-		if (Settings::getInstance()->getString("FullscreenMode") == "normal"
-			&& fullscreen_mode->getSelected() != "normal") {
+		if (Settings::getInstance()->getString("FullscreenMode") == "normal" &&
+			fullscreen_mode->getSelected() != "normal") {
 			Settings::getInstance()->setString("PowerSaverMode", "default");
 			PowerSaver::init();
 		}
@@ -542,7 +504,7 @@ void GuiMenu::openOtherSettings()
 
 	auto local_art = std::make_shared<SwitchComponent>(mWindow);
 	local_art->setState(Settings::getInstance()->getBool("LocalArt"));
-	s->addWithLabel("SEARCH FOR GAME ART IN ROM DIRECTORIES", local_art);
+	s->addWithLabel("DISPLAY GAME ART FROM ROM DIRECTORIES", local_art);
 	s->addSaveFunc([local_art] { Settings::getInstance()->
 			setBool("LocalArt", local_art->getState()); });
 
@@ -583,7 +545,7 @@ void GuiMenu::openConfigInput()
 	Window* window = mWindow;
 	window->pushGui(new GuiMsgBox(window, "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?", "YES",
 		[window] {
-		window->pushGui(new GuiDetectDevice(window, false, nullptr));
+			window->pushGui(new GuiDetectDevice(window, false, nullptr));
 	}, "NO", nullptr)
 	);
 }
@@ -600,8 +562,8 @@ void GuiMenu::openQuitMenu()
 			row.makeAcceptInputHandler([window] {
 				window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES",
 					[] {
-					Scripting::fireEvent("quit");
-					quitES();
+						Scripting::fireEvent("quit");
+						quitES();
 				}, "NO", nullptr));
 			});
 			row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION",
@@ -615,10 +577,10 @@ void GuiMenu::openQuitMenu()
 		row.makeAcceptInputHandler([window] {
 			window->pushGui(new GuiMsgBox(window, "REALLY REBOOT?", "YES",
 				[] {
-				Scripting::fireEvent("quit", "reboot");
-				Scripting::fireEvent("reboot");
-				if (quitES(QuitMode::REBOOT) != 0)
-					LOG(LogWarning) << "Reboot terminated with non-zero result!";
+					Scripting::fireEvent("quit", "reboot");
+					Scripting::fireEvent("reboot");
+					if (quitES(QuitMode::REBOOT) != 0)
+						LOG(LogWarning) << "Reboot terminated with non-zero result!";
 			}, "NO", nullptr));
 		});
 		row.addElement(std::make_shared<TextComponent>(window, "REBOOT SYSTEM",
@@ -631,10 +593,10 @@ void GuiMenu::openQuitMenu()
 		row.makeAcceptInputHandler([window] {
 			window->pushGui(new GuiMsgBox(window, "REALLY POWER OFF?", "YES",
 				[] {
-				Scripting::fireEvent("quit", "poweroff");
-				Scripting::fireEvent("poweroff");
-				if (quitES(QuitMode::POWEROFF) != 0)
-					LOG(LogWarning) << "Power off terminated with non-zero result!";
+					Scripting::fireEvent("quit", "poweroff");
+					Scripting::fireEvent("poweroff");
+					if (quitES(QuitMode::POWEROFF) != 0)
+						LOG(LogWarning) << "Power off terminated with non-zero result!";
 			}, "NO", nullptr));
 		});
 		row.addElement(std::make_shared<TextComponent>(window, "POWER OFF SYSTEM",
@@ -668,11 +630,8 @@ void GuiMenu::onSizeChanged()
 	mVersion.setPosition(0, mSize.y() - mVersion.getSize().y());
 }
 
-void GuiMenu::addEntry(
-		const char* name,
-		unsigned int color,
-		bool add_arrow,
-		const std::function<void()>& func)
+void GuiMenu::addEntry(const char* name, unsigned int color,
+		bool add_arrow, const std::function<void()>& func)
 {
 	std::shared_ptr<Font> font = Font::get(FONT_SIZE_MEDIUM);
 

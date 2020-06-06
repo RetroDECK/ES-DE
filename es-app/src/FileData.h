@@ -57,11 +57,17 @@ public:
 	inline const std::vector<FileData*>& getChildren() const { return mChildren; }
 	inline SystemData* getSystem() const { return mSystem; }
 	inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
-	virtual const std::string getMediaDirectory() const;
+	static const std::string getMediaDirectory();
+	virtual const std::string getMediafilePath(
+			std::string subdirectory, std::string mediatype) const;
+	virtual const std::string getImagePath() const;
+	virtual const std::string get3DBoxPath() const;
+	virtual const std::string getCoverPath() const;
+	virtual const std::string getMarqueePath() const;
+	virtual const std::string getMiximagePath() const;
+	virtual const std::string getScreenshotPath() const;
 	virtual const std::string getThumbnailPath() const;
 	virtual const std::string getVideoPath() const;
-	virtual const std::string getMarqueePath() const;
-	virtual const std::string getImagePath() const;
 
 	const std::vector<FileData*>& getChildrenListToDisplay();
 	std::vector<FileData*> getFilesRecursive(unsigned int typeMask,

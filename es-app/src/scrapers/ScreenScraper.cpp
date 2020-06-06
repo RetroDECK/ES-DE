@@ -14,6 +14,7 @@
 #include "PlatformId.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "math/Misc.h"
 #include <pugixml/src/pugixml.hpp>
 #include <cstring>
 
@@ -132,7 +133,11 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
 
 	ScreenScraperRequest::ScreenScraperConfig ssConfig;
 
-	path = ssConfig.getGameSearchUrl(params.game->getFileName());
+	if (params.nameOverride == "")
+		path = ssConfig.getGameSearchUrl(params.game->getCleanName());
+	else
+		path = ssConfig.getGameSearchUrl(params.nameOverride);
+
 	auto& platforms = params.system->getPlatformIds();
 	std::vector<unsigned short> p_ids;
 
@@ -164,7 +169,6 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
 		requests.push(std::unique_ptr<ScraperRequest>
 				(new ScreenScraperRequest(requests, results, path)));
 	}
-
 }
 
 void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
@@ -200,8 +204,20 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 		ScraperSearchResult result;
 		ScreenScraperRequest::ScreenScraperConfig ssConfig;
 
-		std::string region = Utils::String::toLower(ssConfig.region).c_str();
-		std::string language = Utils::String::toLower(ssConfig.language).c_str();
+		result.gameID = game.attribute("id").as_string();
+
+		// Find how many more requests we can make before the scraper request
+		// allowance counter is reset.
+		unsigned requestsToday =
+				data.child("ssuser").child("requeststoday").text().as_uint();
+		unsigned maxRequestsPerDay =
+				data.child("ssuser").child("maxrequestsperday").text().as_uint();
+		result.scraperRequestAllowance = maxRequestsPerDay - requestsToday;
+
+		std::string region =
+				Utils::String::toLower(Settings::getInstance()->getString("ScraperRegion"));
+		std::string language =
+				Utils::String::toLower(Settings::getInstance()->getString("ScraperLanguage"));
 
 		// Name fallback: US, WOR(LD). ( Xpath: Data/jeu[0]/noms/nom[*] ).
 		result.mdl.set("name", find_child_by_attribute_list(game.child("noms"),
@@ -251,9 +267,11 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 		// Players.
 		result.mdl.set("players", game.child("joueurs").text().get());
 
-		// TODO: Validate rating.
+		// Validate rating.
 		if (Settings::getInstance()->getBool("ScrapeRatings") && game.child("note")) {
 			float ratingVal = (game.child("note").text().as_int() / 20.0f);
+			// Round up to the closest .1 value, i.e. to the closest half-star.
+			ratingVal = Math::ceilf(ratingVal / 0.1) / 10;
 			std::stringstream ss;
 			ss << ratingVal;
 			result.mdl.set("rating", ss.str());
@@ -263,52 +281,70 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 		pugi::xml_node media_list = game.child("medias");
 
 		if (media_list) {
-			pugi::xml_node art = pugi::xml_node(NULL);
+			// 3D box
+			processMedia(result, media_list, ssConfig.media_3dbox,
+					result.box3dUrl, result.box3dFormat, region);
+			// Cover
+			processMedia(result, media_list, ssConfig.media_cover,
+					result.coverUrl, result.coverFormat, region);
+			// Marquee (wheel)
+			processMedia(result, media_list, ssConfig.media_marquee,
+					result.marqueeUrl, result.marqueeFormat, region);
+			// Screenshot
+			processMedia(result, media_list, ssConfig.media_screenshot,
+					result.screenshotUrl, result.screenshotFormat, region);
+		}
+		result.mediaURLFetch = COMPLETED;
+		out_results.push_back(result);
+	} // Game.
+}
 
-			// Do an XPath query for media[type='$media_type'], then filter by region.
-			// We need to do this because any child of 'medias' has the form
-			// <media type="..." region="..." format="...">
-			// and we need to find the right media for the region.
-			pugi::xpath_node_set results = media_list.select_nodes((static_cast<std::string>
-					("media[@type='") + ssConfig.media_name + "']").c_str());
+void ScreenScraperRequest::processMedia(
+		ScraperSearchResult& result,
+		const pugi::xml_node& media_list,
+		std::string mediaType,
+		std::string& fileURL,
+		std::string& fileFormat,
+		std::string region)
+{
+	pugi::xml_node art = pugi::xml_node(NULL);
 
-			if (results.size()) {
-				// Region fallback: WOR(LD), US, CUS(TOM?), JP, EU.
-				for (auto _region : std::vector<std::string>{ region,
-						"wor", "us", "cus", "jp", "eu" }) {
-					if (art)
+	// Do an XPath query for media[type='$media_type'], then filter by region.
+	// We need to do this because any child of 'medias' has the form
+	// <media type="..." region="..." format="...">
+	// and we need to find the right media for the region.
+	pugi::xpath_node_set results = media_list.select_nodes((static_cast<std::string>
+		("media[@type='") + mediaType + "']").c_str());
+
+		if (results.size()) {
+			// Region fallback: WOR(LD), US, CUS(TOM?), JP, EU.
+			for (auto _region : std::vector<std::string>{
+					region, "wor", "us", "cus", "jp", "eu" }) {
+				if (art)
+					break;
+
+				for (auto node : results) {
+					if (node.node().attribute("region").value() == _region) {
+						art = node.node();
 						break;
-
-					for (auto node : results) {
-						if (node.node().attribute("region").value() == _region) {
-							art = node.node();
-							break;
-						}
 					}
 				}
-			} // Results.
-
-			if (art) {
-				// Sending a 'softname' containing space will make the image URLs returned
-				// by the API also contain the space. Escape any spaces in the URL here
-				result.imageUrl = Utils::String::replace(art.text().get(), " ", "%20");
-
-				// Get the media type returned by ScreenScraper.
-				std::string media_type = art.attribute("format").value();
-				if (!media_type.empty())
-					result.imageType = "." + media_type;
-
-				// Ask for the same image, but with a smaller size, for the thumbnail
-				// displayed during scraping.
-				result.thumbnailUrl = result.imageUrl + "&maxheight=250";
-			}
-			else {
-				LOG(LogDebug) << "Failed to find media XML node with name=" << ssConfig.media_name;
 			}
 		}
 
-		out_results.push_back(result);
-	} // Game.
+		if (art) {
+			// Sending a 'softname' containing space will make the image URLs returned
+			// by the API also contain the space. Escape any spaces in the URL here.
+			fileURL = Utils::String::replace(art.text().get(), " ", "%20");
+
+			// Get the media type returned by ScreenScraper.
+			std::string media_type = art.attribute("format").value();
+			if (!media_type.empty())
+				fileFormat = "." + media_type;
+		}
+		else {
+			LOG(LogDebug) << "Failed to find media XML node with name=" << mediaType;
+		}
 }
 
 // Currently not used in this module.

@@ -80,7 +80,8 @@ public:
 	inline void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
 
 protected:
-	virtual void onScroll() { navigationsounds.playThemeNavigationSound(SCROLLSOUND); }
+	virtual void onScroll() {
+			NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND); }
 	virtual void onCursorChanged(const CursorState& state);
 
 private:
@@ -389,7 +390,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme, c
 	setFont(Font::getFromTheme(elem, properties, mFont));
 	const float selectorHeight = Math::max(mFont->getHeight(1.0), (float)mFont->getSize()) * mLineSpacing;
 	setSelectorHeight(selectorHeight);
-	
+
 	if(properties & ALIGNMENT)
 	{
 		if(elem->has("alignment"))

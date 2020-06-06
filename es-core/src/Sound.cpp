@@ -5,6 +5,8 @@
 #include "Settings.h"
 #include "ThemeData.h"
 
+NavigationSounds* NavigationSounds::sInstance = nullptr;
+
 std::map< std::string, std::shared_ptr<Sound> > Sound::sMap;
 
 std::shared_ptr<Sound> Sound::get(const std::string& path)
@@ -26,79 +28,41 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
 	const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
 	if(!elem || !elem->has("path"))
 	{
-		LOG(LogInfo) << "[" << element << "] not found, can't play sound file";
+		LOG(LogInfo) << "[" << element << "] not found, won't load any sound file";
 		return get("");
 	}
-	
-	LOG(LogInfo) << "[" << element << "] found, ready to play sound file";
+
+	LOG(LogInfo) << "[" << element << "] found, ready to load sound file";
 	return get(elem->get<std::string>("path"));
+}
+
+NavigationSounds* NavigationSounds::getInstance()
+{
+	if (sInstance == NULL)
+		sInstance = new NavigationSounds();
+
+	return sInstance;
 }
 
 void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
 {
-			systembrowseSound = Sound::getFromTheme(theme, "all", "systembrowseSound"); 
-			quicksysselectSound = Sound::getFromTheme(theme, "all", "quicksysselectSound"); 
-			selectSound = Sound::getFromTheme(theme, "all", "selectSound"); 
-			backSound = Sound::getFromTheme(theme, "all", "backSound"); 
-			scrollSound = Sound::getFromTheme(theme, "all", "scrollSound"); 
-			favoriteSound = Sound::getFromTheme(theme, "all", "favoriteSound"); 
-			launchSound = Sound::getFromTheme(theme, "all", "launchSound"); 
+	navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowseSound"));
+	navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselectSound"));
+	navigationSounds.push_back(Sound::getFromTheme(theme, "all", "selectSound"));
+	navigationSounds.push_back(Sound::getFromTheme(theme, "all", "backSound"));
+	navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scrollSound"));
+	navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favoriteSound"));
+	navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launchSound"));
 }
 
 void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)
 {
-
-	switch(soundID)
-	{
-		case SYSTEMBROWSESOUND:
-			navigationsounds.systembrowseSound->play();
-			break;
-		case QUICKSYSSELECTSOUND:
-			navigationsounds.quicksysselectSound->play();
-			break;
-		case SELECTSOUND:
-			navigationsounds.selectSound->play();
-			break;
-		case BACKSOUND:
-			navigationsounds.backSound->play();
-			break;
-		case SCROLLSOUND:
-			navigationsounds.scrollSound->play();
-			break;		
-		case FAVORITESOUND:
-			navigationsounds.favoriteSound->play();
-			break;
-		case LAUNCHSOUND:
-			navigationsounds.launchSound->play();
-	}
+	NavigationSounds::getInstance()->navigationSounds[soundID]->play();
 }
 
 bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
 {
-	switch(soundID)
-	{
-		case SYSTEMBROWSESOUND:
-			return navigationsounds.systembrowseSound->isPlaying();
-			break;
-		case QUICKSYSSELECTSOUND:
-			return navigationsounds.quicksysselectSound->isPlaying();
-			break;
-		case SELECTSOUND:
-			return navigationsounds.selectSound->isPlaying();
-			break;
-		case BACKSOUND:
-			return navigationsounds.backSound->isPlaying();
-			break;
-		case SCROLLSOUND:
-			return navigationsounds.scrollSound->isPlaying();
-			break;
-		case FAVORITESOUND:
-			return navigationsounds.favoriteSound->isPlaying();
-			break;
-		case LAUNCHSOUND:
-			return navigationsounds.launchSound->isPlaying();
-	}		
-	return false;
+	return NavigationSounds::getInstance()->navigationSounds[soundID]->isPlaying();
 }
 
 Sound::Sound(const std::string & path) : mSampleData(NULL), mSamplePos(0), mSampleLength(0), playing(false)
@@ -130,7 +94,7 @@ void Sound::init()
 	Uint8 * data = NULL;
     Uint32 dlen = 0;
 	if (SDL_LoadWAV(mPath.c_str(), &wave, &data, &dlen) == NULL) {
-		LOG(LogError) << "Error loading sound \"" << mPath << "\"!\n" << "	" << SDL_GetError();
+		LOG(LogError) << "Error loading sound file \"" << mPath << "\"!\n" << "	" << SDL_GetError();
 		return;
 	}
 	//build conversion buffer

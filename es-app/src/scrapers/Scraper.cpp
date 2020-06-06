@@ -36,10 +36,28 @@ std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParam
 	return handle;
 }
 
+std::unique_ptr<ScraperSearchHandle> startMediaURLsFetch(const std::string& gameIDs)
+{
+	const std::string& name = Settings::getInstance()->getString("Scraper");
+	std::unique_ptr<ScraperSearchHandle> handle(new ScraperSearchHandle());
+
+	ScraperSearchParams params;
+	// Check if the scraper in the settings still exists as a registered scraping source.
+	if (scraper_request_funcs.find(name) == scraper_request_funcs.end())
+		LOG(LogWarning) << "Configured scraper (" << name << ") unavailable, scraping aborted.";
+	else
+		// Specifically use the TheGamesDB function as this type of request
+		// will never occur for ScreenScraper.
+		thegamesdb_generate_json_scraper_requests(gameIDs, handle->mRequestQueue,
+				handle->mResults);
+
+	return handle;
+}
+
 std::vector<std::string> getScraperList()
 {
 	std::vector<std::string> list;
-	for(auto it = scraper_request_funcs.cbegin(); it != scraper_request_funcs.cend(); it++)
+	for (auto it = scraper_request_funcs.cbegin(); it != scraper_request_funcs.cend(); it++)
 		list.push_back(it->first);
 
 	return list;
@@ -59,36 +77,35 @@ ScraperSearchHandle::ScraperSearchHandle()
 
 void ScraperSearchHandle::update()
 {
-	if(mStatus == ASYNC_DONE)
+	if (mStatus == ASYNC_DONE)
 		return;
 
-	if(!mRequestQueue.empty())
-	{
+	if (!mRequestQueue.empty()) {
 		// A request can add more requests to the queue while running,
 		// so be careful with references into the queue.
 		auto& req = *(mRequestQueue.front());
 		AsyncHandleStatus status = req.status();
 
-		if(status == ASYNC_ERROR) {
+		if (status == ASYNC_ERROR) {
 			// Propagate error.
 			setError(req.getStatusString());
 
 			// Empty our queue.
-			while(!mRequestQueue.empty())
+			while (!mRequestQueue.empty())
 				mRequestQueue.pop();
 
 			return;
 		}
 
 		// Finished this one, see if we have any more.
-		if(status == ASYNC_DONE)
+		if (status == ASYNC_DONE)
 			mRequestQueue.pop();
 
 		// Status == ASYNC_IN_PROGRESS.
 	}
 
 	// We finished without any errors!
-	if(mRequestQueue.empty()) {
+	if (mRequestQueue.empty()) {
 		setStatus(ASYNC_DONE);
 		return;
 	}
@@ -101,8 +118,8 @@ ScraperRequest::ScraperRequest(std::vector<ScraperSearchResult>& resultsWrite)
 }
 
 // ScraperHttpRequest.
-ScraperHttpRequest::ScraperHttpRequest(std::vector<ScraperSearchResult>&
-		resultsWrite, const std::string& url) : ScraperRequest(resultsWrite)
+ScraperHttpRequest::ScraperHttpRequest(std::vector<ScraperSearchResult>& resultsWrite,
+		const std::string& url) : ScraperRequest(resultsWrite)
 {
 	setStatus(ASYNC_IN_PROGRESS);
 	mReq = std::unique_ptr<HttpReq>(new HttpReq(url));
@@ -111,8 +128,7 @@ ScraperHttpRequest::ScraperHttpRequest(std::vector<ScraperSearchResult>&
 void ScraperHttpRequest::update()
 {
 	HttpReq::Status status = mReq->status();
-	if(status == HttpReq::REQ_SUCCESS)
-	{
+	if (status == HttpReq::REQ_SUCCESS) {
 		// If process() has an error, status will be changed to ASYNC_ERROR.
 		setStatus(ASYNC_DONE);
 		process(mReq, mResults);
@@ -120,7 +136,7 @@ void ScraperHttpRequest::update()
 	}
 
 	// Not ready yet.
-	if(status == HttpReq::REQ_IN_PROGRESS)
+	if (status == HttpReq::REQ_IN_PROGRESS)
 		return;
 
 	// Everything else is some sort of error.
@@ -129,8 +145,7 @@ void ScraperHttpRequest::update()
 	setError(mReq->getErrorMsg());
 }
 
-// Metadata resolving stuff.
-
+// Download and write the media files to disk.
 std::unique_ptr<MDResolveHandle> resolveMetaDataAssets(const ScraperSearchResult& result,
 		const ScraperSearchParams& search)
 {
@@ -140,44 +155,124 @@ std::unique_ptr<MDResolveHandle> resolveMetaDataAssets(const ScraperSearchResult
 MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
 		const ScraperSearchParams& search) : mResult(result)
 {
-	if(!result.imageUrl.empty()) {
+	struct mediaFileInfoStruct {
+		std::string fileURL;
+		std::string fileFormat;
+		std::string subDirectory;
+		std::string existingMediaFile;
+	} mediaFileInfo;
+
+	std::vector<struct mediaFileInfoStruct> scrapeFiles;
+
+	if (Settings::getInstance()->getBool("Scrape3DBoxes") && result.box3dUrl != "") {
+		mediaFileInfo.fileURL = result.box3dUrl;
+		mediaFileInfo.fileFormat = result.box3dFormat;
+		mediaFileInfo.subDirectory = "3dboxes";
+		mediaFileInfo.existingMediaFile = search.game->get3DBoxPath();
+		scrapeFiles.push_back(mediaFileInfo);
+	}
+	if (Settings::getInstance()->getBool("ScrapeCovers") && result.coverUrl != "") {
+		mediaFileInfo.fileURL = result.coverUrl;
+		mediaFileInfo.fileFormat = result.coverFormat;
+		mediaFileInfo.subDirectory = "covers";
+		mediaFileInfo.existingMediaFile = search.game->getCoverPath();
+		scrapeFiles.push_back(mediaFileInfo);
+	}
+	if (Settings::getInstance()->getBool("ScrapeMarquees") && result.marqueeUrl != "") {
+		mediaFileInfo.fileURL = result.marqueeUrl;
+		mediaFileInfo.fileFormat = result.marqueeFormat;
+		mediaFileInfo.subDirectory = "marquees";
+		mediaFileInfo.existingMediaFile = search.game->getMarqueePath();
+		scrapeFiles.push_back(mediaFileInfo);
+	}
+	if (Settings::getInstance()->getBool("ScrapeScreenshots") && result.screenshotUrl != "") {
+		mediaFileInfo.fileURL = result.screenshotUrl;
+		mediaFileInfo.fileFormat = result.screenshotFormat;
+		mediaFileInfo.subDirectory = "screenshots";
+		mediaFileInfo.existingMediaFile = search.game->getScreenshotPath();
+		scrapeFiles.push_back(mediaFileInfo);
+	}
+
+	for (auto it = scrapeFiles.cbegin(); it != scrapeFiles.cend(); it++) {
 
 		std::string ext;
 
 		// If we have a file extension returned by the scraper, then use it.
 		// Otherwise, try to guess it by the name of the URL, which point to an image.
-		if (!result.imageType.empty()) {
-			ext = result.imageType;
+		if (!it->fileFormat.empty()) {
+			ext = it->fileFormat;
 		}
 		else {
-			size_t dot = result.imageUrl.find_last_of('.');
+			size_t dot = it->fileURL.find_last_of('.');
 
 			if (dot != std::string::npos)
-				ext = result.imageUrl.substr(dot, std::string::npos);
+				ext = it->fileURL.substr(dot, std::string::npos);
 		}
 
-		std::string imgPath = getSaveAsPath(search, "image", ext);
+		std::string filePath = getSaveAsPath(search, it->subDirectory, ext);
 
-		mFuncs.push_back(ResolvePair(downloadImageAsync(result.imageUrl, imgPath),
-				[this, imgPath] {
-			mResult.mdl.set("image", imgPath);
-			mResult.imageUrl = "";
-		}));
+		// If there is an existing media file on disk and the setting to overwrite data
+		// has been set to no, then don't proceed with downloading or saving a new file.
+		if (it->existingMediaFile != "" &&
+				!Settings::getInstance()->getBool("ScraperOverwriteData"))
+			continue;
+
+		// If the image is cached already as the thumbnail, then we don't need
+		// to download it again, in this case just save it to disk and resize it.
+		if (mResult.ThumbnailImageUrl == it->fileURL &&
+				mResult.ThumbnailImageData.size() > 0) {
+
+			// Remove any existing media file before attempting to write a new one.
+			// This avoids the problem where there's already a file for this media type
+			// with a different format/extension (e.g. game.jpg and we're going to write
+			// game.png) which would lead to two media files for this game.
+			if(it->existingMediaFile != "")
+				Utils::FileSystem::removeFile(it->existingMediaFile);
+
+			std::ofstream stream(filePath, std::ios_base::out | std::ios_base::binary);
+			if (stream.bad()) {
+				setError("Failed to open image path to write. Permission error? Disk full?");
+				return;
+			}
+
+			const std::string& content = mResult.ThumbnailImageData;
+			stream.write(content.data(), content.length());
+			stream.close();
+			if (stream.bad()) {
+				setError("Failed to save image. Disk full?");
+				return;
+			}
+
+			// Resize it.
+			if (!resizeImage(filePath, Settings::getInstance()->getInt("ScraperResizeWidth"),
+					Settings::getInstance()->getInt("ScraperResizeHeight"))) {
+				setError("Error saving resized image. Out of memory? Disk full?");
+				return;
+			}
+		}
+		// If it's not cached, then initiate the download.
+		else {
+			mFuncs.push_back(ResolvePair(downloadImageAsync(it->fileURL, filePath,
+					it->existingMediaFile), [this, filePath] {
+//				mResult.mdl.set("image", filePath);
+			}));
+		}
 	}
 }
 
 void MDResolveHandle::update()
 {
-	if(mStatus == ASYNC_DONE || mStatus == ASYNC_ERROR)
+	if (mStatus == ASYNC_DONE || mStatus == ASYNC_ERROR)
 		return;
 
 	auto it = mFuncs.cbegin();
-	while(it != mFuncs.cend()) {
-		if(it->first->status() == ASYNC_ERROR) {
+	while (it != mFuncs.cend()) {
+
+		if (it->first->status() == ASYNC_ERROR) {
 			setError(it->first->getStatusString());
 			return;
 		}
-		else if(it->first->status() == ASYNC_DONE) {
+		else if (it->first->status() == ASYNC_DONE) {
 			it->second();
 			it = mFuncs.erase(it);
 			continue;
@@ -185,30 +280,41 @@ void MDResolveHandle::update()
 		it++;
 	}
 
-	if(mFuncs.empty())
+	if (mFuncs.empty())
 		setStatus(ASYNC_DONE);
 }
 
 std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
-		const std::string& saveAs)
+		const std::string& saveAs, const std::string& existingMediaFile)
 {
-	return std::unique_ptr<ImageDownloadHandle>(new ImageDownloadHandle(url, saveAs,
+	return std::unique_ptr<ImageDownloadHandle>(new ImageDownloadHandle(
+			url,
+			saveAs,
+			existingMediaFile,
 			Settings::getInstance()->getInt("ScraperResizeWidth"),
 			Settings::getInstance()->getInt("ScraperResizeHeight")));
 }
 
-ImageDownloadHandle::ImageDownloadHandle(const std::string& url,
-		const std::string& path, int maxWidth, int maxHeight) : mSavePath(path),
-		mMaxWidth(maxWidth), mMaxHeight(maxHeight), mReq(new HttpReq(url))
+ImageDownloadHandle::ImageDownloadHandle(
+		const std::string& url,
+		const std::string& path,
+		const std::string& existingMediaPath,
+		int maxWidth,
+		int maxHeight)
+		: mSavePath(path),
+		mExistingMediaFile(existingMediaPath),
+		mMaxWidth(maxWidth),
+		mMaxHeight(maxHeight),
+		mReq(new HttpReq(url))
 {
 }
 
 void ImageDownloadHandle::update()
 {
-	if(mReq->status() == HttpReq::REQ_IN_PROGRESS)
+	if (mReq->status() == HttpReq::REQ_IN_PROGRESS)
 		return;
 
-	if(mReq->status() != HttpReq::REQ_SUCCESS) {
+	if (mReq->status() != HttpReq::REQ_SUCCESS) {
 		std::stringstream ss;
 		ss << "Network error: " << mReq->getErrorMsg();
 		setError(ss.str());
@@ -216,8 +322,16 @@ void ImageDownloadHandle::update()
 	}
 
 	// Download is done, save it to disk.
+
+	// Remove any existing media file before attempting to write a new one.
+	// This avoids the problem where there's already a file for this media type
+	// with a different format/extension (e.g. game.jpg and we're going to write
+	// game.png) which would lead to two media files for this game.
+	if(mExistingMediaFile != "")
+		Utils::FileSystem::removeFile(mExistingMediaFile);
+
 	std::ofstream stream(mSavePath, std::ios_base::out | std::ios_base::binary);
-	if(stream.bad()) {
+	if (stream.bad()) {
 		setError("Failed to open image path to write. Permission error? Disk full?");
 		return;
 	}
@@ -225,13 +339,13 @@ void ImageDownloadHandle::update()
 	const std::string& content = mReq->getContent();
 	stream.write(content.data(), content.length());
 	stream.close();
-	if(stream.bad()) {
+	if (stream.bad()) {
 		setError("Failed to save image. Disk full?");
 		return;
 	}
 
 	// Resize it.
-	if(!resizeImage(mSavePath, mMaxWidth, mMaxHeight)) {
+	if (!resizeImage(mSavePath, mMaxWidth, mMaxHeight)) {
 		setError("Error saving resized image. Out of memory? Disk full?");
 		return;
 	}
@@ -243,7 +357,7 @@ void ImageDownloadHandle::update()
 bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
 {
 	// Nothing to do.
-	if(maxWidth == 0 && maxHeight == 0)
+	if (maxWidth == 0 && maxHeight == 0)
 		return true;
 
 	FREE_IMAGE_FORMAT format = FIF_UNKNOWN;
@@ -251,15 +365,15 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
 
 	// Detect the filetype.
 	format = FreeImage_GetFileType(path.c_str(), 0);
-	if(format == FIF_UNKNOWN)
+	if (format == FIF_UNKNOWN)
 		format = FreeImage_GetFIFFromFilename(path.c_str());
-	if(format == FIF_UNKNOWN) {
+	if (format == FIF_UNKNOWN) {
 		LOG(LogError) << "Error - could not detect filetype for image \"" << path << "\"!";
 		return false;
 	}
 
 	// Make sure we can read this filetype first, then load it.
-	if(FreeImage_FIFSupportsReading(format)) {
+	if (FreeImage_FIFSupportsReading(format)) {
 		image = FreeImage_Load(format, path.c_str());
 	}
 	else {
@@ -270,15 +384,20 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
 	float width = (float)FreeImage_GetWidth(image);
 	float height = (float)FreeImage_GetHeight(image);
 
-	if(maxWidth == 0)
+	// If the image is smaller than maxWidth or maxHeight, then don't do any
+	// scaling. It doesn't make sense to upscale the image and waste disk space.
+	if (maxWidth > width || maxHeight > height)
+		return true;
+
+	if (maxWidth == 0)
 		maxWidth = (int)((maxHeight / height) * width);
-	else if(maxHeight == 0)
+	else if (maxHeight == 0)
 		maxHeight = (int)((maxWidth / width) * height);
 
 	FIBITMAP* imageRescaled = FreeImage_Rescale(image, maxWidth, maxHeight, FILTER_BILINEAR);
 	FreeImage_Unload(image);
 
-	if(imageRescaled == NULL) {
+	if (imageRescaled == NULL) {
 		LOG(LogError) << "Could not resize image! (not enough memory? invalid bitdepth?)";
 		return false;
 	}
@@ -286,26 +405,26 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
 	bool saved = (FreeImage_Save(format, imageRescaled, path.c_str()) != 0);
 	FreeImage_Unload(imageRescaled);
 
-	if(!saved)
+	if (!saved)
 		LOG(LogError) << "Failed to save resized image!";
 
 	return saved;
 }
 
 std::string getSaveAsPath(const ScraperSearchParams& params,
-		const std::string& suffix, const std::string& extension)
+		const std::string& filetypeSubdirectory, const std::string& extension)
 {
-	const std::string subdirectory = params.system->getName();
-	const std::string name = Utils::FileSystem::getStem(params.game->getPath()) + "-" + suffix;
+	const std::string systemsubdirectory = params.system->getName();
+	const std::string name = Utils::FileSystem::getStem(params.game->getPath());
 
-	std::string path = Utils::FileSystem::getHomePath() + "/.emulationstation/downloaded_images/";
+	std::string path = FileData::getMediaDirectory();
 
-	if(!Utils::FileSystem::exists(path))
+	if (!Utils::FileSystem::exists(path))
 		Utils::FileSystem::createDirectory(path);
 
-	path += subdirectory + "/";
+	path += systemsubdirectory + "/" + filetypeSubdirectory + "/";
 
-	if(!Utils::FileSystem::exists(path))
+	if (!Utils::FileSystem::exists(path))
 		Utils::FileSystem::createDirectory(path);
 
 	path += name + extension;

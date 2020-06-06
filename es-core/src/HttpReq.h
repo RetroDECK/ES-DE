@@ -26,8 +26,7 @@
 // Once one of those calls complete, the request is ready.
 //
 // Do something like this to capture errors:
-// if(myRequest.status() != REQ_SUCCESS)
-// {
+// if(myRequest.status() != REQ_SUCCESS) {
 //    // An error occured.
 //    LOG(LogError) << "HTTP request error - " << myRequest.getErrorMessage();
 //    return;

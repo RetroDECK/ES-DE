@@ -354,7 +354,6 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 		}
 		else {
 			ViewController::get()->onFileChanged(rootFolder, FILE_SORTED);
-			std::string teststring1 = rootFolder->getPath();
 			// If it's a custom collection and the collections
 			// are grouped, update the parent instead.
 			if (sysData.decl.isCustom &&

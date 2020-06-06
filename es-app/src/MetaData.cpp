@@ -12,38 +12,40 @@
 #include <pugixml/src/pugixml.hpp>
 
 MetaDataDecl gameDecls[] = {
-	// key,          type,                   default,            statistic,  name in GuiMetaDataEd,  prompt in GuiMetaDataEd
-	{"name",         MD_STRING,              "",                 false,      "name",                 "enter game name"},
-	{"sortname",     MD_STRING,              "",                 false,      "sortname",             "enter game sort name"},
-	{"desc",         MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description"},
-	{"rating",       MD_RATING,              "0.000000",         false,      "rating",               "enter rating"},
-	{"releasedate",  MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date"},
-	{"developer",    MD_STRING,              "unknown",          false,      "developer",            "enter game developer"},
-	{"publisher",    MD_STRING,              "unknown",          false,      "publisher",            "enter game publisher"},
-	{"genre",        MD_STRING,              "unknown",          false,      "genre",                "enter game genre"},
-	{"players",      MD_INT,                 "1",                false,      "players",              "enter number of players"},
-	{"favorite",     MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on"},
-	{"completed",    MD_BOOL,                "false",            false,      "completed",            "enter completed off/on"},
-	{"hidden",       MD_BOOL,                "false",            false,      "hidden",               "enter hidden off/on"},
-	{"kidgame",      MD_BOOL,                "false",            false,      "kidgame",              "enter kidgame off/on"},
-	{"launchstring", MD_LAUNCHSTRING,        "",                 false,      "launch string",        "enter game launch string (emulator override)"},
-	{"playcount",    MD_INT,                 "0",                false,      "play count",           "enter number of times played"},
-	{"lastplayed",   MD_TIME,                "0",                true,       "last played",          "enter last played date"}
+// key,          type,                default,           statistic, name in GuiMetaDataEd, prompt in GuiMetaDataEd,         shouldScrape
+{"name",         MD_STRING,           "",                false,     "name",                "enter game name",               true},
+{"sortname",     MD_STRING,           "",                false,     "sortname",            "enter game sort name",          false},
+{"desc",         MD_MULTILINE_STRING, "",                false,     "description",         "enter description",             true},
+{"rating",       MD_RATING,           "0",               false,     "rating",              "enter rating",                  true},
+{"releasedate",  MD_DATE,             "not-a-date-time", false,     "release date",        "enter release date",            true},
+{"developer",    MD_STRING,           "unknown",         false,     "developer",           "enter game developer",          true},
+{"publisher",    MD_STRING,           "unknown",         false,     "publisher",           "enter game publisher",          true},
+{"genre",        MD_STRING,           "unknown",         false,     "genre",               "enter game genre",              true},
+{"players",      MD_INT,              "unknown",         false,     "players",             "enter number of players",       true},
+{"favorite",     MD_BOOL,             "false",           false,     "favorite",            "enter favorite off/on",         false},
+{"completed",    MD_BOOL,             "false",           false,     "completed",           "enter completed off/on",        false},
+{"broken",       MD_BOOL,             "false",           false,     "broken/not working",  "enter broken off/on",           false},
+{"hidden",       MD_BOOL,             "false",           false,     "hidden",              "enter hidden off/on",           false},
+{"kidgame",      MD_BOOL,             "false",           false,     "kidgame",             "enter kidgame off/on",          false},
+{"launchstring", MD_LAUNCHSTRING,     "",                false,     "launch string",       "enter game launch string "
+                                                                                           "(emulator override)",           false},
+{"playcount",    MD_INT,              "0",               false,     "play count",          "enter number of times played",  false},
+{"lastplayed",   MD_TIME,             "0",               true,      "last played",         "enter last played date",        false}
 
 };
 const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls +
 		sizeof(gameDecls) / sizeof(gameDecls[0]));
 
 MetaDataDecl folderDecls[] = {
-	{"name",         MD_STRING,              "",                 false,      "name",                 "enter game name"},
-	{"sortname",     MD_STRING,              "",                 false,      "sortname",             "enter game sort name"},
-	{"desc",         MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description"},
-	{"rating",       MD_RATING,              "0.000000",         false,      "rating",               "enter rating"},
-	{"releasedate",  MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date"},
-	{"developer",    MD_STRING,              "unknown",          false,      "developer",            "enter game developer"},
-	{"publisher",    MD_STRING,              "unknown",          false,      "publisher",            "enter game publisher"},
-	{"genre",        MD_STRING,              "unknown",          false,      "genre",                "enter game genre"},
-	{"players",      MD_INT,                 "1",                false,      "players",              "enter number of players"}
+{"name",         MD_STRING,              "",                 false,      "name",                 "enter game name",         true},
+{"sortname",     MD_STRING,              "",                 false,      "sortname",             "enter game sort name",    false},
+{"desc",         MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description",       true},
+{"rating",       MD_RATING,              "0",                false,      "rating",               "enter rating",            true},
+{"releasedate",  MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date",      true},
+{"developer",    MD_STRING,              "unknown",          false,      "developer",            "enter game developer",    true},
+{"publisher",    MD_STRING,              "unknown",          false,      "publisher",            "enter game publisher",    true},
+{"genre",        MD_STRING,              "unknown",          false,      "genre",                "enter game genre",        true},
+{"players",      MD_INT,                 "unknown",          false,      "players",              "enter number of players", true}
 };
 const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls +
 		sizeof(folderDecls) / sizeof(folderDecls[0]));
@@ -78,7 +80,7 @@ MetaDataList MetaDataList::createFromXML(MetaDataListType type,
 
 	for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
 		pugi::xml_node md = node.child(iter->key.c_str());
-		if (md) {
+		if (md && !md.text().empty()) {
 			// If it's a path, resolve relative paths.
 			std::string value = md.text().get();
 			if (iter->type == MD_PATH)

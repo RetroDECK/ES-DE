@@ -5,6 +5,7 @@
 #include "SDL_audio.h"
 #include <map>
 #include <memory>
+#include <vector>
 
 class ThemeData;
 
@@ -57,18 +58,15 @@ enum NavigationSoundsID
 class NavigationSounds
 {
 public:
+	static NavigationSounds* getInstance();
+
 	void loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme);
 	void playThemeNavigationSound(NavigationSoundsID soundID);
 	bool isPlayingThemeNavigationSound(NavigationSoundsID soundID);
 
 private:
-	std::shared_ptr<Sound> systembrowseSound;
-	std::shared_ptr<Sound> quicksysselectSound;
-	std::shared_ptr<Sound> selectSound;
-	std::shared_ptr<Sound> backSound;
-	std::shared_ptr<Sound> scrollSound;
-	std::shared_ptr<Sound> favoriteSound;
-	std::shared_ptr<Sound> launchSound;
+	static NavigationSounds* sInstance;
+	std::vector<std::shared_ptr<Sound>> navigationSounds;
 };
 
 extern NavigationSounds navigationsounds;
