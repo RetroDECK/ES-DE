@@ -138,6 +138,11 @@ bool TextEditComponent::input(InputConfig* config, Input input)
 		else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("down", input)) {
 			// TODO.
 		}
+
+		else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedTo("y", input)) {
+			textInput("\b");
+		}
+
 		else if (cursor_left || cursor_right) {
 			mCursorRepeatDir = cursor_left ? -1 : 1;
 			mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);
@@ -298,6 +303,7 @@ std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()
 	std::vector<HelpPrompt> prompts;
 	if (mEditing) {
 		prompts.push_back(HelpPrompt("up/down/left/right", "move cursor"));
+		prompts.push_back(HelpPrompt("y", "backspace"));
 		prompts.push_back(HelpPrompt("b", "stop editing"));
 	}
 	else {
