@@ -40,11 +40,13 @@ set(CORE_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/MenuComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/NinePatchComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/OptionListComponent.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScrollableContainer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/SliderComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/SwitchComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextEditComponent.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextListComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoPlayerComponent.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.h
@@ -115,6 +117,7 @@ set(CORE_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/MenuComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/NinePatchComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScrollableContainer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/SliderComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/components/SwitchComponent.cpp

@@ -1,7 +1,7 @@
 //
-//	ScraperSearchComponent.h
+//	GuiScraperSearch.h
 //
-//	User interface component for the scraper where the user is able to see an overview
+//	User interface for the scraper where the user is able to see an overview
 //	of the game being scraped and an option to override the game search string.
 //	Used by both single-game scraping from the GuiMetaDataEd menu as well as
 //	to resolve scraping conflicts when run from GuiScraperMenu.
@@ -12,8 +12,8 @@
 //
 
 #pragma once
-#ifndef ES_APP_COMPONENTS_SCRAPER_SEARCH_COMPONENT_H
-#define ES_APP_COMPONENTS_SCRAPER_SEARCH_COMPONENT_H
+#ifndef ES_APP_GUIS_GUI_SCRAPER_SEARCH_H
+#define ES_APP_GUIS_GUI_SCRAPER_SEARCH_H
 
 #include "components/BusyComponent.h"
 #include "components/ComponentGrid.h"
@@ -27,7 +27,7 @@ class RatingComponent;
 class ScrollableContainer;
 class TextComponent;
 
-class ScraperSearchComponent : public GuiComponent
+class GuiScraperSearch : public GuiComponent
 {
 public:
 	enum SearchType {
@@ -36,7 +36,7 @@ public:
 		NEVER_AUTO_ACCEPT
 	};
 
-	ScraperSearchComponent(Window* window, SearchType searchType = NEVER_AUTO_ACCEPT);
+	GuiScraperSearch(Window* window, SearchType searchType = NEVER_AUTO_ACCEPT);
 
 	void search(const ScraperSearchParams& params);
 	void openInputScreen(ScraperSearchParams& from);
@@ -125,4 +125,4 @@ private:
 	BusyComponent mBusyAnim;
 };
 
-#endif // ES_APP_COMPONENTS_SCRAPER_SEARCH_COMPONENT_H
+#endif // ES_APP_GUIS_GUI_SCRAPER_SEARCH_H

@@ -1,7 +1,7 @@
 //
-//	ScraperSearchComponent.cpp
+//	GuiScraperSearch.cpp
 //
-//	User interface component for the scraper where the user is able to see an overview
+//	User interface for the scraper where the user is able to see an overview
 //	of the game being scraped and an option to override the game search string.
 //	Used by both single-game scraping from the GuiMetaDataEd menu as well as
 //	to resolve scraping conflicts when run from GuiScraperMenu.
@@ -11,7 +11,7 @@
 //	from GuiScraperMulti for multi-game scraping.
 //
 
-#include "components/ScraperSearchComponent.h"
+#include "guis/GuiScraperSearch.h"
 
 #include "components/ComponentList.h"
 #include "components/DateTimeEditComponent.h"
@@ -30,7 +30,7 @@
 #include "Log.h"
 #include "Window.h"
 
-ScraperSearchComponent::ScraperSearchComponent(
+GuiScraperSearch::GuiScraperSearch(
 		Window* window,
 		SearchType type)
 		: GuiComponent(window),
@@ -107,7 +107,7 @@ ScraperSearchComponent::ScraperSearchComponent(
 	updateViewStyle();
 }
 
-void ScraperSearchComponent::onSizeChanged()
+void GuiScraperSearch::onSizeChanged()
 {
 	mGrid.setSize(mSize);
 
@@ -160,7 +160,7 @@ void ScraperSearchComponent::onSizeChanged()
 	mBusyAnim.setSize(mSize);
 }
 
-void ScraperSearchComponent::resizeMetadata()
+void GuiScraperSearch::resizeMetadata()
 {
 	mMD_Grid->setSize(mGrid.getColWidth(2), mGrid.getRowHeight(1));
 	if (mMD_Grid->getSize().y() > mMD_Pairs.size()) {
@@ -202,7 +202,7 @@ void ScraperSearchComponent::resizeMetadata()
 	}
 }
 
-void ScraperSearchComponent::updateViewStyle()
+void GuiScraperSearch::updateViewStyle()
 {
 	// Unlink description, result list and result name.
 	mGrid.removeEntry(mResultName);
@@ -242,7 +242,7 @@ void ScraperSearchComponent::updateViewStyle()
 	}
 }
 
-void ScraperSearchComponent::search(const ScraperSearchParams& params)
+void GuiScraperSearch::search(const ScraperSearchParams& params)
 {
 	mBlockAccept = true;
 
@@ -257,7 +257,7 @@ void ScraperSearchComponent::search(const ScraperSearchParams& params)
 	mSearchHandle = startScraperSearch(params);
 }
 
-void ScraperSearchComponent::stop()
+void GuiScraperSearch::stop()
 {
 	mThumbnailReq.reset();
 	mSearchHandle.reset();
@@ -266,7 +266,7 @@ void ScraperSearchComponent::stop()
 	mBlockAccept = false;
 }
 
-void ScraperSearchComponent::onSearchDone(const std::vector<ScraperSearchResult>& results)
+void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& results)
 {
 	mResultList->clear();
 
@@ -322,16 +322,16 @@ void ScraperSearchComponent::onSearchDone(const std::vector<ScraperSearchResult>
 
 }
 
-void ScraperSearchComponent::onSearchError(const std::string& error)
+void GuiScraperSearch::onSearchError(const std::string& error)
 {
-	LOG(LogInfo) << "ScraperSearchComponent search error: " << error;
+	LOG(LogInfo) << "GuiScraperSearch search error: " << error;
 	mWindow->pushGui(new GuiMsgBox(mWindow, Utils::String::toUpper(error),
-		"RETRY", std::bind(&ScraperSearchComponent::search, this, mLastSearch),
+		"RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
 		"SKIP", mSkipCallback,
 		"CANCEL", mCancelCallback));
 }
 
-int ScraperSearchComponent::getSelectedIndex()
+int GuiScraperSearch::getSelectedIndex()
 {
 	if (!mScraperResults.size() || mGrid.getSelectedComponent() != mResultList)
 		return -1;
@@ -339,7 +339,7 @@ int ScraperSearchComponent::getSelectedIndex()
 	return mResultList->getCursorId();
 }
 
-void ScraperSearchComponent::updateInfoPane()
+void GuiScraperSearch::updateInfoPane()
 {
 	int i = getSelectedIndex();
 	if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size())
@@ -405,7 +405,7 @@ void ScraperSearchComponent::updateInfoPane()
 	}
 }
 
-bool ScraperSearchComponent::input(InputConfig* config, Input input)
+bool GuiScraperSearch::input(InputConfig* config, Input input)
 {
 	if (config->isMappedTo("a", input) && input.value != 0) {
 		if (mBlockAccept)
@@ -415,7 +415,7 @@ bool ScraperSearchComponent::input(InputConfig* config, Input input)
 	return GuiComponent::input(config, input);
 }
 
-void ScraperSearchComponent::render(const Transform4x4f& parentTrans)
+void GuiScraperSearch::render(const Transform4x4f& parentTrans)
 {
 	Transform4x4f trans = parentTrans * getTransform();
 
@@ -429,7 +429,7 @@ void ScraperSearchComponent::render(const Transform4x4f& parentTrans)
 	}
 }
 
-void ScraperSearchComponent::returnResult(ScraperSearchResult result)
+void GuiScraperSearch::returnResult(ScraperSearchResult result)
 {
 	mBlockAccept = true;
 
@@ -443,7 +443,7 @@ void ScraperSearchComponent::returnResult(ScraperSearchResult result)
 	mAcceptCallback(result);
 }
 
-void ScraperSearchComponent::update(int deltaTime)
+void GuiScraperSearch::update(int deltaTime)
 {
 	GuiComponent::update(deltaTime);
 
@@ -530,7 +530,7 @@ void ScraperSearchComponent::update(int deltaTime)
 	}
 }
 
-void ScraperSearchComponent::updateThumbnail()
+void GuiScraperSearch::updateThumbnail()
 {
 	if (mThumbnailReq && mThumbnailReq->status() == HttpReq::REQ_SUCCESS) {
 		// Save thumbnail to mScraperResults cache and set the flag that the
@@ -569,7 +569,7 @@ void ScraperSearchComponent::updateThumbnail()
 	}
 }
 
-void ScraperSearchComponent::openInputScreen(ScraperSearchParams& params)
+void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 {
 	auto searchForFunc = [&](const std::string& name) {
 		params.nameOverride = name;
@@ -596,7 +596,7 @@ void ScraperSearchComponent::openInputScreen(ScraperSearchParams& params)
 	}
 }
 
-bool ScraperSearchComponent::saveMetadata(
+bool GuiScraperSearch::saveMetadata(
 		const ScraperSearchResult& result, MetaDataList& metadata)
 {
 	bool mMetadataUpdated = false;
@@ -651,7 +651,7 @@ bool ScraperSearchComponent::saveMetadata(
 	return mMetadataUpdated;
 }
 
-std::vector<HelpPrompt> ScraperSearchComponent::getHelpPrompts()
+std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
 	if (getSelectedIndex() != -1)
@@ -660,12 +660,12 @@ std::vector<HelpPrompt> ScraperSearchComponent::getHelpPrompts()
 	return prompts;
 }
 
-void ScraperSearchComponent::onFocusGained()
+void GuiScraperSearch::onFocusGained()
 {
 	mGrid.onFocusGained();
 }
 
-void ScraperSearchComponent::onFocusLost()
+void GuiScraperSearch::onFocusLost()
 {
 	mGrid.onFocusLost();
 }

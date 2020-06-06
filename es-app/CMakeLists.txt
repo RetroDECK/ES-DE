@@ -14,11 +14,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreenSaver.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.h
 
-    # GuiComponents
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScraperSearchComponent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextListComponent.h
-
     # Guis
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiFastSelect.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
@@ -32,6 +27,7 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.h
@@ -72,10 +68,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreenSaver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.cpp
 
-    # GuiComponents
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScraperSearchComponent.cpp
-
     # Guis
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiFastSelect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp
@@ -89,6 +81,7 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.cpp

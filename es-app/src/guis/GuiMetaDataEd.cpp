@@ -4,7 +4,7 @@
 //	Game metadata edit user interface.
 //	This interface is triggered from the GuiGamelistOptions menu.
 //	The scraping interface is handled by GuiGameScraper which calls
-//	ScraperSearchComponent.
+//	GuiScraperSearch.
 //
 
 #include "guis/GuiMetaDataEd.h"
@@ -286,7 +286,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 	MetaDataList* metadata = nullptr;
 	metadata = new MetaDataList(*mMetaData);
 
-	mMetadataUpdated = ScraperSearchComponent::saveMetadata(result, *metadata);
+	mMetadataUpdated = GuiScraperSearch::saveMetadata(result, *metadata);
 
 	// Update the list with the scraped metadata values.
 	for (unsigned int i = 0; i < mEditors.size(); i++) {

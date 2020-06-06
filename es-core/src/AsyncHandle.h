@@ -1,7 +1,7 @@
 //
 //	AsyncHandle.h
 //
-//	Asynchronous operations used by ScraperSearchComponent and Scraper.
+//	Asynchronous operations used by GuiScraperSearch and Scraper.
 //
 
 #pragma once

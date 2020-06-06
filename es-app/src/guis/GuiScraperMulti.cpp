@@ -4,16 +4,16 @@
 //	Multiple game scraping user interface.
 //	Shows the progress for the scraping as it's running.
 //	This interface is triggered from GuiScraperMenu.
-//	ScraperSearchComponent is called from here.
+//	GuiScraperSearch is called from here.
 //
 
 #include "guis/GuiScraperMulti.h"
 
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
-#include "components/ScraperSearchComponent.h"
 #include "components/TextComponent.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiScraperSearch.h"
 #include "views/ViewController.h"
 #include "Gamelist.h"
 #include "PowerSaver.h"
@@ -55,15 +55,15 @@ GuiScraperMulti::GuiScraperMulti(
 			Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
 	mGrid.setEntry(mSubtitle, Vector2i(0, 2), false, true);
 
-	mSearchComp = std::make_shared<ScraperSearchComponent>(mWindow,
-			approveResults ? ScraperSearchComponent::ALWAYS_ACCEPT_MATCHING_CRC
-			: ScraperSearchComponent::ALWAYS_ACCEPT_FIRST_RESULT);
+	mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
+			approveResults ? GuiScraperSearch::ALWAYS_ACCEPT_MATCHING_CRC
+			: GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT);
 	mSearchComp->setAcceptCallback(std::bind(&GuiScraperMulti::acceptResult,
 			this, std::placeholders::_1));
 	mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));
 	mSearchComp->setCancelCallback(std::bind(&GuiScraperMulti::finish, this));
 	mGrid.setEntry(mSearchComp, Vector2i(0, 3), mSearchComp->getSearchType() !=
-			ScraperSearchComponent::ALWAYS_ACCEPT_FIRST_RESULT, true);
+			GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, true);
 
 	std::vector< std::shared_ptr<ButtonComponent> > buttons;
 
@@ -136,7 +136,7 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
 {
 	ScraperSearchParams& search = mSearchQueue.front();
 
-	ScraperSearchComponent::saveMetadata(result, search.game->metadata);
+	GuiScraperSearch::saveMetadata(result, search.game->metadata);
 
 	updateGamelist(search.system);
 

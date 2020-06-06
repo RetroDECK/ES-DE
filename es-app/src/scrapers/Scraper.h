@@ -2,7 +2,7 @@
 //	Scraper.h
 //
 //	Main scraper logic.
-//	Called from ScraperSearchComponent.
+//	Called from GuiScraperSearch.
 //	Calls either GamesDBJSONScraper or ScreenScraper.
 //
 

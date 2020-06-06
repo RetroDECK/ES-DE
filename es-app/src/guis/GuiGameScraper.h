@@ -3,7 +3,7 @@
 //
 //	Single game scraping user interface.
 //	This interface is triggered from GuiMetaDataEd.
-//	ScraperSearchComponent is called from here.
+//	GuiScraperSearch is called from here.
 //
 
 #pragma once
@@ -11,7 +11,7 @@
 #define ES_APP_GUIS_GUI_GAME_SCRAPER_H
 
 #include "components/NinePatchComponent.h"
-#include "components/ScraperSearchComponent.h"
+#include "guis/GuiScraperSearch.h"
 #include "GuiComponent.h"
 
 class GuiGameScraper : public GuiComponent
@@ -37,7 +37,7 @@ private:
 
 	std::shared_ptr<TextComponent> mGameName;
 	std::shared_ptr<TextComponent> mSystemName;
-	std::shared_ptr<ScraperSearchComponent> mSearch;
+	std::shared_ptr<GuiScraperSearch> mSearch;
 	std::shared_ptr<ComponentGrid> mButtonGrid;
 
 	ScraperSearchParams mSearchParams;

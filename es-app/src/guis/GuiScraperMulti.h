@@ -4,7 +4,7 @@
 //	Multiple game scraping user interface.
 //	Shows the progress for the scraping as it's running.
 //	This interface is triggered from GuiScraperMenu.
-//	ScraperSearchComponent is called from here.
+//	GuiScraperSearch is called from here.
 //
 
 #pragma once
@@ -17,7 +17,7 @@
 #include "GuiComponent.h"
 #include "MetaData.h"
 
-class ScraperSearchComponent;
+class GuiScraperSearch;
 class TextComponent;
 
 class GuiScraperMulti : public GuiComponent
@@ -53,7 +53,7 @@ private:
 	std::shared_ptr<TextComponent> mTitle;
 	std::shared_ptr<TextComponent> mSystem;
 	std::shared_ptr<TextComponent> mSubtitle;
-	std::shared_ptr<ScraperSearchComponent> mSearchComp;
+	std::shared_ptr<GuiScraperSearch> mSearchComp;
 	std::shared_ptr<ComponentGrid> mButtonGrid;
 };
 
