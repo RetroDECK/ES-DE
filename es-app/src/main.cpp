@@ -7,7 +7,7 @@
 //	Improved and extended by the RetroPie community.
 //	Desktop Edition fork by Leon Styhre.
 //
-//	The line length limit is 100 characters.
+//	The line length limit is 100 characters and the tab width is 4 spaces.
 //
 //	main.cpp
 //

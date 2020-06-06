@@ -1,3 +1,10 @@
+//
+//	UIModeController.cpp
+//
+//	Handling of application user interface modes (full, kiosk and kid).
+//	This includes switching the mode when the UI mode passkey was used.
+//
+
 #include "UIModeController.h"
 
 #include "utils/StringUtil.h"
@@ -25,8 +32,8 @@ UIModeController::UIModeController()
 void UIModeController::monitorUIMode()
 {
 	std::string uimode = Settings::getInstance()->getString("UIMode");
-	if (uimode != mCurrentUIMode) // UIMODE HAS CHANGED
-	{
+	// UI mode was changed.
+	if (uimode != mCurrentUIMode) {
 		mCurrentUIMode = uimode;
 		ViewController::get()->ReloadAndGoToStart();
 	}
@@ -34,26 +41,18 @@ void UIModeController::monitorUIMode()
 
 bool UIModeController::listen(InputConfig * config, Input input)
 {
-	// Reads the current input to listen for the passkey
-	// sequence to unlock the UI mode. The progress is saved in mPassKeyCounter
+	// Reads the current input to listen for the passkey sequence to unlock
+	// the UI mode. The progress is saved in mPassKeyCounter.
 	if (Settings::getInstance()->getBool("Debug"))
-	{
 		logInput(config, input);
-	}
 
 	if ((Settings::getInstance()->getString("UIMode") == "Full") || !isValidInput(config, input))
-	{
 		return false; // Already unlocked, or invalid input, nothing to do here.
-	}
-
 
 	if (!inputIsMatch(config, input))
-	{
-		mPassKeyCounter = 0; // current input is incorrect, reset counter
-	}
+		mPassKeyCounter = 0; // Current input is incorrect, reset counter.
 
-	if (mPassKeyCounter == (int)mPassKeySequence.length())
-	{
+	if (mPassKeyCounter == (int)mPassKeySequence.length()) {
 		unlockUIMode();
 		return true;
 	}
@@ -62,11 +61,9 @@ bool UIModeController::listen(InputConfig * config, Input input)
 
 bool UIModeController::inputIsMatch(InputConfig * config, Input input)
 {
-	for (auto valstring : mInputVals)
-	{
+	for (auto valstring : mInputVals) {
 		if (config->isMappedLike(valstring, input) &&
-			(mPassKeySequence[mPassKeyCounter] == valstring[0]))
-		{
+			(mPassKeySequence[mPassKeyCounter] == valstring[0])) {
 			mPassKeyCounter++;
 			return true;
 		}
@@ -74,10 +71,11 @@ bool UIModeController::inputIsMatch(InputConfig * config, Input input)
 	return false;
 }
 
-// When we have reached the end of the list, trigger UI_mode unlock
+// When we have reached the end of the list, trigger UI_mode unlock.
 void UIModeController::unlockUIMode()
 {
-	LOG(LogDebug) << " UIModeController::listen(): Passkey sequence completed, switching UIMode to full";
+	LOG(LogDebug) <<
+			" UIModeController::listen(): Passkey sequence completed, switching UIMode to full";
 	Settings::getInstance()->setString("UIMode", "Full");
 	Settings::getInstance()->saveFile();
 	mPassKeyCounter = 0;
@@ -102,26 +100,24 @@ bool UIModeController::isUIModeKiosk()
 
 std::string UIModeController::getFormattedPassKeyStr()
 {
-	// supported sequence-inputs: u (up), d (down), l (left), r (right), a, b, x, y
+	// Supported sequence-inputs: u (up), d (down), l (left), r (right), a, b, x, y.
 
 	std::string out = "";
-	for (auto c : mPassKeySequence)
-	{
-		out += (out == "") ? "" : ", ";  // add a comma after the first entry
+	for (auto c : mPassKeySequence) {
+		out += (out == "") ? "" : ", ";  // Add a comma after the first entry.
 
-		switch (c)
-		{
+		switch (c) {
 		case 'u':
-			out += Utils::String::unicode2Chars(0x2191); // arrow pointing up
+			out += Utils::String::unicode2Chars(0x2191); // Arrow pointing up.
 			break;
 		case 'd':
-			out += Utils::String::unicode2Chars(0x2193); // arrow pointing down
+			out += Utils::String::unicode2Chars(0x2193); // Arrow pointing down.
 			break;
 		case 'l':
-			out += Utils::String::unicode2Chars(0x2190); // arrow pointing left
+			out += Utils::String::unicode2Chars(0x2190); // Arrow pointing left.
 			break;
 		case 'r':
-			out += Utils::String::unicode2Chars(0x2192); // arrow pointing right
+			out += Utils::String::unicode2Chars(0x2192); // Arrow pointing right.
 			break;
 		case 'a':
 			out += "A";
@@ -140,29 +136,26 @@ std::string UIModeController::getFormattedPassKeyStr()
 	return out;
 }
 
-
 void UIModeController::logInput(InputConfig * config, Input input)
 {
 	std::string mapname = "";
 	std::vector<std::string> maps = config->getMappedTo(input);
-	for( auto mn : maps)
-	{
+
+	for (auto mn : maps) {
 		mapname += mn;
 		mapname += ", ";
 	}
-	LOG(LogDebug) << "UIModeController::logInput( " << config->getDeviceName() <<" ):" << input.string() << ", isMappedTo= " << mapname << ", value=" << input.value;
+
+	LOG(LogDebug) << "UIModeController::logInput( " << config->getDeviceName() <<
+			" ):" << input.string() << ", isMappedTo= " << mapname << ", value=" << input.value;
 }
 
 bool UIModeController::isValidInput(InputConfig * config, Input input)
 {
-	if((config->getMappedTo(input).size() == 0)  || // not a mapped input, so ignore.
-		(input.type == TYPE_HAT) ||  // ignore all HAT inputs
-		(!input.value))	// not a key-down event
-	{
+	if ((config->getMappedTo(input).size() == 0)  || // Not a mapped input, so ignore..
+			(input.type == TYPE_HAT) ||  // Ignore all hat inputs.
+			(!input.value))	// Not a key-down event.
 		return false;
-	}
 	else
-	{
 		return true;
-	}
 }

@@ -1,3 +1,9 @@
+//
+//	SystemView.h
+//
+//	Main system view.
+//
+
 #pragma once
 #ifndef ES_APP_VIEWS_SYSTEM_VIEW_H
 #define ES_APP_VIEWS_SYSTEM_VIEW_H
@@ -11,22 +17,19 @@
 class AnimatedImageComponent;
 class SystemData;
 
-enum CarouselType : unsigned int
-{
+enum CarouselType : unsigned int {
 	HORIZONTAL = 0,
 	VERTICAL = 1,
 	VERTICAL_WHEEL = 2,
 	HORIZONTAL_WHEEL = 3
 };
 
-struct SystemViewData
-{
+struct SystemViewData {
 	std::shared_ptr<GuiComponent> logo;
 	std::vector<GuiComponent*> backgroundExtras;
 };
 
-struct SystemViewCarousel
-{
+struct SystemViewCarousel {
 	CarouselType type;
 	Vector2f pos;
 	Vector2f size;
@@ -38,7 +41,7 @@ struct SystemViewCarousel
 	unsigned int color;
 	unsigned int colorEnd;
 	bool colorGradientHorizontal;
-	int maxLogoCount; // number of logos shown on the carousel
+	int maxLogoCount; // Number of logos shown on the carousel.
 	Vector2f logoSize;
 	float zIndex;
 };
@@ -79,7 +82,7 @@ private:
 	SystemViewCarousel mCarousel;
 	TextComponent mSystemInfo;
 
-	// unit is list index
+	// Unit is list index.
 	float mCamOffset;
 	float mExtrasCamOffset;
 	float mExtrasFadeOpacity;

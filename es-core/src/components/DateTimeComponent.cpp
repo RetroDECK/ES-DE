@@ -1,16 +1,32 @@
+//
+//	DateTimeComponent.cpp
+//
+//	Date and time component.
+//
+
 #include "components/DateTimeComponent.h"
 
 #include "utils/StringUtil.h"
 #include "Log.h"
 #include "Settings.h"
 
-DateTimeComponent::DateTimeComponent(Window* window) : TextComponent(window), mDisplayRelative(false)
+DateTimeComponent::DateTimeComponent(Window* window)
+		: TextComponent(window), mDisplayRelative(false)
 {
 	setFormat("%m/%d/%Y");
 }
 
-DateTimeComponent::DateTimeComponent(Window* window, const std::string& text, const std::shared_ptr<Font>& font, unsigned int color, Alignment align,
-	Vector3f pos, Vector2f size, unsigned int bgcolor) : TextComponent(window, text, font, color, align, pos, size, bgcolor), mDisplayRelative(false)
+DateTimeComponent::DateTimeComponent(
+		Window* window,
+		const std::string& text,
+		const std::shared_ptr<Font>& font,
+		unsigned int color,
+		Alignment align,
+		Vector3f pos,
+		Vector2f size,
+		unsigned int bgcolor)
+		: TextComponent(window, text, font, color, align, pos, size, bgcolor),
+		mDisplayRelative(false)
 {
 	setFormat("%m/%d/%Y");
 }
@@ -41,14 +57,13 @@ void DateTimeComponent::setDisplayRelative(bool displayRelative)
 void DateTimeComponent::onTextChanged()
 {
 	mText = getDisplayString();
-
 	TextComponent::onTextChanged();
 }
 
 std::string DateTimeComponent::getDisplayString() const
 {
 	if (mDisplayRelative) {
-		//relative time
+		// Relative time.
 		if(mTime.getTime() == 0)
 			return "never";
 
@@ -81,7 +96,8 @@ void DateTimeComponent::render(const Transform4x4f& parentTrans)
 }
 
 
-void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view, const std::string& element, unsigned int properties)
+void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
+		const std::string& view, const std::string& element, unsigned int properties)
 {
 	GuiComponent::applyTheme(theme, view, element, properties);
 
@@ -106,8 +122,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, cons
 		setRenderBackground(true);
 	}
 
-	if(properties & ALIGNMENT && elem->has("alignment"))
-	{
+	if(properties & ALIGNMENT && elem->has("alignment")) {
 		std::string str = elem->get<std::string>("alignment");
 		if(str == "left")
 			setHorizontalAlignment(ALIGN_LEFT);

@@ -1,3 +1,9 @@
+//
+//	TextEditComponent.h
+//
+//	Component for editing text fields in menus.
+//
+
 #pragma once
 #ifndef ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
 #define ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
@@ -51,7 +57,7 @@ private:
 	std::string mText;
 	bool mFocused;
 	bool mEditing;
-	unsigned int mCursor; // cursor position in characters
+	unsigned int mCursor; // Cursor position in characters.
 
 	int mCursorRepeatTimer;
 	int mCursorRepeatDir;

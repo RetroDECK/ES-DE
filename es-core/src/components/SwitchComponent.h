@@ -1,3 +1,9 @@
+//
+//	SwitchComponent.h
+//
+//	Basic switch used in the menus.
+//
+
 #pragma once
 #ifndef ES_CORE_COMPONENTS_SWITCH_COMPONENT_H
 #define ES_CORE_COMPONENTS_SWITCH_COMPONENT_H
@@ -5,8 +11,7 @@
 #include "components/ImageComponent.h"
 #include "GuiComponent.h"
 
-// A very simple "on/off" switch.
-// Should hopefully be switched to use images instead of text in the future.
+// A simple "on/off" switch.
 class SwitchComponent : public GuiComponent
 {
 public:

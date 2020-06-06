@@ -1,3 +1,9 @@
+//
+//	TextListComponent.h
+//
+//	Used for displaying and navigating the gamelists.
+//
+
 #pragma once
 #ifndef ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
 #define ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
@@ -11,13 +17,12 @@
 
 class TextCache;
 
-struct TextListData
-{
+struct TextListData {
 	unsigned int colorId;
 	std::shared_ptr<TextCache> textCache;
 };
 
-//A graphical list. Supports multiple colors for rows and scrolling.
+// A graphical list. Supports multiple colors for rows and scrolling.
 template <typename T>
 class TextListComponent : public IList<TextListData, T>
 {
@@ -41,12 +46,12 @@ public:
 	bool input(InputConfig* config, Input input) override;
 	void update(int deltaTime) override;
 	void render(const Transform4x4f& parentTrans) override;
-	void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view, const std::string& element, unsigned int properties) override;
+	void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
+			const std::string& element, unsigned int properties) override;
 
 	void add(const std::string& name, const T& obj, unsigned int colorId);
 
-	enum Alignment
-	{
+	enum Alignment {
 		ALIGN_LEFT,
 		ALIGN_CENTER,
 		ALIGN_RIGHT
@@ -54,19 +59,20 @@ public:
 
 	inline void setAlignment(Alignment align) { mAlignment = align; }
 
-	inline void setCursorChangedCallback(const std::function<void(CursorState state)>& func) { mCursorChangedCallback = func; }
+	inline void setCursorChangedCallback(const std::function<void(CursorState state)>& func)
+			{ mCursorChangedCallback = func; }
 
 	inline void setFont(const std::shared_ptr<Font>& font)
 	{
 		mFont = font;
-		for(auto it = mEntries.begin(); it != mEntries.end(); it++)
+		for (auto it = mEntries.begin(); it != mEntries.end(); it++)
 			it->data.textCache.reset();
 	}
 
 	inline void setUppercase(bool /*uppercase*/)
 	{
 		mUppercase = true;
-		for(auto it = mEntries.begin(); it != mEntries.end(); it++)
+		for (auto it = mEntries.begin(); it != mEntries.end(); it++)
 			it->data.textCache.reset();
 	}
 
@@ -74,7 +80,8 @@ public:
 	inline void setSelectorOffsetY(float selectorOffsetY) { mSelectorOffsetY = selectorOffsetY; }
 	inline void setSelectorColor(unsigned int color) { mSelectorColor = color; }
 	inline void setSelectorColorEnd(unsigned int color) { mSelectorColorEnd = color; }
-	inline void setSelectorColorGradientHorizontal(bool horizontal) { mSelectorColorGradientHorizontal = horizontal; }
+	inline void setSelectorColorGradientHorizontal(bool horizontal)
+			{ mSelectorColorGradientHorizontal = horizontal; }
 	inline void setSelectedColor(unsigned int color) { mSelectedColor = color; }
 	inline void setColor(unsigned int id, unsigned int color) { mColors[id] = color; }
 	inline void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
@@ -141,90 +148,99 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
 
 	std::shared_ptr<Font>& font = mFont;
 
-	if(size() == 0)
+	if (size() == 0)
 		return;
 
 	const float entrySize = Math::max(font->getHeight(1.0), (float)font->getSize()) * mLineSpacing;
 
 	int startEntry = 0;
 
-	//number of entries that can fit on the screen simultaniously
+	// Number of entries that can fit on the screen simultaniously.
 	int screenCount = (int)(mSize.y() / entrySize + 0.5f);
 
-	if(size() >= screenCount)
+	if (size() >= screenCount)
 	{
 		startEntry = mCursor - screenCount/2;
-		if(startEntry < 0)
+		if (startEntry < 0)
 			startEntry = 0;
-		if(startEntry >= size() - screenCount)
+		if (startEntry >= size() - screenCount)
 			startEntry = size() - screenCount;
 	}
 
 	float y = 0;
 
 	int listCutoff = startEntry + screenCount;
-	if(listCutoff > size())
+	if (listCutoff > size())
 		listCutoff = size();
 
-	// draw selector bar
-	if(startEntry < listCutoff)
-	{
+	// Draw selector bar.
+	if (startEntry < listCutoff) {
 		if (mSelectorImage.hasImage()) {
-			mSelectorImage.setPosition(0.f, (mCursor - startEntry)*entrySize + mSelectorOffsetY, 0.f);
+			mSelectorImage.setPosition(0.f,
+					(mCursor - startEntry)*entrySize + mSelectorOffsetY, 0.f);
 			mSelectorImage.render(trans);
-		} else {
+		}
+		else {
 			Renderer::setMatrix(trans);
-			Renderer::drawRect(0.0f, (mCursor - startEntry)*entrySize + mSelectorOffsetY, mSize.x(),
-					mSelectorHeight, mSelectorColor, mSelectorColorEnd, mSelectorColorGradientHorizontal);
+			Renderer::drawRect(
+					0.0f,
+					(mCursor - startEntry)*entrySize +
+					mSelectorOffsetY,
+					mSize.x(),
+					mSelectorHeight,
+					mSelectorColor,
+					mSelectorColorEnd,
+					mSelectorColorGradientHorizontal);
 		}
 	}
 
-	// clip to inside margins
+	// Clip to inside margins.
 	Vector3f dim(mSize.x(), mSize.y(), 0);
 	dim = trans * dim - trans.translation();
-	Renderer::pushClipRect(Vector2i((int)(trans.translation().x() + mHorizontalMargin), (int)trans.translation().y()),
-		Vector2i((int)(dim.x() - mHorizontalMargin*2), (int)dim.y()));
+	Renderer::pushClipRect(Vector2i((int)(trans.translation().x() + mHorizontalMargin),
+			(int)trans.translation().y()), Vector2i((int)(dim.x() - mHorizontalMargin*2),
+			(int)dim.y()));
 
-	for(int i = startEntry; i < listCutoff; i++)
-	{
+	for (int i = startEntry; i < listCutoff; i++) {
 		typename IList<TextListData, T>::Entry& entry = mEntries.at((unsigned int)i);
 
 		unsigned int color;
-		if(mCursor == i && mSelectedColor)
+		if (mCursor == i && mSelectedColor)
 			color = mSelectedColor;
 		else
 			color = mColors[entry.data.colorId];
 
-		if(!entry.data.textCache)
-			entry.data.textCache = std::unique_ptr<TextCache>(font->buildTextCache(mUppercase ? Utils::String::toUpper(entry.name) : entry.name, 0, 0, 0x000000FF));
+		if (!entry.data.textCache)
+			entry.data.textCache = std::unique_ptr<TextCache>
+					(font->buildTextCache(mUppercase ?
+					Utils::String::toUpper(entry.name) : entry.name, 0, 0, 0x000000FF));
 
 		entry.data.textCache->setColor(color);
 
 		Vector3f offset(0, y, 0);
 
-		switch(mAlignment)
-		{
+		switch (mAlignment) {
 		case ALIGN_LEFT:
 			offset[0] = mHorizontalMargin;
 			break;
 		case ALIGN_CENTER:
 			offset[0] = (int)((mSize.x() - entry.data.textCache->metrics.size.x()) / 2);
-			if(offset[0] < mHorizontalMargin)
+			if (offset[0] < mHorizontalMargin)
 				offset[0] = mHorizontalMargin;
 			break;
 		case ALIGN_RIGHT:
 			offset[0] = (mSize.x() - entry.data.textCache->metrics.size.x());
 			offset[0] -= mHorizontalMargin;
-			if(offset[0] < mHorizontalMargin)
+			if (offset[0] < mHorizontalMargin)
 				offset[0] = mHorizontalMargin;
 			break;
 		}
 
-		// render text
+		// Render text.
 		Transform4x4f drawTrans = trans;
 
-		// currently selected item text might be scrolling
-		if((mCursor == i) && (mMarqueeOffset > 0))
+		// Currently selected item text might be scrolling.
+		if ((mCursor == i) && (mMarqueeOffset > 0))
 			drawTrans.translate(offset - Vector3f((float)mMarqueeOffset, 0, 0));
 		else
 			drawTrans.translate(offset);
@@ -232,10 +248,9 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
 		Renderer::setMatrix(drawTrans);
 		font->renderTextCache(entry.data.textCache.get());
 
-		// render currently selected item text again if
-		// marquee is scrolled far enough for it to repeat
-		if((mCursor == i) && (mMarqueeOffset2 < 0))
-		{
+		// Render currently selected item text again if marquee is
+		// scrolled far enough for it to repeat.
+		if ((mCursor == i) && (mMarqueeOffset2 < 0)) {
 			drawTrans = trans;
 			drawTrans.translate(offset - Vector3f((float)mMarqueeOffset2, 0, 0));
 			Renderer::setMatrix(drawTrans);
@@ -246,47 +261,40 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
 	}
 
 	Renderer::popClipRect();
-
 	listRenderTitleOverlay(trans);
-
 	GuiComponent::renderChildren(trans);
 }
 
 template <typename T>
 bool TextListComponent<T>::input(InputConfig* config, Input input)
 {
-	if(size() > 0)
-	{
-		if(input.value != 0)
-		{
-			if(config->isMappedLike("down", input))
-			{
+	if (size() > 0) {
+		if (input.value != 0) {
+			if (config->isMappedLike("down", input)) {
 				listInput(1);
 				return true;
 			}
 
-			if(config->isMappedLike("up", input))
-			{
+			if (config->isMappedLike("up", input)) {
 				listInput(-1);
 				return true;
 			}
-			if(config->isMappedLike("rightshoulder", input))
-			{
+			if (config->isMappedLike("rightshoulder", input)) {
 				listInput(10);
 				return true;
 			}
 
-			if(config->isMappedLike("leftshoulder", input))
-			{
+			if (config->isMappedLike("leftshoulder", input)) {
 				listInput(-10);
 				return true;
 			}
-		}else{
-			if(config->isMappedLike("down", input) || config->isMappedLike("up", input) ||
-				config->isMappedLike("rightshoulder", input) || config->isMappedLike("leftshoulder", input))
-			{
+		}
+		else {
+			if (config->isMappedLike("down", input) ||
+					config->isMappedLike("up", input) ||
+					config->isMappedLike("rightshoulder", input) ||
+					config->isMappedLike("leftshoulder", input))
 				stopScrolling();
-			}
 		}
 	}
 
@@ -298,20 +306,18 @@ void TextListComponent<T>::update(int deltaTime)
 {
 	listUpdate(deltaTime);
 
-	if(!isScrolling() && size() > 0)
-	{
-		// always reset the marquee offsets
+	if (!isScrolling() && size() > 0) {
+		// Always reset the marquee offsets.
 		mMarqueeOffset  = 0;
 		mMarqueeOffset2 = 0;
 
-		// if we're not scrolling and this object's text goes outside our size, marquee it!
+		// If we're not scrolling and this object's text goes outside our size, marquee it!
 		const float textLength = mFont->sizeText(mEntries.at((unsigned int)mCursor).name).x();
 		const float limit      = mSize.x() - mHorizontalMargin * 2;
 
-		if(textLength > limit)
-		{
-			// loop
-			// pixels per second ( based on nes-mini font at 1920x1080 to produce a speed of 200 )
+		if (textLength > limit) {
+			// Loop.
+			// Pixels per second (based on nes-mini font at 1920x1080 to produce a speed of 200).
 			const float speed        = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x() * 0.247f;
 			const float delay        = 3000;
 			const float scrollLength = textLength;
@@ -321,12 +327,13 @@ void TextListComponent<T>::update(int deltaTime)
 			const int   maxTime      = (int)(delay + scrollTime + returnTime);
 
 			mMarqueeTime += deltaTime;
-			while(mMarqueeTime > maxTime)
+			while (mMarqueeTime > maxTime)
 				mMarqueeTime -= maxTime;
 
-			mMarqueeOffset = (int)(Math::Scroll::loop(delay, scrollTime + returnTime, (float)mMarqueeTime, scrollLength + returnLength));
+			mMarqueeOffset = (int)(Math::Scroll::loop(delay, scrollTime + returnTime,
+					(float)mMarqueeTime, scrollLength + returnLength));
 
-			if(mMarqueeOffset > (scrollLength - (limit - returnLength)))
+			if (mMarqueeOffset > (scrollLength - (limit - returnLength)))
 				mMarqueeOffset2 = (int)(mMarqueeOffset - (scrollLength + returnLength));
 		}
 	}
@@ -334,7 +341,7 @@ void TextListComponent<T>::update(int deltaTime)
 	GuiComponent::update(deltaTime);
 }
 
-//list management stuff
+// List management stuff.
 template <typename T>
 void TextListComponent<T>::add(const std::string& name, const T& obj, unsigned int color)
 {
@@ -354,92 +361,89 @@ void TextListComponent<T>::onCursorChanged(const CursorState& state)
 	mMarqueeOffset2 = 0;
 	mMarqueeTime = 0;
 
-	if(mCursorChangedCallback)
+	if (mCursorChangedCallback)
 		mCursorChangedCallback(state);
 }
 
 template <typename T>
-void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view, const std::string& element, unsigned int properties)
+void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
+		const std::string& view, const std::string& element, unsigned int properties)
 {
 	GuiComponent::applyTheme(theme, view, element, properties);
 
 	const ThemeData::ThemeElement* elem = theme->getElement(view, element, "textlist");
-	if(!elem)
+	if (!elem)
 		return;
 
 	using namespace ThemeFlags;
-	if(properties & COLOR)
-	{
-		if(elem->has("selectorColor"))
-		{
+	if (properties & COLOR) {
+		if (elem->has("selectorColor")) {
 			setSelectorColor(elem->get<unsigned int>("selectorColor"));
 			setSelectorColorEnd(elem->get<unsigned int>("selectorColor"));
 		}
 		if (elem->has("selectorColorEnd"))
 			setSelectorColorEnd(elem->get<unsigned int>("selectorColorEnd"));
 		if (elem->has("selectorGradientType"))
-			setSelectorColorGradientHorizontal(!(elem->get<std::string>("selectorGradientType").compare("horizontal")));
-		if(elem->has("selectedColor"))
+			setSelectorColorGradientHorizontal(!(elem->get<std::string>
+					("selectorGradientType").compare("horizontal")));
+		if (elem->has("selectedColor"))
 			setSelectedColor(elem->get<unsigned int>("selectedColor"));
-		if(elem->has("primaryColor"))
+		if (elem->has("primaryColor"))
 			setColor(0, elem->get<unsigned int>("primaryColor"));
-		if(elem->has("secondaryColor"))
+		if (elem->has("secondaryColor"))
 			setColor(1, elem->get<unsigned int>("secondaryColor"));
 	}
 
 	setFont(Font::getFromTheme(elem, properties, mFont));
-	const float selectorHeight = Math::max(mFont->getHeight(1.0), (float)mFont->getSize()) * mLineSpacing;
+	const float selectorHeight = Math::max(mFont->getHeight(1.0),
+			(float)mFont->getSize()) * mLineSpacing;
 	setSelectorHeight(selectorHeight);
 
-	if(properties & ALIGNMENT)
-	{
-		if(elem->has("alignment"))
-		{
+	if (properties & ALIGNMENT) {
+		if (elem->has("alignment")) {
 			const std::string& str = elem->get<std::string>("alignment");
-			if(str == "left")
+			if (str == "left")
 				setAlignment(ALIGN_LEFT);
-			else if(str == "center")
+			else if (str == "center")
 				setAlignment(ALIGN_CENTER);
-			else if(str == "right")
+			else if (str == "right")
 				setAlignment(ALIGN_RIGHT);
 			else
 				LOG(LogError) << "Unknown TextListComponent alignment \"" << str << "\"!";
 		}
-		if(elem->has("horizontalMargin"))
-		{
-			mHorizontalMargin = elem->get<float>("horizontalMargin") * (this->mParent ? this->mParent->getSize().x() : (float)Renderer::getScreenWidth());
+		if (elem->has("horizontalMargin")) {
+			mHorizontalMargin = elem->get<float>("horizontalMargin") *
+					(this->mParent ? this->mParent->getSize().x() :
+					(float)Renderer::getScreenWidth());
 		}
 	}
 
-	if(properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
+	if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
 		setUppercase(elem->get<bool>("forceUppercase"));
 
-	if(properties & LINE_SPACING)
-	{
-		if(elem->has("lineSpacing"))
+	if (properties & LINE_SPACING) {
+		if (elem->has("lineSpacing"))
 			setLineSpacing(elem->get<float>("lineSpacing"));
-		if(elem->has("selectorHeight"))
-		{
+		if (elem->has("selectorHeight"))
 			setSelectorHeight(elem->get<float>("selectorHeight") * Renderer::getScreenHeight());
-		}
-		if(elem->has("selectorOffsetY"))
-		{
+		if (elem->has("selectorOffsetY")) {
 			float scale = this->mParent ? this->mParent->getSize().y() : (float)Renderer::getScreenHeight();
 			setSelectorOffsetY(elem->get<float>("selectorOffsetY") * scale);
-		} else {
+		}
+		else {
 			setSelectorOffsetY(0.0);
 		}
 	}
 
-	if (elem->has("selectorImagePath"))
-	{
+	if (elem->has("selectorImagePath")) {
 		std::string path = elem->get<std::string>("selectorImagePath");
 		bool tile = elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile");
 		mSelectorImage.setImage(path, tile);
 		mSelectorImage.setSize(mSize.x(), mSelectorHeight);
 		mSelectorImage.setColorShift(mSelectorColor);
 		mSelectorImage.setColorShiftEnd(mSelectorColorEnd);
-	} else {
+	}
+	else {
 		mSelectorImage.setImage("");
 	}
 }

@@ -1,8 +1,19 @@
+//
+//	SwitchComponent.cpp
+//
+//	Basic switch used in the menus.
+//
+
 #include "SwitchComponent.h"
 
 #include "resources/Font.h"
 
-SwitchComponent::SwitchComponent(Window* window, bool state) : GuiComponent(window), mImage(window), mState(state)
+SwitchComponent::SwitchComponent(
+		Window* window,
+		bool state)
+		: GuiComponent(window),
+		mImage(window),
+		mState(state)
 {
 	mImage.setImage(":/off.svg");
 	mImage.setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
@@ -16,8 +27,7 @@ void SwitchComponent::onSizeChanged()
 
 bool SwitchComponent::input(InputConfig* config, Input input)
 {
-	if(config->isMappedTo("a", input) && input.value)
-	{
+	if(config->isMappedTo("a", input) && input.value) {
 		mState = !mState;
 		onStateChanged();
 		return true;
@@ -29,9 +39,7 @@ bool SwitchComponent::input(InputConfig* config, Input input)
 void SwitchComponent::render(const Transform4x4f& parentTrans)
 {
 	Transform4x4f trans = parentTrans * getTransform();
-
 	mImage.render(trans);
-
 	renderChildren(trans);
 }
 
@@ -54,12 +62,9 @@ std::string SwitchComponent::getValue() const
 void SwitchComponent::setValue(const std::string& statestring)
 {
 	if (statestring == "true")
-	{
 		mState = true;
-	}else
-	{
+	else
 		mState = false;
-	}
 	onStateChanged();
 }
 
