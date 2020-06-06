@@ -63,15 +63,22 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
 		}
 
 		int incDir = 0;
-		if (config->isMappedLike("up", input) || config->isMappedLike("leftshoulder", input))
+		if (config->isMappedLike("up", input) || config->isMappedLike("rightshoulder", input))
 			incDir = 1;
-		else if (config->isMappedLike("down", input) || config->isMappedLike("rightshoulder", input))
+		else if (config->isMappedLike("down", input) || config->isMappedLike("leftshoulder", input))
 			incDir = -1;
 
 		if (incDir != 0) {
 			tm new_tm = mTime;
 
+			// ISO 8601 date format.
 			if (mEditIndex == 0) {
+				new_tm.tm_year += incDir;
+
+				if (new_tm.tm_year < 0)
+					new_tm.tm_year = 0;
+			}
+			else if (mEditIndex == 1) {
 				new_tm.tm_mon += incDir;
 
 				if (new_tm.tm_mon > 11)
@@ -80,7 +87,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
 					new_tm.tm_mon = 11;
 
 			}
-			else if (mEditIndex == 1) {
+			else if (mEditIndex == 2) {
 				const int days_in_month =
 						Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1);
 				new_tm.tm_mday += incDir;
@@ -90,12 +97,6 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
 				else if (new_tm.tm_mday < 1)
 					new_tm.tm_mday = days_in_month;
 
-			}
-			else if (mEditIndex == 2) {
-				new_tm.tm_year += incDir;
-
-				if (new_tm.tm_year < 0)
-					new_tm.tm_year = 0;
 			}
 
 			// Validate day.
@@ -191,16 +192,21 @@ DateTimeEditComponent::DisplayMode DateTimeEditComponent::getCurrentDisplayMode(
 
 std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
 {
+	// ISO 8601 date format.
 	std::string fmt;
 	switch (mode) {
 	case DISP_DATE: {
-		fmt = "%m/%d/%Y";
+		if (mTime.getTime() == 0)
+			// The extra blankspaces are for visual alignment.
+			return "unknown   ";
+		fmt = "%Y-%m-%d";
 		break;
 	}
 	case DISP_DATE_TIME: {
 		if (mTime.getTime() == 0)
-			return "unknown";
-		fmt = "%m/%d/%Y %H:%M:%S";
+			// The extra blankspaces are for visual alignment.
+			return "unknown   ";
+		fmt = "%Y-%m-%d %H:%M:%S";
 		break;
 	}
 	case DISP_RELATIVE_TO_NOW: {
@@ -243,8 +249,18 @@ std::shared_ptr<Font> DateTimeEditComponent::getFont() const
 void DateTimeEditComponent::updateTextCache()
 {
 	DisplayMode mode = getCurrentDisplayMode();
-	const std::string dispString = mUppercase ?
-			Utils::String::toUpper(getDisplayString(mode)) : getDisplayString(mode);
+
+	std::string dispString;
+
+	// Hack to set date string to blank instead of 'unknown'.
+	// The calling function simply needs to set this string using setValue().
+	if (mTime.getIsoString() == "99990101T000000") {
+		dispString = "";
+	}
+	else {
+		dispString = mUppercase ? Utils::String::toUpper(getDisplayString(mode)) :
+				getDisplayString(mode);
+	}
 	std::shared_ptr<Font> font = getFont();
 	mTextCache = std::unique_ptr<TextCache>(font->buildTextCache(dispString, 0, 0, mColor));
 
@@ -256,32 +272,35 @@ void DateTimeEditComponent::updateTextCache()
 			getParent()->onSizeChanged();
 	}
 
+	if (dispString == "unknown   " || dispString == "")
+		return;
+
 	// Set up cursor positions.
 	mCursorBoxes.clear();
 
 	if (dispString.empty() || mode == DISP_RELATIVE_TO_NOW)
 		return;
 
-	// Month.
+	// Year.
 	Vector2f start(0, 0);
-	Vector2f end = font->sizeText(dispString.substr(0, 2));
+	Vector2f end = font->sizeText(dispString.substr(0, 4));
 	Vector2f diff = end - start;
 	mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
 
-	// Day.
-	start[0] = font->sizeText(dispString.substr(0, 3)).x();
-	end = font->sizeText(dispString.substr(0, 5));
+	// Month.
+	start[0] = font->sizeText(dispString.substr(0, 5)).x();
+	end = font->sizeText(dispString.substr(0, 7));
 	diff = end - start;
 	mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
 
-	// Year.
-	start[0] = font->sizeText(dispString.substr(0, 6)).x();
+	// Day.
+	start[0] = font->sizeText(dispString.substr(0, 8)).x();
 	end = font->sizeText(dispString.substr(0, 10));
 	diff = end - start;
 	mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
 
 	// The logic for handling time for 'mode = DISP_DATE_TIME' is missing, but
-	// nobody will use it anyway so it's not implemented.
+	// nobody will use it anyway so it's not worthwhile implementing.
 }
 
 void DateTimeEditComponent::setColor(unsigned int color)

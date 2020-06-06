@@ -1,7 +1,7 @@
 //
 //	ComponentGrid.cpp
 //
-//	Providing basic layout of other components in an X*Y grid.
+//	Provides basic layout of components in an X*Y grid.
 //
 
 #include "components/ComponentGrid.h"

@@ -1,7 +1,9 @@
 //
 //	DateTimeComponent.cpp
 //
-//	Date and time component.
+//	Provides the date and time, in absolute (actual date) or relative
+//	(delta from current date and time) form.
+//	Used by the gamelist views.
 //
 
 #include "components/DateTimeComponent.h"
@@ -13,7 +15,8 @@
 DateTimeComponent::DateTimeComponent(Window* window)
 		: TextComponent(window), mDisplayRelative(false)
 {
-	setFormat("%m/%d/%Y");
+	// ISO 8601 date format.
+	setFormat("%Y-%m-%d");
 }
 
 DateTimeComponent::DateTimeComponent(
@@ -28,7 +31,8 @@ DateTimeComponent::DateTimeComponent(
 		: TextComponent(window, text, font, color, align, pos, size, bgcolor),
 		mDisplayRelative(false)
 {
-	setFormat("%m/%d/%Y");
+	// ISO 8601 date format.
+	setFormat("%Y-%m-%d");
 }
 
 void DateTimeComponent::setValue(const std::string& val)
@@ -94,7 +98,6 @@ void DateTimeComponent::render(const Transform4x4f& parentTrans)
 {
 	TextComponent::render(parentTrans);
 }
-
 
 void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 		const std::string& view, const std::string& element, unsigned int properties)

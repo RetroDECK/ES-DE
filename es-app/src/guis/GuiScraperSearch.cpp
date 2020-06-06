@@ -379,8 +379,10 @@ void GuiScraperSearch::updateInfoPane()
 
 		// Metadata.
 		if (Settings::getInstance()->getBool("ScrapeRatings") &&
-				Settings::getInstance()->getString("Scraper") != "TheGamesDB")
+				Settings::getInstance()->getString("Scraper") != "TheGamesDB") {
 			mMD_Rating->setValue(Utils::String::toUpper(res.mdl.get("rating")));
+			mMD_Rating->setOpacity(255);
+		}
 		mMD_ReleaseDate->setValue(Utils::String::toUpper(res.mdl.get("releasedate")));
 		mMD_Developer->setText(Utils::String::toUpper(res.mdl.get("developer")));
 		mMD_Publisher->setText(Utils::String::toUpper(res.mdl.get("publisher")));
@@ -395,9 +397,11 @@ void GuiScraperSearch::updateInfoPane()
 
 		// Metadata.
 		if (Settings::getInstance()->getBool("ScrapeRatings") &&
-				Settings::getInstance()->getString("Scraper") != "TheGamesDB")
+				Settings::getInstance()->getString("Scraper") != "TheGamesDB") {
 			mMD_Rating->setValue("");
-		mMD_ReleaseDate->setValue("");
+			mMD_Rating->setOpacity(0);
+		}
+		mMD_ReleaseDate->setValue("99990101T000000");
 		mMD_Developer->setText("");
 		mMD_Publisher->setText("");
 		mMD_Genre->setText("");

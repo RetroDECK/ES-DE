@@ -2,7 +2,7 @@
 //	UIModeController.h
 //
 //	Handling of application user interface modes (full, kiosk and kid).
-//	This includes switching the mode when the UI mode passkey was used.
+//	This includes switching the mode when the UI mode passkey is used.
 //
 
 #pragma once

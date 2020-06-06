@@ -1,7 +1,9 @@
 //
 //	DateTimeComponent.h
 //
-//	Date and time component.
+//	Provides the date and time, in absolute (actual date) or relative
+//	(delta from current date and time) form.
+//	Used by the gamelist views.
 //
 
 #pragma once
@@ -13,7 +15,7 @@
 
 class ThemeData;
 
-// Used to display date times.
+// Used to display date and time.
 class DateTimeComponent : public TextComponent
 {
 public:
