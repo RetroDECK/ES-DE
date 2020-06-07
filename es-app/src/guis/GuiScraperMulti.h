@@ -31,7 +31,9 @@ public:
 	virtual ~GuiScraperMulti();
 
 	void onSizeChanged() override;
+
 	std::vector<HelpPrompt> getHelpPrompts() override;
+	HelpStyle getHelpStyle() override;
 
 private:
 	void acceptResult(const ScraperSearchResult& result);

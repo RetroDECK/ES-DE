@@ -89,7 +89,7 @@ void GuiScreensaverOptions::addEditableTextComponent(ComponentListRow row, const
 
 	auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); }; // ok callback (apply new value to ed)
 	row.makeAcceptInputHandler([this, label, ed, updateVal] {
-		mWindow->pushGui(new GuiTextEditPopup(mWindow, label, ed->getValue(), updateVal, false));
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, ed->getValue(), updateVal, false));
 	});
 	assert(ed);
 	addRow(row);

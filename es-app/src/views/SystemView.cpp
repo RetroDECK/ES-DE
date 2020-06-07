@@ -131,7 +131,7 @@ void SystemView::populate()
 		// Something is wrong, there is not a single system to show, check if UI mode is not full.
 		if (!UIModeController::getInstance()->isUIModeFull()) {
 			Settings::getInstance()->setString("UIMode", "Full");
-			mWindow->pushGui(new GuiMsgBox(mWindow,
+			mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
 					"The selected UI mode has nothing to show,\n returning to UI mode: FULL", "OK",
 					nullptr));
 		}

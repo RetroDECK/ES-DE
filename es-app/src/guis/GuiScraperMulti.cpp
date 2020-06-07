@@ -169,7 +169,7 @@ void GuiScraperMulti::finish()
 					" SKIPPED";
 	}
 
-	mWindow->pushGui(new GuiMsgBox(mWindow, ss.str(), "OK", [&] {
+	mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), ss.str(), "OK", [&] {
 		delete this; }));
 
 	mIsProcessing = false;
@@ -179,4 +179,11 @@ void GuiScraperMulti::finish()
 std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()
 {
 	return mGrid.getHelpPrompts();
+}
+
+HelpStyle GuiScraperMulti::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }

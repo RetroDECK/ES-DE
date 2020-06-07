@@ -158,8 +158,8 @@ GuiMetaDataEd::GuiMetaDataEd(
 
 				row.makeAcceptInputHandler([this, title, staticTextString,
 						defaultLaunchString, ed, updateVal, multiLine] {
-							mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, title,
-							staticTextString, defaultLaunchString, ed->getValue(),
+							mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
+							title, staticTextString, defaultLaunchString, ed->getValue(),
 							updateVal, multiLine));
 				});
 				break;
@@ -186,8 +186,8 @@ GuiMetaDataEd::GuiMetaDataEd(
 				 // OK callback (apply new value to ed).
 				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); };
 				row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
-					mWindow->pushGui(new GuiTextEditPopup(mWindow, title, ed->getValue(),
-							updateVal, multiLine));
+					mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
+							ed->getValue(), updateVal, multiLine));
 				});
 				break;
 			}
@@ -213,8 +213,9 @@ GuiMetaDataEd::GuiMetaDataEd(
 	if (mDeleteFunc) {
 		auto deleteFileAndSelf = [&] { mDeleteFunc(); delete this; };
 		auto deleteBtnFunc = [this, deleteFileAndSelf] { mWindow->pushGui(
-				new GuiMsgBox(mWindow, "THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE "
-						"YOU SURE?", "YES", deleteFileAndSelf, "NO", nullptr)); };
+				new GuiMsgBox(mWindow, getHelpStyle(),
+						"THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE YOU SURE?",
+						"YES", deleteFileAndSelf, "NO", nullptr)); };
 		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
 				"delete", deleteBtnFunc));
 	}
@@ -337,7 +338,7 @@ void GuiMetaDataEd::close(bool closeAllWindows)
 	if (dirty)
 	{
 		// Changes were made, ask if the user wants to save them.
-		mWindow->pushGui(new GuiMsgBox(mWindow,
+		mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
 			"SAVE CHANGES?",
 			"YES", [this, closeFunc] { save(); closeFunc(); },
 			"NO", closeFunc
@@ -368,4 +369,11 @@ std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
 	prompts.push_back(HelpPrompt("b", "back"));
 	prompts.push_back(HelpPrompt("start", "close"));
 	return prompts;
+}
+
+HelpStyle GuiMetaDataEd::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }

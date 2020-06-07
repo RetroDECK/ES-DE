@@ -10,6 +10,7 @@
 
 #include "components/OptionListComponent.h"
 #include "views/UIModeController.h"
+#include "views/ViewController.h"
 #include "SystemData.h"
 
 GuiGamelistFilter::GuiGamelistFilter(
@@ -85,7 +86,8 @@ void GuiGamelistFilter::addFiltersToMenu()
 		ComponentListRow row;
 
 		// Add genres.
-		optionList = std::make_shared< OptionListComponent<std::string> >(mWindow, menuLabel, true);
+		optionList = std::make_shared< OptionListComponent<std::string>>
+				(mWindow, getHelpStyle(), menuLabel, true);
 		for (auto it: *allKeys)
 			optionList->add(it.first, it.first, mFilterIndex->isKeyBeingFilteredBy(it.first, type));
 		if (allKeys->size() > 0)
@@ -125,4 +127,11 @@ std::vector<HelpPrompt> GuiGamelistFilter::getHelpPrompts()
 	std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
 	prompts.push_back(HelpPrompt("b", "back"));
 	return prompts;
+}
+
+HelpStyle GuiGamelistFilter::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }

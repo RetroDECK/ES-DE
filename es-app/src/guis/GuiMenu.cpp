@@ -83,8 +83,8 @@ void GuiMenu::openSoundSettings()
 	if (UIModeController::getInstance()->isUIModeFull()) {
 		#if defined(__linux__)
 		// audio card
-		auto audio_card = std::make_shared< OptionListComponent<std::string>
-				>(mWindow, "AUDIO CARD", false);
+		auto audio_card = std::make_shared<OptionListComponent<std::string>>
+				(mWindow, getHelpStyle(), "AUDIO CARD", false);
 		std::vector<std::string> audio_cards;
 		#ifdef _RPI_
 		// RPi Specific  Audio Cards
@@ -114,8 +114,8 @@ void GuiMenu::openSoundSettings()
 		});
 
 		// Volume control device.
-		auto vol_dev = std::make_shared< OptionListComponent<std::string>
-				>(mWindow, "AUDIO DEVICE", false);
+		auto vol_dev = std::make_shared<OptionListComponent<std::string>>
+				(mWindow, getHelpStyle(), "AUDIO DEVICE", false);
 		std::vector<std::string> transitions;
 		transitions.push_back("PCM");
 		transitions.push_back("Speaker");
@@ -140,8 +140,8 @@ void GuiMenu::openSoundSettings()
 
 		#ifdef _RPI_
 		// OMX player Audio Device
-		auto omx_audio_dev = std::make_shared< OptionListComponent<std::string>
-				>(mWindow, "OMX PLAYER AUDIO DEVICE", false);
+		auto omx_audio_dev = std::make_shared<OptionListComponent<std::string>>
+				(mWindow, getHelpStyle(), "OMX PLAYER AUDIO DEVICE", false);
 		std::vector<std::string> omx_cards;
 		// RPi Specific  Audio Cards
 		omx_cards.push_back("local");
@@ -194,8 +194,8 @@ void GuiMenu::openUISettings()
 	auto s = new GuiSettings(mWindow, "UI SETTINGS");
 
 	// Optionally start in selected system/gamelist.
-	auto systemfocus_list = std::make_shared< OptionListComponent<std::string>
-			>(mWindow, "GAMELIST ON STARTUP", false);
+	auto systemfocus_list = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "GAMELIST ON STARTUP", false);
 	systemfocus_list->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
 	for (auto it = SystemData::sSystemVector.cbegin();
 			it != SystemData::sSystemVector.cend(); it++) {
@@ -209,8 +209,8 @@ void GuiMenu::openUISettings()
 	});
 
 	// GameList view style.
-	auto gamelist_style = std::make_shared< OptionListComponent<std::string>
-			>(mWindow, "GAMELIST VIEW STYLE", false);
+	auto gamelist_style = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "GAMELIST VIEW STYLE", false);
 	std::vector<std::string> styles;
 	styles.push_back("automatic");
 	styles.push_back("basic");
@@ -233,8 +233,8 @@ void GuiMenu::openUISettings()
 	});
 
 	// Transition style.
-	auto transition_style = std::make_shared< OptionListComponent<std::string>
-			>(mWindow, "TRANSITION STYLE", false);
+	auto transition_style = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "TRANSITION STYLE", false);
 	std::vector<std::string> transitions;
 	transitions.push_back("fade");
 	transitions.push_back("slide");
@@ -263,8 +263,8 @@ void GuiMenu::openUISettings()
 		if (selectedSet == themeSets.cend())
 			selectedSet = themeSets.cbegin();
 
-		auto theme_set = std::make_shared< OptionListComponent<std::string>
-				>(mWindow, "THEME SET", false);
+		auto theme_set = std::make_shared<OptionListComponent<std::string>>
+				(mWindow, getHelpStyle(), "THEME SET", false);
 		for (auto it = themeSets.cbegin(); it != themeSets.cend(); it++)
 			theme_set->add(it->first, it->first, it == selectedSet);
 		s->addWithLabel("THEME SET", theme_set);
@@ -289,14 +289,14 @@ void GuiMenu::openUISettings()
 	}
 
 	// UI mode.
-	auto UImodeSelection = std::make_shared< OptionListComponent<std::string>
-			>(mWindow, "UI MODE", false);
+	auto UImodeSelection = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "UI MODE", false);
 	std::vector<std::string> UImodes = UIModeController::getInstance()->getUIModes();
 	for (auto it = UImodes.cbegin(); it != UImodes.cend(); it++)
 		UImodeSelection->add(*it, *it, Settings::getInstance()->getString("UIMode") == *it);
 	s->addWithLabel("UI MODE", UImodeSelection);
 	Window* window = mWindow;
-	s->addSaveFunc([ UImodeSelection, window] {
+	s->addSaveFunc([ UImodeSelection, window, this] {
 		std::string selectedMode = UImodeSelection->getSelected();
 		if (selectedMode != "Full") {
 			std::string msg = "You are changing the UI to a restricted mode:\n" +
@@ -305,7 +305,7 @@ void GuiMenu::openUISettings()
 			msg += "To unlock and return to the full UI, enter this code: \n";
 			msg += "\"" + UIModeController::getInstance()->getFormattedPassKeyStr() + "\"\n\n";
 			msg += "Do you want to proceed?";
-			window->pushGui(new GuiMsgBox(window, msg,
+			window->pushGui(new GuiMsgBox(window, this->getHelpStyle(), msg,
 				"YES", [selectedMode] {
 					LOG(LogDebug) << "Setting UI mode to " << selectedMode;
 					Settings::getInstance()->setString("UIMode", selectedMode);
@@ -413,8 +413,8 @@ void GuiMenu::openOtherSettings()
 			(int)Math::round(max_vram->getValue())); });
 
 	// Fullscreen mode.
-	auto fullscreen_mode = std::make_shared< OptionListComponent<std::string>
-			>(mWindow, "FULLSCREEN MODE", false);
+	auto fullscreen_mode = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
 	std::vector<std::string> screenmode;
 	screenmode.push_back("normal");
 	screenmode.push_back("borderless");
@@ -431,8 +431,8 @@ void GuiMenu::openOtherSettings()
 	});
 
 	// Power saver.
-	auto power_saver = std::make_shared< OptionListComponent<std::string>
-			>(mWindow, "POWER SAVER MODES", false);
+	auto power_saver = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "POWER SAVER MODES", false);
 	std::vector<std::string> modes;
 	modes.push_back("disabled");
 	modes.push_back("default");
@@ -473,8 +473,8 @@ void GuiMenu::openOtherSettings()
 	#endif
 
 	// When to save game metadata.
-	auto gamelistsSaveMode = std::make_shared< OptionListComponent<std::string>
-			>(mWindow, "SAVE METADATA", false);
+	auto gamelistsSaveMode = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "SAVE METADATA", false);
 	std::vector<std::string> saveModes;
 	saveModes.push_back("on exit");
 	saveModes.push_back("always");
@@ -543,9 +543,9 @@ void GuiMenu::openOtherSettings()
 void GuiMenu::openConfigInput()
 {
 	Window* window = mWindow;
-	window->pushGui(new GuiMsgBox(window, "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?", "YES",
-		[window] {
-			window->pushGui(new GuiDetectDevice(window, false, nullptr));
+	window->pushGui(new GuiMsgBox(window, getHelpStyle(),
+			"ARE YOU SURE YOU WANT TO CONFIGURE INPUT?", "YES", [window] {
+		window->pushGui(new GuiDetectDevice(window, false, nullptr));
 	}, "NO", nullptr)
 	);
 }
@@ -555,12 +555,14 @@ void GuiMenu::openQuitMenu()
 	auto s = new GuiSettings(mWindow, "QUIT");
 
 	Window* window = mWindow;
+	HelpStyle style = getHelpStyle();
 
 	ComponentListRow row;
 	if (UIModeController::getInstance()->isUIModeFull()) {
 		if (Settings::getInstance()->getBool("ShowExit")) {
-			row.makeAcceptInputHandler([window] {
-				window->pushGui(new GuiMsgBox(window, "REALLY QUIT?", "YES",
+			row.makeAcceptInputHandler([window, this] {
+				window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
+					"REALLY QUIT?", "YES",
 					[] {
 						Scripting::fireEvent("quit");
 						quitES();
@@ -574,9 +576,9 @@ void GuiMenu::openQuitMenu()
 
 	if (Settings::getInstance()->getBool("ShowRebootSystem")) {
 		row.elements.clear();
-		row.makeAcceptInputHandler([window] {
-			window->pushGui(new GuiMsgBox(window, "REALLY REBOOT?", "YES",
-				[] {
+		row.makeAcceptInputHandler([window, this] {
+			window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
+					"REALLY REBOOT?", "YES", [] {
 					Scripting::fireEvent("quit", "reboot");
 					Scripting::fireEvent("reboot");
 					if (quitES(QuitMode::REBOOT) != 0)
@@ -590,9 +592,9 @@ void GuiMenu::openQuitMenu()
 
 	if (Settings::getInstance()->getBool("ShowPoweroffSystem")) {
 		row.elements.clear();
-		row.makeAcceptInputHandler([window] {
-			window->pushGui(new GuiMsgBox(window, "REALLY POWER OFF?", "YES",
-				[] {
+		row.makeAcceptInputHandler([window, this] {
+			window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
+					"REALLY POWER OFF?", "YES", [] {
 					Scripting::fireEvent("quit", "poweroff");
 					Scripting::fireEvent("poweroff");
 					if (quitES(QuitMode::POWEROFF) != 0)
@@ -663,13 +665,6 @@ bool GuiMenu::input(InputConfig* config, Input input)
 	return false;
 }
 
-HelpStyle GuiMenu::getHelpStyle()
-{
-	HelpStyle style = HelpStyle();
-	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
-	return style;
-}
-
 std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
@@ -677,4 +672,11 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 	prompts.push_back(HelpPrompt("a", "select"));
 	prompts.push_back(HelpPrompt("start", "close"));
 	return prompts;
+}
+
+HelpStyle GuiMenu::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }

@@ -12,11 +12,12 @@
 
 #define HORIZONTAL_PADDING_PX 20
 
-GuiMsgBox::GuiMsgBox(Window* window, const std::string& text,
+GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::string& text,
 		const std::string& name1, const std::function<void()>& func1,
 		const std::string& name2, const std::function<void()>& func2,
 		const std::string& name3, const std::function<void()>& func3)
 		: GuiComponent(window),
+		mHelpStyle(helpstyle),
 		mBackground(window, ":/frame.png"),
 		mGrid(window, Vector2i(1, 2))
 {

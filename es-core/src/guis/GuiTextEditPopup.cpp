@@ -14,6 +14,7 @@
 
 GuiTextEditPopup::GuiTextEditPopup(
 		Window* window,
+		const HelpStyle& helpstyle,
 		const std::string& title,
 		const std::string& initValue,
 		const std::function<void(const std::string&)>& okCallback,
@@ -21,6 +22,7 @@ GuiTextEditPopup::GuiTextEditPopup(
 		const char* acceptBtnText,
 		const char* saveConfirmationText)
 		: GuiComponent(window),
+		mHelpStyle(helpstyle),
 		mBackground(window, ":/frame.png"),
 		mGrid(window, Vector2i(1, 3)),
 		mMultiLine(multiLine),
@@ -86,7 +88,7 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
 	if (config->isMappedTo("b", input) && input.value) {
 		if (mText->getValue() != mInitValue) {
 			// Changes were made, ask if the user wants to save them.
-			mWindow->pushGui(new GuiMsgBox(mWindow, mSaveConfirmationText, "YES",
+			mWindow->pushGui(new GuiMsgBox(mWindow, mHelpStyle, mSaveConfirmationText, "YES",
 					[this] { this->mOkCallback(mText->getValue()); delete this; return true; },
 					"NO", [this] { delete this; return false; }));
 		}

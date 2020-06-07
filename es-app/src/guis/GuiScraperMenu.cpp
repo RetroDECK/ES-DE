@@ -21,8 +21,8 @@ GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
 		mMenu(window, "SCRAPER")
 {
 	// Scrape from.
-	auto scraper_list = std::make_shared< OptionListComponent<std::string>>
-			(mWindow, "SCRAPE FROM", false);
+	auto scraper_list = std::make_shared<OptionListComponent<std::string>>
+			(mWindow, getHelpStyle(), "SCRAPE FROM", false);
 	std::vector<std::string> scrapers = getScraperList();
 
 	// Select either the first entry or the one read from the settings,
@@ -37,7 +37,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
 	// Search filters, getSearches() will generate a queue of games to scrape
 	// based on the outcome of the checks below.
 	mFilters = std::make_shared< OptionListComponent<GameFilterFunc>>
-			(mWindow, "SCRAPE THESE GAMES", false);
+			(mWindow, getHelpStyle(), "SCRAPE THESE GAMES", false);
 	mFilters->add("ALL GAMES",
 			[](SystemData*, FileData*) -> bool { return true; }, true);
 	mFilters->add("NO METADATA",
@@ -50,7 +50,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
 
 	// Add systems (all systems with an existing platform ID are listed).
 	mSystems = std::make_shared< OptionListComponent<SystemData*>>
-			(mWindow, "SCRAPE THESE SYSTEMS", true);
+			(mWindow, getHelpStyle(), "SCRAPE THESE SYSTEMS", true);
 	for (unsigned int i = 0; i < SystemData::sSystemVector.size(); i++) {
 		if (!SystemData::sSystemVector[i]->hasPlatformId(PlatformIds::PLATFORM_IGNORE)) {
 			mSystems->add(SystemData::sSystemVector[i]->getFullName(),
@@ -153,7 +153,7 @@ void GuiScraperMenu::openOtherSettings()
 
 	// Scraper region.
 	auto scraper_region = std::make_shared<OptionListComponent<std::string>>
-			(mWindow, "REGION", false);
+			(mWindow, getHelpStyle(), "REGION", false);
 	std::vector<std::string> transitions_rg;
 	transitions_rg.push_back("eu");
 	transitions_rg.push_back("jp");
@@ -176,7 +176,7 @@ void GuiScraperMenu::openOtherSettings()
 
 	// Scraper language.
 	auto scraper_language = std::make_shared<OptionListComponent<std::string>>
-			(mWindow, "LANGUAGE", false);
+			(mWindow, getHelpStyle(), "LANGUAGE", false);
 	std::vector<std::string> transitions_lg;
 	transitions_lg.push_back("en");
 	transitions_lg.push_back("wor");
@@ -220,7 +220,7 @@ void GuiScraperMenu::pressedStart()
 	std::vector<SystemData*> sys = mSystems->getSelectedObjects();
 	for (auto it = sys.cbegin(); it != sys.cend(); it++) {
 		if ((*it)->getPlatformIds().empty()) {
-			mWindow->pushGui(new GuiMsgBox(mWindow,
+			mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
 				Utils::String::toUpper("Warning: some of your selected systems do not "
 				"have a platform set. Results may be even more inaccurate than "
 				"usual!\nContinue anyway?"),
@@ -238,7 +238,7 @@ void GuiScraperMenu::start()
 			mFilters->getSelected());
 
 	if (searches.empty()) {
-		mWindow->pushGui(new GuiMsgBox(mWindow,
+		mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
 			"NO GAMES TO SCRAPE"));
 	}
 	else {
@@ -302,13 +302,6 @@ bool GuiScraperMenu::input(InputConfig* config, Input input)
 	return false;
 }
 
-HelpStyle GuiScraperMenu::getHelpStyle()
-{
-	HelpStyle style = HelpStyle();
-	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
-	return style;
-}
-
 std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
@@ -316,4 +309,11 @@ std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 	prompts.push_back(HelpPrompt("a", "select"));
 	prompts.push_back(HelpPrompt("start", "close"));
 	return prompts;
+}
+
+HelpStyle GuiScraperMenu::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }

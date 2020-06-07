@@ -16,6 +16,7 @@
 
 GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 		Window* window,
+		const HelpStyle& helpstyle,
 		const std::string& title,
 		const std::string& infoString1,
 		const std::string& infoString2,
@@ -25,6 +26,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 		const char* acceptBtnText,
 		const char* saveConfirmationText)
 		: GuiComponent(window),
+		mHelpStyle(helpstyle),
 		mBackground(window, ":/frame.png"),
 		mGrid(window, Vector2i(1, 5)),
 		mMultiLine(multiLine),
@@ -102,7 +104,7 @@ bool GuiComplexTextEditPopup::input(InputConfig* config, Input input)
 	if (config->isMappedTo("b", input) && input.value) {
 		if (mText->getValue() != mInitValue) {
 			// Changes were made, ask if the user wants to save them.
-			mWindow->pushGui(new GuiMsgBox(mWindow, mSaveConfirmationText, "YES",
+			mWindow->pushGui(new GuiMsgBox(mWindow, mHelpStyle, mSaveConfirmationText, "YES",
 					[this] { this->mOkCallback(mText->getValue()); delete this; return true; },
 					"NO", [this] { delete this; return false; }));
 		}

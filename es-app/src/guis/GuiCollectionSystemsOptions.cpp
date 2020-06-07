@@ -7,6 +7,7 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
+#include "SystemData.h"
 #include "Window.h"
 
 GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window) : GuiComponent(window), mMenu(window, "GAME COLLECTION SETTINGS")
@@ -30,7 +31,9 @@ void GuiCollectionSystemsOptions::initializeMenu()
 		addEntry("CREATE NEW CUSTOM COLLECTION FROM THEME", 0x777777FF, true,
 		[this, unusedFolders] {
 			auto s = new GuiSettings(mWindow, "SELECT THEME FOLDER");
-			std::shared_ptr< OptionListComponent<std::string> > folderThemes = std::make_shared< OptionListComponent<std::string> >(mWindow, "SELECT THEME FOLDER", true);
+			std::shared_ptr< OptionListComponent<std::string>>
+					folderThemes = std::make_shared< OptionListComponent<std::string>>
+					(mWindow, getHelpStyle(), "SELECT THEME FOLDER", true);
 
 			// add Custom Systems
 			for(auto it = unusedFolders.cbegin() ; it != unusedFolders.cend() ; it++ )
@@ -62,7 +65,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 		createCollection(name);
 	};
 	row.makeAcceptInputHandler([this, createCustomCollection] {
-		mWindow->pushGui(new GuiTextEditPopup(mWindow, "New Collection Name", "", createCustomCollection, false));
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name", "", createCustomCollection, false));
 	});
 
 	mMenu.addRow(row);
@@ -143,7 +146,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
 
 	std::map<std::string, CollectionSystemData> autoSystems = CollectionSystemManager::get()->getAutoCollectionSystems();
 
-	autoOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, "SELECT COLLECTIONS", true);
+	autoOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
 
 	// add Auto Systems
 	for(std::map<std::string, CollectionSystemData>::const_iterator it = autoSystems.cbegin() ; it != autoSystems.cend() ; it++ )
@@ -154,7 +157,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
 
 	std::map<std::string, CollectionSystemData> customSystems = CollectionSystemManager::get()->getCustomCollectionSystems();
 
-	customOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, "SELECT COLLECTIONS", true);
+	customOptionList = std::make_shared< OptionListComponent<std::string> >(mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
 
 	// add Custom Systems
 	for(std::map<std::string, CollectionSystemData>::const_iterator it = customSystems.cbegin() ; it != customSystems.cend() ; it++ )
@@ -219,4 +222,11 @@ std::vector<HelpPrompt> GuiCollectionSystemsOptions::getHelpPrompts()
 	std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
 	prompts.push_back(HelpPrompt("b", "back"));
 	return prompts;
+}
+
+HelpStyle GuiCollectionSystemsOptions::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }

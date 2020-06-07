@@ -26,7 +26,9 @@ public:
 
 	bool input(InputConfig* config, Input input) override;
 	void update(int deltaTime);
+
 	virtual std::vector<HelpPrompt> getHelpPrompts() override;
+	HelpStyle getHelpStyle() override;
 
 private:
 	bool mClose;

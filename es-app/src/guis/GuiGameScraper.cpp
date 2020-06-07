@@ -11,6 +11,7 @@
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
 #include "components/TextComponent.h"
+#include "views/ViewController.h"
 #include "FileData.h"
 #include "PowerSaver.h"
 #include "SystemData.h"
@@ -135,6 +136,13 @@ void GuiGameScraper::update(int deltaTime)
 std::vector<HelpPrompt> GuiGameScraper::getHelpPrompts()
 {
 	return mGrid.getHelpPrompts();
+}
+
+HelpStyle GuiGameScraper::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }
 
 void GuiGameScraper::close()

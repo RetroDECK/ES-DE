@@ -23,11 +23,13 @@
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
-#include "PlatformId.h"
-#include "MameNames.h"
-#include "SystemData.h"
+#include "views/ViewController.h"
+#include "CollectionSystemManager.h"
 #include "FileData.h"
 #include "Log.h"
+#include "MameNames.h"
+#include "PlatformId.h"
+#include "SystemData.h"
 #include "Window.h"
 
 GuiScraperSearch::GuiScraperSearch(
@@ -277,8 +279,9 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 	if (results.empty()) {
 		// Check if the scraper used is still valid.
 		if (!isValidConfiguredScraper()) {
-			mWindow->pushGui(new GuiMsgBox(mWindow, Utils::String::toUpper("Configured scraper "
-					"is no longer available.\nPlease change the scraping source in the settings."),
+			mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+					Utils::String::toUpper("Configured scraper is no longer available.\n"
+					"Please change the scraping source in the settings."),
 				"FINISH", mSkipCallback));
 		}
 		else {
@@ -325,7 +328,7 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 void GuiScraperSearch::onSearchError(const std::string& error)
 {
 	LOG(LogInfo) << "GuiScraperSearch search error: " << error;
-	mWindow->pushGui(new GuiMsgBox(mWindow, Utils::String::toUpper(error),
+	mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
 		"RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
 		"SKIP", mSkipCallback,
 		"CANCEL", mCancelCallback));
@@ -584,7 +587,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 
 	if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
 			params.system->hasPlatformId(PlatformIds::NEOGEO)) {
-		mWindow->pushGui(new GuiTextEditPopup(mWindow, "SEARCH FOR",
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "SEARCH FOR",
 			// Initial value is last search if there was one, otherwise the clean path name.
 			// If it's a MAME or Neo Geo game, expand the game name accordingly.
 			params.nameOverride.empty() ?
@@ -593,7 +596,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 			searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
 	}
 	else {
-		mWindow->pushGui(new GuiTextEditPopup(mWindow, "SEARCH FOR",
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "SEARCH FOR",
 			// Initial value is last search if there was one, otherwise the clean path name.
 			params.nameOverride.empty() ? params.game->getCleanName() : params.nameOverride,
 			searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
@@ -662,6 +665,13 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
 		prompts.push_back(HelpPrompt("a", "accept result"));
 
 	return prompts;
+}
+
+HelpStyle GuiScraperSearch::getHelpStyle()
+{
+	HelpStyle style = HelpStyle();
+	style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+	return style;
 }
 
 void GuiScraperSearch::onFocusGained()

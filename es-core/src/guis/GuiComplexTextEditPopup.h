@@ -22,6 +22,7 @@ class GuiComplexTextEditPopup : public GuiComponent
 public:
 	GuiComplexTextEditPopup(
 			Window* window,
+			const HelpStyle& helpstyle,
 			const std::string& title,
 			const std::string& infoString1,
 			const std::string& infoString2,
@@ -33,7 +34,9 @@ public:
 
 	bool input(InputConfig* config, Input input);
 	void onSizeChanged();
+
 	std::vector<HelpPrompt> getHelpPrompts() override;
+	HelpStyle getHelpStyle() override { return mHelpStyle; };
 
 private:
 	NinePatchComponent mBackground;
@@ -45,6 +48,7 @@ private:
 	std::shared_ptr<TextEditComponent> mText;
 	std::shared_ptr<ComponentGrid> mButtonGrid;
 
+	HelpStyle mHelpStyle;
 	bool mMultiLine;
 	std::string mInitValue;
 	std::function<void(const std::string&)> mOkCallback;

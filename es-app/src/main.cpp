@@ -381,9 +381,12 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 
+		HelpStyle helpStyle = HelpStyle();
+		helpStyle.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+
 		// We can't handle es_systems.cfg file problems inside ES itself,
         // so display the error message and then quit.
-		window.pushGui(new GuiMsgBox(&window,
+		window.pushGui(new GuiMsgBox(&window, helpStyle,
 			errorMsg,
 			"QUIT", [] {
 				SDL_Event* quit = new SDL_Event();

@@ -58,7 +58,8 @@ GuiGamelistOptions::GuiGamelistOptions(
 		if (curChar < startChar || curChar > endChar)
 			curChar = startChar;
 
-		mJumpToLetterList = std::make_shared<LetterList>(mWindow, "JUMP TO...", false);
+		mJumpToLetterList = std::make_shared<LetterList>(mWindow, getHelpStyle(),
+				 "JUMP TO...", false);
 
 		if (mFavoritesSorting && system->getName() != "favorites" &&
 				system->getName() != "recent") {
@@ -120,11 +121,11 @@ GuiGamelistOptions::GuiGamelistOptions(
 			mMenu.addRow(row);
 
 		// Sort list by selected sort type (persistent throughout the program session).
-		mListSort = std::make_shared<SortList>(mWindow, "SORT GAMES BY", false);
+		mListSort = std::make_shared<SortList>(mWindow, getHelpStyle(), "SORT GAMES BY", false);
 		FileData* root = mSystem->getRootFolder();
 		std::string sortType = root->getSortTypeString();
 
-		for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
+		for (unsigned int i = 0; i <FileSorts::SortTypes.size(); i++) {
 			const FileData::SortType& sort = FileSorts::SortTypes.at(i);
 			if (sort.description == sortType)
 				mListSort->add(sort.description, &sort, 1);

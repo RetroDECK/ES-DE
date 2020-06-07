@@ -31,7 +31,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 #endif
 
 	// Render Video Game Name as subtitles
-	auto ss_info = std::make_shared< OptionListComponent<std::string> >(mWindow, "SHOW GAME INFO", false);
+	auto ss_info = std::make_shared< OptionListComponent<std::string> >(mWindow, getHelpStyle(), "SHOW GAME INFO", false);
 	std::vector<std::string> info_type;
 	info_type.push_back("always");
 	info_type.push_back("start & end");

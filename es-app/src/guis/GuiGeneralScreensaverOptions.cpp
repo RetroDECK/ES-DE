@@ -26,7 +26,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 	addSaveFunc([ss_controls] { Settings::getInstance()->setBool("ScreenSaverControls", ss_controls->getState()); });
 
 	// screensaver behavior
-	auto screensaver_behavior = std::make_shared< OptionListComponent<std::string> >(mWindow, "SCREENSAVER BEHAVIOR", false);
+	auto screensaver_behavior = std::make_shared< OptionListComponent<std::string> >(mWindow, getHelpStyle(), "SCREENSAVER BEHAVIOR", false);
 	std::vector<std::string> screensavers;
 	screensavers.push_back("dim");
 	screensavers.push_back("black");
@@ -38,7 +38,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
 	addSaveFunc([this, screensaver_behavior] {
 		if (Settings::getInstance()->getString("ScreenSaverBehavior") != "random video" && screensaver_behavior->getSelected() == "random video") {
 			// if before it wasn't risky but now there's a risk of problems, show warning
-			mWindow->pushGui(new GuiMsgBox(mWindow,
+			mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
 			"The \"Random Video\" screensaver shows videos from your gamelist.\n\nIf you do not have videos, or if in several consecutive attempts the games it selects don't have videos it will default to black.\n\nMore options in the \"UI Settings\" > \"Video Screensaver\" menu.",
 				"OK", [] { return; }));
 		}
