@@ -55,6 +55,7 @@ private:
 	Vector2f getTextAreaSize() const;
 
 	std::string mText;
+	std::string mTextOrig;
 	bool mFocused;
 	bool mEditing;
 	unsigned int mCursor; // Cursor position in characters.

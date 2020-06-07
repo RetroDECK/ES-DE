@@ -7,10 +7,12 @@
 //
 
 #include "guis/GuiComplexTextEditPopup.h"
+#include "guis/GuiMsgBox.h"
 
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
 #include "components/TextEditComponent.h"
+#include "Window.h"
 
 GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 		Window* window,
@@ -19,11 +21,16 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 		const std::string& infoString2,
 		const std::string& initValue,
 		const std::function<void(const std::string&)>& okCallback,
-		bool multiLine, const char* acceptBtnText)
+		bool multiLine,
+		const char* acceptBtnText,
+		const char* saveConfirmationText)
 		: GuiComponent(window),
 		mBackground(window, ":/frame.png"),
 		mGrid(window, Vector2i(1, 5)),
-		mMultiLine(multiLine)
+		mMultiLine(multiLine),
+		mInitValue(initValue),
+		mOkCallback(okCallback),
+		mSaveConfirmationText(saveConfirmationText)
 {
 	addChild(&mBackground);
 	addChild(&mGrid);
@@ -80,7 +87,7 @@ void GuiComplexTextEditPopup::onSizeChanged()
 
 	mText->setSize(mSize.x() - 40, mText->getSize().y());
 
-	// Update grid
+	// Update grid.
 	mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y());
 	mGrid.setRowHeightPerc(2, mButtonGrid->getSize().y() / mSize.y());
 	mGrid.setSize(mSize);
@@ -91,12 +98,18 @@ bool GuiComplexTextEditPopup::input(InputConfig* config, Input input)
 	if (GuiComponent::input(config, input))
 		return true;
 
-	// Pressing back button when not text editing closes us
+	// Pressing back when not text editing closes us.
 	if (config->isMappedTo("b", input) && input.value) {
-		delete this;
-		return true;
+		if (mText->getValue() != mInitValue) {
+			// Changes were made, ask if the user wants to save them.
+			mWindow->pushGui(new GuiMsgBox(mWindow, mSaveConfirmationText, "YES",
+					[this] { this->mOkCallback(mText->getValue()); delete this; return true; },
+					"NO", [this] { delete this; return false; }));
+		}
+		else {
+			delete this;
+		}
 	}
-
 	return false;
 }
 

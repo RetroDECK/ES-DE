@@ -51,6 +51,7 @@ void TextEditComponent::onSizeChanged()
 void TextEditComponent::setValue(const std::string& val)
 {
 	mText = val;
+	mTextOrig = val;
 	onTextChanged();
 }
 
@@ -126,8 +127,10 @@ bool TextEditComponent::input(InputConfig* config, Input input)
 			return true;
 		}
 
+		// Stop editing.
 		if ((config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_ESCAPE) ||
 				(config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedTo("b", input))) {
+			mTextOrig = mText;
 			stopEditing();
 			return true;
 		}
@@ -138,11 +141,9 @@ bool TextEditComponent::input(InputConfig* config, Input input)
 		else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("down", input)) {
 			// TODO.
 		}
-
 		else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedTo("y", input)) {
 			textInput("\b");
 		}
-
 		else if (cursor_left || cursor_right) {
 			mCursorRepeatDir = cursor_left ? -1 : 1;
 			mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);

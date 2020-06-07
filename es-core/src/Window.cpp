@@ -153,8 +153,9 @@ void Window::input(InputConfig* config, Input input)
 	}
 
 	mTimeSinceLastInput = 0;
-	if (cancelScreenSaver())
-		return;
+	if (!config->isMappedTo("select", input))
+		if (cancelScreenSaver())
+			return;
 
 	if(config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_g && SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug"))
 	{

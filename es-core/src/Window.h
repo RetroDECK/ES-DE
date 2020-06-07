@@ -76,6 +76,7 @@ public:
 	void startScreenSaver();
 	bool cancelScreenSaver();
 	void renderScreenSaver();
+	bool isScreenSaverActive() { return mRenderScreenSaver; };
 
 private:
 	void onSleep();

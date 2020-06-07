@@ -95,13 +95,6 @@ void GuiScraperMenu::openContentSettings()
 {
 	auto s = new GuiSettings(mWindow, "SCRAPER CONTENT SETTINGS");
 
-	// Scrape metadata.
-	auto scrape_metadata = std::make_shared<SwitchComponent>(mWindow);
-	scrape_metadata->setState(Settings::getInstance()->getBool("ScrapeMetadata"));
-	s->addWithLabel("SCRAPE METADATA", scrape_metadata);
-	s->addSaveFunc([scrape_metadata] { Settings::getInstance()->setBool("ScrapeMetadata",
-			scrape_metadata->getState()); });
-
 	// Scrape game names.
 	auto scrape_gamename = std::make_shared<SwitchComponent>(mWindow);
 	scrape_gamename->setState(Settings::getInstance()->getBool("ScrapeGameNames"));
@@ -115,6 +108,13 @@ void GuiScraperMenu::openContentSettings()
 	s->addWithLabel("SCRAPE RATINGS", scrape_ratings);
 	s->addSaveFunc([scrape_ratings] { Settings::getInstance()->setBool("ScrapeRatings",
 			scrape_ratings->getState()); });
+
+	// Scrape other metadata.
+	auto scrape_metadata = std::make_shared<SwitchComponent>(mWindow);
+	scrape_metadata->setState(Settings::getInstance()->getBool("ScrapeMetadata"));
+	s->addWithLabel("SCRAPE OTHER METADATA", scrape_metadata);
+	s->addSaveFunc([scrape_metadata] { Settings::getInstance()->setBool("ScrapeMetadata",
+			scrape_metadata->getState()); });
 
 	// Scrape screenshots images.
 	auto scrape_screenshots = std::make_shared<SwitchComponent>(mWindow);

@@ -1,3 +1,10 @@
+//
+//	GuiMsgBox.h
+//
+//	Popup message dialog with a notification text and a choice of one,
+//	two or three buttons.
+//
+
 #pragma once
 #ifndef ES_CORE_GUIS_GUI_MSG_BOX_H
 #define ES_CORE_GUIS_GUI_MSG_BOX_H
@@ -27,9 +34,8 @@ private:
 	NinePatchComponent mBackground;
 	ComponentGrid mGrid;
 
-
 	std::shared_ptr<TextComponent> mMsg;
-	std::vector< std::shared_ptr<ButtonComponent> > mButtons;
+	std::vector<std::shared_ptr<ButtonComponent>> mButtons;
 	std::shared_ptr<ComponentGrid> mButtonGrid;
 	std::function<void()> mAcceleratorFunc;
 };

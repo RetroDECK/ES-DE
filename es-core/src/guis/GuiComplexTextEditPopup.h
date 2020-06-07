@@ -28,7 +28,8 @@ public:
 			const std::string& initValue,
 			const std::function<void(const std::string&)>& okCallback,
 			bool multiLine,
-			const char* acceptBtnText = "OK");
+			const char* acceptBtnText = "OK",
+			const char* saveConfirmationText = "SAVE CHANGES?");
 
 	bool input(InputConfig* config, Input input);
 	void onSizeChanged();
@@ -45,6 +46,9 @@ private:
 	std::shared_ptr<ComponentGrid> mButtonGrid;
 
 	bool mMultiLine;
+	std::string mInitValue;
+	std::function<void(const std::string&)> mOkCallback;
+	std::string mSaveConfirmationText;
 };
 
 #endif // ES_CORE_GUIS_GUI_COMPLEX_TEXT_EDIT_POPUP_H

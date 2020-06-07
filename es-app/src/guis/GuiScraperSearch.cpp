@@ -590,13 +590,13 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 			params.nameOverride.empty() ?
 					MameNames::getInstance()->getCleanName(params.game->getCleanName()) :
 					params.nameOverride,
-			searchForFunc, false, "SEARCH"));
+			searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
 	}
 	else {
 		mWindow->pushGui(new GuiTextEditPopup(mWindow, "SEARCH FOR",
 			// Initial value is last search if there was one, otherwise the clean path name.
 			params.nameOverride.empty() ? params.game->getCleanName() : params.nameOverride,
-			searchForFunc, false, "SEARCH"));
+			searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
 	}
 }
 
