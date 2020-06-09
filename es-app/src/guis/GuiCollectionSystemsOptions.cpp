@@ -56,6 +56,10 @@ void GuiCollectionSystemsOptions::initializeMenu()
 
 	ComponentListRow row;
 	row.addElement(std::make_shared<TextComponent>(mWindow, "CREATE NEW CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+	auto bracket = std::make_shared<ImageComponent>(mWindow);
+	bracket->setImage(":/arrow.svg");
+	bracket->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+	row.addElement(bracket, false);
 	auto createCustomCollection = [this](const std::string& newVal) {
 		std::string name = newVal;
 		// we need to store the first Gui and remove it, as it'll be deleted by the actual Gui
@@ -65,7 +69,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 		createCollection(name);
 	};
 	row.makeAcceptInputHandler([this, createCustomCollection] {
-		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name", "", createCustomCollection, false));
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name", "", createCustomCollection, false, "SAVE"));
 	});
 
 	mMenu.addRow(row);
@@ -220,6 +224,7 @@ bool GuiCollectionSystemsOptions::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiCollectionSystemsOptions::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
+	prompts.push_back(HelpPrompt("a", "select"));
 	prompts.push_back(HelpPrompt("b", "back"));
 	return prompts;
 }

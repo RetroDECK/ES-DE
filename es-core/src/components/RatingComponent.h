@@ -46,6 +46,8 @@ public:
 	virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
+	Vector2f mTargetSize;
+
 	void updateVertices();
 	void updateColors();
 
@@ -54,9 +56,8 @@ private:
 	Renderer::Vertex mVertices[8];
 
 	unsigned int mColorShift;
+	unsigned int mColorShiftEnd;
 	unsigned int mUnfilledColor;
-	// If set to true, the rating component is hidden.
-	bool mHideRatingComponent;
 
 	std::shared_ptr<TextureResource> mFilledTexture;
 	std::shared_ptr<TextureResource> mUnfilledTexture;

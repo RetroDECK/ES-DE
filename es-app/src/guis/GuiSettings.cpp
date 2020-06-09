@@ -9,7 +9,7 @@ GuiSettings::GuiSettings(Window* window, const char* title) : GuiComponent(windo
 {
 	addChild(&mMenu);
 
-	mMenu.addButton("BACK", "go back", [this] { delete this; });
+	mMenu.addButton("BACK", "back", [this] { delete this; });
 
 	setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
 	mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2, Renderer::getScreenHeight() * 0.15f);
@@ -39,14 +39,15 @@ bool GuiSettings::input(InputConfig* config, Input input)
 		return true;
 	}
 
-	if(config->isMappedTo("start", input) && input.value != 0)
-	{
-		// close everything
-		Window* window = mWindow;
-		while(window->peekGui() && window->peekGui() != ViewController::get())
-			delete window->peekGui();
-		return true;
-	}
+//	Keep code for potential future use.
+//	if(config->isMappedTo("start", input) && input.value != 0)
+//	{
+//		// close everything
+//		Window* window = mWindow;
+//		while(window->peekGui() && window->peekGui() != ViewController::get())
+//			delete window->peekGui();
+//		return true;
+//	}
 
 	return GuiComponent::input(config, input);
 }
@@ -61,9 +62,6 @@ HelpStyle GuiSettings::getHelpStyle()
 std::vector<HelpPrompt> GuiSettings::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
-
 	prompts.push_back(HelpPrompt("b", "back"));
-	prompts.push_back(HelpPrompt("start", "close"));
-
 	return prompts;
 }

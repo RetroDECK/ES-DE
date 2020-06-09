@@ -55,6 +55,7 @@ private:
 	bool mFavoritesSorting;
 	bool fromPlaceholder;
 	bool mFiltersChanged;
+	bool mCancelled;
 };
 
 #endif // ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H

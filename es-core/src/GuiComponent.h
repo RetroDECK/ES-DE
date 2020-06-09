@@ -130,6 +130,8 @@ public:
 
 	virtual unsigned char getOpacity() const;
 	virtual void setOpacity(unsigned char opacity);
+	virtual void setColor(unsigned int color);
+	virtual void setColorShift(unsigned int color);
 
 	const Transform4x4f& getTransform();
 
@@ -170,6 +172,10 @@ protected:
 	void updateChildren(int deltaTime); // Updates animations.
 
 	unsigned char mOpacity;
+	unsigned int mColor;
+	unsigned char mColorOpacity;
+	unsigned int mColorShift;
+	unsigned int mColorShiftEnd;
 	Window* mWindow;
 
 	GuiComponent* mParent;

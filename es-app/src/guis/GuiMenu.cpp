@@ -562,8 +562,7 @@ void GuiMenu::openQuitMenu()
 		if (Settings::getInstance()->getBool("ShowExit")) {
 			row.makeAcceptInputHandler([window, this] {
 				window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
-					"REALLY QUIT?", "YES",
-					[] {
+					"REALLY QUIT?", "YES", [] {
 						Scripting::fireEvent("quit");
 						quitES();
 				}, "NO", nullptr));
@@ -651,14 +650,30 @@ void GuiMenu::addEntry(const char* name, unsigned int color,
 	mMenu.addRow(row);
 }
 
+void GuiMenu::close(bool closeAllWindows)
+{
+	std::function<void()> closeFunc;
+	if (!closeAllWindows) {
+		closeFunc = [this] { delete this; };
+	}
+	else {
+		Window* window = mWindow;
+		closeFunc = [window, this] {
+			while (window->peekGui() != ViewController::get())
+				delete window->peekGui();
+		};
+	}
+	closeFunc();
+}
+
 bool GuiMenu::input(InputConfig* config, Input input)
 {
 	if (GuiComponent::input(config, input))
 		return true;
 
-	if ((config->isMappedTo("b", input) || config->isMappedTo("start", input)) &&
-			input.value != 0) {
-		delete this;
+	const bool isStart = config->isMappedTo("start", input);
+	if (input.value != 0 && (config->isMappedTo("b", input) || isStart)) {
+		close(isStart);
 		return true;
 	}
 
@@ -670,7 +685,8 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 	std::vector<HelpPrompt> prompts;
 	prompts.push_back(HelpPrompt("up/down", "choose"));
 	prompts.push_back(HelpPrompt("a", "select"));
-	prompts.push_back(HelpPrompt("start", "close"));
+	prompts.push_back(HelpPrompt("b", "close menu"));
+	prompts.push_back(HelpPrompt("start", "close menu"));
 	return prompts;
 }
 

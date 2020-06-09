@@ -29,7 +29,8 @@ GuiGamelistOptions::GuiGamelistOptions(
 			mSystem(system),
 			mMenu(window, "OPTIONS"),
 			fromPlaceholder(false),
-			mFiltersChanged(false)
+			mFiltersChanged(false),
+			mCancelled(false)
 {
 	addChild(&mMenu);
 
@@ -140,8 +141,8 @@ GuiGamelistOptions::GuiGamelistOptions(
 	// Show filtered menu.
 	if (system->getName() != "recent" && !Settings::getInstance()->getBool("ForceDisableFilters")) {
 		row.elements.clear();
-		row.addElement(std::make_shared<TextComponent>(
-				mWindow, "FILTER GAMELIST", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+		row.addElement(std::make_shared<TextComponent>
+				(mWindow, "FILTER GAMELIST", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 		row.addElement(makeArrow(mWindow), false);
 		row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openGamelistFilter, this));
 		mMenu.addRow(row);
@@ -192,6 +193,9 @@ GuiGamelistOptions::GuiGamelistOptions(
 
 GuiGamelistOptions::~GuiGamelistOptions()
 {
+	if (mCancelled)
+		return;
+
 	if (!fromPlaceholder) {
 		FileData* root = mSystem->getRootFolder();
 
@@ -316,8 +320,11 @@ void GuiGamelistOptions::jumpToFirstRow()
 
 bool GuiGamelistOptions::input(InputConfig* config, Input input)
 {
-	if ((config->isMappedTo("b", input) ||
-			config->isMappedTo("select", input)) && input.value) {
+	if (input.value != 0 && config->isMappedTo("select", input))
+		mCancelled = true;
+
+	if (input.value != 0 && (config->isMappedTo("b", input) ||
+			config->isMappedTo("select", input))) {
 		delete this;
 		return true;
 	}
@@ -335,7 +342,9 @@ HelpStyle GuiGamelistOptions::getHelpStyle()
 std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
 {
 	auto prompts = mMenu.getHelpPrompts();
-	prompts.push_back(HelpPrompt("b", "close"));
+	prompts.push_back(HelpPrompt("a", "select"));
+	prompts.push_back(HelpPrompt("b", "close (apply)"));
+	prompts.push_back(HelpPrompt("select", "close (cancel)"));
 	return prompts;
 }
 

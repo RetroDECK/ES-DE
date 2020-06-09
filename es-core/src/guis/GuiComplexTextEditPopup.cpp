@@ -54,7 +54,8 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
 			[this, okCallback] { okCallback(mText->getValue()); delete this; }));
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "LOAD", "load default string",
-			[this, infoString2] { mText->setValue(infoString2); }));
+			[this, infoString2] {
+					mText->setValue(infoString2); mText->setCursor(infoString2.size()); }));
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear string",
 			[this] { mText->setValue(""); }));
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "discard changes",

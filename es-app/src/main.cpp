@@ -27,7 +27,6 @@
 #include "MameNames.h"
 #include "platform.h"
 #include "PowerSaver.h"
-#include "ScraperCmdLine.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
@@ -41,8 +40,6 @@
 #endif
 
 #include <FreeImage.h>
-
-bool scrape_cmdline = false;
 
 bool parseArgs(int argc, char* argv[])
 {
@@ -168,9 +165,6 @@ bool parseArgs(int argc, char* argv[])
 					strcmp(argv[i + 1], "1") == 0) ? true : false;
 			Settings::getInstance()->setBool("VSync", vsync);
 			i++; // Skip vsync value.
-//		}
-//		else if (strcmp(argv[i], "--scrape") == 0) {
-//			scrape_cmdline = true;
 		}
 		else if (strcmp(argv[i], "--force-kiosk") == 0) {
 			Settings::getInstance()->setBool("ForceKiosk", true);
@@ -210,7 +204,6 @@ bool parseArgs(int argc, char* argv[])
 #else
 "--debug                         Print debug information\n"
 #endif
-//"--scrape                        Scrape using command line interface\n"
 "--windowed                      Windowed mode, should be combined with --resolution\n"
 "--fullscreen-normal             Normal fullscreen mode\n"
 "--fullscreen-borderless         Borderless fullscreen mode (always on top)\n"
@@ -356,18 +349,16 @@ int main(int argc, char* argv[])
 	bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
 	bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
 
-	if (!scrape_cmdline) {
-		if (!window.init()) {
-			LOG(LogError) << "Window failed to initialize!";
-			return 1;
-		}
+	if (!window.init()) {
+		LOG(LogError) << "Window failed to initialize!";
+		return 1;
+	}
 
-		if (splashScreen) {
-			std::string progressText = "Loading...";
-			if (splashScreenProgress)
-				progressText = "Loading system config...";
-			window.renderLoadingScreen(progressText);
-		}
+	if (splashScreen) {
+		std::string progressText = "Loading...";
+		if (splashScreenProgress)
+			progressText = "Loading system config...";
+		window.renderLoadingScreen(progressText);
 	}
 
 	const char* errorMsg = NULL;
@@ -376,8 +367,7 @@ int main(int argc, char* argv[])
 		if (errorMsg == NULL)
 		{
 			LOG(LogError) << "Unknown error occured while parsing system config file.";
-			if (!scrape_cmdline)
-				Renderer::deinit();
+			Renderer::deinit();
 			return 1;
 		}
 
@@ -393,12 +383,6 @@ int main(int argc, char* argv[])
 				quit->type = SDL_QUIT;
 				SDL_PushEvent(quit);
 			}));
-	}
-
-	// Run the command line scraper then quit.
-	if (scrape_cmdline)
-	{
-		return run_scraper_cmdline();
 	}
 
 	// Dont generate joystick events while we're loading.

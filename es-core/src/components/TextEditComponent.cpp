@@ -127,9 +127,10 @@ bool TextEditComponent::input(InputConfig* config, Input input)
 			return true;
 		}
 
-		// Stop editing.
+		// Done editing (accept changes).
 		if ((config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_ESCAPE) ||
-				(config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedTo("b", input))) {
+				(config->getDeviceId() != DEVICE_KEYBOARD && (config->isMappedTo("a", input) ||
+				config->isMappedTo("b", input)))) {
 			mTextOrig = mText;
 			stopEditing();
 			return true;
@@ -305,7 +306,8 @@ std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()
 	if (mEditing) {
 		prompts.push_back(HelpPrompt("up/down/left/right", "move cursor"));
 		prompts.push_back(HelpPrompt("y", "backspace"));
-		prompts.push_back(HelpPrompt("b", "stop editing"));
+		prompts.push_back(HelpPrompt("a", "accept changes"));
+		prompts.push_back(HelpPrompt("b", "accept changes"));
 	}
 	else {
 		prompts.push_back(HelpPrompt("a", "edit"));

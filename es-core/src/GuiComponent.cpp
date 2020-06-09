@@ -257,6 +257,18 @@ void GuiComponent::setOpacity(unsigned char opacity)
 		(*it)->setOpacity(opacity);
 }
 
+void GuiComponent::setColor(unsigned int color)
+{
+	mColor = color;
+	mColorOpacity = mColor & 0x000000FF;
+}
+
+void GuiComponent::setColorShift(unsigned int color)
+{
+	mColorShift = color;
+	mColorShiftEnd = color;
+}
+
 const Transform4x4f& GuiComponent::getTransform()
 {
 	mTransform = Transform4x4f::Identity();

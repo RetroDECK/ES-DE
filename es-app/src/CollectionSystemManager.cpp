@@ -354,12 +354,18 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 		}
 		else {
 			ViewController::get()->onFileChanged(rootFolder, FILE_SORTED);
-			// If it's a custom collection and the collections
-			// are grouped, update the parent instead.
+			// If it's a custom collection and the setting to group the collections is
+			// enabled, we may have to update the parent instead.
+			// However it may not necessarily be so if some collections are themed and
+			// some are not, so we always need to check whether a parent exists.
 			if (sysData.decl.isCustom &&
 					Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
-				ViewController::get()->onFileChanged(
-						rootFolder->getParent(), FILE_METADATA_CHANGED);
+				// In case of a returned null pointer, we know there is no parent.
+				if (rootFolder->getParent() == nullptr)
+					ViewController::get()->onFileChanged(rootFolder, FILE_METADATA_CHANGED);
+				else
+					ViewController::get()->onFileChanged(
+							rootFolder->getParent(), FILE_METADATA_CHANGED);
 			}
 		}
 	}
@@ -914,12 +920,14 @@ void CollectionSystemManager::addEnabledCollectionsToDisplayedSystems(
 					FileData* rootFolder = it->second.system->getRootFolder();
 					rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
 							Settings::getInstance()->getBool("FavFirstCustom"));
-					// Jump to the first row of the game list
+					// Jump to the first row of the game list, assuming it's not empty.
 					IGameListView* gameList = ViewController::get()->
 							getGameListView((it->second.system)).get();
-					FileData* firstRow = gameList->getCursor()->
-							getParent()->getChildrenListToDisplay()[0];
-					gameList->setCursor(firstRow);
+					if (!gameList->getCursor()->isPlaceHolder()) {
+						FileData* firstRow = gameList->getCursor()->
+								getParent()->getChildrenListToDisplay().front();
+						gameList->setCursor(firstRow);
+					}
 				}
 			}
 			else {

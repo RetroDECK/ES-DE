@@ -116,6 +116,7 @@ private:
 	std::function<void()> mSkipCallback;
 	std::function<void()> mCancelCallback;
 	bool mBlockAccept;
+	bool mFoundGame;
 
 	std::unique_ptr<ScraperSearchHandle> mSearchHandle;
 	std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;

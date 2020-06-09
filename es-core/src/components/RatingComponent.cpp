@@ -8,16 +8,16 @@
 #include "components/RatingComponent.h"
 
 #include "resources/TextureResource.h"
+#include "Settings.h"
 #include "ThemeData.h"
 
 RatingComponent::RatingComponent(Window* window) : GuiComponent(window),
-		mColorShift(0xFFFFFFFF), mUnfilledColor(0xFFFFFFFF)
+		mColorShift(0xFFFFFFFF), mColorShiftEnd(0xFFFFFFFF), mUnfilledColor(0xFFFFFFFF)
 {
 	mFilledTexture = TextureResource::get(":/star_filled.svg", true);
 	mUnfilledTexture = TextureResource::get(":/star_unfilled.svg", true);
 	mValue = 0.5f;
 	mSize = Vector2f(64 * NUM_RATING_STARS, 64);
-	mHideRatingComponent = false;
 	updateVertices();
 	updateColors();
 }
@@ -50,12 +50,6 @@ std::string RatingComponent::getValue() const
 
 void RatingComponent::setOpacity(unsigned char opacity)
 {
-	// Completely hide component if opacity if set to zero.
-	if (opacity == 0)
-		mHideRatingComponent = true;
-	else
-		mHideRatingComponent = false;
-
 	mOpacity = opacity;
 	mColorShift = (mColorShift >> 8 << 8) | mOpacity;
 	updateColors();
@@ -64,6 +58,8 @@ void RatingComponent::setOpacity(unsigned char opacity)
 void RatingComponent::setColorShift(unsigned int color)
 {
 	mColorShift = color;
+	mColorShiftEnd = color;
+
 	// Grab the opacity from the color shift because we may need
 	// to apply it if fading in textures.
 	mOpacity = color & 0xff;
@@ -126,31 +122,34 @@ void RatingComponent::render(const Transform4x4f& parentTrans)
 	if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr)
 		return;
 
-	// If set to true, hide rating component.
-	if (mHideRatingComponent)
-		return;
-
 	Transform4x4f trans = parentTrans * getTransform();
 
 	Renderer::setMatrix(trans);
 
-	if (mUnfilledTexture->bind()) {
-		if (mUnfilledColor != mColorShift) {
-			const unsigned int color = Renderer::convertColor(mUnfilledColor);
-			for (int i = 0; i < 8; ++i)
-				mVertices[i].col = color;
+	if (mOpacity > 0) {
+		if(Settings::getInstance()->getBool("DebugImage")) {
+			Renderer::drawRect(0.0f, 0.0f, mSize.y() * NUM_RATING_STARS,
+					mSize.y(), 0x00000033, 0x00000033);
 		}
 
-		Renderer::drawTriangleStrips(&mVertices[4], 4);
-		Renderer::bindTexture(0);
+		if (mUnfilledTexture->bind()) {
+			if (mUnfilledColor != mColorShift) {
+				const unsigned int color = Renderer::convertColor(mUnfilledColor);
+				for (int i = 0; i < 8; ++i)
+					mVertices[i].col = color;
+			}
 
-		if (mUnfilledColor != mColorShift)
-			updateColors();
-	}
+			Renderer::drawTriangleStrips(&mVertices[4], 4);
+			Renderer::bindTexture(0);
 
-	if (mFilledTexture->bind()) {
-		Renderer::drawTriangleStrips(&mVertices[0], 4);
-		Renderer::bindTexture(0);
+			if (mUnfilledColor != mColorShift)
+				updateColors();
+		}
+
+		if (mFilledTexture->bind()) {
+			Renderer::drawTriangleStrips(&mVertices[0], 4);
+			Renderer::bindTexture(0);
+		}
 	}
 
 	renderChildren(trans);
@@ -206,6 +205,6 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 std::vector<HelpPrompt> RatingComponent::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("a", "add star"));
+	prompts.push_back(HelpPrompt("a", "add half star"));
 	return prompts;
 }

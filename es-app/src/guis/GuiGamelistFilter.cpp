@@ -126,6 +126,7 @@ std::vector<HelpPrompt> GuiGamelistFilter::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
 	prompts.push_back(HelpPrompt("b", "back"));
+	prompts.push_back(HelpPrompt("a", "select"));
 	return prompts;
 }
 

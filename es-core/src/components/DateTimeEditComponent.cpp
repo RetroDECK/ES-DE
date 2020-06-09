@@ -354,3 +354,10 @@ void DateTimeEditComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 	setFont(Font::getFromTheme(elem, properties, mFont));
 }
+
+std::vector<HelpPrompt> DateTimeEditComponent::getHelpPrompts()
+{
+	std::vector<HelpPrompt> prompts;
+	prompts.push_back(HelpPrompt("a", "edit date"));
+	return prompts;
+}

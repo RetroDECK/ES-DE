@@ -285,6 +285,7 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 				"FINISH", mSkipCallback));
 		}
 		else {
+			mFoundGame = false;
 			ComponentListRow row;
 			row.addElement(std::make_shared<TextComponent>(mWindow, "NO GAMES FOUND - SKIP",
 					font, color), true);
@@ -297,6 +298,7 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 		}
 	}
 	else {
+		mFoundGame = true;
 		ComponentListRow row;
 		for (size_t i = 0; i < results.size(); i++) {
 			row.elements.clear();
@@ -587,7 +589,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 
 	if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
 			params.system->hasPlatformId(PlatformIds::NEOGEO)) {
-		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "SEARCH FOR",
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
 			// Initial value is last search if there was one, otherwise the clean path name.
 			// If it's a MAME or Neo Geo game, expand the game name accordingly.
 			params.nameOverride.empty() ?
@@ -596,7 +598,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 			searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
 	}
 	else {
-		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "SEARCH FOR",
+		mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
 			// Initial value is last search if there was one, otherwise the clean path name.
 			params.nameOverride.empty() ? params.game->getCleanName() : params.nameOverride,
 			searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
@@ -660,8 +662,9 @@ bool GuiScraperSearch::saveMetadata(
 
 std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
 {
-	std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
-	if (getSelectedIndex() != -1)
+	std::vector<HelpPrompt> prompts;
+
+	if (mFoundGame)
 		prompts.push_back(HelpPrompt("a", "accept result"));
 
 	return prompts;

@@ -68,12 +68,13 @@ GuiScraperMulti::GuiScraperMulti(
 	std::vector< std::shared_ptr<ButtonComponent> > buttons;
 
 	if (approveResults) {
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "INPUT", "search", [&] {
+		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH",
+				"refine search", [&] {
 			mSearchComp->openInputScreen(mSearchQueue.front());
 			mGrid.resetCursor();
 		}));
 
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SKIP", "skip", [&] {
+		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SKIP", "skip game", [&] {
 			skip();
 			mGrid.resetCursor();
 		}));

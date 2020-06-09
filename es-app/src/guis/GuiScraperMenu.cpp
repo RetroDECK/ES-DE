@@ -242,8 +242,6 @@ void GuiScraperMenu::start()
 			"NO GAMES TO SCRAPE"));
 	}
 	else {
-
-		bool testbool = Settings::getInstance()->getBool("ScraperInteractive");
 		GuiScraperMulti* gsm = new GuiScraperMulti(mWindow, searches,
 				Settings::getInstance()->getBool("ScraperInteractive"));
 		mWindow->pushGui(gsm);
@@ -293,7 +291,7 @@ bool GuiScraperMenu::input(InputConfig* config, Input input)
 	if (GuiComponent::input(config, input))
 		return true;
 
-	if ((config->isMappedTo("b", input) || config->isMappedTo("start", input)) &&
+	if (config->isMappedTo("b", input) &&
 			input.value != 0) {
 		delete this;
 		return true;
@@ -304,10 +302,8 @@ bool GuiScraperMenu::input(InputConfig* config, Input input)
 
 std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 {
-	std::vector<HelpPrompt> prompts;
-	prompts.push_back(HelpPrompt("up/down", "choose"));
-	prompts.push_back(HelpPrompt("a", "select"));
-	prompts.push_back(HelpPrompt("start", "close"));
+	std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
+	prompts.push_back(HelpPrompt("b", "back"));
 	return prompts;
 }
 

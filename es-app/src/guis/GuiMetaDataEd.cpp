@@ -88,6 +88,9 @@ GuiMetaDataEd::GuiMetaDataEd(
 
 		// Create ed and add it (and any related components) to mMenu.
 		// ed's value will be set below.
+		// It's very important to put the element with the help prompt as the last row
+		// entry instead of for instance the spacer. That is so because ComponentList
+		// always looks for the help prompt at the back of the element stack.
 		ComponentListRow row;
 		auto lbl = std::make_shared<TextComponent>(mWindow,
 				Utils::String::toUpper(iter->displayName), Font::get(FONT_SIZE_SMALL), 0x777777FF);
@@ -100,14 +103,14 @@ GuiMetaDataEd::GuiMetaDataEd(
 				break;
 			}
 		case MD_RATING: {
+				auto spacer = std::make_shared<GuiComponent>(mWindow);
+				spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
+				row.addElement(spacer, false);
+
 				ed = std::make_shared<RatingComponent>(window);
 				const float height = lbl->getSize().y() * 0.71f;
 				ed->setSize(0, height);
 				row.addElement(ed, false, true);
-
-				auto spacer = std::make_shared<GuiComponent>(mWindow);
-				spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
-				row.addElement(spacer, false);
 
 				// Pass input to the actual RatingComponent instead of the spacer.
 				row.input_handler = std::bind(&GuiComponent::input,
@@ -115,12 +118,12 @@ GuiMetaDataEd::GuiMetaDataEd(
 				break;
 			}
 		case MD_DATE: {
-				ed = std::make_shared<DateTimeEditComponent>(window);
-				row.addElement(ed, false);
-
 				auto spacer = std::make_shared<GuiComponent>(mWindow);
 				spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
 				row.addElement(spacer, false);
+
+				ed = std::make_shared<DateTimeEditComponent>(window);
+				row.addElement(ed, false);
 
 				// Pass input to the actual DateTimeEditComponent instead of the spacer.
 				row.input_handler = std::bind(&GuiComponent::input, ed.get(),
@@ -160,7 +163,7 @@ GuiMetaDataEd::GuiMetaDataEd(
 						defaultLaunchString, ed, updateVal, multiLine] {
 							mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
 							title, staticTextString, defaultLaunchString, ed->getValue(),
-							updateVal, multiLine));
+							updateVal, multiLine, "SAVE"));
 				});
 				break;
 			}
@@ -187,7 +190,7 @@ GuiMetaDataEd::GuiMetaDataEd(
 				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); };
 				row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
 					mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
-							ed->getValue(), updateVal, multiLine));
+							ed->getValue(), updateVal, multiLine, "SAVE"));
 				});
 				break;
 			}
@@ -205,9 +208,9 @@ GuiMetaDataEd::GuiMetaDataEd(
 		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
 				std::bind(&GuiMetaDataEd::fetch, this)));
 
-	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save",
+	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata",
 			[&] { save(); delete this; }));
-	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel",
+	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel changes",
 			[&] { delete this; }));
 
 	if (mDeleteFunc) {
@@ -217,7 +220,7 @@ GuiMetaDataEd::GuiMetaDataEd(
 						"THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE YOU SURE?",
 						"YES", deleteFileAndSelf, "NO", nullptr)); };
 		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
-				"delete", deleteBtnFunc));
+				"delete game", deleteBtnFunc));
 	}
 
 	mButtons = makeButtonGrid(mWindow, buttons);
@@ -292,16 +295,13 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 	// Update the list with the scraped metadata values.
 	for (unsigned int i = 0; i < mEditors.size(); i++) {
 		const std::string& key = mMetaDataDecl.at(i).key;
-//		if (mEditors.at(i)->getValue() != metadata->get(key)) {
-//				mEditors.at(i)->setOpacity(150);
-//		}
 		mEditors.at(i)->setValue(metadata->get(key));
 	}
 
 	delete metadata;
 }
 
-void GuiMetaDataEd::close(bool closeAllWindows)
+void GuiMetaDataEd::close()
 {
 	// Find out if the user made any changes.
 	bool dirty = mMetadataUpdated;
@@ -311,9 +311,7 @@ void GuiMetaDataEd::close(bool closeAllWindows)
 		std::string mEditorsValue = mEditors.at(i)->getValue();
 
 		// Incredibly ugly workaround to avoid the "SAVE CHANGES?" window for games
-		// with mising metadata for rating and release date.
-		if (key == "rating" && (mMetaDataValue == "" || mMetaDataValue == "0.000000"))
-			mMetaDataValue = "0";
+		// with missing release date metadata.
 		if (key == "releasedate" && (mMetaDataValue == "" || mMetaDataValue == "not-a-date-time"))
 			mMetaDataValue = "19700101T010000";
 
@@ -323,17 +321,21 @@ void GuiMetaDataEd::close(bool closeAllWindows)
 		}
 	}
 
+//	Keep code for potential future use.
+//	std::function<void()> closeFunc;
+//	if (!closeAllWindows) {
+//		closeFunc = [this] { delete this; };
+//	}
+//	else {
+//		Window* window = mWindow;
+//		closeFunc = [window, this] {
+//			while (window->peekGui() != ViewController::get())
+//				delete window->peekGui();
+//		};
+//	}
+
 	std::function<void()> closeFunc;
-	if (!closeAllWindows) {
 		closeFunc = [this] { delete this; };
-	}
-	else {
-		Window* window = mWindow;
-		closeFunc = [window, this] {
-			while (window->peekGui() != ViewController::get())
-				delete window->peekGui();
-		};
-	}
 
 	if (dirty)
 	{
@@ -354,9 +356,8 @@ bool GuiMetaDataEd::input(InputConfig* config, Input input)
 	if (GuiComponent::input(config, input))
 		return true;
 
-	const bool isStart = config->isMappedTo("start", input);
-	if (input.value != 0 && (config->isMappedTo("b", input) || isStart)) {
-		close(isStart);
+	if (input.value != 0 && (config->isMappedTo("b", input))) {
+		close();
 		return true;
 	}
 
@@ -367,7 +368,6 @@ std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
 {
 	std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
 	prompts.push_back(HelpPrompt("b", "back"));
-	prompts.push_back(HelpPrompt("start", "close"));
 	return prompts;
 }
 
