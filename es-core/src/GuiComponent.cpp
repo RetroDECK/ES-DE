@@ -269,6 +269,11 @@ void GuiComponent::setColorShift(unsigned int color)
 	mColorShiftEnd = color;
 }
 
+unsigned int GuiComponent::getColor() const
+{
+	return mColor;
+}
+
 const Transform4x4f& GuiComponent::getTransform()
 {
 	mTransform = Transform4x4f::Identity();

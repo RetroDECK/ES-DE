@@ -132,6 +132,7 @@ public:
 	virtual void setOpacity(unsigned char opacity);
 	virtual void setColor(unsigned int color);
 	virtual void setColorShift(unsigned int color);
+	virtual unsigned int getColor() const;
 
 	const Transform4x4f& getTransform();
 

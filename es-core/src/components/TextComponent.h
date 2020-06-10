@@ -30,6 +30,7 @@ public:
 	void setBackgroundColor(unsigned int color);
 	void setRenderBackground(bool render);
 
+	unsigned int getColor() const override { return mColor; };
 	void render(const Transform4x4f& parentTrans) override;
 
 	std::string getValue() const override;

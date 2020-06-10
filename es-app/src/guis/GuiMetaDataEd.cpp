@@ -295,6 +295,14 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 	// Update the list with the scraped metadata values.
 	for (unsigned int i = 0; i < mEditors.size(); i++) {
 		const std::string& key = mMetaDataDecl.at(i).key;
+		if (mEditors.at(i)->getValue() != metadata->get(key)) {
+			if (key == "rating") {
+				mEditors.at(i)->setColorShift(0xDD2222FF);
+			}
+			else {
+				mEditors.at(i)->setColor(0x994444FF);
+			}
+		}
 		mEditors.at(i)->setValue(metadata->get(key));
 	}
 

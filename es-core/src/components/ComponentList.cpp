@@ -176,8 +176,39 @@ void ComponentList::render(const Transform4x4f& parentTrans)
 		auto& entry = mEntries.at(i);
 		drawAll = !mFocused || i != (unsigned int)mCursor;
 		for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
-			if (drawAll || it->invert_when_selected)
-				it->component->render(trans);
+			if (drawAll || it->invert_when_selected) {
+				// For the row where the cursor is at, we want to remove any hue from the
+				// font color before inverting, as it would otherwise lead to an ugly
+				// inverted color (e.g. red text inverting to a green hue).
+				if (i == mCursor && it->component->getValue() != "" ) {
+					// Check if the text color is neutral.
+					unsigned int origColor = it->component->getColor();
+					unsigned char byteRed = origColor >> 24 & 0xFF;
+					unsigned char byteGreen = origColor >> 16 & 0xFF;
+					unsigned char byteBlue = origColor >> 8 & 0xFF;
+					// If it's neutral, just proceed with normal rendering.
+					if (byteRed == byteGreen && byteGreen == byteBlue) {
+						it->component->render(trans);
+					}
+					else {
+						// If there is a hue, average the brightness values to make
+						// an equivalent gray value before inverting the text.
+						// This is not the proper way to do a BW conversion as the RGB values
+						// should not be evenly distributed, but it's definitely good enough
+						// for this situation.
+						unsigned char byteAverage = (byteRed + byteGreen + byteBlue) / 3;
+						unsigned int averageColor = byteAverage << 24 | byteAverage << 16 |
+								byteAverage << 8 | 0xFF;
+						it->component->setColor(averageColor);
+						it->component->render(trans);
+						// Revert to the original color after rendering.
+						it->component->setColor(origColor);
+					}
+				}
+				else {
+					it->component->render(trans);
+				}
+			}
 			else
 				drawAfterCursor.push_back(it->component.get());
 		}

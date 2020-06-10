@@ -30,6 +30,7 @@ public:
 
 	bool input(InputConfig* config, Input input) override;
 	void update(int deltaTime) override;
+	unsigned int getColor() const override { return mColor; };
 	void render(const Transform4x4f& parentTrans) override;
 	void onSizeChanged() override;
 
