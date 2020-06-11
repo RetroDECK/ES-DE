@@ -57,6 +57,8 @@ public:
 	inline const std::vector<FileData*>& getChildren() const { return mChildren; }
 	inline SystemData* getSystem() const { return mSystem; }
 	inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
+	const std::vector<std::string>& getFirstLetterIndex() const
+			{ return mFirstLetterIndex; };
 	static const std::string getMediaDirectory();
 	virtual const std::string getMediafilePath(
 			std::string subdirectory, std::string mediatype) const;
@@ -87,8 +89,7 @@ public:
 	virtual FileData* getSourceFileData();
 	inline std::string getSystemName() const { return mSystemName; };
 
-	// Returns our best guess at the "real" name for this file
-	// (will attempt to perform MAME name translation).
+	// Returns our best guess at the "real" name for this file.
 	std::string getDisplayName() const;
 
 	// As above, but also remove parenthesis.
@@ -132,6 +133,9 @@ private:
 	std::unordered_map<std::string,FileData*> mChildrenByFilename;
 	std::vector<FileData*> mChildren;
 	std::vector<FileData*> mFilteredChildren;
+	std::vector<std::string> mFirstLetterIndex;
+
+	const std::string FAVORITE_CHAR = "\uF005";
 };
 
 class CollectionFileData : public FileData

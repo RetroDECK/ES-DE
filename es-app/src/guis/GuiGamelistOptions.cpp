@@ -47,79 +47,30 @@ GuiGamelistOptions::GuiGamelistOptions(
 		mFavoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
 	if (!fromPlaceholder) {
-		// Jump to letter.
+		// Jump to letter quick selector.
 		row.elements.clear();
 
-		// Define supported character range.
-		// This range includes all numbers, capital letters, and most reasonable symbols.
-		char startChar = '!';
-		char endChar = '_';
+		// The letter index is generated in FileData during game system sorting.
+		mFirstLetterIndex = file->getParent()->getFirstLetterIndex();
 
-		char curChar = (char)toupper(getGamelist()->getCursor()->getSortName()[0]);
-		if (curChar < startChar || curChar > endChar)
-			curChar = startChar;
+		// Set the quick selector to the first character of the selected game.
+		if (mFavoritesSorting && file->getFavorite() && mFirstLetterIndex.front() == FAVORITE_CHAR)
+			mCurrentFirstCharacter = FAVORITE_CHAR;
+		else
+			mCurrentFirstCharacter = toupper(file->getSortName().front());
 
 		mJumpToLetterList = std::make_shared<LetterList>(mWindow, getHelpStyle(),
 				 "JUMP TO...", false);
 
-		if (mFavoritesSorting && system->getName() != "favorites" &&
-				system->getName() != "recent") {
-			// Check whether the first game in the list is a favorite, if it's
-			// not, then there are no favorites currently visible in this gamelist.
-			if (getGamelist()->getCursor()->getParent()->getChildrenListToDisplay()[0]->
-					getFavorite()) {
-				if (getGamelist()->getCursor()->getFavorite())
-					mJumpToLetterList->add(FAVORITE_CHAR, FAVORITE_CHAR, 1);
-				else
-					mJumpToLetterList->add(FAVORITE_CHAR, FAVORITE_CHAR, 0);
-			}
+		// Populate the quick selector.
+		for (unsigned int i = 0; i < mFirstLetterIndex.size(); i++) {
+			mJumpToLetterList->add(mFirstLetterIndex[i], mFirstLetterIndex[i], 0);
+			if (mFirstLetterIndex[i] == mCurrentFirstCharacter)
+				mJumpToLetterList->selectEntry(i);
 		}
 
-		for (char c = startChar; c <= endChar; c++) {
-			// Check if c is a valid first letter in the current list.
-			const std::vector<FileData*>& files =
-					getGamelist()->getCursor()->getParent()->getChildrenListToDisplay();
-			for (auto file : files) {
-				char candidate = (char)toupper(file->getSortName()[0]);
-				if (c == candidate) {
-					// If the game is a favorite, continue to the next entry in the list.
-					if (mFavoritesSorting && system->getName() != "favorites" &&
-							system->getName() != "recent" && file->getFavorite())
-						continue;
-
-					// If the currently selected game is a favorite, set the character
-					// as not selected so we don't get two current positions.
-					if (mFavoritesSorting && system->getName() != "favorites" &&
-							system->getName() != "recent" &&
-							getGamelist()->getCursor()->getFavorite())
-						mJumpToLetterList->add(std::string(1, c), std::string(1, c), 0);
-					else
-						mJumpToLetterList->add(std::string(1, c), std::string(1, c), c == curChar);
-					break;
-				}
-			}
-		}
-
-		row.addElement(std::make_shared<TextComponent>(
-					mWindow, "JUMP TO...", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-		row.addElement(mJumpToLetterList, false);
-		row.input_handler = [&](InputConfig* config, Input input) {
-			if (config->isMappedTo("a", input) && input.value) {
-				NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
-				if (mJumpToLetterList->getSelected() == FAVORITE_CHAR)
-					jumpToFirstRow();
-				else
-					jumpToLetter();
-
-				return true;
-			}
-			else if (mJumpToLetterList->input(config, input)) {
-				return true;
-			}
-			return false;
-		};
 		if (system->getName() != "recent")
-			mMenu.addRow(row);
+			mMenu.addWithLabel("JUMP TO..", mJumpToLetterList);
 
 		// Sort list by selected sort type (persistent throughout the program session).
 		mListSort = std::make_shared<SortList>(mWindow, getHelpStyle(), "SORT GAMES BY", false);
@@ -201,26 +152,30 @@ GuiGamelistOptions::~GuiGamelistOptions()
 
 		// If a new sorting type was selected, then sort and update mSortTypeString for the system.
 		if ((*mListSort->getSelected()).description != root->getSortTypeString()) {
-			NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
-
 			// This will also recursively sort children.
 			root->sort(*mListSort->getSelected(), mFavoritesSorting);
 			root->setSortTypeString((*mListSort->getSelected()).description);
 
-			// Select the first row of the gamelist.
-			FileData* firstRow = getGamelist()->getCursor()->getParent()->
-					getChildrenListToDisplay()[0];
-			getGamelist()->setCursor(firstRow);
-
-			// Notify that the root folder was sorted.
+			// Notify that the root folder was sorted (refresh).
 			getGamelist()->onFileChanged(root, FILE_SORTED);
 		}
+
+		// Has the user changed the letter using the quick selector?
+		if (mCurrentFirstCharacter != mJumpToLetterList->getSelected()) {
+			if (mJumpToLetterList->getSelected() == FAVORITE_CHAR)
+				jumpToFirstRow();
+			else
+				jumpToLetter();
+		}
 	}
+
 	if (mFiltersChanged) {
 		// Only reload full view if we came from a placeholder as we need to
 		// re-display the remaining elements for whatever new game is selected.
 		ViewController::get()->reloadGameListView(mSystem);
 	}
+
+	NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 }
 
 void GuiGamelistOptions::openGamelistFilter()
@@ -283,29 +238,27 @@ void GuiGamelistOptions::openMetaDataEd()
 
 void GuiGamelistOptions::jumpToLetter()
 {
-	char letter = mJumpToLetterList->getSelected()[0];
+	char letter = mJumpToLetterList->getSelected().front();
 
 	// Get first row of the gamelist.
 	const std::vector<FileData*>& files = getGamelist()->getCursor()->
 			getParent()->getChildrenListToDisplay();
 
 	for (unsigned int i = 0; i < files.size(); i++) {
-		if (mFavoritesSorting && mSystem->getName() != "favorites") {
-			if ((char)toupper(files.at(i)->getSortName()[0]) ==
+		if (mFavoritesSorting && mFirstLetterIndex.front() == FAVORITE_CHAR) {
+			if ((char)toupper(files.at(i)->getSortName().front()) ==
 					letter && !files.at(i)->getFavorite()) {
 				getGamelist()->setCursor(files.at(i));
 				break;
 			}
 		}
 		else {
-			if ((char)toupper(files.at(i)->getSortName()[0]) == letter) {
+			if ((char)toupper(files.at(i)->getSortName().front()) == letter) {
 				getGamelist()->setCursor(files.at(i));
 				break;
 			}
 		}
 	}
-
-	delete this;
 }
 
 void GuiGamelistOptions::jumpToFirstRow()
@@ -314,8 +267,6 @@ void GuiGamelistOptions::jumpToFirstRow()
 	const std::vector<FileData*>& files = getGamelist()->getCursor()->
 			getParent()->getChildrenListToDisplay();
 	getGamelist()->setCursor(files.at(0));
-
-	delete this;
 }
 
 bool GuiGamelistOptions::input(InputConfig* config, Input input)

@@ -40,8 +40,6 @@ private:
 	void jumpToLetter();
 	void jumpToFirstRow();
 
-	const std::string FAVORITE_CHAR = "\uF005";
-
 	MenuComponent mMenu;
 
 	typedef OptionListComponent<std::string> LetterList;
@@ -56,6 +54,10 @@ private:
 	bool fromPlaceholder;
 	bool mFiltersChanged;
 	bool mCancelled;
+	std::vector<std::string> mFirstLetterIndex;
+	std::string mCurrentFirstCharacter;
+	const std::string FAVORITE_CHAR = "\uF005";
+
 };
 
 #endif // ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H

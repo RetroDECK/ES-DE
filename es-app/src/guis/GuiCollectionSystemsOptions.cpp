@@ -74,13 +74,13 @@ void GuiCollectionSystemsOptions::initializeMenu()
 
 	mMenu.addRow(row);
 
-	bundleCustomCollections = std::make_shared<SwitchComponent>(mWindow);
-	bundleCustomCollections->setState(Settings::getInstance()->getBool("UseCustomCollectionsSystem"));
-	mMenu.addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", bundleCustomCollections);
-
 	sortFavFirstCustomSwitch = std::make_shared<SwitchComponent>(mWindow);
 	sortFavFirstCustomSwitch->setState(Settings::getInstance()->getBool("FavFirstCustom"));
 	mMenu.addWithLabel("SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS", sortFavFirstCustomSwitch);
+
+	bundleCustomCollections = std::make_shared<SwitchComponent>(mWindow);
+	bundleCustomCollections->setState(Settings::getInstance()->getBool("UseCustomCollectionsSystem"));
+	mMenu.addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", bundleCustomCollections);
 
 	toggleSystemNameInCollections = std::make_shared<SwitchComponent>(mWindow);
 	toggleSystemNameInCollections->setState(Settings::getInstance()->getBool("CollectionShowSystemInfo"));
