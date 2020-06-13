@@ -27,6 +27,8 @@ public:
 
 	virtual FileData* getCursor() override;
 	virtual void setCursor(FileData*) override;
+	virtual FileData* getFirstEntry() override;
+	virtual FileData* getLastEntry() override;
 
 	virtual bool input(InputConfig* config, Input input) override;
 

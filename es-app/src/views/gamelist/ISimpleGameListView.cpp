@@ -87,8 +87,6 @@ void ISimpleGameListView::onFileChanged(FileData* /*file*/, FileChangeType /*cha
 
 bool ISimpleGameListView::input(InputConfig* config, Input input)
 {
-	std::shared_ptr<Sound> soundfile;
-
 	if (input.value != 0) {
 		if (config->isMappedTo("a", input)) {
 			FileData* cursor = getCursor();

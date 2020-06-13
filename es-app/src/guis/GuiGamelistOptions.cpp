@@ -50,7 +50,7 @@ GuiGamelistOptions::GuiGamelistOptions(
 		// Jump to letter quick selector.
 		row.elements.clear();
 
-		// The letter index is generated in FileData during game system sorting.
+		// The letter index is generated in FileData during gamelist sorting.
 		mFirstLetterIndex = file->getParent()->getFirstLetterIndex();
 
 		// Set the quick selector to the first character of the selected game.
@@ -240,7 +240,7 @@ void GuiGamelistOptions::jumpToLetter()
 {
 	char letter = mJumpToLetterList->getSelected().front();
 
-	// Get first row of the gamelist.
+	// Get the gamelist.
 	const std::vector<FileData*>& files = getGamelist()->getCursor()->
 			getParent()->getChildrenListToDisplay();
 
@@ -264,9 +264,7 @@ void GuiGamelistOptions::jumpToLetter()
 void GuiGamelistOptions::jumpToFirstRow()
 {
 	// Get first row of the gamelist.
-	const std::vector<FileData*>& files = getGamelist()->getCursor()->
-			getParent()->getChildrenListToDisplay();
-	getGamelist()->setCursor(files.at(0));
+	getGamelist()->setCursor(getGamelist()->getFirstEntry());
 }
 
 bool GuiGamelistOptions::input(InputConfig* config, Input input)

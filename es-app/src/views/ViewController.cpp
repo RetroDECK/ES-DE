@@ -390,6 +390,22 @@ bool ViewController::input(InputConfig* config, Input input)
 	if (!(UIModeController::getInstance()->isUIModeKid() &&
 			Settings::getInstance()->getBool("DisableKidStartMenu")) &&
 			config->isMappedTo("start", input) && input.value != 0) {
+		// If we don't stop the scrolling here, it will continue to
+		// run after closing the menu.
+		if (mSystemListView->isScrolling())
+			mSystemListView->stopScrolling();
+		// Finish the animation too, so that it doesn't continue
+		// to play when we've closed the menu.
+		if (mSystemListView->isAnimationPlaying(0))
+			mSystemListView->finishAnimation(0);
+//		for (unsigned int i = 0; i > mGameListViews.size(); i++)
+//			mGameListViews[i].get()->finishAnimation(0);
+
+		for (auto it = mGameListViews.begin(); it != mGameListViews.end(); it++) {
+			std::string teststring = it->second->getCursor()->getName();
+			std::string teststring2;
+		}
+
 		mWindow->pushGui(new GuiMenu(mWindow));
 		return true;
 	}

@@ -129,6 +129,18 @@ public:
 		return mEntries.at(mCursor).object;
 	}
 
+	inline const UserData& getFirst() const
+	{
+		assert(size() > 0);
+		return mEntries.front().object;
+	}
+
+	inline const UserData& getLast() const
+	{
+		assert(size() > 0);
+		return mEntries.back().object;
+	}
+
 	void setCursor(typename std::vector<Entry>::const_iterator& it)
 	{
 		assert(it != mEntries.cend());
@@ -186,6 +198,19 @@ protected:
 		mEntries.erase(it);
 	}
 
+	bool listFirstRow()
+	{
+		mCursor = 0;
+		onCursorChanged(CURSOR_STOPPED);
+		return true;
+	}
+
+	bool listLastRow()
+	{
+		mCursor = mEntries.size() - 1;
+		onCursorChanged(CURSOR_STOPPED);
+		return true;
+	}
 
 	bool listInput(int velocity) // a velocity of 0 = stop scrolling
 	{

@@ -288,15 +288,29 @@ bool TextListComponent<T>::input(InputConfig* config, Input input)
 				listInput(-10);
 				return true;
 			}
+
+			if (config->isMappedLike("righttrigger", input)) {
+				return this->listLastRow();
+			}
+
+			if (config->isMappedLike("lefttrigger", input)) {
+				return this->listFirstRow();
+			}
 		}
 		else {
 			if (config->isMappedLike("down", input) ||
 					config->isMappedLike("up", input) ||
 					config->isMappedLike("rightshoulder", input) ||
-					config->isMappedLike("leftshoulder", input))
+					config->isMappedLike("leftshoulder", input) ||
+					config->isMappedLike("lefttrigger", input) ||
+					config->isMappedLike("righttrigger", input))
 				stopScrolling();
 		}
 	}
+	// Explicitly stop the scrolling, otherwise it will go forever in case
+	// the menu was openened or another gamelist was selected using the
+	// quick system selector etc.
+	stopScrolling();
 
 	return GuiComponent::input(config, input);
 }

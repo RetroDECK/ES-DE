@@ -126,6 +126,10 @@ bool InputConfig::isMappedLike(const std::string& name, Input input)
 		return isMappedTo("leftshoulder", input) || isMappedTo("pageup", input);
 	}else if(name == "rightshoulder"){
 		return isMappedTo("rightshoulder", input) || isMappedTo("pagedown", input);
+	}else if(name == "lefttrigger"){
+		return isMappedTo("lefttrigger", input) || isMappedTo("home", input);
+	}else if(name == "righttrigger"){
+		return isMappedTo("righttrigger", input) || isMappedTo("end", input);
 	}
 	return isMappedTo(name, input);
 }

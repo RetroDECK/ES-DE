@@ -79,14 +79,26 @@ bool ComponentList::input(InputConfig* config, Input input)
 	}
 
 	// Input handler didn't consume the input - try to scroll.
-	if (config->isMappedLike("up", input))
+	if (config->isMappedLike("up", input)) {
 		return listInput(input.value != 0 ? -1 : 0);
-	else if (config->isMappedLike("down", input))
+	}
+	else if (config->isMappedLike("down", input)) {
 		return listInput(input.value != 0 ? 1 : 0);
-	else if (config->isMappedLike("leftshoulder", input))
+	}
+	else if (config->isMappedLike("leftshoulder", input)) {
 		return listInput(input.value != 0 ? -6 : 0);
-	else if (config->isMappedLike("rightshoulder", input))
+	}
+	else if (config->isMappedLike("rightshoulder", input)) {
 		return listInput(input.value != 0 ? 6 : 0);
+	}
+	else if (config->isMappedLike("lefttrigger", input)) {
+		mSelectorBarOffset = 0;
+		return listFirstRow();
+	}
+	else if (config->isMappedLike("righttrigger", input)) {
+		mSelectorBarOffset = mEntries.size() - 1;
+		return listLastRow();
+	}
 
 	return false;
 }

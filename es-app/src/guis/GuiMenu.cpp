@@ -338,8 +338,7 @@ void GuiMenu::openUISettings()
 
 			// Jump to the first row of the gamelist.
 			IGameListView* gameList = ViewController::get()->getGameListView((*it)).get();
-			FileData* firstRow = gameList->getCursor()->getParent()->getChildrenListToDisplay()[0];
-			gameList->setCursor(firstRow);
+			gameList->setCursor(gameList->getFirstEntry());
 		}
 	});
 

@@ -15,7 +15,7 @@ struct InputConfigStructure
 	const char* icon;
 };
 
-static const int inputCount = 25;
+static const int inputCount = 22;
 static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
 {
 	{ "Up",               false, "D-PAD UP",           ":/help/dpad_up.svg" },
@@ -32,8 +32,8 @@ static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
 	{ "RightShoulder",    true,  "RIGHT SHOULDER",     ":/help/button_r.svg" },
 	{ "LeftTrigger",      true,  "LEFT TRIGGER",       ":/help/button_lt.svg" },
 	{ "RightTrigger",     true,  "RIGHT TRIGGER",      ":/help/button_rt.svg" },
-	{ "LeftThumb",        true,  "LEFT THUMB",         ":/help/analog_thumb.svg" },
-	{ "RightThumb",       true,  "RIGHT THUMB",        ":/help/analog_thumb.svg" },
+//	{ "LeftThumb",        true,  "LEFT THUMB",         ":/help/analog_thumb.svg" },
+//	{ "RightThumb",       true,  "RIGHT THUMB",        ":/help/analog_thumb.svg" },
 	{ "LeftAnalogUp",     true,  "LEFT ANALOG UP",     ":/help/analog_up.svg" },
 	{ "LeftAnalogDown",   true,  "LEFT ANALOG DOWN",   ":/help/analog_down.svg" },
 	{ "LeftAnalogLeft",   true,  "LEFT ANALOG LEFT",   ":/help/analog_left.svg" },
@@ -42,7 +42,7 @@ static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
 	{ "RightAnalogDown",  true,  "RIGHT ANALOG DOWN",  ":/help/analog_down.svg" },
 	{ "RightAnalogLeft",  true,  "RIGHT ANALOG LEFT",  ":/help/analog_left.svg" },
 	{ "RightAnalogRight", true,  "RIGHT ANALOG RIGHT", ":/help/analog_right.svg" },
-	{ "HotKeyEnable",     true,  "HOTKEY ENABLE",      ":/help/button_hotkey.svg" }
+//	{ "HotKeyEnable",     true,  "HOTKEY ENABLE",      ":/help/button_hotkey.svg" }
 };
 
 //MasterVolUp and MasterVolDown are also hooked up, but do not appear on this screen.
@@ -190,25 +190,27 @@ GuiInputConfig::GuiInputConfig(Window* window, InputConfig* target, bool reconfi
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [this, okFunction] {
 		// check if the hotkey enable button is set. if not prompt the user to use select or nothing.
 		Input input;
-		if (!mTargetConfig->getInputByName("HotKeyEnable", &input)) {
-			mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-				"YOU DIDN'T CHOOSE A HOTKEY ENABLE BUTTON. THIS IS REQUIRED FOR EXITING GAMES WITH A CONTROLLER. DO YOU WANT TO USE THE SELECT BUTTON DEFAULT ? PLEASE ANSWER YES TO USE SELECT OR NO TO NOT SET A HOTKEY ENABLE BUTTON.",
-				"YES", [this, okFunction] {
-					Input input;
-					mTargetConfig->getInputByName("Select", &input);
-					mTargetConfig->mapInput("HotKeyEnable", input);
-					okFunction();
-					},
-				"NO", [this, okFunction] {
-					// for a disabled hotkey enable button, set to a key with id 0,
-					// so the input configuration script can be backwards compatible.
-					mTargetConfig->mapInput("HotKeyEnable", Input(DEVICE_KEYBOARD, TYPE_KEY, 0, 1, true));
-					okFunction();
-				}
-			));
-		} else {
-			okFunction();
-		}
+		okFunction();
+		// Temporary comments, needs to be properly cleaned up later.
+//		if (!mTargetConfig->getInputByName("HotKeyEnable", &input)) {
+//			mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+//				"YOU DIDN'T CHOOSE A HOTKEY ENABLE BUTTON. THIS IS REQUIRED FOR EXITING GAMES WITH A CONTROLLER. DO YOU WANT TO USE THE SELECT BUTTON DEFAULT ? PLEASE ANSWER YES TO USE SELECT OR NO TO NOT SET A HOTKEY ENABLE BUTTON.",
+//				"YES", [this, okFunction] {
+//					Input input;
+//					mTargetConfig->getInputByName("Select", &input);
+//					mTargetConfig->mapInput("HotKeyEnable", input);
+//					okFunction();
+//					},
+//				"NO", [this, okFunction] {
+//					// for a disabled hotkey enable button, set to a key with id 0,
+//					// so the input configuration script can be backwards compatible.
+//					mTargetConfig->mapInput("HotKeyEnable", Input(DEVICE_KEYBOARD, TYPE_KEY, 0, 1, true));
+//					okFunction();
+//				}
+//			));
+//		} else {
+//			okFunction();
+//		}
 	}));
 	mButtonGrid = makeButtonGrid(mWindow, buttons);
 	mGrid.setEntry(mButtonGrid, Vector2i(0, 6), true, false);

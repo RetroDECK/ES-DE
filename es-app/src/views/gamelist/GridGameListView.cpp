@@ -153,11 +153,20 @@ FileData* GridGameListView::getCursor()
 
 void GridGameListView::setCursor(FileData* file)
 {
-	if (!mGrid.setCursor(file))
-	{
+	if (!mGrid.setCursor(file)) {
 		populateList(file->getParent()->getChildrenListToDisplay());
 		mGrid.setCursor(file);
 	}
+}
+
+FileData* GridGameListView::getFirstEntry()
+{
+	return mGrid.getFirst();;
+}
+
+FileData* GridGameListView::getLastEntry()
+{
+	return mGrid.getLast();
 }
 
 std::string GridGameListView::getQuickSystemSelectRightButton()

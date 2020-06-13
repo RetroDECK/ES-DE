@@ -23,6 +23,8 @@ public:
 
 	virtual FileData* getCursor() override;
 	virtual void setCursor(FileData* file) override;
+	virtual FileData* getFirstEntry() override;
+	virtual FileData* getLastEntry() override;
 
 	virtual const char* getName() const override { return "basic"; }
 

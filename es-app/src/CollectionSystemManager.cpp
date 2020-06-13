@@ -348,9 +348,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 			// Select the first row of the gamelist (the game just played).
 			IGameListView* gameList =
 					ViewController::get()->getGameListView(getSystemToView(sysData.system)).get();
-			FileData* firstRow =
-					gameList->getCursor()->getParent()->getChildrenListToDisplay()[0];
-			gameList->setCursor(firstRow);
+			gameList->setCursor(gameList->getFirstEntry());
 		}
 		else {
 			ViewController::get()->onFileChanged(rootFolder, FILE_SORTED);
@@ -924,9 +922,7 @@ void CollectionSystemManager::addEnabledCollectionsToDisplayedSystems(
 					IGameListView* gameList = ViewController::get()->
 							getGameListView((it->second.system)).get();
 					if (!gameList->getCursor()->isPlaceHolder()) {
-						FileData* firstRow = gameList->getCursor()->
-								getParent()->getChildrenListToDisplay().front();
-						gameList->setCursor(firstRow);
+						gameList->setCursor(gameList->getFirstEntry());
 					}
 				}
 			}

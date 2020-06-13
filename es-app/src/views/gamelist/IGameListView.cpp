@@ -20,6 +20,7 @@ bool IGameListView::input(InputConfig* config, Input input)
 		mWindow->pushGui(new GuiGamelistOptions(mWindow, this->mRoot->getSystem()));
 		return true;
 	}
+
 	// Ctrl-R reloads the view when debugging.
 	else if (Settings::getInstance()->getBool("Debug") &&
 			config->getDeviceId() == DEVICE_KEYBOARD &&

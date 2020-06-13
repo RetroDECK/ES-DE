@@ -107,6 +107,16 @@ void BasicGameListView::setCursor(FileData* cursor)
 	}
 }
 
+FileData* BasicGameListView::getFirstEntry()
+{
+	return mList.getFirst();
+}
+
+FileData* BasicGameListView::getLastEntry()
+{
+	return mList.getLast();
+}
+
 void BasicGameListView::addPlaceholder()
 {
 	// Empty list - add a placeholder.
