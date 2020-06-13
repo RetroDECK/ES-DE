@@ -14,7 +14,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.h
 
     # Guis
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiFastSelect.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.h
@@ -67,7 +66,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.cpp
 
     # Guis
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiFastSelect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.cpp
