@@ -136,6 +136,10 @@ GuiGamelistOptions::GuiGamelistOptions(
 		mMenu.addRow(row);
 	}
 
+	// Buttons. Logic to apply or cancel settings are handled by the destructor.
+	mMenu.addButton("APPLY", "apply", [&] { delete this; });
+	mMenu.addButton("CANCEL", "cancel", [&] { mCancelled = true; delete this; });
+
 	// Center the menu.
 	setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
 	mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2, (mSize.y() -
