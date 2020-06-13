@@ -202,12 +202,20 @@ void GuiScraperMenu::openOtherSettings()
 	s->addSaveFunc([scrape_overwrite] { Settings::getInstance()->setBool("ScraperOverwriteData",
 			scrape_overwrite->getState()); });
 
-	// Automatic scraping.
+	// Interactive scraping.
 	auto scraper_interactive = std::make_shared<SwitchComponent>(mWindow);
 	scraper_interactive->setState(Settings::getInstance()->getBool("ScraperInteractive"));
 	s->addWithLabel("INTERACTIVE MODE", scraper_interactive);
 	s->addSaveFunc([scraper_interactive] { Settings::getInstance()->setBool("ScraperInteractive",
 			scraper_interactive->getState()); });
+
+	// Semi-automatic scraping.
+	auto scraper_semiautomatic = std::make_shared<SwitchComponent>(mWindow);
+	scraper_semiautomatic->setState(Settings::getInstance()->getBool("ScraperSemiautomatic"));
+	s->addWithLabel("AUTO-APPROVE SINGLE GAME MATCHES", scraper_semiautomatic);
+	s->addSaveFunc([scraper_semiautomatic] {
+			Settings::getInstance()->setBool("ScraperSemiautomatic",
+			scraper_semiautomatic->getState()); });
 
 	mWindow->pushGui(s);
 }

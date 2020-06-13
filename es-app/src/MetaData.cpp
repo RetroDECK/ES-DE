@@ -38,10 +38,7 @@ const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls +
 
 MetaDataDecl folderDecls[] = {
 {"name",         MD_STRING,              "",                 false,      "name",                 "enter game name",         true},
-{"sortname",     MD_STRING,              "",                 false,      "sortname",             "enter game sort name",    false},
 {"desc",         MD_MULTILINE_STRING,    "",                 false,      "description",          "enter description",       true},
-{"rating",       MD_RATING,              "0",                false,      "rating",               "enter rating",            true},
-{"releasedate",  MD_DATE,                "not-a-date-time",  false,      "release date",         "enter release date",      true},
 {"developer",    MD_STRING,              "unknown",          false,      "developer",            "enter game developer",    true},
 {"publisher",    MD_STRING,              "unknown",          false,      "publisher",            "enter game publisher",    true},
 {"genre",        MD_STRING,              "unknown",          false,      "genre",                "enter game genre",        true},

@@ -137,6 +137,7 @@ void Settings::setDefaults()
 //	mBoolMap["ScraperGenerateMiximages"] = false;
 //	mBoolMap["ScraperGenerateThumbnails"] = false;
 	mBoolMap["ScraperInteractive"] = true;
+	mBoolMap["ScraperSemiautomatic"] = true;
 	mBoolMap["ScraperOverwriteData"] = false;
 	mBoolMap["ScrapeMetadata"] = true;
 	mBoolMap["ScrapeGameNames"] = true;

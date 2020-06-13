@@ -32,7 +32,7 @@ class GuiScraperSearch : public GuiComponent
 public:
 	enum SearchType {
 		ALWAYS_ACCEPT_FIRST_RESULT,
-		ALWAYS_ACCEPT_MATCHING_CRC,
+		ACCEPT_SINGLE_MATCHES,
 		NEVER_AUTO_ACCEPT
 	};
 

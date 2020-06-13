@@ -299,22 +299,31 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 	}
 	else {
 		mFoundGame = true;
-		ComponentListRow row;
-		for (size_t i = 0; i < results.size(); i++) {
-			row.elements.clear();
-			row.addElement(std::make_shared<TextComponent>(mWindow,
-					Utils::String::toUpper(results.at(i).mdl.get("name")), font, color), true);
-			row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
-			mResultList->addRow(row);
+		if (!(mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1)) {
+			ComponentListRow row;
+
+			for (size_t i = 0; i < results.size(); i++) {
+				row.elements.clear();
+				row.addElement(std::make_shared<TextComponent>(mWindow,
+						Utils::String::toUpper(results.at(i).mdl.get("name")), font, color), true);
+				row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
+				mResultList->addRow(row);
+			}
+			mGrid.resetCursor();
 		}
-		mGrid.resetCursor();
 	}
 
 	mBlockAccept = false;
 	updateInfoPane();
 
-	// If there is no scraping result or if there is no game media to download
-	// as a thumbnail, then proceed directly.
+	// If there is no thumbnail to download and we're in semi-automatic mode, proceed to return
+	// the results or we'll get stuck forever waiting for a thumbnail to be downloaded.
+	if (mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1 &&
+			mScraperResults.front().ThumbnailImageUrl == "")
+		returnResult(mScraperResults.front());
+
+	// For automatic mode, if there's no thumbnail to download or no matching games found,
+	// proceed directly or we'll get stuck forever.
 	if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
 		if (mScraperResults.size() == 0 || (mScraperResults.size() > 0 &&
 				mScraperResults.front().ThumbnailImageUrl == "")) {
@@ -324,7 +333,6 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 				returnResult(mScraperResults.front());
 		}
 	}
-
 }
 
 void GuiScraperSearch::onSearchError(const std::string& error)
@@ -562,14 +570,11 @@ void GuiScraperSearch::updateThumbnail()
 
 	mThumbnailReq.reset();
 
-	// When the thumbnail has been downloaded and we are in non-interactive
-	// mode, we proceed to automatically download the rest of the media files.
-	// The reason to always complete the thumbnail download first is that it looks
-	// a lot more consistent in the GUI. And since the thumbnail is being cached
-	// anyway, this hardly takes any more time. Maybe rather the opposite as the
-	// image used for the thumbnail (cover or screenshot) would have had to be
-	// requested from the server again.
-	if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT &&
+	// When the thumbnail has been downloaded and we are in automatic mode, or if
+	// we are in semi-automatic mode with a single matching game result, we proceed
+	// to immediately download the rest of the media files.
+	if ((mSearchType == ALWAYS_ACCEPT_FIRST_RESULT ||
+			(mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() == 1)) &&
 			mScraperResults.front().thumbnailDownloadStatus == COMPLETED) {
 		if (mScraperResults.size() == 0)
 			mSkipCallback();
@@ -644,6 +649,10 @@ bool GuiScraperSearch::saveMetadata(
 		// Skip elements that are identical to the existing value.
 		if (result.mdl.get(key) == metadata.get(key))
 			continue;
+
+		// Make sure to set releasedate to the proper default value.
+		if (key == "releasedate" && metadata.get(key) == "19700101T010000")
+			metadata.set(key, mMetaDataDecl.at(i).defaultValue);
 
 		// Overwrite all the other values if the flag to overwrite data has been set.
 		if (Settings::getInstance()->getBool("ScraperOverwriteData")) {

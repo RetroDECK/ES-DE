@@ -126,14 +126,27 @@ GuiGamelistOptions::GuiGamelistOptions(
 		mMenu.addRow(row);
 	}
 
-	if (UIModeController::getInstance()->isUIModeFull() && !fromPlaceholder &&
-			!(mSystem->isCollection() && file->getType() == FOLDER)) {
-		row.elements.clear();
-		row.addElement(std::make_shared<TextComponent>(mWindow,
-				"EDIT THIS GAME'S METADATA", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-		row.addElement(makeArrow(mWindow), false);
-		row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
-		mMenu.addRow(row);
+	if (file->getType() == FOLDER) {
+		if (UIModeController::getInstance()->isUIModeFull() && !fromPlaceholder &&
+				!(mSystem->isCollection() && file->getType() == FOLDER)) {
+			row.elements.clear();
+			row.addElement(std::make_shared<TextComponent>(mWindow,
+					"EDIT THIS FOLDER'S METADATA", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			row.addElement(makeArrow(mWindow), false);
+			row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
+			mMenu.addRow(row);
+		}
+	}
+	else {
+		if (UIModeController::getInstance()->isUIModeFull() && !fromPlaceholder &&
+				!(mSystem->isCollection() && file->getType() == FOLDER)) {
+			row.elements.clear();
+			row.addElement(std::make_shared<TextComponent>(mWindow,
+					"EDIT THIS GAME'S METADATA", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+			row.addElement(makeArrow(mWindow), false);
+			row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
+			mMenu.addRow(row);
+		}
 	}
 
 	// Buttons. Logic to apply or cancel settings are handled by the destructor.
@@ -234,10 +247,20 @@ void GuiGamelistOptions::openMetaDataEd()
 		};
 	}
 
-	mWindow->pushGui(new GuiMetaDataEd(mWindow, &file->metadata, file->metadata.getMDD(), p,
-			Utils::FileSystem::getFileName(file->getPath()), std::bind(
-			&IGameListView::onFileChanged, ViewController::get()->getGameListView(
-			file->getSystem()).get(), file, FILE_METADATA_CHANGED), deleteBtnFunc));
+	if (file->getType() == FOLDER) {
+		mWindow->pushGui(new GuiMetaDataEd(mWindow, &file->metadata,
+				file->metadata.getMDD(FOLDER_METADATA), p,
+				Utils::FileSystem::getFileName(file->getPath()), std::bind(
+				&IGameListView::onFileChanged, ViewController::get()->getGameListView(
+				file->getSystem()).get(), file, FILE_METADATA_CHANGED), deleteBtnFunc));
+	}
+	else {
+		mWindow->pushGui(new GuiMetaDataEd(mWindow, &file->metadata,
+				file->metadata.getMDD(GAME_METADATA), p,
+				Utils::FileSystem::getFileName(file->getPath()), std::bind(
+				&IGameListView::onFileChanged, ViewController::get()->getGameListView(
+				file->getSystem()).get(), file, FILE_METADATA_CHANGED), deleteBtnFunc));
+	}
 }
 
 void GuiGamelistOptions::jumpToLetter()

@@ -55,9 +55,15 @@ GuiScraperMulti::GuiScraperMulti(
 			Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
 	mGrid.setEntry(mSubtitle, Vector2i(0, 2), false, true);
 
-	mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
-			approveResults ? GuiScraperSearch::ALWAYS_ACCEPT_MATCHING_CRC
-			: GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT);
+	if (approveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
+		mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
+				GuiScraperSearch::NEVER_AUTO_ACCEPT);
+	else if (approveResults && Settings::getInstance()->getBool("ScraperSemiautomatic"))
+		mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
+				GuiScraperSearch::ACCEPT_SINGLE_MATCHES);
+	else if (!approveResults)
+		mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
+				GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT);
 	mSearchComp->setAcceptCallback(std::bind(&GuiScraperMulti::acceptResult,
 			this, std::placeholders::_1));
 	mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));

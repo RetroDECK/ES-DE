@@ -327,8 +327,8 @@ void InputManager::loadDefaultKBConfig()
 	cfg->mapInput("b", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_BACKSPACE, 1, true));
 	cfg->mapInput("x", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_DELETE, 1, true));
 	cfg->mapInput("y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_INSERT, 1, true));
-	cfg->mapInput("start", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F1, 1, true));
-	cfg->mapInput("select", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F2, 1, true));
+	cfg->mapInput("start", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_ESCAPE, 1, true));
+	cfg->mapInput("select", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F1, 1, true));
 
 	cfg->mapInput("leftshoulder", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PAGEUP, 1, true));
 	cfg->mapInput("rightshoulder", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PAGEDOWN, 1, true));

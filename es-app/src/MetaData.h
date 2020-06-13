@@ -72,6 +72,8 @@ public:
 
 	inline MetaDataListType getType() const { return mType; }
 	inline const std::vector<MetaDataDecl>& getMDD() const { return getMDDByType(getType()); }
+	inline const std::vector<MetaDataDecl>& getMDD(MetaDataListType type) const
+			{ return getMDDByType(type); }
 
 private:
 	MetaDataListType mType;

@@ -163,7 +163,7 @@ GuiMetaDataEd::GuiMetaDataEd(
 						defaultLaunchString, ed, updateVal, multiLine] {
 							mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
 							title, staticTextString, defaultLaunchString, ed->getValue(),
-							updateVal, multiLine, "SAVE"));
+							updateVal, multiLine, "APPLY"));
 				});
 				break;
 			}
@@ -190,7 +190,7 @@ GuiMetaDataEd::GuiMetaDataEd(
 				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); };
 				row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
 					mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
-							ed->getValue(), updateVal, multiLine, "SAVE"));
+							ed->getValue(), updateVal, multiLine, "APPLY"));
 				});
 				break;
 			}
@@ -204,9 +204,11 @@ GuiMetaDataEd::GuiMetaDataEd(
 
 	std::vector< std::shared_ptr<ButtonComponent> > buttons;
 
-	if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
-		buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
-				std::bind(&GuiMetaDataEd::fetch, this)));
+	if (mScraperParams.game->getType() != FOLDER) {
+		if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
+			buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
+					std::bind(&GuiMetaDataEd::fetch, this)));
+	}
 
 	buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata",
 			[&] { save(); delete this; }));
@@ -289,6 +291,15 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 	// Clone the mMetaData object.
 	MetaDataList* metadata = nullptr;
 	metadata = new MetaDataList(*mMetaData);
+
+	// Check if any values were manually changed before starting the scraping.
+	// If so, it's these values we should compare against when scraping, not
+	// the values previously saved for the game.
+	for (unsigned int i = 0; i < mEditors.size(); i++) {
+		const std::string& key = mMetaDataDecl.at(i).key;
+		if (metadata->get(key) != mEditors[i]->getValue())
+			metadata->set(key, mEditors[i]->getValue());
+	}
 
 	mMetadataUpdated = GuiScraperSearch::saveMetadata(result, *metadata);
 
