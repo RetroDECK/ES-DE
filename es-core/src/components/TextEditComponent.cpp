@@ -103,9 +103,20 @@ bool TextEditComponent::input(InputConfig* config, Input input)
 	bool const cursor_right = (config->getDeviceId() != DEVICE_KEYBOARD &&
 			config->isMappedLike("right", input)) || (config->getDeviceId() == DEVICE_KEYBOARD &&
 			input.id == SDLK_RIGHT);
+	bool const cursor_up = (config->getDeviceId() != DEVICE_KEYBOARD &&
+			config->isMappedLike("up", input)) || (config->getDeviceId() == DEVICE_KEYBOARD &&
+			input.id == SDLK_UP);
+	bool const cursor_down = (config->getDeviceId() != DEVICE_KEYBOARD &&
+			config->isMappedLike("down", input)) || (config->getDeviceId() == DEVICE_KEYBOARD &&
+			input.id == SDLK_DOWN);
+	bool const shoulder_left = (config->isMappedLike("leftshoulder", input));
+	bool const shoulder_right = (config->isMappedLike("rightshoulder", input));
+	bool const trigger_left = (config->isMappedLike("lefttrigger", input));
+	bool const trigger_right = (config->isMappedLike("righttrigger", input));
 
 	if (input.value == 0) {
-		if (cursor_left || cursor_right)
+		if (cursor_left || cursor_right || cursor_up || cursor_down ||
+			shoulder_left || shoulder_right | trigger_left || trigger_right)
 			mCursorRepeatDir = 0;
 
 		return false;
@@ -135,20 +146,32 @@ bool TextEditComponent::input(InputConfig* config, Input input)
 			stopEditing();
 			return true;
 		}
-
-		if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("up", input)) {
-			// TODO.
-		}
-		else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("down", input)) {
-			// TODO.
-		}
-		else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedTo("y", input)) {
-			textInput("\b");
-		}
 		else if (cursor_left || cursor_right) {
 			mCursorRepeatDir = cursor_left ? -1 : 1;
 			mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);
 			moveCursor(mCursorRepeatDir);
+		}
+		else if (cursor_up) {
+			// TODO
+		}
+		else if (cursor_down) {
+			// TODO
+		}
+		else if (shoulder_left || shoulder_right) {
+			mCursorRepeatDir = shoulder_left ? -10 : 10;
+			mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);
+			moveCursor(mCursorRepeatDir);
+		}
+		// Jump to beginning of text.
+		else if (trigger_left) {
+			setCursor(0);
+		}
+		// Jump to end of text.
+		else if (trigger_right) {
+			setCursor(mText.length());
+		}
+		else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedTo("y", input)) {
+			textInput("\b");
 		}
 		else if (config->getDeviceId() == DEVICE_KEYBOARD) {
 			switch (input.id) {

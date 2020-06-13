@@ -212,7 +212,7 @@ void GuiScraperMenu::openOtherSettings()
 	// Semi-automatic scraping.
 	auto scraper_semiautomatic = std::make_shared<SwitchComponent>(mWindow);
 	scraper_semiautomatic->setState(Settings::getInstance()->getBool("ScraperSemiautomatic"));
-	s->addWithLabel("AUTO-APPROVE SINGLE GAME MATCHES", scraper_semiautomatic);
+	s->addWithLabel("AUTO-ACCEPT SINGLE GAME MATCHES", scraper_semiautomatic);
 	s->addSaveFunc([scraper_semiautomatic] {
 			Settings::getInstance()->setBool("ScraperSemiautomatic",
 			scraper_semiautomatic->getState()); });
