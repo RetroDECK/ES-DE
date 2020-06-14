@@ -1,33 +1,52 @@
+# Credits
+
 Programming
-	Alec "Aloshi" Lofquist - http://www.aloshi.com
+===========
+
+Alec "Aloshi" Lofquist (original version) http://www.aloshi.com
+RetroPie Community (RetroPie fork) https://retropie.org.uk
+Leon Styhre (Desktop Edition fork)
+
 
 UI Art & Design
-	Nils Bonenberger
+===============
+
+Nils Bonenberger
 
 
 Libraries
 =========
 
-PugiXML
-	http://pugixml.org/
+cURL http://curl.haxx.se
 
-SDL 2
-	http://www.libsdl.org/
+FreeType http://www.freetype.org
 
-FreeImage
-	http://www.freeimage.sourceforge.net
+FreeImage http://www.freeimage.sourceforge.net
 
-FreeType
-	http://www.freetype.org
+libVLC https://wiki.videolan.org/LibVLC
 
-cURL
-	http://curl.haxx.se/
+nanosvg https://github.com/memononen/nanosvg
 
-nanosvg
-	https://github.com/memononen/nanosvg
+pugixml http://pugixml.org
+
+RapdidJSON http://rapidjson.org
+
+SDL 2 http://www.libsdl.org
+
 
 Resources
 =========
 
-Open Sans font
-	http://www.google.com/fonts/specimen/Open+Sans
+DejaVu font https://dejavu-fonts.github.io
+
+DroidSans FallBackFull font https://android.googlesource.com/platform/frameworks/base
+
+Font Awesome https://fontawesome.com
+
+GNU FreeFont https://www.gnu.org/software/freefont
+
+Nanum font https://hangeul.naver.com
+
+Open Sans font https://fonts.google.com/specimen/Open+Sans
+
+MAME ROM information https://www.mamedev.org

@@ -4,24 +4,13 @@ EmulationStation Desktop Edition
 EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
 
 This is a fork intended for use on desktop computers rather than devices such as a Raspberry Pi. It's specifically intended to be
-used with RetroArch, but it's certainly possible to configure the software to be used with other emulators.
-
-It's based on the RetroPie fork with some functionality ported from the Batocera fork. New and hopefully useful functionality has also been added.
+used with RetroArch, although it's certainly possible to configure the software to be used with other emulators.
 
 As it's intended for RetroArch and for usage on desktop computers, there has been no effort spent on trying to create advanced emulator or system configuration tools in the frontend, it's better to let the emulator itself handle that. Rather the goal is to keep the code as clean and fast as possible and to avoid bloat.
 
-The following changes and improvements have been made as of the fork from retropie-emulationstation v2.9.1:
+Check the GIT repository and/or the NEWS.md file for information of improvements and bug fixes.
+This fork was initially based off RetroPie EmulationStation v2.10.0rp-dev (master).
 
-* GUI-configurable ability to put favorite games on the top of the game lists
-* Favorites marked with stars in the game lists
-* Full navigation sound support, configurable per theme (seven different sounds can be defined)
-* Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch or other emulators
-* A GUI-configurable choice between normal fullscreen and borderless fullscreen mode (the latter disables alt-tab switching but is more seamless)
-* GUI options to disable menu entries for system reboot and system power off (normally not required on a desktop computer and accidents do happen!)
-* Default theme es-theme-rbsimple-DE based on Recalbox Multi, but greatly simplified and in my opinion improved
-* Two other themes, es-theme-carbon-DE and es-theme-fundamental-DE fully updated with the functionality from this Desktop Edition fork
-* All required fonts are now bundled with the software so that it's not necessary to install them separately in the operating system
-* Preconfigured for use with RetroArch, although you may want to modify the core settings if you prefer alternatives to the emulators configured
 
 Building
 ========
@@ -42,7 +31,7 @@ All of this be easily installed with `dnf` (with rpmfusion activated) :
 ```bash
 sudo dnf install SDL2-devel freeimage-devel freetype-devel curl-devel \
   alsa-lib-devel mesa-libGL-devel cmake \
-  vlc-devel rapidjson-devel 
+  vlc-devel rapidjson-devel
 ```
 
 Note this Repository uses a git submodule - to checkout the source and all submodules, use
@@ -51,7 +40,7 @@ Note this Repository uses a git submodule - to checkout the source and all submo
 git clone --recursive https://github.com/RetroPie/EmulationStation.git
 ```
 
-or 
+or
 
 ```bash
 git clone https://github.com/RetroPie/EmulationStation.git
