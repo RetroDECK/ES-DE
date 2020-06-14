@@ -8,7 +8,7 @@ used with RetroArch, although it's certainly possible to configure the software 
 
 As it's intended for RetroArch and for usage on desktop computers, there has been no effort spent on trying to create advanced emulator or system configuration tools in the frontend, it's better to let the emulator itself handle that. Rather the goal is to keep the code as clean and fast as possible and to avoid bloat.
 
-Check the GIT repository and/or the NEWS.md file for information of improvements and bug fixes.
+Check the Git repository and/or the NEWS.md file for information of improvements and bug fixes.
 This fork was initially based off RetroPie EmulationStation v2.10.0rp-dev (master).
 
 

@@ -1,10 +1,10 @@
 Coding Style Guide
 ==================
 
-The coding style is mostly a combination the Linux Kernel and Google C++ coding styles.
-Please refer to these guides here:
-	https://www.kernel.org/doc/html/v4.10/process/coding-style.html
-	https://google.github.io/styleguide/cppguide.html
+The coding style is mostly a combination the Linux Kernel and Google C++ coding styles.\
+Please refer to these guides here:\
+https://www.kernel.org/doc/html/v4.10/process/coding-style.html\
+https://google.github.io/styleguide/cppguide.html\
 There are some deviations though, mostly due to historical reasons as the original code did not use this coding style.
 
 The most obvious and important points to consider:
@@ -14,16 +14,15 @@ The most obvious and important points to consider:
 * Comments always in C++ style, i.e. // instead of /* */
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
 * K&R placements of braces, read the Linux Kernel coding style document for clarifications
-* Always use spaces between keywords and opening brackets, i.e. 'if ()', 'for ()', 'while (' etc.
+* Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while (` etc.
 * Avoid excessive inline functions as it bloats the binary and provides dubious performance gains
-* In C++ functions are called functions (or member functions) and not methods like in Java :)
 * For the rest, check the code!
 
 
 Development Environment
 =======================
 
-EmulationStation-DE is developed and compiled using GCC and GDB.
+EmulationStation-DE is developed and compiled using GCC and GDB.\
 For debugging purposes, starting the application like this could make sense:
 
 `emulationstation --windowed --debug --resolution 1280 720`
