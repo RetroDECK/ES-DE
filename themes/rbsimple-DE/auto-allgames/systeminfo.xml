@@ -1,0 +1,9 @@
+<theme>
+    <formatVersion>5</formatVersion>
+
+    <view name="system">
+        <text name="info1" extra="true">
+            <text>See your complete game library in a single list.</text>
+        </text>
+    </view>
+</theme>

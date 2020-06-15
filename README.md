@@ -3,13 +3,13 @@ EmulationStation Desktop Edition
 
 EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
 
-This is a fork intended for use on desktop computers rather than devices such as a Raspberry Pi. It's specifically intended to be
-used with RetroArch, although it's certainly possible to configure the software to be used with other emulators.
+This is a fork intended for use on desktop computers rather than devices such as the Raspberry Pi. \
+As such the goal is not to create advanced emulator configuration tools in the frontend but instead to let the emulators themselves handle that.
 
-As it's intended for RetroArch and for usage on desktop computers, there has been no effort spent on trying to create advanced emulator or system configuration tools in the frontend, it's better to let the emulator itself handle that. Rather the goal is to keep the code as clean and fast as possible and to avoid bloat.
+EmulationStation-DE is primarily intended to be used with RetroArch, although it's certainly possible to configure the software to be used with other emulators as well.
 
-Check the Git repository and/or the NEWS.md file for information of improvements and bug fixes.
-This fork was initially based off RetroPie EmulationStation v2.10.0rp-dev (master).
+Check out the Git repository and/or NEWS.md file for release information, including a list of improvements and bug fixes per version. \
+This fork was initially based on RetroPie EmulationStation v2.10.0rp-dev (master).
 
 
 Building

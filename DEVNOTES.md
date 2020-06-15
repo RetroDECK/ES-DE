@@ -1,28 +1,36 @@
-Coding Style Guide
-==================
+Coding Style
+============
 
-The coding style is mostly a combination the Linux Kernel and Google C++ coding styles.\
-Please refer to these guides here:\
-https://www.kernel.org/doc/html/v4.10/process/coding-style.html\
-https://google.github.io/styleguide/cppguide.html\
+The coding style for EmulationStation-DE is mostly a combination of the Linux Kernel and Google C++ coding guidelines. \
+Please refer to these documents here: \
+https://www.kernel.org/doc/html/v4.10/process/coding-style.html \
+https://google.github.io/styleguide/cppguide.html \
 There are some deviations though, mostly due to historical reasons as the original code did not use this coding style.
 
-The most obvious and important points to consider:
+Some key points:
 
 * Column width (line length) is 100 characters
 * Indentation is 4 spaces, don't use tabs as they can be interpreted differently!
+* Line break is Unix-style (line feed only, no carriage return)
 * Comments always in C++ style, i.e. // instead of /* */
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
-* K&R placements of braces, read the Linux Kernel coding style document for clarifications
-* Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while (` etc.
-* Avoid excessive inline functions as it bloats the binary and provides dubious performance gains
-* For the rest, check the code!
+* Use K&R placements of braces, read the Linux Kernel coding style document for clarifications
+* Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while ()` etc.
+* If the arguments (and initializer list) for a function or class exceeds 4 items, arrange them vertically to make the code easier to read
+* Always declare one variable per line, never combine multiple declarations of the same type
+* Name local variables with the first word in small letters and the proceeding words starting with capital letters, e.g. myExampleVariable
+* Name member variables starting with a small 'm', e.g. mMyMemberVariable
+* Use the same naming convention for functions as for local variables, e.g. someFunction()
+* Inline functions can be used but don't overdo it by using them for functions that won't be called very frequently
+* Never put more than one statement on a single line, except for lambda expressions
+* Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
+* For the rest, check the code and have fun! :)
 
 
 Development Environment
 =======================
 
-EmulationStation-DE is developed and compiled using GCC and GDB.\
+EmulationStation-DE is developed and compiled using GCC and GDB. \
 For debugging purposes, starting the application like this could make sense:
 
 `emulationstation --windowed --debug --resolution 1280 720`

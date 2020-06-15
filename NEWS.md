@@ -11,6 +11,7 @@ v1.0.0
 * For single-game scraping, any values updated by the scraper are now highlighted using a different font color in the metadata editor
 * Gamelist sorting now working as expected and is persistent throughout the application session
 * Full navigation sound support, configurable per theme
+* New default theme 'rbsimple-DE' bundled with the software, this theme is largely based on 'recalbox-multi' by the Recalbox community
 * Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
 * Per-game launchstring override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * Help system updated and expanded to the complete application (previously it was only partially implemented)

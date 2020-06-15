@@ -1,0 +1,9 @@
+<theme>
+    <formatVersion>5</formatVersion>
+
+    <view name="system">
+        <text name="info1" extra="true">
+            <text>Lutro is an experimental lua game framework for libretro following the LÖVE API.</text>
+        </text>
+    </view>
+</theme>

@@ -1,0 +1,29 @@
+<theme>
+    <formatVersion>5</formatVersion>
+
+    <feature supported="navigationsounds">
+        <view name="all">
+            <sound name="systembrowseSound">
+                  <path>./core/sounds/systembrowse.wav</path>
+            </sound>
+            <sound name="quicksysselectSound">
+                <path>./core/sounds/quicksysselect.wav</path>
+            </sound>
+            <sound name="selectSound">
+                <path>./core/sounds/select.wav</path>
+            </sound>
+            <sound name="backSound">
+                <path>./core/sounds/back.wav</path>
+            </sound>
+            <sound name="scrollSound">
+                <path>./core/sounds/scroll.wav</path>
+            </sound>
+            <sound name="favoriteSound">
+                <path>./core/sounds/favorite.wav</path>
+            </sound>
+            <sound name="launchSound">
+                <path>./core/sounds/launch.wav</path>
+            </sound>
+        </view>
+    </feature>
+</theme>

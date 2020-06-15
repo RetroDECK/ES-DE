@@ -1,11 +1,11 @@
 Programming
 ===========
 
-Alec "Aloshi" Lofquist (original version)\
-http://www.aloshi.com\
-RetroPie Community (RetroPie fork)\
-https://retropie.org.uk\
-Leon Styhre (Desktop Edition fork)\
+Alec "Aloshi" Lofquist (original version) \
+http://www.aloshi.com \
+RetroPie Community (RetroPie fork) \
+https://retropie.org.uk \
+Leon Styhre (Desktop Edition fork)
 
 
 UI Art & Design
@@ -14,60 +14,70 @@ UI Art & Design
 Nils Bonenberger
 
 
+Licenses
+========
+
+Please find the individual license files inside the LICENSES directory.
+
+
 Libraries
 =========
 
-cURL
+cURL \
 http://curl.haxx.se
 
-FreeType
+FreeType \
 http://www.freetype.org
 
-FreeImage
+FreeImage \
 http://www.freeimage.sourceforge.net
 
-libVLC
+libVLC \
 https://wiki.videolan.org/LibVLC
 
-nanosvg
+nanosvg \
 https://github.com/memononen/nanosvg
 
-pugixml
+pugixml \
 http://pugixml.org
 
-RapdidJSON
+RapdidJSON \
 http://rapidjson.org
 
-SDL 2
+SDL 2 \
 http://www.libsdl.org
 
 
 Resources
 =========
 
-DejaVu font
+DejaVu font \
 https://dejavu-fonts.github.io
 
-DroidSans font
+DroidSans font \
 https://android.googlesource.com/platform/frameworks/base
 
-Font Awesome
+Font Awesome \
 https://fontawesome.com
 
-GNU FreeFont
+GNU FreeFont \
 https://www.gnu.org/software/freefont
 
-Nanum font
+Nanum font \
 https://hangeul.naver.com
 
-Open Sans font
+Open Sans font \
 https://fonts.google.com/specimen/Open+Sans
 
-MAME ROM information
+MAME ROM information \
 https://www.mamedev.org
 
 
-Licenses
-========
+Themes
+======
 
-Please find the individual license files inside the LICENSES directory.
+Recalbox Multi (the default theme rbsimple-DE is based on this one) \
+https://gitlab.com/recalbox/recalbox-themes
+
+Carbon (some graphics used in rbsimple-DE comes from this theme) \
+https://github.com/RetroPie/es-theme-carbon
