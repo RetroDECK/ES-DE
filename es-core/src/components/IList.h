@@ -202,6 +202,7 @@ protected:
 	{
 		mCursor = 0;
 		onCursorChanged(CURSOR_STOPPED);
+		onScroll();
 		return true;
 	}
 
@@ -209,6 +210,7 @@ protected:
 	{
 		mCursor = mEntries.size() - 1;
 		onCursorChanged(CURSOR_STOPPED);
+		onScroll();
 		return true;
 	}
 
