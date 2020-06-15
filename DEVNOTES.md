@@ -12,6 +12,7 @@ Some key points:
 * Column width (line length) is 100 characters
 * Indentation is 4 spaces, don't use tabs as they can be interpreted differently!
 * Line break is Unix-style (line feed only, no carriage return)
+* Do not leave trailing whitespaces at the end of the lines (a good source code editor should have a setting to automatically trim these for you)
 * Comments always in C++ style, i.e. // instead of /* */
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
 * Use K&R placements of braces, read the Linux Kernel coding style document for clarifications

@@ -5,7 +5,8 @@ Alec "Aloshi" Lofquist (original version) \
 http://www.aloshi.com \
 RetroPie Community (RetroPie fork) \
 https://retropie.org.uk \
-Leon Styhre (Desktop Edition fork)
+Leon Styhre (Desktop Edition fork) \
+https://gitlab.com/leonstyhre/emulationstation-de
 
 
 UI Art & Design
@@ -44,7 +45,7 @@ http://pugixml.org
 RapdidJSON \
 http://rapidjson.org
 
-SDL 2 \
+SDL2 \
 http://www.libsdl.org
 
 
