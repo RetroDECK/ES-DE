@@ -1,6 +1,8 @@
+<!-- Latest updates from MAME driver file mame0221.xml -->
 <bios>3dobios</bios>
 <bios>airlbios</bios>
 <bios>aleck64</bios>
+<bios>alg3do</bios>
 <bios>alg_bios</bios>
 <bios>allied</bios>
 <bios>ar_bios</bios>
@@ -45,6 +47,7 @@
 <bios>iteagle</bios>
 <bios>konamigv</bios>
 <bios>konamigx</bios>
+<bios>konendev</bios>
 <bios>kviper</bios>
 <bios>lindbios</bios>
 <bios>list.txt</bios>
@@ -57,6 +60,7 @@
 <bios>naomi</bios>
 <bios>naomigd</bios>
 <bios>neogeo</bios>
+<bios>nichidvd</bios>
 <bios>nss</bios>
 <bios>pgm</bios>
 <bios>playch10</bios>
