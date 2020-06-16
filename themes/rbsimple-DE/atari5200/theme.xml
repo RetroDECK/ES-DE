@@ -4,12 +4,9 @@
     <include>./colors.xml</include>
     <include>./systeminfo.xml</include>
 
-    <view name="system, basic, detailed, video">
-        <image name="logo">
-            <path>./images/logo.svg</path>
-        </image>
-        <image name="consolegame" extra="true">
-            <path>./images/consolegame.svg</path>
+    <view name="system">
+        <image name="controller" extra="true">
+            <path>./images/controller.svg</path>
         </image>
     </view>
 
@@ -18,6 +15,15 @@
             <textColor>262626</textColor>
             <iconColor>262626</iconColor>
         </helpsystem>
+    </view>
+
+    <view name="system, basic, detailed, video">
+        <image name="logo">
+            <path>./images/logo.svg</path>
+        </image>
+        <image name="consolegame" extra="true">
+            <path>./images/consolegame.svg</path>
+        </image>
     </view>
 
     <view name="basic, detailed">
