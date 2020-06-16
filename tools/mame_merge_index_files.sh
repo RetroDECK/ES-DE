@@ -25,12 +25,12 @@ if [ $# -ne 3 ]; then
 fi
 
 if [ ! -f $1 ]; then
-  echo "Can't find old ROM index file" $1 
+  echo "Can't find old ROM index file" $1
   exit
 fi
 
 if [ ! -f $2 ]; then
-  echo "Can't find new ROM index file" $1 
+  echo "Can't find new ROM index file" $1
   exit
 fi
 
@@ -41,8 +41,8 @@ TEMPFILE=tempfile_$(date +%H%M%S)
 
 HEADER=$(grep "<\!--" $MAME_NEW_FILE)
 
-grep -v "Latest updates from MAME driver file" $MAME_OLD_FILE > $TEMPFILE
-grep -v "Latest updates from MAME driver file" $MAME_NEW_FILE >> $TEMPFILE
+grep -v "Last updated with information from MAME driver file" $MAME_OLD_FILE > $TEMPFILE
+grep -v "Last updated with information from MAME driver file" $MAME_NEW_FILE >> $TEMPFILE
 echo $HEADER > $MAME_TARGET_FILE
 sort -u $TEMPFILE | sed '/^[[:space:]]*$/d' >> $MAME_TARGET_FILE
 rm $TEMPFILE

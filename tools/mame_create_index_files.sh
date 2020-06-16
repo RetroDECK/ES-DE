@@ -27,7 +27,7 @@ if [ $# -ne 1 ]; then
 fi
 
 if [ ! -f $1 ]; then
-  echo "Can't find MAME driver file" $1 
+  echo "Can't find MAME driver file" $1
   exit
 fi
 
@@ -36,22 +36,25 @@ MAMEBIOSFILE=mamebioses.xml
 MAMEDEVICEFILE=mamedevices.xml
 MAMENAMEFILE=mamenames.xml
 
-echo "<!-- Latest updates from MAME driver file" $1 "-->" > $MAMEBIOSFILE 
+echo "<!-- Last updated with information from MAME driver file" $1 "-->" > $MAMEBIOSFILE
 
-for bios in $(xmlstarlet sel -t -m "/mame/machine[@isbios=\"yes\"]" -v "@name" -n $MAME_XML_FILE); do
+for bios in $(xmlstarlet sel -t -m "/mame/machine[@isbios=\"yes\"]" -v "@name" \
+    -n $MAME_XML_FILE); do
   echo "<bios>"${bios}"</bios>" >> $MAMEBIOSFILE
 done
 
-echo "<!-- Latest updates from MAME driver file" $1 "-->" > $MAMEDEVICEFILE
+echo "<!-- Last updated with information from MAME driver file" $1 "-->" > $MAMEDEVICEFILE
 
-for device in $(xmlstarlet sel -t -m "/mame/machine[@isdevice=\"yes\"][rom]" -v "@name" -n $MAME_XML_FILE); do
+for device in $(xmlstarlet sel -t -m "/mame/machine[@isdevice=\"yes\"][rom]" \
+    -v "@name" -n $MAME_XML_FILE); do
   echo "<device>"${device}"</device>" >> $MAMEDEVICEFILE
 done
 
 echo "<!-- Generated from MAME driver file" $1 "-->" > $MAMENAMEFILE
 
-xmlstarlet sel -t -m "/mame/machine[not(@isbios=\"yes\")][not(@isdevice=\"yes\")][rom]" -v "@name" -o " " -v description -n $MAME_XML_FILE | \
+xmlstarlet sel -t -m "/mame/machine[not(@isbios=\"yes\")][not(@isdevice=\"yes\")][rom]" \
+    -v "@name" -o " " -v description -n $MAME_XML_FILE | \
 awk '{ print "<mamename>" $1 "</mamename>"; print $1=""; print "<realname>" $0 "</realname>"}' | \
-sed s/"realname> "/"realname>"/g | sed '/^[[:space:]]*$/d' | sed s/"<mamename"/"<game>\n\t<mamename"/g | \
-sed s/"<realname"/"\t<realname"/g | sed s/"<\/realname>"/"<\/realname>\n<\/game>"/g >> $MAMENAMEFILE
-
+sed s/"realname> "/"realname>"/g | sed '/^[[:space:]]*$/d' | \
+sed s/"<mamename"/"<game>\n\t<mamename"/g | sed s/"<realname"/"\t<realname"/g |
+sed s/"<\/realname>"/"<\/realname>\n<\/game>"/g >> $MAMENAMEFILE
