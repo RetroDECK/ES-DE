@@ -20,6 +20,7 @@ v1.0.0
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * License files included for all the libraries and resources that are bundled with the application
+* Updated the MAME ROM index files to include ROMs up to MAME version 0.221
 
 ### Bug fixes
 

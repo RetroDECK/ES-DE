@@ -113,16 +113,19 @@ originally based on: "recalbox-multi"
             <maxSize>0.01 0.01</maxSize>
             <origin>0 0</origin>
         </image>
+        <text name="md_lbl_playcount, md_playcount">
+                <pos>1 1</pos>
+        </text>
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
                     md_lbl_publisher, md_lbl_genre, md_lbl_players,
-                    md_lbl_lastplayed, md_lbl_playcount, md_lbl_favorite">
+                    md_lbl_lastplayed, md_lbl_favorite">
             <forceUppercase>1</forceUppercase>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
         </text>
         <text name="md_developer, md_publisher, md_genre,
-                    md_players, md_playcount, md_favorite">
+                    md_players, md_favorite">
             <forceUppercase>1</forceUppercase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
@@ -208,12 +211,6 @@ originally based on: "recalbox-multi"
         <datetime name="md_lastplayed">
             <pos>0.83 0.4955</pos>
         </datetime>
-        <text name="md_lbl_playcount">
-            <pos>0.815 0.5255</pos>
-        </text>
-        <text name="md_playcount">
-            <pos>0.83 0.5455</pos>
-        </text>
         <text name="md_lbl_favorite">
             <pos>0.815 0.5755</pos>
         </text>

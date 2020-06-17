@@ -9,8 +9,6 @@ As such, this fork will not provide full control over emulator settings or emula
 
 The software comes preconfigured for use with [RetroArch](https://www.retroarch.com), although this can certainly be changed as all emulator settings are fully configurable, even on a per-game basis.
 
-This fork was initially based on RetroPie EmulationStation v2.10.0rp-dev (master).
-
 
 General information
 ===================
