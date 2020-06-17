@@ -12,9 +12,9 @@
 #include "views/ViewController.h"
 #include "Log.h"
 #include "Settings.h"
+#include "Sound.h"
 #include "SystemData.h"
 #include "Window.h"
-#include "Sound.h"
 
 // Buffer values for scrolling velocity (left, stopped, right).
 const int logoBuffersLeft[] = { -5, -2, -1 };
@@ -163,12 +163,10 @@ bool SystemView::input(InputConfig* config, Input input)
 		case VERTICAL:
 		case VERTICAL_WHEEL:
 			if (config->isMappedLike("up", input)) {
-				NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("down", input)) {
-				NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(1);
 				return true;
 			}
@@ -177,12 +175,10 @@ bool SystemView::input(InputConfig* config, Input input)
 		case HORIZONTAL_WHEEL:
 		default:
 			if (config->isMappedLike("left", input)) {
-				NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(-1);
 				return true;
 			}
 			if (config->isMappedLike("right", input)) {
-				NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
 				listInput(1);
 				return true;
 			}
@@ -236,6 +232,8 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 {
 	// Update help style.
 	updateHelpPrompts();
+
+//	NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
 
 	float startPos = mCamOffset;
 

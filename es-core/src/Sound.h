@@ -60,6 +60,7 @@ class NavigationSounds
 public:
 	static NavigationSounds* getInstance();
 
+	void deinit();
 	void loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme);
 	void playThemeNavigationSound(NavigationSoundsID soundID);
 	bool isPlayingThemeNavigationSound(NavigationSoundsID soundID);

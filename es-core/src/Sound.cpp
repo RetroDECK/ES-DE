@@ -38,10 +38,18 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
 
 NavigationSounds* NavigationSounds::getInstance()
 {
-	if (sInstance == NULL)
+	if (sInstance == nullptr)
 		sInstance = new NavigationSounds();
 
 	return sInstance;
+}
+
+void NavigationSounds::deinit()
+{
+	if (sInstance)
+		delete sInstance;
+
+	sInstance = nullptr;
 }
 
 void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)

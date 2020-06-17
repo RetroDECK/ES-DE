@@ -12,6 +12,7 @@
 #include "components/TextComponent.h"
 #include "resources/Font.h"
 #include "GuiComponent.h"
+#include "Sound.h"
 #include <memory>
 
 class AnimatedImageComponent;
@@ -67,6 +68,8 @@ public:
 
 protected:
 	void onCursorChanged(const CursorState& state) override;
+	virtual void onScroll() {
+		NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND); }
 
 private:
 	void populate();

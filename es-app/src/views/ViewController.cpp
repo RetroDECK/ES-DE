@@ -548,6 +548,7 @@ void ViewController::reloadAll()
 	}
 
 	// Load navigation sounds.
+	NavigationSounds::getInstance()->deinit();
 	NavigationSounds::getInstance()->loadThemeNavigationSounds(
 			SystemData::sSystemVector.front()->getTheme());
 
