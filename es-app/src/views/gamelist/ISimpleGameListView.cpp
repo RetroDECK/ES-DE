@@ -153,7 +153,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 		else if (config->isMappedTo("y", input) &&
 				!UIModeController::getInstance()->isUIModeKid()) {
 			if (mRoot->getSystem()->isGameSystem()) {
-				NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
+				if (getCursor()->getType() == GAME)
+					NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
 				if (CollectionSystemManager::get()->toggleGameInCollection(getCursor()))
 					return true;
 			}
