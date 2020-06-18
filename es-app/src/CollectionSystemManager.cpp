@@ -39,7 +39,7 @@ std::string myCollectionsName = "collections";
 
 // Handles the getting, initialization, deinitialization,
 // saving and deletion of a CollectionSystemManager instance.
-CollectionSystemManager* CollectionSystemManager::sInstance = NULL;
+CollectionSystemManager* CollectionSystemManager::sInstance = nullptr;
 
 CollectionSystemManager::CollectionSystemManager(Window* window) : mWindow(window)
 {
@@ -82,7 +82,10 @@ CollectionSystemManager::CollectionSystemManager(Window* window) : mWindow(windo
 CollectionSystemManager::~CollectionSystemManager()
 {
 	assert(sInstance == this);
-	removeCollectionsFromDisplayedSystems();
+
+	// Don't attempt to remove any collections if no systems exist.
+	if (SystemData::sSystemVector.size() > 0)
+		removeCollectionsFromDisplayedSystems();
 
 	// Iterate the map.
 	for (std::map<std::string, CollectionSystemData>::const_iterator

@@ -479,9 +479,10 @@ void ViewController::preload()
 		(*it)->getIndex()->resetFilters();
 		getGameListView(*it);
 	}
-	// Load navigation sounds.
-	NavigationSounds::getInstance()->loadThemeNavigationSounds(
-			SystemData::sSystemVector.front()->getTheme());
+	// Load navigation sounds, but only if at least one system exists.
+	if (SystemData::sSystemVector.size() > 0)
+		NavigationSounds::getInstance()->loadThemeNavigationSounds(
+				SystemData::sSystemVector.front()->getTheme());
 }
 
 void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)

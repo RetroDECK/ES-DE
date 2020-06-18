@@ -303,7 +303,9 @@ bool SystemData::loadConfig()
 			sSystemVector.push_back(newSys);
 		}
 	}
-	CollectionSystemManager::get()->loadCollectionSystems();
+	// Don't load any collections if there are no systems available.
+	if (sSystemVector.size() > 0)
+		CollectionSystemManager::get()->loadCollectionSystems();
 
 	return true;
 }

@@ -41,6 +41,12 @@
 
 #include <FreeImage.h>
 
+enum eErrorCodes {
+	NO_ERRORS,
+	NO_SYSTEMS_FILE,
+	NO_ROMS
+};
+
 bool parseArgs(int argc, char* argv[])
 {
 	Utils::FileSystem::setExePath(argv[0]);
@@ -246,31 +252,33 @@ bool verifyHomeFolderExists()
 	return true;
 }
 
-// Returns true if everything is OK.
-bool loadSystemConfigFile(const char** errorString)
+// Returns NO_ERRORS if everything is OK.
+// Otherwise returns either NO_SYSTEMS_FILE or NO_ROMS.
+unsigned int loadSystemConfigFile(std::string& errorMsg)
 {
-	*errorString = NULL;
-
 	if (!SystemData::loadConfig()) {
 		LOG(LogError) << "Error while parsing systems configuration file!";
-		*errorString = "IT LOOKS LIKE YOUR SYSTEMS CONFIGURATION FILE HAS NOT BEEN SET UP "
-			"OR IS INVALID. YOU'LL NEED TO DO THIS BY HAND, UNFORTUNATELY.\n\n"
-			"VISIT EMULATIONSTATION.ORG FOR MORE INFORMATION.";
-		return false;
+		errorMsg = "COULDN'T FIND THE SYSTEMS CONFIGURATION FILE.\n"
+				"WILL ATTEMPT TO INSTALL A TEMPLATE ES_SYSTEMS.CFG FILE FROM "
+				"THE EMULATIONSTATION RESOURCES DIRECTORY.\n"
+				"PLEASE RESTART THE APPLICATION.";
+		return NO_SYSTEMS_FILE;
 	}
 
 	if (SystemData::sSystemVector.size() == 0)
 	{
 		LOG(LogError) << "No systems found! Does at least one system have a game present? (check "
-		"that extensions match!)\n(Also, make sure you've updated your es_systems.cfg for XML!)";
-		*errorString = "WE CAN'T FIND ANY SYSTEMS!\n"
-			"CHECK THAT YOUR PATHS ARE CORRECT IN THE SYSTEMS CONFIGURATION FILE, "
-			"AND YOUR GAME DIRECTORY HAS AT LEAST ONE GAME WITH THE CORRECT EXTENSION.\n\n"
-			"VISIT EMULATIONSTATION.ORG FOR MORE INFORMATION.";
-		return false;
+		"that extensions match!)\n";
+		errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS BUT NO GAME "
+				"ROM FILES WERE FOUND. PLEASE MAKE SURE THAT THE 'ROMDIRECTORY' "
+				"SETTING IN ES_SYSTEMS.CFG IS POINTING TO YOUR ROM DIRECTORY "
+				"AND THAT YOUR GAME ROMS ARE USING SUPPORTED FILE EXTENSIONS. "
+				"THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+		errorMsg += FileData::getROMDirectory();
+		return NO_ROMS;
 	}
 
-	return true;
+	return NO_ERRORS;
 }
 
 // Called on exit, assuming we get far enough to have the log initialized.
@@ -361,10 +369,11 @@ int main(int argc, char* argv[])
 		window.renderLoadingScreen(progressText);
 	}
 
-	const char* errorMsg = NULL;
-	if (!loadSystemConfigFile(&errorMsg)) {
+	std::string errorMsg;
+
+	if (loadSystemConfigFile(errorMsg) != NO_ERRORS) {
 		// Something went terribly wrong.
-		if (errorMsg == NULL)
+		if (errorMsg == "")
 		{
 			LOG(LogError) << "Unknown error occured while parsing system config file.";
 			Renderer::deinit();
@@ -372,18 +381,25 @@ int main(int argc, char* argv[])
 		}
 
 		HelpStyle helpStyle = HelpStyle();
-		helpStyle.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+
+		if (errorMsg == "")
+			helpStyle.applyTheme(ViewController::get()->
+					getState().getSystem()->getTheme(), "system");
 
 		// We can't handle es_systems.cfg file problems inside ES itself,
         // so display the error message and then quit.
 		window.pushGui(new GuiMsgBox(&window, helpStyle,
-			errorMsg,
+			errorMsg.c_str(),
 			"QUIT", [] {
 				SDL_Event* quit = new SDL_Event();
 				quit->type = SDL_QUIT;
 				SDL_PushEvent(quit);
 			}));
 	}
+
+	std::vector<HelpPrompt> prompts;
+	prompts.push_back(HelpPrompt("a", "Quit"));
+	window.setHelpPrompts(prompts, HelpStyle());
 
 	// Dont generate joystick events while we're loading.
 	// (Hopefully fixes "automatically started emulator" bug.)
@@ -397,7 +413,7 @@ int main(int argc, char* argv[])
 		window.renderLoadingScreen("Done.");
 
 	// Choose which GUI to open depending on if an input configuration already exists.
-	if (errorMsg == NULL) {
+	if (errorMsg == "") {
 		if (Utils::FileSystem::exists(InputManager::getConfigPath()) &&
 				InputManager::getInstance()->getNumConfiguredDevices() > 0) {
 			ViewController::get()->goToStart();
