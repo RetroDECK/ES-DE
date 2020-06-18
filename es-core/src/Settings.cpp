@@ -209,6 +209,7 @@ void Settings::setDefaults()
 
 	mStringMap["DefaultSortOrder"] = "filename, ascending";
 	mStringMap["MediaDirectory"] = "";
+	mStringMap["ROMDirectory"] = "";
 	mIntMap["ScraperResizeWidth"] = 600;
 	mIntMap["ScraperResizeHeight"] = 0;
 

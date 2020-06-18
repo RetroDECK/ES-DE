@@ -98,6 +98,29 @@ const bool FileData::getFavorite()
 		return false;
 }
 
+const std::string FileData::getROMDirectory()
+{
+	std::string romDirSetting = Settings::getInstance()->getString("ROMDirectory");
+	std::string romDirPath = "";
+
+	if (romDirSetting == "") {
+		romDirPath = Utils::FileSystem::getHomePath() + "/ROMs/";
+	}
+	else {
+		romDirPath = romDirSetting;
+
+		// Expand home symbol if the path starts with ~
+		if (romDirPath[0] == '~') {
+			romDirPath.erase(0, 1);
+			romDirPath.insert(0, Utils::FileSystem::getHomePath());
+		}
+		if (romDirPath.back() !=  '/')
+			romDirPath = romDirPath + "/";
+	}
+
+	return romDirPath;
+}
+
 const std::string FileData::getMediaDirectory()
 {
 	std::string mediaDirSetting = Settings::getInstance()->getString("MediaDirectory");

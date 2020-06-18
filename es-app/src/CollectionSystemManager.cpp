@@ -115,10 +115,12 @@ void CollectionSystemManager::deinit()
 
 void CollectionSystemManager::saveCustomCollection(SystemData* sys)
 {
+	const std::string rompath  = FileData::getROMDirectory();
 	std::string name = sys->getName();
 	std::unordered_map<std::string, FileData*>
 			games = sys->getRootFolder()->getChildrenByFilename();
 	bool found = mCustomCollectionSystemsData.find(name) != mCustomCollectionSystemsData.cend();
+
 	if (found) {
 		CollectionSystemData sysData = mCustomCollectionSystemsData.at(name);
 		if (sysData.needsSave) {
@@ -127,6 +129,11 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
 			for (std::unordered_map<std::string, FileData*>::const_iterator
 					iter = games.cbegin(); iter != games.cend(); ++iter) {
 				std::string path =  iter->first;
+				// If the ROM path of the game begins with the path from the setting
+				// ROMDirectory (or the default ROM directory), then replace it with %ROMPATH%.
+				if (path.find(rompath) == 0)
+					path.replace(0, rompath.size(), "%ROMPATH%/");
+
 				configFile << path << std::endl;
 			}
 			configFile.close();
@@ -850,8 +857,20 @@ void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sys
 	std::unordered_map<std::string,FileData*>
 			allFilesMap = getAllGamesCollection()->getRootFolder()->getChildrenByFilename();
 
+	// Get the ROM directory, either as configured in es_settings.cfg, or if no value
+	// is set there, then use the default hardcoded path.
+	const std::string rompath  = FileData::getROMDirectory();
+
 	// Iterate list of files in the config file.
 	for (std::string gameKey; getline(input, gameKey); ) {
+		// If there is a %ROMPATH% variable set for the game, expand it. By doing this
+		// it's possible to use either absolute ROM paths in the collection files or using
+		// the path variable. The absolute ROM paths are only used for backward compatibility
+		// with old custom collections. All custom collections saved by EmulationStation-DE
+		// will use the %ROMPATH% variable instead.
+		gameKey = Utils::String::replace(gameKey, "%ROMPATH%", rompath);
+		gameKey = Utils::String::replace(gameKey, "//", "/");
+
 		std::unordered_map<std::string,FileData*>::const_iterator it = allFilesMap.find(gameKey);
 		if (it != allFilesMap.cend()) {
 			CollectionFileData* newGame = new CollectionFileData(it->second, newSys);

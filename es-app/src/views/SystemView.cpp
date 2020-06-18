@@ -233,8 +233,6 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 	// Update help style.
 	updateHelpPrompts();
 
-//	NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
-
 	float startPos = mCamOffset;
 
 	float posMax = (float)mEntries.size();

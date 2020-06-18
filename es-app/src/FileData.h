@@ -59,6 +59,7 @@ public:
 	inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
 	const std::vector<std::string>& getFirstLetterIndex() const
 			{ return mFirstLetterIndex; };
+	static const std::string getROMDirectory();
 	static const std::string getMediaDirectory();
 	virtual const std::string getMediafilePath(
 			std::string subdirectory, std::string mediatype) const;

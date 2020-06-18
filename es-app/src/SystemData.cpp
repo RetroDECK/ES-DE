@@ -10,6 +10,7 @@
 #include "SystemData.h"
 
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "CollectionSystemManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
@@ -195,6 +196,7 @@ bool SystemData::loadConfig()
 	deleteSystems();
 
 	std::string path = getConfigPath(false);
+	const std::string rompath  = FileData::getROMDirectory();
 
 	LOG(LogInfo) << "Loading system config file " << path << "...";
 
@@ -228,6 +230,13 @@ bool SystemData::loadConfig()
 		name = system.child("name").text().get();
 		fullname = system.child("fullname").text().get();
 		path = system.child("path").text().get();
+
+		// If there is a %ROMPATH% variable set for the system, expand it. By doing this
+		// it's possible to use either absolute ROM paths in es_systems.cfg or to utilize
+		// the ROM path configured as ROMDirectory in es_settings.cfg. If it's set to ""
+		// in this configuration file, the default hardcoded path $HOME/ROMs/ will be used.
+		path = Utils::String::replace(path, "%ROMPATH%", rompath);
+		path = Utils::String::replace(path, "//", "/");
 
 		// Convert extensions list from a string into a vector of strings.
 		std::vector<std::string> extensions = readList(system.child("extension").text().get());
