@@ -163,7 +163,7 @@ GuiMetaDataEd::GuiMetaDataEd(
 						defaultLaunchString, ed, updateVal, multiLine] {
 							mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
 							title, staticTextString, defaultLaunchString, ed->getValue(),
-							updateVal, multiLine, "APPLY"));
+							updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
 				});
 				break;
 			}
@@ -190,7 +190,7 @@ GuiMetaDataEd::GuiMetaDataEd(
 				auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); };
 				row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
 					mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
-							ed->getValue(), updateVal, multiLine, "APPLY"));
+							ed->getValue(), updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
 				});
 				break;
 			}
