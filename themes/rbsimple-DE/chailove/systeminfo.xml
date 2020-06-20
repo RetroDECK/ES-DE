@@ -3,7 +3,7 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Löve game engine</text>
+            <text>ChaiLove game engine</text>
         </text>
     </view>
 </theme>
