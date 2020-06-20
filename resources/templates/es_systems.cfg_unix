@@ -164,6 +164,15 @@
     <theme>c64</theme>
   </system>
   <system>
+    <name>cavestory</name>
+    <fullname>Cave Story (NXEngine)</fullname>
+    <path>%ROMPATH%/cavestory</path>
+    <extension>.exe .EXE .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/nxengine_libretro.so %ROM%</command>
+    <platform>cavestory</platform>
+    <theme>cavestory</theme>
+  </system>
+  <system>
     <name>channelf</name>
     <fullname>Fairchild Channel F</fullname>
     <path>%ROMPATH%/channelf</path>
