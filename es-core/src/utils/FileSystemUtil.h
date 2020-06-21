@@ -18,6 +18,7 @@ namespace Utils
 		std::string getCWDPath         ();
 		void        setExePath         (const std::string& _path);
 		std::string getExePath         ();
+		std::string getInstallPrefixPath ();
 		std::string getPreferredPath   (const std::string& _path);
 		std::string getGenericPath     (const std::string& _path);
 		std::string getEscapedPath     (const std::string& _path);

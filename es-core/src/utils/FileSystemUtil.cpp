@@ -21,6 +21,23 @@
 #include <unistd.h>
 #endif // _WIN32
 
+// Try to ascertain the install prefix as defined when CMake was run.
+// The installPrefix directory is the value set for CMAKE_INSTALL_DIRECTORY during build.
+// The datarootdir directory is the value set for CMAKE_INSTALL_DATAROOTDIR during build.
+// If not defined, the default prefix path '/usr/local' and the default datarootdir
+// directory 'share' will be used, i.e. combining to '/usr/local/share'.
+#ifdef ES_INSTALL_PREFIX
+std::string installPrefix = ES_INSTALL_PREFIX;
+#else
+std::string installPrefix = "/usr/local";
+#endif
+
+#ifdef ES_DATAROOTDIR
+std::string dataRootDir = ES_DATAROOTDIR;
+#else
+std::string dataRootDir = "share";
+#endif
+
 namespace Utils
 {
 	namespace FileSystem
@@ -220,6 +237,11 @@ namespace Utils
 			return exePath;
 
 		} // getExePath
+
+		std::string getInstallPrefixPath()
+		{
+			return installPrefix + "/" + dataRootDir;
+		}
 
 		std::string getPreferredPath(const std::string& _path)
 		{

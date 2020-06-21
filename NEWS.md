@@ -18,6 +18,8 @@ v1.0.0
 * GUI-configurable option to sort favorite games on the top of the game lists (favorites marked with stars)
 * Added new component GuiComplexTextEditPopup to handle changes to configuration file entries and similar
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
+* Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
+* Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * License files included for all the libraries and resources that are bundled with the application
