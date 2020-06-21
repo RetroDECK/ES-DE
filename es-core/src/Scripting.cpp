@@ -1,6 +1,6 @@
 #include "Scripting.h"
 #include "Log.h"
-#include "platform.h"
+#include "Platform.h"
 #include "utils/FileSystemUtil.h"
 
 namespace Scripting

@@ -1,4 +1,4 @@
-#include "platform.h"
+#include "Platform.h"
 
 #include <SDL_events.h>
 #ifdef WIN32

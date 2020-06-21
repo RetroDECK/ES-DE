@@ -25,7 +25,7 @@
 #include "InputManager.h"
 #include "Log.h"
 #include "MameNames.h"
-#include "platform.h"
+#include "Platform.h"
 #include "PowerSaver.h"
 #include "Settings.h"
 #include "SystemData.h"

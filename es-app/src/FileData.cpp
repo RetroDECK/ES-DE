@@ -17,7 +17,7 @@
 #include "FileSorts.h"
 #include "Log.h"
 #include "MameNames.h"
-#include "platform.h"
+#include "Platform.h"
 #include "Scripting.h"
 #include "SystemData.h"
 #include "VolumeControl.h"

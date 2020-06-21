@@ -16,7 +16,7 @@
 #include "FileSorts.h"
 #include "Gamelist.h"
 #include "Log.h"
-#include "platform.h"
+#include "Platform.h"
 #include "Settings.h"
 #include "ThemeData.h"
 #include "views/UIModeController.h"

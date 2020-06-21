@@ -5,7 +5,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "Log.h"
-#include "platform.h"
+#include "Platform.h"
 #include "Settings.h"
 #include <pugixml/src/pugixml.hpp>
 #include <algorithm>

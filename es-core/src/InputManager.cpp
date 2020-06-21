@@ -3,7 +3,7 @@
 #include "utils/FileSystemUtil.h"
 #include "CECInput.h"
 #include "Log.h"
-#include "platform.h"
+#include "Platform.h"
 #include "Scripting.h"
 #include "Window.h"
 #include <pugixml/src/pugixml.hpp>
