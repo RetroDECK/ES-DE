@@ -27,7 +27,7 @@ namespace Renderer
 	{
 		size_t                     width   = 0;
 		size_t                     height  = 0;
-		ResourceData               resData = ResourceManager::getInstance()->getFileData(":/window_icon_256.png");
+		ResourceData               resData = ResourceManager::getInstance()->getFileData(":/graphics/window_icon_256.png");
 		std::vector<unsigned char> rawData = ImageIO::loadFromMemoryRGBA32(resData.ptr.get(), resData.length, width, height);
 
 		if(!rawData.empty())

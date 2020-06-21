@@ -23,7 +23,7 @@ GuiTextEditPopup::GuiTextEditPopup(
         const char* saveConfirmationText)
         : GuiComponent(window),
         mHelpStyle(helpstyle),
-        mBackground(window, ":/frame.png"),
+        mBackground(window, ":/graphics/frame.png"),
         mGrid(window, Vector2i(1, 3)),
         mMultiLine(multiLine),
         mInitValue(initValue),

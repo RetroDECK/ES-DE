@@ -89,7 +89,7 @@ public:
 		mTitleOverlayOpacity = 0x00;
 		mTitleOverlayColor = 0xFFFFFF00;
 		mGradient.setResize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
-		mGradient.setImage(":/scroll_gradient.png");
+		mGradient.setImage(":/graphics/scroll_gradient.png");
 		mTitleOverlayFont = Font::get(FONT_SIZE_LARGE);
 	}
 

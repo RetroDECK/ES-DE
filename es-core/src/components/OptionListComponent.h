@@ -9,8 +9,8 @@
 #ifndef ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 #define ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 
-#define CHECKED_PATH ":/checkbox_checked.svg"
-#define UNCHECKED_PATH ":/checkbox_unchecked.svg"
+#define CHECKED_PATH ":/graphics/checkbox_checked.svg"
+#define UNCHECKED_PATH ":/graphics/checkbox_unchecked.svg"
 
 #include "GuiComponent.h"
 #include "Log.h"
@@ -51,15 +51,15 @@ public:
 		mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
 
 		if(mMultiSelect) {
-			mRightArrow.setImage(":/arrow.svg");
+			mRightArrow.setImage(":/graphics/arrow.svg");
 			addChild(&mRightArrow);
 		}
 		else {
-			mLeftArrow.setImage(":/option_arrow.svg");
+			mLeftArrow.setImage(":/graphics/option_arrow.svg");
 			mLeftArrow.setFlipX(true);
 			addChild(&mLeftArrow);
 
-			mRightArrow.setImage(":/option_arrow.svg");
+			mRightArrow.setImage(":/graphics/option_arrow.svg");
 			addChild(&mRightArrow);
 		}
 

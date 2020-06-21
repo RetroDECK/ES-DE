@@ -96,7 +96,7 @@ bool Window::init()
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
     }
 
-    mBackgroundOverlay->setImage(":/scroll_gradient.png");
+    mBackgroundOverlay->setImage(":/graphics/scroll_gradient.png");
     mBackgroundOverlay->setResize((float)Renderer::getScreenWidth(),
             (float)Renderer::getScreenHeight());
 
@@ -309,7 +309,7 @@ void Window::renderLoadingScreen(std::string text)
 
     ImageComponent splash(this, true);
     splash.setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);
-    splash.setImage(":/splash.svg");
+    splash.setImage(":/graphics/splash.svg");
     splash.setPosition((Renderer::getScreenWidth() - splash.getSize().x()) / 2,
             (Renderer::getScreenHeight() - splash.getSize().y()) / 2 * 0.6f);
     splash.render(trans);

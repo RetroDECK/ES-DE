@@ -6,15 +6,15 @@
 
 // animation definition
 AnimationFrame BUSY_ANIMATION_FRAMES[] = {
-	{":/busy_0.svg", 300},
-	{":/busy_1.svg", 300},
-	{":/busy_2.svg", 300},
-	{":/busy_3.svg", 300},
+	{":/graphics/busy_0.svg", 300},
+	{":/graphics/busy_1.svg", 300},
+	{":/graphics/busy_2.svg", 300},
+	{":/graphics/busy_3.svg", 300},
 };
 const AnimationDef BUSY_ANIMATION_DEF = { BUSY_ANIMATION_FRAMES, 4, true };
 
 BusyComponent::BusyComponent(Window* window) : GuiComponent(window),
-	mBackground(window, ":/frame.png"), mGrid(window, Vector2i(5, 3))
+	mBackground(window, ":/graphics/frame.png"), mGrid(window, Vector2i(5, 3))
 {
 	mAnimation = std::make_shared<AnimatedImageComponent>(mWindow);
 	mAnimation->load(&BUSY_ANIMATION_DEF);

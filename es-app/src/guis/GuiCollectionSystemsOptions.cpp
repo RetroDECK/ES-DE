@@ -57,7 +57,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
 	ComponentListRow row;
 	row.addElement(std::make_shared<TextComponent>(mWindow, "CREATE NEW CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
 	auto bracket = std::make_shared<ImageComponent>(mWindow);
-	bracket->setImage(":/arrow.svg");
+	bracket->setImage(":/graphics/arrow.svg");
 	bracket->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
 	row.addElement(bracket, false);
 	auto createCustomCollection = [this](const std::string& newVal) {

@@ -44,7 +44,7 @@ GuiInfoPopup::GuiInfoPopup(Window* window, std::string message, int duration) :
 
 	setPosition(posX, posY, 0);
 
-	mFrame->setImagePath(":/frame.png");
+	mFrame->setImagePath(":/graphics/frame.png");
 	mFrame->fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
 	addChild(mFrame);
 

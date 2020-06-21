@@ -74,7 +74,7 @@ void GuiScreensaverOptions::addEditableTextComponent(ComponentListRow row, const
 	row.addElement(spacer, false);
 
 	auto bracket = std::make_shared<ImageComponent>(mWindow);
-	bracket->setImage(":/arrow.svg");
+	bracket->setImage(":/graphics/arrow.svg");
 	bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
 	row.addElement(bracket, false);
 

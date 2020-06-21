@@ -14,8 +14,8 @@
 RatingComponent::RatingComponent(Window* window) : GuiComponent(window),
         mColorShift(0xFFFFFFFF), mColorShiftEnd(0xFFFFFFFF), mUnfilledColor(0xFFFFFFFF)
 {
-    mFilledTexture = TextureResource::get(":/star_filled.svg", true);
-    mUnfilledTexture = TextureResource::get(":/star_unfilled.svg", true);
+    mFilledTexture = TextureResource::get(":/graphics/star_filled.svg", true);
+    mUnfilledTexture = TextureResource::get(":/graphics/star_unfilled.svg", true);
     mValue = 0.5f;
     mSize = Vector2f(64 * NUM_RATING_STARS, 64);
     updateVertices();

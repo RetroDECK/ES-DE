@@ -18,7 +18,7 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
         const std::string& name3, const std::function<void()>& func3)
         : GuiComponent(window),
         mHelpStyle(helpstyle),
-        mBackground(window, ":/frame.png"),
+        mBackground(window, ":/graphics/frame.png"),
         mGrid(window, Vector2i(1, 2))
 {
     float width = Renderer::getScreenWidth() * 0.6f;  // Max width.

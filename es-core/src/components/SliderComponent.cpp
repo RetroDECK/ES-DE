@@ -14,7 +14,7 @@ SliderComponent::SliderComponent(Window* window, float min, float max, float inc
 	mValue = (max + min) / 2;
 
 	mKnob.setOrigin(0.5f, 0.5f);
-	mKnob.setImage(":/slider_knob.svg");
+	mKnob.setImage(":/graphics/slider_knob.svg");
 
 	setSize(Renderer::getScreenWidth() * 0.15f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
 }

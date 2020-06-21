@@ -40,7 +40,7 @@ GuiMetaDataEd::GuiMetaDataEd(
         : GuiComponent(window),
         mScraperParams(scraperParams),
 
-        mBackground(window, ":/frame.png"),
+        mBackground(window, ":/graphics/frame.png"),
         mGrid(window, Vector2i(1, 3)),
 
         mMetaDataDecl(mdd),
@@ -146,7 +146,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
-                bracket->setImage(":/arrow.svg");
+                bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
                 row.addElement(bracket, false);
 
@@ -179,7 +179,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
-                bracket->setImage(":/arrow.svg");
+                bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
                 row.addElement(bracket, false);
 

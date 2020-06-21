@@ -253,19 +253,19 @@ std::vector<std::string> getFallbackFontPaths()
 
     // Vera sans Unicode:
     fontPaths.push_back(ResourceManager::getInstance()->
-            getResourcePath(":/DejaVuSans.ttf"));
+            getResourcePath(":/fonts/DejaVuSans.ttf"));
     // Freefont monospaced:
     fontPaths.push_back(ResourceManager::getInstance()->
-            getResourcePath(":/FreeMono.ttf"));
+            getResourcePath(":/fonts/FreeMono.ttf"));
     // Various languages, such as Japanese and Chinese:
     fontPaths.push_back(ResourceManager::getInstance()->
-            getResourcePath(":/DroidSansFallbackFull.ttf"));
+            getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
     // Korean:
     fontPaths.push_back(ResourceManager::getInstance()->
-            getResourcePath(":/NanumMyeongjo.ttf"));
+            getResourcePath(":/fonts/NanumMyeongjo.ttf"));
     // Font Awesome icon glyphs, used for star-flagging favorites in the gamelists:
     fontPaths.push_back(ResourceManager::getInstance()->
-            getResourcePath(":/fontawesome-webfont.ttf"));
+            getResourcePath(":/fonts/fontawesome-webfont.ttf"));
 
     fontPaths.shrink_to_fit();
     return fontPaths;

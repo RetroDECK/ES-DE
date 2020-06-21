@@ -4,7 +4,7 @@
 #include "utils/StringUtil.h"
 
 ButtonComponent::ButtonComponent(Window* window, const std::string& text, const std::string& helpText, const std::function<void()>& func) : GuiComponent(window),
-	mBox(window, ":/button.png"),
+	mBox(window, ":/graphics/button.png"),
 	mFont(Font::get(FONT_SIZE_MEDIUM)),
 	mFocused(false),
 	mEnabled(true),
@@ -72,7 +72,7 @@ void ButtonComponent::updateImage()
 {
 	if(!mEnabled || !mPressedFunc)
 	{
-		mBox.setImagePath(":/button_filled.png");
+		mBox.setImagePath(":/graphics/button_filled.png");
 		mBox.setCenterColor(0x770000FF);
 		mBox.setEdgeColor(0x770000FF);
 		return;
@@ -80,7 +80,7 @@ void ButtonComponent::updateImage()
 
 	mBox.setCenterColor(0xFFFFFFFF);
 	mBox.setEdgeColor(0xFFFFFFFF);
-	mBox.setImagePath(mFocused ? ":/button_filled.png" : ":/button.png");
+	mBox.setImagePath(mFocused ? ":/graphics/button_filled.png" : ":/graphics/button.png");
 }
 
 void ButtonComponent::render(const Transform4x4f& parentTrans)

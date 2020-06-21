@@ -10,6 +10,18 @@
 #include "utils/FileSystemUtil.h"
 #include <fstream>
 
+#ifdef ES_INSTALL_PREFIX
+std::string installPrefix = ES_INSTALL_PREFIX;
+#else
+std::string installPrefix = "/usr/local";
+#endif
+
+#ifdef ES_DATAROOTDIR
+std::string dataRootDir = ES_DATAROOTDIR;
+#else
+std::string dataRootDir = "share";
+#endif
+
 auto array_deleter = [](unsigned char* p) { delete[] p; };
 auto nop_deleter = [](unsigned char* /*p*/) { };
 
@@ -33,18 +45,17 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
     if ((path[0] == ':') && (path[1] == '/')) {
         std::string test;
 
-        // Check in homepath.
+        // Check under the home directory.
         test = Utils::FileSystem::getHomePath() + "/.emulationstation/resources/" + &path[2];
         if (Utils::FileSystem::exists(test))
             return test;
 
-        // Check in exepath.
-        test = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
-        if (Utils::FileSystem::exists(test))
-            return test;
-
-        // Check in cwd.
-        test = Utils::FileSystem::getCWDPath() + "/resources/" + &path[2];
+        // Check under the data installation directory.
+        // The base directory is the value set for CMAKE_INSTALL_DIRECTORY during build.
+        // The datarootdir directory is the value set for CMAKE_INSTALL_DATAROOTDIR during build.
+        // If not defined, the default prefix path '/usr/local' and the default datarootdir
+        // directory 'share' will be used, i.e. '/usr/local/share'.
+        test = installPrefix + "/" + dataRootDir + "/emulationstation/resources/" + &path[2];
         if (Utils::FileSystem::exists(test))
             return test;
     }

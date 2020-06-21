@@ -18,7 +18,7 @@
 TextEditComponent::TextEditComponent(
         Window* window)
         : GuiComponent(window),
-        mBox(window, ":/textinput_ninepatch.png"),
+        mBox(window, ":/graphics/textinput_ninepatch.png"),
         mFocused(false),
         mScrollOffset(0.0f, 0.0f),
         mCursor(0), mEditing(false),
@@ -33,13 +33,13 @@ TextEditComponent::TextEditComponent(
 void TextEditComponent::onFocusGained()
 {
     mFocused = true;
-    mBox.setImagePath(":/textinput_ninepatch_active.png");
+    mBox.setImagePath(":/graphics/textinput_ninepatch_active.png");
 }
 
 void TextEditComponent::onFocusLost()
 {
     mFocused = false;
-    mBox.setImagePath(":/textinput_ninepatch.png");
+    mBox.setImagePath(":/graphics/textinput_ninepatch.png");
 }
 
 void TextEditComponent::onSizeChanged()
