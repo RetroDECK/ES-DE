@@ -1,7 +1,7 @@
 //
-//	SwitchComponent.h
+//  SwitchComponent.h
 //
-//	Basic switch used in the menus.
+//  Basic switch used in the menus.
 //
 
 #pragma once
@@ -15,24 +15,24 @@
 class SwitchComponent : public GuiComponent
 {
 public:
-	SwitchComponent(Window* window, bool state = false);
+    SwitchComponent(Window* window, bool state = false);
 
-	bool input(InputConfig* config, Input input) override;
-	void render(const Transform4x4f& parentTrans) override;
-	void onSizeChanged() override;
+    bool input(InputConfig* config, Input input) override;
+    void render(const Transform4x4f& parentTrans) override;
+    void onSizeChanged() override;
 
-	bool getState() const;
-	void setState(bool state);
-	std::string getValue() const;
-	void setValue(const std::string& statestring) override;
+    bool getState() const;
+    void setState(bool state);
+    std::string getValue() const;
+    void setValue(const std::string& statestring) override;
 
-	virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-	void onStateChanged();
+    void onStateChanged();
 
-	ImageComponent mImage;
-	bool mState;
+    ImageComponent mImage;
+    bool mState;
 };
 
 #endif // ES_CORE_COMPONENTS_SWITCH_COMPONENT_H

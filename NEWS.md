@@ -16,6 +16,7 @@ v1.0.0
 * Per-game launchstring override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
 * GUI-configurable option to sort favorite games on the top of the game lists (favorites marked with stars)
+* Added new component GuiComplexTextEditPopup to handle changes to configuration file entries and similar
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer

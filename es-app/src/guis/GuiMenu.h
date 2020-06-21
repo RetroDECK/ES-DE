@@ -1,8 +1,8 @@
 //
-//	GuiMenu.h
+//  GuiMenu.h
 //
-//	Main menu.
-//	Some submenus are covered in separate source files.
+//  Main menu.
+//  Some submenus are covered in separate source files.
 //
 
 #pragma once
@@ -15,29 +15,29 @@
 class GuiMenu : public GuiComponent
 {
 public:
-	GuiMenu(Window* window);
+    GuiMenu(Window* window);
 
-	bool input(InputConfig* config, Input input) override;
-	void onSizeChanged() override;
-	std::vector<HelpPrompt> getHelpPrompts() override;
-	HelpStyle getHelpStyle() override;
+    bool input(InputConfig* config, Input input) override;
+    void onSizeChanged() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
+    HelpStyle getHelpStyle() override;
 
 private:
-	void close(bool closeAllWindows);
-	void addEntry(const char* name, unsigned int color,
-			bool add_arrow, const std::function<void()>& func);
-	void addVersionInfo();
-	void openCollectionSystemSettings();
-	void openConfigInput();
-	void openOtherSettings();
-	void openQuitMenu();
-	void openScraperSettings();
-	void openScreensaverOptions();
-	void openSoundSettings();
-	void openUISettings();
+    void close(bool closeAllWindows);
+    void addEntry(const char* name, unsigned int color,
+            bool add_arrow, const std::function<void()>& func);
+    void addVersionInfo();
+    void openCollectionSystemSettings();
+    void openConfigInput();
+    void openOtherSettings();
+    void openQuitMenu();
+    void openScraperSettings();
+    void openScreensaverOptions();
+    void openSoundSettings();
+    void openUISettings();
 
-	MenuComponent mMenu;
-	TextComponent mVersion;
+    MenuComponent mMenu;
+    TextComponent mVersion;
 };
 
 #endif // ES_APP_GUIS_GUI_MENU_H

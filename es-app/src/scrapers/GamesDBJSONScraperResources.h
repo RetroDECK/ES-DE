@@ -1,13 +1,13 @@
 //
-//	GamesDBJSONScraperResources.h
+//  GamesDBJSONScraperResources.h
 //
-//	Functions specifically for scraping from thegamesdb.net
-//	Called from GamesDBJSONScraper.
+//  Functions specifically for scraping from thegamesdb.net
+//  Called from GamesDBJSONScraper.
 //
-//	Downloads these resource files to ~/.emulationstation/scrapers:
-//	gamesdb_developers.json
-//	gamesdb_genres.json
-//	gamesdb_publishers.json
+//  Downloads these resource files to ~/.emulationstation/scrapers:
+//  gamesdb_developers.json
+//  gamesdb_genres.json
+//  gamesdb_publishers.json
 //
 
 #pragma once
@@ -22,34 +22,34 @@
 #include "HttpReq.h"
 
 struct TheGamesDBJSONRequestResources {
-	TheGamesDBJSONRequestResources() = default;
+    TheGamesDBJSONRequestResources() = default;
 
-	void prepare();
-	void ensureResources();
-	std::string getApiKey() const;
+    void prepare();
+    void ensureResources();
+    std::string getApiKey() const;
 
-	std::unordered_map<int, std::string> gamesdb_new_developers_map;
-	std::unordered_map<int, std::string> gamesdb_new_publishers_map;
-	std::unordered_map<int, std::string> gamesdb_new_genres_map;
+    std::unordered_map<int, std::string> gamesdb_new_developers_map;
+    std::unordered_map<int, std::string> gamesdb_new_publishers_map;
+    std::unordered_map<int, std::string> gamesdb_new_genres_map;
 
   private:
-	bool checkLoaded();
+    bool checkLoaded();
 
-	bool saveResource(
-			HttpReq* req,
-			std::unordered_map<int, std::string>& resource,
-			const std::string& resource_name,
-			const std::string& file_name);
-			std::unique_ptr<HttpReq> fetchResource(const std::string& endpoint);
+    bool saveResource(
+            HttpReq* req,
+            std::unordered_map<int, std::string>& resource,
+            const std::string& resource_name,
+            const std::string& file_name);
+            std::unique_ptr<HttpReq> fetchResource(const std::string& endpoint);
 
-	int loadResource(
-		std::unordered_map<int, std::string>& resource,
-		const std::string& resource_name,
-		const std::string& file_name);
+    int loadResource(
+        std::unordered_map<int, std::string>& resource,
+        const std::string& resource_name,
+        const std::string& file_name);
 
-	std::unique_ptr<HttpReq> gamesdb_developers_resource_request;
-	std::unique_ptr<HttpReq> gamesdb_publishers_resource_request;
-	std::unique_ptr<HttpReq> gamesdb_genres_resource_request;
+    std::unique_ptr<HttpReq> gamesdb_developers_resource_request;
+    std::unique_ptr<HttpReq> gamesdb_publishers_resource_request;
+    std::unique_ptr<HttpReq> gamesdb_genres_resource_request;
 };
 
 std::string getScrapersResouceDir();

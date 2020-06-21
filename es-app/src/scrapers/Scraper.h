@@ -1,9 +1,9 @@
 //
-//	Scraper.h
+//  Scraper.h
 //
-//	Main scraper logic.
-//	Called from GuiScraperSearch.
-//	Calls either GamesDBJSONScraper or ScreenScraper.
+//  Main scraper logic.
+//  Called from GuiScraperSearch.
+//  Calls either GamesDBJSONScraper or ScreenScraper.
 //
 
 #pragma once
@@ -25,45 +25,45 @@ class FileData;
 class SystemData;
 
 enum eDownloadStatus {
-	NOT_STARTED,
-	IN_PROGRESS,
-	COMPLETED
+    NOT_STARTED,
+    IN_PROGRESS,
+    COMPLETED
 };
 
 struct ScraperSearchParams {
-	SystemData* system;
-	FileData* game;
+    SystemData* system;
+    FileData* game;
 
-	std::string nameOverride;
+    std::string nameOverride;
 };
 
 struct ScraperSearchResult {
-	ScraperSearchResult() : mdl(GAME_METADATA) {};
+    ScraperSearchResult() : mdl(GAME_METADATA) {};
 
-	MetaDataList mdl;
-	std::string gameID;
+    MetaDataList mdl;
+    std::string gameID;
 
-	// How many more objects the scraper service allows to be downloaded
-	// within a given time period.
-	unsigned int scraperRequestAllowance;
+    // How many more objects the scraper service allows to be downloaded
+    // within a given time period.
+    unsigned int scraperRequestAllowance;
 
-	enum eDownloadStatus mediaURLFetch = NOT_STARTED;
-	enum eDownloadStatus thumbnailDownloadStatus = NOT_STARTED;
-	enum eDownloadStatus mediaFilesDownloadStatus = NOT_STARTED;
+    enum eDownloadStatus mediaURLFetch = NOT_STARTED;
+    enum eDownloadStatus thumbnailDownloadStatus = NOT_STARTED;
+    enum eDownloadStatus mediaFilesDownloadStatus = NOT_STARTED;
 
-	std::string ThumbnailImageData; // Thumbnail cache, will containe entire image.
-	std::string ThumbnailImageUrl;
+    std::string ThumbnailImageData; // Thumbnail cache, will containe entire image.
+    std::string ThumbnailImageUrl;
 
-	std::string box3dUrl;
-	std::string coverUrl;
-	std::string marqueeUrl;
-	std::string screenshotUrl;
+    std::string box3dUrl;
+    std::string coverUrl;
+    std::string marqueeUrl;
+    std::string screenshotUrl;
 
-	// Needed to pre-set the image type.
-	std::string box3dFormat;
-	std::string coverFormat;
-	std::string marqueeFormat;
-	std::string screenshotFormat;
+    // Needed to pre-set the image type.
+    std::string box3dFormat;
+    std::string coverFormat;
+    std::string marqueeFormat;
+    std::string screenshotFormat;
 };
 
 // So let me explain why I've abstracted this so heavily.
@@ -98,49 +98,49 @@ struct ScraperSearchResult {
 class ScraperRequest : public AsyncHandle
 {
 public:
-	ScraperRequest(std::vector<ScraperSearchResult>& resultsWrite);
+    ScraperRequest(std::vector<ScraperSearchResult>& resultsWrite);
 
-	// Returns "true" once we're done.
-	virtual void update() = 0;
+    // Returns "true" once we're done.
+    virtual void update() = 0;
 
 protected:
-	std::vector<ScraperSearchResult>& mResults;
+    std::vector<ScraperSearchResult>& mResults;
 };
 
 // A single HTTP request that needs to be processed to get the results.
 class ScraperHttpRequest : public ScraperRequest
 {
 public:
-	ScraperHttpRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url);
-	virtual void update() override;
+    ScraperHttpRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url);
+    virtual void update() override;
 
 protected:
-	virtual void process(const std::unique_ptr<HttpReq>& req,
-			std::vector<ScraperSearchResult>& results) = 0;
+    virtual void process(const std::unique_ptr<HttpReq>& req,
+            std::vector<ScraperSearchResult>& results) = 0;
 
 private:
-	std::unique_ptr<HttpReq> mReq;
+    std::unique_ptr<HttpReq> mReq;
 };
 
 // A request to get a list of results.
 class ScraperSearchHandle : public AsyncHandle
 {
 public:
-	ScraperSearchHandle();
+    ScraperSearchHandle();
 
-	void update();
-	inline const std::vector<ScraperSearchResult>& getResults() const {
-				assert(mStatus != ASYNC_IN_PROGRESS); return mResults; }
+    void update();
+    inline const std::vector<ScraperSearchResult>& getResults() const {
+                assert(mStatus != ASYNC_IN_PROGRESS); return mResults; }
 
 protected:
-	friend std::unique_ptr<ScraperSearchHandle>
-			startScraperSearch(const ScraperSearchParams& params);
+    friend std::unique_ptr<ScraperSearchHandle>
+            startScraperSearch(const ScraperSearchParams& params);
 
-	friend std::unique_ptr<ScraperSearchHandle>
-			startMediaURLsFetch(const std::string& gameIDs);
+    friend std::unique_ptr<ScraperSearchHandle>
+            startMediaURLsFetch(const std::string& gameIDs);
 
-	std::queue< std::unique_ptr<ScraperRequest> > mRequestQueue;
-	std::vector<ScraperSearchResult> mResults;
+    std::queue< std::unique_ptr<ScraperRequest> > mRequestQueue;
+    std::vector<ScraperSearchResult> mResults;
 };
 
 // Will use the current scraper settings to pick the result source.
@@ -155,8 +155,8 @@ std::vector<std::string> getScraperList();
 bool isValidConfiguredScraper();
 
 typedef void (*generate_scraper_requests_func)(const ScraperSearchParams& params,
-		std::queue<std::unique_ptr<ScraperRequest>>& requests,
-		std::vector<ScraperSearchResult>& results);
+        std::queue<std::unique_ptr<ScraperRequest>>& requests,
+        std::vector<ScraperSearchResult>& results);
 
 // -------------------------------------------------------------------------
 
@@ -164,53 +164,53 @@ typedef void (*generate_scraper_requests_func)(const ScraperSearchParams& params
 class MDResolveHandle : public AsyncHandle
 {
 public:
-	MDResolveHandle(const ScraperSearchResult& result, const ScraperSearchParams& search);
+    MDResolveHandle(const ScraperSearchResult& result, const ScraperSearchParams& search);
 
-	void update() override;
-	inline const ScraperSearchResult& getResult() const
-			{ assert(mStatus == ASYNC_DONE); return mResult; }
+    void update() override;
+    inline const ScraperSearchResult& getResult() const
+            { assert(mStatus == ASYNC_DONE); return mResult; }
 
 private:
-	ScraperSearchResult mResult;
+    ScraperSearchResult mResult;
 
-	typedef std::pair<std::unique_ptr<AsyncHandle>, std::function<void()>> ResolvePair;
-	std::vector<ResolvePair> mFuncs;
+    typedef std::pair<std::unique_ptr<AsyncHandle>, std::function<void()>> ResolvePair;
+    std::vector<ResolvePair> mFuncs;
 };
 
 class ImageDownloadHandle : public AsyncHandle
 {
 public:
-	ImageDownloadHandle(
-			const std::string& url,
-			const std::string& path,
-			const std::string& existingMediaPath,
-			int maxWidth,
-			int maxHeight);
+    ImageDownloadHandle(
+            const std::string& url,
+            const std::string& path,
+            const std::string& existingMediaPath,
+            int maxWidth,
+            int maxHeight);
 
-	void update() override;
+    void update() override;
 
 private:
-	std::unique_ptr<HttpReq> mReq;
-	std::string mSavePath;
-	std::string mExistingMediaFile;
-	int mMaxWidth;
-	int mMaxHeight;
+    std::unique_ptr<HttpReq> mReq;
+    std::string mSavePath;
+    std::string mExistingMediaFile;
+    int mMaxWidth;
+    int mMaxHeight;
 };
 
 // About the same as:
 // "~/.emulationstation/downloaded_images/[system_name]/[game_name].[url's extension]".
 // Will create the "downloaded_images" and "subdirectory" directories if they do not exist.
 std::string getSaveAsPath(const ScraperSearchParams& params,
-		const std::string& filetypeSubdirectory, const std::string& url);
+        const std::string& filetypeSubdirectory, const std::string& url);
 
 // Will resize according to Settings::getInt("ScraperResizeWidth") and
 // Settings::getInt("ScraperResizeHeight").
 std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
-		const std::string& saveAs, const std::string& existingMediaPath);
+        const std::string& saveAs, const std::string& existingMediaPath);
 
 // Resolves all metadata assets that need to be downloaded.
 std::unique_ptr<MDResolveHandle> resolveMetaDataAssets(const ScraperSearchResult& result,
-		const ScraperSearchParams& search);
+        const ScraperSearchParams& search);
 
 // You can pass 0 for maxWidth or maxHeight to automatically keep the aspect ratio.
 // It will overwrite the image at [path] with the new resized one.

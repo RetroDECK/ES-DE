@@ -1,7 +1,7 @@
 //
-//	Gamelist.h
+//  Gamelist.h
 //
-//	Parses and updates the gamelist.xml files.
+//  Parses and updates the gamelist.xml files.
 //
 
 #pragma once

@@ -1,11 +1,11 @@
 //
-//	GuiGamelistOptions.h
+//  GuiGamelistOptions.h
 //
-//	Gamelist options menu for the 'Jump to...' quick selector,
-//	game sorting, game filters, and metadata edit.
+//  Gamelist options menu for the 'Jump to...' quick selector,
+//  game sorting, game filters, and metadata edit.
 //
-//	The filter interface is covered by GuiGamelistFilter and the
-//	metadata edit interface is covered by GuiMetaDataEd.
+//  The filter interface is covered by GuiGamelistFilter and the
+//  metadata edit interface is covered by GuiMetaDataEd.
 //
 
 #pragma once
@@ -24,39 +24,39 @@ class SystemData;
 class GuiGamelistOptions : public GuiComponent
 {
 public:
-	GuiGamelistOptions(Window* window, SystemData* system);
-	virtual ~GuiGamelistOptions();
+    GuiGamelistOptions(Window* window, SystemData* system);
+    virtual ~GuiGamelistOptions();
 
-	virtual bool input(InputConfig* config, Input input) override;
-	virtual std::vector<HelpPrompt> getHelpPrompts() override;
-	virtual HelpStyle getHelpStyle() override;
+    virtual bool input(InputConfig* config, Input input) override;
+    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    virtual HelpStyle getHelpStyle() override;
 
 private:
-	void openGamelistFilter();
-	void openMetaDataEd();
-	void startEditMode();
-	void exitEditMode();
+    void openGamelistFilter();
+    void openMetaDataEd();
+    void startEditMode();
+    void exitEditMode();
 
-	void jumpToLetter();
-	void jumpToFirstRow();
+    void jumpToLetter();
+    void jumpToFirstRow();
 
-	MenuComponent mMenu;
+    MenuComponent mMenu;
 
-	typedef OptionListComponent<std::string> LetterList;
-	std::shared_ptr<LetterList> mJumpToLetterList;
+    typedef OptionListComponent<std::string> LetterList;
+    std::shared_ptr<LetterList> mJumpToLetterList;
 
-	typedef OptionListComponent<const FileData::SortType*> SortList;
-	std::shared_ptr<SortList> mListSort;
+    typedef OptionListComponent<const FileData::SortType*> SortList;
+    std::shared_ptr<SortList> mListSort;
 
-	SystemData* mSystem;
-	IGameListView* getGamelist();
-	bool mFavoritesSorting;
-	bool fromPlaceholder;
-	bool mFiltersChanged;
-	bool mCancelled;
-	std::vector<std::string> mFirstLetterIndex;
-	std::string mCurrentFirstCharacter;
-	const std::string FAVORITE_CHAR = "\uF005";
+    SystemData* mSystem;
+    IGameListView* getGamelist();
+    bool mFavoritesSorting;
+    bool fromPlaceholder;
+    bool mFiltersChanged;
+    bool mCancelled;
+    std::vector<std::string> mFirstLetterIndex;
+    std::string mCurrentFirstCharacter;
+    const std::string FAVORITE_CHAR = "\uF005";
 
 };
 

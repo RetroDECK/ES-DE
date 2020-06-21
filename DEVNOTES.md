@@ -13,10 +13,12 @@ Some key points:
 * Indentation is 4 spaces, don't use tabs as they can be interpreted differently!
 * Line break is Unix-style (line feed only, no carriage return)
 * Do not leave trailing whitespaces at the end of the lines (a good source code editor should have a setting to automatically trim these for you)
+* When breaking up long lines into multiple lines, consider what could be useful data to grep for so you don't break in the middle of such a string
 * Comments always in C++ style, i.e. // instead of /* */
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
 * Use K&R placements of braces, read the Linux Kernel coding style document for clarifications
 * Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while ()` etc.
+* Use `std::string` instead of `char *` or `char []` unless there is a very specific reason not to
 * If the arguments (and initializer list) for a function or class exceeds 4 items, arrange them vertically to make the code easier to read
 * Always declare one variable per line, never combine multiple declarations of the same type
 * Name local variables with the first word in small letters and the proceeding words starting with capital letters, e.g. myExampleVariable

@@ -1,9 +1,9 @@
 //
-//	GuiGamelistFilter.h
+//  GuiGamelistFilter.h
 //
-//	User interface for the gamelist filters.
-//	Triggered from the GuiGamelistOptions menu.
-//	Actual filter logic is covered by FileFilterIndex.
+//  User interface for the gamelist filters.
+//  Triggered from the GuiGamelistOptions menu.
+//  Actual filter logic is covered by FileFilterIndex.
 //
 
 #pragma once
@@ -21,25 +21,25 @@ class SystemData;
 class GuiGamelistFilter : public GuiComponent
 {
 public:
-	GuiGamelistFilter(Window* window, SystemData* system);
+    GuiGamelistFilter(Window* window, SystemData* system);
 
-	~GuiGamelistFilter();
-	bool input(InputConfig* config, Input input) override;
+    ~GuiGamelistFilter();
+    bool input(InputConfig* config, Input input) override;
 
-	virtual std::vector<HelpPrompt> getHelpPrompts() override;
-	HelpStyle getHelpStyle() override;
+    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    HelpStyle getHelpStyle() override;
 
 private:
-	void initializeMenu();
-	void applyFilters();
-	void resetAllFilters();
-	void addFiltersToMenu();
+    void initializeMenu();
+    void applyFilters();
+    void resetAllFilters();
+    void addFiltersToMenu();
 
-	std::map<FilterIndexType, std::shared_ptr< OptionListComponent<std::string> >> mFilterOptions;
+    std::map<FilterIndexType, std::shared_ptr< OptionListComponent<std::string> >> mFilterOptions;
 
-	MenuComponent mMenu;
-	SystemData* mSystem;
-	FileFilterIndex* mFilterIndex;
+    MenuComponent mMenu;
+    SystemData* mSystem;
+    FileFilterIndex* mFilterIndex;
 };
 
 #endif // ES_APP_GUIS_GUI_GAME_LIST_FILTER_H

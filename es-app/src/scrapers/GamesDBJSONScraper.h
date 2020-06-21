@@ -1,8 +1,8 @@
 //
-//	GamesDBJSONScraper.h
+//  GamesDBJSONScraper.h
 //
-//	Functions specifically for scraping from thegamesdb.net
-//	Called from Scraper.
+//  Functions specifically for scraping from thegamesdb.net
+//  Called from Scraper.
 //
 
 #pragma once
@@ -16,44 +16,44 @@ class xml_document;
 }
 
 void thegamesdb_generate_json_scraper_requests(
-		const ScraperSearchParams& params,
-		std::queue<std::unique_ptr<ScraperRequest>>& requests,
-		std::vector<ScraperSearchResult>& results);
+        const ScraperSearchParams& params,
+        std::queue<std::unique_ptr<ScraperRequest>>& requests,
+        std::vector<ScraperSearchResult>& results);
 
 void thegamesdb_generate_json_scraper_requests(
-		const std::string& gameIDs,
-		std::queue<std::unique_ptr<ScraperRequest>>& requests,
-		std::vector<ScraperSearchResult>& results);
+        const std::string& gameIDs,
+        std::queue<std::unique_ptr<ScraperRequest>>& requests,
+        std::vector<ScraperSearchResult>& results);
 
 class TheGamesDBJSONRequest : public ScraperHttpRequest
 {
   public:
-	// ctor for a GetGameList request.
-	TheGamesDBJSONRequest(
-			std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
-			std::vector<ScraperSearchResult>& resultsWrite,
-			const std::string& url)
-			: ScraperHttpRequest(resultsWrite, url),
-			mRequestQueue(&requestsWrite)
-	{
-	}
-	// ctor for a GetGame request
-	TheGamesDBJSONRequest(
-			std::vector<ScraperSearchResult>& resultsWrite,
-			const std::string& url)
-			: ScraperHttpRequest(resultsWrite, url),
-			mRequestQueue(nullptr)
-	{
-	}
+    // ctor for a GetGameList request.
+    TheGamesDBJSONRequest(
+            std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
+            std::vector<ScraperSearchResult>& resultsWrite,
+            const std::string& url)
+            : ScraperHttpRequest(resultsWrite, url),
+            mRequestQueue(&requestsWrite)
+    {
+    }
+    // ctor for a GetGame request
+    TheGamesDBJSONRequest(
+            std::vector<ScraperSearchResult>& resultsWrite,
+            const std::string& url)
+            : ScraperHttpRequest(resultsWrite, url),
+            mRequestQueue(nullptr)
+    {
+    }
 
   protected:
-	//void retrieveMediaURLs()
+    //void retrieveMediaURLs()
 
-	void process(const std::unique_ptr<HttpReq>& req,
-			std::vector<ScraperSearchResult>& results) override;
-	bool isGameRequest() { return !mRequestQueue; }
+    void process(const std::unique_ptr<HttpReq>& req,
+            std::vector<ScraperSearchResult>& results) override;
+    bool isGameRequest() { return !mRequestQueue; }
 
-	std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;
+    std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;
 };
 
 #endif // ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_H

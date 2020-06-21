@@ -1,7 +1,7 @@
 //
-//	IGameListView.h
+//  IGameListView.h
 //
-//	Interface that defines the minimum for a GameListView.
+//  Interface that defines the minimum for a GameListView.
 //
 
 #pragma once
@@ -19,45 +19,45 @@ class Window;
 class IGameListView : public GuiComponent
 {
 public:
-	IGameListView(
-			Window* window,
-			FileData* root)
-			: GuiComponent(window),
-			mRoot(root)
-			{ setSize((float)Renderer::getScreenWidth(),
-			(float)Renderer::getScreenHeight()); }
+    IGameListView(
+            Window* window,
+            FileData* root)
+            : GuiComponent(window),
+            mRoot(root)
+            { setSize((float)Renderer::getScreenWidth(),
+            (float)Renderer::getScreenHeight()); }
 
-	virtual ~IGameListView() {}
+    virtual ~IGameListView() {}
 
-	// Called when a new file is added, a file is removed, a file's metadata changes,
-	// or a file's children are sorted.
-	// NOTE: FILE_SORTED is only reported for the topmost FileData, where the sort started.
-	//       Since sorts are recursive, that FileData's children probably changed too.
-	virtual void onFileChanged(FileData* file, FileChangeType change) = 0;
+    // Called when a new file is added, a file is removed, a file's metadata changes,
+    // or a file's children are sorted.
+    // NOTE: FILE_SORTED is only reported for the topmost FileData, where the sort started.
+    //       Since sorts are recursive, that FileData's children probably changed too.
+    virtual void onFileChanged(FileData* file, FileChangeType change) = 0;
 
-	// Called whenever the theme changes.
-	virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) = 0;
+    // Called whenever the theme changes.
+    virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) = 0;
 
-	void setTheme(const std::shared_ptr<ThemeData>& theme);
-	inline const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
+    void setTheme(const std::shared_ptr<ThemeData>& theme);
+    inline const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
 
-	virtual FileData* getCursor() = 0;
-	virtual void setCursor(FileData*) = 0;
-	virtual FileData* getFirstEntry() = 0;
-	virtual FileData* getLastEntry() = 0;
+    virtual FileData* getCursor() = 0;
+    virtual void setCursor(FileData*) = 0;
+    virtual FileData* getFirstEntry() = 0;
+    virtual FileData* getLastEntry() = 0;
 
-	virtual bool input(InputConfig* config, Input input) override;
-	virtual void remove(FileData* game, bool deleteFile) = 0;
+    virtual bool input(InputConfig* config, Input input) override;
+    virtual void remove(FileData* game, bool deleteFile) = 0;
 
-	virtual const char* getName() const = 0;
-	virtual void launch(FileData* game) = 0;
+    virtual const char* getName() const = 0;
+    virtual void launch(FileData* game) = 0;
 
-	virtual HelpStyle getHelpStyle() override;
+    virtual HelpStyle getHelpStyle() override;
 
-	void render(const Transform4x4f& parentTrans) override;
+    void render(const Transform4x4f& parentTrans) override;
 protected:
-	FileData* mRoot;
-	std::shared_ptr<ThemeData> mTheme;
+    FileData* mRoot;
+    std::shared_ptr<ThemeData> mTheme;
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H

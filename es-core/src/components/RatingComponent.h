@@ -1,8 +1,8 @@
 //
-//	RatingComponent.h
+//  RatingComponent.h
 //
-//	Game rating icons.
-//	Used by gamelist views, metadata editor and scraper.
+//  Game rating icons.
+//  Used by gamelist views, metadata editor and scraper.
 //
 
 #pragma once
@@ -24,43 +24,43 @@ class TextureResource;
 class RatingComponent : public GuiComponent
 {
 public:
-	RatingComponent(Window* window);
+    RatingComponent(Window* window);
 
-	std::string getValue() const override;
-	// Should be a normalized float (in the range [0..1]) - if it's not, it will be clamped.
-	void setValue(const std::string& value) override;
+    std::string getValue() const override;
+    // Should be a normalized float (in the range [0..1]) - if it's not, it will be clamped.
+    void setValue(const std::string& value) override;
 
-	bool input(InputConfig* config, Input input) override;
-	void render(const Transform4x4f& parentTrans);
+    bool input(InputConfig* config, Input input) override;
+    void render(const Transform4x4f& parentTrans);
 
-	void onSizeChanged() override;
+    void onSizeChanged() override;
 
-	void setOpacity(unsigned char opacity) override;
+    void setOpacity(unsigned char opacity) override;
 
-	// Multiply all pixels in the image by this color when rendering.
-	void setColorShift(unsigned int color);
+    // Multiply all pixels in the image by this color when rendering.
+    void setColorShift(unsigned int color);
 
-	virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
-			const std::string& element, unsigned int properties) override;
+    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
+            const std::string& element, unsigned int properties) override;
 
-	virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-	Vector2f mTargetSize;
+    Vector2f mTargetSize;
 
-	void updateVertices();
-	void updateColors();
+    void updateVertices();
+    void updateColors();
 
-	float mValue;
+    float mValue;
 
-	Renderer::Vertex mVertices[8];
+    Renderer::Vertex mVertices[8];
 
-	unsigned int mColorShift;
-	unsigned int mColorShiftEnd;
-	unsigned int mUnfilledColor;
+    unsigned int mColorShift;
+    unsigned int mColorShiftEnd;
+    unsigned int mUnfilledColor;
 
-	std::shared_ptr<TextureResource> mFilledTexture;
-	std::shared_ptr<TextureResource> mUnfilledTexture;
+    std::shared_ptr<TextureResource> mFilledTexture;
+    std::shared_ptr<TextureResource> mUnfilledTexture;
 };
 
 #endif // ES_APP_COMPONENTS_RATING_COMPONENT_H

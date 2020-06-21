@@ -1,7 +1,7 @@
 //
-//	DetailedGameListView.h
+//  DetailedGameListView.h
 //
-//	Interface that defines a GameListView of the type 'detailed'.
+//  Interface that defines a GameListView of the type 'detailed'.
 //
 
 #pragma once
@@ -16,48 +16,48 @@
 class DetailedGameListView : public BasicGameListView
 {
 public:
-	DetailedGameListView(Window* window, FileData* root);
+    DetailedGameListView(Window* window, FileData* root);
 
-	virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
+    virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
 
-	virtual const char* getName() const override { return "detailed"; }
+    virtual const char* getName() const override { return "detailed"; }
 
-	virtual void launch(FileData* game) override;
+    virtual void launch(FileData* game) override;
 
 private:
-	void updateInfoPanel();
+    void updateInfoPanel();
 
-	void initMDLabels();
-	void initMDValues();
+    void initMDLabels();
+    void initMDValues();
 
-	ImageComponent mThumbnail;
-	ImageComponent mMarquee;
-	ImageComponent mImage;
+    ImageComponent mThumbnail;
+    ImageComponent mMarquee;
+    ImageComponent mImage;
 
-	TextComponent mLblRating;
-	TextComponent mLblReleaseDate;
-	TextComponent mLblDeveloper;
-	TextComponent mLblPublisher;
-	TextComponent mLblGenre;
-	TextComponent mLblPlayers;
-	TextComponent mLblLastPlayed;
-	TextComponent mLblPlayCount;
+    TextComponent mLblRating;
+    TextComponent mLblReleaseDate;
+    TextComponent mLblDeveloper;
+    TextComponent mLblPublisher;
+    TextComponent mLblGenre;
+    TextComponent mLblPlayers;
+    TextComponent mLblLastPlayed;
+    TextComponent mLblPlayCount;
 
-	RatingComponent mRating;
-	DateTimeComponent mReleaseDate;
-	TextComponent mDeveloper;
-	TextComponent mPublisher;
-	TextComponent mGenre;
-	TextComponent mPlayers;
-	DateTimeComponent mLastPlayed;
-	TextComponent mPlayCount;
-	TextComponent mName;
+    RatingComponent mRating;
+    DateTimeComponent mReleaseDate;
+    TextComponent mDeveloper;
+    TextComponent mPublisher;
+    TextComponent mGenre;
+    TextComponent mPlayers;
+    DateTimeComponent mLastPlayed;
+    TextComponent mPlayCount;
+    TextComponent mName;
 
-	std::vector<TextComponent*> getMDLabels();
-	std::vector<GuiComponent*> getMDValues();
+    std::vector<TextComponent*> getMDLabels();
+    std::vector<GuiComponent*> getMDValues();
 
-	ScrollableContainer mDescContainer;
-	TextComponent mDescription;
+    ScrollableContainer mDescContainer;
+    TextComponent mDescription;
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_DETAILED_GAME_LIST_VIEW_H

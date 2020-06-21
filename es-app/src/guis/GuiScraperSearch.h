@@ -1,14 +1,14 @@
 //
-//	GuiScraperSearch.h
+//  GuiScraperSearch.h
 //
-//	User interface for the scraper where the user is able to see an overview
-//	of the game being scraped and an option to override the game search string.
-//	Used by both single-game scraping from the GuiMetaDataEd menu as well as
-//	to resolve scraping conflicts when run from GuiScraperMenu.
-//	The function to properly save scraped metadata is located here too.
+//  User interface for the scraper where the user is able to see an overview
+//  of the game being scraped and an option to override the game search string.
+//  Used by both single-game scraping from the GuiMetaDataEd menu as well as
+//  to resolve scraping conflicts when run from GuiScraperMenu.
+//  The function to properly save scraped metadata is located here too.
 //
-//	This component is called from GuiGameScraper for single-game scraping and
-//	from GuiScraperMulti for multi-game scraping.
+//  This component is called from GuiGameScraper for single-game scraping and
+//  from GuiScraperMulti for multi-game scraping.
 //
 
 #pragma once
@@ -30,101 +30,101 @@ class TextComponent;
 class GuiScraperSearch : public GuiComponent
 {
 public:
-	enum SearchType {
-		ALWAYS_ACCEPT_FIRST_RESULT,
-		ACCEPT_SINGLE_MATCHES,
-		NEVER_AUTO_ACCEPT
-	};
+    enum SearchType {
+        ALWAYS_ACCEPT_FIRST_RESULT,
+        ACCEPT_SINGLE_MATCHES,
+        NEVER_AUTO_ACCEPT
+    };
 
-	GuiScraperSearch(Window* window, SearchType searchType = NEVER_AUTO_ACCEPT);
+    GuiScraperSearch(Window* window, SearchType searchType = NEVER_AUTO_ACCEPT);
 
-	void search(const ScraperSearchParams& params);
-	void openInputScreen(ScraperSearchParams& from);
-	void stop();
-	inline SearchType getSearchType() const { return mSearchType; }
-	static bool saveMetadata(const ScraperSearchResult& result, MetaDataList& metadata);
+    void search(const ScraperSearchParams& params);
+    void openInputScreen(ScraperSearchParams& from);
+    void stop();
+    inline SearchType getSearchType() const { return mSearchType; }
+    static bool saveMetadata(const ScraperSearchResult& result, MetaDataList& metadata);
 
-	// Metadata assets will be resolved before calling the accept callback
-	// (e.g. result.mdl's "image" is automatically downloaded and properly set).
-	inline void setAcceptCallback(const std::function<void(const ScraperSearchResult&)>&
-			acceptCallback) { mAcceptCallback = acceptCallback; }
-	inline void setSkipCallback(const std::function<void()>&
-			skipCallback) { mSkipCallback = skipCallback; };
-	inline void setCancelCallback(const std::function<void()>&
-			cancelCallback) { mCancelCallback = cancelCallback; }
+    // Metadata assets will be resolved before calling the accept callback
+    // (e.g. result.mdl's "image" is automatically downloaded and properly set).
+    inline void setAcceptCallback(const std::function<void(const ScraperSearchResult&)>&
+            acceptCallback) { mAcceptCallback = acceptCallback; }
+    inline void setSkipCallback(const std::function<void()>&
+            skipCallback) { mSkipCallback = skipCallback; };
+    inline void setCancelCallback(const std::function<void()>&
+            cancelCallback) { mCancelCallback = cancelCallback; }
 
-	bool input(InputConfig* config, Input input) override;
-	void update(int deltaTime) override;
-	void render(const Transform4x4f& parentTrans) override;
-	std::vector<HelpPrompt> getHelpPrompts() override;
-	HelpStyle getHelpStyle() override;
-	void onSizeChanged() override;
-	void onFocusGained() override;
-	void onFocusLost() override;
+    bool input(InputConfig* config, Input input) override;
+    void update(int deltaTime) override;
+    void render(const Transform4x4f& parentTrans) override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
+    HelpStyle getHelpStyle() override;
+    void onSizeChanged() override;
+    void onFocusGained() override;
+    void onFocusLost() override;
 
 private:
-	void updateViewStyle();
-	void updateThumbnail();
-	void updateInfoPane();
+    void updateViewStyle();
+    void updateThumbnail();
+    void updateInfoPane();
 
-	void resizeMetadata();
+    void resizeMetadata();
 
-	void onSearchError(const std::string& error);
-	void onSearchDone(const std::vector<ScraperSearchResult>& results);
+    void onSearchError(const std::string& error);
+    void onSearchDone(const std::vector<ScraperSearchResult>& results);
 
-	int getSelectedIndex();
+    int getSelectedIndex();
 
-	// For TheGamesDB, retrieve URLs for the additional metadata assets
-	// that need to be downloaded.
-	void retrieveMediaURLs(ScraperSearchResult result);
+    // For TheGamesDB, retrieve URLs for the additional metadata assets
+    // that need to be downloaded.
+    void retrieveMediaURLs(ScraperSearchResult result);
 
-	// Resolve any metadata assets that need to be downloaded and return.
-	void returnResult(ScraperSearchResult result);
+    // Resolve any metadata assets that need to be downloaded and return.
+    void returnResult(ScraperSearchResult result);
 
-	ComponentGrid mGrid;
+    ComponentGrid mGrid;
 
-	std::shared_ptr<TextComponent> mResultName;
-	std::shared_ptr<ScrollableContainer> mDescContainer;
-	std::shared_ptr<TextComponent> mResultDesc;
-	std::shared_ptr<ImageComponent> mResultThumbnail;
-	std::shared_ptr<ComponentList> mResultList;
+    std::shared_ptr<TextComponent> mResultName;
+    std::shared_ptr<ScrollableContainer> mDescContainer;
+    std::shared_ptr<TextComponent> mResultDesc;
+    std::shared_ptr<ImageComponent> mResultThumbnail;
+    std::shared_ptr<ComponentList> mResultList;
 
-	std::shared_ptr<ComponentGrid> mMD_Grid;
-	std::shared_ptr<RatingComponent> mMD_Rating;
-	std::shared_ptr<DateTimeEditComponent> mMD_ReleaseDate;
-	std::shared_ptr<TextComponent> mMD_Developer;
-	std::shared_ptr<TextComponent> mMD_Publisher;
-	std::shared_ptr<TextComponent> mMD_Genre;
-	std::shared_ptr<TextComponent> mMD_Players;
+    std::shared_ptr<ComponentGrid> mMD_Grid;
+    std::shared_ptr<RatingComponent> mMD_Rating;
+    std::shared_ptr<DateTimeEditComponent> mMD_ReleaseDate;
+    std::shared_ptr<TextComponent> mMD_Developer;
+    std::shared_ptr<TextComponent> mMD_Publisher;
+    std::shared_ptr<TextComponent> mMD_Genre;
+    std::shared_ptr<TextComponent> mMD_Players;
 
-	// Label-component pair.
-	struct MetaDataPair {
-		std::shared_ptr<TextComponent> first;
-		std::shared_ptr<GuiComponent> second;
-		bool resize;
+    // Label-component pair.
+    struct MetaDataPair {
+        std::shared_ptr<TextComponent> first;
+        std::shared_ptr<GuiComponent> second;
+        bool resize;
 
-		MetaDataPair(const std::shared_ptr<TextComponent>& f,
-				const std::shared_ptr<GuiComponent>& s, bool r = true)
-				: first(f), second(s), resize(r) {};
-	};
+        MetaDataPair(const std::shared_ptr<TextComponent>& f,
+                const std::shared_ptr<GuiComponent>& s, bool r = true)
+                : first(f), second(s), resize(r) {};
+    };
 
-	std::vector<MetaDataPair> mMD_Pairs;
+    std::vector<MetaDataPair> mMD_Pairs;
 
-	SearchType mSearchType;
-	ScraperSearchParams mLastSearch;
-	std::function<void(const ScraperSearchResult&)> mAcceptCallback;
-	std::function<void()> mSkipCallback;
-	std::function<void()> mCancelCallback;
-	bool mBlockAccept;
-	bool mFoundGame;
+    SearchType mSearchType;
+    ScraperSearchParams mLastSearch;
+    std::function<void(const ScraperSearchResult&)> mAcceptCallback;
+    std::function<void()> mSkipCallback;
+    std::function<void()> mCancelCallback;
+    bool mBlockAccept;
+    bool mFoundGame;
 
-	std::unique_ptr<ScraperSearchHandle> mSearchHandle;
-	std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;
-	std::unique_ptr<MDResolveHandle> mMDResolveHandle;
-	std::vector<ScraperSearchResult> mScraperResults;
-	std::unique_ptr<HttpReq> mThumbnailReq;
+    std::unique_ptr<ScraperSearchHandle> mSearchHandle;
+    std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;
+    std::unique_ptr<MDResolveHandle> mMDResolveHandle;
+    std::vector<ScraperSearchResult> mScraperResults;
+    std::unique_ptr<HttpReq> mThumbnailReq;
 
-	BusyComponent mBusyAnim;
+    BusyComponent mBusyAnim;
 };
 
 #endif // ES_APP_GUIS_GUI_SCRAPER_SEARCH_H

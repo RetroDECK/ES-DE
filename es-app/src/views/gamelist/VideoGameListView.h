@@ -1,7 +1,7 @@
 //
-//	VideoGameListView.h
+//  VideoGameListView.h
 //
-//	Interface that defines a GameListView of the type 'video'.
+//  Interface that defines a GameListView of the type 'video'.
 //
 
 #pragma once
@@ -18,56 +18,56 @@ class VideoComponent;
 class VideoGameListView : public BasicGameListView
 {
 public:
-	VideoGameListView(Window* window, FileData* root);
-	virtual ~VideoGameListView();
+    VideoGameListView(Window* window, FileData* root);
+    virtual ~VideoGameListView();
 
-	virtual void onShow() override;
+    virtual void onShow() override;
 
-	virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
+    virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
 
-	virtual const char* getName() const override { return "video"; }
-	virtual void launch(FileData* game) override;
+    virtual const char* getName() const override { return "video"; }
+    virtual void launch(FileData* game) override;
 
 protected:
-	virtual void update(int deltaTime) override;
+    virtual void update(int deltaTime) override;
 
 private:
-	void updateInfoPanel();
+    void updateInfoPanel();
 
-	void initMDLabels();
-	void initMDValues();
+    void initMDLabels();
+    void initMDValues();
 
-	ImageComponent mThumbnail;
-	ImageComponent mMarquee;
-	VideoComponent* mVideo;
-	ImageComponent mImage;
+    ImageComponent mThumbnail;
+    ImageComponent mMarquee;
+    VideoComponent* mVideo;
+    ImageComponent mImage;
 
-	TextComponent mLblRating;
-	TextComponent mLblReleaseDate;
-	TextComponent mLblDeveloper;
-	TextComponent mLblPublisher;
-	TextComponent mLblGenre;
-	TextComponent mLblPlayers;
-	TextComponent mLblLastPlayed;
-	TextComponent mLblPlayCount;
+    TextComponent mLblRating;
+    TextComponent mLblReleaseDate;
+    TextComponent mLblDeveloper;
+    TextComponent mLblPublisher;
+    TextComponent mLblGenre;
+    TextComponent mLblPlayers;
+    TextComponent mLblLastPlayed;
+    TextComponent mLblPlayCount;
 
-	RatingComponent mRating;
-	DateTimeComponent mReleaseDate;
-	TextComponent mDeveloper;
-	TextComponent mPublisher;
-	TextComponent mGenre;
-	TextComponent mPlayers;
-	DateTimeComponent mLastPlayed;
-	TextComponent mPlayCount;
-	TextComponent mName;
+    RatingComponent mRating;
+    DateTimeComponent mReleaseDate;
+    TextComponent mDeveloper;
+    TextComponent mPublisher;
+    TextComponent mGenre;
+    TextComponent mPlayers;
+    DateTimeComponent mLastPlayed;
+    TextComponent mPlayCount;
+    TextComponent mName;
 
-	std::vector<TextComponent*> getMDLabels();
-	std::vector<GuiComponent*> getMDValues();
+    std::vector<TextComponent*> getMDLabels();
+    std::vector<GuiComponent*> getMDValues();
 
-	ScrollableContainer mDescContainer;
-	TextComponent mDescription;
+    ScrollableContainer mDescContainer;
+    TextComponent mDescription;
 
-	bool		mVideoPlaying;
+    bool		mVideoPlaying;
 
 };
 

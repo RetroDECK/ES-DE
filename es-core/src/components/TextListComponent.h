@@ -110,7 +110,6 @@ private:
 	unsigned int mSelectorColorEnd;
 	bool mSelectorColorGradientHorizontal = true;
 	unsigned int mSelectedColor;
-	std::string mScrollSound;
 	static const unsigned int COLOR_ID_COUNT = 2;
 	unsigned int mColors[COLOR_ID_COUNT];
 

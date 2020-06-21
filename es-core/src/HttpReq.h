@@ -1,9 +1,9 @@
 //
-//	HttpReq.h
+//  HttpReq.h
 //
-//	HTTP request functions.
-//	Used by Scraper, GamesDBJSONScraper, GamesDBJSONScraperResources and
-//	ScreenScraper to download game information and media files.
+//  HTTP request functions.
+//  Used by Scraper, GamesDBJSONScraper, GamesDBJSONScraperResources and
+//  ScreenScraper to download game information and media files.
 //
 
 #pragma once
@@ -38,47 +38,47 @@
 class HttpReq
 {
 public:
-	HttpReq(const std::string& url);
+    HttpReq(const std::string& url);
 
-	~HttpReq();
+    ~HttpReq();
 
-	enum Status {
-		REQ_IN_PROGRESS,		// Request is in progress.
-		REQ_SUCCESS,			// Request completed successfully, get it with getContent().
+    enum Status {
+        REQ_IN_PROGRESS,		// Request is in progress.
+        REQ_SUCCESS,			// Request completed successfully, get it with getContent().
 
-		REQ_IO_ERROR,			// Some error happened, get it with getErrorMsg().
-		REQ_BAD_STATUS_CODE,	// Some invalid HTTP response status code happened (non-200).
-		REQ_INVALID_RESPONSE	// The HTTP response was invalid.
-	};
+        REQ_IO_ERROR,			// Some error happened, get it with getErrorMsg().
+        REQ_BAD_STATUS_CODE,	// Some invalid HTTP response status code happened (non-200).
+        REQ_INVALID_RESPONSE	// The HTTP response was invalid.
+    };
 
-	Status status(); // Process any received data and return the status afterwards.
+    Status status(); // Process any received data and return the status afterwards.
 
-	std::string getErrorMsg();
+    std::string getErrorMsg();
 
-	std::string getContent() const; // mStatus must be REQ_SUCCESS.
+    std::string getContent() const; // mStatus must be REQ_SUCCESS.
 
-	static std::string urlEncode(const std::string &s);
-	static bool isUrl(const std::string& s);
+    static std::string urlEncode(const std::string &s);
+    static bool isUrl(const std::string& s);
 
 private:
-	static size_t write_content(void* buff, size_t size, size_t nmemb, void* req_ptr);
-	//static int update_progress(void* req_ptr, double dlTotal, double dlNow,
-	//		double ulTotal, double ulNow);
+    static size_t write_content(void* buff, size_t size, size_t nmemb, void* req_ptr);
+    //static int update_progress(void* req_ptr, double dlTotal, double dlNow,
+    //		double ulTotal, double ulNow);
 
-	// God dammit libcurl why can't you have some way to check the status of an
-	// individual handle why do I have to handle ALL messages at once.
-	static std::map<CURL*, HttpReq*> s_requests;
+    // God dammit libcurl why can't you have some way to check the status of an
+    // individual handle why do I have to handle ALL messages at once.
+    static std::map<CURL*, HttpReq*> s_requests;
 
-	static CURLM* s_multi_handle;
+    static CURLM* s_multi_handle;
 
-	void onError(const char* msg);
+    void onError(const char* msg);
 
-	CURL* mHandle;
+    CURL* mHandle;
 
-	Status mStatus;
+    Status mStatus;
 
-	std::stringstream mContent;
-	std::string mErrorMsg;
+    std::stringstream mContent;
+    std::string mErrorMsg;
 };
 
 #endif // ES_CORE_HTTP_REQ_H

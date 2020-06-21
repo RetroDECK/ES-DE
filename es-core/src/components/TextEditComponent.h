@@ -1,7 +1,7 @@
 //
-//	TextEditComponent.h
+//  TextEditComponent.h
 //
-//	Component for editing text fields in menus.
+//  Component for editing text fields in menus.
 //
 
 #pragma once
@@ -18,57 +18,57 @@ class TextCache;
 class TextEditComponent : public GuiComponent
 {
 public:
-	TextEditComponent(Window* window);
+    TextEditComponent(Window* window);
 
-	void textInput(const char* text) override;
-	bool input(InputConfig* config, Input input) override;
-	void update(int deltaTime) override;
-	void render(const Transform4x4f& parentTrans) override;
+    void textInput(const char* text) override;
+    bool input(InputConfig* config, Input input) override;
+    void update(int deltaTime) override;
+    void render(const Transform4x4f& parentTrans) override;
 
-	void onFocusGained() override;
-	void onFocusLost() override;
+    void onFocusGained() override;
+    void onFocusLost() override;
 
-	void onSizeChanged() override;
+    void onSizeChanged() override;
 
-	void setValue(const std::string& val) override;
-	std::string getValue() const override;
+    void setValue(const std::string& val) override;
+    std::string getValue() const override;
 
-	inline bool isEditing() const { return mEditing; };
-	inline const std::shared_ptr<Font>& getFont() const { return mFont; }
+    inline bool isEditing() const { return mEditing; };
+    inline const std::shared_ptr<Font>& getFont() const { return mFont; }
 
-	void setCursor(size_t pos);
+    void setCursor(size_t pos);
 
-	virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-	void startEditing();
-	void stopEditing();
+    void startEditing();
+    void stopEditing();
 
-	void onTextChanged();
-	void onCursorChanged();
+    void onTextChanged();
+    void onCursorChanged();
 
-	void updateCursorRepeat(int deltaTime);
-	void moveCursor(int amt);
+    void updateCursorRepeat(int deltaTime);
+    void moveCursor(int amt);
 
-	bool isMultiline();
-	Vector2f getTextAreaPos() const;
-	Vector2f getTextAreaSize() const;
+    bool isMultiline();
+    Vector2f getTextAreaPos() const;
+    Vector2f getTextAreaSize() const;
 
-	std::string mText;
-	std::string mTextOrig;
-	bool mFocused;
-	bool mEditing;
-	unsigned int mCursor; // Cursor position in characters.
+    std::string mText;
+    std::string mTextOrig;
+    bool mFocused;
+    bool mEditing;
+    unsigned int mCursor; // Cursor position in characters.
 
-	int mCursorRepeatTimer;
-	int mCursorRepeatDir;
+    int mCursorRepeatTimer;
+    int mCursorRepeatDir;
 
-	Vector2f mScrollOffset;
+    Vector2f mScrollOffset;
 
-	NinePatchComponent mBox;
+    NinePatchComponent mBox;
 
-	std::shared_ptr<Font> mFont;
-	std::unique_ptr<TextCache> mTextCache;
+    std::shared_ptr<Font> mFont;
+    std::unique_ptr<TextCache> mTextCache;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H

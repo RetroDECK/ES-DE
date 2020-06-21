@@ -1,7 +1,7 @@
 //
-//	GridGameListView.h
+//  GridGameListView.h
 //
-//	Interface that defines a GameListView of the type 'grid'.
+//  Interface that defines a GameListView of the type 'grid'.
 //
 
 #pragma once
@@ -18,70 +18,70 @@
 class GridGameListView : public ISimpleGameListView
 {
 public:
-	GridGameListView(Window* window, FileData* root);
-	virtual ~GridGameListView();
+    GridGameListView(Window* window, FileData* root);
+    virtual ~GridGameListView();
 
-	virtual void onShow() override;
+    virtual void onShow() override;
 
-	virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
+    virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
 
-	virtual FileData* getCursor() override;
-	virtual void setCursor(FileData*) override;
-	virtual FileData* getFirstEntry() override;
-	virtual FileData* getLastEntry() override;
+    virtual FileData* getCursor() override;
+    virtual void setCursor(FileData*) override;
+    virtual FileData* getFirstEntry() override;
+    virtual FileData* getLastEntry() override;
 
-	virtual bool input(InputConfig* config, Input input) override;
+    virtual bool input(InputConfig* config, Input input) override;
 
-	virtual const char* getName() const override { return "grid"; }
+    virtual const char* getName() const override { return "grid"; }
 
-	virtual std::vector<HelpPrompt> getHelpPrompts() override;
-	virtual void launch(FileData* game) override;
+    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    virtual void launch(FileData* game) override;
 
 protected:
-	virtual void update(int deltaTime) override;
-	virtual std::string getQuickSystemSelectRightButton() override;
-	virtual std::string getQuickSystemSelectLeftButton() override;
-	virtual void populateList(const std::vector<FileData*>& files) override;
-	virtual void remove(FileData* game, bool deleteFile) override;
-	virtual void addPlaceholder();
+    virtual void update(int deltaTime) override;
+    virtual std::string getQuickSystemSelectRightButton() override;
+    virtual std::string getQuickSystemSelectLeftButton() override;
+    virtual void populateList(const std::vector<FileData*>& files) override;
+    virtual void remove(FileData* game, bool deleteFile) override;
+    virtual void addPlaceholder();
 
-	ImageGridComponent<FileData*> mGrid;
+    ImageGridComponent<FileData*> mGrid;
 
 private:
-	void updateInfoPanel();
-	const std::string getImagePath(FileData* file);
+    void updateInfoPanel();
+    const std::string getImagePath(FileData* file);
 
-	void initMDLabels();
-	void initMDValues();
+    void initMDLabels();
+    void initMDValues();
 
-	TextComponent mLblRating;
-	TextComponent mLblReleaseDate;
-	TextComponent mLblDeveloper;
-	TextComponent mLblPublisher;
-	TextComponent mLblGenre;
-	TextComponent mLblPlayers;
-	TextComponent mLblLastPlayed;
-	TextComponent mLblPlayCount;
+    TextComponent mLblRating;
+    TextComponent mLblReleaseDate;
+    TextComponent mLblDeveloper;
+    TextComponent mLblPublisher;
+    TextComponent mLblGenre;
+    TextComponent mLblPlayers;
+    TextComponent mLblLastPlayed;
+    TextComponent mLblPlayCount;
 
-	ImageComponent mMarquee;
-	VideoComponent* mVideo;
-	bool mVideoPlaying;
-	ImageComponent mImage;
-	RatingComponent mRating;
-	DateTimeComponent mReleaseDate;
-	TextComponent mDeveloper;
-	TextComponent mPublisher;
-	TextComponent mGenre;
-	TextComponent mPlayers;
-	DateTimeComponent mLastPlayed;
-	TextComponent mPlayCount;
-	TextComponent mName;
+    ImageComponent mMarquee;
+    VideoComponent* mVideo;
+    bool mVideoPlaying;
+    ImageComponent mImage;
+    RatingComponent mRating;
+    DateTimeComponent mReleaseDate;
+    TextComponent mDeveloper;
+    TextComponent mPublisher;
+    TextComponent mGenre;
+    TextComponent mPlayers;
+    DateTimeComponent mLastPlayed;
+    TextComponent mPlayCount;
+    TextComponent mName;
 
-	std::vector<TextComponent*> getMDLabels();
-	std::vector<GuiComponent*> getMDValues();
+    std::vector<TextComponent*> getMDLabels();
+    std::vector<GuiComponent*> getMDValues();
 
-	ScrollableContainer mDescContainer;
-	TextComponent mDescription;
+    ScrollableContainer mDescContainer;
+    TextComponent mDescription;
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
