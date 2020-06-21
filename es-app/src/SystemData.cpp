@@ -49,8 +49,12 @@ SystemData::SystemData(
         mRootFolder = new FileData(FOLDER, mEnvData->mStartPath, mEnvData, this);
         mRootFolder->metadata.set("name", mFullName);
 
-        if (!Settings::getInstance()->getBool("ParseGamelistOnly"))
-            populateFolder(mRootFolder);
+        if (!Settings::getInstance()->getBool("ParseGamelistOnly")) {
+            // If there was an error populating the folder or if there were no games found,
+            // then don't continue with any additional process steps for this system.
+            if (!populateFolder(mRootFolder))
+                return;
+        }
 
         if (!Settings::getInstance()->getBool("IgnoreGamelist"))
             parseGamelist(this);
@@ -89,12 +93,12 @@ void SystemData::setIsGameSystemStatus()
     mIsGameSystem = (mName != "retropie");
 }
 
-void SystemData::populateFolder(FileData* folder)
+bool SystemData::populateFolder(FileData* folder)
 {
     const std::string& folderPath = folder->getPath();
     if (!Utils::FileSystem::isDirectory(folderPath)) {
         LOG(LogWarning) << "Error - folder with path \"" << folderPath << "\" is not a directory!";
-        return;
+        return false;
     }
 
     // Make sure that this isn't a symlink to an object we already have.
@@ -103,7 +107,7 @@ void SystemData::populateFolder(FileData* folder)
         // path, it's going to create a recursive loop. Make sure to avoid this.
         if (folderPath.find(Utils::FileSystem::getCanonicalPath(folderPath)) == 0) {
             LOG(LogWarning) << "Skipping infinitely recursive symlink \"" << folderPath << "\"";
-            return;
+            return false;
         }
     }
 
@@ -112,6 +116,11 @@ void SystemData::populateFolder(FileData* folder)
     bool isGame;
     bool showHidden = Settings::getInstance()->getBool("ShowHiddenFiles");
     Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(folderPath);
+
+    // If system directory exists but contain no games, return as error.
+    if (dirContent.size() == 0)
+        return false;
+
     for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
             it != dirContent.cend(); ++it) {
         filePath = *it;
@@ -153,6 +162,7 @@ void SystemData::populateFolder(FileData* folder)
                 folder->addChild(newFolder);
         }
     }
+    return true;
 }
 
 void SystemData::indexAllGameFilters(const FileData* folder)

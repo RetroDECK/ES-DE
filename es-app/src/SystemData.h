@@ -109,7 +109,7 @@ private:
     std::string mThemeFolder;
     std::shared_ptr<ThemeData> mTheme;
 
-    void populateFolder(FileData* folder);
+    bool populateFolder(FileData* folder);
     void indexAllGameFilters(const FileData* folder);
     void setIsGameSystemStatus();
     void writeMetaData();
