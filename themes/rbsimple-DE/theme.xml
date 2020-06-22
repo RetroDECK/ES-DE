@@ -7,7 +7,7 @@ originally based on: "recalbox-multi"
 -->
 
 <theme>
-    <formatVersion>5</formatVersion>
+    <formatVersion>6</formatVersion>
     <include>./colors.xml</include>
     <include>./navigationsounds.xml</include>
 

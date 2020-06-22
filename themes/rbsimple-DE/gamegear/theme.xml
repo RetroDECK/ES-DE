@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>5</formatVersion>
+    <formatVersion>6</formatVersion>
     <include>./../theme.xml</include>
     <include>./colors.xml</include>
     <include>./systeminfo.xml</include>

@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>5</formatVersion>
+    <formatVersion>6</formatVersion>
 
 <view name="system, basic, detailed, video, grid">
         <image name="band1" extra="true">

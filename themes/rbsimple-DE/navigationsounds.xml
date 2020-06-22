@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>5</formatVersion>
+    <formatVersion>6</formatVersion>
 
     <feature supported="navigationsounds">
         <view name="all">

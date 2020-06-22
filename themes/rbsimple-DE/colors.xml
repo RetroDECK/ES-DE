@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>5</formatVersion>
+    <formatVersion>6</formatVersion>
 
     <view name="system">
         <text name="info1, info2, info3, info4, info5, info6, info7,
