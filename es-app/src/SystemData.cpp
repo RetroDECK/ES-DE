@@ -117,7 +117,7 @@ bool SystemData::populateFolder(FileData* folder)
     bool showHidden = Settings::getInstance()->getBool("ShowHiddenFiles");
     Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(folderPath);
 
-    // If system directory exists but contain no games, return as error.
+    // If system directory exists but contains no games, return as error.
     if (dirContent.size() == 0)
         return false;
 
@@ -380,7 +380,7 @@ std::string SystemData::getConfigPath(bool forWrite)
     if (forWrite || Utils::FileSystem::exists(path))
         return path;
 
-    return "/etc/emulationstation/es_systems.cfg";
+    return "";
 }
 
 bool SystemData::isVisible()
@@ -430,13 +430,15 @@ std::string SystemData::getGamelistPath(bool forWrite) const
 
     filePath = Utils::FileSystem::getHomePath() + "/.emulationstation/gamelists/" +
             mName + "/gamelist.xml";
-    // Make sure the directory exists if we're going to write to it, or crashes will happen.
+
+    // Make sure the directory exists if we're going to write to it,
+    // or crashes will happen.
     if (forWrite)
         Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(filePath));
     if (forWrite || Utils::FileSystem::exists(filePath))
         return filePath;
 
-    return "/etc/emulationstation/gamelists/" + mName + "/gamelist.xml";
+    return "";
 }
 
 std::string SystemData::getThemePath() const

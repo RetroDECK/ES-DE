@@ -1,27 +1,27 @@
 Gamelists
 =========
 
-The gamelist.xml file for a system defines metadata for a system's games, such as a name, image (like a screenshot or box art), description, release date, and rating.
+The gamelist.xml file for a system defines metadata for a system's games, such as a name, description, release date, and rating.
 
-ES will check three places for a gamelist.xml in the following order, using the first one it finds:
-* `[SYSTEM_PATH]/gamelist.xml`
+ES only checks for the gamelist.xml files in the user's home directory:
 * `~/.emulationstation/gamelists/[SYSTEM_NAME]/gamelist.xml`
-* `/etc/emulationstation/gamelists/[SYSTEM_NAME]/gamelist.xml`
 
 An example gamelist.xml:
 ```xml
 <gameList>
 	<game>
-		<path>/home/pi/ROMs/nes/mm2.nes</path>
+		<path>./mm2.nes</path>
 		<name>Mega Man 2</name>
 		<desc>Mega Man 2 is a classic NES game which follows Mega Man as he murders eight robot masters in cold blood.</desc>
-		<image>~/.emulationstation/downloaded_images/nes/Mega Man 2-image.png</image>
 	</game>
 </gameList>
 ```
 
 Everything is enclosed in a `<gameList>` tag.  The information for each game or folder is enclosed in a corresponding tag (`<game>` or `<folder>`).  Each piece of metadata is encoded as a string.
 
+As of EmulationStation Desktop Edition v1.0.0, there are no longer any references to game media files in gamelist.xml. Instead a media directory is used where the images and videos are simply matched against the ROM file names. As well, no absolute paths are used for the ROM files any longer. Instead a global ROM directory is configured and there are only relative references in the gamelist.xml files, starting with `./` as can be seen in the example above.
+
+Please refer to [INSTALL.md](INSTALL.md) for more information on how the ROM and media directories are configured.
 
 Reference
 =========

@@ -20,16 +20,17 @@ v1.0.0
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
 * Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
+* No more attempts to open files directly under /etc, instead only the install prefix directory and the home directory are used
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * License files included for all the libraries and resources that are bundled with the application
-* Updated the MAME ROM index files to include ROMs up to MAME version 0.221
+* Updated the MAME ROM index files to include ROMs up to MAME version 0.221 (and included new scripts to easily generate these index files)
 
 ### Bug fixes
 
 * Metadata editor insisted that changes were made although nothing was updated
 * Game images were sometimes scaled incorrectly
 * Non-transparent favorite icons were not rendered correctly
-* Restart and power-off menu entries not working (i.e. on a desktop OS)
+* Restart and power-off menu entries not working (at least on my desktop OS)
 * Toggling the screensaver didn't work as expected
 * Lots and lots of small bugs and inconsistencies fixed

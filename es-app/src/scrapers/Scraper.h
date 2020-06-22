@@ -197,9 +197,9 @@ private:
     int mMaxHeight;
 };
 
-// About the same as:
-// "~/.emulationstation/downloaded_images/[system_name]/[game_name].[url's extension]".
-// Will create the "downloaded_images" and "subdirectory" directories if they do not exist.
+// Downloads to the home directory, using this subdirectory structure:
+// ".emulationstation/downloaded_media/[system_name]/[media_type]/[game_name].[file_extension]".
+// The subdirectories are automatically created if they do not exist.
 std::string getSaveAsPath(const ScraperSearchParams& params,
         const std::string& filetypeSubdirectory, const std::string& url);
 
