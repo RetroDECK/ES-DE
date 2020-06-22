@@ -1,7 +1,9 @@
 //
 //  ThemeData.h
 //
-//  Theme handling.
+//  Finds available themes on the file system and loads these,
+//  including the parsing of individual theme components
+//  (includes, features, variables, views, elements).
 //
 
 #pragma once
@@ -148,7 +150,6 @@ private:
     };
 
 public:
-
     ThemeData();
 
     // Throws ThemeException.

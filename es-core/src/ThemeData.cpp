@@ -1,7 +1,9 @@
 //
 //  ThemeData.cpp
 //
-//  Theme handling.
+//  Finds available themes on the file system and loads these,
+//  including the parsing of individual theme components
+//  (includes, features, variables, views, elements).
 //
 
 #include "ThemeData.h"
@@ -416,7 +418,6 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
         }
     }
 }
-
 
 void ThemeData::parseElement(const pugi::xml_node& root,
         const std::map<std::string, ElementPropertyType>& typeMap, ThemeElement& element)

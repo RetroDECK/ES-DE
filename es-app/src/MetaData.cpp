@@ -88,7 +88,6 @@ MetaDataList MetaDataList::createFromXML(MetaDataListType type,
             mdl.set(iter->key, iter->defaultValue);
         }
     }
-
     return mdl;
 }
 

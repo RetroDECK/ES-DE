@@ -71,8 +71,6 @@ public:
     // An example will be written if the file doesn't exist.
     static bool loadConfig();
     static void writeExampleConfig(const std::string& path);
-    // If forWrite, will only return ~/.emulationstation/es_systems.cfg,
-    // never /etc/emulationstation/es_systems.cfg.
     static std::string getConfigPath(bool forWrite);
 
     static std::vector<SystemData*> sSystemVector;

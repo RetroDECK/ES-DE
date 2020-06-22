@@ -31,4 +31,5 @@ v1.0.0
 * Game images were sometimes scaled incorrectly
 * Non-transparent favorite icons were not rendered correctly
 * Restart and power-off menu entries not working (i.e. on a desktop OS)
+* Toggling the screensaver didn't work as expected
 * Lots and lots of small bugs and inconsistencies fixed
