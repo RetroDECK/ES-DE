@@ -36,7 +36,7 @@ There are two places ES can load theme sets from:
 * `[HOME]/.emulationstation/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 * `[INSTALLATION PATH]/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 
-An example of an installation path would be: \
+An example installation path would be: \
 `/usr/local/share/emulationstation/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 
 `[SYSTEM_THEME]` is the `<theme>` tag for the system, as defined in `es_systems.cfg`.  If the `<theme>` tag is not set, ES will use the system's `<name>`.
@@ -273,20 +273,22 @@ Just remember, *this only works if the elements have the same type!*
 
 You can now change the order in which elements are rendered by setting `zIndex` values.  Default values correspond to the default rendering order while allowing elements to easily be shifted without having to set `zIndex` values for every element.  Elements will be rendered in order from smallest z-index to largest.
 
+
+
 #### Navigation sounds
 
 The navigation sounds are configured globally per theme, so it needs to be defined as a feature and with the view set to the special 'all' category.
-It's recommended to put these elements in a separate file and include it from the main theme file (e.g. <include>./navigationsounds.xml</include>).
+It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`).
 There are seven different navigation sounds that can be configured. The names as well as the element structure should be self-explanatory based
 on the example below.
 Starting EmulationStation with the --debug flag will provide feedback on whether the navigation sound elements were read correctly, as well as
 providing an error message if any of the .wav sound files could not be loaded.
 
-Example debug output:
-May 12 21:12:37 lvl2:   Sound::getFromTheme() looking for [all.selectSound]
+Example debug output: \
+May 12 21:12:37 lvl2:   Sound::getFromTheme() looking for [all.selectSound] \
 May 12 21:12:37 lvl2:   [selectSound] found, ready to play sound file
 
-Example navigationsounds.xml, to be included from the main theme file:
+Example `navigationsounds.xml`, to be included from the main theme file:
 
 ```xml
 <theme>
@@ -887,7 +889,13 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 
 The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
 
-[*Check out the "official" themes for some more examples!*](http://aloshi.com/emulationstation#themes)
 
+To see some examples of EmulationStation themes, the following resources are recommended:
 
-This file was last updated for EmulationStation Desktop Edition v1.0.0
+https://aloshi.com/emulationstation#themes
+
+https://github.com/RetroPie
+
+https://gitlab.com/recalbox/recalbox-themes
+
+https://wiki.batocera.org/themes

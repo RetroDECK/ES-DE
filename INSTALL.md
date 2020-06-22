@@ -64,33 +64,39 @@ Configuring
 
 
 **~/.emulationstation/es_systems.cfg:**
-EmulationStation Desktop Edition ships with a comprehensive es_systems.cfg configuration file, and as the logic is to use a %ROMPATH% variable to locate the ROM files (with a corresponding setting in es_settings.cfg), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust es_systems.cfg file if required.
+
+EmulationStation Desktop Edition ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust es_systems.cfg file if required.
 
 Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template directory of the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates`.
 
-The template file will be copied to `~/.emulationstation/es_systems.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%`
+The template file will be copied to `~/.emulationstation/es_systems.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows.
 
 **~/.emulationstation/es_settings.cfg:**
-When first run, an example configuration file will be created at `~/.emulationstation/es_settings.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows. This file contains all the settings supported by ES, at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES to update all the necessary settings. The exception would be the ROMDirectory setting as ES won't start if no ROM files are found.
+
+When ES is first run, an example configuration file will be created as `~/.emulationstation/es_settings.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows. \
+This file contains all the settings supported by ES, at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES to update all the necessary settings.
+
+The exception would be the ROMDirectory setting as ES won't start if no ROM files are found.
 
 **Setting the ROM directory:**
 
 By default, ES looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the systems, for example:
 
-```bash
+```
 user@computer:~ROMs$ ls -1
 arcade
 megadrive
 pcengine
 ```
 
-However, if you save your ROMs in another directory, you need to configure the ROMDirectory setting in es_settings.cfg.\
+However, if you've saved your ROMs to another directory, you need to configure the ROMDirectory setting in es_settings.cfg.\
 Here's an example:
-'<string name="ROMDirectory" value="~/games/roms" />'
 
-Keep in mind though that you still need to group the ROMs into directories corresponding to the system names. Well at least if you want to use the default es_systems.cfg file. See below how to customize that file, which gives you full control over the location of the ROMs.
+`<string name="ROMDirectory" value="~/games/roms" />`
 
-**Keep in mind you'll have to set up your emulator separately from EmulationStation!**
+Keep in mind though that you still need to group the ROMs into directories corresponding to the system names. Well at least if you want to use the default `es_systems.cfg` file. See below how to customize that file, which gives you full control over the location of the ROMs.
+
+**Keep in mind that you'll have to set up your emulator separately from EmulationStation!**
 
 **~/.emulationstation/es_input.cfg:**
 When you first start EmulationStation, you will be prompted to configure an input device. The process is thus:
@@ -135,8 +141,7 @@ You can use `--help` or `-h` to view a list of command-line options. Briefly out
 
 As long as ES hasn't frozen, you can always press F4 to close the application.
 
-As you can see above, you can override the home directory path using the `--home` flag. \
-So by running for instance the command `emulationstation --home ~/games/emulation` ES will look for all the configuration files under `~/games/emulation/.emulationstation`.
+As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES will use `~/games/emulation/.emulationstation` as its base directory.
 
 
 Writing an es_systems.cfg
@@ -145,13 +150,13 @@ Writing an es_systems.cfg
 The `es_systems.cfg` file contains the system configuration data for EmulationStation, written in XML. \
 This tells EmulationStation what systems you have, what platform they correspond to (for scraping), and where the games are located.
 
-ES will only check in your home directory for an es_systems.cfg file, for example `~/.emulationstation/es_systems.cfg`.
+ES will only check in your home directory for an `es_systems.cfg` file, for example `~/.emulationstation/es_systems.cfg`.
 
-The order EmulationStation displays systems reflects the order you define them in, in the case of the default es_systems.cfg file, the systems are listed in alphabetical order.
+The order EmulationStation displays systems reflects the order you define them in. In the case of the default `es_systems.cfg` file, the systems are listed in alphabetical order.
 
 **NOTE:** A system *must* have at least one game present in its "path" directory, or ES will ignore it! If no valid systems are found, ES will report an error and quit!
 
-Here's an overview of the es_systems.cfg file layout:
+Here's an overview of the `es_systems.cfg` file layout:
 
 ```xml
 <?xml version="1.0"?>
@@ -166,7 +171,7 @@ Here's an overview of the es_systems.cfg file layout:
         <fullname>Super Nintendo Entertainment System</fullname>
 
         <!-- The path to start searching for ROMs in. '~' will be expanded to $HOME or %HOMEPATH%, depending on platform.
-        The optional %ROMPATH% variable will expand to the setting defined for ROMDirectory in es_settings.cfg.
+        The optional %ROMPATH% variable will expand to the path defined for the setting ROMDirectory in es_settings.cfg.
         All subdirectories (and non-recursive links) will be included. -->
         <path>%ROMPATH%/snes</path>
 
@@ -199,15 +204,14 @@ The following variables are replaced by ES in launch commands:
 
 `%ROM_RAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
 
-See [SYSTEMS.md](SYSTEMS.md) for some live examples in EmulationStation.
-
 
 gamelist.xml
 ============
 
 The gamelist.xml file for a system defines metadata for games, such as a name, description, release date, and rating.
 
-As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game art is configurable either manually in es_settings.cfg or via the GUI. If configured manually in es_settings.cfg, it looks something like this:
+As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the `gamelist.xml` files. Instead the application will look for any media matching the ROM filename. The media path where to look for game art is configurable either manually in `es_settings.cfg` or via the GUI. If configured manually in `es_settings.cfg`, it looks something like this:
+
 `<string name="MediaDirectory" value="~/games/images/emulationstation" />`
 
 The default game media directory is `~/.emulationstation/downloaded_media`.

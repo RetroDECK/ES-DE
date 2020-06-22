@@ -1,3 +1,8 @@
+
+**NOTE: This information is outdated and the SYSTEMS.md file will probably be removed from the repository in the near future.**
+
+
+
 # Systems
 
 This outlines how to add support for many different systems into EmulationStation through configuration of `es_systems.cfg`.

@@ -3,8 +3,9 @@ Gamelists
 
 The gamelist.xml file for a system defines metadata for a system's games, such as a name, description, release date, and rating.
 
-ES only checks for the gamelist.xml files in the user's home directory:
-* `~/.emulationstation/gamelists/[SYSTEM_NAME]/gamelist.xml`
+ES only checks for the `gamelist.xml` files in the user's home directory:
+
+`~/.emulationstation/gamelists/[SYSTEM_NAME]/gamelist.xml`
 
 An example gamelist.xml:
 ```xml
@@ -19,7 +20,7 @@ An example gamelist.xml:
 
 Everything is enclosed in a `<gameList>` tag.  The information for each game or folder is enclosed in a corresponding tag (`<game>` or `<folder>`).  Each piece of metadata is encoded as a string.
 
-As of EmulationStation Desktop Edition v1.0.0, there are no longer any references to game media files in gamelist.xml. Instead a media directory is used where the images and videos are simply matched against the ROM file names. As well, no absolute paths are used for the ROM files any longer. Instead a global ROM directory is configured and there are only relative references in the gamelist.xml files, starting with `./` as can be seen in the example above.
+As of EmulationStation Desktop Edition v1.0.0, there are no longer any references to game media files in `gamelist.xml`. Instead a media directory is used where the images and videos are simply matched against the ROM file names. As well, no absolute paths are used for the ROM files any longer. Instead a global ROM directory is configured and there are only relative references in the `gamelist.xml` files, starting with `./` as can be seen in the example above.
 
 Please refer to [INSTALL.md](INSTALL.md) for more information on how the ROM and media directories are configured.
 
