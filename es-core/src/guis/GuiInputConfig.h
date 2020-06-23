@@ -1,3 +1,9 @@
+//
+//  GuiInputConfig.h
+//
+//  Input device configuration GUI (for keyboards, joysticks and gamepads).
+//
+
 #pragma once
 #ifndef ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 #define ES_CORE_GUIS_GUI_INPUT_CONFIG_H
@@ -13,46 +19,53 @@ class TextComponent;
 class GuiInputConfig : public GuiComponent
 {
 public:
-	GuiInputConfig(Window* window, InputConfig* target, bool reconfigureAll, const std::function<void()>& okCallback);
+    GuiInputConfig(Window* window, InputConfig* target, bool reconfigureAll,
+            const std::function<void()>& okCallback);
 
-	void update(int deltaTime) override;
-
-	void onSizeChanged() override;
+    void update(int deltaTime) override;
+    void onSizeChanged() override;
 
 private:
-	void error(const std::shared_ptr<TextComponent>& text, const std::string& msg); // set text to "msg" + not greyed out
+    // Set text to "msg" + not greyed out.
+    void error(const std::shared_ptr<TextComponent>& text, const std::string& msg);
 
-	void setPress(const std::shared_ptr<TextComponent>& text); // set text to "PRESS ANYTHING" + not greyed out
-	void setNotDefined(const std::shared_ptr<TextComponent>& text); // set text to -NOT DEFINED- + greyed out
-	void setAssignedTo(const std::shared_ptr<TextComponent>& text, Input input); // set text to "BUTTON 2"/"AXIS 2+", etc.
+    // Set text to "PRESS ANYTHING" + not greyed out.
+    void setPress(const std::shared_ptr<TextComponent>& text);
+    // Set text to -NOT DEFINED- + greyed out.
+    void setNotDefined(const std::shared_ptr<TextComponent>& text);
+    // Set text to "BUTTON 2"/"AXIS 2+", etc.
+    void setAssignedTo(const std::shared_ptr<TextComponent>& text, Input input);
 
-	bool assign(Input input, int inputId);
-	void clearAssignment(int inputId);
-	bool filterTrigger(Input input, InputConfig* config, int inputId);
+    bool assign(Input input, int inputId);
+    void clearAssignment(int inputId);
+    bool filterTrigger(Input input, InputConfig* config, int inputId);
 
-	void rowDone();
+    void rowDone();
 
-	NinePatchComponent mBackground;
-	ComponentGrid mGrid;
+    NinePatchComponent mBackground;
+    ComponentGrid mGrid;
 
-	std::shared_ptr<TextComponent> mTitle;
-	std::shared_ptr<TextComponent> mSubtitle1;
-	std::shared_ptr<TextComponent> mSubtitle2;
-	std::shared_ptr<ComponentList> mList;
-	std::vector< std::shared_ptr<TextComponent> > mMappings;
-	std::shared_ptr<ComponentGrid> mButtonGrid;
+    std::shared_ptr<TextComponent> mTitle;
+    std::shared_ptr<TextComponent> mSubtitle1;
+    std::shared_ptr<TextComponent> mSubtitle2;
+    std::shared_ptr<ComponentList> mList;
+    std::vector< std::shared_ptr<TextComponent> > mMappings;
+    std::shared_ptr<ComponentGrid> mButtonGrid;
 
-	InputConfig* mTargetConfig;
-	bool mConfiguringRow; // next input captured by mList will be interpretted as a remap
-	bool mConfiguringAll; // move the cursor down after configuring a row and start configuring the next row until we reach the bottom
+    InputConfig* mTargetConfig;
+    // Next input captured by mList will be interpretted as a remap.
+    bool mConfiguringRow;
+    // Move the cursor down after configuring a row and start configuring
+    // the next row until we reach the bottom.
+    bool mConfiguringAll;
 
-	bool mHoldingInput;
-	Input mHeldInput;
-	int mHeldTime;
-	int mHeldInputId;
-	bool mSkipAxis;
+    bool mHoldingInput;
+    Input mHeldInput;
+    int mHeldTime;
+    int mHeldInputId;
+    bool mSkipAxis;
 
-	BusyComponent mBusyAnim;
+    BusyComponent mBusyAnim;
 };
 
 #endif // ES_CORE_GUIS_GUI_INPUT_CONFIG_H

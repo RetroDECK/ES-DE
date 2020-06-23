@@ -2,6 +2,8 @@
 //  FileSystemUtil.cpp
 //
 //  Low-level filesystem functions.
+//  Resolve relative paths, resolve symlinks, create directories,
+//  remove files etc.
 //
 
 #define _FILE_OFFSET_BITS 64
@@ -100,10 +102,10 @@ namespace Utils
                 #else
                 DIR* dir = opendir(path.c_str());
 
-                if (dir != NULL) {
+                if (dir != nullptr) {
                     struct dirent* entry;
                     // Loop over all files in the directory.
-                    while ((entry = readdir(dir)) != NULL) {
+                    while ((entry = readdir(dir)) != nullptr) {
                         std::string name(entry->d_name);
 
                         // Ignore "." and ".."

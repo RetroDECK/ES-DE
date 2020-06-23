@@ -1,7 +1,7 @@
 //
 //  PlatformId.h
 //
-//  Index of all supported platforms.
+//  Index of all supported systems/platforms.
 //
 
 #include "PlatformId.h"
@@ -89,7 +89,7 @@ namespace PlatformIds
 
     PlatformId getPlatformId(const char* str)
     {
-        if (str == NULL)
+        if (str == nullptr)
             return PLATFORM_UNKNOWN;
 
         for (unsigned int i = 1; i < PLATFORM_COUNT; i++) {

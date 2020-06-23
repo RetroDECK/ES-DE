@@ -304,7 +304,7 @@ FileData* FileData::getSourceFileData()
 void FileData::addChild(FileData* file)
 {
     assert(mType == FOLDER);
-    assert(file->getParent() == NULL);
+    assert(file->getParent() == nullptr);
 
     const std::string key = file->getKey();
     if (mChildrenByFilename.find(key) == mChildrenByFilename.cend()) {
@@ -321,7 +321,7 @@ void FileData::removeChild(FileData* file)
     mChildrenByFilename.erase(file->getKey());
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
         if (*it == file) {
-            file->mParent = NULL;
+            file->mParent = nullptr;
             mChildren.erase(it);
             return;
         }
@@ -491,7 +491,7 @@ CollectionFileData::CollectionFileData(FileData* file, SystemData* system)
     // We use this constructor to create a clone of the filedata, and change its system.
     mSourceFileData = file->getSourceFileData();
     refreshMetadata();
-    mParent = NULL;
+    mParent = nullptr;
     metadata = mSourceFileData->metadata;
     mSystemName = mSourceFileData->getSystem()->getName();
 }
@@ -501,7 +501,7 @@ CollectionFileData::~CollectionFileData()
     // Need to remove collection file data at the collection object destructor.
     if (mParent)
         mParent->removeChild(this);
-    mParent = NULL;
+    mParent = nullptr;
 }
 
 std::string CollectionFileData::getKey() {

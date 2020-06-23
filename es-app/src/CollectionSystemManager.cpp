@@ -75,8 +75,8 @@ CollectionSystemManager::CollectionSystemManager(Window* window) : mWindow(windo
 
     mIsEditingCustom = false;
     mEditingCollection = "Favorites";
-    mEditingCollectionSystemData = NULL;
-    mCustomCollectionsBundle = NULL;
+    mEditingCollectionSystemData = nullptr;
+    mCustomCollectionsBundle = nullptr;
 }
 
 CollectionSystemManager::~CollectionSystemManager()

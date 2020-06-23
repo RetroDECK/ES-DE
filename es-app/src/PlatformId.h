@@ -1,7 +1,7 @@
 //
 //  PlatformId.h
 //
-//  Index of all supported platforms.
+//  Index of all supported systems/platforms.
 //
 
 #pragma once

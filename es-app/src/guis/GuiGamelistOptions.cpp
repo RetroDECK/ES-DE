@@ -238,7 +238,7 @@ void GuiGamelistOptions::openMetaDataEd()
     std::function<void()> deleteBtnFunc;
 
     if (file->getType() == FOLDER) {
-        deleteBtnFunc = NULL;
+        deleteBtnFunc = nullptr;
     }
     else {
         deleteBtnFunc = [this, file] {

@@ -455,7 +455,7 @@ std::string InputManager::getTemporaryConfigPath()
 
 bool InputManager::initialized() const
 {
-    return mKeyboardInputConfig != NULL;
+    return mKeyboardInputConfig != nullptr;
 }
 
 int InputManager::getNumConfiguredDevices()

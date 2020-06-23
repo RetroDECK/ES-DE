@@ -270,7 +270,7 @@ bool SystemData::loadConfig()
 
             // If there appears to be an actual platform ID supplied
             // but it didn't match the list, generate a warning.
-            if (str != NULL && str[0] != '\0' && platformId == PlatformIds::PLATFORM_UNKNOWN)
+            if (str != nullptr && str[0] != '\0' && platformId == PlatformIds::PLATFORM_UNKNOWN)
                 LOG(LogWarning) << "  Unknown platform for system \"" << name << "\" (platform \""
                         << str << "\" from list \"" << platformList << "\")";
             else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
@@ -499,7 +499,7 @@ SystemData* SystemData::getRandomSystem()
     }
 
     // If we end up here, there is no valid system.
-    return NULL;
+    return nullptr;
 }
 
 FileData* SystemData::getRandomGame()
@@ -510,7 +510,7 @@ FileData* SystemData::getRandomGame()
 
     // Get a random number in range.
     if (total == 0)
-        return NULL;
+        return nullptr;
     target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
 
     return list.at(target);

@@ -18,14 +18,13 @@ Some key points:
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
 * Use K&R placements of braces, read the Linux Kernel coding style document for clarifications
 * Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while ()` etc.
-* Use `std::string` instead of `char *` or `char []` unless there is a very specific reason requiring the latter
+* Use `std::string` instead of `char *` or `char []` unless there is a specific reason requiring the latter
 * If the arguments (and initializer list) for a function or class exceeds 4 items, arrange them vertically to make the code easier to read
 * Always declare one variable per line, never combine multiple declarations of the same type
 * Name local variables with the first word in small letters and the proceeding words starting with capital letters, e.g. myExampleVariable
 * Name member variables starting with a small 'm', e.g. mMyMemberVariable
-* Don't pad variable declarations with spaces to make them align in columns, I'm sure it's well intended but it looks terrible
 * Use the same naming convention for functions as for local variables, e.g. someFunction()
-* Inline functions can be used but don't overdo it by using them for functions that won't be called very frequently
+* Inline functions makes perfect sense to use, but don't overdo it by using them for functions that won't be called very frequently
 * Never put more than one statement on a single line, except for lambda expressions
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
 * For the rest, check the code and have fun! :)
@@ -34,7 +33,7 @@ Some key points:
 Development Environment
 =======================
 
-EmulationStation-DE is developed and compiled using GCC and GDB. \
+EmulationStation-DE is developed and compiled using GCC and GDB. Any code editor can be used of course, I use [VSCodium](https://vscodium.com). \
 For debugging purposes, starting the application like this could make sense:
 
 `emulationstation --windowed --debug --resolution 1280 720`

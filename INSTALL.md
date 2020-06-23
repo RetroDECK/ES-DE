@@ -8,35 +8,35 @@ The code has a few dependencies. For building, you'll need CMake and development
 
 **On Debian/Ubuntu:**
 All of the required packages can be easily installed with `apt-get`:
-```bash
-sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev rapidjson-dev \
-  libasound2-dev libgl1-mesa-dev build-essential cmake fonts-droid-fallback libvlc-dev \
+```
+sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev rapidjson-dev
+  libasound2-dev libgl1-mesa-dev build-essential cmake fonts-droid-fallback libvlc-dev
   libvlccore-dev vlc-bin
 ```
 **On Fedora:**
 For this operating system, use `dnf` (with rpmfusion activated) :
-```bash
-sudo dnf install SDL2-devel freeimage-devel freetype-devel curl-devel \
-  alsa-lib-devel mesa-libGL-devel cmake \
+```
+sudo dnf install SDL2-devel freeimage-devel freetype-devel curl-devel
+  alsa-lib-devel mesa-libGL-devel cmake
   vlc-devel rapidjson-devel
 ```
 
 To checkout the source, run the following:
 
-```bash
+```
 git clone https://gitlab.com/leonstyhre/emulationstation-de
 ```
 
-Then generate and build the Makefile using CMake:
+Then generate the Makefile and build the software like this:
 
-```bash
+```
 cd emulationstation-de
 cmake -DOpenGL_GL_PREFERENCE=GLVND .
 make
 ```
 
-NOTE: to generate a `Debug` build on Unix/Linux, run this:
-```bash
+NOTE: to generate a `Debug` build on Unix/Linux, run this instead:
+```
 cmake -DOpenGL_GL_PREFERENCE=GLVND -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
@@ -65,9 +65,9 @@ Configuring
 
 **~/.emulationstation/es_systems.cfg:**
 
-EmulationStation Desktop Edition ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust es_systems.cfg file if required.
+EmulationStation Desktop Edition ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
 
-Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template directory of the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates`.
+Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates`.
 
 The template file will be copied to `~/.emulationstation/es_systems.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows.
 
@@ -80,7 +80,7 @@ The exception would be the ROMDirectory setting as ES won't start if no ROM file
 
 **Setting the ROM directory:**
 
-By default, ES looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the systems, for example:
+By default, ES looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
 
 ```
 user@computer:~ROMs$ ls -1
@@ -99,6 +99,7 @@ Keep in mind though that you still need to group the ROMs into directories corre
 **Keep in mind that you'll have to set up your emulator separately from EmulationStation!**
 
 **~/.emulationstation/es_input.cfg:**
+
 When you first start EmulationStation, you will be prompted to configure an input device. The process is thus:
 
 1. Hold a button on the device you want to configure.  This includes the keyboard.
@@ -116,7 +117,10 @@ The new configuration will be added to the `~/.emulationstation/es_input.cfg` fi
 **If your controller stops working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next run.**
 
 
-You can use `--help` or `-h` to view a list of command-line options. Briefly outlined here:
+**Command line arguments:**
+
+You can use `--help` or `-h` to view a list of command line options. Briefly outlined here:
+
 ```
 --resolution [width] [height]   Try to force a particular resolution
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
@@ -147,16 +151,16 @@ As you can see above, you can override the home directory path using the `--home
 Writing an es_systems.cfg
 =========================
 
-The `es_systems.cfg` file contains the system configuration data for EmulationStation, written in XML. \
+The es_systems.cfg file contains the system configuration data for EmulationStation, written in XML format. \
 This tells EmulationStation what systems you have, what platform they correspond to (for scraping), and where the games are located.
 
-ES will only check in your home directory for an `es_systems.cfg` file, for example `~/.emulationstation/es_systems.cfg`.
+ES will only check in your home directory for an es_systems.cfg file, for example `~/.emulationstation/es_systems.cfg`.
 
-The order EmulationStation displays systems reflects the order you define them in. In the case of the default `es_systems.cfg` file, the systems are listed in alphabetical order.
+The order EmulationStation displays systems reflects the order you define them in. In the case of the default es_systems.cfg file, the systems are listed in alphabetical order.
 
 **NOTE:** A system *must* have at least one game present in its "path" directory, or ES will ignore it! If no valid systems are found, ES will report an error and quit!
 
-Here's an overview of the `es_systems.cfg` file layout:
+Here's an overview of the file layout:
 
 ```xml
 <?xml version="1.0"?>
@@ -194,15 +198,17 @@ Here's an overview of the `es_systems.cfg` file layout:
 </systemList>
 ```
 
-The following variables are replaced by ES in launch commands:
-
-`%ROMPATH%` - Replaced with the path defined for the setting ROMDirectory in es_settings.cfg.
+The following variables are expanded by ES for the `command` tag:
 
 `%ROM%` - Replaced with absolute path to the selected ROM, with most Bash special characters escaped with a backslash.
 
-`%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of "/foo/bar.rom", this tag would be "bar". This tag is useful for setting up AdvanceMAME.
+`%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
 `%ROM_RAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
+
+For the `path` tag, the following variable is expanded by ES:
+
+`%ROMPATH%` - Replaced with the path defined for the setting ROMDirectory in `es_settings.cfg`.
 
 
 gamelist.xml
@@ -210,7 +216,7 @@ gamelist.xml
 
 The gamelist.xml file for a system defines metadata for games, such as a name, description, release date, and rating.
 
-As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the `gamelist.xml` files. Instead the application will look for any media matching the ROM filename. The media path where to look for game art is configurable either manually in `es_settings.cfg` or via the GUI. If configured manually in `es_settings.cfg`, it looks something like this:
+As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game art is configurable either manually in `es_settings.cfg` or via the GUI. If configured manually in es_settings.cfg, it looks something like this:
 
 `<string name="MediaDirectory" value="~/games/images/emulationstation" />`
 

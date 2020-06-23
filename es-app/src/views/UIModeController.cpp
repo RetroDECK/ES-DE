@@ -12,11 +12,11 @@
 #include "Log.h"
 #include "Window.h"
 
-UIModeController *  UIModeController::sInstance = NULL;
+UIModeController *  UIModeController::sInstance = nullptr;
 
 UIModeController * UIModeController::getInstance()
 {
-    if (sInstance == NULL)
+    if (sInstance == nullptr)
         sInstance = new UIModeController();
 
     return sInstance;

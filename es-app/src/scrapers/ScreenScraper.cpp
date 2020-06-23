@@ -122,7 +122,7 @@ pugi::xml_node find_child_by_attribute_list(const pugi::xml_node& node_parent,
         }
     }
 
-    return pugi::xml_node(NULL);
+    return pugi::xml_node(nullptr);
 }
 
 void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
@@ -307,7 +307,7 @@ void ScreenScraperRequest::processMedia(
         std::string& fileFormat,
         std::string region)
 {
-    pugi::xml_node art = pugi::xml_node(NULL);
+    pugi::xml_node art = pugi::xml_node(nullptr);
 
     // Do an XPath query for media[type='$media_type'], then filter by region.
     // We need to do this because any child of 'medias' has the form

@@ -2,6 +2,8 @@
 //  FileSystemUtil.h
 //
 //  Low-level filesystem functions.
+//  Resolve relative paths, resolve symlinks, create directories,
+//  remove files etc.
 //
 
 #pragma once

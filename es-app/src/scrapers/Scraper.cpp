@@ -360,7 +360,7 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
         return true;
 
     FREE_IMAGE_FORMAT format = FIF_UNKNOWN;
-    FIBITMAP* image = NULL;
+    FIBITMAP* image = nullptr;
 
     // Detect the filetype.
     format = FreeImage_GetFileType(path.c_str(), 0);
@@ -396,7 +396,7 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
     FIBITMAP* imageRescaled = FreeImage_Rescale(image, maxWidth, maxHeight, FILTER_BILINEAR);
     FreeImage_Unload(image);
 
-    if (imageRescaled == NULL) {
+    if (imageRescaled == nullptr) {
         LOG(LogError) << "Could not resize image! (not enough memory? invalid bitdepth?)";
         return false;
     }

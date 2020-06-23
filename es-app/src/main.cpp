@@ -30,6 +30,7 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
+#include <FreeImage.h>
 #include <SDL_events.h>
 #include <SDL_main.h>
 #include <SDL_timer.h>
@@ -38,8 +39,6 @@
 #ifdef WIN32
 #include <Windows.h>
 #endif
-
-#include <FreeImage.h>
 
 enum eErrorCodes {
     NO_ERRORS,
@@ -289,7 +288,7 @@ void onExit()
 
 int main(int argc, char* argv[])
 {
-    srand((unsigned int)time(NULL));
+    srand((unsigned int)time(nullptr));
 
     std::locale::global(std::locale("C"));
 

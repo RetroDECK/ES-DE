@@ -285,8 +285,8 @@ Starting EmulationStation with the --debug flag will provide feedback on whether
 providing an error message if any of the .wav sound files could not be loaded.
 
 Example debug output: \
-May 12 21:12:37 lvl2:   Sound::getFromTheme() looking for [all.selectSound] \
-May 12 21:12:37 lvl2:   [selectSound] found, ready to play sound file
+`May 12 21:12:37 lvl2:   Sound::getFromTheme() looking for [all.selectSound]` \
+`May 12 21:12:37 lvl2:   [selectSound] found, ready to play sound file`
 
 Example `navigationsounds.xml`, to be included from the main theme file:
 

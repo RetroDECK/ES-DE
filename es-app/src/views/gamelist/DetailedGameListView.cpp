@@ -232,7 +232,7 @@ void DetailedGameListView::initMDValues()
 
 void DetailedGameListView::updateInfoPanel()
 {
-    FileData* file = (mList.size() == 0 || mList.isScrolling()) ? NULL : mList.getSelected();
+    FileData* file = (mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected();
 
     bool fadingOut;
     if (file == nullptr) {
