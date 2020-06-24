@@ -1,20 +1,16 @@
 EmulationStation Desktop Edition - User Guide
 =============================================
 
-Getting started
-===============
+### Getting started
 
 
 
-Main menu
-=========
+### Main menu
 
 
 
-Game option menu
-================
+### Game option menu
 
 
 
-Scraper
-=======
+### Scraper

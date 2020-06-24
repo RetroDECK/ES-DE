@@ -11,7 +11,7 @@ v1.0.0
 * For single-game scraping, any values updated by the scraper are now highlighted using a different font color in the metadata editor
 * Gamelist sorting now working as expected and is persistent throughout the application session
 * Full navigation sound support, configurable per theme
-* New default theme 'rbsimple-DE' bundled with the software, this theme is largely based on 'recalbox-multi' by the Recalbox community
+* New default theme rbsimple-DE bundled with the software, this theme is largely based on recalbox-multi by the Recalbox community
 * Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
 * Per-game launchstring override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
@@ -24,15 +24,16 @@ v1.0.0
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
-* Updated the cmake/cpack install and package build script to work as expected (can generate .deb and .rpm installation packages)
+* Updated the cmake/cpack install and package build script to work as expected (can now generate .deb and .rpm installation packages)
 * License files included for all the libraries and resources that are bundled with the application
-* Updated the MAME ROM index files to include ROMs up to MAME version 0.221 (and included new scripts to easily generate these index files)
+* Updated the MAME ROM index files to include ROMs up to MAME version 0.221 (and created scripts to easily generate these index files in the future)
 
 ### Bug fixes
 
 * Metadata editor insisted that changes were made although nothing was updated
+  Note: The editor will still ask for save confirmations after automatically rounding fractional game ratings to half-star values
 * Game images were sometimes scaled incorrectly
 * Non-transparent favorite icons were not rendered correctly
-* Restart and power-off menu entries not working (at least on my desktop OS)
+* Restart and power-off menu entries not working (at least not on my desktop OS)
 * Toggling the screensaver didn't work as expected
 * Lots and lots of small bugs and inconsistencies fixed

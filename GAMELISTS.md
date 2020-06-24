@@ -20,7 +20,7 @@ An example gamelist.xml:
 
 Everything is enclosed in a `<gameList>` tag.  The information for each game or folder is enclosed in a corresponding tag (`<game>` or `<folder>`).  Each piece of metadata is encoded as a string.
 
-As of EmulationStation Desktop Edition v1.0.0, there are no longer any references to game media files in `gamelist.xml`. Instead a media directory is used where the images and videos are simply matched against the ROM file names. As well, no absolute paths are used for the ROM files any longer. Instead a global ROM directory is configured and there are only relative references in the `gamelist.xml` files, starting with `./` as can be seen in the example above.
+As of EmulationStation Desktop Edition v1.0.0, there are no longer any references to game media files in gamelist.xml. Instead a media directory is used where the images and videos are simply matched against the ROM file names. As well, no absolute paths are used for the ROM files any longer. Instead a global ROM directory is configured and there are only relative references in the gamelist.xml files, starting with `./` as can be seen in the example above.
 
 Please refer to [INSTALL.md](INSTALL.md) for more information on how the ROM and media directories are configured.
 
@@ -32,51 +32,48 @@ Reference
 There are a few types of metadata:
 
 * `string` - just text.
-* `image_path` - a path to an image. This path should be either the absolute to the image, a path relative to the system games folder that starts with "./" (e.g. `./mm2_image.png`), or a path relative to the home directory that starts with "~/" (e.g. `~/.emulationstation/downloaded_images/nes/mm2-image.png`).  Images will be automatically resized by OpenGL to fit the corresponding `<image>` tag in the current theme.  Smaller images will load faster, so try to keep resolution low!
-* `video_path` - a path to a video. Similar to `image_path`.
 * `float` - a floating-point decimal value (written as a string).
 * `integer` - an integer value (written as a string).
 * `datetime` - a date and, potentially, a time.  These are encoded as an ISO string, in the following format: "%Y%m%dT%H%M%S%F%q".  For example, the release date for Chrono Trigger is encoded as "19950311T000000" (no time specified).
 
-Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor.  They are shown in certain views (for example, the detailed view shows both `playcount` and `lastplayed`).
+Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor. They are shown in certain views (for example, the detailed and video views show `lastplayed`, although it can be disabled by the theme).
 
 #### `<game>`
 
 * `name` - string, the displayed name for the game.
 * `desc` - string, a description of the game.  Longer descriptions will automatically scroll, so don't worry about size.
-* `image` - image_path, the path to an image to display for the game (like box art or a screenshot).
-* `thumbnail` - image_path, the path to a smaller image, displayed in image lists like the grid view.  Should be small to ensure quick loading.
-* `video` - video_path, the path to a video to display for the game, for themes that support the _video_ viewstyle.
 * `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1.  Arbitrary values are fine (ES can display half-stars, quarter-stars, etc).
 * `releasedate` - datetime, the date the game was released.  Displayed as date only, time is ignored.
 * `developer` - string, the developer for the game.
 * `publisher` - string, the publisher for the game.
 * `genre` - string, the (primary) genre for the game.
 * `players` - integer, the number of players the game supports.
-* `playcount` - statistic, integer, the number of times this game has been played.
+* `favorite` - bool, indicates whether the game is a favorite
+* `completed`- bool, indicates whether the game has been completed
+* `broken` - bool, indicates a game that doesn't work (useful for MAME)
+* `kidgame` - bool, indicates whether the game is suitable for children, used by the `kid' UI mode
+* `playcount` - integer, the number of times this game has been played.
 * `lastplayed` - statistic, datetime, the last date and time this game was played.
 * `sortname` - string, used in sorting the gamelist in a system, instead of `name`.
-
+* `launchstring` - optional tag that is used to override the emulator and core settings on a per-game basis
 
 #### `<folder>`
 * `name` - string, the displayed name for the folder.
 * `desc` - string, the description for the folder.
-* `image` - image_path, the path to an image to display for the folder.
-* `thumbnail` - image_path, the path to a smaller image to display for the folder.
+* `developer` - string, developer(s)
+* `publisher` - string, publisher(s)
+* `genre` - string, genre(s)
+* `players` - integer, the number of players the game supports
 
 
-Things to be Aware Of
+Things to be aware of
 =====================
 
 * You can use ES's built-in [scraping](http://en.wikipedia.org/wiki/Web_scraping) tools to avoid creating a gamelist.xml by hand, as described in README.md.
 
-* ES will try to write any image paths as relative to the current system games path or relative to the current home directory if it can.  This is done to try and keep installations portable (so you can copy them between computers).
+* If a value matches the default for a particular piece of metadata, ES will not write it to the gamelist.xml (for example, if `genre` isn't specified, ES won't write an empty genre tag).
 
-* One thing to be aware of: the EmulationStation text rendering code doesn't currently support Unicode.  If I fix this in the future, it will probably use UTF-8.  For now, you'll just have to convert names and descriptions to ASCII.  Sorry!
-
-* If a value matches the default for a particular piece of metadata, ES will not write it to the gamelist.xml (for example, if `genre` isn't specified, ES won't write an empty genre tag; if `players` is 1, ES won't write a `players` tag).
-
-* A `game` can actually point to a folder/directory if the the folder has a matching extension.
+* A `game` can actually point to a folder/directory if the folder has a matching extension.
 
 * `folder` metadata will only be used if a game is found inside of that folder.
 
@@ -84,8 +81,4 @@ Things to be Aware Of
 
 * The switch `--gamelist-only` can be used to skip automatic searching, and only display games defined in the system's gamelist.xml.
 
-* The switch `--ignore-gamelist` can be used to ignore the gamelist and force ES to use the non-detailed view.
-
-* If at least one game in a system has an image specified, ES will use the detailed view for that system (which displays metadata alongside the game list).
-
-* If you want to write your own scraper, the built-in scraping system is actually pretty extendable if you can get past the ugly function declarations and your instinctual fear of C++.  Check out `src/scrapers/GamesDBScraper.cpp` for an example (it's less than a hundred lines of actual code).  An offline scraper is also possible (though you'll have to subclass `ScraperRequest`).  I hope to write a more complete guide on how to do this in the future.
+* The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application.

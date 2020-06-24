@@ -44,7 +44,7 @@ make
 ```
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
 
-Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling `make` to run 6 parallel jobs:
+Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
 
 ```
 make -j6
@@ -76,15 +76,16 @@ Assuming the default installation prefix `/usr/local` has been used, this is the
 /usr/local/share/emulationstation/themes
 ```
 
-*Note: The `resources` directory is critical, without it the application won't start.* \
+**Note:** The resources directory is critical, without it the application won't start.
+
 ES will look in the following two locations for the resources:
 
 * `[HOME]/.emulationstation/resources/`
-* `[INSTALLATION PATH]/share/emulationstation/resources/`
+* `[INSTALL PREFIX]/share/emulationstation/resources/`
 
-The home directory will always take precedence so any resources located there will override the ones in the installation path. It's not recommended to override any resources since they are by nature static. But combining this ability with the command line `--home` flag, a fully portable version of EmulationStation could be created on a USB memory stick or similar.
+The home directory will always take precedence, so any resources located there will override the ones in the installation path. It's not recommended to override any resources since they are by nature static. But using the ability to locate resource files in the home directory is very useful when combined with the command line option `--home` (see below), as a fully portable version of EmulationStation can then be created on a USB memory stick or similar.
 
-Anyway, after compiling the application, either run `make install` or copy or symlink the resources directory to `~/.emulationstation/resources`:
+Anyway, after compiling the application, either run `make install` or copy or symlink the resources directory to `~/.emulationstation/resources`.
 
 `cp -R resources ~/.emulationstation/` \
 or \
@@ -115,7 +116,7 @@ For RPM packages, change the comments in the `CMakeLists.txt` accordingly, from:
 #SET(CPACK_GENERATOR "RPM")
 SET(CPACK_GENERATOR "DEB")
 ```
-To:
+to:
 ```
 SET(CPACK_GENERATOR "RPM")
 #SET(CPACK_GENERATOR "DEB")
@@ -157,11 +158,13 @@ EmulationStation Desktop Edition ships with a comprehensive `es_systems.cfg` con
 
 Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates`.
 
-The template file will be copied to `~/.emulationstation/es_systems.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows.
+The template file will be copied to `~/.emulationstation/es_systems.cfg`. \
+`~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows.
 
 **~/.emulationstation/es_settings.cfg:**
 
-When ES is first run, an example configuration file will be created as `~/.emulationstation/es_settings.cfg`.  `~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows. \
+When ES is first run, a configuration file will be created as `~/.emulationstation/es_settings.cfg`.
+
 This file contains all the settings supported by ES, at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES to update all the necessary settings.
 
 The exception would be the ROMDirectory setting as ES won't start if no ROM files are found.
@@ -182,9 +185,9 @@ Here's an example:
 
 `<string name="ROMDirectory" value="~/games/roms" />`
 
-Keep in mind though that you still need to group the ROMs into directories corresponding to the system names. Well at least if you want to use the default `es_systems.cfg` file. See below how to customize that file, which gives you full control over the location of the ROMs.
+Keep in mind though that you still need to group the ROMs into directories corresponding to the system names. Well at least if you want to use the default es_systems.cfg file. See below how to customize that file, which gives you full control over the location of the ROMs.
 
-**Keep in mind that you'll have to set up your emulator separately from EmulationStation!**
+**Keep in mind that you have to set up your emulator separately from EmulationStation!**
 
 **~/.emulationstation/es_input.cfg:**
 
@@ -247,7 +250,7 @@ ES will only check in your home directory for an es_systems.cfg file, for exampl
 
 The order EmulationStation displays systems reflects the order you define them in. In the case of the default es_systems.cfg file, the systems are listed in alphabetical order.
 
-**NOTE:** A system *must* have at least one game present in its "path" directory, or ES will ignore it! If no valid systems are found, ES will report an error and quit!
+**Note:** A system *must* have at least one game present in its `path` directory, or ES will ignore it! If no valid systems are found, ES will report an error and quit.
 
 Here's an overview of the file layout:
 
@@ -311,16 +314,14 @@ As of the fork to EmulationStation Desktop Edition, game media information no lo
 
 The default game media directory is `~/.emulationstation/downloaded_media`.
 
-If at least one game in a system has an image (mix image, screenshot or box cover), ES will use the detailed view for that system (which displays metadata alongside the game list).
-
 *You can use ES's [scraping](http://en.wikipedia.org/wiki/Web_scraping) tools to avoid creating a gamelist.xml by hand.*  There are two ways to run the scraper:
 
-* **If you want to scrape multiple games:** press start to open the menu and choose the "SCRAPER" option.  Adjust your settings and press "START".
-* **If you just want to scrape one game:** find the game on the game list in ES and press select.  Choose "EDIT THIS GAME'S METADATA" and then press the "SCRAPE" button at the bottom of the metadata editor.
+* **If you want to scrape multiple games:** press the Start button to open the menu and choose the "SCRAPER" option.  Adjust your settings and press "START".
+* **If you just want to scrape one game:** find the game on the game list in ES and press the Select button.  Choose "EDIT THIS GAME'S METADATA" and then press the "SCRAPE" button at the bottom of the metadata editor.
 
 You can also edit metadata within ES by using the metadata editor - just find the game you wish to edit on the gamelist, press Select, and choose "EDIT THIS GAME'S METADATA."
 
-The switch `--ignore-gamelist` can be used to ignore the gamelist and force ES to use the non-detailed view.
+The switch `--ignore-gamelist` can be used to ignore the gamelists upon start of the application.
 
 If you're writing a tool to generate or parse gamelist.xml files, you should check out [GAMELISTS.md](GAMELISTS.md) for more detailed documentation.
 
