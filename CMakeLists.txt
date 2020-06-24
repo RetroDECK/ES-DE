@@ -5,6 +5,9 @@ option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer)" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
 
+# Set this to on to show verbose compiler output (e.g. compiler flags, include directories etc.)
+set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
+
 project(emulationstation-de)
 
 #-------------------------------------------------------------------------------

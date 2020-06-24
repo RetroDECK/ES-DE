@@ -1,3 +1,9 @@
+EmulationStation Desktop Edition - Installation
+===============================================
+
+**Note:** This is a quite technical document intended for those that are interested in compiling EmulationStation from source code, or would like to customize the configuration. If you just want to start using the software, check out the [User Guide](USERGUIDE.md) instead!
+
+
 Building
 ========
 
@@ -31,12 +37,18 @@ cmake .
 make
 ```
 
-NOTE: to generate a `Debug` build on Unix/Linux, run this instead:
+Note: To generate a `Debug` build on Unix/Linux, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
+
+Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling `make` to run 6 parallel jobs:
+
+```
+make -j6
+```
 
 By default EmulationStation will install under `/usr/local` but this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.\
 The following example will build the application for installtion under `/opt`:
@@ -45,7 +57,7 @@ The following example will build the application for installtion under `/opt`:
 cmake -DCMAKE_INSTALL_PREFIX=/opt .
 ```
 
-Note that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code modified inside ES to find the program resources. So it's very important that the install prefix corresponds to the location where the application will actually be located.
+It's important to know that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code inside ES used to locate the required program resources. So it's necessary that the install prefix corresponds to the location where the application will actually be installed.
 
 **Installing:**
 
@@ -73,13 +85,14 @@ ES will look in the following two locations for the resources:
 The home directory will always take precedence so any resources located there will override the ones in the installation path. It's not recommended to override any resources since they are by nature static. But combining this ability with the command line `--home` flag, a fully portable version of EmulationStation could be created on a USB memory stick or similar.
 
 Anyway, after compiling the application, either run `make install` or copy or symlink the resources directory to `~/.emulationstation/resources`:
+
 `cp -R resources ~/.emulationstation/` \
-or
+or \
 `ln -s $(pwd)/resources ~/.emulationstation/`
 
 The same goes for the `themes` directory. Although ES can start without a theme, it would be pretty pointless as the application would barely be usable.
 
-**Making .deb and .rpm packages:**
+**Creating .deb and .rpm packages:**
 
 Creation of Debian .deb packages are enabled by default, simply run `cpack` to generate the package:
 
@@ -94,10 +107,10 @@ CPackDeb: - Generating dependency list
 CPack: - package: /home/user/emulationstation-de/emulationstation-de-1.0.0.deb generated.
 ```
 
-The package can now be installed using a package manager, for example `dpkg'.
+The package can now be installed using a package manager, for example `dpkg`.
 
-For RPM packages, change the comments in the `CMakeLists.txt` accordingly. \
-From:
+For RPM packages, change the comments in the `CMakeLists.txt` accordingly, from:
+
 ```
 #SET(CPACK_GENERATOR "RPM")
 SET(CPACK_GENERATOR "DEB")
@@ -115,6 +128,7 @@ To be able to generate RPM packages on a Debian system such as Ubuntu, install t
 ```
 sudo apt-get install rpm
 ```
+
 
 **On Windows:**
 
@@ -191,7 +205,8 @@ The new configuration will be added to the `~/.emulationstation/es_input.cfg` fi
 **If your controller stops working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next run.**
 
 
-**Command line arguments:**
+Command line arguments
+======================
 
 You can use `--help` or `-h` to view a list of command line options. Briefly outlined here:
 

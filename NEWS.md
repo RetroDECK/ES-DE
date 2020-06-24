@@ -23,6 +23,8 @@ v1.0.0
 * No more attempts to open files directly under /etc, instead only the install prefix directory and the home directory are used
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
+* Made pugixml an external dependency instead of bundling it
+* Updated the cmake/cpack install and package build script to work as expected (can generate .deb and .rpm installation packages)
 * License files included for all the libraries and resources that are bundled with the application
 * Updated the MAME ROM index files to include ROMs up to MAME version 0.221 (and included new scripts to easily generate these index files)
 
