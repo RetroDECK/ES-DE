@@ -13,10 +13,10 @@
 #include "Platform.h"
 #include "Scripting.h"
 #include "Window.h"
-#include <pugixml/src/pugixml.hpp>
+#include <pugixml.hpp>
 #include <SDL.h>
-#include <iostream>
 #include <assert.h>
+#include <iostream>
 
 #define KEYBOARD_GUID_STRING "-1"
 #define CEC_GUID_STRING      "-2"

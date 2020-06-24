@@ -11,7 +11,7 @@
 #include "Log.h"
 #include "Scripting.h"
 #include "Platform.h"
-#include <pugixml/src/pugixml.hpp>
+#include <pugixml.hpp>
 #include <algorithm>
 #include <vector>
 

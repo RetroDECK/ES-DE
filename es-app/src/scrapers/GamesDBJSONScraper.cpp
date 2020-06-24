@@ -18,7 +18,7 @@
 #include "SystemData.h"
 #include "MameNames.h"
 #include "utils/TimeUtil.h"
-#include <pugixml/src/pugixml.hpp>
+#include <pugixml.hpp>
 
 // When raspbian will get an up to date version of rapidjson we'll be
 // able to have it throw in case of error with the following:

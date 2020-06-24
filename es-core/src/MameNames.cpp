@@ -13,7 +13,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "Log.h"
-#include <pugixml/src/pugixml.hpp>
+#include <pugixml.hpp>
 #include <string.h>
 
 MameNames* MameNames::sInstance = nullptr;

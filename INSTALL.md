@@ -4,43 +4,117 @@ Building
 EmulationStation-DE uses some C++11 code, which means you'll need to use a compiler that supports that. \
 GCC is recommended although other compilers should hopefully work fine as well.
 
-The code has a few dependencies. For building, you'll need CMake and development packages for SDL2, FreeImage, FreeType, libVLC, cURL and RapidJSON.
+The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
 **On Debian/Ubuntu:**
 All of the required packages can be easily installed with `apt-get`:
 ```
-sudo apt-get install libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev rapidjson-dev
-  libasound2-dev libgl1-mesa-dev build-essential cmake fonts-droid-fallback libvlc-dev
-  libvlccore-dev vlc-bin
+sudo apt-get install build-essential cmake libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libvlc-dev libgl1-mesa-dev
 ```
 **On Fedora:**
 For this operating system, use `dnf` (with rpmfusion activated) :
 ```
-sudo dnf install SDL2-devel freeimage-devel freetype-devel curl-devel
-  alsa-lib-devel mesa-libGL-devel cmake
-  vlc-devel rapidjson-devel
+sudo dnf install cmake SDL2-devel freeimage-devel freetype-devel curl-devel rapidjson-devel alsa-lib-devel vlc-devel mesa-libGL-devel
 ```
 
-To checkout the source, run the following:
+To clone the source repository, run the following:
 
 ```
 git clone https://gitlab.com/leonstyhre/emulationstation-de
 ```
 
-Then generate the Makefile and build the software like this:
+Then generate the Makefile and build the software:
 
 ```
 cd emulationstation-de
-cmake -DOpenGL_GL_PREFERENCE=GLVND .
+cmake .
 make
 ```
 
 NOTE: to generate a `Debug` build on Unix/Linux, run this instead:
 ```
-cmake -DOpenGL_GL_PREFERENCE=GLVND -DCMAKE_BUILD_TYPE=Debug .
+cmake -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
+
+By default EmulationStation will install under `/usr/local` but this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.\
+The following example will build the application for installtion under `/opt`:
+
+```
+cmake -DCMAKE_INSTALL_PREFIX=/opt .
+```
+
+Note that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code modified inside ES to find the program resources. So it's very important that the install prefix corresponds to the location where the application will actually be located.
+
+**Installing:**
+
+Installing the software requires root permissions, the following command will install all the required application files:
+
+```
+sudo make install
+```
+
+Assuming the default installation prefix `/usr/local` has been used, this is the directory structure for the installation:
+
+```
+/usr/local/bin/emulationstation
+/usr/local/share/emulationstation/LICENSES
+/usr/local/share/emulationstation/resources
+/usr/local/share/emulationstation/themes
+```
+
+*Note: The `resources` directory is critical, without it the application won't start.* \
+ES will look in the following two locations for the resources:
+
+* `[HOME]/.emulationstation/resources/`
+* `[INSTALLATION PATH]/share/emulationstation/resources/`
+
+The home directory will always take precedence so any resources located there will override the ones in the installation path. It's not recommended to override any resources since they are by nature static. But combining this ability with the command line `--home` flag, a fully portable version of EmulationStation could be created on a USB memory stick or similar.
+
+Anyway, after compiling the application, either run `make install` or copy or symlink the resources directory to `~/.emulationstation/resources`:
+`cp -R resources ~/.emulationstation/` \
+or
+`ln -s $(pwd)/resources ~/.emulationstation/`
+
+The same goes for the `themes` directory. Although ES can start without a theme, it would be pretty pointless as the application would barely be usable.
+
+**Making .deb and .rpm packages:**
+
+Creation of Debian .deb packages are enabled by default, simply run `cpack` to generate the package:
+
+```
+user@computer:~/emulationstation-de$ cpack
+CPack: Create package using DEB
+CPack: Install projects
+CPack: - Run preinstall target for: emulationstation-de
+CPack: - Install project: emulationstation-de []
+CPack: Create package
+CPackDeb: - Generating dependency list
+CPack: - package: /home/user/emulationstation-de/emulationstation-de-1.0.0.deb generated.
+```
+
+The package can now be installed using a package manager, for example `dpkg'.
+
+For RPM packages, change the comments in the `CMakeLists.txt` accordingly. \
+From:
+```
+#SET(CPACK_GENERATOR "RPM")
+SET(CPACK_GENERATOR "DEB")
+```
+To:
+```
+SET(CPACK_GENERATOR "RPM")
+#SET(CPACK_GENERATOR "DEB")
+```
+
+Then simply run `cpack`.
+
+To be able to generate RPM packages on a Debian system such as Ubuntu, install the `rpm` package first:
+
+```
+sudo apt-get install rpm
+```
 
 **On Windows:**
 

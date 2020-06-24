@@ -29,6 +29,12 @@ CMakeCache.txt
 CMakeFiles
 cmake_install.cmake
 Makefile
+install_manifest.txt
+
+# CPack
+_CPack_Packages
+emulationstation-de*.deb
+emulationstation-de*.rpm
 
 # TODO
 TODO.md

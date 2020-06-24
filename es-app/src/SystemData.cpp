@@ -20,7 +20,7 @@
 #include "Settings.h"
 #include "ThemeData.h"
 #include "views/UIModeController.h"
-#include <pugixml/src/pugixml.hpp>
+#include <pugixml.hpp>
 #include <fstream>
 #ifdef WIN32
 #include <Windows.h>

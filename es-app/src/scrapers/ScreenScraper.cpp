@@ -15,7 +15,7 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "math/Misc.h"
-#include <pugixml/src/pugixml.hpp>
+#include <pugixml.hpp>
 #include <cstring>
 
 using namespace PlatformIds;

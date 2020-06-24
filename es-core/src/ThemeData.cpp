@@ -15,7 +15,7 @@
 #include "Log.h"
 #include "Platform.h"
 #include "Settings.h"
-#include <pugixml/src/pugixml.hpp>
+#include <pugixml.hpp>
 #include <algorithm>
 
 std::vector<std::string> ThemeData::sSupportedViews {

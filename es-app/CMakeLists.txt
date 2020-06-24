@@ -1,4 +1,4 @@
-project("emulationstation")
+project("emulationstation-de")
 
 set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/EmulationStation.h
@@ -101,7 +101,7 @@ set(ES_SOURCES
 )
 
 #-------------------------------------------------------------------------------
-# define OS specific sources and headers
+# Define OS specific sources and headers.
 if(MSVC)
     LIST(APPEND ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/EmulationStation.rc
@@ -109,12 +109,12 @@ if(MSVC)
 endif()
 
 #-------------------------------------------------------------------------------
-# define target
+# Define target.
 include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_executable(emulationstation ${ES_SOURCES} ${ES_HEADERS})
 target_link_libraries(emulationstation ${COMMON_LIBRARIES} es-core)
 
-# special properties for Windows builds
+# Special properties for Windows builds.
 if(MSVC)
     # Always compile with the "WINDOWS" subsystem to avoid console window flashing at startup
     # when --debug is not set (see es-core/src/main.cpp for explanation).
@@ -126,36 +126,51 @@ if(MSVC)
     set_target_properties(emulationstation PROPERTIES LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:WINDOWS")
 endif()
 
-
 #-------------------------------------------------------------------------------
-# set up CPack install stuff so `make install` does something useful
+# Set up CPack install for `make install`.
 
 install(TARGETS emulationstation
     RUNTIME
-    DESTINATION bin)
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/LICENSES
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
 
 INCLUDE(InstallRequiredSystemLibraries)
 
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A flexible graphical emulator front-end")
-SET(CPACK_PACKAGE_DESCRIPTION "EmulationStation is a flexible, graphical front-end designed for keyboardless navigation of your multi-platform retro game collection.")
+SET(CPACK_PACKAGE_NAME "emulationstation-de")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An emulator front-end with controller navigation and theming support.")
+SET(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition is a fast, feature rich front-end for browsing and launching games from your multi-platform retro game collection. It's intended to be used in conjunction with emulators such as the RetroArch cores.")
 
-SET(CPACK_RESOURCE_FILE LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md")
-SET(CPACK_RESOURCE_FILE README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+SET(CPACK_RESOURCE_FILE LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+#SET(CPACK_RESOURCE_FILE README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 
-SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Alec Lofquist <allofquist@yahoo.com>")
+SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Leon Styhre <leon@leonstyhre.com>")
+SET(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://gitlab.com/leonstyhre/emulationstation-de")
 SET(CPACK_DEBIAN_PACKAGE_SECTION "misc")
-SET(CPACK_DEBIAN_PACKAGE_PRIORITY "extra")
-SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libsdl2-2.0-0, libfreeimage3, libfreetype6, libcurl3, libasound2")
-SET(CPACK_DEBIAN_PACKAGE_BUILDS_DEPENDS "debhelper (>= 8.0.0), cmake, g++ (>= 4.8), libsdl2-dev, libfreeimage-dev, libfreetype6-dev, libcurl4-openssl-dev, libasound2-dev, libgl1-mesa-dev, rapidjson-dev")
+SET(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+#SET(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6, libsdl2-2.0-0, libfreeimage3, libfreetype6, libvlc5, libcurl4, libpugixml1v5, libasound2")
+SET(CPACK_DEBIAN_PACKAGE_BUILDS_DEPENDS "debhelper (>= 8.0.0), cmake, g++ (>= 4.8), libsdl2-dev, libfreeimage-dev, libfreetype6-dev, libcurl4-openssl-dev, libpugixml-dev, rapidjson-dev, libasound2-dev, libvlc-dev, libgl1-mesa-dev")
 
-SET(CPACK_PACKAGE_VENDOR "emulationstation.org")
-SET(CPACK_PACKAGE_VERSION "2.0.0~rc1")
-SET(CPACK_PACKAGE_VERSION_MAJOR "2")
+SET(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
+SET(CPACK_RPM_PACKAGE_REQUIRES "libc6, libsdl2-2.0-0, libfreeimage3, libfreetype6, libvlc5, libcurl4, libpugixml1v5, libasound2")
+SET(CPACK_RPM_PACKAGE_LICENSE "MIT")
+
+SET(CPACK_PACKAGE_VENDOR "https://gitlab.com/leonstyhre/emulationstation-de")
+SET(CPACK_PACKAGE_VERSION "1.0.0")
+SET(CPACK_PACKAGE_VERSION_MAJOR "1")
 SET(CPACK_PACKAGE_VERSION_MINOR "0")
 SET(CPACK_PACKAGE_VERSION_PATCH "0")
 SET(CPACK_PACKAGE_INSTALL_DIRECTORY "emulationstation_${CMAKE_PACKAGE_VERSION}")
 SET(CPACK_PACKAGE_EXECUTABLES "emulationstation" "emulationstation")
 
-SET(CPACK_GENERATOR "TGZ;DEB")
+SET(CPACK_RPM_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}.rpm")
+SET(CPACK_DEBIAN_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}.deb")
+#SET(CPACK_GENERATOR "RPM")
+SET(CPACK_GENERATOR "DEB")
 
 INCLUDE(CPack)

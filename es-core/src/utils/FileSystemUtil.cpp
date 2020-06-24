@@ -30,20 +30,13 @@
 #endif
 
 // Try to get the install prefix as defined when CMake was run.
-// The installPrefix directory is the value set for CMAKE_INSTALL_DIRECTORY during build.
-// The datarootdir directory is the value set for CMAKE_INSTALL_DATAROOTDIR during build.
-// If not defined, the default prefix path '/usr/local' and the default datarootdir
-// directory 'share' will be used, i.e. combining to '/usr/local/share'.
+// The installPrefix directory is the value set for CMAKE_INSTALL_PREFIX during build.
+// If not defined, the default prefix path '/usr/local' will be used.
 #ifdef __unix__
 #ifdef ES_INSTALL_PREFIX
 std::string installPrefix = ES_INSTALL_PREFIX;
 #else
 std::string installPrefix = "/usr/local";
-#endif
-#ifdef ES_DATAROOTDIR
-std::string dataRootDir = ES_DATAROOTDIR;
-#else
-std::string dataRootDir = "share";
 #endif
 #endif
 
@@ -216,22 +209,13 @@ namespace Utils
 
         std::string getInstallPrefixPath()
         {
-            // There seems to be a bug in CMake that when deleting the CMakeCache.txt
-            // file and running cmake, the ES_DATAROOTDIR is not populated, i.e. this fails:
-            // add_definitions(-DES_DATAROOTDIR="${CMAKE_INSTALL_DATAROOTDIR}")
-            // Re-running cmake a second time populates it correctly. But ES_INSTALL_PREFIX
-            // is always populated correctly on my machine which is very strange.
-            // Anyway, as an extra precaution, let's set datarootdir to 'share' if it's blank,
-            // as that's what most people would want anyway. When this bug has been fixed in
-            // CMake this code can be removed.
-            // Just in case, let's set installPrefix to '/usr/local' if blank as well as a
-            // fallback precaution as maybe some make environments won't handle this
-            // correctly either.
+            // installPrefix should be populated by CMAKE from $CMAKE_INSTALL_PREFIX.
+            // But just as a precaution, let's check if this variable is blank, and if so
+            // set it to '/usr/local'. Just in case some make environments won't handle this
+            // correctly.
             if (!installPrefix.length())
                 installPrefix = "/usr/local";
-            if (!dataRootDir.length())
-                dataRootDir = "share";
-            return installPrefix + "/" + dataRootDir;
+            return installPrefix + "/share";
         }
 
         std::string getPreferredPath(const std::string& _path)
