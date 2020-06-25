@@ -815,6 +815,8 @@ void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysDa
                         // want in auto collections in "favorites"
                         include = (*gameIt)->metadata.get("favorite") == "true";
                         break;
+                    default:
+                        break;
                 }
 
                 if (include) {

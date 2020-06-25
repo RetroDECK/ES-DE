@@ -36,34 +36,34 @@ There are a few types of metadata:
 * `integer` - an integer value (written as a string).
 * `datetime` - a date and, potentially, a time.  These are encoded as an ISO string, in the following format: "%Y%m%dT%H%M%S%F%q".  For example, the release date for Chrono Trigger is encoded as "19950311T000000" (no time specified).
 
-Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor. They are shown in certain views (for example, the detailed and video views show `lastplayed`, although it can be disabled by the theme).
+Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
 
 #### `<game>`
 
 * `name` - string, the displayed name for the game.
 * `desc` - string, a description of the game.  Longer descriptions will automatically scroll, so don't worry about size.
-* `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1.  Arbitrary values are fine (ES can display half-stars, quarter-stars, etc).
+* `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1. ES will round fractional values to half-stars.
 * `releasedate` - datetime, the date the game was released.  Displayed as date only, time is ignored.
 * `developer` - string, the developer for the game.
 * `publisher` - string, the publisher for the game.
 * `genre` - string, the (primary) genre for the game.
 * `players` - integer, the number of players the game supports.
-* `favorite` - bool, indicates whether the game is a favorite
-* `completed`- bool, indicates whether the game has been completed
-* `broken` - bool, indicates a game that doesn't work (useful for MAME)
-* `kidgame` - bool, indicates whether the game is suitable for children, used by the `kid' UI mode
+* `favorite` - bool, indicates whether the game is a favorite.
+* `completed`- bool, indicates whether the game has been completed.
+* `broken` - bool, indicates a game that doesn't work (useful for MAME).
+* `kidgame` - bool, indicates whether the game is suitable for children, used by the `kid' UI mode.
 * `playcount` - integer, the number of times this game has been played.
 * `lastplayed` - statistic, datetime, the last date and time this game was played.
 * `sortname` - string, used in sorting the gamelist in a system, instead of `name`.
-* `launchstring` - optional tag that is used to override the emulator and core settings on a per-game basis
+* `launchstring` - optional tag that is used to override the emulator and core settings on a per-game basis.
 
 #### `<folder>`
 * `name` - string, the displayed name for the folder.
 * `desc` - string, the description for the folder.
-* `developer` - string, developer(s)
-* `publisher` - string, publisher(s)
-* `genre` - string, genre(s)
-* `players` - integer, the number of players the game supports
+* `developer` - string, developer(s).
+* `publisher` - string, publisher(s).
+* `genre` - string, genre(s).
+* `players` - integer, the number of players the game supports.
 
 
 Things to be aware of

@@ -461,8 +461,9 @@ void FileData::launchGame(Window* window)
     LOG(LogInfo) << "	" << command;
     int exitCode = runSystemCommand(command);
 
-    if (exitCode != 0)
+    if (exitCode != 0) {
         LOG(LogWarning) << "...launch terminated with nonzero exit code " << exitCode << "!";
+    }
 
     Scripting::fireEvent("game-end");
 

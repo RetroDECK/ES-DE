@@ -18,8 +18,9 @@ namespace Renderer
 	{
 		const GLenum errorCode = glGetError();
 
-		if(errorCode != GL_NO_ERROR)
+		if(errorCode != GL_NO_ERROR) {
 			LOG(LogError) << "OpenGLES error: " << _funcName << " failed with error code: " << errorCode;
+		}
 	}
 #else
 #define GL_CHECK_ERROR(Function) (Function)
@@ -246,8 +247,9 @@ namespace Renderer
 			// SDL_GL_SetSwapInterval returns 0 on success, -1 on error.
 			// if vsync is requested, try normal vsync; if that doesn't work, try late swap tearing
 			// if that doesn't work, report an error
-			if(SDL_GL_SetSwapInterval(1) != 0 && SDL_GL_SetSwapInterval(-1) != 0)
+			if(SDL_GL_SetSwapInterval(1) != 0 && SDL_GL_SetSwapInterval(-1) != 0) {
 				LOG(LogWarning) << "Tried to enable vsync, but failed! (" << SDL_GetError() << ")";
+			}
 		}
 		else
 			SDL_GL_SetSwapInterval(0);

@@ -23,31 +23,31 @@ Settings* Settings::sInstance = NULL;
 // functions.
 std::vector<const char*> settings_dont_save {
     // These options can be set using command-line arguments:
-    { "Debug" },				// --debug
-    { "HideConsole" },			// Implicitly set via the --debug flag.
-    { "ForceKid" },				// --force-kid
-    { "ForceKiosk" },			// --force-kiosk
-    { "IgnoreGamelist" },		// --ignore-gamelist
-    { "ShowExit" },				// --no-exit
-    { "SplashScreen" },			// --no-splash
-    { "VSync" },				// --vsync [1/on or 0/off]
-    { "Windowed" },				// --windowed
-    { "WindowWidth" },			// Set via --resolution [width] [height]
-    { "WindowHeight" },			// set via --resolution [width] [height]
+    "Debug",                // --debug
+    "HideConsole",          // Implicitly set via the --debug flag.
+    "ForceKid",             // --force-kid
+    "ForceKiosk",           // --force-kiosk
+    "IgnoreGamelist",       // --ignore-gamelist
+    "ShowExit",             // --no-exit
+    "SplashScreen",         // --no-splash
+    "VSync",                // --vsync [1/on or 0/off]
+    "Windowed",             // --windowed
+    "WindowWidth",          // Set via --resolution [width] [height]
+    "WindowHeight",         // set via --resolution [width] [height]
 
     // These options are not shown in the --help text and are intended
     // for debugging and testing purposes:
-    { "ScreenWidth" },			// Set via --screensize [width] [height]
-    { "ScreenHeight" },			// set via --screensize [width] [height]
-    { "ScreenOffsetX" },		// Set via --screenoffset [X] [Y]
-    { "ScreenOffsetY" },		// Set via --screenoffset [X] [Y]
-    { "ScreenRotate" },			// --screenrotate [0-3]
+    "ScreenWidth",          // Set via --screensize [width] [height]
+    "ScreenHeight",         // set via --screensize [width] [height]
+    "ScreenOffsetX",        // Set via --screenoffset [X] [Y]
+    "ScreenOffsetY",        // Set via --screenoffset [X] [Y]
+    "ScreenRotate",         // --screenrotate [0-3]
 
     // These options are not configurable from the command-line:
-    { "DebugGrid" },
-    { "DebugText" },
-    { "DebugImage" },
-    { "SplashScreenProgress" }
+    "DebugGrid",
+    "DebugText",
+    "DebugImage",
+    "SplashScreenProgress"
 };
 
 Settings::Settings()

@@ -31,14 +31,14 @@ public:
     void setValue(const std::string& value) override;
 
     bool input(InputConfig* config, Input input) override;
-    void render(const Transform4x4f& parentTrans);
+    void render(const Transform4x4f& parentTrans) override;
 
     void onSizeChanged() override;
 
     void setOpacity(unsigned char opacity) override;
 
     // Multiply all pixels in the image by this color when rendering.
-    void setColorShift(unsigned int color);
+    void setColorShift(unsigned int color) override;
 
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
             const std::string& element, unsigned int properties) override;

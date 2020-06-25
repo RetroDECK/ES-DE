@@ -124,7 +124,7 @@ void thegamesdb_generate_json_scraper_requests(
         usingGameID = true;
     }
     else {
-        if (cleanName.empty())
+        if (cleanName.empty()) {
             // If it's an arcade game (MAME or Neo Geo) then use the regular name.
             if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
                     params.system->hasPlatformId(PlatformIds::NEOGEO)) {
@@ -132,13 +132,15 @@ void thegamesdb_generate_json_scraper_requests(
 
                 cleanName = MameNames::getInstance()->getCleanName(params.game->getCleanName());
             }
-            else
+            else {
                 cleanName = params.game->getCleanName();
+            }
 
             path += "/Games/ByGameName?" + apiKey +
                     "&fields=players,publishers,genres,overview,last_updated,rating,"
                     "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=" +
                     HttpReq::urlEncode(cleanName);
+        }
     }
 
     if (usingGameID) {

@@ -174,6 +174,8 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
             key = Utils::String::toUpper(game->metadata.get("kidgame"));
             break;
         }
+        default:
+            break;
     }
     key = Utils::String::trim(key);
     if (key.empty() || (type == RATINGS_FILTER && key == "0 STARS")) {

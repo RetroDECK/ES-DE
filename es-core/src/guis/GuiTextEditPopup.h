@@ -28,8 +28,8 @@ public:
             const char* acceptBtnText = "OK",
             const char* saveConfirmationText = "SAVE CHANGES?");
 
-    bool input(InputConfig* config, Input input);
-    void onSizeChanged();
+    bool input(InputConfig* config, Input input) override;
+    void onSizeChanged() override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override { return mHelpStyle; };

@@ -27,23 +27,32 @@ namespace Utils
             // 110xxxxx, two byte character.
             else if ((c & 0xE0) == 0xC0) {
                 // 110xxxxx 10xxxxxx
-                result = ((_string[_cursor++] & 0x1F) <<  6) |
-                         ((_string[_cursor++] & 0x3F)      );
+                result = (_string[_cursor++] & 0x1F) <<  6;
+                result |= _string[_cursor++] & 0x3F;
+//              result = ((_string[_cursor++] & 0x1F) <<  6) |
+//                       ((_string[_cursor++] & 0x3F)      );
             }
             // 1110xxxx, three byte character.
             else if ((c & 0xF0) == 0xE0) {
                 // 1110xxxx 10xxxxxx 10xxxxxx
-                result = ((_string[_cursor++] & 0x0F) << 12) |
-                         ((_string[_cursor++] & 0x3F) <<  6) |
-                         ((_string[_cursor++] & 0x3F)      );
+                result = (_string[_cursor++] & 0x0F) << 12;
+                result |= (_string[_cursor++] & 0x3F) <<  6;
+                result |= _string[_cursor++] & 0x3F;
+//              result = ((_string[_cursor++] & 0x0F) << 12) |
+//                       ((_string[_cursor++] & 0x3F) <<  6) |
+//                       ((_string[_cursor++] & 0x3F)      );
             }
             // 11110xxx, four byte character.
             else if ((c & 0xF8) == 0xF0) {
                 // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
-                result = ((_string[_cursor++] & 0x07) << 18) |
-                         ((_string[_cursor++] & 0x3F) << 12) |
-                         ((_string[_cursor++] & 0x3F) <<  6) |
-                         ((_string[_cursor++] & 0x3F)      );
+                result = (_string[_cursor++] & 0x07) << 18;
+                result |= (_string[_cursor++] & 0x3F) << 12;
+                result |= (_string[_cursor++] & 0x3F) <<  6;
+                result |= _string[_cursor++] & 0x3F;
+//              result = ((_string[_cursor++] & 0x07) << 18) |
+//                       ((_string[_cursor++] & 0x3F) << 12) |
+//                       ((_string[_cursor++] & 0x3F) <<  6) |
+//                       ((_string[_cursor++] & 0x3F)      );
             }
             else {
                 // Error, invalid unicode.
@@ -156,7 +165,7 @@ namespace Utils
         std::string trim(const std::string& _string)
         {
             const size_t strBegin = _string.find_first_not_of(" \t");
-            const size_t strEnd   = _string.find_last_not_of(" \t");
+            const size_t strEnd = _string.find_last_not_of(" \t");
 
             if (strBegin == std::string::npos)
                 return "";
@@ -168,7 +177,7 @@ namespace Utils
                 const std::string& _with)
         {
             std::string string = _string;
-            size_t      pos;
+            size_t pos;
 
             while ((pos = string.find(_replace)) != std::string::npos)
                 string = string.replace(pos, _replace.length(), _with.c_str(), _with.length());
@@ -189,10 +198,10 @@ namespace Utils
         std::string removeParenthesis(const std::string& _string)
         {
             static const char remove[4] = { '(', ')', '[', ']' };
-            std::string       string = _string;
-            size_t            start;
-            size_t            end;
-            bool              done = false;
+            std::string string = _string;
+            size_t start;
+            size_t end;
+            bool done = false;
 
             while (!done) {
                 done = true;
@@ -215,8 +224,8 @@ namespace Utils
                 const std::string& _delimiter, bool sort)
         {
             stringVector vector;
-            size_t       start = 0;
-            size_t       comma = _string.find(_delimiter);
+            size_t start = 0;
+            size_t comma = _string.find(_delimiter);
 
             while (comma != std::string::npos) {
                 vector.push_back(_string.substr(start, comma - start));
@@ -267,7 +276,7 @@ namespace Utils
             va_end(args);
 
             std::string out(buffer);
-            delete buffer;
+            delete[] buffer;
 
             return out;
         }
@@ -283,5 +292,4 @@ namespace Utils
         }
 
     } // String::
-
 } // Utils::

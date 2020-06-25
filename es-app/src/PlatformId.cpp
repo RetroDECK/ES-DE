@@ -1,5 +1,5 @@
 //
-//  PlatformId.h
+//  PlatformId.cpp
 //
 //  Index of all supported systems/platforms.
 //

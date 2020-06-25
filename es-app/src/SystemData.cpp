@@ -180,6 +180,8 @@ void SystemData::indexAllGameFilters(const FileData* folder)
                 indexAllGameFilters(*it);
             }
             break;
+            default:
+                break;
         }
     }
 }

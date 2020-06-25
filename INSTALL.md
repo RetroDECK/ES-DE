@@ -7,9 +7,6 @@ EmulationStation Desktop Edition - Installation
 Building
 ========
 
-EmulationStation-DE uses some C++11 code, which means you'll need to use a compiler that supports that. \
-GCC is recommended although other compilers should hopefully work fine as well.
-
 The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
 **On Debian/Ubuntu:**
@@ -17,6 +14,7 @@ All of the required packages can be easily installed with `apt-get`:
 ```
 sudo apt-get install build-essential cmake libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libvlc-dev libgl1-mesa-dev
 ```
+
 **On Fedora:**
 For this operating system, use `dnf` (with rpmfusion activated) :
 ```
@@ -58,6 +56,52 @@ cmake -DCMAKE_INSTALL_PREFIX=/opt .
 ```
 
 It's important to know that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code inside ES used to locate the required program resources. So it's necessary that the install prefix corresponds to the location where the application will actually be installed.
+
+**Compilers:**
+
+Both Clang/LLVM and GCC work fine for building ES.
+
+The Microsoft Visual C++ compiler (MSVC) could maybe work as well, there are some old settings in CMakeLists.txt for it. Try it if you want, but I recommend Clang or GCC instead of this legacy compiler.
+
+I did some small benchmarks comparing Clang to GCC with the ES codebase (as of writing it's year 2020) and it's pretty interesting.
+
+Advantages with Clang (vs GCC):
+* 10% smaller binary size for a release build
+* 17% smaller binary size for a debug build
+* 2% faster compile time for a release build
+* 16% faster compile time for a debug build
+* 4% faster application startup time for a debug build
+
+Advantage with GCC (vs Clang):
+* 1% faster application startup time for a release build
+
+*Release build: Optimizations enabled, debug info disabled, binary stripped.* \
+*Debug build: Optimizations disabled, debug info enabled, binary not stripped.*
+
+This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCodium that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance `std::string` variables.
+
+It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 36% slower! The same goes for the binary size, instead of 17% smaller it's now 17% larger.
+
+So overall Clang is interesting and perhaps even a better compiler than GCC, but it needs better integration with VSCodium before it's really usable. For macOS it seems as if Clang is the preferred compiler though, so it's good that ES now fully supports it. (It took quite some effort to get all the compile errors and compile warnings sorted out.)
+
+It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
+
+```
+user@computer:~$ sudo update-alternatives --config c++
+[sudo] password for user:
+There are 2 choices for the alternative c++ (providing /usr/bin/c++).
+
+  Selection    Path              Priority   Status
+------------------------------------------------------------
+* 0            /usr/bin/g++       20        auto mode
+  1            /usr/bin/clang++   10        manual mode
+  2            /usr/bin/g++       20        manual mode
+
+Press <enter> to keep the current choice[*], or type selection number: 1
+update-alternatives: using /usr/bin/clang++ to provide /usr/bin/c++ (c++) in manual mode
+```
+
+Following this, just re-run cmake and make and the binary should be built by Clang instead.
 
 **Installing:**
 

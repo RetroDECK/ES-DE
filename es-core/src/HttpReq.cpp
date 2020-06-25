@@ -121,9 +121,10 @@ HttpReq::~HttpReq()
 
         CURLMcode merr = curl_multi_remove_handle(s_multi_handle, mHandle);
 
-        if (merr != CURLM_OK)
+        if (merr != CURLM_OK) {
             LOG(LogError) << "Error removing curl_easy handle from curl_multi: " <<
                     curl_multi_strerror(merr);
+        }
 
         curl_easy_cleanup(mHandle);
     }

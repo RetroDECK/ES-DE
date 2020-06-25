@@ -34,7 +34,10 @@ protected:
 	using IList<TextListData, T>::getTransform;
 	using IList<TextListData, T>::mSize;
 	using IList<TextListData, T>::mCursor;
-	using IList<TextListData, T>::Entry;
+//	The following change is required for compilation with Clang.
+//	http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html#2070
+//	using IList<TextListData, T>::Entry;
+	using IList<TextListData, T>::IList;
 
 public:
 	using IList<TextListData, T>::size;
@@ -87,9 +90,9 @@ public:
 	inline void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
 
 protected:
-	virtual void onScroll() {
+	virtual void onScroll() override {
 			NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND); }
-	virtual void onCursorChanged(const CursorState& state);
+	virtual void onCursorChanged(const CursorState& state) override;
 
 private:
 	int mMarqueeOffset;

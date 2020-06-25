@@ -214,7 +214,7 @@ const std::string GridGameListView::getImagePath(FileData* file)
         return file->getMarqueePath();
 
     // If no thumbnail was found, then use the image media type.
-    if (file->getThumbnailPath() == "");
+    if (file->getThumbnailPath() == "")
         return file->getImagePath();
 
     return file->getThumbnailPath();

@@ -404,8 +404,9 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
     bool saved = (FreeImage_Save(format, imageRescaled, path.c_str()) != 0);
     FreeImage_Unload(imageRescaled);
 
-    if (!saved)
+    if (!saved) {
         LOG(LogError) << "Failed to save resized image!";
+    }
 
     return saved;
 }

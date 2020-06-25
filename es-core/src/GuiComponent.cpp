@@ -200,8 +200,9 @@ void GuiComponent::removeChild(GuiComponent* cmp)
     if (!cmp->getParent())
         return;
 
-    if (cmp->getParent() != this)
+    if (cmp->getParent() != this) {
         LOG(LogError) << "Tried to remove child from incorrect parent!";
+    }
 
     cmp->setParent(nullptr);
 

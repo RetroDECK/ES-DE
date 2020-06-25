@@ -429,9 +429,10 @@ void InputManager::doOnFinish()
                         int exitCode = runSystemCommand(tocall);
                         std::cout << "==============================================\n";
 
-                        if (exitCode != 0)
+                        if (exitCode != 0) {
                             LOG(LogWarning) << "...launch terminated with nonzero exit code " <<
                                     exitCode << "!";
+                        }
                     }
                 }
             }

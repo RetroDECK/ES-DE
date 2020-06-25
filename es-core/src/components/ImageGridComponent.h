@@ -40,8 +40,11 @@ protected:
 	using IList<ImageGridData, T>::getTransform;
 	using IList<ImageGridData, T>::mSize;
 	using IList<ImageGridData, T>::mCursor;
-	using IList<ImageGridData, T>::Entry;
 	using IList<ImageGridData, T>::mWindow;
+//	The following change is required for compilation with Clang.
+//	http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html#2070
+//	using IList<ImageGridData, T>::Entry;
+	using IList<ImageGridData, T>::IList;
 
 public:
 	using IList<ImageGridData, T>::size;
@@ -694,10 +697,12 @@ void ImageGridComponent<T>::calcGridDimension()
 	mGridDimension = Vector2i(gridDimension.x(), Math::ceilf(gridDimension.y()));
 
 	// Grid dimension validation
-	if (mGridDimension.x() < 1)
+	if (mGridDimension.x() < 1) {
 		LOG(LogError) << "Theme defined grid X dimension below 1";
-	if (mGridDimension.y() < 1)
+	}
+	if (mGridDimension.y() < 1) {
 		LOG(LogError) << "Theme defined grid Y dimension below 1";
+	}
 
 	// Add extra tiles to both sides : Add EXTRAITEMS before, EXTRAITEMS after
 	if (isVertical())

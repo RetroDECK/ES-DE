@@ -84,5 +84,7 @@ void processQuitMode()
         LOG(LogInfo) << "Powering off system";
         runPoweroffCommand();
         break;
+    default:
+        break;
     }
 }

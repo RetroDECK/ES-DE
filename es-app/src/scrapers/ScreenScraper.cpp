@@ -358,8 +358,9 @@ void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
     pugi::xml_node data = xmldoc.child("Data");
     pugi::xml_node game = data.child("jeu");
 
-    if (!game)
+    if (!game) {
         LOG(LogDebug) << "Found nothing";
+    }
 
     ScreenScraperRequest::ScreenScraperConfig ssConfig;
 

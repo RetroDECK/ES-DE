@@ -11,7 +11,7 @@ Check out the [User Guide](USERGUIDE.md) for how to quickly get the application 
 (It will also show how to use its more advanced features.)
 
 
-**Help needed:**
+### Help needed:
 
 Apart from code commits, help is especially needed for thorough testing of the software and for working on the rbsimple-DE theme.
 

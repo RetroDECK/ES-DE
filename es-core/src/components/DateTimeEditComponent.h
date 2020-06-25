@@ -44,7 +44,7 @@ public:
     void setDisplayMode(DisplayMode mode);
 
      // Text color.
-    void setColor(unsigned int color);
+    void setColor(unsigned int color) override;
     // Font to use. Default is Font::get(FONT_SIZE_MEDIUM).
     void setFont(std::shared_ptr<Font> font);
     // Force text to be uppercase when in DISP_RELATIVE_TO_NOW mode.

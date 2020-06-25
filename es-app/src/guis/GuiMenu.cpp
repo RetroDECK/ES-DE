@@ -579,8 +579,9 @@ void GuiMenu::openQuitMenu()
                     "REALLY REBOOT?", "YES", [] {
                     Scripting::fireEvent("quit", "reboot");
                     Scripting::fireEvent("reboot");
-                    if (quitES(QuitMode::REBOOT) != 0)
+                    if (quitES(QuitMode::REBOOT) != 0) {
                         LOG(LogWarning) << "Reboot terminated with non-zero result!";
+                    }
             }, "NO", nullptr));
         });
         row.addElement(std::make_shared<TextComponent>(window, "REBOOT SYSTEM",
@@ -595,8 +596,9 @@ void GuiMenu::openQuitMenu()
                     "REALLY POWER OFF?", "YES", [] {
                     Scripting::fireEvent("quit", "poweroff");
                     Scripting::fireEvent("poweroff");
-                    if (quitES(QuitMode::POWEROFF) != 0)
+                    if (quitES(QuitMode::POWEROFF) != 0) {
                         LOG(LogWarning) << "Power off terminated with non-zero result!";
+                    }
             }, "NO", nullptr));
         });
         row.addElement(std::make_shared<TextComponent>(window, "POWER OFF SYSTEM",

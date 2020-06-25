@@ -54,7 +54,7 @@ public:
 	void uncrop();
 
 	// Multiply all pixels in the image by this color when rendering.
-	void setColorShift(unsigned int color);
+	void setColorShift(unsigned int color) override;
 	void setColorShiftEnd(unsigned int color);
 	void setColorGradientHorizontal(bool horizontal);
 
