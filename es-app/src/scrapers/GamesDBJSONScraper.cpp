@@ -129,18 +129,16 @@ void thegamesdb_generate_json_scraper_requests(
             if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
                     params.system->hasPlatformId(PlatformIds::NEOGEO)) {
                 cleanName = params.game->getName();
-
                 cleanName = MameNames::getInstance()->getCleanName(params.game->getCleanName());
             }
             else {
                 cleanName = params.game->getCleanName();
             }
-
-            path += "/Games/ByGameName?" + apiKey +
-                    "&fields=players,publishers,genres,overview,last_updated,rating,"
-                    "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=" +
-                    HttpReq::urlEncode(cleanName);
         }
+        path += "/Games/ByGameName?" + apiKey +
+                "&fields=players,publishers,genres,overview,last_updated,rating,"
+                "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=" +
+                HttpReq::urlEncode(cleanName);
     }
 
     if (usingGameID) {
