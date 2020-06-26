@@ -30,10 +30,18 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
+
+#ifdef __linux__
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_main.h>
+#include <SDL2/SDL_timer.h>
+#else
+#include "SDL_events.h"
+#include "SDL_main.h"
+#include "SDL_timer.h"
+#endif
+
 #include <FreeImage.h>
-#include <SDL_events.h>
-#include <SDL_main.h>
-#include <SDL_timer.h>
 #include <iostream>
 #include <time.h>
 #ifdef WIN32

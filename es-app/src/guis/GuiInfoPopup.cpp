@@ -9,7 +9,12 @@
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
 #include "components/TextComponent.h"
-#include <SDL_timer.h>
+
+#ifdef __linux__
+#include <SDL2/SDL_timer.h>
+#else
+#include "SDL_timer.h"
+#endif
 
 GuiInfoPopup::GuiInfoPopup(
         Window* window,

@@ -8,7 +8,12 @@
 #ifndef ES_CORE_AUDIO_MANAGER_H
 #define ES_CORE_AUDIO_MANAGER_H
 
-#include <SDL_audio.h>
+#ifdef __linux__
+#include <SDL2/SDL_audio.h>
+#else
+#include "SDL_audio.h"
+#endif
+
 #include <memory>
 #include <vector>
 

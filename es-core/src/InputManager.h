@@ -10,7 +10,12 @@
 #ifndef ES_CORE_INPUT_MANAGER_H
 #define ES_CORE_INPUT_MANAGER_H
 
-#include <SDL_joystick.h>
+#ifdef __linux__
+#include <SDL2/SDL_joystick.h>
+#else
+#include "SDL_joystick.h"
+#endif
+
 #include <map>
 
 class InputConfig;

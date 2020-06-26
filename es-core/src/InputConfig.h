@@ -9,13 +9,17 @@
 #define ES_CORE_INPUT_CONFIG_H
 
 #include <CECInput.h>
-#include <SDL_joystick.h>
-#include <SDL_keyboard.h>
 #include <map>
 #include <sstream>
 #include <vector>
 
-namespace pugi { class xml_node; }
+#ifdef __linux__
+#include <SDL2/SDL_joystick.h>
+#include <SDL2/SDL_keyboard.h>
+#else
+#include "SDL_joystick.h"
+#include "SDL_keyboard.h"
+#endif
 
 #define DEVICE_KEYBOARD -1
 #define DEVICE_CEC      -2
@@ -28,6 +32,11 @@ enum InputType {
     TYPE_CEC_BUTTON,
     TYPE_COUNT
 };
+
+namespace pugi
+{
+    class xml_node;
+}
 
 struct Input
 {

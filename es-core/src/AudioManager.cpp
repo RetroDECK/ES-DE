@@ -7,9 +7,9 @@
 #include "AudioManager.h"
 
 #include "Log.h"
+#include "SDL.h"
 #include "Settings.h"
 #include "Sound.h"
-#include <SDL.h>
 
 std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
 SDL_AudioSpec AudioManager::sAudioFormat;

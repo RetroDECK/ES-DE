@@ -5,7 +5,12 @@
 #include "PowerSaver.h"
 #include "ThemeData.h"
 #include "Window.h"
-#include <SDL_timer.h>
+
+#ifdef __linux__
+#include <SDL2/SDL_timer.h>
+#else
+#include "SDL_timer.h"
+#endif
 
 #define FADE_TIME_MS	200
 

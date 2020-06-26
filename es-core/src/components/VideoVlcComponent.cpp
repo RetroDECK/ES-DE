@@ -5,9 +5,16 @@
 #include "utils/StringUtil.h"
 #include "PowerSaver.h"
 #include "Settings.h"
+
+#ifdef __linux__
+#include <SDL2/SDL_mutex.h>
+#include <SDL2/SDL_timer.h>
+#else
+#include "SDL_mutex.h"
+#include "SDL_timer.h"
+#endif
+
 #include <vlc/vlc.h>
-#include <SDL_mutex.h>
-#include <SDL_timer.h>
 
 #ifdef WIN32
 #include <codecvt>
@@ -261,7 +268,7 @@ void VideoVlcComponent::startVideo()
 				// Asynchronous media parsing
 				libvlc_event_attach(libvlc_media_event_manager(mMedia), libvlc_MediaParsedChanged, VlcMediaParseCallback, 0);
 				parseResult = libvlc_media_parse_with_options(mMedia, libvlc_media_parse_local, -1);
-				
+
 				if (!parseResult)
 				{
 					// Wait for a maximum of 1 second for the media parsing

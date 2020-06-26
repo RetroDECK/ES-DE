@@ -7,6 +7,7 @@
 #include "InputConfig.h"
 
 #include "Log.h"
+
 #include <pugixml.hpp>
 
 // Some utility functions.

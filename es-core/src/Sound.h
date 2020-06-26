@@ -9,7 +9,12 @@
 #ifndef ES_CORE_SOUND_H
 #define ES_CORE_SOUND_H
 
+#ifdef __linux__
+#include <SDL2/SDL_audio.h>
+#else
 #include "SDL_audio.h"
+#endif
+
 #include <map>
 #include <memory>
 #include <vector>

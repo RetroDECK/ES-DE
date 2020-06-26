@@ -14,8 +14,14 @@
 #include "Platform.h"
 #include "Scripting.h"
 #include "Window.h"
+
+#ifdef __linux__
+#include <SDL2/SDL.h>
+#else
+#include "SDL.h"
+#endif
+
 #include <pugixml.hpp>
-#include <SDL.h>
 #include <assert.h>
 #include <iostream>
 

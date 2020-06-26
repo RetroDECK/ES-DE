@@ -25,8 +25,14 @@
 #include "Scripting.h"
 #include "SystemData.h"
 #include "VolumeControl.h"
-#include <SDL_events.h>
+
 #include <algorithm>
+
+#ifdef __linux__
+#include <SDL2/SDL_events.h>
+#else
+#include "SDL_events.h"
+#endif
 
 GuiMenu::GuiMenu(
         Window* window)

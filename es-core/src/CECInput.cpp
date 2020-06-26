@@ -12,7 +12,13 @@
 #include <iostream> // Bad bad cecloader.
 #include <libcec/cec.h>
 #include <libcec/cecloader.h>
-#include <SDL_events.h>
+
+#ifdef __linux__
+#include <SDL2/SDL_events.h>
+#else
+#include "SDL_events.h"
+#endif // __linux__
+
 #ifdef _RPI_
 extern "C" {
 #include <interface/vmcs_host/vc_cecservice.h>
