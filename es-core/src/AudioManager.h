@@ -1,7 +1,7 @@
 //
 //  AudioManager.h
 //
-//  Low-level audio functions (using SDL).
+//  Low-level audio functions (using SDL2).
 //
 
 #pragma once

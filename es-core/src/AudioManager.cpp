@@ -1,15 +1,20 @@
 //
 //  AudioManager.cpp
 //
-//  Low-level audio functions (using SDL).
+//  Low-level audio functions (using SDL2).
 //
 
 #include "AudioManager.h"
 
 #include "Log.h"
-#include "SDL.h"
 #include "Settings.h"
 #include "Sound.h"
+
+#ifdef __linux__
+#include <SDL2/SDL.h>
+#else
+#include "SDL.h"
+#endif
 
 std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
 SDL_AudioSpec AudioManager::sAudioFormat;

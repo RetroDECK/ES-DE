@@ -13,10 +13,10 @@
 
 #ifdef __linux__
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_opengles.h>
 #else
 #include "SDL.h"
-#include "SDL_opengl.h"
+#include "SDL_opengles.h"
 #endif
 
 namespace Renderer
