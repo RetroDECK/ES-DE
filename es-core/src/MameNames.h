@@ -18,17 +18,15 @@
 class MameNames
 {
 public:
-
-    static void       init       ();
-    static void       deinit     ();
+    static void init();
+    static void deinit();
     static MameNames* getInstance();
-    std::string       getRealName(const std::string& _mameName);
-    std::string       getCleanName(const std::string& _mameName);
-    const bool        isBios(const std::string& _biosName);
-    const bool        isDevice(const std::string& _deviceName);
+    std::string getRealName(const std::string& _mameName);
+    std::string getCleanName(const std::string& _mameName);
+    const bool isBios(const std::string& _biosName);
+    const bool isDevice(const std::string& _deviceName);
 
 private:
-
     struct NamePair {
         std::string mameName;
         std::string realName;
@@ -46,7 +44,6 @@ private:
     std::vector<std::string> mMameDevices;
 
     const bool find(const std::vector<std::string> devices, const std::string& name);
-
-}; // MameNames
+};
 
 #endif // ES_CORE_MAMENAMES_H

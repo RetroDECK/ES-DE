@@ -89,7 +89,7 @@ MameNames::MameNames()
         mMameBioses.push_back(bios);
     }
 
-    // Read devices file.
+    // Read device file.
     xmlpath = ResourceManager::getInstance()->getResourcePath(":/MAME/mamedevices.xml");
 
     if (!Utils::FileSystem::exists(xmlpath))
@@ -110,8 +110,7 @@ MameNames::MameNames()
         std::string device = deviceNode.text().get();
         mMameDevices.push_back(device);
     }
-
-} // MameNames.
+}
 
 MameNames::~MameNames()
 {

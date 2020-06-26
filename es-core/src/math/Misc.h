@@ -1,3 +1,9 @@
+//
+//  Misc.h
+//
+//  Miscellaneous math functions.
+//
+
 #pragma once
 #ifndef ES_CORE_MATH_MISC_H
 #define ES_CORE_MATH_MISC_H
@@ -8,29 +14,29 @@
 
 namespace Math
 {
-	// added here to avoid including math.h whenever these are used
-	float cosf        (const float _num);
-	float sinf        (const float _num);
-	float floorf      (const float _num);
-	float ceilf       (const float _num);
+    // Added here to avoid including math.h whenever these are used.
+    float cosf(const float _num);
+    float sinf(const float _num);
+    float floorf(const float _num);
+    float ceilf(const float _num);
 
-	int   min         (const int _num1, const int _num2);
-	int   max         (const int _num1, const int _num2);
-	float min         (const float _num1, const float _num2);
-	float max         (const float _num1, const float _num2);
-	float clamp       (const float _num, const float _min, const float _max);
-	float round       (const float _num);
-	float lerp        (const float _start, const float _end, const float _fraction);
-	float smoothStep  (const float _left, const float _right, const float _x);
-	float smootherStep(const float _left, const float _right, const float _x);
+    int min(const int _num1, const int _num2);
+    int max(const int _num1, const int _num2);
+    float min(const float _num1, const float _num2);
+    float max(const float _num1, const float _num2);
+    float clamp(const float _num, const float _min, const float _max);
+    float round(const float _num);
+    float lerp(const float _start, const float _end, const float _fraction);
+    float smoothStep(const float _left, const float _right, const float _x);
+    float smootherStep(const float _left, const float _right, const float _x);
 
-	namespace Scroll
-	{
-		float bounce(const float _delayTime, const float _scrollTime, const float _currentTime, const float _scrollLength);
-		float loop  (const float _delayTime, const float _scrollTime, const float _currentTime, const float _scrollLength);
-
-	} // Scroll::
-
-} // Math::
+    namespace Scroll
+    {
+        float bounce(const float _delayTime, const float _scrollTime,
+                const float _currentTime, const float _scrollLength);
+        float loop(const float _delayTime, const float _scrollTime,
+                const float _currentTime, const float _scrollLength);
+    }
+}
 
 #endif // ES_CORE_MATH_MISC_H
