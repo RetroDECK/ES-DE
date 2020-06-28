@@ -2,7 +2,7 @@
 //  GuiCollectionSystemsOptions.cpp
 //
 //  User interface for the game collection settings.
-//	Submenu to the GuiMenu main menu.
+//  Submenu to the GuiMenu main menu.
 //
 
 #include "guis/GuiCollectionSystemsOptions.h"

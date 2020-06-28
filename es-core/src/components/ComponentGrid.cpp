@@ -100,7 +100,7 @@ void ComponentGrid::setEntry(
 {
     assert(pos.x() >= 0 && pos.x() < mGridSize.x() && pos.y() >= 0 && pos.y() < mGridSize.y());
     assert(comp != nullptr);
-    assert(comp->getParent() == NULL);
+    assert(comp->getParent() == nullptr);
 
     GridEntry entry(pos, size, comp, canFocus, resize, updateType, border);
     mCells.push_back(entry);
@@ -223,7 +223,7 @@ const ComponentGrid::GridEntry* ComponentGrid::getCellAt(int x, int y) const
             return &(*it);
     }
 
-    return NULL;
+    return nullptr;
 }
 
 bool ComponentGrid::input(InputConfig* config, Input input)
@@ -327,7 +327,7 @@ void ComponentGrid::onFocusGained()
 bool ComponentGrid::cursorValid()
 {
     const GridEntry* e = getCellAt(mCursor);
-    return (e != NULL && e->canFocus);
+    return (e != nullptr && e->canFocus);
 }
 
 void ComponentGrid::update(int deltaTime)
@@ -359,7 +359,7 @@ void ComponentGrid::render(const Transform4x4f& parentTrans)
 void ComponentGrid::textInput(const char* text)
 {
     const GridEntry* selectedEntry = getCellAt(mCursor);
-    if (selectedEntry != NULL && selectedEntry->canFocus)
+    if (selectedEntry != nullptr && selectedEntry->canFocus)
         selectedEntry->component->textInput(text);
 }
 

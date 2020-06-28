@@ -1,8 +1,15 @@
+//
+//  VideoVlcComponent.h
+//
+//  Video playing using libVLC.
+//
+
 #pragma once
 #ifndef ES_CORE_COMPONENTS_VIDEO_VLC_COMPONENT_H
 #define ES_CORE_COMPONENTS_VIDEO_VLC_COMPONENT_H
 
 #include "VideoComponent.h"
+
 #include <vlc/vlc.h>
 
 struct SDL_mutex;
@@ -12,64 +19,62 @@ struct libvlc_media_t;
 struct libvlc_media_player_t;
 
 struct VideoContext {
-	SDL_Surface*		surface;
-	SDL_mutex*			mutex;
-	bool				valid;
+    SDL_Surface* surface;
+    SDL_mutex* mutex;
+    bool valid;
 };
 
 class VideoVlcComponent : public VideoComponent
 {
-	// Structure that groups together the configuration of the video component
-	struct Configuration
-	{
-		unsigned						startDelay;
-		bool							showSnapshotNoVideo;
-		bool							showSnapshotDelay;
-		std::string						defaultVideoPath;
-	};
+    // Structure that groups together the configuration of the video component.
+    struct Configuration {
+        unsigned startDelay;
+        bool showSnapshotNoVideo;
+        bool showSnapshotDelay;
+        std::string defaultVideoPath;
+    };
 
 public:
-	static void setupVLC(std::string subtitles);
+    static void setupVLC(std::string subtitles);
 
-	VideoVlcComponent(Window* window, std::string subtitles);
-	virtual ~VideoVlcComponent();
+    VideoVlcComponent(Window* window, std::string subtitles);
+    virtual ~VideoVlcComponent();
 
-	void render(const Transform4x4f& parentTrans) override;
+    void render(const Transform4x4f& parentTrans) override;
 
+    // Resize the video to fit this size. If one axis is zero, scale that axis to maintain
+    // aspect ratio. If both are non-zero, potentially break the aspect ratio. If both are
+    // zero, no resizing. This can be set before or after a video is loaded.
+    // setMaxSize() and setResize() are mutually exclusive.
+    void setResize(float width, float height) override;
 
-	// Resize the video to fit this size. If one axis is zero, scale that axis to maintain aspect ratio.
-	// If both are non-zero, potentially break the aspect ratio.  If both are zero, no resizing.
-	// Can be set before or after a video is loaded.
-	// setMaxSize() and setResize() are mutually exclusive.
-	void setResize(float width, float height) override;
-
-	// Resize the video to be as large as possible but fit within a box of this size.
-	// Can be set before or after a video is loaded.
-	// Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
-	void setMaxSize(float width, float height) override;
-
-private:
-	// Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
-	// Used internally whenever the resizing parameters or texture change.
-	void resize();
-	// Start the video Immediately
-	virtual void startVideo() override;
-	// Stop the video
-	virtual void stopVideo() override;
-	// Handle looping the video. Must be called periodically
-	virtual void handleLooping() override;
-
-	void setupContext();
-	void freeContext();
-
-	static void VlcMediaParseCallback(const libvlc_event_t *event, void *user_data) {};
+    // Resize the video to be as large as possible but fit within a box of this size.
+    // This can be set before or after a video is loaded.
+    // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
+    void setMaxSize(float width, float height) override;
 
 private:
-	static libvlc_instance_t*		mVLC;
-	libvlc_media_t*					mMedia;
-	libvlc_media_player_t*			mMediaPlayer;
-	VideoContext					mContext;
-	std::shared_ptr<TextureResource> mTexture;
+    // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
+    // Used internally whenever the resizing parameters or texture change.
+    void resize();
+    // Start the video immediately.
+    virtual void startVideo() override;
+    // Stop the video.
+    virtual void stopVideo() override;
+    // Handle looping the video. Must be called periodically.
+    virtual void handleLooping() override;
+
+    void setupContext();
+    void freeContext();
+
+    static void VlcMediaParseCallback(const libvlc_event_t *event, void *user_data) {};
+
+private:
+    static libvlc_instance_t* mVLC;
+    libvlc_media_t* mMedia;
+    libvlc_media_player_t* mMediaPlayer;
+    VideoContext mContext;
+    std::shared_ptr<TextureResource> mTexture;
 };
 
 #endif // ES_CORE_COMPONENTS_VIDEO_VLC_COMPONENT_H

@@ -24,9 +24,9 @@
 // able to have it throw in case of error with the following:
 //ifndef RAPIDJSON_ASSERT
 //#define RAPIDJSON_ASSERT(x)                                                      \
-//	if (!(x)) {                                                                    \
-//		throw std::runtime_error("rapidjson internal assertion failure: " #x);     \
-//	}
+//  if (!(x)) {                                                                    \
+//      throw std::runtime_error("rapidjson internal assertion failure: " #x);     \
+//  }
 //#endif // RAPIDJSON_ASSERT
 
 #include <rapidjson/document.h>

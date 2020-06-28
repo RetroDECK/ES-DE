@@ -1,5 +1,5 @@
 //
-//	EmulationStation.h
+//  EmulationStation.h
 //
 //  Version and build information.
 //

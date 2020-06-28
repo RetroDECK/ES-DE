@@ -1,5 +1,5 @@
 //
-//	GuiSlideshowScreensaverOptions.h
+//  GuiSlideshowScreensaverOptions.h
 //
 //  User interface for the slideshow screensaver options.
 //  Submenu to GuiGeneralScreensaverOptions.

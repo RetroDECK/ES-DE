@@ -1,7 +1,7 @@
 //
 //  Renderer.cpp
 //
-//  Rendering functions.
+//  General rendering functions.
 //
 
 #include "renderers/Renderer.h"

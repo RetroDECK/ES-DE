@@ -59,7 +59,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 
     // Set subtitle position.
     auto ss_omx_subs_align = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, "GAME INFO ALIGNMENT", false);
+            (mWindow, getHelpStyle(), "GAME INFO ALIGNMENT", false);
     std::vector<std::string> align_mode;
     align_mode.push_back("left");
     align_mode.push_back("center");
@@ -132,7 +132,7 @@ void GuiVideoScreensaverOptions::save()
             "never" && Settings::getInstance()->getBool("ScreenSaverOmxPlayer"));
     if (startingStatusNotRisky && endStatusRisky) {
         // If before it wasn't risky but now there's a risk of problems, show warning.
-        mWindow->pushGui(new GuiMsgBox(mWindow,
+        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
         "Using OMX Player and displaying Game Info may result in the video flickering in "
         "some TV modes. If that happens, consider:\n\n• Disabling the \"Show Game Info\" "
         "option;\n• Disabling \"Overscan\" on the Pi configuration menu might help:\nRetroPie > "

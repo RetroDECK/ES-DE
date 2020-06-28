@@ -54,7 +54,7 @@ bool TextureData::initSVGFromMemory(const unsigned char* fileData, size_t length
 
     // nsvgParse excepts a modifiable, null-terminated string.
     char* copy = (char*)malloc(length + 1);
-    assert(copy != NULL);
+    assert(copy != nullptr);
     memcpy(copy, fileData, length);
     copy[length] = '\0';
 

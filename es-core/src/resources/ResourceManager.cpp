@@ -60,7 +60,7 @@ const ResourceData ResourceManager::getFileData(const std::string& path) const
     }
 
     // If the file doesn't exist, return an "empty" ResourceData.
-    ResourceData data = {NULL, 0};
+    ResourceData data = {nullptr, 0};
     return data;
 }
 

@@ -69,7 +69,7 @@ void touch(const std::string& filename)
 {
 #ifdef WIN32
     FILE* fp = fopen(filename.c_str(), "ab+");
-    if (fp != NULL)
+    if (fp != nullptr)
         fclose(fp);
 #else
     int fd = open(filename.c_str(), O_CREAT|O_WRONLY, 0644);

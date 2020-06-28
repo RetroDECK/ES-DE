@@ -1,3 +1,10 @@
+//
+//  ScrollableContainer.h
+//
+//  Area containing scrollable information, for example the game description
+//  text container in the detailed, video and grid views.
+//
+
 #pragma once
 #ifndef ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H
 #define ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H
@@ -7,26 +14,26 @@
 class ScrollableContainer : public GuiComponent
 {
 public:
-	ScrollableContainer(Window* window);
+    ScrollableContainer(Window* window);
 
-	Vector2f getScrollPos() const;
-	void setScrollPos(const Vector2f& pos);
-	void setAutoScroll(bool autoScroll);
-	void reset();
+    Vector2f getScrollPos() const;
+    void setScrollPos(const Vector2f& pos);
+    void setAutoScroll(bool autoScroll);
+    void reset();
 
-	void update(int deltaTime) override;
-	void render(const Transform4x4f& parentTrans) override;
+    void update(int deltaTime) override;
+    void render(const Transform4x4f& parentTrans) override;
 
 private:
-	Vector2f getContentSize();
+    Vector2f getContentSize();
 
-	Vector2f mScrollPos;
-	Vector2f mScrollDir;
-	int mAutoScrollDelay; // ms to wait before starting to autoscroll
-	int mAutoScrollSpeed; // ms to wait before scrolling down by mScrollDir
-	int mAutoScrollAccumulator;
-	bool mAtEnd;
-	int mAutoScrollResetAccumulator;
+    Vector2f mScrollPos;
+    Vector2f mScrollDir;
+    int mAutoScrollDelay; // ms to wait before starting to autoscroll.
+    int mAutoScrollSpeed; // ms to wait before scrolling down by mScrollDir.
+    int mAutoScrollAccumulator;
+    bool mAtEnd;
+    int mAutoScrollResetAccumulator;
 };
 
 #endif // ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H

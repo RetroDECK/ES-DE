@@ -1,5 +1,5 @@
 //
-//	GuiVideoScreensaverOptions.h
+//  GuiVideoScreensaverOptions.h
 //
 //  User interface for the video screensaver options.
 //  Submenu to GuiGeneralScreensaverOptions.

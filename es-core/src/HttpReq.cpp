@@ -44,11 +44,11 @@ bool HttpReq::isUrl(const std::string& str)
                 std::string::npos || str.find("www.") != std::string::npos));
 }
 
-HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(NULL)
+HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nullptr)
 {
     mHandle = curl_easy_init();
 
-    if (mHandle == NULL) {
+    if (mHandle == nullptr) {
         mStatus = REQ_IO_ERROR;
         onError("curl_easy_init failed");
         return;
@@ -147,7 +147,7 @@ HttpReq::Status HttpReq::status()
             if (msg->msg == CURLMSG_DONE) {
                 HttpReq* req = s_requests[msg->easy_handle];
 
-                if (req == NULL) {
+                if (req == nullptr) {
                     LOG(LogError) << "Cannot find easy handle!";
                     continue;
                 }

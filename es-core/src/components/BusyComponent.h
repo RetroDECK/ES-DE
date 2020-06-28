@@ -1,3 +1,9 @@
+//
+//  BusyComponent.h
+//
+//  Animated busy indicator.
+//
+
 #pragma once
 #ifndef ES_CORE_COMPONENTS_BUSY_COMPONENT_H
 #define ES_CORE_COMPONENTS_BUSY_COMPONENT_H
@@ -12,18 +18,18 @@ class TextComponent;
 class BusyComponent : public GuiComponent
 {
 public:
-	BusyComponent(Window* window);
+    BusyComponent(Window* window);
 
-	void onSizeChanged() override;
+    void onSizeChanged() override;
 
-	void reset(); // reset to frame 0
+    void reset(); // Reset to frame 0.
 
 private:
-	NinePatchComponent mBackground;
-	ComponentGrid mGrid;
+    NinePatchComponent mBackground;
+    ComponentGrid mGrid;
 
-	std::shared_ptr<AnimatedImageComponent> mAnimation;
-	std::shared_ptr<TextComponent> mText;
+    std::shared_ptr<AnimatedImageComponent> mAnimation;
+    std::shared_ptr<TextComponent> mText;
 };
 
 #endif // ES_CORE_COMPONENTS_BUSY_COMPONENT_H

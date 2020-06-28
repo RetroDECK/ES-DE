@@ -11,11 +11,12 @@
 #include "Log.h"
 #include "Scripting.h"
 #include "Platform.h"
+
 #include <pugixml.hpp>
 #include <algorithm>
 #include <vector>
 
-Settings* Settings::sInstance = NULL;
+Settings* Settings::sInstance = nullptr;
 
 // These values are NOT saved to es_settings.cfg since they're not set via
 // the in-program settings menu. Most can be set using command-line arguments,
@@ -59,7 +60,7 @@ Settings::Settings()
 
 Settings* Settings::getInstance()
 {
-    if (sInstance == NULL)
+    if (sInstance == nullptr)
         sInstance = new Settings();
 
     return sInstance;

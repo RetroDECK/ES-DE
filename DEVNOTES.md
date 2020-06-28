@@ -25,7 +25,7 @@ Some key points:
 * Name member variables starting with a small 'm', e.g. mMyMemberVariable
 * Use the same naming convention for functions as for local variables, e.g. someFunction()
 * Inline functions makes perfect sense to use, but don't overdo it by using them for functions that won't be called very frequently
-* Never put more than one statement on a single line, except for lambda expressions
+* Never put more than one statement on a single line (there are some exceptions though like lambda expressions and some switch statements)
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
 * For the rest, check the code and have fun! :)
 

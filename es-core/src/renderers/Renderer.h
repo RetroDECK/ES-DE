@@ -1,7 +1,7 @@
 //
 //  Renderer.h
 //
-//  Rendering functions.
+//  General rendering functions.
 //
 
 #pragma once

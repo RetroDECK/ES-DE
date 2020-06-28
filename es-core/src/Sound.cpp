@@ -82,7 +82,7 @@ bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
 
 Sound::Sound(
         const std::string & path)
-        : mSampleData(NULL),
+        : mSampleData(nullptr),
         mSamplePos(0),
         mSampleLength(0),
         playing(false)
@@ -103,7 +103,7 @@ void Sound::loadFile(const std::string & path)
 
 void Sound::init()
 {
-    if(mSampleData != NULL)
+    if(mSampleData != nullptr)
         deinit();
 
     if(mPath.empty())

@@ -3,7 +3,7 @@
 //
 //  User interface for the screensaver options.
 //  Based on the GuiScreenSaverOptions template.
-//	Submenu to the GuiMenu main menu.
+//  Submenu to the GuiMenu main menu.
 //
 
 #pragma once

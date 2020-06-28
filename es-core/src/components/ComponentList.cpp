@@ -20,7 +20,7 @@ void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
 {
     IList<ComponentListRow, void*>::Entry e;
     e.name = "";
-    e.object = NULL;
+    e.object = nullptr;
     e.data = row;
 
     this->add(e);
