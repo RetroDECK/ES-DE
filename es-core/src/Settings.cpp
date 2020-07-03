@@ -25,7 +25,6 @@ Settings* Settings::sInstance = nullptr;
 std::vector<const char*> settings_dont_save {
     // These options can be set using command-line arguments:
     "Debug",                // --debug
-    "HideConsole",          // Implicitly set via the --debug flag.
     "ForceKid",             // --force-kid
     "ForceKiosk",           // --force-kiosk
     "IgnoreGamelist",       // --ignore-gamelist
@@ -185,7 +184,6 @@ void Settings::setDefaults()
 
     // Options listed using --help
     mBoolMap["Debug"] = false;
-    mBoolMap["HideConsole"] = true; // Implicitly set via the --debug flag.
     mBoolMap["ForceKid"] = false;
     mBoolMap["ForceKiosk"] = false;
     mBoolMap["IgnoreGamelist"] = false;

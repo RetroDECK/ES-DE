@@ -9,7 +9,7 @@
 #ifndef ES_CORE_SOUND_H
 #define ES_CORE_SOUND_H
 
-#ifdef __linux__
+#if defined(__linux__) || defined (_WIN64)
 #include <SDL2/SDL_audio.h>
 #else
 #include "SDL_audio.h"

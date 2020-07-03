@@ -12,7 +12,7 @@
 #include "ThemeData.h"
 #include "Window.h"
 
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_timer.h>
 #else
 #include "SDL_timer.h"

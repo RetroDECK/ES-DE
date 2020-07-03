@@ -6,14 +6,15 @@
 
 #include "Platform.h"
 
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_events.h>
 #else
 #include "SDL_events.h"
 #endif
 
-#ifdef WIN32
+#ifdef _WIN64
 #include <codecvt>
+#include <locale>
 #else
 #include <unistd.h>
 #endif
@@ -23,7 +24,7 @@
 
 int runRebootCommand()
 {
-#ifdef WIN32 // Windows.
+#ifdef _WIN64 // Windows.
     return system("shutdown -r -t 0");
 #else // macOS and Linux.
     return system("shutdown --reboot now");
@@ -32,7 +33,7 @@ int runRebootCommand()
 
 int runPoweroffCommand()
 {
-#ifdef WIN32 // Windows.
+#ifdef _WIN64 // Windows.
     return system("shutdown -s -t 0");
 #else // macOS and Linux.
     return system("shutdown --poweroff now");
@@ -41,7 +42,7 @@ int runPoweroffCommand()
 
 int runSystemCommand(const std::string& cmd_utf8)
 {
-#ifdef WIN32
+#ifdef _WIN64
     // On Windows we use _wsystem to support non-ASCII paths
     // which requires converting from UTF8 to a wstring.
     typedef std::codecvt_utf8<wchar_t> convert_type;
@@ -67,7 +68,7 @@ int quitES(QuitMode mode)
 
 void touch(const std::string& filename)
 {
-#ifdef WIN32
+#ifdef _WIN64
     FILE* fp = fopen(filename.c_str(), "ab+");
     if (fp != nullptr)
         fclose(fp);

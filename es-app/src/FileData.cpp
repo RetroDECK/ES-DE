@@ -436,7 +436,11 @@ void FileData::launchGame(Window* window)
     AudioManager::getInstance()->deinit();
     VolumeControl::getInstance()->deinit();
 
-//	window->deinit();
+    // TEMPORARY - Windows does not like it at all if you launch a game without
+    // first doing a deinit(). Need to fix this properly at a later date.
+    #ifdef _WIN64
+	window->deinit();
+    #endif
 
     std::string command = "";
 
@@ -448,9 +452,9 @@ void FileData::launchGame(Window* window)
     else
         command = mEnvData->mLaunchCommand;
 
-    const std::string rom      = Utils::FileSystem::getEscapedPath(getPath());
+    const std::string rom = Utils::FileSystem::getEscapedPath(getPath());
     const std::string basename = Utils::FileSystem::getStem(getPath());
-    const std::string rom_raw  = Utils::FileSystem::getPreferredPath(getPath());
+    const std::string rom_raw = Utils::FileSystem::getPreferredPath(getPath());
 
     command = Utils::String::replace(command, "%ROM%", rom);
     command = Utils::String::replace(command, "%BASENAME%", basename);
@@ -467,7 +471,11 @@ void FileData::launchGame(Window* window)
 
     Scripting::fireEvent("game-end");
 
-//	window->init();
+    // TEMPORARY - Windows does not like it at all if you launch a game without
+    // first doing a deinit(). Need to fix this properly at a later date.
+    #ifdef _WIN64
+	window->init();
+    #endif
 
     VolumeControl::getInstance()->init();
     window->normalizeNextUpdate();

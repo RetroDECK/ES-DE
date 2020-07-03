@@ -20,8 +20,14 @@
 #include "PowerSaver.h"
 #include "Sound.h"
 #include "SystemData.h"
+
 #include <unordered_map>
 #include <time.h>
+
+#ifdef _WIN64
+#include <cstring>
+#endif
+
 #define FADE_TIME 300
 
 SystemScreenSaver::SystemScreenSaver(

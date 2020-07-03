@@ -10,7 +10,7 @@
 #ifndef ES_CORE_INPUT_MANAGER_H
 #define ES_CORE_INPUT_MANAGER_H
 
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_joystick.h>
 #else
 #include "SDL_joystick.h"

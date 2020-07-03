@@ -6,6 +6,9 @@
 # Compiled Dynamic libraries
 *.so
 
+# Windows Dynamic-link libraries
+*.[dD][lL][lL]
+
 # Compiled Static libraries
 *.lai
 *.la
@@ -16,6 +19,7 @@
 
 # Compiled executable
 emulationstation
+emulationstation.exe
 
 # build directory
 build

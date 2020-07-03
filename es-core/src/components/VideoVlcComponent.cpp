@@ -12,7 +12,7 @@
 #include "PowerSaver.h"
 #include "Settings.h"
 
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_mutex.h>
 #include <SDL2/SDL_timer.h>
 #else
@@ -22,8 +22,9 @@
 
 #include <vlc/vlc.h>
 
-#ifdef WIN32
+#ifdef _WIN64
 #include <codecvt>
+#include <cstring>
 #endif
 
 libvlc_instance_t* VideoVlcComponent::mVLC = nullptr;
@@ -243,7 +244,7 @@ void VideoVlcComponent::startVideo()
         mVideoWidth = 0;
         mVideoHeight = 0;
 
-        #ifdef WIN32
+        #ifdef _WIN64
         std::string path(Utils::String::replace(mVideoPath, "/", "\\"));
         #else
         std::string path(mVideoPath);

@@ -56,13 +56,17 @@ if(${GLSystem} MATCHES "Desktop OpenGL")
 else()
     find_package(OpenGLES REQUIRED)
 endif()
-find_package(CURL REQUIRED)
-find_package(FreeImage REQUIRED)
-find_package(Freetype REQUIRED)
-find_package(Pugixml REQUIRED)
-find_package(RapidJSON REQUIRED)
-find_package(SDL2 REQUIRED)
-find_package(VLC REQUIRED)
+
+# Skip package dependency checks if we're on Windows.
+if (NOT WIN32)
+    find_package(CURL REQUIRED)
+    find_package(FreeImage REQUIRED)
+    find_package(Freetype REQUIRED)
+    find_package(Pugixml REQUIRED)
+    find_package(RapidJSON REQUIRED)
+    find_package(SDL2 REQUIRED)
+    find_package(VLC REQUIRED)
+endif()
 
 # Add libCEC support.
 if(CEC)
@@ -101,14 +105,10 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (G++_VERSION VERSION_LESS 4.8)
         message(SEND_ERROR "You need at least GCC 4.8 to compile EmulationStation-DE!")
     endif()
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    message("-- Compiler is MSVC (NOT TESTED)")
-    set(CMAKE_DEBUG_POSTFIX "d")
-    add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
-    add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
-    add_definitions(-DNOMINMAX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP") # Multi-processor compilation.
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP") # Multi-processor compilation.
+    if (WIN32)
+        set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
+#        set(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc ${CMAKE_CXX_FLAGS}")
+    endif()
 endif()
 
 # Set up compiler flags for debug or release builds.
@@ -136,12 +136,23 @@ else()
     add_definitions(-DUSE_OPENGLES_10)
 endif()
 
-# Assign the installation prefix to local $ES_INSTALL_PREFIX variable.
-add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
+# For Unix systems, assign the installation prefix to local $ES_INSTALL_PREFIX variable.
+if (NOT WIN32)
+    add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
+endif()
 
 # Enable additional defines for the Debug build configuration.
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -D_DEBUG")
+
+# Handle additional (required) include files for dependency packages.
+if (WIN32)
+    set(WIN32_INCLUDE_DIR "NOT_DEFINED" CACHE FILEPATH "")
+    if(NOT EXISTS ${WIN32_INCLUDE_DIR})
+        message(SEND_ERROR "Can't find WIN32 include directory: ${WIN32_INCLUDE_DIR}")
+    endif()
+    #include_directories(${WIN32_INCLUDE_DIR})
+endif()
 
 #---------------------------------------------------------------------------------------------------
 # Add include directories.
@@ -156,6 +167,12 @@ set(COMMON_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/external
     ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src
 )
+
+if (WIN32)
+set(COMMON_INCLUDE_DIRS
+    ${COMMON_INCLUDE_DIRS}
+    ${WIN32_INCLUDE_DIR})
+endif()
 
 # Add libCEC include directory.
 if(DEFINED libCEC_FOUND)
@@ -200,14 +217,28 @@ elseif(DEFINED VERO4K)
         "${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib")
 endif()
 
-set(COMMON_LIBRARIES
-    ${CURL_LIBRARIES}
-    ${FreeImage_LIBRARIES}
-    ${FREETYPE_LIBRARIES}
-    ${PUGIXML_LIBRARIES}
-    ${SDL2_LIBRARY}
-    ${VLC_LIBRARIES}
-    nanosvg)
+if (NOT WIN32)
+    set(COMMON_LIBRARIES
+        ${CURL_LIBRARIES}
+        ${FreeImage_LIBRARIES}
+        ${FREETYPE_LIBRARIES}
+        ${PUGIXML_LIBRARIES}
+        ${SDL2_LIBRARY}
+        ${VLC_LIBRARIES}
+        nanosvg)
+elseif(WIN32)
+    set(COMMON_LIBRARIES
+        "${PROJECT_SOURCE_DIR}/libpugixml.dll"
+        "${PROJECT_SOURCE_DIR}/FreeImage.dll"
+        "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
+        "${PROJECT_SOURCE_DIR}/libvlc.dll"
+        "${PROJECT_SOURCE_DIR}/libfreetype.dll"
+        "Winmm.dll"
+        "mingw32"
+        "${PROJECT_SOURCE_DIR}/libSDL2main.a"
+        "${PROJECT_SOURCE_DIR}/SDL2.dll"
+        "nanosvg")
+endif()
 
 # Add libCEC libraries.
 if(DEFINED libCEC_FOUND)

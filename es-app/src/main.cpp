@@ -31,7 +31,12 @@
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
 
-#ifdef __linux__
+#ifdef _WIN64
+#include <cstring>
+#include <windows.h>
+#endif
+
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_timer.h>
@@ -44,9 +49,6 @@
 #include <FreeImage.h>
 #include <iostream>
 #include <time.h>
-#ifdef WIN32
-#include <Windows.h>
-#endif
 
 enum eErrorCodes {
     NO_ERRORS,
@@ -54,9 +56,95 @@ enum eErrorCodes {
     NO_ROMS
 };
 
+
+#ifdef _WIN64
+enum eConsoleType {
+    NO_CONSOLE,
+    PARENT_CONSOLE,
+    ALLOCATED_CONSOLE
+};
+
+// Console output for Windows. The handling of consoles is a mess on this operating system,
+// and this is the best solution I could find. EmulationStation is built using the WINDOWS
+// subsystem (using the -mwindows compiler flag). The idea is to attach to or allocate a new
+// console as needed. However some console types such as the 'Git Bash' shell simply doesn't
+// work properly. Windows thinks it's attaching to a console but is unable to redirect the
+// standard input and output. Output also can't be redirected or piped by the user for any
+// console type and PowerShell behaves quite strange. Still, it works well enough to be
+// somewhat usable, at least for the moment. If the allocConsole argument is set to true
+// and there is no console available, a new console window will be spawned.
+eConsoleType outputToConsole(bool allocConsole)
+{
+    HANDLE outputHandle = nullptr;
+    HWND consoleWindow = nullptr;
+    eConsoleType ConsoleType = NO_CONSOLE;
+
+    // Try to attach to a parent console process.
+    if (AttachConsole(ATTACH_PARENT_PROCESS))
+            outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    // If there is a parent console process, then attempt to retrieve its handle.
+    if (outputHandle != INVALID_HANDLE_VALUE && outputHandle != nullptr) {
+        consoleWindow = GetConsoleWindow();
+        ConsoleType = PARENT_CONSOLE;
+    }
+
+    // If we couldn't retrieve the handle, it means we need to allocate a new console window.
+    if (!consoleWindow && allocConsole) {
+        AllocConsole();
+        ConsoleType = ALLOCATED_CONSOLE;
+    }
+
+    // If we are attached to the parent console or we have opened a new console window,
+    // then redirect stdin, stdout and stderr accordingly.
+    if (ConsoleType == PARENT_CONSOLE || ConsoleType == ALLOCATED_CONSOLE) {
+
+        FILE* fp = nullptr;
+        freopen_s(&fp, "CONIN$", "rb", stdin);
+        freopen_s(&fp, "CONOUT$", "wb", stdout);
+        setvbuf(stdout, NULL, _IONBF, 0);
+        freopen_s(&fp, "CONOUT$", "wb", stderr);
+        setvbuf(stderr, NULL, _IONBF, 0);
+
+        // Point the standard streams to the console.
+        std::ios::sync_with_stdio(true);
+
+        // Clear the error state for each standard stream.
+        std::wcout.clear();
+        std::cout.clear();
+        std::wcerr.clear();
+        std::cerr.clear();
+        std::wcin.clear();
+        std::cin.clear();
+
+        std::cout << "\n";
+    }
+
+    return ConsoleType;
+}
+
+void closeConsole()
+{
+    FILE* fp;
+
+    // Redirect stdin, stdout and stderr to NUL.
+    freopen_s(&fp, "NUL:", "r", stdin);
+    freopen_s(&fp, "NUL:", "w", stdout);
+    freopen_s(&fp, "NUL:", "w", stderr);
+
+    FreeConsole();
+}
+#endif
+
 bool parseArgs(int argc, char* argv[])
 {
     Utils::FileSystem::setExePath(argv[0]);
+
+    #ifdef _WIN64
+    // Print any command line output to the console.
+    if (argc > 1)
+        eConsoleType ConsoleType = outputToConsole(false);
+    #endif
 
     // We need to process --home before any call to Settings::getInstance(),
     // because settings are loaded from the home path.
@@ -161,7 +249,6 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--debug") == 0) {
             Settings::getInstance()->setBool("Debug", true);
-            Settings::getInstance()->setBool("HideConsole", false);
             Log::setReportingLevel(LogDebug);
         }
         else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
@@ -194,14 +281,6 @@ bool parseArgs(int argc, char* argv[])
             return false;
         }
         else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
-#ifdef WIN32
-            // This is a bit of a hack, but otherwise output will go to nowhere when the
-            // application is compiled with the "WINDOWS" subsystem (which we usually are).
-            // If you're an experienced Windows programmer and know how to do this
-            // the right way, please submit a pull request!
-            AttachConsole(ATTACH_PARENT_PROCESS);
-            freopen("CONOUT$", "wb", stdout);
-#endif
             std::cout <<
 "EmulationStation Desktop Edition\n"
 "An Emulator Front-end\n\n"
@@ -212,11 +291,7 @@ bool parseArgs(int argc, char* argv[])
 "--draw-framerate                Display the framerate\n"
 "--no-exit                       Don't show the exit option in the menu\n"
 "--no-splash                     Don't show the splash screen\n"
-#ifdef WIN32
-"--debug                         Show console and print debug information\n"
-#else
 "--debug                         Print debug information\n"
-#endif
 "--windowed                      Windowed mode, should be combined with --resolution\n"
 "--fullscreen-normal             Normal fullscreen mode\n"
 "--fullscreen-borderless         Borderless fullscreen mode (always on top)\n"
@@ -300,45 +375,23 @@ int main(int argc, char* argv[])
 
     std::locale::global(std::locale("C"));
 
-    if (!parseArgs(argc, argv))
+    if (!parseArgs(argc, argv)) {
+        #ifdef _WIN64
+        closeConsole();
+        #endif
         return 0;
+    }
 
-    // Only show the console on Windows if HideConsole is false.
-#ifdef WIN32
-    // MSVC has a "SubSystem" option, with two primary options: "WINDOWS" and "CONSOLE".
-    // In "WINDOWS" mode, no console is automatically created for us.  This is good,
-    // because we can choose to only create the console window if the user explicitly
-    // asks for it, preventing it from flashing open and then closing.
-    // In "CONSOLE" mode, a console is always automatically created for us before we
-    // enter main. In this case, we can only hide the console after the fact, which
-    // will leave a brief flash.
-    // TL;DR: You should compile ES under the "WINDOWS" subsystem.
-    // I have no idea how this works with non-MSVC compilers.
-    if (!Settings::getInstance()->getBool("HideConsole")) {
-        // We want to show the console.
-        // If we're compiled in "CONSOLE" mode, this is already done.
-        // If we're compiled in "WINDOWS" mode, no console is created for us automatically;
-        // the user asked for one, so make one and then hook stdin/stdout/sterr up to it.
-        if (AllocConsole()) { // Should only pass in "WINDOWS" mode.
-            freopen("CONIN$", "r", stdin);
-            freopen("CONOUT$", "wb", stdout);
-            freopen("CONOUT$", "wb", stderr);
-        }
-    }
-    else {
-        // We want to hide the console.
-        // If we're compiled with the "WINDOWS" subsystem, this is already done.
-        // If we're compiled with the "CONSOLE" subsystem, a console is already created;
-        // it'll flash open, but we hide it nearly immediately.
-        if (GetConsoleWindow()) // Should only pass in "CONSOLE" mode.
-            ShowWindow(GetConsoleWindow(), SW_HIDE);
-    }
-#endif
+    #ifdef _WIN64
+    // Send debug output to the console..
+    if (Settings::getInstance()->getBool("Debug"))
+        outputToConsole(true);
+    #endif
 
     // Call this ONLY when linking with FreeImage as a static library.
-#ifdef FREEIMAGE_LIB
+    #ifdef FREEIMAGE_LIB
     FreeImage_Initialise();
-#endif
+    #endif
 
     // If ~/.emulationstation doesn't exist and cannot be created, bail.
     if (!verifyHomeFolderExists())
@@ -500,13 +553,17 @@ int main(int argc, char* argv[])
     SystemData::deleteSystems();
 
     // Call this ONLY when linking with FreeImage as a static library.
-#ifdef FREEIMAGE_LIB
+    #ifdef FREEIMAGE_LIB
     FreeImage_DeInitialise();
-#endif
+    #endif
 
     processQuitMode();
 
     LOG(LogInfo) << "EmulationStation cleanly shutting down.";
+
+    #ifdef _WIN64
+    closeConsole();
+    #endif
 
     return 0;
 }

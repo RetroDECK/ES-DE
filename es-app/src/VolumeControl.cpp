@@ -9,7 +9,8 @@
 #include "math/Misc.h"
 #include "Log.h"
 #include "Settings.h"
-#ifdef WIN32
+
+#ifdef _WIN64
 #include <mmdeviceapi.h>
 #endif
 
@@ -34,7 +35,7 @@ VolumeControl::VolumeControl()
         mixerHandle(nullptr),
         mixerElem(nullptr),
         mixerSelemId(nullptr)
-        #elif defined(WIN32) || defined(_WIN32)
+        #elif defined(_WIN64)
         , mixerHandle(nullptr),
         endpointVolume(nullptr)
         #endif
@@ -56,7 +57,7 @@ VolumeControl::VolumeControl(
         mixerHandle(nullptr),
         mixerElem(nullptr),
         mixerSelemId(nullptr)
-        #elif defined(WIN32) || defined(_WIN32)
+        #elif defined(_WIN64)
         , mixerHandle(nullptr),
         endpointVolume(nullptr)
         #endif
@@ -156,7 +157,7 @@ void VolumeControl::init()
             LOG(LogError) << "VolumeControl::init() - Failed to open ALSA mixer!";
         }
     }
-    #elif defined(WIN32) || defined(_WIN32)
+    #elif defined(_WIN64)
     // Get windows version information.
     OSVERSIONINFOEXA osVer = {sizeof(OSVERSIONINFO)};
     ::GetVersionExA(reinterpret_cast<LPOSVERSIONINFOA>(&osVer));
@@ -164,7 +165,11 @@ void VolumeControl::init()
     if (osVer.dwMajorVersion < 6) {
         // Windows older than Vista. use mixer API. open default mixer.
         if (mixerHandle == nullptr) {
+            #if defined(_WIN64)
+            if (mixerOpen(&mixerHandle, 0, (DWORD_PTR)nullptr, 0, 0) == MMSYSERR_NOERROR) {
+            #else
             if (mixerOpen(&mixerHandle, 0, nullptr, 0, 0) == MMSYSERR_NOERROR) {
+            #endif
                 // Retrieve info on the volume slider control for the "Speaker Out" line.
                 MIXERLINECONTROLS mixerLineControls;
                 mixerLineControls.cbStruct = sizeof(MIXERLINECONTROLS);
@@ -239,7 +244,7 @@ void VolumeControl::deinit()
         mixerHandle = nullptr;
         mixerElem = nullptr;
     }
-    #elif defined(WIN32) || defined(_WIN32)
+    #elif defined(_WIN64)
     if (mixerHandle != nullptr) {
         mixerClose(mixerHandle);
         mixerHandle = nullptr;
@@ -283,7 +288,7 @@ int VolumeControl::getVolume() const
             LOG(LogError) << "VolumeControl::getVolume() - Failed to get volume range!";
         }
     }
-    #elif defined(WIN32) || defined(_WIN32)
+    #elif defined(_WIN64)
     if (mixerHandle != nullptr) {
         // Windows older than Vista. use mixer API. get volume from line control.
         MIXERCONTROLDETAILS_UNSIGNED value;
@@ -355,7 +360,7 @@ void VolumeControl::setVolume(int volume)
             LOG(LogError) << "VolumeControl::getVolume() - Failed to get volume range!";
         }
     }
-    #elif defined(WIN32) || defined(_WIN32)
+    #elif defined(_WIN64)
     if (mixerHandle != nullptr) {
         // Windows older than Vista. use mixer API. get volume from line control.
         MIXERCONTROLDETAILS_UNSIGNED value;

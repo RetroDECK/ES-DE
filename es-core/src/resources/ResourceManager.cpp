@@ -38,11 +38,16 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
         if (Utils::FileSystem::exists(test))
             return test;
 
-        // Check under the data installation directory (install prefix).
-        test = Utils::FileSystem::getInstallPrefixPath() +
-                "/emulationstation/resources/" + &path[2];
-            if (Utils::FileSystem::exists(test))
-            return test;
+        // Check for the resource under the data installation directory for Unix or under
+        // the executable directory for Windows.
+        #ifdef _WIN64
+        test = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
+        #else
+        test = Utils::FileSystem::getProgramDataPath() + "/resources/" + &path[2];
+        #endif
+
+        if (Utils::FileSystem::exists(test))
+        return test;
     }
 
     // Not a resource, return unmodified path.

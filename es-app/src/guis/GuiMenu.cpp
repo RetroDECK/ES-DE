@@ -28,7 +28,7 @@
 
 #include <algorithm>
 
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_events.h>
 #else
 #include "SDL_events.h"

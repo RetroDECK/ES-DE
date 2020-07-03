@@ -13,7 +13,7 @@
 #include <sys/stat.h>
 #include <string.h>
 
-#ifdef WIN32
+#if defined(_WIN64)
 // Because windows...
 #include <direct.h>
 #include <Windows.h>
@@ -22,17 +22,17 @@
 #define snprintf _snprintf
 #define stat64 _stat64
 #define unlink _unlink
-#define S_ISREG(x) (((x) & S_IFMT) == S_IFREG)
-#define S_ISDIR(x) (((x) & S_IFMT) == S_IFDIR)
+//#define S_ISREG(x) (((x) & S_IFMT) == S_IFREG)
+//#define S_ISDIR(x) (((x) & S_IFMT) == S_IFDIR)
 #else
 #include <dirent.h>
 #include <unistd.h>
 #endif
 
-// Try to get the install prefix as defined when CMake was run.
+// For Unix systems, try to get the install prefix as defined when CMake was run.
 // The installPrefix directory is the value set for CMAKE_INSTALL_PREFIX during build.
 // If not defined, the default prefix path '/usr/local' will be used.
-#ifdef __unix__
+#if defined(__unix__)
 #ifdef ES_INSTALL_PREFIX
 std::string installPrefix = ES_INSTALL_PREFIX;
 #else
@@ -47,7 +47,7 @@ namespace Utils
         static std::string homePath = "";
         static std::string exePath = "";
 
-        #if defined(_WIN32)
+        #if defined(_WIN64)
         static std::string convertFromWideString(const std::wstring wstring)
         {
             int numBytes = WideCharToMultiByte(CP_UTF8, 0, wstring.c_str(),
@@ -70,7 +70,7 @@ namespace Utils
             // Only parse the directory, if it's a directory.
             if (isDirectory(path)) {
 
-                #if defined(_WIN32)
+                #if defined(_WIN64)
                 WIN32_FIND_DATAW findData;
                 std::string wildcard = path + "/*";
                 HANDLE hFind = FindFirstFileW(std::wstring(wildcard.begin(),
@@ -149,14 +149,7 @@ namespace Utils
             if (homePath.length())
                 return homePath;
 
-            // Check for HOME environment variable.
-            if (!homePath.length()) {
-                std::string envHome = getenv("HOME");
-                if (envHome.length())
-                    homePath = getGenericPath(envHome);
-            }
-
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             // On Windows we need to check HOMEDRIVE and HOMEPATH.
             if (!homePath.length()) {
                 std::string envHomeDrive = getenv("HOMEDRIVE");
@@ -164,7 +157,14 @@ namespace Utils
                 if (envHomeDrive.length() && envHomePath.length())
                     homePath = getGenericPath(envHomeDrive + "/" + envHomePath);
             }
-            #endif // _WIN32
+            #else
+            // Check for HOME environment variable.
+            if (!homePath.length()) {
+                std::string envHome = getenv("HOME");
+                if (envHome.length())
+                    homePath = getGenericPath(envHome);
+            }
+            #endif
 
             // No homepath found, fall back to current working directory.
             if (!homePath.length())
@@ -184,7 +184,7 @@ namespace Utils
         void setExePath(const std::string& _path)
         {
             constexpr int path_max = 32767;
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             std::wstring result(path_max, 0);
             if (GetModuleFileNameW(nullptr, &result[0], path_max) != 0)
                 exePath = convertFromWideString(result);
@@ -207,22 +207,28 @@ namespace Utils
             return exePath;
         }
 
-        std::string getInstallPrefixPath()
+        std::string getProgramDataPath()
         {
-            // installPrefix should be populated by CMAKE from $CMAKE_INSTALL_PREFIX.
-            // But just as a precaution, let's check if this variable is blank, and if so
-            // set it to '/usr/local'. Just in case some make environments won't handle this
-            // correctly.
+            // For Unix systems, installPrefix should be populated by CMAKE from
+            // $CMAKE_INSTALL_PREFIX. But just as a precaution, let's check if this
+            // variable is blank, and if so set it to '/usr/local'.
+            // Just in case some build environments won't handle this correctly.
+            // For Windows it doesn't really work like that and the application could have
+            // been install to an arbitrary location, so this function won't be used on that OS.
+            #ifdef __unix__
             if (!installPrefix.length())
                 installPrefix = "/usr/local";
-            return installPrefix + "/share";
+            return installPrefix + "/share/emulationstation";
+            #else
+            return "";
+            #endif
         }
 
         std::string getPreferredPath(const std::string& _path)
         {
             std::string path = _path;
             size_t offset = std::string::npos;
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             // Convert '/' to '\\'
             while ((offset = path.find('/')) != std::string::npos)
                 path.replace(offset, 1, "\\");
@@ -258,7 +264,7 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             // Windows escapes stuff by just putting everything in quotes.
             return '"' + getPreferredPath(path) + '"';
             #else
@@ -316,7 +322,7 @@ namespace Utils
                         continue;
                     }
 
-                    #if defined(_WIN32)
+                    #if defined(_WIN64)
                     // Append folder to path.
                     path += (path.size() == 0) ? (*it) : ("/" + (*it));
                     #else
@@ -481,20 +487,23 @@ namespace Utils
             std::string path = getGenericPath(_path);
             std::string resolved;
 
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             HANDLE hFile = CreateFile(path.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ,
                     0, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
-
+/*
             if (hFile != INVALID_HANDLE_VALUE) {
+                resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
                 resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
                         FILE_NAME_NORMALIZED) + 1);
                 if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
+               if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
                         (DWORD)resolved.size(), FILE_NAME_NORMALIZED) > 0) {
                     resolved.resize(resolved.size() - 1);
                     resolved = getGenericPath(resolved);
                 }
                 CloseHandle(hFile);
             }
+*/
             #else
             struct stat info;
 
@@ -555,7 +564,7 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             return ((path.size() > 1) && (path[1] == ':'));
             #else
             return ((path.size() > 0) && (path[0] == '/'));
@@ -590,7 +599,7 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             // Check for symlink attribute.
             const DWORD Attributes = GetFileAttributes(path.c_str());
             if ((Attributes != INVALID_FILE_ATTRIBUTES) &&
@@ -614,12 +623,12 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #if defined(_WIN32)
+            #if defined(_WIN64)
             // Check for hidden attribute.
             const DWORD Attributes = GetFileAttributes(path.c_str());
             if ((Attributes != INVALID_FILE_ATTRIBUTES) && (Attributes & FILE_ATTRIBUTE_HIDDEN))
                 return true;
-            #endif // _WIN32
+            #endif // _WIN64
 
             // Filenames starting with . are hidden in Linux, but
             // we do this check for windows as well.

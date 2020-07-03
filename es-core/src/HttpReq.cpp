@@ -8,8 +8,10 @@
 
 #include "HttpReq.h"
 
+#include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "Log.h"
+
 #include <assert.h>
 
 CURLM* HttpReq::s_multi_handle = curl_multi_init();
@@ -47,6 +49,15 @@ bool HttpReq::isUrl(const std::string& str)
 HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nullptr)
 {
     mHandle = curl_easy_init();
+
+    // On Windows, use the bundled cURL TLS/SSL certificates (which actually come from the
+    // Mozilla project). There is a possibility to use the OS provided Schannel certificates
+    // but I haven't been able to get this to work and it also seems to be problematic on
+    // older Windows versions.
+    #ifdef _WIN64
+    curl_easy_setopt(mHandle, CURLOPT_CAINFO, ResourceManager::getInstance()->
+            getResourcePath(":/certificates/curl-ca-bundle.crt").c_str());
+    #endif
 
     if (mHandle == nullptr) {
         mStatus = REQ_IO_ERROR;

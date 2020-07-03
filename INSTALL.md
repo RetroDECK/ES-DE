@@ -175,25 +175,177 @@ sudo apt-get install rpm
 ```
 
 
-**On Windows:**
+### On Windows:
 
-[CMake](http://www.cmake.org/cmake/resources/software.html)
+This is a strange legacy operating system. However it's still popular, so we need to support it for the time being.
 
-[SDL2](http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip)
+I did a brief evaluation of the Microsoft Visual C++ compiler (MSVC) but as far as I'm concerned it's an abomination so I won't cover it here and it won't be supported.
 
-[FreeImage](http://downloads.sourceforge.net/freeimage/FreeImage3154Win32.zip)
+At the moment I have only built the software using GCC on Windows, but I may try to get Clang/LLVM working at a later date.
 
-[FreeType2](http://download.savannah.gnu.org/releases/freetype/freetype-2.4.9.tar.bz2) (you'll need to compile)
+Anyway, here's a brief summary of how to get a build environment up and running on Windows.
 
-[cURL](http://curl.haxx.se/download.html) (you'll need to compile or get the pre-compiled DLL version)
+**Install Git, CMake, MinGW and your code editor:**
 
-[RapisJSON](https://github.com/tencent/rapidjson) (you need to add `include/rapidsjon` to your include path)
+[Git](https://gitforwindows.org)
 
-Remember to copy the necessary .DLL files into the same folder as the executable: probably FreeImage.dll, freetype6.dll, SDL2.dll, libcurl.dll, and zlib1.dll. Exact list depends on if you built your libraries in "static" mode or not.
+[CMake](https://cmake.org/download)
+
+[MinGW](https://gnutoolchains.com/mingw64)
+
+Make a copy of `mingw64/bin/mingw32-make` to `make` just for convenience and make sure that the necessary paths are defined for the PATH environmental variable.
+
+I won't get into the details on how to configure Git, but there are many resources available online to support with this. The `Git Bash` shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
+
+Install your editor of choice. As for VSCodium it's unfortunately broken or crippled under Windows, making some important extensions impossible to install. VSCode works fine, but make sure to disable all surveillance functionality (telemetry).
+
+It's strongly recommended to set line breaks to linefeed (Unix-style) directly in the editor, although it can also be configured in Git for conversion during commit. The source code for EmulationStation-DE only uses Unix-style line breaks.
+
+**Enable pretty printing for GDB:**
+
+This is useful for displaying std::string values for example.
+
+Adjust your paths accordingly, the below are just examples of course.
+
+Save a file to
+C:/Programming/mingw64/bin/pp.gdb with the following contents:
+
+```
+python
+import sys
+sys.path.insert(0, 'c:/Programming/mingw64/share/gcc-9.1.0/python/libstdcxx/v6')
+from printers import register_libstdcxx_printers
+register_libstdcxx_printers (None)
+end
+```
+
+If using VSCode, add the following line to launch.json:
+
+`"miDebuggerArgs": "-x c:/programming/mingw64/bin/pp.gdb",`
+
+An equivalent setup should be possible on other code editors as well.
+
+Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The MinGW installation recommended in the previous step seems to work fine though.
+
+**Download the dependency packages:**
+
+[FreeImage](https://sourceforge.net/projects/freeimage)
+
+[cURL](https://curl.haxx.se/download.html)
+
+[SDL2](https://www.libsdl.org/download-2.0.php)
+
+[libVLC](https://ftp.lysator.liu.se/pub/videolan/vlc)
+
+Uncompress the files to a suitable directory, for example C:/Programming/Dependencies/
+
+The following packages are not readily available for Windows, so clone the repos and build them yourself:
+
+[FreeType](https://www.freetype.org)
+```
+git clone git://git.savannah.gnu.org/freetype/freetype2.git
+git checkout VER-2-10-2
+mkdir build
+cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON ..
+make
+```
+
+[pugixml](https://pugixml.org)
+```
+git clone git://github.com/zeux/pugixml
+git checkout v1.10
+cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
+make
+```
+
+As for RapidJSON, you don't need to compile it, you just need the include files:
+
+[RapidJSON](http://rapidjson.org)
+```
+git clone git://github.com/Tencent/rapidjson
+git checkout v1.1.0
+```
+
+**Clone the EmulationStation-DE repository:**
+
+This works the same as in Unix, just run the following:
+
+```
+git clone https://gitlab.com/leonstyhre/emulationstation-de
+```
+
+**Setup the include directories:**
+
+As there is no standardized include directory structure in Windows and no package manager, you need to provide the include files manually.
+
+Make a directory in your build environment tree, for instance under `C:/Programming/include`.
+
+Copy the include files from cURL, FreeImage, FreeType, pugixml, RapidJSON, SDL2 and VLC to this directory.
+It should then look something like this:
+
+```
+$ ls -1 include/
+curl/
+FreeImage.h
+freetype/
+ft2build.h
+pugiconfig.hpp
+pugixml.hpp
+rapidjson/
+SDL2/
+vlc/
+```
+
+**Copy the required DLL files to the EmulationStation build directory:**
+
+As there's no package manager in Windows and no way to handle dependencies, we need to ship all the required shared libraries with the application.
+
+Copy the following files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide:
+
+```
+FreeImage.dll
+libcrypto-1_1-x64.dll    (from the OpenSSL package, located in Git MinGW/MSYS under /mingw/bin/)
+libcurl-x64.dll
+libfreetype.dll
+libgcc_s_seh-1.dll    (located in Git MinGW/MSYS under /mingw/bin/)
+libpugixml.dll
+libssl-1_1-x64.dll    (from the OpenSSL package, located in Git MinGW under /mingw/bin/)
+libstdc++-6.dll
+libvlc.dll
+libvlccore.dll
+libwinpthread-1.dll    (located in Git MinGW under /mingw/bin/)
+SDL2.dll
+libSDL2main.a
+```
+
+The files from the MinGW installation must correspond to the version used to compile the binary.
+
+*So if the MinGW installation is upgraded to a newer version or so, make sure to copy the .dll files again, overwriting the old ones.*
+
+**Building the application:**
+
+For a release build:
+
+cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include .
+
+Or for a debug build:
+
+cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
+
+For some reason defining the '../include' path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a `Git Bash` shell.
+
+The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
+
+Running `make -j6` (or whatever number of parallel jobs you prefer) should now build the binary.
+
+Note that compilation time is much longer than on Unix, and linking time is excessive for a debug build. The debug binary is also much larger than on Unix.
+
+A worthwhile endeavour could be to setup a cross-compilation environment using WLS/WLS2 (Linux), but I have not tried it.
 
 
-Configuring
-===========
+
+Configuring EmulationStation-DE
+===============================
 
 
 **~/.emulationstation/es_systems.cfg:**
@@ -320,7 +472,9 @@ Here's an overview of the file layout:
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
         <!-- The command executed when a game is launched. A few special variables are replaced if found in a command, like %ROM% (see below).
-        This example would run RetroArch with the the snes9x_libretro core. -->
+        This example would run RetroArch with the the snes9x_libretro core.
+        If there are spaces in the path or file name, you must enclose them in quotation marks, for example:
+        retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
         <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
 
         <!-- The platform(s) to use when scraping. You can see the full list of accepted platforms in src/PlatformIds.cpp.

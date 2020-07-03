@@ -13,7 +13,7 @@
 #include <sstream>
 #include <vector>
 
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_joystick.h>
 #include <SDL2/SDL_keyboard.h>
 #else

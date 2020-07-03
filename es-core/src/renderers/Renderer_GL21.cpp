@@ -11,7 +11,7 @@
 #include "Log.h"
 #include "Settings.h"
 
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #else
@@ -29,7 +29,7 @@ namespace Renderer
         const GLenum errorCode = glGetError();
 
         if (errorCode != GL_NO_ERROR) {
-            LOG(LogError) << "OpenGLES error: " << _funcName <<
+            LOG(LogError) << "OpenGL error: " << _funcName <<
                     " failed with error code: " << errorCode;
         }
     }

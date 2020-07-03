@@ -8,7 +8,7 @@
 #ifndef ES_CORE_AUDIO_MANAGER_H
 #define ES_CORE_AUDIO_MANAGER_H
 
-#ifdef __linux__
+#if defined(__linux__) || defined (_WIN64)
 #include <SDL2/SDL_audio.h>
 #else
 #include "SDL_audio.h"

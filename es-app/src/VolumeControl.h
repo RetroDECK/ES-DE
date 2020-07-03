@@ -16,10 +16,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <alsa/asoundlib.h>
-#elif defined(WIN32) || defined(_WIN32)
+#elif defined(_WIN64)
 #include <Windows.h>
 #include <endpointvolume.h>
-#include <mmeapi.h>
+//#include <mmeapi.h>
 #endif
 
 //  Singleton pattern. Call getInstance() to get an object.
@@ -34,7 +34,7 @@ class VolumeControl
     snd_mixer_t* mixerHandle;
     snd_mixer_elem_t* mixerElem;
     snd_mixer_selem_id_t* mixerSelemId;
-    #elif defined(WIN32) || defined(_WIN32)
+    #elif defined(_WIN64)
     HMIXER mixerHandle;
     MIXERCONTROL mixerControl;
     IAudioEndpointVolume * endpointVolume;
