@@ -312,8 +312,8 @@ int VolumeControl::getVolume() const
         float floatVolume = 0.0f; // 0-1
         if (endpointVolume->GetMasterVolumeLevelScalar(&floatVolume) == S_OK) {
             volume = (int)Math::round(floatVolume * 100.0f);
-            LOG(LogInfo) << " getting volume as " << volume <<
-                    " ( from float " << floatVolume << ")";
+            LOG(LogInfo) << "System audio volume is " << volume <<
+                    " (floating point value " << floatVolume << ")";
         }
         else {
             LOG(LogError) << "VolumeControl::getVolume() - Failed to get master volume!";

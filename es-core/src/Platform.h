@@ -21,8 +21,14 @@ enum QuitMode {
     POWEROFF = 2
 };
 
-// Run UTF-8 encoded in the shell (requires wstring conversion on Windows).
+// Uses UTF-8 for Unix and does a UTF-16/wstring conversion for Windows.
 int runSystemCommand(const std::string& cmd_utf8);
+// Windows specific UTF-16/wstring function. (FOR FUTURE USE)
+int runSystemCommand(const std::wstring& cmd_utf16);
+
+int launchEmulatorUnix(const std::string& cmd_utf8);
+int launchEmulatorWindows(const std::wstring& cmd_utf16);
+
 int quitES(QuitMode mode = QuitMode::QUIT);
 void processQuitMode();
 

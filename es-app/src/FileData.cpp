@@ -22,6 +22,7 @@
 #include "SystemData.h"
 #include "VolumeControl.h"
 #include "Window.h"
+
 #include <assert.h>
 
 FileData::FileData(
@@ -452,18 +453,84 @@ void FileData::launchGame(Window* window)
     else
         command = mEnvData->mLaunchCommand;
 
+    std::string commandRaw = command;
+
     const std::string rom = Utils::FileSystem::getEscapedPath(getPath());
     const std::string basename = Utils::FileSystem::getStem(getPath());
     const std::string rom_raw = Utils::FileSystem::getPreferredPath(getPath());
+    const std::string emupath = Utils::FileSystem::getExePath();
 
     command = Utils::String::replace(command, "%ROM%", rom);
     command = Utils::String::replace(command, "%BASENAME%", basename);
     command = Utils::String::replace(command, "%ROM_RAW%", rom_raw);
 
-    Scripting::fireEvent("game-start", rom, basename);
+    #ifdef _WIN64
+    std::wstring commandWide = Utils::String::charToWideChar(command);
+    #endif
 
-    LOG(LogInfo) << "	" << command;
-    int exitCode = runSystemCommand(command);
+    Scripting::fireEvent("game-start", rom, basename);
+    int exitCode = 0;
+
+    if (command.find("%EMUPATH%") != std::string::npos) {
+        // Extract the emulator executable from the launch command string. This could either be
+        // just the program name, assuming the binary is in the PATH variable of the operating
+        // system, or it could be an absolute path to the emulator. (In the latter case, if
+        // there is a space in the the path, it needs to be enclosed by quotation marks in
+        // es_systems.cfg.)
+        std::string emuExecutable;
+
+        // If the first character is a quotation mark, then we need to extract up to the
+        // next quotation mark, otherwise we'll extract up to the first space character.
+        if (command.front() == '\"') {
+            std::string emuTemp = command.substr(1, std::string::npos);
+            emuExecutable = emuTemp.substr(0, emuTemp.find('"'));
+        }
+        else {
+            emuExecutable = command.substr(0, command.find(' '));
+        }
+
+        // For Windows, we need to handle UTF-16 encoding.
+        #ifdef _WIN64
+        std::wstring emuExecutableWide;
+        std::wstring emuPathWide;
+
+        emuExecutableWide = Utils::String::charToWideChar(emuExecutable);
+
+        // Search for the emulator using the PATH environmental variable.
+        DWORD size = SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr);
+
+        if (size) {
+            std::vector<wchar_t> pathBuffer(static_cast<size_t>(size) + 1 );
+            wchar_t* fileName = nullptr;
+
+            SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", size + 1 ,
+                    pathBuffer.data(), &fileName);
+            std::wstring pathString = pathBuffer.data();
+
+            if (pathString.length()) {
+                emuPathWide = pathString.substr(0, pathString.size() -
+                        std::wstring(fileName).size());
+                emuPathWide.pop_back();
+                auto stringPos = commandWide.find(L"%EMUPATH%");
+                commandWide = commandWide.replace(stringPos, 9, emuPathWide);
+            }
+        }
+        #else
+        // TODO for Unix.
+        #endif
+    }
+
+    LOG(LogInfo) << "Raw emulator launch command:";
+    LOG(LogInfo) << commandRaw;
+    LOG(LogInfo) << "Expanded emulator launch command:";
+
+    #ifdef _WIN64
+    LOG(LogInfo) << Utils::String::wideCharToChar(commandWide);
+    exitCode = launchEmulatorWindows(commandWide);
+    #else
+    LOG(LogInfo) << command;
+    exitCode = launchEmulatorUnix(command);
+    #endif
 
     if (exitCode != 0) {
         LOG(LogWarning) << "...launch terminated with nonzero exit code " << exitCode << "!";

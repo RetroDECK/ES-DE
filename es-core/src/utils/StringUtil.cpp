@@ -8,6 +8,8 @@
 #include "utils/StringUtil.h"
 
 #include <algorithm>
+#include <codecvt>
+#include <locale>
 #include <stdarg.h>
 
 namespace Utils
@@ -183,6 +185,22 @@ namespace Utils
                 string = string.replace(pos, _replace.length(), _with.c_str(), _with.length());
 
             return string;
+        }
+
+        std::wstring charToWideChar(const std::string& _string)
+        {
+            typedef std::codecvt_utf8<wchar_t> convert_type;
+            std::wstring_convert<convert_type, wchar_t> stringConverter;
+
+            return stringConverter.from_bytes(_string);
+        }
+
+        std::string wideCharToChar(const std::wstring& _string)
+        {
+            typedef std::codecvt_utf8<wchar_t> convert_type;
+            std::wstring_convert<convert_type, wchar_t> stringConverter;
+
+            return stringConverter.to_bytes(_string);
         }
 
         bool startsWith(const std::string& _string, const std::string& _start)

@@ -28,6 +28,8 @@ namespace Utils
         std::string trim(const std::string& _string);
         std::string replace(const std::string& _string, const std::string& _replace,
                 const std::string& _with);
+        std::wstring charToWideChar(const std::string& _string);
+        std::string wideCharToChar(const std::wstring& _string);
         bool startsWith(const std::string& _string, const std::string& _start);
         bool endsWith(const std::string& _string, const std::string& _end);
         std::string removeParenthesis(const std::string& _string);
