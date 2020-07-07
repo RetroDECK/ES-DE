@@ -39,6 +39,7 @@ install_manifest.txt
 _CPack_Packages
 emulationstation-de*.deb
 emulationstation-de*.rpm
+emulationstation-de*.exe
 
 # TODO
 TODO.md

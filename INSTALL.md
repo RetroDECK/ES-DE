@@ -177,7 +177,7 @@ sudo apt-get install rpm
 
 ### On Windows:
 
-This is a strange legacy operating system. However it's still popular, so we need to support it for the time being.
+This is a strange legacy operating system. However it's still popular, so we need to support it.
 
 I did a brief evaluation of the Microsoft Visual C++ compiler (MSVC) but as far as I'm concerned it's an abomination so I won't cover it here and it won't be supported.
 
@@ -197,13 +197,13 @@ Make a copy of `mingw64/bin/mingw32-make` to `make` just for convenience and mak
 
 I won't get into the details on how to configure Git, but there are many resources available online to support with this. The `Git Bash` shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
 
-Install your editor of choice. As for VSCodium it's unfortunately broken or crippled under Windows, making some important extensions impossible to install. VSCode works fine, but make sure to disable all surveillance functionality (telemetry).
+Install your editor of choice. As for VSCodium it's unfortunately broken or crippled under Windows, making some important extensions impossible to install. VSCode can however be used instead.
 
-It's strongly recommended to set line breaks to linefeed (Unix-style) directly in the editor, although it can also be configured in Git for conversion during commit. The source code for EmulationStation-DE only uses Unix-style line breaks.
+It's strongly recommended to set line breaks to Unix-style (linefeed only) directly in the editor, although it can also be configured in Git for conversion during commit. The source code for EmulationStation-DE only uses Unix-style line breaks.
 
 **Enable pretty printing for GDB:**
 
-This is useful for displaying std::string values for example.
+This is useful for displaying `std::string` values for example.
 
 Adjust your paths accordingly, the below are just examples of course.
 
@@ -225,7 +225,7 @@ If using VSCode, add the following line to launch.json:
 
 An equivalent setup should be possible on other code editors as well.
 
-Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The MinGW installation recommended in the previous step seems to work fine though.
+Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The MinGW installation recommended in the previous step works fine though.
 
 **Download the dependency packages:**
 
@@ -326,11 +326,15 @@ The files from the MinGW installation must correspond to the version used to com
 
 For a release build:
 
+```
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include .
+```
 
 Or for a debug build:
 
+```
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
+```
 
 For some reason defining the '../include' path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a `Git Bash` shell.
 
@@ -342,6 +346,26 @@ Note that compilation time is much longer than on Unix, and linking time is exce
 
 A worthwhile endeavour could be to setup a cross-compilation environment using WLS/WLS2 (Linux), but I have not tried it.
 
+
+**Creating an NSIS installer:**
+
+To create an NSIS installer (Nullsoft Scriptable Install System) you need to first install the NSIS creation tool:
+
+[NSIS](https://nsis.sourceforge.io/Download)
+
+Simply install the application using it's installer.
+
+After the installation has been completed, go to the emulationstation-de directory and run cpack to generate the NSIS installer:
+
+```
+$ cpack
+CPack: Create package using NSIS
+CPack: Install projects
+CPack: - Run preinstall target for: emulationstation-de
+CPack: - Install project: emulationstation-de []
+CPack: Create package
+CPack: - package: C:/Programming/emulationstation-de/emulationstation-de-1.0.0-win64.exe generated.
+```
 
 
 Configuring EmulationStation-DE
@@ -477,6 +501,17 @@ Here's an overview of the file layout:
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
         <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
 
+        <!-- This is an example for Windows. The .exe extension is optional and both forward slashes and backslashes are allowed as
+        directory separators. As there is no standardized installation directory structure for this operating system, the %EMUPATH%
+        variable is used here to find the cores relative to the RetroArch binary. This binary must be in the PATH environmental variable
+        or otherwise the complete path to the retroarch.exe file needs to be defined. Batch scripts (.bat) are also supported. -->
+        <command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
+
+        <!-- Another example for Windows. As can be seen here, the absolut path to the emulator has been defined, and there are spaces
+        in the directory name, so it needs to be surrounded by quotation marks. As well the quotation marks are needed around the core
+        configuration as the %EMUPATH% will expand to the path of the emulator binary, which will of course also include the spaces. -->
+        <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+
         <!-- The platform(s) to use when scraping. You can see the full list of accepted platforms in src/PlatformIds.cpp.
         It's case sensitive, but everything is lowercase. This tag is optional.
         You can use multiple platforms too, delimited with any of the whitespace characters (", \r\n\t"), e.g.: "megadrive, genesis" -->
@@ -495,6 +530,8 @@ The following variables are expanded by ES for the `command` tag:
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
 `%ROM_RAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
+
+`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded either using the PATH environmental variable of the operating system, or if an absolute emulator path is defined, this will be used instead. This variable is mostly useful to define the emulator core path for Windows, as this operating system does not have a standardized program installation directory structure.
 
 For the `path` tag, the following variable is expanded by ES:
 

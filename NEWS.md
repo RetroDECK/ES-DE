@@ -12,8 +12,11 @@ v1.0.0
 * Gamelist sorting now working as expected and is persistent throughout the application session
 * Full navigation sound support, configurable per theme
 * New default theme rbsimple-DE bundled with the software, this theme is largely based on recalbox-multi by the Recalbox community
+* Added extensive es_systems.cfg templates for Unix and Windows
+* Updated the application to compile and work on Microsoft Windows
 * Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
-* Per-game launchstring override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
+* Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
+* Core location can be defined relative to the emulator binary using the %EMUPATH% varible in es_systems.cfg (mostly useful for Windows)
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
 * GUI-configurable option to sort favorite games on the top of the game lists (favorites marked with stars)
 * Added new component GuiComplexTextEditPopup to handle changes to configuration file entries and similar
@@ -24,8 +27,8 @@ v1.0.0
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
-* Updated the cmake/cpack install and package build script to work as expected (can now generate .deb and .rpm installation packages)
-* Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler
+* Updated the CMake/CPack install and package build script to work as expected (can now generate .deb, .rpm and NSIS installation packages)
+* Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix only)
 * License files included for all the libraries and resources that are bundled with the application
 * Updated the MAME ROM index files to include ROMs up to MAME version 0.221 (and created scripts to easily generate these index files in the future)
 
