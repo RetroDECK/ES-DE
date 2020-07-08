@@ -76,8 +76,8 @@ GuiMetaDataEd::GuiMetaDataEd(
             continue;
 
         // Don't show the launch string override entry if this option has been disabled.
-        if (!Settings::getInstance()->getBool("LaunchstringOverride") &&
-                iter->type == MD_LAUNCHSTRING) {
+        if (!Settings::getInstance()->getBool("LaunchCommandOverride") &&
+                iter->type == MD_LAUNCHCOMMAND) {
             ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL,
                     FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
             assert(ed);
@@ -136,7 +136,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(ed, false);
                 break;
             }
-        case MD_LAUNCHSTRING: {
+        case MD_LAUNCHCOMMAND: {
                 ed = std::make_shared<TextComponent>(window, "",
                         Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
                 row.addElement(ed, true);
@@ -156,13 +156,13 @@ GuiMetaDataEd::GuiMetaDataEd(
                         ed->setValue(newVal); }; // OK callback (apply new value to ed).
 
                 std::string staticTextString = "Default value from es_systems.cfg:";
-                std::string defaultLaunchString = scraperParams.system->
+                std::string defaultLaunchCommand = scraperParams.system->
                         getSystemEnvData()->mLaunchCommand;
 
                 row.makeAcceptInputHandler([this, title, staticTextString,
-                        defaultLaunchString, ed, updateVal, multiLine] {
+                        defaultLaunchCommand, ed, updateVal, multiLine] {
                             mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
-                            title, staticTextString, defaultLaunchString, ed->getValue(),
+                            title, staticTextString, defaultLaunchCommand, ed->getValue(),
                             updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
                 });
                 break;

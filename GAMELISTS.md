@@ -55,7 +55,7 @@ Some metadata is also marked as "statistic" - these are kept track of by ES and 
 * `playcount` - integer, the number of times this game has been played.
 * `lastplayed` - statistic, datetime, the last date and time this game was played.
 * `sortname` - string, used in sorting the gamelist in a system, instead of `name`.
-* `launchstring` - optional tag that is used to override the emulator and core settings on a per-game basis.
+* `launchcommand` - optional tag that is used to override the emulator and core settings on a per-game basis.
 
 #### `<folder>`
 * `name` - string, the displayed name for the folder.

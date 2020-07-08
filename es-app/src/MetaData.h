@@ -23,7 +23,7 @@ enum MetaDataType {
 
     // Specialized types.
     MD_MULTILINE_STRING,
-    MD_LAUNCHSTRING,
+    MD_LAUNCHCOMMAND,
     MD_PATH,
     MD_RATING,
     MD_DATE,

@@ -447,9 +447,9 @@ void FileData::launchGame(Window* window)
 
     // Check if there is a launch string override for the game
     // and the corresponding option to use it has been set.
-    if (Settings::getInstance()->getBool("LaunchstringOverride") &&
-            !metadata.get("launchstring").empty())
-        command = metadata.get("launchstring");
+    if (Settings::getInstance()->getBool("LaunchCommandOverride") &&
+            !metadata.get("launchcommand").empty())
+        command = metadata.get("launchcommand");
     else
         command = mEnvData->mLaunchCommand;
 

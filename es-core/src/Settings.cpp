@@ -119,7 +119,7 @@ void Settings::setDefaults()
         mStringMap["AudioDevice"] = "Master";
     #endif
     mBoolMap["VideoAudio"] = true;
-    mBoolMap["EnableSounds"] = true;
+    mBoolMap["EnableNavigationSounds"] = true;
     // Audio out device for Video playback using OMX player.
     mStringMap["OMXAudioDev"] = "both";
 
@@ -170,7 +170,7 @@ void Settings::setDefaults()
     mBoolMap["ScreenSaverOmxPlayer"] = false;
     #endif
     mStringMap["SaveGamelistsMode"] = "always";
-    mBoolMap["LaunchstringOverride"] = true;
+    mBoolMap["LaunchCommandOverride"] = true;
     mBoolMap["ParseGamelistOnly"] = false;
     mBoolMap["LocalArt"] = false;
     mBoolMap["ShowHiddenFiles"] = false;

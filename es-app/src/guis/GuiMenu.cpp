@@ -178,17 +178,19 @@ void GuiMenu::openSoundSettings()
                 video_audio->getState()); });
 
         // Navigation sounds.
-        auto sounds_enabled = std::make_shared<SwitchComponent>(mWindow);
-        sounds_enabled->setState(Settings::getInstance()->getBool("EnableSounds"));
-        s->addWithLabel("ENABLE NAVIGATION SOUNDS", sounds_enabled);
-        s->addSaveFunc([sounds_enabled] {
-            if (sounds_enabled->getState() &&
-                    !Settings::getInstance()->getBool("EnableSounds") &&
+        auto navigationsounds_enabled = std::make_shared<SwitchComponent>(mWindow);
+        navigationsounds_enabled->setState(Settings::getInstance()->
+                getBool("EnableNavigationSounds"));
+        s->addWithLabel("ENABLE NAVIGATION SOUNDS", navigationsounds_enabled);
+        s->addSaveFunc([navigationsounds_enabled] {
+            if (navigationsounds_enabled->getState() &&
+                    !Settings::getInstance()->getBool("EnableNavigationSounds") &&
                     PowerSaver::getMode() == PowerSaver::INSTANT) {
                 Settings::getInstance()->setString("PowerSaverMode", "default");
                 PowerSaver::init();
             }
-            Settings::getInstance()->setBool("EnableSounds", sounds_enabled->getState());
+            Settings::getInstance()->setBool("EnableNavigationSounds",
+                    navigationsounds_enabled->getState());
         });
     }
 
@@ -451,7 +453,7 @@ void GuiMenu::openOtherSettings()
                 "instant" && power_saver->getSelected() == "instant") {
             Settings::getInstance()->setString("TransitionStyle", "instant");
             Settings::getInstance()->setBool("MoveCarousel", false);
-            Settings::getInstance()->setBool("EnableSounds", false);
+            Settings::getInstance()->setBool("EnableNavigationSounds", false);
         }
         Settings::getInstance()->setString("PowerSaverMode", power_saver->getSelected());
         PowerSaver::init();
@@ -493,13 +495,13 @@ void GuiMenu::openOtherSettings()
         Settings::getInstance()->setString("SaveGamelistsMode", gamelistsSaveMode->getSelected());
     });
 
-    // Allow overriding of the launch string per game (the option
+    // Allow overriding of the launch command per game (the option
     // to disable this is intended primarily for testing purposes).
-    auto launchstring_override = std::make_shared<SwitchComponent>(mWindow);
-    launchstring_override->setState(Settings::getInstance()->getBool("LaunchstringOverride"));
-    s->addWithLabel("ENABLE PER GAME LAUNCH STRING OVERRIDE", launchstring_override);
-    s->addSaveFunc([launchstring_override] { Settings::getInstance()->
-            setBool("LaunchstringOverride", launchstring_override->getState()); });
+    auto launchcommand_override = std::make_shared<SwitchComponent>(mWindow);
+    launchcommand_override->setState(Settings::getInstance()->getBool("LaunchCommandOverride"));
+    s->addWithLabel("ENABLE PER GAME LAUNCH COMMAND OVERRIDE", launchcommand_override);
+    s->addSaveFunc([launchcommand_override] { Settings::getInstance()->
+            setBool("LaunchCommandOverride", launchcommand_override->getState()); });
 
     auto parse_gamelists = std::make_shared<SwitchComponent>(mWindow);
     parse_gamelists->setState(Settings::getInstance()->getBool("ParseGamelistOnly"));

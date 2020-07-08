@@ -164,7 +164,7 @@ void Sound::play()
     if(mSampleData == nullptr)
         return;
 
-    if(!Settings::getInstance()->getBool("EnableSounds"))
+    if(!Settings::getInstance()->getBool("EnableNavigationSounds"))
         return;
 
     AudioManager::getInstance();
