@@ -146,8 +146,8 @@ void UIModeController::logInput(InputConfig * config, Input input)
         mapname += ", ";
     }
 
-    LOG(LogDebug) << "UIModeController::logInput( " << config->getDeviceName() <<
-            " ):" << input.string() << ", isMappedTo= " << mapname << ", value=" << input.value;
+    LOG(LogDebug) << "UIModeController::logInput(" << config->getDeviceName() <<
+            "): " << input.string() << ", isMappedTo=" << mapname << ", value=" << input.value;
 }
 
 bool UIModeController::isValidInput(InputConfig * config, Input input)

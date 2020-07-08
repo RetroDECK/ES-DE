@@ -213,6 +213,13 @@ std::vector<std::string> getFallbackFontPaths()
 {
     std::vector<std::string> fontPaths;
 
+    // Standard fonts, let's include them here for error checking purposes even though that's
+    // not really the correct location. (The application will crash if they are missing.)
+    ResourceManager::getInstance()->
+            getResourcePath(":/fonts/opensans_hebrew_condensed_light.ttf");
+    ResourceManager::getInstance()->
+            getResourcePath(":/fonts/opensans_hebrew_condensed_regular.ttf");
+
     // Vera sans Unicode:
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/DejaVuSans.ttf"));

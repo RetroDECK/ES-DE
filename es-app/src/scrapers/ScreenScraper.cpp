@@ -149,7 +149,7 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
             p_ids.push_back(mapIt->second);
         }
         else {
-            LOG(LogWarning) << "ScreenScraper: no support for platform " <<
+            LOG(LogWarning) << "Warning - ScreenScraper: no support for platform " <<
                     getPlatformName(*platformIt);
             // Add the scrape request without a platform/system ID.
             requests.push(std::unique_ptr<ScraperRequest>
@@ -180,8 +180,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
 
     if (!parseResult) {
         std::stringstream ss;
-        ss << "ScreenScraperRequest - Error parsing XML." << std::endl <<
-                parseResult.description() << "";
+        ss << "Error - ScreenScraperRequest - Error parsing XML: " << parseResult.description();
 
         std::string err = ss.str();
         setError(err);
@@ -232,14 +231,12 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         // Genre fallback language: EN. ( Xpath: Data/jeu[0]/genres/genre[*] ).
         result.mdl.set("genre", find_child_by_attribute_list(game.child("genres"),
                 "genre", "langue", { language, "en" }).text().get());
-        LOG(LogDebug) << "Genre: " << result.mdl.get("genre");
 
         // Get the date proper. The API returns multiple 'date' children nodes to the 'dates'
         // main child of 'jeu'.
         // Date fallback: WOR(LD), US, SS, JP, EU.
         std::string _date = find_child_by_attribute_list(game.child("dates"), "date", "region",
                 { region, "wor", "us", "ss", "jp", "eu" }).text().get();
-        LOG(LogDebug) << "Release Date (unparsed): " << _date;
 
         // Date can be YYYY-MM-DD or just YYYY.
         if (_date.length() > 4) {
@@ -250,8 +247,6 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             result.mdl.set("releasedate", Utils::Time::DateTime(
                     Utils::Time::stringToTime(_date, "%Y")));
         }
-
-        LOG(LogDebug) << "Release Date (parsed): " << result.mdl.get("releasedate");
 
         /// Developer for the game( Xpath: Data/jeu[0]/developpeur ).
         std::string developer = game.child("developpeur").text().get();
@@ -275,6 +270,21 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             ss << ratingVal;
             result.mdl.set("rating", ss.str());
         }
+
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " <<
+                result.mdl.get("name");
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Release Date (unparsed): " <<
+                _date;
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Release Date (parsed): " <<
+                result.mdl.get("releasedate");
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Developer: " <<
+                result.mdl.get("developer");
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Publisher: " <<
+                result.mdl.get("publisher");
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Genre: " <<
+                result.mdl.get("genre");
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Players: " <<
+                result.mdl.get("players");
 
         // Media super-node.
         pugi::xml_node media_list = game.child("medias");
@@ -352,13 +362,13 @@ void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
 {
     assert(mRequestQueue != nullptr);
 
-    LOG(LogDebug) << "Processing a list of results";
+    LOG(LogDebug) << "ScreenScraper: Processing a list of results";
 
     pugi::xml_node data = xmldoc.child("Data");
     pugi::xml_node game = data.child("jeu");
 
     if (!game) {
-        LOG(LogDebug) << "Found nothing";
+        LOG(LogDebug) << "ScreenScraper: Found nothing";
     }
 
     ScreenScraperRequest::ScreenScraperConfig ssConfig;

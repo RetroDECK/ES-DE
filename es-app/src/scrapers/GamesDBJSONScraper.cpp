@@ -161,8 +161,8 @@ void thegamesdb_generate_json_scraper_requests(
                     first = false;
                 }
                 else {
-                    LOG(LogWarning) << "TheGamesDB scraper warning - no support for platform "
-                                    << getPlatformName(*platformIt);
+                    LOG(LogWarning) << "Warning - TheGamesDB scraper warning - "
+                            "no support for platform " << getPlatformName(*platformIt);
                 }
             }
             path += platformQueryParam;
@@ -290,6 +290,7 @@ void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
         result.gameID = std::to_string(getIntOrThrow(game, "id"));
 
     result.mdl.set("name", getStringOrThrow(game, "game_title"));
+
     if (game.HasMember("overview") && game["overview"].IsString())
         result.mdl.set("desc", game["overview"].GetString());
 
@@ -308,6 +309,21 @@ void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
 
     if (game.HasMember("players") && game["players"].IsInt())
         result.mdl.set("players", std::to_string(game["players"].GetInt()));
+
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Name: " <<
+            result.mdl.get("name");
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (unparsed): " <<
+            game["release_date"].GetString();
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (parsed): " <<
+            result.mdl.get("releasedate");
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Developer: " <<
+            result.mdl.get("developer");
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Publisher: " <<
+            result.mdl.get("publisher");
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Genre: " <<
+            result.mdl.get("genre");
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Players: " <<
+            result.mdl.get("players");
 
     result.mediaURLFetch = NOT_STARTED;
     results.push_back(result);
@@ -365,7 +381,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
 
     if (doc.HasParseError()) {
         std::string err =
-            std::string("TheGamesDBJSONRequest - Error parsing JSON. \n\t") +
+            std::string("Error - TheGamesDBJSONRequest - Error parsing JSON. \n\t") +
                     GetParseError_En(doc.GetParseError());
         setError(err);
         LOG(LogError) << err;
@@ -384,7 +400,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             baseImageUrlLarge = base_url["large"].GetString();
         }
         else {
-            std::string warn = "TheGamesDBJSONRequest - No URL path for large images.\n";
+            std::string warn = "Warning - TheGamesDBJSONRequest - No URL path for large images.\n";
             LOG(LogWarning) << warn;
             return;
         }
@@ -393,7 +409,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             processMediaURLs(images, baseImageUrlLarge, results);
         }
         catch (std::runtime_error& e) {
-            LOG(LogError) << "Error while processing media URLs: " << e.what();
+            LOG(LogError) << "Error - Error while processing media URLs: " << e.what();
         }
 
         // Find how many more requests we can make before the scraper
@@ -412,7 +428,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     // These process steps are for the initial scraping response.
     if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
             !doc["data"]["games"].IsArray()) {
-        std::string warn = "TheGamesDBJSONRequest - Response had no game data.\n";
+        std::string warn = "Warning - TheGamesDBJSONRequest - Response had no game data.\n";
         LOG(LogWarning) << warn;
         return;
     }
@@ -426,7 +442,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             processGame(v, results);
         }
         catch (std::runtime_error& e) {
-            LOG(LogError) << "Error while processing game: " << e.what();
+            LOG(LogError) << "Error - Error while processing game: " << e.what();
         }
     }
 }

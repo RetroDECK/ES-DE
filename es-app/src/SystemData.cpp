@@ -94,8 +94,14 @@ void SystemData::setIsGameSystemStatus()
 bool SystemData::populateFolder(FileData* folder)
 {
     const std::string& folderPath = folder->getPath();
+    if (!Utils::FileSystem::exists(folderPath)) {
+    LOG(LogInfo) << "Info - Folder with path \"" <<
+                folderPath << "\" does not exist.";
+        return false;
+    }
     if (!Utils::FileSystem::isDirectory(folderPath)) {
-        LOG(LogWarning) << "Error - folder with path \"" << folderPath << "\" is not a directory!";
+        LOG(LogWarning) << "Warning - Folder with path \"" <<
+                folderPath << "\" is not a directory!";
         return false;
     }
 
@@ -104,7 +110,8 @@ bool SystemData::populateFolder(FileData* folder)
         // If this symlink resolves to somewhere that's at the beginning of our
         // path, it's going to create a recursive loop. Make sure to avoid this.
         if (folderPath.find(Utils::FileSystem::getCanonicalPath(folderPath)) == 0) {
-            LOG(LogWarning) << "Skipping infinitely recursive symlink \"" << folderPath << "\"";
+            LOG(LogWarning) << "Warning - Skipping infinitely recursive symlink \"" <<
+                    folderPath << "\"";
             return false;
         }
     }
@@ -211,7 +218,7 @@ bool SystemData::loadConfig()
     LOG(LogInfo) << "Loading system config file " << path << "...";
 
     if (!Utils::FileSystem::exists(path)) {
-        LOG(LogError) << "es_systems.cfg file does not exist!";
+        LOG(LogError) << "Error - es_systems.cfg file does not exist!";
         writeExampleConfig(getConfigPath(true));
         return false;
     }
@@ -220,7 +227,7 @@ bool SystemData::loadConfig()
     pugi::xml_parse_result res = doc.load_file(path.c_str());
 
     if (!res) {
-        LOG(LogError) << "Could not parse es_systems.cfg file!";
+        LOG(LogError) << "Error - Could not parse es_systems.cfg file!";
         LOG(LogError) << res.description();
         return false;
     }
@@ -229,7 +236,7 @@ bool SystemData::loadConfig()
     pugi::xml_node systemList = doc.child("systemList");
 
     if (!systemList) {
-        LOG(LogError) << "es_systems.cfg is missing the <systemList> tag!";
+        LOG(LogError) << "Error - es_systems.cfg is missing the <systemList> tag!";
         return false;
     }
 
@@ -275,8 +282,8 @@ bool SystemData::loadConfig()
             // If there appears to be an actual platform ID supplied
             // but it didn't match the list, generate a warning.
             if (str != nullptr && str[0] != '\0' && platformId == PlatformIds::PLATFORM_UNKNOWN)
-                LOG(LogWarning) << "Unknown platform for system \"" << name << "\" (platform \""
-                        << str << "\" from list \"" << platformList << "\")";
+                LOG(LogWarning) << "Warning - Unknown platform for system \"" << name <<
+                        "\" (platform \"" << str << "\" from list \"" << platformList << "\")";
             else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
                 platformIds.push_back(platformId);
         }
@@ -286,7 +293,7 @@ bool SystemData::loadConfig()
 
         // Validate.
         if (name.empty() || path.empty() || extensions.empty() || cmd.empty()) {
-            LOG(LogError) << "System \"" << name <<
+            LOG(LogError) << "Error - System \"" << name <<
                     "\" is missing name, path, extension, or command!";
             continue;
         }
@@ -310,7 +317,7 @@ bool SystemData::loadConfig()
 
         SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
         if (newSys->getRootFolder()->getChildrenByFilename().size() == 0) {
-            LOG(LogWarning) << "System \"" << name << "\" has no games! Ignoring it.";
+            LOG(LogInfo) << "Info - System \"" << name << "\" has no games, ignoring it.";
             delete newSys;
         }
         else {

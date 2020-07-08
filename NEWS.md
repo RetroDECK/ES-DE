@@ -24,6 +24,7 @@ v1.0.0
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
 * Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
 * No more attempts to open files directly under /etc, instead only the install prefix directory and the home directory are used
+* Added proper error handling for missing resource files and improved overall logging
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it

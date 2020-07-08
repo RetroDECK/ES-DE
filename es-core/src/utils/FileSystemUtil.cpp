@@ -490,20 +490,19 @@ namespace Utils
             #if defined(_WIN64)
             HANDLE hFile = CreateFile(path.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ,
                     0, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
-/*
-            if (hFile != INVALID_HANDLE_VALUE) {
-                resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
-                resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
-                        FILE_NAME_NORMALIZED) + 1);
-                if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
-               if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
-                        (DWORD)resolved.size(), FILE_NAME_NORMALIZED) > 0) {
-                    resolved.resize(resolved.size() - 1);
-                    resolved = getGenericPath(resolved);
-                }
-                CloseHandle(hFile);
-            }
-*/
+//            TEMPORARY, will need to fix this later.
+//            if (hFile != INVALID_HANDLE_VALUE) {
+//                resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
+//                resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
+//                        FILE_NAME_NORMALIZED) + 1);
+//                if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
+//               if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
+//                        (DWORD)resolved.size(), FILE_NAME_NORMALIZED) > 0) {
+//                    resolved.resize(resolved.size() - 1);
+//                    resolved = getGenericPath(resolved);
+//                }
+//                CloseHandle(hFile);
+//            }
             #else
             struct stat info;
 

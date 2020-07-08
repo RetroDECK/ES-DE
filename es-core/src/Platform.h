@@ -29,7 +29,10 @@ int runSystemCommand(const std::wstring& cmd_utf16);
 int launchEmulatorUnix(const std::string& cmd_utf8);
 int launchEmulatorWindows(const std::wstring& cmd_utf16);
 
+// Clean, normal shutdown.
 int quitES(QuitMode mode = QuitMode::QUIT);
+// Immediately shut down the application as cleanly as possible.
+void emergencyShutdown();
 void processQuitMode();
 
 #endif // ES_CORE_PLATFORM_H

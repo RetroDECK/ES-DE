@@ -5,7 +5,12 @@
 //
 
 #include "Platform.h"
+
+#include "renderers/Renderer.h"
 #include "utils/StringUtil.h"
+#include "AudioManager.h"
+#include "Log.h"
+#include "MameNames.h"
 
 #if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_events.h>
@@ -21,8 +26,6 @@
 #include <unistd.h>
 #endif
 #include <fcntl.h>
-
-#include "Log.h"
 
 int runRebootCommand()
 {
@@ -139,6 +142,19 @@ int quitES(QuitMode mode)
     quit->type = SDL_QUIT;
     SDL_PushEvent(quit);
     return 0;
+}
+
+void emergencyShutdown()
+{
+    LOG(LogError) << "Critical Error - Performing emergency shutdown...";
+
+    MameNames::deinit();
+    AudioManager::getInstance()->deinit();
+    // Most of the SDL deinitialization is done in Renderer.
+    Renderer::deinit();
+    Log::flush();
+
+    exit(EXIT_FAILURE);
 }
 
 void touch(const std::string& filename)

@@ -416,11 +416,17 @@ int main(int argc, char* argv[])
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
+    SDL_Event event;
 
     if (!window.init()) {
         LOG(LogError) << "Window failed to initialize!";
         return 1;
     }
+
+    InputManager::getInstance()->parseEvent(event, &window);
+    if (event.type == SDL_QUIT)
+        return 1;
+
 
     if (splashScreen) {
         std::string progressText = "Loading...";
@@ -433,8 +439,7 @@ int main(int argc, char* argv[])
 
     if (loadSystemConfigFile(errorMsg) != NO_ERRORS) {
         // Something went terribly wrong.
-        if (errorMsg == "")
-        {
+        if (errorMsg == "") {
             LOG(LogError) << "Unknown error occured while parsing system config file.";
             Renderer::deinit();
             return 1;

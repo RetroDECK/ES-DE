@@ -65,7 +65,8 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char * d
             }
         }
         else {
-            LOG(LogError) << "Error - File type " <<
+            LOG(LogError) << "Error - Couldn't load image, file is missing or the file type is " <<
+//            it's not existing or the file type " <<
                     (format == FIF_UNKNOWN ? "unknown" : "unsupported") << "!";
         }
         // Free fiMemory again
