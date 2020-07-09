@@ -45,6 +45,8 @@ namespace Utils
         std::string removeCommonPath(const std::string& _path,
                 const std::string& _common, bool& _contains);
         std::string resolveSymlink(const std::string& _path);
+        bool copyFile(const std::string& _source_path,
+                const std::string& _destination_path, bool _overwrite);
         bool removeFile(const std::string& _path);
         bool createDirectory(const std::string& _path);
         bool exists(const std::string& _path);

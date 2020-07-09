@@ -9,6 +9,7 @@
 
 #include "SystemData.h"
 
+#include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "CollectionSystemManager.h"
@@ -218,16 +219,17 @@ bool SystemData::loadConfig()
     LOG(LogInfo) << "Loading system config file " << path << "...";
 
     if (!Utils::FileSystem::exists(path)) {
-        LOG(LogError) << "Error - es_systems.cfg file does not exist!";
-        writeExampleConfig(getConfigPath(true));
-        return false;
+        LOG(LogWarning) << "Warning - es_systems.cfg does not exist.";
+        if (copyConfigTemplate(getConfigPath(true)))
+            return false;
+        path = getConfigPath(false);
     }
 
     pugi::xml_document doc;
     pugi::xml_parse_result res = doc.load_file(path.c_str());
 
     if (!res) {
-        LOG(LogError) << "Error - Could not parse es_systems.cfg file!";
+        LOG(LogError) << "Error - Could not parse es_systems.cfg";
         LOG(LogError) << res.description();
         return false;
     }
@@ -331,50 +333,28 @@ bool SystemData::loadConfig()
     return true;
 }
 
-void SystemData::writeExampleConfig(const std::string& path)
+bool SystemData::copyConfigTemplate(const std::string& path)
 {
-    std::ofstream file(path.c_str());
+    std::string systemsTemplateFile;;
 
-    file << "<!-- This is the EmulationStation Systems configuration file.\n"
-            "All systems must be contained within the <systemList> tag.-->\n"
-            "\n"
-            "<systemList>\n"
-            "	<!-- Here's an example system to get you started. -->\n"
-            "	<system>\n"
-            "\n"
-            "		<!-- A short name, used internally. Traditionally lower-case. -->\n"
-            "		<name>nes</name>\n"
-            "\n"
-            "		<!-- A \"pretty\" name, displayed in menus and such. -->\n"
-            "		<fullname>Nintendo Entertainment System</fullname>\n"
-            "\n"
-            "		<!-- The path to start searching for ROMs in. '~' will be expanded to $HOME on Linux or %HOMEPATH% on Windows. -->\n"
-            "		<path>~/roms/nes</path>\n"
-            "\n"
-            "		<!-- A list of extensions to search for, delimited by any of the whitespace characters (\", \\r\\n\\t\").\n"
-            "		You MUST include the period at the start of the extension! It's also case sensitive. -->\n"
-            "		<extension>.nes .NES</extension>\n"
-            "\n"
-            "		<!-- The shell command executed when a game is selected. A few special tags are replaced if found in a command:\n"
-            "		%ROM% is replaced by a bash-special-character-escaped absolute path to the ROM.\n"
-            "		%BASENAME% is replaced by the \"base\" name of the ROM.  For example, \"/foo/bar.rom\" would have a basename of \"bar\". Useful for MAME.\n"
-            "		%ROM_RAW% is the raw, unescaped path to the ROM. -->\n"
-            "		<command>retroarch -L ~/cores/libretro-fceumm.so %ROM%</command>\n"
-            "\n"
-            "		<!-- The platform to use when scraping. You can see the full list of accepted platforms in src/PlatformIds.cpp.\n"
-            "		It's case sensitive, but everything is lowercase. This tag is optional.\n"
-            "		You can use multiple platforms too, delimited with any of the whitespace characters (\", \\r\\n\\t\"), eg: \"genesis, megadrive\" -->\n"
-            "		<platform>nes</platform>\n"
-            "\n"
-            "		<!-- The theme to load from the current theme set.  See THEMES.md for more information.\n"
-            "		This tag is optional. If not set, it will default to the value of <name>. -->\n"
-            "		<theme>nes</theme>\n"
-            "	</system>\n"
-            "</systemList>\n";
+    LOG(LogInfo) << "Attempting to copy template es_systems.cfg file from the resources directory.";
 
-    file.close();
+    #if defined (_WIN64)
+    systemsTemplateFile = ResourceManager::getInstance()->
+            getResourcePath(":/templates/es_systems.cfg_windows");
+    #elif defined(__unix__)
+    systemsTemplateFile = ResourceManager::getInstance()->
+            getResourcePath(":/templates/es_systems.cfg_unix");
+    #endif
 
-    LOG(LogError) << "Example config written!  Go read it at \"" << path << "\"!";
+    if (Utils::FileSystem::copyFile(systemsTemplateFile, path, false)) {
+        LOG(LogError) << "Error - Copying of es_systems.cfg template file failed.";
+        return true;
+    }
+
+    LOG(LogInfo) << "Template es_systems.cfg file copied successfully.";
+
+    return false;
 }
 
 void SystemData::deleteSystems()

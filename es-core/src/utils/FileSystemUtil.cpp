@@ -9,8 +9,10 @@
 #define _FILE_OFFSET_BITS 64
 
 #include "utils/FileSystemUtil.h"
+#include "Log.h"
 
 #include <sys/stat.h>
+#include <fstream>
 #include <string.h>
 
 #if defined(_WIN64)
@@ -514,6 +516,53 @@ namespace Utils
             }
             #endif
             return resolved;
+        }
+
+        bool copyFile(const std::string& _source_path,
+                const std::string& _destination_path, bool _overwrite)
+        {
+            if (!exists(_source_path)) {
+                LOG(LogError) << "Error - Can't copy file, source file does not exist:";
+                LOG(LogError) << _source_path;
+                return true;
+            }
+
+            if(isDirectory(_destination_path)) {
+                LOG(LogError) << "Error - Destination file is actually a directory:";
+                LOG(LogError) << _destination_path;
+                return true;
+            }
+
+            if (!_overwrite && exists(_destination_path)) {
+                LOG(LogError) << "Error - Destination file exists and the overwrite flag "
+                        "has not been set.";
+                return true;
+            }
+
+            std::ifstream sourceFile(_source_path, std::ios::binary);
+
+            if (sourceFile.fail()) {
+                LOG(LogError) << "Error - Couldn't read from source file (" << _source_path <<
+                        "), permission problems?";
+                sourceFile.close();
+                return true;
+            }
+
+            std::ofstream targetFile(_destination_path, std::ios::binary);
+
+            if (targetFile.fail()) {
+                LOG(LogError) << "Error - Couldn't write to target file (" << _destination_path <<
+                        "), permission problems?";
+                targetFile.close();
+                return true;
+            }
+
+            targetFile << sourceFile.rdbuf();
+
+            sourceFile.close();
+            targetFile.close();
+
+            return false;
         }
 
         bool removeFile(const std::string& _path)

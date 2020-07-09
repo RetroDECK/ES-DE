@@ -50,13 +50,6 @@
 #include <iostream>
 #include <time.h>
 
-enum eErrorCodes {
-    NO_ERRORS,
-    NO_SYSTEMS_FILE,
-    NO_ROMS
-};
-
-
 #ifdef _WIN64
 enum eConsoleType {
     NO_CONSOLE,
@@ -336,31 +329,36 @@ bool verifyHomeFolderExists()
 
 // Returns NO_ERRORS if everything is OK.
 // Otherwise returns either NO_SYSTEMS_FILE or NO_ROMS.
-unsigned int loadSystemConfigFile(std::string& errorMsg)
+bool loadSystemConfigFile(std::string& errorMsg)
 {
     if (!SystemData::loadConfig()) {
-        LOG(LogError) << "Error while parsing systems configuration file!";
+        LOG(LogError) << "Error - Could not parse systems configuration file.";
         errorMsg = "COULDN'T FIND THE SYSTEMS CONFIGURATION FILE.\n"
-                "WILL ATTEMPT TO INSTALL A TEMPLATE ES_SYSTEMS.CFG FILE FROM "
-                "THE EMULATIONSTATION RESOURCES DIRECTORY.\n"
-                "PLEASE RESTART THE APPLICATION.";
-        return NO_SYSTEMS_FILE;
+                "ATTEMPTED TO COPY A TEMPLATE ES_SYSTEMS.CFG FILE\n"
+                "FROM THE EMULATIONSTATION RESOURCES DIRECTORY,\n"
+                "BUT THIS FAILED. HAS EMULATIONSTATION BEEN PROPERLY\n"
+                "INSTALLED AND DO YOU HAVE WRITE PERMISSIONS TO \n"
+                "YOUR HOME DIRECTORY?";
+        return true;
     }
 
     if (SystemData::sSystemVector.size() == 0)
     {
-        LOG(LogError) << "No systems found! Does at least one system have a game present? (check "
-        "that extensions match!)\n";
-        errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS BUT NO GAME "
-                "ROM FILES WERE FOUND. PLEASE MAKE SURE THAT THE 'ROMDIRECTORY' "
-                "SETTING IN ES_SYSTEMS.CFG IS POINTING TO YOUR ROM DIRECTORY "
-                "AND THAT YOUR GAME ROMS ARE USING SUPPORTED FILE EXTENSIONS. "
+        LOG(LogError) << "Error - No systems found, does at least one system have a game present? "
+                "(Check that the file extensions are supported.)";
+        errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
+                "GAME FILES WERE FOUND. PLEASE MAKE SURE THAT\n"
+                "THE 'ROMDIRECTORY' SETTING IN ES_SETTINGS.CFG IS\n"
+                "POINTING TO YOUR ROM DIRECTORY AND THAT YOUR\n"
+                "GAME FILES ARE USING SUPPORTED FILE EXTENSIONS.\n"
+                "THE GAME SYSTEMS SUBDIRECTORIES ALSO NEED TO\n"
+                "MATCH THE PLATFORM TAGS IN ES_SYSTEMS.CFG.\n"
                 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
         errorMsg += FileData::getROMDirectory();
-        return NO_ROMS;
+        return true;
     }
 
-    return NO_ERRORS;
+    return false;
 }
 
 // Called on exit, assuming we get far enough to have the log initialized.
@@ -437,7 +435,7 @@ int main(int argc, char* argv[])
 
     std::string errorMsg;
 
-    if (loadSystemConfigFile(errorMsg) != NO_ERRORS) {
+    if (loadSystemConfigFile(errorMsg)) {
         // Something went terribly wrong.
         if (errorMsg == "") {
             LOG(LogError) << "Unknown error occured while parsing system config file.";

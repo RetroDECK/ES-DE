@@ -70,7 +70,7 @@ public:
     // Returns true if no errors were encountered.
     // An example will be written if the file doesn't exist.
     static bool loadConfig();
-    static void writeExampleConfig(const std::string& path);
+    static bool copyConfigTemplate(const std::string& path);
     static std::string getConfigPath(bool forWrite);
 
     static std::vector<SystemData*> sSystemVector;
