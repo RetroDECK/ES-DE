@@ -76,7 +76,7 @@ void Settings::setDefaults()
 
     // UI settings.
     mStringMap["StartupSystem"] = "";
-    mStringMap["GamelistViewStyle"] = "automatic";
+    mStringMap["GamelistViewStyle"] = "detailed";
     mStringMap["TransitionStyle"] = "instant";
     mStringMap["ThemeSet"] = "";
     mStringMap["UIMode"] = "Full";
@@ -84,8 +84,8 @@ void Settings::setDefaults()
     mBoolMap["ForceDisableFilters"] = false;
     mBoolMap["QuickSystemSelect"] = true;
     mBoolMap["MoveCarousel"] = true;
-    mBoolMap["DisableKidStartMenu"] = true;
     mBoolMap["ShowHelpPrompts"] = true;
+    mBoolMap["ShowKidStartMenu"] = false;
 
     // UI settings -> scrensaver settings.
     mIntMap["ScreenSaverTime"] = 5*60*1000; // 5 minutes
@@ -111,17 +111,26 @@ void Settings::setDefaults()
     mStringMap["SlideshowScreenSaverImageFilter"] = ".png,.jpg";
 
     // Sound settings.
+    // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
+    // As PulseAudio controls the sound devices for the desktop environment, it doesn't
+    // make much sense to be able to select ALSA devices directly. Normally (always?)
+    // the selection doesn't make any difference at all. But maybe some PulseAudio
+    // settings could be added later on, if needed.
+    // The code is still active for Raspberry Pi though as I'm not sure if this is
+    // useful for that device.
+    #ifdef _RPI_
     mStringMap["AudioCard"] = "default";
     // Audio out device for volume control.
-    #ifdef _RPI_
-        mStringMap["AudioDevice"] = "PCM";
-    #else
-        mStringMap["AudioDevice"] = "Master";
-    #endif
-    mBoolMap["VideoAudio"] = true;
-    mBoolMap["EnableNavigationSounds"] = true;
+    //#endif
+    //#ifdef _RPI_
+    mStringMap["AudioDevice"] = "PCM";
     // Audio out device for Video playback using OMX player.
     mStringMap["OMXAudioDev"] = "both";
+    //#else
+    //    mStringMap["AudioDevice"] = "Master";
+    #endif
+    mBoolMap["VideoAudio"] = true;
+    mBoolMap["NavigationSounds"] = true;
 
     // Game collection settings.
     mStringMap["CollectionSystemsAuto"] = "";
@@ -138,7 +147,7 @@ void Settings::setDefaults()
 //	mBoolMap["ScraperGenerateThumbnails"] = false;
     mBoolMap["ScraperInteractive"] = true;
     mBoolMap["ScraperSemiautomatic"] = true;
-    mBoolMap["ScraperOverwriteData"] = false;
+    mBoolMap["ScraperOverwriteData"] = true;
     mBoolMap["ScrapeMetadata"] = true;
     mBoolMap["ScrapeGameNames"] = true;
     mBoolMap["ScrapeRatings"] = true;
@@ -171,6 +180,7 @@ void Settings::setDefaults()
     #endif
     mStringMap["SaveGamelistsMode"] = "always";
     mBoolMap["LaunchCommandOverride"] = true;
+    mBoolMap["CustomEventScripts"] = false;
     mBoolMap["ParseGamelistOnly"] = false;
     mBoolMap["LocalArt"] = false;
     mBoolMap["ShowHiddenFiles"] = false;
@@ -209,8 +219,8 @@ void Settings::setDefaults()
     mStringMap["DefaultSortOrder"] = "filename, ascending";
     mStringMap["MediaDirectory"] = "";
     mStringMap["ROMDirectory"] = "";
-    mIntMap["ScraperResizeWidth"] = 600;
-    mIntMap["ScraperResizeHeight"] = 0;
+    mIntMap["ScraperResizeMaxWidth"] = 600;
+    mIntMap["ScraperResizeMaxHeight"] = 0;
 
     //
     // Hardcoded or program-internal settings.
@@ -275,7 +285,7 @@ void Settings::loadFile()
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(path.c_str());
     if (!result) {
-        LOG(LogError) << "Could not parse Settings file!\n   " << result.description();
+        LOG(LogError) << "Error - Could not parse Settings file!\n   " << result.description();
         return;
     }
 
@@ -295,7 +305,7 @@ void Settings::loadFile()
         type Settings::getMethodName(const std::string& name) \
 { \
     if (mapName.find(name) == mapName.cend()) { \
-        LOG(LogError) << "Tried to use unset setting " << name << "!"; \
+        LOG(LogError) << "Error - Tried to use unset setting " << name << "!"; \
     } \
     return mapName[name]; \
 } \

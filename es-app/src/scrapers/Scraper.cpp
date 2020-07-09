@@ -246,8 +246,8 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             }
 
             // Resize it.
-            if (!resizeImage(filePath, Settings::getInstance()->getInt("ScraperResizeWidth"),
-                    Settings::getInstance()->getInt("ScraperResizeHeight"))) {
+            if (!resizeImage(filePath, Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
+                    Settings::getInstance()->getInt("ScraperResizeMaxHeight"))) {
                 setError("Error saving resized image. Out of memory? Disk full?");
                 return;
             }
@@ -292,8 +292,8 @@ std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
             url,
             saveAs,
             existingMediaFile,
-            Settings::getInstance()->getInt("ScraperResizeWidth"),
-            Settings::getInstance()->getInt("ScraperResizeHeight")));
+            Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
+            Settings::getInstance()->getInt("ScraperResizeMaxHeight")));
 }
 
 ImageDownloadHandle::ImageDownloadHandle(

@@ -8,12 +8,24 @@
 
 #include "math/Misc.h"
 #include "Log.h"
+
+#ifdef _RPI_
 #include "Settings.h"
+#endif
 
 #ifdef _WIN64
 #include <mmdeviceapi.h>
 #endif
 
+// The ALSA Audio Card and Audio Device selection code is disabled at the moment.
+// As PulseAudio controls the sound devices for the desktop environment, it doesn't
+// make much sense to be able to select ALSA devices directly. Normally (always?)
+// the selection doesn't make any difference at all. But maybe some PulseAudio
+// settings could be added later on, if needed.
+// The code is still active for Raspberry Pi though as I'm not sure if this is
+// useful for that device.
+// Keeping mixerName and mixerCard at their default values should make sure that
+// the rest of the volume control code in here compiles and works fine.
 #if defined(__linux__)
 #if defined(_RPI_) || defined(_VERO4K_)
 const char * VolumeControl::mixerName = "PCM";
@@ -102,8 +114,10 @@ void VolumeControl::init()
     // Try to open mixer device.
     if (mixerHandle == nullptr) {
         // Allow user to override the AudioCard and AudioDevice in es_settings.cfg.
+        #ifdef _RPI_
         mixerCard = Settings::getInstance()->getString("AudioCard").c_str();
         mixerName = Settings::getInstance()->getString("AudioDevice").c_str();
+        #endif
 
         snd_mixer_selem_id_alloca(&mixerSelemId);
         // Sets simple-mixer index and name.
@@ -312,8 +326,7 @@ int VolumeControl::getVolume() const
         float floatVolume = 0.0f; // 0-1
         if (endpointVolume->GetMasterVolumeLevelScalar(&floatVolume) == S_OK) {
             volume = (int)Math::round(floatVolume * 100.0f);
-            LOG(LogInfo) << "System audio volume is " << volume <<
-                    " (floating point value " << floatVolume << ")";
+            LOG(LogInfo) << "System audio volume is " << volume;
         }
         else {
             LOG(LogError) << "VolumeControl::getVolume() - Failed to get master volume!";

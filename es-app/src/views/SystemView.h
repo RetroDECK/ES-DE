@@ -13,6 +13,7 @@
 #include "resources/Font.h"
 #include "GuiComponent.h"
 #include "Sound.h"
+
 #include <memory>
 
 class AnimatedImageComponent;

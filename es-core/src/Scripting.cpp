@@ -11,14 +11,19 @@
 //
 
 #include "Scripting.h"
+
+#include "utils/FileSystemUtil.h"
 #include "Log.h"
 #include "Platform.h"
-#include "utils/FileSystemUtil.h"
+#include "Settings.h"
 
 namespace Scripting
 {
 	void fireEvent(const std::string& eventName, const std::string& arg1, const std::string& arg2)
 	{
+        if (!Settings::getInstance()->getBool("CustomEventScripts"))
+            return;
+
 		LOG(LogDebug) << "fireEvent: " << eventName << " " << arg1 << " " << arg2;
 
         std::list<std::string> scriptDirList;

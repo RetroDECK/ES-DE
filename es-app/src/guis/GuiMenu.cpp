@@ -87,7 +87,15 @@ void GuiMenu::openSoundSettings()
             setVolume((int)Math::round(volume->getValue())); });
 
     if (UIModeController::getInstance()->isUIModeFull()) {
-        #if defined(__linux__)
+    // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
+    // As PulseAudio controls the sound devices for the desktop environment, it doesn't
+    // make much sense to be able to select ALSA devices directly. Normally (always?)
+    // the selection doesn't make any difference at all. But maybe some PulseAudio
+    // settings could be added later on, if needed.
+    // The code is still active for Raspberry Pi though as I'm not sure if this is
+    // useful for that device.
+    //    #if defined(__linux__)
+        #ifdef _RPI_
         // audio card
         auto audio_card = std::make_shared<OptionListComponent<std::string>>
                 (mWindow, getHelpStyle(), "AUDIO CARD", false);
@@ -173,24 +181,24 @@ void GuiMenu::openSoundSettings()
         // Video audio.
         auto video_audio = std::make_shared<SwitchComponent>(mWindow);
         video_audio->setState(Settings::getInstance()->getBool("VideoAudio"));
-        s->addWithLabel("ENABLE AUDIO FOR VIDEO FILES", video_audio);
+        s->addWithLabel("AUDIO FOR VIDEO FILES", video_audio);
         s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("VideoAudio",
                 video_audio->getState()); });
 
         // Navigation sounds.
-        auto navigationsounds_enabled = std::make_shared<SwitchComponent>(mWindow);
-        navigationsounds_enabled->setState(Settings::getInstance()->
-                getBool("EnableNavigationSounds"));
-        s->addWithLabel("ENABLE NAVIGATION SOUNDS", navigationsounds_enabled);
-        s->addSaveFunc([navigationsounds_enabled] {
-            if (navigationsounds_enabled->getState() &&
-                    !Settings::getInstance()->getBool("EnableNavigationSounds") &&
+        auto navigation_sounds = std::make_shared<SwitchComponent>(mWindow);
+        navigation_sounds->setState(Settings::getInstance()->
+                getBool("NavigationSounds"));
+        s->addWithLabel("NAVIGATION SOUNDS", navigation_sounds);
+        s->addSaveFunc([navigation_sounds] {
+            if (navigation_sounds->getState() &&
+                    !Settings::getInstance()->getBool("NavigationSounds") &&
                     PowerSaver::getMode() == PowerSaver::INSTANT) {
                 Settings::getInstance()->setString("PowerSaverMode", "default");
                 PowerSaver::init();
             }
-            Settings::getInstance()->setBool("EnableNavigationSounds",
-                    navigationsounds_enabled->getState());
+            Settings::getInstance()->setBool("NavigationSounds",
+                    navigation_sounds->getState());
         });
     }
 
@@ -353,7 +361,7 @@ void GuiMenu::openUISettings()
     // Enable filters (ForceDisableFilters).
     auto enable_filter = std::make_shared<SwitchComponent>(mWindow);
     enable_filter->setState(!Settings::getInstance()->getBool("ForceDisableFilters"));
-    s->addWithLabel("ENABLE GAMELIST FILTERS", enable_filter);
+    s->addWithLabel("GAMELIST FILTERS", enable_filter);
     s->addSaveFunc([enable_filter] {
         bool filter_is_enabled = !Settings::getInstance()->getBool("ForceDisableFilters");
         Settings::getInstance()->setBool("ForceDisableFilters", !enable_filter->getState());
@@ -382,19 +390,19 @@ void GuiMenu::openUISettings()
         Settings::getInstance()->setBool("MoveCarousel", move_carousel->getState());
     });
 
-    // Hide start menu in Kid Mode.
-    auto disable_start = std::make_shared<SwitchComponent>(mWindow);
-    disable_start->setState(Settings::getInstance()->getBool("DisableKidStartMenu"));
-    s->addWithLabel("DISABLE START MENU IN KID MODE", disable_start);
-    s->addSaveFunc([disable_start] { Settings::getInstance()->setBool("DisableKidStartMenu",
-            disable_start->getState()); });
-
     // Show help.
     auto show_help = std::make_shared<SwitchComponent>(mWindow);
     show_help->setState(Settings::getInstance()->getBool("ShowHelpPrompts"));
     s->addWithLabel("ON-SCREEN HELP", show_help);
     s->addSaveFunc([show_help] { Settings::getInstance()->setBool("ShowHelpPrompts",
             show_help->getState()); });
+
+    // Whether to show start menu in Kid Mode.
+    auto show_kidstartmenu = std::make_shared<SwitchComponent>(mWindow);
+    show_kidstartmenu->setState(Settings::getInstance()->getBool("ShowKidStartMenu"));
+    s->addWithLabel("SHOW START MENU IN KID MODE", show_kidstartmenu);
+    s->addSaveFunc([show_kidstartmenu] { Settings::getInstance()->setBool("ShowKidStartMenu",
+            show_kidstartmenu->getState()); });
 
     // Screensaver.
     ComponentListRow screensaver_row;
@@ -453,7 +461,7 @@ void GuiMenu::openOtherSettings()
                 "instant" && power_saver->getSelected() == "instant") {
             Settings::getInstance()->setString("TransitionStyle", "instant");
             Settings::getInstance()->setBool("MoveCarousel", false);
-            Settings::getInstance()->setBool("EnableNavigationSounds", false);
+            Settings::getInstance()->setBool("NavigationSounds", false);
         }
         Settings::getInstance()->setString("PowerSaverMode", power_saver->getSelected());
         PowerSaver::init();
@@ -499,9 +507,16 @@ void GuiMenu::openOtherSettings()
     // to disable this is intended primarily for testing purposes).
     auto launchcommand_override = std::make_shared<SwitchComponent>(mWindow);
     launchcommand_override->setState(Settings::getInstance()->getBool("LaunchCommandOverride"));
-    s->addWithLabel("ENABLE PER GAME LAUNCH COMMAND OVERRIDE", launchcommand_override);
+    s->addWithLabel("PER GAME LAUNCH COMMAND OVERRIDE", launchcommand_override);
     s->addSaveFunc([launchcommand_override] { Settings::getInstance()->
             setBool("LaunchCommandOverride", launchcommand_override->getState()); });
+
+     // Custom event scripts, fired using Scripting::fireEvent().
+    auto custom_eventscripts = std::make_shared<SwitchComponent>(mWindow);
+    custom_eventscripts->setState(Settings::getInstance()->getBool("CustomEventScripts"));
+    s->addWithLabel("CUSTOM EVENT SCRIPTS", custom_eventscripts);
+    s->addSaveFunc([custom_eventscripts] { Settings::getInstance()->
+            setBool("CustomEventScripts", custom_eventscripts->getState()); });
 
     auto parse_gamelists = std::make_shared<SwitchComponent>(mWindow);
     parse_gamelists->setState(Settings::getInstance()->getBool("ParseGamelistOnly"));

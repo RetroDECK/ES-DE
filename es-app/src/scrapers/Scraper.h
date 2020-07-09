@@ -203,8 +203,8 @@ private:
 std::string getSaveAsPath(const ScraperSearchParams& params,
         const std::string& filetypeSubdirectory, const std::string& url);
 
-// Will resize according to Settings::getInt("ScraperResizeWidth") and
-// Settings::getInt("ScraperResizeHeight").
+// Will resize according to Settings::getInt("ScraperResizeMaxWidth") and
+// Settings::getInt("ScraperResizeMaxHeight").
 std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
         const std::string& saveAs, const std::string& existingMediaPath);
 
