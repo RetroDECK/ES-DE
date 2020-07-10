@@ -128,10 +128,15 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
         CollectionSystemData sysData = mCustomCollectionSystemsData.at(name);
         if (sysData.needsSave) {
             std::ofstream configFile;
+            #ifdef _WIN64
+            configFile.open(Utils::String::
+                    stringToWideString(getCustomCollectionConfigPath(name)).c_str());
+            #else
             configFile.open(getCustomCollectionConfigPath(name));
+            #endif
             for (std::unordered_map<std::string, FileData*>::const_iterator
                     iter = games.cbegin(); iter != games.cend(); ++iter) {
-                std::string path =  iter->first;
+                std::string path = iter->first;
                 // If the ROM path of the game begins with the path from the setting
                 // ROMDirectory (or the default ROM directory), then replace it with %ROMPATH%.
                 if (path.find(rompath) == 0)
@@ -143,7 +148,7 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
         }
     }
     else {
-        LOG(LogError) << "Couldn't find collection to save! " << name;
+        LOG(LogError) << "Error - Couldn't find collection to save! " << name;
     }
 }
 
@@ -838,7 +843,7 @@ void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysDa
     sysData->isPopulated = true;
 }
 
-// Populate a custom collection system
+// Populate a custom collection system.
 void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sysData)
 {
     SystemData* newSys = sysData->system;
@@ -856,7 +861,11 @@ void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sys
     FileFilterIndex* index = newSys->getIndex();
 
     // Get configuration for this custom collection.
+    #if _WIN64
+    std::ifstream input(Utils::String::stringToWideString(path).c_str());
+    #else
     std::ifstream input(path);
+    #endif
 
     // Get all files map.
     std::unordered_map<std::string,FileData*>
@@ -970,7 +979,11 @@ std::vector<std::string> CollectionSystemManager::getSystemsFromConfig()
         return systems;
 
     pugi::xml_document doc;
+    #ifdef _WIN64
+    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    #else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
+    #endif
 
     if (!res)
         return systems;

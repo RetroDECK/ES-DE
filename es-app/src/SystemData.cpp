@@ -226,7 +226,11 @@ bool SystemData::loadConfig()
     }
 
     pugi::xml_document doc;
+    #ifdef _WIN64
+    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    #else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
+    #endif
 
     if (!res) {
         LOG(LogError) << "Error - Could not parse es_systems.cfg";

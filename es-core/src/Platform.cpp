@@ -50,7 +50,7 @@ int runSystemCommand(const std::string& cmd_utf8)
     #ifdef _WIN64
     // On Windows we use _wsystem to support non-ASCII paths
     // which requires converting from UTF-8 to a wstring.
-    std::wstring wchar_str = Utils::String::charToWideChar(cmd_utf8);
+    std::wstring wchar_str = Utils::String::stringToWideString(cmd_utf8);
     return _wsystem(wchar_str.c_str());
     #else
     return system(cmd_utf8.c_str());
@@ -111,7 +111,7 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
 
         errorCode = GetLastError();
 
-        std::string errorMessage = Utils::String::wideCharToChar(pBuffer);
+        std::string errorMessage = Utils::String::wideStringToString(pBuffer);
         // Remove trailing newline from the error message.
         if (errorMessage.back() == '\n');
             errorMessage.pop_back();

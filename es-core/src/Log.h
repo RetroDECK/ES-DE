@@ -24,7 +24,6 @@ enum LogLevel {
 class Log
 {
 public:
-    //Log();
     ~Log();
     std::ostringstream& get(LogLevel level = LogInfo);
 
@@ -40,11 +39,9 @@ public:
 
 protected:
     std::ostringstream os;
-    static FILE* file;
 
 private:
     static LogLevel reportingLevel;
-    static FILE* getOutput();
     LogLevel messageLevel;
 };
 

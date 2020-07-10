@@ -9,6 +9,7 @@
 #include <chrono>
 
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "FileData.h"
 #include "FileFilterIndex.h"
 #include "Log.h"
@@ -93,7 +94,12 @@ void parseGamelist(SystemData* system)
     LOG(LogInfo) << "Parsing XML file \"" << xmlpath << "\"...";
 
     pugi::xml_document doc;
+    #ifdef _WIN64
+    pugi::xml_parse_result result =
+            doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
+    #else
     pugi::xml_parse_result result = doc.load_file(xmlpath.c_str());
+    #endif
 
     if (!result) {
         LOG(LogError) << "Error parsing XML file \"" << xmlpath <<
@@ -189,7 +195,12 @@ void updateGamelist(SystemData* system)
 
     if (Utils::FileSystem::exists(xmlReadPath)) {
         // Parse an existing file first.
+        #ifdef _WIN64
+        pugi::xml_parse_result result =
+                doc.load_file(Utils::String::stringToWideString(xmlReadPath).c_str());
+        #else
         pugi::xml_parse_result result = doc.load_file(xmlReadPath.c_str());
+        #endif
 
         if (!result) {
             LOG(LogError) << "Error parsing XML file \"" << xmlReadPath << "\"!\n	" <<
@@ -264,7 +275,11 @@ void updateGamelist(SystemData* system)
             LOG(LogInfo) << "Added/Updated " << numUpdated <<
                     " entities in '" << xmlReadPath << "'";
 
+            #ifdef _WIN64
+            if (!doc.save_file(Utils::String::stringToWideString(xmlWritePath).c_str())) {
+            #else
             if (!doc.save_file(xmlWritePath.c_str())) {
+            #endif
                 LOG(LogError) << "Error saving gamelist.xml to \"" <<
                         xmlWritePath << "\" (for system " << system->getName() << ")!";
             }

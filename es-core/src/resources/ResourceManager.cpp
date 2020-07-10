@@ -8,6 +8,7 @@
 #include "ResourceManager.h"
 
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "Log.h"
 #include "Platform.h"
 #include "Scripting.h"
@@ -88,7 +89,11 @@ const ResourceData ResourceManager::getFileData(const std::string& path) const
 
 ResourceData ResourceManager::loadFile(const std::string& path) const
 {
+    #ifdef _WIN64
+    std::ifstream stream(Utils::String::stringToWideString(path).c_str(), std::ios::binary);
+    #else
     std::ifstream stream(path, std::ios::binary);
+    #endif
 
     stream.seekg(0, stream.end);
     size_t size = (size_t)stream.tellg();

@@ -8,6 +8,7 @@
 #include "Settings.h"
 
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "Log.h"
 #include "Scripting.h"
 #include "Platform.h"
@@ -268,7 +269,11 @@ void Settings::saveFile()
         node.append_attribute("value").set_value(iter->second.c_str());
     }
 
+    #ifdef _WIN64
+    doc.save_file(Utils::String::stringToWideString(path).c_str());
+    #else
     doc.save_file(path.c_str());
+    #endif
 
     Scripting::fireEvent("config-changed");
     Scripting::fireEvent("settings-changed");
@@ -283,7 +288,11 @@ void Settings::loadFile()
         return;
 
     pugi::xml_document doc;
+    #ifdef _WIN64
+    pugi::xml_parse_result result = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    #else
     pugi::xml_parse_result result = doc.load_file(path.c_str());
+    #endif
     if (!result) {
         LOG(LogError) << "Error - Could not parse Settings file!\n   " << result.description();
         return;

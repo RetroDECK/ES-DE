@@ -465,7 +465,7 @@ void FileData::launchGame(Window* window)
     command = Utils::String::replace(command, "%ROM_RAW%", rom_raw);
 
     #ifdef _WIN64
-    std::wstring commandWide = Utils::String::charToWideChar(command);
+    std::wstring commandWide = Utils::String::stringToWideString(command);
     #endif
 
     Scripting::fireEvent("game-start", rom, basename);
@@ -494,7 +494,7 @@ void FileData::launchGame(Window* window)
         std::wstring emuExecutableWide;
         std::wstring emuPathWide;
 
-        emuExecutableWide = Utils::String::charToWideChar(emuExecutable);
+        emuExecutableWide = Utils::String::stringToWideString(emuExecutable);
 
         // Search for the emulator using the PATH environmental variable.
         DWORD size = SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr);
@@ -525,7 +525,7 @@ void FileData::launchGame(Window* window)
     LOG(LogInfo) << "Expanded emulator launch command:";
 
     #ifdef _WIN64
-    LOG(LogInfo) << Utils::String::wideCharToChar(commandWide);
+    LOG(LogInfo) << Utils::String::wideStringToString(commandWide);
     exitCode = launchEmulatorWindows(commandWide);
     #else
     LOG(LogInfo) << command;

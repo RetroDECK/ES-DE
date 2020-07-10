@@ -260,7 +260,11 @@ void ThemeData::loadFile(std::map<std::string, std::string> sysDataMap, const st
     mVariables.insert(sysDataMap.cbegin(), sysDataMap.cend());
 
     pugi::xml_document doc;
+    #ifdef _WIN64
+    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    #else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
+    #endif
     if (!res)
         throw error << "XML parsing error: \n    " << res.description();
 
@@ -302,7 +306,12 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         mPaths.push_back(path);
 
         pugi::xml_document includeDoc;
+        #ifdef _WIN64
+        pugi::xml_parse_result result =
+                includeDoc.load_file(Utils::String::stringToWideString(path).c_str());
+        #else
         pugi::xml_parse_result result = includeDoc.load_file(path.c_str());
+        #endif
         if (!result)
             throw error << "Error parsing file: \n    " << result.description();
 

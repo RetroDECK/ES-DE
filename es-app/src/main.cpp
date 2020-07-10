@@ -19,6 +19,7 @@
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMsgBox.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "EmulationStation.h"
@@ -342,8 +343,7 @@ bool loadSystemConfigFile(std::string& errorMsg)
         return true;
     }
 
-    if (SystemData::sSystemVector.size() == 0)
-    {
+    if (SystemData::sSystemVector.size() == 0) {
         LOG(LogError) << "Error - No systems found, does at least one system have a game present? "
                 "(Check that the file extensions are supported.)";
         errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
@@ -354,7 +354,12 @@ bool loadSystemConfigFile(std::string& errorMsg)
                 "THE GAME SYSTEMS SUBDIRECTORIES ALSO NEED TO\n"
                 "MATCH THE PLATFORM TAGS IN ES_SYSTEMS.CFG.\n"
                 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+        #ifdef _WIN64
+        errorMsg += Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+        #else
         errorMsg += FileData::getROMDirectory();
+        #endif
+
         return true;
     }
 

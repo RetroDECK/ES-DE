@@ -7,13 +7,15 @@
 #include "Log.h"
 
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "Platform.h"
 
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 
 LogLevel Log::reportingLevel = LogInfo;
-FILE* Log::file = nullptr; // fopen(getLogPath().c_str(), "w");
+std::ofstream file;
 
 LogLevel Log::getReportingLevel()
 {
@@ -32,15 +34,19 @@ void Log::setReportingLevel(LogLevel level)
 
 void Log::init()
 {
-    remove((getLogPath() + ".bak").c_str());
-    // Rename previous log file.
-    rename(getLogPath().c_str(), (getLogPath() + ".bak").c_str());
+    Utils::FileSystem::removeFile(getLogPath() + ".bak");
+    // Rename the previous log file.
+    Utils::FileSystem::renameFile(getLogPath(), getLogPath() + ".bak", true);
     return;
 }
 
 void Log::open()
 {
-    file = fopen(getLogPath().c_str(), "w");
+    #ifdef _WIN64
+    file.open(Utils::String::stringToWideString(getLogPath()).c_str());
+    #else
+    file.open(getLogPath().c_str());
+    #endif
 }
 
 std::ostringstream& Log::get(LogLevel level)
@@ -54,36 +60,30 @@ std::ostringstream& Log::get(LogLevel level)
 
 void Log::flush()
 {
-    fflush(getOutput());
+    file.flush();
 }
 
 void Log::close()
 {
-    fclose(file);
-    file = nullptr;
-}
-
-FILE* Log::getOutput()
-{
-    return file;
+    file.close();
 }
 
 Log::~Log()
 {
     os << std::endl;
 
-    if (getOutput() == nullptr) {
-        // not open yet, print to stdout
+    if (!file.is_open()) {
+        // Not open yet, print to stdout.
         std::cerr << "ERROR - tried to write to log file before it was open! "
                 "The following won't be logged:\n";
         std::cerr << os.str();
         return;
     }
 
-    fprintf(getOutput(), "%s", os.str().c_str());
+    file << os.str();
 
     // If it's an error, also print to console.
     // Print all messages if using --debug.
     if (messageLevel == LogError || reportingLevel >= LogDebug)
-        fprintf(stderr, "%s", os.str().c_str());
+        std::cerr << os.str();
 }

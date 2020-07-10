@@ -21,8 +21,7 @@ class FileData;
 class FileFilterIndex;
 class ThemeData;
 
-struct SystemEnvironmentData
-{
+struct SystemEnvironmentData {
     std::string mStartPath;
     std::vector<std::string> mSearchExtensions;
     std::string mLaunchCommand;
@@ -32,7 +31,8 @@ struct SystemEnvironmentData
 class SystemData
 {
 public:
-    SystemData(const std::string& name,
+    SystemData(
+            const std::string& name,
             const std::string& fullName,
             SystemEnvironmentData* envData,
             const std::string& themeFolder,

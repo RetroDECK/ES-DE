@@ -9,6 +9,7 @@
 #include "InputManager.h"
 
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "CECInput.h"
 #include "Log.h"
 #include "Platform.h"
@@ -83,7 +84,7 @@ void InputManager::init()
     loadInputConfig(mKeyboardInputConfig);
 
     SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
-    SDL_USER_CECBUTTONUP   = SDL_USER_CECBUTTONDOWN + 1;
+    SDL_USER_CECBUTTONUP = SDL_USER_CECBUTTONDOWN + 1;
     CECInput::init();
     mCECInputConfig = new InputConfig(DEVICE_CEC, "CEC", CEC_GUID_STRING);
     loadInputConfig(mCECInputConfig);
@@ -302,7 +303,11 @@ bool InputManager::loadInputConfig(InputConfig* config)
         return false;
 
     pugi::xml_document doc;
+    #ifdef _WIN64
+    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    #else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
+    #endif
 
     if (!res) {
         LOG(LogError) << "Error parsing input config: " << res.description();
@@ -362,7 +367,12 @@ void InputManager::writeDeviceConfig(InputConfig* config)
 
     if (Utils::FileSystem::exists(path)) {
         // Merge files.
+        #ifdef _WIN64
+        pugi::xml_parse_result result =
+                doc.load_file(Utils::String::stringToWideString(path).c_str());
+        #else
         pugi::xml_parse_result result = doc.load_file(path.c_str());
+        #endif
         if (!result) {
             LOG(LogError) << "Error parsing input config: " << result.description();
         }
@@ -400,7 +410,12 @@ void InputManager::writeDeviceConfig(InputConfig* config)
         root = doc.append_child("inputList");
 
     config->writeToXML(root);
+
+    #ifdef _WIN64
+    doc.save_file(Utils::String::stringToWideString(path).c_str());
+    #else
     doc.save_file(path.c_str());
+    #endif
 
     Scripting::fireEvent("config-changed");
     Scripting::fireEvent("controls-changed");
@@ -417,7 +432,13 @@ void InputManager::doOnFinish()
     pugi::xml_document doc;
 
     if (Utils::FileSystem::exists(path)) {
+        #ifdef _WIN64
+        pugi::xml_parse_result result =
+                doc.load_file(Utils::String::stringToWideString(path).c_str());
+        #else
         pugi::xml_parse_result result = doc.load_file(path.c_str());
+        #endif
+
         if (!result) {
             LOG(LogError) << "Error parsing input config: " << result.description();
         }

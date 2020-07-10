@@ -187,7 +187,7 @@ namespace Utils
             return string;
         }
 
-        std::wstring charToWideChar(const std::string& _string)
+        std::wstring stringToWideString(const std::string& _string)
         {
             typedef std::codecvt_utf8<wchar_t> convert_type;
             std::wstring_convert<convert_type, wchar_t> stringConverter;
@@ -195,7 +195,7 @@ namespace Utils
             return stringConverter.from_bytes(_string);
         }
 
-        std::string wideCharToChar(const std::wstring& _string)
+        std::string wideStringToString(const std::wstring& _string)
         {
             typedef std::codecvt_utf8<wchar_t> convert_type;
             std::wstring_convert<convert_type, wchar_t> stringConverter;

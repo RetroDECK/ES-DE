@@ -13,7 +13,7 @@ v1.0.0
 * Full navigation sound support, configurable per theme
 * New default theme rbsimple-DE bundled with the software, this theme is largely based on recalbox-multi by the Recalbox community
 * Added extensive es_systems.cfg templates for Unix and Windows
-* Updated the application to compile and work on Microsoft Windows
+* Updated the application to compile and work on Microsoft Windows, including full UTF-16 (Unicode) support
 * Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * Core location can be defined relative to the emulator binary using the %EMUPATH% varible in es_systems.cfg (mostly useful for Windows)

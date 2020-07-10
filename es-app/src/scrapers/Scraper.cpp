@@ -8,6 +8,7 @@
 
 #include "scrapers/Scraper.h"
 
+#include "utils/StringUtil.h"
 #include "FileData.h"
 #include "GamesDBJSONScraper.h"
 #include "ScreenScraper.h"
@@ -231,7 +232,12 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             if(it->existingMediaFile != "")
                 Utils::FileSystem::removeFile(it->existingMediaFile);
 
+            #ifdef _WIN64
+            std::ofstream stream(Utils::String::stringToWideString(filePath).c_str(),
+                    std::ios_base::out | std::ios_base::binary);
+            #else
             std::ofstream stream(filePath, std::ios_base::out | std::ios_base::binary);
+            #endif
             if (stream.bad()) {
                 setError("Failed to open image path to write. Permission error? Disk full?");
                 return;
@@ -331,7 +337,12 @@ void ImageDownloadHandle::update()
     if(mExistingMediaFile != "")
         Utils::FileSystem::removeFile(mExistingMediaFile);
 
+    #ifdef _WIN64
+    std::ofstream stream(Utils::String::stringToWideString(mSavePath).c_str(),
+            std::ios_base::out | std::ios_base::binary);
+    #else
     std::ofstream stream(mSavePath, std::ios_base::out | std::ios_base::binary);
+    #endif
     if (stream.bad()) {
         setError("Failed to open image path to write. Permission error? Disk full?");
         return;
