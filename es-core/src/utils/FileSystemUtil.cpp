@@ -176,6 +176,26 @@ namespace Utils
             #endif
         }
 
+        std::string getPathToBinary(const std::string& executable)
+        {
+            #ifdef _WIN64
+            return "";
+            #else
+            std::string pathVariable = std::string(getenv("PATH"));
+            std::vector<std::string> pathList =
+                    Utils::String::delimitedStringToVector(pathVariable, ":");
+
+            std::string pathTest;
+
+            for (auto it = pathList.cbegin(); it != pathList.cend(); it++) {
+                pathTest = it->c_str() + ("/" + executable);
+                if (exists(pathTest))
+                    return it->c_str();
+            }
+            return "";
+            #endif
+        }
+
         void setExePath(const std::string& _path)
         {
             constexpr int path_max = 32767;

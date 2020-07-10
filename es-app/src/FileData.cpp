@@ -24,6 +24,7 @@
 #include "Window.h"
 
 #include <assert.h>
+#include <filesystem>
 
 FileData::FileData(
         FileType type,
@@ -516,7 +517,8 @@ void FileData::launchGame(Window* window)
             }
         }
         #else
-        // TODO for Unix.
+        std::string exePath = Utils::FileSystem::getPathToBinary(emuExecutable);
+        command = Utils::String::replace(command, "%EMUPATH%", exePath);
         #endif
     }
 

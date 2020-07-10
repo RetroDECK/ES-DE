@@ -25,6 +25,7 @@ namespace Utils
         void setHomePath(const std::string& _path);
         std::string getHomePath();
         std::string getCWDPath();
+        std::string getPathToBinary(const std::string& executable);
         void setExePath(const std::string& _path);
         std::string getExePath();
         std::string getProgramDataPath();
