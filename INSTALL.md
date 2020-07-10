@@ -512,7 +512,11 @@ Here's an overview of the file layout:
         configuration as the %EMUPATH% will expand to the path of the emulator binary, which will of course also include the spaces. -->
         <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
 
-        <!-- The platform(s) to use when scraping. You can see the full list of accepted platforms in src/PlatformIds.cpp.
+        <!-- An example for use in a portable emulator installation, for instance on a USB memory stick. The %ESPATH% variable is
+        expanded to the directory of the ES executable. -->
+        <command>"%ESPATH%\..\RetroArch\retroarch.exe" -L "%ESPATH%\..\RetroArch\cores\snes9x_libretro.dll" %ROM%</command>
+
+        <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in src/PlatformIds.cpp.
         It's case sensitive, but everything is lowercase. This tag is optional.
         You can use multiple platforms too, delimited with any of the whitespace characters (", \r\n\t"), e.g.: "megadrive, genesis" -->
         <platform>snes</platform>
@@ -532,6 +536,8 @@ The following variables are expanded by ES for the `command` tag:
 `%ROM_RAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded either using the PATH environmental variable of the operating system, or if an absolute emulator path is defined, this will be used instead. This variable is mostly useful to define the emulator core path for Windows, as this operating system does not have a standardized program installation directory structure.
+
+`%ESPATH%` - Replaced with the path to the EmulationStation binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
 For the `path` tag, the following variable is expanded by ES:
 

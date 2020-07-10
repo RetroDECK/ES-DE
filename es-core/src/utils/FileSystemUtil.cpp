@@ -438,6 +438,15 @@ namespace Utils
             return ".";
         }
 
+        std::string expandHomePath(const std::string& _path)
+        {
+            // Expand home path if ~ is used.
+            std::string expandedPath = _path;
+
+            expandedPath = Utils::String::replace(_path, "~", Utils::FileSystem::getHomePath());
+            return expandedPath;
+        }
+
         std::string resolveRelativePath(const std::string& _path,
                 const std::string& _relativeTo, const bool _allowHome)
         {

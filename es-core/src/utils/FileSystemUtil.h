@@ -39,6 +39,7 @@ namespace Utils
         std::string getFileName(const std::string& _path);
         std::string getStem(const std::string& _path);
         std::string getExtension(const std::string& _path);
+        std::string expandHomePath(const std::string& _path);
         std::string resolveRelativePath(const std::string& _path,
                 const std::string& _relativeTo, const bool _allowHome);
         std::string createRelativePath(const std::string& _path,

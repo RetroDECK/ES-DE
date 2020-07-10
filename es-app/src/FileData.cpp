@@ -24,7 +24,6 @@
 #include "Window.h"
 
 #include <assert.h>
-#include <filesystem>
 
 FileData::FileData(
         FileType type,
@@ -110,12 +109,9 @@ const std::string FileData::getROMDirectory()
     }
     else {
         romDirPath = romDirSetting;
+        // Expand home path if ~ is used.
+        romDirPath = Utils::FileSystem::expandHomePath(romDirPath);
 
-        // Expand home symbol if the path starts with ~
-        if (romDirPath[0] == '~') {
-            romDirPath.erase(0, 1);
-            romDirPath.insert(0, Utils::FileSystem::getHomePath());
-        }
         if (romDirPath.back() !=  '/')
             romDirPath = romDirPath + "/";
     }
@@ -446,7 +442,7 @@ void FileData::launchGame(Window* window)
 
     std::string command = "";
 
-    // Check if there is a launch string override for the game
+    // Check if there is a launch command override for the game
     // and the corresponding option to use it has been set.
     if (Settings::getInstance()->getBool("LaunchCommandOverride") &&
             !metadata.get("launchcommand").empty())
@@ -464,6 +460,10 @@ void FileData::launchGame(Window* window)
     command = Utils::String::replace(command, "%ROM%", rom);
     command = Utils::String::replace(command, "%BASENAME%", basename);
     command = Utils::String::replace(command, "%ROM_RAW%", rom_raw);
+    command = Utils::String::replace(command, "%ESPATH%", emupath);
+
+    // Expand home path if ~ is used.
+    command = Utils::FileSystem::expandHomePath(command);
 
     #ifdef _WIN64
     std::wstring commandWide = Utils::String::stringToWideString(command);
@@ -517,7 +517,13 @@ void FileData::launchGame(Window* window)
             }
         }
         #else
-        std::string exePath = Utils::FileSystem::getPathToBinary(emuExecutable);
+        std::string exePath;
+        if (Utils::FileSystem::isRegularFile(emuExecutable) ||
+                Utils::FileSystem::isSymlink(emuExecutable))
+            exePath = Utils::FileSystem::getParent(emuExecutable);
+        else
+            exePath = Utils::FileSystem::getPathToBinary(emuExecutable);
+
         command = Utils::String::replace(command, "%EMUPATH%", exePath);
         #endif
     }

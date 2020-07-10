@@ -307,13 +307,6 @@ bool SystemData::loadConfig()
         // Convert path to generic directory seperators.
         path = Utils::FileSystem::getGenericPath(path);
 
-        // Expand home symbol if the startpath contains ~
-        if (path[0] == '~')
-        {
-            path.erase(0, 1);
-            path.insert(0, Utils::FileSystem::getHomePath());
-        }
-
         // Create the system runtime environment data.
         SystemEnvironmentData* envData = new SystemEnvironmentData;
         envData->mStartPath = path;

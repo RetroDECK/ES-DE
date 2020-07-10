@@ -75,7 +75,7 @@ GuiMetaDataEd::GuiMetaDataEd(
         if (iter->isStatistic)
             continue;
 
-        // Don't show the launch string override entry if this option has been disabled.
+        // Don't show the launch command override entry if this option has been disabled.
         if (!Settings::getInstance()->getBool("LaunchCommandOverride") &&
                 iter->type == MD_LAUNCHCOMMAND) {
             ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL,
