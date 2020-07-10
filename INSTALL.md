@@ -405,7 +405,13 @@ Here's an example:
 
 `<string name="ROMDirectory" value="~/games/roms" />`
 
-Keep in mind though that you still need to group the ROMs into directories corresponding to the system names. Well at least if you want to use the default es_systems.cfg file. See below how to customize that file, which gives you full control over the location of the ROMs.
+Keep in mind though that you still need to group the ROMs into directories corresponding to the platform names in es_systems.cfg.
+
+There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. This is useful for a portable emulator installation, for example on a USB memory stick.
+
+Here is such an example:
+
+`<string name="ROMDirectory" value="%ESPATH%/../roms" />`
 
 **Keep in mind that you have to set up your emulator separately from EmulationStation!**
 

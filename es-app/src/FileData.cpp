@@ -116,6 +116,11 @@ const std::string FileData::getROMDirectory()
             romDirPath = romDirPath + "/";
     }
 
+    // If %ESPATH% is used for the ROM path configuration, then expand it to the executable
+    // directory of ES. This is useful for a portable emulator installation, for instance on
+    // a USB memory stick.
+    romDirPath = Utils::String::replace(romDirPath, "%ESPATH%", Utils::FileSystem::getExePath());
+
     return romDirPath;
 }
 
@@ -129,12 +134,10 @@ const std::string FileData::getMediaDirectory()
     }
     else {
         mediaDirPath = mediaDirSetting;
-
+        // Expand home path if ~ is used.
+        mediaDirPath = Utils::FileSystem::expandHomePath(mediaDirPath);
         // Expand home symbol if the path starts with ~
-        if (mediaDirPath[0] == '~') {
-            mediaDirPath.erase(0, 1);
-            mediaDirPath.insert(0, Utils::FileSystem::getHomePath());
-        }
+
         if (mediaDirPath.back() !=  '/')
             mediaDirPath = mediaDirPath + "/";
     }
