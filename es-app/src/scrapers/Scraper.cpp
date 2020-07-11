@@ -232,6 +232,14 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             if(it->existingMediaFile != "")
                 Utils::FileSystem::removeFile(it->existingMediaFile);
 
+            // If the media directory does not exist, something is wrong, possibly permission
+            // problems or the MediaDirectory setting points to a file instead of a directory.
+            if (!Utils::FileSystem::isDirectory(Utils::FileSystem::getParent(filePath))) {
+                setError("Media directory does not exist and can't be created. "
+                        "Permission problems?");
+            return;
+            }
+
             #ifdef _WIN64
             std::ofstream stream(Utils::String::stringToWideString(filePath).c_str(),
                     std::ios_base::out | std::ios_base::binary);
@@ -336,6 +344,13 @@ void ImageDownloadHandle::update()
     // game.png) which would lead to two media files for this game.
     if(mExistingMediaFile != "")
         Utils::FileSystem::removeFile(mExistingMediaFile);
+
+    // If the media directory does not exist, something is wrong, possibly permission
+    // problems or the MediaDirectory setting points to a file instead of a directory.
+    if (!Utils::FileSystem::isDirectory(Utils::FileSystem::getParent(mSavePath))) {
+        setError("Media directory does not exist and can't be created. Permission problems?");
+        return;
+    }
 
     #ifdef _WIN64
     std::ofstream stream(Utils::String::stringToWideString(mSavePath).c_str(),

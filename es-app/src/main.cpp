@@ -409,6 +409,14 @@ int main(int argc, char* argv[])
     // Always close the log on exit.
     atexit(&onExit);
 
+    // Check if the configuration file exists, and if not, create it.
+    // This should only happen on first application startup.
+    if (!Utils::FileSystem::exists(Utils::FileSystem::getHomePath() +
+            "/.emulationstation/es_settings.cfg")) {
+        LOG(LogInfo) << "Settings file es_settings.cfg does not exist, creating it...";
+        Settings::getInstance()->saveFile();
+    }
+
     Window window;
     SystemScreenSaver screensaver(&window);
     PowerSaver::init();
@@ -490,6 +498,14 @@ int main(int argc, char* argv[])
             window.pushGui(new GuiDetectDevice(&window, true, [] {
                     ViewController::get()->goToStart(); }));
         }
+    }
+
+    // Check if the media directory exists, and if not, log a warning.
+    if (!Utils::FileSystem::isDirectory(FileData::getMediaDirectory()) ||
+            Utils::FileSystem::isSymlink(FileData::getMediaDirectory())) {
+        LOG(LogWarning) << "Warning - Games media directory does not exist "
+                "(or is not a directory or a symlink):";
+        LOG(LogWarning) << FileData::getMediaDirectory();
     }
 
     // Generate joystick events since we're done loading.
