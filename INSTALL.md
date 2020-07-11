@@ -1,11 +1,20 @@
-EmulationStation Desktop Edition - Installation
-===============================================
+EmulationStation Desktop Edition - Installation and configuration
+=================================================================
 
-**Note:** This is a quite technical document intended for those that are interested in compiling EmulationStation from source code, or would like to customize the configuration. If you just want to start using the software, check out the [User Guide](USERGUIDE.md) instead!
+**Note:** This is a quite technical document intended for those that are interested in compiling EmulationStation from source code, or would like to customize the configuration. If you just want to start using the software, check out the [User Guide](USERGUIDE.md) instead.
 
 
-Building
-========
+Development Environment
+=======================
+
+EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
+
+There are much more details regarding compilers later in this document, so read on!
+
+Any code editor can be used of course, but I recommend [VSCodium](https://vscodium.com) or [VSCode](https://code.visualstudio.com).
+
+
+### Building on Unix:
 
 The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
@@ -20,6 +29,8 @@ For this operating system, use `dnf` (with rpmfusion activated) :
 ```
 sudo dnf install cmake SDL2-devel freeimage-devel freetype-devel curl-devel rapidjson-devel alsa-lib-devel vlc-devel mesa-libGL-devel
 ```
+
+**Cloning and compiling:**
 
 To clone the source repository, run the following:
 
@@ -42,6 +53,14 @@ make
 ```
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
 
+To build with CEC support, add the corresponding option, for example:
+
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -DCEC=on .
+make
+```
+I have however not been able to test the CEC support and I'm not entirely sure how it's supposed to work.
+
 Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
 
 ```
@@ -60,8 +79,6 @@ It's important to know that this is not only the directory used by the install s
 **Compilers:**
 
 Both Clang/LLVM and GCC work fine for building ES.
-
-The Microsoft Visual C++ compiler (MSVC) could maybe work as well, there are some old settings in CMakeLists.txt for it. Try it if you want, but I recommend Clang or GCC instead of this legacy compiler.
 
 I did some small benchmarks comparing Clang to GCC with the ES codebase (as of writing it's year 2020) and it's pretty interesting.
 
@@ -82,7 +99,7 @@ This Clang debug build is LLVM "native", i.e. intended to be debugged using the 
 
 It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 36% slower! The same goes for the binary size, instead of 17% smaller it's now 17% larger.
 
-So overall Clang is interesting and perhaps even a better compiler than GCC, but it needs better integration with VSCodium before it's really usable. For macOS it seems as if Clang is the preferred compiler though, so it's good that ES now fully supports it. (It took quite some effort to get all the compile errors and compile warnings sorted out.)
+I'm expecting this to be resolved in the near future though, and as I think Clang is an interesting compiler, I use it as the default when working on the project (I sometimes test with GCC to make sure that it still builds the software correctly).
 
 It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
 
@@ -122,24 +139,21 @@ Assuming the default installation prefix `/usr/local` has been used, this is the
 
 **Note:** The resources directory is critical, without it the application won't start.
 
-ES will look in the following two locations for the resources:
+ES will look in the following locations for the resources:
 
 * `[HOME]/.emulationstation/resources/`
 * `[INSTALL PREFIX]/share/emulationstation/resources/`
 
-The home directory will always take precedence, so any resources located there will override the ones in the installation path. It's not recommended to override any resources since they are by nature static. But using the ability to locate resource files in the home directory is very useful when combined with the command line option `--home` (see below), as a fully portable version of EmulationStation can then be created on a USB memory stick or similar.
+And it will look in the following locations for the themes:
 
-Anyway, after compiling the application, either run `make install` or copy or symlink the resources directory to `~/.emulationstation/resources`.
+* `[HOME]/.emulationstation/themes/`
+* `[INSTALL PREFIX]/share/emulationstation/themes/`
 
-`cp -R resources ~/.emulationstation/` \
-or \
-`ln -s $(pwd)/resources ~/.emulationstation/`
-
-The same goes for the `themes` directory. Although ES can start without a theme, it would be pretty pointless as the application would barely be usable.
+The home directory will always take precedence, so any resources or themes located there will override the ones in the installation path.
 
 **Creating .deb and .rpm packages:**
 
-Creation of Debian .deb packages are enabled by default, simply run `cpack` to generate the package:
+Creation of Debian .deb packages is enabled by default, simply run `cpack` to generate the package:
 
 ```
 user@computer:~/emulationstation-de$ cpack
@@ -175,13 +189,13 @@ sudo apt-get install rpm
 ```
 
 
-### On Windows:
+### Building on Windows:
 
 This is a strange legacy operating system. However it's still popular, so we need to support it.
 
 I did a brief evaluation of the Microsoft Visual C++ compiler (MSVC) but as far as I'm concerned it's an abomination so I won't cover it here and it won't be supported.
 
-At the moment I have only built the software using GCC on Windows, but I may try to get Clang/LLVM working at a later date.
+At the moment I have only built the software using GCC on Windows, but I aim to get Clang/LLVM working at a later date.
 
 Anyway, here's a brief summary of how to get a build environment up and running on Windows.
 
@@ -346,7 +360,6 @@ Note that compilation time is much longer than on Unix, and linking time is exce
 
 A worthwhile endeavour could be to setup a cross-compilation environment using WLS/WLS2 (Linux), but I have not tried it.
 
-
 **Creating an NSIS installer:**
 
 To create an NSIS installer (Nullsoft Scriptable Install System) you need to first install the NSIS creation tool:
@@ -366,6 +379,60 @@ CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPack: - package: C:/Programming/emulationstation-de/emulationstation-de-1.0.0-win64.exe generated.
 ```
+
+**Setting up a portable installation:**
+
+It's possible to easily create a portable installation of ES for Windows, for example on a USB memory stick.
+
+For the sake of this example, let's assume that the removable media has the device name `f:\`.
+
+* Copy the EmulationStation installation directory to f:\
+* Create the directory `ES-Home` directly under f:\
+* Copy your game ROMs into `f:\ES-Home\ROMs`
+* Copy your emulators to f:\ (such as the RetroArch directory)
+* Create the file `start_es.bat` directly under f:\
+
+Add the following lines to the start_es.bat file:
+```
+@echo off
+EmulationStation\emulationstation.exe --home %CD:~0,3%ES-Home
+```
+
+The contents of f:\ should now look something like this:
+```
+EmulationStation
+ES-Home
+RetroArch
+start_es.bat
+
+```
+
+Now run the batch script, ES should start and ask you to configure any attached controllers. Following this, check that everything works as expected, i.e. the gamelists are properly populated etc.
+
+You can optionally skip the configuration of the controllers by copying any existing `es_input.cfg` file to `f:\ES-Home\.emulationstation\es_input.cfg`.
+
+Exit ES and modify the file `f:\ES-Home\.emulationstation\es_systems.cfg` to point to the emulators on the portable media.
+
+Example change, from this:
+```
+<command>retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+```
+
+To this:
+```
+<command>%ESPATH%\..\RetroArch\retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+```
+
+The %ESPATH% variable is explained later in this document.
+
+Following this, optionally copy any existing gamelists and game media files to the removable media. By default these files should be located here:
+
+`f:\ES-Home\.emulationstation\gamelists\` \
+`f:\ES-Home\.emulationstation\downloaded_media\`
+
+You now have a fully functional portable emulator installation!
+
+The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
 
 
 Configuring EmulationStation-DE
@@ -466,8 +533,8 @@ As long as ES hasn't frozen, you can always press F4 to close the application.
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES will use `~/games/emulation/.emulationstation` as its base directory.
 
 
-Writing an es_systems.cfg
-=========================
+es_systems.cfg
+==============
 
 The es_systems.cfg file contains the system configuration data for EmulationStation, written in XML format. \
 This tells EmulationStation what systems you have, what platform they correspond to (for scraping), and where the games are located.
@@ -561,7 +628,7 @@ As of the fork to EmulationStation Desktop Edition, game media information no lo
 
 The default game media directory is `~/.emulationstation/downloaded_media`.
 
-*You can use ES's [scraping](http://en.wikipedia.org/wiki/Web_scraping) tools to avoid creating a gamelist.xml by hand.*  There are two ways to run the scraper:
+You can use ES's [scraping](http://en.wikipedia.org/wiki/Web_scraping) tools to populate the gamelist.xml files. There are two ways to run the scraper:
 
 * **If you want to scrape multiple games:** press the Start button to open the menu and choose the "SCRAPER" option.  Adjust your settings and press "START".
 * **If you just want to scrape one game:** find the game on the game list in ES and press the Select button.  Choose "EDIT THIS GAME'S METADATA" and then press the "SCRAPE" button at the bottom of the metadata editor.
@@ -570,22 +637,77 @@ You can also edit metadata within ES by using the metadata editor - just find th
 
 The switch `--ignore-gamelist` can be used to ignore the gamelists upon start of the application.
 
-If you're writing a tool to generate or parse gamelist.xml files, you should check out [GAMELISTS.md](GAMELISTS.md) for more detailed documentation.
+**File location and structure:**
+
+ES checks for the `gamelist.xml` files in the user's home directory:
+
+`~/.emulationstation/gamelists/[SYSTEM_NAME]/gamelist.xml`
+
+The home directory can be overridden using the `--home` option from the command line, see above in this document for details regarding that.
+
+An example gamelist.xml:
+
+```xml
+<gameList>
+	<game>
+		<path>./mm2.nes</path>
+		<name>Mega Man 2</name>
+		<desc>Mega Man 2 is a classic NES game which follows Mega Man as he murders eight robot masters in cold blood.</desc>
+	</game>
+</gameList>
+```
+
+Everything is enclosed in a `<gameList>` tag.  The information for each game or folder is enclosed in a corresponding tag (`<game>` or `<folder>`).  Each piece of metadata is encoded as a string.
+
+**gamelist.xml reference:**
+
+There are a few types of metadata:
+
+* `string` - just text.
+* `float` - a floating-point decimal value (written as a string).
+* `integer` - an integer value (written as a string).
+* `datetime` - a date and, potentially, a time.  These are encoded as an ISO string, in the following format: "%Y%m%dT%H%M%S%F%q".  For example, the release date for Chrono Trigger is encoded as "19950311T000000" (no time specified).
+
+Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
+
+#### `<game>`
+
+* `name` - string, the displayed name for the game.
+* `desc` - string, a description of the game.  Longer descriptions will automatically scroll, so don't worry about size.
+* `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1. ES will round fractional values to half-stars.
+* `releasedate` - datetime, the date the game was released.  Displayed as date only, time is ignored.
+* `developer` - string, the developer for the game.
+* `publisher` - string, the publisher for the game.
+* `genre` - string, the (primary) genre for the game.
+* `players` - integer, the number of players the game supports.
+* `favorite` - bool, indicates whether the game is a favorite.
+* `completed`- bool, indicates whether the game has been completed.
+* `broken` - bool, indicates a game that doesn't work (useful for MAME).
+* `kidgame` - bool, indicates whether the game is suitable for children, used by the `kid' UI mode.
+* `playcount` - integer, the number of times this game has been played.
+* `lastplayed` - statistic, datetime, the last date and time this game was played.
+* `sortname` - string, used in sorting the gamelist in a system, instead of `name`.
+* `launchcommand` - optional tag that is used to override the emulator and core settings on a per-game basis.
+
+#### `<folder>`
+* `name` - string, the displayed name for the folder.
+* `desc` - string, the description for the folder.
+* `developer` - string, developer(s).
+* `publisher` - string, publisher(s).
+* `genre` - string, genre(s).
+* `players` - integer, the number of players the game supports.
 
 
-Themes
-======
+**Additional gamelist.xml information:**
 
-EmulationStation is not intended to be used without a theme. The default theme 'rbsimple-DE' is included in the emulationstation-de repository.
+* If a value matches the default for a particular piece of metadata, ES will not write it to the gamelist.xml (for example, if `genre` isn't specified, ES won't write an empty genre tag)
 
-For additional themes, the following resources are recommended:
+* A `game` can actually point to a folder/directory if the folder has a matching extension
 
-https://aloshi.com/emulationstation#themes
+* `folder` metadata will only be used if a game is found inside of that folder
 
-https://github.com/RetroPie
+* ES will keep entries for games and folders that it can't find the game/ROM files for
 
-https://gitlab.com/recalbox/recalbox-themes
+* The switch `--gamelist-only` can be used to skip automatic searching, and only display games defined in the system's gamelist.xml
 
-https://wiki.batocera.org/themes
-
-For information on how to make your own theme or edit an existing one, read [THEMES.md](THEMES.md).
+* The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application

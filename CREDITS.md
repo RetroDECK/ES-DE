@@ -2,9 +2,11 @@ Programming
 ===========
 
 Alec "Aloshi" Lofquist (original version) \
-http://www.aloshi.com \
+http://www.aloshi.com
+
 RetroPie Community (RetroPie fork) \
-https://retropie.org.uk \
+https://retropie.org.uk
+
 Leon Styhre (Desktop Edition fork, based on the RetroPie version) \
 https://gitlab.com/leonstyhre/emulationstation-de
 
@@ -74,10 +76,10 @@ MAME ROM information \
 https://www.mamedev.org
 
 
-RBSimple-DE theme
+rbsimple-DE theme
 =================
 
-Recalbox Multi (RBSimple-DE is based on this theme) \
+Recalbox Multi (rbsimple-DE is based on this theme) \
 https://gitlab.com/recalbox/recalbox-themes
 
 Carbon (some graphics taken from this theme) \
@@ -87,7 +89,7 @@ https://github.com/RetroPie/es-theme-carbon
 Sounds
 ======
 
-Used by the default RBSimple-DE theme as well as for fallback sounds (for themes that lack navigation sounds).
+Used by the default rbsimple-DE theme as well as for fallback sounds (for themes that lack navigation sounds).
 
 https://freesound.org/people/adcbicycle/sounds/14066
 
