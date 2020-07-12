@@ -96,7 +96,7 @@ bool SystemData::populateFolder(FileData* folder)
 {
     const std::string& folderPath = folder->getPath();
     if (!Utils::FileSystem::exists(folderPath)) {
-    LOG(LogInfo) << "Info - Folder with path \"" <<
+    LOG(LogDebug) << "SystemData::populateFolder(): Folder with path \"" <<
                 folderPath << "\" does not exist.";
         return false;
     }
@@ -316,7 +316,8 @@ bool SystemData::loadConfig()
 
         SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
         if (newSys->getRootFolder()->getChildrenByFilename().size() == 0) {
-            LOG(LogInfo) << "Info - System \"" << name << "\" has no games, ignoring it.";
+            LOG(LogDebug) << "SystemData::loadConfig(): System \"" << name <<
+                    "\" has no games, ignoring it.";
             delete newSys;
         }
         else {

@@ -110,9 +110,10 @@ namespace Renderer
         std::string extensions = glGetString(GL_EXTENSIONS) ?
                 (const char*)glGetString(GL_EXTENSIONS) : "";
 
-        LOG(LogInfo) << "GL vendor:   " << vendor;
+        LOG(LogInfo) << "GL vendor: " << vendor;
         LOG(LogInfo) << "GL renderer: " << renderer;
-        LOG(LogInfo) << "GL version:  " << version;
+        LOG(LogInfo) << "GL version: " << version;
+        LOG(LogInfo) << "EmulationStation renderer: OpenGL 2.1";
         LOG(LogInfo) << "Checking available OpenGL extensions...";
         std::string glExts = glGetString(GL_EXTENSIONS) ?
                 (const char*)glGetString(GL_EXTENSIONS) : "";
