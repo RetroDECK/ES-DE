@@ -36,32 +36,44 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
 {
     // Check if this is a resource file.
     if ((path[0] == ':') && (path[1] == '/')) {
-        std::string testHome;
-        std::string testDataPath;
 
         // Check under the home directory.
+        std::string testHome;
+
         testHome = Utils::FileSystem::getHomePath() + "/.emulationstation/resources/" + &path[2];
         if (Utils::FileSystem::exists(testHome))
             return testHome;
 
-        // Check for the resource under the data installation directory for Unix or under
-        // the executable directory for Windows.
-        #ifdef _WIN64
-        testDataPath = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
-        #else
+        // Check under the data installation directory (Unix only).
+        #ifdef __unix__
+        std::string testDataPath;
+
         testDataPath = Utils::FileSystem::getProgramDataPath() + "/resources/" + &path[2];
-        #endif
 
         if (Utils::FileSystem::exists(testDataPath)) {
             return testDataPath;
         }
+        #endif
+
+        // Check under the ES executable directory.
+        std::string testExePath;
+
+        testExePath = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
+
+        if (Utils::FileSystem::exists(testExePath)) {
+            return testExePath;
+        }
+
         // For missing resources, log an error and terminate the application. This should
         // indicate that we have a broken EmulationStation installation.
         else {
             LOG(LogError) << "Error - Program resource missing: " << path;
             LOG(LogError) << "Tried to find the resource in the following locations:";
             LOG(LogError) << testHome;
+            #ifdef __unix__
             LOG(LogError) << testDataPath;
+            #endif
+            LOG(LogError) << testExePath;
             LOG(LogError) << "Has EmulationStation been properly installed?";
             Scripting::fireEvent("quit");
             emergencyShutdown();

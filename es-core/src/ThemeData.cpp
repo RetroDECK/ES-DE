@@ -602,15 +602,16 @@ std::map<std::string, ThemeSet> ThemeData::getThemeSets()
 {
     std::map<std::string, ThemeSet> sets;
 
-    // Check for themes under the data installation directory for Unix or under the
-    // executable directory for Windows, as well as under the user home directory regardless
-    // of operating system.
+    // Check for themes first under the home directory, then under the data installation
+    // directory (Unix only) and last under the ES executable directory.
+    #ifdef __unix__
+    static const size_t pathCount = 3;
+    #else
     static const size_t pathCount = 2;
-    std::string paths[pathCount] =
-    {
-        #ifdef _WIN64
+    #endif
+    std::string paths[pathCount] = {
         Utils::FileSystem::getExePath() + "/themes",
-        #else
+        #ifdef __unix__
         Utils::FileSystem::getProgramDataPath() + "/themes",
         #endif
         Utils::FileSystem::getHomePath() + "/.emulationstation/themes"

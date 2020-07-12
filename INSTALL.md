@@ -4,8 +4,7 @@ EmulationStation Desktop Edition - Installation and configuration
 **Note:** This is a quite technical document intended for those that are interested in compiling EmulationStation from source code, or would like to customize the configuration. If you just want to start using the software, check out the [User Guide](USERGUIDE.md) instead.
 
 
-Development Environment
-=======================
+### Development Environment
 
 EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
 
@@ -137,19 +136,23 @@ Assuming the default installation prefix `/usr/local` has been used, this is the
 /usr/local/share/emulationstation/themes
 ```
 
-**Note:** The resources directory is critical, without it the application won't start.
-
-ES will look in the following locations for the resources:
+ES will look in the following locations for the resources, in the listed order:
 
 * `[HOME]/.emulationstation/resources/`
 * `[INSTALL PREFIX]/share/emulationstation/resources/`
+* `[ES EXECUTABLE DIRECTORY]/resources/`
 
-And it will look in the following locations for the themes:
+**Note:** The resources directory is critical, without it the application won't start.
+
+And it will look in the following locations for the themes, also in the listed order:
 
 * `[HOME]/.emulationstation/themes/`
 * `[INSTALL PREFIX]/share/emulationstation/themes/`
+* `[ES EXECUTABLE DIRECTORY]/themes/`
 
-The home directory will always take precedence, so any resources or themes located there will override the ones in the installation path.
+The theme is not mandatory to start the application, but ES will be basically useless without it.
+
+So the home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or the path of the ES executable.
 
 **Creating .deb and .rpm packages:**
 
@@ -379,6 +382,24 @@ CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPack: - package: C:/Programming/emulationstation-de/emulationstation-de-1.0.0-win64.exe generated.
 ```
+
+The default installation directory suggested by the installer is `C:\Program Files\EmulationStation`. However this can of course be changed by the user.
+
+ES will look in the following locations for the resources, in the listed order:
+
+* `[HOME]\.emulationstation\resources\`
+* `[ES EXECUTABLE DIRECTORY]\resources\`
+
+**Note:** The resources directory is critical, without it the application won't start.
+
+And it will look in the following locations for the themes, also in the listed order:
+
+* `[HOME]\.emulationstation\themes\`
+* `[ES EXECUTABLE DIRECTORY]\themes\`
+
+The theme is not mandatory to start the application, but ES will be basically useless without it.
+
+So the home directory will always take precedence, and any resources or themes located there will override the ones in the path of the ES executable.
 
 **Setting up a portable installation:**
 
