@@ -3,25 +3,25 @@
 
     <feature supported="navigationsounds">
         <view name="all">
-            <sound name="systembrowseSound">
+            <sound name="systembrowse">
                   <path>./core/sounds/systembrowse.wav</path>
             </sound>
-            <sound name="quicksysselectSound">
+            <sound name="quicksysselect">
                 <path>./core/sounds/quicksysselect.wav</path>
             </sound>
-            <sound name="selectSound">
+            <sound name="select">
                 <path>./core/sounds/select.wav</path>
             </sound>
-            <sound name="backSound">
+            <sound name="back">
                 <path>./core/sounds/back.wav</path>
             </sound>
-            <sound name="scrollSound">
+            <sound name="scroll">
                 <path>./core/sounds/scroll.wav</path>
             </sound>
-            <sound name="favoriteSound">
+            <sound name="favorite">
                 <path>./core/sounds/favorite.wav</path>
             </sound>
-            <sound name="launchSound">
+            <sound name="launch">
                 <path>./core/sounds/launch.wav</path>
             </sound>
         </view>

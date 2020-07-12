@@ -277,16 +277,21 @@ You can now change the order in which elements are rendered by setting `zIndex` 
 
 #### Navigation sounds
 
-The navigation sounds are configured globally per theme, so it needs to be defined as a feature and with the view set to the special 'all' category.
+The navigation sounds are configured globally per theme set, so it needs to be defined as a feature and with the view set to the special 'all' category.
 It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`).
 There are seven different navigation sounds that can be configured. The names as well as the element structure should be self-explanatory based
 on the example below.
-Starting EmulationStation with the --debug flag will provide feedback on whether the navigation sound elements were read correctly, as well as
-providing an error message if any of the .wav sound files could not be loaded.
+Starting EmulationStation with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sound is provided by the theme, ES will use the bundled navigation sound file as a fallback. This is done per sound, so the theme could provide for example one or two custom sound files while using the bundled ES sounds for the other samples.
 
-Example debug output: \
-`May 12 21:12:37 lvl2:   Sound::getFromTheme() looking for [all.selectSound]` \
-`May 12 21:12:37 lvl2:   [selectSound] found, ready to play sound file`
+
+Example debug output:
+```
+Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Looking for navigation sound tag <sound name="quicksysselect">.
+Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Tag found, ready to load theme sound file.
+Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Looking for navigation sound tag <sound name="select">.
+Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Tag not found, using fallback sound file.
+
+```
 
 Example `navigationsounds.xml`, to be included from the main theme file:
 
@@ -295,25 +300,25 @@ Example `navigationsounds.xml`, to be included from the main theme file:
     <formatVersion>6</formatVersion>
     <feature supported="navigationsounds">
         <view name="all">
-            <sound name="systembrowseSound">
+            <sound name="systembrowse">
                   <path>./core/sounds/systembrowse.wav</path>
             </sound>
-            <sound name="quicksysselectSound">
+            <sound name="quicksysselect">
                 <path>./core/sounds/quicksysselect.wav</path>
             </sound>
-            <sound name="selectSound">
+            <sound name="select">
                 <path>./core/sounds/select.wav</path>
             </sound>
-            <sound name="backSound">
+            <sound name="back">
                 <path>./core/sounds/back.wav</path>
             </sound>
-            <sound name="scrollSound">
+            <sound name="scroll">
                 <path>./core/sounds/scroll.wav</path>
             </sound>
-            <sound name="favoriteSound">
+            <sound name="favorite">
                 <path>./core/sounds/favorite.wav</path>
             </sound>
-            <sound name="launchSound">
+            <sound name="launch">
                 <path>./core/sounds/launch.wav</path>
             </sound>
         </view>

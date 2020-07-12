@@ -7,6 +7,7 @@
 
 #include "Sound.h"
 
+#include "resources/ResourceManager.h"
 #include "AudioManager.h"
 #include "Log.h"
 #include "Settings.h"
@@ -31,15 +32,17 @@ std::shared_ptr<Sound> Sound::get(const std::string& path)
 std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& theme,
         const std::string& view, const std::string& element)
 {
-    LOG(LogInfo) << "Sound::getFromTheme() looking for [" << view << "." << element << "]";
+    LOG(LogDebug) << "Sound::getFromTheme(): Looking for navigation sound tag <sound name=\"" <<
+            element << "\">.";
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
     if(!elem || !elem->has("path")) {
-        LOG(LogInfo) << "[" << element << "] not found, won't load any sound file";
-        return get("");
+        LOG(LogDebug) << "Sound::getFromTheme(): " << "Tag not found, using fallback sound file.";
+        return get(ResourceManager::getInstance()->
+                getResourcePath(":/sounds/" + element + ".wav"));
     }
 
-    LOG(LogInfo) << "[" << element << "] found, ready to load sound file";
+    LOG(LogDebug) << "Sound::getFromTheme(): Tag found, ready to load theme sound file.";
     return get(elem->get<std::string>("path"));
 }
 
@@ -61,13 +64,13 @@ void NavigationSounds::deinit()
 
 void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
 {
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowseSound"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselectSound"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "selectSound"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "backSound"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scrollSound"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favoriteSound"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launchSound"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowse"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselect"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "select"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "back"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scroll"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favorite"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launch"));
 }
 
 void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)
@@ -114,7 +117,8 @@ void Sound::init()
     Uint8 * data = nullptr;
     Uint32 dlen = 0;
     if (SDL_LoadWAV(mPath.c_str(), &wave, &data, &dlen) == nullptr) {
-        LOG(LogError) << "Error loading sound file \"" << mPath << "\"!\n" << "	" << SDL_GetError();
+        LOG(LogError) << "Error - Failed to load theme navigation sound file:";
+        LOG(LogError) << SDL_GetError();
         return;
     }
     // Build conversion buffer.
