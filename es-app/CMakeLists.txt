@@ -124,6 +124,12 @@ if(WIN32)
 else()
     install(TARGETS emulationstation RUNTIME
         DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/emulationstation.desktop
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/emulationstation.svg
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/LICENSES
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes

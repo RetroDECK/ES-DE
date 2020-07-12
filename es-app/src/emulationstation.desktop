@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=EmulationStation Desktop Edition
+GenericName=EmulationStation
+Type=Application
+Comment=EmulationStation Emulator Front-end
+Icon=emulationstation
+Exec=emulationstation
+Terminal=false
+StartupNotify=true
+Hidden=false
+Keywords=emulator;front-end;frontend;
+Categories=Game;Emulator;

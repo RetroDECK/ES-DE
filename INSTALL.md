@@ -131,9 +131,12 @@ Assuming the default installation prefix `/usr/local` has been used, this is the
 
 ```
 /usr/local/bin/emulationstation
-/usr/local/share/emulationstation/LICENSES
-/usr/local/share/emulationstation/resources
-/usr/local/share/emulationstation/themes
+/usr/local/share/applications/emulationstation.desktop
+/usr/local/share/emulationstation/LICENSE
+/usr/local/share/emulationstation/LICENSES/*
+/usr/local/share/emulationstation/resources/*
+/usr/local/share/emulationstation/themes/*
+/usr/local/share/pixmaps/emulationstation.svg
 ```
 
 ES will look in the following locations for the resources, in the listed order:
