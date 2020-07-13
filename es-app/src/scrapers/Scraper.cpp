@@ -11,10 +11,11 @@
 #include "utils/StringUtil.h"
 #include "FileData.h"
 #include "GamesDBJSONScraper.h"
-#include "ScreenScraper.h"
 #include "Log.h"
+#include "ScreenScraper.h"
 #include "Settings.h"
 #include "SystemData.h"
+
 #include <FreeImage.h>
 #include <fstream>
 
@@ -45,14 +46,15 @@ std::unique_ptr<ScraperSearchHandle> startMediaURLsFetch(const std::string& game
 
     ScraperSearchParams params;
     // Check if the scraper in the settings still exists as a registered scraping source.
-    if (scraper_request_funcs.find(name) == scraper_request_funcs.end())
+    if (scraper_request_funcs.find(name) == scraper_request_funcs.end()) {
         LOG(LogWarning) << "Warning - Configured scraper (" << name <<
                 ") unavailable, scraping aborted.";
-    else
+    }
+    else {
         // Specifically use the TheGamesDB function as this type of request
         // will never occur for ScreenScraper.
-        thegamesdb_generate_json_scraper_requests(gameIDs, handle->mRequestQueue,
-                handle->mResults);
+        thegamesdb_generate_json_scraper_requests(gameIDs, handle->mRequestQueue, handle->mResults);
+    }
 
     return handle;
 }
@@ -167,6 +169,8 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
 
     std::vector<struct mediaFileInfoStruct> scrapeFiles;
 
+    mResult.savedNewImages = false;
+
     if (Settings::getInstance()->getBool("Scrape3DBoxes") && result.box3dUrl != "") {
         mediaFileInfo.fileURL = result.box3dUrl;
         mediaFileInfo.fileFormat = result.box3dFormat;
@@ -265,11 +269,13 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
                 setError("Error saving resized image. Out of memory? Disk full?");
                 return;
             }
+
+            mResult.savedNewImages = true;
         }
         // If it's not cached, then initiate the download.
         else {
             mFuncs.push_back(ResolvePair(downloadImageAsync(it->fileURL, filePath,
-                    it->existingMediaFile), [this, filePath] {
+                    it->existingMediaFile, mResult.savedNewImages), [this, filePath] {
             }));
         }
     }
@@ -300,12 +306,13 @@ void MDResolveHandle::update()
 }
 
 std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
-        const std::string& saveAs, const std::string& existingMediaFile)
+        const std::string& saveAs, const std::string& existingMediaFile, bool& savedNewImage)
 {
     return std::unique_ptr<ImageDownloadHandle>(new ImageDownloadHandle(
             url,
             saveAs,
             existingMediaFile,
+            savedNewImage,
             Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
             Settings::getInstance()->getInt("ScraperResizeMaxHeight")));
 }
@@ -314,6 +321,7 @@ ImageDownloadHandle::ImageDownloadHandle(
         const std::string& url,
         const std::string& path,
         const std::string& existingMediaPath,
+        bool& savedNewImage,
         int maxWidth,
         int maxHeight)
         : mSavePath(path),
@@ -322,6 +330,7 @@ ImageDownloadHandle::ImageDownloadHandle(
         mMaxHeight(maxHeight),
         mReq(new HttpReq(url))
 {
+        mSavedNewImagePtr = &savedNewImage;
 }
 
 void ImageDownloadHandle::update()
@@ -376,6 +385,9 @@ void ImageDownloadHandle::update()
         setError("Error saving resized image. Out of memory? Disk full?");
         return;
     }
+
+    // If this image was successfully saved, update savedNewImages in ScraperSearchResult.
+    *mSavedNewImagePtr = true;
 
     setStatus(ASYNC_DONE);
 }

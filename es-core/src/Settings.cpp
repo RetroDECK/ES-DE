@@ -77,7 +77,7 @@ void Settings::setDefaults()
 
     // UI settings.
     mStringMap["StartupSystem"] = "";
-    mStringMap["GamelistViewStyle"] = "detailed";
+    mStringMap["GamelistViewStyle"] = "automatic";
     mStringMap["TransitionStyle"] = "instant";
     mStringMap["ThemeSet"] = "";
     mStringMap["UIMode"] = "Full";

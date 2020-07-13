@@ -13,11 +13,8 @@
 #include "Settings.h"
 #include "SystemData.h"
 
-BasicGameListView::BasicGameListView(
-        Window* window,
-        FileData* root)
-        : ISimpleGameListView(window, root),
-        mList(window)
+BasicGameListView::BasicGameListView(Window* window, FileData* root)
+        : ISimpleGameListView(window, root), mList(window)
 {
     mList.setSize(mSize.x(), mSize.y() * 0.8f);
     mList.setPosition(0, mSize.y() * 0.2f);
@@ -38,8 +35,7 @@ void BasicGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 void BasicGameListView::onFileChanged(FileData* file, FileChangeType change)
 {
-    if (change == FILE_METADATA_CHANGED)
-    {
+    if (change == FILE_METADATA_CHANGED) {
         // Might switch to a detailed view.
         ViewController::get()->reloadGameListView(this);
         return;
@@ -146,6 +142,28 @@ void BasicGameListView::remove(FileData *game, bool deleteFile)
     if (deleteFile)
         Utils::FileSystem::removeFile(game->getPath());
 
+    // Remove all game media files as well.
+    if (Utils::FileSystem::exists(game->getVideoPath()))
+        Utils::FileSystem::removeFile(game->getVideoPath());
+
+    if (Utils::FileSystem::exists(game->getMiximagePath()))
+        Utils::FileSystem::removeFile(game->getMiximagePath());
+
+    if (Utils::FileSystem::exists(game->getScreenshotPath()))
+        Utils::FileSystem::removeFile(game->getScreenshotPath());
+
+    if (Utils::FileSystem::exists(game->getCoverPath()))
+        Utils::FileSystem::removeFile(game->getCoverPath());
+
+    if (Utils::FileSystem::exists(game->getMarqueePath()))
+        Utils::FileSystem::removeFile(game->getMarqueePath());
+
+    if (Utils::FileSystem::exists(game->get3DBoxPath()))
+        Utils::FileSystem::removeFile(game->get3DBoxPath());
+
+    if (Utils::FileSystem::exists(game->getThumbnailPath()))
+        Utils::FileSystem::removeFile(game->getThumbnailPath());
+
     FileData* parent = game->getParent();
     // Select next element in list, or previous if none.
     if (getCursor() == game) {
@@ -163,6 +181,11 @@ void BasicGameListView::remove(FileData *game, bool deleteFile)
 
     if (mList.size() == 0)
         addPlaceholder();
+
+    // If a game has been deleted, immediately remove the entry from gamelist.xml
+    // regardless of the value of the setting SaveGamelistsMode.
+    game->setDeletionFlag();
+    parent->getSystem()->writeMetaData();
 
     // Remove before repopulating (removes from parent), then update the view.
     delete game;

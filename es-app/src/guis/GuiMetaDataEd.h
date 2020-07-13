@@ -62,6 +62,7 @@ private:
     std::function<void()> mDeleteFunc;
 
     bool mMetadataUpdated;
+    bool mMediaFilesUpdated;
 };
 
 #endif // ES_APP_GUIS_GUI_META_DATA_ED_H

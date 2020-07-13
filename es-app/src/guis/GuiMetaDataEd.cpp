@@ -292,6 +292,8 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     MetaDataList* metadata = nullptr;
     metadata = new MetaDataList(*mMetaData);
 
+    mMediaFilesUpdated = result.savedNewImages;
+
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
     // the values previously saved for the game.
@@ -356,8 +358,7 @@ void GuiMetaDataEd::close()
     std::function<void()> closeFunc;
         closeFunc = [this] { delete this; };
 
-    if (dirty)
-    {
+    if (dirty) {
         // Changes were made, ask if the user wants to save them.
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
             "SAVE CHANGES?",
@@ -366,6 +367,9 @@ void GuiMetaDataEd::close()
         ));
     }
     else {
+        // Always save if the media files have been changed (i.e. newly scraped images).
+        if (mMediaFilesUpdated)
+            save();
         closeFunc();
     }
 }

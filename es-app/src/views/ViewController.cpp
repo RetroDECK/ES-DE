@@ -326,7 +326,7 @@ std::shared_ptr<IGameListView> ViewController::getGameListView(SystemData* syste
                 selectedViewType = VIDEO;
                 break;
             }
-            else if (!(*it)->getThumbnailPath().empty()) {
+            else if (!(*it)->getImagePath().empty()) {
                 selectedViewType = DETAILED;
                 // Don't break out in case any subsequent files have videos.
             }

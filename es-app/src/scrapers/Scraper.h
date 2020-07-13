@@ -64,6 +64,9 @@ struct ScraperSearchResult {
     std::string coverFormat;
     std::string marqueeFormat;
     std::string screenshotFormat;
+
+    // Indicate whether any new images were downloaded and saved.
+    bool savedNewImages;
 };
 
 // So let me explain why I've abstracted this so heavily.
@@ -184,6 +187,7 @@ public:
             const std::string& url,
             const std::string& path,
             const std::string& existingMediaPath,
+            bool& savedNewImage,
             int maxWidth,
             int maxHeight);
 
@@ -193,6 +197,7 @@ private:
     std::unique_ptr<HttpReq> mReq;
     std::string mSavePath;
     std::string mExistingMediaFile;
+    bool *mSavedNewImagePtr;
     int mMaxWidth;
     int mMaxHeight;
 };
@@ -206,7 +211,7 @@ std::string getSaveAsPath(const ScraperSearchParams& params,
 // Will resize according to Settings::getInt("ScraperResizeMaxWidth") and
 // Settings::getInt("ScraperResizeMaxHeight").
 std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
-        const std::string& saveAs, const std::string& existingMediaPath);
+        const std::string& saveAs, const std::string& existingMediaPath, bool& savedNewImage);
 
 // Resolves all metadata assets that need to be downloaded.
 std::unique_ptr<MDResolveHandle> resolveMetaDataAssets(const ScraperSearchResult& result,
