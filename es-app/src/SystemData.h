@@ -94,6 +94,7 @@ public:
 
     FileFilterIndex* getIndex() { return mFilterIndex; };
     void onMetaDataSavePoint();
+    void writeMetaData();
 
     void setupSystemSortType(FileData* mRootFolder);
 
@@ -110,7 +111,6 @@ private:
     bool populateFolder(FileData* folder);
     void indexAllGameFilters(const FileData* folder);
     void setIsGameSystemStatus();
-    void writeMetaData();
 
     FileFilterIndex* mFilterIndex;
 

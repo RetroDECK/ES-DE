@@ -39,6 +39,7 @@ v1.0.0
   Note: The editor will still ask for save confirmations after automatically rounding fractional game ratings to half-star values
 * Game images were sometimes scaled incorrectly
 * Non-transparent favorite icons were not rendered correctly
-* Restart and power-off menu entries not working (at least not on my desktop OS)
+* Restart and power-off menu entries not working
 * Toggling the screensaver didn't work as expected
+* Deleting a game did not delete the game media files or its entry in the gamelist.xml file
 * Lots and lots of small bugs and inconsistencies fixed

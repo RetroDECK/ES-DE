@@ -233,8 +233,8 @@ void updateGamelist(SystemData* system)
                 fit != files.cend(); ++fit) {
             const char* tag = ((*fit)->getType() == GAME) ? "game" : "folder";
 
-            // Do not touch if it wasn't changed.
-            if (!(*fit)->metadata.wasChanged())
+            // Do not touch if it wasn't changed and is not flagged for deletion.
+            if (!(*fit)->metadata.wasChanged() && !(*fit)->getDeletionFlag())
                 continue;
 
             // Check if the file already exists in the XML file.
@@ -248,20 +248,24 @@ void updateGamelist(SystemData* system)
                 }
 
                 std::string nodePath =Utils::FileSystem::getCanonicalPath(
-                            Utils::FileSystem::resolveRelativePath(pathNode.text().get(),
-                            system->getStartPath(), true));
+                        Utils::FileSystem::resolveRelativePath(pathNode.text().get(),
+                        system->getStartPath(), true));
                 std::string gamePath = Utils::FileSystem::getCanonicalPath((*fit)->getPath());
+
                 if (nodePath == gamePath) {
                     // Found it
                     root.remove_child(fileNode);
+                    if ((*fit)->getDeletionFlag())
+                        ++numUpdated;
                     break;
                 }
             }
 
-            // It was either removed or never existed to begin with.
-            // Either way, we can add it now.
-            addFileDataNode(root, *fit, tag, system);
-            ++numUpdated;
+            // Add the game to the file, unless it's flagged for deletion.
+            if (!(*fit)->getDeletionFlag()) {
+                addFileDataNode(root, *fit, tag, system);
+                ++numUpdated;
+            }
         }
 
         // Now write the file.

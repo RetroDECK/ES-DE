@@ -39,16 +39,14 @@ FileType stringToFileType(const char* str);
 class FileData
 {
 public:
-    FileData(FileType type,
-            const std::string& path,
-            SystemEnvironmentData* envData,
-            SystemData* system);
+    FileData(FileType type, const std::string& path,
+            SystemEnvironmentData* envData, SystemData* system);
 
     virtual ~FileData();
 
     virtual const std::string& getName();
-    virtual const std::string& getSortName();
-    virtual const bool getFavorite();
+    const std::string& getSortName();
+    const bool getFavorite();
     inline FileType getType() const { return mType; }
     inline const std::string& getPath() const { return mPath; }
     inline FileData* getParent() const { return mParent; }
@@ -61,16 +59,18 @@ public:
             { return mFirstLetterIndex; };
     static const std::string getROMDirectory();
     static const std::string getMediaDirectory();
-    virtual const std::string getMediafilePath(
-            std::string subdirectory, std::string mediatype) const;
-    virtual const std::string getImagePath() const;
-    virtual const std::string get3DBoxPath() const;
-    virtual const std::string getCoverPath() const;
-    virtual const std::string getMarqueePath() const;
-    virtual const std::string getMiximagePath() const;
-    virtual const std::string getScreenshotPath() const;
-    virtual const std::string getThumbnailPath() const;
-    virtual const std::string getVideoPath() const;
+    const std::string getMediafilePath(std::string subdirectory, std::string mediatype) const;
+    const std::string getImagePath() const;
+    const std::string get3DBoxPath() const;
+    const std::string getCoverPath() const;
+    const std::string getMarqueePath() const;
+    const std::string getMiximagePath() const;
+    const std::string getScreenshotPath() const;
+    const std::string getThumbnailPath() const;
+    const std::string getVideoPath() const;
+
+    bool getDeletionFlag() { return mDeletionFlag; };
+    void setDeletionFlag() { mDeletionFlag = true; };
 
     const std::vector<FileData*>& getChildrenListToDisplay();
     std::vector<FileData*> getFilesRecursive(unsigned int typeMask,
@@ -135,6 +135,8 @@ private:
     std::vector<FileData*> mChildren;
     std::vector<FileData*> mFilteredChildren;
     std::vector<std::string> mFirstLetterIndex;
+    // Used for flagging a game for deletion from its gamelist.xml file.
+    bool mDeletionFlag;
 
     const std::string FAVORITE_CHAR = "\uF005";
 };

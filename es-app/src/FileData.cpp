@@ -36,6 +36,7 @@ FileData::FileData(
         mEnvData(envData),
         mSourceFileData(nullptr),
         mParent(nullptr),
+        mDeletionFlag(false),
         // Metadata is REALLY set in the constructor!
         metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
 {
