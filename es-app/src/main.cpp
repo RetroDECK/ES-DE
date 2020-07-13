@@ -148,11 +148,11 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: No home path supplied with \'--home'.\n";
                 return false;
             }
-            if(!Utils::FileSystem::exists(argv[i + 1])) {
+            if (!Utils::FileSystem::exists(argv[i + 1])) {
                 std::cerr << "Error: Home path \'" << argv[i + 1] << "\' does not exist.\n";
                 return false;
             }
-            if(Utils::FileSystem::isRegularFile(argv[i + 1])) {
+            if (Utils::FileSystem::isRegularFile(argv[i + 1])) {
                 std::cerr << "Error: Home path \'" << argv[i + 1] <<
                         "\' is a file and not a directory.\n";
                 return false;
@@ -162,7 +162,7 @@ bool parseArgs(int argc, char* argv[])
         }
     }
 
-    for(int i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; i++) {
         // Skip past --home flag as we already processed it.
         if (strcmp(argv[i], "--home") == 0) {
             i++;

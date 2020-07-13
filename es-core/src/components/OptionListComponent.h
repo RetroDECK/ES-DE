@@ -50,7 +50,7 @@ public:
         mLeftArrow.setResize(0, mText.getFont()->getLetterHeight());
         mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
 
-        if(mMultiSelect) {
+        if (mMultiSelect) {
             mRightArrow.setImage(":/graphics/arrow.svg");
             addChild(&mRightArrow);
         }
@@ -72,7 +72,7 @@ public:
         mLeftArrow.setResize(0, mText.getFont()->getLetterHeight());
         mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
 
-        if(mSize.x() < (mLeftArrow.getSize().x() + mRightArrow.getSize().x())) {
+        if (mSize.x() < (mLeftArrow.getSize().x() + mRightArrow.getSize().x())) {
             LOG(LogWarning) << "OptionListComponent too narrow!";
         }
 
@@ -89,17 +89,17 @@ public:
 
     bool input(InputConfig* config, Input input) override
     {
-        if(input.value != 0) {
-            if(config->isMappedTo("a", input)) {
+        if (input.value != 0) {
+            if (config->isMappedTo("a", input)) {
                 open();
                 return true;
             }
-            if(!mMultiSelect) {
-                if(config->isMappedLike("left", input)) {
+            if (!mMultiSelect) {
+                if (config->isMappedLike("left", input)) {
                     // Move selection to previous.
                     unsigned int i = getSelectedId();
                     int next = (int)i - 1;
-                    if(next < 0)
+                    if (next < 0)
                         next += (int)mEntries.size();
 
                     mEntries.at(i).selected = false;
@@ -108,7 +108,7 @@ public:
                     return true;
 
                 }
-                else if(config->isMappedLike("right", input)) {
+                else if (config->isMappedLike("right", input)) {
                     // Move selection to next.
                     unsigned int i = getSelectedId();
                     int next = (i + 1) % mEntries.size();
@@ -125,8 +125,8 @@ public:
     std::vector<T> getSelectedObjects()
     {
         std::vector<T> ret;
-        for(auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
-            if(it->selected)
+        for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
+            if (it->selected)
                 ret.push_back(it->object);
         }
 
@@ -178,14 +178,14 @@ public:
 
     void selectAll()
     {
-        for(unsigned int i = 0; i < mEntries.size(); i++)
+        for (unsigned int i = 0; i < mEntries.size(); i++)
             mEntries.at(i).selected = true;
         onSelectedChanged();
     }
 
     void selectNone()
     {
-        for(unsigned int i = 0; i < mEntries.size(); i++)
+        for (unsigned int i = 0; i < mEntries.size(); i++)
             mEntries.at(i).selected = false;
         onSelectedChanged();
     }
@@ -204,8 +204,8 @@ private:
     unsigned int getSelectedId()
     {
         assert(mMultiSelect == false);
-        for(unsigned int i = 0; i < mEntries.size(); i++) {
-            if(mEntries.at(i).selected)
+        for (unsigned int i = 0; i < mEntries.size(); i++) {
+            if (mEntries.at(i).selected)
                 return i;
         }
 
@@ -221,25 +221,25 @@ private:
 
     void onSelectedChanged()
     {
-        if(mMultiSelect) {
+        if (mMultiSelect) {
             // Display # selected.
             std::stringstream ss;
             ss << getSelectedObjects().size() << " SELECTED";
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y());
             setSize(mText.getSize().x() + mRightArrow.getSize().x() + 24, mText.getSize().y());
-            if(mParent) // Hack since theres no "on child size changed" callback atm...
+            if (mParent) // Hack since theres no "on child size changed" callback atm...
                 mParent->onSizeChanged();
         }
         else {
             // Display currently selected + l/r cursors.
-            for(auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
-                if(it->selected) {
+            for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
+                if (it->selected) {
                     mText.setText(Utils::String::toUpper(it->name));
                     mText.setSize(0, mText.getSize().y());
                     setSize(mText.getSize().x() + mLeftArrow.getSize().x() +
                             mRightArrow.getSize().x() + 24, mText.getSize().y());
-                    if(mParent) // Hack since theres no "on child size changed" callback atm...
+                    if (mParent) // Hack since theres no "on child size changed" callback atm...
                         mParent->onSizeChanged();
                     break;
                 }
@@ -250,7 +250,7 @@ private:
     std::vector<HelpPrompt> getHelpPrompts() override
     {
         std::vector<HelpPrompt> prompts;
-        if(!mMultiSelect)
+        if (!mMultiSelect)
             prompts.push_back(HelpPrompt("left/right", "change value"));
 
         prompts.push_back(HelpPrompt("a", "select"));
@@ -286,14 +286,14 @@ private:
             // For select all/none.
             std::vector<ImageComponent*> checkboxes;
 
-            for(auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); it++) {
+            for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); it++) {
                 row.elements.clear();
                 row.addElement(std::make_shared<TextComponent>
                         (mWindow, Utils::String::toUpper(it->name), font, 0x777777FF), true);
 
                 OptionListData& e = *it;
 
-                if(mParent->mMultiSelect) {
+                if (mParent->mMultiSelect) {
                     // Add checkbox.
                     auto checkbox = std::make_shared<ImageComponent>(mWindow);
                     checkbox->setImage(it->selected ? CHECKED_PATH : UNCHECKED_PATH);
@@ -328,9 +328,9 @@ private:
 
             mMenu.addButton("BACK", "back", [this] { delete this; });
 
-            if(mParent->mMultiSelect) {
+            if (mParent->mMultiSelect) {
                 mMenu.addButton("SELECT ALL", "select all", [this, checkboxes] {
-                    for(unsigned int i = 0; i < mParent->mEntries.size(); i++) {
+                    for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
                         mParent->mEntries.at(i).selected = true;
                         checkboxes.at(i)->setImage(CHECKED_PATH);
                     }
@@ -338,7 +338,7 @@ private:
                 });
 
                 mMenu.addButton("SELECT NONE", "select none", [this, checkboxes] {
-                    for(unsigned int i = 0; i < mParent->mEntries.size(); i++) {
+                    for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
                         mParent->mEntries.at(i).selected = false;
                         checkboxes.at(i)->setImage(UNCHECKED_PATH);
                     }
@@ -353,7 +353,7 @@ private:
 
         bool input(InputConfig* config, Input input) override
         {
-            if(config->isMappedTo("b", input) && input.value != 0) {
+            if (config->isMappedTo("b", input) && input.value != 0) {
                 delete this;
                 return true;
             }

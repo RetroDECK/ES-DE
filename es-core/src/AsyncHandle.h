@@ -33,14 +33,14 @@ public:
     inline std::string getStatusString()
     {
         switch (mStatus) {
-        case ASYNC_IN_PROGRESS:
-            return "in progress";
-        case ASYNC_ERROR:
-            return mError;
-        case ASYNC_DONE:
-            return "done";
-        default:
-            return "something impossible has occured; row, row, fight the power";
+            case ASYNC_IN_PROGRESS:
+                return "in progress";
+            case ASYNC_ERROR:
+                return mError;
+            case ASYNC_DONE:
+                return "done";
+            default:
+                return "something impossible has occured; row, row, fight the power";
         }
     }
 

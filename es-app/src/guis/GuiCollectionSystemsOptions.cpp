@@ -42,7 +42,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
                     (mWindow, getHelpStyle(), "SELECT THEME FOLDER", true);
 
             // Add custom systems.
-            for(auto it = unusedFolders.cbegin() ; it != unusedFolders.cend() ; it++ ) {
+            for (auto it = unusedFolders.cbegin() ; it != unusedFolders.cend() ; it++ ) {
                 ComponentListRow row;
                 std::string name = *it;
 
@@ -97,7 +97,7 @@ void GuiCollectionSystemsOptions::initializeMenu()
             getBool("CollectionShowSystemInfo"));
     mMenu.addWithLabel("SHOW SYSTEM NAMES IN COLLECTIONS", toggleSystemNameInCollections);
 
-    if(CollectionSystemManager::get()->isEditing()) {
+    if (CollectionSystemManager::get()->isEditing()) {
         row.elements.clear();
         row.addElement(std::make_shared<TextComponent>(mWindow, "FINISH EDITING '" +
                 Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection()) +
@@ -120,7 +120,7 @@ void GuiCollectionSystemsOptions::addEntry(const char* name, unsigned int color,
     ComponentListRow row;
     row.addElement(std::make_shared<TextComponent>(mWindow, name, font, color), true);
 
-    if(add_arrow) {
+    if (add_arrow) {
         std::shared_ptr<ImageComponent> bracket = makeArrow(mWindow);
         row.addElement(bracket, false);
     }
@@ -142,7 +142,7 @@ void GuiCollectionSystemsOptions::createCollection(std::string inName) {
 
     Window* window = mWindow;
     CollectionSystemManager::get()->setEditMode(name);
-    while(window->peekGui() && window->peekGui() != ViewController::get())
+    while (window->peekGui() && window->peekGui() != ViewController::get())
         delete window->peekGui();
     return;
 }
@@ -166,7 +166,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
             (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
 
     // Add automatic systems.
-    for(std::map<std::string, CollectionSystemData>::const_iterator it = autoSystems.cbegin();
+    for (std::map<std::string, CollectionSystemData>::const_iterator it = autoSystems.cbegin();
             it != autoSystems.cend() ; it++ )
         autoOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
     mMenu.addWithLabel("AUTOMATIC GAME COLLECTIONS", autoOptionList);
@@ -178,7 +178,7 @@ void GuiCollectionSystemsOptions::addSystemsToMenu()
             (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
 
     // Add custom systems.
-    for(std::map<std::string, CollectionSystemData>::const_iterator it = customSystems.cbegin();
+    for (std::map<std::string, CollectionSystemData>::const_iterator it = customSystems.cbegin();
             it != customSystems.cend() ; it++ )
         customOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
     mMenu.addWithLabel("CUSTOM GAME COLLECTIONS", customOptionList);
@@ -228,10 +228,10 @@ bool GuiCollectionSystemsOptions::input(InputConfig* config, Input input)
 {
     bool consumed = GuiComponent::input(config, input);
 
-    if(consumed)
+    if (consumed)
         return true;
 
-    if(config->isMappedTo("b", input) && input.value != 0)
+    if (config->isMappedTo("b", input) && input.value != 0)
         applySettings();
 
     return false;

@@ -274,8 +274,8 @@ void DetailedGameListView::updateInfoPanel()
 
     for (auto it = comps.cbegin(); it != comps.cend(); it++) {
         GuiComponent* comp = *it;
-        // An animation is playing, then animate if reverse != fadingOut
-        // An animation is not playing, then animate if opacity != our target opacity
+        // An animation is playing, then animate if reverse != fadingOut.
+        // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
             (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {

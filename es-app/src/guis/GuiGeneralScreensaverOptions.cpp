@@ -45,7 +45,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
     screensavers.push_back("black");
     screensavers.push_back("random video");
     screensavers.push_back("slideshow");
-    for(auto it = screensavers.cbegin(); it != screensavers.cend(); it++)
+    for (auto it = screensavers.cbegin(); it != screensavers.cend(); it++)
         screensaver_behavior->add(*it, *it, Settings::getInstance()->
                 getString("ScreenSaverBehavior") == *it);
     addWithLabel("SCREENSAVER BEHAVIOR", screensaver_behavior);

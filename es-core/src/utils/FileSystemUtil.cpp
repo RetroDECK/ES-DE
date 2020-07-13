@@ -549,7 +549,7 @@ namespace Utils
                 return true;
             }
 
-            if(isDirectory(_destination_path)) {
+            if (isDirectory(_destination_path)) {
                 LOG(LogError) << "Error - Destination file is actually a directory:";
                 LOG(LogError) << _destination_path;
                 return true;
@@ -607,7 +607,7 @@ namespace Utils
                 return true;
             }
 
-            if(isDirectory(_destination_path)) {
+            if (isDirectory(_destination_path)) {
                 LOG(LogError) << "Error - Destination file is actually a directory:";
                 LOG(LogError) << _destination_path;
                 return true;

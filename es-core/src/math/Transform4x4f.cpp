@@ -143,7 +143,7 @@ Transform4x4f& Transform4x4f::invert(const Transform4x4f& _other)
                         om[ 8] * tm[ 2] +
                         om[12] * tm[ 3];
 
-    if(Determinant != 0)
+    if (Determinant != 0)
         Determinant = 1 / Determinant;
 
     tm[ 0] *= Determinant;

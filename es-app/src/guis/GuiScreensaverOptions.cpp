@@ -29,10 +29,10 @@ GuiScreensaverOptions::~GuiScreensaverOptions()
 
 void GuiScreensaverOptions::save()
 {
-    if(!mSaveFuncs.size())
+    if (!mSaveFuncs.size())
         return;
 
-    for(auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); it++)
+    for (auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); it++)
         (*it)();
 
     Settings::getInstance()->saveFile();

@@ -48,7 +48,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     info_type.push_back("always");
     info_type.push_back("start & end");
     info_type.push_back("never");
-    for(auto it = info_type.cbegin(); it != info_type.cend(); it++)
+    for (auto it = info_type.cbegin(); it != info_type.cend(); it++)
         ss_info->add(*it, *it, Settings::getInstance()->getString("ScreenSaverGameInfo") == *it);
     addWithLabel("SHOW GAME INFO ON SCREENSAVER", ss_info);
     addSaveFunc([ss_info, this] { Settings::getInstance()->
@@ -63,7 +63,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     std::vector<std::string> align_mode;
     align_mode.push_back("left");
     align_mode.push_back("center");
-    for(auto it = align_mode.cbegin(); it != align_mode.cend(); it++)
+    for (auto it = align_mode.cbegin(); it != align_mode.cend(); it++)
         ss_omx_subs_align->add(*it, *it, Settings::getInstance()->
                 getString("SubtitleAlignment") == *it);
     addWithLabel("GAME INFO ALIGNMENT", ss_omx_subs_align);

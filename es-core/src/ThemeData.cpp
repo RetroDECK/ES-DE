@@ -379,8 +379,7 @@ void ThemeData::parseViews(const pugi::xml_node& root)
         size_t prevOff = nameAttr.find_first_not_of(delim, 0);
         size_t off = nameAttr.find_first_of(delim, prevOff);
         std::string viewKey;
-        while (off != std::string::npos || prevOff != std::string::npos)
-        {
+        while (off != std::string::npos || prevOff != std::string::npos) {
             viewKey = nameAttr.substr(prevOff, off - prevOff);
             prevOff = nameAttr.find_first_not_of(delim, off);
             off = nameAttr.find_first_of(delim, prevOff);

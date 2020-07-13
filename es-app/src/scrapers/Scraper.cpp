@@ -233,7 +233,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             // This avoids the problem where there's already a file for this media type
             // with a different format/extension (e.g. game.jpg and we're going to write
             // game.png) which would lead to two media files for this game.
-            if(it->existingMediaFile != "")
+            if (it->existingMediaFile != "")
                 Utils::FileSystem::removeFile(it->existingMediaFile);
 
             // If the media directory does not exist, something is wrong, possibly permission
@@ -351,7 +351,7 @@ void ImageDownloadHandle::update()
     // This avoids the problem where there's already a file for this media type
     // with a different format/extension (e.g. game.jpg and we're going to write
     // game.png) which would lead to two media files for this game.
-    if(mExistingMediaFile != "")
+    if (mExistingMediaFile != "")
         Utils::FileSystem::removeFile(mExistingMediaFile);
 
     // If the media directory does not exist, something is wrong, possibly permission

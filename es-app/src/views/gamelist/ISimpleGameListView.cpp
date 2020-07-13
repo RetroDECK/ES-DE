@@ -47,8 +47,7 @@ void ISimpleGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme
     mHeaderText.applyTheme(theme, getName(), "logoText", ALL);
 
     // Remove old theme extras.
-    for (auto extra : mThemeExtras)
-    {
+    for (auto extra : mThemeExtras) {
         removeChild(extra);
         delete extra;
     }
@@ -78,8 +77,7 @@ void ISimpleGameListView::onFileChanged(FileData* /*file*/, FileChangeType /*cha
         populateList(cursor->getParent()->getChildrenListToDisplay());
         setCursor(cursor);
     }
-    else
-    {
+    else {
         populateList(mRoot->getChildrenListToDisplay());
         setCursor(cursor);
     }
@@ -118,9 +116,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 onFocusLost();
                 SystemData* systemToView = getCursor()->getSystem();
                 if (systemToView->isCollection())
-                {
                     systemToView = CollectionSystemManager::get()->getSystemToView(systemToView);
-                }
+
                 ViewController::get()->goToSystemView(systemToView);
             }
 

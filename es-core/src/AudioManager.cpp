@@ -31,7 +31,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8 *stream, int len)
     std::vector<std::shared_ptr<Sound>>::const_iterator soundIt = sSoundVector.cbegin();
     while (soundIt != sSoundVector.cend()) {
         std::shared_ptr<Sound> sound = *soundIt;
-        if(sound->isPlaying()) {
+        if (sound->isPlaying()) {
             // Calculate rest length of current sample.
             Uint32 restLength = (sound->getLength() - sound->getPosition());
             if (restLength > (Uint32)len) {
@@ -87,8 +87,8 @@ void AudioManager::init()
     }
 
     // Stop playing all Sounds.
-    for(unsigned int i = 0; i < sSoundVector.size(); i++) {
-        if(sSoundVector.at(i)->isPlaying())
+    for (unsigned int i = 0; i < sSoundVector.size(); i++) {
+        if (sSoundVector.at(i)->isPlaying())
             sSoundVector[i]->stop();
     }
 
@@ -127,8 +127,8 @@ void AudioManager::registerSound(std::shared_ptr<Sound> & sound)
 void AudioManager::unregisterSound(std::shared_ptr<Sound> & sound)
 {
     getInstance();
-    for(unsigned int i = 0; i < sSoundVector.size(); i++) {
-        if(sSoundVector.at(i) == sound) {
+    for (unsigned int i = 0; i < sSoundVector.size(); i++) {
+        if (sSoundVector.at(i) == sound) {
             sSoundVector[i]->stop();
             sSoundVector.erase(sSoundVector.cbegin() + i);
             return;
@@ -148,10 +148,10 @@ void AudioManager::play()
 void AudioManager::stop()
 {
     // Stop playing all Sounds.
-    for(unsigned int i = 0; i < sSoundVector.size(); i++) {
-        if(sSoundVector.at(i)->isPlaying())
+    for (unsigned int i = 0; i < sSoundVector.size(); i++) {
+        if (sSoundVector.at(i)->isPlaying())
             sSoundVector[i]->stop();
     }
-    // Pause audio
+    // Pause audio.
     SDL_PauseAudio(1);
 }

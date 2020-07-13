@@ -20,7 +20,7 @@ std::map< std::string, std::shared_ptr<Sound> > Sound::sMap;
 std::shared_ptr<Sound> Sound::get(const std::string& path)
 {
     auto it = sMap.find(path);
-    if(it != sMap.cend())
+    if (it != sMap.cend())
         return it->second;
 
     std::shared_ptr<Sound> sound = std::shared_ptr<Sound>(new Sound(path));
@@ -36,7 +36,7 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
             element << "\">.";
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
-    if(!elem || !elem->has("path")) {
+    if (!elem || !elem->has("path")) {
         LOG(LogDebug) << "Sound::getFromTheme(): " << "Tag not found, using fallback sound file.";
         return get(ResourceManager::getInstance()->
                 getResourcePath(":/sounds/" + element + ".wav"));
@@ -106,10 +106,10 @@ void Sound::loadFile(const std::string & path)
 
 void Sound::init()
 {
-    if(mSampleData != nullptr)
+    if (mSampleData != nullptr)
         deinit();
 
-    if(mPath.empty())
+    if (mPath.empty())
         return;
 
     // Load WAV file via SDL.
@@ -153,7 +153,7 @@ void Sound::deinit()
 {
     playing = false;
 
-    if(mSampleData != nullptr) {
+    if (mSampleData != nullptr) {
         SDL_LockAudio();
         delete[] mSampleData;
         mSampleData = nullptr;
@@ -165,10 +165,10 @@ void Sound::deinit()
 
 void Sound::play()
 {
-    if(mSampleData == nullptr)
+    if (mSampleData == nullptr)
         return;
 
-    if(!Settings::getInstance()->getBool("NavigationSounds"))
+    if (!Settings::getInstance()->getBool("NavigationSounds"))
         return;
 
     AudioManager::getInstance();

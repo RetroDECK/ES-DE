@@ -17,9 +17,7 @@
 class GuiGameScraper : public GuiComponent
 {
 public:
-    GuiGameScraper(
-            Window* window,
-            ScraperSearchParams params,
+    GuiGameScraper(Window* window, ScraperSearchParams params,
             std::function<void(const ScraperSearchResult&)> doneFunc);
 
     void onSizeChanged() override;

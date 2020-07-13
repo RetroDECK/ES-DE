@@ -31,10 +31,10 @@ namespace Scripting
 
         // Check in homepath.
         test = Utils::FileSystem::getHomePath() + "/.emulationstation/scripts/" + eventName;
-        if(Utils::FileSystem::exists(test))
+        if (Utils::FileSystem::exists(test))
             scriptDirList.push_back(test);
 
-        for(std::list<std::string>::const_iterator dirIt = scriptDirList.cbegin();
+        for (std::list<std::string>::const_iterator dirIt = scriptDirList.cbegin();
                 dirIt != scriptDirList.cend(); ++dirIt) {
             std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
             for (std::list<std::string>::const_iterator it = scripts.cbegin();

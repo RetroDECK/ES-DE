@@ -83,20 +83,20 @@ namespace Math
         float bounce(const float _delayTime, const float _scrollTime,
                 const float _currentTime, const float _scrollLength)
         {
-            if(_currentTime < _delayTime) {
+            if (_currentTime < _delayTime) {
                 // Wait.
                 return 0;
             }
-            else if(_currentTime < (_delayTime + _scrollTime)) {
+            else if (_currentTime < (_delayTime + _scrollTime)) {
                 // Lerp from 0 to scrollLength.
                 const float fraction = (_currentTime - _delayTime) / _scrollTime;
                 return lerp(0.0f, _scrollLength, smootherStep(0, 1, fraction));
             }
-            else if(_currentTime < (_delayTime + _scrollTime + _delayTime)) {
+            else if (_currentTime < (_delayTime + _scrollTime + _delayTime)) {
                 // Wait some more.
                 return _scrollLength;
             }
-            else if(_currentTime < (_delayTime + _scrollTime + _delayTime + _scrollTime)) {
+            else if (_currentTime < (_delayTime + _scrollTime + _delayTime + _scrollTime)) {
                 // Lerp back from scrollLength to 0.
                 const float fraction = (_currentTime - _delayTime - _scrollTime -
                         _delayTime) / _scrollTime;
@@ -109,11 +109,11 @@ namespace Math
         float loop(const float _delayTime, const float _scrollTime,
                 const float _currentTime, const float _scrollLength)
         {
-            if(_currentTime < _delayTime) {
+            if (_currentTime < _delayTime) {
                 // Wait.
                 return 0;
             }
-            else if(_currentTime < (_delayTime + _scrollTime)) {
+            else if (_currentTime < (_delayTime + _scrollTime)) {
                 // Lerp from 0 to scrollLength.
                 const float fraction = (_currentTime - _delayTime) / _scrollTime;
                 return lerp(0.0f, _scrollLength, fraction);

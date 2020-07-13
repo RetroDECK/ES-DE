@@ -82,20 +82,17 @@ void BasicGameListView::setCursor(FileData* cursor)
 
         // Update our cursor stack in case our cursor just
         // got set to some folder we weren't in before.
-        if (mCursorStack.empty() || mCursorStack.top() != cursor->getParent())
-        {
+        if (mCursorStack.empty() || mCursorStack.top() != cursor->getParent()) {
             std::stack<FileData*> tmp;
             FileData* ptr = cursor->getParent();
-            while (ptr && ptr != mRoot)
-            {
+            while (ptr && ptr != mRoot) {
                 tmp.push(ptr);
                 ptr = ptr->getParent();
             }
 
             // Flip the stack and put it in mCursorStack.
             mCursorStack = std::stack<FileData*>();
-            while (!tmp.empty())
-            {
+            while (!tmp.empty()) {
                 mCursorStack.push(tmp.top());
                 tmp.pop();
             }
@@ -205,8 +202,7 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("select", "options"));
     if (mRoot->getSystem()->isGameSystem())
         prompts.push_back(HelpPrompt("x", "random"));
-    if (mRoot->getSystem()->isGameSystem() && !UIModeController::getInstance()->isUIModeKid())
-    {
+    if (mRoot->getSystem()->isGameSystem() && !UIModeController::getInstance()->isUIModeKid()) {
         std::string prompt = CollectionSystemManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }

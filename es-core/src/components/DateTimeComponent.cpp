@@ -68,7 +68,7 @@ std::string DateTimeComponent::getDisplayString() const
 {
     if (mDisplayRelative) {
         // Relative time.
-        if(mTime.getTime() == 0)
+        if (mTime.getTime() == 0)
             return "never";
 
         Utils::Time::DateTime now(Utils::Time::now());
@@ -76,11 +76,11 @@ std::string DateTimeComponent::getDisplayString() const
 
         char buf[64];
 
-        if(dur.getDays() > 0)
+        if (dur.getDays() > 0)
             sprintf(buf, "%d day%s ago", dur.getDays(), (dur.getDays() > 1) ? "s" : "");
-        else if(dur.getHours() > 0)
+        else if (dur.getHours() > 0)
             sprintf(buf, "%d hour%s ago", dur.getHours(), (dur.getHours() > 1) ? "s" : "");
-        else if(dur.getMinutes() > 0)
+        else if (dur.getMinutes() > 0)
             sprintf(buf, "%d minute%s ago", dur.getMinutes(), (dur.getMinutes() > 1) ? "s" : "");
         else
             sprintf(buf, "%d second%s ago", dur.getSeconds(), (dur.getSeconds() > 1) ? "s" : "");
@@ -88,7 +88,7 @@ std::string DateTimeComponent::getDisplayString() const
         return std::string(buf);
     }
 
-    if(mTime.getTime() == 0)
+    if (mTime.getTime() == 0)
         return "unknown";
 
     return Utils::Time::timeToString(mTime.getTime(), mFormat);
@@ -107,13 +107,13 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     using namespace ThemeFlags;
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "datetime");
-    if(!elem)
+    if (!elem)
         return;
 
-    if(elem->has("displayRelative"))
+    if (elem->has("displayRelative"))
         setDisplayRelative(elem->get<bool>("displayRelative"));
 
-    if(elem->has("format"))
+    if (elem->has("format"))
         setFormat(elem->get<std::string>("format"));
 
     if (properties & COLOR && elem->has("color"))
@@ -125,22 +125,22 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setRenderBackground(true);
     }
 
-    if(properties & ALIGNMENT && elem->has("alignment")) {
+    if (properties & ALIGNMENT && elem->has("alignment")) {
         std::string str = elem->get<std::string>("alignment");
-        if(str == "left")
+        if (str == "left")
             setHorizontalAlignment(ALIGN_LEFT);
-        else if(str == "center")
+        else if (str == "center")
             setHorizontalAlignment(ALIGN_CENTER);
-        else if(str == "right")
+        else if (str == "right")
             setHorizontalAlignment(ALIGN_RIGHT);
         else
         LOG(LogError) << "Unknown text alignment string: " << str;
     }
 
-    if(properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
+    if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 
-    if(properties & LINE_SPACING && elem->has("lineSpacing"))
+    if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(elem->get<float>("lineSpacing"));
 
     setFont(Font::getFromTheme(elem, properties, mFont));

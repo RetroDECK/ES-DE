@@ -21,12 +21,12 @@
 // while (myRequest.status() == HttpReq::REQ_IN_PROGRESS);
 //
 // For non-blocking behavior:
-// Check 'if(myRequest.status() != HttpReq::REQ_IN_PROGRESS)' in some sort of update method.
+// Check 'if (myRequest.status() != HttpReq::REQ_IN_PROGRESS)' in some sort of update method.
 //
 // Once one of those calls complete, the request is ready.
 //
 // Do something like this to capture errors:
-// if(myRequest.status() != REQ_SUCCESS) {
+// if (myRequest.status() != REQ_SUCCESS) {
 //    // An error occured.
 //    LOG(LogError) << "HTTP request error - " << myRequest.getErrorMessage();
 //    return;

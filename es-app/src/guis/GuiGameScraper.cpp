@@ -86,7 +86,7 @@ GuiGameScraper::GuiGameScraper(
     //         mSearchComponent::update()
     //           acceptCallback -> close() -> mClose = true
     //         it++; // OK.
-    //       if(mClose)
+    //       if (mClose)
     //         delete this;
     mSearch->setAcceptCallback([this, doneFunc](const ScraperSearchResult& result) {
             doneFunc(result); close(); });
@@ -117,7 +117,7 @@ void GuiGameScraper::onSizeChanged()
 
 bool GuiGameScraper::input(InputConfig* config, Input input)
 {
-    if(config->isMappedTo("b", input) && input.value) {
+    if (config->isMappedTo("b", input) && input.value) {
         PowerSaver::resume();
         delete this;
         return true;
@@ -130,7 +130,7 @@ void GuiGameScraper::update(int deltaTime)
 {
     GuiComponent::update(deltaTime);
 
-    if(mClose)
+    if (mClose)
         delete this;
 }
 

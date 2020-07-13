@@ -54,14 +54,14 @@ GridGameListView::GridGameListView(
     const float padding = 0.01f;
 
 // Create the correct type of video window.
-#ifdef _RPI_
+    #ifdef _RPI_
     if (Settings::getInstance()->getBool("VideoOmxPlayer"))
         mVideo = new VideoPlayerComponent(window, "");
     else
         mVideo = new VideoVlcComponent(window, getTitlePath());
-#else
+    #else
     mVideo = new VideoVlcComponent(window, getTitlePath());
-#endif
+    #endif
 
     mGrid.setPosition(mSize.x() * 0.1f, mSize.y() * 0.1f);
     mGrid.setDefaultZIndex(20);
@@ -228,8 +228,9 @@ void GridGameListView::populateList(const std::vector<FileData*>& files)
         for (auto it = files.cbegin(); it != files.cend(); it++)
             mGrid.add((*it)->getName(), getImagePath(*it), *it);
     }
-    else
+    else {
         addPlaceholder();
+    }
 }
 
 void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
@@ -237,7 +238,6 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     ISimpleGameListView::onThemeChanged(theme);
 
     using namespace ThemeFlags;
-
     mGrid.applyTheme(theme, getName(), "gamegrid", ALL);
     mName.applyTheme(theme, getName(), "md_name", ALL);
     mMarquee.applyTheme(theme, getName(), "md_marquee",
@@ -354,19 +354,18 @@ void GridGameListView::updateInfoPanel()
     FileData* file = (mGrid.size() == 0 || mGrid.isScrolling()) ? nullptr : mGrid.getSelected();
 
     bool fadingOut;
-    if (file == nullptr)
-    {
+    if (file == nullptr) {
         mVideo->setVideo("");
         mVideo->setImage("");
         mVideoPlaying = false;
 
         fadingOut = true;
-    }else{
-// 		Temporary fix to disable only audio from playing
+    }
+    else {
+// 		Temporary fix to disable only audio from playing.
 //		if (!mVideo->setVideo(file->getVideoPath()))
-//		{
 //			mVideo->setDefaultVideo();
-//		}
+
 //		mVideoPlaying = true;
 
 //		mVideo->setImage(file->getThumbnailPath());
@@ -403,8 +402,8 @@ void GridGameListView::updateInfoPanel()
 
     for (auto it = comps.cbegin(); it != comps.cend(); it++) {
         GuiComponent* comp = *it;
-        // An animation is playing, then animate if reverse != fadingOut
-        // An animation is not playing, then animate if opacity != our target opacity
+        // An animation is playing, then animate if reverse != fadingOut.
+        // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {

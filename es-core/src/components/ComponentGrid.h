@@ -72,7 +72,7 @@ public:
     inline std::shared_ptr<GuiComponent> getSelectedComponent()
     {
         const GridEntry* e = getCellAt(mCursor);
-        if(e)
+        if (e)
             return e->component;
         else
             return nullptr;

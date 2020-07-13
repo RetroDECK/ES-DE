@@ -11,7 +11,7 @@
 #include <sstream>
 
 #define LOG(level) \
-if(level > Log::getReportingLevel()); \
+if (level > Log::getReportingLevel()); \
 else Log().get(level)
 
 enum LogLevel {

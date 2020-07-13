@@ -53,10 +53,10 @@ namespace FileSorts
         // appended which messes up the order.
         std::string name1 = Utils::String::toUpper(file1->metadata.get("sortname"));
         std::string name2 = Utils::String::toUpper(file2->metadata.get("sortname"));
-        if(name1.empty()){
+        if (name1.empty()){
             name1 = Utils::String::toUpper(file1->metadata.get("name"));
         }
-        if(name2.empty()){
+        if (name2.empty()){
             name2 = Utils::String::toUpper(file2->metadata.get("name"));
         }
         return name1.compare(name2) < 0;
@@ -70,7 +70,7 @@ namespace FileSorts
     bool compareTimesPlayed(const FileData* file1, const FileData* file2)
     {
         //only games have playcount metadata
-        if(file1->metadata.getType() == GAME_METADATA && file2->metadata.getType() == GAME_METADATA)
+        if (file1->metadata.getType() == GAME_METADATA && file2->metadata.getType() == GAME_METADATA)
             return (file1)->metadata.getInt("playcount") < (file2)->metadata.getInt("playcount");
 
         return false;

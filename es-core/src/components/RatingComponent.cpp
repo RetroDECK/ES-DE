@@ -127,7 +127,7 @@ void RatingComponent::render(const Transform4x4f& parentTrans)
     Renderer::setMatrix(trans);
 
     if (mOpacity > 0) {
-        if(Settings::getInstance()->getBool("DebugImage")) {
+        if (Settings::getInstance()->getBool("DebugImage")) {
             Renderer::drawRect(0.0f, 0.0f, mSize.y() * NUM_RATING_STARS,
                     mSize.y(), 0x00000033, 0x00000033);
         }

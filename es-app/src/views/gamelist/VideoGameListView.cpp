@@ -52,14 +52,14 @@ VideoGameListView::VideoGameListView(
     const float padding = 0.01f;
 
     // Create the correct type of video window.
-#ifdef _RPI_
+    #ifdef _RPI_
     if (Settings::getInstance()->getBool("VideoOmxPlayer"))
         mVideo = new VideoPlayerComponent(window, "");
     else
         mVideo = new VideoVlcComponent(window, getTitlePath());
-#else
+    #else
     mVideo = new VideoVlcComponent(window, getTitlePath());
-#endif
+    #endif
 
     mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y());
     mList.setSize(mSize.x() * (0.50f - padding), mList.getSize().y());
