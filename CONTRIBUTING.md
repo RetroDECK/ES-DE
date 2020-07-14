@@ -38,6 +38,7 @@ https://google.github.io/styleguide/cppguide.html
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
 * Use K&R placements of braces, read the Linux Kernel coding style document for clarifications
 * Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while ()` etc.
+* Indentation of switch/case statements is optional, but it's usually easier to read the code with indentations in place
 * Use `std::string` instead of `char *` or `char []` unless there is a specific reason requiring the latter
 * If the arguments (and initializer list) for a function or class exceeds 4 items, arrange them vertically to make the code easier to read
 * Always declare one variable per line, never combine multiple declarations of the same type

@@ -51,7 +51,7 @@ GuiDetectDevice::GuiDetectDevice(
 
     // Message.
     mMsg1 = std::make_shared<TextComponent>(mWindow,
-            "HOLD A BUTTON ON YOUR DEVICE TO CONFIGURE IT.",
+            "HOLD A BUTTON ON YOUR DEVICE OR KEYBOARD TO CONFIGURE IT.",
             Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     mGrid.setEntry(mMsg1, Vector2i(0, 2), false, true);
 

@@ -299,8 +299,15 @@ bool InputManager::parseEvent(const SDL_Event& ev, Window* window)
 bool InputManager::loadInputConfig(InputConfig* config)
 {
     std::string path = getConfigPath();
-    if (!Utils::FileSystem::exists(path))
+    if (!Utils::FileSystem::exists(path)) {
+        if (config->getDeviceName() == "Keyboard") {
+            LOG(LogDebug) << "InputManager::loadInputConfig(): Assigning default keyboard "
+                    "mappings as there is no es_input.cfg configuration file.";
+            loadDefaultKBConfig();
+            config->setDefaultConfigFlag();
+        }
         return false;
+    }
 
     pugi::xml_document doc;
     #ifdef _WIN64
@@ -323,17 +330,25 @@ bool InputManager::loadInputConfig(InputConfig* config)
     if (!configNode)
         configNode = root.find_child_by_attribute("inputConfig",
                 "deviceName", config->getDeviceName().c_str());
-    if (!configNode)
-        return false;
+    if (!configNode) {
+        if (config->getDeviceName() == "Keyboard") {
+            LOG(LogDebug) << "InputManager::loadInputConfig(): Assigning default keyboard "
+                    "mappings as there is no keyboard configuration in es_input.cfg.";
+            loadDefaultKBConfig();
+            config->setDefaultConfigFlag();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     config->loadFromXML(configNode);
     return true;
 }
 
-// Used in an "emergency" where no keyboard config could be loaded from the inputmanager
-// config file. Allows the user to select to reconfigure in menus if this happens without
-// having to delete es_input.cfg manually.
-// Note: Not currently used.
+// If there is no es_input.cfg file or if the user has not yet configured the keyboard
+// mappings, then load these defaults.
 void InputManager::loadDefaultKBConfig()
 {
     InputConfig* cfg = getInputConfigByDevice(DEVICE_KEYBOARD);
@@ -362,6 +377,9 @@ void InputManager::writeDeviceConfig(InputConfig* config)
     assert(initialized());
 
     std::string path = getConfigPath();
+
+    LOG(LogDebug) << "InputManager::writeDeviceConfig(): "
+            "Saving input configuration file to " << path;
 
     pugi::xml_document doc;
 
@@ -420,7 +438,7 @@ void InputManager::writeDeviceConfig(InputConfig* config)
     Scripting::fireEvent("config-changed");
     Scripting::fireEvent("controls-changed");
 
-    // Execute any doOnFinish commands and re-load the config for changes.
+    // Execute any doOnFinish commands and reload the config for changes.
     doOnFinish();
     loadInputConfig(config);
 }
@@ -440,7 +458,7 @@ void InputManager::doOnFinish()
         #endif
 
         if (!result) {
-            LOG(LogError) << "Error parsing input config: " << result.description();
+            LOG(LogError) << "Error - Couldn't parse input config: " << result.description();
         }
         else {
             pugi::xml_node root = doc.child("inputList");
@@ -514,7 +532,7 @@ std::string InputManager::getDeviceGUIDString(int deviceId)
 
     auto it = mJoysticks.find(deviceId);
     if (it == mJoysticks.cend()) {
-        LOG(LogError) << "getDeviceGUIDString - deviceId " << deviceId << " not found!";
+        LOG(LogError) << "Error - getDeviceGUIDString - deviceId " << deviceId << " not found!";
         return "something went horribly wrong";
     }
 

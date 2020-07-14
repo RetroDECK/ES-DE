@@ -12,9 +12,9 @@
 #include "Log.h"
 #include "Window.h"
 
-UIModeController *  UIModeController::sInstance = nullptr;
+UIModeController*  UIModeController::sInstance = nullptr;
 
-UIModeController * UIModeController::getInstance()
+UIModeController* UIModeController::getInstance()
 {
     if (sInstance == nullptr)
         sInstance = new UIModeController();
@@ -39,7 +39,7 @@ void UIModeController::monitorUIMode()
     }
 }
 
-bool UIModeController::listen(InputConfig * config, Input input)
+bool UIModeController::listen(InputConfig* config, Input input)
 {
     // Reads the current input to listen for the passkey sequence to unlock
     // the UI mode. The progress is saved in mPassKeyCounter.
@@ -59,7 +59,7 @@ bool UIModeController::listen(InputConfig * config, Input input)
     return false;
 }
 
-bool UIModeController::inputIsMatch(InputConfig * config, Input input)
+bool UIModeController::inputIsMatch(InputConfig* config, Input input)
 {
     for (auto valstring : mInputVals) {
         if (config->isMappedLike(valstring, input) &&
@@ -107,36 +107,36 @@ std::string UIModeController::getFormattedPassKeyStr()
         out += (out == "") ? "" : ", ";  // Add a comma after the first entry.
 
         switch (c) {
-        case 'u':
-            out += Utils::String::unicode2Chars(0x2191); // Arrow pointing up.
-            break;
-        case 'd':
-            out += Utils::String::unicode2Chars(0x2193); // Arrow pointing down.
-            break;
-        case 'l':
-            out += Utils::String::unicode2Chars(0x2190); // Arrow pointing left.
-            break;
-        case 'r':
-            out += Utils::String::unicode2Chars(0x2192); // Arrow pointing right.
-            break;
-        case 'a':
-            out += "A";
-            break;
-        case 'b':
-            out += "B";
-            break;
-        case 'x':
-            out += "X";
-            break;
-        case 'y':
-            out += "Y";
-            break;
+            case 'u':
+                out += Utils::String::unicode2Chars(0x2191); // Arrow pointing up.
+                break;
+            case 'd':
+                out += Utils::String::unicode2Chars(0x2193); // Arrow pointing down.
+                break;
+            case 'l':
+                out += Utils::String::unicode2Chars(0x2190); // Arrow pointing left.
+                break;
+            case 'r':
+                out += Utils::String::unicode2Chars(0x2192); // Arrow pointing right.
+                break;
+            case 'a':
+                out += "A";
+                break;
+            case 'b':
+                out += "B";
+                break;
+            case 'x':
+                out += "X";
+                break;
+            case 'y':
+                out += "Y";
+                break;
         }
     }
     return out;
 }
 
-void UIModeController::logInput(InputConfig * config, Input input)
+void UIModeController::logInput(InputConfig* config, Input input)
 {
     std::string mapname = "";
     std::vector<std::string> maps = config->getMappedTo(input);
@@ -146,11 +146,11 @@ void UIModeController::logInput(InputConfig * config, Input input)
         mapname += ", ";
     }
 
-    LOG(LogDebug) << "UIModeController::logInput(" << config->getDeviceName() <<
-            "): " << input.string() << ", isMappedTo=" << mapname << ", value=" << input.value;
+    LOG(LogDebug) << "UIModeController::logInput(" << config->getDeviceName() << "): " <<
+            input.string() << ", isMappedTo=" << mapname << ", value=" << input.value;
 }
 
-bool UIModeController::isValidInput(InputConfig * config, Input input)
+bool UIModeController::isValidInput(InputConfig* config, Input input)
 {
     if ((config->getMappedTo(input).size() == 0)  || // Not a mapped input, so ignore..
             (input.type == TYPE_HAT) ||  // Ignore all hat inputs.

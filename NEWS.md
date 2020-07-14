@@ -18,6 +18,7 @@ v1.0.0
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * Core location can be defined relative to the emulator binary using the %EMUPATH% varible in es_systems.cfg (mostly useful for Windows)
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
+* Improved input device configuration, and default keyboard mappings are now applied if the keyboard has not been configured by the user
 * GUI-configurable option to sort favorite games on the top of the game lists (favorites marked with stars)
 * Added new component GuiComplexTextEditPopup to handle changes to configuration file entries and similar
 * Speed improvements and optimizations, the application now starts faster and feels more responsive

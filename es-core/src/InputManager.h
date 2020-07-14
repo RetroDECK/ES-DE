@@ -25,29 +25,6 @@ union SDL_Event;
 // You should only ever instantiate one of these, by the way.
 class InputManager
 {
-private:
-    InputManager();
-
-    static InputManager* mInstance;
-
-    static const int DEADZONE = 23000;
-
-    void loadDefaultKBConfig();
-
-    std::map<SDL_JoystickID, SDL_Joystick*> mJoysticks;
-    std::map<SDL_JoystickID, InputConfig*> mInputConfigs;
-    InputConfig* mKeyboardInputConfig;
-    InputConfig* mCECInputConfig;
-
-    std::map<SDL_JoystickID, int*> mPrevAxisValues;
-
-    bool initialized() const;
-
-    void addJoystickByDeviceIndex(int id);
-    void removeJoystickByJoystickID(SDL_JoystickID id);
-    // Returns true if successfully loaded, false if not (or if it didn't exist).
-    bool loadInputConfig(InputConfig* config);
-
 public:
     virtual ~InputManager();
 
@@ -71,6 +48,29 @@ public:
     InputConfig* getInputConfigByDevice(int deviceId);
 
     bool parseEvent(const SDL_Event& ev, Window* window);
+
+private:
+    InputManager();
+
+    static InputManager* mInstance;
+
+    static const int DEADZONE = 23000;
+
+    void loadDefaultKBConfig();
+
+    std::map<SDL_JoystickID, SDL_Joystick*> mJoysticks;
+    std::map<SDL_JoystickID, InputConfig*> mInputConfigs;
+    InputConfig* mKeyboardInputConfig;
+    InputConfig* mCECInputConfig;
+
+    std::map<SDL_JoystickID, int*> mPrevAxisValues;
+
+    bool initialized() const;
+
+    void addJoystickByDeviceIndex(int id);
+    void removeJoystickByJoystickID(SDL_JoystickID id);
+    // Returns true if successfully loaded, false if not (or if it didn't exist).
+    bool loadInputConfig(InputConfig* config);
 };
 
 #endif // ES_CORE_INPUT_MANAGER_H

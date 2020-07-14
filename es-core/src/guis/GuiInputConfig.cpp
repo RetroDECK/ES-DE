@@ -200,41 +200,51 @@ GuiInputConfig::GuiInputConfig(
     // Buttons.
     std::vector< std::shared_ptr<ButtonComponent> > buttons;
     std::function<void()> okFunction = [this, okCallback] {
-        InputManager::getInstance()->writeDeviceConfig(mTargetConfig); // save
+        // If we have just configured the keyboard, then unset the flag to indicate that
+        // we are using the default keyboard mappings.
+        if (mTargetConfig->getDeviceId() == DEVICE_KEYBOARD) {
+            InputManager::getInstance()->
+                    getInputConfigByDevice(DEVICE_KEYBOARD)->unsetDefaultConfigFlag();
+        }
+        InputManager::getInstance()->writeDeviceConfig(mTargetConfig); // Save.
         if (okCallback)
             okCallback();
         delete this;
     };
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [this, okFunction] {
-        // Check if the hotkey enable button is set. if not prompt the
-        // user to use select or nothing.
-        Input input;
-        okFunction();
-        // Temporarily commented out, needs to be properly cleaned up later.
-//      if (!mTargetConfig->getInputByName("HotKeyEnable", &input)) {
-//          mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-//              "YOU DIDN'T CHOOSE A HOTKEY ENABLE BUTTON. THIS IS REQUIRED FOR EXITING GAMES "
-//              "WITH A CONTROLLER. DO YOU WANT TO USE THE SELECT BUTTON DEFAULT ? PLEASE ANSWER "
-//              "YES TO USE SELECT OR NO TO NOT SET A HOTKEY ENABLE BUTTON.",
-//              "YES", [this, okFunction] {
-//                  Input input;
-//                  mTargetConfig->getInputByName("Select", &input);
-//                  mTargetConfig->mapInput("HotKeyEnable", input);
-//                  okFunction();
-//                  },
-//              "NO", [this, okFunction] {
-//                  // for a disabled hotkey enable button, set to a key with id 0,
-//                  // so the input configuration script can be backwards compatible.
-//                  mTargetConfig->mapInput("HotKeyEnable", Input(DEVICE_KEYBOARD,
-//                      TYPE_KEY, 0, 1, true));
-//                  okFunction();
-//              }
-//          ));
-//      }
-//      else {
-//          okFunction();
-//      }
-    }));
+
+    buttons.push_back(std::make_shared<ButtonComponent>
+            (mWindow, "OK", "ok", [this, okFunction] { okFunction(); }));
+
+//    This code is disabled as there is no intention to provide emulator configuration or
+//    control via ES Desktop Edition. Let's keep the code for reference though.
+//    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [this, okFunction] {
+//        // Check if the hotkey enable button is set. if not prompt the
+//        // user to use select or nothing.
+//        Input input;
+//        okFunction();
+//        if (!mTargetConfig->getInputByName("HotKeyEnable", &input)) {
+//            mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+//                    "YOU DIDN'T CHOOSE A HOTKEY ENABLE BUTTON. THIS IS REQUIRED FOR EXITING "
+//                    "GAMES WITH A CONTROLLER. DO YOU WANT TO USE THE SELECT BUTTON DEFAULT ? "
+//                    "PLEASE ANSWER YES TO USE SELECT OR NO TO NOT SET A HOTKEY ENABLE BUTTON.",
+//                    "YES", [this, okFunction] {
+//                Input input;
+//                mTargetConfig->getInputByName("Select", &input);
+//                mTargetConfig->mapInput("HotKeyEnable", input);
+//                okFunction();
+//            },
+//            "NO", [this, okFunction] {
+//                // For a disabled hotkey enable button, set to a key with id 0,
+//                // so the input configuration script can be backwards compatible.
+//                mTargetConfig->mapInput("HotKeyEnable", Input(DEVICE_KEYBOARD,
+//                    TYPE_KEY, 0, 1, true));
+//                okFunction();
+//            }));
+//        }
+//        else {
+//            okFunction();
+//        }
+//    }));
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
     mGrid.setEntry(mButtonGrid, Vector2i(0, 6), true, false);
@@ -354,8 +364,8 @@ bool GuiInputConfig::assign(Input input, int inputId)
     input.configured = true;
     mTargetConfig->mapInput(GUI_INPUT_CONFIG_LIST[inputId].name, input);
 
-    LOG(LogInfo) << "  Mapping [" << input.string() << "] -> " <<
-            GUI_INPUT_CONFIG_LIST[inputId].name;
+    LOG(LogInfo) << "Mapping [" << input.string() << "] to [" <<
+            GUI_INPUT_CONFIG_LIST[inputId].name << "]";
 
     return true;
 }

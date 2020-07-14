@@ -214,9 +214,10 @@ void Settings::setDefaults()
 
     //
     // Settings that can be changed in es_settings.cfg
-    // but that are not configurable via the GUI (yet).
+    // but that are not configurable via the GUI.
     //
 
+    mBoolMap["ShowDefaultKeyboardWarning"] = true;
     mStringMap["DefaultSortOrder"] = "filename, ascending";
     mStringMap["MediaDirectory"] = "";
     mStringMap["ROMDirectory"] = "";

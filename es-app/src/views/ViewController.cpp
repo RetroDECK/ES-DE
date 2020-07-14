@@ -14,6 +14,7 @@
 #include "animations/LaunchAnimation.h"
 #include "animations/MoveCameraAnimation.h"
 #include "guis/GuiMenu.h"
+#include "guis/GuiMsgBox.h"
 #include "views/gamelist/DetailedGameListView.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/gamelist/GridGameListView.h"
@@ -21,11 +22,12 @@
 #include "views/SystemView.h"
 #include "views/UIModeController.h"
 #include "FileFilterIndex.h"
+#include "InputManager.h"
 #include "Log.h"
 #include "Settings.h"
+#include "Sound.h"
 #include "SystemData.h"
 #include "Window.h"
-#include "Sound.h"
 
 ViewController* ViewController::sInstance = nullptr;
 
@@ -60,6 +62,26 @@ ViewController::~ViewController()
 
 void ViewController::goToStart()
 {
+    // Check if the keyboard config is set as application default, meaning no user
+    // configuration has been performed.
+    if (InputManager::getInstance()->
+            getInputConfigByDevice(DEVICE_KEYBOARD)->getDefaultConfigFlag()) {
+        if (Settings::getInstance()->getBool("ShowDefaultKeyboardWarning")) {
+            std::string message = "NO KEYBOARD CONFIGURATION COULD BE\n"
+                    "FOUND IN ES_INPUT.CFG, SO APPLYING THE\n"
+                    "DEFAULT KEYBOARD MAPPINGS. IT'S HOWEVER\n"
+                    "RECOMMENDED TO SETUP YOUR OWN KEYBOARD\n"
+                    "CONFIGURATION. TO DO SO, CHOOSE THE ENTRY\n"
+                    "\"CONFIGURE INPUT\" ON THE MAIN MENU.";
+
+        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(), message.c_str(),
+            "OK", nullptr, "DON'T SHOW AGAIN", [] {
+                Settings::getInstance()->setBool("ShowDefaultKeyboardWarning", false);
+                Settings::getInstance()->saveFile();
+            }));
+        }
+    }
+
     // If a specific system is requested, go directly to its game list.
     auto requestedSystem = Settings::getInstance()->getString("StartupSystem");
     if ("" != requestedSystem && "retropie" != requestedSystem) {

@@ -27,7 +27,8 @@ struct HelpStyle;
 class Window
 {
 public:
-    class ScreenSaver {
+    class ScreenSaver
+    {
     public:
         virtual void startScreenSaver() = 0;
         virtual void stopScreenSaver() = 0;
@@ -41,7 +42,8 @@ public:
         virtual void resetCounts() = 0;
     };
 
-    class InfoPopup {
+    class InfoPopup
+    {
     public:
         virtual void render(const Transform4x4f& parentTrans) = 0;
         virtual void stop() = 0;

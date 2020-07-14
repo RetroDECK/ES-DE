@@ -495,6 +495,11 @@ int main(int argc, char* argv[])
             ViewController::get()->goToStart();
         }
         else {
+            // Always reset ShowDefaultKeyboardWarning to true if the es_input.cfg
+            // file is missing.
+            Settings::getInstance()->setBool("ShowDefaultKeyboardWarning", true);
+            Settings::getInstance()->saveFile();
+
             window.pushGui(new GuiDetectDevice(&window, true, [] {
                     ViewController::get()->goToStart(); }));
         }

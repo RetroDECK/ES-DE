@@ -128,6 +128,10 @@ public:
     inline const std::string& getDeviceName() { return mDeviceName; }
     inline const std::string& getDeviceGUIDString() { return mDeviceGUID; }
 
+    void setDefaultConfigFlag() { mDefaultConfigFlag = true; };
+    void unsetDefaultConfigFlag() { mDefaultConfigFlag = false; };
+    bool getDefaultConfigFlag() { return mDefaultConfigFlag; };
+
     // Returns true if Input is mapped to this name, false otherwise.
     bool isMappedTo(const std::string& name, Input input);
     bool isMappedLike(const std::string& name, Input input);
@@ -149,6 +153,7 @@ private:
     const int mDeviceId;
     const std::string mDeviceName;
     const std::string mDeviceGUID;
+    bool mDefaultConfigFlag;
 };
 
 #endif // ES_CORE_INPUT_CONFIG_H

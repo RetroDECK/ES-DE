@@ -13,6 +13,7 @@
 #include "InputManager.h"
 #include "Log.h"
 #include "Scripting.h"
+
 #include <algorithm>
 #include <iomanip>
 
@@ -130,7 +131,8 @@ void Window::input(InputConfig* config, Input input)
         if (mScreenSaver->isScreenSaverActive() &&
                 Settings::getInstance()->getBool("ScreenSaverControls") &&
                 (Settings::getInstance()->getString("ScreenSaverBehavior") == "random video")) {
-            if (mScreenSaver->getCurrentGame() != nullptr && (config->isMappedLike("right", input) ||
+            if (mScreenSaver->getCurrentGame() != nullptr &&
+                    (config->isMappedLike("right", input) ||
                     config->isMappedTo("start", input) || config->isMappedTo("select", input))) {
                 if (config->isMappedLike("right", input) || config->isMappedTo("select", input)) {
                     if (input.value != 0) {
@@ -140,7 +142,7 @@ void Window::input(InputConfig* config, Input input)
                     return;
                 }
                 else if (config->isMappedTo("start", input) && input.value != 0) {
-                    // Launch game!
+                    // Launch game.
                     cancelScreenSaver();
                     mScreenSaver->launchGame();
                     // To force handling the wake up process.
@@ -217,7 +219,7 @@ void Window::update(int deltaTime)
             float fontVramUsageMb = Font::getTotalMemUsage() / 1000.0f / 1000.0f;
 
             ss << "\nFont VRAM: " << fontVramUsageMb << " Tex VRAM: " << textureVramUsageMb <<
-                  " Tex Max: " << textureTotalUsageMb;
+                    " Tex Max: " << textureTotalUsageMb;
             mFrameDataText = std::unique_ptr<TextCache>
                     (mDefaultFonts.at(1)->buildTextCache(ss.str(), 50.f, 50.f, 0xFF00FFFF));
         }
@@ -388,8 +390,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
         int i = 0;
         int aVal = 0;
         int bVal = 0;
-        while (map[i] != nullptr)
-        {
+        while (map[i] != nullptr) {
             if (a.first == map[i])
                 aVal = i;
             if (b.first == map[i])
