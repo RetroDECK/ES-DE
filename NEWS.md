@@ -8,7 +8,7 @@ v1.0.0
 * Many quality of life improvements and removal of GUI inconsistencies
 * New game media file logic using a media directory with files matching the ROM names instead of pointing to the media files in gamelist.xml
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
-* For single-game scraping, any values updated by the scraper are now highlighted using a different font color in the metadata editor
+* In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using a different font color
 * Gamelist sorting now working as expected and is persistent throughout the application session
 * Full navigation sound support, configurable per theme
 * New default theme rbsimple-DE bundled with the software, this theme is largely based on recalbox-multi by the Recalbox community
@@ -37,7 +37,7 @@ v1.0.0
 ### Bug fixes
 
 * Metadata editor insisted that changes were made although nothing was updated
-  Note: The editor will still ask for save confirmations after automatically rounding fractional game ratings to half-star values
+  Note: The editor will still ask for save confirmations after automatically rounding fractional game ratings to half-star values, but any time such a rounding has taken place, the rating stars will be colored green in the metadata editor to nofity the user
 * Game images were sometimes scaled incorrectly
 * Non-transparent favorite icons were not rendered correctly
 * Restart and power-off menu entries not working

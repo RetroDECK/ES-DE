@@ -107,6 +107,12 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
 
             mTime = new_tm;
 
+            // Change the color of the text to reflect the changes.
+            if (mTime == mOriginalValue)
+                setColor(mColorOriginalValue);
+            else
+                setColor(mColorChangedValue);
+
             updateTextCache();
             return true;
         }
@@ -170,6 +176,7 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
 void DateTimeEditComponent::setValue(const std::string& val)
 {
     mTime = val;
+    mOriginalValue = val;
     updateTextCache();
 }
 

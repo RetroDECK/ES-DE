@@ -363,7 +363,6 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
             // 'jump' in when it finally loads.
             fadeIn(mTexture->bind());
             Renderer::drawTriangleStrips(&mVertices[0], 4);
-
         }
         else {
             LOG(LogError) << "Image texture is not initialized!";

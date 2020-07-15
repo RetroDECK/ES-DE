@@ -46,8 +46,7 @@ GuiMetaDataEd::GuiMetaDataEd(
         mMetaDataDecl(mdd),
         mMetaData(md),
         mSavedCallback(saveCallback),
-        mDeleteFunc(deleteFunc),
-        mMetadataUpdated(false)
+        mDeleteFunc(deleteFunc)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -70,6 +69,7 @@ GuiMetaDataEd::GuiMetaDataEd(
     // Populate list.
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
         std::shared_ptr<GuiComponent> ed;
+        std::string originalValue;
 
         // Don't add statistics.
         if (iter->isStatistic)
@@ -99,6 +99,7 @@ GuiMetaDataEd::GuiMetaDataEd(
         switch (iter->type) {
         case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
+                ed->setChangedColor(ICONCOLOR_USERMARKED);
                 row.addElement(ed, false, true);
                 break;
             }
@@ -107,7 +108,8 @@ GuiMetaDataEd::GuiMetaDataEd(
                 spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
                 row.addElement(spacer, false);
 
-                ed = std::make_shared<RatingComponent>(window);
+                ed = std::make_shared<RatingComponent>(window, true);
+                ed->setChangedColor(ICONCOLOR_USERMARKED);
                 const float height = lbl->getSize().y() * 0.71f;
                 ed->setSize(0, height);
                 row.addElement(ed, false, true);
@@ -123,6 +125,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<DateTimeEditComponent>(window);
+                ed->setChangedColor(TEXTCOLOR_USERMARKED);
                 row.addElement(ed, false);
 
                 // Pass input to the actual DateTimeEditComponent instead of the spacer.
@@ -130,12 +133,14 @@ GuiMetaDataEd::GuiMetaDataEd(
                         std::placeholders::_1, std::placeholders::_2);
                 break;
             }
-        case MD_TIME: {
-                ed = std::make_shared<DateTimeEditComponent>(window,
-                        DateTimeEditComponent::DISP_RELATIVE_TO_NOW);
-                row.addElement(ed, false);
-                break;
-            }
+//        Not in use as 'lastplayed' is flagged as statistics and these are skipped.
+//        Let's still keep the code because it may be needed in the future.
+//        case MD_TIME: {
+//                ed = std::make_shared<DateTimeEditComponent>(window,
+//                        DateTimeEditComponent::DISP_RELATIVE_TO_NOW);
+//                row.addElement(ed, false);
+//                break;
+//            }
         case MD_LAUNCHCOMMAND: {
                 ed = std::make_shared<TextComponent>(window, "",
                         Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
@@ -152,8 +157,17 @@ GuiMetaDataEd::GuiMetaDataEd(
 
                 bool multiLine = false;
                 const std::string title = iter->displayPrompt;
-                auto updateVal = [ed](const std::string& newVal) {
-                        ed->setValue(newVal); }; // OK callback (apply new value to ed).
+
+                originalValue = mMetaData->get(iter->key);
+
+                // OK callback (apply new value to ed).
+                auto updateVal = [ed, originalValue](const std::string& newVal) {
+                    ed->setValue(newVal);
+                    if (newVal == originalValue)
+                        ed->setColor(DEFAULT_TEXTCOLOR);
+                    else
+                        ed->setColor(TEXTCOLOR_USERMARKED);
+                };
 
                 std::string staticTextString = "Default value from es_systems.cfg:";
                 std::string defaultLaunchCommand = scraperParams.system->
@@ -186,8 +200,17 @@ GuiMetaDataEd::GuiMetaDataEd(
                 bool multiLine = iter->type == MD_MULTILINE_STRING;
                 const std::string title = iter->displayPrompt;
 
+                originalValue = mMetaData->get(iter->key);
+
                  // OK callback (apply new value to ed).
-                auto updateVal = [ed](const std::string& newVal) { ed->setValue(newVal); };
+                auto updateVal = [ed, originalValue](const std::string& newVal) {
+                    ed->setValue(newVal);
+                    if (newVal == originalValue)
+                        ed->setColor(DEFAULT_TEXTCOLOR);
+                    else
+                        ed->setColor(TEXTCOLOR_USERMARKED);
+                 };
+
                 row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
                     mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
                             ed->getValue(), updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
@@ -202,7 +225,7 @@ GuiMetaDataEd::GuiMetaDataEd(
         mEditors.push_back(ed);
     }
 
-    std::vector< std::shared_ptr<ButtonComponent> > buttons;
+    std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
     if (mScraperParams.game->getType() != FOLDER) {
         if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
@@ -217,10 +240,10 @@ GuiMetaDataEd::GuiMetaDataEd(
 
     if (mDeleteFunc) {
         auto deleteFileAndSelf = [&] { mDeleteFunc(); delete this; };
-        auto deleteBtnFunc = [this, deleteFileAndSelf] { mWindow->pushGui(
-                new GuiMsgBox(mWindow, getHelpStyle(),
-                        "THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE YOU SURE?",
-                        "YES", deleteFileAndSelf, "NO", nullptr)); };
+        auto deleteBtnFunc = [this, deleteFileAndSelf] {
+            mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                    "THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE YOU SURE?",
+                    "YES", deleteFileAndSelf, "NO", nullptr)); };
         buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
                 "delete game", deleteBtnFunc));
     }
@@ -303,20 +326,21 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
             metadata->set(key, mEditors[i]->getValue());
     }
 
-    mMetadataUpdated = GuiScraperSearch::saveMetadata(result, *metadata);
+    GuiScraperSearch::saveMetadata(result, *metadata);
 
     // Update the list with the scraped metadata values.
     for (unsigned int i = 0; i < mEditors.size(); i++) {
         const std::string& key = mMetaDataDecl.at(i).key;
         if (mEditors.at(i)->getValue() != metadata->get(key)) {
-            if (key == "rating") {
-                mEditors.at(i)->setColorShift(0xDD2222FF);
-            }
-            else {
-                mEditors.at(i)->setColor(0x994444FF);
-            }
+            if (key == "rating")
+                mEditors.at(i)->setOriginalColor(ICONCOLOR_SCRAPERMARKED);
+            else
+                mEditors.at(i)->setColor(TEXTCOLOR_SCRAPERMARKED);
         }
-        mEditors.at(i)->setValue(metadata->get(key));
+        // Save all the keys, except the following which can't be scraped.
+        if (key != "favorite" && key != "completed" && key != "broken" &&
+                key != "hidden" && key != "kidgame")
+            mEditors.at(i)->setValue(metadata->get(key));
     }
 
     delete metadata;
@@ -325,7 +349,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 void GuiMetaDataEd::close()
 {
     // Find out if the user made any changes.
-    bool dirty = mMetadataUpdated;
+    bool metadataUpdated = false;
     for (unsigned int i = 0; i < mEditors.size(); i++) {
         const std::string& key = mMetaDataDecl.at(i).key;
         std::string mMetaDataValue = mMetaData->get(key);
@@ -337,7 +361,7 @@ void GuiMetaDataEd::close()
             mMetaDataValue = "19700101T010000";
 
         if (mMetaDataValue != mEditorsValue) {
-            dirty = true;
+            metadataUpdated = true;
             break;
         }
     }
@@ -358,7 +382,7 @@ void GuiMetaDataEd::close()
     std::function<void()> closeFunc;
         closeFunc = [this] { delete this; };
 
-    if (dirty) {
+    if (metadataUpdated) {
         // Changes were made, ask if the user wants to save them.
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
             "SAVE CHANGES?",

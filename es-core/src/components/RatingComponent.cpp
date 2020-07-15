@@ -11,8 +11,16 @@
 #include "Settings.h"
 #include "ThemeData.h"
 
-RatingComponent::RatingComponent(Window* window) : GuiComponent(window),
-        mColorShift(0xFFFFFFFF), mColorShiftEnd(0xFFFFFFFF), mUnfilledColor(0xFFFFFFFF)
+RatingComponent::RatingComponent(
+        Window* window,
+        bool colorizeChanges)
+        : GuiComponent(window),
+        mColorShift(DEFAULT_COLORSHIFT),
+        mColorShiftEnd(DEFAULT_COLORSHIFT),
+        mUnfilledColor(DEFAULT_COLORSHIFT),
+        mColorizeChanges(colorizeChanges),
+        mColorOriginalValue(DEFAULT_COLORSHIFT),
+        mColorChangedValue(DEFAULT_COLORSHIFT)
 {
     mFilledTexture = TextureResource::get(":/graphics/star_filled.svg", true);
     mUnfilledTexture = TextureResource::get(":/graphics/star_unfilled.svg", true);
@@ -30,6 +38,26 @@ void RatingComponent::setValue(const std::string& value)
     else {
         // Round up to the closest .1 value, i.e. to the closest half-icon.
         mValue = Math::ceilf(stof(value) / 0.1) / 10;
+        mOriginalValue = static_cast<int>(mValue * 10);
+
+        // If the argument to colorize the rating icons has been passed, set the
+        // color shift accordingly.
+        if (mColorizeChanges) {
+            if (static_cast<int>(mValue * 10) == mOriginalValue)
+                setColorShift(mColorOriginalValue);
+            else
+                setColorShift(mColorChangedValue);
+        }
+
+        // For the special situation where there is a fractional rating in the gamelist.xml
+        // file that has been rounded to a half-star rating, render the rating icons green.
+        // This should only happen if an external scraper has been used or if the file has
+        // been manually edited.
+        if (mColorizeChanges && mValue != stof(value)) {
+            mOriginalValue = ICONCOLOR_USERMARKED;
+            setColorShift(0x449944FF);
+        }
+
         if (mValue > 1.0f)
             mValue = 1.0f;
         else if (mValue < 0.0f)
@@ -102,11 +130,12 @@ void RatingComponent::updateVertices()
     mVertices[6] = { { fw,   0.0f }, { numStars,          1.0f }, color };
     mVertices[7] = { { fw,   h    }, { numStars,          0.0f }, color };
 
-    // Round vertices.
-    // Disabled as it caused subtle but strange rendering errors where
-    // the icons changed size slightly when changing rating scores.
-//	for (int i = 0; i < 8; ++i)
-//		mVertices[i].pos.round();
+
+//    Disabled this code as it caused subtle but strange rendering errors
+//    where the icons changed size slightly when changing rating scores.
+//    // Round vertices.
+//    for (int i = 0; i < 8; ++i)
+//        mVertices[i].pos.round();
 }
 
 void RatingComponent::updateColors()
@@ -162,6 +191,14 @@ bool RatingComponent::input(InputConfig* config, Input input)
         if (mValue > 1.05f)
             mValue = 0.0f;
 
+        // If the argument to colorize the rating icons has been passed,
+        // set the color shift accordingly.
+        if (mColorizeChanges) {
+            if (static_cast<int>(mValue * 10) == mOriginalValue)
+                setColorShift(mColorOriginalValue);
+            else
+                setColorShift(mColorChangedValue);
+        }
         updateVertices();
     }
 

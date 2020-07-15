@@ -26,6 +26,9 @@ public:
     std::string getValue() const override;
     void setValue(const std::string& statestring) override;
 
+    void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; };
+    void setChangedColor(unsigned int color) override { mColorChangedValue = color; };
+
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
@@ -33,6 +36,9 @@ private:
 
     ImageComponent mImage;
     bool mState;
+    bool mOriginalValue;
+    unsigned int mColorOriginalValue;
+    unsigned int mColorChangedValue;
 };
 
 #endif // ES_CORE_COMPONENTS_SWITCH_COMPONENT_H

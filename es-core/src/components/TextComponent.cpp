@@ -88,10 +88,9 @@ void TextComponent::setRenderBackground(bool render)
 //  Scale the opacity.
 void TextComponent::setOpacity(unsigned char opacity)
 {
-    // This method is mostly called to do fading in-out of the Text component element.
+    // This function is mostly called to do fading in-out of the Text component element.
     // Therefore, we assume here that opacity is a fractional value (expressed as an int 0-255),
     // of the opacity originally set with setColor() or setBackgroundColor().
-
     unsigned char o = (unsigned char)((float)opacity / 255.f * (float) mColorOpacity);
     mColor = (mColor & 0xFFFFFF00) | (unsigned char) o;
 

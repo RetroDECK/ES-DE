@@ -46,6 +46,10 @@ public:
      // Text color.
     void setColor(unsigned int color) override;
     // Font to use. Default is Font::get(FONT_SIZE_MEDIUM).
+
+    void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; };
+    void setChangedColor(unsigned int color) override { mColorChangedValue = color; };
+
     void setFont(std::shared_ptr<Font> font);
     // Force text to be uppercase when in DISP_RELATIVE_TO_NOW mode.
     void setUppercase(bool uppercase);
@@ -76,6 +80,10 @@ private:
     std::vector<Vector4f> mCursorBoxes;
 
     unsigned int mColor;
+    Utils::Time::DateTime mOriginalValue;
+    unsigned int mColorOriginalValue;
+    unsigned int mColorChangedValue;
+
     std::shared_ptr<Font> mFont;
     bool mUppercase;
     bool mAutoSize;

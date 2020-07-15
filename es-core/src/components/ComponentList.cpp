@@ -203,15 +203,20 @@ void ComponentList::render(const Transform4x4f& parentTrans)
                         it->component->render(trans);
                     }
                     else {
-                        // If there is a hue, average the brightness values to make
-                        // an equivalent gray value before inverting the text.
-                        // This is not the proper way to do a BW conversion as the RGB values
-                        // should not be evenly distributed, but it's definitely good enough
-                        // for this situation.
-                        unsigned char byteAverage = (byteRed + byteGreen + byteBlue) / 3;
-                        unsigned int averageColor = byteAverage << 24 | byteAverage << 16 |
-                                byteAverage << 8 | 0xFF;
-                        it->component->setColor(averageColor);
+                        // Note: I've disabled this code as it's overly complicated,
+                        // instead we're now using a simple constant which should be
+                        // good enough. Let's keep the code though if needed in the
+                        // future for some reason.
+//                        // If there is a hue, average the brightness values to make
+//                        // an equivalent gray value before inverting the text.
+//                        // This is not the proper way to do a BW conversion as the RGB values
+//                        // should not be evenly distributed, but it's definitely good enough
+//                        // for this situation.
+//                        unsigned char byteAverage = (byteRed + byteGreen + byteBlue) / 3;
+//                        unsigned int averageColor = byteAverage << 24 | byteAverage << 16 |
+//                                byteAverage << 8 | 0xFF;
+//                        it->component->setColor(averageColor);
+                        it->component->setColor(DEFAULT_INVERTED_TEXTCOLOR);
                         it->component->render(trans);
                         // Revert to the original color after rendering.
                         it->component->setColor(origColor);
@@ -221,8 +226,9 @@ void ComponentList::render(const Transform4x4f& parentTrans)
                     it->component->render(trans);
                 }
             }
-            else
+            else {
                 drawAfterCursor.push_back(it->component.get());
+            }
         }
     }
 

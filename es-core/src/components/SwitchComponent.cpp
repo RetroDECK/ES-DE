@@ -13,7 +13,9 @@ SwitchComponent::SwitchComponent(
         bool state)
         : GuiComponent(window),
         mImage(window),
-        mState(state)
+        mState(state),
+        mColorOriginalValue(DEFAULT_COLORSHIFT),
+        mColorChangedValue(DEFAULT_COLORSHIFT)
 {
     mImage.setImage(":/graphics/off.svg");
     mImage.setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
@@ -65,12 +67,20 @@ void SwitchComponent::setValue(const std::string& statestring)
         mState = true;
     else
         mState = false;
+
+    mOriginalValue = mState;
     onStateChanged();
 }
 
 void SwitchComponent::onStateChanged()
 {
     mImage.setImage(mState ? ":/graphics/on.svg" : ":/graphics/off.svg");
+
+    // Change the color of the switch to reflect the changes.
+    if (mState == mOriginalValue)
+        mImage.setColorShift(mColorOriginalValue);
+    else
+        mImage.setColorShift(mColorChangedValue);
 }
 
 std::vector<HelpPrompt> SwitchComponent::getHelpPrompts()

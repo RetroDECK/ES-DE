@@ -16,6 +16,14 @@
 #include <functional>
 #include <memory>
 
+#define DEFAULT_TEXTCOLOR 0x777777FF
+#define DEFAULT_INVERTED_TEXTCOLOR 0x444444FF
+#define DEFAULT_COLORSHIFT 0xFFFFFFFF
+#define ICONCOLOR_SCRAPERMARKED 0xFF5555FF
+#define ICONCOLOR_USERMARKED 0x5555FFFF
+#define TEXTCOLOR_SCRAPERMARKED 0x992222FF
+#define TEXTCOLOR_USERMARKED 0x222299FF
+
 class Animation;
 class AnimationController;
 class Font;
@@ -132,6 +140,8 @@ public:
     virtual void setOpacity(unsigned char opacity);
     virtual void setColor(unsigned int color);
     virtual void setColorShift(unsigned int color);
+    virtual void setOriginalColor(unsigned int color) { mColorOriginalValue = color; };
+    virtual void setChangedColor(unsigned int color) { mColorChangedValue = color; };
     virtual unsigned int getColor() const;
 
     const Transform4x4f& getTransform();
@@ -177,6 +187,9 @@ protected:
     unsigned char mColorOpacity;
     unsigned int mColorShift;
     unsigned int mColorShiftEnd;
+    unsigned int mColorOriginalValue;
+    unsigned int mColorChangedValue;
+
     Window* mWindow;
 
     GuiComponent* mParent;

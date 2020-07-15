@@ -552,7 +552,7 @@ TextCache* Font::buildTextCache(
     float y = offset[1] + (yBot + yTop)/2.0f;
 
     // Vertices by texture.
-    std::map< FontTexture*, std::vector<Renderer::Vertex> > vertMap;
+    std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
     size_t cursor = 0;
     while (cursor < text.length()) {
@@ -581,8 +581,8 @@ TextCache* Font::buildTextCache(
         verts.resize(oldVertSize + 6);
         Renderer::Vertex* vertices = verts.data() + oldVertSize;
 
-        const float        glyphStartX    = x + glyph->bearing.x();
-        const Vector2i&    textureSize    = glyph->texture->textureSize;
+        const float glyphStartX = x + glyph->bearing.x();
+        const Vector2i& textureSize = glyph->texture->textureSize;
         const unsigned int convertedColor = Renderer::convertColor(color);
 
         vertices[1] = {

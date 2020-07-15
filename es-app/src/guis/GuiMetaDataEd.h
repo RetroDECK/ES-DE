@@ -54,14 +54,13 @@ private:
 
     ScraperSearchParams mScraperParams;
 
-    std::vector< std::shared_ptr<GuiComponent> > mEditors;
+    std::vector<std::shared_ptr<GuiComponent>> mEditors;
 
     std::vector<MetaDataDecl> mMetaDataDecl;
     MetaDataList* mMetaData;
     std::function<void()> mSavedCallback;
     std::function<void()> mDeleteFunc;
 
-    bool mMetadataUpdated;
     bool mMediaFilesUpdated;
 };
 

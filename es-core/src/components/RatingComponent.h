@@ -24,7 +24,7 @@ class TextureResource;
 class RatingComponent : public GuiComponent
 {
 public:
-    RatingComponent(Window* window);
+    RatingComponent(Window* window, bool colorizeChanges = false);
 
     std::string getValue() const override;
     // Should be a normalized float (in the range [0..1]) - if it's not, it will be clamped.
@@ -40,6 +40,9 @@ public:
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;
 
+    void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; };
+    void setChangedColor(unsigned int color) override { mColorChangedValue = color; };
+
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
             const std::string& element, unsigned int properties) override;
 
@@ -52,6 +55,9 @@ private:
     void updateColors();
 
     float mValue;
+    int mOriginalValue;
+    unsigned int mColorOriginalValue;
+    unsigned int mColorChangedValue;
 
     Renderer::Vertex mVertices[8];
 
@@ -61,6 +67,8 @@ private:
 
     std::shared_ptr<TextureResource> mFilledTexture;
     std::shared_ptr<TextureResource> mUnfilledTexture;
+
+    bool mColorizeChanges;
 };
 
 #endif // ES_APP_COMPONENTS_RATING_COMPONENT_H
