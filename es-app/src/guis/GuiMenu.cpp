@@ -11,6 +11,7 @@
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiCollectionSystemsOptions.h"
+#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiGeneralScreensaverOptions.h"
 #include "guis/GuiMsgBox.h"
@@ -21,6 +22,7 @@
 #include "views/gamelist/IGameListView.h"
 #include "CollectionSystemManager.h"
 #include "EmulationStation.h"
+#include "FileSorts.h"
 #include "Platform.h"
 #include "Scripting.h"
 #include "SystemData.h"
@@ -34,11 +36,8 @@
 #include "SDL_events.h"
 #endif
 
-GuiMenu::GuiMenu(
-        Window* window)
-        : GuiComponent(window),
-        mMenu(window, "MAIN MENU"),
-        mVersion(window)
+GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
+        mMenu(window, "MAIN MENU"), mVersion(window)
 {
     bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 
@@ -215,9 +214,10 @@ void GuiMenu::openUISettings()
     systemfocus_list->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
     for (auto it = SystemData::sSystemVector.cbegin();
             it != SystemData::sSystemVector.cend(); it++) {
-        if ("retropie" != (*it)->getName())
+        if ("retropie" != (*it)->getName()) {
             systemfocus_list->add((*it)->getName(), (*it)->getName(),
                     Settings::getInstance()->getString("StartupSystem") == (*it)->getName());
+        }
     }
     s->addWithLabel("GAMELIST TO SHOW ON STARTUP", systemfocus_list);
     s->addSaveFunc([systemfocus_list] {
@@ -272,8 +272,7 @@ void GuiMenu::openUISettings()
     // Theme selection.
     auto themeSets = ThemeData::getThemeSets();
 
-    if (!themeSets.empty())
-    {
+    if (!themeSets.empty()) {
         std::map<std::string, ThemeSet>::const_iterator selectedSet =
                 themeSets.find(Settings::getInstance()->getString("ThemeSet"));
         if (selectedSet == themeSets.cend())
@@ -327,6 +326,66 @@ void GuiMenu::openUISettings()
                     Settings::getInstance()->setString("UIMode", selectedMode);
                     Settings::getInstance()->saveFile();
             }, "NO",nullptr));
+        }
+    });
+
+    // Default gamelist sort order.
+    typedef OptionListComponent<const FileData::SortType*> SortList;
+    std::string sortOrder;
+    auto defaultSortOrder = std::make_shared<SortList>
+            (mWindow, getHelpStyle(), "DEFAULT SORT ORDER", false);
+    for (auto it = FileSorts::SortTypes.cbegin(); it != FileSorts::SortTypes.cend(); it++) {
+        if (it->description == Settings::getInstance()->getString("DefaultSortOrder")) {
+            sortOrder = it->description;
+            break;
+        }
+    }
+    // If an invalid sort order was defined in es_settings.cfg, then apply the default
+    // sort order 'filename, ascending'.
+    if (sortOrder == "")
+        sortOrder = "filename, ascending";
+
+    for (auto it = FileSorts::SortTypes.cbegin(); it != FileSorts::SortTypes.cend(); it++) {
+        const FileData::SortType& sort = *it;
+        if (sort.description == sortOrder)
+            defaultSortOrder->add(sort.description, &sort, true);
+        else
+            defaultSortOrder->add(sort.description, &sort, false);
+    }
+    s->addWithLabel("DEFAULT SORT ORDER", defaultSortOrder);
+    s->addSaveFunc([defaultSortOrder, sortOrder] {
+        std::string selectedSortOrder = defaultSortOrder.get()->getSelected()->description;
+        if (selectedSortOrder != sortOrder) {
+            Settings::getInstance()->setString("DefaultSortOrder", selectedSortOrder);
+            Settings::getInstance()->saveFile();
+
+            // Activate the new sort order by setting up the sort type per system
+            // and then resorting all gamelists.
+            for (auto it = SystemData::sSystemVector.cbegin(); it !=
+                    SystemData::sSystemVector.cend(); it++) {
+
+                bool favoritesSorting;
+
+                if ((*it)->getName() == "recent")
+                    continue;
+
+                if (CollectionSystemManager::get()->getIsCustomCollection(*it))
+                    favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
+                else
+                    favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
+
+                FileData* rootFolder = (*it)->getRootFolder();
+                rootFolder->getSystem()->setupSystemSortType(rootFolder);
+
+                rootFolder->sort(getSortTypeFromString(
+                        rootFolder->getSortTypeString()), favoritesSorting);
+                ViewController::get()->reloadGameListView(*it);
+
+                // Jump to the first row of the gamelist.
+                IGameListView* gameList = ViewController::get()->getGameListView((*it)).get();
+                gameList->setCursor(gameList->getFirstEntry());
+
+            }
         }
     });
 
@@ -472,8 +531,7 @@ void GuiMenu::openOtherSettings()
     auto omx_player = std::make_shared<SwitchComponent>(mWindow);
     omx_player->setState(Settings::getInstance()->getBool("VideoOmxPlayer"));
     s->addWithLabel("USE OMX PLAYER (HW ACCELERATED)", omx_player);
-    s->addSaveFunc([omx_player]
-    {
+    s->addSaveFunc([omx_player] {
         // Need to reload all views to re-create the right video components.
         bool needReload = false;
         if (Settings::getInstance()->getBool("VideoOmxPlayer") != omx_player->getState())
@@ -495,23 +553,56 @@ void GuiMenu::openOtherSettings()
     saveModes.push_back("always");
     saveModes.push_back("never");
 
-    for (auto it = saveModes.cbegin(); it != saveModes.cend(); it++)
+    for (auto it = saveModes.cbegin(); it != saveModes.cend(); it++) {
         gamelistsSaveMode->add(*it, *it, Settings::getInstance()->
                 getString("SaveGamelistsMode") == *it);
+    }
     s->addWithLabel("WHEN TO SAVE GAME METADATA", gamelistsSaveMode);
     s->addSaveFunc([gamelistsSaveMode] {
         Settings::getInstance()->setString("SaveGamelistsMode", gamelistsSaveMode->getSelected());
     });
 
-    // Allow overriding of the launch command per game (the option
-    // to disable this is intended primarily for testing purposes).
+    // Game media directory.
+    ComponentListRow row;
+    auto mediaDirectory = std::make_shared<TextComponent>(mWindow, "GAME MEDIA DIRECTORY",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto bracket = std::make_shared<ImageComponent>(mWindow);
+    bracket->setImage(":/graphics/arrow.svg");
+    bracket->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+
+    row.addElement(mediaDirectory, true);
+    row.addElement(bracket, false);
+
+    std::string title = "ENTER GAME MEDIA DIRECTORY";
+    std::string mediaDirectoryStaticText = "Default directory:";
+    std::string defaultDirectoryText = "~/.emulationstation/downloaded_media/";
+    std::string initValue = Settings::getInstance()->getString("MediaDirectory");
+    bool multiLine = false;
+
+    auto updateVal = [](const std::string& newVal) {
+        Settings::getInstance()->setString("MediaDirectory", newVal);
+        Settings::getInstance()->saveFile();
+        ViewController::get()->reloadAll();
+    };
+
+    row.makeAcceptInputHandler([this, title, mediaDirectoryStaticText,
+            defaultDirectoryText, initValue, updateVal, multiLine] {
+                mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
+                title, mediaDirectoryStaticText, defaultDirectoryText,
+                Settings::getInstance()->getString("MediaDirectory"),
+                updateVal, multiLine, "SAVE", "SAVE CHANGES?"));
+    });
+    s->addRow(row);
+
+    // Allow overriding of the launch command per game (the option to disable this is
+    // intended primarily for testing purposes).
     auto launchcommand_override = std::make_shared<SwitchComponent>(mWindow);
     launchcommand_override->setState(Settings::getInstance()->getBool("LaunchCommandOverride"));
     s->addWithLabel("PER GAME LAUNCH COMMAND OVERRIDE", launchcommand_override);
     s->addSaveFunc([launchcommand_override] { Settings::getInstance()->
             setBool("LaunchCommandOverride", launchcommand_override->getState()); });
 
-     // Custom event scripts, fired using Scripting::fireEvent().
+    // Custom event scripts, fired using Scripting::fireEvent().
     auto custom_eventscripts = std::make_shared<SwitchComponent>(mWindow);
     custom_eventscripts->setState(Settings::getInstance()->getBool("CustomEventScripts"));
     s->addWithLabel("CUSTOM EVENT SCRIPTS", custom_eventscripts);
@@ -559,7 +650,6 @@ void GuiMenu::openOtherSettings()
             show_poweroffsystem->getState()); });
 
     mWindow->pushGui(s);
-
 }
 
 void GuiMenu::openConfigInput()

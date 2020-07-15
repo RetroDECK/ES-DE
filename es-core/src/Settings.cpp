@@ -81,6 +81,7 @@ void Settings::setDefaults()
     mStringMap["TransitionStyle"] = "instant";
     mStringMap["ThemeSet"] = "";
     mStringMap["UIMode"] = "Full";
+    mStringMap["DefaultSortOrder"] = "filename, ascending";
     mBoolMap["FavoritesFirst"] = true;
     mBoolMap["ForceDisableFilters"] = false;
     mBoolMap["QuickSystemSelect"] = true;
@@ -180,6 +181,7 @@ void Settings::setDefaults()
     mBoolMap["ScreenSaverOmxPlayer"] = false;
     #endif
     mStringMap["SaveGamelistsMode"] = "always";
+    mStringMap["MediaDirectory"] = "";
     mBoolMap["LaunchCommandOverride"] = true;
     mBoolMap["CustomEventScripts"] = false;
     mBoolMap["ParseGamelistOnly"] = false;
@@ -218,8 +220,6 @@ void Settings::setDefaults()
     //
 
     mBoolMap["ShowDefaultKeyboardWarning"] = true;
-    mStringMap["DefaultSortOrder"] = "filename, ascending";
-    mStringMap["MediaDirectory"] = "";
     mStringMap["ROMDirectory"] = "";
     mIntMap["ScraperResizeMaxWidth"] = 600;
     mIntMap["ScraperResizeMaxHeight"] = 0;
