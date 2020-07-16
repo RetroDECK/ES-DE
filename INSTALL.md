@@ -343,6 +343,27 @@ The files from the MinGW installation must correspond to the version used to com
 
 *So if the MinGW installation is upgraded to a newer version or so, make sure to copy the .dll files again, overwriting the old ones.*
 
+In addition to these, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder and although there is no requirement to retain these as libVLC apparently looks recursively for the required .dll files, it still makes it a bit more tidy to keep the folder names for each type of plugin. The CMake install script will however copy all the contents of this plugins folder regardless of whether subdirectories are in use or not.
+
+It's a bit tricky to know which libraries are really needed. But as the plugins directory is around 120 MB (as of VLC version 3.0.11), we definitely only want to copy the files we need.
+
+The following files seem to be required to play most video and audio formats (place them in `emulationstation-de\plugins\`):
+
+```
+access\libfilesystem_plugin.dll
+audio_filter\libaudio_format_plugin.dll
+audio_filter\libtrivial_channel_mixer_plugin.dll
+audio_output\libwaveout_plugin.dll
+codec\libavcodec_plugin.dll
+codec\libx264_plugin.dll
+codec\libx265_plugin.dll
+text_renderer\libfreetype_plugin.dll
+video_chroma\libswscale_plugin.dll
+video_output\libvmem_plugin.dll
+```
+
+The combined size of these files is around 24 MB which is more reasonable.
+
 **Building the application:**
 
 For a release build:
