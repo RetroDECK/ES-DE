@@ -131,6 +131,7 @@ Assuming the default installation prefix `/usr/local` has been used, this is the
 
 ```
 /usr/local/bin/emulationstation
+/usr/local/man/man6/emulationstation.6.gz
 /usr/local/share/applications/emulationstation.desktop
 /usr/local/share/emulationstation/LICENSE
 /usr/local/share/emulationstation/LICENSES/*
