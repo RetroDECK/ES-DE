@@ -357,7 +357,6 @@ void GuiMenu::openUISettings()
         std::string selectedSortOrder = defaultSortOrder.get()->getSelected()->description;
         if (selectedSortOrder != sortOrder) {
             Settings::getInstance()->setString("DefaultSortOrder", selectedSortOrder);
-            Settings::getInstance()->saveFile();
 
             // Activate the new sort order by setting up the sort type per system
             // and then resorting all gamelists.
