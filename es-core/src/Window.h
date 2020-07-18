@@ -86,6 +86,10 @@ public:
     void renderScreenSaver();
     bool isScreenSaverActive() { return mRenderScreenSaver; };
 
+    void setLaunchedGame();
+    void unsetLaunchedGame();
+    bool getGameLaunchedState() { return mGameLaunchedState; };
+
 private:
     void onSleep();
     void onWake();
@@ -98,6 +102,7 @@ private:
     ScreenSaver* mScreenSaver;
     InfoPopup* mInfoPopup;
     bool mRenderScreenSaver;
+    bool mGameLaunchedState;
 
     std::vector<GuiComponent*> mGuiStack;
 

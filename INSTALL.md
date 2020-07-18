@@ -357,6 +357,7 @@ audio_output\libwaveout_plugin.dll
 codec\libavcodec_plugin.dll
 codec\libx264_plugin.dll
 codec\libx265_plugin.dll
+logger\libconsole_logger_plugin.dll
 text_renderer\libfreetype_plugin.dll
 video_chroma\libswscale_plugin.dll
 video_output\libvmem_plugin.dll
@@ -550,7 +551,9 @@ The new configuration will be added to the `~/.emulationstation/es_input.cfg` fi
 Command line arguments
 ======================
 
-You can use `--help` or `-h` to view a list of command line options. Briefly outlined here:
+You can use `--help` or `-h` to view a list of command line options, as shown here.
+
+### Unix:
 
 ```
 --resolution [width] [height]   Try to force a particular resolution
@@ -563,6 +566,27 @@ You can use `--help` or `-h` to view a list of command line options. Briefly out
 --windowed                      Windowed mode, should be combined with --resolution
 --fullscreen-normal             Normal fullscreen mode
 --fullscreen-borderless         Borderless fullscreen mode (always on top)
+--vsync [1/on or 0/off]         Turn vsync on or off (default is on)
+--max-vram [size]               Max VRAM to use in Mb before swapping
+                                Set to at least 20 to avoid unpredictable behavior
+--force-kid                     Force the UI mode to Kid
+--force-kiosk                   Force the UI mode to Kiosk
+--force-disable-filters         Force the UI to ignore applied filters in gamelist
+--home [path]                   Directory to use as home path
+--version, -v                   Displays version information
+--help, -h                      Summon a sentient, angry tuba
+```
+
+### Windows:
+
+```
+--resolution [width] [height]   Try to force a particular resolution
+--gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
+--ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
+--draw-framerate                Display the framerate
+--no-exit                       Don't show the exit option in the menu
+--no-splash                     Don't show the splash screen
+--debug                         Print debug information
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use in Mb before swapping
                                 Set to at least 20 to avoid unpredictable behavior

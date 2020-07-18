@@ -104,12 +104,20 @@ namespace Renderer
 
         unsigned int windowFlags;
 
+        #ifdef _WIN64
+        // For Windows, always set the mode to windowed, as full screen mode seems to
+        // behave quite erratic. There may be a proper fix for this, but for now windowed
+        // mode seems to behave well and it's almost completely seamless, especially with
+        // a hidden taskbar.
+        windowFlags = getWindowFlags();
+        #else
         if (Settings::getInstance()->getBool("Windowed"))
             windowFlags = getWindowFlags();
         else if (Settings::getInstance()->getString("FullscreenMode") == "borderless")
             windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
         else
             windowFlags = SDL_WINDOW_FULLSCREEN | getWindowFlags();
+        #endif
 
         if ((sdlWindow = SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, windowFlags)) == nullptr) {

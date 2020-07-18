@@ -8,6 +8,7 @@
 
 #include "FileData.h"
 
+#include "guis/GuiInfoPopup.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
@@ -435,15 +436,6 @@ void FileData::launchGame(Window* window)
 {
     LOG(LogInfo) << "Attempting to launch game...";
 
-    AudioManager::getInstance()->deinit();
-    VolumeControl::getInstance()->deinit();
-
-    // TEMPORARY - Windows does not like it at all if you launch a game without
-    // first doing a deinit(). Need to fix this properly at a later date.
-    #ifdef _WIN64
-	window->deinit();
-    #endif
-
     std::string command = "";
 
     // Check if there is a launch command override for the game
@@ -544,20 +536,20 @@ void FileData::launchGame(Window* window)
     exitCode = launchEmulatorUnix(command);
     #endif
 
+    // Notify the user in case of a failed game launch using a popup window.
     if (exitCode != 0) {
         LOG(LogWarning) << "...launch terminated with nonzero exit code " << exitCode << "!";
+
+        GuiInfoPopup* s = new GuiInfoPopup(window, "ERROR LAUNCHING GAME '" +
+                Utils::String::toUpper(metadata.get("name")) + "' (EXIT CODE " +
+                Utils::String::toUpper(std::to_string(exitCode) + ")"), 4000);
+        window->setInfoPopup(s);
+    }
+    else {
+        window->setLaunchedGame();
     }
 
     Scripting::fireEvent("game-end");
-
-    // TEMPORARY - Windows does not like it at all if you launch a game without
-    // first doing a deinit(). Need to fix this properly at a later date.
-    #ifdef _WIN64
-	window->init();
-    #endif
-
-    VolumeControl::getInstance()->init();
-    window->normalizeNextUpdate();
 
     // Update number of times the game has been launched.
     FileData* gameToUpdate = getSourceFileData();

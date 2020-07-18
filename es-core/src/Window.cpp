@@ -56,12 +56,12 @@ void Window::pushGui(GuiComponent* gui)
 
 void Window::removeGui(GuiComponent* gui)
 {
-    for (auto i = mGuiStack.cbegin(); i != mGuiStack.cend(); i++) {
-        if (*i == gui) {
-            i = mGuiStack.erase(i);
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
+        if (*it == gui) {
+            it = mGuiStack.erase(it);
 
             // We just popped the stack and the stack is not empty.
-            if (i == mGuiStack.cend() && mGuiStack.size()) {
+            if (it == mGuiStack.cend() && mGuiStack.size()) {
                 mGuiStack.back()->updateHelpPrompts();
                 mGuiStack.back()->topWindow(true);
             }
@@ -111,8 +111,8 @@ bool Window::init()
 void Window::deinit()
 {
     // Hide all GUI elements on uninitialisation - this disable.
-    for (auto i = mGuiStack.cbegin(); i != mGuiStack.cend(); i++)
-        (*i)->onHide();
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+        (*it)->onHide();
 
     InputManager::getInstance()->deinit();
     ResourceManager::getInstance()->unloadAll();
@@ -266,8 +266,14 @@ void Window::render()
     }
 
     unsigned int screensaverTime = (unsigned int)Settings::getInstance()->getInt("ScreenSaverTime");
-    if (mTimeSinceLastInput >= screensaverTime && screensaverTime != 0)
-        startScreenSaver();
+    // If a game has been launched, reset the screensaver timer when it's been reached as we
+    // don't want to start the screensaver in the background when running a game.
+    if (mTimeSinceLastInput >= screensaverTime && screensaverTime != 0) {
+        if (mGameLaunchedState)
+            mTimeSinceLastInput = 0;
+        else
+            startScreenSaver();
+    }
 
     // Always call the screensaver render function regardless of whether the screensaver is active
     // or not because it may perform a fade on transition.
@@ -420,12 +426,30 @@ bool Window::isProcessing()
             [](GuiComponent* c) { return c->isProcessing(); }) > 0;
 }
 
+void Window::setLaunchedGame()
+{
+    // Tell the GUI components that a game has been launched.
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+        (*it)->onGameLaunchedActivate();
+
+    mGameLaunchedState = true;
+}
+
+void Window::unsetLaunchedGame()
+{
+    // Tell the GUI components that the user is back in ES again.
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+        (*it)->onGameLaunchedDeactivate();
+
+    mGameLaunchedState = false;
+}
+
 void Window::startScreenSaver()
 {
     if (mScreenSaver && !mRenderScreenSaver) {
         // Tell the GUI components the screensaver is starting.
-        for (auto i = mGuiStack.cbegin(); i != mGuiStack.cend(); i++)
-            (*i)->onScreenSaverActivate();
+        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+            (*it)->onScreenSaverActivate();
 
         mScreenSaver->startScreenSaver();
         mRenderScreenSaver = true;
@@ -440,8 +464,8 @@ bool Window::cancelScreenSaver()
         mScreenSaver->resetCounts();
 
         // Tell the GUI components the screensaver has stopped.
-        for (auto i = mGuiStack.cbegin(); i != mGuiStack.cend(); i++)
-            (*i)->onScreenSaverDeactivate();
+        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+            (*it)->onScreenSaverDeactivate();
 
         return true;
     }

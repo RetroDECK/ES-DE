@@ -485,6 +485,7 @@ void GuiMenu::openOtherSettings()
     s->addSaveFunc([max_vram] { Settings::getInstance()->setInt("MaxVRAM",
             (int)Math::round(max_vram->getValue())); });
 
+    #ifdef __unix__
     // Fullscreen mode.
     auto fullscreen_mode = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
@@ -502,6 +503,7 @@ void GuiMenu::openOtherSettings()
         }
         Settings::getInstance()->setString("FullscreenMode", fullscreen_mode->getSelected());
     });
+    #endif
 
     // Power saver.
     auto power_saver = std::make_shared<OptionListComponent<std::string>>
@@ -541,7 +543,6 @@ void GuiMenu::openOtherSettings()
         if (needReload)
             ViewController::get()->reloadAll();
     });
-
     #endif
 
     // When to save game metadata.
@@ -592,6 +593,15 @@ void GuiMenu::openOtherSettings()
                 updateVal, multiLine, "SAVE", "SAVE CHANGES?"));
     });
     s->addRow(row);
+
+    #ifdef _WIN64
+    // Hide taskbar during ES program session.
+    auto hide_taskbar = std::make_shared<SwitchComponent>(mWindow);
+    hide_taskbar->setState(Settings::getInstance()->getBool("HideTaskbar"));
+    s->addWithLabel("HIDE TASKBAR (REQUIRES RESTART)", hide_taskbar);
+    s->addSaveFunc([hide_taskbar] { Settings::getInstance()->
+            setBool("HideTaskbar", hide_taskbar->getState()); });
+    #endif
 
     // Allow overriding of the launch command per game (the option to disable this is
     // intended primarily for testing purposes).

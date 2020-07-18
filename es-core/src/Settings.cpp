@@ -32,7 +32,9 @@ std::vector<const char*> settings_dont_save {
     "ShowExit",             // --no-exit
     "SplashScreen",         // --no-splash
     "VSync",                // --vsync [1/on or 0/off]
+    #ifndef _WIN64
     "Windowed",             // --windowed
+    #endif
     "WindowWidth",          // Set via --resolution [width] [height]
     "WindowHeight",         // set via --resolution [width] [height]
 
@@ -164,7 +166,9 @@ void Settings::setDefaults()
     #else
         mIntMap["MaxVRAM"] = 100;
     #endif
+    #ifdef __unix__
     mStringMap["FullscreenMode"] = "normal";
+    #endif
     mStringMap["PowerSaverMode"] = "disabled";
     // This setting only applies to raspberry pi but set it for all platforms so
     // we don't get a warning if we encounter it on a different platform.
@@ -181,6 +185,9 @@ void Settings::setDefaults()
     mBoolMap["ScreenSaverOmxPlayer"] = false;
     #endif
     mStringMap["SaveGamelistsMode"] = "always";
+    #ifdef _WIN64
+    mBoolMap["HideTaskbar"] = false;
+    #endif
     mStringMap["MediaDirectory"] = "";
     mBoolMap["LaunchCommandOverride"] = true;
     mBoolMap["CustomEventScripts"] = false;
@@ -203,7 +210,9 @@ void Settings::setDefaults()
     mBoolMap["ShowExit"] = true;
     mBoolMap["SplashScreen"] = true;
     mBoolMap["VSync"] = true;
+    #ifndef _WIN64
     mBoolMap["Windowed"] = false;
+    #endif
     mIntMap["WindowWidth"]   = 0;
     mIntMap["WindowHeight"]  = 0;
     mIntMap["ScreenWidth"]   = 0;

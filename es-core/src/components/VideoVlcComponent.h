@@ -57,10 +57,13 @@ private:
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
     // Used internally whenever the resizing parameters or texture change.
     void resize();
+
     // Start the video immediately.
     virtual void startVideo() override;
     // Stop the video.
     virtual void stopVideo() override;
+    // Pause the video when a game has been launched.
+    virtual void pauseVideo() override;
     // Handle looping the video. Must be called periodically.
     virtual void handleLooping() override;
 

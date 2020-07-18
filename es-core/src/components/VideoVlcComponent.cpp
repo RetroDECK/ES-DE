@@ -231,10 +231,22 @@ void VideoVlcComponent::handleLooping()
                 (Settings::getInstance()->getBool("ScreenSaverVideoMute") && mScreensaverMode))
                 libvlc_audio_set_mute(mMediaPlayer, 1);
 
-            //libvlc_media_player_set_position(mMediaPlayer, 0.0f);
             libvlc_media_player_set_media(mMediaPlayer, mMedia);
             libvlc_media_player_play(mMediaPlayer);
         }
+    }
+}
+
+void VideoVlcComponent::pauseVideo()
+{
+    // If a game has been launched and the flag to pause the video has been
+    // set, then rewind and pause.
+    if (!mPause || !mMediaPlayer)
+        return;
+
+    if (libvlc_media_player_get_state(mMediaPlayer) == libvlc_Playing) {
+        libvlc_media_player_set_position(mMediaPlayer, 0.0f);
+        libvlc_media_player_pause(mMediaPlayer);
     }
 }
 
@@ -336,6 +348,7 @@ void VideoVlcComponent::stopVideo()
 {
     mIsPlaying = false;
     mStartDelayed = false;
+    mPause = false;
     // Release the media player so it stops calling back to us.
     if (mMediaPlayer) {
         libvlc_media_player_stop(mMediaPlayer);

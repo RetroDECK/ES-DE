@@ -511,6 +511,18 @@ void GuiComponent::onScreenSaverDeactivate()
         getChild(i)->onScreenSaverDeactivate();
 }
 
+void GuiComponent::onGameLaunchedActivate()
+{
+    for (unsigned int i = 0; i < getChildCount(); i++)
+        getChild(i)->onGameLaunchedActivate();
+}
+
+void GuiComponent::onGameLaunchedDeactivate()
+{
+    for (unsigned int i = 0; i < getChildCount(); i++)
+        getChild(i)->onGameLaunchedDeactivate();
+}
+
 void GuiComponent::topWindow(bool isTop)
 {
     for (unsigned int i = 0; i < getChildCount(); i++)

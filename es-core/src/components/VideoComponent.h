@@ -48,6 +48,8 @@ public:
     virtual void onHide() override;
     virtual void onScreenSaverActivate() override;
     virtual void onScreenSaverDeactivate() override;
+    virtual void onGameLaunchedActivate() override;
+    virtual void onGameLaunchedDeactivate() override;
     virtual void topWindow(bool isTop) override;
 
     void onOriginChanged() override;
@@ -82,7 +84,9 @@ private:
     // Start the video immediately.
     virtual void startVideo() = 0;
     // Stop the video.
-    virtual void stopVideo() { };
+    virtual void stopVideo() {};
+    // Pause the video when a game has been launched.
+    virtual void pauseVideo() {};
     // Handle looping the video. Must be called periodically.
     virtual void handleLooping();
 
@@ -109,13 +113,15 @@ protected:
     bool mStartDelayed;
     unsigned mStartTime;
     bool mIsPlaying;
+    bool mPause;
     bool mShowing;
     bool mDisable;
     bool mScreensaverActive;
     bool mScreensaverMode;
+    bool mGameLaunched;
     bool mTargetIsMax;
 
-    Configuration					mConfig;
+    Configuration mConfig;
 };
 
 #endif // ES_CORE_COMPONENTS_VIDEO_COMPONENT_H

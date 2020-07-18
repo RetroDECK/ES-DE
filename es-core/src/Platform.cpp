@@ -68,6 +68,7 @@ int runSystemCommand(const std::wstring& cmd_utf16)
 
 int launchEmulatorUnix(const std::string& cmd_utf8)
 {
+    // TODO, replace with proper child process execution.
     #ifdef __unix__
     return system(cmd_utf8.c_str());
     #else
@@ -95,11 +96,7 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
             nullptr,                        // Use parent's environment block.
             nullptr,                        // Use parent's starting directory.
             &si,                            // Pointer to the STARTUPINFOW structure.
-            &pi );                          // Pointer to the PROCESS_INFORMATION structure.
-
-    // Wait for the child process to exit.
-    WaitForSingleObject(pi.hThread, INFINITE);
-    WaitForSingleObject(pi.hProcess, INFINITE);
+            &pi);                           // Pointer to the PROCESS_INFORMATION structure.
 
     // If the return value is false, then something failed.
     if (!processReturnValue) {
@@ -129,6 +126,37 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
     return errorCode;
     #else // _WIN64
     return 0;
+    #endif
+}
+
+unsigned int getTaskbarState()
+{
+    #ifdef _WIN64
+    APPBARDATA barData;
+    barData.cbSize = sizeof(APPBARDATA);
+    return (UINT) SHAppBarMessage(ABM_GETSTATE, &barData);
+    #else
+    return 0;
+    #endif
+}
+
+void hideTaskbar()
+{
+    #ifdef _WIN64
+    APPBARDATA barData;
+    barData.cbSize = sizeof(APPBARDATA);
+    barData.lParam = ABS_AUTOHIDE;
+    SHAppBarMessage(ABM_SETSTATE, &barData);
+    #endif
+}
+
+void revertTaskbarState(unsigned int& state)
+{
+    #ifdef _WIN64
+    APPBARDATA barData;
+    barData.cbSize = sizeof(APPBARDATA);
+    barData.lParam = state;
+    SHAppBarMessage(ABM_SETSTATE, &barData);
     #endif
 }
 

@@ -408,6 +408,13 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mLockInput)
         return true;
 
+    // If we have previously launched a game and there is now input registered, it means
+    // the user is back in ES, so unset the flag to indicate that a game has been launched
+    // and update all the GUI components to reflect this.
+    if (mWindow->getGameLaunchedState()) {
+        mWindow->unsetLaunchedGame();
+    }
+
     // Open menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&
             !Settings::getInstance()->getBool("ShowKidStartMenu")) &&
@@ -531,6 +538,11 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
             break;
         }
     }
+
+    // If a game has been launched, then update all the GUI components to reflect this.
+    if (mWindow->getGameLaunchedState())
+        mWindow->setLaunchedGame();
+
     // Redisplay the current view.
     if (mCurrentView)
         mCurrentView->onShow();

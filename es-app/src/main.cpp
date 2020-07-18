@@ -245,6 +245,8 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setBool("Debug", true);
             Log::setReportingLevel(LogDebug);
         }
+        // Windowed mode is always selected on Windows.
+        #ifndef _WIN64
         else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
             Settings::getInstance()->setString("FullscreenMode", "normal");
         }
@@ -254,6 +256,7 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--windowed") == 0) {
             Settings::getInstance()->setBool("Windowed", true);
         }
+        #endif
         else if (strcmp(argv[i], "--vsync") == 0) {
             bool vsync = (strcmp(argv[i + 1], "on") == 0 ||
                     strcmp(argv[i + 1], "1") == 0) ? true : false;
@@ -286,9 +289,11 @@ bool parseArgs(int argc, char* argv[])
 "  --no-exit                       Don't show the exit option in the menu\n"
 "  --no-splash                     Don't show the splash screen\n"
 "  --debug                         Print debug information\n"
+#ifndef _WIN64
 "  --windowed                      Windowed mode, should be combined with --resolution\n"
 "  --fullscreen-normal             Normal fullscreen mode\n"
 "  --fullscreen-borderless         Borderless fullscreen mode (always on top)\n"
+#endif
 "  --vsync [1/on or 0/off]         Turn vsync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use in Mb before swapping\n"
 "                                  Set to at least 20 to avoid unpredictable behavior\n"
@@ -348,8 +353,8 @@ bool loadSystemConfigFile(std::string& errorMsg)
                 "(Check that the file extensions are supported.)";
         errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
                 "GAME FILES WERE FOUND. PLEASE MAKE SURE THAT\n"
-                "THE 'ROMDIRECTORY' SETTING IN ES_SETTINGS.CFG IS\n"
-                "POINTING TO YOUR ROM DIRECTORY AND THAT YOUR\n"
+                "THE \"ROMDIRECTORY\" SETTING IN ES_SETTINGS.CFG\n"
+                "IS POINTING TO YOUR ROM DIRECTORY AND THAT YOUR\n"
                 "GAME FILES ARE USING SUPPORTED FILE EXTENSIONS.\n"
                 "THE GAME SYSTEMS SUBDIRECTORIES ALSO NEED TO\n"
                 "MATCH THE PLATFORM TAGS IN ES_SYSTEMS.CFG.\n"
@@ -389,6 +394,18 @@ int main(int argc, char* argv[])
     // Send debug output to the console..
     if (Settings::getInstance()->getBool("Debug"))
         outputToConsole(true);
+    #endif
+
+    #ifdef _WIN64
+    // Hide taskbar if the setting for this is enabled.
+    bool taskbarStateChanged = false;
+    unsigned int taskbarState;
+
+    if (Settings::getInstance()->getBool("HideTaskbar")) {
+        taskbarStateChanged = true;
+        taskbarState = getTaskbarState();
+        hideTaskbar();
+    }
     #endif
 
     // Call this ONLY when linking with FreeImage as a static library.
@@ -584,6 +601,12 @@ int main(int argc, char* argv[])
     // Call this ONLY when linking with FreeImage as a static library.
     #ifdef FREEIMAGE_LIB
     FreeImage_DeInitialise();
+    #endif
+
+    #ifdef _WIN64
+    // If the taskbar state was changed (taskbar was hidden), then revert it.
+    if (taskbarStateChanged)
+        revertTaskbarState(taskbarState);
     #endif
 
     processQuitMode();

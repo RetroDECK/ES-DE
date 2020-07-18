@@ -67,8 +67,10 @@ VideoComponent::VideoComponent(
     mVideoWidth(0),
     mStartDelayed(false),
     mIsPlaying(false),
+    mPause(false),
     mShowing(false),
     mScreensaverActive(false),
+    mGameLaunched(false),
     mDisable(false),
     mScreensaverMode(false),
     mTargetIsMax(false),
@@ -174,6 +176,9 @@ void VideoComponent::render(const Transform4x4f& parentTrans)
 
     // Handle looping of the video.
     handleLooping();
+
+    // Pause video in case a game has been launched.
+    pauseVideo();
 }
 
 void VideoComponent::renderSnapshot(const Transform4x4f& parentTrans)
@@ -253,6 +258,8 @@ void VideoComponent::handleLooping()
 
 void VideoComponent::startVideoWithDelay()
 {
+    mPause = false;
+
     // If not playing then either start the video or initiate the delay.
     if (!mIsPlaying) {
         // Set the video that we are going to be playing so we don't attempt to restart it.
@@ -300,7 +307,7 @@ void VideoComponent::update(int deltaTime)
 
 void VideoComponent::manageState()
 {
-    // We will only show if the component is on display and the screensaver
+    // We will only show the video if the component is on display and the screensaver
     // is not active.
     bool show = mShowing && !mScreensaverActive && !mDisable;
 
@@ -324,6 +331,12 @@ void VideoComponent::manageState()
         if (show && !mVideoPath.empty())
             startVideoWithDelay();
     }
+
+    // If a game has just been launched and a video is actually shown, then request a
+    // pause of the video so it doesn't continue to play in the background while the
+    // game is running.
+    if (mGameLaunched && show && !mPause)
+        mPause = true;
 }
 
 void VideoComponent::onShow()
@@ -347,6 +360,19 @@ void VideoComponent::onScreenSaverActivate()
 void VideoComponent::onScreenSaverDeactivate()
 {
     mScreensaverActive = false;
+    manageState();
+}
+
+void VideoComponent::onGameLaunchedActivate()
+{
+    mGameLaunched = true;
+    manageState();
+}
+
+void VideoComponent::onGameLaunchedDeactivate()
+{
+    mGameLaunched = false;
+    stopVideo();
     manageState();
 }
 

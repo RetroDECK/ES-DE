@@ -157,6 +157,8 @@ public:
 
     virtual void onScreenSaverActivate();
     virtual void onScreenSaverDeactivate();
+    virtual void onGameLaunchedActivate();
+    virtual void onGameLaunchedDeactivate();
     virtual void topWindow(bool isTop);
 
     // Default implementation just handles <pos> and <size> tags as normalized float pairs.
