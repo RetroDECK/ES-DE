@@ -27,6 +27,7 @@ Window::Window()
         mTimeSinceLastInput(0),
         mScreenSaver(nullptr),
         mRenderScreenSaver(false),
+        mGameLaunchedState(false),
         mInfoPopup(nullptr)
 {
     mHelp = new HelpComponent(this);

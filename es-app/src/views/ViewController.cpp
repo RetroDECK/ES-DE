@@ -408,12 +408,16 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mLockInput)
         return true;
 
+    // This code is only needed for Windows, where we need to keep ES running while
+    // the game/emulator is in use. It's basically used to pause any playing game video.
+    #ifdef _WIN64
     // If we have previously launched a game and there is now input registered, it means
     // the user is back in ES, so unset the flag to indicate that a game has been launched
     // and update all the GUI components to reflect this.
     if (mWindow->getGameLaunchedState()) {
         mWindow->unsetLaunchedGame();
     }
+    #endif
 
     // Open menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&
@@ -539,9 +543,13 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
         }
     }
 
+    // This code is only needed for Windows, where we need to keep ES running while
+    // the game/emulator is in use. It's basically used to pause any playing game video.
+    #ifdef _WIN64
     // If a game has been launched, then update all the GUI components to reflect this.
     if (mWindow->getGameLaunchedState())
         mWindow->setLaunchedGame();
+    #endif
 
     // Redisplay the current view.
     if (mCurrentView)

@@ -68,10 +68,49 @@ int runSystemCommand(const std::wstring& cmd_utf16)
 
 int launchEmulatorUnix(const std::string& cmd_utf8)
 {
-    // TODO, replace with proper child process execution.
     #ifdef __unix__
-    return system(cmd_utf8.c_str());
-    #else
+    std::string command = std::string(cmd_utf8) + " 2>&1";
+
+    FILE* commandPipe;
+    std::array<char, 128> buffer;
+    std::string commandOutput;
+    int returnValue;
+
+    if (!(commandPipe = (FILE*)popen(command.c_str(), "r"))) {
+        LOG(LogError) << "Error - couldn't open pipe to command.";
+        return -1;
+    }
+
+    while (fgets(buffer.data(), buffer.size(), commandPipe) != nullptr) {
+        commandOutput += buffer.data();
+    }
+
+    returnValue = pclose(commandPipe);
+    // We need to shift the return value as it contains some flags (which we don't need).
+    returnValue >>= 8;
+
+    // Remove any trailing newline from the command output.
+    if (commandOutput.size()) {
+        if (commandOutput.back() == '\n')
+           commandOutput.pop_back();
+    }
+
+    if (returnValue) {
+        LOG(LogError) << "Error - launchEmulatorUnix - return value " <<
+                std::to_string(returnValue) + ":";
+        if (commandOutput.size())
+            LOG(LogError) << commandOutput;
+        else
+            LOG(LogError) << "No error output provided by emulator.";
+    }
+    else if (commandOutput.size()) {
+        LOG(LogDebug) << "Platform::launchEmulatorUnix():";
+        LOG(LogDebug) << "Output from launched game:\n" << commandOutput;
+    }
+
+    return returnValue;
+
+    #else // __unix__
     return 0;
     #endif
 }
@@ -98,6 +137,15 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
             &si,                            // Pointer to the STARTUPINFOW structure.
             &pi);                           // Pointer to the PROCESS_INFORMATION structure.
 
+    // Unfortunately suspending ES and resuming when the emulator process has exited
+    // doesn't work reliably on Windows, so we need to keep ES running. Maybe there is
+    // some workaround for this. Possibly it's just SDL that is glitchy or it's actually
+    // something OS-specific. Keeping the code here just in case it could be reactivated.
+    // For sure it would simplify things, like not having to pause playing videos.
+//    // Wait for the child process to exit.
+//    WaitForSingleObject(pi.hThread, INFINITE);
+//    WaitForSingleObject(pi.hProcess, INFINITE);
+
     // If the return value is false, then something failed.
     if (!processReturnValue) {
         LPWSTR pBuffer = nullptr;
@@ -110,10 +158,14 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
 
         std::string errorMessage = Utils::String::wideStringToString(pBuffer);
         // Remove trailing newline from the error message.
-        if (errorMessage.back() == '\n');
-            errorMessage.pop_back();
-        if (errorMessage.back() == '\r');
-            errorMessage.pop_back();
+        if (errorMessage.size()) {
+            if (errorMessage.back() == '\n')
+                errorMessage.pop_back();
+            if (errorMessage.size()) {
+                if (errorMessage.back() == '\r')
+                    errorMessage.pop_back();
+            }
+        }
 
         LOG(LogError) << "Error - launchEmulatorWindows - system error code " <<
                 errorCode << ": " << errorMessage;
@@ -124,6 +176,7 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
     CloseHandle(pi.hThread);
 
     return errorCode;
+
     #else // _WIN64
     return 0;
     #endif

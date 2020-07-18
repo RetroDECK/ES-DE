@@ -466,7 +466,7 @@ void FileData::launchGame(Window* window)
     #endif
 
     Scripting::fireEvent("game-start", rom, basename);
-    int exitCode = 0;
+    int returnValue = 0;
 
     if (command.find("%EMUPATH%") != std::string::npos) {
         // Extract the emulator executable from the launch command string. This could either be
@@ -530,24 +530,28 @@ void FileData::launchGame(Window* window)
 
     #ifdef _WIN64
     LOG(LogInfo) << Utils::String::wideStringToString(commandWide);
-    exitCode = launchEmulatorWindows(commandWide);
+    returnValue = launchEmulatorWindows(commandWide);
     #else
     LOG(LogInfo) << command;
-    exitCode = launchEmulatorUnix(command);
+    returnValue = launchEmulatorUnix(command);
     #endif
 
     // Notify the user in case of a failed game launch using a popup window.
-    if (exitCode != 0) {
-        LOG(LogWarning) << "...launch terminated with nonzero exit code " << exitCode << "!";
+    if (returnValue != 0) {
+        LOG(LogWarning) << "...launch terminated with nonzero return value " << returnValue << "!";
 
         GuiInfoPopup* s = new GuiInfoPopup(window, "ERROR LAUNCHING GAME '" +
-                Utils::String::toUpper(metadata.get("name")) + "' (EXIT CODE " +
-                Utils::String::toUpper(std::to_string(exitCode) + ")"), 4000);
+                Utils::String::toUpper(metadata.get("name")) + "' (ERROR CODE " +
+                Utils::String::toUpper(std::to_string(returnValue) + ")"), 6000);
         window->setInfoPopup(s);
     }
+    // This code is only needed for Windows, where we need to keep ES running while
+    // the game/emulator is in use. It's basically used to pause any playing game video.
+    #ifdef _WIN64
     else {
         window->setLaunchedGame();
     }
+    #endif
 
     Scripting::fireEvent("game-end");
 

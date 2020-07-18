@@ -1,7 +1,7 @@
 //
 //  MoveCameraAnimation.h
 //
-//  Animation to play when moving the camera.
+//  Animation to play when moving the camera, used by the slide transition style.
 //
 
 #pragma once

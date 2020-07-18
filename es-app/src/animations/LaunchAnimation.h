@@ -56,6 +56,8 @@ public:
 
     void apply(float t) override
     {
+        // TEMPORARY, disabled as it causes flicker when launching games.
+        return;
         cameraOut = Transform4x4f::Identity();
 
         float zoom = Math::lerp(1.0, 4.25f, t*t);
