@@ -11,6 +11,7 @@
 #include "AudioManager.h"
 #include "Log.h"
 #include "MameNames.h"
+#include "Settings.h"
 
 #if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_events.h>
@@ -138,13 +139,15 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
             &pi);                           // Pointer to the PROCESS_INFORMATION structure.
 
     // Unfortunately suspending ES and resuming when the emulator process has exited
-    // doesn't work reliably on Windows, so we need to keep ES running. Maybe there is
-    // some workaround for this. Possibly it's just SDL that is glitchy or it's actually
-    // something OS-specific. Keeping the code here just in case it could be reactivated.
-    // For sure it would simplify things, like not having to pause playing videos.
-//    // Wait for the child process to exit.
-//    WaitForSingleObject(pi.hThread, INFINITE);
-//    WaitForSingleObject(pi.hProcess, INFINITE);
+    // doesn't work reliably on Windows, so we may need to keep ES running in the
+    // background while the game is launched. I'm not sure if there is a workaround
+    // for this, but on some Windows installations it seems to work fine so we'll let
+    // the user choose via a menu option.
+    if (!Settings::getInstance()->getBool("RunInBackground")) {
+        // Wait for the child process to exit.
+        WaitForSingleObject(pi.hThread, INFINITE);
+        WaitForSingleObject(pi.hProcess, INFINITE);
+    }
 
     // If the return value is false, then something failed.
     if (!processReturnValue) {

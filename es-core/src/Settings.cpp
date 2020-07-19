@@ -187,6 +187,7 @@ void Settings::setDefaults()
     mStringMap["SaveGamelistsMode"] = "always";
     #ifdef _WIN64
     mBoolMap["HideTaskbar"] = false;
+    mBoolMap["RunInBackground"] = true;
     #endif
     mStringMap["MediaDirectory"] = "";
     mBoolMap["LaunchCommandOverride"] = true;

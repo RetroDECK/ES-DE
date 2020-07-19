@@ -601,6 +601,13 @@ void GuiMenu::openOtherSettings()
     s->addWithLabel("HIDE TASKBAR (REQUIRES RESTART)", hide_taskbar);
     s->addSaveFunc([hide_taskbar] { Settings::getInstance()->
             setBool("HideTaskbar", hide_taskbar->getState()); });
+
+    // Run ES in the background when a game has been launched.
+    auto run_in_background = std::make_shared<SwitchComponent>(mWindow);
+    run_in_background->setState(Settings::getInstance()->getBool("RunInBackground"));
+    s->addWithLabel("RUN IN BACKGROUND (WHILE GAME IS LAUNCHED)", run_in_background);
+    s->addSaveFunc([run_in_background] { Settings::getInstance()->
+            setBool("RunInBackground", run_in_background->getState()); });
     #endif
 
     // Allow overriding of the launch command per game (the option to disable this is

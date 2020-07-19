@@ -56,6 +56,12 @@ public:
 
     void apply(float t) override
     {
+        // TEMPORARY - disabled the launch animations as they don't work properly and more
+        // work is needed to fix them. This has been done in LaunchAnimation.h instead of in
+        // ViewController as not calling the animation leads to input not being properly
+        // consumed. This also needs to be fixed later on.
+        return;
+
         cameraOut = Transform4x4f::Identity();
 
         float zoom = Math::lerp(1.0, 4.25f, t*t);

@@ -26,10 +26,6 @@
 
 #include <assert.h>
 
-#ifdef _WIN64
-#include <SDL2/SDL_timer.h>
-#endif
-
 FileData::FileData(
         FileType type,
         const std::string& path,
@@ -549,14 +545,13 @@ void FileData::launchGame(Window* window)
                 Utils::String::toUpper(std::to_string(returnValue) + ")"), 6000);
         window->setInfoPopup(s);
     }
-    // This code is only needed for Windows, where we need to keep ES running while
-    // the game/emulator is in use. It's basically used to pause any playing game video.
     #ifdef _WIN64
+    // This code is only needed for Windows, where we may need to keep ES running while
+    // the game/emulator is in use. It's basically used to pause any playing game video
+    // and to keep the screensaver from activating.
     else {
-        window->setLaunchedGame();
-        // Temporary hack to stop the user from sending any input to ES while
-        // the game is launching.
-        SDL_Delay(3000);
+        if (Settings::getInstance()->getBool("RunInBackground"))
+            window->setLaunchedGame();
     }
     #endif
 

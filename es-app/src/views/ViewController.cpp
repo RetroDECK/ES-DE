@@ -264,13 +264,21 @@ void ViewController::launch(FileData* game, Vector3f center)
     // Let launch sound play to the end before launching game.
     while (NavigationSounds::getInstance()->isPlayingThemeNavigationSound(LAUNCHSOUND));
 
-    game->launchGame(mWindow);
-    mLockInput = false;
-    this->onFileChanged(game, FILE_METADATA_CHANGED);
-
     // TEMPORARY - disabled the launch animations as they don't work properly and more
-    // work is needed to fix them.
-    //
+    // work is needed to fix them. This has been done in LaunchAnimation.h instead of here,
+    // as not calling the animation leads to input not being properly consumed. This also
+    // needs to be fixed later on.
+    setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 1500), 0,
+            [this, origCamera, center, game] {
+        game->launchGame(mWindow);
+        mCamera = origCamera;
+        setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 600), 0, [this] {
+                    mLockInput = false; }, true);
+        this->onFileChanged(game, FILE_METADATA_CHANGED);
+        if (mCurrentView)
+            mCurrentView->onShow();
+    });
+
     // if (transition_style == "fade") {
     //     // Fade out, launch game, fade back in.
     //     auto fadeFunc = [this](float t) {
@@ -409,20 +417,22 @@ std::shared_ptr<SystemView> ViewController::getSystemListView()
     return mSystemListView;
 }
 
-
 bool ViewController::input(InputConfig* config, Input input)
 {
     if (mLockInput)
         return true;
 
-    // This code is only needed for Windows, where we need to keep ES running while
-    // the game/emulator is in use. It's basically used to pause any playing game video.
     #ifdef _WIN64
-    // If we have previously launched a game and there is now input registered, it means
-    // the user is back in ES, so unset the flag to indicate that a game has been launched
-    // and update all the GUI components to reflect this.
-    if (mWindow->getGameLaunchedState()) {
-        mWindow->unsetLaunchedGame();
+    // This code is only needed for Windows, where we may need to keep ES running while
+    // the game/emulator is in use. It's basically used to pause any playing game video
+    // and to keep the screensaver from activating.
+    if (Settings::getInstance()->getBool("RunInBackground")) {
+        // If we have previously launched a game and there is now input registered, it means
+        // the user is back in ES, so unset the flag to indicate that a game has been launched
+        // and update all the GUI components to reflect this.
+        bool testbool = mWindow->getGameLaunchedState();
+        if (mWindow->getGameLaunchedState())
+            mWindow->unsetLaunchedGame();
     }
     #endif
 
@@ -550,12 +560,15 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
         }
     }
 
-    // This code is only needed for Windows, where we need to keep ES running while
-    // the game/emulator is in use. It's basically used to pause any playing game video.
     #ifdef _WIN64
-    // If a game has been launched, then update all the GUI components to reflect this.
-    if (mWindow->getGameLaunchedState())
-        mWindow->setLaunchedGame();
+    // This code is only needed for Windows, where we may need to keep ES running while
+    // the game/emulator is in use. It's basically used to pause any playing game video
+    // and to keep the screensaver from activating.
+    if (Settings::getInstance()->getBool("RunInBackground")) {
+        // If a game has been launched, then update all the GUI components to reflect this.
+        if (mWindow->getGameLaunchedState())
+            mWindow->setLaunchedGame();
+    }
     #endif
 
     // Redisplay the current view.
