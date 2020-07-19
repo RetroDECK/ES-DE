@@ -282,8 +282,8 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         mSystemInfo.setOpacity((unsigned char)(Math::lerp(0.f, 1.f, t) * 255));
     }, goFast ? 10 : 300);
 
-    // Wait 600ms to fade in.
-    setAnimation(infoFadeIn, goFast ? 0 : 2000, nullptr, false, 2);
+    // Wait 150ms to fade in.
+    setAnimation(infoFadeIn, goFast ? 0 : 500, nullptr, false, 2);
 
     // No need to animate transition, we're not going anywhere (probably mEntries.size() == 1).
     if (endPos == mCamOffset && endPos == mExtrasCamOffset)
@@ -306,11 +306,11 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 
             t += 1;
             if (t < 0.3f)
-                this->mExtrasFadeOpacity = Math::lerp(0.0f, 1.0f, t / 0.3f + startExtrasFade);
+                this->mExtrasFadeOpacity = Math::lerp(0.0f, 1.0f, t / 0.2f + startExtrasFade);
             else if (t < 0.7f)
                 this->mExtrasFadeOpacity = 1.0f;
             else
-                this->mExtrasFadeOpacity = Math::lerp(1.0f, 0.0f, (t - 0.7f) / 0.3f);
+                this->mExtrasFadeOpacity = Math::lerp(1.0f, 0.0f, (t - 0.6f) / 0.3f);
 
             if (t > 0.5f)
                 this->mExtrasCamOffset = endPos;

@@ -200,8 +200,8 @@ void ViewController::playViewTransition()
             mFadeOpacity = Math::lerp(0, 1, t);
         };
 
-        const static int FADE_DURATION = 240; // Fade in/out time.
-        const static int FADE_WAIT = 320; // Time to wait between in/out.
+        const static int FADE_DURATION = 120; // Fade in/out time.
+        const static int FADE_WAIT = 200; // Time to wait between in/out.
         setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), 0, [this, fadeFunc, target] {
             this->mCamera.translation() = -target;
             updateHelpPrompts();
