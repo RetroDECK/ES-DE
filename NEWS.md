@@ -43,4 +43,5 @@ v1.0.0
 * Restart and power-off menu entries not working
 * Toggling the screensaver didn't work as expected
 * Deleting a game did not delete the game media files or its entry in the gamelist.xml file
+* SystemView didn't properly loop the systems if only two systems were available
 * Lots and lots of small bugs and inconsistencies fixed

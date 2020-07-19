@@ -244,9 +244,9 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     float endPos = target; // Directly.
     float dist = abs(endPos - startPos);
 
-    if (abs(target + posMax - startPos) < dist)
+    if (abs(target + posMax - startPos - mScrollVelocity) < dist)
         endPos = target + posMax; // Loop around the end (0 -> max).
-    if (abs(target - posMax - startPos) < dist)
+    if (abs(target - posMax - startPos - mScrollVelocity) < dist)
         endPos = target - posMax; // Loop around the start (max - 1 -> -1).
 
     // Animate mSystemInfo's opacity (fade out, wait, fade back in).
