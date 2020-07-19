@@ -1,7 +1,8 @@
 //
 //  MoveCameraAnimation.h
 //
-//  Animation to play when moving the camera, used by the slide transition style.
+//  Animation to play when moving the camera, used by the slide transition style
+//  (when moving between gamelists using quick system select).
 //
 
 #pragma once

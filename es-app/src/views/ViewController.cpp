@@ -264,46 +264,53 @@ void ViewController::launch(FileData* game, Vector3f center)
     // Let launch sound play to the end before launching game.
     while (NavigationSounds::getInstance()->isPlayingThemeNavigationSound(LAUNCHSOUND));
 
-    if (transition_style == "fade") {
-        // Fade out, launch game, fade back in.
-        auto fadeFunc = [this](float t) {
-            mFadeOpacity = Math::lerp(0.0f, 1.0f, t);
-        };
-        setAnimation(new LambdaAnimation(fadeFunc, 800), 0, [this, game, fadeFunc] {
-            game->launchGame(mWindow);
-            setAnimation(new LambdaAnimation(fadeFunc, 800), 0, [this] {
-                        mLockInput = false; }, true);
-            this->onFileChanged(game, FILE_METADATA_CHANGED);
-            if (mCurrentView)
-                mCurrentView->onShow();
-        });
-    }
-    else if (transition_style == "slide") {
-        // Move camera to zoom in on center + fade out, launch game, come back in.
-        setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 1500), 0,
-                [this, origCamera, center, game] {
-            game->launchGame(mWindow);
-            mCamera = origCamera;
-            setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 600), 0, [this] {
-                        mLockInput = false; }, true);
-            this->onFileChanged(game, FILE_METADATA_CHANGED);
-            if (mCurrentView)
-                mCurrentView->onShow();
-        });
-    }
-    // Instant
-    else {
-        setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 10), 0,
-                [this, origCamera, center, game] {
-            game->launchGame(mWindow);
-            mCamera = origCamera;
-            setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 10), 0,
-                    [this] { mLockInput = false; }, true);
-            this->onFileChanged(game, FILE_METADATA_CHANGED);
-            if (mCurrentView)
-                mCurrentView->onShow();
-        });
-    }
+    game->launchGame(mWindow);
+    mLockInput = false;
+    this->onFileChanged(game, FILE_METADATA_CHANGED);
+
+    // TEMPORARY - disabled the launch animations as they don't work properly and more
+    // work is needed to fix them.
+    //
+    // if (transition_style == "fade") {
+    //     // Fade out, launch game, fade back in.
+    //     auto fadeFunc = [this](float t) {
+    //         mFadeOpacity = Math::lerp(0.0f, 1.0f, t);
+    //     };
+    //     setAnimation(new LambdaAnimation(fadeFunc, 800), 0, [this, game, fadeFunc] {
+    //         game->launchGame(mWindow);
+    //         setAnimation(new LambdaAnimation(fadeFunc, 800), 0, [this] {
+    //                     mLockInput = false; }, true);
+    //         this->onFileChanged(game, FILE_METADATA_CHANGED);
+    //         if (mCurrentView)
+    //             mCurrentView->onShow();
+    //     });
+    // }
+    // else if (transition_style == "slide") {
+    //     // Move camera to zoom in on center + fade out, launch game, come back in.
+    //     setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 1500), 0,
+    //             [this, origCamera, center, game] {
+    //         game->launchGame(mWindow);
+    //         mCamera = origCamera;
+    //         setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 600), 0, [this] {
+    //                     mLockInput = false; }, true);
+    //         this->onFileChanged(game, FILE_METADATA_CHANGED);
+    //         if (mCurrentView)
+    //             mCurrentView->onShow();
+    //     });
+    // }
+    // // Instant
+    // else {
+    //     setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 10), 0,
+    //             [this, origCamera, center, game] {
+    //         game->launchGame(mWindow);
+    //         mCamera = origCamera;
+    //         setAnimation(new LaunchAnimation(mCamera, mFadeOpacity, center, 10), 0,
+    //                 [this] { mLockInput = false; }, true);
+    //         this->onFileChanged(game, FILE_METADATA_CHANGED);
+    //         if (mCurrentView)
+    //             mCurrentView->onShow();
+    //     });
+    // }
 }
 
 void ViewController::removeGameListView(SystemData* system)

@@ -26,6 +26,10 @@
 
 #include <assert.h>
 
+#ifdef _WIN64
+#include <SDL2/SDL_timer.h>
+#endif
+
 FileData::FileData(
         FileType type,
         const std::string& path,
@@ -550,6 +554,9 @@ void FileData::launchGame(Window* window)
     #ifdef _WIN64
     else {
         window->setLaunchedGame();
+        // Temporary hack to stop the user from sending any input to ES while
+        // the game is launching.
+        SDL_Delay(3000);
     }
     #endif
 
