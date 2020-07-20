@@ -261,7 +261,7 @@ void DateTimeEditComponent::updateTextCache()
 
     // Hack to set date string to blank instead of 'unknown'.
     // The calling function simply needs to set this string using setValue().
-    if (mTime.getIsoString() == "99990101T000000") {
+    if (mTime.getIsoString() == "19700101T010101") {
         dispString = "";
     }
     else {

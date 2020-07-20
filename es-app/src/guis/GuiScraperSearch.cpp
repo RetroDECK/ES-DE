@@ -7,7 +7,7 @@
 //  to resolve scraping conflicts when run from GuiScraperMenu.
 //  The function to properly save scraped metadata is located here too.
 //
-//  This component is called from GuiGameScraper for single-game scraping and
+//  This GUI is called from GuiGameScraper for single-game scraping and
 //  from GuiScraperMulti for multi-game scraping.
 //
 
@@ -414,7 +414,9 @@ void GuiScraperSearch::updateInfoPane()
             mMD_Rating->setValue("");
             mMD_Rating->setOpacity(0);
         }
-        mMD_ReleaseDate->setValue("99990101T000000");
+        // Set the release date to this value to force DateTimeEditComponent to put a
+        // blank instead of the text 'unknown' prior to the scrape result being returned.
+        mMD_ReleaseDate->setValue("19700101T010101");
         mMD_Developer->setText("");
         mMD_Publisher->setText("");
         mMD_Genre->setText("");
