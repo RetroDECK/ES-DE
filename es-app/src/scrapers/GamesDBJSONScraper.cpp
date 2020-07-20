@@ -290,40 +290,39 @@ void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
         result.gameID = std::to_string(getIntOrThrow(game, "id"));
 
     result.mdl.set("name", getStringOrThrow(game, "game_title"));
+    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Name: " << result.mdl.get("name");
 
     if (game.HasMember("overview") && game["overview"].IsString())
         result.mdl.set("desc", game["overview"].GetString());
 
-    if (game.HasMember("release_date") && game["release_date"].IsString())
+    if (game.HasMember("release_date") && game["release_date"].IsString()) {
         result.mdl.set("releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(
                 game["release_date"].GetString(), "%Y-%m-%d")));
-
-    if (game.HasMember("developers") && game["developers"].IsArray())
-        result.mdl.set("developer", getDeveloperString(game["developers"]));
-
-    if (game.HasMember("publishers") && game["publishers"].IsArray())
-        result.mdl.set("publisher", getPublisherString(game["publishers"]));
-
-    if (game.HasMember("genres") && game["genres"].IsArray())
-        result.mdl.set("genre", getGenreString(game["genres"]));
-
-    if (game.HasMember("players") && game["players"].IsInt())
-        result.mdl.set("players", std::to_string(game["players"].GetInt()));
-
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Name: " <<
-            result.mdl.get("name");
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (unparsed): " <<
-            game["release_date"].GetString();
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (parsed): " <<
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (unparsed): " <<
+                game["release_date"].GetString();
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (parsed): " <<
             result.mdl.get("releasedate");
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Developer: " <<
-            result.mdl.get("developer");
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Publisher: " <<
+    }
+    if (game.HasMember("developers") && game["developers"].IsArray()) {
+        result.mdl.set("developer", getDeveloperString(game["developers"]));
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Developer: " <<
+                result.mdl.get("developer");
+    }
+    if (game.HasMember("publishers") && game["publishers"].IsArray()) {
+        result.mdl.set("publisher", getPublisherString(game["publishers"]));
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Publisher: " <<
             result.mdl.get("publisher");
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Genre: " <<
-            result.mdl.get("genre");
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Players: " <<
-            result.mdl.get("players");
+    }
+    if (game.HasMember("genres") && game["genres"].IsArray()) {
+        result.mdl.set("genre", getGenreString(game["genres"]));
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Genre: " <<
+                result.mdl.get("genre");
+    }
+    if (game.HasMember("players") && game["players"].IsInt()) {
+        result.mdl.set("players", std::to_string(game["players"].GetInt()));
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Players: " <<
+                result.mdl.get("players");
+    }
 
     result.mediaURLFetch = NOT_STARTED;
     results.push_back(result);
