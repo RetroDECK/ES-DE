@@ -545,15 +545,23 @@ void FileData::launchGame(Window* window)
                 Utils::String::toUpper(std::to_string(returnValue) + ")"), 6000);
         window->setInfoPopup(s);
     }
-    #ifdef _WIN64
-    // This code is only needed for Windows, where we may need to keep ES running while
-    // the game/emulator is in use. It's basically used to pause any playing game video
-    // and to keep the screensaver from activating.
     else {
+        #ifdef _WIN64
+        // This code is only needed for Windows, where we may need to keep ES running while
+        // the game/emulator is in use. It's basically used to pause any playing game video
+        // and to keep the screensaver from activating.
         if (Settings::getInstance()->getBool("RunInBackground"))
             window->setLaunchedGame();
+        else
+            // Normalize deltaTime so that the screensaver does not start immediately
+            // when returning from the game.
+            window->normalizeNextUpdate();
+        #else
+        // Normalize deltaTime so that the screensaver does not start immediately
+        // when returning from the game.
+        window->normalizeNextUpdate();
+        #endif
     }
-    #endif
 
     Scripting::fireEvent("game-end");
 
