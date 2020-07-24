@@ -276,10 +276,10 @@ based on: 'recalbox-multi' by the Recalbox community
     <feature supported="video">
         <view name="video">
             <video name="md_video">
-                <pos>0.62 0.45</pos>
-                <maxSize>0.320 0.424</maxSize>
                 <origin>0.5 0.5</origin>
-                   <delay>0.1</delay>
+                <pos>0.63 0.45</pos>
+                <maxSize>0.360 0.424</maxSize>
+                <delay>0.1</delay>
                 <showSnapshotNoVideo>true</showSnapshotNoVideo>
                 <showSnapshotDelay>false</showSnapshotDelay>
             </video>
