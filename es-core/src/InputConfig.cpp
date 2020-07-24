@@ -96,6 +96,15 @@ bool InputConfig::getInputByName(const std::string& name, Input* result)
     return false;
 }
 
+int InputConfig::getInputIDByName(const std::string& name)
+{
+    auto it = mNameMap.find(toLower(name));
+    if (it != mNameMap.cend()) {
+        return it->second.id;
+    }
+    return -1;
+}
+
 bool InputConfig::isMappedTo(const std::string& name, Input input)
 {
     Input comp;

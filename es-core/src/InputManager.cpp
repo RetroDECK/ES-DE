@@ -142,7 +142,7 @@ void InputManager::removeJoystickByJoystickID(SDL_JoystickID joyId)
         mJoysticks.erase(joyIt);
     }
     else {
-        LOG(LogError) << "Could not find joystick to close (instance ID: " << joyId << ")";
+        LOG(LogError) << "Error - Could not find joystick to close (instance ID: " << joyId << ")";
     }
 }
 
@@ -151,16 +151,16 @@ void InputManager::deinit()
     if (!initialized())
         return;
 
-    for (auto iter = mJoysticks.cbegin(); iter != mJoysticks.cend(); iter++)
-        SDL_JoystickClose(iter->second);
+    for (auto it = mJoysticks.cbegin(); it != mJoysticks.cend(); it++)
+        SDL_JoystickClose(it->second);
     mJoysticks.clear();
 
-    for (auto iter = mInputConfigs.cbegin(); iter != mInputConfigs.cend(); iter++)
-        delete iter->second;
+    for (auto it = mInputConfigs.cbegin(); it != mInputConfigs.cend(); it++)
+        delete it->second;
     mInputConfigs.clear();
 
-    for (auto iter = mPrevAxisValues.cbegin(); iter != mPrevAxisValues.cend(); iter++)
-        delete[] iter->second;
+    for (auto it = mPrevAxisValues.cbegin(); it != mPrevAxisValues.cend(); it++)
+        delete[] it->second;
     mPrevAxisValues.clear();
 
     if (mKeyboardInputConfig != nullptr) {
@@ -191,11 +191,11 @@ int InputManager::getButtonCountByDevice(SDL_JoystickID id)
     if (id == DEVICE_KEYBOARD)
         return 120; // It's a lot, okay.
     else if (id == DEVICE_CEC)
-#ifdef HAVE_CECLIB
+    #ifdef HAVE_CECLIB
         return CEC::CEC_USER_CONTROL_CODE_MAX;
-#else // HAVE_LIBCEF
+    #else // HAVE_LIBCEF
         return 0;
-#endif // HAVE_CECLIB
+    #endif // HAVE_CECLIB
     else
         return SDL_JoystickNumButtons(mJoysticks[id]);
 }
@@ -213,26 +213,40 @@ InputConfig* InputManager::getInputConfigByDevice(int device)
 bool InputManager::parseEvent(const SDL_Event& ev, Window* window)
 {
     bool causedEvent = false;
+    int32_t axisValue;
+
     switch (ev.type) {
     case SDL_JOYAXISMOTION:
-        // If it switched boundaries.
-        if ((abs(ev.jaxis.value) > DEADZONE) !=
+        axisValue = ev.jaxis.value;
+        // For the analog trigger buttons, convert the negative<->positive axis values to only
+        // positive values in order to avoid registering double inputs. This is only a
+        // temporary solution until ES has been updated to use the SDL GameController API.
+        if (ev.jaxis.axis == mInputConfigs[ev.jaxis.which]->getInputIDByName("lefttrigger") ||
+                ev.jaxis.axis == mInputConfigs[ev.jaxis.which]->getInputIDByName("righttrigger")) {
+            axisValue += 32768;
+            axisValue /= 2;
+        }
+
+        // Check if the input value switched boundaries.
+        if ((abs(axisValue) > DEADZONE) !=
                 (abs(mPrevAxisValues[ev.jaxis.which][ev.jaxis.axis]) > DEADZONE)) {
             int normValue;
-            if (abs(ev.jaxis.value) <= DEADZONE)
+            if (abs(axisValue) <= DEADZONE) {
                 normValue = 0;
-            else
-                if (ev.jaxis.value > 0)
+            }
+            else {
+                if (axisValue > 0)
                     normValue = 1;
                 else
                     normValue = -1;
+            }
 
             window->input(getInputConfigByDevice(ev.jaxis.which), Input(ev.jaxis.which,
                     TYPE_AXIS, ev.jaxis.axis, normValue, false));
             causedEvent = true;
         }
 
-        mPrevAxisValues[ev.jaxis.which][ev.jaxis.axis] = ev.jaxis.value;
+        mPrevAxisValues[ev.jaxis.which][ev.jaxis.axis] = axisValue;
         return causedEvent;
 
     case SDL_JOYBUTTONDOWN:

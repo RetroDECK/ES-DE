@@ -380,26 +380,35 @@ bool GuiInputConfig::filterTrigger(Input input, InputConfig* config, int inputId
     #if defined(__linux__)
     // On Linux, some gamepads return both an analog axis and a digital button for the trigger;
     // we want the analog axis only, so this function removes the button press event.
-
-    if ((
-        // Match PlayStation joystick with 6 axes only.
-        strstr(config->getDeviceName().c_str(), "PLAYSTATION") != nullptr ||
-        strstr(config->getDeviceName().c_str(), "PS3 Ga") != nullptr ||
-        strstr(config->getDeviceName().c_str(), "PS(R) Ga") != nullptr ||
-        // BigBen kid's PS3 gamepad 146b:0902, matched on SDL GUID because its name "Bigben
-        // Interactive Bigben Game Pad" may be too generic.
-        strcmp(config->getDeviceGUIDString().c_str(), "030000006b1400000209000011010000") == 0)
-        && InputManager::getInstance()->getAxisCountByDevice(config->getDeviceId()) == 6) {
-        // Digital triggers are unwanted.
-        if (input.type == TYPE_BUTTON && (input.id == 6 || input.id == 7)) {
-            mHoldingInput = false;
-            return true;
+    // This is relevant mostly for Sony Dual Shock controllers.
+    if (InputManager::getInstance()->getAxisCountByDevice(config->getDeviceId()) == 6) {
+        if (config->getDeviceName().find("PLAYSTATION") != std::string::npos ||
+                config->getDeviceName().find("PS3 Ga") != std::string::npos ||
+                config->getDeviceName().find("PS(R) Ga") != std::string::npos ||
+                config->getDeviceName().find("PS4 Controller") != std::string::npos ||
+                config->getDeviceName().find("Sony Interactive") != std::string::npos ||
+                // BigBen kid's PS3 gamepad 146b:0902, matched on SDL GUID because its name
+                // "Bigben Interactive Bigben Game Pad" may be too generic.
+                config->getDeviceGUIDString().find("030000006b1400000209000011010000")
+                        != std::string::npos ) {
+            // Remove digital trigger events.
+            if (input.type == TYPE_BUTTON && (input.id == 6 || input.id == 7)) {
+                mHoldingInput = false;
+                return true;
+            }
         }
     }
+    #endif
 
-    // Ignore negative pole for axes 2/5 only when triggers are being configured.
-    if (input.type == TYPE_AXIS && (input.id == 2 || input.id == 5)) {
-        if (strstr(GUI_INPUT_CONFIG_LIST[inputId].name, "Trigger") != nullptr) {
+    // Ignore negative poles when triggers are being configured.
+    // This is not a good solution as it's hardcoded to input 2 and 5 (Xbox controllers) and
+    // input 4 and 5 (Playstation Dual Shock controllers) instead of using a general detection
+    // for which type of axis input is used. This is also hardcoded to only work when configuring
+    // the trigger buttons, so it will not be possible to map trigger buttons to the shoulder
+    // button functions in ES for instance. It's probably necessary to update ES to use the SDL
+    // GameController API to fix this properly.
+    if (input.type == TYPE_AXIS && (input.id == 2 || input.id == 4 || input.id == 5)) {
+        if (std::string(GUI_INPUT_CONFIG_LIST[inputId].name).find("Trigger") != std::string::npos) {
             if (input.value == 1)
                 mSkipAxis = true;
             else if (input.value == -1)
@@ -410,11 +419,10 @@ bool GuiInputConfig::filterTrigger(Input input, InputConfig* config, int inputId
             return true;
         }
     }
-    #else
-    (void)input;
-    (void)config;
-    (void)inputId;
-    #endif
+
+//    (void)input;
+//    (void)config;
+//    (void)inputId;
 
     return false;
 }
