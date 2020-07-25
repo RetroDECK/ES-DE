@@ -46,7 +46,7 @@ namespace PlatformIds
         "gb",  // Game Boy
         "gba",  // Game Boy Advance
         "gbc",  // Game Boy Color
-        "gc",  // GameCube
+        "gamecube",  // GameCube
         "wii",
         "wiiu",
         "virtualboy",
@@ -70,7 +70,7 @@ namespace PlatformIds
         "psp", // PlayStation Portable
         "snes", // Super Nintendo Entertainment System
         "scummvm",
-        "x6800",
+        "x68000",
         "solarus",
         "pcengine",  // (Aka turbografx-16), HuCards only
         "pcenginecd",  // (Aka turbografx-16), CD-ROMs only
@@ -78,10 +78,31 @@ namespace PlatformIds
         "wonderswancolor",
         "zxspectrum",
         "zx81",
-        "videopac",
+        "odyssey2",
         "vectrex",
         "trs-80",
         "coco",
+        "ags",
+        "astrocade",
+        "bbcmicro",
+        "cavestory",
+        "daphne",
+        "doom",
+        "dragon32",
+        "famicom",
+        "love",
+        "lutro",
+        "mess",
+        "moonlight",
+        "oric",
+        "pcfx",
+        "residualvm",
+        "samcoupe",
+        "supergrafx",
+        "stratagus",
+        "videopac",
+        "zmachine",
+        "ti99",
 
         "ignore",  // Do not allow scraping for this system.
         "invalid"

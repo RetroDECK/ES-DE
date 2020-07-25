@@ -277,7 +277,7 @@
     <path>%ROMPATH%/gameandwatch</path>
     <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/gw_libretro.so %ROM%</command>
-    <platform>nintendo_game_and_watch</platform>
+    <platform>gameandwatch</platform>
     <theme>gameandwatch</theme>
   </system>
   <system>
@@ -560,13 +560,13 @@
     <theme>pcengine</theme>
   </system>
   <system>
-    <name>pce-cd</name>
+    <name>pcenginecd</name>
     <fullname>PC Engine CD</fullname>
-    <path>%ROMPATH%/pce-cd</path>
+    <path>%ROMPATH%/pcenginecd</path>
     <extension>.pce .PCE .cue .CUE .ccd .CCD .iso .ISO .img .IMG .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pce_libretro.so %ROM%</command>
-    <platform>pcenginecd, pce-cd</platform>
-    <theme>pce-cd</theme>
+    <platform>pcenginecd</platform>
+    <theme>pcenginecd</theme>
   </system>
   <system>
     <name>pcfx</name>
@@ -718,7 +718,7 @@
     <path>%ROMPATH%/tg16</path>
     <extension>.pce .PCE .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.so %ROM%</command>
-    <platform>tg16, pcengine</platform>
+    <platform>pcengine</platform>
     <theme>tg16</theme>
   </system>
   <system>
@@ -727,7 +727,7 @@
     <path>%ROMPATH%/tg-cd</path>
     <extension>.pce .PCE .cue .CUE .ccd .CCD .iso .ISO .img .IMG .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pce_libretro.so %ROM%</command>
-    <platform>tg-cd, pcenginecd, pce-cd</platform>
+    <platform>pcenginecd</platform>
     <theme>tg-cd</theme>
   </system>
   <system>

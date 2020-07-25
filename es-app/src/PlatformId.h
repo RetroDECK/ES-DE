@@ -70,7 +70,7 @@ namespace PlatformIds
         PLAYSTATION_PORTABLE,
         SUPER_NINTENDO,
         SCUMMVM,
-        SHARP_X6800,
+        SHARP_X68000,
         SOLARUS,
         TURBOGRAFX_16,  // (Aka PC Engine) HuCards only.
         TURBOGRAFX_CD,  // (Aka PC Engine) CD-ROMs only.
@@ -82,6 +82,27 @@ namespace PlatformIds
         VECTREX,
         TRS80_COLOR_COMPUTER,
         TANDY,
+        ADVENTUREGAMESTUDIO,
+        ASTROCADE,
+        BBCMICRO,
+        CAVESTORY,
+        DAPHNE,
+        DOOM,
+        DRAGON32,
+        FAMICOM,
+        LOVE,
+        LUTRO,
+        MESS,
+        MOONLIGHT,
+        ORIC,
+        PCFX,
+        RESIDUALVM,
+        SAMCOUPE,
+        SUPERGRAFX,
+        STRATAGUS,
+        VIDEOPAC,
+        ZMACHINE,
+        TI99,
 
         PLATFORM_IGNORE, // Do not allow scraping for this system.
         PLATFORM_COUNT
