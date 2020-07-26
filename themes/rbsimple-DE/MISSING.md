@@ -14,7 +14,9 @@ Missing (or not updated) theme data
 * atari800: Atari 800 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * atari5200: Atari 5200 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * atarijaguar: Atari Jaguar - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* atarijaguarcd: Atari Jaguar CD - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * atarist: Atari ST - controller.svg, game.svg
+* atarixe: Atari XE - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * auto-allgames - customized colors, consolegame.svg, console.svg, controller.svg, game.svg (uses temporary art)
 * auto-favorites - customized colors, consolegame.svg, console.svg, controller.svg, game.svg (uses temporary art)
 * auto-lastplayed - customized colors, consolegame.svg, console.svg, controller.svg, game.svg (uses temporary art)
@@ -29,10 +31,12 @@ Missing (or not updated) theme data
 * love: Löve game engine - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * macintosh: Apple Macintosh - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * mess: MESS (Multi Emulator Super System) - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* openbor: Open Beats of Rage (OpenBOR) game engine - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * oric: Tangerine Computer Systems Oric - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * pcfx: NEC PC-FX - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * ports: Source ports - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * ps2: Sony PlayStation 2 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* psvita: Sony PlayStation Vita - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * residualvm: ResidualVM - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * samcoupe: SAM Coupé - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * saturn: Sega Saturn - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
@@ -42,4 +46,8 @@ Missing (or not updated) theme data
 * ti99: Texas Instruments TI-99 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * trs-80: Tandy TRS 80 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
+* wiiu: Nintendo Wii U - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
+* x68000: Sharp X68000 - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
+* xbox: Microsoft Xbox - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
+* xbox360: Microsoft Xbox - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * zmachine: Infocom Z-machine - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg

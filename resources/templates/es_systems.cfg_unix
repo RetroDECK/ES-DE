@@ -125,7 +125,16 @@
     <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/virtualjaguar_libretro.so %ROM%</command>
     <platform>atarijaguar</platform>
-    <theme>atarijaguar</theme>
+    <theme>atarijaguar, atarijaguarcd</theme>
+  </system>
+  <system>
+    <name>atarijaguarcd</name>
+    <fullname>Atari Jaguar CD</fullname>
+    <path>%ROMPATH%/atarijaguarcd</path>
+    <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/virtualjaguar_libretro.so %ROM%</command>
+    <platform>atarijaguarcd</platform>
+    <theme>atarijaguarcd</theme>
   </system>
   <system>
     <name>atarilynx</name>
@@ -144,6 +153,15 @@
     <command>retroarch -L ~/.config/retroarch/cores/hatari_libretro.so %ROM%</command>
     <platform>atarist</platform>
     <theme>atarist</theme>
+  </system>
+  <system>
+    <name>atarixe</name>
+    <fullname>Atari XE</fullname>
+    <path>%ROMPATH%/atarixe</path>
+    <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/atari800_libretro.so %ROM%</command>
+    <platform>atarixe</platform>
+    <theme>atarixe</theme>
   </system>
   <system>
     <name>bbcmicro</name>
@@ -354,7 +372,7 @@
   </system>
   <system>
     <name>lutro</name>
-    <fullname>Lutro</fullname>
+    <fullname>Lutro game engine</fullname>
     <path>%ROMPATH%/lutro</path>
     <extension>.lua .LUA .lutro .LUTRO .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/lutro_libretro.so %ROM%</command>
@@ -435,7 +453,7 @@
   </system>
   <system>
     <name>moonlight</name>
-    <fullname>Moonlight</fullname>
+    <fullname>Moonlight game streaming</fullname>
     <path>%ROMPATH%/moonlight</path>
     <extension>.moonlight .MOONLIGHT .7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
@@ -533,6 +551,15 @@
     <theme>odyssey2</theme>
   </system>
   <system>
+    <name>openbor</name>
+    <fullname>OpenBOR game engine</fullname>
+    <path>%ROMPATH%/openbor</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>openbor</platform>
+    <theme>openbor</theme>
+  </system>
+  <system>
     <name>oric</name>
     <fullname>Tangerine Computer Systems Oric</fullname>
     <path>%ROMPATH%/oric</path>
@@ -552,7 +579,7 @@
   </system>
   <system>
     <name>pcengine</name>
-    <fullname>PC Engine</fullname>
+    <fullname>NEC PC Engine</fullname>
     <path>%ROMPATH%/pcengine</path>
     <extension>.pce .PCE .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.so %ROM%</command>
@@ -561,7 +588,7 @@
   </system>
   <system>
     <name>pcenginecd</name>
-    <fullname>PC Engine CD</fullname>
+    <fullname>NEC PC Engine CD</fullname>
     <path>%ROMPATH%/pcenginecd</path>
     <extension>.pce .PCE .cue .CUE .ccd .CCD .iso .ISO .img .IMG .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pce_libretro.so %ROM%</command>
@@ -576,6 +603,15 @@
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pcfx_libretro.so %ROM%</command>
     <platform>pcfx</platform>
     <theme>pcfx</theme>
+  </system>
+  <system>
+    <name>ports</name>
+    <fullname>Ports</fullname>
+    <path>%ROMPATH%/ports</path>
+    <extension>.sh .SH</extension>
+    <command>bash %ROM%</command>
+    <platform>pc</platform>
+    <theme>ports</theme>
   </system>
   <system>
     <name>ps2</name>
@@ -596,13 +632,13 @@
     <theme>psp</theme>
   </system>
   <system>
-    <name>ports</name>
-    <fullname>Ports</fullname>
-    <path>%ROMPATH%/ports</path>
-    <extension>.sh .SH</extension>
-    <command>bash %ROM%</command>
-    <platform>pc</platform>
-    <theme>ports</theme>
+    <name>psvita</name>
+    <fullname>PlayStation Vita</fullname>
+    <path>%ROMPATH%/psp</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>psvita</platform>
+    <theme>psvita</theme>
   </system>
   <system>
     <name>psx</name>
@@ -615,7 +651,7 @@
   </system>
   <system>
     <name>residualvm</name>
-    <fullname>ResidualVM</fullname>
+    <fullname>ResidualVM game engine</fullname>
     <path>%ROMPATH%/residualvm</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
@@ -642,7 +678,7 @@
   </system>
   <system>
     <name>scummvm</name>
-    <fullname>ScummVM</fullname>
+    <fullname>ScummVM game engine</fullname>
     <path>%ROMPATH%/scummvm</path>
     <extension>.scummvm .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/scummvm_libretro.so %ROM%</command>
@@ -660,7 +696,7 @@
   </system>
   <system>
     <name>segacd</name>
-    <fullname>Mega CD</fullname>
+    <fullname>Sega Mega-CD</fullname>
     <path>%ROMPATH%/segacd</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so %ROM%</command>
@@ -705,7 +741,7 @@
   </system>
   <system>
     <name>supergrafx</name>
-    <fullname>Supergrafx</fullname>
+    <fullname>NEC SuperGrafx</fullname>
     <path>%ROMPATH%/supergrafx</path>
     <extension>.pce .PCE .sgx .SGX .cue .CUE .ccd .CCD .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_supergrafx_libretro.so %ROM%</command>
@@ -714,7 +750,7 @@
   </system>
   <system>
     <name>tg16</name>
-    <fullname>TurboGrafx-16</fullname>
+    <fullname>NEC TurboGrafx-16</fullname>
     <path>%ROMPATH%/tg16</path>
     <extension>.pce .PCE .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pce_fast_libretro.so %ROM%</command>
@@ -723,7 +759,7 @@
   </system>
   <system>
     <name>tg-cd</name>
-    <fullname>TurboGrafx-CD</fullname>
+    <fullname>NEC TurboGrafx-CD</fullname>
     <path>%ROMPATH%/tg-cd</path>
     <extension>.pce .PCE .cue .CUE .ccd .CCD .iso .ISO .img .IMG .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_pce_libretro.so %ROM%</command>
@@ -785,8 +821,17 @@
     <theme>wii</theme>
   </system>
   <system>
+    <name>wiiu</name>
+    <fullname>Nintendo Wii U</fullname>
+    <path>%ROMPATH%/wiiu</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>wiiu</platform>
+    <theme>wiiu</theme>
+  </system>
+  <system>
     <name>wonderswan</name>
-    <fullname>WonderSwan</fullname>
+    <fullname>Bandai WonderSwan</fullname>
     <path>%ROMPATH%/wonderswan</path>
     <extension>.ws .WS .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_wswan_libretro.so %ROM%</command>
@@ -795,12 +840,39 @@
   </system>
   <system>
     <name>wonderswancolor</name>
-    <fullname>WonderSwan Color</fullname>
+    <fullname>Bandai WonderSwan Color</fullname>
     <path>%ROMPATH%/wonderswancolor</path>
     <extension>.ws .WS .wsc .WSC .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_wswan_libretro.so %ROM%</command>
     <platform>wonderswancolor</platform>
     <theme>wonderswancolor</theme>
+  </system>
+  <system>
+    <name>x68000</name>
+    <fullname>Sharp X68000</fullname>
+    <path>%ROMPATH%/x68000</path>
+    <extension>.dim .DIM .img .IMG .d88 .D88 .88d .88D .hdm .HDM .dup .DUP .2hd .2HD .xdf .XDF .hdf .HDF .cmd .CMD .m3u .M3U .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/px68k_libretro.so %ROM%</command>
+    <platform>x68000</platform>
+    <theme>x68000</theme>
+  </system>
+  <system>
+    <name>xbox</name>
+    <fullname>Microsoft Xbox</fullname>
+    <path>%ROMPATH%/xbox</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>xbox</platform>
+    <theme>xbox</theme>
+  </system>
+  <system>
+    <name>xbox360</name>
+    <fullname>Microsoft Xbox 360</fullname>
+    <path>%ROMPATH%/xbox360</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>xbox360</platform>
+    <theme>xbox360</theme>
   </system>
   <system>
     <name>zmachine</name>
@@ -813,7 +885,7 @@
   </system>
   <system>
     <name>zx81</name>
-    <fullname>ZX81</fullname>
+    <fullname>Sinclair ZX81</fullname>
     <path>%ROMPATH%/zx81</path>
     <extension>.tzx .TZX .p .P .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/81_libretro.so %ROM%</command>
@@ -822,7 +894,7 @@
   </system>
   <system>
     <name>zxspectrum</name>
-    <fullname>ZX Spectrum</fullname>
+    <fullname>Sinclair ZX Spectrum</fullname>
     <path>%ROMPATH%/zxspectrum</path>
     <extension>.tzx .TZX .tap .TAP .z80 .Z80 .rzx .RZX .scl .SCL .trd .TRD .sh .SH .sna .SNA .szx .SZX .udi .UDI .mgt .MGT .img .IMG .dsk .DSK .gz .GZ .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/fuse_libretro.so %ROM%</command>
