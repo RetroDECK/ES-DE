@@ -287,7 +287,15 @@ void GuiMetaDataEd::save()
         if (mMetaDataDecl.at(i).isStatistic)
             continue;
 
-        mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
+        // If the user has entered a blank game name, then set the name to the ROM
+        // filename (minus the extension).
+        if (mMetaDataDecl.at(i).key == "name" && mEditors.at(i)->getValue() == "") {
+            mMetaData->set(mMetaDataDecl.at(i).key,
+                    Utils::FileSystem::getStem(mScraperParams.game->getPath()));
+        }
+        else {
+            mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
+        }
     }
 
     // Enter game in index.
