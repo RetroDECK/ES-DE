@@ -120,7 +120,7 @@ bool SystemData::populateFolder(FileData* folder)
     std::string filePath;
     std::string extension;
     bool isGame;
-    bool showHidden = Settings::getInstance()->getBool("ShowHiddenFiles");
+    bool showHiddenFiles = Settings::getInstance()->getBool("ShowHiddenFiles");
     Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(folderPath);
 
     // If system directory exists but contains no games, return as error.
@@ -132,7 +132,7 @@ bool SystemData::populateFolder(FileData* folder)
         filePath = *it;
 
         // Skip hidden files and folders.
-        if (!showHidden && Utils::FileSystem::isHidden(filePath))
+        if (!showHiddenFiles && Utils::FileSystem::isHidden(filePath))
             continue;
 
         // This is a little complicated because we allow a list

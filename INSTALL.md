@@ -559,6 +559,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --resolution [width] [height]   Try to force a particular resolution
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
+--show-hidden-files             Show hidden files and folders
 --draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
@@ -583,6 +584,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --resolution [width] [height]   Try to force a particular resolution
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
+--show-hidden-files             Show hidden files and folders
 --draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen

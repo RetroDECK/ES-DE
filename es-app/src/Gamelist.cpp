@@ -114,6 +114,7 @@ void parseGamelist(SystemData* system)
     }
 
     std::string relativeTo = system->getStartPath();
+    bool showHiddenFiles = Settings::getInstance()->getBool("ShowHiddenFiles");
 
     const char* tagList[2] = { "game", "folder" };
     FileType typeList[2] = { GAME, FOLDER };
@@ -128,6 +129,12 @@ void parseGamelist(SystemData* system)
 
             if (!trustGamelist && !Utils::FileSystem::exists(path)) {
                 LOG(LogWarning) << "File \"" << path << "\" does not exist! Ignoring.";
+                continue;
+            }
+
+            // Skip hidden files and folders.
+            if (!showHiddenFiles && Utils::FileSystem::isHidden(path)) {
+                LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping hidden file " << path;
                 continue;
             }
 

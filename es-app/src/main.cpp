@@ -285,6 +285,7 @@ bool parseArgs(int argc, char* argv[])
 "  --resolution [width] [height]   Try to force a particular resolution\n"
 "  --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
 "  --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
+"  --show-hidden-files             Show hidden files and folders\n"
 "  --draw-framerate                Display the framerate\n"
 "  --no-exit                       Don't show the exit option in the menu\n"
 "  --no-splash                     Don't show the splash screen\n"

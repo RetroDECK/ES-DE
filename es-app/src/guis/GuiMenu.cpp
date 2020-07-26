@@ -640,7 +640,7 @@ void GuiMenu::openOtherSettings()
     // Hidden files.
     auto hidden_files = std::make_shared<SwitchComponent>(mWindow);
     hidden_files->setState(Settings::getInstance()->getBool("ShowHiddenFiles"));
-    s->addWithLabel("SHOW HIDDEN FILES", hidden_files);
+    s->addWithLabel("SHOW HIDDEN FILES AND FOLDERS (REQUIRES RESTART)", hidden_files);
     s->addSaveFunc([hidden_files] { Settings::getInstance()->setBool("ShowHiddenFiles",
             hidden_files->getState()); });
 
