@@ -232,6 +232,9 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--show-hidden-files") == 0) {
             Settings::getInstance()->setBool("ShowHiddenFiles", true);
         }
+        else if (strcmp(argv[i], "--show-hidden-games") == 0) {
+            Settings::getInstance()->setBool("ShowHiddenGames", true);
+        }
         else if (strcmp(argv[i], "--draw-framerate") == 0) {
             Settings::getInstance()->setBool("DrawFramerate", true);
         }
@@ -263,6 +266,9 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setBool("VSync", vsync);
             i++; // Skip vsync value.
         }
+        else if (strcmp(argv[i], "--force-full") == 0) {
+            Settings::getInstance()->setString("UIMode", "Full");
+        }
         else if (strcmp(argv[i], "--force-kiosk") == 0) {
             Settings::getInstance()->setBool("ForceKiosk", true);
         }
@@ -286,6 +292,7 @@ bool parseArgs(int argc, char* argv[])
 "  --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
 "  --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
 "  --show-hidden-files             Show hidden files and folders\n"
+"  --show-hidden-games             Show hidden games\n"
 "  --draw-framerate                Display the framerate\n"
 "  --no-exit                       Don't show the exit option in the menu\n"
 "  --no-splash                     Don't show the splash screen\n"
@@ -298,6 +305,7 @@ bool parseArgs(int argc, char* argv[])
 "  --vsync [1/on or 0/off]         Turn vsync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use in Mb before swapping\n"
 "                                  Set to at least 20 to avoid unpredictable behavior\n"
+"  --force-full                    Force the UI mode to Full\n"
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-kiosk                   Force the UI mode to Kiosk\n"
 "  --force-disable-filters         Force the UI to ignore applied filters in gamelist\n"

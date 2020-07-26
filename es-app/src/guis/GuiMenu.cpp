@@ -618,6 +618,22 @@ void GuiMenu::openOtherSettings()
     s->addSaveFunc([launchcommand_override] { Settings::getInstance()->
             setBool("LaunchCommandOverride", launchcommand_override->getState()); });
 
+    // Hidden files.
+    auto hidden_files = std::make_shared<SwitchComponent>(mWindow);
+    hidden_files->setState(Settings::getInstance()->getBool("ShowHiddenFiles"));
+    s->addWithLabel("SHOW HIDDEN FILES AND FOLDERS (REQUIRES RESTART)", hidden_files);
+    s->addSaveFunc([hidden_files] { Settings::getInstance()->setBool("ShowHiddenFiles",
+            hidden_files->getState()); });
+
+    // Hidden games.
+    auto hidden_games = std::make_shared<SwitchComponent>(mWindow);
+    hidden_games->setState(Settings::getInstance()->getBool("ShowHiddenGames"));
+    s->addWithLabel("SHOW HIDDEN GAMES (REQUIRES RESTART)", hidden_games);
+    s->addSaveFunc([hidden_games] {
+        Settings::getInstance()->setBool("ShowHiddenGames",
+        hidden_games->getState());
+    });
+
     // Custom event scripts, fired using Scripting::fireEvent().
     auto custom_eventscripts = std::make_shared<SwitchComponent>(mWindow);
     custom_eventscripts->setState(Settings::getInstance()->getBool("CustomEventScripts"));
@@ -636,13 +652,6 @@ void GuiMenu::openOtherSettings()
     s->addWithLabel("DISPLAY GAME ART FROM ROM DIRECTORIES", local_art);
     s->addSaveFunc([local_art] { Settings::getInstance()->
             setBool("LocalArt", local_art->getState()); });
-
-    // Hidden files.
-    auto hidden_files = std::make_shared<SwitchComponent>(mWindow);
-    hidden_files->setState(Settings::getInstance()->getBool("ShowHiddenFiles"));
-    s->addWithLabel("SHOW HIDDEN FILES AND FOLDERS (REQUIRES RESTART)", hidden_files);
-    s->addSaveFunc([hidden_files] { Settings::getInstance()->setBool("ShowHiddenFiles",
-            hidden_files->getState()); });
 
     // Framerate.
     auto framerate = std::make_shared<SwitchComponent>(mWindow);

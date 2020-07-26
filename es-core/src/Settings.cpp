@@ -194,7 +194,8 @@ void Settings::setDefaults()
     mBoolMap["CustomEventScripts"] = false;
     mBoolMap["ParseGamelistOnly"] = false;
     mBoolMap["LocalArt"] = false;
-    mBoolMap["ShowHiddenFiles"] = false;
+    mBoolMap["ShowHiddenFiles"] = true;
+    mBoolMap["ShowHiddenGames"] = true;
     mBoolMap["DrawFramerate"] = false;
     mBoolMap["ShowRebootSystem"] = true;
     mBoolMap["ShowPoweroffSystem"] = true;

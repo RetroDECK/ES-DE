@@ -873,7 +873,7 @@ void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sys
 
     // Get the ROM directory, either as configured in es_settings.cfg, or if no value
     // is set there, then use the default hardcoded path.
-    const std::string rompath  = FileData::getROMDirectory();
+    const std::string rompath = FileData::getROMDirectory();
 
     // Iterate list of files in the config file.
     for (std::string gameKey; getline(input, gameKey); ) {

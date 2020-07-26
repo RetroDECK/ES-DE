@@ -47,6 +47,8 @@ public:
     virtual const std::string& getName();
     const std::string& getSortName();
     const bool getFavorite();
+    const bool getHidden();
+    const std::vector<FileData*> getChildrenRercursive() const;
     inline FileType getType() const { return mType; }
     inline const std::string& getPath() const { return mPath; }
     inline FileData* getParent() const { return mParent; }

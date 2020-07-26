@@ -560,6 +560,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
+--show-hidden-games             Show hidden games
 --draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
@@ -570,6 +571,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use in Mb before swapping
                                 Set to at least 20 to avoid unpredictable behavior
+--force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
 --force-disable-filters         Force the UI to ignore applied filters in gamelist
@@ -585,6 +587,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
+--show-hidden-games             Show hidden games
 --draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
@@ -592,6 +595,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use in Mb before swapping
                                 Set to at least 20 to avoid unpredictable behavior
+--force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
 --force-disable-filters         Force the UI to ignore applied filters in gamelist

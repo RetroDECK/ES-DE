@@ -26,6 +26,7 @@
 #include "CollectionSystemManager.h"
 #include "FileData.h"
 #include "FileFilterIndex.h"
+#include "Gamelist.h"
 #include "SystemData.h"
 #include "Window.h"
 
@@ -283,9 +284,18 @@ void GuiMetaDataEd::save()
     // Remove game from index.
     mScraperParams.system->getIndex()->removeFromIndex(mScraperParams.game);
 
+    // We need this to handle the special situation where the user sets a game to hidden while
+    // ShowHiddenGames is set to false, meaning it will immediately disappear from the gamelist.
+    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
+    bool hideGameWhileHidden = false;
+
     for (unsigned int i = 0; i < mEditors.size(); i++) {
         if (mMetaDataDecl.at(i).isStatistic)
             continue;
+
+        if (!showHiddenGames && mMetaDataDecl.at(i).key == "hidden" &&
+                mEditors.at(i)->getValue() != mMetaData->get("hidden"))
+            hideGameWhileHidden = true;
 
         // If the user has entered a blank game name, then set the name to the ROM
         // filename (minus the extension).
@@ -297,6 +307,14 @@ void GuiMetaDataEd::save()
             mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
         }
     }
+
+    // If hidden games are not shown and the hide flag was set for the game, then write the
+    // metadata immediately regardless of the SaveGamelistsMode setting. Otherwise the file
+    // will never be written as the game will be filtered from the gamelist. This solution is not
+    // really good as the gamelist will be written twice, but it's a very special and hopefully
+    // rare situation.
+    if (hideGameWhileHidden)
+        updateGamelist(mScraperParams.system);
 
     // Enter game in index.
     mScraperParams.system->getIndex()->addToIndex(mScraperParams.game);

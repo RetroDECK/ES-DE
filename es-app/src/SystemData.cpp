@@ -315,7 +315,24 @@ bool SystemData::loadConfig()
         envData->mPlatformIds = platformIds;
 
         SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
-        if (newSys->getRootFolder()->getChildrenByFilename().size() == 0) {
+        bool onlyHidden = false;
+
+        // If the option to show hidden games has been disabled, then check whether all
+        // games for the system are hidden. That will flag the system as empty.
+        if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
+            std::vector<FileData*> recursiveGames =
+                    newSys->getRootFolder()->getChildrenRercursive();
+            onlyHidden = true;
+            for (auto it = recursiveGames.cbegin(); it != recursiveGames.cend(); it++) {
+                if ((*it)->getType() != FOLDER) {
+                    onlyHidden = (*it)->getHidden();
+                    if (!onlyHidden)
+                        break;
+                }
+            }
+        }
+
+        if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
             LOG(LogDebug) << "SystemData::loadConfig(): System \"" << name <<
                     "\" has no games, ignoring it.";
             delete newSys;

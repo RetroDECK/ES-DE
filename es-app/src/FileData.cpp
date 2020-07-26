@@ -110,6 +110,32 @@ const bool FileData::getFavorite()
         return false;
 }
 
+const bool FileData::getHidden()
+{
+    if (metadata.get("hidden") == "true")
+        return true;
+    else
+        return false;
+}
+
+const std::vector<FileData*> FileData::getChildrenRercursive() const
+{
+    std::vector<FileData*> childrenRecursive;
+
+    for (auto it = mChildrenByFilename.cbegin();
+            it != mChildrenByFilename.cend(); it++) {
+        childrenRecursive.push_back((*it).second);
+        // Recurse through any subdirectories.
+        if ((*it).second->getType() == FOLDER) {
+            std::vector<FileData*> childrenSubdirectory = (*it).second->getChildrenRercursive();
+            childrenRecursive.insert(childrenRecursive.end(),
+                    childrenSubdirectory.begin(), childrenSubdirectory.end());
+        }
+    }
+
+    return childrenRecursive;
+}
+
 const std::string FileData::getROMDirectory()
 {
     std::string romDirSetting = Settings::getInstance()->getString("ROMDirectory");
@@ -346,6 +372,24 @@ void FileData::removeChild(FileData* file)
 void FileData::sort(ComparisonFunction& comparator, bool ascending)
 {
     mFirstLetterIndex.clear();
+
+    // Only run this section of code if the setting to show hidden games has been disabled,
+    // in order to avoid unnecessary processing.
+    if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
+        std::vector<FileData*> mChildrenShown;
+        for (unsigned int i = 0; i < mChildren.size(); i++) {
+            if (mChildren[i]->getHidden()) {
+                LOG(LogDebug) << "Debug - FileData::sort(): Skipping hidden game '" <<
+                        mChildren[i]->getName() << "'";
+                continue;
+            }
+            mChildrenShown.push_back(mChildren[i]);
+        }
+        mChildren.erase(mChildren.begin(), mChildren.end());
+        mChildren.reserve(mChildrenShown.size());
+        mChildren.insert(mChildren.end(), mChildrenShown.begin(), mChildrenShown.end());
+    }
+
     std::stable_sort(mChildren.begin(), mChildren.end(), comparator);
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
@@ -371,8 +415,16 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     mFirstLetterIndex.clear();
     std::vector<FileData*> mChildrenFavorites;
     std::vector<FileData*> mChildrenOthers;
+    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
 
     for (unsigned int i = 0; i < mChildren.size(); i++) {
+        // Exclude game if it's marked as hidden and the hide setting has been set.
+        if (!showHiddenGames && mChildren[i]->getHidden()) {
+            LOG(LogDebug) << "Debug - FileData::sortFavoritesOnTop(): Skipping hidden game '" <<
+                    mChildren[i]->getName() << "'";
+            continue;
+        }
+
         if (mChildren[i]->getFavorite()) {
             mChildrenFavorites.push_back(mChildren[i]);
         }
