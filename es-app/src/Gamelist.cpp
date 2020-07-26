@@ -132,8 +132,10 @@ void parseGamelist(SystemData* system)
                 continue;
             }
 
-            // Skip hidden files and folders.
-            if (!showHiddenFiles && Utils::FileSystem::isHidden(path)) {
+            // Skip hidden files, check both the file itself and the directory in which
+            // it is located.
+            if (!showHiddenFiles && (Utils::FileSystem::isHidden(path) ||
+                    Utils::FileSystem::isHidden(Utils::FileSystem::getParent(path)))) {
                 LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping hidden file " << path;
                 continue;
             }

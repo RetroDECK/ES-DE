@@ -51,7 +51,16 @@ FileData::FileData(
                     MameNames::getInstance()->getCleanName(getCleanName()));
         }
         else {
+            #ifdef __unix__
+            if (metadata.getType() == FOLDER_METADATA && Utils::FileSystem::isHidden(mPath)) {
+                metadata.set("name", Utils::FileSystem::getFileName(mPath));
+            }
+            else {
+                metadata.set("name", getDisplayName());
+            }
+            #else
             metadata.set("name", getDisplayName());
+            #endif
         }
     }
     mSystemName = system->getName();

@@ -44,4 +44,6 @@ v1.0.0
 * Toggling the screensaver didn't work as expected
 * Deleting a game did not delete the game media files or its entry in the gamelist.xml file
 * SystemView didn't properly loop the systems if only two systems were available
+* Hidden files still showed up if they had a gamelist.xml entry
+* On Unix, adding a hidden folder with a game in it crashed the application on startup
 * Lots and lots of small bugs and inconsistencies fixed
