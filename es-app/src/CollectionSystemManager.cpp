@@ -148,7 +148,7 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
         }
     }
     else {
-        LOG(LogError) << "Error - Couldn't find collection to save! " << name;
+        LOG(LogError) << "Couldn't find collection to save! " << name;
     }
 }
 

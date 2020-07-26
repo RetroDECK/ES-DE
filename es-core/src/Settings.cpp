@@ -306,7 +306,7 @@ void Settings::loadFile()
     pugi::xml_parse_result result = doc.load_file(path.c_str());
     #endif
     if (!result) {
-        LOG(LogError) << "Error - Could not parse Settings file!\n   " << result.description();
+        LOG(LogError) << "Could not parse Settings file.\n   " << result.description();
         return;
     }
 
@@ -326,7 +326,7 @@ void Settings::loadFile()
         type Settings::getMethodName(const std::string& name) \
 { \
     if (mapName.find(name) == mapName.cend()) { \
-        LOG(LogError) << "Error - Tried to use unset setting " << name << "!"; \
+        LOG(LogError) << "Tried to use unset setting " << name << "!"; \
     } \
     return mapName[name]; \
 } \

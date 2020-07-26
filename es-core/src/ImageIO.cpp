@@ -61,11 +61,11 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char * d
                 }
             }
             else {
-                LOG(LogError) << "Error - Failed to load image from memory!";
+                LOG(LogError) << "Failed to load image from memory!";
             }
         }
         else {
-            LOG(LogError) << "Error - Couldn't load image, file is missing or the file type is " <<
+            LOG(LogError) << "Couldn't load image, file is missing or the file type is " <<
 //            it's not existing or the file type " <<
                     (format == FIF_UNKNOWN ? "unknown" : "unsupported") << "!";
         }

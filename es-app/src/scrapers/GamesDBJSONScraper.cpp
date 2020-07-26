@@ -161,7 +161,7 @@ void thegamesdb_generate_json_scraper_requests(
                     first = false;
                 }
                 else {
-                    LOG(LogWarning) << "Warning - TheGamesDB scraper warning - "
+                    LOG(LogWarning) << "TheGamesDB scraper warning - "
                             "no support for platform " << getPlatformName(*platformIt);
                 }
             }
@@ -380,7 +380,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
 
     if (doc.HasParseError()) {
         std::string err =
-            std::string("Error - TheGamesDBJSONRequest - Error parsing JSON. \n\t") +
+            std::string("TheGamesDBJSONRequest - Error parsing JSON. \n\t") +
                     GetParseError_En(doc.GetParseError());
         setError(err);
         LOG(LogError) << err;
@@ -399,8 +399,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             baseImageUrlLarge = base_url["large"].GetString();
         }
         else {
-            std::string warn = "Warning - TheGamesDBJSONRequest - No URL path for large images.\n";
-            LOG(LogWarning) << warn;
+            LOG(LogWarning) << "TheGamesDBJSONRequest - No URL path for large images.\n";
             return;
         }
 
@@ -408,7 +407,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             processMediaURLs(images, baseImageUrlLarge, results);
         }
         catch (std::runtime_error& e) {
-            LOG(LogError) << "Error - Error while processing media URLs: " << e.what();
+            LOG(LogError) << "Error while processing media URLs: " << e.what();
         }
 
         // Find how many more requests we can make before the scraper
@@ -427,8 +426,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     // These process steps are for the initial scraping response.
     if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
             !doc["data"]["games"].IsArray()) {
-        std::string warn = "Warning - TheGamesDBJSONRequest - Response had no game data.\n";
-        LOG(LogWarning) << warn;
+        LOG(LogWarning) << "TheGamesDBJSONRequest - Response had no game data.\n";
         return;
     }
 
@@ -441,7 +439,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             processGame(v, results);
         }
         catch (std::runtime_error& e) {
-            LOG(LogError) << "Error - Error while processing game: " << e.what();
+            LOG(LogError) << "Error while processing game: " << e.what();
         }
     }
 }

@@ -142,7 +142,7 @@ void InputManager::removeJoystickByJoystickID(SDL_JoystickID joyId)
         mJoysticks.erase(joyIt);
     }
     else {
-        LOG(LogError) << "Error - Could not find joystick to close (instance ID: " << joyId << ")";
+        LOG(LogError) << "Could not find joystick to close (instance ID: " << joyId << ")";
     }
 }
 
@@ -472,7 +472,7 @@ void InputManager::doOnFinish()
         #endif
 
         if (!result) {
-            LOG(LogError) << "Error - Couldn't parse input config: " << result.description();
+            LOG(LogError) << "Couldn't parse input config: " << result.description();
         }
         else {
             pugi::xml_node root = doc.child("inputList");
@@ -546,7 +546,7 @@ std::string InputManager::getDeviceGUIDString(int deviceId)
 
     auto it = mJoysticks.find(deviceId);
     if (it == mJoysticks.cend()) {
-        LOG(LogError) << "Error - getDeviceGUIDString - deviceId " << deviceId << " not found!";
+        LOG(LogError) << "getDeviceGUIDString - deviceId " << deviceId << " not found!";
         return "something went horribly wrong";
     }
 

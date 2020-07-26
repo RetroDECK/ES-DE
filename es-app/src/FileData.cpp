@@ -379,7 +379,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
         std::vector<FileData*> mChildrenShown;
         for (unsigned int i = 0; i < mChildren.size(); i++) {
             if (mChildren[i]->getHidden()) {
-                LOG(LogDebug) << "Debug - FileData::sort(): Skipping hidden game '" <<
+                LOG(LogDebug) << "FileData::sort(): Skipping hidden game '" <<
                         mChildren[i]->getName() << "'";
                 continue;
             }
@@ -420,7 +420,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     for (unsigned int i = 0; i < mChildren.size(); i++) {
         // Exclude game if it's marked as hidden and the hide setting has been set.
         if (!showHiddenGames && mChildren[i]->getHidden()) {
-            LOG(LogDebug) << "Debug - FileData::sortFavoritesOnTop(): Skipping hidden game '" <<
+            LOG(LogDebug) << "FileData::sortFavoritesOnTop(): Skipping hidden game '" <<
                     mChildren[i]->getName() << "'";
             continue;
         }

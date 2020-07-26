@@ -117,7 +117,7 @@ void Sound::init()
     Uint8 * data = nullptr;
     Uint32 dlen = 0;
     if (SDL_LoadWAV(mPath.c_str(), &wave, &data, &dlen) == nullptr) {
-        LOG(LogError) << "Error - Failed to load theme navigation sound file:";
+        LOG(LogError) << "Failed to load theme navigation sound file:";
         LOG(LogError) << SDL_GetError();
         return;
     }

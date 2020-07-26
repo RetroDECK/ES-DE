@@ -78,7 +78,7 @@ int launchEmulatorUnix(const std::string& cmd_utf8)
     int returnValue;
 
     if (!(commandPipe = (FILE*)popen(command.c_str(), "r"))) {
-        LOG(LogError) << "Error - couldn't open pipe to command.";
+        LOG(LogError) << "Couldn't open pipe to command.";
         return -1;
     }
 
@@ -97,7 +97,7 @@ int launchEmulatorUnix(const std::string& cmd_utf8)
     }
 
     if (returnValue) {
-        LOG(LogError) << "Error - launchEmulatorUnix - return value " <<
+        LOG(LogError) << "launchEmulatorUnix - return value " <<
                 std::to_string(returnValue) + ":";
         if (commandOutput.size())
             LOG(LogError) << commandOutput;
@@ -170,7 +170,7 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
             }
         }
 
-        LOG(LogError) << "Error - launchEmulatorWindows - system error code " <<
+        LOG(LogError) << "launchEmulatorWindows - system error code " <<
                 errorCode << ": " << errorMessage;
     }
 
@@ -230,7 +230,7 @@ int quitES(QuitMode mode)
 
 void emergencyShutdown()
 {
-    LOG(LogError) << "Critical Error - Performing emergency shutdown...";
+    LOG(LogError) << "Critical - Performing emergency shutdown...";
 
     MameNames::deinit();
     AudioManager::getInstance()->deinit();

@@ -101,8 +101,8 @@ bool SystemData::populateFolder(FileData* folder)
         return false;
     }
     if (!Utils::FileSystem::isDirectory(folderPath)) {
-        LOG(LogWarning) << "Warning - Folder with path \"" <<
-                folderPath << "\" is not a directory!";
+        LOG(LogWarning) << "Folder with path \"" <<
+                folderPath << "\" is not a directory.";
         return false;
     }
 
@@ -111,7 +111,7 @@ bool SystemData::populateFolder(FileData* folder)
         // If this symlink resolves to somewhere that's at the beginning of our
         // path, it's going to create a recursive loop. Make sure to avoid this.
         if (folderPath.find(Utils::FileSystem::getCanonicalPath(folderPath)) == 0) {
-            LOG(LogWarning) << "Warning - Skipping infinitely recursive symlink \"" <<
+            LOG(LogWarning) << "Skipping infinitely recursive symlink \"" <<
                     folderPath << "\"";
             return false;
         }
@@ -219,7 +219,7 @@ bool SystemData::loadConfig()
     LOG(LogInfo) << "Loading system config file " << path << "...";
 
     if (!Utils::FileSystem::exists(path)) {
-        LOG(LogWarning) << "Warning - es_systems.cfg does not exist.";
+        LOG(LogWarning) << "es_systems.cfg does not exist.";
         if (copyConfigTemplate(getConfigPath(true)))
             return false;
         path = getConfigPath(false);
@@ -233,7 +233,7 @@ bool SystemData::loadConfig()
     #endif
 
     if (!res) {
-        LOG(LogError) << "Error - Could not parse es_systems.cfg";
+        LOG(LogError) << "Could not parse es_systems.cfg";
         LOG(LogError) << res.description();
         return false;
     }
@@ -242,7 +242,7 @@ bool SystemData::loadConfig()
     pugi::xml_node systemList = doc.child("systemList");
 
     if (!systemList) {
-        LOG(LogError) << "Error - es_systems.cfg is missing the <systemList> tag!";
+        LOG(LogError) << "es_systems.cfg is missing the <systemList> tag.";
         return false;
     }
 
@@ -288,7 +288,7 @@ bool SystemData::loadConfig()
             // If there appears to be an actual platform ID supplied
             // but it didn't match the list, generate a warning.
             if (str != nullptr && str[0] != '\0' && platformId == PlatformIds::PLATFORM_UNKNOWN)
-                LOG(LogWarning) << "Warning - Unknown platform for system \"" << name <<
+                LOG(LogWarning) << "Unknown platform for system \"" << name <<
                         "\" (platform \"" << str << "\" from list \"" << platformList << "\")";
             else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
                 platformIds.push_back(platformId);
@@ -299,8 +299,8 @@ bool SystemData::loadConfig()
 
         // Validate.
         if (name.empty() || path.empty() || extensions.empty() || cmd.empty()) {
-            LOG(LogError) << "Error - System \"" << name <<
-                    "\" is missing name, path, extension, or command!";
+            LOG(LogError) << "System \"" << name <<
+                    "\" is missing name, path, extension, or command.";
             continue;
         }
 
@@ -363,7 +363,7 @@ bool SystemData::copyConfigTemplate(const std::string& path)
     #endif
 
     if (Utils::FileSystem::copyFile(systemsTemplateFile, path, false)) {
-        LOG(LogError) << "Error - Copying of es_systems.cfg template file failed.";
+        LOG(LogError) << "Copying of es_systems.cfg template file failed.";
         return true;
     }
 

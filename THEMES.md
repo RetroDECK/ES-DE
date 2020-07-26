@@ -286,10 +286,10 @@ Starting EmulationStation with the --debug flag will provide feedback on whether
 
 Example debug output:
 ```
-Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Looking for navigation sound tag <sound name="quicksysselect">.
-Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Tag found, ready to load theme sound file.
-Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Looking for navigation sound tag <sound name="select">.
-Jul 12 11:28:58 lvl3:   Sound::getFromTheme(): Tag not found, using fallback sound file.
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for navigation sound tag <sound name="quicksysselect">.
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag found, ready to load theme sound file.
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for navigation sound tag <sound name="select">.
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag not found, using fallback sound file.
 
 ```
 

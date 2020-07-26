@@ -128,7 +128,7 @@ void parseGamelist(SystemData* system)
                     relativeTo, false);
 
             if (!trustGamelist && !Utils::FileSystem::exists(path)) {
-                LOG(LogWarning) << "Warning - File \"" << path << "\" does not exist, ignoring.";
+                LOG(LogWarning) << "File \"" << path << "\" does not exist, ignoring.";
                 continue;
             }
 

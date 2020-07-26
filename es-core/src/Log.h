@@ -9,6 +9,7 @@
 #define ES_CORE_LOG_H
 
 #include <sstream>
+#include <map>
 
 #define LOG(level) \
 if (level > Log::getReportingLevel()); \
@@ -41,6 +42,13 @@ protected:
     std::ostringstream os;
 
 private:
+    std::map<LogLevel, std::string> logLevelMap {
+        { LogError, "Error" },
+        { LogWarning, "Warn" },
+        { LogInfo, "Info" },
+        { LogDebug, "Debug" }
+    };
+
     static LogLevel reportingLevel;
     LogLevel messageLevel;
 };

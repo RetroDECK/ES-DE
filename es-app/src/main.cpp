@@ -347,7 +347,7 @@ bool verifyHomeFolderExists()
 bool loadSystemConfigFile(std::string& errorMsg)
 {
     if (!SystemData::loadConfig()) {
-        LOG(LogError) << "Error - Could not parse systems configuration file.";
+        LOG(LogError) << "Could not parse systems configuration file.";
         errorMsg = "COULDN'T FIND THE SYSTEMS CONFIGURATION FILE.\n"
                 "ATTEMPTED TO COPY A TEMPLATE ES_SYSTEMS.CFG FILE\n"
                 "FROM THE EMULATIONSTATION RESOURCES DIRECTORY,\n"
@@ -358,7 +358,7 @@ bool loadSystemConfigFile(std::string& errorMsg)
     }
 
     if (SystemData::sSystemVector.size() == 0) {
-        LOG(LogError) << "Error - No systems found, does at least one system have a game present? "
+        LOG(LogError) << "No systems found, does at least one system have a game present? "
                 "(Check that the file extensions are supported.)";
         errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
                 "GAME FILES WERE FOUND. PLEASE MAKE SURE THAT\n"
@@ -534,7 +534,7 @@ int main(int argc, char* argv[])
     // Check if the media directory exists, and if not, log a warning.
     if (!Utils::FileSystem::isDirectory(FileData::getMediaDirectory()) ||
             Utils::FileSystem::isSymlink(FileData::getMediaDirectory())) {
-        LOG(LogWarning) << "Warning - Games media directory does not exist "
+        LOG(LogWarning) << "Games media directory does not exist "
                 "(or is not a directory or a symlink):";
         LOG(LogWarning) << FileData::getMediaDirectory();
     }

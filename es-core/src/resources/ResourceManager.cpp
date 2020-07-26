@@ -67,7 +67,7 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
         // For missing resources, log an error and terminate the application. This should
         // indicate that we have a broken EmulationStation installation.
         else {
-            LOG(LogError) << "Error - Program resource missing: " << path;
+            LOG(LogError) << "Program resource missing: " << path;
             LOG(LogError) << "Tried to find the resource in the following locations:";
             LOG(LogError) << testHome;
             #ifdef __unix__

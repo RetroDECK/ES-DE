@@ -31,8 +31,7 @@ std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParam
 
     // Check if the scraper in the settings still exists as a registered scraping source.
     if (scraper_request_funcs.find(name) == scraper_request_funcs.end())
-        LOG(LogWarning) << "Warning - Configured scraper (" << name <<
-                ") unavailable, scraping aborted.";
+        LOG(LogWarning) << "Configured scraper (" << name << ") unavailable, scraping aborted.";
     else
         scraper_request_funcs.at(name)(params, handle->mRequestQueue, handle->mResults);
 
@@ -47,8 +46,7 @@ std::unique_ptr<ScraperSearchHandle> startMediaURLsFetch(const std::string& game
     ScraperSearchParams params;
     // Check if the scraper in the settings still exists as a registered scraping source.
     if (scraper_request_funcs.find(name) == scraper_request_funcs.end()) {
-        LOG(LogWarning) << "Warning - Configured scraper (" << name <<
-                ") unavailable, scraping aborted.";
+        LOG(LogWarning) << "Configured scraper (" << name << ") unavailable, scraping aborted.";
     }
     else {
         // Specifically use the TheGamesDB function as this type of request
@@ -145,7 +143,7 @@ void ScraperHttpRequest::update()
         return;
 
     // Everything else is some sort of error.
-    LOG(LogError) << "Error - ScraperHttpRequest network error (status: " << status<< ") - "
+    LOG(LogError) << "ScraperHttpRequest network error (status: " << status<< ") - "
             << mReq->getErrorMsg();
     setError(mReq->getErrorMsg());
 }
@@ -407,7 +405,7 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
     if (format == FIF_UNKNOWN)
         format = FreeImage_GetFIFFromFilename(path.c_str());
     if (format == FIF_UNKNOWN) {
-        LOG(LogError) << "Error - Could not detect filetype for image \"" << path << "\"!";
+        LOG(LogError) << "Could not detect filetype for image \"" << path << "\"!";
         return false;
     }
 
@@ -416,7 +414,7 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
         image = FreeImage_Load(format, path.c_str());
     }
     else {
-        LOG(LogError) << "Error - File format not supported for image \"" << path << "\"!";
+        LOG(LogError) << "File format not supported for image \"" << path << "\"!";
         return false;
     }
 
@@ -437,7 +435,7 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
     FreeImage_Unload(image);
 
     if (imageRescaled == nullptr) {
-        LOG(LogError) << "Error - Could not resize image! (not enough memory? invalid bitdepth?)";
+        LOG(LogError) << "Could not resize image. (Not enough memory? Invalid bitdepth?)";
         return false;
     }
 
@@ -445,7 +443,7 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
     FreeImage_Unload(imageRescaled);
 
     if (!saved) {
-        LOG(LogError) << "Error - Failed to save resized image!";
+        LOG(LogError) << "Failed to save resized image.";
     }
 
     return saved;

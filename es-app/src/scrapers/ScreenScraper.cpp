@@ -149,7 +149,7 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
             p_ids.push_back(mapIt->second);
         }
         else {
-            LOG(LogWarning) << "Warning - ScreenScraper: no support for platform " <<
+            LOG(LogWarning) << "ScreenScraper: no support for platform " <<
                     getPlatformName(*platformIt);
             // Add the scrape request without a platform/system ID.
             requests.push(std::unique_ptr<ScraperRequest>
@@ -180,7 +180,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
 
     if (!parseResult) {
         std::stringstream ss;
-        ss << "Error - ScreenScraperRequest - Error parsing XML: " << parseResult.description();
+        ss << "ScreenScraperRequest - Error parsing XML: " << parseResult.description();
 
         std::string err = ss.str();
         setError(err);

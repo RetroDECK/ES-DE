@@ -102,7 +102,7 @@ void AudioManager::init()
 
     // Open the audio device and pause.
     if (SDL_OpenAudio(&sAudioFormat, nullptr) < 0) {
-        LOG(LogError) << "AudioManager Error - Unable to open SDL audio: " <<
+        LOG(LogError) << "AudioManager - Unable to open SDL audio: " <<
                 SDL_GetError() << std::endl;
     }
 }
@@ -134,7 +134,7 @@ void AudioManager::unregisterSound(std::shared_ptr<Sound> & sound)
             return;
         }
     }
-    LOG(LogError) << "AudioManager Error - tried to unregister a sound that wasn't registered!";
+    LOG(LogError) << "AudioManager - tried to unregister a sound that wasn't registered!";
 }
 
 void AudioManager::play()

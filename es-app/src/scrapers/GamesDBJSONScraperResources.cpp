@@ -125,14 +125,14 @@ bool TheGamesDBJSONRequestResources::saveResource(
 {
 
     if (req == nullptr) {
-        LOG(LogError) << "Error - HTTP request pointer was null.\n";
+        LOG(LogError) << "HTTP request pointer was null.\n";
         return true;
     }
     if (req->status() == HttpReq::REQ_IN_PROGRESS) {
         return false; // Not ready: wait some more.
     }
     if (req->status() != HttpReq::REQ_SUCCESS) {
-        LOG(LogError) << "Error - Resource request for " << file_name <<
+        LOG(LogError) << "Resource request for " << file_name <<
                 " failed:\n\t" << req->getErrorMsg();
         return true; // Request failed, resetting request..
     }

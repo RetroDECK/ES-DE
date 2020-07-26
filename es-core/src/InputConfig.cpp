@@ -196,7 +196,7 @@ void InputConfig::loadFromXML(pugi::xml_node& node)
         InputType typeEnum = stringToInputType(type);
 
         if (typeEnum == TYPE_COUNT) {
-            LOG(LogError) << "Error - InputConfig load error - input of type \"" << type <<
+            LOG(LogError) << "InputConfig load error - input of type \"" << type <<
                     "\" is invalid! Skipping input \"" << name << "\".\n";
             continue;
         }
@@ -205,7 +205,7 @@ void InputConfig::loadFromXML(pugi::xml_node& node)
         int value = input.attribute("value").as_int();
 
         if (value == 0) {
-            LOG(LogWarning) << "Warning - InputConfig value is 0 for " <<
+            LOG(LogWarning) << "InputConfig value is 0 for " <<
                     type << " " << id << "!\n";
         }
 

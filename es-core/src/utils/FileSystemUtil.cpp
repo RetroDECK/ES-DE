@@ -544,19 +544,19 @@ namespace Utils
                 const std::string& _destination_path, bool _overwrite)
         {
             if (!exists(_source_path)) {
-                LOG(LogError) << "Error - Can't copy file, source file does not exist:";
+                LOG(LogError) << "Can't copy file, source file does not exist:";
                 LOG(LogError) << _source_path;
                 return true;
             }
 
             if (isDirectory(_destination_path)) {
-                LOG(LogError) << "Error - Destination file is actually a directory:";
+                LOG(LogError) << "Destination file is actually a directory:";
                 LOG(LogError) << _destination_path;
                 return true;
             }
 
             if (!_overwrite && exists(_destination_path)) {
-                LOG(LogError) << "Error - Destination file exists and the overwrite flag "
+                LOG(LogError) << "Destination file exists and the overwrite flag "
                         "has not been set.";
                 return true;
             }
@@ -569,7 +569,7 @@ namespace Utils
             #endif
 
             if (sourceFile.fail()) {
-                LOG(LogError) << "Error - Couldn't read from source file (" << _source_path <<
+                LOG(LogError) << "Couldn't read from source file (" << _source_path <<
                         "), permission problems?";
                 sourceFile.close();
                 return true;
@@ -583,7 +583,7 @@ namespace Utils
             #endif
 
             if (targetFile.fail()) {
-                LOG(LogError) << "Error - Couldn't write to target file (" << _destination_path <<
+                LOG(LogError) << "Couldn't write to target file (" << _destination_path <<
                         "), permission problems?";
                 targetFile.close();
                 return true;
@@ -608,13 +608,13 @@ namespace Utils
             }
 
             if (isDirectory(_destination_path)) {
-                LOG(LogError) << "Error - Destination file is actually a directory:";
+                LOG(LogError) << "Destination file is actually a directory:";
                 LOG(LogError) << _destination_path;
                 return true;
             }
 
             if (!_overwrite && exists(_destination_path)) {
-                LOG(LogError) << "Error - Destination file exists and the overwrite flag "
+                LOG(LogError) << "Destination file exists and the overwrite flag "
                         "has not been set.";
                 return true;
             }
@@ -640,7 +640,7 @@ namespace Utils
             // Try to remove file.
             #ifdef _WIN64
             if (_wunlink(Utils::String::stringToWideString(path).c_str()) != 0) {
-                LOG(LogError) << "Error - Couldn't delete file, permission problems?";
+                LOG(LogError) << "Couldn't delete file, permission problems?";
                 LOG(LogError) << path;
                 return true;
             }
@@ -649,7 +649,7 @@ namespace Utils
             }
             #else
             if (unlink(path.c_str()) != 0) {
-                LOG(LogError) << "Error - Couldn't delete file, permission problems?";
+                LOG(LogError) << "Couldn't delete file, permission problems?";
                 LOG(LogError) << path;
                 return true;
             }
