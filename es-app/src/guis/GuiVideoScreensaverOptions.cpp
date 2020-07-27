@@ -17,7 +17,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
         : GuiScreensaverOptions(window, title)
 {
     // Timer for swapping videos.
-    auto swap = std::make_shared<SliderComponent>(mWindow, 10.f, 300.f, 5.f, "s");
+    auto swap = std::make_shared<SliderComponent>(mWindow, 1.f, 120.f, 1.f, "s");
     swap->setValue((float)(Settings::getInstance()->
             getInt("ScreenSaverSwapVideoTimeout") / (1000)));
     addWithLabel("SWAP VIDEO AFTER (SECS)", swap);
@@ -28,10 +28,10 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     });
 
     auto stretch_screensaver = std::make_shared<SwitchComponent>(mWindow);
-    stretch_screensaver->setState(Settings::getInstance()->getBool("StretchVideoOnScreenSaver"));
-    addWithLabel("STRETCH VIDEO ON SCREENSAVER", stretch_screensaver);
+    stretch_screensaver->setState(Settings::getInstance()->getBool("ScreenSaverStretchVideos"));
+    addWithLabel("STRETCH VIDEOS TO MONITOR RESOLUTION", stretch_screensaver);
     addSaveFunc([stretch_screensaver] { Settings::getInstance()->
-            setBool("StretchVideoOnScreenSaver", stretch_screensaver->getState()); });
+            setBool("ScreenSaverStretchVideos", stretch_screensaver->getState()); });
 
     #ifdef _RPI_
     auto ss_omx = std::make_shared<SwitchComponent>(mWindow);

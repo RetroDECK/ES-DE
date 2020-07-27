@@ -32,10 +32,10 @@ GuiSlideshowScreensaverOptions::GuiSlideshowScreensaverOptions(Window* window, c
 
     // Stretch image.
     auto sss_stretch = std::make_shared<SwitchComponent>(mWindow);
-    sss_stretch->setState(Settings::getInstance()->getBool("SlideshowScreenSaverStretch"));
-    addWithLabel(row, "STRETCH IMAGES", sss_stretch);
+    sss_stretch->setState(Settings::getInstance()->getBool("ScreenSaverStretchImages"));
+    addWithLabel(row, "STRETCH IMAGES TO MONITOR RESOLUTION", sss_stretch);
     addSaveFunc([sss_stretch] {
-        Settings::getInstance()->setBool("SlideshowScreenSaverStretch", sss_stretch->getState());
+        Settings::getInstance()->setBool("ScreenSaverStretchImages", sss_stretch->getState());
     });
 
     // Background audio file.

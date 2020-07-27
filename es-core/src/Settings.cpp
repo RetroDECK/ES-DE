@@ -97,14 +97,14 @@ void Settings::setDefaults()
     mStringMap["ScreenSaverBehavior"] = "dim";
 
     // UI settings -> screensaver settings -> video screensaver settings.
-    mIntMap["ScreenSaverSwapVideoTimeout"] = 30000;
-    mBoolMap["StretchVideoOnScreenSaver"] = false;
+    mIntMap["ScreenSaverSwapVideoTimeout"] = 20000;
+    mBoolMap["ScreenSaverStretchVideos"] = false;
     mStringMap["ScreenSaverGameInfo"] = "never";
     mBoolMap["ScreenSaverVideoMute"] = false;			// Raspberry Pi only
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
     mIntMap["ScreenSaverSwapImageTimeout"] = 10000;
-    mBoolMap["SlideshowScreenSaverStretch"] = false;
+    mBoolMap["ScreenSaverStretchImages"] = false;
     mStringMap["SlideshowScreenSaverBackgroundAudioFile"] = Utils::FileSystem::getHomePath() +
             "/.emulationstation/slideshow/audio/slideshow_bg.wav";
     mBoolMap["SlideshowScreenSaverCustomImageSource"] = false;

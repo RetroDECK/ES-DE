@@ -178,7 +178,7 @@ void VideoPlayerComponent::startVideo()
                 if (!subtitlePath.empty()) {
                     // If we are rendering a screensaver.
                     // Check if we want to stretch the image.
-                    if (Settings::getInstance()->getBool("StretchVideoOnScreenSaver"))
+                    if (Settings::getInstance()->getBool("ScreenSaverStretchVideos"))
                         argv[6] = "stretch";
 
                     if (Settings::getInstance()->getString("ScreenSaverGameInfo") != "never") {

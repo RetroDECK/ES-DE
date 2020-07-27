@@ -112,7 +112,7 @@ void SystemScreenSaver::startScreenSaver()
             mVideoScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
                     Renderer::getScreenHeight() / 2.0f);
 
-            if (Settings::getInstance()->getBool("StretchVideoOnScreenSaver"))
+            if (Settings::getInstance()->getBool("ScreenSaverStretchVideos"))
                 mVideoScreensaver->setResize((float)Renderer::getScreenWidth(),
                         (float)Renderer::getScreenHeight());
             else
@@ -156,7 +156,7 @@ void SystemScreenSaver::startScreenSaver()
         mImageScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
                 Renderer::getScreenHeight() / 2.0f);
 
-        if (Settings::getInstance()->getBool("SlideshowScreenSaverStretch"))
+        if (Settings::getInstance()->getBool("ScreenSaverStretchImages"))
             mImageScreensaver->setResize((float)Renderer::getScreenWidth(),
                     (float)Renderer::getScreenHeight());
         else
