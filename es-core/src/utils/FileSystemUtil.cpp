@@ -706,6 +706,25 @@ namespace Utils
             #endif
         }
 
+        bool driveExists(const std::string& _path)
+        {
+            #ifdef _WIN64
+            std::string path = getGenericPath(_path);
+            // Try to add a dot or a backslash and a dot depending on how the drive
+            // letter was defined by the user.
+            if (path.length() == 2 && path.at(1) == ':')
+                path += "\\.";
+            else if (path.length() == 3 && path.at(1) == ':')
+                path += ".";
+
+            struct _stat64 info;
+            return (_wstat64(Utils::String::stringToWideString(path).c_str(), &info) == 0);
+
+            #else
+            return false;
+            #endif
+        }
+
         bool isAbsolute(const std::string& _path)
         {
             std::string path = getGenericPath(_path);

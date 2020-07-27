@@ -187,6 +187,8 @@ void Settings::setDefaults()
     mStringMap["SaveGamelistsMode"] = "always";
     #ifdef _WIN64
     mBoolMap["HideTaskbar"] = false;
+    // Set this to true as default as it's unreliable to suspend ES during game launches
+    // on some Windows versions/installations.
     mBoolMap["RunInBackground"] = true;
     #endif
     mStringMap["MediaDirectory"] = "";

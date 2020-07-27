@@ -55,6 +55,7 @@ namespace Utils
 
         bool createDirectory(const std::string& _path);
         bool exists(const std::string& _path);
+        bool driveExists(const std::string& _path);
         bool isAbsolute(const std::string& _path);
         bool isRegularFile(const std::string& _path);
         bool isDirectory(const std::string& _path);

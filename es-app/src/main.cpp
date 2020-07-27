@@ -148,7 +148,12 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: No home path supplied with \'--home'.\n";
                 return false;
             }
+            #ifdef _WIN64
+            if (!Utils::FileSystem::exists(argv[i + 1]) &&
+                    (!Utils::FileSystem::driveExists(argv[i + 1]))) {
+            #else
             if (!Utils::FileSystem::exists(argv[i + 1])) {
+            #endif
                 std::cerr << "Error: Home path \'" << argv[i + 1] << "\' does not exist.\n";
                 return false;
             }
