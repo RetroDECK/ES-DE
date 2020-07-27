@@ -512,7 +512,8 @@ namespace Utils
             std::string resolved;
 
             #if defined(_WIN64)
-            HANDLE hFile = CreateFile(path.c_str(), FILE_READ_ATTRIBUTES, FILE_SHARE_READ,
+            HANDLE hFile = CreateFileW(Utils::String::stringToWideString(path).c_str(),
+                    FILE_READ_ATTRIBUTES, FILE_SHARE_READ,
                     0, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
 //            TEMPORARY, will need to fix this later.
 //            if (hFile != INVALID_HANDLE_VALUE) {
@@ -756,7 +757,8 @@ namespace Utils
 
             #if defined(_WIN64)
             // Check for symlink attribute.
-            const DWORD Attributes = GetFileAttributes(path.c_str());
+            const DWORD Attributes =
+                    GetFileAttributesW(Utils::String::stringToWideString(path).c_str());
             if ((Attributes != INVALID_FILE_ATTRIBUTES) &&
                     (Attributes & FILE_ATTRIBUTE_REPARSE_POINT))
                 return true;
@@ -780,7 +782,8 @@ namespace Utils
 
             #if defined(_WIN64)
             // Check for hidden attribute.
-            const DWORD Attributes = GetFileAttributes(path.c_str());
+            const DWORD Attributes =
+                    GetFileAttributesW(Utils::String::stringToWideString(path).c_str());
             if ((Attributes != INVALID_FILE_ATTRIBUTES) && (Attributes & FILE_ATTRIBUTE_HIDDEN))
                 return true;
             #endif // _WIN64
