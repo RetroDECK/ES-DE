@@ -179,9 +179,9 @@ void GuiMenu::openSoundSettings()
 
         // Video audio.
         auto video_audio = std::make_shared<SwitchComponent>(mWindow);
-        video_audio->setState(Settings::getInstance()->getBool("VideoAudio"));
-        s->addWithLabel("AUDIO FOR VIDEO FILES", video_audio);
-        s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("VideoAudio",
+        video_audio->setState(Settings::getInstance()->getBool("GamelistVideoAudio"));
+        s->addWithLabel("PLAY AUDIO FOR VIDEO FILES IN GAMELIST VIEWS", video_audio);
+        s->addSaveFunc([video_audio] { Settings::getInstance()->setBool("GamelistVideoAudio",
                 video_audio->getState()); });
 
         // Navigation sounds.

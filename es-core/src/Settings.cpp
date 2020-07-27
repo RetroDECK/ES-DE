@@ -100,7 +100,7 @@ void Settings::setDefaults()
     mIntMap["ScreenSaverSwapVideoTimeout"] = 20000;
     mBoolMap["ScreenSaverStretchVideos"] = false;
     mStringMap["ScreenSaverGameInfo"] = "never";
-    mBoolMap["ScreenSaverVideoMute"] = false;			// Raspberry Pi only
+    mBoolMap["ScreenSaverVideoAudio"] = false;
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
     mIntMap["ScreenSaverSwapImageTimeout"] = 10000;
@@ -132,7 +132,7 @@ void Settings::setDefaults()
     //#else
     //    mStringMap["AudioDevice"] = "Master";
     #endif
-    mBoolMap["VideoAudio"] = true;
+    mBoolMap["GamelistVideoAudio"] = true;
     mBoolMap["NavigationSounds"] = true;
 
     // Game collection settings.
