@@ -307,6 +307,14 @@ bool SystemData::loadConfig()
         // Convert path to generic directory seperators.
         path = Utils::FileSystem::getGenericPath(path);
 
+        #ifdef _WIN64
+        if (!Settings::getInstance()->getBool("ShowHiddenFiles") &&
+                Utils::FileSystem::isHidden(path)) {
+            LOG(LogWarning) << "Skipping hidden ROM folder " << path;
+            continue;
+        }
+        #endif
+
         // Create the system runtime environment data.
         SystemEnvironmentData* envData = new SystemEnvironmentData;
         envData->mStartPath = path;
