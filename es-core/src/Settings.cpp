@@ -82,7 +82,7 @@ void Settings::setDefaults()
     mStringMap["GamelistViewStyle"] = "automatic";
     mStringMap["TransitionStyle"] = "instant";
     mStringMap["ThemeSet"] = "";
-    mStringMap["UIMode"] = "Full";
+    mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
     mBoolMap["FavoritesFirst"] = true;
     mBoolMap["ForceDisableFilters"] = false;
@@ -144,7 +144,7 @@ void Settings::setDefaults()
     mBoolMap["CollectionShowSystemInfo"] = true;
 
     // Scraper.
-    mStringMap["Scraper"] = "ScreenScraper";
+    mStringMap["Scraper"] = "screenscraper";
     mStringMap["ScraperRegion"] = "eu";
     mStringMap["ScraperLanguage"] = "en";
 //	mBoolMap["ScraperGenerateMiximages"] = false;

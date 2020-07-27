@@ -267,7 +267,7 @@ bool parseArgs(int argc, char* argv[])
             i++; // Skip vsync value.
         }
         else if (strcmp(argv[i], "--force-full") == 0) {
-            Settings::getInstance()->setString("UIMode", "Full");
+            Settings::getInstance()->setString("UIMode", "full");
         }
         else if (strcmp(argv[i], "--force-kiosk") == 0) {
             Settings::getInstance()->setBool("ForceKiosk", true);

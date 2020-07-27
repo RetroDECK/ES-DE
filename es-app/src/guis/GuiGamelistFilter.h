@@ -35,7 +35,7 @@ private:
     void resetAllFilters();
     void addFiltersToMenu();
 
-    std::map<FilterIndexType, std::shared_ptr< OptionListComponent<std::string> >> mFilterOptions;
+    std::map<FilterIndexType, std::shared_ptr<OptionListComponent<std::string>>> mFilterOptions;
 
     MenuComponent mMenu;
     SystemData* mSystem;

@@ -161,8 +161,8 @@ void thegamesdb_generate_json_scraper_requests(
                     first = false;
                 }
                 else {
-                    LOG(LogWarning) << "TheGamesDB scraper warning - "
-                            "no support for platform " << getPlatformName(*platformIt);
+                    LOG(LogWarning) << "TheGamesDB scraper - no support for platform " <<
+                            getPlatformName(*platformIt);
                 }
             }
             path += platformQueryParam;

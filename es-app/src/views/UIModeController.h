@@ -48,7 +48,7 @@ private:
     void unlockUIMode();
 
     static UIModeController * sInstance;
-    const std::vector<std::string> mUIModes = { "Full", "Kiosk", "Kid" };
+    const std::vector<std::string> mUIModes = { "full", "kiosk", "kid" };
 
     // Default passkeyseq = "uuddlrlrba", as defined in the setting 'UIMode_passkey'.
     std::string mPassKeySequence;

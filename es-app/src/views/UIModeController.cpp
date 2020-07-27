@@ -46,7 +46,7 @@ bool UIModeController::listen(InputConfig* config, Input input)
     if (Settings::getInstance()->getBool("Debug"))
         logInput(config, input);
 
-    if ((Settings::getInstance()->getString("UIMode") == "Full") || !isValidInput(config, input))
+    if ((Settings::getInstance()->getString("UIMode") == "full") || !isValidInput(config, input))
         return false; // Already unlocked, or invalid input, nothing to do here.
 
     if (!inputIsMatch(config, input))
@@ -75,27 +75,27 @@ bool UIModeController::inputIsMatch(InputConfig* config, Input input)
 void UIModeController::unlockUIMode()
 {
     LOG(LogDebug) <<
-            " UIModeController::listen(): Passkey sequence completed, switching UIMode to full";
-    Settings::getInstance()->setString("UIMode", "Full");
+            " UIModeController::listen(): Passkey sequence completed, switching UIMode to Full";
+    Settings::getInstance()->setString("UIMode", "full");
     Settings::getInstance()->saveFile();
     mPassKeyCounter = 0;
 }
 
 bool UIModeController::isUIModeFull()
 {
-    return ((mCurrentUIMode == "Full") && !Settings::getInstance()->getBool("ForceKiosk"));
+    return ((mCurrentUIMode == "full") && !Settings::getInstance()->getBool("ForceKiosk"));
 }
 
 bool UIModeController::isUIModeKid()
 {
     return (Settings::getInstance()->getBool("ForceKid") ||
-        ((mCurrentUIMode == "Kid") && !Settings::getInstance()->getBool("ForceKiosk")));
+        ((mCurrentUIMode == "kid") && !Settings::getInstance()->getBool("ForceKiosk")));
 }
 
 bool UIModeController::isUIModeKiosk()
 {
     return (Settings::getInstance()->getBool("ForceKiosk") ||
-        ((mCurrentUIMode == "Kiosk") && !Settings::getInstance()->getBool("ForceKid")));
+        ((mCurrentUIMode == "kiosk") && !Settings::getInstance()->getBool("ForceKid")));
 }
 
 std::string UIModeController::getFormattedPassKeyStr()

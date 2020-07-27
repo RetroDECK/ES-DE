@@ -313,7 +313,7 @@ void GuiMenu::openUISettings()
     Window* window = mWindow;
     s->addSaveFunc([ UImodeSelection, window, this] {
         std::string selectedMode = UImodeSelection->getSelected();
-        if (selectedMode != "Full") {
+        if (selectedMode != "full") {
             std::string msg = "YOU ARE CHANGING THE UI TO A RESTRICTED MODE:\n\"" +
                     Utils::String::toUpper(selectedMode) + "\"\n";
             msg += "THIS WILL HIDE MOST MENU OPTIONS TO PREVENT CHANGES TO THE SYSTEM.\n";

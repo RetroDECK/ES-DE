@@ -76,7 +76,7 @@ GuiScraperSearch::GuiScraperSearch(
     mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
     if (Settings::getInstance()->getBool("ScrapeRatings") &&
-            Settings::getInstance()->getString("Scraper") != "TheGamesDB")
+            Settings::getInstance()->getString("Scraper") != "thegamesdb")
         mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
                 (mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
@@ -193,7 +193,7 @@ void GuiScraperSearch::resizeMetadata()
         mMD_Grid->setColWidthPerc(0, maxLblWidth / mMD_Grid->getSize().x());
 
         if (Settings::getInstance()->getBool("ScrapeRatings") &&
-            Settings::getInstance()->getString("Scraper") != "TheGamesDB") {
+            Settings::getInstance()->getString("Scraper") != "thegamesdb") {
             // Rating is manually sized.
             mMD_Rating->setSize(mMD_Grid->getColWidth(1), fontLbl->getHeight() * 0.65f);
             mMD_Grid->onSizeChanged();
@@ -392,7 +392,7 @@ void GuiScraperSearch::updateInfoPane()
 
         // Metadata.
         if (Settings::getInstance()->getBool("ScrapeRatings") &&
-                Settings::getInstance()->getString("Scraper") != "TheGamesDB") {
+                Settings::getInstance()->getString("Scraper") != "thegamesdb") {
             mMD_Rating->setValue(Utils::String::toUpper(res.mdl.get("rating")));
             mMD_Rating->setOpacity(255);
         }
@@ -410,7 +410,7 @@ void GuiScraperSearch::updateInfoPane()
 
         // Metadata.
         if (Settings::getInstance()->getBool("ScrapeRatings") &&
-                Settings::getInstance()->getString("Scraper") != "TheGamesDB") {
+                Settings::getInstance()->getString("Scraper") != "thegamesdb") {
             mMD_Rating->setValue("");
             mMD_Rating->setOpacity(0);
         }
