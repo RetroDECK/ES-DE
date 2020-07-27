@@ -101,7 +101,6 @@ void Settings::setDefaults()
     mBoolMap["StretchVideoOnScreenSaver"] = false;
     mStringMap["ScreenSaverGameInfo"] = "never";
     mBoolMap["ScreenSaverVideoMute"] = false;			// Raspberry Pi only
-    mBoolMap["CaptionsCompatibility"] = true;
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
     mIntMap["ScreenSaverSwapImageTimeout"] = 10000;

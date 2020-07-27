@@ -104,14 +104,6 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
                 ss_omx_italic_font_file->getValue());
     });
     #endif
-
-    #ifndef _RPI_
-    auto captions_compatibility = std::make_shared<SwitchComponent>(mWindow);
-    captions_compatibility->setState(Settings::getInstance()->getBool("CaptionsCompatibility"));
-    addWithLabel("USE COMPATIBLE LOW RESOLUTION FOR CAPTIONS", captions_compatibility);
-    addSaveFunc([captions_compatibility] { Settings::getInstance()->
-    setBool("CaptionsCompatibility", captions_compatibility->getState()); });
-    #endif
 }
 
 GuiVideoScreensaverOptions::~GuiVideoScreensaverOptions()

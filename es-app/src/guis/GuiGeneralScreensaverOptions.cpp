@@ -43,8 +43,8 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
     std::vector<std::string> screensavers;
     screensavers.push_back("dim");
     screensavers.push_back("black");
-    screensavers.push_back("random video");
     screensavers.push_back("slideshow");
+    screensavers.push_back("random video");
     for (auto it = screensavers.cbegin(); it != screensavers.cend(); it++)
         screensaver_behavior->add(*it, *it, Settings::getInstance()->
                 getString("ScreenSaverBehavior") == *it);
