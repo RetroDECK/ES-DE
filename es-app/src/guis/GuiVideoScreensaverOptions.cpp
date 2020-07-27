@@ -39,8 +39,10 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     addWithLabel("USE OMX PLAYER FOR SCREENSAVER", ss_omx);
     addSaveFunc([ss_omx, this] { Settings::getInstance()->
             setBool("ScreenSaverOmxPlayer", ss_omx->getState()); });
-    #endif
 
+    // TEMPORARY - Disabled for now (except for RPI), need to find a proper way to make an
+    // overlay on top of the videos. The solution with rendering subtitles is not a good solution.
+    // And as well the VLC video player subtitles seem to be somehow broken.
     // Render video game name as subtitles.
     auto ss_info = std::make_shared<OptionListComponent<std::string>>
             (mWindow,getHelpStyle(), "SHOW GAME INFO", false);
@@ -54,7 +56,6 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     addSaveFunc([ss_info, this] { Settings::getInstance()->
             setString("ScreenSaverGameInfo", ss_info->getSelected()); });
 
-    #ifdef _RPI_
     ComponentListRow row;
 
     // Set subtitle position.

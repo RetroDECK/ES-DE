@@ -99,7 +99,9 @@ void Settings::setDefaults()
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreenSaverSwapVideoTimeout"] = 20000;
     mBoolMap["ScreenSaverStretchVideos"] = false;
+    #ifdef _RPI_
     mStringMap["ScreenSaverGameInfo"] = "never";
+    #endif
     mBoolMap["ScreenSaverVideoAudio"] = false;
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.

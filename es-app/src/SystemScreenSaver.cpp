@@ -323,10 +323,12 @@ void SystemScreenSaver::pickGameListNode(unsigned long index,
                     mCurrentGame = (*itf);
 
                     // End of getting FileData.
+                    #ifdef _RPI_
                     if (Settings::getInstance()->getString("ScreenSaverGameInfo") != "never")
                         writeSubtitle(mGameName.c_str(), mSystemName.c_str(),
                                 (Settings::getInstance()->getString("ScreenSaverGameInfo") ==
                                 "always"));
+                    #endif
                     return;
                 }
             }
