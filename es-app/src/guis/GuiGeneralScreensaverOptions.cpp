@@ -54,10 +54,8 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
                 "random video" && screensaver_behavior->getSelected() == "random video") {
             // If before it wasn't risky but now there's a risk of problems, show warning.
             mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-            "THE \"RANDOM VIDEO\" SCREENSAVER SHOWS\nVIDEOS FROM YOUR GAMELISTS.\n\nIF YOU DO NOT "
-            "HAVE ANY VIDEOS, THE SCREENSAVER\nWILL DEFAULT TO \"BLACK\".\n\nSEE MORE "
-            "OPTIONS IN THE MENU \"UI SETTINGS\" >\n\"SCREENSAVER SETTINGS\" > "
-            "\"VIDEO SCREENSAVER SETTINGS\".",
+            "THE \"RANDOM VIDEO\" SCREENSAVER\nSHOWS VIDEOS FROM YOUR GAMELISTS.\n\nIF YOU DO NOT "
+            "HAVE ANY VIDEOS, THE\nSCREENSAVER WILL DEFAULT TO \"BLACK\"",
                 "OK", [] { return; }));
         }
         Settings::getInstance()->setString("ScreenSaverBehavior",

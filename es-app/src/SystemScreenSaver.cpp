@@ -2,7 +2,7 @@
 //  SystemScreenSaver.cpp
 //
 //  Screensaver, supporting the following modes:
-//  Dim, black, video, slideshow.
+//  Dim, black, slideshow, video.
 //
 
 #include "SystemScreenSaver.h"

@@ -17,7 +17,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
         : GuiScreensaverOptions(window, title)
 {
     // Timer for swapping videos.
-    auto swap = std::make_shared<SliderComponent>(mWindow, 10.f, 1000.f, 1.f, "s");
+    auto swap = std::make_shared<SliderComponent>(mWindow, 10.f, 300.f, 5.f, "s");
     swap->setValue((float)(Settings::getInstance()->
             getInt("ScreenSaverSwapVideoTimeout") / (1000)));
     addWithLabel("SWAP VIDEO AFTER (SECS)", swap);

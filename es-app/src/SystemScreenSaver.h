@@ -2,7 +2,7 @@
 //  SystemScreenSaver.h
 //
 //  Screensaver, supporting the following modes:
-//  Dim, black, video, slideshow.
+//  Dim, black, slideshow, video.
 //
 
 #pragma once
