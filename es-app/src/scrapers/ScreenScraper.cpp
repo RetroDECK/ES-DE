@@ -176,6 +176,13 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
     assert(req->status() == HttpReq::REQ_SUCCESS);
 
     pugi::xml_document doc;
+
+    // It seems as if screenscraper.fr has changed their API slightly and now just returns
+    // a simple text messsage upon not finding any matching game. If we don't return here,
+    // we will get a pugixml error trying to process this string as an XML message.
+    if (req->getContent().find("Erreur : Rom") == 0)
+        return;
+
     pugi::xml_parse_result parseResult = doc.load_string(req->getContent().c_str());
 
     if (!parseResult) {
