@@ -195,7 +195,7 @@ bool SystemView::input(InputConfig* config, Input input)
             // Get random system.
             // Go to system.
             NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
-            setCursor(SystemData::getRandomSystem());
+            setCursor(SystemData::getRandomSystem(getSelected()));
             return true;
         }
     }

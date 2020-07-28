@@ -329,7 +329,7 @@ bool SystemData::loadConfig()
         // games for the system are hidden. That will flag the system as empty.
         if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
             std::vector<FileData*> recursiveGames =
-                    newSys->getRootFolder()->getChildrenRercursive();
+                    newSys->getRootFolder()->getChildrenRecursive();
             onlyHidden = true;
             for (auto it = recursiveGames.cbegin(); it != recursiveGames.cend(); it++) {
                 if ((*it)->getType() != FOLDER) {
@@ -490,44 +490,110 @@ unsigned int SystemData::getGameCount() const
     return (unsigned int)mRootFolder->getFilesRecursive(GAME).size();
 }
 
-SystemData* SystemData::getRandomSystem()
+SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
 {
-    // This is a bit brute force.
-    // It might be more efficient to just do a while (!gameSystem) do random again...
     unsigned int total = 0;
     for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); it++) {
         if ((*it)->isGameSystem())
             total++;
     }
 
-    // Get a random number in range.
-    int target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
-    for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); it++)
-    {
-        if ((*it)->isGameSystem()) {
-            if (target > 0)
-                target--;
-            else
-                return (*it);
+    if (total < 2)
+        return nullptr;
+
+    SystemData* randomSystem;
+
+    do {
+        // Get a random number in range.
+        int target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
+
+        for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); it++) {
+            if ((*it)->isGameSystem()) {
+                if (target > 0) {
+                    target--;
+                }
+                else {
+                    randomSystem = (*it);
+                    break;
+                }
+            }
+        }
+    }
+    while (randomSystem == currentSystem);
+
+    return randomSystem;
+}
+
+FileData* SystemData::getRandomCollectionFolder(const FileData* currentFolder)
+{
+    if (!currentFolder)
+        return nullptr;
+
+    std::vector<FileData*> collectionFolders = currentFolder->getParent()->getChildren();
+
+    unsigned int total = collectionFolders.size();
+    int target = 0;
+
+    if (total < 2)
+        return nullptr;
+
+    do {
+        // Get a random number in range.
+        target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
+    }
+    while (collectionFolders.at(target) == currentFolder);
+
+    return collectionFolders.at(target);
+}
+
+FileData* SystemData::getRandomGame(const FileData* currentGame)
+{
+    std::vector<FileData*> gameList = mRootFolder->getFilesRecursive(GAME, true);
+
+    if (currentGame) {
+        // If the game is inside a folder, update gameList to only contain the games
+        // inside this folder.
+        if (currentGame->getParent()->getFullPath() !=
+                currentGame->getSystem()->getRootFolder()->getFullPath()) {
+            std::vector<FileData*> folderList;
+
+            for (auto it = gameList.cbegin(); it != gameList.cend(); it++) {
+                if ((*it)->getParent()->getFullPath() == currentGame->getParent()->getFullPath())
+                    folderList.push_back((*it));
+            }
+
+            gameList.erase(gameList.cbegin(), gameList.cend());
+            gameList.reserve(folderList.size());
+            gameList.insert(gameList.cend(), folderList.cbegin(), folderList.cend());
+        }
+        // If the game is not inside a folder, update gameList to exclude all folders.
+        else {
+            std::vector<FileData*> childrenList = mRootFolder->getChildren();
+            std::vector<FileData*> noFolderList;
+
+            for (auto it = childrenList.cbegin(); it != childrenList.cend(); it++) {
+                if ((*it)->getType() == GAME)
+                    noFolderList.push_back((*it));
+            }
+            gameList.erase(gameList.cbegin(), gameList.cend());
+            gameList.reserve(noFolderList.size());
+            gameList.insert(gameList.cend(), noFolderList.cbegin(), noFolderList.cend());
         }
     }
 
-    // If we end up here, there is no valid system.
-    return nullptr;
-}
-
-FileData* SystemData::getRandomGame()
-{
-    std::vector<FileData*> list = mRootFolder->getFilesRecursive(GAME, true);
-    unsigned int total = (int)list.size();
+    unsigned int total = (int)gameList.size();
     int target = 0;
 
-    // Get a random number in range.
-    if (total == 0)
+    if (total < 2)
         return nullptr;
-    target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
 
-    return list.at(target);
+    do {
+        // Get a random number in range.
+        target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
+    }
+    while (currentGame && gameList.at(target) == currentGame);
+
+    return gameList.at(target);
 }
 
 unsigned int SystemData::getDisplayedGameCount() const

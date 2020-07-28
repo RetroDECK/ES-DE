@@ -86,8 +86,9 @@ public:
 
     SystemData* getNext() const;
     SystemData* getPrev() const;
-    static SystemData* getRandomSystem();
-    FileData* getRandomGame();
+    static SystemData* getRandomSystem(const SystemData* currentSystem);
+    static FileData* getRandomCollectionFolder(const FileData* currentFolder);
+    FileData* getRandomGame(const FileData* currentGame = nullptr);
 
     // Load or re-load theme.
     void loadTheme();

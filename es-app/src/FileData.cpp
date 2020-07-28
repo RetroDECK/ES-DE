@@ -114,7 +114,7 @@ const bool FileData::getHidden()
         return false;
 }
 
-const std::vector<FileData*> FileData::getChildrenRercursive() const
+const std::vector<FileData*> FileData::getChildrenRecursive() const
 {
     std::vector<FileData*> childrenRecursive;
 
@@ -123,7 +123,7 @@ const std::vector<FileData*> FileData::getChildrenRercursive() const
         childrenRecursive.push_back((*it).second);
         // Recurse through any subdirectories.
         if ((*it).second->getType() == FOLDER) {
-            std::vector<FileData*> childrenSubdirectory = (*it).second->getChildrenRercursive();
+            std::vector<FileData*> childrenSubdirectory = (*it).second->getChildrenRecursive();
             childrenRecursive.insert(childrenRecursive.end(),
                     childrenSubdirectory.begin(), childrenSubdirectory.end());
         }

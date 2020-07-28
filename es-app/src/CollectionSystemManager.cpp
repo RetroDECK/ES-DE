@@ -729,9 +729,11 @@ void CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sys)
 
         FileData* randomGame = sys->getRandomGame();
 
-        video = randomGame->getVideoPath();
-        thumbnail = randomGame->getThumbnailPath();
-        image = randomGame->getImagePath();
+        if (randomGame) {
+            video = randomGame->getVideoPath();
+            thumbnail = randomGame->getThumbnailPath();
+            image = randomGame->getImagePath();
+        }
     }
 
     rootFolder->metadata.set("desc", desc);

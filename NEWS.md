@@ -62,6 +62,9 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Toggling the screensaver didn't work as expected
 * The setting to enable or disable audio for the video screensaver only worked on Raspberry Pi
 * The screensaver random function did not consider the previously selected game and could potentially show the same image or video over and over again
+* The random system selection did not consider the currently selected system
+* The random game selection did not consider the currently selected game
+* The random game selection traversed folders, i.e. a game could be selected inside a subdirectory and vice versa
 * Deleting a game did not delete the game media files or its entry in the gamelist.xml file
 * SystemView didn't properly loop the systems if only two systems were available
 * Hidden files still showed up if they had a gamelist.xml entry
