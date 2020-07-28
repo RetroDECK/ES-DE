@@ -388,12 +388,35 @@ void GuiMenu::openUISettings()
         }
     });
 
-    // Sort favorites on top of the gamelists.
-    auto favoritesFirstSwitch = std::make_shared<SwitchComponent>(mWindow);
-    favoritesFirstSwitch->setState(Settings::getInstance()->getBool("FavoritesFirst"));
-    s->addWithLabel("SORT FAVORITES ON TOP OF GAMELISTS", favoritesFirstSwitch);
-    s->addSaveFunc([favoritesFirstSwitch] {
-    if (Settings::getInstance()->setBool("FavoritesFirst", favoritesFirstSwitch->getState()))
+    // Sort folders on top of the gamelists.
+    auto folders_on_top = std::make_shared<SwitchComponent>(mWindow);
+    folders_on_top->setState(Settings::getInstance()->getBool("FoldersOnTop"));
+    s->addWithLabel("SORT FOLDERS ON TOP OF GAMELISTS", folders_on_top);
+    s->addSaveFunc([folders_on_top] {
+    if (Settings::getInstance()->setBool("FoldersOnTop", folders_on_top->getState()))
+        for (auto it = SystemData::sSystemVector.cbegin(); it !=
+                SystemData::sSystemVector.cend(); it++) {
+
+            if ((*it)->isCollection())
+                continue;
+
+            FileData* rootFolder = (*it)->getRootFolder();
+            rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+                    Settings::getInstance()->getBool("FavoritesFirst"));
+            ViewController::get()->reloadGameListView(*it);
+
+            // Jump to the first row of the gamelist.
+            IGameListView* gameList = ViewController::get()->getGameListView((*it)).get();
+            gameList->setCursor(gameList->getFirstEntry());
+        }
+    });
+
+    // Sort favorites on top of non-favorites in the gamelists.
+    auto favorites_first = std::make_shared<SwitchComponent>(mWindow);
+    favorites_first->setState(Settings::getInstance()->getBool("FavoritesFirst"));
+    s->addWithLabel("SORT FAVORITE GAMES ABOVE NON-FAVORITES", favorites_first);
+    s->addSaveFunc([favorites_first] {
+    if (Settings::getInstance()->setBool("FavoritesFirst", favorites_first->getState()))
         for (auto it = SystemData::sSystemVector.cbegin(); it !=
                 SystemData::sSystemVector.cend(); it++) {
             // The favorites and recent gamelists never sort favorites on top.

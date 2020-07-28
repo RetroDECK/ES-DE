@@ -59,6 +59,7 @@ public:
     inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
     const std::vector<std::string>& getFirstLetterIndex() const
             { return mFirstLetterIndex; };
+    const bool getOnlyFoldersFlag() { return mOnlyFolders; }
     static const std::string getROMDirectory();
     static const std::string getMediaDirectory();
     const std::string getMediafilePath(std::string subdirectory, std::string mediatype) const;
@@ -137,6 +138,7 @@ private:
     std::vector<FileData*> mChildren;
     std::vector<FileData*> mFilteredChildren;
     std::vector<std::string> mFirstLetterIndex;
+    bool mOnlyFolders;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
 

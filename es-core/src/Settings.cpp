@@ -84,6 +84,7 @@ void Settings::setDefaults()
     mStringMap["ThemeSet"] = "";
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
+    mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;
     mBoolMap["ForceDisableFilters"] = false;
     mBoolMap["QuickSystemSelect"] = true;

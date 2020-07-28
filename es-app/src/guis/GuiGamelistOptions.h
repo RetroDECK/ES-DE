@@ -50,7 +50,9 @@ private:
 
     SystemData* mSystem;
     IGameListView* getGamelist();
+    bool mFoldersOnTop;
     bool mFavoritesSorting;
+    bool mOnlyHasFolders;
     bool fromPlaceholder;
     bool mFiltersChanged;
     bool mCancelled;

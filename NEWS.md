@@ -35,7 +35,8 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Custom event scripts can now be enabled or disabled with a menu option
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
 * Improved input device configuration, and default keyboard mappings are now applied if the keyboard has not been configured by the user
-* GUI-configurable option to sort favorite games on the top of the game lists (favorites marked with stars)
+* GUI-configurable option to sort favorite games above non-favorite games (favorites marked with stars)
+* GUI-configurable option to sort folders on top of the gamelists
 * Added new component GuiComplexTextEditPopup to handle changes to configuration file entries and similar
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
@@ -65,7 +66,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The random system selection did not consider the currently selected system
 * The random game selection did not consider the currently selected game
 * The random game selection traversed folders, i.e. a game could be selected inside a subdirectory and vice versa
-* Deleting a game did not delete the game media files or its entry in the gamelist.xml file
+* Deleting a game from the metadata editor did not delete the game media files or the entry in the gamelist.xml file
 * SystemView didn't properly loop the systems if only two systems were available
 * Hidden files still showed up if they had a gamelist.xml entry
 * On Unix, adding a hidden folder with a game in it crashed the application on startup
