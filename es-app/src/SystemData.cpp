@@ -572,7 +572,7 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
             std::vector<FileData*> noFolderList;
 
             for (auto it = childrenList.cbegin(); it != childrenList.cend(); it++) {
-                if ((*it)->getType() == GAME)
+                if ((*it)->getType() == GAME || (*it)->getParent()->getOnlyFoldersFlag())
                     noFolderList.push_back((*it));
             }
             gameList.erase(gameList.cbegin(), gameList.cend());

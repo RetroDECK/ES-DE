@@ -430,7 +430,6 @@ bool ViewController::input(InputConfig* config, Input input)
         // If we have previously launched a game and there is now input registered, it means
         // the user is back in ES, so unset the flag to indicate that a game has been launched
         // and update all the GUI components to reflect this.
-        bool testbool = mWindow->getGameLaunchedState();
         if (mWindow->getGameLaunchedState())
             mWindow->unsetLaunchedGame();
     }

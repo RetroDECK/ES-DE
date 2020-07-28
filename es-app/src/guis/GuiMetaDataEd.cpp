@@ -57,8 +57,8 @@ GuiMetaDataEd::GuiMetaDataEd(
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA",
             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
     mSubtitle = std::make_shared<TextComponent>(mWindow,
-            Utils::String::toUpper(Utils::FileSystem::getFileName(scraperParams.game->
-            getPath())), Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+            Utils::FileSystem::getFileName(scraperParams.game->
+            getPath()), Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
     mHeaderGrid->setEntry(mSubtitle, Vector2i(0, 3), false, true);
 
@@ -228,11 +228,9 @@ GuiMetaDataEd::GuiMetaDataEd(
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-    if (mScraperParams.game->getType() != FOLDER) {
-        if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
-            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
-                    std::bind(&GuiMetaDataEd::fetch, this)));
-    }
+    if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
+        buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
+                std::bind(&GuiMetaDataEd::fetch, this)));
 
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata",
             [&] { save(); delete this; }));
