@@ -44,17 +44,17 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
     screensavers.push_back("dim");
     screensavers.push_back("black");
     screensavers.push_back("slideshow");
-    screensavers.push_back("random video");
+    screensavers.push_back("video");
     for (auto it = screensavers.cbegin(); it != screensavers.cend(); it++)
         screensaver_behavior->add(*it, *it, Settings::getInstance()->
                 getString("ScreenSaverBehavior") == *it);
     addWithLabel("SCREENSAVER BEHAVIOR", screensaver_behavior);
     addSaveFunc([this, screensaver_behavior] {
         if (Settings::getInstance()->getString("ScreenSaverBehavior") !=
-                "random video" && screensaver_behavior->getSelected() == "random video") {
+                "video" && screensaver_behavior->getSelected() == "video") {
             // If before it wasn't risky but now there's a risk of problems, show warning.
             mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-            "THE \"RANDOM VIDEO\" SCREENSAVER\nSHOWS VIDEOS FROM YOUR GAMELISTS.\n\nIF YOU DO NOT "
+            "THE \"VIDEO\" SCREENSAVER SHOWS\nVIDEOS FROM YOUR GAMELISTS.\n\nIF YOU DO NOT "
             "HAVE ANY VIDEOS, THE\nSCREENSAVER WILL DEFAULT TO \"BLACK\"",
                 "OK", [] { return; }));
         }

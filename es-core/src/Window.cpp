@@ -131,7 +131,7 @@ void Window::input(InputConfig* config, Input input)
     if (mScreenSaver) {
         if (mScreenSaver->isScreenSaverActive() &&
                 Settings::getInstance()->getBool("ScreenSaverControls") &&
-                ((Settings::getInstance()->getString("ScreenSaverBehavior") == "random video") ||
+                ((Settings::getInstance()->getString("ScreenSaverBehavior") == "video") ||
                 (Settings::getInstance()->getString("ScreenSaverBehavior") == "slideshow"))) {
             if (mScreenSaver->getCurrentGame() != nullptr &&
                     (config->isMappedTo("a", input) ||
@@ -140,7 +140,7 @@ void Window::input(InputConfig* config, Input input)
                 if (config->isMappedLike("left", input) || config->isMappedLike("right", input)) {
                     if (input.value != 0) {
                         // Handle screensaver control.
-                        mScreenSaver->nextVideo();
+                        mScreenSaver->nextGame();
                     }
                     return;
                 }

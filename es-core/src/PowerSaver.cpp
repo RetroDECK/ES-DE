@@ -35,7 +35,7 @@ void PowerSaver::loadWakeupTime()
 {
     // TODO : Move this to Screensaver Class.
     std::string behaviour = Settings::getInstance()->getString("ScreenSaverBehavior");
-    if (behaviour == "random video")
+    if (behaviour == "video")
         mWakeupTimeout = Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout") - getMode();
     else if (behaviour == "slideshow")
         mWakeupTimeout = Settings::getInstance()->getInt("ScreenSaverSwapImageTimeout") - getMode();

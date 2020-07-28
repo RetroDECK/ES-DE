@@ -32,6 +32,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful for Windows)
 * Properly implemented the option to show or hide hidden files and folders
 * Properly implemented the option to show or hide games flagged as hidden in the metadata editor
+* Custom event scripts can now be enabled or disabled with a menu option
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
 * Improved input device configuration, and default keyboard mappings are now applied if the keyboard has not been configured by the user
 * GUI-configurable option to sort favorite games on the top of the game lists (favorites marked with stars)
@@ -57,7 +58,10 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Game images were sometimes scaled incorrectly
 * Non-transparent favorite icons were not rendered correctly
 * Restart and power-off menu entries not working
+* Unknown command line options were silently accepted instead of generating an error and notifying the user
 * Toggling the screensaver didn't work as expected
+* The setting to enable or disable audio for the video screensaver only worked on Raspberry Pi
+* The screensaver random function did not consider the previously selected game and could potentially show the same image or video over and over again
 * Deleting a game did not delete the game media files or its entry in the gamelist.xml file
 * SystemView didn't properly loop the systems if only two systems were available
 * Hidden files still showed up if they had a gamelist.xml entry

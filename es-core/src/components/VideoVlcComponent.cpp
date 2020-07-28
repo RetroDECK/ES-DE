@@ -227,11 +227,12 @@ void VideoVlcComponent::handleLooping()
     if (mIsPlaying && mMediaPlayer) {
         libvlc_state_t state = libvlc_media_player_get_state(mMediaPlayer);
         if (state == libvlc_Ended) {
-            if (!Settings::getInstance()->getBool("GamelistVideoAudio") ||
+            libvlc_media_player_set_media(mMediaPlayer, mMedia);
+
+            if ((!Settings::getInstance()->getBool("GamelistVideoAudio") && !mScreensaverMode) ||
                 (!Settings::getInstance()->getBool("ScreenSaverVideoAudio") && mScreensaverMode))
                 libvlc_audio_set_mute(mMediaPlayer, 1);
 
-            libvlc_media_player_set_media(mMediaPlayer, mMedia);
             libvlc_media_player_play(mMediaPlayer);
         }
     }

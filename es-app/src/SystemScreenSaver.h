@@ -24,7 +24,7 @@ public:
 
     virtual void startScreenSaver();
     virtual void stopScreenSaver();
-    virtual void nextVideo();
+    virtual void nextGame();
     virtual void renderScreenSaver();
     virtual bool allowSleep();
     virtual void update(int deltaTime);
@@ -64,6 +64,7 @@ private:
     float mOpacity;
     int mTimer;
     FileData* mCurrentGame;
+    FileData* mPreviousGame;
     std::string mGameName;
     std::string mSystemName;
     int mVideoChangeTime;

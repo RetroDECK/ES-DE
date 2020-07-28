@@ -32,7 +32,7 @@ public:
     public:
         virtual void startScreenSaver() = 0;
         virtual void stopScreenSaver() = 0;
-        virtual void nextVideo() = 0;
+        virtual void nextGame() = 0;
         virtual void renderScreenSaver() = 0;
         virtual bool allowSleep() = 0;
         virtual void update(int deltaTime) = 0;

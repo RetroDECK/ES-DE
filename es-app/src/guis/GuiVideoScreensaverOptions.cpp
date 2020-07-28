@@ -29,7 +29,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
 
     auto stretch_screensaver = std::make_shared<SwitchComponent>(mWindow);
     stretch_screensaver->setState(Settings::getInstance()->getBool("ScreenSaverStretchVideos"));
-    addWithLabel("STRETCH VIDEOS TO MONITOR RESOLUTION", stretch_screensaver);
+    addWithLabel("STRETCH VIDEOS TO SCREEN RESOLUTION", stretch_screensaver);
     addSaveFunc([stretch_screensaver] { Settings::getInstance()->
             setBool("ScreenSaverStretchVideos", stretch_screensaver->getState()); });
 

@@ -77,7 +77,14 @@ bool SystemScreenSaver::isScreenSaverActive()
 void SystemScreenSaver::startScreenSaver()
 {
     std::string screensaver_behavior = Settings::getInstance()->getString("ScreenSaverBehavior");
-    if (!mVideoScreensaver && (screensaver_behavior == "random video")) {
+
+    // Set mPreviousGame which will be used to avoid showing the same game again during
+    // the random selection.
+    if ((screensaver_behavior == "video" || screensaver_behavior == "slideshow") &&
+            mCurrentGame != nullptr)
+        mPreviousGame = mCurrentGame;
+
+    if (!mVideoScreensaver && (screensaver_behavior == "video")) {
         // Configure to fade out the windows, skip fading if mode is set to Instant.
         mState =  PowerSaver::getMode() == PowerSaver::INSTANT
                     ? STATE_SCREENSAVER_ACTIVE
@@ -208,7 +215,7 @@ void SystemScreenSaver::stopScreenSaver()
 void SystemScreenSaver::renderScreenSaver()
 {
     std::string screensaver_behavior = Settings::getInstance()->getString("ScreenSaverBehavior");
-    if (mVideoScreensaver && screensaver_behavior == "random video") {
+    if (mVideoScreensaver && screensaver_behavior == "video") {
         // Render black background.
         Renderer::setMatrix(Transform4x4f::Identity());
         Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
@@ -341,9 +348,17 @@ void SystemScreenSaver::pickRandomVideo(std::string& path)
     countVideos();
     mCurrentGame = nullptr;
 
+    if (mVideoCount < 2)
+        mPreviousGame = nullptr;
+
+    // If there are more than 1 videos available, keep trying until the same game is
+    // not shown again.
     if (mVideoCount > 0) {
-        int video = (int)(((float)rand() / float(RAND_MAX)) * (float)mVideoCount);
-        pickGameListNode(video, "video", path);
+        do {
+            int video = (int)(((float)rand() / float(RAND_MAX)) * (float)mVideoCount);
+            pickGameListNode(video, "video", path);
+        }
+        while (mPreviousGame && mCurrentGame == mPreviousGame);
     }
 }
 
@@ -352,9 +367,17 @@ void SystemScreenSaver::pickRandomGameListImage(std::string& path)
     countImages();
     mCurrentGame = nullptr;
 
+    if (mImageCount < 2)
+        mPreviousGame = nullptr;
+
+    // If there are more than 1 images available, keep trying until the same game is
+    // not shown again.
     if (mImageCount > 0) {
-        int image = (int)(((float)rand() / float(RAND_MAX)) * (float)mImageCount);
-        pickGameListNode(image, "image", path);
+        do {
+            int image = (int)(((float)rand() / float(RAND_MAX)) * (float)mImageCount);
+            pickGameListNode(image, "image", path);
+        }
+        while (mPreviousGame && mCurrentGame == mPreviousGame);
     }
 }
 
@@ -420,7 +443,7 @@ void SystemScreenSaver::update(int deltaTime)
         // Update the timer that swaps the videos.
         mTimer += deltaTime;
         if (mTimer > mVideoChangeTime)
-            nextVideo();
+            nextGame();
     }
 
     // If we have a loaded video then update it.
@@ -430,7 +453,7 @@ void SystemScreenSaver::update(int deltaTime)
         mImageScreensaver->update(deltaTime);
 }
 
-void SystemScreenSaver::nextVideo() {
+void SystemScreenSaver::nextGame() {
     mStopBackgroundAudio = false;
     stopScreenSaver();
     startScreenSaver();
