@@ -573,7 +573,7 @@
     <fullname>PC (DOS)</fullname>
     <path>%ROMPATH%\pc</path>
     <extension>.bat .BAT .com .COM .dos .DOS .exe .EXE .pc .PC .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\dosbox_libretro %ROM%</command>
+    <command>retroarch.exe -L "%EMUPATH%\cores\dosbox_core_libretro.dll" %ROM%</command>
     <platform>pc</platform>
     <theme>pc</theme>
   </system>
