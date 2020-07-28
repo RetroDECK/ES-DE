@@ -1,7 +1,19 @@
-v1.0.0
-======
+EmulationStation Desktop Edition v1.0.0
+=======================================
 
-### General
+**Release date:** YYYY-MM-DD
+
+### Release overview
+
+First release, a major update to the application compared to the RetroPie version on which it is based. This includes new gamelist sorting logic, new game media handling and a completely updated Windows port (which now works about as well as the Unix version). The menu system has also been completely overhauled and the scraper has been expanded to support multiple media types as well as providing detailed scraping configuration options.
+
+Full navigation sound support has been implemented, and the metadata editor has seen a lot of updates including color coding of all changes done by the user and by the scraper. Favorite games can now also be sorted on top of the gamelists and game collections.
+
+A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. However themes created for other EmulationStation ports should still work correctly.
+
+Many bugs have been fixed, and numerous features that were only partially implemented or broken have been updated to a fully working state.
+
+### Detailed list of changes
 
 * Initial version, fork from RetroPie EmulationStation 2.10.0rp-dev (master)
 * Reorganization and general overhaul of the menu system, hopefully making it more intuitive and easy to understand
@@ -10,13 +22,14 @@ v1.0.0
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
 * In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using a different font color
 * Gamelist sorting now working as expected and is persistent throughout the application session
-* Full navigation sound support, configurable per theme
+* Added support for jumping to the start and end of gamelists and menus using the controller trigger buttons (or equivalent keyboard mappings)
+* Full navigation sound support, configurable per theme with a fallback to the built-in sounds if the theme does not support it
 * New default theme rbsimple-DE bundled with the software, this theme is largely based on recalbox-multi by the Recalbox community
 * Added extensive es_systems.cfg templates for Unix and Windows
 * Updated the application to compile and work on Microsoft Windows, including full UTF-16 (Unicode) support
-* Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
+* Seamless (almost) launch of games without showing the desktop when starting and when returning from RetroArch and other emulators
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
-* Core location can be defined relative to the emulator binary using the %EMUPATH% varible in es_systems.cfg (mostly useful for Windows)
+* Core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful for Windows)
 * Properly implemented the option to show or hide hidden files and folders
 * Properly implemented the option to show or hide games flagged as hidden in the metadata editor
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
@@ -31,10 +44,11 @@ v1.0.0
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
-* Updated the CMake/CPack install and package build script to work as expected (can now generate .deb, .rpm and NSIS installation packages)
+* Updated the CMake/CPack install and package build script to work as expected (it can now generate .deb, .rpm and NSIS installation packages)
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix only)
 * License files included for all the libraries and resources that are bundled with the application
-* Updated the MAME ROM index files to include ROMs up to MAME version 0.221 (and created scripts to easily generate these index files in the future)
+* Greatly expanded the application documentation (which is hosted with the source repository on GitLab)
+* Updated the MAME ROM index files to include ROMs up to MAME version 0.221 and created scripts to easily generate these index files in the future
 
 ### Bug fixes
 
@@ -49,4 +63,4 @@ v1.0.0
 * Hidden files still showed up if they had a gamelist.xml entry
 * On Unix, adding a hidden folder with a game in it crashed the application on startup
 * If the user tried to enter a blank game name in the metadata editor, the application would crash upon saving
-* Lots and lots of small bugs and inconsistencies fixed
+* Lots and lots of additional small bugs and inconsistencies fixed
