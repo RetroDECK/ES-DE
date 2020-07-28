@@ -285,8 +285,8 @@ based on: 'recalbox-multi' by the Recalbox community
             </video>
             <image name="md_marquee">
                 <origin>1 1</origin>
-                <pos>0.405 0.16</pos>
-                <maxSize>0.15 0.1</maxSize>
+                <pos>0.9135 0.165</pos>
+                <maxSize>0.11 0.11</maxSize>
             </image>
         </view>
     </feature>
