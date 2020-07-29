@@ -52,7 +52,7 @@ namespace PlatformIds
         "virtualboy",
         "gameandwatch",
         "openbor",
-        "pc",
+        "dos",
         "sega32x",
         "segacd",
         "dreamcast",

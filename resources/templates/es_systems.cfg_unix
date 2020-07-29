@@ -236,6 +236,15 @@
     <theme>doom</theme>
   </system>
   <system>
+    <name>dos</name>
+    <fullname>DOS (PC)</fullname>
+    <path>%ROMPATH%/dos</path>
+    <extension>.bat .BAT .com .COM .dos .DOS .exe .EXE .pc .PC .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/dosbox_core_libretro.so %ROM%</command>
+    <platform>dos</platform>
+    <theme>dos</theme>
+  </system>
+  <system>
     <name>dragon32</name>
     <fullname>Dragon 32</fullname>
     <path>%ROMPATH%/dragon32</path>
@@ -567,15 +576,6 @@
     <command>PLACEHOLDER %ROM%</command>
     <platform>oric</platform>
     <theme>oric</theme>
-  </system>
-  <system>
-    <name>pc</name>
-    <fullname>PC (DOS)</fullname>
-    <path>%ROMPATH%/pc</path>
-    <extension>.bat .BAT .com .COM .dos .DOS .exe .EXE .pc .PC .7z .7Z .zip .ZIP</extension>
-    <command>retroarch -L ~/.config/retroarch/cores/dosbox_core_libretro.so %ROM%</command>
-    <platform>pc</platform>
-    <theme>pc</theme>
   </system>
   <system>
     <name>pcengine</name>

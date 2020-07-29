@@ -61,7 +61,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
     { NINTENDO_WII_U, 18 },
     { NINTENDO_VIRTUAL_BOY, 11 },
     { NINTENDO_GAME_AND_WATCH, 52 },
-    { PC, 135 },
+    { DOS, 135 },
     { OPENBOR, 214 },
     { SCUMMVM, 123},
     { SEGA_32X, 19 },

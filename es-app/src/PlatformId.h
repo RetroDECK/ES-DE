@@ -52,7 +52,7 @@ namespace PlatformIds
         NINTENDO_VIRTUAL_BOY,
         NINTENDO_GAME_AND_WATCH,
         OPENBOR,
-        PC,
+        DOS,
         SEGA_32X,
         SEGA_CD,
         SEGA_DREAMCAST,

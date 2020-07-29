@@ -24,6 +24,7 @@ Missing (or not updated) theme data
 * channelf: Fairchild Channel F - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * coco: Tandy Color Computer - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * daphne: Daphne Arcade Laserdisc Emulator - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* dos: DOS - system info
 * desktop: Desktop applications - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * dragon32: Dragon 32 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * intellivision: Intellivision - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
