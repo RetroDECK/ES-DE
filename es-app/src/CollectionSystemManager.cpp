@@ -316,6 +316,12 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
                 ViewController::get()->
                         getGameListView(curSys).get()->remove(collectionEntry, false);
             }
+            else if (name == "all" && !file->getCountAsGame()) {
+                // If the countasgame flag has been set to false, then remove the game.
+                ViewController::get()->
+                        getGameListView(curSys).get()->remove(collectionEntry, false);
+            }
+
             else {
                 // Re-index with new metadata.
                 fileIndex->addToIndex(collectionEntry);
@@ -323,10 +329,15 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
             }
         }
         else {
+            bool addGame = false;
             // We didn't find it here - we need to check if we should add it.
             if (name == "recent" && file->metadata.get("playcount") > "0" &&
                     includeFileInAutoCollections(file) || name == "favorites" &&
-                    file->metadata.get("favorite") == "true") {
+                    file->metadata.get("favorite") == "true")
+                addGame = true;
+            else if (name == "all" && file->getCountAsGame())
+                addGame = true;
+            if (addGame) {
                 CollectionFileData* newGame = new CollectionFileData(file, curSys);
                 rootFolder->addChild(newGame);
                 fileIndex->addToIndex(newGame);
@@ -827,6 +838,10 @@ void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysDa
                 }
 
                 if (include) {
+                    // Exclude files that are set not to be counted as games.
+                    if (rootFolder->getName() == "all" && !(*gameIt)->getCountAsGame())
+                        continue;
+
                     CollectionFileData* newGame = new CollectionFileData(*gameIt, newSys);
                     rootFolder->addChild(newGame);
                     index->addToIndex(newGame);

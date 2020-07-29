@@ -48,6 +48,7 @@ public:
     const std::string& getSortName();
     const bool getFavorite();
     const bool getHidden();
+    const bool getCountAsGame();
     const std::vector<FileData*> getChildrenRecursive() const;
     inline FileType getType() const { return mType; }
     inline const std::string& getPath() const { return mPath; }
@@ -77,7 +78,7 @@ public:
 
     const std::vector<FileData*>& getChildrenListToDisplay();
     std::vector<FileData*> getFilesRecursive(unsigned int typeMask,
-            bool displayedOnly = false) const;
+            bool displayedOnly = false, bool countAllGames = true) const;
 
     void addChild(FileData* file); // Error if mType != FOLDER
     void removeChild(FileData* file); //Error if mType != FOLDER

@@ -598,7 +598,8 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
 
 unsigned int SystemData::getDisplayedGameCount() const
 {
-    return (unsigned int)mRootFolder->getFilesRecursive(GAME, true).size();
+    // Pass the flag to only count games that are marked with the flag 'countasgame'.
+    return (unsigned int)mRootFolder->getFilesRecursive(GAME, true, false).size();
 }
 
 void SystemData::loadTheme()

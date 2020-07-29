@@ -27,6 +27,7 @@ MetaDataDecl gameDecls[] = {
 {"broken",        MD_BOOL,             "false",           false,     "broken/not working",  "enter broken off/on",           false},
 {"hidden",        MD_BOOL,             "false",           false,     "hidden",              "enter hidden off/on",           false},
 {"kidgame",       MD_BOOL,             "false",           false,     "kidgame",             "enter kidgame off/on",          false},
+{"countasgame",   MD_BOOL,             "true",            false,     "count as game",       "enter count as game off/on",    false},
 {"launchcommand", MD_LAUNCHCOMMAND,    "",                false,     "launch command",      "enter game launch command "
                                                                                             "(emulator override)",           false},
 {"playcount",     MD_INT,              "0",               false,     "play count",          "enter number of times played",  false},

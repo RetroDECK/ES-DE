@@ -115,6 +115,14 @@ const bool FileData::getHidden()
         return false;
 }
 
+const bool FileData::getCountAsGame()
+{
+    if (metadata.get("countasgame") == "true")
+        return true;
+    else
+        return false;
+}
+
 const std::vector<FileData*> FileData::getChildrenRecursive() const
 {
     std::vector<FileData*> childrenRecursive;
@@ -297,19 +305,32 @@ const std::vector<FileData*>& FileData::getChildrenListToDisplay()
     }
 }
 
-std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask, bool displayedOnly) const
+std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
+        bool displayedOnly, bool countAllGames) const
 {
     std::vector<FileData*> out;
     FileFilterIndex* idx = mSystem->getIndex();
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
         if ((*it)->getType() & typeMask) {
-            if (!displayedOnly || !idx->isFiltered() || idx->showFile(*it))
-                out.push_back(*it);
+            if (!displayedOnly || !idx->isFiltered() || idx->showFile(*it)) {
+                if (countAllGames)
+                    out.push_back(*it);
+                else if ((*it)->getCountAsGame())
+                    out.push_back(*it);
+            }
         }
         if ((*it)->getChildren().size() > 0) {
-            std::vector<FileData*> subchildren = (*it)->getFilesRecursive(typeMask, displayedOnly);
-            out.insert(out.cend(), subchildren.cbegin(), subchildren.cend());
+            std::vector<FileData*> subChildren = (*it)->getFilesRecursive(typeMask, displayedOnly);
+            if (countAllGames) {
+                out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
+            }
+            else {
+                for (auto it = subChildren.cbegin(); it != subChildren.cend(); it++) {
+                    if ((*it)->getCountAsGame())
+                        out.push_back(*it);
+                }
+            }
         }
     }
 
