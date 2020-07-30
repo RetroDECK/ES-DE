@@ -666,6 +666,11 @@ bool GuiScraperSearch::saveMetadata(
             metadata.set(key, result.mdl.get(key));
             mMetadataUpdated = true;
         }
+
+        // For the description, expand any escaped HTML quotation marks to literal
+        // quotation marks.
+        if (key == "desc" && mMetadataUpdated)
+            metadata.set(key, Utils::String::replace(metadata.get(key), "&quot;", "\""));
     }
 
     return mMetadataUpdated;
