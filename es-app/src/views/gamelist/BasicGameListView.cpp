@@ -135,32 +135,9 @@ void BasicGameListView::launch(FileData* game)
 
 void BasicGameListView::remove(FileData *game, bool deleteFile)
 {
-    // Actually delete the file on the filesystem.
-    if (deleteFile) {
+    // Delete the game file on the filesystem.
+    if (deleteFile)
         Utils::FileSystem::removeFile(game->getPath());
-
-        // Remove all game media files as well.
-        if (Utils::FileSystem::exists(game->getVideoPath()))
-            Utils::FileSystem::removeFile(game->getVideoPath());
-
-        if (Utils::FileSystem::exists(game->getMiximagePath()))
-            Utils::FileSystem::removeFile(game->getMiximagePath());
-
-        if (Utils::FileSystem::exists(game->getScreenshotPath()))
-            Utils::FileSystem::removeFile(game->getScreenshotPath());
-
-        if (Utils::FileSystem::exists(game->getCoverPath()))
-            Utils::FileSystem::removeFile(game->getCoverPath());
-
-        if (Utils::FileSystem::exists(game->getMarqueePath()))
-            Utils::FileSystem::removeFile(game->getMarqueePath());
-
-        if (Utils::FileSystem::exists(game->get3DBoxPath()))
-            Utils::FileSystem::removeFile(game->get3DBoxPath());
-
-        if (Utils::FileSystem::exists(game->getThumbnailPath()))
-            Utils::FileSystem::removeFile(game->getThumbnailPath());
-    }
 
     FileData* parent = game->getParent();
     // Select next element in list, or previous if none.
@@ -188,6 +165,31 @@ void BasicGameListView::remove(FileData *game, bool deleteFile)
     // Remove before repopulating (removes from parent), then update the view.
     delete game;
     onFileChanged(parent, FILE_REMOVED);
+}
+
+void BasicGameListView::removeMedia(FileData *game)
+{
+    // Remove all game media files on the filesystem.
+    if (Utils::FileSystem::exists(game->getVideoPath()))
+        Utils::FileSystem::removeFile(game->getVideoPath());
+
+    if (Utils::FileSystem::exists(game->getMiximagePath()))
+        Utils::FileSystem::removeFile(game->getMiximagePath());
+
+    if (Utils::FileSystem::exists(game->getScreenshotPath()))
+        Utils::FileSystem::removeFile(game->getScreenshotPath());
+
+    if (Utils::FileSystem::exists(game->getCoverPath()))
+        Utils::FileSystem::removeFile(game->getCoverPath());
+
+    if (Utils::FileSystem::exists(game->getMarqueePath()))
+        Utils::FileSystem::removeFile(game->getMarqueePath());
+
+    if (Utils::FileSystem::exists(game->get3DBoxPath()))
+        Utils::FileSystem::removeFile(game->get3DBoxPath());
+
+    if (Utils::FileSystem::exists(game->getThumbnailPath()))
+        Utils::FileSystem::removeFile(game->getThumbnailPath());
 }
 
 std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()

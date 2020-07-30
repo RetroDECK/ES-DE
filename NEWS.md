@@ -41,6 +41,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
 * Added metadata entry to mark games as broken/not working
 * Added metadata entry to indicate whether the file should be counted as a game (for example useful to exclude setup files and similar for DOS games)
+* Added a button to the metadata editor to delete the media files for a game while retaining the game itself and the gamelist.xml entry
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
 * Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
 * No more attempts to open files directly under /etc, instead only the install prefix directory and the home directory are used

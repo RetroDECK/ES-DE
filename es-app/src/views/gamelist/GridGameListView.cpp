@@ -450,7 +450,7 @@ void GridGameListView::launch(FileData* game)
 
 void GridGameListView::remove(FileData *game, bool deleteFile)
 {
-    // Actually delete the file on the filesystem.
+    // Delete the game file on the filesystem.
     if (deleteFile)
         Utils::FileSystem::removeFile(game->getPath());
 
@@ -472,10 +472,39 @@ void GridGameListView::remove(FileData *game, bool deleteFile)
     if (mGrid.size() == 0)
         addPlaceholder();
 
-    // Remove before repopulating (removes from parent).
-    // Update the view, with game removed.
+    // If a game has been deleted, immediately remove the entry from gamelist.xml
+    // regardless of the value of the setting SaveGamelistsMode.
+    game->setDeletionFlag();
+    parent->getSystem()->writeMetaData();
+
+    // Remove before repopulating (removes from parent), then update the view.
     delete game;
     onFileChanged(parent, FILE_REMOVED);
+}
+
+void GridGameListView::removeMedia(FileData *game)
+{
+    // Remove all game media files on the filesystem.
+    if (Utils::FileSystem::exists(game->getVideoPath()))
+        Utils::FileSystem::removeFile(game->getVideoPath());
+
+    if (Utils::FileSystem::exists(game->getMiximagePath()))
+        Utils::FileSystem::removeFile(game->getMiximagePath());
+
+    if (Utils::FileSystem::exists(game->getScreenshotPath()))
+        Utils::FileSystem::removeFile(game->getScreenshotPath());
+
+    if (Utils::FileSystem::exists(game->getCoverPath()))
+        Utils::FileSystem::removeFile(game->getCoverPath());
+
+    if (Utils::FileSystem::exists(game->getMarqueePath()))
+        Utils::FileSystem::removeFile(game->getMarqueePath());
+
+    if (Utils::FileSystem::exists(game->get3DBoxPath()))
+        Utils::FileSystem::removeFile(game->get3DBoxPath());
+
+    if (Utils::FileSystem::exists(game->getThumbnailPath()))
+        Utils::FileSystem::removeFile(game->getThumbnailPath());
 }
 
 std::vector<TextComponent*> GridGameListView::getMDLabels()

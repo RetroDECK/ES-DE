@@ -48,6 +48,7 @@ public:
 
     virtual bool input(InputConfig* config, Input input) override;
     virtual void remove(FileData* game, bool deleteFile) = 0;
+    virtual void removeMedia(FileData* game) = 0;
 
     virtual const char* getName() const = 0;
     virtual void launch(FileData* game) = 0;

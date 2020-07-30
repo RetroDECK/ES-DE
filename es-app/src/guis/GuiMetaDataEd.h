@@ -29,7 +29,8 @@ public:
             ScraperSearchParams params,
             const std::string& header,
             std::function<void()> savedCallback,
-            std::function<void()> deleteFunc);
+            std::function<void()> deleteGameFunc,
+            std::function<void()> deleteMediaFunc);
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
@@ -59,7 +60,8 @@ private:
     std::vector<MetaDataDecl> mMetaDataDecl;
     MetaDataList* mMetaData;
     std::function<void()> mSavedCallback;
-    std::function<void()> mDeleteFunc;
+    std::function<void()> mDeleteGameFunc;
+    std::function<void()> mDeleteMediaFunc;
 
     bool mMediaFilesUpdated;
 };

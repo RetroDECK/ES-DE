@@ -37,17 +37,17 @@ GuiMetaDataEd::GuiMetaDataEd(
         ScraperSearchParams scraperParams,
         const std::string& /*header*/,
         std::function<void()> saveCallback,
-        std::function<void()> deleteFunc)
+        std::function<void()> deleteGameFunc,
+        std::function<void()> deleteMediaFunc)
         : GuiComponent(window),
         mScraperParams(scraperParams),
-
         mBackground(window, ":/graphics/frame.png"),
         mGrid(window, Vector2i(1, 3)),
-
         mMetaDataDecl(mdd),
         mMetaData(md),
         mSavedCallback(saveCallback),
-        mDeleteFunc(deleteFunc)
+        mDeleteGameFunc(deleteGameFunc),
+        mDeleteMediaFunc(deleteMediaFunc)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -237,14 +237,61 @@ GuiMetaDataEd::GuiMetaDataEd(
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel changes",
             [&] { delete this; }));
 
-    if (mDeleteFunc) {
-        auto deleteFileAndSelf = [&] { mDeleteFunc(); delete this; };
-        auto deleteBtnFunc = [this, deleteFileAndSelf] {
-            mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                    "THIS WILL DELETE THE ACTUAL GAME FILE(S)!\nARE YOU SURE?",
-                    "YES", deleteFileAndSelf, "NO", nullptr)); };
-        buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
-                "delete game", deleteBtnFunc));
+    if (scraperParams.game->getType() == FOLDER) {
+        if (mDeleteGameFunc) {
+            auto deleteFilesAndSelf = [&] { mDeleteGameFunc(); delete this; };
+            auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
+                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                        "THIS WILL DELETE THE MEDIA FILES AND\n"
+                        "THE GAMELIST.XML ENTRY FOR THIS FOLDER.\n"
+                        "HOWEVER NEITHER THE FOLDER ITSELF OR\n"
+                        "ANY DATA FOR THE FILES INSIDE THE FOLDER\n"
+                        "WILL BE DELETED. ARE YOU SURE?",
+                        "YES", deleteFilesAndSelf, "NO", nullptr)); };
+            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
+                    "delete game", deleteGameBtnFunc));
+        }
+
+        if (mDeleteMediaFunc) {
+            auto deleteFilesAndSelf = [&] { mDeleteMediaFunc(); delete this; };
+            auto deleteMediaBtnFunc = [this, deleteFilesAndSelf] {
+                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                        "THIS WILL DELETE ALL THE MEDIA FILES\n"
+                        "FOR THE ACTUAL FOLDER, BUT NO MEDIA\n"
+                        "FOR ANY FILES INSIDE THE FOLDER WILL\n"
+                        "BE DELETED. ARE YOU SURE?",
+                        "YES", deleteFilesAndSelf, "NO", nullptr)); };
+            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE MEDIA",
+                    "delete game", deleteMediaBtnFunc));
+        }
+    }
+    else {
+        if (mDeleteGameFunc) {
+            auto deleteFilesAndSelf = [&] { mDeleteGameFunc(); delete this; };
+            auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
+                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                        "THIS WILL DELETE THE GAME\n"
+                        "FILE, ANY MEDIA FILES AND\n"
+                        "THE GAMELIST.XML ENTRY.\n"
+                        "ARE YOU SURE?",
+                        "YES", deleteFilesAndSelf, "NO", nullptr)); };
+            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
+                    "delete game", deleteGameBtnFunc));
+        }
+
+        if (mDeleteMediaFunc) {
+            auto deleteFilesAndSelf = [&] { mDeleteMediaFunc(); delete this; };
+            auto deleteMediaBtnFunc = [this, deleteFilesAndSelf] {
+                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                        "THIS WILL DELETE ALL GAME\n"
+                        "MEDIA FILES, BUT WILL KEEP\n"
+                        "THE ACTUAL GAME FILE AND\n"
+                        "THE GAMELIST.XML ENTRY.\n"
+                        "ARE YOU SURE?",
+                        "YES", deleteFilesAndSelf, "NO", nullptr)); };
+            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE MEDIA",
+                    "delete game", deleteMediaBtnFunc));
+        }
     }
 
     mButtons = makeButtonGrid(mWindow, buttons);
