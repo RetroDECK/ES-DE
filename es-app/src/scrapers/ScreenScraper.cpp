@@ -7,16 +7,17 @@
 
 #include "scrapers/ScreenScraper.h"
 
-#include "utils/TimeUtil.h"
+#include "math/Misc.h"
 #include "utils/StringUtil.h"
+#include "utils/TimeUtil.h"
 #include "FileData.h"
 #include "Log.h"
 #include "PlatformId.h"
 #include "Settings.h"
 #include "SystemData.h"
-#include "math/Misc.h"
-#include <pugixml.hpp>
+
 #include <cstring>
+#include <pugixml.hpp>
 
 using namespace PlatformIds;
 
@@ -192,6 +193,9 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
         std::string err = ss.str();
         setError(err);
         LOG(LogError) << err;
+
+        LOG(LogError) << "ScreenScraperRequest - Additional information:";
+        LOG(LogError) << req->getContent();
 
         return;
     }
