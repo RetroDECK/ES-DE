@@ -413,9 +413,11 @@ namespace Utils
             if (fileName == ".")
                 return fileName;
 
-            // Find last '.' and erase the extension.
-            if ((offset = fileName.find_last_of('.')) != std::string::npos)
-                return fileName.erase(offset);
+            if (!Utils::FileSystem::isDirectory(_path)) {
+                // Find last '.' and erase the extension.
+                if ((offset = fileName.find_last_of('.')) != std::string::npos)
+                    return fileName.erase(offset);
+            }
 
             // No '.' found, filename has no extension.
             return fileName;
