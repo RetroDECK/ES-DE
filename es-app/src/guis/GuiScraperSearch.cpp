@@ -38,7 +38,8 @@ GuiScraperSearch::GuiScraperSearch(
         : GuiComponent(window),
         mGrid(window, Vector2i(4, 3)),
         mBusyAnim(window),
-        mSearchType(type)
+        mSearchType(type),
+        mScrapeRatings(false)
 {
     addChild(&mGrid);
 
@@ -74,9 +75,13 @@ GuiScraperSearch::GuiScraperSearch(
     mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
     mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
     mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
+    mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
     if (Settings::getInstance()->getBool("ScrapeRatings") &&
             Settings::getInstance()->getString("Scraper") != "thegamesdb")
+        mScrapeRatings = true;
+
+    if (mScrapeRatings)
         mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
                 (mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
@@ -89,6 +94,11 @@ GuiScraperSearch::GuiScraperSearch(
             (mWindow, "GENRE:", font, mdLblColor), mMD_Genre));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
             (mWindow, "PLAYERS:", font, mdLblColor), mMD_Players));
+    // If no rating is being scraped, add a filler to make sure the fonts keep the same
+    // size and the GUI looks consistent.
+    if (!mScrapeRatings)
+        mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
+            (mWindow, "", font, mdLblColor), mMD_Filler));
 
     mMD_Grid = std::make_shared<ComponentGrid>(mWindow,
             Vector2i(2, (int)mMD_Pairs.size()*2 - 1));
@@ -192,8 +202,7 @@ void GuiScraperSearch::resizeMetadata()
 
         mMD_Grid->setColWidthPerc(0, maxLblWidth / mMD_Grid->getSize().x());
 
-        if (Settings::getInstance()->getBool("ScrapeRatings") &&
-            Settings::getInstance()->getString("Scraper") != "thegamesdb") {
+        if (mScrapeRatings) {
             // Rating is manually sized.
             mMD_Rating->setSize(mMD_Grid->getColWidth(1), fontLbl->getHeight() * 0.65f);
             mMD_Grid->onSizeChanged();
@@ -391,8 +400,7 @@ void GuiScraperSearch::updateInfoPane()
         }
 
         // Metadata.
-        if (Settings::getInstance()->getBool("ScrapeRatings") &&
-                Settings::getInstance()->getString("Scraper") != "thegamesdb") {
+        if (mScrapeRatings) {
             mMD_Rating->setValue(Utils::String::toUpper(res.mdl.get("rating")));
             mMD_Rating->setOpacity(255);
         }
@@ -409,8 +417,7 @@ void GuiScraperSearch::updateInfoPane()
         mResultThumbnail->setImage("");
 
         // Metadata.
-        if (Settings::getInstance()->getBool("ScrapeRatings") &&
-                Settings::getInstance()->getString("Scraper") != "thegamesdb") {
+        if (mScrapeRatings) {
             mMD_Rating->setValue("");
             mMD_Rating->setOpacity(0);
         }
@@ -439,11 +446,10 @@ void GuiScraperSearch::render(const Transform4x4f& parentTrans)
     Transform4x4f trans = parentTrans * getTransform();
 
     renderChildren(trans);
+    Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x00000009, 0x00000009);
 
     if (mBlockAccept) {
         Renderer::setMatrix(trans);
-        Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x00000011, 0x00000011);
-
         mBusyAnim.render(trans);
     }
 }

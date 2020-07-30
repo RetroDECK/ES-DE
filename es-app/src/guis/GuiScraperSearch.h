@@ -96,6 +96,7 @@ private:
     std::shared_ptr<TextComponent> mMD_Publisher;
     std::shared_ptr<TextComponent> mMD_Genre;
     std::shared_ptr<TextComponent> mMD_Players;
+    std::shared_ptr<TextComponent> mMD_Filler;
 
     // Label-component pair.
     struct MetaDataPair {
@@ -117,6 +118,7 @@ private:
     std::function<void()> mCancelCallback;
     bool mBlockAccept;
     bool mFoundGame;
+    bool mScrapeRatings;
 
     std::unique_ptr<ScraperSearchHandle> mSearchHandle;
     std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;
