@@ -45,6 +45,8 @@ GuiTextEditPopup::GuiTextEditPopup(
     std::vector< std::shared_ptr<ButtonComponent> > buttons;
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
             [this, okCallback] { okCallback(mText->getValue()); delete this; }));
+    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear",
+            [this] { mText->setValue(""); }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "discard changes",
             [this] { delete this; }));
 
