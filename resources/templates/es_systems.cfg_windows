@@ -608,8 +608,8 @@
     <name>ports</name>
     <fullname>Ports</fullname>
     <path>%ROMPATH%\ports</path>
-    <extension>.sh .SH</extension>
-    <command>bash %ROM%</command>
+    <extension>.bat .ps1</extension>
+    <command>%ROM%</command>
     <platform>pc</platform>
     <theme>ports</theme>
   </system>

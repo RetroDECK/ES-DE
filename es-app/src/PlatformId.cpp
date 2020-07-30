@@ -53,6 +53,7 @@ namespace PlatformIds
         "gameandwatch",
         "openbor",
         "dos",
+        "pc",
         "sega32x",
         "segacd",
         "dreamcast",

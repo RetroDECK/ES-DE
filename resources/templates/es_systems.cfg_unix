@@ -608,7 +608,7 @@
     <name>ports</name>
     <fullname>Ports</fullname>
     <path>%ROMPATH%/ports</path>
-    <extension>.sh .SH</extension>
+    <extension>.sh .csh</extension>
     <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>ports</theme>

@@ -53,6 +53,7 @@ namespace PlatformIds
         NINTENDO_GAME_AND_WATCH,
         OPENBOR,
         DOS,
+        PC,
         SEGA_32X,
         SEGA_CD,
         SEGA_DREAMCAST,

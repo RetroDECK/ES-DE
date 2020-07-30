@@ -78,6 +78,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { NINTENDO_VIRTUAL_BOY, "4918" },
     { NINTENDO_GAME_AND_WATCH, "-1" },
     { DOS, "1" },
+    { PC, "1" },
     { SEGA_32X, "33" },
     { SEGA_CD, "21" },
     { SEGA_DREAMCAST, "16" },
