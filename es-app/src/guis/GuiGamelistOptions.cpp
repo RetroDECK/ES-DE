@@ -193,7 +193,8 @@ GuiGamelistOptions::~GuiGamelistOptions()
         }
 
         // Has the user changed the letter using the quick selector?
-        if ((mFoldersOnTop && getGamelist()->getCursor()->getType() == FOLDER) ||
+        if ((mFoldersOnTop && !mOnlyHasFolders &&
+                getGamelist()->getCursor()->getType() == FOLDER) ||
                 mCurrentFirstCharacter != mJumpToLetterList->getSelected()) {
             if (mJumpToLetterList->getSelected() == FAVORITE_CHAR)
                 jumpToFirstRow();
