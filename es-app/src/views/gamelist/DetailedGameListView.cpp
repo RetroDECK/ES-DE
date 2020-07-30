@@ -259,8 +259,8 @@ void DetailedGameListView::updateInfoPanel()
             mLastPlayed.setValue(file->metadata.get("lastplayed"));
             mPlayCount.setValue(file->metadata.get("playcount"));
         }
-        else {
-            mLastPlayed.setValue("");
+        else if (file->getType() == FOLDER) {
+            mLastPlayed.setValue(file->metadata.get("lastplayed"));
             mPlayCount.setValue("");
         }
 

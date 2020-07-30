@@ -720,6 +720,15 @@ void FileData::launchGame(Window* window)
 
     // Update last played time.
     gameToUpdate->metadata.set("lastplayed", Utils::Time::DateTime(Utils::Time::now()));
+
+    // If the parent is a folder and it's not the root of the system, then update its lastplayed
+    // timestamp to the same time as the game that was just launched.
+    if (gameToUpdate->getParent()->getType() == FOLDER && gameToUpdate->getParent()->getName() !=
+            gameToUpdate->getSystem()->getFullName()) {
+        gameToUpdate->getParent()->metadata.set("lastplayed",
+                gameToUpdate->metadata.get("lastplayed"));
+    }
+
     CollectionSystemManager::get()->refreshCollectionSystems(gameToUpdate);
 
     gameToUpdate->mSystem->onMetaDataSavePoint();
