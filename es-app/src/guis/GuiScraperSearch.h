@@ -36,7 +36,7 @@ public:
         NEVER_AUTO_ACCEPT
     };
 
-    GuiScraperSearch(Window* window, SearchType searchType = NEVER_AUTO_ACCEPT);
+    GuiScraperSearch(Window* window, SearchType searchType, unsigned int scrapeCount = 1);
 
     void search(const ScraperSearchParams& params);
     void openInputScreen(ScraperSearchParams& from);
@@ -51,7 +51,7 @@ public:
     inline void setSkipCallback(const std::function<void()>&
             skipCallback) { mSkipCallback = skipCallback; };
     inline void setCancelCallback(const std::function<void()>&
-            cancelCallback) { mCancelCallback = cancelCallback; }
+            cancelCallback) { mScrapeCount -= 1; mCancelCallback = cancelCallback; }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -116,6 +116,7 @@ private:
     std::function<void(const ScraperSearchResult&)> mAcceptCallback;
     std::function<void()> mSkipCallback;
     std::function<void()> mCancelCallback;
+    unsigned int mScrapeCount;
     bool mBlockAccept;
     bool mFoundGame;
     bool mScrapeRatings;

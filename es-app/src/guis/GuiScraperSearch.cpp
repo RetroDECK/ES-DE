@@ -34,11 +34,13 @@
 
 GuiScraperSearch::GuiScraperSearch(
         Window* window,
-        SearchType type)
+        SearchType type,
+        unsigned int scrapeCount)
         : GuiComponent(window),
         mGrid(window, Vector2i(4, 3)),
         mBusyAnim(window),
         mSearchType(type),
+        mScrapeCount(scrapeCount),
         mScrapeRatings(false)
 {
     addChild(&mGrid);
@@ -346,11 +348,19 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 
 void GuiScraperSearch::onSearchError(const std::string& error)
 {
-    LOG(LogInfo) << "GuiScraperSearch search error: " << error;
-    mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
-        "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
-        "SKIP", mSkipCallback,
-        "CANCEL", mCancelCallback));
+    if (mScrapeCount > 1) {
+        LOG(LogInfo) << "GuiScraperSearch search error: " << error;
+        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
+            "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
+            "SKIP", mSkipCallback,
+            "CANCEL", mCancelCallback));
+    }
+    else {
+        LOG(LogInfo) << "GuiScraperSearch search error: " << error;
+        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
+            "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
+            "CANCEL", mCancelCallback));
+    }
 }
 
 int GuiScraperSearch::getSelectedIndex()
@@ -465,6 +475,7 @@ void GuiScraperSearch::returnResult(ScraperSearchResult result)
         return;
     }
 
+    mScrapeCount -= 1;
     mAcceptCallback(result);
 }
 

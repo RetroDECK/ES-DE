@@ -63,6 +63,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Non-transparent favorite icons were not rendered correctly
 * Restart and power-off menu entries not working
 * Unknown command line options were silently accepted instead of generating an error and notifying the user
+* The scraper didn't handle error conditions correctly
 * Toggling the screensaver didn't work as expected
 * The setting to enable or disable audio for the video screensaver only worked on Raspberry Pi
 * The screensaver random function did not consider the previously selected game and could potentially show the same image or video over and over again

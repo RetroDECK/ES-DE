@@ -57,13 +57,13 @@ GuiScraperMulti::GuiScraperMulti(
 
     if (approveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
-                GuiScraperSearch::NEVER_AUTO_ACCEPT);
+                GuiScraperSearch::NEVER_AUTO_ACCEPT, mTotalGames);
     else if (approveResults && Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
-                GuiScraperSearch::ACCEPT_SINGLE_MATCHES);
+                GuiScraperSearch::ACCEPT_SINGLE_MATCHES, mTotalGames);
     else if (!approveResults)
         mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
-                GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT);
+                GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, mTotalGames);
     mSearchComp->setAcceptCallback(std::bind(&GuiScraperMulti::acceptResult,
             this, std::placeholders::_1));
     mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));

@@ -48,7 +48,7 @@ GuiGameScraper::GuiGameScraper(
 
     // GuiScraperSearch.
     mSearch = std::make_shared<GuiScraperSearch>(window,
-            GuiScraperSearch::NEVER_AUTO_ACCEPT);
+            GuiScraperSearch::NEVER_AUTO_ACCEPT, 1);
     mGrid.setEntry(mSearch, Vector2i(0, 5), true);
 
     // Buttons
