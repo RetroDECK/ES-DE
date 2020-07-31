@@ -145,7 +145,7 @@ void ScraperHttpRequest::update()
     // Everything else is some sort of error.
     LOG(LogError) << "ScraperHttpRequest network error (status: " << status<< ") - "
             << mReq->getErrorMsg();
-    setError(mReq->getErrorMsg());
+    setError("Network error: " + mReq->getErrorMsg());
 }
 
 // Download and write the media files to disk.
