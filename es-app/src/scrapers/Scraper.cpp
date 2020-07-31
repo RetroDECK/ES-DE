@@ -248,8 +248,8 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             #else
             std::ofstream stream(filePath, std::ios_base::out | std::ios_base::binary);
             #endif
-            if (stream.bad()) {
-                setError("Failed to open image path to write. Permission error? Disk full?");
+            if (!stream || stream.bad()) {
+                setError("Failed to open path for writing image.\nPermission error?");
                 return;
             }
 
@@ -257,14 +257,14 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             stream.write(content.data(), content.length());
             stream.close();
             if (stream.bad()) {
-                setError("Failed to save image. Disk full?");
+                setError("Failed to save image.\nDisk full?");
                 return;
             }
 
             // Resize it.
             if (!resizeImage(filePath, Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
                     Settings::getInstance()->getInt("ScraperResizeMaxHeight"))) {
-                setError("Error saving resized image. Out of memory? Disk full?");
+                setError("Error saving resized image.\nOut of memory? Disk full?");
                 return;
             }
 
@@ -365,8 +365,8 @@ void ImageDownloadHandle::update()
     #else
     std::ofstream stream(mSavePath, std::ios_base::out | std::ios_base::binary);
     #endif
-    if (stream.bad()) {
-        setError("Failed to open image path to write. Permission error? Disk full?");
+    if (!stream || stream.bad()) {
+        setError("Failed to open path for writing image.\nPermission error?");
         return;
     }
 
@@ -374,13 +374,13 @@ void ImageDownloadHandle::update()
     stream.write(content.data(), content.length());
     stream.close();
     if (stream.bad()) {
-        setError("Failed to save image. Disk full?");
+        setError("Failed to save image.\nDisk full?");
         return;
     }
 
     // Resize it.
     if (!resizeImage(mSavePath, mMaxWidth, mMaxHeight)) {
-        setError("Error saving resized image. Out of memory? Disk full?");
+        setError("Error saving resized image.\nOut of memory? Disk full?");
         return;
     }
 
