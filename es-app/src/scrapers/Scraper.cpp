@@ -107,8 +107,8 @@ void ScraperSearchHandle::update()
         // Status == ASYNC_IN_PROGRESS.
     }
 
-    // We finished without any errors!
-    if (mRequestQueue.empty()) {
+    // Check if we finished without any errors and if so set the status flag accordingly.
+    if (mRequestQueue.empty() && mStatus != ASYNC_ERROR) {
         setStatus(ASYNC_DONE);
         return;
     }
