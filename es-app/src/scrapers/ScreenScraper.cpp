@@ -232,6 +232,22 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         // Name fallback: US, WOR(LD). ( Xpath: Data/jeu[0]/noms/nom[*] ).
         result.mdl.set("name", find_child_by_attribute_list(game.child("noms"),
                 "nom", "region", { region, "wor", "us" , "ss", "eu", "jp" }).text().get());
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " <<
+                result.mdl.get("name");
+
+        // Validate rating.
+        if (Settings::getInstance()->getBool("ScrapeRatings") && game.child("note")) {
+            float ratingVal = (game.child("note").text().as_int() / 20.0f);
+            // Round up to the closest .1 value, i.e. to the closest half-star.
+            ratingVal = Math::ceilf(ratingVal / 0.1) / 10;
+            std::stringstream ss;
+            ss << ratingVal;
+            if (ratingVal > 0) {
+                result.mdl.set("rating", ss.str());
+                LOG(LogDebug) << "ScreenScraperRequest::processGame(): Rating: " <<
+                        result.mdl.get("rating");
+            }
+        }
 
         // Description fallback language: EN, WOR(LD).
         std::string description = find_child_by_attribute_list(game.child("synopsis"),
@@ -239,10 +255,6 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 
         if (!description.empty())
             result.mdl.set("desc", Utils::String::replace(description, "&nbsp;", " "));
-
-        // Genre fallback language: EN. ( Xpath: Data/jeu[0]/genres/genre[*] ).
-        result.mdl.set("genre", find_child_by_attribute_list(game.child("genres"),
-                "genre", "langue", { language, "en" }).text().get());
 
         // Get the date proper. The API returns multiple 'date' children nodes to the 'dates'
         // main child of 'jeu'.
@@ -260,43 +272,45 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                     Utils::Time::stringToTime(_date, "%Y")));
         }
 
+        if (_date.length() > 0) {
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Release Date (unparsed): " <<
+                    _date;
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Release Date (parsed): " <<
+                    result.mdl.get("releasedate");
+        }
+
         /// Developer for the game( Xpath: Data/jeu[0]/developpeur ).
         std::string developer = game.child("developpeur").text().get();
-        if (!developer.empty())
+        if (!developer.empty()) {
             result.mdl.set("developer", Utils::String::replace(developer, "&nbsp;", " "));
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Developer: " <<
+                    result.mdl.get("developer");
+        }
 
         // Publisher for the game ( Xpath: Data/jeu[0]/editeur ).
         std::string publisher = game.child("editeur").text().get();
-        if (!publisher.empty())
+        if (!publisher.empty()) {
             result.mdl.set("publisher", Utils::String::replace(publisher, "&nbsp;", " "));
-
-        // Players.
-        result.mdl.set("players", game.child("joueurs").text().get());
-
-        // Validate rating.
-        if (Settings::getInstance()->getBool("ScrapeRatings") && game.child("note")) {
-            float ratingVal = (game.child("note").text().as_int() / 20.0f);
-            // Round up to the closest .1 value, i.e. to the closest half-star.
-            ratingVal = Math::ceilf(ratingVal / 0.1) / 10;
-            std::stringstream ss;
-            ss << ratingVal;
-            result.mdl.set("rating", ss.str());
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Publisher: " <<
+                    result.mdl.get("publisher");
         }
 
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " <<
-                result.mdl.get("name");
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Release Date (unparsed): " <<
-                _date;
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Release Date (parsed): " <<
-                result.mdl.get("releasedate");
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Developer: " <<
-                result.mdl.get("developer");
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Publisher: " <<
-                result.mdl.get("publisher");
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Genre: " <<
-                result.mdl.get("genre");
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Players: " <<
-                result.mdl.get("players");
+        // Genre fallback language: EN. ( Xpath: Data/jeu[0]/genres/genre[*] ).
+        std::string genre = find_child_by_attribute_list(game.child("genres"),
+                "genre", "langue", { language, "en" }).text().get();
+        if (!genre.empty()) {
+            result.mdl.set("genre", genre);
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Genre: " <<
+                    result.mdl.get("genre");
+        }
+
+        // Players.
+        std::string players = game.child("joueurs").text().get();
+        if (!players.empty()) {
+            result.mdl.set("players", players);
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Players: " <<
+                    result.mdl.get("players");
+        }
 
         // Media super-node.
         pugi::xml_node media_list = game.child("medias");

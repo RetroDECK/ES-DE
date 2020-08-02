@@ -304,21 +304,25 @@ void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
         LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (parsed): " <<
             result.mdl.get("releasedate");
     }
+
     if (game.HasMember("developers") && game["developers"].IsArray()) {
         result.mdl.set("developer", getDeveloperString(game["developers"]));
         LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Developer: " <<
                 result.mdl.get("developer");
     }
+
     if (game.HasMember("publishers") && game["publishers"].IsArray()) {
         result.mdl.set("publisher", getPublisherString(game["publishers"]));
         LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Publisher: " <<
             result.mdl.get("publisher");
     }
+
     if (game.HasMember("genres") && game["genres"].IsArray()) {
         result.mdl.set("genre", getGenreString(game["genres"]));
         LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Genre: " <<
                 result.mdl.get("genre");
     }
+
     if (game.HasMember("players") && game["players"].IsInt()) {
         result.mdl.set("players", std::to_string(game["players"].GetInt()));
         LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Players: " <<
