@@ -92,12 +92,16 @@ bool ComponentList::input(InputConfig* config, Input input)
         return listInput(input.value != 0 ? 6 : 0);
     }
     else if (config->isMappedLike("lefttrigger", input)) {
-        mSelectorBarOffset = 0;
-        return listFirstRow();
+        if (input.value != 0) {
+            mSelectorBarOffset = 0;
+            return listFirstRow();
+        }
     }
     else if (config->isMappedLike("righttrigger", input)) {
-        mSelectorBarOffset = mEntries.size() - 1;
-        return listLastRow();
+        if (input.value != 0) {
+            mSelectorBarOffset = mEntries.size() - 1;
+            return listLastRow();
+        }
     }
 
     return false;
