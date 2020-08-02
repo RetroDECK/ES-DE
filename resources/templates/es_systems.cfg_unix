@@ -578,6 +578,15 @@
     <theme>oric</theme>
   </system>
   <system>
+    <name>pc</name>
+    <fullname>IBM PC</fullname>
+    <path>%ROMPATH%/pc</path>
+    <extension>.bat .BAT .com .COM .dos .DOS .exe .EXE .pc .PC .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/dosbox_core_libretro.so %ROM%</command>
+    <platform>pc</platform>
+    <theme>pc</theme>
+  </system>
+  <system>
     <name>pcengine</name>
     <fullname>NEC PC Engine</fullname>
     <path>%ROMPATH%/pcengine</path>
