@@ -70,7 +70,9 @@ GuiMetaDataEd::GuiMetaDataEd(
     // Populate list.
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
         std::shared_ptr<GuiComponent> ed;
-        std::string originalValue;
+        std::string currentKey = iter->key;
+        std::string originalValue = mMetaData->get(iter->key);
+        std::string gamePath;
 
         // Don't add statistics.
         if (iter->isStatistic)
@@ -159,8 +161,6 @@ GuiMetaDataEd::GuiMetaDataEd(
                 bool multiLine = false;
                 const std::string title = iter->displayPrompt;
 
-                originalValue = mMetaData->get(iter->key);
-
                 // OK callback (apply new value to ed).
                 auto updateVal = [ed, originalValue](const std::string& newVal) {
                     ed->setValue(newVal);
@@ -201,15 +201,27 @@ GuiMetaDataEd::GuiMetaDataEd(
                 bool multiLine = iter->type == MD_MULTILINE_STRING;
                 const std::string title = iter->displayPrompt;
 
-                originalValue = mMetaData->get(iter->key);
+                gamePath = Utils::FileSystem::getStem(mScraperParams.game->getPath());
 
                  // OK callback (apply new value to ed).
-                auto updateVal = [ed, originalValue](const std::string& newVal) {
-                    ed->setValue(newVal);
-                    if (newVal == originalValue)
-                        ed->setColor(DEFAULT_TEXTCOLOR);
-                    else
-                        ed->setColor(TEXTCOLOR_USERMARKED);
+                auto updateVal = [ed, currentKey, originalValue, gamePath]
+                        (const std::string& newVal) {
+                    // If the user has entered a blank game name, then set the name to the ROM
+                    // filename (minus the extension).
+                    if (currentKey == "name" && newVal == "") {
+                        ed->setValue(gamePath);
+                        if (gamePath == originalValue)
+                            ed->setColor(DEFAULT_TEXTCOLOR);
+                        else
+                            ed->setColor(TEXTCOLOR_USERMARKED);
+                    }
+                    else {
+                        ed->setValue(newVal);
+                        if (newVal == originalValue)
+                            ed->setColor(DEFAULT_TEXTCOLOR);
+                        else
+                           ed->setColor(TEXTCOLOR_USERMARKED);
+                    }
                  };
 
                 row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
@@ -342,15 +354,7 @@ void GuiMetaDataEd::save()
                 mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
 
-        // If the user has entered a blank game name, then set the name to the ROM
-        // filename (minus the extension).
-        if (mMetaDataDecl.at(i).key == "name" && mEditors.at(i)->getValue() == "") {
-            mMetaData->set(mMetaDataDecl.at(i).key,
-                    Utils::FileSystem::getStem(mScraperParams.game->getPath()));
-        }
-        else {
-            mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
-        }
+        mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
     }
 
     // If hidden games are not shown and the hide flag was set for the game, then write the
