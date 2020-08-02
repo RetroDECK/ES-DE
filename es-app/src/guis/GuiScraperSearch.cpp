@@ -73,6 +73,7 @@ GuiScraperSearch::GuiScraperSearch(
     mMD_Rating = std::make_shared<RatingComponent>(mWindow);
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>(mWindow);
     mMD_ReleaseDate->setColor(mdColor);
+    mMD_ReleaseDate->setUppercase(true);
     mMD_Developer = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
     mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
     mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor);

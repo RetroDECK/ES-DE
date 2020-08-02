@@ -40,12 +40,18 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
         if (mDisplayMode != DISP_RELATIVE_TO_NOW) // Don't allow editing for relative times.
             mEditing = !mEditing;
 
+        // Change the color of the text to reflect the changes.
+        if (mTime == mOriginalValue)
+            setColor(mColorOriginalValue);
+        else
+            setColor(mColorChangedValue);
+
         if (mEditing) {
             // Started editing.
             mTimeBeforeEdit = mTime;
 
             // Initialize to now if unset.
-            if (mTime.getTime() == Utils::Time::NOT_A_DATE_TIME) {
+            if (mTime.getTime() == Utils::Time::DEFAULT_TIMEVALUE) {
                 mTime = Utils::Time::now();
                 updateTextCache();
             }
@@ -55,6 +61,11 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
     }
 
     if (mEditing) {
+
+        if (config->isMappedLike("lefttrigger", input) ||
+                config->isMappedLike("righttrigger", input))
+            return true;
+
         if (config->isMappedTo("b", input)) {
             mEditing = false;
             mTime = mTimeBeforeEdit;
@@ -106,12 +117,6 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
                 new_tm.tm_mday = days_in_month;
 
             mTime = new_tm;
-
-            // Change the color of the text to reflect the changes.
-            if (mTime == mOriginalValue)
-                setColor(mColorOriginalValue);
-            else
-                setColor(mColorChangedValue);
 
             updateTextCache();
             return true;

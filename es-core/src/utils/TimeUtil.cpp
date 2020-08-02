@@ -83,7 +83,7 @@ namespace Utils
             tm timeStruct  = { 0, 0, 0, 1, 0, 0, 0, 0, -1 };
             size_t parsedChars = 0;
 
-            if (_string == "not-a-date-time")
+            if (_string == "19700101T010000")
                 return mktime(&timeStruct);
 
             while (*f && (parsedChars < _string.length())) {

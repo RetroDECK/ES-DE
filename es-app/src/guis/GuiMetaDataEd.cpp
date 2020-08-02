@@ -128,6 +128,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<DateTimeEditComponent>(window);
+                ed->setOriginalColor(DEFAULT_TEXTCOLOR);
                 ed->setChangedColor(TEXTCOLOR_USERMARKED);
                 row.addElement(ed, false);
 
@@ -429,11 +430,6 @@ void GuiMetaDataEd::close()
         const std::string& key = mMetaDataDecl.at(i).key;
         std::string mMetaDataValue = mMetaData->get(key);
         std::string mEditorsValue = mEditors.at(i)->getValue();
-
-        // Incredibly ugly workaround to avoid the "SAVE CHANGES?" window for games
-        // with missing release date metadata.
-        if (key == "releasedate" && (mMetaDataValue == "" || mMetaDataValue == "not-a-date-time"))
-            mMetaDataValue = "19700101T010000";
 
         if (mMetaDataValue != mEditorsValue) {
             metadataUpdated = true;
