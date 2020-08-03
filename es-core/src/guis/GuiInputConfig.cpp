@@ -407,7 +407,12 @@ bool GuiInputConfig::filterTrigger(Input input, InputConfig* config, int inputId
     // button functions in ES for instance. It's probably necessary to update ES to use the SDL
     // GameController API to fix this properly.
     if (input.type == TYPE_AXIS && (input.id == 2 || input.id == 4 || input.id == 5)) {
-        if (std::string(GUI_INPUT_CONFIG_LIST[inputId].name).find("Trigger") != std::string::npos) {
+        if (!(std::string(GUI_INPUT_CONFIG_LIST[inputId].name).find("Trigger") !=
+                std::string::npos)) {
+            return false;
+        }
+        else if (std::string(GUI_INPUT_CONFIG_LIST[inputId].name).find("Trigger") !=
+                std::string::npos) {
             if (input.value == 1)
                 mSkipAxis = true;
             else if (input.value == -1)
