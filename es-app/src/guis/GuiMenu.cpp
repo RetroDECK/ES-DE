@@ -705,7 +705,7 @@ void GuiMenu::openConfigInput()
     Window* window = mWindow;
     window->pushGui(new GuiMsgBox(window, getHelpStyle(),
             "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?", "YES", [window] {
-        window->pushGui(new GuiDetectDevice(window, false, nullptr));
+        window->pushGui(new GuiDetectDevice(window, false, false, nullptr));
     }, "NO", nullptr)
     );
 }

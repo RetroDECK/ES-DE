@@ -575,6 +575,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
 --force-disable-filters         Force the UI to ignore applied filters in gamelist
+--force-input-config            Force configuration of input device
 --home [path]                   Directory to use as home path
 --version, -v                   Displays version information
 --help, -h                      Summon a sentient, angry tuba
@@ -599,6 +600,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
 --force-disable-filters         Force the UI to ignore applied filters in gamelist
+--force-input-config            Force configuration of input device
 --home [path]                   Directory to use as home path
 --version, -v                   Displays version information
 --help, -h                      Summon a sentient, angry tuba

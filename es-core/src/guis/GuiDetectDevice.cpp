@@ -19,9 +19,11 @@
 GuiDetectDevice::GuiDetectDevice(
         Window* window,
         bool firstRun,
+        bool forcedConfig,
         const std::function<void()>& doneCallback)
         : GuiComponent(window),
         mFirstRun(firstRun),
+        mForcedConfig(forcedConfig),
         mBackground(window, ":/graphics/frame.png"),
         mGrid(window, Vector2i(1, 5))
 {
@@ -50,12 +52,21 @@ GuiDetectDevice::GuiDetectDevice(
     mGrid.setEntry(mDeviceInfo, Vector2i(0, 1), false, true);
 
     // Message.
-    mMsg1 = std::make_shared<TextComponent>(mWindow,
-            "HOLD A BUTTON ON YOUR DEVICE OR KEYBOARD TO CONFIGURE IT.",
-            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+    if (numDevices > 0) {
+        mMsg1 = std::make_shared<TextComponent>(mWindow,
+                "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT.",
+                Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+    }
+    else {
+        mMsg1 = std::make_shared<TextComponent>(mWindow,
+                "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT.",
+                Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+    }
+
     mGrid.setEntry(mMsg1, Vector2i(0, 2), false, true);
 
-    const char* msg2str = firstRun ? "PRESS F4 TO QUIT AT ANY TIME." : "PRESS ESC TO CANCEL.";
+    const char* msg2str = firstRun ?
+            "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)." : "PRESS ESC TO CANCEL.";
     mMsg2 = std::make_shared<TextComponent>(mWindow, msg2str,
             Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     mGrid.setEntry(mMsg2, Vector2i(0, 3), false, true);
@@ -91,8 +102,18 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
             input.value && input.id == SDLK_ESCAPE) {
         // Cancel the configuration.
         PowerSaver::resume();
-        delete this;
+        delete this; // Delete GUI element.
         return true;
+    }
+    // First run, but the user chooses to skip the configuration. This will default to the
+    // built-in keyboard mappings.
+    else if (mFirstRun && input.device == DEVICE_KEYBOARD && input.type == TYPE_KEY &&
+            input.value && input.id == SDLK_ESCAPE) {
+            if (mDoneCallback)
+                mDoneCallback();
+            PowerSaver::resume();
+            delete this; // Delete GUI element.
+            return true;
     }
 
     if (input.type == TYPE_BUTTON || input.type == TYPE_KEY ||input.type == TYPE_CEC_BUTTON) {
@@ -114,9 +135,11 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
 void GuiDetectDevice::update(int deltaTime)
 {
     if (mHoldingConfig) {
-        // If ES starts and if a known device is connected after startup
-        // skip controller configuration.
-        if (mFirstRun && Utils::FileSystem::exists(InputManager::getConfigPath()) &&
+        // If ES starts and if a known device is connected after startup skip controller
+        // configuration unless the flag to force the configuration was passed on the
+        // command line.
+        if (!mForcedConfig && mFirstRun &&
+                Utils::FileSystem::exists(InputManager::getConfigPath()) &&
                 InputManager::getInstance()->getNumConfiguredDevices() > 0) {
             if (mDoneCallback)
                 mDoneCallback();

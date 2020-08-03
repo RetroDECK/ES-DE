@@ -17,7 +17,8 @@ class TextComponent;
 class GuiDetectDevice : public GuiComponent
 {
 public:
-    GuiDetectDevice(Window* window, bool firstRun, const std::function<void()>& doneCallback);
+    GuiDetectDevice(Window* window, bool firstRun, bool forcedConfig,
+            const std::function<void()>& doneCallback);
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -25,6 +26,7 @@ public:
 
 private:
     bool mFirstRun;
+    bool mForcedConfig;
     InputConfig* mHoldingConfig;
     int mHoldTime;
 

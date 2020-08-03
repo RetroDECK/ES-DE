@@ -51,6 +51,8 @@
 #include <iostream>
 #include <time.h>
 
+bool forceInputConfig = false;
+
 #ifdef _WIN64
 enum eConsoleType {
     NO_CONSOLE,
@@ -283,6 +285,9 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--force-disable-filters") == 0) {
             Settings::getInstance()->setBool("ForceDisableFilters", true);
         }
+        else if (strcmp(argv[i], "--force-input-config") == 0) {
+            forceInputConfig = true;
+        }
         else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0) {
             std::cout <<
             "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << "\n";
@@ -314,6 +319,7 @@ bool parseArgs(int argc, char* argv[])
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-kiosk                   Force the UI mode to Kiosk\n"
 "  --force-disable-filters         Force the UI to ignore applied filters in gamelist\n"
+"  --force-input-config            Force configuration of input device\n"
 "  --home [path]                   Directory to use as home path\n"
 "  --version, -v                   Display version information\n"
 "  --help, -h                      Summon a sentient, angry tuba\n";
@@ -519,20 +525,23 @@ int main(int argc, char* argv[])
     if (splashScreen && splashScreenProgress)
         window.renderLoadingScreen("Done.");
 
-    // Choose which GUI to open depending on if an input configuration already exists.
+    // Choose which GUI to open depending on if an input configuration already exists and
+    // whether the flag to force the input configuration was passed from the command line.
     if (errorMsg == "") {
-        if (Utils::FileSystem::exists(InputManager::getConfigPath()) &&
+        if (!forceInputConfig && Utils::FileSystem::exists(InputManager::getConfigPath()) &&
                 InputManager::getInstance()->getNumConfiguredDevices() > 0) {
             ViewController::get()->goToStart();
         }
-        else {
-            // Always reset ShowDefaultKeyboardWarning to true if the es_input.cfg
-            // file is missing.
-            Settings::getInstance()->setBool("ShowDefaultKeyboardWarning", true);
-            Settings::getInstance()->saveFile();
-
-            window.pushGui(new GuiDetectDevice(&window, true, [] {
+        else if (forceInputConfig) {
+            window.pushGui(new GuiDetectDevice(&window, true, true, [] {
                     ViewController::get()->goToStart(); }));
+        }
+        else {
+            if (InputManager::getInstance()->getNumJoysticks() > 0)
+                window.pushGui(new GuiDetectDevice(&window, true, false, [] {
+                        ViewController::get()->goToStart(); }));
+            else
+                ViewController::get()->goToStart();
         }
     }
 
