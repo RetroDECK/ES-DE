@@ -81,7 +81,7 @@ void Settings::setDefaults()
     mStringMap["StartupSystem"] = "";
     mStringMap["GamelistViewStyle"] = "automatic";
     mStringMap["TransitionStyle"] = "instant";
-    mStringMap["ThemeSet"] = "";
+    mStringMap["ThemeSet"] = "rbsimple-DE";
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
     mBoolMap["FoldersOnTop"] = true;
