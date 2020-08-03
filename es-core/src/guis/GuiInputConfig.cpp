@@ -350,8 +350,7 @@ bool GuiInputConfig::assign(Input input, int inputId)
     // Input is from InputConfig* mTargetConfig.
 
     // If this input is mapped to something other than "nothing" or the current row,
-    // generate an error.
-    // (If it's the same as what it was before, allow it.)
+    // generate an error. (If it's the same as what it was before, allow it.)
     if (mTargetConfig->getMappedTo(input).size() > 0 &&
             !mTargetConfig->isMappedTo(GUI_INPUT_CONFIG_LIST[inputId].name, input) &&
             strcmp(GUI_INPUT_CONFIG_LIST[inputId].name, "HotKeyEnable") != 0) {

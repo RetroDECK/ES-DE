@@ -179,7 +179,19 @@ void InputManager::deinit()
     SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
 }
 
-int InputManager::getNumJoysticks() { return (int)mJoysticks.size(); }
+int InputManager::getNumJoysticks()
+{
+    int numJoysticks = 0;
+
+    // This is a workaround to exclude the keyboard (ID -1) from the total joystick count.
+    // It's incorrectly added when configuring the keyboard in GuiInputConfig, but I've
+    // been unable to find a proper fix to not having it added to mJoysticks.
+    for (auto it = mJoysticks.cbegin(); it != mJoysticks.cend(); it++) {
+        if ((*it).first >= 0)
+            numJoysticks += 1;
+    }
+    return numJoysticks;
+}
 
 int InputManager::getAxisCountByDevice(SDL_JoystickID id)
 {
