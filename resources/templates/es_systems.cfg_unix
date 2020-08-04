@@ -124,8 +124,8 @@
     <path>%ROMPATH%/atarijaguar</path>
     <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/virtualjaguar_libretro.so %ROM%</command>
-    <platform>atarijaguar</platform>
-    <theme>atarijaguar, atarijaguarcd</theme>
+    <platform>atarijaguar, atarijaguarcd</platform>
+    <theme>atarijaguar</theme>
   </system>
   <system>
     <name>atarijaguarcd</name>
