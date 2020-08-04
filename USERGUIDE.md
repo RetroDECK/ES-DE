@@ -1,9 +1,10 @@
 # EmulationStation Desktop Edition - User Guide
 
+**_This guide is currently under construction!_**
+
 **Note:** This document is intended as a quick start guide, for more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to the [INSTALL.md](INSTALL.md) document.
 
-
-**_Note: This guide is currently under construction!_**
+Table of contents:
 
 [[_TOC_]]
 
@@ -36,7 +37,9 @@ When first starting ES, the application will look for any attached controllers (
 
 If a controller is attached when starting ES and no **es_input.cfg** input configuration file exists, you will be presented with the input configuration dialog. Just follow the steps as described to map the inputs.
 
-If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you however need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES with the command line argument **--force-input-config** or you can manually delete the es_input.cfg file prior to starting the application.
+If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you however need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES with the command line argument **--force-input-config** or you can manually delete the es_input.cfg file prior to starting the application. Alternatively you can navigate to the menu using your keyboard and select **Configure input** manually to configure your new device.
+
+The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions.
 
 
 ## System view (main screen)
@@ -50,35 +53,35 @@ Depending on the theme, the system navigation carousel can be either horizontal 
 
 The gamelist view is where you browse and start your games, and it's where you will spend most of your time using ES.
 
-Upon startup with the default settings, ES is set to the gamelist view style to `AUTOMATIC`. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style `DETAILED` will be shown, and if at least one video file is found, the view style `VIDEO` will be selected. Note that this setting is applied per game system.
+Upon startup with the default settings, ES is set to the gamelist view style to **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video** will be selected. Note that this setting is applied per game system.
 
 
 ## Help system
 
-There is a help system available throughout the application that provides an overview of the possible actions and buttons that can be used. It's possible to disable the help system (it's enabled by default).
+There is a help system available throughout the application that provides an overview of the possible actions and buttons that can be used. It's possible to disable the help system for a somewhat cleaner look using a menu option. Note that some general button actions are never shown, such as the ability to quick jump in gamelists, menus and text input fields using the shoulder and trigger buttons.
 
 
 ## General navigation
 
-The help system will provide an overview per screen on the navigation options for the application, however here is a general overview. These are the inputs you mapped in the previous input device configuration step.
+The help system will provide an overview per screen on the navigation options for the application, however here is a general overview. These are the inputs you mapped in the previous input device configuration step. Note that this is not an exhaustive list, but it covers most situations.
 
 **Up and down**
 
-Navigate up and down in the gamelists, system view (if the theme has a vertical carousel) and in menus.
+Navigate up and down in gamelists, system view (if the theme has a vertical carousel) and in menus.
 
 **Left and right**
 
-Navigate between gamelists if _quick system select_ has been activated in the options (it's enabled by default) or between system (if the theme has a horizontal carousel).
+Navigate between gamelists (if _"Quick system select"_ has been activated in the options), or between systems (if the theme has a horizontal carousel).
 
 **Start button**
 
-Opens and closes the main menu
+Opens and closes the main menu.
 
 **Select button**
 
 Opens and closes the game options menu if in the gamelist view, or toggles the screensaver if in the system view (main screen).
 
-**Shoulder button left and right**
+**Shoulder buttons left and right**
 
 Provides quick jumping in gamelists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Also jumps forward in text edit dialogs.
 
@@ -108,177 +111,346 @@ Marks games as favorites in the gamelist views. Used by some other minor functio
 For most systems, this is very straightforward, just put your game files into the folder corresponding to the system name. These names can be found in the end of this document.
 
 
+## Emulator setup
+
+EmulationStation is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the **es_systems.cfg** file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL.md](INSTALL.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
+
+Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
+
+In order to use the default es_systems.cfg file, you need to make sure that the emulator installation directory is in the operating system's path variable. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and there is a standardized directory structure. But for Windows you may need to add the emulator directory to your %PATH% variable manually. If on Windows, a simple test is to open a command window and type the name of the emulator and press enter, if the emulator is not found, then EmulationStation won't find it either and you need to update your %PATH% variable.
+
+As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator path relative to the EmulationStation location. Again, please refer to the [INSTALL.md](INSTALL.md) document on details regarding this.
+
+
 ## Main menu
 
-This menu can be accessed from both the main screen and from the gamelist views. It contains the scraper, the quit menu as well as the application settings.
+This menu can be accessed from both the main screen and from the gamelist views. It contains the scraper, the quit menu as well as the application settings. When it comes to saving settings, this is done automatically when navigating back from a screen, or when closing the menu altogether.
 
 Here is a breakdown of the main menu entires:
 
 ### Scraper
 
+Contains the various options for the scraper, which is used to download metadata and images for your games.
+
 **Scrape from**
+
+Scraper service selection, currently ScreenScraper.fr and TheGamesDB.net are supported.
 
 **Filter**
 
+Criteria for what games to include in the scraping. It can be set to _All games_, _No metadata_ or _No game image_.
+
 **Systems**
+
+A selection of which systems to scrape for. It's recommended to scrape one system at a time, but it's possible to automatically scrap several or all systems in one go.
 
 #### Content settings
 
+Describes the content types to include in the scraping.
+
 **Scrape game names**
+
+Whether to scrape the names of the games. This does not affect the actual files on the filesystem and is only used for viewing and sorting purposes. The downloaded media files are also matched against the actually game file on the filesystem, not against this name.
 
 **Scrape ratings**
 
-**Scrap other metadata**
+Currently only supported by ScreenScraper.
+
+**Scrape other metadata**
+
+This includes the game description, release date, developer, publisher, genre and the number of players.
 
 **Scrape screenshot images**
 
+Screenshot images of actual gameplay.
+
 **Scrape box cover images**
+
+Cover art.
 
 **Scrape marquee (wheel) images**
 
+Logotype for the game, is used primarily for the Video view style.
+
 **Scrape 3D box images**
+
+Currently unused, but will be used for future versions of ES so it's recommended to keep this option ticked.
 
 #### Other settings
 
+Various scraping settings.
+
 **Region**
+
+The region to scrape for, affects game names.
 
 **Language**
 
+Currently only English or World are supported, not really significant at the moment.
+
 **Overwrite files and data**
+
+Affects both overwriting of metadata as well as actual game media files on the filesystem.
 
 **Interactive mode**
 
+If turned off, the scraping will be fully automatic and will not stop on multiple results or on missing games.
+
 **Auto-accept single game matches**
 
+Used in conjunction with interactive mode, to not having to confirm every single game if a single matched is returned from the scraper service.
 
 ### UI settings
 
+Various settings that affects the user interface.
+
 **Gamelist to show on startup**
+
+If set to None, the system view will be showed. Any other value will jump to that game system automatically on startup.
 
 **Gamelist view style**
 
+See the description earlier in this document regarding gamelist view styles.
+
 **Transition style**
+
+Graphical transition effect, either Instant (the default value), Fade or Slide.
 
 **Theme set**
 
+The theme to use. Defaults to rbsimple-DE, the theme shipped with EmulationStation Desktop Edition.
+
 **UI mode**
+
+Defaults to Full which enables all functionality within the application. If set to Kid, only games marked as being suitable for children will be displayed, and there will be an option to disable the menu. In Kiosk mode, most settings are disabled.
 
 **Default sort order**
 
+The order in which to sort your gamelists. This can be overriden per game system using the game options menu, but that override will only be persistent during the application session.
+
 **Sort folders on top of gamelists**
+
+Whether to place all folders on top of the gamelists. If done so, the folders will not be part of the quick selector index, meaning they can no longer be quick-jumped to.
 
 **Sort favorite games above non-favorites**
 
+Whether to sort your favorite games above your other games in the gamelists.
+
 **Gamelist filters**
+
+Activating or deactivating the ability to filter your gamelists. Can normally be left on.
 
 **Quick system select**
 
+If activated, it will be possible to jump between gamelists using the Left and Right buttons without having to first go back to the system view.
+
 **Carousel transitions**
+
+Whether to perform an animation when transitioning between systems in the system view.
 
 **On-screen help**
 
+Activating or deactivating the built-in help systems that provides contextual information regarding button usage.
+
 **Show start menu in kid mode**
+
+Hiding or showing the menu when the UI mode is set to Kid.
 
 #### Screensaver settings
 
+Settings for the built-in screensaver.
+
 **Screensaver after**
+
+After how many minutes to start the screensaver. If set to 0 minutes, the automatic screensaver will be deactivated. It can however still be started manually, if the Screensaver controls settings is activated.
 
 **Screensaver controls**
 
+This includes the ability to start the screensaver manually, but also to browse Left and Right between images or videos, and to launch the game shown by the screensaver using the A button.
+
 **Screensaver behavior**
 
-#### Video scrensaver settings
+The screensaven style to use, which includes _Dim_, _Black_, _Slideshow_ and _Video_.
+
+#### Video screensaver settings
+
+Options specific to the video screensaver.
 
 **Swap videos after (secs)**
 
+How long to play videos before change to the next game.
+
 **Stretch videos to screen resolution**
+
+This will fill the entire screen surface but will possibly break the aspect ratio of the video.
 
 **Play audio for screensaver video files**
 
+Muting or playing the audio.
+
 #### Slideshow screensaver settings
+
+Options specific to the slideshow screensaver.
 
 **Swap images after (secs)**
 
+How long to show images before change to the next game.
+
 **Stretch images to screen resolution**
+
+This will fill the entire screen surface but will possibly break the aspect ratio of the image.
 
 **Background audio**
 
+Background audio to play when the screensaver is active.
+
 **Use custom images**
+
+Using this option, it's possible to use custom images instead of random images from the game library.
 
 **Custom image dir**
 
+The directory for the custom images.
+
 **Custom image dir recursive**
 
+Whether to search the custom image directory recursively.
+
 **Custom image filter**
+
+The file extensions to consider for the custom images.
 
 
 ### Sound settings
 
+General sound settings.
+
 **System volume**
+
+As the name implies, this sets the overall system volume and not the volume specifically for ES.
 
 **Play audio for video files in gamelist views**
 
+With this turned off, audio won't play for you game videos in the gamelists.
+
 **Navigation sounds**
+
+Enable or disable navigation sounds throughout the application. Sounds are played when browsing systems and lists, starting games, adding and removing games as favorites etc. The sounds can be customized per theme, but if the theme does not support navigation sounds, ES will fall back to built-in sounds.
 
 
 ### Game collection settings
 
+Handles collections, which are built using the games already present for your game systems. _(Details on how this works are discussed later in this guide.)_
+
 **Automatic game collections**
+
+This opens a screen that lets you enable or disable the automatic game collections _All games_, _Favorites_ and _Last played_.
 
 **Custom game collections**
 
+This lets you create your own custom game collections.
+
 **Create new custom collection from theme**
+
+If the theme set in use provides themes for custom collections, then this can be selected here. For example, there could be themes for _"Fighting games"_ or _"Driving games"_ etc. As of version 1.0.0, the default rbsimple-DE theme set does not provides such themes for custom collections.
 
 **Create new custom collection**
 
+This lets you create a completely custom collection with a name that you choose.
+
 **Sort favorites on top for custom collections**
+
+Whether to sort your favorite games above your other games.
 
 **Group unthemed custom collections**
 
+With this enabled, if you have created custom collections and there is no theme support for the names you've selected, the collections will be grouped in a general collection which is correctly themed. It's strongly recommended to keep this option enabled as otherwise your collections would be completely unthemed which doesn't make much sense.
+
 **Show system names in collections**
 
+Enables the system name to be shown in square brackets after the game name, for example "CONTRA [NES]" or "DOOM [DOS]". It's recommended to keep this option enabled.
 
 ### Other settings
 
+These are mostly technical settings.
+
 **VRAM limit**
 
-**Fullscreen mode (requires restart)**
+The amount of video RAM to use for the application. Defaults to 100 MB which seems to work fine most of the time. Don't put it too low or you may see strange application behavior.
+
+**Fullscreen mode (requires restart) - Unix only**
+
+This gives you a choice between Normal and Borderless modes. With the borderless being more seamless as the ES window will always stay on top of other windows so the taskbar will not be visible when launching and exiting from games. It will however break the alt-tab application switching of your window manager.
 
 **Power saver modes**
 
+Can be set to Disabled, Default, Enhanced or Instant. Set to Disabled by default.
+
 **When to save metadata**
+
+The metadata for a game is updated both by scraping and modifying data in the metadata editor, but also when launching a game, as the play count and last played date is then updated. This settings enabled you to define when to write such metadata changes to the gamelist.xml files. Setting the option to "Never" will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor. In theory "On exit" will give some performance gains, but it's normally recommended to leave the setting at its default value which is "Always".
 
 **Game media directory**
 
+Here you can override the directory to your game media, i.e. the game images and videos. The default location is "~/.emulationstation/downloaded_media".
+
 **Per game launch command override**
+
+If enabled, you can override the launch command defined in es_systems.cfg on a per-game basis. It's only recommended to disable this option for testing purposes, such as when a game won't start and you're unsure if it's your custom launch command that causes the problem.
 
 **Show hidden files and folders (requires restart)**
 
+Allows hiding of hidden files, which on Unix means files and directories starting with a dot, and on Windows it's directories set as hidden as an NTFS option.
+
 **Show hidden games (requires restart)**
+
+You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES.
 
 **Custom event scripts**
 
+It's possible to trigger custom scripts for a number of actions in ES. _(Details on how this works are discussed later in this guide.)_
+
 **Only show roms from gamelist.xml files**
+
+If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
 
 **Display game art from rom directories**
 
+Using this option, you can locate game images in the ROM directory tree. The images are searched inside the directory "<ROM directory>/<system name>/images/" and the filenames must be the same as the ROM names, followed by a dash and the image type. For example "~/ROMs/nes/images/Contra-screenshot.jpg" and "~/ROMs/nes/images/Contra-marquee.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic.
+
 **Show framerate**
+
+Shows the framerate and some other statistics as an overlay. You normally never need to use this.
 
 **Show "reboot system" menu entry**
 
+Gives the ability to hide the "Reboot system" entry on the quit menu. Anyone who has accidentally rebooted a system from such a menu will appreciate this.
+
 **Show "power off system" menu entry**
+
+Gives the ability to hide the "Power off system" entry on the quit menu. Anyone who has accidentally powered off a system from such a menu will appreciate this.
 
 
 ### Configure input
 
+Gives you the possibility to reconfigure you devices or configure additional devices. This procedure is explained earlier in this guide.
+
 
 ### Quit
 
+The menu where you quit ES, or reboot or power off your system.
+
 **Quit emulationstation**
+
+If the option _"When to save metadata"_ has been set to _"On exit"_, the gamelist.xml files will be updated at this point.
 
 **Reboot system**
 
+Can be disabled, meaning the entry will not show up at all.
+
 **Power off system**
+
+Can be disabled, meaning the entry will not show up at all.
 
 
 ## Game options menu
@@ -291,7 +463,7 @@ Here's a summary of the menu entries:
 
 ### Jump to..
 
-This provides the ability to quick jump to a certain letter. If the setting to sort favorite games above non-favorites has been selected (it is enabled by default), then it's also possible to jump to the favorites games by choosing the star symbol.
+This provides the ability to jump to a certain letter using a quick selector. If the setting to sort favorite games above non-favorites has been selected (it is enabled by default), then it's also possible to jump to the favorites games by choosing the star symbol. If there are only folders or only favorite games in a certain game list, these games and folders will be indexed as well, making it possible to jump betwen them using the quick selector.
 
 ### Sort games by
 
@@ -322,7 +494,7 @@ This is the game that will be shown when browsing the gamelist. If no sortname h
 
 **Sortname**
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort **Mille Miglia** as **1000 Miglia** or **The Punisher** as **Punisher, The**.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _"Mille Miglia"_ as _"1000 Miglia"_ or _"The Punisher"_ as _"Punisher, The"_.
 
 **Description**
 
@@ -390,11 +562,23 @@ A statistics counter that counts how many times you're played the game. You norm
 The scraper supports downloading of game metadata and media files from the Internet. Currently two scraper services are supported, ScreenScraper.fr and TheGamesDB.net.
 
 
+## Game collections
+
+There are two types of game collections supported by ES; the automatic collections **All games**, **Favorites** and **Last played** as well as custom collections that you create yourself. Example of such could be grouping of genres like _"Shoot 'em up"_, _"Fighting"_ etc. or perhaps a time period like _"1980s"_, _"1990s"_ and so on.
+
+For either types of collections, they are always based on the games you currently have available in your normal game systems.
+
+
+## Custom event scripts
+
+There are numerous locations throughout ES where custom scripts can be executes if the option to do so has been enabled in the settings.
+
+
 ## Command line arguments
 
-You can use `--help` or `-h` to view a list of command line options, as shown here.
+You can use **--help** or **-h** to view a list of command line options, as shown here.
 
-### Unix:
+### Unix
 
 ```
 --resolution [width] [height]   Try to force a particular resolution
@@ -422,7 +606,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --help, -h                      Summon a sentient, angry tuba
 ```
 
-### Windows:
+### Windows
 
 ```
 --resolution [width] [height]   Try to force a particular resolution
@@ -447,111 +631,110 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --help, -h                      Summon a sentient, angry tuba
 ```
 
-
 ## Supported game systems
 
-Here is the list of supported game systems:
+For details regarding the systems such as which emulator or core is setup as default or which file extensions are supported, refer to the **es_systems.cfg** templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
 
-| Platform Name         | Full Name                                     | Recommmended game setup              | Comments                       |
-| :-------------------- | :-------------------------------------------- | :----------------------------------- | :----------------------------- |
-| 3do                   | 3DO                                           |                                      |                                |
-| ags                   | Adventure Game Studio                         |                                      |                                |
-| amiga                 | Amiga                                         | .hdf WHDLoad harddisk images or .adf disk images |                    |
-| amiga600              | Amiga 600                                     | .hdf WHDLoad harddisk images or .adf disk images | Same as **Amiga**, only different theme graphics |
-| amiga1200             | Amiga 1200                                    | .hdf WHDLoad harddisk images or .adf disk images |                    |
-| amstradcpc            | Amstrad CPC                                   |                                      |                                |
-| apple2                | Apple II                                      |                                      |                                |
-| arcade                | Arcade                                        |                                      |                                |
-| astrocade             | Bally Astrocade                               |                                      |                                |
-| atari2600             | Atari 2600                                    |                                      |                                |
-| atari5200             | Atari 5200                                    |                                      |                                |
-| atari7800             | Atari 7800 ProSystem                          |                                      |                                |
-| atari800              | Atari 800                                     |                                      |                                |
-| atarijaguar           | Atari Jaguar                                  |                                      |                                |
-| atarijaguarcd         | Atari Jaguar CD                               |                                      |                                |
-| atarilynx             | Atari Lynx                                    |                                      |                                |
-| atarist               | Atari ST                                      |                                      |                                |
-| atarixe               | Atari XE                                      |                                      |                                |
-| bbcmicro              | BBC Micro                                     |                                      |                                |
-| c64                   | Commodore 64                                  |                                      |                                |
-| cavestory             | Cave Story (NXEngine)                         |                                      |                                |
-| channelf              | Fairchild Channel F                           |                                      |                                |
-| coco                  | Tandy Color Computer                          |                                      |                                |
-| coleco                | ColecoVision                                  |                                      |                                |
-| daphne                | Daphne Arcade Laserdisc Emulator              |                                      |                                |
-| doom                  | Doom                                          |                                      |                                |
-| dos                   | DOS (PC)                                      |                                      |                                |
-| dragon32              | Dragon 32                                     |                                      |                                |
-| dreamcast             | Sega Dreamcast                                |                                      |                                |
-| famicom               | Nintendo Family Computer                      |                                      |                                |
-| fba                   | Final Burn Alpha                              |                                      |                                |
-| fbneo                 | FinalBurn Neo                                 |                                      |                                |
-| fds                   | Famicom Disk System                           |                                      |                                |
-| gameandwatch          | Nintendo Game and Watch                       |                                      |                                |
-| gamegear              | Sega Gamegear                                 |                                      |                                |
-| gamecube              | Nintendo GameCube                             |                                      |                                |
-| gb                    | Game Boy                                      |                                      |                                |
-| gba                   | Game Boy Advance                              |                                      |                                |
-| gbc                   | Game Boy Color                                |                                      |                                |
-| genesis               | Sega Genesis                                  |                                      |                                |
-| intellivision         | Mattel Electronics Intellivision              |                                      |                                |
-| chailove              | ChaiLove game engine                          |                                      |                                |
-| lutro                 | Lutro game engine                             |                                      |                                |
-| macintosh             | Apple Macintosh                               |                                      |                                |
-| mame                  | Multiple Arcade Machine Emulator              |                                      |                                |
-| mame-advmame          | AdvanceMAME                                   |                                      |                                |
-| mame-libretro         | Multiple Arcade Machine Emulator              |                                      |                                |
-| mame-mame4all         | MAME4ALL                                      |                                      |                                |
-| mastersystem          | Sega Master System                            |                                      |                                |
-| megadrive             | Sega Mega Drive                               |                                      |                                |
-| mess                  | Multi Emulator Super System                   |                                      |                                |
-| moonlight             | Moonlight game streaming                      |                                      |                                |
-| msx                   | MSX                                           |                                      |                                |
-| msx1                  | MSX1                                          |                                      |                                |
-| msx2                  | MSX2                                          |                                      |                                |
-| n64                   | Nintendo 64                                   |                                      |                                |
-| nds                   | Nintendo DS                                   |                                      |                                |
-| neogeo                | Neo Geo                                       |                                      |                                |
-| nes                   | Nintendo Entertainment System                 |                                      |                                |
-| ngp                   | Neo Geo Pocket                                |                                      |                                |
-| ngpc                  | Neo Geo Pocket Color                          |                                      |                                |
-| odyssey2              | Magnavox Odyssey2                             |                                      |                                |
-| openbor               | OpenBOR game engine                           |                                      |                                |
-| oric                  | Tangerine Computer Systems Oric               |                                      |                                |
-| pc                    | IBM PC                                        |                                      |                                |
-| pcengine              | NEC PC Engine                                 |                                      |                                |
-| pcenginecd            | NEC PC Engine CD                              |                                      |                                |
-| pcfx                  | NEC PC-FX                                     |                                      |                                |
-| ports                 | Ports                                         |                                      |                                |
-| ps2                   | Sony PlayStation 2                            |                                      |                                |
-| psp                   | PlayStation Portable                          |                                      |                                |
-| psvita                | PlayStation Vita                              |                                      |                                |
-| psx                   | Sony PlayStation 1                            |                                      |                                |
-| residualvm            | ResidualVM game engine                        |                                      |                                |
-| samcoupe              | SAM Coupé                                     |                                      |                                |
-| saturn                | Sega Saturn                                   |                                      |                                |
-| scummvm               | ScummVM game engine                           |                                      |                                |
-| sega32x               | Sega 32X                                      |                                      |                                |
-| segacd                | Sega Mega-CD                                  |                                      |                                |
-| sg-1000               | Sega SG-1000                                  |                                      |                                |
-| snes                  | Super Nintendo                                |                                      |                                |
-| solarus               | Solarus game engine                           |                                      |                                |
-| stratagus             | Stratagus game engine                         |                                      |                                |
-| supergrafx            | NEC SuperGrafx                                |                                      |                                |
-| tg16                  | NEC TurboGrafx-16                             |                                      |                                |
-| tg-cd                 | NEC TurboGrafx-CD                             |                                      |                                |
-| ti99                  | Texas Instruments TI-99                       |                                      |                                |
-| trs-80                | Tandy TRS-80                                  |                                      |                                |
-| vectrex               | Vectrex                                       |                                      |                                |
-| videopac              | Philips Videopac G7000 (Magnavox Odyssey2)    |                                      |                                |
-| virtualboy            | Nintendo Virtual Boy                          |                                      |                                |
-| wii                   | Nintendo Wii                                  |                                      |                                |
-| wiiu                  | Nintendo Wii U                                |                                      |                                |
-| wonderswan            | Bandai WonderSwan                             |                                      |                                |
-| wonderswancolor       | Bandai WonderSwan Color                       |                                      |                                |
-| x68000                | Sharp X68000                                  |                                      |                                |
-| xbox                  | Microsoft Xbox                                |                                      |                                |
-| xbox360               | Microsoft Xbox 360                            |                                      |                                |
-| zmachine              | Infocom Z-machine                             |                                      |                                |
-| zx81                  | Sinclair ZX81                                 |                                      |                                |
-| zxspectrum            | Sinclair ZX Spectrum                          |                                      |                                |
+| Platform name         | Full name                                     | Recommended game setup               |
+| :-------------------- | :-------------------------------------------- | :----------------------------------- |
+| 3do                   | 3DO                                           |                                      |
+| ags                   | Adventure Game Studio                         |                                      |
+| amiga                 | Amiga                                         | **.hdf** WHDLoad harddisk images or **.adf** disk images |
+| amiga600              | Amiga 600                                     | **.hdf** WHDLoad harddisk images or **.adf** disk images |
+| amiga1200             | Amiga 1200                                    | **.hdf** WHDLoad harddisk images or **.adf** disk images |
+| amstradcpc            | Amstrad CPC                                   |                                      |
+| apple2                | Apple II                                      |                                      |
+| arcade                | Arcade                                        | Single archive files following MAME name standard in root folder |
+| astrocade             | Bally Astrocade                               |                                      |
+| atari2600             | Atari 2600                                    |                                      |
+| atari5200             | Atari 5200                                    |                                      |
+| atari7800             | Atari 7800 ProSystem                          |                                      |
+| atari800              | Atari 800                                     |                                      |
+| atarijaguar           | Atari Jaguar                                  |                                      |
+| atarijaguarcd         | Atari Jaguar CD                               |                                      |
+| atarilynx             | Atari Lynx                                    |                                      |
+| atarist               | Atari ST                                      |                                      |
+| atarixe               | Atari XE                                      |                                      |
+| bbcmicro              | BBC Micro                                     |                                      |
+| c64                   | Commodore 64                                  | Single disk, tape or cartridge images in root folder and/or multi-disk images in separate folders |
+| cavestory             | Cave Story (NXEngine)                         |                                      |
+| channelf              | Fairchild Channel F                           |                                      |
+| coco                  | Tandy Color Computer                          |                                      |
+| coleco                | ColecoVision                                  |                                      |
+| daphne                | Daphne Arcade Laserdisc Emulator              |                                      |
+| doom                  | Doom                                          |                                      |
+| dos                   | DOS (PC)                                      | Games in separate folders (one folder per game, with complete file structure) |
+| dragon32              | Dragon 32                                     |                                      |
+| dreamcast             | Sega Dreamcast                                |                                      |
+| famicom               | Nintendo Family Computer                      | Single archive files in root folder  |
+| fba                   | Final Burn Alpha                              |                                      |
+| fbneo                 | FinalBurn Neo                                 |                                      |
+| fds                   | Famicom Disk System                           |                                      |
+| gameandwatch          | Nintendo Game and Watch                       |                                      |
+| gamegear              | Sega Gamegear                                 |                                      |
+| gamecube              | Nintendo GameCube                             |                                      |
+| gb                    | Game Boy                                      |                                      |
+| gba                   | Game Boy Advance                              |                                      |
+| gbc                   | Game Boy Color                                |                                      |
+| genesis               | Sega Genesis                                  | Single archive files in root folder  |
+| intellivision         | Mattel Electronics Intellivision              |                                      |
+| chailove              | ChaiLove game engine                          |                                      |
+| lutro                 | Lutro game engine                             |                                      |
+| macintosh             | Apple Macintosh                               |                                      |
+| mame                  | Multiple Arcade Machine Emulator              | Single archive files following MAME name standard in root folder |
+| mame-advmame          | AdvanceMAME                                   | Single archive files following MAME name standard in root folder |
+| mame-libretro         | Multiple Arcade Machine Emulator              | Single archive files following MAME name standard in root folder |
+| mame-mame4all         | MAME4ALL                                      | Single archive files following MAME name standard in root folder |
+| mastersystem          | Sega Master System                            |                                      |
+| megadrive             | Sega Mega Drive                               | Single archive files in root folder  |
+| mess                  | Multi Emulator Super System                   |                                      |
+| moonlight             | Moonlight game streaming                      |                                      |
+| msx                   | MSX                                           |                                      |
+| msx1                  | MSX1                                          |                                      |
+| msx2                  | MSX2                                          |                                      |
+| n64                   | Nintendo 64                                   | Single archive files in root folder  |
+| nds                   | Nintendo DS                                   |                                      |
+| neogeo                | Neo Geo                                       | Single archive files following MAME name standard |
+| nes                   | Nintendo Entertainment System                 | Single archive files in root folder  |
+| ngp                   | Neo Geo Pocket                                |                                      |
+| ngpc                  | Neo Geo Pocket Color                          |                                      |
+| odyssey2              | Magnavox Odyssey2                             |                                      |
+| openbor               | OpenBOR game engine                           |                                      |
+| oric                  | Tangerine Computer Systems Oric               |                                      |
+| pc                    | IBM PC                                        | Games in separate folders (one folder per game, with complete file structure) |
+| pcengine              | NEC PC Engine                                 | Single archive files in root folder  |
+| pcenginecd            | NEC PC Engine CD                              |                                      |
+| pcfx                  | NEC PC-FX                                     |                                      |
+| ports                 | Ports                                         | Shell/batch scripts in separate folders (possibly combined with game data) |
+| ps2                   | Sony PlayStation 2                            |                                      |
+| psp                   | PlayStation Portable                          |                                      |
+| psvita                | PlayStation Vita                              |                                      |
+| psx                   | Sony PlayStation 1                            |                                      |
+| residualvm            | ResidualVM game engine                        |                                      |
+| samcoupe              | SAM Coupé                                     |                                      |
+| saturn                | Sega Saturn                                   |                                      |
+| scummvm               | ScummVM game engine                           |                                      |
+| sega32x               | Sega 32X                                      | Single archive files in root folder  |
+| segacd                | Sega Mega-CD                                  |                                      |
+| sg-1000               | Sega SG-1000                                  |                                      |
+| snes                  | Super Nintendo                                | Single archive files in root folder  |
+| solarus               | Solarus game engine                           |                                      |
+| stratagus             | Stratagus game engine                         |                                      |
+| supergrafx            | NEC SuperGrafx                                |                                      |
+| tg16                  | NEC TurboGrafx-16                             |                                      |
+| tg-cd                 | NEC TurboGrafx-CD                             |                                      |
+| ti99                  | Texas Instruments TI-99                       |                                      |
+| trs-80                | Tandy TRS-80                                  |                                      |
+| vectrex               | Vectrex                                       |                                      |
+| videopac              | Philips Videopac G7000 (Magnavox Odyssey2)    |                                      |
+| virtualboy            | Nintendo Virtual Boy                          |                                      |
+| wii                   | Nintendo Wii                                  |                                      |
+| wiiu                  | Nintendo Wii U                                |                                      |
+| wonderswan            | Bandai WonderSwan                             |                                      |
+| wonderswancolor       | Bandai WonderSwan Color                       |                                      |
+| x68000                | Sharp X68000                                  |                                      |
+| xbox                  | Microsoft Xbox                                |                                      |
+| xbox360               | Microsoft Xbox 360                            |                                      |
+| zmachine              | Infocom Z-machine                             |                                      |
+| zx81                  | Sinclair ZX81                                 |                                      |
+| zxspectrum            | Sinclair ZX Spectrum                          |                                      |
