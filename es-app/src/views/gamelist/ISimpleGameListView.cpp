@@ -184,6 +184,11 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 
                     mWindow->setInfoPopup(s);
                     getCursor()->getSourceFileData()->getSystem()->onMetaDataSavePoint();
+
+                    if (!Settings::getInstance()->getBool("FoldersOnTop"))
+                        mRoot->sort(getSortTypeFromString(mRoot->getSortTypeString()),
+                                Settings::getInstance()->getBool("FavoritesFirst"));
+
                     ViewController::get()->onFileChanged(getCursor(), FILE_METADATA_CHANGED);
                     return true;
                 }
