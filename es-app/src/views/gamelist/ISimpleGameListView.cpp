@@ -6,6 +6,8 @@
 
 #include "views/gamelist/ISimpleGameListView.h"
 
+#include "guis/GuiInfoPopup.h"
+#include "utils/StringUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
@@ -158,10 +160,36 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedTo("y", input) &&
                 !UIModeController::getInstance()->isUIModeKid()) {
             if (mRoot->getSystem()->isGameSystem()) {
-                if (getCursor()->getType() == GAME)
+                if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
                     NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
-                if (CollectionSystemManager::get()->toggleGameInCollection(getCursor()))
+
+                // Marking folders as favorites is only cosmetic as they're not sorted
+                // differently and they're not part of any collections. So it makes more
+                // sense to do it here than to add the function to CollectionSystemManager.
+                if (getCursor()->getType() == FOLDER) {
+                    GuiInfoPopup* s;
+                    MetaDataList* md = &getCursor()->getSourceFileData()->metadata;
+                    if (md->get("favorite") == "false") {
+                        md->set("favorite", "true");
+                        s = new GuiInfoPopup(mWindow, "Marked folder '" +
+                                Utils::String::removeParenthesis(getCursor()->getName()) +
+                                "' as favorite", 4000);
+                    }
+                    else {
+                        md->set("favorite", "false");
+                        s = new GuiInfoPopup(mWindow, "Removed favorite marking for folder '" +
+                                Utils::String::removeParenthesis(getCursor()->getName()) +
+                                "'", 4000);
+                    }
+
+                    mWindow->setInfoPopup(s);
+                    getCursor()->getSourceFileData()->getSystem()->onMetaDataSavePoint();
+                    ViewController::get()->onFileChanged(getCursor(), FILE_METADATA_CHANGED);
                     return true;
+                }
+                else if (CollectionSystemManager::get()->toggleGameInCollection(getCursor())) {
+                    return true;
+                }
             }
         }
     }

@@ -46,6 +46,9 @@ MetaDataDecl folderDecls[] = {
 {"publisher",     MD_STRING,              "unknown",          false,      "publisher",            "enter game publisher",    true},
 {"genre",         MD_STRING,              "unknown",          false,      "genre",                "enter game genre",        true},
 {"players",       MD_INT,                 "unknown",          false,      "players",              "enter number of players", true},
+{"favorite",      MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on",   false},
+{"completed",     MD_BOOL,                "false",            false,      "completed",            "enter completed off/on",  false},
+{"broken",        MD_BOOL,                "false",            false,      "broken/not working",   "enter broken off/on",     false},
 {"hidden",        MD_BOOL,                "false",            false,      "hidden",               "enter hidden off/on",     false},
 {"lastplayed",    MD_TIME,                "0",                true,       "last played",          "enter last played date",  false}
 };
