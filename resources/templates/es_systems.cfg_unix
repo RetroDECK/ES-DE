@@ -21,7 +21,7 @@
   </system>
   <system>
     <name>amiga</name>
-    <fullname>Amiga</fullname>
+    <fullname>Commodore Amiga</fullname>
     <path>%ROMPATH%/amiga</path>
     <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/puae_libretro.so %ROM%</command>
@@ -30,7 +30,7 @@
   </system>
   <system>
     <name>amiga600</name>
-    <fullname>Amiga 600</fullname>
+    <fullname>Commodore Amiga 600</fullname>
     <path>%ROMPATH%/amiga600</path>
     <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/puae_libretro.so %ROM%</command>
@@ -39,7 +39,7 @@
   </system>
   <system>
     <name>amiga1200</name>
-    <fullname>Amiga 1200</fullname>
+    <fullname>Commodore Amiga 1200</fullname>
     <path>%ROMPATH%/amiga1200</path>
     <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/puae_libretro.so %ROM%</command>
