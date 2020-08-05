@@ -15,8 +15,11 @@ namespace PlatformIds
 
         "3do",
         "amiga",
+        "amigacd32",
         "amstradcpc",
+        "gx4000",
         "apple2",
+        "apple2gs",
         "arcade",
         "atari800",
         "atari2600",
@@ -27,14 +30,17 @@ namespace PlatformIds
         "atarijaguar",
         "atarijaguarcd",
         "atarixe",
+        "atomiswave",
         "colecovision",
         "c64",  // Commodore 64
+        "cdtv",
         "intellivision",
         "macintosh",
         "xbox",
         "xbox360",
         "msx",
         "neogeo",
+        "neogeocd",
         "ngp",  // Neo Geo Pocket
         "ngpc",  // Neo Geo Pocket Color
         "n3ds",  // Nintendo 3DS
@@ -51,6 +57,9 @@ namespace PlatformIds
         "wiiu",
         "virtualboy",
         "gameandwatch",
+        "pokemini",
+        "satellaview",
+        "sufami",
         "openbor",
         "dos",
         "pc",
@@ -88,7 +97,6 @@ namespace PlatformIds
         "bbcmicro",
         "cavestory",
         "daphne",
-        "doom",
         "dragon32",
         "famicom",
         "love",
@@ -104,6 +112,11 @@ namespace PlatformIds
         "videopac",
         "zmachine",
         "ti99",
+        "naomi",
+        "thomson",
+        "uzebox",
+        "spectravideo",
+        "palm",
 
         "ignore",  // Do not allow scraping for this system.
         "invalid"

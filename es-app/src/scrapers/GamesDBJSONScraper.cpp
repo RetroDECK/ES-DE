@@ -42,6 +42,7 @@ TheGamesDBJSONRequestResources resources;
 const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { THREEDO, "25" },
     { AMIGA, "4911" },
+    { AMIGACD32, "4947" },
     { AMSTRAD_CPC, "4914" },
     { APPLE_II, "4942" },
     { ARCADE, "23" },
@@ -54,14 +55,17 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { ATARI_LYNX, "4924" },
     { ATARI_ST, "4937" },
     { ATARI_XE, "30" },
+    { CAVESTORY, "1" },
     { COLECOVISION, "31" },
     { COMMODORE_64, "40" },
     { INTELLIVISION, "32" },
     { MAC_OS, "37" },
     { XBOX, "14" },
     { XBOX_360, "15" },
+	{ MOONLIGHT, "1" },
     { MSX, "4929" },
     { NEOGEO, "24" },
+    { NEOGEO_CD, "24" },
     { NEOGEO_POCKET, "4922" },
     { NEOGEO_POCKET_COLOR, "4923" },
     { NINTENDO_3DS, "4912" },
@@ -77,8 +81,12 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { NINTENDO_WII_U, "38" },
     { NINTENDO_VIRTUAL_BOY, "4918" },
     { NINTENDO_GAME_AND_WATCH, "-1" },
+    { NINTENDO_POKEMON_MINI, "4957" },
+    { NINTENDO_SATELLAVIEW, "6" },
+    { SUFAMI_TURBO, "6" },
     { DOS, "1" },
     { PC, "1" },
+    { PCFX, "4930" },
     { SEGA_32X, "33" },
     { SEGA_CD, "21" },
     { SEGA_DREAMCAST, "16" },
@@ -95,8 +103,9 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { PLAYSTATION_VITA, "39" },
     { PLAYSTATION_PORTABLE, "13" },
     { SUPER_NINTENDO, "6" },
-    { TURBOGRAFX_16, "34" },   // HuCards only.
-    { TURBOGRAFX_CD, "4955" }, // CD-ROMs only.
+    { SUPERGRAFX, "34" },       // Combined with TurboGrafx-16
+    { TURBOGRAFX_16, "34" },    // HuCards only.
+    { TURBOGRAFX_CD, "4955" },  // CD-ROMs only.
     { WONDERSWAN, "4925" },
     { WONDERSWAN_COLOR, "4926" },
     { ZX_SPECTRUM, "4913" },
