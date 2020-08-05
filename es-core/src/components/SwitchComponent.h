@@ -29,6 +29,10 @@ public:
     void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; };
     void setChangedColor(unsigned int color) override { mColorChangedValue = color; };
 
+    void setOpacity(unsigned char opacity) override;
+    // Multiply all pixels in the image by this color when rendering.
+    void setColorShift(unsigned int color) override;
+
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:

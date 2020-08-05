@@ -62,8 +62,18 @@ GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
     }
     mMenu.addWithLabel("Systems", mSystems);
 
-    addEntry("CONTENT SETTINGS", 0x777777FF, true, [this] { openContentSettings(); });
-    addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherSettings(); });
+    addEntry("CONTENT SETTINGS", 0x777777FF, true, [this] {
+        // Always save the settings when entering this menu, so the options that are
+        // not supported by TheGamesDB can be disabled.
+        mMenu.save();
+        openContentSettings();
+    });
+    addEntry("OTHER SETTINGS", 0x777777FF, true, [this] {
+        // Always save the settings when entering this menu, so the options that are
+        // not supported by TheGamesDB can be disabled.
+        mMenu.save();
+        openOtherSettings();
+    });
 
     addChild(&mMenu);
 
@@ -109,6 +119,15 @@ void GuiScraperMenu::openContentSettings()
     s->addSaveFunc([scrape_ratings] { Settings::getInstance()->setBool("ScrapeRatings",
             scrape_ratings->getState()); });
 
+    // Ratings are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrape_ratings->setDisabled();
+        scrape_ratings->setOpacity(DISABLED_OPACITY);
+        // I'm sure there is a better way to find the text component...
+        scrape_ratings->getParent()->getChild(
+                scrape_ratings->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+    }
+
     // Scrape other metadata.
     auto scrape_metadata = std::make_shared<SwitchComponent>(mWindow);
     scrape_metadata->setState(Settings::getInstance()->getBool("ScrapeMetadata"));
@@ -144,6 +163,16 @@ void GuiScraperMenu::openContentSettings()
     s->addSaveFunc([scrape_3dboxes] { Settings::getInstance()->setBool("Scrape3DBoxes",
             scrape_3dboxes->getState()); });
 
+    // 3D box images are not supported by TheGamesDB, so disable the option if this scraper
+    // is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrape_3dboxes->setDisabled();
+        scrape_3dboxes->setOpacity(DISABLED_OPACITY);
+        // I'm sure there is a better way to find the text component...
+        scrape_3dboxes->getParent()->getChild(
+                scrape_3dboxes->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+    }
+
     mWindow->pushGui(s);
 }
 
@@ -174,6 +203,15 @@ void GuiScraperMenu::openOtherSettings()
         Settings::getInstance()->setString("ScraperRegion", scraper_region->getSelected());
     });
 
+    // Regions are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scraper_region->setDisabled();
+        scraper_region->setOpacity(DISABLED_OPACITY);
+        // I'm sure there is a better way to find the text component...
+        scraper_region->getParent()->getChild(
+                scraper_region->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+    }
+
     // Scraper language.
     auto scraper_language = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "LANGUAGE", false);
@@ -194,6 +232,15 @@ void GuiScraperMenu::openOtherSettings()
     s->addSaveFunc([scraper_language] {
         Settings::getInstance()->setString("ScraperLanguage", scraper_language->getSelected());
     });
+
+    // Languages are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scraper_language->setDisabled();
+        scraper_language->setOpacity(DISABLED_OPACITY);
+        // I'm sure there is a better way to find the text component...
+        scraper_language->getParent()->getChild(
+                scraper_language->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+    }
 
     // Overwrite files and data.
     auto scrape_overwrite = std::make_shared<SwitchComponent>(mWindow);

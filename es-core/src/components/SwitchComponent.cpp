@@ -30,6 +30,10 @@ void SwitchComponent::onSizeChanged()
 bool SwitchComponent::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("a", input) && input.value) {
+        // Ignore input if the component has been disabled.
+        if (!mEnabled)
+            return true;
+
         mState = !mState;
         onStateChanged();
         return true;
@@ -70,6 +74,16 @@ void SwitchComponent::setValue(const std::string& statestring)
 
     mOriginalValue = mState;
     onStateChanged();
+}
+
+void SwitchComponent::setOpacity(unsigned char opacity)
+{
+    mImage.setOpacity(opacity);
+}
+
+void SwitchComponent::setColorShift(unsigned int color)
+{
+    mImage.setColorShift(color);
 }
 
 void SwitchComponent::onStateChanged()

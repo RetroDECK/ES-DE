@@ -23,6 +23,7 @@
 #define ICONCOLOR_USERMARKED 0x5555FFFF
 #define TEXTCOLOR_SCRAPERMARKED 0x992222FF
 #define TEXTCOLOR_USERMARKED 0x222299FF
+#define DISABLED_OPACITY 80
 
 class Animation;
 class AnimationController;
@@ -144,6 +145,10 @@ public:
     virtual void setChangedColor(unsigned int color) { mColorChangedValue = color; };
     virtual unsigned int getColor() const;
 
+    // These functions are used to enable and disable options in menus, i.e. switches and similar.
+    virtual void setEnabled() { mEnabled = true; };
+    virtual void setDisabled() { mEnabled = false; };
+
     const Transform4x4f& getTransform();
 
     virtual std::string getValue() const;
@@ -210,6 +215,7 @@ protected:
 
     bool mIsProcessing;
     bool mVisible;
+    bool mEnabled;
 
 private:
     // Don't access this directly! Use getTransform()!

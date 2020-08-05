@@ -91,11 +91,17 @@ public:
     {
         if (input.value != 0) {
             if (config->isMappedTo("a", input)) {
+                // Ignore input if the component has been disabled.
+                if (!mEnabled)
+                    return true;
                 open();
                 return true;
             }
             if (!mMultiSelect) {
                 if (config->isMappedLike("left", input)) {
+                    // Ignore input if the component has been disabled.
+                    if (!mEnabled)
+                        return true;
                     // Move selection to previous.
                     unsigned int i = getSelectedId();
                     int next = (int)i - 1;
@@ -109,6 +115,9 @@ public:
 
                 }
                 else if (config->isMappedLike("right", input)) {
+                    // Ignore input if the component has been disabled.
+                    if (!mEnabled)
+                        return true;
                     // Move selection to next.
                     unsigned int i = getSelectedId();
                     int next = (i + 1) % mEntries.size();
