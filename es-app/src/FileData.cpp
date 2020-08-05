@@ -671,8 +671,8 @@ void FileData::launchGame(Window* window)
         #endif
     }
 
-    LOG(LogInfo) << "Raw emulator launch command:";
-    LOG(LogInfo) << commandRaw;
+    LOG(LogDebug) << "Raw emulator launch command:";
+    LOG(LogDebug) << commandRaw;
     LOG(LogInfo) << "Expanded emulator launch command:";
 
     #ifdef _WIN64
