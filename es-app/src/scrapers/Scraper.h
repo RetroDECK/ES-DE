@@ -24,7 +24,7 @@
 class FileData;
 class SystemData;
 
-enum eDownloadStatus {
+enum downloadStatus {
     NOT_STARTED,
     IN_PROGRESS,
     COMPLETED
@@ -47,26 +47,28 @@ struct ScraperSearchResult {
     // within a given time period.
     unsigned int scraperRequestAllowance;
 
-    enum eDownloadStatus mediaURLFetch = NOT_STARTED;
-    enum eDownloadStatus thumbnailDownloadStatus = NOT_STARTED;
-    enum eDownloadStatus mediaFilesDownloadStatus = NOT_STARTED;
+    enum downloadStatus mediaURLFetch = NOT_STARTED;
+    enum downloadStatus thumbnailDownloadStatus = NOT_STARTED;
+    enum downloadStatus mediaFilesDownloadStatus = NOT_STARTED;
 
-    std::string ThumbnailImageData; // Thumbnail cache, will containe entire image.
+    std::string ThumbnailImageData; // Thumbnail cache, will contain entire image.
     std::string ThumbnailImageUrl;
 
     std::string box3dUrl;
     std::string coverUrl;
     std::string marqueeUrl;
     std::string screenshotUrl;
+    std::string videoUrl;
 
     // Needed to pre-set the image type.
     std::string box3dFormat;
     std::string coverFormat;
     std::string marqueeFormat;
     std::string screenshotFormat;
+    std::string videoFormat;
 
-    // Indicate whether any new images were downloaded and saved.
-    bool savedNewImages;
+    // Indicates whether any new media files were downloaded and saved.
+    bool savedNewMedia;
 };
 
 // So let me explain why I've abstracted this so heavily.
@@ -132,8 +134,11 @@ public:
     ScraperSearchHandle();
 
     void update();
-    inline const std::vector<ScraperSearchResult>& getResults() const {
-                assert(mStatus != ASYNC_IN_PROGRESS); return mResults; }
+    inline const std::vector<ScraperSearchResult>& getResults() const
+    {
+        assert(mStatus != ASYNC_IN_PROGRESS);
+        return mResults;
+    }
 
 protected:
     friend std::unique_ptr<ScraperSearchHandle>
@@ -180,14 +185,15 @@ private:
     std::vector<ResolvePair> mFuncs;
 };
 
-class ImageDownloadHandle : public AsyncHandle
+class MediaDownloadHandle : public AsyncHandle
 {
 public:
-    ImageDownloadHandle(
+    MediaDownloadHandle(
             const std::string& url,
             const std::string& path,
             const std::string& existingMediaPath,
-            bool& savedNewImage,
+            const bool resizeFile,
+            bool& savedNewMedia,
             int maxWidth,
             int maxHeight);
 
@@ -197,7 +203,8 @@ private:
     std::unique_ptr<HttpReq> mReq;
     std::string mSavePath;
     std::string mExistingMediaFile;
-    bool *mSavedNewImagePtr;
+    bool mResizeFile;
+    bool *mSavedNewMediaPtr;
     int mMaxWidth;
     int mMaxHeight;
 };
@@ -210,8 +217,12 @@ std::string getSaveAsPath(const ScraperSearchParams& params,
 
 // Will resize according to Settings::getInt("ScraperResizeMaxWidth") and
 // Settings::getInt("ScraperResizeMaxHeight").
-std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
-        const std::string& saveAs, const std::string& existingMediaPath, bool& savedNewImage);
+std::unique_ptr<MediaDownloadHandle> downloadMediaAsync(
+        const std::string& url,
+        const std::string& saveAs,
+        const std::string& existingMediaPath,
+        const bool resizeFile,
+        bool& savedNewMedia);
 
 // Resolves all metadata assets that need to be downloaded.
 std::unique_ptr<MDResolveHandle> resolveMetaDataAssets(const ScraperSearchResult& result,

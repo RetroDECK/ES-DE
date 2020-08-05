@@ -163,17 +163,19 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         std::string fileFormat;
         std::string subDirectory;
         std::string existingMediaFile;
+        bool resizeFile;
     } mediaFileInfo;
 
     std::vector<struct mediaFileInfoStruct> scrapeFiles;
 
-    mResult.savedNewImages = false;
+    mResult.savedNewMedia = false;
 
     if (Settings::getInstance()->getBool("Scrape3DBoxes") && result.box3dUrl != "") {
         mediaFileInfo.fileURL = result.box3dUrl;
         mediaFileInfo.fileFormat = result.box3dFormat;
         mediaFileInfo.subDirectory = "3dboxes";
         mediaFileInfo.existingMediaFile = search.game->get3DBoxPath();
+        mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
     if (Settings::getInstance()->getBool("ScrapeCovers") && result.coverUrl != "") {
@@ -181,6 +183,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.fileFormat = result.coverFormat;
         mediaFileInfo.subDirectory = "covers";
         mediaFileInfo.existingMediaFile = search.game->getCoverPath();
+        mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
     if (Settings::getInstance()->getBool("ScrapeMarquees") && result.marqueeUrl != "") {
@@ -188,6 +191,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.fileFormat = result.marqueeFormat;
         mediaFileInfo.subDirectory = "marquees";
         mediaFileInfo.existingMediaFile = search.game->getMarqueePath();
+        mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
     if (Settings::getInstance()->getBool("ScrapeScreenshots") && result.screenshotUrl != "") {
@@ -195,6 +199,15 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.fileFormat = result.screenshotFormat;
         mediaFileInfo.subDirectory = "screenshots";
         mediaFileInfo.existingMediaFile = search.game->getScreenshotPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
+    if (Settings::getInstance()->getBool("ScrapeVideos") && result.videoUrl != "") {
+        mediaFileInfo.fileURL = result.videoUrl;
+        mediaFileInfo.fileFormat = result.videoFormat;
+        mediaFileInfo.subDirectory = "videos";
+        mediaFileInfo.existingMediaFile = search.game->getVideoPath();
+        mediaFileInfo.resizeFile = false;
         scrapeFiles.push_back(mediaFileInfo);
     }
 
@@ -203,7 +216,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         std::string ext;
 
         // If we have a file extension returned by the scraper, then use it.
-        // Otherwise, try to guess it by the name of the URL, which point to an image.
+        // Otherwise, try to guess it by the name of the URL, which points to a media file.
         if (!it->fileFormat.empty()) {
             ext = it->fileFormat;
         }
@@ -249,7 +262,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             std::ofstream stream(filePath, std::ios_base::out | std::ios_base::binary);
             #endif
             if (!stream || stream.bad()) {
-                setError("Failed to open path for writing image.\nPermission error?");
+                setError("Failed to open path for writing media file.\nPermission error?");
                 return;
             }
 
@@ -257,24 +270,26 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             stream.write(content.data(), content.length());
             stream.close();
             if (stream.bad()) {
-                setError("Failed to save image.\nDisk full?");
+                setError("Failed to save media file.\nDisk full?");
                 return;
             }
 
             // Resize it.
-            if (!resizeImage(filePath, Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
-                    Settings::getInstance()->getInt("ScraperResizeMaxHeight"))) {
-                setError("Error saving resized image.\nOut of memory? Disk full?");
-                return;
+            if (it->resizeFile) {
+                if (!resizeImage(filePath, Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
+                        Settings::getInstance()->getInt("ScraperResizeMaxHeight"))) {
+                    setError("Error saving resized image.\nOut of memory? Disk full?");
+                    return;
+                }
             }
 
-            mResult.savedNewImages = true;
+            mResult.savedNewMedia = true;
         }
         // If it's not cached, then initiate the download.
         else {
-            mFuncs.push_back(ResolvePair(downloadImageAsync(it->fileURL, filePath,
-                    it->existingMediaFile, mResult.savedNewImages), [this, filePath] {
-            }));
+            mFuncs.push_back(ResolvePair(downloadMediaAsync(it->fileURL, filePath,
+                    it->existingMediaFile, it->resizeFile, mResult.savedNewMedia),
+                    [this, filePath] {}));
         }
     }
 }
@@ -303,35 +318,42 @@ void MDResolveHandle::update()
         setStatus(ASYNC_DONE);
 }
 
-std::unique_ptr<ImageDownloadHandle> downloadImageAsync(const std::string& url,
-        const std::string& saveAs, const std::string& existingMediaFile, bool& savedNewImage)
+std::unique_ptr<MediaDownloadHandle> downloadMediaAsync(
+        const std::string& url,
+        const std::string& saveAs,
+        const std::string& existingMediaPath,
+        const bool resizeFile,
+        bool& savedNewMedia)
 {
-    return std::unique_ptr<ImageDownloadHandle>(new ImageDownloadHandle(
+    return std::unique_ptr<MediaDownloadHandle>(new MediaDownloadHandle(
             url,
             saveAs,
-            existingMediaFile,
-            savedNewImage,
+            existingMediaPath,
+            resizeFile,
+            savedNewMedia,
             Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
             Settings::getInstance()->getInt("ScraperResizeMaxHeight")));
 }
 
-ImageDownloadHandle::ImageDownloadHandle(
+MediaDownloadHandle::MediaDownloadHandle(
         const std::string& url,
         const std::string& path,
         const std::string& existingMediaPath,
-        bool& savedNewImage,
+        const bool resizeFile,
+        bool& savedNewMedia,
         int maxWidth,
         int maxHeight)
         : mSavePath(path),
         mExistingMediaFile(existingMediaPath),
+        mResizeFile(resizeFile),
         mMaxWidth(maxWidth),
         mMaxHeight(maxHeight),
         mReq(new HttpReq(url))
 {
-        mSavedNewImagePtr = &savedNewImage;
+        mSavedNewMediaPtr = &savedNewMedia;
 }
 
-void ImageDownloadHandle::update()
+void MediaDownloadHandle::update()
 {
     if (mReq->status() == HttpReq::REQ_IN_PROGRESS)
         return;
@@ -342,6 +364,11 @@ void ImageDownloadHandle::update()
         setError(ss.str());
         return;
     }
+
+    // This seems to take care of a strange race condition where the media saving and
+    // resizing would sometimes take place twice.
+    if (mStatus == ASYNC_DONE)
+        return;
 
     // Download is done, save it to disk.
 
@@ -366,7 +393,7 @@ void ImageDownloadHandle::update()
     std::ofstream stream(mSavePath, std::ios_base::out | std::ios_base::binary);
     #endif
     if (!stream || stream.bad()) {
-        setError("Failed to open path for writing image.\nPermission error?");
+        setError("Failed to open path for writing media file.\nPermission error?");
         return;
     }
 
@@ -374,18 +401,20 @@ void ImageDownloadHandle::update()
     stream.write(content.data(), content.length());
     stream.close();
     if (stream.bad()) {
-        setError("Failed to save image.\nDisk full?");
+        setError("Failed to save media file.\nDisk full?");
         return;
     }
 
     // Resize it.
-    if (!resizeImage(mSavePath, mMaxWidth, mMaxHeight)) {
-        setError("Error saving resized image.\nOut of memory? Disk full?");
-        return;
+    if (mResizeFile) {
+        if (!resizeImage(mSavePath, mMaxWidth, mMaxHeight)) {
+            setError("Error saving resized image.\nOut of memory? Disk full?");
+            return;
+        }
     }
 
-    // If this image was successfully saved, update savedNewImages in ScraperSearchResult.
-    *mSavedNewImagePtr = true;
+    // If this media file was successfully saved, update savedNewMedia in ScraperSearchResult.
+    *mSavedNewMediaPtr = true;
 
     setStatus(ASYNC_DONE);
 }

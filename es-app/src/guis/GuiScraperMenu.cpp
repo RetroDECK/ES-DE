@@ -135,6 +135,22 @@ void GuiScraperMenu::openContentSettings()
     s->addSaveFunc([scrape_metadata] { Settings::getInstance()->setBool("ScrapeMetadata",
             scrape_metadata->getState()); });
 
+    // Scrape videos.
+    auto scrape_videos = std::make_shared<SwitchComponent>(mWindow);
+    scrape_videos->setState(Settings::getInstance()->getBool("ScrapeVideos"));
+    s->addWithLabel("SCRAPE VIDEOS", scrape_videos);
+    s->addSaveFunc([scrape_videos] { Settings::getInstance()->setBool("ScrapeVideos",
+            scrape_videos->getState()); });
+
+    // Videos are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrape_videos->setDisabled();
+        scrape_videos->setOpacity(DISABLED_OPACITY);
+        // I'm sure there is a better way to find the text component...
+        scrape_videos->getParent()->getChild(
+                scrape_videos->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+    }
+
     // Scrape screenshots images.
     auto scrape_screenshots = std::make_shared<SwitchComponent>(mWindow);
     scrape_screenshots->setState(Settings::getInstance()->getBool("ScrapeScreenshots"));

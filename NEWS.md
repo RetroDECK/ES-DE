@@ -5,7 +5,7 @@ EmulationStation Desktop Edition v1.0.0
 
 ### Release overview
 
-First release, a major update to the application compared to the RetroPie version on which it is based. This includes new gamelist sorting logic, new game media handling and a completely updated Windows port (which now works about as well as the Unix version). The menu system has also been completely overhauled and the scraper has been expanded to support multiple media types as well as providing detailed scraping configuration options.
+First release, a major update to the application compared to the RetroPie version on which it is based. This includes new gamelist sorting logic, new game media handling and a completely updated Windows port (which now works about as well as the Unix version). The menu system has also been completely overhauled and the scraper has been expanded to support multiple media types (including videos) as well as providing detailed scraping configuration options.
 
 Full navigation sound support has been implemented, and the metadata editor has seen a lot of updates including color coding of all changes done by the user and by the scraper. Favorite games can now also be sorted on top of the gamelists and game collections.
 

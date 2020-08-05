@@ -45,7 +45,7 @@ public:
         const std::string API_DEV_KEY =
         { 54, 73, 115, 100, 101, 67, 111, 107, 79, 66, 68, 66, 67, 56, 118, 77, 54, 88, 101, 54 };
         const std::string API_URL_BASE = "https://www.screenscraper.fr/api2";
-        const std::string API_SOFT_NAME = "Emulationstation-DE " +
+        const std::string API_SOFT_NAME = "EmulationStation-DE " +
                 static_cast<std::string>(PROGRAM_VERSION_STRING);
 
         // Which type of image artwork we need. Possible values (not a comprehensive list):
@@ -58,15 +58,17 @@ public:
         // - wheel: spine
         // - support-2D: media showing the 2d boxart on the cart
         // - support-3D: media showing the 3d boxart on the cart
+        // - video: gameplay videos
+        // - video-normalized: gameplay videos in smaller file sizes with lower audio quality
         //
-        // Note that not all games contain values for all these, so we default to "box-2D"
-        // since it's the most common.
+        // Note that not all games contain values for all these, so we default to "ss".
         //
 
         std::string media_3dbox = "box-3D";
         std::string media_cover = "box-2D";
         std::string media_marquee = "wheel";
         std::string media_screenshot = "ss";
+        std::string media_video = "video";
 
         // Which Region to use when selecting the artwork.
         // Applies to: artwork, name of the game, date of release.

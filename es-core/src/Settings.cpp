@@ -98,7 +98,7 @@ void Settings::setDefaults()
     mStringMap["ScreenSaverBehavior"] = "dim";
 
     // UI settings -> screensaver settings -> video screensaver settings.
-    mIntMap["ScreenSaverSwapVideoTimeout"] = 20000;
+    mIntMap["ScreenSaverSwapVideoTimeout"] = 25000;
     mBoolMap["ScreenSaverStretchVideos"] = false;
     #ifdef _RPI_
     mStringMap["ScreenSaverGameInfo"] = "never";
@@ -161,6 +161,7 @@ void Settings::setDefaults()
     mBoolMap["ScrapeCovers"] = true;
     mBoolMap["ScrapeMarquees"] = true;
     mBoolMap["ScrapeScreenshots"] = true;
+    mBoolMap["ScrapeVideos"] = false;
 
     // Other settings.
     #ifdef _RPI_

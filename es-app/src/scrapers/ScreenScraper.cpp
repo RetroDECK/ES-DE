@@ -248,7 +248,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         std::string language =
                 Utils::String::toLower(Settings::getInstance()->getString("ScraperLanguage"));
 
-        // Name fallback: US, WOR(LD). ( Xpath: Data/jeu[0]/noms/nom[*] ).
+        // Name fallback: US, WOR(LD). (Xpath: Data/jeu[0]/noms/nom[*]).
         result.mdl.set("name", find_child_by_attribute_list(game.child("noms"),
                 "nom", "region", { region, "wor", "us" , "ss", "eu", "jp" }).text().get());
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " <<
@@ -347,6 +347,9 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             // Screenshot
             processMedia(result, media_list, ssConfig.media_screenshot,
                     result.screenshotUrl, result.screenshotFormat, region);
+            // Video
+            processMedia(result, media_list, ssConfig.media_video,
+                    result.videoUrl, result.videoFormat, region);
         }
         result.mediaURLFetch = COMPLETED;
         out_results.push_back(result);
@@ -371,23 +374,30 @@ void ScreenScraperRequest::processMedia(
         ("media[@type='") + mediaType + "']").c_str());
 
         if (results.size()) {
-            // Region fallback: WOR(LD), US, CUS(TOM?), JP, EU.
-            for (auto _region : std::vector<std::string>{
-                    region, "wor", "us", "cus", "jp", "eu" }) {
-                if (art)
-                    break;
-
-                for (auto node : results) {
-                    if (node.node().attribute("region").value() == _region) {
-                        art = node.node();
+            // Videos don't have any region attributes, so just take the first entry
+            // (which should be the only entry as well).
+            if (mediaType == "video" || mediaType == "video-normalized") {
+                art = results.first().node();
+            }
+            else {
+                // Region fallback: WOR(LD), US, CUS(TOM?), JP, EU.
+                for (auto _region : std::vector<std::string>{
+                        region, "wor", "us", "cus", "jp", "eu" }) {
+                    if (art)
                         break;
+
+                    for (auto node : results) {
+                        if (node.node().attribute("region").value() == _region) {
+                            art = node.node();
+                            break;
+                        }
                     }
                 }
             }
         }
 
         if (art) {
-            // Sending a 'softname' containing space will make the image URLs returned
+            // Sending a 'softname' containing space will make the media URLs returned
             // by the API also contain the space. Escape any spaces in the URL here.
             fileURL = Utils::String::replace(art.text().get(), " ", "%20");
 

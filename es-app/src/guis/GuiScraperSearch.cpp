@@ -540,6 +540,7 @@ void GuiScraperSearch::update(int deltaTime)
                         results_scrape[i].coverUrl = it->coverUrl;
                         results_scrape[i].marqueeUrl = it->marqueeUrl;
                         results_scrape[i].screenshotUrl = it->screenshotUrl;
+                        results_scrape[i].videoUrl = it->videoUrl;
                         results_scrape[i].scraperRequestAllowance = it->scraperRequestAllowance;
                         results_scrape[i].mediaURLFetch = COMPLETED;
                     }

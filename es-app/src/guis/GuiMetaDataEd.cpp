@@ -392,7 +392,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     MetaDataList* metadata = nullptr;
     metadata = new MetaDataList(*mMetaData);
 
-    mMediaFilesUpdated = result.savedNewImages;
+    mMediaFilesUpdated = result.savedNewMedia;
 
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
