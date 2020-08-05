@@ -214,11 +214,8 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
         ss << "ScreenScraperRequest - Error parsing XML: " << parseResult.description();
 
         std::string err = ss.str();
-        setError("ScreenScraper error:\n" + err);
         LOG(LogError) << err;
-
-        LOG(LogError) << "ScreenScraperRequest - Additional information:";
-        LOG(LogError) << req->getContent();
+        setError("ScreenScraper error: \n" + req->getContent());
 
         return;
     }

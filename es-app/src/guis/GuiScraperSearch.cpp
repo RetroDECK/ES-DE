@@ -350,14 +350,16 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 void GuiScraperSearch::onSearchError(const std::string& error)
 {
     if (mScrapeCount > 1) {
-        LOG(LogInfo) << "GuiScraperSearch search error: " << error;
+        LOG(LogError) << "GuiScraperSearch search error: " <<
+                Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
             "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
             "SKIP", mSkipCallback,
             "CANCEL", mCancelCallback));
     }
     else {
-        LOG(LogInfo) << "GuiScraperSearch search error: " << error;
+        LOG(LogError) << "GuiScraperSearch search error: " <<
+                Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
             "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
             "CANCEL", mCancelCallback));
