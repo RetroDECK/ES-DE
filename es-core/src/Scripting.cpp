@@ -24,7 +24,8 @@ namespace Scripting
         if (!Settings::getInstance()->getBool("CustomEventScripts"))
             return;
 
-		LOG(LogDebug) << "fireEvent: " << eventName << " " << arg1 << " " << arg2;
+		LOG(LogDebug) << "Scripting::fireEvent(): " << eventName << " \"" << arg1 <<
+                "\" \"" << arg2 << "\"";
 
         std::list<std::string> scriptDirList;
         std::string test;
@@ -41,7 +42,7 @@ namespace Scripting
                     it != scripts.cend(); ++it) {
                 // Append folder to path.
                 std::string script = *it + " \"" + arg1 + "\" \"" + arg2 + "\"";
-                LOG(LogDebug) << "  executing: " << script;
+                LOG(LogDebug) << "Executing: " << script;
                 runSystemCommand(script);
             }
         }

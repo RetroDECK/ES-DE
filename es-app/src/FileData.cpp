@@ -612,7 +612,7 @@ void FileData::launchGame(Window* window)
     std::wstring commandWide = Utils::String::stringToWideString(command);
     #endif
 
-    Scripting::fireEvent("game-start", rom, basename);
+    Scripting::fireEvent("game-start", rom, getSourceFileData()->metadata.get("name"));
     int returnValue = 0;
 
     if (command.find("%EMUPATH%") != std::string::npos) {
@@ -710,7 +710,7 @@ void FileData::launchGame(Window* window)
         #endif
     }
 
-    Scripting::fireEvent("game-end");
+    Scripting::fireEvent("game-end", rom, getSourceFileData()->metadata.get("name"));
 
     // Update number of times the game has been launched.
     FileData* gameToUpdate = getSourceFileData();
