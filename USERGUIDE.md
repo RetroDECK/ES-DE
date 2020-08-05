@@ -75,7 +75,7 @@ Navigate up and down in gamelists, system view (if the theme has a vertical caro
 
 **Left and right**
 
-Navigate between gamelists (if _"Quick system select"_ has been activated in the options), or between systems (if the theme has a horizontal carousel).
+Navigate between gamelists (if 'Quick system select' has been activated in the options), or between systems (if the theme has a horizontal carousel).
 
 **Start button**
 
@@ -112,15 +112,17 @@ Marks games as favorites in the gamelist views. Used by some other minor functio
 
 ## Getting your games into EmulationStation
 
-For most systems, this is very straightforward, just put your game files into the folder corresponding to the platform name. (These names can be found in the end of this document.)
+For most systems, this is very straightforward, just put your game files into the folder corresponding to the platform name. (These names can be found at the end of this document.)
 
 For some systems though, a more elaborate setup is required, and we will attempt to cover such situations in this guide as well.
 
 ### Single gamefile installation
 
-Let's start with the simple scenario of a single game file per game platform, which is the case for the majority of systems. In this example we're setting up ES to play Nintendo Entertainment System games.
+Let's start with the simple scenario of a single game file per platform, which is the case for the majority of systems. In this example we're setting up ES to play Nintendo Entertainment System games.
 
-The ROM files supported are listed in [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Here is the snippet from the es_systems.cfg_unix for the NES platform:
+The supported file extensions are listed in [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
+
+Here is the snippet from the es_systems.cfg_unix file:
 
 ```
 <system>
@@ -134,11 +136,11 @@ The ROM files supported are listed in [es_systems.cfg_unix](resources/templates/
 </system>
 ```
 
-It's important that the ROM files are in one of the supported file extensions, or ES won't find them.
+It's required that the ROM files are in one of the supported file extensions, or ES won't find them.
 
-The default ROM directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/.emulationstation/ and on Windows it defaults to C:\Users\\<username\>\.emulationstation\
+The default ROM directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/.emulationstation/ and on Windows it defaults to C:\Users\\<username\>\\.emulationstation\
 
-Assuming the default ROM directory is used, we need to create a directory corresponding to the **\<platform\>** tag in es_systems.cfg, in this example it's **nes**.
+Assuming the default ROM directory is used, we need to create a directory corresponding to the \<platform\> tag in es_systems.cfg, in this example it's **nes**.
 
 This would look something like this on Unix and Windows:
 
@@ -147,7 +149,7 @@ This would look something like this on Unix and Windows:
 C:\Users\myusername\ROMs\nes
 ```
 
-Then simply copy your game ROMs into this folder, and you should end up with something like this:
+Then simply copy your game ROMs into this folder, and you should end up with something like the following:
 
 ```
 ~/ROMs/nes/Legend of Zelda, the.zip
@@ -155,13 +157,13 @@ Then simply copy your game ROMs into this folder, and you should end up with som
 ~/ROMs/nes/Super Mario Bros. 3.zip
 ```
 
-**Note: These directories are case sensitive on Unix, so creating a directory called NES instead of nes won't work!**
+**Note: These directories are case sensitive on Unix, so creating a directory named _NES_ instead of _nes_ won't work!**
 
 That's it, start ES and the NES game system should be populated. You can now scrape game information and media for the games, and assuming you've setup RetroArch correctly with the FCEUmm core, you can launch the games.
 
 ### Multiple gamefiles installation
 
-For some systems, there are sometimes multiple gamefiles per game. Such an example would be the Commodore 64, when multidisk games are being played. For such instances, simply group the files inside folders.
+For some systems, there are sometimes (or always) multiple gamefiles per game. Such an example would be the Commodore 64, when multidisk games are being played. For such instances, simply group the files inside folders.
 
 The platform name for the Commodore 64 is **c64**, so the following structure would be a possible approach:
 
@@ -181,6 +183,13 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 
 It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
+The .m3u file simply contains a list of the game files, for example in the case of **LNINJA2.m3u**:
+
+```
+Last Ninja 2/LNINJA2A.D64
+Last Ninja 2/LNINJA2B.D64
+```
+
 It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy.
 
 When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see images and metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it looks ok when browsing, but when a game is part of a collection, the metadata and images will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
@@ -191,35 +200,42 @@ Not all systems are as simple as described above, or sometimes there are multipl
 
 #### Arcade and Neo Geo
 
-For all the MAME variants supported as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. However these should retain the MAME names as filenames since ES ships with MAME lookup files, meaning the MAME names are expanded to the full game names.
+For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. However these should retain the MAME names as filenames since ES ships with MAME lookup tables, meaning the MAME names are expanded to the full game names.
 
 For instance **avsp.7z** will be expanded to **Alien vs. Predator**.
 
-This is used by the TheGamesDB scraper where the expanded file name is used for game searches. (Screenscraper supports native search using the MAME names.) It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
+This is used by the TheGamesDB scraper where the expanded file name is used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
 #### Commodore Amiga
 
 There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in **.hdf** or **.hdz** format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
-An alternative would be to use **.adf** images as not all games may be available with WHDLoad support. For this, you can either put single-disk images in the gamelist root or in a dedicated ADF directory, or multiple-disk games in separate folders. It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
+An alternative would be to use **.adf** images as not all games may be available with WHDLoad support. For this, you can either put single-disk images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
-This and other topics such as the need for the Amiga Kickstart ROMs is beyond the scope of this guide, but the following page is recommended for reading more about how this setup can be achieved:
+Here's an example of what the file structure could look like:
+
+```
+~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken_disk1.adf
+~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken_disk2.adf
+~/ROMs/amiga/Robbeary.adf
+~/ROMs/amiga/Dungeon Master.hdf
+```
+
+Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games is beyond the scope of this guide, but the following page is recommended for reading more about how this setup can be achieved:
 
 [https://github.com/libretro/libretro-uae/blob/master/README.md](https://github.com/libretro/libretro-uae/blob/master/README.md)
 
 #### DOS / PC
 
-The DOS (and PC) platform uses the DOSBox emulator and the recommended approach here is to keep the directory structure intact, just as if running the game on a real DOS computer. So this means one folder per game in ES. It's also recommended to set the metadata field **Count as game** to off for all files but the actual game binary. This is done so that the game counter on the system view correctly reflects the number of games you have installed. It's also possible to mark files and subdirectories as hidden to avoid seeing them in ES. Both of these fields can be set using the metadata editor.
+The DOS (and PC) platform uses the DOSBox emulator and the recommended approach here is to keep the directory structure intact, just as if running the game on a real DOS computer. So this means one folder per game in ES. It's also recommended to set the metadata field **Count as game** to off for all files but the actual file used to launch the game (the binary or a .bat batch file). This is done so that the game counter on the system view screen correctly reflects the number of games you have installed. It's also possible to mark files and subdirectories as hidden to avoid seeing them in ES. Both of these fields can be set using the metadata editor.
 
-Apart from this the game should work as normal. The game folders can be scraped so that it looks nice when browsing the list of games, but make sure to also scrape the game binary or the entries in the collections **Last played**, **Favorites** and **All games** as well as any custom collections will look strange. If you don't have these collections activated, then this can of course be skipped.
-
-Although the words _game binary_ were just used, it's of course possible to also start a DOS game using a **.bat** batch file. It's DOS after all.
+Apart from this the game should work as normal. The game folders can be scraped so that it looks nice when browsing the list of games, but make sure to also scrape the files used to launch the games, or otherwise the entries in the collections **Last played**, **Favorites** and **All games** as well as any custom collections will miss the game metadata and media. If you don't have these collections activated, then this can of course be skipped.
 
 #### Ports
 
-Ports are not really executed using emulators, but is instead software running natively on your operating system. The easiest way to handle these is to add a simple shell script or batch file where you can customize the exact settings for the game.
+Ports are not really executed using emulators, but is instead software running natively on your operating system. The easiest way to handle these is to add a simple shell script or batch file where you can customize the exact launch parameters for the game.
 
-It's of course possible to add these as single files to the root of the gamelist, but normally it's recommended to setup a separate folder per game as there may be more than a single file available per game. You very often want to have easy access to the game setup utility for instance.
+It's of course possible to add these as single files to the root folder, but normally it's recommended to setup a separate folder per game as there may be more than a single file available per game. You very often want to have easy access to the game setup utility for instance.
 
 Here's an example for running Chocolate-doom and Quakespasm:
 
@@ -255,17 +271,15 @@ Don't forget to make the scripts executable (e.g. 'chmod 755 ./chocolate-doom.sh
 
 #### Steam
 
-For steam, it's recommended to put shell scripts/batch files directly in the root folder, where the file names of these scripts correspond to the game names. Add the following information to each file:
+For steam, it's recommended to put shell scripts/batch files directly in the root folder, where the file names of these scripts correspond to the game names.
 
-steam steam://rungameid/\<game ID\>
+Add the following information to each file:
 
-An example for the game Broforce:
+`steam steam://rungameid/\<game ID\>`
 
-Contents of **~/ROMs/steam/Broforce.sh**:
+Here's an example for the game Broforce:
 
-```
-steam steam://rungameid/274190
-```
+`steam steam://rungameid/274190`
 
 The game ID can be found by going to [https://store.steampowered.com](https://store.steampowered.com) and searching for a game. The Broforce example would have an URL such as this:
 
@@ -736,14 +750,74 @@ The scraper supports downloading of game metadata and media files from the Inter
 
 ## Game collections
 
-There are two types of game collections supported by ES; the automatic collections **All games**, **Favorites** and **Last played** as well as custom collections that you create yourself. Example of such could be grouping of genres like _"Shoot 'em up"_, _"Fighting"_ etc. or perhaps a time period like _"1980s"_, _"1990s"_ and so on.
+There are two types of game collections supported by ES; the automatic collections **All games**, **Favorites** and **Last played** as well as custom collections that you create yourself. Example of such could be grouping of genres like **Shoot 'em up**, **Fighting** etc. or perhaps a time period like '1980s', '1990s' and so on.
 
 For either types of collections, they are always based on the games you currently have available in your normal game systems.
 
 
 ## Custom event scripts
 
-There are numerous locations throughout ES where custom scripts can be executes if the option to do so has been enabled in the settings.
+There are numerous locations throughout ES where custom scripts will be executed if the option to do so has been enabled in the settings. By default it's deactivated so be sure to enable it to use this feature.
+
+It's very straightforward, ES will look for any files inside a script directory that correspond to the event that is triggered and execute all files located there.
+
+As an example, let's create a log that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming.
+
+**Note: The following example is for Unix systems, but it works the same in Windows (though .bat batch files are then used instead of shell scripts).**
+
+The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names are easily achieved by starting ES with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+
+So let's create the folders for these events in the script directory. The location of this directory is **~/.emulationstation/scripts/**.
+
+After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies, but for this example the two parameters are the absolute path to the game file, and the game name as shown in the gamelist.
+
+Let's name the start script 'game_start_logging.sh' with the following contents:
+
+```
+#!/bin/bash
+TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
+echo Starting game "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+```
+
+And let's name the end script 'game_end_logging.sh' with the following contents:
+
+```
+#!/bin/bash
+TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
+echo "Ending game  " "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+```
+
+After creating the two scripts, you should have something like this on the filesystem:
+
+```
+~/.emulationstation/scripts/game-start/game_start_logging.sh
+~/.emulationstation/scripts/game-end/game_end_logging.sh
+```
+
+Don't forget to make the scripts executable (e.g. 'chmod 755 ./game_start_logging.sh').
+
+If we now start ES with the debug flag and launch a game, something like the following should show up in es_log.txt:
+
+```
+Aug 05 14:19:24 Debug:  Scripting::fireEvent(): game-start "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+Aug 05 14:19:24 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-start/game_start_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+.
+.
+Aug 05 14:27:15 Debug:  Scripting::fireEvent(): game-end "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+Aug 05 14:27:15 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-end/game_end_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+
+```
+
+Finally ~/.emulationstation/game_playlog.txt should now contain something like this:
+
+```
+Starting game "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:19:24
+Ending game   "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:27:15
+Starting game "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 14:38:46
+Ending game   "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 15:13:58
+Starting game "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/PIRATES.m3u") at 2020-08-05 15:15:24
+Ending game   "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/PIRATES.m3u") at 2020-08-05 15:17:11
+```
 
 
 ## Command line arguments
@@ -811,14 +885,14 @@ For details regarding the systems such as which emulator or core is setup as def
 | :-------------------- | :-------------------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                           |                                      |
 | ags                   | Adventure Game Studio                         |                                      |
-| amiga                 | Amiga                                         | **.hdf or .hdz** WHDLoad harddisk images or **.adf** and **.m3u** diskette images |
-| amiga600              | Amiga 600                                     | **.hdf or .hdz** WHDLoad harddisk images or **.adf** and **.m3u** diskette images |
-| amiga1200             | Amiga 1200                                    | **.hdf or .hdz** WHDLoad harddisk images or **.adf** and **.m3u** diskette images |
+| amiga                 | Amiga                                         | **.hdf or .hdz** WHDLoad hard disk image or **.adf** diskette images (with **.m3u** playlist) |
+| amiga600              | Amiga 600                                     | **.hdf or .hdz** WHDLoad hard disk image or **.adf** diskette images (with **.m3u** playlist) |
+| amiga1200             | Amiga 1200                                    | **.hdf or .hdz** WHDLoad hard disk image or **.adf** diskette images (with **.m3u** playlist) |
 | amigacd32             | Amiga CD32                                    |                                      |
 | amstradcpc            | Amstrad CPC                                   |                                      |
 | apple2                | Apple II                                      |                                      |
 | apple2gs              | Apple IIGS                                    |                                      |
-| arcade                | Arcade                                        | Single archive files following MAME name standard in root folder |
+| arcade                | Arcade                                        | Single archive file following MAME name standard in root folder |
 | astrocade             | Bally Astrocade                               |                                      |
 | atari2600             | Atari 2600                                    |                                      |
 | atari5200             | Atari 5200                                    |                                      |
@@ -831,7 +905,7 @@ For details regarding the systems such as which emulator or core is setup as def
 | atarixe               | Atari XE                                      |                                      |
 | atomiswave            |                                               |                                      |
 | bbcmicro              | BBC Micro                                     |                                      |
-| c64                   | Commodore 64                                  | Single disk, tape or cartridge images in root folder and/or multi-disk images in separate folders |
+| c64                   | Commodore 64                                  | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
 | cavestory             | Cave Story (NXEngine)                         |                                      |
 | cdtv                  | Commodore CDTV                                |                                      |
 | channelf              | Fairchild Channel F                           |                                      |
@@ -839,12 +913,12 @@ For details regarding the systems such as which emulator or core is setup as def
 | coleco                | ColecoVision                                  |                                      |
 | daphne                | Daphne Arcade Laserdisc Emulator              |                                      |
 | doom                  | Doom                                          |                                      |
-| dos                   | DOS (PC)                                      | Games in separate folders (one folder per game, with complete file structure) |
+| dos                   | DOS (PC)                                      | In separate folder (one folder per game, with complete file structure retained) |
 | dragon32              | Dragon 32                                     |                                      |
 | dreamcast             | Sega Dreamcast                                |                                      |
-| famicom               | Nintendo Family Computer                      | Single archive files in root folder  |
-| fba                   | Final Burn Alpha                              | Single archive files following MAME name standard |
-| fbneo                 | FinalBurn Neo                                 | Single archive files following MAME name standard |
+| famicom               | Nintendo Family Computer                      | Single archive or ROM file in root folder |
+| fba                   | Final Burn Alpha                              | Single archive file following MAME name standard |
+| fbneo                 | FinalBurn Neo                                 | Single archive file following MAME name standard |
 | fds                   | Famicom Disk System                           |                                      |
 | gameandwatch          | Nintendo Game and Watch                       |                                      |
 | gamegear              | Sega Gamegear                                 |                                      |
@@ -852,41 +926,41 @@ For details regarding the systems such as which emulator or core is setup as def
 | gb                    | Game Boy                                      |                                      |
 | gba                   | Game Boy Advance                              |                                      |
 | gbc                   | Game Boy Color                                |                                      |
-| genesis               | Sega Genesis                                  | Single archive files in root folder  |
+| genesis               | Sega Genesis                                  | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                |                                      |
 | intellivision         | Mattel Electronics Intellivision              |                                      |
 | chailove              | ChaiLove game engine                          |                                      |
 | lutro                 | Lutro game engine                             |                                      |
 | macintosh             | Apple Macintosh                               |                                      |
-| mame                  | Multiple Arcade Machine Emulator              | Single archive files following MAME name standard in root folder |
-| mame-advmame          | AdvanceMAME                                   | Single archive files following MAME name standard in root folder |
-| mame-libretro         | Multiple Arcade Machine Emulator              | Single archive files following MAME name standard in root folder |
-| mame-mame4all         | MAME4ALL                                      | Single archive files following MAME name standard in root folder |
+| mame                  | Multiple Arcade Machine Emulator              | Single archive file following MAME name standard in root folder |
+| mame-advmame          | AdvanceMAME                                   | Single archive file following MAME name standard in root folder |
+| mame-libretro         | Multiple Arcade Machine Emulator              | Single archive file following MAME name standard in root folder |
+| mame-mame4all         | MAME4ALL                                      | Single archive file following MAME name standard in root folder |
 | mastersystem          | Sega Master System                            |                                      |
-| megadrive             | Sega Mega Drive                               | Single archive files in root folder  |
+| megadrive             | Sega Mega Drive                               | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                   |                                      |
 | moonlight             | Moonlight game streaming                      |                                      |
 | msx                   | MSX                                           |                                      |
 | msx1                  | MSX1                                          |                                      |
 | msx2                  | MSX2                                          |                                      |
 | naomi                 | Sega NAOMI                                    |                                      |
-| n64                   | Nintendo 64                                   | Single archive files in root folder  |
+| n64                   | Nintendo 64                                   | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                   |                                      |
-| neogeo                | Neo Geo                                       | Single archive files following MAME name standard |
+| neogeo                | Neo Geo                                       | Single archive file following MAME name standard |
 | neogeocd              | Neo Geo CD                                    |                                      |
-| nes                   | Nintendo Entertainment System                 | Single archive files in root folder  |
+| nes                   | Nintendo Entertainment System                 | Single archive or ROM file in root folder |
 | ngp                   | Neo Geo Pocket                                |                                      |
 | ngpc                  | Neo Geo Pocket Color                          |                                      |
 | odyssey2              | Magnavox Odyssey2                             |                                      |
 | openbor               | OpenBOR game engine                           |                                      |
 | oric                  | Tangerine Computer Systems Oric               |                                      |
 | palm                  | Palm OS                                       |                                      |
-| pc                    | IBM PC                                        | Games in separate folders (one folder per game, with complete file structure) |
-| pcengine              | NEC PC Engine                                 | Single archive files in root folder  |
+| pc                    | IBM PC                                        | In separate folder (one folder per game, with complete file structure retained) |
+| pcengine              | NEC PC Engine                                 | Single archive or ROM file in root folder |
 | pcenginecd            | NEC PC Engine CD                              |                                      |
 | pcfx                  | NEC PC-FX                                     |                                      |
 | pokemini              | Nintendo Pokémon Mini                         |                                      |
-| ports                 | Ports                                         | Shell/batch scripts in separate folders (possibly combined with game data) |
+| ports                 | Ports                                         | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                            |                                      |
 | psp                   | PlayStation Portable                          |                                      |
 | psvita                | PlayStation Vita                              |                                      |
@@ -896,13 +970,13 @@ For details regarding the systems such as which emulator or core is setup as def
 | satellaview           | Nintendo Satellaview                          |                                      |
 | saturn                | Sega Saturn                                   |                                      |
 | scummvm               | ScummVM game engine                           |                                      |
-| sega32x               | Sega 32X                                      | Single archive files in root folder  |
+| sega32x               | Sega 32X                                      | Single archive or ROM file in root folder |
 | segacd                | Sega Mega-CD                                  |                                      |
 | sg-1000               | Sega SG-1000                                  |                                      |
-| snes                  | Super Nintendo                                | Single archive files in root folder  |
+| snes                  | Super Nintendo                                | Single archive or ROM file in root folder |
 | solarus               | Solarus game engine                           |                                      |
 | spectravideo          | Spectravideo                                  |                                      |
-| steam                 | Valve Steam                                   | Shell/batch scripts in root folder   |
+| steam                 | Valve Steam                                   | Shell/batch script in root folder    |
 | stratagus             | Stratagus game engine                         |                                      |
 | sufami                | Bandai SuFami Turbo                           |                                      |
 | supergrafx            | NEC SuperGrafx                                |                                      |
