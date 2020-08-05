@@ -8,7 +8,7 @@ There are many cards in the Kanban backlog that would be nice to implement. And 
 
 Apart from code commits, help is especially needed for thorough testing of the software and for working on the rbsimple-DE theme.
 
-It's impossible for me to test every game system (rbsimple-DE has support for almost a 100 different systems!) so it would be especially useful to hear about any issues with starting games using the default es_systems.cfg configuration file and also if there are any problems with scraping for certain systems.
+It's impossible for me to test every game system (rbsimple-DE has support for more than a 100 different systems!) so it would be especially useful to hear about any issues with starting games using the default es_systems.cfg configuration file and also if there are any problems with scraping for certain systems.
 
 In general, a review of the [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) files including the supported file extensions would be great!
 
