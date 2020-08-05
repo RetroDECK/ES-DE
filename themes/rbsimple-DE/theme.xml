@@ -239,6 +239,11 @@ based on: 'recalbox-multi' by the Recalbox community
             <alignment>left</alignment>
             <horizontalMargin>0.01</horizontalMargin>
         </textlist>
+        <image name="md_marquee">
+            <origin>1 1</origin>
+            <pos>0.9135 0.165</pos>
+            <maxSize>0.11 0.11</maxSize>
+        </image>
         <!-- This block prevents additional controls layout elements
              from interfering when mixing layouts-->
         <image name="controls" extra="false">
@@ -283,11 +288,6 @@ based on: 'recalbox-multi' by the Recalbox community
                 <showSnapshotNoVideo>true</showSnapshotNoVideo>
                 <showSnapshotDelay>false</showSnapshotDelay>
             </video>
-            <image name="md_marquee">
-                <origin>1 1</origin>
-                <pos>0.9135 0.165</pos>
-                <maxSize>0.11 0.11</maxSize>
-            </image>
         </view>
     </feature>
 
