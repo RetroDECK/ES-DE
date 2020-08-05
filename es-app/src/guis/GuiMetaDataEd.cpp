@@ -58,7 +58,8 @@ GuiMetaDataEd::GuiMetaDataEd(
             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
     mSubtitle = std::make_shared<TextComponent>(mWindow,
             Utils::FileSystem::getFileName(scraperParams.game->
-            getPath()), Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+            getPath()) + " [" + Utils::String::toUpper(scraperParams.system->getName()) + "]",
+            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
     mHeaderGrid->setEntry(mSubtitle, Vector2i(0, 3), false, true);
 
