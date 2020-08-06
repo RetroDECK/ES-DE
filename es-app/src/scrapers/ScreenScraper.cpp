@@ -419,7 +419,8 @@ void ScreenScraperRequest::processMedia(
                 fileFormat = "." + media_type;
         }
         else {
-            LOG(LogDebug) << "Failed to find media XML node with name=" << mediaType;
+            LOG(LogDebug) << "ScreenScraperRequest::processMedia(): "
+                    "Failed to find media XML node with name '" << mediaType << "'.";
         }
 }
 
@@ -429,13 +430,13 @@ void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
 {
     assert(mRequestQueue != nullptr);
 
-    LOG(LogDebug) << "ScreenScraper: Processing a list of results";
+    LOG(LogDebug) << "ScreenScraperRequest::processList(): Processing a list of results.";
 
     pugi::xml_node data = xmldoc.child("Data");
     pugi::xml_node game = data.child("jeu");
 
     if (!game) {
-        LOG(LogDebug) << "ScreenScraper: Found nothing";
+        LOG(LogDebug) << "ScreenScraperRequest::processList(): Found nothing.";
     }
 
     ScreenScraperRequest::ScreenScraperConfig ssConfig;

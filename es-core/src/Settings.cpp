@@ -155,6 +155,8 @@ void Settings::setDefaults()
     mBoolMap["ScraperSemiautomatic"] = true;
     mBoolMap["ScraperOverwriteData"] = true;
     mBoolMap["ScraperRespectExclusions"] = true;
+    mBoolMap["ScraperExcludeRecursively"] = true;
+    mBoolMap["ScraperIncludeFolders"] = false;
     mBoolMap["ScrapeMetadata"] = true;
     mBoolMap["ScrapeGameNames"] = true;
     mBoolMap["ScrapeRatings"] = true;

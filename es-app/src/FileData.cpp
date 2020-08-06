@@ -345,6 +345,36 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
     return out;
 }
 
+std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
+        bool excludeRecursively, bool respectExclusions) const
+{
+    std::vector<FileData*> out;
+
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+        if (includeFolders && (*it)->getType() == FOLDER) {
+            if (!(respectExclusions && (*it)->getExcludeFromScraper()))
+                out.push_back(*it);
+        }
+        else if ((*it)->getType() == GAME) {
+            if (!(respectExclusions && (*it)->getExcludeFromScraper()))
+                out.push_back(*it);
+        }
+
+        // If the flag has been passed to exclude directories recursively, then skip the entire
+        // folder at this point if the folder is marked for scrape exclusion.
+        if (excludeRecursively && (*it)->getType() == FOLDER && (*it)->getExcludeFromScraper())
+            continue;
+
+        if ((*it)->getChildren().size() > 0) {
+            std::vector<FileData*> subChildren = (*it)->getScrapeFilesRecursive(
+                    includeFolders, excludeRecursively, respectExclusions);
+            out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
+        }
+    }
+
+    return out;
+}
+
 std::string FileData::getKey() {
     return getFileName();
 }

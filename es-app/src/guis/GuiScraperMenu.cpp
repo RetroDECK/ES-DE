@@ -292,6 +292,24 @@ void GuiScraperMenu::openOtherSettings()
             Settings::getInstance()->setBool("ScraperRespectExclusions",
             scraper_respect_exclusions->getState()); });
 
+    // Exclude files recursively for excluded folders.
+    auto scraper_exclude_recursively = std::make_shared<SwitchComponent>(mWindow);
+    scraper_exclude_recursively->setState(
+                Settings::getInstance()->getBool("ScraperExcludeRecursively"));
+    s->addWithLabel("EXCLUDE FOLDERS RECURSIVELY", scraper_exclude_recursively);
+    s->addSaveFunc([scraper_exclude_recursively] {
+            Settings::getInstance()->setBool("ScraperExcludeRecursively",
+            scraper_exclude_recursively->getState()); });
+
+    // Include actual folders when scraping.
+    auto scraper_include_folders = std::make_shared<SwitchComponent>(mWindow);
+    scraper_include_folders->setState(
+                Settings::getInstance()->getBool("ScraperIncludeFolders"));
+    s->addWithLabel("SCRAPE ACTUAL FOLDERS", scraper_include_folders);
+    s->addSaveFunc([scraper_include_folders] {
+            Settings::getInstance()->setBool("ScraperIncludeFolders",
+            scraper_include_folders->getState()); });
+
     mWindow->pushGui(s);
 }
 
@@ -337,13 +355,12 @@ std::queue<ScraperSearchParams> GuiScraperMenu::getSearches(
 {
     std::queue<ScraperSearchParams> queue;
     for (auto sys = systems.cbegin(); sys != systems.cend(); sys++) {
-        std::vector<FileData*> games = (*sys)->getRootFolder()->getFilesRecursive(GAME);
+        std::vector<FileData*> games = (*sys)->getRootFolder()->getScrapeFilesRecursive(
+                Settings::getInstance()->getBool("ScraperIncludeFolders"),
+                Settings::getInstance()->getBool("ScraperExcludeRecursively"),
+                Settings::getInstance()->getBool("ScraperRespectExclusions"));
         for (auto game = games.cbegin(); game != games.cend(); game++) {
-            // Skip scraping the game if the multi-scraper exclusion flag has been
-            // set for the file, and the flag to respect this value is also enabled.
-            bool skipGame = ((*game)->getExcludeFromScraper() &&
-                Settings::getInstance()->getBool("ScraperRespectExclusions") == true);
-            if (!skipGame && selector((*sys), (*game))) {
+            if (selector((*sys), (*game))) {
                 ScraperSearchParams search;
                 search.game = *game;
                 search.system = *sys;

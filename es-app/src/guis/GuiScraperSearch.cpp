@@ -451,6 +451,10 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
             return true;
     }
 
+    // Quick-skip option activated by pressing 's' on the keyboard.
+    if (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_s && input.value != 0)
+        mSkipCallback();
+
     return GuiComponent::input(config, input);
 }
 

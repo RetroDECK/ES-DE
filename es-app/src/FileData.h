@@ -80,6 +80,8 @@ public:
     const std::vector<FileData*>& getChildrenListToDisplay();
     std::vector<FileData*> getFilesRecursive(unsigned int typeMask,
             bool displayedOnly = false, bool countAllGames = true) const;
+    std::vector<FileData*> getScrapeFilesRecursive(bool includeFolders, bool excludeRecursively,
+            bool respectExclusions) const;
 
     void addChild(FileData* file); // Error if mType != FOLDER
     void removeChild(FileData* file); //Error if mType != FOLDER
