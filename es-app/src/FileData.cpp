@@ -117,7 +117,15 @@ const bool FileData::getHidden()
 
 const bool FileData::getCountAsGame()
 {
-    if (metadata.get("countasgame") == "true")
+    if (metadata.get("nogamecount") == "true")
+        return false;
+    else
+        return true;
+}
+
+const bool FileData::getExcludeFromScraper()
+{
+    if (metadata.get("nomultiscrape") == "true")
         return true;
     else
         return false;

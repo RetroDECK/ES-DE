@@ -24,10 +24,11 @@ MetaDataDecl gameDecls[] = {
 {"players",       MD_INT,              "unknown",         false,     "players",             "enter number of players",       true},
 {"favorite",      MD_BOOL,             "false",           false,     "favorite",            "enter favorite off/on",         false},
 {"completed",     MD_BOOL,             "false",           false,     "completed",           "enter completed off/on",        false},
-{"broken",        MD_BOOL,             "false",           false,     "broken/not working",  "enter broken off/on",           false},
-{"hidden",        MD_BOOL,             "false",           false,     "hidden",              "enter hidden off/on",           false},
 {"kidgame",       MD_BOOL,             "false",           false,     "kidgame",             "enter kidgame off/on",          false},
-{"countasgame",   MD_BOOL,             "true",            false,     "count as game",       "enter count as game off/on",    false},
+{"hidden",        MD_BOOL,             "false",           false,     "hidden",              "enter hidden off/on",           false},
+{"broken",        MD_BOOL,             "false",           false,     "broken/not working",  "enter broken off/on",           false},
+{"nogamecount",   MD_BOOL,             "false",           false,     "exclude from game counter", "enter don't count as game off/on", false},
+{"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper", "enter no autoscrape off/on", false},
 {"launchcommand", MD_LAUNCHCOMMAND,    "",                false,     "launch command",      "enter game launch command "
                                                                                             "(emulator override)",           false},
 {"playcount",     MD_INT,              "0",               false,     "play count",          "enter number of times played",  false},
@@ -48,8 +49,9 @@ MetaDataDecl folderDecls[] = {
 {"players",       MD_INT,                 "unknown",          false,      "players",              "enter number of players", true},
 {"favorite",      MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on",   false},
 {"completed",     MD_BOOL,                "false",            false,      "completed",            "enter completed off/on",  false},
-{"broken",        MD_BOOL,                "false",            false,      "broken/not working",   "enter broken off/on",     false},
 {"hidden",        MD_BOOL,                "false",            false,      "hidden",               "enter hidden off/on",     false},
+{"broken",        MD_BOOL,                "false",            false,      "broken/not working",   "enter broken off/on",     false},
+{"nomultiscrape", MD_BOOL,                "false",            false,      "exclude from multi-scraper", "enter no autoscrape off/on", false},
 {"lastplayed",    MD_TIME,                "0",                true,       "last played",          "enter last played date",  false}
 };
 const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls +

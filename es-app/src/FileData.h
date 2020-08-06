@@ -49,6 +49,7 @@ public:
     const bool getFavorite();
     const bool getHidden();
     const bool getCountAsGame();
+    const bool getExcludeFromScraper();
     const std::vector<FileData*> getChildrenRecursive() const;
     inline FileType getType() const { return mType; }
     inline const std::string& getPath() const { return mPath; }

@@ -154,6 +154,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperInteractive"] = true;
     mBoolMap["ScraperSemiautomatic"] = true;
     mBoolMap["ScraperOverwriteData"] = true;
+    mBoolMap["ScraperRespectExclusions"] = true;
     mBoolMap["ScrapeMetadata"] = true;
     mBoolMap["ScrapeGameNames"] = true;
     mBoolMap["ScrapeRatings"] = true;
