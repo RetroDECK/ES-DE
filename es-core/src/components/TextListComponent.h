@@ -219,7 +219,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
         // If a game is marked as hidden, lower the text opacity quite a lot.
         // For games marked not to be counted, lower the opacity moderately.
         if (entry.object->getHidden())
-            entry.data.textCache->setColor(color & 0xFFFFFF33);
+            entry.data.textCache->setColor(color & 0xFFFFFF44);
         else if (!entry.object->getCountAsGame())
             entry.data.textCache->setColor(color & 0xFFFFFF77);
         else

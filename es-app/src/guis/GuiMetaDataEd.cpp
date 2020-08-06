@@ -376,6 +376,15 @@ void GuiMetaDataEd::save()
     // Update respective Collection Entries.
     CollectionSystemManager::get()->refreshCollectionSystems(mScraperParams.game);
 
+    // If hiding a folder and the hide games flag is enabled, we need to manually sort
+    // and reload the gamelist as CollectionSystemManager ignores folders.
+    if (hideGameWhileHidden && mScraperParams.game->getType() == FOLDER) {
+        FileData* systemRoot = mScraperParams.system->getRootFolder();
+        systemRoot->sort(getSortTypeFromString(systemRoot->getSortTypeString()),
+                Settings::getInstance()->getBool("FavoritesFirst"));
+        ViewController::get()->reloadGameListView(mScraperParams.system);
+    }
+
     mScraperParams.system->onMetaDataSavePoint();
 }
 

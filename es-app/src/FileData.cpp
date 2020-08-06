@@ -440,7 +440,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
         for (unsigned int i = 0; i < mChildren.size(); i++) {
             if (mChildren[i]->getHidden()) {
                 LOG(LogDebug) << "FileData::sort(): Skipping hidden game '" <<
-                        mChildren[i]->getName() << "'";
+                        mChildren[i]->getName() << "'" << " (" << mChildren[i]->getPath() << ").";
                 continue;
             }
             mChildrenShown.push_back(mChildren[i]);
@@ -518,7 +518,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
         // Exclude game if it's marked as hidden and the hide setting has been set.
         if (!showHiddenGames && mChildren[i]->getHidden()) {
             LOG(LogDebug) << "FileData::sortFavoritesOnTop(): Skipping hidden game '" <<
-                    mChildren[i]->getName() << "'";
+                        mChildren[i]->getName() << "'" << " (" << mChildren[i]->getPath() << ").";
             continue;
         }
 
