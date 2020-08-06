@@ -281,8 +281,7 @@ void CollectionSystemManager::refreshCollectionSystems(FileData* file)
 
 void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionSystemData sysData)
 {
-    if (sysData.isPopulated)
-    {
+    if (sysData.isPopulated) {
         // Collection files use the full path as key, to avoid clashes.
         std::string key = file->getFullPath();
 
@@ -316,7 +315,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
                 ViewController::get()->
                         getGameListView(curSys).get()->remove(collectionEntry, false);
             }
-            else if (name == "all" && !file->getCountAsGame()) {
+            else if (curSys->isCollection() && !file->getCountAsGame()) {
                 // If the countasgame flag has been set to false, then remove the game.
                 ViewController::get()->
                         getGameListView(curSys).get()->remove(collectionEntry, false);
@@ -331,9 +330,10 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
         else {
             bool addGame = false;
             // We didn't find it here - we need to check if we should add it.
-            if (name == "recent" && file->metadata.get("playcount") > "0" &&
-                    includeFileInAutoCollections(file) || name == "favorites" &&
-                    file->metadata.get("favorite") == "true")
+            if ((name == "recent" && file->metadata.get("playcount") > "0" &&
+                    file->getCountAsGame() && includeFileInAutoCollections(file)) ||
+                    (name == "favorites" && file->metadata.get("favorite") == "true" &&
+                    file->getCountAsGame()))
                 addGame = true;
             else if (name == "all" && file->getCountAsGame())
                 addGame = true;
@@ -839,7 +839,7 @@ void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysDa
 
                 if (include) {
                     // Exclude files that are set not to be counted as games.
-                    if (rootFolder->getName() == "all" && !(*gameIt)->getCountAsGame())
+                    if (!(*gameIt)->getCountAsGame())
                         continue;
 
                     CollectionFileData* newGame = new CollectionFileData(*gameIt, newSys);
