@@ -157,7 +157,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
 
     int startEntry = 0;
 
-    // Number of entries that can fit on the screen simultaniously.
+    // Number of entries that can fit on the screen simultaneously.
     int screenCount = (int)(mSize.y() / entrySize + 0.5f);
 
     if (size() >= screenCount) {
@@ -216,7 +216,14 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
                     (font->buildTextCache(mUppercase ?
                     Utils::String::toUpper(entry.name) : entry.name, 0, 0, 0x000000FF));
 
-        entry.data.textCache->setColor(color);
+        // If a game is marked as hidden, lower the text opacity quite a lot.
+        // For games marked not to be counted, lower the opacity moderately.
+        if (entry.object->getHidden())
+            entry.data.textCache->setColor(color & 0xFFFFFF33);
+        else if (!entry.object->getCountAsGame())
+            entry.data.textCache->setColor(color & 0xFFFFFF77);
+        else
+            entry.data.textCache->setColor(color);
 
         Vector3f offset(0, y, 0);
 
