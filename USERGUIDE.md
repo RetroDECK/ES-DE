@@ -138,6 +138,8 @@ Here is the snippet from the es_systems.cfg_unix file:
 
 It's required that the ROM files are in one of the supported file extensions, or ES won't find them.
 
+It's highly recommended to use filenames that are corresponding to the full name of the game, or otherwise you will need to manually feed the scraper the game name when scraping which is very tedious.
+
 The default ROM directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/.emulationstation/ and on Windows it defaults to C:\Users\\<username\>\\.emulationstation\
 
 Assuming the default ROM directory is used, we need to create a directory corresponding to the \<platform\> tag in es_systems.cfg, in this example it's **nes**.
@@ -172,27 +174,29 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 ~/ROMs/c64/Tape
 ~/ROMs/c64/Disk
 ~/ROMs/c64/Multidisk
-~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2A.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2B.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2.m3u
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E0.d64
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E1.d64
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E2.d64
-~/ROMs/c64/Multidisk/Pirates/PIRATES.m3u
+~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2 (Disk 1 of 2).d64
+~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2 (Disk 2 of 2).d64
+~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
+~/ROMs/c64/Multidisk/Pirates/Pirates! (Disk 1 of 3).d64
+~/ROMs/c64/Multidisk/Pirates/Pirates! (Disk 2 of 3).d64
+~/ROMs/c64/Multidisk/Pirates/Pirates! (Disk 3 of 3).d64
+~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
 It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
-The .m3u file simply contains a list of the game files, for example in the case of **LNINJA2.m3u**:
+The .m3u file simply contains a list of the game files, for example in the case of **Last Ninja 2.m3u**:
 
 ```
-Last Ninja 2/LNINJA2A.D64
-Last Ninja 2/LNINJA2B.D64
+Last Ninja 2 (Disk 1 of 2).d64
+Last Ninja 2 (Disk 2 of 2).d64
 ```
 
 It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy.
 
 When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see images and metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it looks ok when browsing, but when a game is part of a collection, the metadata and images will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
+
+As well it's recommended to set the flags **Exclude from game counter** and **Exclude from automatic scraper** for the actual game files so that they are not counted (the game counter is shown on the system view) and not scraped if running the multi-scraper. It's enough to scrape the .m3u playlist file and the game folder. But if you only intend to manually scrape file-per-file then you don't need to bother with this.
 
 ### Special game installation considerations
 
@@ -215,8 +219,8 @@ An alternative would be to use **.adf** images as not all games may be available
 Here's an example of what the file structure could look like:
 
 ```
-~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken_disk1.adf
-~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken_disk2.adf
+~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken (Disk 1 of 2).adf
+~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken (Disk 2 of 2).adf
 ~/ROMs/amiga/Robbeary.adf
 ~/ROMs/amiga/Dungeon Master.hdf
 ```
@@ -308,6 +312,84 @@ In order to use the default es_systems.cfg file, you need to make sure that the 
 As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator path relative to the EmulationStation location. Again, please refer to the INSTALL.md document on details regarding this.
 
 
+## Scraping
+
+Scraping means downloading metadata and game media files (images and videos) for the games in your collections.
+
+EmulationStation Desktop Edition supports the two scrapers ScreenScraper.fr and TheGamesDB.net. In general TheGamesDB supports less formats and less systems, but in some areas such PC gaming, the quality is better and sometimes ScreenScraper is missing some specific information such as release dates where TheGamesDB may be able to fill in the gaps.
+
+Here is an overview of what's supported by ES and these scrapers:
+
+| Media type or option     | ScreenScraper | TheGamesDB |
+| :----------------------: | :-----------: | :--------: |
+| Region (EU/JP/US/SS/WOR) | Yes           | No         |
+| Language (EN/WOR)        | Yes           | No         |
+| Game names               | Yes           | Yes        |
+| Ratings                  | Yes           | No         |
+| Other game metadata      | Yes           | Yes        |
+| Videos                   | Yes           | No         |
+| Screenshots              | Yes           | Yes        |
+| Box covers (2D)          | Yes           | Yes        |
+| Marquees/wheels          | Yes           | Yes        |
+| 3D boxes                 | Yes           | No         |
+
+The category **Other game metadata** includes Description, Release date, Developer, Publisher, Genre and Players.
+
+There are two approaches to scraping, either for a single game from the metadata editor, or for many games and systems using the multi-scraper.
+
+### Single-game scraper
+
+The single-game scraper is launched from the metadata editor. You navigate to a game, open the game options menu, choose **Edit this game's metadata** and then select the **Scrape** button. The metadata editor is explained in more depth later in this guide so it won't be covered here.
+
+### Multi-scraper
+
+The multi-scraper is launched from the main menu, it's the first option on the menu actually. Here you can configure a number of scraping options, all which are explained in more depth below when covering the main menu entries.
+
+### Scraping process
+
+The process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes just removing some extra characters such as disk information or other data from the search name yields a better result.
+
+In general the actual file name of the game is used for the scraper, the exception being MAME/arcade games when using TheGamesDB, as the MAME names are then expanded to the full game names.
+
+Hopefully the scraping process should be self-explanatory once you try it in ES.
+
+### Manually copying game media files
+
+If you already have a library of game media (images and videos) you can manually copy it into ES.
+
+The default directory is ~/.emulationstation/downloaded_media/\<game system\>/\<media type\>/
+
+For example on Unix:
+
+`/home/myusername/.emulationstation/downloaded_media/c64/screenshots/`
+
+For example on Windows:
+
+`C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\`
+
+The media type directories are:
+
+* 3dboxes
+* covers
+* marquees
+* screenshots
+* videos
+
+The files must correspond directly to the game file. For example the following game:
+
+`~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u`
+
+Must have the filename:
+
+`~/.emulationstation/downloaded_media/c64/screenshots/Last Ninja 2.jpg`
+
+JPG and PNG file formats and file extensions are supported.
+
+As an alternative, you can also locate your game media in the ROM directory. This is explained below in this guide under the option **Display game art from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
+
+Note that it's possible to change the game media directory from within ES, see the option **Game media directory** detailed below.
+
+
 ## Main menu
 
 This menu can be accessed from both the main screen and from the gamelist views. It contains the scraper, the quit menu as well as the application settings. When it comes to saving settings, this is done automatically when navigating back from a screen, or when closing the menu altogether.
@@ -324,11 +406,11 @@ Scraper service selection, currently ScreenScraper.fr and TheGamesDB.net are sup
 
 **Filter**
 
-Criteria for what games to include in the scraping. It can be set to _All games_, _No metadata_ or _No game image_.
+Criteria for what games to include in the scraping. It can be set to 'All games', 'Favorite games', 'No metadata', 'No game image' or 'No game video'.
 
 **Systems**
 
-A selection of which systems to scrape for. It's recommended to scrape one system at a time, but it's possible to automatically scrap several or all systems in one go.
+A selection of which systems to scrape for. It's possible to automatically scrape several or all systems in one go.
 
 #### Content settings
 
@@ -338,13 +420,17 @@ Describes the content types to include in the scraping.
 
 Whether to scrape the names of the games. This does not affect the actual files on the filesystem and is only used for viewing and sorting purposes. The downloaded media files are also matched against the actually game file on the filesystem, not against this name.
 
-**Scrape ratings**
+**Scrape ratings** _(ScreenScraper only)_
 
 Currently only supported by ScreenScraper.
 
 **Scrape other metadata**
 
 This includes the game description, release date, developer, publisher, genre and the number of players.
+
+**Scrape videos** _(ScreenScraper only)_
+
+Videos of actual gameplay. This option is disabled by default as it slows down the scraping significantly as well as consuming bandwidth and disk space. Not all users want gameplay videos in their frontend after all.
 
 **Scrape screenshot images**
 
@@ -358,19 +444,19 @@ Cover art.
 
 Logotype for the game, is used primarily for the Video view style.
 
-**Scrape 3D box images**
+**Scrape 3D box images** _(ScreenScraper only)_
 
-Currently unused, but will be used for future versions of ES so it's recommended to keep this option ticked.
+These images are currently unused, but will be used for future versions of ES so it's recommended to keep this option ticked.
 
 #### Other settings
 
 Various scraping settings.
 
-**Region**
+**Region** _(ScreenScraper only)_
 
 The region to scrape for, affects game names.
 
-**Language**
+**Language** _(ScreenScraper only)_
 
 Currently only English or World are supported, not really significant at the moment.
 
@@ -385,6 +471,10 @@ If turned off, the scraping will be fully automatic and will not stop on multipl
 **Auto-accept single game matches**
 
 Used in conjunction with interactive mode, to not having to confirm every single game if a single matched is returned from the scraper service.
+
+**Respect per-file scraper exclusions**
+
+It's possible to set a flag per file to indicate that the file should be excluded from the multi-scraper. With this flag it's possible to override this setting and scrape all files anyway.
 
 ### UI settings
 
@@ -600,7 +690,7 @@ It's possible to trigger custom scripts for a number of actions in ES. _(Details
 
 If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
 
-**Display game art from rom directories**
+**Display game art from ROM directories**
 
 Using this option, you can locate game images in the ROM directory tree. The images are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and the filenames must be the same as the ROM names, followed by a dash and the image type. For example "~/ROMs/nes/images/Contra-screenshot.jpg" and "~/ROMs/nes/images/Contra-marquee.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic.
 
@@ -718,21 +808,25 @@ A flag to indicate whether this is a favorite. Can also be set directly from the
 
 A flag to indicate whether you have completed this game.
 
-**Broken/not working**
+**Kidgame**
 
-A flag to indicate whether the game is broken. Useful for MAME games for instance where future releases may make the game functional.
+A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES in 'Kid mode'.
 
 **Hidden**
 
 A flag to indicate the game is hidden. If the corresponding option has been set on the main menu, the game will not be shown. Useful for examle for DOS games to hide batch scripts, configuration tools etc.
 
-**Kidgame**
+**Broken/not working**
 
-A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES in 'Kid mode'.
+A flag to indicate whether the game is broken. Useful for MAME games for instance where future releases may make the game functional.
 
-**Count as game**
+**Exclude from game counter**
 
-A flag to indicate whether the game should be counted. It's only used for the game system counter on the main screen, but is quite useful for multi-file games such multi-disk Amiga or Commodore 64 games, or for DOS games configuration executables that you want to keep in ES and therefore can't hide.
+A flag to indicate whether the game should be excluded from being counted. It's only used for the game system counter on the main screen, but is quite useful for multi-file games such as multi-disk Amiga or Commodore 64 games, or for DOS games for configuration executables that you want to keep in ES and therefore can't hide.
+
+**Exclude from multi-scraper**
+
+Whether to exclude the file from the multi-scraper. This is quite useful in order to avoid scraping all the disks for multi-disk games for example. There is an option in the scraper settings to ignore this flag, but by default the scraper will respect it. Note that the manual single-file scraper will work regardless of whether this flag is set or not.
 
 **Launch command**
 
@@ -741,11 +835,6 @@ Here you can override the launch command for the game, for example to use a diff
 **Play count**
 
 A statistics counter that counts how many times you're played the game. You normally don't need to touch this, but if you want to, the possibility is there.
-
-
-## Scraper
-
-The scraper supports downloading of game metadata and media files from the Internet. Currently two scraper services are supported, ScreenScraper.fr and TheGamesDB.net.
 
 
 ## Game collections
@@ -765,13 +854,13 @@ As an example, let's create a log that will record the start and end time for ea
 
 **Note: The following example is for Unix systems, but it works the same in Windows (though .bat batch files are then used instead of shell scripts).**
 
-The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names are easily achieved by starting ES with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names is easily achieved by starting ES with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
 
-So let's create the folders for these events in the script directory. The location of this directory is **~/.emulationstation/scripts/**.
+So let's create the folders for these events in the scripts directory. The location of this directory is **~/.emulationstation/scripts/**.
 
-After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies, but for this example the two parameters are the absolute path to the game file, and the game name as shown in the gamelist.
+After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist.
 
-Let's name the start script 'game_start_logging.sh' with the following contents:
+Let's name the start script **game_start_logging.sh** with the following contents:
 
 ```
 #!/bin/bash
@@ -779,7 +868,7 @@ TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
 echo Starting game "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
 ```
 
-And let's name the end script 'game_end_logging.sh' with the following contents:
+And let's name the end script **game_end_logging.sh** with the following contents:
 
 ```
 #!/bin/bash
@@ -808,15 +897,15 @@ Aug 05 14:27:15 Debug:  Executing: /home/myusername/.emulationstation/scripts/ga
 
 ```
 
-Finally ~/.emulationstation/game_playlog.txt should now contain something like this:
+Finally after running some games, ~/.emulationstation/game_playlog.txt should contain something like the following:
 
 ```
 Starting game "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:19:24
 Ending game   "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:27:15
 Starting game "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 14:38:46
 Ending game   "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 15:13:58
-Starting game "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/PIRATES.m3u") at 2020-08-05 15:15:24
-Ending game   "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/PIRATES.m3u") at 2020-08-05 15:17:11
+Starting game "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:15:24
+Ending game   "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:17:11
 ```
 
 
@@ -885,9 +974,9 @@ For details regarding the systems such as which emulator or core is setup as def
 | :-------------------- | :-------------------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                           |                                      |
 | ags                   | Adventure Game Studio                         |                                      |
-| amiga                 | Amiga                                         | **.hdf or .hdz** WHDLoad hard disk image or **.adf** diskette images (with **.m3u** playlist) |
-| amiga600              | Amiga 600                                     | **.hdf or .hdz** WHDLoad hard disk image or **.adf** diskette images (with **.m3u** playlist) |
-| amiga1200             | Amiga 1200                                    | **.hdf or .hdz** WHDLoad hard disk image or **.adf** diskette images (with **.m3u** playlist) |
+| amiga                 | Amiga                                         | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amiga600              | Amiga 600                                     | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amiga1200             | Amiga 1200                                    | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
 | amigacd32             | Amiga CD32                                    |                                      |
 | amstradcpc            | Amstrad CPC                                   |                                      |
 | apple2                | Apple II                                      |                                      |
