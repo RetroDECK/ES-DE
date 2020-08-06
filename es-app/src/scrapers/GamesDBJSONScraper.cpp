@@ -432,8 +432,10 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
                         doc["remaining_monthly_allowance"].GetInt() +
                         doc["extra_allowance"].GetInt();
             }
+            LOG(LogDebug) << "TheGamesDBJSONRequest::process(): "
+                    "Remaining monthly scraping allowance: " <<
+                    results.back().scraperRequestAllowance;
         }
-
         return;
     }
 

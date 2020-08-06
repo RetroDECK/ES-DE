@@ -236,7 +236,9 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         result.gameID = game.attribute("id").as_string();
 
         // Find how many more requests we can make before the scraper request
-        // allowance counter is reset.
+        // allowance counter is reset. For some strange reason the ssuser information
+        // is not provided for all games even though the request looks identical apart
+        // from the game name.
         unsigned requestsToday =
                 data.child("ssuser").child("requeststoday").text().as_uint();
         unsigned maxRequestsPerDay =
@@ -329,6 +331,16 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             result.mdl.set("players", players);
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): Players: " <<
                     result.mdl.get("players");
+        }
+
+        if (maxRequestsPerDay > 0) {
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: " <<
+                    requestsToday << "/" << maxRequestsPerDay << " (" <<
+                    result.scraperRequestAllowance << " remaining).";
+        }
+        else {
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: "
+                    "No statistics were provided with the response.";
         }
 
         // Media super-node.
