@@ -550,10 +550,22 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
 {
     std::vector<FileData*> gameList = mRootFolder->getFilesRecursive(GAME, true);
 
+    if (currentGame && currentGame->getType() == PLACEHOLDER)
+        return nullptr;
+
     if (currentGame) {
-        // If the game is inside a folder, update gameList to only contain the games
-        // inside this folder.
-        if (currentGame->getParent()->getFullPath() !=
+        // If the parent of the game only contains folders, then simply make all these
+        // folders the selection list for the random function. This covers folder-only
+        // views regardless of how many levels deep they're located.
+        if (currentGame->getParent()->getOnlyFoldersFlag()) {
+            std::vector<FileData*> childrenList = currentGame->getParent()->getChildren();
+            gameList.erase(gameList.cbegin(), gameList.cend());
+            gameList.reserve(childrenList.size());
+            gameList.insert(gameList.cend(), childrenList.cbegin(), childrenList.cend());
+        }
+        // If the game is inside a folder where there are only other files, update gameList
+        // to only contain these files.
+        else if (currentGame->getParent()->getFullPath() !=
                 currentGame->getSystem()->getRootFolder()->getFullPath()) {
             std::vector<FileData*> folderList;
 
@@ -566,7 +578,8 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
             gameList.reserve(folderList.size());
             gameList.insert(gameList.cend(), folderList.cbegin(), folderList.cend());
         }
-        // If the game is not inside a folder, update gameList to exclude all folders.
+        // If the game is inside a folder with a mix of files and folders, then update
+        // gameList to exclude all folders so we don't jump into one of them.
         else {
             std::vector<FileData*> childrenList = mRootFolder->getChildren();
             std::vector<FileData*> noFolderList;

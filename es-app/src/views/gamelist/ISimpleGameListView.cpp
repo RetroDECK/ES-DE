@@ -140,7 +140,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedTo("x", input)) {
-            if (mRoot->getSystem()->isGameSystem()) {
+            if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER) {
                 // Go to random system game.
                 NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 FileData* randomGame = getCursor()->getSystem()->getRandomGame(getCursor());
