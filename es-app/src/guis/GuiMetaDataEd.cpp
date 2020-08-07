@@ -403,6 +403,10 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 
     mMediaFilesUpdated = result.savedNewMedia;
 
+//    Curently disabled as I'm not sure if this is more annoying than helpful.
+//    // Select the Save button.
+//    mButtons->moveCursor(Vector2i(1, 0));
+
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
     // the values previously saved for the game.

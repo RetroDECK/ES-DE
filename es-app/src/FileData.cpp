@@ -428,7 +428,7 @@ void FileData::removeChild(FileData* file)
 void FileData::sort(ComparisonFunction& comparator, bool ascending)
 {
     mFirstLetterIndex.clear();
-    mOnlyFolders = false;
+    mOnlyFolders = true;
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
@@ -478,6 +478,9 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
     }
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+        if ((*it)->getType() != FOLDER)
+            mOnlyFolders = false;
+
         if (!(foldersOnTop && (*it)->getType() == FOLDER)) {
             // Build mFirstLetterIndex.
             const char firstChar = toupper((*it)->getSortName().front());
@@ -490,7 +493,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
 
     // If there are only folders in the gamelist, then it makes sense to still
     // generate a letter index.
-    if (mChildrenOthers.size() == 0 && mChildrenFolders.size() > 0) {
+    if (mOnlyFolders) {
         for (unsigned int i = 0; i < mChildrenFolders.size(); i++) {
             const char firstChar = toupper(mChildrenFolders[i]->getSortName().front());
             mFirstLetterIndex.push_back(std::string(1, firstChar));
@@ -507,7 +510,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
 void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending)
 {
     mFirstLetterIndex.clear();
-    mOnlyFolders = false;
+    mOnlyFolders = true;
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenFavorites;
     std::vector<FileData*> mChildrenOthers;
@@ -534,6 +537,9 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
             const char firstChar = toupper(mChildren[i]->getSortName().front());
             mFirstLetterIndex.push_back(std::string(1, firstChar));
         }
+
+        if (mChildren[i]->getType() != FOLDER)
+            mOnlyFolders = false;
     }
 
     // If there are only favorites in the gamelist, it makes sense to still generate
@@ -553,13 +559,11 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     }
     // If there are only folders in the gamelist, then it also makes sense to generate
     // a letter index.
-    else if (mChildrenOthers.size() == 0 && mChildrenFavorites.size() == 0 &&
-            mChildrenFolders.size() > 0) {
+    else if (mOnlyFolders) {
         for (unsigned int i = 0; i < mChildrenFolders.size(); i++) {
             const char firstChar = toupper(mChildrenFolders[i]->getSortName().front());
             mFirstLetterIndex.push_back(std::string(1, firstChar));
         }
-        mOnlyFolders = true;
     }
 
     // Sort and make each entry unique in mFirstLetterIndex.
