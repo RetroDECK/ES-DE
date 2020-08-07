@@ -274,7 +274,7 @@ void Window::render()
     if (mTimeSinceLastInput >= screensaverTime && screensaverTime != 0) {
         if (mGameLaunchedState)
             mTimeSinceLastInput = 0;
-        else
+        else if (!isProcessing() && !mScreenSaver->isScreenSaverActive())
             startScreenSaver();
     }
 
