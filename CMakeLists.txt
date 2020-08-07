@@ -114,7 +114,7 @@ endif()
 # Set up compiler flags for debug or release builds.
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     # Enable the C++11 standard and disable optimizations as it's a debug build.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-attributes -O0")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O0")
 
     # If using Clang, then add additional debug data needed by GDB.
@@ -126,7 +126,7 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
 else()
     # Enable the C++11 standard and enable optimizations as it's a release build.
     # Also disable the assert() macros and strip the binary.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-attributes -O2 -DNDEBUG")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -DNDEBUG")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
 endif()
 
@@ -140,10 +140,6 @@ endif()
 if(NOT WIN32)
     add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 endif()
-
-# Enable additional defines for the Debug build configuration.
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -D_DEBUG")
 
 # Handle additional (required) include files for dependency packages.
 if(WIN32)
