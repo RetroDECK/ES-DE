@@ -185,7 +185,7 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 
 It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
-The .m3u file simply contains a list of the game files, for example in the case of **Last Ninja 2.m3u**:
+The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
 ```
 Last Ninja 2 (Disk 1 of 2).d64
@@ -279,7 +279,7 @@ For steam, it's recommended to put shell scripts/batch files directly in the roo
 
 Add the following information to each file:
 
-`steam steam://rungameid/\<game ID\>`
+`steam steam://rungameid/<game ID>`
 
 Here's an example for the game Broforce:
 
@@ -321,7 +321,7 @@ EmulationStation Desktop Edition supports the two scrapers ScreenScraper.fr and 
 Here is an overview of what's supported by ES and these scrapers:
 
 | Media type or option     | ScreenScraper | TheGamesDB |
-| :----------------------: | :-----------: | :--------: |
+| :----------------------- | :-----------: | :--------: |
 | Region (EU/JP/US/SS/WOR) | Yes           | No         |
 | Language (EN/WOR)        | Yes           | No         |
 | Game names               | Yes           | Yes        |
@@ -344,6 +344,8 @@ The single-game scraper is launched from the metadata editor. You navigate to a 
 ### Multi-scraper
 
 The multi-scraper is launched from the main menu, it's the first option on the menu actually. Here you can configure a number of scraping options, all which are explained in more depth below when covering the main menu entries.
+
+**_Tip: Pressing the 's' key on the keyboard is a quick-skip shortcut rather than having to navigate to the 'Skip' button and selecting it._**
 
 ### Scraping process
 
@@ -414,7 +416,7 @@ A selection of which systems to scrape for. It's possible to automatically scrap
 
 #### Content settings
 
-Describes the content types to include in the scraping.
+Describes the content types to include in the scraping. Most users will probably not need to adjust so many of these, excect perhaps to enable video scraping.
 
 **Scrape game names**
 
@@ -450,7 +452,7 @@ These images are currently unused, but will be used for future versions of ES so
 
 #### Other settings
 
-Various scraping settings.
+Various scraping settings. Most users will probably not need to adjust so many of these.
 
 **Region** _(ScreenScraper only)_
 
@@ -475,6 +477,14 @@ Used in conjunction with interactive mode, to not having to confirm every single
 **Respect per-file scraper exclusions**
 
 It's possible to set a flag per file to indicate that the file should be excluded from the multi-scraper. With this flag it's possible to override this setting and scrape all files anyway.
+
+**Exclude folders recursively**
+
+If this settings is enabled and a directory has its flag set to be excluded from the scraping, then the entire folder contents are skipped when running the multi-scraper.
+
+**Scrape actual folders**
+
+Enabling this option causes folders themselves to be included in the scraping. This is useful when games are grouped into folders that should themselves be scraped. For instance for DOS games or any multi-disk games where there is a folder for each game.
 
 ### UI settings
 
@@ -692,7 +702,7 @@ If enabled, only ROMs that have metadata saved to the gamelist.xml files will be
 
 **Display game art from ROM directories**
 
-Using this option, you can locate game images in the ROM directory tree. The images are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and the filenames must be the same as the ROM names, followed by a dash and the image type. For example "~/ROMs/nes/images/Contra-screenshot.jpg" and "~/ROMs/nes/images/Contra-marquee.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic.
+Using this option, you can locate game images in the ROM directory tree. The images are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and the filenames must be the same as the ROM names, followed by a dash and the image type. For example "~/ROMs/nes/images/Contra-screenshot.jpg" and "~/ROMs/nes/images/Contra-marquee.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
 
 **Show framerate**
 
@@ -814,7 +824,7 @@ A flag to mark whether the game is suitable for children. This will be applied a
 
 **Hidden**
 
-A flag to indicate the game is hidden. If the corresponding option has been set on the main menu, the game will not be shown. Useful for examle for DOS games to hide batch scripts, configuration tools etc.
+A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts, configuration tools etc. If a file or folder is flagged as hidden but the correponding option to hide hidden games has not been set, then the opacity of the text will be lowered significantly to make it clear that it's a hidden game.
 
 **Broken/not working**
 
@@ -822,7 +832,7 @@ A flag to indicate whether the game is broken. Useful for MAME games for instanc
 
 **Exclude from game counter**
 
-A flag to indicate whether the game should be excluded from being counted. It's only used for the game system counter on the main screen, but is quite useful for multi-file games such as multi-disk Amiga or Commodore 64 games, or for DOS games for configuration executables that you want to keep in ES and therefore can't hide.
+A flag to indicate whether the game should be excluded from being counted. It's only used for the game system counter on the main screen, but is quite useful for multi-file games such as multi-disk Amiga or Commodore 64 games, or for DOS games for configuration executables that you want to keep in ES and therefore can't hide. Games that have this flag set will have a lower opacity in the gamelists, making them easy to spot.
 
 **Exclude from multi-scraper**
 
@@ -837,11 +847,101 @@ Here you can override the launch command for the game, for example to use a diff
 A statistics counter that counts how many times you're played the game. You normally don't need to touch this, but if you want to, the possibility is there.
 
 
+## Screensaver
+
+There is a screensaver built into ES with four different behaviours: _Dim_, _Black_, _Slideshow_ and _Video_.
+
+There are numerous options for the screensaver, refer to the Main menu section above to find out about them.
+
+The _Dim_ screensaver simply dims the current view and _Black_ will show a black screen. The _Slideshow_ and _Video_ screensavers are a bit more interesting as they can display images and videos from your game collection. (In addition to this, Slideshow can be configured to only show images from a specified directory).
+
+If the option **Screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this the controls will allow you to jump to a new random image video or by using the left and right buttons on your keyboard or controller, and it allows you to actually launch the game just shown by pressing the 'A' button.
+
+
 ## Game collections
 
-There are two types of game collections supported by ES; the automatic collections **All games**, **Favorites** and **Last played** as well as custom collections that you create yourself. Example of such could be grouping of genres like **Shoot 'em up**, **Fighting** etc. or perhaps a time period like '1980s', '1990s' and so on.
+ES provides two types of collections, automatic collections as well as custom collections defined by the user. Each collection can be individually enabled or disabled in the main menu.
 
-For either types of collections, they are always based on the games you currently have available in your normal game systems.
+Collections are, as the name implies, only collections of games already present games from your game systems and any given game can be part of as many collections as you want.
+
+There are multiple settings for the game collections, but these are covered above in the 'Main menu' section so that information won't be repeated here.
+
+### Automatic collections
+
+These are **All games**, **Favorites** and **Last played**. The 'All games' collection simply groups all your game system into one big list, 'Favorites' combines all your games marked as favorites from all your game systems, and 'Last played' is a list of the 50 last games you have launched.
+
+These automatic collections can be individually enabled or disabled by going to the main menu, selecting **Game collection settings** and then **Automatic game collections**.
+
+Note that you should only enable these collections if you really need them as they slow down the application quite significantly. By default these collections are therefore disabled.
+
+### Custom collections
+
+These are collections that you create yourself. Example of such collections could be grouping in genres like _Shoot 'em up_, _Fighting_ etc. or perhaps a time period like '1980s', '1990s' and so on.
+
+If the theme set supports it, you can create a custom collection directly from a theme. However, as of version 1.0.0, rbsimple-DE does not provide such themes.
+
+But if you have enabled the option **Group unthemed custom collections** (it's active by default), any collections you add will show up in the special 'Collection' system. Here you can access them just as you would access folders inside a regular game system.
+
+To create a custom collection, go to 'Game collection settings' in the main menu and choose 'Create new custom collection'.
+
+Select a name and press enter, let's use the name '1980s' for this example.
+
+The collection will now be added and the collection edit mode will be automatically selected. You can now add games to your collection by navigating to any game system and adding a game by pressing the 'Y' key, just as you would normally do to flag the game as a favorite. Any number of games from any of your game systems can be added to your collection.
+
+Removing games works in the same way, just press 'Y' to remove it if it's already present in your collection. You can do this either from the game system where the game was added, or from the collection itself.
+
+When you are done adding games, you can either open the main menu and go to 'Game collection settings' and select the 'Finish editing '1980s' collection' or you can open the game options menu and select the same option there. The latter works from within any game system, you don't need to navigate back to the collection that you're editing.
+
+You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing 'Add/remove games to this game collection'.
+
+The way that custom collection are implemented is very simple. There is a folder for the collections in `~/.emulationstation/collections` with a separate file for each collection.
+
+For this example a file will have been created named `~/.emulationstation/collections/custom-1980s.cfg`.
+
+The file contents is simply a list of ROM files, such as the following:
+
+%ROMPATH%/c64/multidisk/Last Ninja 2/Last Ninja 2.m3u
+%ROMPATH%/nes/Legend of Zelda, The.zip
+
+Note that if you for example copy or migrate a collection from a previous version of EmulationStation or if you're setting up EmulationStation Desktop Edition on a new computer, even though you copy the files into the collections directory, they will not show up in the application. You always need to enable the collection in the menu. ES looks inside the es_settings.cfg file during startup to see which collections should be shown.
+
+If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection. Be aware though that if at this time the ROM was not found by ES, the corresponding entry in the collections file will be deleted.
+
+
+## Themes
+
+ES is fully themeable, and although the application ships with the comprehensive rbsimple-DE theme set, you can replace it with a number of themes available from various locations on the Internet.
+
+>>>
+Somewhat confusingly the term 'theme' and 'theme set' are used to refer to the same thing. The correct term for what you apply to the application to achieve a different look is actually 'theme set' as it's a collection of a number of themes for a number of game systems. The supplied rbsimple-DE is an example of such a theme set. But in this guide and in other EmulationStation resources on the Internet, the term 'theme' is often used to refer to the same thing as a 'theme set'.
+>>>
+
+Note that this Desktop Edition fork adds additional features to the themes and more still will be added in the future. This means that you may not get the full benefit of the application if you're using a different theme set. But effort is spent trying to make sure that the application is backwards compatible with the available themes used by other ES versions, even with the limited functionality.
+
+Themes are most easily installed in your ES home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found by ES during startup and you're given an option to choose which one to use from the 'UI Settings' on the main menu.
+
+Note that although you can put additional themes in your ES home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be something like `/usr/local/share/emulationstation/themes` on Unix or `C:\Program Files\EmulationStation\themes` on Windows.
+
+Note: If you would like to customize the rbsimple-DE theme, simply make a copy of the complete rbsimple-DE directory to ~/.emulationstation/themes and then that copy of the theme will take precedence over the one in the application installation directory.
+
+In this example, we've downloaded the Carbon and Fundamental themes and uncompressed them to the ES folder:
+
+```
+~/.emulationstation/themes/es-theme-carbon
+~/.emulationstation/themes/es-theme-fundamental
+```
+
+You will now have three entries for the Theme set selector in the UI settings menu, i.e. rbsimple-DE, es-theme-carbon and es-theme-fundamental.
+
+Here are some resources where additional theme sets can be downloaded.
+
+https://aloshi.com/emulationstation#themes
+
+https://github.com/RetroPie
+
+https://gitlab.com/recalbox/recalbox-themes
+
+https://wiki.batocera.org/themes
 
 
 ## Custom event scripts
