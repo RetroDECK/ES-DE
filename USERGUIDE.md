@@ -2,8 +2,6 @@
 
 **Note:** This document is intended as a quick start guide, for more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to the [INSTALL.md](INSTALL.md) document.
 
-**_This guide is currently under construction!_**
-
 Table of contents:
 
 [[_TOC_]]
@@ -386,6 +384,8 @@ Must have the filename:
 `~/.emulationstation/downloaded_media/c64/screenshots/Last Ninja 2.jpg`
 
 JPG and PNG file formats and file extensions are supported.
+
+Remember that on Unix files are case sensitive, and as well the file extensions must be in lower case, i.e. .png intead of .PNG or .Png or the file won't be found.
 
 As an alternative, you can also locate your game media in the ROM directory. This is explained below in this guide under the option **Display game art from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
 
@@ -900,8 +900,10 @@ For this example a file will have been created named `~/.emulationstation/collec
 
 The file contents is simply a list of ROM files, such as the following:
 
+```
 %ROMPATH%/c64/multidisk/Last Ninja 2/Last Ninja 2.m3u
 %ROMPATH%/nes/Legend of Zelda, The.zip
+```
 
 Note that if you for example copy or migrate a collection from a previous version of EmulationStation or if you're setting up EmulationStation Desktop Edition on a new computer, even though you copy the files into the collections directory, they will not show up in the application. You always need to enable the collection in the menu. ES looks inside the es_settings.cfg file during startup to see which collections should be shown.
 
@@ -948,65 +950,7 @@ https://wiki.batocera.org/themes
 
 There are numerous locations throughout ES where custom scripts will be executed if the option to do so has been enabled in the settings. By default it's deactivated so be sure to enable it to use this feature.
 
-It's very straightforward, ES will look for any files inside a script directory that correspond to the event that is triggered and execute all files located there.
-
-As an example, let's create a log that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming.
-
-**Note: The following example is for Unix systems, but it works the same in Windows (though .bat batch files are then used instead of shell scripts).**
-
-The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names is easily achieved by starting ES with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
-
-So let's create the folders for these events in the scripts directory. The location of this directory is **~/.emulationstation/scripts/**.
-
-After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist.
-
-Let's name the start script **game_start_logging.sh** with the following contents:
-
-```
-#!/bin/bash
-TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
-echo Starting game "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
-```
-
-And let's name the end script **game_end_logging.sh** with the following contents:
-
-```
-#!/bin/bash
-TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
-echo "Ending game  " "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
-```
-
-After creating the two scripts, you should have something like this on the filesystem:
-
-```
-~/.emulationstation/scripts/game-start/game_start_logging.sh
-~/.emulationstation/scripts/game-end/game_end_logging.sh
-```
-
-Don't forget to make the scripts executable (e.g. 'chmod 755 ./game_start_logging.sh').
-
-If we now start ES with the debug flag and launch a game, something like the following should show up in es_log.txt:
-
-```
-Aug 05 14:19:24 Debug:  Scripting::fireEvent(): game-start "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
-Aug 05 14:19:24 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-start/game_start_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
-.
-.
-Aug 05 14:27:15 Debug:  Scripting::fireEvent(): game-end "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
-Aug 05 14:27:15 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-end/game_end_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
-
-```
-
-Finally after running some games, ~/.emulationstation/game_playlog.txt should contain something like the following:
-
-```
-Starting game "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:19:24
-Ending game   "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:27:15
-Starting game "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 14:38:46
-Ending game   "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 15:13:58
-Starting game "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:15:24
-Ending game   "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:17:11
-```
+The setup for this is a bit technical, so please refer to the [INSTALL.md](INSTALL.md) document to see how it's configured.
 
 
 ## Command line arguments

@@ -1,10 +1,12 @@
-EmulationStation Desktop Edition - Installation and configuration
-=================================================================
+# EmulationStation Desktop Edition - Installation and configuration
 
 **Note:** This is a quite technical document intended for those that are interested in compiling EmulationStation from source code, or would like to customize the configuration. If you just want to start using the software, check out the [User Guide](USERGUIDE.md) instead.
 
+Table of contents:
 
-### Development Environment
+[[_TOC_]]
+
+## Development Environment
 
 EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
 
@@ -13,7 +15,7 @@ There are much more details regarding compilers later in this document, so read 
 Any code editor can be used of course, but I recommend [VSCodium](https://vscodium.com) or [VSCode](https://code.visualstudio.com).
 
 
-### Building on Unix:
+## Building on Unix:
 
 The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
@@ -196,7 +198,7 @@ sudo apt-get install rpm
 ```
 
 
-### Building on Windows:
+## Building on Windows:
 
 This is a strange legacy operating system. However it's still popular, so we need to support it.
 
@@ -482,9 +484,7 @@ You now have a fully functional portable emulator installation!
 The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
 
 
-Configuring EmulationStation-DE
-===============================
-
+## Configuring EmulationStation-DE
 
 **~/.emulationstation/es_systems.cfg:**
 
@@ -548,8 +548,7 @@ The new configuration will be added to the `~/.emulationstation/es_input.cfg` fi
 **If your controller stops working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next run.**
 
 
-Command line arguments
-======================
+## Command line arguments
 
 You can use `--help` or `-h` to view a list of command line options, as shown here.
 
@@ -611,8 +610,7 @@ As long as ES hasn't frozen, you can always press F4 to close the application.
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES will use `~/games/emulation/.emulationstation` as its base directory.
 
 
-es_systems.cfg
-==============
+## es_systems.cfg
 
 The es_systems.cfg file contains the system configuration data for EmulationStation, written in XML format. \
 This tells EmulationStation what systems you have, what platform they correspond to (for scraping), and where the games are located.
@@ -695,8 +693,7 @@ For the `path` tag, the following variable is expanded by ES:
 `%ROMPATH%` - Replaced with the path defined for the setting ROMDirectory in `es_settings.cfg`.
 
 
-gamelist.xml
-============
+## gamelist.xml
 
 The gamelist.xml file for a system defines metadata for games, such as a name, description, release date, and rating.
 
@@ -748,7 +745,7 @@ There are a few types of metadata:
 
 Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
 
-#### `<game>`
+### `<game>`
 
 * `name` - string, the displayed name for the game.
 * `desc` - string, a description of the game.  Longer descriptions will automatically scroll, so don't worry about size.
@@ -767,7 +764,7 @@ Some metadata is also marked as "statistic" - these are kept track of by ES and 
 * `sortname` - string, used in sorting the gamelist in a system, instead of `name`.
 * `launchcommand` - optional tag that is used to override the emulator and core settings on a per-game basis.
 
-#### `<folder>`
+### `<folder>`
 * `name` - string, the displayed name for the folder.
 * `desc` - string, the description for the folder.
 * `developer` - string, developer(s).
@@ -789,3 +786,68 @@ Some metadata is also marked as "statistic" - these are kept track of by ES and 
 * The switch `--gamelist-only` can be used to skip automatic searching, and only display games defined in the system's gamelist.xml
 
 * The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application
+
+
+## Custom event scripts
+
+There are numerous locations throughout ES where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under **Other settings**. By default it's deactivated so be sure to enable it to use this feature.
+
+The approach is quite straightforward, ES will look for any files inside a script directory that correspond to the event that is triggered and execute all files located there.
+
+As an example, let's create a log that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming.
+
+**Note: The following example is for Unix systems, but it works the same in Windows (though .bat batch files are then used instead of shell scripts).**
+
+The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names is easily achieved by starting ES with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+
+So let's create the folders for these events in the scripts directory. The location of this directory is **~/.emulationstation/scripts/**.
+
+After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist.
+
+Let's name the start script **game_start_logging.sh** with the following contents:
+
+```
+#!/bin/bash
+TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
+echo Starting game "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+```
+
+And let's name the end script **game_end_logging.sh** with the following contents:
+
+```
+#!/bin/bash
+TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
+echo "Ending game  " "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+```
+
+After creating the two scripts, you should have something like this on the filesystem:
+
+```
+~/.emulationstation/scripts/game-start/game_start_logging.sh
+~/.emulationstation/scripts/game-end/game_end_logging.sh
+```
+
+Don't forget to make the scripts executable (e.g. 'chmod 755 ./game_start_logging.sh').
+
+If we now start ES with the debug flag and launch a game, something like the following should show up in es_log.txt:
+
+```
+Aug 05 14:19:24 Debug:  Scripting::fireEvent(): game-start "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+Aug 05 14:19:24 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-start/game_start_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+.
+.
+Aug 05 14:27:15 Debug:  Scripting::fireEvent(): game-end "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+Aug 05 14:27:15 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-end/game_end_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+
+```
+
+Finally after running some games, ~/.emulationstation/game_playlog.txt should contain something like the following:
+
+```
+Starting game "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:19:24
+Ending game   "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:27:15
+Starting game "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 14:38:46
+Ending game   "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 15:13:58
+Starting game "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:15:24
+Ending game   "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:17:11
+```
