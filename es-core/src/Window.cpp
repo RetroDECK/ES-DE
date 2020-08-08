@@ -212,19 +212,20 @@ void Window::update(int deltaTime)
 
             // FPS.
             ss << std::fixed << std::setprecision(1) <<
-                    (1000.0f * (float)mFrameCountElapsed / (float)mFrameTimeElapsed) << "fps, ";
+                    (1000.0f * (float)mFrameCountElapsed / (float)mFrameTimeElapsed) << " FPS (";
             ss << std::fixed << std::setprecision(2) <<
-                    ((float)mFrameTimeElapsed / (float)mFrameCountElapsed) << "ms";
+                    ((float)mFrameTimeElapsed / (float)mFrameCountElapsed) << " ms)";
 
             // VRAM.
-            float textureVramUsageMb = TextureResource::getTotalMemUsage() / 1000.0f / 1000.0f;
-            float textureTotalUsageMb = TextureResource::getTotalTextureSize() / 1000.0f / 1000.0f;
-            float fontVramUsageMb = Font::getTotalMemUsage() / 1000.0f / 1000.0f;
+            float textureVramUsageMiB = TextureResource::getTotalMemUsage() / 1024.0f / 1024.0f;
+            float textureTotalUsageMiB = TextureResource::getTotalTextureSize() / 1024.0f / 1024.0f;
+            float fontVramUsageMiB = Font::getTotalMemUsage() / 1024.0f / 1024.0f;
 
-            ss << "\nFont VRAM: " << fontVramUsageMb << "  Texture VRAM: " << textureVramUsageMb <<
-                    "  (Max Texture VRAM: " << textureTotalUsageMb << ")";
+            ss << "\nFont VRAM: " << fontVramUsageMiB << " MiB\nTexture VRAM: " <<
+                    textureVramUsageMiB << " MiB\nMax Texture VRAM: " <<
+                    textureTotalUsageMiB << " MiB";
             mFrameDataText = std::unique_ptr<TextCache>
-                    (mDefaultFonts.at(1)->buildTextCache(ss.str(), 50.f, 50.f, 0xFF00FFFF));
+                    (mDefaultFonts.at(1)->buildTextCache(ss.str(), 30.f, 30.f, 0xFF00FFFF));
         }
 
         mFrameTimeElapsed = 0;

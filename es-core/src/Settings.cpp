@@ -170,7 +170,7 @@ void Settings::setDefaults()
     #ifdef _RPI_
         mIntMap["MaxVRAM"] = 80;
     #else
-        mIntMap["MaxVRAM"] = 160;
+        mIntMap["MaxVRAM"] = 128;
     #endif
     #ifdef __unix__
     mStringMap["FullscreenMode"] = "normal";

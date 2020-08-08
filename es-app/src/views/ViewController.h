@@ -105,7 +105,7 @@ private:
     int getSystemId(SystemData* system);
 
     std::shared_ptr<GuiComponent> mCurrentView;
-    std::map< SystemData*, std::shared_ptr<IGameListView> > mGameListViews;
+    std::map<SystemData*, std::shared_ptr<IGameListView>> mGameListViews;
     std::shared_ptr<SystemView> mSystemListView;
 
     Transform4x4f mCamera;
