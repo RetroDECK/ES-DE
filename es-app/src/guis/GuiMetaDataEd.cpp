@@ -427,11 +427,8 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
             else
                 mEditors.at(i)->setColor(TEXTCOLOR_SCRAPERMARKED);
         }
-        // Save all the keys, except the following which can't be scraped.
-        if (key != "favorite" && key != "completed" && key != "kidgame" &&
-                key != "hidden" && key != "broken" && key != "nogamecount" &&
-                key != "nomultiscrape" && key != "nocontentscrape" &&
-                key != "nocontentscrape")
+        // Save all the keys that should be scraped.
+        if (mMetaDataDecl.at(i).shouldScrape)
             mEditors.at(i)->setValue(metadata->get(key));
     }
 

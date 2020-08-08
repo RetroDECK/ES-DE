@@ -352,6 +352,47 @@ void GridGameListView::initMDValues()
 void GridGameListView::updateInfoPanel()
 {
     FileData* file = (mGrid.size() == 0 || mGrid.isScrolling()) ? nullptr : mGrid.getSelected();
+    bool hideMetaDataFields = false;
+
+    if (file)
+        hideMetaDataFields = (file->metadata.get("hidemetadata") == "true");
+
+    if (hideMetaDataFields) {
+        mLblRating.setVisible(false);
+        mRating.setVisible(false);
+        mLblReleaseDate.setVisible(false);
+        mReleaseDate.setVisible(false);
+        mLblDeveloper.setVisible(false);
+        mDeveloper.setVisible(false);
+        mLblPublisher.setVisible(false);
+        mPublisher.setVisible(false);
+        mLblGenre.setVisible(false);
+        mGenre.setVisible(false);
+        mLblPlayers.setVisible(false);
+        mPlayers.setVisible(false);
+        mLblLastPlayed.setVisible(false);
+        mLastPlayed.setVisible(false);
+        mLblPlayCount.setVisible(false);
+        mPlayCount.setVisible(false);
+    }
+    else {
+        mLblRating.setVisible(true);
+        mRating.setVisible(true);
+        mLblReleaseDate.setVisible(true);
+        mReleaseDate.setVisible(true);
+        mLblDeveloper.setVisible(true);
+        mDeveloper.setVisible(true);
+        mLblPublisher.setVisible(true);
+        mPublisher.setVisible(true);
+        mLblGenre.setVisible(true);
+        mGenre.setVisible(true);
+        mLblPlayers.setVisible(true);
+        mPlayers.setVisible(true);
+        mLblLastPlayed.setVisible(true);
+        mLastPlayed.setVisible(true);
+        mLblPlayCount.setVisible(true);
+        mPlayCount.setVisible(true);
+    }
 
     bool fadingOut;
     if (file == nullptr) {
@@ -384,12 +425,17 @@ void GridGameListView::updateInfoPanel()
         mName.setValue(file->metadata.get("name"));
 
         if (file->getType() == GAME) {
-            mLastPlayed.setValue(file->metadata.get("lastplayed"));
-            mPlayCount.setValue(file->metadata.get("playcount"));
+            if (!hideMetaDataFields) {
+                mLastPlayed.setValue(file->metadata.get("lastplayed"));
+                mPlayCount.setValue(file->metadata.get("playcount"));
+            }
         }
         else if (file->getType() == FOLDER) {
-            mLastPlayed.setValue(file->metadata.get("lastplayed"));
-            mPlayCount.setValue("");
+            if (!hideMetaDataFields) {
+                mLastPlayed.setValue(file->metadata.get("lastplayed"));
+                mLblPlayCount.setVisible(false);
+                mPlayCount.setVisible(false);
+            }
         }
 
         fadingOut = false;

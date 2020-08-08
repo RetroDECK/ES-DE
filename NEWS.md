@@ -1,5 +1,4 @@
-EmulationStation Desktop Edition v1.0.0
-=======================================
+# EmulationStation Desktop Edition v1.0.0
 
 **Release date:** YYYY-MM-DD
 
@@ -43,6 +42,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
 * Added metadata entry to mark games as broken/not working
 * Added metadata entry to indicate whether the file should be counted as a game (for example useful to exclude setup files and similar for DOS games)
+* Added metadata entry to hide the metadata values from the gamelist views (useful for general folders, DOS game configuration utilities etc.)
 * Added a button to the metadata editor to delete the media files for a game or folder while retaining the game file and gamelist.xml entry
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
 * Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
