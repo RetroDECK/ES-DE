@@ -41,6 +41,15 @@ ISimpleGameListView::ISimpleGameListView(
     addChild(&mBackground);
 }
 
+ISimpleGameListView::~ISimpleGameListView()
+{
+    for (auto extra : mThemeExtras) {
+        removeChild(extra);
+        delete extra;
+    }
+    mThemeExtras.clear();
+}
+
 void ISimpleGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 {
     using namespace ThemeFlags;
