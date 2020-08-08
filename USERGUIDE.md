@@ -190,7 +190,7 @@ Last Ninja 2 (Disk 1 of 2).d64
 Last Ninja 2 (Disk 2 of 2).d64
 ```
 
-It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy.
+It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and the hide the game files, showing only the .m3u playlist. But it's probably quite confusing to start a game that looks like a single-disk game and then be prompted for disk swaps by the emulator.
 
 When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see images and metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it looks ok when browsing, but when a game is part of a collection, the metadata and images will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
 
@@ -662,7 +662,7 @@ These are mostly technical settings.
 
 **VRAM limit**
 
-The amount of video RAM to use for the application. Defaults to 100 MB which seems to work fine most of the time. Don't put it too low or you may see strange application behavior.
+The amount of video RAM to use for the application. Defaults to 160 MiB which seems to work fine most of the time. The allowed range is 80 to 1000 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or edit the es_settings.cfg file manually, ES will log a warning and automatically adjust the value within the allowable range.
 
 **Fullscreen mode (requires restart) - Unix only**
 
@@ -704,9 +704,9 @@ If enabled, only ROMs that have metadata saved to the gamelist.xml files will be
 
 Using this option, you can locate game images in the ROM directory tree. The images are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and the filenames must be the same as the ROM names, followed by a dash and the image type. For example "~/ROMs/nes/images/Contra-screenshot.jpg" and "~/ROMs/nes/images/Contra-marquee.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
 
-**Show framerate**
+**Draw GPU statistics overlay**
 
-Shows the framerate and some other statistics as an overlay. You normally never need to use this.
+Draws the framerate and VRAM statistics as an overlay. You normally never need to use this.
 
 **Show "reboot system" menu entry**
 
@@ -838,6 +838,10 @@ A flag to indicate whether the game should be excluded from being counted. It's 
 
 Whether to exclude the file from the multi-scraper. This is quite useful in order to avoid scraping all the disks for multi-disk games for example. There is an option in the scraper settings to ignore this flag, but by default the scraper will respect it. Note that the manual single-file scraper will work regardless of whether this flag is set or not.
 
+**Hide metadata fields**
+
+This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disk, Cartridges etc.) and configuration files and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disk games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's still possible to display game images and videos with this setting enabled.
+
 **Launch command**
 
 Here you can override the launch command for the game, for example to use a different emulator than the default for the game system. Very useful for MAME/arcade games.
@@ -965,7 +969,6 @@ You can use **--help** or **-h** to view a list of command line options, as show
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
@@ -973,8 +976,8 @@ You can use **--help** or **-h** to view a list of command line options, as show
 --fullscreen-normal             Normal fullscreen mode
 --fullscreen-borderless         Borderless fullscreen mode (always on top)
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use in Mb before swapping
-                                Set to at least 20 to avoid unpredictable behavior
+--max-vram [size]               Max VRAM to use (in mebibytes) before swapping
+--gpu-statistics                Draw framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
@@ -993,13 +996,12 @@ You can use **--help** or **-h** to view a list of command line options, as show
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use in Mb before swapping
-                                Set to at least 20 to avoid unpredictable behavior
+--max-vram [size]               Max VRAM to use (in mebibytes) before swapping
+--gpu-statistics                Draw framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk

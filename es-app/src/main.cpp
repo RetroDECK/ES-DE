@@ -242,9 +242,6 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--show-hidden-games") == 0) {
             Settings::getInstance()->setBool("ShowHiddenGames", true);
         }
-        else if (strcmp(argv[i], "--draw-framerate") == 0) {
-            Settings::getInstance()->setBool("DrawFramerate", true);
-        }
         else if (strcmp(argv[i], "--no-exit") == 0) {
             Settings::getInstance()->setBool("ShowExit", false);
         }
@@ -272,6 +269,9 @@ bool parseArgs(int argc, char* argv[])
                     strcmp(argv[i + 1], "1") == 0) ? true : false;
             Settings::getInstance()->setBool("VSync", vsync);
             i++; // Skip vsync value.
+        }
+        else if (strcmp(argv[i], "--gpu-statistics") == 0) {
+            Settings::getInstance()->setBool("DrawGPUStatistics", "true");
         }
         else if (strcmp(argv[i], "--force-full") == 0) {
             Settings::getInstance()->setString("UIMode", "full");
@@ -303,7 +303,6 @@ bool parseArgs(int argc, char* argv[])
 "  --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
 "  --show-hidden-files             Show hidden files and folders\n"
 "  --show-hidden-games             Show hidden games\n"
-"  --draw-framerate                Display the framerate\n"
 "  --no-exit                       Don't show the exit option in the menu\n"
 "  --no-splash                     Don't show the splash screen\n"
 "  --debug                         Print debug information\n"
@@ -313,8 +312,8 @@ bool parseArgs(int argc, char* argv[])
 "  --fullscreen-borderless         Borderless fullscreen mode (always on top)\n"
 #endif
 "  --vsync [1/on or 0/off]         Turn vsync on or off (default is on)\n"
-"  --max-vram [size]               Max VRAM to use in Mb before swapping\n"
-"                                  Set to at least 20 to avoid unpredictable behavior\n"
+"  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
+"  --gpu-statistics                Draw framerate and VRAM usage overlay\n"
 "  --force-full                    Force the UI mode to Full\n"
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-kiosk                   Force the UI mode to Kiosk\n"

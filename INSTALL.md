@@ -15,7 +15,7 @@ There are much more details regarding compilers later in this document, so read 
 Any code editor can be used of course, but I recommend [VSCodium](https://vscodium.com) or [VSCode](https://code.visualstudio.com).
 
 
-## Building on Unix:
+## Building on Unix
 
 The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
@@ -198,7 +198,7 @@ sudo apt-get install rpm
 ```
 
 
-## Building on Windows:
+## Building on Windows
 
 This is a strange legacy operating system. However it's still popular, so we need to support it.
 
@@ -484,7 +484,7 @@ You now have a fully functional portable emulator installation!
 The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
 
 
-## Configuring EmulationStation-DE
+## Configuration
 
 **~/.emulationstation/es_systems.cfg:**
 
@@ -552,7 +552,7 @@ The new configuration will be added to the `~/.emulationstation/es_input.cfg` fi
 
 You can use `--help` or `-h` to view a list of command line options, as shown here.
 
-### Unix:
+### Unix
 
 ```
 --resolution [width] [height]   Try to force a particular resolution
@@ -560,7 +560,6 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
@@ -568,8 +567,8 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --fullscreen-normal             Normal fullscreen mode
 --fullscreen-borderless         Borderless fullscreen mode (always on top)
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use in Mb before swapping
-                                Set to at least 20 to avoid unpredictable behavior
+--max-vram [size]               Max VRAM to use (in mebibytes) before swapping
+--gpu-statistics                Draw framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
@@ -580,7 +579,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --help, -h                      Summon a sentient, angry tuba
 ```
 
-### Windows:
+### Windows
 
 ```
 --resolution [width] [height]   Try to force a particular resolution
@@ -588,13 +587,12 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---draw-framerate                Display the framerate
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use in Mb before swapping
-                                Set to at least 20 to avoid unpredictable behavior
+--max-vram [size]               Max VRAM to use (in mebibytes) before swapping
+--gpu-statistics                Draw framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
@@ -745,7 +743,7 @@ There are a few types of metadata:
 
 Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
 
-### `<game>`
+**\<game\>**
 
 * `name` - string, the displayed name for the game.
 * `desc` - string, a description of the game.  Longer descriptions will automatically scroll, so don't worry about size.
@@ -764,7 +762,7 @@ Some metadata is also marked as "statistic" - these are kept track of by ES and 
 * `sortname` - string, used in sorting the gamelist in a system, instead of `name`.
 * `launchcommand` - optional tag that is used to override the emulator and core settings on a per-game basis.
 
-### `<folder>`
+**\<folder\>**
 * `name` - string, the displayed name for the folder.
 * `desc` - string, the description for the folder.
 * `developer` - string, developer(s).

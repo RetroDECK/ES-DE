@@ -12,7 +12,7 @@
 TextureDataManager TextureResource::sTextureDataManager;
 std::map< TextureResource::TextureKeyType,
         std::weak_ptr<TextureResource>> TextureResource::sTextureMap;
-std::set<TextureResource*> 	TextureResource::sAllTextures;
+std::set<TextureResource*> TextureResource::sAllTextures;
 
 TextureResource::TextureResource(
         const std::string& path,
@@ -45,8 +45,10 @@ TextureResource::TextureResource(
     }
     else {
         // Create a texture managed by this class because it cannot be dynamically
-        // loaded and unloaded.
+        // loaded and unloaded. This would normally be a video texture, where the player
+        // reserves a texture to later be used for the video rendering.
         mTextureData = std::shared_ptr<TextureData>(new TextureData(tile));
+        mSize = Vector2i(0, 0);
     }
     sAllTextures.insert(this);
 }

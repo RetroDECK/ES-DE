@@ -502,7 +502,7 @@ void GuiMenu::openOtherSettings()
     auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
     // Maximum VRAM.
-    auto max_vram = std::make_shared<SliderComponent>(mWindow, 0.f, 1000.f, 10.f, "Mb");
+    auto max_vram = std::make_shared<SliderComponent>(mWindow, 80.f, 1000.f, 10.f, "MiB");
     max_vram->setValue((float)(Settings::getInstance()->getInt("MaxVRAM")));
     s->addWithLabel("VRAM LIMIT", max_vram);
     s->addSaveFunc([max_vram] { Settings::getInstance()->setInt("MaxVRAM",
@@ -676,12 +676,12 @@ void GuiMenu::openOtherSettings()
     s->addSaveFunc([local_art] { Settings::getInstance()->
             setBool("LocalArt", local_art->getState()); });
 
-    // Framerate.
-    auto framerate = std::make_shared<SwitchComponent>(mWindow);
-    framerate->setState(Settings::getInstance()->getBool("DrawFramerate"));
-    s->addWithLabel("SHOW FRAMERATE", framerate);
-    s->addSaveFunc([framerate] { Settings::getInstance()->setBool("DrawFramerate",
-            framerate->getState()); });
+    // GPU statistics.
+    auto gpu_statistics = std::make_shared<SwitchComponent>(mWindow);
+    gpu_statistics->setState(Settings::getInstance()->getBool("DrawGPUStatistics"));
+    s->addWithLabel("DRAW GPU STATISTICS OVERLAY", gpu_statistics);
+    s->addSaveFunc([gpu_statistics] { Settings::getInstance()->setBool("DrawGPUStatistics",
+            gpu_statistics->getState()); });
 
     // Hide Reboot System option in the quit menu.
     auto show_rebootsystem = std::make_shared<SwitchComponent>(mWindow);

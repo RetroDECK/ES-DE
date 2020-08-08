@@ -207,7 +207,7 @@ void Window::update(int deltaTime)
     if (mFrameTimeElapsed > 500) {
         mAverageDeltaTime = mFrameTimeElapsed / mFrameCountElapsed;
 
-        if (Settings::getInstance()->getBool("DrawFramerate")) {
+        if (Settings::getInstance()->getBool("DrawGPUStatistics")) {
             std::stringstream ss;
 
             // FPS.
@@ -221,8 +221,8 @@ void Window::update(int deltaTime)
             float textureTotalUsageMb = TextureResource::getTotalTextureSize() / 1000.0f / 1000.0f;
             float fontVramUsageMb = Font::getTotalMemUsage() / 1000.0f / 1000.0f;
 
-            ss << "\nFont VRAM: " << fontVramUsageMb << " Tex VRAM: " << textureVramUsageMb <<
-                    " Tex Max: " << textureTotalUsageMb;
+            ss << "\nFont VRAM: " << fontVramUsageMb << "  Texture VRAM: " << textureVramUsageMb <<
+                    "  (Max Texture VRAM: " << textureTotalUsageMb << ")";
             mFrameDataText = std::unique_ptr<TextCache>
                     (mDefaultFonts.at(1)->buildTextCache(ss.str(), 50.f, 50.f, 0xFF00FFFF));
         }
@@ -262,8 +262,7 @@ void Window::render()
     if (!mRenderedHelpPrompts)
         mHelp->render(transform);
 
-    if (Settings::getInstance()->getBool("DrawFramerate") && mFrameDataText)
-    {
+    if (Settings::getInstance()->getBool("DrawGPUStatistics") && mFrameDataText) {
         Renderer::setMatrix(Transform4x4f::Identity());
         mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
     }

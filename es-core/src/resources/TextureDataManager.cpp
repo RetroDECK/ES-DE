@@ -8,6 +8,7 @@
 
 #include "resources/TextureData.h"
 #include "resources/TextureResource.h"
+#include "Log.h"
 #include "Settings.h"
 
 TextureDataManager::TextureDataManager()
@@ -110,7 +111,22 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
         return;
     // Not loaded. Make sure there is room.
     size_t size = TextureResource::getTotalMemUsage();
-    size_t max_texture = (size_t)Settings::getInstance()->getInt("MaxVRAM") * 1024 * 1024;
+    size_t settingVRAM = (size_t)Settings::getInstance()->getInt("MaxVRAM");
+
+    if (settingVRAM < 80) {
+        LOG(LogWarning) << "MaxVRAM set too low at " << settingVRAM << " MiB, setting it to the "
+                "minimum value of 80 MiB.";
+        Settings::getInstance()->setInt("MaxVRAM", 80);
+        settingVRAM = 80;
+    }
+    else if (settingVRAM > 1000) {
+        LOG(LogWarning) << "MaxVRAM set too high at " << settingVRAM << " MiB, setting it to the "
+                "maximum value of 1000 MiB.";
+        Settings::getInstance()->setInt("MaxVRAM", 1000);
+        settingVRAM = 1000;
+    }
+
+    size_t max_texture = settingVRAM * 1024 * 1024;
 
     for (auto it = mTextures.crbegin(); it != mTextures.crend(); ++it) {
         if (size < max_texture)

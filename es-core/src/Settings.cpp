@@ -170,7 +170,7 @@ void Settings::setDefaults()
     #ifdef _RPI_
         mIntMap["MaxVRAM"] = 80;
     #else
-        mIntMap["MaxVRAM"] = 100;
+        mIntMap["MaxVRAM"] = 160;
     #endif
     #ifdef __unix__
     mStringMap["FullscreenMode"] = "normal";
@@ -204,7 +204,7 @@ void Settings::setDefaults()
     mBoolMap["LocalArt"] = false;
     mBoolMap["ShowHiddenFiles"] = true;
     mBoolMap["ShowHiddenGames"] = true;
-    mBoolMap["DrawFramerate"] = false;
+    mBoolMap["DrawGPUStatistics"] = false;
     mBoolMap["ShowRebootSystem"] = true;
     mBoolMap["ShowPoweroffSystem"] = true;
 
