@@ -26,7 +26,7 @@ A settings file, **es_settings.cfg** will be generated with all the default sett
 
 There's a log file in the home directory as well named **es_log.txt**, please refer to this in case of any errors as it should provide information on what went wrong.
 
-After ES finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. Please refer to the game installation procedure below in this document.
+After ES finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default path. Please refer to the game installation procedure below in this document for more information regarding this.
 
 
 ## Input device configuration
@@ -53,7 +53,9 @@ The gamelist view is where you browse and start your games, and it's where you w
 
 Upon startup with the default settings, ES is set to the gamelist view style to **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video** will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view will be selected. Note that this automatic selection is applied per game system.
 
-It's possible to manually set a specific gamelist view style in the UI settings entry of the main menu, but this is applied globally regardless of what media files are available per game system.
+Also note that the Video view style requires that the theme supports it. If not, the Detailed style will be selected instead. (The default theme rbsimple-DE supports both of these view styles).
+
+It's possible to manually set a specific gamelist view style in the UI settings entry of the main menu, but this is applied globally regardless of what media files are available per game system. The manual setting also overrides the theme-supported view styles which has the potential of making ES very ugly indeed.
 
 In additions to the styles just described, there is a **Grid** view style as well, but as of version 1.0.0 this is very limited and not recommended. Future versions of EmulationStation may update this style to a more useful state.
 
@@ -116,7 +118,7 @@ For some systems though, a more elaborate setup is required, and we will attempt
 
 ### Single gamefile installation
 
-Let's start with the simple scenario of a single game file per platform, which is the case for the majority of systems. In this example we're setting up ES to play Nintendo Entertainment System games.
+Let's start with the simple scenario of a single ROM game file per platform, which is the case for the majority of systems. In this example we're setting up ES to play Nintendo Entertainment System games.
 
 The supported file extensions are listed in [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
 
@@ -138,7 +140,9 @@ It's required that the ROM files are in one of the supported file extensions, or
 
 It's highly recommended to use filenames that are corresponding to the full name of the game, or otherwise you will need to manually feed the scraper the game name when scraping which is very tedious.
 
-The default ROM directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/.emulationstation/ and on Windows it defaults to C:\Users\\<username\>\\.emulationstation\
+The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/.emulationstation/ and on Windows it defaults to C:\Users\\<username\>\\.emulationstation\
+
+If ES can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
 
 Assuming the default ROM directory is used, we need to create a directory corresponding to the \<platform\> tag in es_systems.cfg, in this example it's **nes**.
 
@@ -704,9 +708,9 @@ If enabled, only ROMs that have metadata saved to the gamelist.xml files will be
 
 Using this option, you can locate game images in the ROM directory tree. The images are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and the filenames must be the same as the ROM names, followed by a dash and the image type. For example "~/ROMs/nes/images/Contra-screenshot.jpg" and "~/ROMs/nes/images/Contra-marquee.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
 
-**Draw GPU statistics overlay**
+**Display GPU statistics overlay**
 
-Draws the framerate and VRAM statistics as an overlay. You normally never need to use this.
+Displays the framerate and VRAM statistics as an overlay. You normally never need to use this. **Note:** As of version 1.0.0 the VRAM usage statistics is not accurate; this issue will be addressed in future ES versions.
 
 **Show "reboot system" menu entry**
 
@@ -977,7 +981,7 @@ You can use **--help** or **-h** to view a list of command line options, as show
 --fullscreen-borderless         Borderless fullscreen mode (always on top)
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Draw framerate and VRAM usage overlay
+--gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
@@ -1001,7 +1005,7 @@ You can use **--help** or **-h** to view a list of command line options, as show
 --debug                         Print debug information
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Draw framerate and VRAM usage overlay
+--gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk

@@ -501,9 +501,9 @@ When ES is first run, a configuration file will be created as `~/.emulationstati
 
 This file contains all the settings supported by ES, at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES to update all the necessary settings.
 
-The exception would be the ROMDirectory setting as ES won't start if no ROM files are found.
+For the ROM directory, you can either change it manually in es_settings.cfg, or use the dialog that is shown on application startup to change the path to your liking.
 
-**Setting the ROM directory:**
+**Setting the ROM directory in es_settings.cfg:**
 
 By default, ES looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
 
@@ -521,11 +521,13 @@ Here's an example:
 
 Keep in mind though that you still need to group the ROMs into directories corresponding to the platform names in es_systems.cfg.
 
-There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. This is useful for a portable emulator installation, for example on a USB memory stick.
+There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. You would normally not need this, but the option is there, should you require it for some reason.
 
 Here is such an example:
 
 `<string name="ROMDirectory" value="%ESPATH%/../roms" />`
+
+Note that this complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
 
 **Keep in mind that you have to set up your emulator separately from EmulationStation!**
 
@@ -568,7 +570,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --fullscreen-borderless         Borderless fullscreen mode (always on top)
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Draw framerate and VRAM usage overlay
+--gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
@@ -592,7 +594,7 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --debug                         Print debug information
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Draw framerate and VRAM usage overlay
+--gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk

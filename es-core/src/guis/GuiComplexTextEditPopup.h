@@ -30,7 +30,12 @@ public:
             const std::function<void(const std::string&)>& okCallback,
             bool multiLine,
             const char* acceptBtnText = "OK",
-            const char* saveConfirmationText = "SAVE CHANGES?");
+            const char* saveConfirmationText = "SAVE CHANGES?",
+            const char* loadBtnText = "LOAD",
+            const char* loadBtnHelpText = "load default",
+            const char* clearBtnText = "CLEAR",
+            const char* clearBtnHelpText = "clear",
+            bool hideCancelButton = false);
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
@@ -50,6 +55,7 @@ private:
 
     HelpStyle mHelpStyle;
     bool mMultiLine;
+    bool mHideCancelButton;
     std::string mInitValue;
     std::function<void(const std::string&)> mOkCallback;
     std::string mSaveConfirmationText;

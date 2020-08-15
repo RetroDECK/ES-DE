@@ -15,11 +15,13 @@
 GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::string& text,
         const std::string& name1, const std::function<void()>& func1,
         const std::string& name2, const std::function<void()>& func2,
-        const std::string& name3, const std::function<void()>& func3)
+        const std::string& name3, const std::function<void()>& func3,
+        bool disableBackButton)
         : GuiComponent(window),
         mHelpStyle(helpstyle),
         mBackground(window, ":/graphics/frame.png"),
-        mGrid(window, Vector2i(1, 2))
+        mGrid(window, Vector2i(1, 2)),
+        mDisableBackButton(disableBackButton)
 {
     float width = Renderer::getScreenWidth() * 0.6f;  // Max width.
     float minWidth = Renderer::getScreenWidth() * 0.3f; // Minimum width.
@@ -87,9 +89,11 @@ bool GuiMsgBox::input(InputConfig* config, Input input)
         return true;
     }
 
-    if (mAcceleratorFunc && config->isMappedTo("b", input) && input.value != 0) {
-        mAcceleratorFunc();
-        return true;
+    if (!mDisableBackButton) {
+        if (mAcceleratorFunc && config->isMappedTo("b", input) && input.value != 0) {
+            mAcceleratorFunc();
+            return true;
+        }
     }
 
     return GuiComponent::input(config, input);
@@ -119,6 +123,14 @@ void GuiMsgBox::deleteMeAndCall(const std::function<void()>& func)
 std::vector<HelpPrompt> GuiMsgBox::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
-    prompts.push_back(HelpPrompt("b", "Back"));
+
+    // If there is only one button, then remove the "Choose" help symbol
+    // as there is no way to make a choice.
+    if (mButtons.size() == 1)
+        prompts.pop_back();
+
+    if (!mDisableBackButton)
+        prompts.push_back(HelpPrompt("b", "Back"));
+
     return prompts;
 }

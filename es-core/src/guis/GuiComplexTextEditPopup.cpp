@@ -24,7 +24,12 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
         const std::function<void(const std::string&)>& okCallback,
         bool multiLine,
         const char* acceptBtnText,
-        const char* saveConfirmationText)
+        const char* saveConfirmationText,
+        const char* loadBtnText,
+        const char* loadBtnHelpText,
+        const char* clearBtnText,
+        const char* clearBtnHelpText,
+        bool hideCancelButton)
         : GuiComponent(window),
         mHelpStyle(helpstyle),
         mBackground(window, ":/graphics/frame.png"),
@@ -32,7 +37,8 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
         mMultiLine(multiLine),
         mInitValue(initValue),
         mOkCallback(okCallback),
-        mSaveConfirmationText(saveConfirmationText)
+        mSaveConfirmationText(saveConfirmationText),
+        mHideCancelButton(hideCancelButton)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -53,13 +59,14 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     std::vector< std::shared_ptr<ButtonComponent> > buttons;
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
             [this, okCallback] { okCallback(mText->getValue()); delete this; }));
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "LOAD", "load default",
+    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, loadBtnText, loadBtnHelpText,
             [this, infoString2] {
                     mText->setValue(infoString2); mText->setCursor(infoString2.size()); }));
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear",
+    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, clearBtnText, clearBtnHelpText,
             [this] { mText->setValue(""); }));
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "discard changes",
-            [this] { delete this; }));
+    if (!mHideCancelButton)
+        buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "discard changes",
+                [this] { delete this; }));
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
@@ -101,16 +108,18 @@ bool GuiComplexTextEditPopup::input(InputConfig* config, Input input)
     if (GuiComponent::input(config, input))
         return true;
 
+    if (!mHideCancelButton) {
     // Pressing back when not text editing closes us.
-    if (config->isMappedTo("b", input) && input.value) {
-        if (mText->getValue() != mInitValue) {
-            // Changes were made, ask if the user wants to save them.
-            mWindow->pushGui(new GuiMsgBox(mWindow, mHelpStyle, mSaveConfirmationText, "YES",
-                    [this] { this->mOkCallback(mText->getValue()); delete this; return true; },
-                    "NO", [this] { delete this; return false; }));
-        }
-        else {
-            delete this;
+        if (config->isMappedTo("b", input) && input.value) {
+            if (mText->getValue() != mInitValue) {
+                // Changes were made, ask if the user wants to save them.
+                mWindow->pushGui(new GuiMsgBox(mWindow, mHelpStyle, mSaveConfirmationText, "YES",
+                        [this] { this->mOkCallback(mText->getValue()); delete this; return true; },
+                        "NO", [this] { delete this; return false; }));
+            }
+            else {
+                delete this;
+            }
         }
     }
     return false;
@@ -119,6 +128,7 @@ bool GuiComplexTextEditPopup::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiComplexTextEditPopup::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
-    prompts.push_back(HelpPrompt("b", "back"));
+    if (!mHideCancelButton)
+        prompts.push_back(HelpPrompt("b", "back"));
     return prompts;
 }

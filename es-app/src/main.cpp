@@ -18,6 +18,7 @@
 
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiComplexTextEditPopup.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
@@ -52,6 +53,12 @@
 #include <time.h>
 
 bool forceInputConfig = false;
+
+enum returnCode {
+    NO_ERROR,
+    NO_SYSTEMS_FILE,
+    NO_ROMS
+};
 
 #ifdef _WIN64
 enum eConsoleType {
@@ -354,7 +361,7 @@ bool verifyHomeFolderExists()
 
 // Returns NO_ERRORS if everything is OK.
 // Otherwise returns either NO_SYSTEMS_FILE or NO_ROMS.
-bool loadSystemConfigFile(std::string& errorMsg)
+returnCode loadSystemConfigFile(std::string& errorMsg)
 {
     if (!SystemData::loadConfig()) {
         LOG(LogError) << "Could not parse systems configuration file.";
@@ -364,19 +371,18 @@ bool loadSystemConfigFile(std::string& errorMsg)
                 "BUT THIS FAILED. HAS EMULATIONSTATION BEEN PROPERLY\n"
                 "INSTALLED AND DO YOU HAVE WRITE PERMISSIONS TO \n"
                 "YOUR HOME DIRECTORY?";
-        return true;
+        return NO_SYSTEMS_FILE;
     }
 
     if (SystemData::sSystemVector.size() == 0) {
         LOG(LogError) << "No systems found, does at least one system have a game present? "
                 "(Check that the file extensions are supported.)";
         errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
-                "GAME FILES WERE FOUND. PLEASE MAKE SURE THAT\n"
-                "THE \"ROMDIRECTORY\" SETTING IN ES_SETTINGS.CFG\n"
-                "IS POINTING TO YOUR ROM DIRECTORY AND THAT YOUR\n"
-                "GAME FILES ARE USING SUPPORTED FILE EXTENSIONS.\n"
-                "THE GAME SYSTEMS SUBDIRECTORIES ALSO NEED TO\n"
-                "MATCH THE PLATFORM TAGS IN ES_SYSTEMS.CFG.\n"
+                "GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES\n"
+                "IN THE CURRENTLY CONFIGURED ROM DIRECTORY OR\n"
+                "CHANGE IT USING THE BUTTON BELOW. MAKE SURE\n"
+                "THAT YOUR FILE EXTENSIONS AND SYSTEMS DIRECTORY\n"
+                "NAMES ARE SUPPORTED BY EMULATIONSTATION-DE.\n"
                 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
         #ifdef _WIN64
         errorMsg += Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
@@ -384,10 +390,10 @@ bool loadSystemConfigFile(std::string& errorMsg)
         errorMsg += FileData::getROMDirectory();
         #endif
 
-        return true;
+        return NO_ROMS;
     }
 
-    return false;
+    return NO_ERROR;
 }
 
 // Called on exit, assuming we get far enough to have the log initialized.
@@ -483,8 +489,9 @@ int main(int argc, char* argv[])
     }
 
     std::string errorMsg;
+    returnCode returnCodeValue = loadSystemConfigFile(errorMsg);
 
-    if (loadSystemConfigFile(errorMsg)) {
+    if (returnCodeValue) {
         // Something went terribly wrong.
         if (errorMsg == "") {
             LOG(LogError) << "Unknown error occured while parsing system config file.";
@@ -498,20 +505,63 @@ int main(int argc, char* argv[])
             helpStyle.applyTheme(ViewController::get()->
                     getState().getSystem()->getTheme(), "system");
 
-        // We can't handle es_systems.cfg file problems inside ES itself,
-        // so display the error message and then quit.
-        window.pushGui(new GuiMsgBox(&window, helpStyle,
-            errorMsg.c_str(),
+        // If there was an issue with installing the es_systems.cfg file from the
+        // template directory, then display an error message and let the user quit.
+        // If there are no game files found, give the option to the user to quit or
+        // to configure a different ROM directory. The application will need to be
+        // restarted though, to activate any new ROM directory setting.
+        if (returnCodeValue == NO_SYSTEMS_FILE) {
+            window.pushGui(new GuiMsgBox(&window, helpStyle,
+                errorMsg.c_str(),
+                "QUIT", [] {
+                    SDL_Event* quit = new SDL_Event();
+                    quit->type = SDL_QUIT;
+                    SDL_PushEvent(quit);
+                }, "", nullptr, "", nullptr, true));
+        }
+        else if (returnCodeValue == NO_ROMS) {
+            auto updateVal = [](const std::string& newROMDirectory) {
+                Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                Settings::getInstance()->saveFile();
+                SDL_Event* quit = new SDL_Event();
+                quit->type = SDL_QUIT;
+                SDL_PushEvent(quit);
+            };
+
+            window.pushGui(new GuiMsgBox(&window, helpStyle, errorMsg.c_str(),
+                    "CHANGE ROM DIRECTORY", [&window, &helpStyle, updateVal] {
+                std::string currentROMDirectory;
+                #ifdef _WIN64
+                currentROMDirectory =
+                        Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+                #else
+                currentROMDirectory = FileData::getROMDirectory();
+                #endif
+
+                window.pushGui(new GuiComplexTextEditPopup(
+                        &window,
+                        helpStyle,
+                        "ENTER ROM DIRECTORY",
+                        "Currently configured directory:",
+                        currentROMDirectory,
+                        currentROMDirectory,
+                        updateVal,
+                        false,
+                        "SAVE AND QUIT",
+                        "SAVE CHANGES?",
+                        "LOAD CURRENT",
+                        "LOAD CURRENTLY CONFIGURED VALUE",
+                        "CLEAR",
+                        "CLEAR (LEAVE BLANK TO RESET TO DEFAULT DIRECTORY)",
+                        true));
+            },
             "QUIT", [] {
                 SDL_Event* quit = new SDL_Event();
                 quit->type = SDL_QUIT;
                 SDL_PushEvent(quit);
-            }));
+            }, "", nullptr, true));
+        }
     }
-
-    std::vector<HelpPrompt> prompts;
-    prompts.push_back(HelpPrompt("a", "Quit"));
-    window.setHelpPrompts(prompts, HelpStyle());
 
     // Dont generate joystick events while we're loading.
     // (Hopefully fixes "automatically started emulator" bug.)
