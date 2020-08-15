@@ -3,7 +3,7 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Amiga 600</text>
+            <text>Commodore Amiga 600</text>
         </text>
     </view>
 </theme>
