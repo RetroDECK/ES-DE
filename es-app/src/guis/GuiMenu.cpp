@@ -678,9 +678,9 @@ void GuiMenu::openOtherSettings()
 
     // GPU statistics.
     auto gpu_statistics = std::make_shared<SwitchComponent>(mWindow);
-    gpu_statistics->setState(Settings::getInstance()->getBool("DrawGPUStatistics"));
-    s->addWithLabel("GPU STATISTICS OVERLAY", gpu_statistics);
-    s->addSaveFunc([gpu_statistics] { Settings::getInstance()->setBool("DrawGPUStatistics",
+    gpu_statistics->setState(Settings::getInstance()->getBool("DisplayGPUStatistics"));
+    s->addWithLabel("DISPLAY GPU STATISTICS OVERLAY", gpu_statistics);
+    s->addSaveFunc([gpu_statistics] { Settings::getInstance()->setBool("DisplayGPUStatistics",
             gpu_statistics->getState()); });
 
     // Hide Reboot System option in the quit menu.

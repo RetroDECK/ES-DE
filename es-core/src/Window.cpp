@@ -207,7 +207,7 @@ void Window::update(int deltaTime)
     if (mFrameTimeElapsed > 500) {
         mAverageDeltaTime = mFrameTimeElapsed / mFrameCountElapsed;
 
-        if (Settings::getInstance()->getBool("DrawGPUStatistics")) {
+        if (Settings::getInstance()->getBool("DisplayGPUStatistics")) {
             std::stringstream ss;
 
             // FPS.
@@ -216,6 +216,9 @@ void Window::update(int deltaTime)
             ss << std::fixed << std::setprecision(2) <<
                     ((float)mFrameTimeElapsed / (float)mFrameCountElapsed) << " ms)";
 
+            // The following calculations are not accurate, and the font calculation is completely
+            // broken. For now, still report the figures as it's somehow useful to locate memory
+            // leaks and similar. But this needs to be completely overhauled later on.
             // VRAM.
             float textureVramUsageMiB = TextureResource::getTotalMemUsage() / 1024.0f / 1024.0f;
             float textureTotalUsageMiB = TextureResource::getTotalTextureSize() / 1024.0f / 1024.0f;
@@ -263,7 +266,7 @@ void Window::render()
     if (!mRenderedHelpPrompts)
         mHelp->render(transform);
 
-    if (Settings::getInstance()->getBool("DrawGPUStatistics") && mFrameDataText) {
+    if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         Renderer::setMatrix(Transform4x4f::Identity());
         mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
     }

@@ -204,7 +204,7 @@ void Settings::setDefaults()
     mBoolMap["LocalArt"] = false;
     mBoolMap["ShowHiddenFiles"] = true;
     mBoolMap["ShowHiddenGames"] = true;
-    mBoolMap["DrawGPUStatistics"] = false;
+    mBoolMap["DisplayGPUStatistics"] = false;
     mBoolMap["ShowRebootSystem"] = true;
     mBoolMap["ShowPoweroffSystem"] = true;
 

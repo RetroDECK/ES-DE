@@ -271,7 +271,7 @@ bool parseArgs(int argc, char* argv[])
             i++; // Skip vsync value.
         }
         else if (strcmp(argv[i], "--gpu-statistics") == 0) {
-            Settings::getInstance()->setBool("DrawGPUStatistics", "true");
+            Settings::getInstance()->setBool("DisplayGPUStatistics", "true");
         }
         else if (strcmp(argv[i], "--force-full") == 0) {
             Settings::getInstance()->setString("UIMode", "full");
@@ -313,7 +313,7 @@ bool parseArgs(int argc, char* argv[])
 #endif
 "  --vsync [1/on or 0/off]         Turn vsync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
-"  --gpu-statistics                Draw framerate and VRAM usage overlay\n"
+"  --gpu-statistics                Display framerate and VRAM usage overlay\n"
 "  --force-full                    Force the UI mode to Full\n"
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-kiosk                   Force the UI mode to Kiosk\n"
