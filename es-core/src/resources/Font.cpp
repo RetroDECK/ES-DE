@@ -16,7 +16,7 @@ FT_Library Font::sLibrary = nullptr;
 
 int Font::getSize() const { return mSize; }
 
-std::map< std::pair<std::string, int>, std::weak_ptr<Font> > Font::sFontMap;
+std::map<std::pair<std::string, int>, std::weak_ptr<Font>> Font::sFontMap;
 
 Font::FontFace::FontFace(ResourceData&& d, int size) : data(d)
 {
@@ -213,7 +213,7 @@ std::vector<std::string> getFallbackFontPaths()
 {
     std::vector<std::string> fontPaths;
 
-    // Standard fonts, let's include them here for error checking purposes even though that's
+    // Standard fonts, let's include them here for exception handling purposes even though that's
     // not really the correct location. (The application will crash if they are missing.)
     ResourceManager::getInstance()->
             getResourcePath(":/fonts/opensans_hebrew_condensed_light.ttf");

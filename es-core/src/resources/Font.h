@@ -93,7 +93,7 @@ public:
 
 private:
     static FT_Library sLibrary;
-    static std::map< std::pair<std::string, int>, std::weak_ptr<Font> > sFontMap;
+    static std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
 
     Font(int size, const std::string& path);
 

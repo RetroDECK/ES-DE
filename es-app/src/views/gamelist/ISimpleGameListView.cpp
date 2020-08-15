@@ -43,6 +43,7 @@ ISimpleGameListView::ISimpleGameListView(
 
 ISimpleGameListView::~ISimpleGameListView()
 {
+    // Remove theme extras.
     for (auto extra : mThemeExtras) {
         removeChild(extra);
         delete extra;

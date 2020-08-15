@@ -35,6 +35,16 @@ SystemView::SystemView(
     populate();
 }
 
+SystemView::~SystemView()
+{
+    // Delete any existing extras.
+    for (auto entry : mEntries) {
+        for (auto extra : entry.data.backgroundExtras)
+            delete extra;
+        entry.data.backgroundExtras.clear();
+    }
+}
+
 void SystemView::populate()
 {
     mEntries.clear();
@@ -110,10 +120,6 @@ void SystemView::populate()
 
             Vector2f denormalized = mCarousel.logoSize * e.data.logo->getOrigin();
             e.data.logo->setPosition(denormalized.x(), denormalized.y(), 0.0);
-            // Delete any existing extras.
-            for (auto extra : e.data.backgroundExtras)
-                delete extra;
-            e.data.backgroundExtras.clear();
 
             // Make background extras.
             e.data.backgroundExtras = ThemeData::makeExtras((*it)->getTheme(), "system", mWindow);
