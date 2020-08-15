@@ -227,6 +227,15 @@
     <theme>cdtv</theme>
   </system>
   <system>
+    <name>chailove</name>
+    <fullname>ChaiLove game engine</fullname>
+    <path>%ROMPATH%/chailove</path>
+    <extension>.chai .CHAI .chailove .CHAILOVE .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/chailove_libretro.so %ROM%</command>
+    <platform>love</platform>
+    <theme>chailove</theme>
+  </system>
+  <system>
     <name>channelf</name>
     <fullname>Fairchild Channel F</fullname>
     <path>%ROMPATH%/channelf</path>
@@ -261,6 +270,15 @@
     <command>retroarch -L ~/.config/retroarch/cores/daphne_libretro.so %ROM%</command>
     <platform>daphne</platform>
     <theme>daphne</theme>
+  </system>
+  <system>
+    <name>desktop</name>
+    <fullname>Desktop applications</fullname>
+    <path>%ROMPATH%/desktop</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
+    <platform>pc</platform>
+    <theme>desktop</theme>
   </system>
   <system>
     <name>doom</name>
@@ -416,13 +434,13 @@
     <theme>intellivision</theme>
   </system>
   <system>
-    <name>chailove</name>
-    <fullname>ChaiLove game engine</fullname>
-    <path>%ROMPATH%/chailove</path>
-    <extension>.chai .CHAI .chailove .CHAILOVE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch -L ~/.config/retroarch/cores/chailove_libretro.so %ROM%</command>
-    <platform>love</platform>
-    <theme>chailove</theme>
+    <name>kodi</name>
+    <fullname>Kodi home theatre software</fullname>
+    <path>%ROMPATH%/kodi</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
+    <platform>pc</platform>
+    <theme>kodi</theme>
   </system>
   <system>
     <name>lutro</name>
@@ -486,6 +504,24 @@
     <command>retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>mastersystem</platform>
     <theme>mastersystem</theme>
+  </system>
+  <system>
+    <name>megacd</name>
+    <fullname>Sega Mega-CD</fullname>
+    <path>%ROMPATH%/megacd</path>
+    <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so %ROM%</command>
+    <platform>segacd</platform>
+    <theme>megacd</theme>
+  </system>
+  <system>
+    <name>megacdjp</name>
+    <fullname>Sega Mega-CD</fullname>
+    <path>%ROMPATH%/megacdjp</path>
+    <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so %ROM%</command>
+    <platform>segacd</platform>
+    <theme>megacdjp</theme>
   </system>
   <system>
     <name>megadrive</name>
@@ -786,7 +822,7 @@
   </system>
   <system>
     <name>sega32x</name>
-    <fullname>Sega 32X</fullname>
+    <fullname>Sega Mega Drive 32X</fullname>
     <path>%ROMPATH%/sega32x</path>
     <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/picodrive_libretro.so %ROM%</command>
@@ -794,8 +830,26 @@
     <theme>sega32x</theme>
   </system>
   <system>
+    <name>sega32xjp</name>
+    <fullname>Sega Super 32X</fullname>
+    <path>%ROMPATH%/sega32xjp</path>
+    <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/picodrive_libretro.so %ROM%</command>
+    <platform>sega32x</platform>
+    <theme>sega32xjp</theme>
+  </system>
+  <system>
+    <name>sega32xna</name>
+    <fullname>Sega Genesis 32X</fullname>
+    <path>%ROMPATH%/sega32xna</path>
+    <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/picodrive_libretro.so %ROM%</command>
+    <platform>sega32x</platform>
+    <theme>sega32xna</theme>
+  </system>
+  <system>
     <name>segacd</name>
-    <fullname>Sega Mega-CD</fullname>
+    <fullname>Sega CD</fullname>
     <path>%ROMPATH%/segacd</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so %ROM%</command>
@@ -819,6 +873,15 @@
     <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
     <platform>snes</platform>
     <theme>snes</theme>
+  </system>
+  <system>
+    <name>snesna</name>
+    <fullname>Super Nintendo</fullname>
+    <path>%ROMPATH%/snesna</path>
+    <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
+    <platform>snes</platform>
+    <theme>snesna</theme>
   </system>
   <system>
     <name>solarus</name>

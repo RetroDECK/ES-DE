@@ -519,7 +519,7 @@ Here's an example:
 
 `<string name="ROMDirectory" value="~/games/roms" />`
 
-Keep in mind though that you still need to group the ROMs into directories corresponding to the platform names in es_systems.cfg.
+Keep in mind though that you still need to group the ROMs into directories corresponding to the \<path\> tags in es_systems.cfg.
 
 There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. You would normally not need this, but the option is there, should you require it for some reason.
 

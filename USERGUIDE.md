@@ -144,7 +144,7 @@ The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<us
 
 If ES can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
 
-Assuming the default ROM directory is used, we need to create a directory corresponding to the \<platform\> tag in es_systems.cfg, in this example it's **nes**.
+Assuming the default ROM directory is used, we need to create a directory corresponding to the \<path\> tag in es_systems.cfg, in this example it's **nes**.
 
 This would look something like this on Unix and Windows:
 
@@ -1020,7 +1020,15 @@ You can use **--help** or **-h** to view a list of command line options, as show
 
 For details regarding the systems such as which emulator or core is setup as default or which file extensions are supported, refer to the **es_systems.cfg** templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
 
-| Platform name         | Full name                                     | Recommended game setup               |
+**Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. EmulationStation will still work but the game system will not be themed which looks very ugly.
+
+The column **Game system name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
+
+Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although people from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be modified in the es_systems.cfg file if you wish to.
+
+Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For example 'na' for North America has been added to `snes` (Super Nintendo), as this is the minority region corresponding to around 7,5% of the world population. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
+
+| Game system name      | Full name                                     | Recommended game setup               |
 | :-------------------- | :-------------------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                           |                                      |
 | ags                   | Adventure Game Studio                         |                                      |
@@ -1051,6 +1059,7 @@ For details regarding the systems such as which emulator or core is setup as def
 | coco                  | Tandy Color Computer                          |                                      |
 | coleco                | ColecoVision                                  |                                      |
 | daphne                | Daphne Arcade Laserdisc Emulator              |                                      |
+| desktop               | Desktop applications                          |                                      |
 | doom                  | Doom                                          |                                      |
 | dos                   | DOS (PC)                                      | In separate folder (one folder per game, with complete file structure retained) |
 | dragon32              | Dragon 32                                     |                                      |
@@ -1069,6 +1078,7 @@ For details regarding the systems such as which emulator or core is setup as def
 | gx4000                | Amstrad GX4000                                |                                      |
 | intellivision         | Mattel Electronics Intellivision              |                                      |
 | chailove              | ChaiLove game engine                          |                                      |
+| kodi                  | Kodi home theatre software                    |                                      |
 | lutro                 | Lutro game engine                             |                                      |
 | macintosh             | Apple Macintosh                               |                                      |
 | mame                  | Multiple Arcade Machine Emulator              | Single archive file following MAME name standard in root folder |
@@ -1076,6 +1086,8 @@ For details regarding the systems such as which emulator or core is setup as def
 | mame-libretro         | Multiple Arcade Machine Emulator              | Single archive file following MAME name standard in root folder |
 | mame-mame4all         | MAME4ALL                                      | Single archive file following MAME name standard in root folder |
 | mastersystem          | Sega Master System                            |                                      |
+| megacd                | Sega Mega-CD                                  |                                      |
+| megacdjp              | Sega Mega-CD (Japan)                          |                                      |
 | megadrive             | Sega Mega Drive                               | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                   |                                      |
 | moonlight             | Moonlight game streaming                      |                                      |
@@ -1109,10 +1121,13 @@ For details regarding the systems such as which emulator or core is setup as def
 | satellaview           | Nintendo Satellaview                          |                                      |
 | saturn                | Sega Saturn                                   |                                      |
 | scummvm               | ScummVM game engine                           |                                      |
-| sega32x               | Sega 32X                                      | Single archive or ROM file in root folder |
-| segacd                | Sega Mega-CD                                  |                                      |
+| sega32x               | Sega Mega Drive 32X                           | Single archive or ROM file in root folder |
+| sega32xjp             | Sega Super 32X (Japan)                        | Single archive or ROM file in root folder |
+| sega32xna             | Sega Genesis 32X (North America)              | Single archive or ROM file in root folder |
+| segacd                | Sega CD                                       |                                      |
 | sg-1000               | Sega SG-1000                                  |                                      |
 | snes                  | Super Nintendo                                | Single archive or ROM file in root folder |
+| snesna                | Super Nintendo (North America)                | Single archive or ROM file in root folder |
 | solarus               | Solarus game engine                           |                                      |
 | spectravideo          | Spectravideo                                  |                                      |
 | steam                 | Valve Steam                                   | Shell/batch script in root folder    |
