@@ -13,6 +13,7 @@
 #include "animations/LambdaAnimation.h"
 #include "animations/LaunchAnimation.h"
 #include "animations/MoveCameraAnimation.h"
+#include "guis/GuiInfoPopup.h"
 #include "guis/GuiMenu.h"
 #include "guis/GuiMsgBox.h"
 #include "views/gamelist/DetailedGameListView.h"
@@ -260,6 +261,13 @@ void ViewController::launch(FileData* game, Vector3f center)
     stopAnimation(1); // Make sure the fade in isn't still playing.
     mWindow->stopInfoPopup(); // Make sure we disable any existing info popup.
     mLockInput = true;
+
+    // TEMPORARY - Until a proper game launch screen is implemented, at least this
+    // will let the user know that something is actually happening (in addition
+    // to the launch sound, if navigation sounds are enabled).
+    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "LAUNCHING GAME '" +
+            Utils::String::toUpper(game->metadata.get("name") + "'"), 10000);
+    mWindow->setInfoPopup(s);
 
     std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
 

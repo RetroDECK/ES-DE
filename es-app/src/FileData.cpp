@@ -735,6 +735,8 @@ void FileData::launchGame(Window* window)
         window->setInfoPopup(s);
     }
     else {
+        // Stop showing the game launch notification.
+        window->stopInfoPopup();
         #ifdef _WIN64
         // This code is only needed for Windows, where we may need to keep ES running while
         // the game/emulator is in use. It's basically used to pause any playing game video
