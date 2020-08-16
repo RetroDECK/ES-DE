@@ -311,18 +311,16 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
     }
     else {
         mFoundGame = true;
-        if (!(mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1)) {
-            ComponentListRow row;
+        ComponentListRow row;
 
-            for (size_t i = 0; i < results.size(); i++) {
-                row.elements.clear();
-                row.addElement(std::make_shared<TextComponent>(mWindow,
-                        Utils::String::toUpper(results.at(i).mdl.get("name")), font, color), true);
-                row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
-                mResultList->addRow(row);
-            }
-            mGrid.resetCursor();
+        for (size_t i = 0; i < results.size(); i++) {
+            row.elements.clear();
+            row.addElement(std::make_shared<TextComponent>(mWindow,
+                    Utils::String::toUpper(results.at(i).mdl.get("name")), font, color), true);
+            row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
+            mResultList->addRow(row);
         }
+        mGrid.resetCursor();
     }
 
     mBlockAccept = false;
@@ -382,7 +380,20 @@ void GuiScraperSearch::updateInfoPane()
 
     if (i != -1 && (int)mScraperResults.size() > i) {
         ScraperSearchResult& res = mScraperResults.at(i);
-        mResultName->setText(Utils::String::toUpper(res.mdl.get("name")));
+        std::string formattedName;
+
+        // Hack to make the game name align better with the image when using automatic mode.
+        mSearchType == ALWAYS_ACCEPT_FIRST_RESULT ?
+                formattedName = "  " + Utils::String::toUpper(res.mdl.get("name")) :
+                formattedName = Utils::String::toUpper(res.mdl.get("name"));
+
+        // If the game name is too long, cut it down. This does not affect the value that
+        // is actually scraped.
+        if (formattedName.size() > 40)
+            formattedName = formattedName.erase(40, formattedName.size()-40) + "...";
+
+        mResultName->setText(formattedName);
+
         mResultDesc->setText(Utils::String::toUpper(res.mdl.get("desc")));
         mDescContainer->reset();
 
