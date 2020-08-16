@@ -420,7 +420,7 @@ A selection of which systems to scrape for. It's possible to automatically scrap
 
 #### Content settings
 
-Describes the content types to include in the scraping. Most users will probably not need to adjust so many of these, excect perhaps to enable video scraping.
+Describes the content types to include in the scraping. Most users will probably not need to adjust so many of these.
 
 **Scrape game names**
 
@@ -436,7 +436,7 @@ This includes the game description, release date, developer, publisher, genre an
 
 **Scrape videos** _(ScreenScraper only)_
 
-Videos of actual gameplay. This option is disabled by default as it slows down the scraping significantly as well as consuming bandwidth and disk space. Not all users want gameplay videos in their frontend after all.
+Videos of actual gameplay.
 
 **Scrape screenshot images**
 
