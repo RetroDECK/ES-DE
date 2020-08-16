@@ -269,6 +269,7 @@ The following packages are not readily available for Windows, so clone the repos
 git clone git://git.savannah.gnu.org/freetype/freetype2.git
 git checkout VER-2-10-2
 mkdir build
+cd build
 cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON ..
 make
 ```
@@ -276,6 +277,7 @@ make
 [pugixml](https://pugixml.org)
 ```
 git clone git://github.com/zeux/pugixml
+cd pugixml
 git checkout v1.10
 cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
 make
@@ -286,6 +288,7 @@ As for RapidJSON, you don't need to compile it, you just need the include files:
 [RapidJSON](http://rapidjson.org)
 ```
 git clone git://github.com/Tencent/rapidjson
+cd rapidjson
 git checkout v1.1.0
 ```
 
