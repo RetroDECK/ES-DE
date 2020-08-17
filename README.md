@@ -5,16 +5,16 @@ EmulationStation Desktop Edition is a cross-platform graphical front-end for emu
 
 Maybe you're familiar with EmulationStation: yes there are multiple forks available for this software! However this version is intended for use primarily on desktop computers where it's not the primary interface for the computer. As such, the aim is not to provide full control over emulator settings or emulator button mappings, or include system administration functions and similar. Instead it's assumed that the emulators and the overall environment has been properly configured upfront.
 
-The goal is to suppport the major desktop operating systems: Unix/Linux, Windows and macOS (although the macOS port still remains to be done).
+The goal is to make the software as easy as possible to install and use, and to suppport the major desktop operating systems: Unix/Linux, Windows and macOS (although the macOS port is still very much a work in progress).
 
-With that said it's possible that the application still compiles and works on devices such as the Raspberry Pi, I've certainly not deliberately removed any code specific to such platforms and this fork is after all based on the RetroPie version of EmulationStation!
+With that said it's possible that the application still compiles and works on devices such as the Raspberry Pi, I've certainly not deliberately removed any code specific to such platforms and this fork is after all based on the RetroPie version of EmulationStation.
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
-A complete theme set, `rbsimple-DE` (which is based on Recalbox Multi), is bundled with the application and overall the goal is to make this software as easy as possible to install and use.
+A comprehensive theme set, `rbsimple-DE` (which is based on Recalbox Multi from the Recalbox community) is bundled with the application.
 
 Check out the [User Guide](USERGUIDE.md) for how to quickly get the application up and running! \
-(It will also show how to use its more advanced features.)
+(It will also show how to use some of its more advanced features.)
 
 
 ### Help needed:

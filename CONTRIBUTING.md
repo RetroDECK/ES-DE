@@ -4,7 +4,7 @@ Contributing to EmulationStation Desktop Edition
 
 ### Help needed:
 
-There are many cards in the Kanban backlog that would be nice to implement. And for this, code contributions are most welcome. There may be a bug or two as well that needs fixing ;)
+There are many cards in the Kanban backlog that would be nice to implement. And for this, code contributions are very welcome. There may be a bug or two as well that needs fixing ;)
 
 Apart from code commits, help is especially needed for thorough testing of the software and for working on the rbsimple-DE theme.
 
@@ -15,12 +15,9 @@ In general, a review of the [es_systems.cfg_unix](resources/templates/es_systems
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. \
 Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details of what needs to be added or updated.
 
-Finally, if someone could make a proper port to macOS, that would be great! There is some code present specifically for macOS but I've been unable to test it. More work is definitely needed but since macOS is a Unix operating system, this port should hopefully be quite straightforward.
-
-
 ### Coding style:
 
-The coding style for EmulationStation-DE is mostly a combination of the Linux Kernel and Google C++ coding guidelines.
+The coding style for EmulationStation-DE is mostly a combination of the Linux Kernel style (although that's C it's close enough to C++ as far as I'm concerned) and Google's C++ guidelines. Google is not a very nice company, but they write nice code.
 
 Please refer to these documents here:
 

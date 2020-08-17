@@ -47,7 +47,7 @@ cmake .
 make
 ```
 
-Note: To generate a `Debug` build on Unix/Linux, run this instead:
+To generate a `Debug` build on Unix/Linux, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
@@ -198,6 +198,78 @@ sudo apt-get install rpm
 ```
 
 
+## Building on macOS
+
+EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a quite bizarre Unix variant, it is still a proper system with good toolchains. The main deficiency (apart from a very strange user interface) is that there is no package manager and you need to register an account to install software from the App Store. There are several third party package managers though, and the use of one of them, _Homebrew_, is detailed below.
+
+**Setting up the build tools:**
+
+Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command `clang`. This will open a dialog that will let you download and install the tools.
+
+Following this, install the Homebrew package manager which will simplify the rest of the installation greatly. Install it by runing the following in a terminal window:
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+Be aware though that Homebrew is really slow as it compiles the packages from source code, so you need some patience when using it.
+
+**Package installation with Homebrew:**
+
+Install cmake, which will also install pkg-config that we need as well:
+
+```
+brew install cmake
+```
+
+Following this, install the dependency packages needed by ES:
+```
+brew install sdl2 freeimage freetype pugixml rapidjson
+```
+Curl could optionally be installed too, but normally the version shipped with macOS is fine to use.
+
+Finally, install VLC/libVLC:
+```
+brew cask install vlc
+```
+
+**Some additional/optional steps:**
+
+Enable developer mode to avoid annoying password requests when attaching the debugger to a process:
+```
+sudo /usr/sbin/DevToolsSecurity --enable
+```
+It makes me wonder who designed this functionality and what was their thinking, but a simple command is enough to not having to ponder this any further.
+
+If required, define SDKROOT, this is only needed if during compilation you get error messages regarding missing include files. Running the following will properly setup the development environment paths:
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+
+I suppose you should add this to your .bash_profile or similar, but I didn't have to do this step so I'm not sure.
+
+**Cloning and compiling:**
+
+To clone the source repository, run the following:
+
+```
+git clone https://gitlab.com/leonstyhre/emulationstation-de
+```
+
+Then generate the Makefile and build the software:
+
+```
+cd emulationstation-de
+cmake .
+make
+```
+
+To generate a `Debug` build, run this instead:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug .
+make
+```
+Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
+
+Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time (if you have cores to spare).
+
+
 ## Building on Windows
 
 This is a strange legacy operating system. However it's still popular, so we need to support it.
@@ -206,7 +278,7 @@ I did a brief evaluation of the Microsoft Visual C++ compiler (MSVC) but as far 
 
 At the moment I have only built the software using GCC on Windows, but I aim to get Clang/LLVM working at a later date.
 
-Anyway, here's a brief summary of how to get a build environment up and running on Windows.
+Anyway, here's a (not so) brief summary of how to get a build environment up and running on Windows.
 
 **Install Git, CMake, MinGW and your code editor:**
 
@@ -386,13 +458,11 @@ cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Deb
 
 For some reason defining the '../include' path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a `Git Bash` shell.
 
-The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
+The make command works fine directly in PowerShell though so it can be run from the VSCode terminal. Unfortunately I haven't been able to find a way to use a civilized shell from inside VSCode so we're stuck with PowerShell.
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) should now build the binary.
 
-Note that compilation time is much longer than on Unix, and linking time is excessive for a debug build. The debug binary is also much larger than on Unix.
-
-A worthwhile endeavour could be to setup a cross-compilation environment using WLS/WLS2 (Linux), but I have not tried it.
+Note that compilation time is much longer than on Unix, and linking time is excessive for a debug build (around 10 times longer on my computer). The debug binary is also much larger than on Unix.
 
 **Creating an NSIS installer:**
 
