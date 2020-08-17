@@ -164,7 +164,7 @@ void Settings::setDefaults()
     mBoolMap["ScrapeCovers"] = true;
     mBoolMap["ScrapeMarquees"] = true;
     mBoolMap["ScrapeScreenshots"] = true;
-    mBoolMap["ScrapeVideos"] = false;
+    mBoolMap["ScrapeVideos"] = true;
 
     // Other settings.
     #ifdef _RPI_

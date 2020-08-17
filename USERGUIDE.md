@@ -420,7 +420,7 @@ A selection of which systems to scrape for. It's possible to automatically scrap
 
 #### Content settings
 
-Describes the content types to include in the scraping. Most users will probably not need to adjust so many of these, excect perhaps to enable video scraping.
+Describes the content types to include in the scraping. Most users will probably not need to adjust so many of these.
 
 **Scrape game names**
 
@@ -436,7 +436,7 @@ This includes the game description, release date, developer, publisher, genre an
 
 **Scrape videos** _(ScreenScraper only)_
 
-Videos of actual gameplay. This option is disabled by default as it slows down the scraping significantly as well as consuming bandwidth and disk space. Not all users want gameplay videos in their frontend after all.
+Videos of actual gameplay.
 
 **Scrape screenshot images**
 
@@ -961,6 +961,11 @@ There are numerous locations throughout ES where custom scripts will be executed
 The setup for this is a bit technical, so please refer to the [INSTALL.md](INSTALL.md) document to see how it's configured.
 
 
+## Portable installation (Windows only)
+
+On Windows, ES can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, please refer to the [INSTALL.md](INSTALL.md) document to see how it's configured.
+
+
 ## Command line arguments
 
 You can use **--help** or **-h** to view a list of command line options, as shown here.
@@ -1032,10 +1037,10 @@ Sometimes the name of the console is (more or less) the same for multiple region
 | :-------------------- | :-------------------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                           |                                      |
 | ags                   | Adventure Game Studio                         |                                      |
-| amiga                 | Amiga                                         | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amiga600              | Amiga 600                                     | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amiga1200             | Amiga 1200                                    | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amigacd32             | Amiga CD32                                    |                                      |
+| amiga                 | Commodore Amiga                               | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amiga600              | Commodore Amiga 600                           | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amiga1200             | Commodore Amiga 1200                          | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amigacd32             | Commodore Amiga CD32                          |                                      |
 | amstradcpc            | Amstrad CPC                                   |                                      |
 | apple2                | Apple II                                      |                                      |
 | apple2gs              | Apple IIGS                                    |                                      |
@@ -1050,7 +1055,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 | atarilynx             | Atari Lynx                                    |                                      |
 | atarist               | Atari ST                                      |                                      |
 | atarixe               | Atari XE                                      |                                      |
-| atomiswave            |                                               |                                      |
+| atomiswave            | Atomiswave                                    |                                      |
 | bbcmicro              | BBC Micro                                     |                                      |
 | c64                   | Commodore 64                                  | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
 | cavestory             | Cave Story (NXEngine)                         |                                      |
@@ -1067,13 +1072,13 @@ Sometimes the name of the console is (more or less) the same for multiple region
 | famicom               | Nintendo Family Computer                      | Single archive or ROM file in root folder |
 | fba                   | Final Burn Alpha                              | Single archive file following MAME name standard |
 | fbneo                 | FinalBurn Neo                                 | Single archive file following MAME name standard |
-| fds                   | Famicom Disk System                           |                                      |
+| fds                   | Nintendo Famicom Disk System                  |                                      |
 | gameandwatch          | Nintendo Game and Watch                       |                                      |
-| gamegear              | Sega Gamegear                                 |                                      |
+| gamegear              | Sega Game Gear                                |                                      |
 | gamecube              | Nintendo GameCube                             |                                      |
-| gb                    | Game Boy                                      |                                      |
-| gba                   | Game Boy Advance                              |                                      |
-| gbc                   | Game Boy Color                                |                                      |
+| gb                    | Nintendo Game Boy                             |                                      |
+| gba                   | Nintendo Game Boy Advance                     |                                      |
+| gbc                   | Nintendo Game Boy Color                       |                                      |
 | genesis               | Sega Genesis                                  | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                |                                      |
 | intellivision         | Mattel Electronics Intellivision              |                                      |

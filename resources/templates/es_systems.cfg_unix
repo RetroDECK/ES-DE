@@ -345,7 +345,7 @@
   </system>
   <system>
     <name>fds</name>
-    <fullname>Famicom Disk System</fullname>
+    <fullname>Nintendo Famicom Disk System</fullname>
     <path>%ROMPATH%/fds</path>
     <extension>.nes .NES .fds .FDS .unf .UNF .UNIF .UNIF .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/nestopia_libretro.so %ROM%</command>
@@ -363,7 +363,7 @@
   </system>
   <system>
     <name>gamegear</name>
-    <fullname>Sega Gamegear</fullname>
+    <fullname>Sega Game Gear</fullname>
     <path>%ROMPATH%/gamegear</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/genesis_plus_gx_libretro.so %ROM%</command>
@@ -381,7 +381,7 @@
   </system>
   <system>
     <name>gb</name>
-    <fullname>Game Boy</fullname>
+    <fullname>Nintendo Game Boy</fullname>
     <path>%ROMPATH%/gb</path>
     <extension>.sfc .SFC .smc .SMC .gb .GB .gbc .GBC .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/bsnes_libretro.so %ROM%</command>
@@ -390,7 +390,7 @@
   </system>
   <system>
     <name>gba</name>
-    <fullname>Game Boy Advance</fullname>
+    <fullname>Nintendo Game Boy Advance</fullname>
     <path>%ROMPATH%/gba</path>
     <extension>.gba .GBA .agb .AGB .bin .BIN .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/mednafen_gba_libretro.so %ROM%</command>
@@ -399,7 +399,7 @@
   </system>
   <system>
     <name>gbc</name>
-    <fullname>Game Boy Color</fullname>
+    <fullname>Nintendo Game Boy Color</fullname>
     <path>%ROMPATH%/gbc</path>
     <extension>.sfc .SFC .smc .SMC .gb .GB .gbc .GBC .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/bsnes_libretro.so %ROM%</command>
