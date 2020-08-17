@@ -24,15 +24,13 @@ namespace Utils
             // 0xxxxxxx, one byte character.
             if ((c & 0x80) == 0) {
                 // 0xxxxxxx
-                result = ((_string[_cursor++]       )      );
+                result = ((_string[_cursor++]));
             }
             // 110xxxxx, two byte character.
             else if ((c & 0xE0) == 0xC0) {
                 // 110xxxxx 10xxxxxx
                 result = (_string[_cursor++] & 0x1F) <<  6;
                 result |= _string[_cursor++] & 0x3F;
-//              result = ((_string[_cursor++] & 0x1F) <<  6) |
-//                       ((_string[_cursor++] & 0x3F)      );
             }
             // 1110xxxx, three byte character.
             else if ((c & 0xF0) == 0xE0) {
@@ -40,9 +38,6 @@ namespace Utils
                 result = (_string[_cursor++] & 0x0F) << 12;
                 result |= (_string[_cursor++] & 0x3F) <<  6;
                 result |= _string[_cursor++] & 0x3F;
-//              result = ((_string[_cursor++] & 0x0F) << 12) |
-//                       ((_string[_cursor++] & 0x3F) <<  6) |
-//                       ((_string[_cursor++] & 0x3F)      );
             }
             // 11110xxx, four byte character.
             else if ((c & 0xF8) == 0xF0) {
@@ -51,10 +46,6 @@ namespace Utils
                 result |= (_string[_cursor++] & 0x3F) << 12;
                 result |= (_string[_cursor++] & 0x3F) <<  6;
                 result |= _string[_cursor++] & 0x3F;
-//              result = ((_string[_cursor++] & 0x07) << 18) |
-//                       ((_string[_cursor++] & 0x3F) << 12) |
-//                       ((_string[_cursor++] & 0x3F) <<  6) |
-//                       ((_string[_cursor++] & 0x3F)      );
             }
             else {
                 // Error, invalid unicode.

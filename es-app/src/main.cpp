@@ -33,7 +33,7 @@
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
 
-#ifdef _WIN64
+#if defined(_WIN64)
 #include <cstring>
 #include <windows.h>
 #endif
@@ -597,7 +597,7 @@ int main(int argc, char* argv[])
     // Check if the media directory exists, and if not, log a warning.
     if (!Utils::FileSystem::isDirectory(FileData::getMediaDirectory()) ||
             Utils::FileSystem::isSymlink(FileData::getMediaDirectory())) {
-        LOG(LogWarning) << "Games media directory does not exist "
+        LOG(LogWarning) << "Game media directory does not exist "
                 "(or is not a directory or a symlink):";
         LOG(LogWarning) << FileData::getMediaDirectory();
     }

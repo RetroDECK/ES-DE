@@ -8,6 +8,10 @@
 
 #define _FILE_OFFSET_BITS 64
 
+#if defined(__APPLE__)
+#define _DARWIN_USE_64_BIT_INODE
+#endif
+
 #include "utils/FileSystemUtil.h"
 
 #include "utils/StringUtil.h"
@@ -134,7 +138,7 @@ namespace Utils
             #if defined(_WIN64)
             // On Windows we need to check HOMEDRIVE and HOMEPATH.
             if (!homePath.length()) {
-                #ifdef _WIN64
+                #if defined(_WIN64)
                 std::string envHomeDrive =
                         Utils::String::wideStringToString(_wgetenv(L"HOMEDRIVE"));
                 std::string envHomePath  =
@@ -167,7 +171,7 @@ namespace Utils
             char temp[512];
 
             // Return current working directory.
-            #ifdef _WIN64
+            #if defined(_WIN64)
             wchar_t tempWide[512];
             return (_wgetcwd(tempWide, 512) ?
                     getGenericPath(Utils::String::wideStringToString(tempWide)) : "");
@@ -178,7 +182,7 @@ namespace Utils
 
         std::string getPathToBinary(const std::string& executable)
         {
-            #ifdef _WIN64
+            #if defined(_WIN64)
             return "";
             #else
             std::string pathVariable = std::string(getenv("PATH"));
@@ -230,7 +234,7 @@ namespace Utils
             // Just in case some build environments won't handle this correctly.
             // For Windows it doesn't really work like that and the application could have
             // been install to an arbitrary location, so this function won't be used on that OS.
-            #ifdef __unix__
+            #if defined(__unix__)
             if (!installPrefix.length())
                 installPrefix = "/usr/local";
             return installPrefix + "/share/emulationstation";
@@ -564,7 +568,7 @@ namespace Utils
                 return true;
             }
 
-            #ifdef _WIN64
+            #if defined(_WIN64)
             std::ifstream sourceFile(Utils::String::stringToWideString(_source_path).c_str(),
                     std::ios::binary);
             #else
@@ -578,7 +582,7 @@ namespace Utils
                 return true;
             }
 
-            #ifdef _WIN64
+            #if defined(_WIN64)
             std::ofstream targetFile(Utils::String::stringToWideString(_destination_path).c_str(),
                     std::ios::binary);
             #else
@@ -622,7 +626,7 @@ namespace Utils
                 return true;
             }
 
-            #ifdef _WIN64
+            #if defined(_WIN64)
             _wrename(Utils::String::stringToWideString(_source_path).c_str(),
                     Utils::String::stringToWideString(_destination_path).c_str());
             #else
@@ -641,7 +645,7 @@ namespace Utils
                 return true;
 
             // Try to remove file.
-            #ifdef _WIN64
+            #if defined(_WIN64)
             if (_wunlink(Utils::String::stringToWideString(path).c_str()) != 0) {
                 LOG(LogError) << "Couldn't delete file, permission problems?";
                 LOG(LogError) << path;
@@ -688,7 +692,7 @@ namespace Utils
                 createDirectory(parent);
 
             // Try to create directory again now that the parent should exist.
-            #ifdef _WIN64
+            #if defined(_WIN64)
             return (_wmkdir(Utils::String::stringToWideString(path).c_str()) == 0);
             #else
             return (mkdir(path.c_str(), 0755) == 0);
@@ -699,7 +703,10 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #ifdef _WIN64
+            #if defined(__APPLE__)
+            struct stat info;
+            return (stat(path.c_str(), &info) == 0);
+            #elif defined(_WIN64)
             struct _stat64 info;
             return (_wstat64(Utils::String::stringToWideString(path).c_str(), &info) == 0);
             #else
@@ -710,7 +717,7 @@ namespace Utils
 
         bool driveExists(const std::string& _path)
         {
-            #ifdef _WIN64
+            #if defined(_WIN64)
             std::string path = getGenericPath(_path);
             // Try to add a dot or a backslash and a dot depending on how the drive
             // letter was defined by the user.
@@ -741,12 +748,16 @@ namespace Utils
         bool isRegularFile(const std::string& _path)
         {
             std::string path = getGenericPath(_path);
-            struct stat64 info;
 
-            #ifdef _WIN64
+            #if defined(__APPLE__)
+            struct stat info;
+            return (stat(path.c_str(), &info) == 0);
+            #elif defined(_WIN64)
+            struct stat64 info;
             if (_wstat64(Utils::String::stringToWideString(path).c_str(), &info) != 0)
                 return false;
             #else
+            struct stat64 info;
             if (stat64(path.c_str(), &info) != 0)
                 return false;
             #endif
@@ -758,13 +769,17 @@ namespace Utils
         bool isDirectory(const std::string& _path)
         {
             std::string path = getGenericPath(_path);
-            struct stat64 info;
 
-            #ifdef _WIN64
+            #if defined(__APPLE__)
+            struct stat info;
+            return (stat(path.c_str(), &info) == 0);
+            #elif defined(_WIN64)
+            struct stat64 info;
             if (_wstat64(Utils::String::stringToWideString(path).c_str(), &info) != 0)
                 return false;
             #else
-             if (stat64(path.c_str(), &info) != 0)
+            struct stat64 info;
+            if (stat64(path.c_str(), &info) != 0)
                 return false;
             #endif
 
@@ -784,10 +799,18 @@ namespace Utils
                     (Attributes & FILE_ATTRIBUTE_REPARSE_POINT))
                 return true;
             #else
+
+            #if defined(__APPLE__)
             struct stat info;
 
             if (lstat(path.c_str(), &info) != 0)
                 return false;
+            #else
+            struct stat64 info;
+
+            if (lstat64(path.c_str(), &info) != 0)
+                return false;
+            #endif
 
             // Check for S_IFLNK attribute.
             return (S_ISLNK(info.st_mode));

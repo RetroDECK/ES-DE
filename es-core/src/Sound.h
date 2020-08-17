@@ -9,10 +9,14 @@
 #ifndef ES_CORE_SOUND_H
 #define ES_CORE_SOUND_H
 
-#if defined(__linux__) || defined (_WIN64)
+#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_audio.h>
 #else
 #include "SDL_audio.h"
+#endif
+
+#if defined(__APPLE__)
+#include <sstream>
 #endif
 
 #include <map>

@@ -62,10 +62,16 @@ if(NOT WIN32)
     find_package(CURL REQUIRED)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
-    find_package(Pugixml REQUIRED)
     find_package(RapidJSON REQUIRED)
     find_package(SDL2 REQUIRED)
     find_package(VLC REQUIRED)
+endif()
+
+if(APPLE)
+    # For some strange reason, macOS complains about an uppercase 'P' in Pugixml.
+    find_package(pugixml REQUIRED)
+elseif(UNIX)
+    find_package(Pugixml REQUIRED)
 endif()
 
 # Add libCEC support.
@@ -96,8 +102,8 @@ endif()
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     message("-- Compiler is Clang/LLVM")
     execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE CLANG_VERSION)
-    if(CLANG_VERSION VERSION_LESS 6.0.0)
-        message(SEND_ERROR "You need at least Clang 6.0.0 to compile EmulationStation-DE!")
+    if(CLANG_VERSION VERSION_LESS 4.2.1)
+        message(SEND_ERROR "You need at least Clang 4.2.1 to compile EmulationStation-DE!")
     endif()
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     message("-- Compiler is GNU/GCC")
@@ -118,16 +124,24 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O0")
 
     # If using Clang, then add additional debug data needed by GDB.
-    # Comment this out if you're using LLDB for debugging as this flag makes
-    # the binary much larger and the application much slower.
-    if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    # Comment this out if you're using LLDB for debugging as this flag makes the binary
+    # much larger and the application much slower. On macoOS this setting is never enabled
+    # as LLDB is the default debugger on this OS.
+    if(NOT APPLE AND "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_DEBUG")
     endif()
 else()
     # Enable the C++11 standard and enable optimizations as it's a release build.
-    # Also disable the assert() macros and strip the binary.
+    # This will also disable all assert() macros. Strip the binary as well.
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -DNDEBUG")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
+endif()
+
+# This removes half of the ranlib warnings on macOS regarding no symbols for files that
+# are #ifdef'ed away. There must be a way to remove the other half as well?
+if(APPLE)
+    SET(CMAKE_C_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
+    SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
 endif()
 
 if(${GLSystem} MATCHES "Desktop OpenGL")
@@ -136,12 +150,13 @@ else()
     add_definitions(-DUSE_OPENGLES_10)
 endif()
 
-# For Unix systems, assign the installation prefix to local $ES_INSTALL_PREFIX variable.
-if(NOT WIN32)
+# For Unix systems (except for macOS), assign the installation prefix to the local
+# $ES_INSTALL_PREFIX variable.
+if(NOT WIN32 AND NOT APPLE)
     add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 endif()
 
-# Handle additional (required) include files for dependency packages.
+# Handle additional (required) include files for dependency packages on Windows.
 if(WIN32)
     set(WIN32_INCLUDE_DIR "NOT_DEFINED" CACHE FILEPATH "")
     if(NOT EXISTS ${WIN32_INCLUDE_DIR})
@@ -162,6 +177,12 @@ set(COMMON_INCLUDE_DIRS
     ${VLC_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/external
     ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
+
+# Temporary solution until the VLC find module has been updated to work properly on macOS.
+if(APPLE)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+            "/Applications/VLC.app/Contents/MacOS/include")
+endif()
 
 if(WIN32)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${WIN32_INCLUDE_DIR})
@@ -224,6 +245,12 @@ elseif(WIN32)
         "${PROJECT_SOURCE_DIR}/libSDL2main.a"
         "${PROJECT_SOURCE_DIR}/SDL2.dll"
         "nanosvg")
+endif()
+
+# Temporary solution until the VLC find module has been updated to work properly on macOS.
+if (APPLE)
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
+            "/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib")
 endif()
 
 # Add libCEC libraries.

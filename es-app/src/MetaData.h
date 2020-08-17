@@ -9,6 +9,10 @@
 #ifndef ES_APP_META_DATA_H
 #define ES_APP_META_DATA_H
 
+#if defined(__APPLE__)
+#include <sstream>
+#endif
+
 #include <map>
 #include <vector>
 

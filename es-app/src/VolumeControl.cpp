@@ -9,11 +9,11 @@
 #include "math/Misc.h"
 #include "Log.h"
 
-#ifdef _RPI_
+#if defined(_RPI_)
 #include "Settings.h"
 #endif
 
-#ifdef _WIN64
+#if defined(_WIN64)
 #include <mmdeviceapi.h>
 #endif
 
@@ -40,8 +40,8 @@ std::weak_ptr<VolumeControl> VolumeControl::sInstance;
 VolumeControl::VolumeControl()
         : originalVolume(0),
         internalVolume(0)
-        #if defined (__APPLE__)
-        #error TODO: Not implemented for MacOS yet!!!
+        #if defined(__APPLE__)
+//        #error TODO: Not implemented for MacOS yet!!!
         #elif defined(__linux__)
         , mixerIndex(0),
         mixerHandle(nullptr),
@@ -62,8 +62,8 @@ VolumeControl::VolumeControl(
         const VolumeControl & right):
         originalVolume(0),
         internalVolume(0)
-        #if defined (__APPLE__)
-        #error TODO: Not implemented for MacOS yet!!!
+        #if defined(__APPLE__)
+//        #error TODO: Not implemented for MacOS yet!!!
         #elif defined(__linux__)
         , mixerIndex(0),
         mixerHandle(nullptr),
@@ -108,8 +108,8 @@ std::shared_ptr<VolumeControl> & VolumeControl::getInstance()
 void VolumeControl::init()
 {
     // Initialize audio mixer interface.
-    #if defined (__APPLE__)
-    #error TODO: Not implemented for MacOS yet!!!
+    #if defined(__APPLE__)
+//    #error TODO: Not implemented for MacOS yet!!!
     #elif defined(__linux__)
     // Try to open mixer device.
     if (mixerHandle == nullptr) {
@@ -248,8 +248,8 @@ void VolumeControl::init()
 void VolumeControl::deinit()
 {
     // Deinitialize audio mixer interface.
-    #if defined (__APPLE__)
-    #error TODO: Not implemented for MacOS yet!!!
+    #if defined(__APPLE__)
+//    #error TODO: Not implemented for MacOS yet!!!
     #elif defined(__linux__)
     if (mixerHandle != nullptr) {
         snd_mixer_detach(mixerHandle, mixerCard);
@@ -275,8 +275,8 @@ int VolumeControl::getVolume() const
 {
     int volume = 0;
 
-    #if defined (__APPLE__)
-    #error TODO: Not implemented for MacOS yet!!!
+    #if defined(__APPLE__)
+//    #error TODO: Not implemented for MacOS yet!!!
     #elif defined(__linux__)
     if (mixerElem != nullptr) {
         // Get volume range.
@@ -352,8 +352,8 @@ void VolumeControl::setVolume(int volume)
 
     // Store values in internal variables.
     internalVolume = volume;
-    #if defined (__APPLE__)
-    #error TODO: Not implemented for MacOS yet!!!
+    #if defined(__APPLE__)
+//    #error TODO: Not implemented for MacOS yet!!!
     #elif defined(__linux__)
     if (mixerElem != nullptr) {
         // Get volume range.

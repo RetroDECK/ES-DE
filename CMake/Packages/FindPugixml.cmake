@@ -12,12 +12,12 @@
 include(FindPkgMacros)
 
 if (NOT WIN32)
-  find_package(PkgConfig)
-  pkg_check_modules(PUGIXML REQUIRED pugixml>=1.09)
+    find_package(PkgConfig)
+    pkg_check_modules(PUGIXML REQUIRED pugixml>=1.09)
 endif (NOT WIN32)
 
 if (WIN32)
-find_path(PUGIXML_INCLUDE_DIR pugixml.hpp)
+    find_path(PUGIXML_INCLUDE_DIR pugixml.hpp)
 
 # Support the REQUIRED and QUIET arguments, and set PUGIXML_FOUND if found.
 include (FindPackageHandleStandardArgs)

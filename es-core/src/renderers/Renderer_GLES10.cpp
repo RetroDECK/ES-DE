@@ -21,7 +21,7 @@
 
 namespace Renderer
 {
-    #if defined(_DEBUG)
+    #ifndef NDEBUG
     #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
 
     static void _GLCheckError(const char* _funcName)
@@ -30,7 +30,7 @@ namespace Renderer
 
         if (errorCode != GL_NO_ERROR) {
             LOG(LogError) << "OpenGLES error: " << _funcName <<
-                    " failed with error code: " << errorCode;
+                    " failed with error code: 0x" << std::hex << errorCode;
         }
     }
     #else

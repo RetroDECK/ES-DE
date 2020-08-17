@@ -9,6 +9,10 @@
 #include "AudioManager.h"
 #include "Settings.h"
 
+#if defined(__APPLE__)
+#include <sstream>
+#endif
+
 bool PowerSaver::mState = false;
 bool PowerSaver::mRunningScreenSaver = false;
 

@@ -365,7 +365,7 @@ bool SystemData::copyConfigTemplate(const std::string& path)
     #if defined (_WIN64)
     systemsTemplateFile = ResourceManager::getInstance()->
             getResourcePath(":/templates/es_systems.cfg_windows");
-    #elif defined(__unix__)
+    #elif defined(__unix__) || defined (__APPLE__)
     systemsTemplateFile = ResourceManager::getInstance()->
             getResourcePath(":/templates/es_systems.cfg_unix");
     #endif

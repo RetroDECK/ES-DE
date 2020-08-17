@@ -248,11 +248,11 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     // It's one of these...
 
     float endPos = target; // Directly.
-    float dist = abs(endPos - startPos);
+    float dist = fabs(endPos - startPos);
 
-    if (abs(target + posMax - startPos - mScrollVelocity) < dist)
+    if (fabs(target + posMax - startPos - mScrollVelocity) < dist)
         endPos = target + posMax; // Loop around the end (0 -> max).
-    if (abs(target - posMax - startPos - mScrollVelocity) < dist)
+    if (fabs(target - posMax - startPos - mScrollVelocity) < dist)
         endPos = target - posMax; // Loop around the start (max - 1 -> -1).
 
     // Animate mSystemInfo's opacity (fade out, wait, fade back in).
@@ -541,11 +541,11 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
 
         float distance = i - mCamOffset;
 
-        float scale = 1.0f + ((mCarousel.logoScale - 1.0f) * (1.0f - abs(distance)));
+        float scale = 1.0f + ((mCarousel.logoScale - 1.0f) * (1.0f - fabs(distance)));
         scale = Math::min(mCarousel.logoScale, Math::max(1.0f, scale));
         scale /= mCarousel.logoScale;
 
-        int opacity = (int)Math::round(0x80 + ((0xFF - 0x80) * (1.0f - abs(distance))));
+        int opacity = (int)Math::round(0x80 + ((0xFF - 0x80) * (1.0f - fabs(distance))));
         opacity = Math::max((int) 0x80, opacity);
 
         const std::shared_ptr<GuiComponent> &comp = mEntries.at(index).data.logo;
