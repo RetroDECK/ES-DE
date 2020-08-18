@@ -78,12 +78,16 @@ void GuiMenu::openSoundSettings()
 {
     auto s = new GuiSettings(mWindow, "SOUND SETTINGS");
 
+    // TEMPORARY - Hide the volume slider on macOS until the volume control logic
+    // has been implemented for this operating system.
+    #if !defined(__APPLE__)
     // System volume.
     auto volume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
     volume->setValue((float)VolumeControl::getInstance()->getVolume());
     s->addWithLabel("SYSTEM VOLUME", volume);
     s->addSaveFunc([volume] { VolumeControl::getInstance()->
             setVolume((int)Math::round(volume->getValue())); });
+    #endif
 
     if (UIModeController::getInstance()->isUIModeFull()) {
     // The ALSA Audio Card and Audio Device selection code is disabled at the moment.

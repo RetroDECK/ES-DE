@@ -376,9 +376,9 @@ void GuiInputConfig::clearAssignment(int inputId)
 
 bool GuiInputConfig::filterTrigger(Input input, InputConfig* config, int inputId)
 {
-    #if defined(__linux__)
-    // On Linux, some gamepads return both an analog axis and a digital button for the trigger;
-    // we want the analog axis only, so this function removes the button press event.
+    #if defined(__linux__) || defined(__APPLE__)
+    // On Linux and macOS, some gamepads return both an analog axis and a digital button for
+    // the trigger; we want the analog axis only, so this function removes the button press event.
     // This is relevant mostly for Sony Dual Shock controllers.
     if (InputManager::getInstance()->getAxisCountByDevice(config->getDeviceId()) == 6) {
         if (config->getDeviceName().find("PLAYSTATION") != std::string::npos ||

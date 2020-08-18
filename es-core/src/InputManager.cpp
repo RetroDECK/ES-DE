@@ -388,7 +388,11 @@ void InputManager::loadDefaultKBConfig()
     cfg->mapInput("a", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_RETURN, 1, true));
     cfg->mapInput("b", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_BACKSPACE, 1, true));
     cfg->mapInput("x", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_DELETE, 1, true));
+    #if defined(__APPLE__)
+    cfg->mapInput("y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PRINTSCREEN, 1, true));
+    #else
     cfg->mapInput("y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_INSERT, 1, true));
+    #endif
     cfg->mapInput("start", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_ESCAPE, 1, true));
     cfg->mapInput("select", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F1, 1, true));
 

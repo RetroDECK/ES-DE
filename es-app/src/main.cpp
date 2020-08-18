@@ -594,12 +594,12 @@ int main(int argc, char* argv[])
         }
     }
 
-    // Check if the media directory exists, and if not, log a warning.
+    // Check if the media directory exists, otherwise log an information entry.
     if (!Utils::FileSystem::isDirectory(FileData::getMediaDirectory()) ||
             Utils::FileSystem::isSymlink(FileData::getMediaDirectory())) {
-        LOG(LogWarning) << "Game media directory does not exist "
+        LOG(LogInfo) << "Game media directory does not exist "
                 "(or is not a directory or a symlink):";
-        LOG(LogWarning) << FileData::getMediaDirectory();
+        LOG(LogInfo) << FileData::getMediaDirectory();
     }
 
     // Generate joystick events since we're done loading.

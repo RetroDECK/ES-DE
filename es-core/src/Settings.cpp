@@ -172,7 +172,7 @@ void Settings::setDefaults()
     #else
         mIntMap["MaxVRAM"] = 128;
     #endif
-    #if defined (__unix__) || defined (__APPLE__)
+    #if defined (__unix__)
     mStringMap["FullscreenMode"] = "normal";
     #endif
     mStringMap["PowerSaverMode"] = "disabled";

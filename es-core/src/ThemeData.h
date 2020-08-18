@@ -66,7 +66,7 @@ public:
 
     inline void setFiles(const std::deque<std::string>& deque)
     {
-        *this << "from theme \"" << deque.front() << "\"\n";
+        *this << "From theme \"" << deque.front() << "\"\n";
         for (auto it = deque.cbegin() + 1; it != deque.cend(); it++)
             *this << "  (from included file \"" << (*it) << "\")\n";
         *this << "    ";

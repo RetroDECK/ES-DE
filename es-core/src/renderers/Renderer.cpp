@@ -113,15 +113,22 @@ namespace Renderer
         #else
         if (Settings::getInstance()->getBool("Windowed"))
             windowFlags = getWindowFlags();
+        #if defined(__APPLE__)
+        else
+            // This seems to be the best fullscreen mode on macOS as the taskbar switcher
+            // works etc. while still filling the entire screen with the application window.
+            windowFlags = SDL_WINDOW_FULLSCREEN_DESKTOP | getWindowFlags();
+        #else
         else if (Settings::getInstance()->getString("FullscreenMode") == "borderless")
             windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
         else
             windowFlags = SDL_WINDOW_FULLSCREEN | getWindowFlags();
         #endif
+        #endif
 
         if ((sdlWindow = SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, windowFlags)) == nullptr) {
-            LOG(LogError) << "Error creating SDL window!\n\t" << SDL_GetError();
+            LOG(LogError) << "Couldn't create SDL window. " << SDL_GetError();
             return false;
         }
 

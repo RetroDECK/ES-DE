@@ -751,7 +751,8 @@ namespace Utils
 
             #if defined(__APPLE__)
             struct stat info;
-            return (stat(path.c_str(), &info) == 0);
+            if (stat(path.c_str(), &info) != 0)
+                return false;
             #elif defined(_WIN64)
             struct stat64 info;
             if (_wstat64(Utils::String::stringToWideString(path).c_str(), &info) != 0)
@@ -772,7 +773,8 @@ namespace Utils
 
             #if defined(__APPLE__)
             struct stat info;
-            return (stat(path.c_str(), &info) == 0);
+            if (stat(path.c_str(), &info) != 0)
+                return false;
             #elif defined(_WIN64)
             struct stat64 info;
             if (_wstat64(Utils::String::stringToWideString(path).c_str(), &info) != 0)

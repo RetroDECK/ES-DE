@@ -84,7 +84,13 @@ namespace Renderer
 
     void setupWindow()
     {
+        #if defined(__APPLE__)
+        // This is required on macOS, as the operating system will otherwise insist on using
+        // a newer OpenGL version which completely breaks the application.
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+        #else
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        #endif
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
@@ -99,6 +105,11 @@ namespace Renderer
     void createContext()
     {
         sdlContext = SDL_GL_CreateContext(getSDLWindow());
+
+        if (!sdlContext) {
+            LOG(LogError) << "Error creating OpenGL context. " << SDL_GetError();
+        }
+
         SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
 
         std::string vendor = glGetString(GL_VENDOR) ?
