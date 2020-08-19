@@ -19,7 +19,11 @@
 #include "SDL_events.h"
 #endif
 
-#ifdef _WIN64
+#if defined(__APPLE__)
+#include <array>
+#endif
+
+#if defined(_WIN64)
 #include <windows.h>
 #include <codecvt>
 #include <locale>
@@ -69,7 +73,7 @@ int runSystemCommand(const std::wstring& cmd_utf16)
 
 int launchEmulatorUnix(const std::string& cmd_utf8)
 {
-    #ifdef __unix__
+    #if defined(__unix__) || defined (__APPLE__)
     std::string command = std::string(cmd_utf8) + " 2>&1";
 
     FILE* commandPipe;
