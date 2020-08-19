@@ -125,7 +125,7 @@ if(WIN32)
             ../libvlc.dll ../libvlccore.dll ../libwinpthread-1.dll ../SDL2.dll DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
     install(FILES ../LICENSE DESTINATION .)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/LICENSES DESTINATION .)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION .)
 elseif(APPLE)
@@ -137,7 +137,7 @@ elseif(APPLE)
             DESTINATION EmulationStation.app/Contents/Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
             DESTINATION EmulationStation.app/Contents/Resources)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/LICENSES
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
             DESTINATION EmulationStation.app/Contents/Resources)
 else()
     install(TARGETS emulationstation RUNTIME
@@ -150,7 +150,7 @@ else()
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.svg
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/LICENSES
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)

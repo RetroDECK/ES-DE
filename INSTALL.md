@@ -105,7 +105,7 @@ I'm expecting this to be resolved in the near future though, and as I think Clan
 It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
 
 ```
-user@computer:~$ sudo update-alternatives --config c++
+myusername@computer:~$ sudo update-alternatives --config c++
 [sudo] password for user:
 There are 2 choices for the alternative c++ (providing /usr/bin/c++).
 
@@ -165,7 +165,7 @@ So the home directory will always take precedence, and any resources or themes l
 Creation of Debian .deb packages is enabled by default, simply run `cpack` to generate the package:
 
 ```
-user@computer:~/emulationstation-de$ cpack
+myusername@computer:~/emulationstation-de$ cpack
 CPack: Create package using DEB
 CPack: Install projects
 CPack: - Run preinstall target for: emulationstation-de
@@ -274,7 +274,7 @@ Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up th
 Simply run `cpack` to build the .dmg installer:
 
 ```
-user@computer:~/emulationstation-de$ cpack
+myusername@computer:~/emulationstation-de$ cpack
 CPack: Create package using DragNDrop
 CPack: Install projects
 CPack: - Run preinstall target for: emulationstation-de
@@ -599,7 +599,7 @@ For the ROM directory, you can either change it manually in es_settings.cfg, or 
 By default, ES looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
 
 ```
-user@computer:~ROMs$ ls -1
+myusername@computer:~ROMs$ ls -1
 arcade
 megadrive
 pcengine
