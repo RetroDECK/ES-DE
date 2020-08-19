@@ -3,7 +3,7 @@
 //
 //  Provides game file data structures and functions to access and sort this information.
 //  Also provides functions to look up paths to media files and for launching games
-//  (launching initiated by the ViewController).
+//  (launching initiated in ViewController).
 //
 
 #pragma once

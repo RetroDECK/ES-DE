@@ -362,10 +362,13 @@ bool SystemData::copyConfigTemplate(const std::string& path)
 
     LOG(LogInfo) << "Attempting to copy template es_systems.cfg file from the resources directory.";
 
-    #if defined (_WIN64)
+    #if defined(_WIN64)
     systemsTemplateFile = ResourceManager::getInstance()->
             getResourcePath(":/templates/es_systems.cfg_windows");
-    #elif defined(__unix__) || defined (__APPLE__)
+    #elif defined(__APPLE__)
+    systemsTemplateFile = ResourceManager::getInstance()->
+            getResourcePath(":/templates/es_systems.cfg_macos");
+    #elif defined(__unix__)
     systemsTemplateFile = ResourceManager::getInstance()->
             getResourcePath(":/templates/es_systems.cfg_unix");
     #endif

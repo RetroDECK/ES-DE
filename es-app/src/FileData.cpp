@@ -3,7 +3,7 @@
 //
 //  Provides game file data structures and functions to access and sort this information.
 //  Also provides functions to look up paths to media files and for launching games
-//  (launching initiated by the ViewController).
+//  (launching initiated in ViewController).
 //
 
 #include "FileData.h"
@@ -650,7 +650,7 @@ void FileData::launchGame(Window* window)
     // Expand home path if ~ is used.
     command = Utils::FileSystem::expandHomePath(command);
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     std::wstring commandWide = Utils::String::stringToWideString(command);
     #endif
 
@@ -676,7 +676,7 @@ void FileData::launchGame(Window* window)
         }
 
         // For Windows, we need to handle UTF-16 encoding.
-        #ifdef _WIN64
+        #if defined(_WIN64)
         std::wstring emuExecutableWide;
         std::wstring emuPathWide;
 
@@ -717,7 +717,7 @@ void FileData::launchGame(Window* window)
     LOG(LogDebug) << commandRaw;
     LOG(LogInfo) << "Expanded emulator launch command:";
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     LOG(LogInfo) << Utils::String::wideStringToString(commandWide);
     returnValue = launchEmulatorWindows(commandWide);
     #else
@@ -737,7 +737,7 @@ void FileData::launchGame(Window* window)
     else {
         // Stop showing the game launch notification.
         window->stopInfoPopup();
-        #ifdef _WIN64
+        #if  defined(_WIN64)
         // This code is only needed for Windows, where we may need to keep ES running while
         // the game/emulator is in use. It's basically used to pause any playing game video
         // and to keep the screensaver from activating.
