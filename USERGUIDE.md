@@ -977,7 +977,7 @@ On Windows, ES can be installed to and run from a removable media device such as
 
 ## Command line arguments
 
-Please refer to the [INSTALL.md](INSTALL.md#Command line arguments) document for a list of the command line arguments per operating system.
+Please refer to the [INSTALL.md](INSTALL.md#command-line-arguments) document for a list of the command line arguments per operating system.
 
 
 ## Supported game systems

@@ -54,7 +54,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
-* Updated the CMake/CPack install and package build script to work as expected (it can now generate .deb, .rpm and NSIS installation packages)
+* Updated the CMake/CPack install and package build script to work as expected (it can now generate .deb, .rpm, .dmg and NSIS installation packages)
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix only)
 * License files included for all the libraries and resources that are bundled with the application
 * Greatly expanded the application documentation (which is hosted with the source repository on GitLab)

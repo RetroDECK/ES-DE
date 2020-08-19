@@ -8,7 +8,7 @@ Table of contents:
 
 ## Development Environment
 
-EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macoOS and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
+EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
 
 There are much more details regarding compilers later in this document, so read on!
 
@@ -172,7 +172,7 @@ CPack: - Run preinstall target for: emulationstation-de
 CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPackDeb: - Generating dependency list
-CPack: - package: /home/user/emulationstation-de/emulationstation-de-1.0.0.deb generated.
+CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-1.0.0.deb generated.
 ```
 
 The package can now be installed using a package manager, for example `dpkg`.
@@ -268,6 +268,20 @@ make
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
+
+**Creating .dmg DragNDrop installer:**
+
+Simply run `cpack` to build the .dmg installer:
+
+```
+user@computer:~/emulationstation-de$ cpack
+CPack: Create package using DragNDrop
+CPack: Install projects
+CPack: - Run preinstall target for: emulationstation-de
+CPack: - Install project: emulationstation-de []
+CPack: Create package
+CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.0.0.dmg generated.
+```
 
 
 ## Building on Windows
@@ -606,7 +620,7 @@ Here is such an example:
 
 **~/.emulationstation/es_input.cfg:**
 
-You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User Guide](USERGUIDE.md#Input device configuration).
+You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User Guide](USERGUIDE.md#input-device-configuration).
 
 If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next run.
 

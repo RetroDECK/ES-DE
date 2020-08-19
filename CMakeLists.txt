@@ -6,8 +6,8 @@ set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
 
 # Add local find modules to CMAKE path.
 list(APPEND CMAKE_MODULE_PATH
-    ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
-    ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages)
+        ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
+        ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages)
 
 # Options.
 option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
@@ -168,15 +168,15 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # Add include directories.
 set(COMMON_INCLUDE_DIRS
-    ${CURL_INCLUDE_DIR}
-    ${FreeImage_INCLUDE_DIRS}
-    ${FREETYPE_INCLUDE_DIRS}
-    ${PUGIXML_INCLUDE_DIRS}
-    ${RAPIDJSON_INCLUDE_DIRS}
-    ${SDL2_INCLUDE_DIR}
-    ${VLC_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/external
-    ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
+        ${CURL_INCLUDE_DIR}
+        ${FreeImage_INCLUDE_DIRS}
+        ${FREETYPE_INCLUDE_DIRS}
+        ${PUGIXML_INCLUDE_DIRS}
+        ${RAPIDJSON_INCLUDE_DIRS}
+        ${SDL2_INCLUDE_DIR}
+        ${VLC_INCLUDE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/external
+        ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
 
 # Temporary solution until the VLC find module has been updated to work properly on macOS.
 if(APPLE)
@@ -200,10 +200,10 @@ endif()
 
 if(DEFINED BCMHOST)
     list(APPEND COMMON_INCLUDE_DIRS
-        "${CMAKE_FIND_ROOT_PATH}/opt/vc/include"
-        "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos"
-        "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vmcs_host/linux"
-        "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos/pthreads")
+            "${CMAKE_FIND_ROOT_PATH}/opt/vc/include"
+            "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos"
+            "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vmcs_host/linux"
+            "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos/pthreads")
 # Add Vero4k include directory.
 elseif(DEFINED VERO4K)
     list(APPEND COMMON_INCLUDE_DIRS "${CMAKE_FIND_ROOT_PATH}/opt/vero3/include")
@@ -226,25 +226,25 @@ endif()
 
 if (NOT WIN32)
     set(COMMON_LIBRARIES
-        ${CURL_LIBRARIES}
-        ${FreeImage_LIBRARIES}
-        ${FREETYPE_LIBRARIES}
-        ${PUGIXML_LIBRARIES}
-        ${SDL2_LIBRARY}
-        ${VLC_LIBRARIES}
-        nanosvg)
+            ${CURL_LIBRARIES}
+            ${FreeImage_LIBRARIES}
+            ${FREETYPE_LIBRARIES}
+            ${PUGIXML_LIBRARIES}
+            ${SDL2_LIBRARY}
+            ${VLC_LIBRARIES}
+            nanosvg)
 elseif(WIN32)
     set(COMMON_LIBRARIES
-        "${PROJECT_SOURCE_DIR}/libpugixml.dll"
-        "${PROJECT_SOURCE_DIR}/FreeImage.dll"
-        "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
-        "${PROJECT_SOURCE_DIR}/libvlc.dll"
-        "${PROJECT_SOURCE_DIR}/libfreetype.dll"
-        "Winmm.dll"
-        "mingw32"
-        "${PROJECT_SOURCE_DIR}/libSDL2main.a"
-        "${PROJECT_SOURCE_DIR}/SDL2.dll"
-        "nanosvg")
+            "${PROJECT_SOURCE_DIR}/libpugixml.dll"
+            "${PROJECT_SOURCE_DIR}/FreeImage.dll"
+            "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
+            "${PROJECT_SOURCE_DIR}/libvlc.dll"
+            "${PROJECT_SOURCE_DIR}/libfreetype.dll"
+            "Winmm.dll"
+            "mingw32"
+            "${PROJECT_SOURCE_DIR}/libSDL2main.a"
+            "${PROJECT_SOURCE_DIR}/SDL2.dll"
+            "nanosvg")
 endif()
 
 # Temporary solution until the VLC find module has been updated to work properly on macOS.

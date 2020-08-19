@@ -19,7 +19,8 @@
 
 # Compiled executable
 emulationstation
-emulationstation.exe
+EmulationStation
+EmulationStation.exe
 
 # build directory
 build
@@ -39,10 +40,14 @@ install_manifest.txt
 _CPack_Packages
 emulationstation-de*.deb
 emulationstation-de*.rpm
-emulationstation-de*.exe
+EmulationStation-DE*.dmg
+EmulationStation-DE*.exe
 
 # TODO
 TODO.md
+
+# macOS
+.DS_Store
 
 # Eclipse
 .cproject
