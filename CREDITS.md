@@ -20,7 +20,7 @@ Nils Bonenberger
 Licenses
 ========
 
-Please find the individual license files inside the LICENSES directory.
+Please find the individual license files inside the `licenses` directory.
 
 
 Libraries

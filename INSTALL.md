@@ -8,7 +8,7 @@ Table of contents:
 
 ## Development Environment
 
-EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
+EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macoOS and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
 
 There are much more details regarding compilers later in this document, so read on!
 
@@ -47,7 +47,7 @@ cmake .
 make
 ```
 
-To generate a `Debug` build on Unix/Linux, run this instead:
+To generate a debug build, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
@@ -177,16 +177,14 @@ CPack: - package: /home/user/emulationstation-de/emulationstation-de-1.0.0.deb g
 
 The package can now be installed using a package manager, for example `dpkg`.
 
-For RPM packages, change the comments in the `CMakeLists.txt` accordingly, from:
+For RPM packages, remove the comment in the `CMakeLists.txt` accordingly, from:
 
 ```
 #SET(CPACK_GENERATOR "RPM")
-SET(CPACK_GENERATOR "DEB")
 ```
 to:
 ```
 SET(CPACK_GENERATOR "RPM")
-#SET(CPACK_GENERATOR "DEB")
 ```
 
 Then simply run `cpack`.
@@ -200,7 +198,7 @@ sudo apt-get install rpm
 
 ## Building on macOS
 
-EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a quite bizarre Unix variant, it is still a proper system with good toolchains. The main deficiency (apart from a very strange user interface) is that there is no package manager and you need to register an account to install software from the App Store. There are several third party package managers though, and the use of one of them, _Homebrew_, is detailed below.
+EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a bizarre Unix variant, it is still a proper system with good tools. The main deficiency (apart from a quite strange user interface) is that there is no package manager and you need to register an account to install software from the App Store. There are several third party package managers though, and the use of one of them, _Homebrew_, is detailed below.
 
 **Setting up the build tools:**
 
@@ -210,7 +208,7 @@ Following this, install the Homebrew package manager which will simplify the res
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
-Be aware though that Homebrew is really slow as it compiles the packages from source code, so you need some patience when using it.
+Be aware though that Homebrew is really slow as it often compiles the packages from source code, so you need some patience when using it.
 
 **Package installation with Homebrew:**
 
@@ -239,8 +237,10 @@ sudo /usr/sbin/DevToolsSecurity --enable
 ```
 It makes me wonder who designed this functionality and what was their thinking, but a simple command is enough to not having to ponder this any further.
 
-If required, define SDKROOT, this is only needed if during compilation you get error messages regarding missing include files. Running the following will properly setup the development environment paths:
+If required, define SDKROOT. This is only needed if during compilation you get error messages regarding missing include files. Running the following will properly setup the development environment paths:
+```
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+```
 
 I suppose you should add this to your .bash_profile or similar, but I didn't have to do this step so I'm not sure.
 
@@ -260,14 +260,14 @@ cmake .
 make
 ```
 
-To generate a `Debug` build, run this instead:
+To generate a debug build, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
 
-Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time (if you have cores to spare).
+Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
 
 ## Building on Windows
@@ -563,10 +563,12 @@ The portable installation works exactly as a normal installation, i.e. you can u
 
 EmulationStation Desktop Edition ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
 
-Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates`.
+Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates` on Unix, `/Applications/EmulationStation.app/Contents/Resources/resources/templates` on macOS and `C:\Program Files\EmulationStation\resources\templates` on Windows.
 
 The template file will be copied to `~/.emulationstation/es_systems.cfg`. \
-`~` is `$HOME` on Linux, and `%HOMEPATH%` on Windows.
+`~` is `$HOME` on Unix and macOS, and `%HOMEPATH%` on Windows.
+
+**Note:** Keep in mind that you have to set up your emulators separately from EmulationStation, the es_systems.cfg file assumes that your emulator environment is properly configured.
 
 **~/.emulationstation/es_settings.cfg:**
 
@@ -577,6 +579,8 @@ This file contains all the settings supported by ES, at their default values. No
 For the ROM directory, you can either change it manually in es_settings.cfg, or use the dialog that is shown on application startup to change the path to your liking.
 
 **Setting the ROM directory in es_settings.cfg:**
+
+**Note:** This complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
 
 By default, ES looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
 
@@ -590,7 +594,7 @@ pcengine
 However, if you've saved your ROMs to another directory, you need to configure the ROMDirectory setting in es_settings.cfg.\
 Here's an example:
 
-`<string name="ROMDirectory" value="~/games/roms" />`
+`<string name="ROMDirectory" value="~/games/ROMs" />`
 
 Keep in mind though that you still need to group the ROMs into directories corresponding to the \<path\> tags in es_systems.cfg.
 
@@ -598,29 +602,13 @@ There is also support to add the variable %ESPATH% to the ROM directory setting,
 
 Here is such an example:
 
-`<string name="ROMDirectory" value="%ESPATH%/../roms" />`
-
-Note that this complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
-
-**Keep in mind that you have to set up your emulator separately from EmulationStation!**
+`<string name="ROMDirectory" value="%ESPATH%/../ROMs" />`
 
 **~/.emulationstation/es_input.cfg:**
 
-When you first start EmulationStation, you will be prompted to configure an input device. The process is thus:
+You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User Guide](USERGUIDE.md#Input device configuration).
 
-1. Hold a button on the device you want to configure.  This includes the keyboard.
-
-2. Press the buttons as they appear in the list.  Some inputs can be skipped by holding any button down for a few seconds (e.g. page up/page down).
-
-3. You can review your mappings by pressing up and down, making any changes by pressing A.
-
-4. Choose "SAVE" to save this device and close the input configuration screen.
-
-The new configuration will be added to the `~/.emulationstation/es_input.cfg` file.
-
-**Both new and old devices can be (re)configured at any time by pressing the Start button and choosing "CONFIGURE INPUT".**  From here, you may unplug the device you used to open the menu and plug in a new one, if necessary.  New devices will be appended to the existing input configuration file, so your old devices will retain their configuration.
-
-**If your controller stops working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next run.**
+If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next run.
 
 
 ## Command line arguments
@@ -628,6 +616,33 @@ The new configuration will be added to the `~/.emulationstation/es_input.cfg` fi
 You can use `--help` or `-h` to view a list of command line options, as shown here.
 
 ### Unix
+
+```
+--resolution [width] [height]   Try to force a particular resolution
+--gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
+--ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
+--show-hidden-files             Show hidden files and folders
+--show-hidden-games             Show hidden games
+--no-exit                       Don't show the exit option in the menu
+--no-splash                     Don't show the splash screen
+--debug                         Print debug information
+--windowed                      Windowed mode, should be combined with --resolution
+--fullscreen-normal             Normal fullscreen mode
+--fullscreen-borderless         Borderless fullscreen mode (always on top)
+--vsync [1/on or 0/off]         Turn vsync on or off (default is on)
+--max-vram [size]               Max VRAM to use (in mebibytes) before swapping
+--gpu-statistics                Display framerate and VRAM usage overlay
+--force-full                    Force the UI mode to Full
+--force-kid                     Force the UI mode to Kid
+--force-kiosk                   Force the UI mode to Kiosk
+--force-disable-filters         Force the UI to ignore applied filters in gamelist
+--force-input-config            Force configuration of input device
+--home [path]                   Directory to use as home path
+--version, -v                   Displays version information
+--help, -h                      Summon a sentient, angry tuba
+```
+
+### macOS
 
 ```
 --resolution [width] [height]   Try to force a particular resolution
@@ -718,18 +733,22 @@ Here's an overview of the file layout:
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
         <!-- The command executed when a game is launched. A few special variables are replaced if found in a command, like %ROM% (see below).
-        This example would run RetroArch with the the snes9x_libretro core.
+        This example for Unix would run RetroArch with the the snes9x_libretro core.
         If there are spaces in the path or file name, you must enclose them in quotation marks, for example:
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
         <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
 
+        <!-- This is an example for macOS. It uses the %EMUPATH% variable to point to the RetroArch cores relative to the emulator binary.
+        As there is a somehow standardized installation structure for this operating system, an absolute path is defined for the emulator. -->
+        <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/snes9x_libretro.dylib %ROM%</command>
+
         <!-- This is an example for Windows. The .exe extension is optional and both forward slashes and backslashes are allowed as
         directory separators. As there is no standardized installation directory structure for this operating system, the %EMUPATH%
-        variable is used here to find the cores relative to the RetroArch binary. This binary must be in the PATH environmental variable
+        variable is used here to find the cores relative to the RetroArch binary. The emulator binary must be in the PATH environmental variable
         or otherwise the complete path to the retroarch.exe file needs to be defined. Batch scripts (.bat) are also supported. -->
         <command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
 
-        <!-- Another example for Windows. As can be seen here, the absolut path to the emulator has been defined, and there are spaces
+        <!-- Another example for Windows. As can be seen here, the absolute path to the emulator has been defined, and there are spaces
         in the directory name, so it needs to be surrounded by quotation marks. As well the quotation marks are needed around the core
         configuration as the %EMUPATH% will expand to the path of the emulator binary, which will of course also include the spaces. -->
         <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>

@@ -15,12 +15,13 @@ The installation procedure will not be covered here as it differs between operat
 The following operating systems have been tested:
 
 * Kubuntu 20.04
+* macOS 10.11.6 (El Capitan)
 * Windows 10 (x86)
 * Windows 8.1 (x86)
 
 Upon first startup, ES will create its home directory, by default the location is ~/.emulationstation.
 
-On Unix this defaults to /home/\<username\>/.emulationstation/ and on Windows it defaults to C:\Users\\<username>\\.emulationstation\
+On Unix this defaults to /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username>\\.emulationstation\
 
 A settings file, **es_settings.cfg** will be generated with all the default settings, and a **es_systems.cfg** file will also be copied from the program resource folder. This file contains the game ROM and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md) document.
 
@@ -38,6 +39,8 @@ If a controller is attached when starting ES and no **es_input.cfg** input confi
 If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you however need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES with the command line argument **--force-input-config** or you can manually delete the es_input.cfg file prior to starting the application. Alternatively you can navigate to the menu using your keyboard and select **Configure input** manually to configure your new device.
 
 The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions.
+
+Both new and old devices can be (re)configured at any time by pressing the Start button and choosing "CONFIGURE INPUT". New devices will be appended to the existing input configuration file, so your old devices will retain their configuration.
 
 
 ## System view (main screen)
@@ -140,20 +143,21 @@ It's required that the ROM files are in one of the supported file extensions, or
 
 It's highly recommended to use filenames that are corresponding to the full name of the game, or otherwise you will need to manually feed the scraper the game name when scraping which is very tedious.
 
-The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/.emulationstation/ and on Windows it defaults to C:\Users\\<username\>\\.emulationstation\
+The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs/, on macOS /Users/\<username\>/ROMs/ and on Windows C:\Users\\<username\>\ROMs\.
 
 If ES can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
 
 Assuming the default ROM directory is used, we need to create a directory corresponding to the \<path\> tag in es_systems.cfg, in this example it's **nes**.
 
-This would look something like this on Unix and Windows:
+This would look something like the following:
 
 ```
-/home/myusername/ROMs/nes
-C:\Users\myusername\ROMs\nes
+/home/myusername/ROMs/nes     # On Unix
+/Users/myusername/ROMs/nes    # On macOS
+C:\Users\myusername\ROMs\nes  # On Windows
 ```
 
-Then simply copy your game ROMs into this folder, and you should end up with something like the following:
+Then simply copy your game ROMs into this folder, and you should end up with something like this (example for Unix):
 
 ```
 ~/ROMs/nes/Legend of Zelda, the.zip
@@ -243,7 +247,7 @@ Ports are not really executed using emulators, but is instead software running n
 
 It's of course possible to add these as single files to the root folder, but normally it's recommended to setup a separate folder per game as there may be more than a single file available per game. You very often want to have easy access to the game setup utility for instance.
 
-Here's an example for running Chocolate-doom and Quakespasm:
+Here's an example for running Chocolate-doom and Quakespasm on Unix:
 
 ```
 ~/ROMs/ports/Chocolate-doom/chocolate-doom.sh
@@ -309,10 +313,11 @@ EmulationStation is a game browsing frontend and does not provide any emulation 
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
-In order to use the default es_systems.cfg file, you need to make sure that the emulator installation directory is in the operating system's path variable. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and there is a standardized directory structure. But for Windows you may need to add the emulator directory to your %PATH% variable manually. If on Windows, a simple test is to open a command window and type the name of the emulator and press enter, if the emulator is not found, then EmulationStation won't find it either and you need to update your %PATH% variable.
+In order to use the default es_systems.cfg file, for Unix and Windows you need to make sure that the emulator binary directory is in the operating system's path variable. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and there is a standardized directory structure. But for Windows you may need to add the emulator directory to your %PATH% variable manually. If on Windows, a simple test is to open a command window and type the name of the emulator and press enter, if the emulator is not found, then EmulationStation won't find it either and you need to update your %PATH% variable.
 
 As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator path relative to the EmulationStation location. Again, please refer to the INSTALL.md document on details regarding this.
 
+For macOS the emulator directory is normally not an issue as there is a somehow standardized installation structure, and the es_systems.cfg template for this operating systems has absolute paths defined for the emulators.
 
 ## Scraping
 
@@ -366,6 +371,10 @@ The default directory is ~/.emulationstation/downloaded_media/\<game system\>/\<
 For example on Unix:
 
 `/home/myusername/.emulationstation/downloaded_media/c64/screenshots/`
+
+For example on macOS:
+
+`/Users/myusername/.emulationstation/downloaded_media/c64/screenshots/`
 
 For example on Windows:
 
@@ -930,7 +939,7 @@ Note that this Desktop Edition fork adds additional features to the themes and m
 
 Themes are most easily installed in your ES home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found by ES during startup and you're given an option to choose which one to use from the 'UI Settings' on the main menu.
 
-Note that although you can put additional themes in your ES home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be something like `/usr/local/share/emulationstation/themes` on Unix or `C:\Program Files\EmulationStation\themes` on Windows.
+Note that although you can put additional themes in your ES home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be something like `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation\themes` on Windows.
 
 Note: If you would like to customize the rbsimple-DE theme, simply make a copy of the complete rbsimple-DE directory to ~/.emulationstation/themes and then that copy of the theme will take precedence over the one in the application installation directory.
 
@@ -968,62 +977,12 @@ On Windows, ES can be installed to and run from a removable media device such as
 
 ## Command line arguments
 
-You can use **--help** or **-h** to view a list of command line options, as shown here.
+Please refer to the [INSTALL.md](INSTALL.md#Command line arguments) document for a list of the command line arguments per operating system.
 
-### Unix
-
-```
---resolution [width] [height]   Try to force a particular resolution
---gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
---show-hidden-files             Show hidden files and folders
---show-hidden-games             Show hidden games
---no-exit                       Don't show the exit option in the menu
---no-splash                     Don't show the splash screen
---debug                         Print debug information
---windowed                      Windowed mode, should be combined with --resolution
---fullscreen-normal             Normal fullscreen mode
---fullscreen-borderless         Borderless fullscreen mode (always on top)
---vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Display framerate and VRAM usage overlay
---force-full                    Force the UI mode to Full
---force-kid                     Force the UI mode to Kid
---force-kiosk                   Force the UI mode to Kiosk
---force-disable-filters         Force the UI to ignore applied filters in gamelist
---force-input-config            Force configuration of input device
---home [path]                   Directory to use as home path
---version, -v                   Displays version information
---help, -h                      Summon a sentient, angry tuba
-```
-
-### Windows
-
-```
---resolution [width] [height]   Try to force a particular resolution
---gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
---show-hidden-files             Show hidden files and folders
---show-hidden-games             Show hidden games
---no-exit                       Don't show the exit option in the menu
---no-splash                     Don't show the splash screen
---debug                         Print debug information
---vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Display framerate and VRAM usage overlay
---force-full                    Force the UI mode to Full
---force-kid                     Force the UI mode to Kid
---force-kiosk                   Force the UI mode to Kiosk
---force-disable-filters         Force the UI to ignore applied filters in gamelist
---force-input-config            Force configuration of input device
---home [path]                   Directory to use as home path
---version, -v                   Displays version information
---help, -h                      Summon a sentient, angry tuba
-```
 
 ## Supported game systems
 
-For details regarding the systems such as which emulator or core is setup as default or which file extensions are supported, refer to the **es_systems.cfg** templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
+For details regarding the systems such as which emulator or core is setup as default or which file extensions are supported, refer to the **es_systems.cfg** templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
 
 **Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. EmulationStation will still work but the game system will not be themed which looks very ugly.
 
