@@ -603,14 +603,16 @@ std::map<std::string, ThemeSet> ThemeData::getThemeSets()
 
     // Check for themes first under the home directory, then under the data installation
     // directory (Unix only) and last under the ES executable directory.
-    #ifdef __unix__
+    #if defined(__unix__) || defined(__APPLE__)
     static const size_t pathCount = 3;
     #else
     static const size_t pathCount = 2;
     #endif
     std::string paths[pathCount] = {
         Utils::FileSystem::getExePath() + "/themes",
-        #ifdef __unix__
+        #if defined(__APPLE__)
+        Utils::FileSystem::getExePath() + "/../Resources/themes",
+        #elif defined(__unix__)
         Utils::FileSystem::getProgramDataPath() + "/themes",
         #endif
         Utils::FileSystem::getHomePath() + "/.emulationstation/themes"

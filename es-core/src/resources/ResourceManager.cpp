@@ -44,8 +44,17 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
         if (Utils::FileSystem::exists(testHome))
             return testHome;
 
+        // For macOS, check in the ../Resources directory relative to the executable directory.
+        #if defined(__APPLE__)
+        std::string applePackagePath =
+                Utils::FileSystem::getExePath() + "/../Resources/resources/" + &path[2];
+
+        if (Utils::FileSystem::exists(applePackagePath)) {
+            return applePackagePath;
+        }
+
         // Check under the data installation directory (Unix only).
-        #ifdef __unix__
+        #elif defined(__unix__)
         std::string testDataPath;
 
         testDataPath = Utils::FileSystem::getProgramDataPath() + "/resources/" + &path[2];
@@ -56,9 +65,7 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
         #endif
 
         // Check under the ES executable directory.
-        std::string testExePath;
-
-        testExePath = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
+        std::string testExePath = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
 
         if (Utils::FileSystem::exists(testExePath)) {
             return testExePath;
@@ -70,7 +77,9 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
             LOG(LogError) << "Program resource missing: " << path;
             LOG(LogError) << "Tried to find the resource in the following locations:";
             LOG(LogError) << testHome;
-            #ifdef __unix__
+            #if defined(__APPLE__)
+            LOG(LogError) << applePackagePath;
+            #elif defined(__unix__)
             LOG(LogError) << testDataPath;
             #endif
             LOG(LogError) << testExePath;
