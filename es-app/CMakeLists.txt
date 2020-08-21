@@ -129,16 +129,40 @@ if(WIN32)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION .)
 elseif(APPLE)
+    # For completely unknown reasons, when generating a Bundle using cpack, an extra 'Resources'
+    # directory is added to the target path. Simply adding the two dots as a prefix fixes the
+    # problem, but doing so would break 'make install' which was actually behaving correctly.
+    # So an extra 'Resources' directory was added to the CMAKE_INSTALL_PREFIX variable as well
+    # to compensate for this. It's a bad solution to the problem and there must surely be a
+    # better way to fix this.
     install(TARGETS EmulationStation RUNTIME
-            DESTINATION EmulationStation.app/Contents/MacOS)
+            DESTINATION ../MacOS)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns
+            DESTINATION ../Resources)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist
+            DESTINATION .. RENAME Info.plist)
+    install(FILES ${CMAKE_SOURCE_DIR}/libcurl.4.dylib
+            DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
+            DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
+            DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
+            DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
+            DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
+            DESTINATION ../MacOS)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
+            DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
-            DESTINATION EmulationStation.app/Contents/Resources)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
-            DESTINATION EmulationStation.app/Contents/Resources)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
-            DESTINATION EmulationStation.app/Contents/Resources)
+            DESTINATION ../Resources)
+#    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
+#            DESTINATION ../Resources)
+#    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
+#                   DESTINATION ../Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
-            DESTINATION EmulationStation.app/Contents/Resources)
+            DESTINATION ../Resources)
 else()
     install(TARGETS emulationstation RUNTIME
             DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
@@ -173,14 +197,17 @@ set(CPACK_PACKAGE_VERSION "1.0.0-beta")
 
 # Settings per operating system and generator type.
 if(APPLE)
-    set(CPACK_GENERATOR "DragNDrop")
+    set(CPACK_GENERATOR "Bundle")
     set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}")
-    set(CPACK_DMG_VOLUME_NAME "EmulationStation-DE ${CPACK_PACKAGE_VERSION}")
-    set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation.icns")
-    set(CPACK_DMG_DS_STORE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation_DS_Store")
+    set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns")
+    set(CPACK_DMG_VOLUME_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}")
+    set(CPACK_DMG_DS_STORE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_DS_Store")
+    set(CPACK_BUNDLE_NAME "EmulationStation-DE")
+    set(CPACK_BUNDLE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns")
+    set(CPACK_BUNDLE_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist")
 elseif(WIN32)
     set(CPACK_GENERATOR "NSIS")
-    set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}-win64")
+    set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}")
     set(CPACK_PACKAGE_INSTALL_DIRECTORY "EmulationStation")
     set(CPACK_PACKAGE_EXECUTABLES "EmulationStation" "EmulationStation")
     set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")

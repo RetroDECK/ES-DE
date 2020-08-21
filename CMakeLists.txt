@@ -247,10 +247,16 @@ elseif(WIN32)
             "nanosvg")
 endif()
 
-# Temporary solution until the VLC find module has been updated to work properly on macOS.
 if (APPLE)
+    # See es-app/CMakeLists.txt for an explation for why an extra 'Resources' directory
+    # has been added to the install prefix.
+    set(CMAKE_INSTALL_PREFIX "/Applications/EmulationStation-DE.app/Contents/Resources")
+
+    # Temporary solution until the VLC find module has been updated to work properly on macOS.
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
             "/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib")
+    set(CMAKE_INSTALL_RPATH @executable_path)
+#    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
 # Add libCEC libraries.
