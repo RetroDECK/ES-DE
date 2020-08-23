@@ -12,7 +12,11 @@
 #include "PowerSaver.h"
 #include "Settings.h"
 
-#if defined(__linux__) || defined(_WIN64)
+#if defined(__APPLE__)
+#include "utils/FileSystemUtil.h"
+#endif
+
+#if defined(__linux__) || defined(_WIN64) || defined(__APPLE__)
 #include <SDL2/SDL_mutex.h>
 #include <SDL2/SDL_timer.h>
 #else
@@ -22,7 +26,7 @@
 
 #include <vlc/vlc.h>
 
-#ifdef _WIN64
+#if defined(_WIN64)
 #include <codecvt>
 #include <cstring>
 #endif
@@ -218,6 +222,17 @@ void VideoVlcComponent::setupVLC(std::string subtitles)
             argslen = sizeof(singleargs) / sizeof(singleargs[0]);
             args = singleargs;
         }
+
+        #if defined(__APPLE__)
+        // It's required to set the VLC_PLUGIN_PATH variable on macOS, or the libVLC
+        // initialization will fail (with no error message).
+        std::string vlcPluginPath = Utils::FileSystem::getExePath() + "/plugins";
+        if (Utils::FileSystem::isDirectory(vlcPluginPath))
+            setenv("VLC_PLUGIN_PATH", vlcPluginPath.c_str(), 1);
+        else
+            setenv("VLC_PLUGIN_PATH", "/Applications/VLC.app/Contents/MacOS/plugins/", 1);
+        #endif
+
         mVLC = libvlc_new(argslen, args);
     }
 }

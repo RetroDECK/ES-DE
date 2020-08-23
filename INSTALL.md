@@ -288,6 +288,7 @@ In addition to these, you need to create a `plugins` directory and copy over the
 
 ```
 libaudio_format_plugin.dylib
+libauhal_plugin.dylib
 libavcodec_plugin.dylib
 libconsole_logger_plugin.dylib
 libfilesystem_plugin.dylib
