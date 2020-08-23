@@ -6,7 +6,7 @@
 
 #include "CECInput.h"
 
-#ifdef HAVE_LIBCEC
+#if defined(HAVE_LIBCEC)
 #include "Log.h"
 
 #include <iostream> // Bad bad cecloader.
@@ -30,7 +30,7 @@ extern int SDL_USER_CECBUTTONUP;
 
 CECInput* CECInput::sInstance = nullptr;
 
-#ifdef HAVE_LIBCEC
+#if defined(HAVE_LIBCEC)
 static void onAlert(void* /*cbParam*/, const CEC::libcec_alert type,
         const CEC::libcec_parameter param)
 {
@@ -58,7 +58,7 @@ static void onLogMessage(void* /*cbParam*/, const CEC::cec_log_message* message)
     LOG(LogDebug) << "CECInput::onLogMessage message: " << message->message;
 }
 
-#ifdef _RPI_
+#if defined(_RPI_)
 static void vchi_tv_and_cec_init()
 {
     VCHI_INSTANCE_T vchi_instance;
@@ -94,8 +94,8 @@ void CECInput::deinit()
 CECInput::CECInput() : mlibCEC(nullptr)
 {
 
-    #ifdef HAVE_LIBCEC
-    #ifdef _RPI_
+    #if defined(HAVE_LIBCEC)
+    #if defined(_RPI_)
     // Restart vchi tv and CEC in case we just came back from another app using CEC (like Kodi).
     vchi_tv_and_cec_deinit();
     vchi_tv_and_cec_init();
@@ -150,14 +150,14 @@ CECInput::CECInput() : mlibCEC(nullptr)
 CECInput::~CECInput()
 {
 
-    #ifdef HAVE_LIBCEC
+    #if defined(HAVE_LIBCEC)
     if (mlibCEC) {
         mlibCEC->Close();
         UnloadLibCec(mlibCEC);
         mlibCEC = nullptr;
     }
 
-    #ifdef _RPI_
+    #if defined(_RPI_)
     // Deinit vchi tv and CEC in case we are going to launch another app using CEC (like Kodi).
     vchi_tv_and_cec_deinit();
     #endif // _RPI_
@@ -167,7 +167,7 @@ CECInput::~CECInput()
 std::string CECInput::getAlertTypeString(const unsigned int _type)
 {
     switch (_type) {
-        #ifdef HAVE_LIBCEC
+        #if defined(HAVE_LIBCEC)
         case CEC::CEC_ALERT_SERVICE_DEVICE:         { return "Service-Device";         } break;
         case CEC::CEC_ALERT_CONNECTION_LOST:        { return "Connection-Lost";        } break;
         case CEC::CEC_ALERT_PERMISSION_ERROR:       { return "Permission-Error";       } break;
@@ -184,7 +184,7 @@ std::string CECInput::getAlertTypeString(const unsigned int _type)
 std::string CECInput::getOpCodeString(const unsigned int _opCode)
 {
     switch (_opCode) {
-        #ifdef HAVE_LIBCEC
+        #if defined(HAVE_LIBCEC)
         case CEC::CEC_OPCODE_ACTIVE_SOURCE:                 { return "Active-Source";                 } break;
         case CEC::CEC_OPCODE_IMAGE_VIEW_ON:                 { return "Image-View-On";                 } break;
         case CEC::CEC_OPCODE_TEXT_VIEW_ON:                  { return "Text-View-On";                  } break;
@@ -265,7 +265,7 @@ std::string CECInput::getOpCodeString(const unsigned int _opCode)
 std::string CECInput::getKeyCodeString(const unsigned int _keyCode)
 {
     switch (_keyCode) {
-        #ifdef HAVE_LIBCEC
+        #if defined(HAVE_LIBCEC)
         case CEC::CEC_USER_CONTROL_CODE_SELECT:                      { return "Select";                      } break;
         case CEC::CEC_USER_CONTROL_CODE_UP:                          { return "Up";                          } break;
         case CEC::CEC_USER_CONTROL_CODE_DOWN:                        { return "Down";                        } break;

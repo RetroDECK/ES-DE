@@ -433,7 +433,7 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mLockInput)
         return true;
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // This code is only needed for Windows, where we may need to keep ES running while
     // the game/emulator is in use. It's basically used to pause any playing game video
     // and to keep the screensaver from activating.
@@ -570,7 +570,7 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
         }
     }
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // This code is only needed for Windows, where we may need to keep ES running while
     // the game/emulator is in use. It's basically used to pause any playing game video
     // and to keep the screensaver from activating.

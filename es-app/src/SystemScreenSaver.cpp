@@ -7,7 +7,7 @@
 
 #include "SystemScreenSaver.h"
 
-#ifdef _RPI_
+#if defined(_RPI_)
 #include "components/VideoPlayerComponent.h"
 #endif
 #include "components/VideoVlcComponent.h"
@@ -24,7 +24,7 @@
 #include <unordered_map>
 #include <time.h>
 
-#ifdef _WIN64
+#if defined(_WIN64)
 #include <cstring>
 #endif
 
@@ -104,7 +104,7 @@ void SystemScreenSaver::startScreenSaver()
         }
 
         if (!path.empty() && Utils::FileSystem::exists(path)) {
-            #ifdef _RPI_
+            #if defined(_RPI_)
             // Create the correct type of video component
             if (Settings::getInstance()->getBool("ScreenSaverOmxPlayer"))
                 mVideoScreensaver = new VideoPlayerComponent(mWindow, getTitlePath());
@@ -330,7 +330,7 @@ void SystemScreenSaver::pickGameListNode(unsigned long index,
                     mCurrentGame = (*itf);
 
                     // End of getting FileData.
-                    #ifdef _RPI_
+                    #if defined(_RPI_)
                     if (Settings::getInstance()->getString("ScreenSaverGameInfo") != "never")
                         writeSubtitle(mGameName.c_str(), mSystemName.c_str(),
                                 (Settings::getInstance()->getString("ScreenSaverGameInfo") ==

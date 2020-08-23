@@ -54,7 +54,7 @@ HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nul
     // Mozilla project). There is a possibility to use the OS provided Schannel certificates
     // but I haven't been able to get this to work and it also seems to be problematic on
     // older Windows versions.
-    #ifdef _WIN64
+    #if defined(_WIN64)
     curl_easy_setopt(mHandle, CURLOPT_CAINFO, ResourceManager::getInstance()->
             getResourcePath(":/certificates/curl-ca-bundle.crt").c_str());
     #endif

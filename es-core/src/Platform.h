@@ -11,7 +11,7 @@
 #include <string>
 
 // Why the hell this naming inconsistency exists is well beyond me.
-#ifdef _WIN64
+#if defined(_WIN64)
     #define sleep Sleep
 #endif
 

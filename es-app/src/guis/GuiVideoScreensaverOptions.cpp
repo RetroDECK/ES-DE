@@ -33,7 +33,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     addSaveFunc([stretch_screensaver] { Settings::getInstance()->
             setBool("ScreenSaverStretchVideos", stretch_screensaver->getState()); });
 
-    #ifdef _RPI_
+    #if defined(_RPI_)
     auto ss_omx = std::make_shared<SwitchComponent>(mWindow);
     ss_omx->setState(Settings::getInstance()->getBool("ScreenSaverOmxPlayer"));
     addWithLabel("USE OMX PLAYER FOR SCREENSAVER", ss_omx);
@@ -87,7 +87,7 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     addSaveFunc([ss_video_audio] { Settings::getInstance()->
             setBool("ScreenSaverVideoAudio", ss_video_audio->getState()); });
 
-    #ifdef _RPI_
+    #if defined(_RPI_)
     // Define subtitle font.
     auto ss_omx_font_file = std::make_shared<TextComponent>(mWindow, "",
             Font::get(FONT_SIZE_SMALL), 0x777777FF);
@@ -115,14 +115,14 @@ GuiVideoScreensaverOptions::~GuiVideoScreensaverOptions()
 
 void GuiVideoScreensaverOptions::save()
 {
-    #ifdef _RPI_
+    #if defined(_RPI_)
     bool startingStatusNotRisky = (Settings::getInstance()->
             getString("ScreenSaverGameInfo") == "never" ||
             !Settings::getInstance()->getBool("ScreenSaverOmxPlayer"));
     #endif
     GuiScreensaverOptions::save();
 
-    #ifdef _RPI_
+    #if defined(_RPI_)
     bool endStatusRisky = (Settings::getInstance()->getString("ScreenSaverGameInfo") !=
             "never" && Settings::getInstance()->getBool("ScreenSaverOmxPlayer"));
     if (startingStatusNotRisky && endStatusRisky) {

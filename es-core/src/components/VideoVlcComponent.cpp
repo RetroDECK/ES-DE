@@ -266,7 +266,7 @@ void VideoVlcComponent::startVideo()
         mVideoWidth = 0;
         mVideoHeight = 0;
 
-        #ifdef _WIN64
+        #if defined(_WIN64)
         std::string path(Utils::String::replace(mVideoPath, "/", "\\"));
         #else
         std::string path(mVideoPath);

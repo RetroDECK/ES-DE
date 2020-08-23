@@ -114,7 +114,7 @@ void VolumeControl::init()
     // Try to open mixer device.
     if (mixerHandle == nullptr) {
         // Allow user to override the AudioCard and AudioDevice in es_settings.cfg.
-        #ifdef _RPI_
+        #if defined(_RPI_)
         mixerCard = Settings::getInstance()->getString("AudioCard").c_str();
         mixerName = Settings::getInstance()->getString("AudioDevice").c_str();
         #endif

@@ -4,7 +4,7 @@
 //  OMXPlayer video playing for Raspberry Pi.
 //
 
-#ifdef _RPI_
+#if defined(_RPI_)
 #include "components/VideoPlayerComponent.h"
 
 #include "renderers/Renderer.h"

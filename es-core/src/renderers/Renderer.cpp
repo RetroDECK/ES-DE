@@ -100,7 +100,7 @@ namespace Renderer
 
         unsigned int windowFlags;
 
-        #ifdef _WIN64
+        #if defined(_WIN64)
         // For Windows, always set the mode to windowed, as full screen mode seems to
         // behave quite erratic. There may be a proper fix for this, but for now windowed
         // mode seems to behave well and it's almost completely seamless, especially with

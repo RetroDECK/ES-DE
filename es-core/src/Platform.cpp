@@ -30,7 +30,7 @@
 
 int runRebootCommand()
 {
-#ifdef _WIN64 // Windows.
+#if defined(_WIN64) // Windows.
     return system("shutdown -r -t 0");
 #else // macOS and Linux.
     return system("shutdown --reboot now");
@@ -39,7 +39,7 @@ int runRebootCommand()
 
 int runPoweroffCommand()
 {
-#ifdef _WIN64 // Windows.
+#if defined(_WIN64) // Windows.
     return system("shutdown -s -t 0");
 #else // macOS and Linux.
     return system("shutdown --poweroff now");
@@ -48,7 +48,7 @@ int runPoweroffCommand()
 
 int runSystemCommand(const std::string& cmd_utf8)
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // On Windows we use _wsystem to support non-ASCII paths
     // which requires converting from UTF-8 to a wstring.
     std::wstring wchar_str = Utils::String::stringToWideString(cmd_utf8);
@@ -60,7 +60,7 @@ int runSystemCommand(const std::string& cmd_utf8)
 
 int runSystemCommand(const std::wstring& cmd_utf16)
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     return _wsystem(cmd_utf16.c_str());
     #else
     return 0;
@@ -118,7 +118,7 @@ int launchEmulatorUnix(const std::string& cmd_utf8)
 
 int launchEmulatorWindows(const std::wstring& cmd_utf16)
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     STARTUPINFOW si {};
     PROCESS_INFORMATION pi;
 
@@ -187,7 +187,7 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
 
 unsigned int getTaskbarState()
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     APPBARDATA barData;
     barData.cbSize = sizeof(APPBARDATA);
     return (UINT) SHAppBarMessage(ABM_GETSTATE, &barData);
@@ -198,7 +198,7 @@ unsigned int getTaskbarState()
 
 void hideTaskbar()
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     APPBARDATA barData;
     barData.cbSize = sizeof(APPBARDATA);
     barData.lParam = ABS_AUTOHIDE;
@@ -208,7 +208,7 @@ void hideTaskbar()
 
 void revertTaskbarState(unsigned int& state)
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     APPBARDATA barData;
     barData.cbSize = sizeof(APPBARDATA);
     barData.lParam = state;
@@ -243,7 +243,7 @@ void emergencyShutdown()
 
 void touch(const std::string& filename)
 {
-#ifdef _WIN64
+#if defined(_WIN64)
     FILE* fp = fopen(filename.c_str(), "ab+");
     if (fp != nullptr)
         fclose(fp);

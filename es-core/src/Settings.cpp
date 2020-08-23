@@ -100,7 +100,7 @@ void Settings::setDefaults()
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreenSaverSwapVideoTimeout"] = 25000;
     mBoolMap["ScreenSaverStretchVideos"] = false;
-    #ifdef _RPI_
+    #if defined(_RPI_)
     mStringMap["ScreenSaverGameInfo"] = "never";
     #endif
     mBoolMap["ScreenSaverVideoAudio"] = false;
@@ -124,11 +124,11 @@ void Settings::setDefaults()
     // settings could be added later on, if needed.
     // The code is still active for Raspberry Pi though as I'm not sure if this is
     // useful for that device.
-    #ifdef _RPI_
+    #if defined(_RPI_)
     mStringMap["AudioCard"] = "default";
     // Audio out device for volume control.
     //#endif
-    //#ifdef _RPI_
+    //#if defined(_RPI_)
     mStringMap["AudioDevice"] = "PCM";
     // Audio out device for Video playback using OMX player.
     mStringMap["OMXAudioDev"] = "both";
@@ -167,7 +167,7 @@ void Settings::setDefaults()
     mBoolMap["ScrapeVideos"] = true;
 
     // Other settings.
-    #ifdef _RPI_
+    #if defined(_RPI_)
         mIntMap["MaxVRAM"] = 80;
     #else
         mIntMap["MaxVRAM"] = 128;
@@ -179,7 +179,7 @@ void Settings::setDefaults()
     // This setting only applies to raspberry pi but set it for all platforms so
     // we don't get a warning if we encounter it on a different platform.
     mBoolMap["VideoOmxPlayer"] = false;
-    #ifdef _RPI_
+    #if defined(_RPI_)
     // We're defaulting to OMX Player for full screen video on the Pi.
     mBoolMap["ScreenSaverOmxPlayer"] = true;
     // Use OMX Player defaults.
@@ -191,7 +191,7 @@ void Settings::setDefaults()
     mBoolMap["ScreenSaverOmxPlayer"] = false;
     #endif
     mStringMap["SaveGamelistsMode"] = "always";
-    #ifdef _WIN64
+    #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = false;
     // Set this to true as default as it's unreliable to suspend ES during game launches
     // on some Windows versions/installations.
@@ -289,7 +289,7 @@ void Settings::saveFile()
         node.append_attribute("value").set_value(iter->second.c_str());
     }
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     doc.save_file(Utils::String::stringToWideString(path).c_str());
     #else
     doc.save_file(path.c_str());
@@ -308,7 +308,7 @@ void Settings::loadFile()
         return;
 
     pugi::xml_document doc;
-    #ifdef _WIN64
+    #if defined(_WIN64)
     pugi::xml_parse_result result = doc.load_file(Utils::String::stringToWideString(path).c_str());
     #else
     pugi::xml_parse_result result = doc.load_file(path.c_str());

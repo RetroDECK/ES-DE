@@ -54,7 +54,7 @@ enum returnCode {
     NO_ROMS
 };
 
-#ifdef _WIN64
+#if defined(_WIN64)
 enum eConsoleType {
     NO_CONSOLE,
     PARENT_CONSOLE,
@@ -137,7 +137,7 @@ bool parseArgs(int argc, char* argv[])
 {
     Utils::FileSystem::setExePath(argv[0]);
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // Print any command line output to the console.
     if (argc > 1)
         eConsoleType ConsoleType = outputToConsole(false);
@@ -151,7 +151,7 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: No home path supplied with \'--home'.\n";
                 return false;
             }
-            #ifdef _WIN64
+            #if defined(_WIN64)
             if (!Utils::FileSystem::exists(argv[i + 1]) &&
                     (!Utils::FileSystem::driveExists(argv[i + 1]))) {
             #else
@@ -378,7 +378,7 @@ returnCode loadSystemConfigFile(std::string& errorMsg)
                 "THAT YOUR FILE EXTENSIONS AND SYSTEMS DIRECTORY\n"
                 "NAMES ARE SUPPORTED BY EMULATIONSTATION-DE.\n"
                 "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
-        #ifdef _WIN64
+        #if defined(_WIN64)
         errorMsg += Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
         #else
         errorMsg += FileData::getROMDirectory();
@@ -403,19 +403,19 @@ int main(int argc, char* argv[])
     std::locale::global(std::locale("C"));
 
     if (!parseArgs(argc, argv)) {
-        #ifdef _WIN64
+        #if defined(_WIN64)
         closeConsole();
         #endif
         return 0;
     }
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // Send debug output to the console..
     if (Settings::getInstance()->getBool("Debug"))
         outputToConsole(true);
     #endif
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // Hide taskbar if the setting for this is enabled.
     bool taskbarStateChanged = false;
     unsigned int taskbarState;
@@ -428,7 +428,7 @@ int main(int argc, char* argv[])
     #endif
 
     // Call this ONLY when linking with FreeImage as a static library.
-    #ifdef FREEIMAGE_LIB
+    #if defined(FREEIMAGE_LIB)
     FreeImage_Initialise();
     #endif
 
@@ -525,7 +525,7 @@ int main(int argc, char* argv[])
             window.pushGui(new GuiMsgBox(&window, helpStyle, errorMsg.c_str(),
                     "CHANGE ROM DIRECTORY", [&window, &helpStyle, updateVal] {
                 std::string currentROMDirectory;
-                #ifdef _WIN64
+                #if defined(_WIN64)
                 currentROMDirectory =
                         Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
                 #else
@@ -665,11 +665,11 @@ int main(int argc, char* argv[])
     SystemData::deleteSystems();
 
     // Call this ONLY when linking with FreeImage as a static library.
-    #ifdef FREEIMAGE_LIB
+    #if defined(FREEIMAGE_LIB)
     FreeImage_DeInitialise();
     #endif
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // If the taskbar state was changed (taskbar was hidden), then revert it.
     if (taskbarStateChanged)
         revertTaskbarState(taskbarState);
@@ -679,7 +679,7 @@ int main(int argc, char* argv[])
 
     LOG(LogInfo) << "EmulationStation cleanly shutting down.";
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     closeConsole();
     #endif
 

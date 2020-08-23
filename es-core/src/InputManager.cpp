@@ -198,7 +198,7 @@ int InputManager::getButtonCountByDevice(SDL_JoystickID id)
     if (id == DEVICE_KEYBOARD)
         return 120; // It's a lot, okay.
     else if (id == DEVICE_CEC)
-    #ifdef HAVE_CECLIB
+    #if defined(HAVE_CECLIB)
         return CEC::CEC_USER_CONTROL_CODE_MAX;
     #else // HAVE_LIBCEF
         return 0;
@@ -331,7 +331,7 @@ bool InputManager::loadInputConfig(InputConfig* config)
     }
 
     pugi::xml_document doc;
-    #ifdef _WIN64
+    #if defined(_WIN64)
     pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
     #else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
@@ -410,7 +410,7 @@ void InputManager::writeDeviceConfig(InputConfig* config)
 
     if (Utils::FileSystem::exists(path)) {
         // Merge files.
-        #ifdef _WIN64
+        #if defined(_WIN64)
         pugi::xml_parse_result result =
                 doc.load_file(Utils::String::stringToWideString(path).c_str());
         #else
@@ -454,7 +454,7 @@ void InputManager::writeDeviceConfig(InputConfig* config)
 
     config->writeToXML(root);
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     doc.save_file(Utils::String::stringToWideString(path).c_str());
     #else
     doc.save_file(path.c_str());
@@ -475,7 +475,7 @@ void InputManager::doOnFinish()
     pugi::xml_document doc;
 
     if (Utils::FileSystem::exists(path)) {
-        #ifdef _WIN64
+        #if defined(_WIN64)
         pugi::xml_parse_result result =
                 doc.load_file(Utils::String::stringToWideString(path).c_str());
         #else

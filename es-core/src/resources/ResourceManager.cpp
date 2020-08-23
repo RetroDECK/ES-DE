@@ -110,7 +110,7 @@ const ResourceData ResourceManager::getFileData(const std::string& path) const
 
 ResourceData ResourceManager::loadFile(const std::string& path) const
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     std::ifstream stream(Utils::String::stringToWideString(path).c_str(), std::ios::binary);
     #else
     std::ifstream stream(path, std::ios::binary);

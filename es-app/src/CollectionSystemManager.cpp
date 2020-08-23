@@ -128,7 +128,7 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
         CollectionSystemData sysData = mCustomCollectionSystemsData.at(name);
         if (sysData.needsSave) {
             std::ofstream configFile;
-            #ifdef _WIN64
+            #if defined(_WIN64)
             configFile.open(Utils::String::
                     stringToWideString(getCustomCollectionConfigPath(name)).c_str());
             #else
@@ -996,7 +996,7 @@ std::vector<std::string> CollectionSystemManager::getSystemsFromConfig()
         return systems;
 
     pugi::xml_document doc;
-    #ifdef _WIN64
+    #if defined(_WIN64)
     pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
     #else
     pugi::xml_parse_result res = doc.load_file(path.c_str());

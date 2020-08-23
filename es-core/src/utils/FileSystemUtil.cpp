@@ -35,7 +35,7 @@
 // The installPrefix directory is the value set for CMAKE_INSTALL_PREFIX during build.
 // If not defined, the default prefix path '/usr/local' will be used.
 #if defined(__unix__)
-#ifdef ES_INSTALL_PREFIX
+#if defined(ES_INSTALL_PREFIX)
 std::string installPrefix = ES_INSTALL_PREFIX;
 #else
 std::string installPrefix = "/usr/local";
@@ -676,7 +676,7 @@ namespace Utils
                 return true;
 
             // Try to create directory.
-            #ifdef _WIN64
+            #if defined(_WIN64)
             if (_wmkdir(Utils::String::stringToWideString(path).c_str()) == 0)
                 return true;
             #else

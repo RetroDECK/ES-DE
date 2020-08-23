@@ -4,7 +4,7 @@
 //  OMXPlayer video playing for Raspberry Pi.
 //
 
-#ifdef _RPI_
+#if defined(_RPI_)
 #pragma once
 #ifndef ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H
 #define ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H

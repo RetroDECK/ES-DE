@@ -42,7 +42,7 @@ void Log::init()
 
 void Log::open()
 {
-    #ifdef _WIN64
+    #if defined(_WIN64)
     file.open(Utils::String::stringToWideString(getLogPath()).c_str());
     #else
     file.open(getLogPath().c_str());

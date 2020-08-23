@@ -15,6 +15,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "SystemData.h"
+
 #include <pugixml.hpp>
 
 FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType type)
@@ -94,7 +95,7 @@ void parseGamelist(SystemData* system)
     LOG(LogInfo) << "Parsing XML file \"" << xmlpath << "\"...";
 
     pugi::xml_document doc;
-    #ifdef _WIN64
+    #if defined(_WIN64)
     pugi::xml_parse_result result =
             doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
     #else
@@ -204,7 +205,7 @@ void updateGamelist(SystemData* system)
 
     if (Utils::FileSystem::exists(xmlReadPath)) {
         // Parse an existing file first.
-        #ifdef _WIN64
+        #if defined(_WIN64)
         pugi::xml_parse_result result =
                 doc.load_file(Utils::String::stringToWideString(xmlReadPath).c_str());
         #else
@@ -288,7 +289,7 @@ void updateGamelist(SystemData* system)
             LOG(LogInfo) << "Added/Updated " << numUpdated <<
                     " entities in '" << xmlReadPath << "'";
 
-            #ifdef _WIN64
+            #if defined(_WIN64)
             if (!doc.save_file(Utils::String::stringToWideString(xmlWritePath).c_str())) {
             #else
             if (!doc.save_file(xmlWritePath.c_str())) {

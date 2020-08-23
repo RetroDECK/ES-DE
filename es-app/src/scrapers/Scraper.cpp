@@ -255,7 +255,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             return;
             }
 
-            #ifdef _WIN64
+            #if defined(_WIN64)
             std::ofstream stream(Utils::String::stringToWideString(filePath).c_str(),
                     std::ios_base::out | std::ios_base::binary);
             #else
@@ -386,7 +386,7 @@ void MediaDownloadHandle::update()
         return;
     }
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     std::ofstream stream(Utils::String::stringToWideString(mSavePath).c_str(),
             std::ios_base::out | std::ios_base::binary);
     #else

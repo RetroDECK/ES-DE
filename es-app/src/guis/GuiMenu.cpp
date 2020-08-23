@@ -93,12 +93,12 @@ void GuiMenu::openSoundSettings()
     // The code is still active for Raspberry Pi though as I'm not sure if this is
     // useful for that device.
     //    #if defined(__linux__)
-        #ifdef _RPI_
+        #if defined(_RPI_)
         // audio card
         auto audio_card = std::make_shared<OptionListComponent<std::string>>
                 (mWindow, getHelpStyle(), "AUDIO CARD", false);
         std::vector<std::string> audio_cards;
-        #ifdef _RPI_
+        #if defined(_RPI_)
         // RPi Specific  Audio Cards
         audio_cards.push_back("local");
         audio_cards.push_back("hdmi");
@@ -150,7 +150,7 @@ void GuiMenu::openSoundSettings()
         });
         #endif
 
-        #ifdef _RPI_
+        #if defined(_RPI_)
         // OMX player Audio Device
         auto omx_audio_dev = std::make_shared<OptionListComponent<std::string>>
                 (mWindow, getHelpStyle(), "OMX PLAYER AUDIO DEVICE", false);
@@ -507,7 +507,7 @@ void GuiMenu::openOtherSettings()
     s->addSaveFunc([max_vram] { Settings::getInstance()->setInt("MaxVRAM",
             (int)Math::round(max_vram->getValue())); });
 
-    #ifdef __unix__
+    #if defined(__unix__)
     // Fullscreen mode.
     auto fullscreen_mode = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
@@ -549,7 +549,7 @@ void GuiMenu::openOtherSettings()
         PowerSaver::init();
     });
 
-    #ifdef _RPI_
+    #if defined(_RPI_)
     // Video Player - VideoOmxPlayer.
     auto omx_player = std::make_shared<SwitchComponent>(mWindow);
     omx_player->setState(Settings::getInstance()->getBool("VideoOmxPlayer"));
@@ -616,7 +616,7 @@ void GuiMenu::openOtherSettings()
     });
     s->addRow(row);
 
-    #ifdef _WIN64
+    #if defined(_WIN64)
     // Hide taskbar during ES program session.
     auto hide_taskbar = std::make_shared<SwitchComponent>(mWindow);
     hide_taskbar->setState(Settings::getInstance()->getBool("HideTaskbar"));

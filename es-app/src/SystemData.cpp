@@ -226,7 +226,7 @@ bool SystemData::loadConfig()
     }
 
     pugi::xml_document doc;
-    #ifdef _WIN64
+    #if defined(_WIN64)
     pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
     #else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
@@ -307,7 +307,7 @@ bool SystemData::loadConfig()
         // Convert path to generic directory seperators.
         path = Utils::FileSystem::getGenericPath(path);
 
-        #ifdef _WIN64
+        #if defined(_WIN64)
         if (!Settings::getInstance()->getBool("ShowHiddenFiles") &&
                 Utils::FileSystem::isHidden(path)) {
             LOG(LogWarning) << "Skipping hidden ROM folder " << path;

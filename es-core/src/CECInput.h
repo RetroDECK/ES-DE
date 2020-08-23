@@ -25,7 +25,7 @@ private:
      CECInput();
     ~CECInput();
 
-    static CECInput*  sInstance;
+    static CECInput* sInstance;
 
     CEC::ICECAdapter* mlibCEC;
 };
