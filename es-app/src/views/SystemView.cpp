@@ -16,6 +16,10 @@
 #include "SystemData.h"
 #include "Window.h"
 
+#if defined(_WIN64)
+#include <cmath>
+#endif
+
 // Buffer values for scrolling velocity (left, stopped, right).
 const int logoBuffersLeft[] = { -5, -2, -1 };
 const int logoBuffersRight[] = { 1, 2, 5 };

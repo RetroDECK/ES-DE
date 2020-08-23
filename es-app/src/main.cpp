@@ -49,13 +49,13 @@
 bool forceInputConfig = false;
 
 enum returnCode {
-    NO_ERROR,
+    NO_LOADING_ERROR,
     NO_SYSTEMS_FILE,
     NO_ROMS
 };
 
 #if defined(_WIN64)
-enum eConsoleType {
+enum win64ConsoleType {
     NO_CONSOLE,
     PARENT_CONSOLE,
     ALLOCATED_CONSOLE
@@ -70,11 +70,11 @@ enum eConsoleType {
 // console type and PowerShell behaves quite strange. Still, it works well enough to be
 // somewhat usable, at least for the moment. If the allocConsole argument is set to true
 // and there is no console available, a new console window will be spawned.
-eConsoleType outputToConsole(bool allocConsole)
+win64ConsoleType outputToConsole(bool allocConsole)
 {
     HANDLE outputHandle = nullptr;
     HWND consoleWindow = nullptr;
-    eConsoleType ConsoleType = NO_CONSOLE;
+    win64ConsoleType consoleType = NO_CONSOLE;
 
     // Try to attach to a parent console process.
     if (AttachConsole(ATTACH_PARENT_PROCESS))
@@ -83,18 +83,18 @@ eConsoleType outputToConsole(bool allocConsole)
     // If there is a parent console process, then attempt to retrieve its handle.
     if (outputHandle != INVALID_HANDLE_VALUE && outputHandle != nullptr) {
         consoleWindow = GetConsoleWindow();
-        ConsoleType = PARENT_CONSOLE;
+        consoleType = PARENT_CONSOLE;
     }
 
     // If we couldn't retrieve the handle, it means we need to allocate a new console window.
     if (!consoleWindow && allocConsole) {
         AllocConsole();
-        ConsoleType = ALLOCATED_CONSOLE;
+        consoleType = ALLOCATED_CONSOLE;
     }
 
     // If we are attached to the parent console or we have opened a new console window,
     // then redirect stdin, stdout and stderr accordingly.
-    if (ConsoleType == PARENT_CONSOLE || ConsoleType == ALLOCATED_CONSOLE) {
+    if (consoleType == PARENT_CONSOLE || consoleType == ALLOCATED_CONSOLE) {
 
         FILE* fp = nullptr;
         freopen_s(&fp, "CONIN$", "rb", stdin);
@@ -117,7 +117,7 @@ eConsoleType outputToConsole(bool allocConsole)
         std::cout << "\n";
     }
 
-    return ConsoleType;
+    return consoleType;
 }
 
 void closeConsole()
@@ -140,7 +140,7 @@ bool parseArgs(int argc, char* argv[])
     #if defined(_WIN64)
     // Print any command line output to the console.
     if (argc > 1)
-        eConsoleType ConsoleType = outputToConsole(false);
+        win64ConsoleType consoleType = outputToConsole(false);
     #endif
 
     // We need to process --home before any call to Settings::getInstance(),
@@ -353,7 +353,7 @@ bool verifyHomeFolderExists()
     return true;
 }
 
-// Returns NO_ERRORS if everything is OK.
+// Returns NO_LOADING_ERROR if everything is OK.
 // Otherwise returns either NO_SYSTEMS_FILE or NO_ROMS.
 returnCode loadSystemConfigFile(std::string& errorMsg)
 {
@@ -387,7 +387,7 @@ returnCode loadSystemConfigFile(std::string& errorMsg)
         return NO_ROMS;
     }
 
-    return NO_ERROR;
+    return NO_LOADING_ERROR;
 }
 
 // Called on exit, assuming we get far enough to have the log initialized.
