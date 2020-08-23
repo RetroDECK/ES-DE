@@ -11,13 +11,8 @@
 #include "Log.h"
 #include "Settings.h"
 
-#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengles.h>
-#else
-#include "SDL.h"
-#include "SDL_opengles.h"
-#endif
 
 namespace Renderer
 {

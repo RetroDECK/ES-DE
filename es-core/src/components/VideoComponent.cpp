@@ -12,11 +12,7 @@
 #include "ThemeData.h"
 #include "Window.h"
 
-#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_timer.h>
-#else
-#include "SDL_timer.h"
-#endif
 
 #define FADE_TIME_MS	200
 

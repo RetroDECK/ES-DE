@@ -10,11 +10,7 @@
 #include "components/NinePatchComponent.h"
 #include "components/TextComponent.h"
 
-#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_timer.h>
-#else
-#include "SDL_timer.h"
-#endif
 
 GuiInfoPopup::GuiInfoPopup(
         Window* window,

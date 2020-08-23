@@ -13,11 +13,7 @@
 #include "Log.h"
 #include "Settings.h"
 
-#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL.h>
-#else
-#include "SDL.h"
-#endif
 #include <stack>
 
 namespace Renderer

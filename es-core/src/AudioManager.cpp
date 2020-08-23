@@ -10,11 +10,7 @@
 #include "Settings.h"
 #include "Sound.h"
 
-#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL.h>
-#else
-#include "SDL.h"
-#endif
 
 std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
 SDL_AudioSpec AudioManager::sAudioFormat;

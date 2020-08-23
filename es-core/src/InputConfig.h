@@ -8,18 +8,12 @@
 #ifndef ES_CORE_INPUT_CONFIG_H
 #define ES_CORE_INPUT_CONFIG_H
 
+#include <SDL2/SDL_joystick.h>
+#include <SDL2/SDL_keyboard.h>
 #include <CECInput.h>
 #include <map>
 #include <sstream>
 #include <vector>
-
-#if defined(__linux__) || defined(_WIN64)
-#include <SDL2/SDL_joystick.h>
-#include <SDL2/SDL_keyboard.h>
-#else
-#include "SDL_joystick.h"
-#include "SDL_keyboard.h"
-#endif
 
 #define DEVICE_KEYBOARD -1
 #define DEVICE_CEC      -2

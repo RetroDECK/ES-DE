@@ -33,19 +33,13 @@
 #include "SystemData.h"
 #include "SystemScreenSaver.h"
 
-#if defined(_WIN64)
-#include <cstring>
-#include <windows.h>
-#endif
-
-#if defined(__linux__) || defined(_WIN64)
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_timer.h>
-#else
-#include "SDL_events.h"
-#include "SDL_main.h"
-#include "SDL_timer.h"
+
+#if defined(_WIN64)
+#include <cstring>
+#include <windows.h>
 #endif
 
 #include <FreeImage.h>

@@ -16,14 +16,8 @@
 #include "utils/FileSystemUtil.h"
 #endif
 
-#if defined(__linux__) || defined(_WIN64) || defined(__APPLE__)
 #include <SDL2/SDL_mutex.h>
 #include <SDL2/SDL_timer.h>
-#else
-#include "SDL_mutex.h"
-#include "SDL_timer.h"
-#endif
-
 #include <vlc/vlc.h>
 
 #if defined(_WIN64)
