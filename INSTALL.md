@@ -269,6 +269,8 @@ Keep in mind though that a debug version will be much slower due to all compiler
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
+**Note:** According to the SDL documentation, there could be issues with attempting to run ES from the build directory when using a High DPI display as the required NSHighResolutionCapable key is not set as there is no Info.plist file available. In this case, doing a 'make install' and running ES from the installation folder would solve the problem. I've been unable to verify if this is really required though as I don't have the necessary hardware to test it on.
+
 **Installing:**
 
 As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. Copy the following .dylib files from their respective installation directories to the emulationstation-de build directory:

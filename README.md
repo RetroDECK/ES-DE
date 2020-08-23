@@ -5,9 +5,16 @@ EmulationStation Desktop Edition is a cross-platform graphical front-end for emu
 
 Maybe you're familiar with EmulationStation: yes there are multiple forks available for this software! However this version is intended for use primarily on desktop computers where it's not the primary interface for the computer. As such, the aim is not to provide full control over emulator settings or emulator button mappings, or include system administration functions and similar. Instead it's assumed that the emulators and the overall environment has been properly configured upfront.
 
-The goal is to make the software as easy as possible to install and use, and to suppport the major desktop operating systems: Unix/Linux, Windows and macOS (although the macOS port is still a work in progress).
+The goal is to make the software as easy as possible to install and use, and to suppport the major desktop operating systems: Unix/Linux, macOS and Windows.
 
-With that said it's possible that the application still compiles and works on devices such as the Raspberry Pi, I've certainly not deliberately removed any code specific to such platforms and this fork is after all based on the RetroPie version of EmulationStation.
+The following operating systems have been tested and confirmed as working with ES:
+
+* Kubuntu 20.04
+* macOS 10.11.6 (El Capitan)
+* Windows 10 (x86)
+* Windows 8.1 (x86)
+
+It's possible that the application still compiles and works on devices such as the Raspberry Pi, but again it's not the goal of this fork to run on such devices.
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 

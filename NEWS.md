@@ -4,9 +4,7 @@
 
 ### Release overview
 
-First release, a major update to the application compared to the RetroPie version on which it is based. This includes new gamelist sorting logic, new game media handling and a completely updated Windows port (which works about as well as the Unix version). The menu system has also been completely overhauled and the scraper has been expanded to support multiple media types (including videos) as well as providing detailed scraping configuration options.
-
-Work has started on a macOS port too. It already runs more or less correctly, but is not completely ready for general use as of this version.
+First release, a major update to the application compared to the RetroPie version on which it is based. This includes new gamelist sorting logic, new game media handling and an updated Windows port as well as a macOS port (which both work about as well as the Unix version). The menu system has also been completely overhauled and the scraper has been expanded to support multiple media types (including videos) as well as providing detailed scraping configuration options.
 
 Full navigation sound support has been implemented, and the metadata editor has seen a lot of updates including color coding of all changes done by the user and by the scraper. Favorite games can now also be sorted on top of the gamelists and game collections.
 
@@ -29,7 +27,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * New default theme rbsimple-DE bundled with the software, this theme is largely based on recalbox-multi by the Recalbox community
 * Added extensive es_systems.cfg templates for Unix and Windows
 * Updated the application to compile and work on Microsoft Windows, including full UTF-16 (Unicode) support
-* Updated the application to compile and work (more or less) on Apple macOS
+* Updated the application to compile and work on Apple macOS
 * Seamless (almost) launch of games without showing the desktop when starting and when returning from RetroArch and other emulators
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * Core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful for Windows)
@@ -55,7 +53,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
 * Updated the CMake/CPack install and package build script to work as expected (it can now generate .deb, .rpm, .dmg and NSIS installation packages)
-* Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix only)
+* Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix and macOS only)
 * License files included for all the libraries and resources that are bundled with the application
 * Greatly expanded the application documentation (which is hosted with the source repository on GitLab)
 * Updated the MAME ROM index files to include ROMs up to MAME version 0.221 and created scripts to easily generate these index files in the future

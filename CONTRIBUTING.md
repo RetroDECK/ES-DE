@@ -14,7 +14,7 @@ It's impossible for me to test every game system (rbsimple-DE has support for mo
 
 And it's a fact that some configuration is simply missing in these files for some systems, so that would need to be added as well.
 
-In general, a review of the [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) files including the supported file extensions would be great.
+In general, a review of the [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) files including the supported file extensions would be great!
 
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details of what needs to be added or updated.
 
