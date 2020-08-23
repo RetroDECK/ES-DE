@@ -679,7 +679,7 @@ The amount of video RAM to use for the application. Defaults to 128 MiB which se
 
 **Fullscreen mode (requires restart) - Unix only**
 
-This gives you a choice between Normal and Borderless modes. With the borderless being more seamless as the ES window will always stay on top of other windows so the taskbar will not be visible when launching and exiting from games. It will however break the alt-tab application switching of your window manager.
+This gives you a choice between Normal and Borderless modes. With the borderless being more seamless as the ES window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES will run in a window. For the borderless mode, any changes to the resolution will make ES run in a window.
 
 **Power saver modes**
 

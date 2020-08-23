@@ -96,7 +96,7 @@ namespace Renderer
         // games or when manually switching windows using task switcher).
         SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
-        #if defined(__APPLE__)
+        #if defined(__APPLE__) || defined(__unix__)
         bool userResolution = false;
         // Check if the user has changed the resolution from the command line.
         if (windowWidth != dispMode.w || windowHeight != dispMode.h)
@@ -133,10 +133,20 @@ namespace Renderer
             // border to the window.
             windowFlags = SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
         #else
-        if (Settings::getInstance()->getBool("Windowed"))
+        if (Settings::getInstance()->getBool("Windowed")) {
             windowFlags = getWindowFlags();
-        else if (Settings::getInstance()->getString("FullscreenMode") == "borderless")
-            windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
+        }
+        else if (Settings::getInstance()->getString("FullscreenMode") == "borderless") {
+            if(!userResolution)
+                windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
+            else
+                // If the user has changed the resolution from the command line, then add a
+                // border to the window and don't make it stay on top.
+                windowFlags = getWindowFlags();
+        }
+        else {
+            windowFlags = SDL_WINDOW_FULLSCREEN | getWindowFlags();
+        }
         #endif
 
         if ((sdlWindow = SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED,
