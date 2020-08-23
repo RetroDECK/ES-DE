@@ -97,6 +97,10 @@ namespace Renderer
         SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
         #if defined(__APPLE__)
+        bool userResolution = false;
+        // Check if the user has changed the resolution from the command line.
+        if (windowWidth != dispMode.w || windowHeight != dispMode.h)
+            userResolution = true;
         // Not sure if this could be a useful setting for some users.
 //        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
         #endif
@@ -111,28 +115,28 @@ namespace Renderer
         // mode seems to behave well and it's almost completely seamless, especially with
         // a hidden taskbar.
         windowFlags = getWindowFlags();
+        #elif defined(__APPLE__)
+        // This seems to be the only full window mode that somehow works on macOS as a real
+        // fullscreen mode will do lots of weird stuff like preventing window switching
+        // or refusing to let emulators run at all. SDL_WINDOW_FULLSCREEN_DESKTOP almost
+        // works, but it "shuffles" windows when starting the emulator and won't return
+        // properly when the game has exited. With the current mode, the top menu is visible
+        // and hides that part of the ES window. Also, the splash screen is not displayed
+        // until the point where ES has almost completely finished loading. I'm not sure
+        // if anything can be done to improve these things as it's quite obvious that
+        // Apple has shipped a broken and/or dysfunctional window manager with their
+        // operating system.
+        if (!userResolution)
+            windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
+        else
+            // If the user has changed the resolution from the command line, then add a
+            // border to the window.
+            windowFlags = SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
         #else
         if (Settings::getInstance()->getBool("Windowed"))
             windowFlags = getWindowFlags();
-        #if defined(__APPLE__)
-        else
-            // This seems to be the only window mode that somehow works on macOS as a real
-            // fullscreen mode will do lots of weird stuff like preventing window switching
-            // or refusing to let emulators run at all. Fullscreen desktop mode almost works,
-            // but it "shuffles" windows when starting the emulator and won't return properly
-            // when the game has exited. With the current mode, the top menu is visible and
-            // hides that part of the ES window. Also, the splash screen is not displayed
-            // until the point where ES has almost completely finished loading. I'm not sure
-            // if anything can be done to improve these things as it's quite obvious that
-            // Apple has shipped a broken and/or dysfunctional window manager with their
-            // operating system.
-            windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
-        #else
         else if (Settings::getInstance()->getString("FullscreenMode") == "borderless")
             windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
-        else
-            windowFlags = SDL_WINDOW_FULLSCREEN | getWindowFlags();
-        #endif
         #endif
 
         if ((sdlWindow = SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED,
