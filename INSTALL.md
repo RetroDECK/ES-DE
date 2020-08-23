@@ -788,9 +788,6 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
---windowed                      Windowed mode, should be combined with --resolution
---fullscreen-normal             Normal fullscreen mode
---fullscreen-borderless         Borderless fullscreen mode (always on top)
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
 --gpu-statistics                Display framerate and VRAM usage overlay

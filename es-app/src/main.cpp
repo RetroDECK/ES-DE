@@ -253,8 +253,9 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setBool("Debug", true);
             Log::setReportingLevel(LogDebug);
         }
-        // Windowed mode is always selected on Windows.
-        #ifndef _WIN64
+        // On Unix, enable settings for the fullscreen mode.
+        // On macOS and Windows only windowed mode is supported.
+        #if defined(__unix__)
         else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
             Settings::getInstance()->setString("FullscreenMode", "normal");
         }
@@ -307,7 +308,7 @@ bool parseArgs(int argc, char* argv[])
 "  --no-exit                       Don't show the exit option in the menu\n"
 "  --no-splash                     Don't show the splash screen\n"
 "  --debug                         Print debug information\n"
-#ifndef _WIN64
+#if defined(__unix__)
 "  --windowed                      Windowed mode, should be combined with --resolution\n"
 "  --fullscreen-normal             Normal fullscreen mode\n"
 "  --fullscreen-borderless         Borderless fullscreen mode (always on top)\n"

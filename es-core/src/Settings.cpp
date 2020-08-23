@@ -32,7 +32,7 @@ std::vector<const char*> settings_dont_save {
     "ShowExit",             // --no-exit
     "SplashScreen",         // --no-splash
     "VSync",                // --vsync [1/on or 0/off]
-    #ifndef _WIN64
+    #if !defined(_WIN64)
     "Windowed",             // --windowed
     #endif
     "WindowWidth",          // Set via --resolution [width] [height]
@@ -224,7 +224,7 @@ void Settings::setDefaults()
     mBoolMap["ShowExit"] = true;
     mBoolMap["SplashScreen"] = true;
     mBoolMap["VSync"] = true;
-    #ifndef _WIN64
+    #if !defined(_WIN64)
     mBoolMap["Windowed"] = false;
     #endif
     mIntMap["WindowWidth"]   = 0;

@@ -16,7 +16,7 @@
 
 namespace Renderer
 {
-    #ifndef NDEBUG
+    #if !defined(NDEBUG)
     #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
 
     static void _GLCheckError(const char* _funcName)
