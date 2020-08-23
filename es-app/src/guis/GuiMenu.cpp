@@ -682,6 +682,9 @@ void GuiMenu::openOtherSettings()
     s->addSaveFunc([gpu_statistics] { Settings::getInstance()->setBool("DisplayGPUStatistics",
             gpu_statistics->getState()); });
 
+    // macOS requires root privileges to reboot and power off so it doesn't make much
+    // sense to enable these settings and menu entries for this operating system.
+    #if !defined(__APPLE__)
     // Hide Reboot System option in the quit menu.
     auto show_rebootsystem = std::make_shared<SwitchComponent>(mWindow);
     show_rebootsystem->setState(Settings::getInstance()->getBool("ShowRebootSystem"));
@@ -695,6 +698,7 @@ void GuiMenu::openOtherSettings()
     s->addWithLabel("SHOW \"POWER OFF SYSTEM\" MENU ENTRY", show_poweroffsystem);
     s->addSaveFunc([show_poweroffsystem] { Settings::getInstance()->setBool("ShowPoweroffSystem",
             show_poweroffsystem->getState()); });
+    #endif
 
     mWindow->pushGui(s);
 }
@@ -732,6 +736,9 @@ void GuiMenu::openQuitMenu()
         }
     }
 
+    // macOS requires root privileges to reboot and power off so it doesn't make much
+    // sense to enable these settings and menu entries for this operating system.
+    #if !defined(__APPLE__)
     if (Settings::getInstance()->getBool("ShowRebootSystem")) {
         row.elements.clear();
         row.makeAcceptInputHandler([window, this] {
@@ -765,6 +772,7 @@ void GuiMenu::openQuitMenu()
                 Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
         s->addRow(row);
     }
+    #endif
 
     mWindow->pushGui(s);
 }

@@ -205,8 +205,12 @@ void Settings::setDefaults()
     mBoolMap["ShowHiddenFiles"] = true;
     mBoolMap["ShowHiddenGames"] = true;
     mBoolMap["DisplayGPUStatistics"] = false;
+    // macOS requires root privileges to reboot and power off so it doesn't make much
+    // sense to enable these settings and menu entries for this operating system.
+    #if !defined(__APPLE__)
     mBoolMap["ShowRebootSystem"] = true;
     mBoolMap["ShowPoweroffSystem"] = true;
+    #endif
 
     //
     // Settings configured via command-line arguments.

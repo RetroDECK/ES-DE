@@ -721,11 +721,11 @@ Using this option, you can locate game images in the ROM directory tree. The ima
 
 Displays the framerate and VRAM statistics as an overlay. You normally never need to use this. **Note:** As of version 1.0.0 the VRAM usage statistics is not accurate; this issue will be addressed in future ES versions.
 
-**Show "reboot system" menu entry**
+**Show "reboot system" menu entry - Unix and Windows only**
 
 Gives the ability to hide the "Reboot system" entry on the quit menu. Anyone who has accidentally rebooted a system from such a menu will appreciate this.
 
-**Show "power off system" menu entry**
+**Show "power off system" menu entry - Unix and Windows only**
 
 Gives the ability to hide the "Power off system" entry on the quit menu. Anyone who has accidentally powered off a system from such a menu will appreciate this.
 
@@ -743,11 +743,11 @@ The menu where you quit ES, or reboot or power off your system.
 
 If the option _"When to save metadata"_ has been set to _"On exit"_, the gamelist.xml files will be updated at this point.
 
-**Reboot system**
+**Reboot system - Unix and Windows only**
 
 Can be disabled, meaning the entry will not show up at all.
 
-**Power off system**
+**Power off system - Unix and Windows only**
 
 Can be disabled, meaning the entry will not show up at all.
 

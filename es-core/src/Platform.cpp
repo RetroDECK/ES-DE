@@ -30,18 +30,24 @@
 
 int runRebootCommand()
 {
-#if defined(_WIN64) // Windows.
+#if defined(_WIN64)
     return system("shutdown -r -t 0");
-#else // macOS and Linux.
+#elif defined(__APPLE__)
+    // This will probably never be used as macOS requires root privileges to reboot.
+    return system("shutdown -r now");
+#else
     return system("shutdown --reboot now");
 #endif
 }
 
 int runPoweroffCommand()
 {
-#if defined(_WIN64) // Windows.
+#if defined(_WIN64)
     return system("shutdown -s -t 0");
-#else // macOS and Linux.
+#elif defined(__APPLE__)
+    // This will probably never be used as macOS requires root privileges to power off.
+    return system("shutdown now");
+#else
     return system("shutdown --poweroff now");
 #endif
 }
