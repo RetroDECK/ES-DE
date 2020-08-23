@@ -136,7 +136,7 @@ Assuming the default installation prefix `/usr/local` has been used, this is the
 /usr/local/man/man6/emulationstation.6.gz
 /usr/local/share/applications/emulationstation.desktop
 /usr/local/share/emulationstation/LICENSE
-/usr/local/share/emulationstation/LICENSES/*
+/usr/local/share/emulationstation/licenses/*
 /usr/local/share/emulationstation/resources/*
 /usr/local/share/emulationstation/themes/*
 /usr/local/share/pixmaps/emulationstation.svg
@@ -156,9 +156,9 @@ And it will look in the following locations for the themes, also in the listed o
 * `[INSTALL PREFIX]/share/emulationstation/themes/`
 * `[ES EXECUTABLE DIRECTORY]/themes/`
 
-The theme is not mandatory to start the application, but ES will be basically useless without it.
+A theme is not mandatory to start the application, but ES will be basically useless without it.
 
-So the home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or the path of the ES executable.
+The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES executable.
 
 **Creating .deb and .rpm packages:**
 
@@ -198,7 +198,7 @@ sudo apt-get install rpm
 
 ## Building on macOS
 
-EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a bizarre Unix variant, it is still a proper system with good tools. The main deficiency (apart from a quite strange user interface) is that there is no package manager and you need to register an account to install software from the App Store. There are several third party package managers though, and the use of one of them, _Homebrew_, is detailed below.
+EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a bizarre Unix variant, it is still a proper system with good tools. The main deficiency (apart from a very strange window manager) is that there is no package manager and you need to register an account to install software from the App Store. There are several third party package managers though, and the use of one of them, `Homebrew`, is detailed below.
 
 **Setting up the build tools:**
 
@@ -269,18 +269,136 @@ Keep in mind though that a debug version will be much slower due to all compiler
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
-**Creating .dmg DragNDrop installer:**
+**Installing:**
 
-Simply run `cpack` to build the .dmg installer:
+As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. Copy the following .dylib files from their respective installation directories to the emulationstation-de build directory:
+
+```
+libSDL2-2.0.0.dylib
+libcurl.4.dylib
+libfreeimage.dylib
+libfreetype.6.dylib
+libvlc.dylib
+libvlccore.dylib
+```
+
+Note that the filenames could be slightly different depending on what versions you have installed on your system.
+
+In addition to these, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
+
+```
+libaudio_format_plugin.dylib
+libavcodec_plugin.dylib
+libconsole_logger_plugin.dylib
+libfilesystem_plugin.dylib
+libfreetype_plugin.dylib
+libswscale_plugin.dylib
+libtrivial_channel_mixer_plugin.dylib
+libvmem_plugin.dylib
+libwave_plugin.dylib
+libx264_plugin.dylib
+libx265_plugin.dylib
+```
+
+If you only want to build EmulationStation to be used on your own computer, there's the option to skip the entire bundling of the libraries and use the ones already installed using Homebrew, meaning you can skip the previous .dylib copying. To do so, run CMake with the following option:
+
+```
+cmake -DAPPLE_SKIP_INSTALL_LIBS=ON .
+```
+
+**Note:** This also affects the .dmg package generation using cpack, so if this options is enabled, the package will be unusable for everyone but yourself as the required libraries will not be bundled with the application.
+
+On macOS you can then install the application as a normal user, i.e. no root privileges are required. Simply run the following to install the application to `/Applications/EmulationStation Desktop Edition.app`:
+
+```
+make install
+```
+
+This will be the directory structure for the installation:
+
+```
+/Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/EmulationStation
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.0.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libcurl.4.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreeimage.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreetype.6.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlc.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlccore.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/plugins/*
+/Applications/EmulationStation Desktop Edition.app/Contents/Resources/EmulationStation-DE.icns
+/Applications/EmulationStation Desktop Edition.app/Contents/Resources/LICENSE
+/Applications/EmulationStation Desktop Edition.app/Contents/Resources/licenses/*
+/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/*
+/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/*
+```
+
+ES will look in the following locations for the resources, in the listed order:
+
+* `[HOME]/.emulationstation/resources/`
+* `[ES EXECUTABLE DIRECTORY]/../Resources/resources/`
+* `[ES EXECUTABLE DIRECTORY]/resources/`
+
+**Note:** The resources directory is critical, without it the application won't start.
+
+And it will look in the following locations for the themes, also in the listed order:
+
+* `[HOME]/.emulationstation/themes/`
+* `[ES EXECUTABLE DIRECTORY]/../Resources/themes/`
+* `[ES EXECUTABLE DIRECTORY]/themes/`
+
+A theme is not mandatory to start the application, but ES will be basically useless without it.
+
+The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES executable.
+
+**Creating a .dmg installer:**
+
+Simply run `cpack` to build a .dmg disk image/installer:
 
 ```
 myusername@computer:~/emulationstation-de$ cpack
-CPack: Create package using DragNDrop
+CPack: Create package using Bundle
 CPack: Install projects
 CPack: - Run preinstall target for: emulationstation-de
 CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.0.0.dmg generated.
+```
+
+**Special considerations regarding run-paths:**
+
+Even after considerable effort I've been unable to make CMake natively set correct rpaths for the EmulationStation binary on macOS. Therefore a hack/workaround is in place that uses install_name_tool to change absolute paths to rpaths for most of the bundled libraries.
+
+This is certainly not perfect as the versions of the libraries are hardcoded inside es-app/CMakeLists.txt. Therefore always check that all the rpaths are set correctly if you intend to create a .dmg image that will be used on other computers than your own.
+
+Simply run `otool -L EmulationStation` and verify that the result looks something like this:
+
+```
+EmulationStation:
+	@rpath/libcurl.4.dylib (compatibility version 7.0.0, current version 8.0.0)
+	@rpath/libfreeimage.dylib (compatibility version 3.0.0, current version 3.18.0)
+	@rpath/libfreetype.6.dylib (compatibility version 24.0.0, current version 24.2.0)
+	@rpath/libSDL2-2.0.0.dylib (compatibility version 13.0.0, current version 13.0.0)
+	/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa (compatibility version 1.0.0, current version 22.0.0)
+	@rpath/libvlc.dylib (compatibility version 12.0.0, current version 12.0.0)
+	/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL (compatibility version 1.0.0, current version 1.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 120.1.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1226.10.1)
+```
+
+If any of the lines that should start with @rpath instead has an absolute path, then you have a problem and need to modify the install_name_tools parameters in es-app/CMakeLists.txt, for example:
+
+`/usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib (compatibility version 13.0.0, current version 13.0.0)`
+
+This is the section that would need to be modified:
+
+```
+add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
+        -change /usr/lib/libcurl.4.dylib @rpath/libcurl.4.dylib
+        -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
+        -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
+        -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
+        $<TARGET_FILE:EmulationStation>)
 ```
 
 

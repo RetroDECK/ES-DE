@@ -141,26 +141,43 @@ elseif(APPLE)
             DESTINATION ../Resources)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist
             DESTINATION .. RENAME Info.plist)
-    install(FILES ${CMAKE_SOURCE_DIR}/libcurl.4.dylib
-            DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
-            DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
-            DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
-            DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
-            DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
-            DESTINATION ../MacOS)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
-            DESTINATION ../MacOS)
+
+    # Another hack/workaround. I have not been able to find any way whatsover to force the
+    # linker to use rpaths for all shared libraries instead of absolute paths. So instead
+    # we're running install_name_tool as a post-build command to manually change the absolute
+    # paths to the rpaths for these libraries. The worst thing about this approach is that
+    # the library version needs to be manually changed here depending on what's installed
+    # on your system (e.g. if using libSDL2-2.1.0.dylib instead of libSDL2-2.0.0.dylib).
+    # This problem definitely needs to be resolved properly at a later date.
+    add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
+            -change /usr/lib/libcurl.4.dylib @rpath/libcurl.4.dylib
+            -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
+            -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
+            -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
+            $<TARGET_FILE:EmulationStation>)
+
+    if(NOT APPLE_SKIP_INSTALL_LIBS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libcurl.4.dylib
+                DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
+                DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
+                DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
+                DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
+                DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
+                DESTINATION ../MacOS)
+        install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
+                DESTINATION ../MacOS)
+    endif()
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
             DESTINATION ../Resources)
-#    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
-#            DESTINATION ../Resources)
-#    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
-#                   DESTINATION ../Resources)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
+            DESTINATION ../Resources)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
+                   DESTINATION ../Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
             DESTINATION ../Resources)
 else()
@@ -202,7 +219,7 @@ if(APPLE)
     set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns")
     set(CPACK_DMG_VOLUME_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}")
     set(CPACK_DMG_DS_STORE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_DS_Store")
-    set(CPACK_BUNDLE_NAME "EmulationStation-DE")
+    set(CPACK_BUNDLE_NAME "EmulationStation Desktop Edition")
     set(CPACK_BUNDLE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns")
     set(CPACK_BUNDLE_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist")
 elseif(WIN32)

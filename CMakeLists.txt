@@ -14,6 +14,8 @@ option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer)" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
+option(APPLE_SKIP_INSTALL_LIBS "Set to ON to skip installation of shared libraries (macOS only)."
+        ${APPLE_SKIP_INSTALL_LIBS})
 
 #---------------------------------------------------------------------------------------------------
 # Set up OpenGL system variable.
@@ -224,7 +226,7 @@ elseif(DEFINED VERO4K)
     link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib")
 endif()
 
-if (NOT WIN32)
+if(NOT WIN32)
     set(COMMON_LIBRARIES
             ${CURL_LIBRARIES}
             ${FreeImage_LIBRARIES}
@@ -247,16 +249,22 @@ elseif(WIN32)
             "nanosvg")
 endif()
 
-if (APPLE)
+if(APPLE)
     # See es-app/CMakeLists.txt for an explation for why an extra 'Resources' directory
     # has been added to the install prefix.
-    set(CMAKE_INSTALL_PREFIX "/Applications/EmulationStation-DE.app/Contents/Resources")
+    set(CMAKE_INSTALL_PREFIX
+            "/Applications/EmulationStation Desktop Edition.app/Contents/Resources")
 
     # Temporary solution until the VLC find module has been updated to work properly on macOS.
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
             "/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib")
-    set(CMAKE_INSTALL_RPATH @executable_path)
-#    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+    # Set the same rpath links for the install executable as for the build executable.
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+    if(NOT APPLE_SKIP_INSTALL_LIBS)
+        set(CMAKE_INSTALL_RPATH @executable_path)
+    endif()
 endif()
 
 # Add libCEC libraries.
