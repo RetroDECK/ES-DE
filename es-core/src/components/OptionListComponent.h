@@ -16,6 +16,8 @@
 #include "Log.h"
 #include "Window.h"
 
+#include <algorithm>
+
 // Used to display a list of options.
 // Can select one or multiple options.
 
@@ -197,6 +199,12 @@ public:
         for (unsigned int i = 0; i < mEntries.size(); i++)
             mEntries.at(i).selected = false;
         onSelectedChanged();
+    }
+
+    void sortEntriesByName()
+    {
+        std::sort(std::begin(mEntries), std::end(mEntries),
+                [](OptionListData a, OptionListData b) { return a.name < b.name; });
     }
 
     HelpStyle getHelpStyle() override { return mHelpStyle; };

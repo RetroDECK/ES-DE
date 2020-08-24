@@ -63,6 +63,8 @@ GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
                     mSystems->selectEntry(i) : mSystems->unselectEntry(i);
         }
     }
+    // Sort the systems by their full names.
+    mSystems->sortEntriesByName();
     mMenu.addWithLabel("Systems", mSystems);
 
     addEntry("CONTENT SETTINGS", 0x777777FF, true, [this] {

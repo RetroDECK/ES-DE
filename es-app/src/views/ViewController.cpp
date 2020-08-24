@@ -100,7 +100,8 @@ void ViewController::goToStart()
         // Requested system doesn't exist.
         Settings::getInstance()->setString("StartupSystem", "");
     }
-    goToSystemView(SystemData::sSystemVector.at(0));
+    // Get the first system entry as sorted by full system names in SystemView.
+    goToSystemView(getSystemListView()->getFirst());
 }
 
 void ViewController::ReloadAndGoToStart()

@@ -146,6 +146,10 @@ void SystemView::populate()
                     "OK", nullptr));
         }
     }
+
+    // Sort the systems by their full names.
+    std::sort(std::begin(mEntries), std::end(mEntries),
+            [](Entry a, Entry b) { return a.object->getFullName() < b.object->getFullName(); });
 }
 
 void SystemView::goToSystem(SystemData* system, bool animate)
