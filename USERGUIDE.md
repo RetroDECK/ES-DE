@@ -49,6 +49,8 @@ When starting EmulationStation with the default settings, you will see the main 
 
 Depending on the theme, the system navigation carousel can be either horizontal or vertical. The default theme rbsimple-DE provides horizontal navigation, i.e. you browse your systems be scrolling left or right.
 
+The game systems are sorted by their full names, as defined in es_systems.cfg.
+
 
 ## Gamelist view
 
@@ -72,43 +74,55 @@ There is a help system available throughout the application that provides an ove
 
 The help system will provide an overview per screen on the navigation options for the application, however here is a general overview. These are the inputs you mapped in the previous input device configuration step. Note that this is not an exhaustive list, but it covers most situations.
 
-**Up and down**
+The default keyboard mappings are shown in brackets. These can be changed by running the input device configuration as described earlier in this document.
+
+**Up and down**\
+_(Arrow up/Arrow down)_
 
 Navigate up and down in gamelists, system view (if the theme has a vertical carousel) and in menus.
 
-**Left and right**
+**Left and right**\
+_(Arrow left/Arrow right)_
 
 Navigate between gamelists (if 'Quick system select' has been activated in the options), or between systems (if the theme has a horizontal carousel).
 
-**Start button**
+**Start button**\
+_(Escape)_
 
 Opens and closes the main menu.
 
-**Select button**
+**Select button**\
+_(F1)_
 
 Opens and closes the game options menu if in the gamelist view, or toggles the screensaver if in the system view (main screen).
 
-**Shoulder buttons left and right**
+**Shoulder buttons left and right**\
+_(Page up/Page down)_
 
 Provides quick jumping in gamelists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Also jumps forward in text edit dialogs.
 
-**Trigger buttons left and right**
+**Trigger buttons left and right**\
+_(Home/End)_
 
 Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
 
-**A button**
+**A button**\
+_(Enter)_
 
 Select button to open gamelists from the systems view, start games, choose menu entries etc.
 
-**B button**
+**B button**\
+_(Back key)_
 
 Back button, self explanatory.
 
-**X button**
+**X button**\
+_(Delete)_
 
 Selects random games and systems.
 
-**Y button**
+**Y button**\
+_(Insert on Unix and Windows, F13 on macOS)_
 
 Marks games as favorites in the gamelist views. Used by some other minor functions as explained by the help system.
 
@@ -992,128 +1006,128 @@ Regional differences are handled by simply using the game system name correspond
 
 Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For example 'na' for North America has been added to `snes` (Super Nintendo), as this is the minority region corresponding to around 7,5% of the world population. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
 
-| Game system name      | Full name                                     | Recommended game setup               |
-| :-------------------- | :-------------------------------------------- | :----------------------------------- |
-| 3do                   | 3DO                                           |                                      |
-| ags                   | Adventure Game Studio                         |                                      |
-| amiga                 | Commodore Amiga                               | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amiga600              | Commodore Amiga 600                           | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amiga1200             | Commodore Amiga 1200                          | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amigacd32             | Commodore Amiga CD32                          |                                      |
-| amstradcpc            | Amstrad CPC                                   |                                      |
-| apple2                | Apple II                                      |                                      |
-| apple2gs              | Apple IIGS                                    |                                      |
-| arcade                | Arcade                                        | Single archive file following MAME name standard in root folder |
-| astrocade             | Bally Astrocade                               |                                      |
-| atari2600             | Atari 2600                                    |                                      |
-| atari5200             | Atari 5200                                    |                                      |
-| atari7800             | Atari 7800 ProSystem                          |                                      |
-| atari800              | Atari 800                                     |                                      |
-| atarijaguar           | Atari Jaguar                                  |                                      |
-| atarijaguarcd         | Atari Jaguar CD                               |                                      |
-| atarilynx             | Atari Lynx                                    |                                      |
-| atarist               | Atari ST                                      |                                      |
-| atarixe               | Atari XE                                      |                                      |
-| atomiswave            | Atomiswave                                    |                                      |
-| bbcmicro              | BBC Micro                                     |                                      |
-| c64                   | Commodore 64                                  | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
-| cavestory             | Cave Story (NXEngine)                         |                                      |
-| cdtv                  | Commodore CDTV                                |                                      |
-| channelf              | Fairchild Channel F                           |                                      |
-| coco                  | Tandy Color Computer                          |                                      |
-| coleco                | ColecoVision                                  |                                      |
-| daphne                | Daphne Arcade Laserdisc Emulator              |                                      |
-| desktop               | Desktop applications                          |                                      |
-| doom                  | Doom                                          |                                      |
-| dos                   | DOS (PC)                                      | In separate folder (one folder per game, with complete file structure retained) |
-| dragon32              | Dragon 32                                     |                                      |
-| dreamcast             | Sega Dreamcast                                |                                      |
-| famicom               | Nintendo Family Computer                      | Single archive or ROM file in root folder |
-| fba                   | Final Burn Alpha                              | Single archive file following MAME name standard |
-| fbneo                 | FinalBurn Neo                                 | Single archive file following MAME name standard |
-| fds                   | Nintendo Famicom Disk System                  |                                      |
-| gameandwatch          | Nintendo Game and Watch                       |                                      |
-| gamegear              | Sega Game Gear                                |                                      |
-| gamecube              | Nintendo GameCube                             |                                      |
-| gb                    | Nintendo Game Boy                             |                                      |
-| gba                   | Nintendo Game Boy Advance                     |                                      |
-| gbc                   | Nintendo Game Boy Color                       |                                      |
-| genesis               | Sega Genesis                                  | Single archive or ROM file in root folder |
-| gx4000                | Amstrad GX4000                                |                                      |
-| intellivision         | Mattel Electronics Intellivision              |                                      |
-| chailove              | ChaiLove game engine                          |                                      |
-| kodi                  | Kodi home theatre software                    |                                      |
-| lutro                 | Lutro game engine                             |                                      |
-| macintosh             | Apple Macintosh                               |                                      |
-| mame                  | Multiple Arcade Machine Emulator              | Single archive file following MAME name standard in root folder |
-| mame-advmame          | AdvanceMAME                                   | Single archive file following MAME name standard in root folder |
-| mame-libretro         | Multiple Arcade Machine Emulator              | Single archive file following MAME name standard in root folder |
-| mame-mame4all         | MAME4ALL                                      | Single archive file following MAME name standard in root folder |
-| mastersystem          | Sega Master System                            |                                      |
-| megacd                | Sega Mega-CD                                  |                                      |
-| megacdjp              | Sega Mega-CD (Japan)                          |                                      |
-| megadrive             | Sega Mega Drive                               | Single archive or ROM file in root folder |
-| mess                  | Multi Emulator Super System                   |                                      |
-| moonlight             | Moonlight game streaming                      |                                      |
-| msx                   | MSX                                           |                                      |
-| msx1                  | MSX1                                          |                                      |
-| msx2                  | MSX2                                          |                                      |
-| naomi                 | Sega NAOMI                                    |                                      |
-| n64                   | Nintendo 64                                   | Single archive or ROM file in root folder |
-| nds                   | Nintendo DS                                   |                                      |
-| neogeo                | Neo Geo                                       | Single archive file following MAME name standard |
-| neogeocd              | Neo Geo CD                                    |                                      |
-| nes                   | Nintendo Entertainment System                 | Single archive or ROM file in root folder |
-| ngp                   | Neo Geo Pocket                                |                                      |
-| ngpc                  | Neo Geo Pocket Color                          |                                      |
-| odyssey2              | Magnavox Odyssey2                             |                                      |
-| openbor               | OpenBOR game engine                           |                                      |
-| oric                  | Tangerine Computer Systems Oric               |                                      |
-| palm                  | Palm OS                                       |                                      |
-| pc                    | IBM PC                                        | In separate folder (one folder per game, with complete file structure retained) |
-| pcengine              | NEC PC Engine                                 | Single archive or ROM file in root folder |
-| pcenginecd            | NEC PC Engine CD                              |                                      |
-| pcfx                  | NEC PC-FX                                     |                                      |
-| pokemini              | Nintendo Pokémon Mini                         |                                      |
-| ports                 | Ports                                         | Shell/batch script in separate folder (possibly combined with game data) |
-| ps2                   | Sony PlayStation 2                            |                                      |
-| psp                   | PlayStation Portable                          |                                      |
-| psvita                | PlayStation Vita                              |                                      |
-| psx                   | Sony PlayStation 1                            |                                      |
-| residualvm            | ResidualVM game engine                        |                                      |
-| samcoupe              | SAM Coupé                                     |                                      |
-| satellaview           | Nintendo Satellaview                          |                                      |
-| saturn                | Sega Saturn                                   |                                      |
-| scummvm               | ScummVM game engine                           |                                      |
-| sega32x               | Sega Mega Drive 32X                           | Single archive or ROM file in root folder |
-| sega32xjp             | Sega Super 32X (Japan)                        | Single archive or ROM file in root folder |
-| sega32xna             | Sega Genesis 32X (North America)              | Single archive or ROM file in root folder |
-| segacd                | Sega CD                                       |                                      |
-| sg-1000               | Sega SG-1000                                  |                                      |
-| snes                  | Super Nintendo                                | Single archive or ROM file in root folder |
-| snesna                | Super Nintendo (North America)                | Single archive or ROM file in root folder |
-| solarus               | Solarus game engine                           |                                      |
-| spectravideo          | Spectravideo                                  |                                      |
-| steam                 | Valve Steam                                   | Shell/batch script in root folder    |
-| stratagus             | Stratagus game engine                         |                                      |
-| sufami                | Bandai SuFami Turbo                           |                                      |
-| supergrafx            | NEC SuperGrafx                                |                                      |
-| thomson               | Thomson TO/MO series                          |                                      |
-| tg16                  | NEC TurboGrafx-16                             |                                      |
-| tg-cd                 | NEC TurboGrafx-CD                             |                                      |
-| ti99                  | Texas Instruments TI-99                       |                                      |
-| trs-80                | Tandy TRS-80                                  |                                      |
-| uzebox                | Uzebox                                        |                                      |
-| vectrex               | Vectrex                                       |                                      |
-| videopac              | Philips Videopac G7000 (Magnavox Odyssey2)    |                                      |
-| virtualboy            | Nintendo Virtual Boy                          |                                      |
-| wii                   | Nintendo Wii                                  |                                      |
-| wiiu                  | Nintendo Wii U                                |                                      |
-| wonderswan            | Bandai WonderSwan                             |                                      |
-| wonderswancolor       | Bandai WonderSwan Color                       |                                      |
-| x68000                | Sharp X68000                                  |                                      |
-| xbox                  | Microsoft Xbox                                |                                      |
-| xbox360               | Microsoft Xbox 360                            |                                      |
-| zmachine              | Infocom Z-machine                             |                                      |
-| zx81                  | Sinclair ZX81                                 |                                      |
-| zxspectrum            | Sinclair ZX Spectrum                          |                                      |
+| Game system name      | Full name                                      | Recommended game setup               |
+| :-------------------- | :--------------------------------------------- | :----------------------------------- |
+| 3do                   | 3DO                                            |                                      |
+| ags                   | Adventure Game Studio                          |                                      |
+| amiga                 | Commodore Amiga                                | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amiga600              | Commodore Amiga 600                            | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amiga1200             | Commodore Amiga 1200                           | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amigacd32             | Commodore Amiga CD32                           |                                      |
+| amstradcpc            | Amstrad CPC                                    |                                      |
+| apple2                | Apple II                                       |                                      |
+| apple2gs              | Apple IIGS                                     |                                      |
+| arcade                | Arcade                                         | Single archive file following MAME name standard in root folder |
+| astrocade             | Bally Astrocade                                |                                      |
+| atari2600             | Atari 2600                                     |                                      |
+| atari5200             | Atari 5200                                     |                                      |
+| atari7800             | Atari 7800 ProSystem                           |                                      |
+| atari800              | Atari 800                                      |                                      |
+| atarijaguar           | Atari Jaguar                                   |                                      |
+| atarijaguarcd         | Atari Jaguar CD                                |                                      |
+| atarilynx             | Atari Lynx                                     |                                      |
+| atarist               | Atari ST                                       |                                      |
+| atarixe               | Atari XE                                       |                                      |
+| atomiswave            | Atomiswave                                     |                                      |
+| bbcmicro              | BBC Micro                                      |                                      |
+| c64                   | Commodore 64                                   | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
+| cavestory             | Cave Story (NXEngine)                          |                                      |
+| cdtv                  | Commodore CDTV                                 |                                      |
+| channelf              | Fairchild Channel F                            |                                      |
+| coco                  | Tandy Color Computer                           |                                      |
+| coleco                | ColecoVision                                   |                                      |
+| daphne                | Daphne Arcade Laserdisc Emulator               |                                      |
+| desktop               | Desktop applications                           |                                      |
+| doom                  | Doom                                           |                                      |
+| dos                   | DOS (PC)                                       | In separate folder (one folder per game, with complete file structure retained) |
+| dragon32              | Dragon 32                                      |                                      |
+| dreamcast             | Sega Dreamcast                                 |                                      |
+| famicom               | Nintendo Family Computer                       | Single archive or ROM file in root folder |
+| fba                   | Final Burn Alpha                               | Single archive file following MAME name standard |
+| fbneo                 | FinalBurn Neo                                  | Single archive file following MAME name standard |
+| fds                   | Nintendo Famicom Disk System                   |                                      |
+| gameandwatch          | Nintendo Game and Watch                        |                                      |
+| gamegear              | Sega Game Gear                                 |                                      |
+| gamecube              | Nintendo GameCube                              |                                      |
+| gb                    | Nintendo Game Boy                              |                                      |
+| gba                   | Nintendo Game Boy Advance                      |                                      |
+| gbc                   | Nintendo Game Boy Color                        |                                      |
+| genesis               | Sega Genesis                                   | Single archive or ROM file in root folder |
+| gx4000                | Amstrad GX4000                                 |                                      |
+| intellivision         | Mattel Electronics Intellivision               |                                      |
+| chailove              | ChaiLove game engine                           |                                      |
+| kodi                  | Kodi home theatre software                     |                                      |
+| lutro                 | Lutro game engine                              |                                      |
+| macintosh             | Apple Macintosh                                |                                      |
+| mame                  | Multiple Arcade Machine Emulator               | Single archive file following MAME name standard in root folder |
+| mame-advmame          | AdvanceMAME                                    | Single archive file following MAME name standard in root folder |
+| mame-libretro         | Multiple Arcade Machine Emulator               | Single archive file following MAME name standard in root folder |
+| mame-mame4all         | MAME4ALL                                       | Single archive file following MAME name standard in root folder |
+| mastersystem          | Sega Master System                             |                                      |
+| megacd                | Sega Mega-CD                                   |                                      |
+| megacdjp              | Sega Mega-CD (Japan)                           |                                      |
+| megadrive             | Sega Mega Drive                                | Single archive or ROM file in root folder |
+| mess                  | Multi Emulator Super System                    |                                      |
+| moonlight             | Moonlight game streaming                       |                                      |
+| msx                   | MSX                                            |                                      |
+| msx1                  | MSX1                                           |                                      |
+| msx2                  | MSX2                                           |                                      |
+| naomi                 | Sega NAOMI                                     |                                      |
+| n64                   | Nintendo 64                                    | Single archive or ROM file in root folder |
+| nds                   | Nintendo DS                                    |                                      |
+| neogeo                | Neo Geo                                        | Single archive file following MAME name standard |
+| neogeocd              | Neo Geo CD                                     |                                      |
+| nes                   | Nintendo Entertainment System                  | Single archive or ROM file in root folder |
+| ngp                   | Neo Geo Pocket                                 |                                      |
+| ngpc                  | Neo Geo Pocket Color                           |                                      |
+| odyssey2              | Magnavox Odyssey2                              |                                      |
+| openbor               | OpenBOR game engine                            |                                      |
+| oric                  | Tangerine Computer Systems Oric                |                                      |
+| palm                  | Palm OS                                        |                                      |
+| pc                    | IBM PC                                         | In separate folder (one folder per game, with complete file structure retained) |
+| pcengine              | NEC PC Engine                                  | Single archive or ROM file in root folder |
+| pcenginecd            | NEC PC Engine CD                               |                                      |
+| pcfx                  | NEC PC-FX                                      |                                      |
+| pokemini              | Nintendo Pokémon Mini                          |                                      |
+| ports                 | Ports                                          | Shell/batch script in separate folder (possibly combined with game data) |
+| ps2                   | Sony PlayStation 2                             |                                      |
+| psp                   | PlayStation Portable                           |                                      |
+| psvita                | PlayStation Vita                               |                                      |
+| psx                   | Sony PlayStation 1                             |                                      |
+| residualvm            | ResidualVM game engine                         |                                      |
+| samcoupe              | SAM Coupé                                      |                                      |
+| satellaview           | Nintendo Satellaview                           |                                      |
+| saturn                | Sega Saturn                                    |                                      |
+| scummvm               | ScummVM game engine                            |                                      |
+| sega32x               | Sega Mega Drive 32X                            | Single archive or ROM file in root folder |
+| sega32xjp             | Sega Super 32X (Japan)                         | Single archive or ROM file in root folder |
+| sega32xna             | Sega Genesis 32X (North America)               | Single archive or ROM file in root folder |
+| segacd                | Sega CD                                        |                                      |
+| sg-1000               | Sega SG-1000                                   |                                      |
+| snes                  | Nintendo SNES (Super Nintendo)                 | Single archive or ROM file in root folder |
+| snesna                | Nintendo SNES (Super Nintendo) (North America) | Single archive or ROM file in root folder |
+| solarus               | Solarus game engine                            |                                      |
+| spectravideo          | Spectravideo                                   |                                      |
+| steam                 | Valve Steam                                    | Shell/batch script in root folder    |
+| stratagus             | Stratagus game engine                          |                                      |
+| sufami                | Bandai SuFami Turbo                            |                                      |
+| supergrafx            | NEC SuperGrafx                                 |                                      |
+| thomson               | Thomson TO/MO series                           |                                      |
+| tg16                  | NEC TurboGrafx-16                              |                                      |
+| tg-cd                 | NEC TurboGrafx-CD                              |                                      |
+| ti99                  | Texas Instruments TI-99                        |                                      |
+| trs-80                | Tandy TRS-80                                   |                                      |
+| uzebox                | Uzebox                                         |                                      |
+| vectrex               | Vectrex                                        |                                      |
+| videopac              | Philips Videopac G7000 (Magnavox Odyssey2)     |                                      |
+| virtualboy            | Nintendo Virtual Boy                           |                                      |
+| wii                   | Nintendo Wii                                   |                                      |
+| wiiu                  | Nintendo Wii U                                 |                                      |
+| wonderswan            | Bandai WonderSwan                              |                                      |
+| wonderswancolor       | Bandai WonderSwan Color                        |                                      |
+| x68000                | Sharp X68000                                   |                                      |
+| xbox                  | Microsoft Xbox                                 |                                      |
+| xbox360               | Microsoft Xbox 360                             |                                      |
+| zmachine              | Infocom Z-machine                              |                                      |
+| zx81                  | Sinclair ZX81                                  |                                      |
+| zxspectrum            | Sinclair ZX Spectrum                           |                                      |
