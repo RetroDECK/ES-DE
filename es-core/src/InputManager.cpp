@@ -224,6 +224,11 @@ bool InputManager::parseEvent(const SDL_Event& ev, Window* window)
 
     switch (ev.type) {
     case SDL_JOYAXISMOTION:
+        // This should hopefully prevent a potential crash if the controller was unplugged
+        // while a game was running.
+        if (!mInputConfigs[ev.jaxis.which])
+            return false;
+
         axisValue = ev.jaxis.value;
         // For the analog trigger buttons, convert the negative<->positive axis values to only
         // positive values in order to avoid registering double inputs. This is only a
@@ -259,11 +264,17 @@ bool InputManager::parseEvent(const SDL_Event& ev, Window* window)
     case SDL_JOYBUTTONDOWN:
 
     case SDL_JOYBUTTONUP:
+        if (!mInputConfigs[ev.jaxis.which])
+            return false;
+
         window->input(getInputConfigByDevice(ev.jbutton.which), Input(ev.jbutton.which,
                 TYPE_BUTTON, ev.jbutton.button, ev.jbutton.state == SDL_PRESSED, false));
         return true;
 
     case SDL_JOYHATMOTION:
+        if (!mInputConfigs[ev.jaxis.which])
+            return false;
+
         window->input(getInputConfigByDevice(ev.jhat.which), Input(ev.jhat.which,
                 TYPE_HAT, ev.jhat.hat, ev.jhat.value, false));
         return true;
