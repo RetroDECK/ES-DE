@@ -164,13 +164,13 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.02 0.19</pos>
             <size>0.4 0.735</size>
             <origin>0 0</origin>
-            <path>./core/images/back90.png</path>
+            <path>./core/images/back_alpha.png</path>
         </image>
         <image name="backtext3" extra="true">
             <pos>0.44 0.19</pos>
             <size>0.54 0.735</size>
             <origin>0 0</origin>
-            <path>./core/images/back90.png</path>
+            <path>./core/images/back_alpha.png</path>
         </image>
         <text name="md_players, md_genre, md_developer, md_publisher">
             <size>0.14 0.023</size>
@@ -260,7 +260,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.02 0.19</pos>
             <size>0.96 0.735</size>
             <origin>0 0</origin>
-            <path>./core/images/back90.png</path>
+            <path>./core/images/back_alpha.png</path>
         </image>
         <textlist name="gamelist">
             <pos>0.04 0.21</pos>
