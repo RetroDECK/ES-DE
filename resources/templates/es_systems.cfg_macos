@@ -867,7 +867,7 @@
   </system>
   <system>
     <name>snes</name>
-    <fullname>Super Nintendo</fullname>
+    <fullname>Nintendo SNES (Super Nintendo)</fullname>
     <path>%ROMPATH%/snes</path>
     <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
     <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/snes9x_libretro.dylib %ROM%</command>
@@ -876,7 +876,7 @@
   </system>
   <system>
     <name>snesna</name>
-    <fullname>Super Nintendo</fullname>
+    <fullname>Nintendo SNES (Super Nintendo)</fullname>
     <path>%ROMPATH%/snesna</path>
     <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
     <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/snes9x_libretro.dylib %ROM%</command>
