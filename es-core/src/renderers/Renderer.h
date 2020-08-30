@@ -9,6 +9,11 @@
 #define ES_CORE_RENDERER_RENDERER_H
 
 #include "math/Vector2f.h"
+#include "Log.h"
+#include "Shader_GL21.h"
+
+#include <string>
+#include <vector>
 
 class  Transform4x4f;
 class  Vector2i;
@@ -16,6 +21,30 @@ struct SDL_Window;
 
 namespace Renderer
 {
+    static std::vector<Shader*> sShaderProgramVector;
+
+    #if !defined(NDEBUG)
+    #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
+
+    static void _GLCheckError(const char* _funcName)
+    {
+        const GLenum errorCode = glGetError();
+
+        if (errorCode != GL_NO_ERROR) {
+        #if defined(USE_OPENGL_21)
+            LOG(LogError) << "OpenGL error: " << _funcName <<
+                    " failed with error code: 0x" << std::hex << errorCode;
+        #else
+            LOG(LogError) << "OpenGLES error: " << _funcName <<
+                    " failed with error code: 0x" << std::hex << errorCode;
+        #endif
+
+        }
+    }
+    #else
+    #define GL_CHECK_ERROR(Function) (Function)
+    #endif
+
     namespace Blend
     {
         enum Factor {
@@ -69,6 +98,7 @@ namespace Renderer
         Vector2f pos;
         Vector2f tex;
         unsigned int col;
+        float saturation = 1.0;
     };
 
     bool init();
@@ -94,11 +124,16 @@ namespace Renderer
     int getScreenOffsetY();
     int getScreenRotate();
 
+    unsigned int rgbaToABGR(unsigned int color);
+    unsigned int abgrToRGBA(unsigned int color);
+
+    Shader* getShaderProgram(unsigned int index);
+
     // API specific.
     unsigned int convertColor(const unsigned int _color);
     unsigned int getWindowFlags();
     void setupWindow();
-    void createContext();
+    bool createContext();
     void destroyContext();
     unsigned int createTexture(
             const Texture::Type _type,
@@ -133,7 +168,6 @@ namespace Renderer
     void setScissor(const Rect& _scissor);
     void setSwapInterval();
     void swapBuffers();
-
 }
 
 #endif // ES_CORE_RENDERER_RENDERER_H

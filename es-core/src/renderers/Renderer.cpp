@@ -8,6 +8,7 @@
 
 #include "math/Transform4x4f.h"
 #include "math/Vector2i.h"
+#include "Shader_GL21.h"
 #include "resources/ResourceManager.h"
 #include "ImageIO.h"
 #include "Log.h"
@@ -155,17 +156,42 @@ namespace Renderer
             return false;
         }
 
-        LOG(LogInfo) << "Created window successfully.";
+        LOG(LogInfo) << "Setting up OpenGL...";
 
-        createContext();
+        if (!createContext())
+            return false;
+
         setIcon();
         setSwapInterval();
+
+        #if defined(USE_OPENGL_21)
+        LOG(LogInfo) << "Loading shaders...";
+
+        Shader* desaturateShader = new Shader();
+
+        desaturateShader->loadShaderFile(":/shaders/glsl/desaturate.glsl", GL_VERTEX_SHADER);
+        desaturateShader->loadShaderFile(":/shaders/glsl/desaturate.glsl", GL_FRAGMENT_SHADER);
+
+        if (!desaturateShader->createProgram()) {
+            LOG(LogError) << "Could not create shader program.";
+            return false;
+        }
+
+        sShaderProgramVector.push_back(desaturateShader);
+        #endif
 
         return true;
     }
 
     static void destroyWindow()
     {
+        #if defined(USE_OPENGL_21)
+        for (auto it = sShaderProgramVector.cbegin();
+                it != sShaderProgramVector.cend(); it++) {
+            delete *it;
+        }
+        #endif
+
         destroyContext();
         SDL_DestroyWindow(sdlWindow);
 
@@ -326,6 +352,34 @@ namespace Renderer
         bindTexture(0);
         drawTriangleStrips(vertices, 4, _srcBlendFactor, _dstBlendFactor);
     }
+
+    unsigned int rgbaToABGR(const unsigned int _color)
+    {
+        unsigned char red = ((_color & 0xff000000) >> 24) & 255;
+        unsigned char green = ((_color & 0x00ff0000) >> 16) & 255;
+        unsigned char blue = ((_color & 0x0000ff00) >> 8) & 255;
+        unsigned char alpha = ((_color & 0x000000ff)) & 255;
+
+        return alpha << 24 | blue << 16 | green << 8 | red;
+    }
+
+    unsigned int abgrToRGBA(const unsigned int _color)
+    {
+        unsigned char alpha = ((_color & 0xff000000) >> 24) & 255;
+        unsigned char blue = ((_color & 0x00ff0000) >> 16) & 255;
+        unsigned char green = ((_color & 0x0000ff00) >> 8) & 255;
+        unsigned char red = ((_color & 0x000000ff)) & 255;
+
+        return red << 24 | green << 16 | blue << 8 | alpha;
+    }
+
+    Shader* getShaderProgram(unsigned int index)
+    {
+        if (sShaderProgramVector.size() > index)
+            return sShaderProgramVector[index];
+        else
+            return nullptr;
+    };
 
     SDL_Window* getSDLWindow() { return sdlWindow; }
     int getWindowWidth() { return windowWidth; }

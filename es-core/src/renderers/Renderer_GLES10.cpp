@@ -16,22 +16,6 @@
 
 namespace Renderer
 {
-    #if !defined(NDEBUG)
-    #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
-
-    static void _GLCheckError(const char* _funcName)
-    {
-        const GLenum errorCode = glGetError();
-
-        if (errorCode != GL_NO_ERROR) {
-            LOG(LogError) << "OpenGLES error: " << _funcName <<
-                    " failed with error code: 0x" << std::hex << errorCode;
-        }
-    }
-    #else
-    #define GL_CHECK_ERROR(Function) (Function)
-    #endif
-
     static SDL_GLContext sdlContext = nullptr;
     static GLuint whiteTexture = 0;
 
@@ -91,7 +75,7 @@ namespace Renderer
         SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     }
 
-    void createContext()
+    bool createContext()
     {
         sdlContext = SDL_GL_CreateContext(getSDLWindow());
         SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
@@ -112,9 +96,9 @@ namespace Renderer
         LOG(LogInfo) << "Checking available OpenGL extensions...";
         std::string glExts = glGetString(GL_EXTENSIONS) ?
                 (const char*)glGetString(GL_EXTENSIONS) : "";
-        LOG(LogInfo) << "ARB_texture_non_power_of_two: " <<
-                (extensions.find("ARB_texture_non_power_of_two") !=
-                std::string::npos ? "ok" : "MISSING");
+        LOG(LogInfo) << "GL_OES_texture_npot: " <<
+                (extensions.find("GL_OES_texture_npot") !=
+                std::string::npos ? "OK" : "MISSING");
 
         uint8_t data[4] = {255, 255, 255, 255};
         whiteTexture = createTexture(Texture::RGBA, false, true, 1, 1, data);
@@ -127,6 +111,8 @@ namespace Renderer
         GL_CHECK_ERROR(glEnableClientState(GL_VERTEX_ARRAY));
         GL_CHECK_ERROR(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
         GL_CHECK_ERROR(glEnableClientState(GL_COLOR_ARRAY));
+
+        return true;
     }
 
     void destroyContext()

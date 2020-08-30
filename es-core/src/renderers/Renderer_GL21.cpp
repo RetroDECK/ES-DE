@@ -6,32 +6,13 @@
 
 #if defined(USE_OPENGL_21)
 
-#include "renderers/Renderer.h"
 #include "math/Transform4x4f.h"
-#include "Log.h"
+#include "renderers/Renderer.h"
 #include "Settings.h"
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+#include "Shader_GL21.h"
 
 namespace Renderer
 {
-    #if !defined(NDEBUG)
-    #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
-
-    static void _GLCheckError(const char* _funcName)
-    {
-        const GLenum errorCode = glGetError();
-
-        if (errorCode != GL_NO_ERROR) {
-            LOG(LogError) << "OpenGL error: " << _funcName <<
-                    " failed with error code: 0x" << std::hex << errorCode;
-        }
-    }
-    #else
-    #define GL_CHECK_ERROR(Function) (Function)
-    #endif
-
     static SDL_GLContext sdlContext = nullptr;
     static GLuint whiteTexture = 0;
 
@@ -97,12 +78,14 @@ namespace Renderer
         SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     }
 
-    void createContext()
+    bool createContext()
     {
+        bool missingExtension = false;
         sdlContext = SDL_GL_CreateContext(getSDLWindow());
 
         if (!sdlContext) {
             LOG(LogError) << "Error creating OpenGL context. " << SDL_GetError();
+            return false;
         }
 
         SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
@@ -123,9 +106,31 @@ namespace Renderer
         LOG(LogInfo) << "Checking available OpenGL extensions...";
         std::string glExts = glGetString(GL_EXTENSIONS) ?
                 (const char*)glGetString(GL_EXTENSIONS) : "";
-        LOG(LogInfo) << "ARB_texture_non_power_of_two: " <<
-                (extensions.find("ARB_texture_non_power_of_two") !=
-                std::string::npos ? "ok" : "MISSING");
+        if (extensions.find("GL_ARB_texture_non_power_of_two") == std::string::npos) {
+            LOG(LogError) << "GL_ARB_texture_non_power_of_two: MISSING";
+            missingExtension = true;
+        }
+        else {
+            LOG(LogInfo) << "GL_ARB_texture_non_power_of_two: OK";
+        }
+        if (extensions.find("GL_ARB_vertex_shader") == std::string::npos) {
+            LOG(LogError) << "GL_ARB_vertex_shader: MISSING";
+            missingExtension = true;
+        }
+        else {
+            LOG(LogInfo) << "GL_ARB_vertex_shader: OK";
+        }
+        if (extensions.find("GL_ARB_fragment_shader") == std::string::npos) {
+            LOG(LogError) << "GL_ARB_fragment_shader: MISSING";
+            missingExtension = true;
+        }
+        else {
+            LOG(LogInfo) << "GL_ARB_fragment_shader: OK";
+        }
+        if (missingExtension) {
+            LOG(LogError) << "Required OpenGL extensions missing.";
+            return false;
+        }
 
         uint8_t data[4] = {255, 255, 255, 255};
         whiteTexture = createTexture(Texture::RGBA, false, true, 1, 1, data);
@@ -138,6 +143,8 @@ namespace Renderer
         GL_CHECK_ERROR(glEnableClientState(GL_VERTEX_ARRAY));
         GL_CHECK_ERROR(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
         GL_CHECK_ERROR(glEnableClientState(GL_COLOR_ARRAY));
+
+        return true;
     }
 
     void destroyContext()
@@ -218,6 +225,20 @@ namespace Renderer
                 convertBlendFactor(_dstBlendFactor)));
 
         GL_CHECK_ERROR(glDrawArrays(GL_LINES, 0, _numVertices));
+
+        // If saturation is set below the maximum (default) value, run the desaturation shader.
+        if (_vertices->saturation < 1.0) {
+            Shader* desaturateShader = getShaderProgram(Shader::Desaturate);
+
+            // Only try to use the shader if it has been loaded properly.
+            if (desaturateShader) {
+                desaturateShader->activateShaders();
+                desaturateShader->getVariableLocations(desaturateShader->getProgramID());
+                desaturateShader->setVariable(_vertices->saturation);
+                GL_CHECK_ERROR(glDrawArrays(GL_LINES, 0, _numVertices));
+                desaturateShader->deactivateShaders();
+            }
+        }
     }
 
     void drawTriangleStrips(
@@ -234,6 +255,20 @@ namespace Renderer
                 convertBlendFactor(_dstBlendFactor)));
 
         GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+
+        // If saturation is set below the maximum (default) value, run the desaturation shader.
+        if (_vertices->saturation < 1.0) {
+            Shader* desaturateShader = getShaderProgram(Shader::Desaturate);
+
+            // Only try to use the shader if it has been loaded properly.
+            if (desaturateShader) {
+                desaturateShader->activateShaders();
+                desaturateShader->getVariableLocations(desaturateShader->getProgramID());
+                desaturateShader->setVariable(_vertices->saturation);
+                GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                desaturateShader->deactivateShaders();
+            }
+        }
     }
 
     void setProjection(const Transform4x4f& _projection)

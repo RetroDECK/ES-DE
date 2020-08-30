@@ -139,11 +139,13 @@ public:
 
     virtual unsigned char getOpacity() const;
     virtual void setOpacity(unsigned char opacity);
+    virtual unsigned int getColor() const;
     virtual void setColor(unsigned int color);
+    virtual float getSaturation() const;
+    virtual void setSaturation(float saturation);
     virtual void setColorShift(unsigned int color);
     virtual void setOriginalColor(unsigned int color) { mColorOriginalValue = color; };
     virtual void setChangedColor(unsigned int color) { mColorChangedValue = color; };
-    virtual unsigned int getColor() const;
 
     // These functions are used to enable and disable options in menus, i.e. switches and similar.
     virtual void setEnabled() { mEnabled = true; };
@@ -191,6 +193,7 @@ protected:
 
     unsigned char mOpacity;
     unsigned int mColor;
+    float mSaturation;
     unsigned char mColorOpacity;
     unsigned int mColorShift;
     unsigned int mColorShiftEnd;

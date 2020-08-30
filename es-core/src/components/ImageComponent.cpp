@@ -293,6 +293,12 @@ void ImageComponent::setOpacity(unsigned char opacity)
     updateColors();
 }
 
+void ImageComponent::setSaturation(float saturation)
+{
+    mSaturation = saturation;
+    updateColors();
+}
+
 void ImageComponent::updateVertices()
 {
     if (!mTexture || !mTexture->isInitialized())
@@ -339,6 +345,10 @@ void ImageComponent::updateColors()
     mVertices[1].col = mColorGradientHorizontal ? colorEnd : color;
     mVertices[2].col = mColorGradientHorizontal ? color : colorEnd;
     mVertices[3].col = colorEnd;
+    mVertices[0].saturation = mSaturation;
+    mVertices[1].saturation = mSaturation;
+    mVertices[2].saturation = mSaturation;
+    mVertices[3].saturation = mSaturation;
 }
 
 void ImageComponent::render(const Transform4x4f& parentTrans)

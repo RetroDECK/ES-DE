@@ -18,6 +18,7 @@ GuiComponent::GuiComponent(Window* window)
         : mWindow(window),
         mParent(nullptr),
         mOpacity(255),
+        mSaturation(1.0),
         mPosition(Vector3f::Zero()),
         mOrigin(Vector2f::Zero()),
         mRotationOrigin(0.5, 0.5),
@@ -259,21 +260,31 @@ void GuiComponent::setOpacity(unsigned char opacity)
         (*it)->setOpacity(opacity);
 }
 
+unsigned int GuiComponent::getColor() const
+{
+    return mColor;
+}
+
 void GuiComponent::setColor(unsigned int color)
 {
     mColor = color;
     mColorOpacity = mColor & 0x000000FF;
 }
 
+float GuiComponent::getSaturation() const
+{
+    return mColor;
+}
+
+void GuiComponent::setSaturation(float saturation)
+{
+    mSaturation = saturation;
+}
+
 void GuiComponent::setColorShift(unsigned int color)
 {
     mColorShift = color;
     mColorShiftEnd = color;
-}
-
-unsigned int GuiComponent::getColor() const
-{
-    return mColor;
 }
 
 const Transform4x4f& GuiComponent::getTransform()

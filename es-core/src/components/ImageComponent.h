@@ -31,7 +31,6 @@ public:
     void setImage(const std::shared_ptr<TextureResource>& texture);
 
     void onSizeChanged() override;
-    void setOpacity(unsigned char opacity) override;
 
     // Resize the image to fit this size. If one axis is zero, scale that axis to maintain
     // aspect ratio. If both are non-zero, potentially break the aspect ratio.  If both are
@@ -65,6 +64,9 @@ public:
     void setColorShift(unsigned int color) override;
     void setColorShiftEnd(unsigned int color);
     void setColorGradientHorizontal(bool horizontal);
+
+    void setOpacity(unsigned char opacity) override;
+    void setSaturation(float saturation) override;
 
     void setFlipX(bool flip); // Mirror on the X axis.
     void setFlipY(bool flip); // Mirror on the Y axis.
