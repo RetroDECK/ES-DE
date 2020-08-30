@@ -155,7 +155,7 @@ void ImageGridComponent<T>::add(const std::string& name, const std::string& imag
     entry.object = obj;
     entry.data.texturePath = imagePath;
 
-    static_cast<IList< ImageGridData, T >*>(this)->add(entry);
+    static_cast<IList<ImageGridData, T>*>(this)->add(entry);
     mEntriesDirty = true;
 }
 

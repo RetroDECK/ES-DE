@@ -467,7 +467,7 @@ int main(int argc, char* argv[])
     SDL_Event event;
 
     if (!window.init()) {
-        LOG(LogError) << "Window failed to initialize!";
+        LOG(LogError) << "Window failed to initialize.";
         return 1;
     }
 

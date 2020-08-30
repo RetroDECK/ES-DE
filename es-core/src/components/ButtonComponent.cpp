@@ -97,8 +97,7 @@ void ButtonComponent::render(const Transform4x4f& parentTrans)
 
     mBox.render(trans);
 
-    if (mTextCache)
-    {
+    if (mTextCache) {
         Vector3f centerOffset((mSize.x() - mTextCache->metrics.size.x()) / 2,
                 (mSize.y() - mTextCache->metrics.size.y()) / 2, 0);
         trans = trans.translate(centerOffset);

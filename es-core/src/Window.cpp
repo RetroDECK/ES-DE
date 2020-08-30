@@ -83,7 +83,7 @@ GuiComponent* Window::peekGui()
 bool Window::init()
 {
     if (!Renderer::init()) {
-        LOG(LogError) << "Renderer failed to initialize!";
+        LOG(LogError) << "Renderer failed to initialize.";
         return false;
     }
 

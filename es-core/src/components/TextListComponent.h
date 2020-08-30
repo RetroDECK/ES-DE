@@ -373,7 +373,7 @@ void TextListComponent<T>::add(const std::string& name, const T& obj, unsigned i
     entry.name = name;
     entry.object = obj;
     entry.data.colorId = color;
-    static_cast<IList< TextListData, T >*>(this)->add(entry);
+    static_cast<IList<TextListData, T>*>(this)->add(entry);
 }
 
 template <typename T>

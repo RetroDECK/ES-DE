@@ -39,7 +39,7 @@ https://google.github.io/styleguide/cppguide.html
 * Use K&R placements of braces, read the Linux Kernel coding style document for clarifications
 * Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while ()` etc.
 * Indentation of switch/case statements is optional, but it's usually easier to read the code with indentations in place
-* Use `std::string` instead of `char *` or `char []` unless there is a specific reason requiring the latter
+* Use `std::string` or `std::vector<char>` instead of `char *` or `char []` unless there is a specific reason requiring the latter
 * Actually, try to use C++ syntax in general instead of C syntax, another example would be `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
 * If the arguments (and initializer list) for a function or class exceeds 4 items, arrange them vertically to make the code easier to read
 * Always declare one variable per line, never combine multiple declarations of the same type

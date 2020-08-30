@@ -216,7 +216,7 @@ bool SystemData::loadConfig()
     std::string path = getConfigPath(false);
     const std::string rompath  = FileData::getROMDirectory();
 
-    LOG(LogInfo) << "Loading system config file " << path << "...";
+    LOG(LogInfo) << "Loading system configuration file " << path << "...";
 
     if (!Utils::FileSystem::exists(path)) {
         LOG(LogWarning) << "es_systems.cfg does not exist.";
