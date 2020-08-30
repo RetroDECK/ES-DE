@@ -151,7 +151,8 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
     Renderer::setMatrix(trans);
 
     if (mIsPlaying && mContext.valid) {
-        const unsigned int fadeIn = (unsigned int)(Math::clamp(0.0f, mFadeIn, 1.0f) * 255.0f);
+        // This fade in is only used by the video screensaver.
+        const unsigned int fadeIn = (unsigned int)(Math::clamp(mFadeIn, 0.0f, 1.0f) * 255.0f);
         const unsigned int color  =
                 Renderer::convertColor((fadeIn << 24) | (fadeIn << 16) | (fadeIn << 8) | 255);
         Renderer::Vertex vertices[4];
