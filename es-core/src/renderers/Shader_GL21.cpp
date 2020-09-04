@@ -16,12 +16,10 @@ namespace Renderer
 {
     Renderer::Shader::Shader()
             : mProgramID(-1),
-            shaderFloat_0(-1),
-            shaderFloat_1(-1),
-            shaderFloat_2(-1),
-            shaderVec4_0(-1),
-            shaderVec4_1(-1),
-            shaderVec4_2(-1)
+            shaderTextureSize(-1),
+            shaderTextureCoord(-1),
+            shaderColor(-1),
+            shaderSaturation(-1)
     {
     }
 
@@ -42,7 +40,7 @@ namespace Renderer
         // Define the GLSL version (version 120 = OpenGL 2.1).
         preprocessorDefines = "#version 120\n";
 
-        // Define the preprocessor macros that will let the shader compiler know whether
+        // Define the preprocessor constants that will let the shader compiler know whether
         // the VERTEX or FRAGMENT portion of the code should be used.
         if (shaderType == GL_VERTEX_SHADER)
             preprocessorDefines += "#define VERTEX\n";
@@ -73,7 +71,7 @@ namespace Renderer
             if (shaderCompiled != GL_TRUE) {
                 LOG(LogError) << "OpenGL error: Unable to compile shader " <<
                         currentShader << " (" << std::get<0>(*it) << ").";
-                printShaderInfoLog(currentShader);
+                printShaderInfoLog(currentShader, std::get<2>(*it));
                 return false;
             }
 
@@ -99,47 +97,34 @@ namespace Renderer
 
     void Renderer::Shader::getVariableLocations(GLuint programID)
     {
-        shaderFloat_0 = glGetUniformLocation(mProgramID, "shaderFloat_0");
-        shaderFloat_1 = glGetUniformLocation(mProgramID, "shaderFloat_1");
-        shaderFloat_2 = glGetUniformLocation(mProgramID, "shaderFloat_2");
-        shaderVec4_0 = glGetUniformLocation(mProgramID, "shaderVec4_0");
-        shaderVec4_1 = glGetUniformLocation(mProgramID, "shaderVec4_1");
-        shaderVec4_2 = glGetUniformLocation(mProgramID, "shaderVec4_2");
+        // Some of the variable names are chosen to be compatible with the RetroArch GLSL shaders.
+        shaderTextureSize = glGetUniformLocation(mProgramID, "TextureSize");
+        shaderTextureCoord = glGetAttribLocation(mProgramID, "TexCoord");
+        shaderColor = glGetAttribLocation(mProgramID, "COLOR");
+        shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
     }
 
-    void Renderer::Shader::setVariable(GLfloat shaderFloat, int index)
+    void Renderer::Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)
     {
-        switch (index) {
-            case 0:
-                GL_CHECK_ERROR(glUniform1f(shaderFloat_0, shaderFloat));
-                break;
-            case 1:
-                GL_CHECK_ERROR(glUniform1f(shaderFloat_1, shaderFloat));
-                break;
-            case 2:
-                GL_CHECK_ERROR(glUniform1f(shaderFloat_2, shaderFloat));
-                break;
-            default:
-                break;
-        }
+        GL_CHECK_ERROR(glUniform2f(shaderTextureSize, shaderVec2[0], shaderVec2[1]));
     }
 
-    void Renderer::Shader::setVariable(std::array<GLfloat, 4> shaderVec4, int index)
+    void Renderer::Shader::setTextureCoordinates(std::array<GLfloat, 4> shaderVec4)
     {
-        switch (index) {
-            case 0:
-                GL_CHECK_ERROR(glUniform4f(shaderVec4_0, shaderVec4[0],
+        glEnableVertexAttribArray(shaderTextureCoord);
+        glVertexAttribPointer(shaderTextureCoord, 4, GL_FLOAT, GL_FALSE, 0,
+                (const GLvoid*)(uintptr_t)&shaderVec4);
+    }
+
+    void Renderer::Shader::setColor(std::array<GLfloat, 4> shaderVec4)
+    {
+        GL_CHECK_ERROR(glUniform4f(shaderColor, shaderVec4[0],
                         shaderVec4[1], shaderVec4[2], shaderVec4[3]));
-                break;
-            case 1:
-                GL_CHECK_ERROR(glUniform4f(shaderVec4_1, shaderVec4[0],
-                        shaderVec4[1], shaderVec4[2], shaderVec4[3]));
-            case 2:
-                GL_CHECK_ERROR(glUniform4f(shaderVec4_2, shaderVec4[0],
-                        shaderVec4[1], shaderVec4[2], shaderVec4[3]));
-            default:
-                break;
-        }
+    }
+
+    void Renderer::Shader::setSaturation(GLfloat saturation)
+    {
+        GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
     }
 
     void Renderer::Shader::activateShaders()
@@ -178,7 +163,7 @@ namespace Renderer
         }
     }
 
-    void Renderer::Shader::printShaderInfoLog(GLuint shaderID)
+    void Renderer::Shader::printShaderInfoLog(GLuint shaderID, GLenum shaderType)
     {
         if (glIsShader(shaderID)) {
             int logLength;
@@ -190,8 +175,9 @@ namespace Renderer
             glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printShaderLog():\n" <<
-                        std::string(infoLog.begin(), infoLog.end());
+                LOG(LogDebug) << "Renderer_GL21::printShaderLog(): Error in " <<
+                        (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
+                        "FRAGMENT section:\n") << std::string(infoLog.begin(), infoLog.end());
             }
         }
         else {

@@ -20,10 +20,6 @@ namespace Renderer
     class Shader
     {
     public:
-        enum shaderNames {
-            Desaturate
-        };
-
         Shader();
         ~Shader();
 
@@ -36,8 +32,10 @@ namespace Renderer
         // Get references to the variables inside the compiled shaders.
         void getVariableLocations(GLuint programID);
         // One-way communication with the compiled shaders.
-        void setVariable(GLfloat shaderFloat, int index = 0);
-        void setVariable(std::array<GLfloat, 4> shaderVec4, int index = 0);
+        void setTextureSize(std::array<GLfloat, 2> shaderVec2);
+        void setTextureCoordinates(std::array<GLfloat, 4> shaderVec4);
+        void setColor(std::array<GLfloat, 4> shaderVec4);
+        void setSaturation(GLfloat saturation);
         // Sets the shader program to use the loaded shaders.
         void activateShaders();
         // Sets the shader program to 0 which reverts to the fixed function pipeline.
@@ -46,20 +44,19 @@ namespace Renderer
         GLuint getProgramID();
         // Only used for error logging if the shaders fail to compile or link.
         void printProgramInfoLog(GLuint programID);
-        void printShaderInfoLog(GLuint shaderID);
+        void printShaderInfoLog(GLuint shaderID, GLenum shaderType);
 
     private:
         GLuint mProgramID;
         std::vector<std::tuple<std::string, std::string, GLenum>> shaderVector;
 
         // Variables used for communication with the compiled shaders.
-        GLint shaderFloat_0;
-        GLint shaderFloat_1;
-        GLint shaderFloat_2;
-        GLint shaderVec4_0;
-        GLint shaderVec4_1;
-        GLint shaderVec4_2;
+        GLint shaderTextureSize;
+        GLint shaderTextureCoord;
+        GLint shaderColor;
+        GLint shaderSaturation;
     };
+
 } // Renderer
 
 #endif // ES_CORE_RENDERER_SHADER_GL21_H

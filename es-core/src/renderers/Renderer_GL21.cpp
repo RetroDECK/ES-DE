@@ -127,6 +127,13 @@ namespace Renderer
         else {
             LOG(LogInfo) << "GL_ARB_fragment_shader: OK";
         }
+        if (extensions.find("GL_EXT_framebuffer_blit") == std::string::npos) {
+            LOG(LogError) << "GL_EXT_framebuffer_blit: MISSING";
+            missingExtension = true;
+        }
+        else {
+            LOG(LogInfo) << "GL_EXT_framebuffer_blit: OK";
+        }
         if (missingExtension) {
             LOG(LogError) << "Required OpenGL extensions missing.";
             return false;
@@ -144,11 +151,15 @@ namespace Renderer
         GL_CHECK_ERROR(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
         GL_CHECK_ERROR(glEnableClientState(GL_COLOR_ARRAY));
 
+        // This is the framebuffer that will be used for shader rendering.
+        GL_CHECK_ERROR(glGenFramebuffers(1, &shaderFBO));
+
         return true;
     }
 
     void destroyContext()
     {
+        GL_CHECK_ERROR(glDeleteFramebuffers(1, &shaderFBO));
         SDL_GL_DeleteContext(sdlContext);
         sdlContext = nullptr;
     }
@@ -225,28 +236,17 @@ namespace Renderer
                 convertBlendFactor(_dstBlendFactor)));
 
         GL_CHECK_ERROR(glDrawArrays(GL_LINES, 0, _numVertices));
-
-        // If saturation is set below the maximum (default) value, run the desaturation shader.
-        if (_vertices->saturation < 1.0) {
-            Shader* desaturateShader = getShaderProgram(Shader::Desaturate);
-
-            // Only try to use the shader if it has been loaded properly.
-            if (desaturateShader) {
-                desaturateShader->activateShaders();
-                desaturateShader->getVariableLocations(desaturateShader->getProgramID());
-                desaturateShader->setVariable(_vertices->saturation);
-                GL_CHECK_ERROR(glDrawArrays(GL_LINES, 0, _numVertices));
-                desaturateShader->deactivateShaders();
-            }
-        }
     }
 
     void drawTriangleStrips(
             const Vertex* _vertices,
             const unsigned int _numVertices,
             const Blend::Factor _srcBlendFactor,
-            const Blend::Factor _dstBlendFactor)
+            const Blend::Factor _dstBlendFactor,
+            const shaderParameters& parameters)
     {
+        float width = _vertices[3].pos[0];
+        float height = _vertices[3].pos[1];
         GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].pos));
         GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].tex));
         GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &_vertices[0].col));
@@ -256,17 +256,56 @@ namespace Renderer
 
         GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
 
-        // If saturation is set below the maximum (default) value, run the desaturation shader.
-        if (_vertices->saturation < 1.0) {
-            Shader* desaturateShader = getShaderProgram(Shader::Desaturate);
+        for (unsigned int i = 0; i < parameters.shaderPasses; i++) {
+            // If saturation is set below the maximum (default) value, run the desaturation shader.
+            if (_vertices->saturation < 1.0 || parameters.fragmentSaturation < 1.0) {
+                Shader* runShader = getShaderProgram(SHADER_DESATURATE);
+                // Only try to use the shader if it has been loaded properly.
+                if (runShader) {
+                    runShader->activateShaders();
+                    runShader->getVariableLocations(runShader->getProgramID());
+                    runShader->setSaturation(_vertices->saturation);
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    runShader->deactivateShaders();
+                }
+            }
 
-            // Only try to use the shader if it has been loaded properly.
-            if (desaturateShader) {
-                desaturateShader->activateShaders();
-                desaturateShader->getVariableLocations(desaturateShader->getProgramID());
-                desaturateShader->setVariable(_vertices->saturation);
-                GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
-                desaturateShader->deactivateShaders();
+            // Check if any other shaders are set to be used and if so, run them.
+            if (_vertices->shaders & SHADER_BLUR_HORIZONTAL) {
+                Shader* runShader = getShaderProgram(SHADER_BLUR_HORIZONTAL);
+                if (runShader) {
+                    runShader->activateShaders();
+                    runShader->getVariableLocations(runShader->getProgramID());
+                    runShader->setTextureSize({width, height});
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    runShader->deactivateShaders();
+                }
+            }
+
+            if (_vertices->shaders & SHADER_BLUR_VERTICAL) {
+                Shader* runShader = getShaderProgram(SHADER_BLUR_VERTICAL);
+                if (runShader) {
+                    runShader->activateShaders();
+                    runShader->getVariableLocations(runShader->getProgramID());
+                    runShader->setTextureSize({width, height});
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    runShader->deactivateShaders();
+                }
+            }
+
+            if (_vertices->shaders & SHADER_SCANLINES) {
+                Shader* runShader = getShaderProgram(SHADER_SCANLINES);
+                float shaderWidth = width * 1.2;
+                // Workaround to get the scanlines to render somehow proportional to the
+                // resolution. A better solution is for sure needed.
+                float shaderHeight = height + height / ((int)height >> 7) * 1.5;
+                if (runShader) {
+                    runShader->activateShaders();
+                    runShader->getVariableLocations(runShader->getProgramID());
+                    runShader->setTextureSize({shaderWidth, shaderHeight});
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    runShader->deactivateShaders();
+                }
             }
         }
     }
@@ -328,6 +367,81 @@ namespace Renderer
     {
         SDL_GL_SwapWindow(getSDLWindow());
         GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+    }
+
+    void shaderPostprocessing(unsigned int shaders, const Renderer::shaderParameters& parameters,
+            unsigned char* textureRGBA)
+    {
+        Vertex vertices[4];
+        GLuint width = getScreenWidth();
+        GLuint height = getScreenHeight();
+        float widthf = static_cast<float>(width);
+        float heightf = static_cast<float>(height);
+
+        // Set vertex positions and texture coordinates to full screen as all
+        // postprocessing is applied to the complete screen area.
+        vertices[0] = { { 0, 0 }, { 0, 1 }, 0 };
+        vertices[1] = { { 0, heightf }, { 0, 0 }, 0 };
+        vertices[2] = { { widthf, 0 }, { 1, 1 }, 0 };
+        vertices[3] = { { widthf, heightf }, { 1, 0 }, 0};
+
+        vertices[0].shaders = shaders;
+        vertices[1].shaders = shaders;
+        vertices[2].shaders = shaders;
+        vertices[3].shaders = shaders;
+
+        if (parameters.fragmentSaturation < 1.0) {
+            vertices[0].saturation = parameters.fragmentSaturation;
+            vertices[1].saturation = parameters.fragmentSaturation;
+            vertices[2].saturation = parameters.fragmentSaturation;
+            vertices[3].saturation = parameters.fragmentSaturation;
+        }
+
+        setMatrix(Transform4x4f::Identity());
+
+        // The following method to apply the shaders is not optimal as it requires
+        // glBlitFramebuffer() to run twice. However, this function seems to be
+        // very fast so maybe it's not a practical issue.
+        GLuint screenTexture = createTexture(Texture::RGBA, false, false, width, height, nullptr);
+
+        GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
+        GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO));
+
+        // Attach the texture to the shader framebuffer.
+        GL_CHECK_ERROR(glFramebufferTexture2D(
+                GL_FRAMEBUFFER,
+                GL_COLOR_ATTACHMENT0,
+                GL_TEXTURE_2D,
+                screenTexture,
+                0));
+
+        // Blit the screen contents to screenTexture.
+        GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
+                GL_COLOR_BUFFER_BIT, GL_NEAREST));
+
+        // Apply/render the shaders.
+        drawTriangleStrips(vertices, 4, Blend::SRC_ALPHA, Blend::ONE_MINUS_SRC_ALPHA, parameters);
+
+        // If textureRGBA has an address, it means that the output should go to this texture
+        // rather than to the screen. The glReadPixels() function is slow, but since this would
+        // typically only run every now and then to create a cached screen texture, it doesn't
+        // really matter.
+        if (textureRGBA) {
+            GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, shaderFBO));
+            GL_CHECK_ERROR(glReadPixels(0, 0, width, height,
+                    GL_RGBA, GL_UNSIGNED_BYTE, textureRGBA));
+            GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+        }
+        else {
+            // Blit the resulting postprocessed texture back to the primary framebuffer.
+            GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, shaderFBO));
+            GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
+                    GL_COLOR_BUFFER_BIT, GL_NEAREST));
+        }
+
+        GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
+        destroyTexture(screenTexture);
     }
 
 } // Renderer::

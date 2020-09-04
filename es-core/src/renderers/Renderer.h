@@ -21,7 +21,27 @@ struct SDL_Window;
 
 namespace Renderer
 {
+    const unsigned int SHADER_DESATURATE =          1;
+    const unsigned int SHADER_BLUR_HORIZONTAL =     2;
+    const unsigned int SHADER_BLUR_VERTICAL =       4;
+    const unsigned int SHADER_SCANLINES =           8;
+
+    struct shaderParameters {
+        std::array<GLfloat, 2> textureSize;
+        std::array<GLfloat, 4> textureCoordinates;
+        float fragmentSaturation;
+        unsigned int shaderPasses;
+
+        shaderParameters()
+                : textureSize({0.0, 0.0}),
+                textureCoordinates({0.0, 0.0, 0.0, 0.0}),
+                fragmentSaturation(1.0),
+                shaderPasses(1)
+                {};
+    };
+
     static std::vector<Shader*> sShaderProgramVector;
+    static GLuint shaderFBO;
 
     #if !defined(NDEBUG)
     #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
@@ -99,6 +119,7 @@ namespace Renderer
         Vector2f tex;
         unsigned int col;
         float saturation = 1.0;
+        unsigned int shaders = 0;
     };
 
     bool init();
@@ -127,7 +148,10 @@ namespace Renderer
     unsigned int rgbaToABGR(unsigned int color);
     unsigned int abgrToRGBA(unsigned int color);
 
-    Shader* getShaderProgram(unsigned int index);
+    Shader* getShaderProgram(unsigned int shaderID);
+    void shaderPostprocessing(unsigned int shaders,
+            const Renderer::shaderParameters& parameters = shaderParameters(),
+            unsigned char* textureRGBA = nullptr);
 
     // API specific.
     unsigned int convertColor(const unsigned int _color);
@@ -161,7 +185,8 @@ namespace Renderer
             const Vertex* _vertices,
             const unsigned int _numVertices,
             const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
-            const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
+            const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA,
+            const shaderParameters& parameters = shaderParameters());
     void setProjection(const Transform4x4f& _projection);
     void setMatrix(const Transform4x4f& _matrix);
     void setViewport(const Rect& _viewport);

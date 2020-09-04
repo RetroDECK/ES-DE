@@ -70,7 +70,7 @@ namespace Renderer
         LOG(LogInfo) << "Creating window...";
 
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-            LOG(LogError) << "Error initializing SDL!\n	" << SDL_GetError();
+            LOG(LogError) << "Couldn't initialize SDL: " << SDL_GetError() << ".";
             return false;
         }
 
@@ -167,17 +167,25 @@ namespace Renderer
         #if defined(USE_OPENGL_21)
         LOG(LogInfo) << "Loading shaders...";
 
-        Shader* desaturateShader = new Shader();
+        std::vector<std::string> shaderFiles;
+        shaderFiles.push_back(":/shaders/glsl/desaturate.glsl");
+        shaderFiles.push_back(":/shaders/glsl/blur_horizontal.glsl");
+        shaderFiles.push_back(":/shaders/glsl/blur_vertical.glsl");
+        shaderFiles.push_back(":/shaders/glsl/scanlines.glsl");
 
-        desaturateShader->loadShaderFile(":/shaders/glsl/desaturate.glsl", GL_VERTEX_SHADER);
-        desaturateShader->loadShaderFile(":/shaders/glsl/desaturate.glsl", GL_FRAGMENT_SHADER);
+        for (auto it = shaderFiles.cbegin(); it != shaderFiles.cend(); it++) {
+            Shader* loadShader = new Shader();
 
-        if (!desaturateShader->createProgram()) {
-            LOG(LogError) << "Could not create shader program.";
-            return false;
+            loadShader->loadShaderFile(*it, GL_VERTEX_SHADER);
+            loadShader->loadShaderFile(*it, GL_FRAGMENT_SHADER);
+
+            if (!loadShader->createProgram()) {
+                LOG(LogError) << "Could not create shader program.";
+                return false;
+            }
+
+            sShaderProgramVector.push_back(loadShader);
         }
-
-        sShaderProgramVector.push_back(desaturateShader);
         #endif
 
         return true;
@@ -373,10 +381,19 @@ namespace Renderer
         return red << 24 | green << 16 | blue << 8 | alpha;
     }
 
-    Shader* getShaderProgram(unsigned int index)
+    Shader* getShaderProgram(unsigned int shaderID)
     {
-        if (sShaderProgramVector.size() > index)
-            return sShaderProgramVector[index];
+        unsigned int index = 0;
+
+        // Find the index in sShaderProgramVector by counting the number
+        // of shifts required to reach 0.
+        while (shaderID > 0) {
+            shaderID = shaderID >> 1;
+            index++;
+        }
+
+        if (sShaderProgramVector.size() > index-1)
+            return sShaderProgramVector[index-1];
         else
             return nullptr;
     };
