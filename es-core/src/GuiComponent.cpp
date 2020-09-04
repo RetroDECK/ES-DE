@@ -294,19 +294,19 @@ const Transform4x4f& GuiComponent::getTransform()
     if (mScale != 1.0)
         mTransform.scale(mScale);
     if (mRotation != 0.0) {
-        // Calculate offset as difference between origin and rotation origin
+        // Calculate offset as difference between origin and rotation origin.
         Vector2f rotationSize = getRotationSize();
         float xOff = (mOrigin.x() - mRotationOrigin.x()) * rotationSize.x();
         float yOff = (mOrigin.y() - mRotationOrigin.y()) * rotationSize.y();
 
-        // Transform to offset point
+        // Transform to offset point.
         if (xOff != 0.0 || yOff != 0.0)
             mTransform.translate(Vector3f(xOff * -1, yOff * -1, 0.0f));
 
-        // Apply rotation transform
+        // Apply rotation transform.
         mTransform.rotateZ(mRotation);
 
-        // Tranform back to original point
+        // Transform back to original point.
         if (xOff != 0.0 || yOff != 0.0)
             mTransform.translate(Vector3f(xOff, yOff, 0.0f));
     }
@@ -373,12 +373,12 @@ bool GuiComponent::finishAnimation(unsigned char slot)
 {
     assert(slot < MAX_ANIMATIONS);
     if (mAnimationMap[slot]) {
-        // Skip to animation's end
+        // Skip to animation's end.
         const bool done = mAnimationMap[slot]->update(mAnimationMap[slot]->
                 getAnimation()->getDuration() - mAnimationMap[slot]->getTime());
         assert(done);
 
-        delete mAnimationMap[slot]; // Will also call finishedCallback
+        delete mAnimationMap[slot]; // Will also call finishedCallback.
         mAnimationMap[slot] = nullptr;
         return true;
     }

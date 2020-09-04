@@ -10,7 +10,7 @@
 #include <FreeImage.h>
 #include <string.h>
 
-std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char * data,
+std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* data,
         const size_t size, size_t & width, size_t & height)
 {
     std::vector<unsigned char> rawData;

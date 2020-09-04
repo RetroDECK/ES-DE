@@ -169,12 +169,12 @@ void ImageComponent::setImage(std::string path, bool tile)
     resize();
 }
 
-void ImageComponent::setImage(const char* path, size_t length, bool tile)
+void ImageComponent::setImage(const char* data, size_t length, bool tile)
 {
     mTexture.reset();
 
     mTexture = TextureResource::get("", tile);
-    mTexture->initFromMemory(path, length);
+    mTexture->initFromMemory(data, length);
 
     resize();
 }
