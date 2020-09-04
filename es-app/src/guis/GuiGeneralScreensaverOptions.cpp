@@ -56,7 +56,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
             mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
             "THE \"VIDEO\" SCREENSAVER SHOWS\nVIDEOS FROM YOUR GAMELISTS.\n\nIF YOU DO NOT "
             "HAVE ANY VIDEOS, THE\nSCREENSAVER WILL DEFAULT TO \"BLACK\"",
-                "OK", [] { return; }, "", nullptr, "", nullptr, true));
+                "OK", [] { return; }, "", nullptr, "", nullptr));
         }
         Settings::getInstance()->setString("ScreenSaverBehavior",
                 screensaver_behavior->getSelected());
