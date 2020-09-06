@@ -705,6 +705,13 @@ The template file will be copied to `~/.emulationstation/es_systems.cfg`. \
 
 **Note:** Keep in mind that you have to set up your emulators separately from EmulationStation, the es_systems.cfg file assumes that your emulator environment is properly configured.
 
+On Unix it's assumed that RetroArch is using the default configuration directory location, i.e. the cores should be located in ~/.config/retroarch/cores. If you've installed RetroArch via a Snap package, make a symlink from the Snap .config directory:
+
+```
+ln -s ~/snap/retroarch/current/.config/retroarch ~/.config/
+```
+
+
 **~/.emulationstation/es_settings.cfg:**
 
 When ES is first run, a configuration file will be created as `~/.emulationstation/es_settings.cfg`.
