@@ -269,6 +269,10 @@ Keep in mind though that a debug version will be much slower due to all compiler
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
+After building ES and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES using 'make install'. It's only needed to be able to run the ES binary from the build directory. The following will of course only be active during your session, and you need to set the variable for each terminal window that you want to start ES from, unless you add it to your shell profile file:
+
+```export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib```
+
 **Note:** According to the SDL documentation, there could be issues with attempting to run ES from the build directory when using a High DPI display as the required NSHighResolutionCapable key is not set as there is no Info.plist file available. In this case, doing a 'make install' and running ES from the installation folder would solve the problem. I've been unable to verify if this is really required though as I don't have the necessary hardware to test it on.
 
 **Installing:**
