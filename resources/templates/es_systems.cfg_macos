@@ -87,7 +87,7 @@
     <fullname>Arcade</fullname>
     <path>%ROMPATH%/arcade</path>
     <extension>.chd .cue .CUE .CHD .cmd .CMD .fba .FBA .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/mame2016_libretro.dylib %ROM%</command>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/mame2010_libretro.dylib %ROM%</command>
     <platform>arcade</platform>
     <theme>arcade</theme>
   </system>
@@ -465,7 +465,7 @@
     <fullname>Multiple Arcade Machine Emulator</fullname>
     <path>%ROMPATH%/mame</path>
     <extension>.chd .cue .CUE .CHD .cmd .CMD .fba .FBA .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/mame2016_libretro.dylib %ROM%</command>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/mame2010_libretro.dylib %ROM%</command>
     <platform>arcade</platform>
     <theme>mame</theme>
   </system>
