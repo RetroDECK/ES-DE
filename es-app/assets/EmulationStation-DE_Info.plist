@@ -21,7 +21,9 @@
     <key>CFBundleVersion</key>
     <string>1.0.0-beta</string>
     <key>NSHighResolutionCapable</key>
-    <string>true</string>
+    <true/>
+    <key>LSUIPresentationMode</key>
+    <integer>4</integer>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSMainNibFile</key>
