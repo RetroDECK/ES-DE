@@ -275,6 +275,19 @@ namespace Renderer
                     }
                 }
 
+                if (_vertices->shaders & SHADER_OPACITY) {
+                    Shader* runShader = getShaderProgram(SHADER_OPACITY);
+                    if (runShader) {
+                        runShader->activateShaders();
+                        runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
+                        _vertices->opacity < 1.0 ?
+                                runShader->setOpacity(_vertices->opacity) :
+                                runShader->setOpacity(_parameters.fragmentOpacity);
+                        GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                        runShader->deactivateShaders();
+                    }
+                }
+
                 // Check if any other shaders are set to be used and if so, run them.
                 if (_vertices->shaders & SHADER_DIM) {
                     Shader* runShader = getShaderProgram(SHADER_DIM);

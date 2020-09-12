@@ -39,6 +39,7 @@ namespace Renderer
         void setTextureCoordinates(std::array<GLfloat, 4> shaderVec4);
         void setColor(std::array<GLfloat, 4> shaderVec4);
         void setSaturation(GLfloat saturation);
+        void setOpacity(GLfloat opacity);
         void setDimValue(GLfloat dimValue);
         // Sets the shader program to use the loaded shaders.
         void activateShaders();
@@ -60,6 +61,7 @@ namespace Renderer
         GLint shaderTextureCoord;
         GLint shaderColor;
         GLint shaderSaturation;
+        GLint shaderOpacity;
         GLint shaderDimValue;
     };
 

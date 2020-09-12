@@ -23,16 +23,18 @@ struct SDL_Window;
 namespace Renderer
 {
     const unsigned int SHADER_DESATURATE =          1;
-    const unsigned int SHADER_DIM =                 2;
-    const unsigned int SHADER_BLUR_HORIZONTAL =     4;
-    const unsigned int SHADER_BLUR_VERTICAL =       8;
-    const unsigned int SHADER_SCANLINES =           16;
+    const unsigned int SHADER_OPACITY =             2;
+    const unsigned int SHADER_DIM =                 4;
+    const unsigned int SHADER_BLUR_HORIZONTAL =     8;
+    const unsigned int SHADER_BLUR_VERTICAL =       16;
+    const unsigned int SHADER_SCANLINES =           32;
 
     struct shaderParameters {
         std::array<GLfloat, 2> textureSize;
         std::array<GLfloat, 4> textureCoordinates;
         float fragmentSaturation;
         float fragmentDimValue;
+        float fragmentOpacity;
         unsigned int shaderPasses;
 
         shaderParameters()
@@ -40,6 +42,7 @@ namespace Renderer
                 textureCoordinates({0.0, 0.0, 0.0, 0.0}),
                 fragmentSaturation(1.0),
                 fragmentDimValue(0.4),
+                fragmentOpacity(1.0),
                 shaderPasses(1)
                 {};
     };
@@ -124,6 +127,7 @@ namespace Renderer
         Vector2f tex;
         unsigned int col;
         float saturation = 1.0;
+        float opacity = 1.0;
         unsigned int shaders = 0;
     };
 
@@ -139,6 +143,8 @@ namespace Renderer
             const unsigned int _color,
             const unsigned int _colorEnd,
             bool horizontalGradient = false,
+            const float _opacity = 1.0,
+            const Transform4x4f& _trans = Transform4x4f::Identity(),
             const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
             const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     SDL_Window* getSDLWindow();

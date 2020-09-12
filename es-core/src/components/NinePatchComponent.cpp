@@ -112,9 +112,12 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
 
     if (mTexture && mVertices != nullptr) {
         Renderer::setMatrix(trans);
-
+        if (mOpacity < 255) {
+            mVertices[0].shaders = Renderer::SHADER_OPACITY;
+            mVertices[0].opacity = mOpacity / 255.0;
+        }
         mTexture->bind();
-        Renderer::drawTriangleStrips(&mVertices[0], 6*9);
+        Renderer::drawTriangleStrips(&mVertices[0], 6*9, trans);
     }
 
     renderChildren(trans);

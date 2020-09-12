@@ -21,6 +21,7 @@ namespace Renderer
             shaderTextureCoord(-1),
             shaderColor(-1),
             shaderSaturation(-1),
+            shaderOpacity(-1),
             shaderDimValue(-1)
     {
     }
@@ -106,6 +107,7 @@ namespace Renderer
         shaderTextureCoord = glGetAttribLocation(mProgramID, "TexCoord");
         shaderColor = glGetAttribLocation(mProgramID, "COLOR");
         shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
+        shaderOpacity = glGetUniformLocation(mProgramID, "opacity");
         shaderDimValue = glGetUniformLocation(mProgramID, "dimValue");
     }
 
@@ -140,6 +142,12 @@ namespace Renderer
     {
         if (shaderSaturation != -1)
             GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
+    }
+
+    void Renderer::Shader::setOpacity(GLfloat opacity)
+    {
+        if (shaderOpacity != -1)
+            GL_CHECK_ERROR(glUniform1f(shaderOpacity, opacity));
     }
 
     void Renderer::Shader::setDimValue(GLfloat dimValue)

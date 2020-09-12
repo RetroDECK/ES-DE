@@ -169,6 +169,7 @@ namespace Renderer
 
         std::vector<std::string> shaderFiles;
         shaderFiles.push_back(":/shaders/glsl/desaturate.glsl");
+        shaderFiles.push_back(":/shaders/glsl/opacity.glsl");
         shaderFiles.push_back(":/shaders/glsl/dim.glsl");
         shaderFiles.push_back(":/shaders/glsl/blur_horizontal.glsl");
         shaderFiles.push_back(":/shaders/glsl/blur_vertical.glsl");
@@ -344,6 +345,8 @@ namespace Renderer
             const unsigned int _color,
             const unsigned int _colorEnd,
             bool horizontalGradient,
+            const float _opacity,
+            const Transform4x4f& _trans,
             const Blend::Factor _srcBlendFactor,
             const Blend::Factor _dstBlendFactor)
     {
@@ -360,8 +363,14 @@ namespace Renderer
         for (int i = 0; i < 4; ++i)
             vertices[i].pos.round();
 
-        bindTexture(0);
-        drawTriangleStrips(vertices, 4, Transform4x4f::Identity(),
+        if (_opacity < 1.0) {
+            vertices[0].shaders = SHADER_OPACITY;
+            vertices[0].opacity = _opacity;
+        }
+        else {
+            bindTexture(0);
+        }
+        drawTriangleStrips(vertices, 4, _trans,
                 _srcBlendFactor, _dstBlendFactor);
     }
 
