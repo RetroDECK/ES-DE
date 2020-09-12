@@ -198,8 +198,10 @@ namespace Renderer
     void drawTriangleStrips(
             const Vertex* _vertices,
             const unsigned int _numVertices,
+            const Transform4x4f& _trans,
             const Blend::Factor _srcBlendFactor,
-            const Blend::Factor _dstBlendFactor)
+            const Blend::Factor _dstBlendFactor,
+            const shaderParameters& _parameters)
     {
         GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].pos));
         GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].tex));

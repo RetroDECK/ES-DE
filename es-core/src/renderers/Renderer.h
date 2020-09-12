@@ -8,6 +8,7 @@
 #ifndef ES_CORE_RENDERER_RENDERER_H
 #define ES_CORE_RENDERER_RENDERER_H
 
+#include "math/Transform4x4f.h"
 #include "math/Vector2f.h"
 #include "Log.h"
 #include "Shader_GL21.h"
@@ -22,26 +23,30 @@ struct SDL_Window;
 namespace Renderer
 {
     const unsigned int SHADER_DESATURATE =          1;
-    const unsigned int SHADER_BLUR_HORIZONTAL =     2;
-    const unsigned int SHADER_BLUR_VERTICAL =       4;
-    const unsigned int SHADER_SCANLINES =           8;
+    const unsigned int SHADER_DIM =                 2;
+    const unsigned int SHADER_BLUR_HORIZONTAL =     4;
+    const unsigned int SHADER_BLUR_VERTICAL =       8;
+    const unsigned int SHADER_SCANLINES =           16;
 
     struct shaderParameters {
         std::array<GLfloat, 2> textureSize;
         std::array<GLfloat, 4> textureCoordinates;
         float fragmentSaturation;
+        float fragmentDimValue;
         unsigned int shaderPasses;
 
         shaderParameters()
                 : textureSize({0.0, 0.0}),
                 textureCoordinates({0.0, 0.0, 0.0, 0.0}),
                 fragmentSaturation(1.0),
+                fragmentDimValue(0.4),
                 shaderPasses(1)
                 {};
     };
 
     static std::vector<Shader*> sShaderProgramVector;
     static GLuint shaderFBO;
+    static Transform4x4f mProjectionMatrix;
 
     #if !defined(NDEBUG)
     #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
@@ -149,6 +154,7 @@ namespace Renderer
     unsigned int abgrToRGBA(unsigned int color);
 
     Shader* getShaderProgram(unsigned int shaderID);
+    const Transform4x4f getProjectionMatrix();
     void shaderPostprocessing(unsigned int shaders,
             const Renderer::shaderParameters& parameters = shaderParameters(),
             unsigned char* textureRGBA = nullptr);
@@ -184,9 +190,10 @@ namespace Renderer
     void drawTriangleStrips(
             const Vertex* _vertices,
             const unsigned int _numVertices,
+            const Transform4x4f& _trans = Transform4x4f::Identity(),
             const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
             const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA,
-            const shaderParameters& parameters = shaderParameters());
+            const shaderParameters& _parameters = shaderParameters());
     void setProjection(const Transform4x4f& _projection);
     void setMatrix(const Transform4x4f& _matrix);
     void setViewport(const Rect& _viewport);

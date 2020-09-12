@@ -1,7 +1,7 @@
 //
 // desaturate.glsl
 //
-// Desaturates textures such as game images.
+// Desaturates textures.
 // The uniform variable 'saturation' sets the saturation intensity.
 // Setting this to the value 0 results in complete desaturation (grayscale).
 //
@@ -9,12 +9,13 @@
 #if defined(VERTEX)
 // Vertex section of code:
 
+uniform mat4 MVPMatrix;
 varying vec2 vTexCoord;
 
 void main(void)
 {
     vTexCoord = gl_MultiTexCoord0.xy;
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+    gl_Position = MVPMatrix * gl_Vertex;
 }
 
 #elif defined(FRAGMENT)
@@ -27,9 +28,9 @@ varying vec2 vTexCoord;
 void main()
 {
     vec4 color = texture2D(myTexture, vTexCoord);
-    vec3 grayscale = vec3(dot(color.rgb, vec3(0.2125, 0.7154, 0.0721)));
-
+    vec3 grayscale = vec3(dot(color.rgb, vec3(0.3, 0.59, 0.11)));
     vec3 blendedColor = mix(grayscale, color.rgb, saturation);
+
     gl_FragColor = vec4(blendedColor, color.a);
 }
 

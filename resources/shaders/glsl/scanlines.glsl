@@ -68,7 +68,7 @@ uniform COMPAT_PRECISION vec2 InputSize;
 
 void main()
 {
-   gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+   gl_Position = MVPMatrix * gl_Vertex;
 //   gl_Position = MVPMatrix * VertexCoord;
    COL0 = COLOR;
    TEX0.xy = gl_MultiTexCoord0.xy;

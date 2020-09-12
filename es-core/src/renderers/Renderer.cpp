@@ -169,6 +169,7 @@ namespace Renderer
 
         std::vector<std::string> shaderFiles;
         shaderFiles.push_back(":/shaders/glsl/desaturate.glsl");
+        shaderFiles.push_back(":/shaders/glsl/dim.glsl");
         shaderFiles.push_back(":/shaders/glsl/blur_horizontal.glsl");
         shaderFiles.push_back(":/shaders/glsl/blur_vertical.glsl");
         shaderFiles.push_back(":/shaders/glsl/scanlines.glsl");
@@ -257,6 +258,8 @@ namespace Renderer
             }
             break;
         }
+
+        mProjectionMatrix = projection;
 
         setViewport(viewport);
         setProjection(projection);
@@ -358,7 +361,8 @@ namespace Renderer
             vertices[i].pos.round();
 
         bindTexture(0);
-        drawTriangleStrips(vertices, 4, _srcBlendFactor, _dstBlendFactor);
+        drawTriangleStrips(vertices, 4, Transform4x4f::Identity(),
+                _srcBlendFactor, _dstBlendFactor);
     }
 
     unsigned int rgbaToABGR(const unsigned int _color)
@@ -397,6 +401,11 @@ namespace Renderer
         else
             return nullptr;
     };
+
+    const Transform4x4f getProjectionMatrix()
+    {
+        return mProjectionMatrix;
+    }
 
     SDL_Window* getSDLWindow() { return sdlWindow; }
     int getWindowWidth() { return windowWidth; }

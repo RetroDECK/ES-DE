@@ -9,6 +9,8 @@
 
 #define GL_GLEXT_PROTOTYPES
 
+#include "math/Transform4x4f.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <array>
@@ -32,10 +34,12 @@ namespace Renderer
         // Get references to the variables inside the compiled shaders.
         void getVariableLocations(GLuint programID);
         // One-way communication with the compiled shaders.
+        void setModelViewProjectionMatrix(Transform4x4f mvpMatrix);
         void setTextureSize(std::array<GLfloat, 2> shaderVec2);
         void setTextureCoordinates(std::array<GLfloat, 4> shaderVec4);
         void setColor(std::array<GLfloat, 4> shaderVec4);
         void setSaturation(GLfloat saturation);
+        void setDimValue(GLfloat dimValue);
         // Sets the shader program to use the loaded shaders.
         void activateShaders();
         // Sets the shader program to 0 which reverts to the fixed function pipeline.
@@ -51,10 +55,12 @@ namespace Renderer
         std::vector<std::tuple<std::string, std::string, GLenum>> shaderVector;
 
         // Variables used for communication with the compiled shaders.
+        GLint shaderMVPMatrix;
         GLint shaderTextureSize;
         GLint shaderTextureCoord;
         GLint shaderColor;
         GLint shaderSaturation;
+        GLint shaderDimValue;
     };
 
 } // Renderer

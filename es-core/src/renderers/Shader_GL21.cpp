@@ -16,10 +16,12 @@ namespace Renderer
 {
     Renderer::Shader::Shader()
             : mProgramID(-1),
+            shaderMVPMatrix(-1),
             shaderTextureSize(-1),
             shaderTextureCoord(-1),
             shaderColor(-1),
-            shaderSaturation(-1)
+            shaderSaturation(-1),
+            shaderDimValue(-1)
     {
     }
 
@@ -87,6 +89,7 @@ namespace Renderer
             return false;
         }
 
+        getVariableLocations(mProgramID);
         return true;
     }
 
@@ -98,33 +101,51 @@ namespace Renderer
     void Renderer::Shader::getVariableLocations(GLuint programID)
     {
         // Some of the variable names are chosen to be compatible with the RetroArch GLSL shaders.
+        shaderMVPMatrix = glGetUniformLocation(mProgramID, "MVPMatrix");
         shaderTextureSize = glGetUniformLocation(mProgramID, "TextureSize");
         shaderTextureCoord = glGetAttribLocation(mProgramID, "TexCoord");
         shaderColor = glGetAttribLocation(mProgramID, "COLOR");
         shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
+        shaderDimValue = glGetUniformLocation(mProgramID, "dimValue");
+    }
+
+    void Renderer::Shader::setModelViewProjectionMatrix(Transform4x4f mvpMatrix)
+    {
+        if (shaderMVPMatrix != -1)
+            GL_CHECK_ERROR(glUniformMatrix4fv(shaderMVPMatrix, 1, GL_FALSE, (GLfloat*)&mvpMatrix));
     }
 
     void Renderer::Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)
     {
-        GL_CHECK_ERROR(glUniform2f(shaderTextureSize, shaderVec2[0], shaderVec2[1]));
+        if (shaderTextureSize != -1)
+            GL_CHECK_ERROR(glUniform2f(shaderTextureSize, shaderVec2[0], shaderVec2[1]));
     }
 
     void Renderer::Shader::setTextureCoordinates(std::array<GLfloat, 4> shaderVec4)
     {
-        glEnableVertexAttribArray(shaderTextureCoord);
-        glVertexAttribPointer(shaderTextureCoord, 4, GL_FLOAT, GL_FALSE, 0,
-                (const GLvoid*)(uintptr_t)&shaderVec4);
+        if (shaderTextureCoord != -1) {
+            glVertexAttrib4f(shaderTextureCoord, shaderVec4[0], shaderVec4[1],
+                    shaderVec4[2], shaderVec4[3]);
+        }
     }
 
     void Renderer::Shader::setColor(std::array<GLfloat, 4> shaderVec4)
     {
-        GL_CHECK_ERROR(glUniform4f(shaderColor, shaderVec4[0],
-                        shaderVec4[1], shaderVec4[2], shaderVec4[3]));
+        if (shaderColor != -1)
+            GL_CHECK_ERROR(glUniform4f(shaderColor, shaderVec4[0],
+                            shaderVec4[1], shaderVec4[2], shaderVec4[3]));
     }
 
     void Renderer::Shader::setSaturation(GLfloat saturation)
     {
-        GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
+        if (shaderSaturation != -1)
+            GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
+    }
+
+    void Renderer::Shader::setDimValue(GLfloat dimValue)
+    {
+        if (shaderDimValue != -1)
+            GL_CHECK_ERROR(glUniform1f(shaderDimValue, dimValue));
     }
 
     void Renderer::Shader::activateShaders()
