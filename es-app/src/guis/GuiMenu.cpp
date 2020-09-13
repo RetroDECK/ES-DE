@@ -398,14 +398,14 @@ void GuiMenu::openUISettings()
 
     for (auto it = menu_effects.cbegin(); it != menu_effects.cend(); it++)
         open_menu_effect->add(*it, *it, Settings::getInstance()->
-                getString("OpenMenuEffect") == *it);
-    s->addWithLabel("OPEN MENU EFFECT", open_menu_effect);
+                getString("MenuOpeningEffect") == *it);
+    s->addWithLabel("MENU OPENING EFFECT", open_menu_effect);
     s->addSaveFunc([open_menu_effect] {
         bool needReload = false;
-        if (Settings::getInstance()->getString("OpenMenuEffect") !=
+        if (Settings::getInstance()->getString("MenuOpeningEffect") !=
                 open_menu_effect->getSelected())
             needReload = true;
-        Settings::getInstance()->setString("OpenMenuEffect", open_menu_effect->getSelected());
+        Settings::getInstance()->setString("MenuOpeningEffect", open_menu_effect->getSelected());
         if (needReload)
             ViewController::get()->reloadAll();
     });

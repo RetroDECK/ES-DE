@@ -84,7 +84,7 @@ void Settings::setDefaults()
     mStringMap["ThemeSet"] = "rbsimple-DE";
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
-    mStringMap["OpenMenuEffect"] = "scale-up";
+    mStringMap["MenuOpeningEffect"] = "scale-up";
     mBoolMap["GamelistVideoScanlines"] = true;
     mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;

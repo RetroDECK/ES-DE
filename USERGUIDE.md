@@ -547,13 +547,13 @@ Defaults to Full which enables all functionality within the application. If set 
 
 The order in which to sort your gamelists. This can be overriden per game system using the game options menu, but that override will only be persistent during the application session.
 
-**Open menu effect** _(OpenGL renderer only)_
+**Menu opening effect** _(OpenGL renderer only)_
 
 Animation to play when opening the main menu or the game options menu. Can be set to _scale-up_, _fade-in_ or _none_.
 
 **Render scanlines for gamelist videos** _(OpenGL renderer only)_
 
-Whether to use a shader to render scanlines for videos in the gamelist view.
+Whether to use a shader to render scanlines for videos in the gamelist view. The effect is usually pretty subtle as the video is normally renderered in a limited size in the GUI, and the scanlines are sized relative to the video window size.
 
 **Sort folders on top of gamelists**
 

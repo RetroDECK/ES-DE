@@ -294,8 +294,8 @@ void Window::render()
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                     Renderer::getScreenHeight(), 0x00000070, 0x00000070);
 
-            // Open menu effects (scale-up and fade-in).
-            if (Settings::getInstance()->getString("OpenMenuEffect") == "scale-up") {
+            // Menu opening effects (scale-up and fade-in).
+            if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 if (mTopScale < 1.0)
                     mTopScale = Math::clamp(mTopScale+0.07, 0, 1.0);
                 Vector2f topCenter = top->getCenter();
@@ -303,7 +303,7 @@ void Window::render()
                 top->setPosition({topCenter.x(), topCenter.y(), 0});
                 top->setScale(mTopScale);
             }
-            if (Settings::getInstance()->getString("OpenMenuEffect") == "fade-in") {
+            if (Settings::getInstance()->getString("MenuOpeningEffect") == "fade-in") {
                 // Fade-in menu.
                 if (mTopOpacity < 255)
                     mTopOpacity = Math::clamp(mTopOpacity+15, 0, 255);
