@@ -1,3 +1,4 @@
+//  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition, an emulator front-end
 //  with controller navigation and theming support.
