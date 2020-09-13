@@ -440,7 +440,7 @@ int main(int argc, char* argv[])
     // Start the logger.
     Log::init();
     Log::open();
-    LOG(LogInfo) << "EmulationStation - v" << PROGRAM_VERSION_STRING <<
+    LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING <<
             ", built " << PROGRAM_BUILT_STRING;
 
     // Always close the log on exit.
