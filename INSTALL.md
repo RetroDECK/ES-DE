@@ -47,14 +47,27 @@ cmake .
 make
 ```
 
-To generate a debug build, run this instead:
+To create a debug build, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
 
-To build with CEC support, add the corresponding option, for example:
+To create a profiling build, run this:
+```
+cmake -DCMAKE_BUILD_TYPE=Profiling .
+make
+```
+
+You can then profile the code with valgrind:
+```
+valgrind --tool=callgrind ./emulationstation
+```
+
+The output file from valgrind can be loaded into a tool such as KCachegrind for data analysis.
+
+To build ES with CEC support, add the corresponding option, for example:
 
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DCEC=on .
