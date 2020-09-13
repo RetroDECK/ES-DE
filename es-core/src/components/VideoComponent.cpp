@@ -14,7 +14,9 @@
 
 #include <SDL2/SDL_timer.h>
 
-#define FADE_TIME_MS	200
+#define FADE_IN_START_OPACITY 0.5f
+#define FADE_IN_TIME 1300
+#define FADE_OUT_TIME 100
 
 std::string getTitlePath() {
     std::string titleFolder = getTitleFolder();
@@ -141,7 +143,7 @@ void VideoComponent::setImage(std::string path)
         return;
 
     mStaticImage.setImage(path);
-    mFadeIn = 0.0f;
+    mFadeIn = FADE_IN_START_OPACITY;
     mStaticImagePath = path;
 }
 
@@ -152,7 +154,6 @@ void VideoComponent::setDefaultVideo()
 
 void VideoComponent::setOpacity(unsigned char opacity)
 {
-    mOpacity = opacity;
     // Update the embeded static image.
     mStaticImage.setOpacity(opacity);
 }
@@ -184,7 +185,7 @@ void VideoComponent::renderSnapshot(const Transform4x4f& parentTrans)
     if ((mConfig.showSnapshotNoVideo && mVideoPath.empty()) ||
             (mStartDelayed && mConfig.showSnapshotDelay)) {
         // Display the static image instead.
-        mStaticImage.setOpacity((unsigned char)(mFadeIn * 255.0f));
+        mStaticImage.setOpacity(static_cast<unsigned char>(mFadeIn * 255.0f));
         mStaticImage.render(parentTrans);
     }
 }
@@ -202,8 +203,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
     if (!elem)
         return;
 
-    Vector2f scale = getParent() ? getParent()->getSize()
-            : Vector2f((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+    Vector2f scale = getParent() ? getParent()->getSize() :
+            Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size"))
@@ -216,7 +218,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
         mConfig.defaultVideoPath = elem->get<std::string>("default");
 
     if ((properties & ThemeFlags::DELAY) && elem->has("delay"))
-        mConfig.startDelay = (unsigned)(elem->get<float>("delay") * 1000.0f);
+        mConfig.startDelay = static_cast<unsigned>((elem->get<float>("delay") * 1000.0f));
 
     if (elem->has("showSnapshotNoVideo"))
         mConfig.showSnapshotNoVideo = elem->get<bool>("showSnapshotNoVideo");
@@ -236,9 +238,13 @@ void VideoComponent::handleStartDelay()
 {
     // Only play if any delay has timed out.
     if (mStartDelayed) {
-        if (mStartTime > SDL_GetTicks()) {
-            // Timeout not yet completed.
-            return;
+        // If the setting to override the theme-supplied video delay setting has been enabled,
+        // then play the video immediately.
+        if (!Settings::getInstance()->getBool("PlayVideosImmediately")) {
+            if (mStartTime > SDL_GetTicks()) {
+                // Timeout not yet completed.
+                return;
+            }
         }
         // Completed.
         mStartDelayed = false;
@@ -269,7 +275,7 @@ void VideoComponent::startVideoWithDelay()
         else {
             // Configure the start delay.
             mStartDelayed = true;
-            mFadeIn = 0.0f;
+            mFadeIn = FADE_IN_START_OPACITY;
             mStartTime = SDL_GetTicks() + mConfig.startDelay;
         }
         mIsPlaying = true;
@@ -286,18 +292,15 @@ void VideoComponent::update(int deltaTime)
         Uint32 ticks = SDL_GetTicks();
         if (mStartTime > ticks) {
             Uint32 diff = mStartTime - ticks;
-            if (diff < FADE_TIME_MS) {
-                mFadeIn = (float)diff / (float)FADE_TIME_MS;
+            if (diff < FADE_OUT_TIME) {
+                mFadeIn = static_cast<float>(diff) / static_cast<float>(FADE_OUT_TIME);
                 return;
             }
         }
     }
-    // If the fade in is less than 1 then increment it.
-    if (mFadeIn < 1.0f) {
-        mFadeIn += deltaTime / (float)FADE_TIME_MS;
-        if (mFadeIn > 1.0f)
-            mFadeIn = 1.0f;
-    }
+    if (mFadeIn < 1.0f)
+        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(FADE_IN_TIME)), 0.0, 1.0);
+
     GuiComponent::update(deltaTime);
 }
 

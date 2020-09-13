@@ -85,13 +85,14 @@ void Settings::setDefaults()
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
     mStringMap["MenuOpeningEffect"] = "scale-up";
+    mBoolMap["MoveCarousel"] = true;
     mBoolMap["GamelistVideoScanlines"] = true;
     mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;
     mBoolMap["ForceDisableFilters"] = false;
     mBoolMap["QuickSystemSelect"] = true;
-    mBoolMap["MoveCarousel"] = true;
     mBoolMap["ShowHelpPrompts"] = true;
+    mBoolMap["PlayVideosImmediately"] = false;
     mBoolMap["ShowKidStartMenu"] = false;
 
     // UI settings -> scrensaver settings.

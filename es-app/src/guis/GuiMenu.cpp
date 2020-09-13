@@ -390,7 +390,7 @@ void GuiMenu::openUISettings()
     #if defined(USE_OPENGL_21)
     // Open menu effect.
     auto open_menu_effect = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "OPEN MENU EFFECT", false);
+            (mWindow, getHelpStyle(), "MENU OPENING EFFECT", false);
     std::vector<std::string> menu_effects;
     menu_effects.push_back("scale-up");
     menu_effects.push_back("fade-in");
@@ -409,7 +409,23 @@ void GuiMenu::openUISettings()
         if (needReload)
             ViewController::get()->reloadAll();
     });
+    #endif
 
+    // Carousel transition option.
+    auto move_carousel = std::make_shared<SwitchComponent>(mWindow);
+    move_carousel->setState(Settings::getInstance()->getBool("MoveCarousel"));
+    s->addWithLabel("CAROUSEL TRANSITIONS", move_carousel);
+    s->addSaveFunc([move_carousel] {
+        if (move_carousel->getState() &&
+            !Settings::getInstance()->getBool("MoveCarousel") &&
+            PowerSaver::getMode() == PowerSaver::INSTANT) {
+            Settings::getInstance()->setString("PowerSaverMode", "default");
+            PowerSaver::init();
+        }
+        Settings::getInstance()->setBool("MoveCarousel", move_carousel->getState());
+    });
+
+    #if defined(USE_OPENGL_21)
     // Render scanlines for videos in the gamelists using a shader.
     auto render_video_scanlines = std::make_shared<SwitchComponent>(mWindow);
     render_video_scanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));
@@ -488,26 +504,20 @@ void GuiMenu::openUISettings()
     s->addSaveFunc([quick_sys_select] { Settings::getInstance()->setBool("QuickSystemSelect",
             quick_sys_select->getState()); });
 
-    // Carousel transition option.
-    auto move_carousel = std::make_shared<SwitchComponent>(mWindow);
-    move_carousel->setState(Settings::getInstance()->getBool("MoveCarousel"));
-    s->addWithLabel("CAROUSEL TRANSITIONS", move_carousel);
-    s->addSaveFunc([move_carousel] {
-        if (move_carousel->getState() &&
-            !Settings::getInstance()->getBool("MoveCarousel") &&
-            PowerSaver::getMode() == PowerSaver::INSTANT) {
-            Settings::getInstance()->setString("PowerSaverMode", "default");
-            PowerSaver::init();
-        }
-        Settings::getInstance()->setBool("MoveCarousel", move_carousel->getState());
-    });
-
     // Show help.
     auto show_help = std::make_shared<SwitchComponent>(mWindow);
     show_help->setState(Settings::getInstance()->getBool("ShowHelpPrompts"));
     s->addWithLabel("ON-SCREEN HELP", show_help);
     s->addSaveFunc([show_help] { Settings::getInstance()->setBool("ShowHelpPrompts",
             show_help->getState()); });
+
+    // Play videos immediately (overrides theme setting).
+    auto play_videos_immediately = std::make_shared<SwitchComponent>(mWindow);
+    play_videos_immediately->setState(Settings::getInstance()->getBool("PlayVideosImmediately"));
+    s->addWithLabel("PLAY VIDEOS IMMEDIATELY (OVERRIDE THEME)", play_videos_immediately);
+    s->addSaveFunc([play_videos_immediately] {
+        Settings::getInstance()->setBool("PlayVideosImmediately",
+                play_videos_immediately->getState()); });
 
     // Whether to show start menu in Kid Mode.
     auto show_kidstartmenu = std::make_shared<SwitchComponent>(mWindow);

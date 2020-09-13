@@ -284,9 +284,9 @@ based on: 'recalbox-multi' by the Recalbox community
                 <origin>0.5 0.5</origin>
                 <pos>0.63 0.45</pos>
                 <maxSize>0.360 0.424</maxSize>
-                <delay>0.1</delay>
+                <delay>1.7</delay>
                 <showSnapshotNoVideo>true</showSnapshotNoVideo>
-                <showSnapshotDelay>false</showSnapshotDelay>
+                <showSnapshotDelay>true</showSnapshotDelay>
             </video>
         </view>
     </feature>

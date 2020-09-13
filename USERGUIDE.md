@@ -551,6 +551,10 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 Animation to play when opening the main menu or the game options menu. Can be set to _scale-up_, _fade-in_ or _none_.
 
+**Carousel transitions**
+
+Whether to perform an animation when transitioning between systems in the system view.
+
 **Render scanlines for gamelist videos** _(OpenGL renderer only)_
 
 Whether to use a shader to render scanlines for videos in the gamelist view. The effect is usually pretty subtle as the video is normally renderered in a limited size in the GUI, and the scanlines are sized relative to the video window size.
@@ -571,13 +575,13 @@ Activating or deactivating the ability to filter your gamelists. Can normally be
 
 If activated, it will be possible to jump between gamelists using the Left and Right buttons without having to first go back to the system view.
 
-**Carousel transitions**
-
-Whether to perform an animation when transitioning between systems in the system view.
-
 **On-screen help**
 
 Activating or deactivating the built-in help systems that provides contextual information regarding button usage.
+
+**Play videos immediately (override theme)**
+
+Some themes (including rbsimple-DE) display the game images briefly before playing the game videos. This setting forces the videos to be played immediately, regardless of the configuration in the theme.
 
 **Show start menu in kid mode**
 
