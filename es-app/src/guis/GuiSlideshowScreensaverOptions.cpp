@@ -38,6 +38,15 @@ GuiSlideshowScreensaverOptions::GuiSlideshowScreensaverOptions(Window* window, c
         Settings::getInstance()->setBool("ScreenSaverStretchImages", sss_stretch->getState());
     });
 
+    #if defined(USE_OPENGL_21)
+    // Render scanlines using a shader.
+    auto render_scanlines = std::make_shared<SwitchComponent>(mWindow);
+    render_scanlines->setState(Settings::getInstance()->getBool("ScreenSaverImageScanlines"));
+    addWithLabel(row, "RENDER SCANLINES", render_scanlines);
+    addSaveFunc([render_scanlines] { Settings::getInstance()->
+            setBool("ScreenSaverImageScanlines", render_scanlines->getState()); });
+    #endif
+
     // Background audio file.
     auto sss_bg_audio_file = std::make_shared<TextComponent>(mWindow, "",
             Font::get(FONT_SIZE_SMALL), 0x777777FF);

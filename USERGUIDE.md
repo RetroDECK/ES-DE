@@ -547,6 +547,14 @@ Defaults to Full which enables all functionality within the application. If set 
 
 The order in which to sort your gamelists. This can be overriden per game system using the game options menu, but that override will only be persistent during the application session.
 
+**Open menu effect** _(OpenGL renderer only)_
+
+Animation to play when opening the main menu or the game options menu. Can be set to _scale-up_, _fade-in_ or _none_.
+
+**Render scanlines for gamelist videos** _(OpenGL renderer only)_
+
+Whether to use a shader to render scanlines for videos in the gamelist view.
+
 **Sort folders on top of gamelists**
 
 Whether to place all folders on top of the gamelists. If done so, the folders will not be part of the quick selector index, meaning they can no longer be quick-jumped to. Also, if this option is enabled, folders marked as favorites will not be sorted above non-favorite folders.
@@ -591,22 +599,6 @@ This includes the ability to start the screensaver manually, but also to browse 
 
 The screensaven style to use, which includes _Dim_, _Black_, _Slideshow_ and _Video_.
 
-#### Video screensaver settings
-
-Options specific to the video screensaver.
-
-**Swap videos after (secs)**
-
-How long to play videos before change to the next game.
-
-**Stretch videos to screen resolution**
-
-This will fill the entire screen surface but will possibly break the aspect ratio of the video.
-
-**Play audio for screensaver video files**
-
-Muting or playing the audio.
-
 #### Slideshow screensaver settings
 
 Options specific to the slideshow screensaver.
@@ -618,6 +610,10 @@ How long to show images before change to the next game.
 **Stretch images to screen resolution**
 
 This will fill the entire screen surface but will possibly break the aspect ratio of the image.
+
+**Render scanlines** _(OpenGL renderer only)_
+
+Whether to use a shader to render scanlines on top of the images.
 
 **Background audio**
 
@@ -638,6 +634,30 @@ Whether to search the custom image directory recursively.
 **Custom image filter**
 
 The file extensions to consider for the custom images.
+
+#### Video screensaver settings
+
+Options specific to the video screensaver.
+
+**Swap videos after (secs)**
+
+How long to play videos before change to the next game.
+
+**Stretch videos to screen resolution**
+
+This will fill the entire screen surface but will possibly break the aspect ratio of the video.
+
+**Play audio for screensaver video files**
+
+Muting or playing the audio.
+
+**Render scanlines** _(OpenGL renderer only)_
+
+Whether to use a shader to render scanlines for the videos.
+
+**Render blur** _(OpenGL renderer only)_
+
+Whether to use a shader to render a slight blur which somewhat simulates a well-used CRT monitor.
 
 
 ### Sound settings

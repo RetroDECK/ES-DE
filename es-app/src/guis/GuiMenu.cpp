@@ -387,6 +387,38 @@ void GuiMenu::openUISettings()
         }
     });
 
+    #if defined(USE_OPENGL_21)
+    // Open menu effect.
+    auto open_menu_effect = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "OPEN MENU EFFECT", false);
+    std::vector<std::string> menu_effects;
+    menu_effects.push_back("scale-up");
+    menu_effects.push_back("fade-in");
+    menu_effects.push_back("none");
+
+    for (auto it = menu_effects.cbegin(); it != menu_effects.cend(); it++)
+        open_menu_effect->add(*it, *it, Settings::getInstance()->
+                getString("OpenMenuEffect") == *it);
+    s->addWithLabel("OPEN MENU EFFECT", open_menu_effect);
+    s->addSaveFunc([open_menu_effect] {
+        bool needReload = false;
+        if (Settings::getInstance()->getString("OpenMenuEffect") !=
+                open_menu_effect->getSelected())
+            needReload = true;
+        Settings::getInstance()->setString("OpenMenuEffect", open_menu_effect->getSelected());
+        if (needReload)
+            ViewController::get()->reloadAll();
+    });
+
+    // Render scanlines for videos in the gamelists using a shader.
+    auto render_video_scanlines = std::make_shared<SwitchComponent>(mWindow);
+    render_video_scanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));
+    s->addWithLabel("RENDER SCANLINES FOR GAMELIST VIDEOS", render_video_scanlines);
+    s->addSaveFunc([render_video_scanlines] {
+        Settings::getInstance()->setBool("GamelistVideoScanlines",
+                render_video_scanlines->getState()); });
+    #endif
+
     // Sort folders on top of the gamelists.
     auto folders_on_top = std::make_shared<SwitchComponent>(mWindow);
     folders_on_top->setState(Settings::getInstance()->getBool("FoldersOnTop"));

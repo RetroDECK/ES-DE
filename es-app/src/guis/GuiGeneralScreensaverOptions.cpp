@@ -68,18 +68,18 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
     // Show filtered menu.
     row.elements.clear();
     row.addElement(std::make_shared<TextComponent>(mWindow,
-            "VIDEO SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-    row.addElement(makeArrow(mWindow), false);
-    row.makeAcceptInputHandler(std::bind(
-                &GuiGeneralScreensaverOptions::openVideoScreensaverOptions, this));
-    addRow(row);
-
-    row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>(mWindow,
             "SLIDESHOW SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
     row.addElement(makeArrow(mWindow), false);
     row.makeAcceptInputHandler(std::bind(
             &GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions, this));
+    addRow(row);
+
+    row.elements.clear();
+    row.addElement(std::make_shared<TextComponent>(mWindow,
+            "VIDEO SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+    row.addElement(makeArrow(mWindow), false);
+    row.makeAcceptInputHandler(std::bind(
+                &GuiGeneralScreensaverOptions::openVideoScreensaverOptions, this));
     addRow(row);
 }
 

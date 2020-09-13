@@ -84,6 +84,8 @@ void Settings::setDefaults()
     mStringMap["ThemeSet"] = "rbsimple-DE";
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
+    mStringMap["OpenMenuEffect"] = "scale-up";
+    mBoolMap["GamelistVideoScanlines"] = true;
     mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;
     mBoolMap["ForceDisableFilters"] = false;
@@ -97,17 +99,10 @@ void Settings::setDefaults()
     mBoolMap["ScreenSaverControls"] = true;
     mStringMap["ScreenSaverBehavior"] = "dim";
 
-    // UI settings -> screensaver settings -> video screensaver settings.
-    mIntMap["ScreenSaverSwapVideoTimeout"] = 25000;
-    mBoolMap["ScreenSaverStretchVideos"] = false;
-    #if defined(_RPI_)
-    mStringMap["ScreenSaverGameInfo"] = "never";
-    #endif
-    mBoolMap["ScreenSaverVideoAudio"] = false;
-
     // UI settings -> screensaver settings -> slideshow screensaver settings.
     mIntMap["ScreenSaverSwapImageTimeout"] = 10000;
     mBoolMap["ScreenSaverStretchImages"] = false;
+    mBoolMap["ScreenSaverImageScanlines"] = true;
     mStringMap["SlideshowScreenSaverBackgroundAudioFile"] = Utils::FileSystem::getHomePath() +
             "/.emulationstation/slideshow/audio/slideshow_bg.wav";
     mBoolMap["SlideshowScreenSaverCustomImageSource"] = false;
@@ -115,6 +110,16 @@ void Settings::setDefaults()
             "/.emulationstation/slideshow/image";
     mBoolMap["SlideshowScreenSaverRecurse"] = false;
     mStringMap["SlideshowScreenSaverImageFilter"] = ".png,.jpg";
+
+    // UI settings -> screensaver settings -> video screensaver settings.
+    mIntMap["ScreenSaverSwapVideoTimeout"] = 25000;
+    mBoolMap["ScreenSaverStretchVideos"] = false;
+    #if defined(_RPI_)
+    mStringMap["ScreenSaverGameInfo"] = "never";
+    #endif
+    mBoolMap["ScreenSaverVideoAudio"] = false;
+    mBoolMap["ScreenSaverVideoScanlines"] = true;
+    mBoolMap["ScreenSaverVideoBlur"] = false;
 
     // Sound settings.
     // The ALSA Audio Card and Audio Device selection code is disabled at the moment.

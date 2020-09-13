@@ -251,10 +251,12 @@ void SystemScreenSaver::renderScreenSaver()
         }
     }
     else if (mState != STATE_INACTIVE) {
+        #if !defined(USE_OPENGL_21)
         Renderer::setMatrix(Transform4x4f::Identity());
         unsigned char color = screensaver_behavior == "dim" ? 0x000000A0 : 0x000000FF;
         Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                 Renderer::getScreenHeight(), color, color);
+        #endif
     }
 }
 

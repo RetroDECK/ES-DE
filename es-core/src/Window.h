@@ -8,6 +8,7 @@
 #ifndef ES_CORE_WINDOW_H
 #define ES_CORE_WInDOW_H
 
+#include "resources/TextureResource.h"
 #include "HelpPrompt.h"
 #include "InputConfig.h"
 #include "Settings.h"
@@ -40,6 +41,7 @@ public:
         virtual FileData* getCurrentGame() = 0;
         virtual void launchGame() = 0;
         virtual void resetCounts() = 0;
+        virtual unsigned int getVideoCount() = 0;
     };
 
     class InfoPopup
@@ -116,6 +118,11 @@ private:
 
     bool mNormalizeNextUpdate;
 
+    float mSaturationAmount;
+    unsigned char mTopOpacity;
+    float mTopScale;
+    float mDimValue;
+    bool mCachedBackground;
     bool mAllowSleep;
     bool mSleeping;
     unsigned int mTimeSinceLastInput;

@@ -171,8 +171,16 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
                 mContext.surface->w, mContext.surface->h);
         mTexture->bind();
 
+        #if defined(USE_OPENGL_21)
+        // Render scanlines if this option is enabled. However, if this is the video
+        // screensaver, then skip this as screensaver scanline rendering is handled from
+        // Window.cpp as a postprocessing step.
+        if (!mScreensaverMode && Settings::getInstance()->getBool("GamelistVideoScanlines"))
+            vertices[0].shaders = Renderer::SHADER_SCANLINES;
+        #endif
+
         // Render it.
-        Renderer::drawTriangleStrips(&vertices[0], 4);
+        Renderer::drawTriangleStrips(&vertices[0], 4, trans);
     }
     else {
         VideoComponent::renderSnapshot(parentTrans);

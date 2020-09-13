@@ -32,7 +32,8 @@ public:
 
     virtual FileData* getCurrentGame();
     virtual void launchGame();
-    inline virtual void resetCounts() { mVideosCounted = false; mImagesCounted = false; };
+    virtual void resetCounts() { mVideosCounted = false; mImagesCounted = false; };
+    virtual unsigned int getVideoCount() { return mVideoCount; };
 
 private:
     unsigned long countGameListNodes(const char *nodeName);

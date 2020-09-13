@@ -8,7 +8,7 @@ First release, a major update to the application compared to the RetroPie versio
 
 Full navigation sound support has been implemented, and the metadata editor has seen a lot of updates including color coding of all changes done by the user and by the scraper. Favorite games can now also be sorted on top of the gamelists and game collections.
 
-OpenGL GLSL shader support has been added (not for the OpenGL ES renderer though) which will open up many possibilities in the future.
+OpenGL GLSL shader support has been added (not for the OpenGL ES renderer though) and there are multiple effects implemented such as scanlines for videos, blurred background when opening menus etc.
 
 A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. However themes created for other EmulationStation ports should still work correctly.
 
@@ -31,6 +31,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Updated the application to compile and work on Microsoft Windows, including full UTF-16 (Unicode) support
 * Updated the application to compile and work on Apple macOS
 * Added support for OpenGL GLSL shaders (OpenGL 2.1 renderer only, no support for OpenGL ES 1.0 renderer)
+* Added multiple animations and shader effects, such as when opening menus, playing videos in the gamelists and via the screensaver etc.
 * Seamless (almost) launch of games without showing the desktop when starting and when returning from RetroArch and other emulators
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * Core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful for Windows)

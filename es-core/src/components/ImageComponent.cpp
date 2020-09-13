@@ -345,10 +345,6 @@ void ImageComponent::updateColors()
     mVertices[1].col = mColorGradientHorizontal ? colorEnd : color;
     mVertices[2].col = mColorGradientHorizontal ? color : colorEnd;
     mVertices[3].col = colorEnd;
-    mVertices[0].saturation = mSaturation;
-    mVertices[1].saturation = mSaturation;
-    mVertices[2].saturation = mSaturation;
-    mVertices[3].saturation = mSaturation;
 }
 
 void ImageComponent::render(const Transform4x4f& parentTrans)
@@ -372,7 +368,13 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
             // texture is bound in this case but we want to handle a fade so it doesn't just
             // 'jump' in when it finally loads.
             fadeIn(mTexture->bind());
-            Renderer::drawTriangleStrips(&mVertices[0], 4);
+            #if defined(USE_OPENGL_21)
+            if (mSaturation < 1.0) {
+                mVertices[0].shaders = Renderer::SHADER_DESATURATE;
+                mVertices[0].saturation = mSaturation;
+            }
+            #endif
+            Renderer::drawTriangleStrips(&mVertices[0], 4, trans);
         }
         else {
             LOG(LogError) << "Image texture is not initialized!";

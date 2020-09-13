@@ -87,6 +87,22 @@ GuiVideoScreensaverOptions::GuiVideoScreensaverOptions(Window* window, const cha
     addSaveFunc([ss_video_audio] { Settings::getInstance()->
             setBool("ScreenSaverVideoAudio", ss_video_audio->getState()); });
 
+    #if defined(USE_OPENGL_21)
+    // Render scanlines using a shader.
+    auto render_scanlines = std::make_shared<SwitchComponent>(mWindow);
+    render_scanlines->setState(Settings::getInstance()->getBool("ScreenSaverVideoScanlines"));
+    addWithLabel("RENDER SCANLINES", render_scanlines);
+    addSaveFunc([render_scanlines] { Settings::getInstance()->
+            setBool("ScreenSaverVideoScanlines", render_scanlines->getState()); });
+
+    // Render blur using a shader.
+    auto render_blur = std::make_shared<SwitchComponent>(mWindow);
+    render_blur->setState(Settings::getInstance()->getBool("ScreenSaverVideoBlur"));
+    addWithLabel("RENDER BLUR", render_blur);
+    addSaveFunc([render_blur] { Settings::getInstance()->
+            setBool("ScreenSaverVideoBlur", render_blur->getState()); });
+    #endif
+
     #if defined(_RPI_)
     // Define subtitle font.
     auto ss_omx_font_file = std::make_shared<TextComponent>(mWindow, "",

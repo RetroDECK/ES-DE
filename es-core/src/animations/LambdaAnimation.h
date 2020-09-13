@@ -10,6 +10,8 @@
 
 #include "animations/Animation.h"
 
+#include <functional>
+
 // Useful for simple one-off animations, you can supply the animation's apply(t)
 // function directly in the constructor as a lambda.
 class LambdaAnimation : public Animation

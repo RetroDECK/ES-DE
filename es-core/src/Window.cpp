@@ -9,7 +9,6 @@
 #include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
 #include "resources/Font.h"
-#include "resources/TextureResource.h"
 #include "InputManager.h"
 #include "Log.h"
 #include "Scripting.h"
@@ -28,7 +27,12 @@ Window::Window()
         mScreenSaver(nullptr),
         mRenderScreenSaver(false),
         mGameLaunchedState(false),
-        mInfoPopup(nullptr)
+        mInfoPopup(nullptr),
+        mCachedBackground(false),
+        mSaturationAmount(1.0),
+        mTopOpacity(0),
+        mTopScale(0.5),
+        mDimValue(1.0)
 {
     mHelp = new HelpComponent(this);
     mBackgroundOverlay = new ImageComponent(this);
@@ -258,18 +262,66 @@ void Window::render()
 
         bottom->render(transform);
         if (bottom != top) {
+            #if defined(USE_OPENGL_21)
+            if (!mCachedBackground) {
+                // Generate a cache texture of the shaded background when opening the menu, which
+                // will remain valid until the menu is closed. This is way faster than having to
+                // render the shaders for every frame.
+                std::shared_ptr<TextureResource> mPostprocessedBackground;
+                mPostprocessedBackground = TextureResource::get("");
+                unsigned char* processedTexture = new unsigned char[Renderer::getScreenWidth() *
+                        Renderer::getScreenHeight() * 4];
+
+                // Defocus the background using three passes of gaussian blur.
+                Renderer::shaderParameters blurParameters;
+                blurParameters.shaderPasses = 3;
+                Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
+                        Renderer::SHADER_BLUR_VERTICAL,
+                        blurParameters, processedTexture);
+
+                mPostprocessedBackground->initFromPixels(processedTexture,
+                        Renderer::getScreenWidth(), Renderer::getScreenHeight());
+
+                mBackgroundOverlay->setImage(mPostprocessedBackground);
+
+                delete[] processedTexture;
+                mCachedBackground = true;
+            }
+            #endif
             mBackgroundOverlay->render(transform);
+
+            #if defined(USE_OPENGL_21)
+            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
+                    Renderer::getScreenHeight(), 0x00000070, 0x00000070);
+
+            // Open menu effects (scale-up and fade-in).
+            if (Settings::getInstance()->getString("OpenMenuEffect") == "scale-up") {
+                if (mTopScale < 1.0)
+                    mTopScale = Math::clamp(mTopScale+0.07, 0, 1.0);
+                Vector2f topCenter = top->getCenter();
+                top->setOrigin({0.5, 0.5});
+                top->setPosition({topCenter.x(), topCenter.y(), 0});
+                top->setScale(mTopScale);
+            }
+            if (Settings::getInstance()->getString("OpenMenuEffect") == "fade-in") {
+                // Fade-in menu.
+                if (mTopOpacity < 255)
+                    mTopOpacity = Math::clamp(mTopOpacity+15, 0, 255);
+                top->setOpacity(mTopOpacity);
+            }
+            #endif
+
             top->render(transform);
+        }
+        else {
+            mCachedBackground = false;
+            mTopOpacity = 0;
+            mTopScale = 0.5;
         }
     }
 
     if (!mRenderedHelpPrompts)
         mHelp->render(transform);
-
-    if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
-        Renderer::setMatrix(Transform4x4f::Identity());
-        mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
-    }
 
     unsigned int screensaverTime = (unsigned int)Settings::getInstance()->getInt("ScreenSaverTime");
     // If a game has been launched, reset the screensaver timer when it's been reached as we
@@ -289,13 +341,62 @@ void Window::render()
         mInfoPopup->render(transform);
 
     if (mTimeSinceLastInput >= screensaverTime && screensaverTime != 0) {
-        if (!isProcessing() && mAllowSleep && (!mScreenSaver || mScreenSaver->allowSleep())) {
+        if (!isProcessing() && mAllowSleep && (!mScreenSaver)) {
             // Go to sleep.
             if (mSleeping == false) {
                 mSleeping = true;
                 onSleep();
             }
         }
+    }
+
+    #if defined(USE_OPENGL_21)
+    // Shaders for the screensavers.
+    if (mScreenSaver->isScreenSaverActive()) {
+        if (Settings::getInstance()->getString("ScreenSaverBehavior") == "video") {
+            if (mScreenSaver->getVideoCount() > 0) {
+                if (Settings::getInstance()->getBool("ScreenSaverVideoBlur"))
+                    Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL);
+                if (Settings::getInstance()->getBool("ScreenSaverVideoScanlines"))
+                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+            }
+            else {
+                // If there are no videos, render a black screen.
+                Renderer::shaderParameters blackParameters;
+                blackParameters.fragmentDimValue = mDimValue;
+                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+                if (mDimValue > 0.0)
+                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+            }
+        }
+        else if (Settings::getInstance()->getString("ScreenSaverBehavior") == "slideshow") {
+            if (Settings::getInstance()->getBool("ScreenSaverImageScanlines"))
+                Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+        }
+        else if (Settings::getInstance()->getString("ScreenSaverBehavior") == "dim") {
+            Renderer::shaderParameters dimParameters;
+            dimParameters.fragmentDimValue = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
+            if (mDimValue > 0.4)
+                mDimValue = Math::clamp(mDimValue-0.021, 0.4, 1.0);
+            dimParameters.fragmentSaturation = mSaturationAmount;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
+            if (mSaturationAmount > 0.0)
+                mSaturationAmount = Math::clamp(mSaturationAmount-0.035, 0.0, 1.0);
+        }
+        else if (Settings::getInstance()->getString("ScreenSaverBehavior") == "black") {
+            Renderer::shaderParameters blackParameters;
+            blackParameters.fragmentDimValue = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+            if (mDimValue > 0.0)
+                mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+        }
+    }
+    #endif
+
+    if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
+        Renderer::setMatrix(Transform4x4f::Identity());
+        mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
     }
 }
 
@@ -472,6 +573,9 @@ bool Window::cancelScreenSaver()
         // Tell the GUI components the screensaver has stopped.
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
             (*it)->onScreenSaverDeactivate();
+
+        mSaturationAmount = 1.0;
+        mDimValue = 1.0;
 
         return true;
     }
