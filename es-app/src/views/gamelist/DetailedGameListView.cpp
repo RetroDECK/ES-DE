@@ -9,6 +9,9 @@
 #include "animations/LambdaAnimation.h"
 #include "views/ViewController.h"
 
+#define FADE_IN_START_OPACITY 0.5f
+#define FADE_IN_TIME 300
+
 DetailedGameListView::DetailedGameListView(
         Window* window,
         FileData* root)
@@ -37,7 +40,8 @@ DetailedGameListView::DetailedGameListView(
         mPlayers(window),
         mLastPlayed(window),
         mPlayCount(window),
-        mName(window)
+        mName(window),
+        mLastUpdated(nullptr)
 {
     const float padding = 0.01f;
 
@@ -233,6 +237,13 @@ void DetailedGameListView::initMDValues()
 void DetailedGameListView::updateInfoPanel()
 {
     FileData* file = (mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected();
+
+    // If the game data has already been rendered to the info panel, then skip it this time.
+    if (file == mLastUpdated) {
+        return;
+    }
+    mLastUpdated = file;
+
     bool hideMetaDataFields = false;
 
     if (file)
@@ -277,14 +288,20 @@ void DetailedGameListView::updateInfoPanel()
 
     bool fadingOut;
     if (file == nullptr) {
-        //mImage.setImage("");
-        //mDescription.setText("");
         fadingOut = true;
     }
     else {
         mThumbnail.setImage(file->getThumbnailPath());
         mMarquee.setImage(file->getMarqueePath());
         mImage.setImage(file->getImagePath());
+
+        // Fade in the game image.
+        auto func = [this](float t) {
+            mImage.setOpacity((unsigned char)(Math::lerp(
+                    static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t)*255));
+            };
+        mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
+
         mDescription.setText(file->metadata.get("desc"));
         mDescContainer.reset();
 

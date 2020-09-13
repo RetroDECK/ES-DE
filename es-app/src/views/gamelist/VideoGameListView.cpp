@@ -81,15 +81,6 @@ VideoGameListView::VideoGameListView(
     mMarquee.setDefaultZIndex(35);
     addChild(&mMarquee);
 
-    // Image.
-    mImage.setOrigin(0.5f, 0.5f);
-    // Default to off the screen.
-    mImage.setPosition(mSize.x() * 0.25f, mList.getPosition().y() + mSize.y() * 0.2125f);
-    mImage.setVisible(false);
-    mImage.setMaxSize(mSize.x() * (0.50f - 2*padding), mSize.y() * 0.4f);
-    mImage.setDefaultZIndex(30);
-    addChild(&mImage);
-
     // Video.
     mVideo->setOrigin(0.5f, 0.5f);
     mVideo->setPosition(mSize.x() * 0.25f, mSize.y() * 0.4f);
@@ -265,9 +256,15 @@ void VideoGameListView::initMDValues()
 void VideoGameListView::updateInfoPanel()
 {
     FileData* file = (mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected();
-    bool hideMetaDataFields = false;
-
     Utils::FileSystem::removeFile(getTitlePath());
+
+    // If the game data has already been rendered to the info panel, then skip it this time.
+    if (file == mLastUpdated) {
+        return;
+    }
+    mLastUpdated = file;
+
+    bool hideMetaDataFields = false;
 
     if (file)
         hideMetaDataFields = (file->metadata.get("hidemetadata") == "true");
@@ -314,8 +311,6 @@ void VideoGameListView::updateInfoPanel()
         mVideo->setVideo("");
         mVideo->setImage("");
         mVideoPlaying = false;
-        //mMarquee.setImage("");
-        //mDescription.setText("");
         fadingOut = true;
 
     }

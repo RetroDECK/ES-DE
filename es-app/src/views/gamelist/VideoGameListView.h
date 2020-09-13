@@ -4,7 +4,6 @@
 //  Interface that defines a GameListView of the type 'video'.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
 
@@ -22,9 +21,7 @@ public:
     virtual ~VideoGameListView();
 
     virtual void onShow() override;
-
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
-
     virtual const char* getName() const override { return "video"; }
     virtual void launch(FileData* game) override;
 
@@ -68,6 +65,7 @@ private:
     TextComponent mDescription;
 
     bool mVideoPlaying;
+    FileData* mLastUpdated;
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
