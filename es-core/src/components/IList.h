@@ -4,7 +4,6 @@
 //  Gamelist base class.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_ILIST_H
 #define ES_CORE_COMPONENTS_ILIST_H
 
@@ -117,7 +116,8 @@ public:
     void stopScrolling()
     {
         listInput(0);
-        onCursorChanged(CURSOR_STOPPED);
+        if (mScrollVelocity == 0)
+            onCursorChanged(CURSOR_STOPPED);
     }
 
     void clear()
@@ -224,11 +224,6 @@ protected:
     bool listInput(int velocity) // A velocity of 0 = stop scrolling.
     {
         PowerSaver::setState(velocity == 0);
-
-        // Generate an onCursorChanged event in the stopped state when the user
-        // lets go of the key.
-        if (velocity == 0 && mScrollVelocity != 0)
-            onCursorChanged(CURSOR_STOPPED);
 
         mScrollVelocity = velocity;
         mScrollTier = 0;

@@ -459,6 +459,10 @@ bool ViewController::input(InputConfig* config, Input input)
         // to play when we've closed the menu.
         if (mSystemListView->isAnimationPlaying(0))
             mSystemListView->finishAnimation(0);
+        // Stop the gamelist scrolling as well as it would otherwise
+        // also continue to run after closing the menu.
+        if (mCurrentView->isListScrolling())
+            mCurrentView->stopListScrolling();
 
         mWindow->pushGui(new GuiMenu(mWindow));
         return true;

@@ -4,7 +4,6 @@
 //  Basic GUI component handling such as placement, rotation, Z-order, rendering and animation.
 //
 
-#pragma once
 #ifndef ES_CORE_GUI_COMPONENT_H
 #define ES_CORE_GUI_COMPONENT_H
 
@@ -13,6 +12,7 @@
 #include "HelpPrompt.h"
 #include "HelpStyle.h"
 #include "InputConfig.h"
+
 #include <functional>
 #include <memory>
 
@@ -137,6 +137,8 @@ public:
     void stopAllAnimations();
     void cancelAllAnimations();
 
+    virtual bool isListScrolling() { return false; };
+    virtual void stopListScrolling() {};
     virtual unsigned char getOpacity() const;
     virtual void setOpacity(unsigned char opacity);
     virtual unsigned int getColor() const;

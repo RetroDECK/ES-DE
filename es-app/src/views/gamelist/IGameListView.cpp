@@ -17,6 +17,8 @@ bool IGameListView::input(InputConfig* config, Input input)
     // Select button opens GuiGamelistOptions.
     if (!UIModeController::getInstance()->isUIModeKid() &&
             config->isMappedTo("select", input) && input.value) {
+        if (isListScrolling())
+            stopListScrolling();
         mWindow->pushGui(new GuiGamelistOptions(mWindow, this->mRoot->getSystem()));
         return true;
     }

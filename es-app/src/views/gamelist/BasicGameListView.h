@@ -4,7 +4,6 @@
 //  Interface that defines a GameListView of the type 'basic'.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
 
@@ -30,6 +29,9 @@ public:
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
     virtual void launch(FileData* game) override;
+
+    virtual bool isListScrolling() override { return mList.isScrolling(); };
+    virtual void stopListScrolling() override { mList.stopScrolling(); };
 
 protected:
     virtual std::string getQuickSystemSelectRightButton() override;

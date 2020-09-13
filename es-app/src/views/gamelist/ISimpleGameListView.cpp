@@ -101,6 +101,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input)) {
             FileData* cursor = getCursor();
             if (cursor->getType() == GAME) {
+                if (isListScrolling())
+                    stopListScrolling();
                 launch(cursor);
             }
             else {
@@ -126,6 +128,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             else {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
                 onFocusLost();
+                if (isListScrolling())
+                    stopListScrolling();
                 SystemData* systemToView = getCursor()->getSystem();
                 if (systemToView->isCollection())
                     systemToView = CollectionSystemManager::get()->getSystemToView(systemToView);
@@ -138,6 +142,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect")) {
                 onFocusLost();
+                if (isListScrolling())
+                    stopListScrolling();
                 ViewController::get()->goToNextGameList();
                 return true;
             }
@@ -145,12 +151,16 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect")) {
                 onFocusLost();
+                if (isListScrolling())
+                    stopListScrolling();
                 ViewController::get()->goToPrevGameList();
                 return true;
             }
         }
         else if (config->isMappedTo("x", input)) {
             if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER) {
+                if (isListScrolling())
+                    stopListScrolling();
                 // Go to random system game.
                 NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 FileData* randomGame = getCursor()->getSystem()->getRandomGame(getCursor());

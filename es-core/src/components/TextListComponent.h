@@ -4,7 +4,6 @@
 //  Used for displaying and navigating the gamelists.
 //
 
-#pragma once
 #ifndef ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
 #define ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
 
@@ -315,10 +314,6 @@ bool TextListComponent<T>::input(InputConfig* config, Input input)
                 stopScrolling();
         }
     }
-    // Explicitly stop the scrolling, otherwise it will go forever in case
-    // the menu was openened or another gamelist was selected using the
-    // quick system selector etc.
-    stopScrolling();
 
     return GuiComponent::input(config, input);
 }
