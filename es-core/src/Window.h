@@ -4,9 +4,8 @@
 //  Window management, screensaver and help prompts.
 //
 
-#pragma once
 #ifndef ES_CORE_WINDOW_H
-#define ES_CORE_WInDOW_H
+#define ES_CORE_WINDOW_H
 
 #include "resources/TextureResource.h"
 #include "HelpPrompt.h"
@@ -91,6 +90,8 @@ public:
     void setLaunchedGame();
     void unsetLaunchedGame();
     bool getGameLaunchedState() { return mGameLaunchedState; };
+
+    void invalidateCachedBackground() { mCachedBackground = false; };
 
 private:
     void onSleep();

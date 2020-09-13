@@ -386,6 +386,9 @@ void GuiMetaDataEd::save()
     }
 
     mScraperParams.system->onMetaDataSavePoint();
+    // Make sure that the cached background is updated to reflect any possible visible
+    // changes to the gamelist (e.g. the game name).
+    mWindow->invalidateCachedBackground();
 }
 
 void GuiMetaDataEd::fetch()
