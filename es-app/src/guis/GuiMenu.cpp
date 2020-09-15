@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiMenu.cpp
 //
 //  Main menu.
@@ -17,9 +19,9 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiSettings.h"
+#include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGameListView.h"
 #include "CollectionSystemManager.h"
 #include "EmulationStation.h"
 #include "FileSorts.h"
@@ -61,6 +63,14 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
     setSize(mMenu.getSize());
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             Renderer::getScreenHeight() * 0.15f);
+}
+
+GuiMenu::~GuiMenu()
+{
+    // This is required for the situation where scrolling started just before the menu
+    // was openened. Without this, the scrolling would run until manually stopped after
+    // the menu has been closed.
+    ViewController::get()->stopScrolling();
 }
 
 void GuiMenu::openScraperSettings()

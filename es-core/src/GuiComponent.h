@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiComponent.h
 //
 //  Basic GUI component handling such as placement, rotation, Z-order, rendering and animation.
@@ -91,7 +93,8 @@ public:
 
     float getRotation() const;
     void setRotation(float rotation);
-    inline void setRotationDegrees(float rotation) { setRotation((float)ES_DEG_TO_RAD(rotation)); }
+    inline void setRotationDegrees(float rotation) {
+            setRotation(static_cast<float>(ES_DEG_TO_RAD(rotation))); }
 
     float getScale() const;
     void setScale(float scale);
@@ -163,6 +166,9 @@ public:
 
     virtual void onShow();
     virtual void onHide();
+    virtual void onPauseVideo();
+    virtual void setRenderView(bool status) { mRenderView = status; }
+    virtual bool getRenderView() { return mRenderView; };
 
     virtual void onScreenSaverActivate();
     virtual void onScreenSaverDeactivate();
@@ -221,6 +227,7 @@ protected:
     bool mIsProcessing;
     bool mVisible;
     bool mEnabled;
+    bool mRenderView;
 
 private:
     // Don't access this directly! Use getTransform()!

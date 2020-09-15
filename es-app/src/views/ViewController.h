@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ViewController.h
 //
 //  Handles overall system navigation including animations and transitions.
@@ -7,13 +9,13 @@
 //  Initiates the launching of games, calling FileData to do the actual launch.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_VIEW_CONTROLLER_H
 #define ES_APP_VIEWS_VIEW_CONTROLLER_H
 
 #include "renderers/Renderer.h"
 #include "FileData.h"
 #include "GuiComponent.h"
+
 #include <vector>
 
 class IGameListView;
@@ -51,10 +53,13 @@ public:
     void goToStart();
     void ReloadAndGoToStart();
 
+    // Functions to make the GUI behave properly.
+    bool isCameraMoving();
+    void resetMovingCamera();
+    void stopScrolling();
+
     void onFileChanged(FileData* file, FileChangeType change);
 
-    // Plays a nice launch effect and launches the game at the end of it.
-    // Once the game terminates, plays a return effect.
     void launch(FileData* game, Vector3f centerCameraOn =
             Vector3f(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f, 0));
 

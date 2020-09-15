@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  IGameListView.cpp
 //
 //  Interface that defines the minimum for a GameListView.
@@ -17,8 +19,8 @@ bool IGameListView::input(InputConfig* config, Input input)
     // Select button opens GuiGamelistOptions.
     if (!UIModeController::getInstance()->isUIModeKid() &&
             config->isMappedTo("select", input) && input.value) {
-        if (isListScrolling())
-            stopListScrolling();
+        ViewController::get()->resetMovingCamera();
+        stopListScrolling();
         mWindow->pushGui(new GuiGamelistOptions(mWindow, this->mRoot->getSystem()));
         return true;
     }
@@ -56,10 +58,10 @@ void IGameListView::render(const Transform4x4f& parentTrans)
     float scaleX = trans.r0().x();
     float scaleY = trans.r1().y();
 
-    Vector2i pos((int)Math::round(trans.translation()[0]),
-            (int)Math::round(trans.translation()[1]));
-    Vector2i size((int)Math::round(mSize.x() * scaleX),
-            (int)Math::round(mSize.y() * scaleY));
+    Vector2i pos(static_cast<int>(Math::round(trans.translation()[0])),
+            static_cast<int>(Math::round(trans.translation()[1])));
+    Vector2i size(static_cast<int>(Math::round(mSize.x() * scaleX)),
+            static_cast<int>(Math::round(mSize.y() * scaleY)));
 
     Renderer::pushClipRect(pos, size);
     renderChildren(trans);

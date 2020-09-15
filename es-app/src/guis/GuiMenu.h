@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiMenu.h
 //
 //  Main menu.
 //  Some submenus are covered in separate source files.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_MENU_H
 #define ES_APP_GUIS_GUI_MENU_H
 
@@ -16,6 +17,7 @@ class GuiMenu : public GuiComponent
 {
 public:
     GuiMenu(Window* window);
+    ~GuiMenu();
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;

@@ -56,6 +56,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
+* Decreased CPU usage dramatically by only rendering the currently visible view (previously every view were always rendered)
 * Updated the CMake/CPack install and package build script to work as expected (it can now generate .deb, .rpm, .dmg and NSIS installation packages)
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix and macOS only)
 * License files included for all the libraries and resources that are bundled with the application
@@ -79,6 +80,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The random game selection traversed folders, i.e. a game could be selected inside a subdirectory and vice versa
 * Deleting a game from the metadata editor did not delete the game media files or the entry in the gamelist.xml file
 * SystemView didn't properly loop the systems if only two systems were available
+* When changing to the video view style from inside a gamelist, the view was not initialized
 * Hidden files still showed up if they had a gamelist.xml entry
 * Fixed an annoying gamelist issue that caused the game images and data to be updated and rendered up to six times every time the list was scrolled
 * VRAM statistics overlay was somewhat broken and incorrectly displayed numbers in megabytes instead of mebibytes

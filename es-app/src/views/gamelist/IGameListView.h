@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  IGameListView.h
 //
 //  Interface that defines the minimum for a GameListView.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
 
@@ -24,15 +25,15 @@ public:
             FileData* root)
             : GuiComponent(window),
             mRoot(root)
-            { setSize((float)Renderer::getScreenWidth(),
-            (float)Renderer::getScreenHeight()); }
+            { setSize(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight())); }
 
     virtual ~IGameListView() {}
 
     // Called when a new file is added, a file is removed, a file's metadata changes,
     // or a file's children are sorted.
-    // NOTE: FILE_SORTED is only reported for the topmost FileData, where the sort started.
-    //       Since sorts are recursive, that FileData's children probably changed too.
+    // Note: FILE_SORTED is only reported for the topmost FileData, where the sort started.
+    // Since sorts are recursive, FileData's children probably changed too.
     virtual void onFileChanged(FileData* file, FileChangeType change) = 0;
 
     // Called whenever the theme changes.

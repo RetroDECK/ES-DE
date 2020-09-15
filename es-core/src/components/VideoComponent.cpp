@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VideoComponent.cpp
 //
 //  Base class for playing videos.
@@ -67,10 +69,11 @@ VideoComponent::VideoComponent(
     mIsPlaying(false),
     mPause(false),
     mShowing(false),
-    mScreensaverActive(false),
-    mGameLaunched(false),
     mDisable(false),
+    mScreensaverActive(false),
     mScreensaverMode(false),
+    mGameLaunched(false),
+    mBlockPlayer(false),
     mTargetIsMax(false),
     mTargetSize(0, 0)
 {
@@ -236,6 +239,9 @@ std::vector<HelpPrompt> VideoComponent::getHelpPrompts()
 
 void VideoComponent::handleStartDelay()
 {
+    if (mBlockPlayer)
+        return;
+
     // Only play if any delay has timed out.
     if (mStartDelayed) {
         // If the setting to override the theme-supplied video delay setting has been enabled,
@@ -284,6 +290,11 @@ void VideoComponent::startVideoWithDelay()
 
 void VideoComponent::update(int deltaTime)
 {
+    if (mBlockPlayer) {
+        setImage(mStaticImagePath);
+        return;
+    }
+
     manageState();
 
     // If the video start is delayed and there is less than the fade time, then set
@@ -340,6 +351,8 @@ void VideoComponent::manageState()
 
 void VideoComponent::onShow()
 {
+    mBlockPlayer = false;
+    mPause = false;
     mShowing = true;
     manageState();
 }
@@ -347,6 +360,13 @@ void VideoComponent::onShow()
 void VideoComponent::onHide()
 {
     mShowing = false;
+    manageState();
+}
+
+void VideoComponent::onPauseVideo()
+{
+    mBlockPlayer = true;
+    mPause = true;
     manageState();
 }
 

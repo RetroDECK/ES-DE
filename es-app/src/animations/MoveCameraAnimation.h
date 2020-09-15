@@ -1,11 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  MoveCameraAnimation.h
 //
-//  Animation to play when moving the camera, used by the slide transition style
-//  (when moving between gamelists using quick system select).
+//  Animation to play when moving the camera, used by the slide transition style.
 //
 
-#pragma once
 #ifndef ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
 #define ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
 

@@ -1,16 +1,18 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ISimpleGameListView.h
 //
-//  Interface that defines a simple GameListView.
+//  Interface that defines a simple gamelist view.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
 
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
 #include "views/gamelist/IGameListView.h"
+
 #include <stack>
 
 class ISimpleGameListView : public IGameListView
@@ -21,8 +23,8 @@ public:
 
     // Called when a new file is added, a file is removed, a file's metadata changes,
     // or a file's children are sorted.
-    // NOTE: FILE_SORTED is only reported for the topmost FileData, where the sort started.
-    // Since sorts are recursive, that FileData's children probably changed too.
+    // Note: FILE_SORTED is only reported for the topmost FileData, where the sort started.
+    // Since sorts are recursive, FileData's children probably changed too.
     virtual void onFileChanged(FileData* file, FileChangeType change) override;
 
     // Called whenever the theme changes.

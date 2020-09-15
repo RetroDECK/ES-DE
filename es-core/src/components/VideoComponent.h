@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VideoComponent.h
 //
 //  Base class for playing videos.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_VIDEO_COMPONENT_H
 #define ES_CORE_COMPONENTS_VIDEO_COMPONENT_H
 
@@ -46,6 +47,7 @@ public:
 
     virtual void onShow() override;
     virtual void onHide() override;
+    virtual void onPauseVideo() override;
     virtual void onScreenSaverActivate() override;
     virtual void onScreenSaverDeactivate() override;
     virtual void onGameLaunchedActivate() override;
@@ -110,8 +112,8 @@ protected:
 
     std::string mVideoPath;
     std::string mPlayingVideoPath;
-    bool mStartDelayed;
     unsigned mStartTime;
+    bool mStartDelayed;
     bool mIsPlaying;
     bool mPause;
     bool mShowing;
@@ -119,6 +121,7 @@ protected:
     bool mScreensaverActive;
     bool mScreensaverMode;
     bool mGameLaunched;
+    bool mBlockPlayer;
     bool mTargetIsMax;
 
     Configuration mConfig;

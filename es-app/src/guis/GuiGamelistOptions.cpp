@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiGamelistOptions.cpp
 //
 //  Gamelist options menu for the 'Jump to...' quick selector,
@@ -19,8 +21,8 @@
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "GuiMetaDataEd.h"
-#include "SystemData.h"
 #include "Sound.h"
+#include "SystemData.h"
 
 GuiGamelistOptions::GuiGamelistOptions(
             Window* window,
@@ -177,6 +179,11 @@ GuiGamelistOptions::GuiGamelistOptions(
 
 GuiGamelistOptions::~GuiGamelistOptions()
 {
+    // This is required for the situation where scrolling started just before the menu
+    // was openened. Without this, the scrolling would run until manually stopped after
+    // the menu has been closed.
+    ViewController::get()->stopScrolling();
+
     if (mCancelled)
         return;
 

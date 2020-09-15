@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiComponent.cpp
 //
 //  Basic GUI component handling such as placement, rotation, Z-order, rendering and animation.
@@ -12,6 +14,7 @@
 #include "Log.h"
 #include "ThemeData.h"
 #include "Window.h"
+
 #include <algorithm>
 
 GuiComponent::GuiComponent(Window* window)
@@ -26,7 +29,8 @@ GuiComponent::GuiComponent(Window* window)
         mTransform(Transform4x4f::Identity()),
         mIsProcessing(false),
         mVisible(true),
-        mEnabled(true)
+        mEnabled(true),
+        mRenderView(false)
 {
     for (unsigned char i = 0; i < MAX_ANIMATIONS; i++)
         mAnimationMap[i] = nullptr;
@@ -230,7 +234,7 @@ void GuiComponent::sortChildren()
 
 unsigned int GuiComponent::getChildCount() const
 {
-    return (int)mChildren.size();
+    return static_cast<int>(mChildren.size());
 }
 
 GuiComponent* GuiComponent::getChild(unsigned int i) const
@@ -437,7 +441,8 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const std::string& view, const std::string& element, unsigned int properties)
 {
     Vector2f scale = getParent() ? getParent()->getSize()
-            : Vector2f((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+            : Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "");
     if (!elem)
@@ -509,6 +514,12 @@ void GuiComponent::onHide()
 {
     for (unsigned int i = 0; i < getChildCount(); i++)
         getChild(i)->onHide();
+}
+
+void GuiComponent::onPauseVideo()
+{
+    for (unsigned int i = 0; i < getChildCount(); i++)
+        getChild(i)->onPauseVideo();
 }
 
 void GuiComponent::onScreenSaverActivate()

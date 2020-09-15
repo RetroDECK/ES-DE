@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiGamelistOptions.h
 //
 //  Gamelist options menu for the 'Jump to...' quick selector,
@@ -8,15 +10,14 @@
 //  metadata edit interface is covered by GuiMetaDataEd.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 #define ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 
 #include "components/MenuComponent.h"
 #include "components/OptionListComponent.h"
+#include "utils/StringUtil.h"
 #include "FileData.h"
 #include "GuiComponent.h"
-#include "utils/StringUtil.h"
 
 class IGameListView;
 class SystemData;

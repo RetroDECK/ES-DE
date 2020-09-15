@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SystemView.h
 //
 //  Main system view.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_SYSTEM_VIEW_H
 #define ES_APP_VIEWS_SYSTEM_VIEW_H
 

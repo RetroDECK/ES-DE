@@ -1,7 +1,9 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ISimpleGameListView.cpp
 //
-//  Interface that defines a simple GameListView.
+//  Interface that defines a simple gamelist view.
 //
 
 #include "views/gamelist/ISimpleGameListView.h"
@@ -101,13 +103,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input)) {
             FileData* cursor = getCursor();
             if (cursor->getType() == GAME) {
-                if (isListScrolling())
-                    stopListScrolling();
+                ViewController::get()->resetMovingCamera();
+                stopListScrolling();
                 launch(cursor);
             }
             else {
                 // It's a folder.
                 if (cursor->getChildren().size() > 0) {
+                    ViewController::get()->resetMovingCamera();
                     NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
                     mCursorStack.push(cursor);
                     populateList(cursor->getChildrenListToDisplay());
@@ -119,6 +122,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             return true;
         }
         else if (config->isMappedTo("b", input)) {
+            ViewController::get()->resetMovingCamera();
             if (mCursorStack.size()) {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
                 populateList(mCursorStack.top()->getParent()->getChildren());
@@ -128,8 +132,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             else {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
                 onFocusLost();
-                if (isListScrolling())
-                    stopListScrolling();
+                stopListScrolling();
                 SystemData* systemToView = getCursor()->getSystem();
                 if (systemToView->isCollection())
                     systemToView = CollectionSystemManager::get()->getSystemToView(systemToView);
@@ -142,8 +145,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect")) {
                 onFocusLost();
-                if (isListScrolling())
-                    stopListScrolling();
+                stopListScrolling();
                 ViewController::get()->goToNextGameList();
                 return true;
             }
@@ -151,16 +153,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect")) {
                 onFocusLost();
-                if (isListScrolling())
-                    stopListScrolling();
+                stopListScrolling();
                 ViewController::get()->goToPrevGameList();
                 return true;
             }
         }
         else if (config->isMappedTo("x", input)) {
             if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER) {
-                if (isListScrolling())
-                    stopListScrolling();
+                stopListScrolling();
                 // Go to random system game.
                 NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 FileData* randomGame = getCursor()->getSystem()->getRandomGame(getCursor());
@@ -182,7 +182,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             if (mRoot->getSystem()->isGameSystem()) {
                 if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
                     NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
-
                 // Marking folders as favorites is only cosmetic as they're not sorted
                 // differently and they're not part of any collections. So it makes more
                 // sense to do it here than to add the function to CollectionSystemManager.

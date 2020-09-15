@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SystemView.cpp
 //
 //  Main system view.
@@ -177,10 +179,12 @@ bool SystemView::input(InputConfig* config, Input input)
         case VERTICAL:
         case VERTICAL_WHEEL:
             if (config->isMappedLike("up", input)) {
+                ViewController::get()->resetMovingCamera();
                 listInput(-1);
                 return true;
             }
             if (config->isMappedLike("down", input)) {
+                ViewController::get()->resetMovingCamera();
                 listInput(1);
                 return true;
             }
@@ -189,10 +193,12 @@ bool SystemView::input(InputConfig* config, Input input)
         case HORIZONTAL_WHEEL:
         default:
             if (config->isMappedLike("left", input)) {
+                ViewController::get()->resetMovingCamera();
                 listInput(-1);
                 return true;
             }
             if (config->isMappedLike("right", input)) {
+                ViewController::get()->resetMovingCamera();
                 listInput(1);
                 return true;
             }
