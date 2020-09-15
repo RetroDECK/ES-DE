@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  UIModeController.cpp
 //
 //  Handling of application user interface modes (full, kiosk and kid).
@@ -43,9 +45,6 @@ bool UIModeController::listen(InputConfig* config, Input input)
 {
     // Reads the current input to listen for the passkey sequence to unlock
     // the UI mode. The progress is saved in mPassKeyCounter.
-    if (Settings::getInstance()->getBool("Debug"))
-        logInput(config, input);
-
     if ((Settings::getInstance()->getString("UIMode") == "full") || !isValidInput(config, input))
         return false; // Already unlocked, or invalid input, nothing to do here.
 
@@ -134,20 +133,6 @@ std::string UIModeController::getFormattedPassKeyStr()
         }
     }
     return out;
-}
-
-void UIModeController::logInput(InputConfig* config, Input input)
-{
-    std::string mapname = "";
-    std::vector<std::string> maps = config->getMappedTo(input);
-
-    for (auto mn : maps) {
-        mapname += mn;
-        mapname += ", ";
-    }
-
-    LOG(LogDebug) << "UIModeController::logInput(" << config->getDeviceName() << "): " <<
-            input.string() << ", isMappedTo=" << mapname << ", value=" << input.value;
 }
 
 bool UIModeController::isValidInput(InputConfig* config, Input input)

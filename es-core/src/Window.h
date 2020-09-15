@@ -1,7 +1,10 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Window.h
 //
 //  Window management, screensaver and help prompts.
+//  The input stack starts here as well, as this is the first instance called by InputManager.
 //
 
 #ifndef ES_CORE_WINDOW_H
@@ -61,6 +64,7 @@ public:
 
     void textInput(const char* text);
     void input(InputConfig* config, Input input);
+    void logInput(InputConfig * config, Input input);
     void update(int deltaTime);
     void render();
 

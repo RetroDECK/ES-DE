@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  UIModeController.h
 //
 //  Handling of application user interface modes (full, kiosk and kid).
 //  This includes switching the mode when the UI mode passkey is used.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_UI_MODE_CONTROLLER_H
 #define ES_APP_VIEWS_UI_MODE_CONTROLLER_H
 
@@ -42,7 +43,6 @@ private:
     UIModeController();
     bool inputIsMatch(InputConfig * config, Input input);
     bool isValidInput(InputConfig * config, Input input);
-    void logInput(InputConfig * config, Input input);
 
     // Return UI mode to 'full'.
     void unlockUIMode();

@@ -1,7 +1,10 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Window.cpp
 //
 //  Window management, screensaver and help prompts.
+//  The input stack starts here as well, as this is the first instance called by InputManager.
 //
 
 #include "Window.h"
@@ -132,6 +135,9 @@ void Window::textInput(const char* text)
 
 void Window::input(InputConfig* config, Input input)
 {
+    if (Settings::getInstance()->getBool("Debug"))
+        logInput(config, input);
+
     if (mScreenSaver) {
         if (mScreenSaver->isScreenSaverActive() &&
                 Settings::getInstance()->getBool("ScreenSaverControls") &&
@@ -196,6 +202,20 @@ void Window::input(InputConfig* config, Input input)
             // This is where the majority of inputs will be consumed: the GuiComponent Stack.
             this->peekGui()->input(config, input);
     }
+}
+
+void Window::logInput(InputConfig* config, Input input)
+{
+    std::string mapname = "";
+    std::vector<std::string> maps = config->getMappedTo(input);
+
+    for (auto mn : maps) {
+        mapname += mn;
+        mapname += ", ";
+    }
+
+    LOG(LogDebug) << "Window::logInput(" << config->getDeviceName() << "): " <<
+            input.string() << ", isMappedTo=" << mapname << ", value=" << input.value;
 }
 
 void Window::update(int deltaTime)
