@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VolumeControl.h
 //
 //  Controls system audio volume.
 //
 
-#pragma once
 #ifndef ES_APP_VOLUME_CONTROL_H
 #define ES_APP_VOLUME_CONTROL_H
 
@@ -19,7 +20,8 @@
 #elif defined(_WIN64)
 #include <Windows.h>
 #include <endpointvolume.h>
-//#include <mmeapi.h>
+#include <mmdeviceapi.h>
+#include <mmsystem.h>
 #endif
 
 //  Singleton pattern. Call getInstance() to get an object.

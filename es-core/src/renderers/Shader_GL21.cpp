@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Shader_GL21.cpp
 //
 //  OpenGL 2.1 GLSL shader functions.
@@ -38,7 +40,7 @@ namespace Renderer
 
         // This will load the entire GLSL source code into the string variable.
         const ResourceData& shaderData = ResourceManager::getInstance()->getFileData(path);
-        shaderCode.assign((const char*)shaderData.ptr.get(), shaderData.length);
+        shaderCode.assign(reinterpret_cast<const char*>(shaderData.ptr.get()), shaderData.length);
 
         // Define the GLSL version (version 120 = OpenGL 2.1).
         preprocessorDefines = "#version 120\n";
@@ -65,7 +67,8 @@ namespace Renderer
             GLuint currentShader = glCreateShader(std::get<2>(*it));
             GLchar const* shaderCodePtr = std::get<1>(*it).c_str();
 
-            glShaderSource(currentShader, 1, (const GLchar**)&shaderCodePtr, nullptr);
+            glShaderSource(currentShader, 1,
+                    reinterpret_cast<const GLchar**>(&shaderCodePtr), nullptr);
             glCompileShader(currentShader);
 
             GLint shaderCompiled;
@@ -114,7 +117,8 @@ namespace Renderer
     void Renderer::Shader::setModelViewProjectionMatrix(Transform4x4f mvpMatrix)
     {
         if (shaderMVPMatrix != -1)
-            GL_CHECK_ERROR(glUniformMatrix4fv(shaderMVPMatrix, 1, GL_FALSE, (GLfloat*)&mvpMatrix));
+            GL_CHECK_ERROR(glUniformMatrix4fv(shaderMVPMatrix, 1, GL_FALSE,
+                    reinterpret_cast<GLfloat*>(&mvpMatrix)));
     }
 
     void Renderer::Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)

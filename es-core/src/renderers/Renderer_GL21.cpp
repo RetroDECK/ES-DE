@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Renderer_GL21.cpp
 //
 //  OpenGL 2.1 rendering functions.
@@ -88,24 +90,32 @@ namespace Renderer
             return false;
         }
 
+        #if defined(_WIN64)
+        glewInit();
+        #endif
+
         SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
 
         std::string vendor = glGetString(GL_VENDOR) ?
-                (const char*)glGetString(GL_VENDOR) : "";
+                reinterpret_cast<const char*>(glGetString(GL_VENDOR)) : "";
         std::string renderer = glGetString(GL_RENDERER) ?
-                (const char*)glGetString(GL_RENDERER) : "";
+                reinterpret_cast<const char*>(glGetString(GL_RENDERER)) : "";
         std::string version = glGetString(GL_VERSION) ?
-                (const char*)glGetString(GL_VERSION) : "";
+                reinterpret_cast<const char*>(glGetString(GL_VERSION)) : "";
         std::string extensions = glGetString(GL_EXTENSIONS) ?
-                (const char*)glGetString(GL_EXTENSIONS) : "";
+                reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)) : "";
 
         LOG(LogInfo) << "GL vendor: " << vendor;
         LOG(LogInfo) << "GL renderer: " << renderer;
         LOG(LogInfo) << "GL version: " << version;
+        #if defined(_WIN64)
+        LOG(LogInfo) << "EmulationStation renderer: OpenGL 2.1 with GLEW";
+        #else
         LOG(LogInfo) << "EmulationStation renderer: OpenGL 2.1";
+        #endif
         LOG(LogInfo) << "Checking available OpenGL extensions...";
         std::string glExts = glGetString(GL_EXTENSIONS) ?
-                (const char*)glGetString(GL_EXTENSIONS) : "";
+                reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)) : "";
         if (extensions.find("GL_ARB_texture_non_power_of_two") == std::string::npos) {
             LOG(LogError) << "GL_ARB_texture_non_power_of_two: MISSING";
             missingExtension = true;
@@ -327,7 +337,7 @@ namespace Renderer
                     float shaderWidth = width * 1.2;
                     // Workaround to get the scanlines to render somehow proportional to the
                     // resolution. A better solution is for sure needed.
-                    float shaderHeight = height + height / ((int)height >> 7) * 2.0;
+                    float shaderHeight = height + height / (static_cast<int>(height) >> 7) * 2.0;
                     if (runShader) {
                         runShader->activateShaders();
                         runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
@@ -343,7 +353,7 @@ namespace Renderer
     void setProjection(const Transform4x4f& _projection)
     {
         GL_CHECK_ERROR(glMatrixMode(GL_PROJECTION));
-        GL_CHECK_ERROR(glLoadMatrixf((GLfloat*)&_projection));
+        GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&_projection)));
     }
 
     void setMatrix(const Transform4x4f& _matrix)
@@ -352,7 +362,7 @@ namespace Renderer
         matrix.round();
 
         GL_CHECK_ERROR(glMatrixMode(GL_MODELVIEW));
-        GL_CHECK_ERROR(glLoadMatrixf((GLfloat*)&matrix));
+        GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&matrix)));
     }
 
     void setViewport(const Rect& _viewport)

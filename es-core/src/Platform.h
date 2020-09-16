@@ -1,18 +1,18 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Platform.h
 //
 //  Platform-specific functions.
 //
 
-#pragma once
 #ifndef ES_CORE_PLATFORM_H
 #define ES_CORE_PLATFORM_H
 
 #include <string>
 
-// Why the hell this naming inconsistency exists is well beyond me.
 #if defined(_WIN64)
-    #define sleep Sleep
+#include <windows.h>
 #endif
 
 enum QuitMode {

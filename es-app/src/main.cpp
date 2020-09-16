@@ -9,6 +9,7 @@
 //  Desktop Edition fork by Leon Styhre.
 //
 //  The line length limit is 100 characters and the indentations are 4 spaces.
+//  Line breaks are Unix-style (line feed only).
 //
 //  main.cpp
 //

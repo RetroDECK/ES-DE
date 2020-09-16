@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Renderer.cpp
 //
 //  General rendering functions.
@@ -8,11 +10,11 @@
 
 #include "math/Transform4x4f.h"
 #include "math/Vector2i.h"
-#include "Shader_GL21.h"
 #include "resources/ResourceManager.h"
 #include "ImageIO.h"
 #include "Log.h"
 #include "Settings.h"
+#include "Shader_GL21.h"
 
 #include <SDL2/SDL.h>
 #include <stack>
@@ -55,8 +57,10 @@ namespace Renderer
             #endif
 
             // Try creating SDL surface from logo data.
-            SDL_Surface* logoSurface = SDL_CreateRGBSurfaceFrom((void*)rawData.data(),
-                    (int)width, (int)height, 32, (int)(width * 4), rmask, gmask, bmask, amask);
+            SDL_Surface* logoSurface = SDL_CreateRGBSurfaceFrom(
+                    static_cast<void*>(rawData.data()),
+                    static_cast<int>(width), static_cast<int>(height), 32,
+                    static_cast<int>((width * 4)), rmask, gmask, bmask, amask);
 
             if (logoSurface != nullptr) {
                 SDL_SetWindowIcon(sdlWindow, logoSurface);
@@ -76,22 +80,22 @@ namespace Renderer
 
         initialCursorState = (SDL_ShowCursor(0) != 0);
 
-        SDL_DisplayMode dispMode;
-        SDL_GetDesktopDisplayMode(0, &dispMode);
+        SDL_DisplayMode displayMode;
+        SDL_GetDesktopDisplayMode(0, &displayMode);
         windowWidth = Settings::getInstance()->getInt("WindowWidth") ?
-                Settings::getInstance()->getInt("WindowWidth") : dispMode.w;
+                Settings::getInstance()->getInt("WindowWidth") : displayMode.w;
         windowHeight = Settings::getInstance()->getInt("WindowHeight") ?
-                Settings::getInstance()->getInt("WindowHeight")  : dispMode.h;
+                Settings::getInstance()->getInt("WindowHeight") : displayMode.h;
         screenWidth = Settings::getInstance()->getInt("ScreenWidth") ?
-                Settings::getInstance()->getInt("ScreenWidth")   : windowWidth;
+                Settings::getInstance()->getInt("ScreenWidth") : windowWidth;
         screenHeight = Settings::getInstance()->getInt("ScreenHeight") ?
-                Settings::getInstance()->getInt("ScreenHeight")  : windowHeight;
+                Settings::getInstance()->getInt("ScreenHeight") : windowHeight;
         screenOffsetX = Settings::getInstance()->getInt("ScreenOffsetX") ?
                 Settings::getInstance()->getInt("ScreenOffsetX") : 0;
         screenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ?
                 Settings::getInstance()->getInt("ScreenOffsetY") : 0;
         screenRotate = Settings::getInstance()->getInt("ScreenRotate") ?
-                Settings::getInstance()->getInt("ScreenRotate")  : 0;
+                Settings::getInstance()->getInt("ScreenRotate") : 0;
 
         // Prevent ES window from minimizing when switching windows (when launching
         // games or when manually switching windows using task switcher).
@@ -100,7 +104,7 @@ namespace Renderer
         #if defined(__APPLE__) || defined(__unix__)
         bool userResolution = false;
         // Check if the user has changed the resolution from the command line.
-        if (windowWidth != dispMode.w || windowHeight != dispMode.h)
+        if (windowWidth != displayMode.w || windowHeight != displayMode.h)
             userResolution = true;
         // Not sure if this could be a useful setting for some users.
 //        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
@@ -234,7 +238,7 @@ namespace Renderer
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
                 projection.orthoProjection(0, screenHeight, screenWidth, 0, -1.0, 1.0);
-                projection.rotate((float)ES_DEG_TO_RAD(90), {0, 0, 1});
+                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(90)), {0, 0, 1});
                 projection.translate({0, screenHeight * -1.0f, 0});
             }
             break;
@@ -244,7 +248,7 @@ namespace Renderer
                 viewport.w = screenWidth;
                 viewport.h = screenHeight;
                 projection.orthoProjection(0, screenWidth, screenHeight, 0, -1.0, 1.0);
-                projection.rotate((float)ES_DEG_TO_RAD(180), {0, 0, 1});
+                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(180)), {0, 0, 1});
                 projection.translate({screenWidth * -1.0f, screenHeight * -1.0f, 0});
             }
             break;
@@ -254,7 +258,7 @@ namespace Renderer
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
                 projection.orthoProjection(0, screenHeight, screenWidth, 0, -1.0, 1.0);
-                projection.rotate((float)ES_DEG_TO_RAD(270), {0, 0, 1});
+                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(270)), {0, 0, 1});
                 projection.translate({screenWidth * -1.0f, 0, 0});
             }
             break;
@@ -284,24 +288,20 @@ namespace Renderer
             box.h = screenHeight - box.y;
 
         switch (screenRotate) {
-            case 0: {
+            case 0:
                 box = Rect(screenOffsetX + box.x, screenOffsetY + box.y, box.w, box.h);
-            }
             break;
-            case 1: {
-                box = Rect(windowWidth - screenOffsetY - box.y - box.h, screenOffsetX +
-                        box.x, box.h, box.w);
-            }
+            case 1:
+                box = Rect(windowWidth - screenOffsetY - box.y - box.h,
+                        screenOffsetX + box.x, box.h, box.w);
             break;
-            case 2: {
+            case 2:
                 box = Rect(windowWidth - screenOffsetX - box.x - box.w, windowHeight -
                         screenOffsetY - box.y - box.h, box.w, box.h);
-            }
             break;
-            case 3: {
-                box = Rect(screenOffsetY + box.y, windowHeight - screenOffsetX - box.x -
-                        box.w, box.h, box.w);
-            }
+            case 3:
+                box = Rect(screenOffsetY + box.y, windowHeight -
+                        screenOffsetX - box.x - box.w, box.h, box.w);
             break;
         }
 

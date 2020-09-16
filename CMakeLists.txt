@@ -241,16 +241,17 @@ if(NOT WIN32)
             nanosvg)
 elseif(WIN32)
     set(COMMON_LIBRARIES
-            "${PROJECT_SOURCE_DIR}/libpugixml.dll"
             "${PROJECT_SOURCE_DIR}/FreeImage.dll"
+            "${PROJECT_SOURCE_DIR}/glew32.dll"
             "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
-            "${PROJECT_SOURCE_DIR}/libvlc.dll"
             "${PROJECT_SOURCE_DIR}/libfreetype.dll"
-            "Winmm.dll"
-            "mingw32"
+            "${PROJECT_SOURCE_DIR}/libpugixml.dll"
             "${PROJECT_SOURCE_DIR}/libSDL2main.a"
+            "${PROJECT_SOURCE_DIR}/libvlc.dll"
             "${PROJECT_SOURCE_DIR}/SDL2.dll"
-            "nanosvg")
+            "mingw32"
+            "nanosvg"
+            "Winmm.dll")
 endif()
 
 if(APPLE)

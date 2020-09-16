@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VolumeControl.cpp
 //
 //  Controls system audio volume.
@@ -11,10 +13,6 @@
 
 #if defined(_RPI_)
 #include "Settings.h"
-#endif
-
-#if defined(_WIN64)
-#include <mmdeviceapi.h>
 #endif
 
 // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
@@ -173,14 +171,15 @@ void VolumeControl::init()
     }
     #elif defined(_WIN64)
     // Get windows version information.
-    OSVERSIONINFOEXA osVer = {sizeof(OSVERSIONINFO)};
+    OSVERSIONINFOEXA osVer = { sizeof(OSVERSIONINFO) };
     ::GetVersionExA(reinterpret_cast<LPOSVERSIONINFOA>(&osVer));
     // Check windows version.
     if (osVer.dwMajorVersion < 6) {
         // Windows older than Vista. use mixer API. open default mixer.
         if (mixerHandle == nullptr) {
             #if defined(_WIN64)
-            if (mixerOpen(&mixerHandle, 0, (DWORD_PTR)nullptr, 0, 0) == MMSYSERR_NOERROR) {
+            if (mixerOpen(&mixerHandle, 0, reinterpret_cast<DWORD_PTR>(nullptr), 0, 0) ==
+                    MMSYSERR_NOERROR) {
             #else
             if (mixerOpen(&mixerHandle, 0, nullptr, 0, 0) == MMSYSERR_NOERROR) {
             #endif
@@ -191,12 +190,13 @@ void VolumeControl::init()
                 mixerLineControls.cControls = 1;
                 // Id of "Speaker Out" line's volume slider.
                 //mixerLineControls.dwControlID = 0x00000000;
-                 //Get volume control.
+                // Get volume control.
                 mixerLineControls.dwControlType = MIXERCONTROL_CONTROLTYPE_VOLUME;
                 mixerLineControls.pamxctrl = &mixerControl;
                 mixerLineControls.cbmxctrl = sizeof(MIXERCONTROL);
-                if (mixerGetLineControls((HMIXEROBJ)mixerHandle, &mixerLineControls,
-                        MIXER_GETLINECONTROLSF_ONEBYTYPE) != MMSYSERR_NOERROR) {
+                if (mixerGetLineControls(reinterpret_cast<HMIXEROBJ>(mixerHandle),
+                        &mixerLineControls, MIXER_GETLINECONTROLSF_ONEBYTYPE) !=
+                        MMSYSERR_NOERROR) {
                     LOG(LogError) <<
                             "VolumeControl::getVolume() - Failed to get mixer volume control!";
                     mixerClose(mixerHandle);
@@ -214,7 +214,7 @@ void VolumeControl::init()
             CoInitialize(nullptr);
             IMMDeviceEnumerator * deviceEnumerator = nullptr;
             CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_INPROC_SERVER,
-                    __uuidof(IMMDeviceEnumerator), (LPVOID *)&deviceEnumerator);
+                    __uuidof(IMMDeviceEnumerator), reinterpret_cast<LPVOID *>(&deviceEnumerator));
             if (deviceEnumerator != nullptr) {
                 // Get default endpoint.
                 IMMDevice * defaultDevice = nullptr;
@@ -222,7 +222,8 @@ void VolumeControl::init()
                 if (defaultDevice != nullptr) {
                     // Retrieve endpoint volume.
                     defaultDevice->Activate(__uuidof(IAudioEndpointVolume),
-                            CLSCTX_INPROC_SERVER, nullptr, (LPVOID *)&endpointVolume);
+                            CLSCTX_INPROC_SERVER, nullptr,
+                            reinterpret_cast<LPVOID *>(&endpointVolume));
                     if (endpointVolume == nullptr)
                         LOG(LogError) << "VolumeControl::init() - "
                                 "Failed to get default audio endpoint volume!";
@@ -315,9 +316,9 @@ int VolumeControl::getVolume() const
         mixerControlDetails.cMultipleItems = 0;
         mixerControlDetails.paDetails = &value;
         mixerControlDetails.cbDetails = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
-        if (mixerGetControlDetails((HMIXEROBJ)mixerHandle, &mixerControlDetails,
+        if (mixerGetControlDetails(reinterpret_cast<HMIXEROBJ>(mixerHandle), &mixerControlDetails,
                 MIXER_GETCONTROLDETAILSF_VALUE) == MMSYSERR_NOERROR)
-            volume = (int)Math::round((value.dwValue * 100) / 65535.0f);
+            volume = static_cast<int>(Math::round((value.dwValue * 100) / 65535.0f));
         else
             LOG(LogError) << "VolumeControl::getVolume() - Failed to get mixer volume!";
     }
@@ -325,7 +326,7 @@ int VolumeControl::getVolume() const
         // Windows Vista or above. use EndpointVolume API.
         float floatVolume = 0.0f; // 0-1
         if (endpointVolume->GetMasterVolumeLevelScalar(&floatVolume) == S_OK) {
-            volume = (int)Math::round(floatVolume * 100.0f);
+            volume = static_cast<int>(Math::round(floatVolume * 100.0f));
             LOG(LogInfo) << "System audio volume is " << volume;
         }
         else {
@@ -387,7 +388,7 @@ void VolumeControl::setVolume(int volume)
         mixerControlDetails.cMultipleItems = 0;
         mixerControlDetails.paDetails = &value;
         mixerControlDetails.cbDetails = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
-        if (mixerSetControlDetails((HMIXEROBJ)mixerHandle, &mixerControlDetails,
+        if (mixerSetControlDetails(reinterpret_cast<HMIXEROBJ>(mixerHandle), &mixerControlDetails,
                 MIXER_SETCONTROLDETAILSF_VALUE) != MMSYSERR_NOERROR)
             LOG(LogError) << "VolumeControl::setVolume() - Failed to set mixer volume!";
     }
@@ -395,7 +396,7 @@ void VolumeControl::setVolume(int volume)
         // Windows Vista or above. use EndpointVolume API.
         float floatVolume = 0.0f; // 0-1
         if (volume > 0)
-            floatVolume = (float)volume / 100.0f;
+            floatVolume = static_cast<float>(volume) / 100.0f;
         if (endpointVolume->SetMasterVolumeLevelScalar(floatVolume, nullptr) != S_OK)
             LOG(LogError) << "VolumeControl::setVolume() - Failed to set master volume!";
     }

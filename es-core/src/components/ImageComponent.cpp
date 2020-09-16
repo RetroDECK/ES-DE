@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ImageComponent.cpp
 //
 //  Handles images: loading, resizing, cropping, color shifting etc.
@@ -337,9 +339,9 @@ void ImageComponent::updateColors()
 {
     const float opacity = (mOpacity * (mFading ? mFadeOpacity / 255.0 : 1.0)) / 255.0;
     const unsigned int color = Renderer::convertColor((mColorShift & 0xFFFFFF00) |
-            (unsigned char)((mColorShift & 0xFF) * opacity));
+            static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
     const unsigned int colorEnd = Renderer::convertColor((mColorShiftEnd & 0xFFFFFF00) |
-            (unsigned char)((mColorShiftEnd & 0xFF) * opacity));
+            static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity));
 
     mVertices[0].col = color;
     mVertices[1].col = mColorGradientHorizontal ? colorEnd : color;
@@ -408,7 +410,7 @@ void ImageComponent::fadeIn(bool textureLoaded)
                 mFading = false;
             }
             else {
-                mFadeOpacity = (unsigned char)opacity;
+                mFadeOpacity = static_cast<unsigned char>(opacity);
             }
             updateColors();
         }
@@ -425,15 +427,16 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 {
     using namespace ThemeFlags;
 
-    GuiComponent::applyTheme(theme, view, element, (properties ^ SIZE) |
-            ((properties & (SIZE | POSITION)) ? ORIGIN : 0));
+    GuiComponent::applyTheme(theme, view, element, (properties ^ ThemeFlags::SIZE) |
+            ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "image");
     if (!elem)
         return;
 
     Vector2f scale = getParent() ? getParent()->getSize() :
-            Vector2f((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+            Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size"))

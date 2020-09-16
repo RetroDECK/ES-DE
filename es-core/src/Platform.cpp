@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Platform.cpp
 //
 //  Platform-specific functions.
@@ -19,13 +21,7 @@
 #include <array>
 #endif
 
-#if defined(_WIN64)
-#include <windows.h>
-#include <codecvt>
-#include <locale>
-#else
 #include <unistd.h>
-#endif
 #include <fcntl.h>
 
 int runRebootCommand()
@@ -133,16 +129,16 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
     DWORD errorCode = 0;
 
     processReturnValue = CreateProcessW(
-            nullptr,                        // No application name (use command line).
-            (wchar_t*) cmd_utf16.c_str(),   // Command line.
-            nullptr,                        // Process attributes.
-            nullptr,                        // Thread attributes.
-            FALSE,                          // Handles inheritance.
-            0,                              // Creation flags.
-            nullptr,                        // Use parent's environment block.
-            nullptr,                        // Use parent's starting directory.
-            &si,                            // Pointer to the STARTUPINFOW structure.
-            &pi);                           // Pointer to the PROCESS_INFORMATION structure.
+            nullptr,                            // No application name (use command line).
+            const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
+            nullptr,                            // Process attributes.
+            nullptr,                            // Thread attributes.
+            FALSE,                              // Handles inheritance.
+            0,                                  // Creation flags.
+            nullptr,                            // Use parent's environment block.
+            nullptr,                            // Use parent's starting directory.
+            &si,                                // Pointer to the STARTUPINFOW structure.
+            &pi);                               // Pointer to the PROCESS_INFORMATION structure.
 
     // Unfortunately suspending ES and resuming when the emulator process has exited
     // doesn't work reliably on Windows, so we may need to keep ES running in the
@@ -161,7 +157,7 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
 
         FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER,
                 nullptr, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                (LPWSTR)&pBuffer, 0, nullptr);
+                reinterpret_cast<LPWSTR>(&pBuffer), 0, nullptr);
 
         errorCode = GetLastError();
 
@@ -196,7 +192,7 @@ unsigned int getTaskbarState()
     #if defined(_WIN64)
     APPBARDATA barData;
     barData.cbSize = sizeof(APPBARDATA);
-    return (UINT) SHAppBarMessage(ABM_GETSTATE, &barData);
+    return static_cast<UINT>(SHAppBarMessage(ABM_GETSTATE, &barData));
     #else
     return 0;
     #endif

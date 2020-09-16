@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Shader_GL21.h
 //
 //  OpenGL 2.1 GLSL shader functions.
@@ -10,6 +12,10 @@
 #define GL_GLEXT_PROTOTYPES
 
 #include "math/Transform4x4f.h"
+
+#if defined(_WIN64)
+#include <GL/glew.h>
+#endif
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>

@@ -10,9 +10,9 @@ Table of contents:
 
 EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
 
-There are much more details regarding compilers later in this document, so read on!
+There are more details regarding compilers later in this document.
 
-Any code editor can be used of course, but I recommend [VSCodium](https://vscodium.com) or [VSCode](https://code.visualstudio.com).
+Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
 
 
 ## Building on Unix
@@ -20,13 +20,13 @@ Any code editor can be used of course, but I recommend [VSCodium](https://vscodi
 The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
 **On Debian/Ubuntu:**
-All of the required packages can be easily installed with `apt-get`:
+All of the required packages can be easily installed with apt-get:
 ```
 sudo apt-get install build-essential cmake libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libvlc-dev libgl1-mesa-dev
 ```
 
 **On Fedora:**
-For this operating system, use `dnf` (with rpmfusion activated) :
+For this operating system, use dnf (with rpmfusion activated) :
 ```
 sudo dnf install cmake SDL2-devel freeimage-devel freetype-devel curl-devel rapidjson-devel alsa-lib-devel vlc-devel mesa-libGL-devel
 ```
@@ -109,7 +109,7 @@ Advantage with GCC (vs Clang):
 *Release build: Optimizations enabled, debug info disabled, binary stripped.* \
 *Debug build: Optimizations disabled, debug info enabled, binary not stripped.*
 
-This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCodium that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance `std::string` variables.
+This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCode that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance `std::string` variables.
 
 It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 36% slower! The same goes for the binary size, instead of 17% smaller it's now 17% larger.
 
@@ -211,7 +211,9 @@ sudo apt-get install rpm
 
 ## Building on macOS
 
-EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a bizarre Unix variant, it is still a proper system with good tools. The main deficiency (apart from a very strange window manager) is that there is no package manager and you need to register an account to install software from the App Store. There are several third party package managers though, and the use of one of them, `Homebrew`, is detailed below.
+EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a bizarre Unix variant with a very strange window manager, it is still a proper system with good tools. The main deficiency is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, `Homebrew`, is detailed below.
+
+As for code editing, I use [VSCode](https://code.visualstudio.com). I suppose Xcode could be used instead but I have no experience with this tool and no interest in it as I want to use the same tools for all the operating systems that I develop on.
 
 **Setting up the build tools:**
 
@@ -428,25 +430,27 @@ This is a strange legacy operating system. However it's still popular, so we nee
 
 I did a brief evaluation of the Microsoft Visual C++ compiler (MSVC) but as far as I'm concerned it's an abomination so I won't cover it here and it won't be supported.
 
+The OpenGL library shipped with Windows is unfortunately garbage, so the OpenGL Extension Wrangler (GLEW) library needs to be used as well to provide shader support. Its installation is explained below.
+
 At the moment I have only built the software using GCC on Windows, but I aim to get Clang/LLVM working at a later date.
 
 Anyway, here's a (not so) brief summary of how to get a build environment up and running on Windows.
 
 **Install Git, CMake, MinGW and your code editor:**
 
-[Git](https://gitforwindows.org)
+[https://gitforwindows.org](https://gitforwindows.org)
 
-[CMake](https://cmake.org/download)
+[https://cmake.org/download](https://cmake.org/download)
 
-[MinGW](https://gnutoolchains.com/mingw64)
+[https://gnutoolchains.com/mingw64](https://gnutoolchains.com/mingw64)
 
 Make a copy of `mingw64/bin/mingw32-make` to `make` just for convenience and make sure that the necessary paths are defined for the PATH environmental variable.
 
 I won't get into the details on how to configure Git, but there are many resources available online to support with this. The `Git Bash` shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
 
-Install your editor of choice. As for VSCodium it's unfortunately broken or crippled under Windows, making some important extensions impossible to install. VSCode can however be used instead.
+Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
 
-It's strongly recommended to set line breaks to Unix-style (linefeed only) directly in the editor, although it can also be configured in Git for conversion during commit. The source code for EmulationStation-DE only uses Unix-style line breaks.
+It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor, although it can also be configured in Git for conversion during commit. The source code for EmulationStation-DE only uses Unix-style line breaks.
 
 **Enable pretty printing for GDB:**
 
@@ -455,7 +459,7 @@ This is useful for displaying `std::string` values for example.
 Adjust your paths accordingly, the below are just examples of course.
 
 Save a file to
-C:/Programming/mingw64/bin/pp.gdb with the following contents:
+C:\Programming\mingw64\bin\pp.gdb with the following contents:
 
 ```
 python
@@ -472,21 +476,39 @@ If using VSCode, add the following line to launch.json:
 
 An equivalent setup should be possible on other code editors as well.
 
-Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The MinGW installation recommended in the previous step works fine though.
+Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The MinGW installation recommended in the previous step should work fine though.
 
 **Download the dependency packages:**
 
-[FreeImage](https://sourceforge.net/projects/freeimage)
+FreeImage\
+[https://sourceforge.net/projects/freeimage](https://sourceforge.net/projects/freeimage)
 
-[cURL](https://curl.haxx.se/download.html)
+cURL\
+[https://curl.haxx.se/download.html](https://curl.haxx.se/download.html)
 
-[SDL2](https://www.libsdl.org/download-2.0.php)
+SDL2\
+[https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)
 
-[libVLC](https://ftp.lysator.liu.se/pub/videolan/vlc)
+libVLC\
+[https://ftp.lysator.liu.se/pub/videolan/vlc](https://ftp.lysator.liu.se/pub/videolan/vlc)
 
-Uncompress the files to a suitable directory, for example C:/Programming/Dependencies/
+Uncompress the files for the above packages to a suitable directory, for example C:\Programming\Dependencies\
 
-The following packages are not readily available for Windows, so clone the repos and build them yourself:
+GLEW\
+[http://glew.sourceforge.net](http://glew.sourceforge.net)
+
+This library needs to be compiled from source as the pre-built libraries don't seem to work with GCC. The GitHub repo seems to be somewhat broken as well, therefore the manual download is required. It's recommended to get the source in zip format and uncompress it to the same directory as the other libraries listed above.
+
+Now simply build the required glew32.dll library:
+
+```
+unzip glew-2.1.0.zip
+cd glew-2.1.0
+make
+```
+You will probably see a huge amount of compile warnings, and the glewinfo.exe tool may fail to build, but we don't need it so it's not an issue.
+
+The following packages are not readily available for Windows either, so clone the repos and build them yourself:
 
 [FreeType](https://www.freetype.org)
 ```
@@ -518,7 +540,7 @@ git checkout v1.1.0
 
 **Clone the EmulationStation-DE repository:**
 
-This works the same as in Unix, just run the following:
+This works the same as in Unix or macOS, just run the following:
 
 ```
 git clone https://gitlab.com/leonstyhre/emulationstation-de
@@ -526,11 +548,11 @@ git clone https://gitlab.com/leonstyhre/emulationstation-de
 
 **Setup the include directories:**
 
-As there is no standardized include directory structure in Windows and no package manager, you need to provide the include files manually.
+As there is no standardized include directory structure in Windows, you need to provide the include files manually.
 
-Make a directory in your build environment tree, for instance under `C:/Programming/include`.
+Make a directory in your build environment tree, for instance under C:\Programming\include\
 
-Copy the include files from cURL, FreeImage, FreeType, pugixml, RapidJSON, SDL2 and VLC to this directory.
+Copy the include files from cURL, FreeImage, FreeType, GLEW, pugixml, RapidJSON, SDL2 and VLC to this directory.
 It should then look something like this:
 
 ```
@@ -539,6 +561,7 @@ curl/
 FreeImage.h
 freetype/
 ft2build.h
+GL/
 pugiconfig.hpp
 pugixml.hpp
 rapidjson/
@@ -554,18 +577,19 @@ Copy the following files to the `emulationstation-de` build directory. Most of t
 
 ```
 FreeImage.dll
+glew32.dll
 libcrypto-1_1-x64.dll    (from the OpenSSL package, located in Git MinGW/MSYS under /mingw/bin/)
 libcurl-x64.dll
 libfreetype.dll
 libgcc_s_seh-1.dll    (located in Git MinGW/MSYS under /mingw/bin/)
 libpugixml.dll
+libSDL2main.a
 libssl-1_1-x64.dll    (from the OpenSSL package, located in Git MinGW under /mingw/bin/)
 libstdc++-6.dll
 libvlc.dll
 libvlccore.dll
 libwinpthread-1.dll    (located in Git MinGW under /mingw/bin/)
 SDL2.dll
-libSDL2main.a
 ```
 
 The files from the MinGW installation must correspond to the version used to compile the binary.
@@ -608,21 +632,22 @@ Or for a debug build:
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
 ```
 
-For some reason defining the '../include' path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a `Git Bash` shell.
+For some reason defining the '../include' path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 
-The make command works fine directly in PowerShell though so it can be run from the VSCode terminal. Unfortunately I haven't been able to find a way to use a civilized shell from inside VSCode so we're stuck with PowerShell.
+The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) should now build the binary.
 
-Note that compilation time is much longer than on Unix, and linking time is excessive for a debug build (around 10 times longer on my computer). The debug binary is also much larger than on Unix.
+Note that compilation time is much longer than on Unix or macOS, and linking time is excessive for a debug build (around 10 times longer on my computer). The debug binary is also much larger than on Unix.
 
 **Creating an NSIS installer:**
 
 To create an NSIS installer (Nullsoft Scriptable Install System) you need to first install the NSIS creation tool:
 
-[NSIS](https://nsis.sourceforge.io/Download)
+NSIS\
+[https://nsis.sourceforge.io/Download](https://nsis.sourceforge.io/Download)
 
-Simply install the application using it's installer.
+Simply install the application using its installer.
 
 After the installation has been completed, go to the emulationstation-de directory and run cpack to generate the NSIS installer:
 

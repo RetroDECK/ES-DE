@@ -33,7 +33,8 @@ std::string getTitleFolder() {
 void writeSubtitle(const char* gameName, const char* systemName, bool always)
 {
     FILE* file = fopen(getTitlePath().c_str(), "w");
-    int end = (int)(Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout") / (1000));
+    int end = static_cast<int>((Settings::getInstance()->
+            getInt("ScreenSaverSwapVideoTimeout") / (1000)));
 
     if (always)
         fprintf(file, "1\n00:00:01,000 --> 00:00:%d,000\n", end);
@@ -198,8 +199,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
 {
     using namespace ThemeFlags;
 
-    GuiComponent::applyTheme(theme, view, element, (properties ^ SIZE) |
-            ((properties & (SIZE | POSITION)) ? ORIGIN : 0));
+    GuiComponent::applyTheme(theme, view, element, (properties ^ ThemeFlags::SIZE) |
+            ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "video");
 
