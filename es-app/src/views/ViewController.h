@@ -86,11 +86,14 @@ public:
         ViewMode viewing;
 
         inline SystemData* getSystem() const
-                { assert(viewing == GAME_LIST || viewing == SYSTEM_SELECT); return system; }
+        {
+            assert(viewing == GAME_LIST || viewing == SYSTEM_SELECT);
+            return system;
+        }
 
-    private:
-        friend ViewController;
-        SystemData* system;
+        private:
+            friend ViewController;
+            SystemData* system;
     };
 
     inline const State& getState() const { return mState; }

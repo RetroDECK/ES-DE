@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TextListComponent.h
 //
 //  Used for displaying and navigating the gamelists.
@@ -12,6 +14,7 @@
 #include "utils/StringUtil.h"
 #include "Log.h"
 #include "Sound.h"
+
 #include <memory>
 
 class TextCache;
@@ -33,6 +36,7 @@ protected:
     using IList<TextListData, T>::getTransform;
     using IList<TextListData, T>::mSize;
     using IList<TextListData, T>::mCursor;
+    using IList<TextListData, T>::mWindow;
     // The following change is required for compilation with Clang.
     // http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html#2070
     // using IList<TextListData, T>::Entry;
@@ -90,7 +94,7 @@ public:
 
 protected:
     virtual void onScroll() override {
-            NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND); }
+        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND); }
     virtual void onCursorChanged(const CursorState& state) override;
 
 private:
@@ -120,7 +124,7 @@ private:
 
 template <typename T>
 TextListComponent<T>::TextListComponent(Window* window) :
-    IList<TextListData, T>(window), mSelectorImage(window)
+        IList<TextListData, T>(window), mSelectorImage(window)
 {
     mMarqueeOffset = 0;
     mMarqueeOffset2 = 0;
@@ -152,12 +156,13 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
     if (size() == 0)
         return;
 
-    const float entrySize = Math::max(font->getHeight(1.0), (float)font->getSize()) * mLineSpacing;
+    const float entrySize = Math::max(font->getHeight(1.0),
+            static_cast<float>(font->getSize())) * mLineSpacing;
 
     int startEntry = 0;
 
     // Number of entries that can fit on the screen simultaneously.
-    int screenCount = (int)(mSize.y() / entrySize + 0.5f);
+    int screenCount = static_cast<int>(mSize.y() / entrySize + 0.5f);
 
     if (size() >= screenCount) {
         startEntry = mCursor - screenCount/2;
@@ -197,12 +202,12 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
     // Clip to inside margins.
     Vector3f dim(mSize.x(), mSize.y(), 0);
     dim = trans * dim - trans.translation();
-    Renderer::pushClipRect(Vector2i((int)(trans.translation().x() + mHorizontalMargin),
-            (int)trans.translation().y()), Vector2i((int)(dim.x() - mHorizontalMargin*2),
-            (int)dim.y()));
+    Renderer::pushClipRect(Vector2i(static_cast<int>(trans.translation().x() +
+            mHorizontalMargin), static_cast<int>(trans.translation().y())),
+            Vector2i(static_cast<int>(dim.x() - mHorizontalMargin*2), static_cast<int>(dim.y())));
 
     for (int i = startEntry; i < listCutoff; i++) {
-        typename IList<TextListData, T>::Entry& entry = mEntries.at((unsigned int)i);
+        typename IList<TextListData, T>::Entry& entry = mEntries.at(static_cast<unsigned int>(i));
 
         unsigned int color;
         if (mCursor == i && mSelectedColor)
@@ -211,12 +216,12 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
             color = mColors[entry.data.colorId];
 
         if (!entry.data.textCache)
-            entry.data.textCache = std::unique_ptr<TextCache>
-                    (font->buildTextCache(mUppercase ?
+            entry.data.textCache = std::unique_ptr<TextCache>(
+                    font->buildTextCache(mUppercase ?
                     Utils::String::toUpper(entry.name) : entry.name, 0, 0, 0x000000FF));
 
-        // If a game is marked as hidden, lower the text opacity quite a lot.
-        // For games marked not to be counted, lower the opacity moderately.
+        // If a game is marked as hidden, lower the text opacity a lot.
+        // If a game is marked to not be counted, lower the opacity a moderate amount.
         if (entry.object->getHidden())
             entry.data.textCache->setColor(color & 0xFFFFFF44);
         else if (!entry.object->getCountAsGame())
@@ -231,7 +236,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
             offset[0] = mHorizontalMargin;
             break;
         case ALIGN_CENTER:
-            offset[0] = (int)((mSize.x() - entry.data.textCache->metrics.size.x()) / 2);
+            offset[0] = static_cast<int>((mSize.x() - entry.data.textCache->metrics.size.x()) / 2);
             if (offset[0] < mHorizontalMargin)
                 offset[0] = mHorizontalMargin;
             break;
@@ -248,7 +253,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
 
         // Currently selected item text might be scrolling.
         if ((mCursor == i) && (mMarqueeOffset > 0))
-            drawTrans.translate(offset - Vector3f((float)mMarqueeOffset, 0, 0));
+            drawTrans.translate(offset - Vector3f(static_cast<float>(mMarqueeOffset), 0, 0));
         else
             drawTrans.translate(offset);
 
@@ -259,11 +264,10 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
         // scrolled far enough for it to repeat.
         if ((mCursor == i) && (mMarqueeOffset2 < 0)) {
             drawTrans = trans;
-            drawTrans.translate(offset - Vector3f((float)mMarqueeOffset2, 0, 0));
+            drawTrans.translate(offset - Vector3f(static_cast<float>(mMarqueeOffset2), 0, 0));
             Renderer::setMatrix(drawTrans);
             font->renderTextCache(entry.data.textCache.get());
         }
-
         y += entrySize;
     }
 
@@ -323,35 +327,39 @@ void TextListComponent<T>::update(int deltaTime)
 {
     listUpdate(deltaTime);
 
+    if (mWindow->isScreenSaverActive() || !mWindow->getAllowTextScrolling())
+        stopScrolling();
+
     if (!isScrolling() && size() > 0) {
         // Always reset the marquee offsets.
         mMarqueeOffset  = 0;
         mMarqueeOffset2 = 0;
 
         // If we're not scrolling and this object's text goes outside our size, marquee it!
-        const float textLength = mFont->sizeText(mEntries.at((unsigned int)mCursor).name).x();
-        const float limit      = mSize.x() - mHorizontalMargin * 2;
+        const float textLength = mFont->sizeText(
+                mEntries.at(static_cast<unsigned int>(mCursor)).name).x();
+        const float limit = mSize.x() - mHorizontalMargin * 2;
 
         if (textLength > limit) {
             // Loop.
             // Pixels per second (based on nes-mini font at 1920x1080 to produce a speed of 200).
-            const float speed        = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x() * 0.247f;
-            const float delay        = 3000;
+            const float speed = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x() * 0.247f;
+            const float delay = 3000;
             const float scrollLength = textLength;
             const float returnLength = speed * 1.5f;
-            const float scrollTime   = (scrollLength * 1000) / speed;
-            const float returnTime   = (returnLength * 1000) / speed;
-            const int   maxTime      = (int)(delay + scrollTime + returnTime);
+            const float scrollTime = (scrollLength * 1000) / speed;
+            const float returnTime = (returnLength * 1000) / speed;
+            const int maxTime = static_cast<int>(delay + scrollTime + returnTime);
 
             mMarqueeTime += deltaTime;
             while (mMarqueeTime > maxTime)
                 mMarqueeTime -= maxTime;
 
-            mMarqueeOffset = (int)(Math::Scroll::loop(delay, scrollTime + returnTime,
-                    (float)mMarqueeTime, scrollLength + returnLength));
+            mMarqueeOffset = static_cast<int>(Math::Scroll::loop(delay, scrollTime + returnTime,
+                    static_cast<float>(mMarqueeTime), scrollLength + returnLength));
 
             if (mMarqueeOffset > (scrollLength - (limit - returnLength)))
-                mMarqueeOffset2 = (int)(mMarqueeOffset - (scrollLength + returnLength));
+                mMarqueeOffset2 = static_cast<int>(mMarqueeOffset - (scrollLength + returnLength));
         }
     }
 
@@ -413,7 +421,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     setFont(Font::getFromTheme(elem, properties, mFont));
     const float selectorHeight = Math::max(mFont->getHeight(1.0),
-            (float)mFont->getSize()) * mLineSpacing;
+            static_cast<float>(mFont->getSize())) * mLineSpacing;
     setSelectorHeight(selectorHeight);
 
     if (properties & ALIGNMENT) {
@@ -431,7 +439,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("horizontalMargin")) {
             mHorizontalMargin = elem->get<float>("horizontalMargin") *
                     (this->mParent ? this->mParent->getSize().x() :
-                    (float)Renderer::getScreenWidth());
+                    static_cast<float>(Renderer::getScreenWidth()));
         }
     }
 
@@ -444,7 +452,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("selectorHeight"))
             setSelectorHeight(elem->get<float>("selectorHeight") * Renderer::getScreenHeight());
         if (elem->has("selectorOffsetY")) {
-            float scale = this->mParent ? this->mParent->getSize().y() : (float)Renderer::getScreenHeight();
+            float scale = this->mParent ? this->mParent->getSize().y() :
+                    static_cast<float>(Renderer::getScreenHeight());
             setSelectorOffsetY(elem->get<float>("selectorOffsetY") * scale);
         }
         else {

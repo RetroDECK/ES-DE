@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  IList.h
 //
 //  Gamelist base class.
@@ -10,6 +12,7 @@
 #include "components/ImageComponent.h"
 #include "resources/Font.h"
 #include "PowerSaver.h"
+#include "Window.h"
 
 enum CursorState {
     CURSOR_STOPPED,
@@ -63,10 +66,8 @@ public:
 
 protected:
     int mCursor;
-
     int mScrollTier;
     int mScrollVelocity;
-
     int mScrollTierAccumulator;
     int mScrollCursorAccumulator;
 
@@ -79,6 +80,7 @@ protected:
     const ListLoopType mLoopType;
 
     std::vector<Entry> mEntries;
+    Window* mWindow;
 
 public:
     IList(
@@ -88,7 +90,8 @@ public:
             : GuiComponent(window),
             mGradient(window),
             mTierList(tierList),
-            mLoopType(loopType)
+            mLoopType(loopType),
+            mWindow(window)
     {
         mCursor = 0;
         mScrollTier = 0;
@@ -98,7 +101,8 @@ public:
 
         mTitleOverlayOpacity = 0x00;
         mTitleOverlayColor = 0xFFFFFF00;
-        mGradient.setResize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+        mGradient.setResize(static_cast<float>(Renderer::getScreenWidth()),
+                static_cast<float>(Renderer::getScreenHeight()));
         mGradient.setImage(":/graphics/scroll_gradient.png");
         mTitleOverlayFont = Font::get(FONT_SIZE_LARGE);
     }
@@ -164,7 +168,7 @@ public:
     {
         for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
             if ((*it).object == obj) {
-                mCursor = (int)(it - mEntries.cbegin());
+                mCursor = static_cast<int>(it - mEntries.cbegin());
                 onCursorChanged(CURSOR_STOPPED);
                 return true;
             }
@@ -191,7 +195,7 @@ public:
         return false;
     }
 
-    inline int size() const { return (int)mEntries.size(); }
+    inline int size() const { return static_cast<int>(mEntries.size()); }
 
 protected:
     void remove(typename std::vector<Entry>::const_iterator& it)
@@ -247,7 +251,7 @@ protected:
         else if (op <= 0)
             mTitleOverlayOpacity = 0;
         else
-            mTitleOverlayOpacity = (unsigned char)op;
+            mTitleOverlayOpacity = static_cast<unsigned char>(op);
 
         if (mScrollVelocity == 0 || size() < 2)
             return;

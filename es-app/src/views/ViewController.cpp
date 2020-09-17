@@ -306,6 +306,9 @@ void ViewController::launch(FileData* game, Vector3f center)
     if (mCurrentView)
         mCurrentView->onPauseVideo();
 
+    // Disable text scrolling. It will be enabled again in FileData upon returning from the game.
+    mWindow->setAllowTextScrolling(false);
+
     stopAnimation(1); // Make sure the fade in isn't still playing.
     mWindow->stopInfoPopup(); // Make sure we disable any existing info popup.
     mLockInput = true;

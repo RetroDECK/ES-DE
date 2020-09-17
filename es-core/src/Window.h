@@ -60,7 +60,7 @@ public:
     void pushGui(GuiComponent* gui);
     void removeGui(GuiComponent* gui);
     GuiComponent* peekGui();
-    inline int getGuiStackSize() { return (int)mGuiStack.size(); }
+    inline int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
 
     void textInput(const char* text);
     void input(InputConfig* config, Input input);
@@ -94,6 +94,8 @@ public:
     void setLaunchedGame();
     void unsetLaunchedGame();
     bool getGameLaunchedState() { return mGameLaunchedState; };
+    void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; };
+    bool getAllowTextScrolling() { return mAllowTextScrolling; };
 
     void invalidateCachedBackground() { mCachedBackground = false; };
 
@@ -108,30 +110,27 @@ private:
     ImageComponent* mBackgroundOverlay;
     ScreenSaver* mScreenSaver;
     InfoPopup* mInfoPopup;
-    bool mRenderScreenSaver;
-    bool mGameLaunchedState;
-
     std::vector<GuiComponent*> mGuiStack;
-
     std::vector<std::shared_ptr<Font>> mDefaultFonts;
-
-    int mFrameTimeElapsed;
-    int mFrameCountElapsed;
-    int mAverageDeltaTime;
-
     std::unique_ptr<TextCache> mFrameDataText;
 
     bool mNormalizeNextUpdate;
+    int mFrameTimeElapsed;
+    int mFrameCountElapsed;
+    int mAverageDeltaTime;
+    bool mAllowSleep;
+    bool mSleeping;
+    unsigned int mTimeSinceLastInput;
+
+    bool mRenderScreenSaver;
+    bool mGameLaunchedState;
+    bool mAllowTextScrolling;
+    bool mCachedBackground;
 
     float mSaturationAmount;
     unsigned char mTopOpacity;
     float mTopScale;
     float mDimValue;
-    bool mCachedBackground;
-    bool mAllowSleep;
-    bool mSleeping;
-    unsigned int mTimeSinceLastInput;
-
     bool mRenderedHelpPrompts;
 };
 

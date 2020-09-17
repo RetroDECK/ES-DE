@@ -373,13 +373,20 @@ void VideoComponent::onPauseVideo()
 
 void VideoComponent::onScreenSaverActivate()
 {
-    mScreensaverActive = true;
+    mBlockPlayer = true;
+    mPause = true;
+    if (Settings::getInstance()->getString("ScreenSaverBehavior") == "dim")
+        stopVideo();
     manageState();
 }
 
 void VideoComponent::onScreenSaverDeactivate()
 {
-    mScreensaverActive = false;
+    mBlockPlayer = false;
+//    mPause = false;
+    // Stop video when deactivating the screensaver to force a reload of the
+    // static image (if the theme is configured as such).
+    stopVideo();
     manageState();
 }
 
@@ -398,6 +405,17 @@ void VideoComponent::onGameLaunchedDeactivate()
 
 void VideoComponent::topWindow(bool isTop)
 {
-    mDisable = !isTop;
+
+    if (isTop) {
+        mBlockPlayer = false;
+        mPause = false;
+        // Stop video when closing the menu to force a reload of the
+        // static image (if the theme is configured as such).
+        stopVideo();
+    }
+    else {
+        mBlockPlayer = true;
+        mPause = true;
+    }
     manageState();
 }

@@ -20,17 +20,18 @@
 #include <iomanip>
 
 Window::Window()
-        : mNormalizeNextUpdate(false),
+        : mScreenSaver(nullptr),
+        mInfoPopup(nullptr),
+        mNormalizeNextUpdate(false),
         mFrameTimeElapsed(0),
         mFrameCountElapsed(0),
         mAverageDeltaTime(10),
         mAllowSleep(true),
         mSleeping(false),
         mTimeSinceLastInput(0),
-        mScreenSaver(nullptr),
         mRenderScreenSaver(false),
         mGameLaunchedState(false),
-        mInfoPopup(nullptr),
+        mAllowTextScrolling(true),
         mCachedBackground(false),
         mSaturationAmount(1.0),
         mTopOpacity(0),
@@ -106,8 +107,8 @@ bool Window::init()
     }
 
     mBackgroundOverlay->setImage(":/graphics/scroll_gradient.png");
-    mBackgroundOverlay->setResize((float)Renderer::getScreenWidth(),
-            (float)Renderer::getScreenHeight());
+    mBackgroundOverlay->setResize(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     // Update our help because font sizes probably changed.
     if (peekGui())
@@ -222,6 +223,7 @@ void Window::update(int deltaTime)
 {
     if (mNormalizeNextUpdate) {
         mNormalizeNextUpdate = false;
+        mTimeSinceLastInput = 0;
         if (deltaTime > mAverageDeltaTime)
             deltaTime = mAverageDeltaTime;
     }
@@ -236,9 +238,11 @@ void Window::update(int deltaTime)
 
             // FPS.
             ss << std::fixed << std::setprecision(1) <<
-                    (1000.0f * (float)mFrameCountElapsed / (float)mFrameTimeElapsed) << " FPS (";
+                    (1000.0f * static_cast<float>(mFrameCountElapsed) /
+                    static_cast<float>(mFrameTimeElapsed)) << " FPS (";
             ss << std::fixed << std::setprecision(2) <<
-                    ((float)mFrameTimeElapsed / (float)mFrameCountElapsed) << " ms)";
+                    (static_cast<float>(mFrameTimeElapsed) /
+                    static_cast<float>(mFrameCountElapsed)) << " ms)";
 
             // The following calculations are not accurate, and the font calculation is completely
             // broken. For now, still report the figures as it's somehow useful to locate memory
@@ -279,6 +283,11 @@ void Window::render()
     if (mGuiStack.size()) {
         auto& bottom = mGuiStack.front();
         auto& top = mGuiStack.back();
+
+        if (mRenderScreenSaver) {
+            bottom->cancelAllAnimations();
+            bottom->stopAllAnimations();
+        }
 
         bottom->render(transform);
         if (bottom != top) {
@@ -343,7 +352,8 @@ void Window::render()
     if (!mRenderedHelpPrompts)
         mHelp->render(transform);
 
-    unsigned int screensaverTime = (unsigned int)Settings::getInstance()->getInt("ScreenSaverTime");
+    unsigned int screensaverTime =
+            static_cast<unsigned int>(Settings::getInstance()->getInt("ScreenSaverTime"));
     // If a game has been launched, reset the screensaver timer when it's been reached as we
     // don't want to start the screensaver in the background when running a game.
     if (mTimeSinceLastInput >= screensaverTime && screensaverTime != 0) {
@@ -501,7 +511,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
             }
             else {
                 // No, it hasn't!
-                mappedToSeenMap.emplace(it->second, (int)addPrompts.size());
+                mappedToSeenMap.emplace(it->second, static_cast<int>(addPrompts.size()));
                 addPrompts.push_back(*it);
             }
         }
@@ -578,6 +588,7 @@ void Window::startScreenSaver()
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
             (*it)->onScreenSaverActivate();
 
+        stopInfoPopup();
         mScreenSaver->startScreenSaver();
         mRenderScreenSaver = true;
     }

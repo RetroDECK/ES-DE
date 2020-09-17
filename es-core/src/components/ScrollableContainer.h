@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ScrollableContainer.h
 //
 //  Area containing scrollable information, for example the game description
 //  text container in the detailed, video and grid views.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H
 #define ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H
 

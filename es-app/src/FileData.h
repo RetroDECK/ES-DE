@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  FileData.h
 //
 //  Provides game file data structures and functions to access and sort this information.
@@ -6,12 +8,12 @@
 //  (launching initiated in ViewController).
 //
 
-#pragma once
 #ifndef ES_APP_FILE_DATA_H
 #define ES_APP_FILE_DATA_H
 
 #include "utils/FileSystemUtil.h"
 #include "MetaData.h"
+
 #include <unordered_map>
 
 class SystemData;
@@ -111,7 +113,8 @@ public:
         bool ascending;
         std::string description;
 
-        SortType(ComparisonFunction* sortFunction,
+        SortType(
+                ComparisonFunction* sortFunction,
                 bool sortAscending,
                 const std::string& sortDescription)
                 : comparisonFunction(sortFunction),
@@ -145,7 +148,6 @@ private:
     bool mOnlyFolders;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
-
     const std::string FAVORITE_CHAR = "\uF005";
 };
 
@@ -158,6 +160,7 @@ public:
     void refreshMetadata();
     FileData* getSourceFileData();
     std::string getKey();
+
 private:
     // Needs to be updated when metadata changes.
     std::string mCollectionFileName;

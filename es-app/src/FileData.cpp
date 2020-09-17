@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  FileData.cpp
 //
 //  Provides game file data structures and functions to access and sort this information.
@@ -39,7 +41,7 @@ FileData::FileData(
         mParent(nullptr),
         mOnlyFolders(false),
         mDeletionFlag(false),
-        // Metadata is REALLY set in the constructor!
+        // Metadata is set in the constructor.
         metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
 {
     // Metadata needs at least a name field (since that's what getName() will return).
@@ -382,12 +384,10 @@ std::string FileData::getKey() {
 const bool FileData::isArcadeAsset()
 {
     const std::string stem = Utils::FileSystem::getStem(mPath);
-    return (
-        (mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
-                mSystem->hasPlatformId(PlatformIds::NEOGEO))) &&
-                (MameNames::getInstance()->isBios(stem) ||
-                MameNames::getInstance()->isDevice(stem))
-    );
+    return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
+            mSystem->hasPlatformId(PlatformIds::NEOGEO))) &&
+            (MameNames::getInstance()->isBios(stem) ||
+            MameNames::getInstance()->isDevice(stem)));
 }
 
 FileData* FileData::getSourceFileData()
@@ -755,6 +755,9 @@ void FileData::launchGame(Window* window)
     }
 
     Scripting::fireEvent("game-end", rom, getSourceFileData()->metadata.get("name"));
+
+    // Re-enable the text scrolling that was disabled in ViewController on game launch.
+    window->setAllowTextScrolling(true);
 
     // Update number of times the game has been launched.
     FileData* gameToUpdate = getSourceFileData();

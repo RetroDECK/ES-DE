@@ -53,7 +53,6 @@ private:
         STATE_SCREENSAVER_ACTIVE
     };
 
-private:
     bool mVideosCounted;
     unsigned long mVideoCount;
     VideoComponent* mVideoScreensaver;

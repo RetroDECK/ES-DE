@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ScrollableContainer.cpp
 //
 //  Area containing scrollable information, for example the game description
@@ -9,6 +11,7 @@
 
 #include "math/Vector2i.h"
 #include "renderers/Renderer.h"
+#include "Window.h"
 
 #define AUTO_SCROLL_RESET_DELAY 3000 // ms to reset to top after we reach the bottom.
 #define AUTO_SCROLL_DELAY 2000 // ms to wait before we start to scroll.
@@ -33,11 +36,12 @@ void ScrollableContainer::render(const Transform4x4f& parentTrans)
 
     Transform4x4f trans = parentTrans * getTransform();
 
-    Vector2i clipPos((int)trans.translation().x(), (int)trans.translation().y());
+    Vector2i clipPos(static_cast<int>(trans.translation().x()),
+            static_cast<int>(trans.translation().y()));
 
     Vector3f dimScaled = trans * Vector3f(mSize.x(), mSize.y(), 0);
-    Vector2i clipDim((int)(dimScaled.x() - trans.translation().x()),
-            (int)(dimScaled.y() - trans.translation().y()));
+    Vector2i clipDim(static_cast<int>((dimScaled.x()) - trans.translation().x()),
+            static_cast<int>((dimScaled.y()) - trans.translation().y()));
 
     Renderer::pushClipRect(clipPos, clipDim);
 
@@ -76,6 +80,13 @@ void ScrollableContainer::setScrollPos(const Vector2f& pos)
 
 void ScrollableContainer::update(int deltaTime)
 {
+    // Don't scroll if the screensaver is active or text scrolling is disabled;
+    if (mWindow->isScreenSaverActive() || !mWindow->getAllowTextScrolling()) {
+        if (mScrollPos != 0)
+            reset();
+        return;
+    }
+
     if (mAutoScrollSpeed != 0) {
         mAutoScrollAccumulator += deltaTime;
 
