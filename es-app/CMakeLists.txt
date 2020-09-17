@@ -206,7 +206,12 @@ include(InstallRequiredSystemLibraries)
 set(CPACK_PACKAGE_NAME "emulationstation-de")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An emulator front-end with controller navigation and theming support.")
 set(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition is a fast and flexible front-end for browsing and launching games from your multi-platform retro game collection. It's intended to be used in conjunction with emulators such as the RetroArch cores.")
+if(APPLE)
+# Shorter line length license file to be able to fit inside the macOS drag and drop installer window without causing ugly line breaks.
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_LICENSE")
+else()
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+endif()
 set(CPACK_PACKAGE_VENDOR "Leon Styhre")
 
 # Update this when there has been a new release.
