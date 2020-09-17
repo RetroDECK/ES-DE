@@ -217,11 +217,11 @@ void CollectionSystemManager::updateSystemsList()
 
     // Don't sort bundled collections unless at least one collection is enabled.
     if (!mIsEditingCustom && mHasEnabledCustomCollection) {
+        FileData* rootFolder = mCustomCollectionsBundle->getRootFolder();
         // Sort the bundled custom collections.
-        if (mCustomCollectionsBundle->getRootFolder()->getChildren().size() > 0) {
-            mCustomCollectionsBundle->getRootFolder()->sort(getSortTypeFromString(
-                    mCustomCollectionsBundle->getRootFolder()->getSortTypeString()),
-                    Settings::getInstance()->getBool("FavFirstCustom"));
+        if (rootFolder->getChildren().size() > 0) {
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->
+                    getSortTypeString()), Settings::getInstance()->getBool("FavFirstCustom"));
             SystemData::sSystemVector.push_back(mCustomCollectionsBundle);
         }
     }
@@ -348,22 +348,22 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
         }
 
         if (name == "recent") {
-            rootFolder->sort(getSortTypeFromString("last played, descending"));
+            rootFolder->sort(rootFolder->getSortTypeFromString("last played, descending"));
         }
         else if (sysData.decl.isCustom &&
                 !Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
-            rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                     mFavoritesSorting);
         }
         // If the game doesn't exist in the current system and it's a custom
         // collection, then skip the sorting.
         else if (sysData.decl.isCustom &&
                 children.find(file->getFullPath()) != children.cend()) {
-            rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                     mFavoritesSorting);
         }
         else if (!sysData.decl.isCustom) {
-            rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                     mFavoritesSorting);
         }
 
@@ -600,9 +600,10 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                 ViewController::get()->getGameListView(systemViewToUpdate)->
                         onFileChanged(newGame, FILE_METADATA_CHANGED);
                 if (name == "recent")
-                    rootFolder->sort(getSortTypeFromString("last played, descending"));
+                    rootFolder->sort(rootFolder->getSortTypeFromString("last played, descending"));
                 else
-                    rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+                    rootFolder->sort(rootFolder->getSortTypeFromString(
+                            rootFolder->getSortTypeString()),
                             Settings::getInstance()->getBool("FavFirstCustom"));
 
                 ViewController::get()->onFileChanged(systemViewToUpdate->
@@ -850,9 +851,9 @@ void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysDa
         }
     }
     if (rootFolder->getName() == "recent")
-        rootFolder->sort(getSortTypeFromString("last played, descending"));
+        rootFolder->sort(rootFolder->getSortTypeFromString("last played, descending"));
     else
-        rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+        rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
             Settings::getInstance()->getBool("FavoritesFirst"));
 
     if (sysDecl.type == AUTO_LAST_PLAYED)
@@ -966,7 +967,8 @@ void CollectionSystemManager::addEnabledCollectionsToDisplayedSystems(
                 // If this is a non-bundled custom collection, then sort it.
                 if (it->second.decl.isCustom == true) {
                     FileData* rootFolder = it->second.system->getRootFolder();
-                    rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+                    rootFolder->sort(rootFolder->getSortTypeFromString(
+                            rootFolder->getSortTypeString()),
                             Settings::getInstance()->getBool("FavFirstCustom"));
                     // Jump to the first row of the game list, assuming it's not empty.
                     IGameListView* gameList = ViewController::get()->

@@ -385,7 +385,7 @@ void GuiMenu::openUISettings()
                 FileData* rootFolder = (*it)->getRootFolder();
                 rootFolder->getSystem()->setupSystemSortType(rootFolder);
 
-                rootFolder->sort(getSortTypeFromString(
+                rootFolder->sort(rootFolder->getSortTypeFromString(
                         rootFolder->getSortTypeString()), favoritesSorting);
                 ViewController::get()->reloadGameListView(*it);
 
@@ -458,7 +458,7 @@ void GuiMenu::openUISettings()
                 continue;
 
             FileData* rootFolder = (*it)->getRootFolder();
-            rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                     Settings::getInstance()->getBool("FavoritesFirst"));
             ViewController::get()->reloadGameListView(*it);
 
@@ -486,7 +486,7 @@ void GuiMenu::openUISettings()
                 continue;
 
             FileData* rootFolder = (*it)->getRootFolder();
-            rootFolder->sort(getSortTypeFromString(rootFolder->getSortTypeString()),
+            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                     Settings::getInstance()->getBool("FavoritesFirst"));
             ViewController::get()->reloadGameListView(*it);
 

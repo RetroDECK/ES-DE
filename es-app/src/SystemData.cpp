@@ -60,7 +60,7 @@ SystemData::SystemData(
 
         setupSystemSortType(mRootFolder);
 
-        mRootFolder->sort(getSortTypeFromString(mRootFolder->getSortTypeString()),
+        mRootFolder->sort(mRootFolder->getSortTypeFromString(mRootFolder->getSortTypeString()),
                 Settings::getInstance()->getBool("FavoritesFirst"));
 
         indexAllGameFilters(mRootFolder);

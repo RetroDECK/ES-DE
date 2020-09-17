@@ -621,6 +621,18 @@ void FileData::sort(const SortType& type, bool mFavoritesOnTop)
         sort(*type.comparisonFunction, type.ascending);
 }
 
+FileData::SortType FileData::getSortTypeFromString(std::string desc) {
+    std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
+
+    for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
+        const FileData::SortType& sort = FileSorts::SortTypes.at(i);
+        if (sort.description == desc)
+            return sort;
+    }
+    // If no type was found then default to "filename, ascending".
+    return FileSorts::SortTypes.at(0);
+}
+
 void FileData::launchGame(Window* window)
 {
     LOG(LogInfo) << "Attempting to launch game...";
@@ -830,17 +842,4 @@ const std::string& CollectionFileData::getName()
         return mCollectionFileName;
 
     return mSourceFileData->metadata.get("name");
-}
-
-// Return sort type based on a string description.
-FileData::SortType getSortTypeFromString(std::string desc) {
-    std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
-    // Find it
-    for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
-        const FileData::SortType& sort = FileSorts::SortTypes.at(i);
-        if (sort.description == desc)
-            return sort;
-    }
-    // If no type found then default to "filename, ascending".
-    return FileSorts::SortTypes.at(0);
 }

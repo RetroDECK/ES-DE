@@ -129,6 +129,8 @@ public:
 
     inline void setSortTypeString(std::string typestring) { mSortTypeString = typestring; }
     inline std::string getSortTypeString() { return mSortTypeString; }
+    // Return sort type based on a string description.
+    FileData::SortType getSortTypeFromString(std::string desc);
 
 protected:
     FileData* mSourceFileData;
@@ -166,7 +168,5 @@ private:
     std::string mCollectionFileName;
     bool mDirty;
 };
-
-FileData::SortType getSortTypeFromString(std::string desc);
 
 #endif // ES_APP_FILE_DATA_H

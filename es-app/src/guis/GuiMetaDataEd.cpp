@@ -380,7 +380,7 @@ void GuiMetaDataEd::save()
     // and reload the gamelist as CollectionSystemManager ignores folders.
     if (hideGameWhileHidden && mScraperParams.game->getType() == FOLDER) {
         FileData* systemRoot = mScraperParams.system->getRootFolder();
-        systemRoot->sort(getSortTypeFromString(systemRoot->getSortTypeString()),
+        systemRoot->sort(systemRoot->getSortTypeFromString(systemRoot->getSortTypeString()),
                 Settings::getInstance()->getBool("FavoritesFirst"));
         ViewController::get()->reloadGameListView(mScraperParams.system);
     }

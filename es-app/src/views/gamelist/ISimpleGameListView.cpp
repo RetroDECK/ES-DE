@@ -205,7 +205,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     getCursor()->getSourceFileData()->getSystem()->onMetaDataSavePoint();
 
                     if (!Settings::getInstance()->getBool("FoldersOnTop"))
-                        mRoot->sort(getSortTypeFromString(mRoot->getSortTypeString()),
+                        mRoot->sort(mRoot->getSortTypeFromString(mRoot->getSortTypeString()),
                                 Settings::getInstance()->getBool("FavoritesFirst"));
 
                     ViewController::get()->onFileChanged(getCursor(), FILE_METADATA_CHANGED);
