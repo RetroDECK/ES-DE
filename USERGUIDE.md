@@ -914,7 +914,7 @@ There is a screensaver built into ES with four different behaviours: _Dim_, _Bla
 
 There are numerous options for the screensaver, refer to the Main menu section above to find out about them.
 
-The _Dim_ screensaver simply dims the current view and _Black_ will show a black screen. The _Slideshow_ and _Video_ screensavers are a bit more interesting as they can display images and videos from your game collection. (In addition to this, Slideshow can be configured to only show images from a specified directory).
+The _Dim_ screensaver simply dims and desaturates the current view and _Black_ will show a black screen. The _Slideshow_ and _Video_ screensavers are a bit more interesting as they can display images and videos from your game collection. (In addition to this, Slideshow can be configured to only show images from a specified directory).
 
 If the option **Screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this the controls will allow you to jump to a new random image video or by using the left and right buttons on your keyboard or controller, and it allows you to actually launch the game just shown by pressing the 'A' button.
 

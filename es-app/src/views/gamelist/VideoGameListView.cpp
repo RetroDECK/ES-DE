@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VideoGameListView.cpp
 //
 //  Interface that defines a GameListView of the type 'video'.
@@ -16,6 +18,9 @@
 #if defined(_RPI_)
 #include "Settings.h"
 #endif
+
+#define FADE_IN_START_OPACITY 0.5f
+#define FADE_IN_TIME 650
 
 VideoGameListView::VideoGameListView(
         Window* window,
@@ -70,21 +75,21 @@ VideoGameListView::VideoGameListView(
     mThumbnail.setOrigin(0.5f, 0.5f);
     mThumbnail.setPosition(2.0f, 2.0f);
     mThumbnail.setVisible(false);
-    mThumbnail.setMaxSize(mSize.x() * (0.25f - 2*padding), mSize.y() * 0.10f);
+    mThumbnail.setMaxSize(mSize.x() * (0.25f - 2 * padding), mSize.y() * 0.10f);
     mThumbnail.setDefaultZIndex(35);
     addChild(&mThumbnail);
 
     // Marquee.
     mMarquee.setOrigin(0.5f, 0.5f);
     mMarquee.setPosition(mSize.x() * 0.25f, mSize.y() * 0.10f);
-    mMarquee.setMaxSize(mSize.x() * (0.5f - 2*padding), mSize.y() * 0.18f);
+    mMarquee.setMaxSize(mSize.x() * (0.5f - 2 * padding), mSize.y() * 0.18f);
     mMarquee.setDefaultZIndex(35);
     addChild(&mMarquee);
 
     // Video.
     mVideo->setOrigin(0.5f, 0.5f);
     mVideo->setPosition(mSize.x() * 0.25f, mSize.y() * 0.4f);
-    mVideo->setSize(mSize.x() * (0.5f - 2*padding), mSize.y() * 0.4f);
+    mVideo->setSize(mSize.x() * (0.5f - 2 * padding), mSize.y() * 0.4f);
     mVideo->setDefaultZIndex(30);
     addChild(mVideo);
 
@@ -123,7 +128,7 @@ VideoGameListView::VideoGameListView(
     addChild(&mName);
 
     mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
-    mDescContainer.setSize(mSize.x() * (0.50f - 2*padding), mSize.y() -
+    mDescContainer.setSize(mSize.x() * (0.50f - 2 * padding), mSize.y() -
             mDescContainer.getPosition().y());
     mDescContainer.setAutoScroll(true);
     mDescContainer.setDefaultZIndex(40);
@@ -193,7 +198,7 @@ void VideoGameListView::initMDLabels()
     std::vector<TextComponent*> components = getMDLabels();
 
     const unsigned int colCount = 2;
-    const unsigned int rowCount = (int)(components.size() / 2);
+    const unsigned int rowCount = static_cast<int>(components.size() / 2);
 
     Vector3f start(mSize.x() * 0.01f, mSize.y() * 0.625f, 0.0f);
 
@@ -224,7 +229,7 @@ void VideoGameListView::initMDValues()
     std::vector<GuiComponent*> values = getMDValues();
 
     std::shared_ptr<Font> defaultFont = Font::get(FONT_SIZE_SMALL);
-    mRating.setSize(defaultFont->getHeight() * 5.0f, (float)defaultFont->getHeight());
+    mRating.setSize(defaultFont->getHeight() * 5.0f, static_cast<float>(defaultFont->getHeight()));
     mReleaseDate.setFont(defaultFont);
     mDeveloper.setFont(defaultFont);
     mPublisher.setFont(defaultFont);
@@ -308,21 +313,25 @@ void VideoGameListView::updateInfoPanel()
 
     bool fadingOut;
     if (file == nullptr) {
-        mVideo->setVideo("");
-        mVideo->setImage("");
         mVideoPlaying = false;
         fadingOut = true;
-
     }
     else {
+        mThumbnail.setImage(file->getThumbnailPath());
+        mMarquee.setImage(file->getMarqueePath());
+        mVideo->setImage(file->getImagePath());
+
         if (!mVideo->setVideo(file->getVideoPath()))
             mVideo->setDefaultVideo();
 
         mVideoPlaying = true;
 
-        mVideo->setImage(file->getImagePath());
-        mThumbnail.setImage(file->getThumbnailPath());
-        mMarquee.setImage(file->getMarqueePath());
+        // Fade in the game image.
+        auto func = [this](float t) {
+            mVideo->setOpacity((unsigned char)(Math::lerp(
+                    static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+            };
+        mVideo->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
 
         mDescription.setText(file->metadata.get("desc"));
         mDescContainer.reset();
@@ -357,29 +366,28 @@ void VideoGameListView::updateInfoPanel()
     comps.push_back(&mMarquee);
     comps.push_back(mVideo);
     comps.push_back(&mDescription);
-    comps.push_back(&mImage);
     comps.push_back(&mName);
     std::vector<TextComponent*> labels = getMDLabels();
     comps.insert(comps.cend(), labels.cbegin(), labels.cend());
 
     for (auto it = comps.cbegin(); it != comps.cend(); it++) {
         GuiComponent* comp = *it;
-        // An animation is playing, then animate if reverse != fadingOut
+        // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
             (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {
-                comp->setOpacity((unsigned char)(Math::lerp(0.0f, 1.0f, t)*255));
+                comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
             };
-            comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
+            comp->setAnimation(new LambdaAnimation(func, 200), 0, nullptr, fadingOut);
         }
     }
 }
 
 void VideoGameListView::launch(FileData* game)
 {
-    float screenWidth = (float) Renderer::getScreenWidth();
-    float screenHeight = (float) Renderer::getScreenHeight();
+    float screenWidth = static_cast<float>(Renderer::getScreenWidth());
+    float screenHeight = static_cast<float>(Renderer::getScreenHeight());
 
     Vector3f target(screenWidth / 2.0f, screenHeight / 2.0f, 0);
 

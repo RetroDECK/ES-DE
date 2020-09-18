@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  DetailedGameListView.cpp
 //
 //  Interface that defines a GameListView of the type 'detailed'.
@@ -54,7 +56,7 @@ DetailedGameListView::DetailedGameListView(
     mThumbnail.setOrigin(0.5f, 0.5f);
     mThumbnail.setPosition(2.0f, 2.0f);
     mThumbnail.setVisible(false);
-    mThumbnail.setMaxSize(mSize.x() * (0.25f - 2*padding), mSize.y() * 0.10f);
+    mThumbnail.setMaxSize(mSize.x() * (0.25f - 2 * padding), mSize.y() * 0.10f);
     mThumbnail.setDefaultZIndex(25);
     addChild(&mThumbnail);
 
@@ -63,14 +65,14 @@ DetailedGameListView::DetailedGameListView(
     // Default to off the screen.
     mMarquee.setPosition(2.0f, 2.0f);
     mMarquee.setVisible(false);
-    mMarquee.setMaxSize(mSize.x() * (0.5f - 2*padding), mSize.y() * 0.18f);
+    mMarquee.setMaxSize(mSize.x() * (0.5f - 2 * padding), mSize.y() * 0.18f);
     mMarquee.setDefaultZIndex(35);
     addChild(&mMarquee);
 
     // Image.
     mImage.setOrigin(0.5f, 0.5f);
     mImage.setPosition(mSize.x() * 0.25f, mList.getPosition().y() + mSize.y() * 0.2125f);
-    mImage.setMaxSize(mSize.x() * (0.50f - 2*padding), mSize.y() * 0.4f);
+    mImage.setMaxSize(mSize.x() * (0.50f - 2 * padding), mSize.y() * 0.4f);
     mImage.setDefaultZIndex(30);
     addChild(&mImage);
 
@@ -109,7 +111,7 @@ DetailedGameListView::DetailedGameListView(
     addChild(&mName);
 
     mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
-    mDescContainer.setSize(mSize.x() * (0.50f - 2*padding), mSize.y() -
+    mDescContainer.setSize(mSize.x() * (0.50f - 2 * padding), mSize.y() -
             mDescContainer.getPosition().y());
     mDescContainer.setAutoScroll(true);
     mDescContainer.setDefaultZIndex(40);
@@ -173,7 +175,7 @@ void DetailedGameListView::initMDLabels()
     std::vector<TextComponent*> components = getMDLabels();
 
     const unsigned int colCount = 2;
-    const unsigned int rowCount = (int)(components.size() / 2);
+    const unsigned int rowCount = static_cast<int>(components.size() / 2);
 
     Vector3f start(mSize.x() * 0.01f, mSize.y() * 0.625f, 0.0f);
 
@@ -204,7 +206,7 @@ void DetailedGameListView::initMDValues()
     std::vector<GuiComponent*> values = getMDValues();
 
     std::shared_ptr<Font> defaultFont = Font::get(FONT_SIZE_SMALL);
-    mRating.setSize(defaultFont->getHeight() * 5.0f, (float)defaultFont->getHeight());
+    mRating.setSize(defaultFont->getHeight() * 5.0f, static_cast<float>(defaultFont->getHeight()));
     mReleaseDate.setFont(defaultFont);
     mDeveloper.setFont(defaultFont);
     mPublisher.setFont(defaultFont);
@@ -297,8 +299,8 @@ void DetailedGameListView::updateInfoPanel()
 
         // Fade in the game image.
         auto func = [this](float t) {
-            mImage.setOpacity((unsigned char)(Math::lerp(
-                    static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t)*255));
+            mImage.setOpacity(static_cast<unsigned char>(Math::lerp(
+                    static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
             };
         mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
 
@@ -346,7 +348,7 @@ void DetailedGameListView::updateInfoPanel()
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
             (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {
-                comp->setOpacity((unsigned char)(Math::lerp(0.0f, 1.0f, t)*255));
+                comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
             };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }

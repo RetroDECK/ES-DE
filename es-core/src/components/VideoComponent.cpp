@@ -16,9 +16,7 @@
 
 #include <SDL2/SDL_timer.h>
 
-#define FADE_IN_START_OPACITY 0.5f
-#define FADE_IN_TIME 1300
-#define FADE_OUT_TIME 100
+#define SCREENSAVER_FADE_IN_TIME 800
 
 std::string getTitlePath() {
     std::string titleFolder = getTitleFolder();
@@ -147,7 +145,6 @@ void VideoComponent::setImage(std::string path)
         return;
 
     mStaticImage.setImage(path);
-    mFadeIn = FADE_IN_START_OPACITY;
     mStaticImagePath = path;
 }
 
@@ -158,8 +155,8 @@ void VideoComponent::setDefaultVideo()
 
 void VideoComponent::setOpacity(unsigned char opacity)
 {
-    // Update the embeded static image.
-    mStaticImage.setOpacity(opacity);
+    // Set the opacity for the embedded static image.
+    mOpacity = opacity;
 }
 
 void VideoComponent::render(const Transform4x4f& parentTrans)
@@ -189,7 +186,7 @@ void VideoComponent::renderSnapshot(const Transform4x4f& parentTrans)
     if ((mConfig.showSnapshotNoVideo && mVideoPath.empty()) ||
             (mStartDelayed && mConfig.showSnapshotDelay)) {
         // Display the static image instead.
-        mStaticImage.setOpacity(static_cast<unsigned char>(mFadeIn * 255.0f));
+        mStaticImage.setOpacity(mOpacity);
         mStaticImage.render(parentTrans);
     }
 }
@@ -282,7 +279,6 @@ void VideoComponent::startVideoWithDelay()
         else {
             // Configure the start delay.
             mStartDelayed = true;
-            mFadeIn = FADE_IN_START_OPACITY;
             mStartTime = SDL_GetTicks() + mConfig.startDelay;
         }
         mIsPlaying = true;
@@ -298,20 +294,11 @@ void VideoComponent::update(int deltaTime)
 
     manageState();
 
-    // If the video start is delayed and there is less than the fade time, then set
-    // the image fade accordingly.
-    if (mStartDelayed) {
-        Uint32 ticks = SDL_GetTicks();
-        if (mStartTime > ticks) {
-            Uint32 diff = mStartTime - ticks;
-            if (diff < FADE_OUT_TIME) {
-                mFadeIn = static_cast<float>(diff) / static_cast<float>(FADE_OUT_TIME);
-                return;
-            }
-        }
-    }
+    // This is only used to fade in the screensaver, fade-in of the static image is
+    // handled using a lambda animation in VideoGameListView.
     if (mFadeIn < 1.0f)
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(FADE_IN_TIME)), 0.0, 1.0);
+        mFadeIn = Math::clamp(mFadeIn + (deltaTime /
+                static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0, 1.0);
 
     GuiComponent::update(deltaTime);
 }
@@ -383,7 +370,6 @@ void VideoComponent::onScreenSaverActivate()
 void VideoComponent::onScreenSaverDeactivate()
 {
     mBlockPlayer = false;
-//    mPause = false;
     // Stop video when deactivating the screensaver to force a reload of the
     // static image (if the theme is configured as such).
     stopVideo();

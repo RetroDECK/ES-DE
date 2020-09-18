@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VideoGameListView.h
 //
 //  Interface that defines a GameListView of the type 'video'.
