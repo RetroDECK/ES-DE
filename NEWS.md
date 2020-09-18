@@ -80,11 +80,13 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The random game selection traversed folders, i.e. a game could be selected inside a subdirectory and vice versa
 * Deleting a game from the metadata editor did not delete the game media files or the entry in the gamelist.xml file
 * SystemView didn't properly loop the systems if only two systems were available
-* When changing to the video view style from inside a gamelist, the view was not initialized
+* When changing to the video view style from inside a gamelist, the view was not completely initialized
 * Hidden files still showed up if they had a gamelist.xml entry
 * Fixed an annoying gamelist issue that caused the game images and data to be updated and rendered up to six times every time the list was scrolled
 * VRAM statistics overlay was somewhat broken and incorrectly displayed numbers in megabytes instead of mebibytes
 * Not all input events were logged when running with debug logging activated
+* Editing long text entries made the cursor jump outside the editing field
+* Long game names would sometimes not scroll in the gamelist view
 * On Unix, adding a hidden folder with a game in it crashed the application on startup
 * If the user tried to enter a blank game name in the metadata editor, the application would crash upon saving
 * The SliderComponent knob position was set incorrectly if the minimum value was not zero

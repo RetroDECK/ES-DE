@@ -336,8 +336,8 @@ void TextListComponent<T>::update(int deltaTime)
         mMarqueeOffset2 = 0;
 
         // If we're not scrolling and this object's text goes outside our size, marquee it!
-        const float textLength = mFont->sizeText(
-                mEntries.at(static_cast<unsigned int>(mCursor)).name).x();
+        const float textLength = mFont->sizeText(Utils::String::toUpper(
+                mEntries.at(static_cast<unsigned int>(mCursor)).name)).x();
         const float limit = mSize.x() - mHorizontalMargin * 2;
 
         if (textLength > limit) {
