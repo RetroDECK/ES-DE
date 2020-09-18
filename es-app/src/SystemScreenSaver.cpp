@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SystemScreenSaver.cpp
 //
 //  Screensaver, supporting the following modes:
@@ -86,9 +88,8 @@ void SystemScreenSaver::startScreenSaver()
 
     if (!mVideoScreensaver && (screensaver_behavior == "video")) {
         // Configure to fade out the windows, skip fading if mode is set to Instant.
-        mState =  PowerSaver::getMode() == PowerSaver::INSTANT
-                    ? STATE_SCREENSAVER_ACTIVE
-                    : STATE_FADE_OUT_WINDOW;
+        mState =  PowerSaver::getMode() ==
+                PowerSaver::INSTANT ? STATE_SCREENSAVER_ACTIVE : STATE_FADE_OUT_WINDOW;
         mVideoChangeTime = Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout");
         mOpacity = 0.0f;
 
@@ -120,11 +121,11 @@ void SystemScreenSaver::startScreenSaver()
                     Renderer::getScreenHeight() / 2.0f);
 
             if (Settings::getInstance()->getBool("ScreenSaverStretchVideos"))
-                mVideoScreensaver->setResize((float)Renderer::getScreenWidth(),
-                        (float)Renderer::getScreenHeight());
+                mVideoScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
+                        static_cast<float>(Renderer::getScreenHeight()));
             else
-                mVideoScreensaver->setMaxSize((float)Renderer::getScreenWidth(),
-                        (float)Renderer::getScreenHeight());
+                mVideoScreensaver->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
+                        static_cast<float>(Renderer::getScreenHeight()));
 
             mVideoScreensaver->setVideo(path);
             mVideoScreensaver->setScreensaverMode(true);
@@ -136,9 +137,8 @@ void SystemScreenSaver::startScreenSaver()
     }
     else if (screensaver_behavior == "slideshow") {
         // Configure to fade out the windows, skip fading if mode is set to Instant.
-        mState =  PowerSaver::getMode() == PowerSaver::INSTANT
-                    ? STATE_SCREENSAVER_ACTIVE
-                    : STATE_FADE_OUT_WINDOW;
+        mState =  PowerSaver::getMode() ==
+                PowerSaver::INSTANT ? STATE_SCREENSAVER_ACTIVE : STATE_FADE_OUT_WINDOW;
         mVideoChangeTime = Settings::getInstance()->getInt("ScreenSaverSwapImageTimeout");
         mOpacity = 0.0f;
 
@@ -164,11 +164,11 @@ void SystemScreenSaver::startScreenSaver()
                 Renderer::getScreenHeight() / 2.0f);
 
         if (Settings::getInstance()->getBool("ScreenSaverStretchImages"))
-            mImageScreensaver->setResize((float)Renderer::getScreenWidth(),
-                    (float)Renderer::getScreenHeight());
+            mImageScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
+                    static_cast<float>(Renderer::getScreenHeight()));
         else
-            mImageScreensaver->setMaxSize((float)Renderer::getScreenWidth(),
-                    (float)Renderer::getScreenHeight());
+            mImageScreensaver->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
+                    static_cast<float>(Renderer::getScreenHeight()));
 
         std::string bg_audio_file = Settings::getInstance()->
                 getString("SlideshowScreenSaverBackgroundAudioFile");
@@ -222,7 +222,7 @@ void SystemScreenSaver::renderScreenSaver()
                 Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
-        if ((int)mState >= STATE_FADE_IN_VIDEO) {
+        if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
             Transform4x4f transform = Transform4x4f::Identity();
             mVideoScreensaver->render(transform);
         }
@@ -236,7 +236,7 @@ void SystemScreenSaver::renderScreenSaver()
         // Only render the video if the state requires it.
         if ((int)mState >= STATE_FADE_IN_VIDEO) {
             if (mImageScreensaver->hasImage()) {
-                mImageScreensaver->setOpacity(255- (unsigned char) (mOpacity * 255));
+                mImageScreensaver->setOpacity(255 - static_cast<unsigned char>(mOpacity * 255));
 
                 Transform4x4f transform = Transform4x4f::Identity();
                 mImageScreensaver->render(transform);
@@ -357,7 +357,8 @@ void SystemScreenSaver::pickRandomVideo(std::string& path)
     // not shown again.
     if (mVideoCount > 0) {
         do {
-            int video = (int)(((float)rand() / float(RAND_MAX)) * (float)mVideoCount);
+            int video = static_cast<int>((static_cast<float>(rand()) /
+                    static_cast<float>(RAND_MAX)) * static_cast<float>(mVideoCount));
             pickGameListNode(video, "video", path);
         }
         while (mPreviousGame && mCurrentGame == mPreviousGame);
@@ -376,7 +377,8 @@ void SystemScreenSaver::pickRandomGameListImage(std::string& path)
     // not shown again.
     if (mImageCount > 0) {
         do {
-            int image = (int)(((float)rand() / float(RAND_MAX)) * (float)mImageCount);
+            int image = static_cast<int>((static_cast<float>(rand()) /
+                    static_cast<float>(RAND_MAX)) * static_cast<float>(mImageCount));
             pickGameListNode(image, "image", path);
         }
         while (mPreviousGame && mCurrentGame == mPreviousGame);
@@ -405,7 +407,7 @@ void SystemScreenSaver::pickRandomCustomImage(std::string& path)
             }
         }
 
-        int fileCount = (int)matchingFiles.size();
+        int fileCount = static_cast<int>(matchingFiles.size());
         if (fileCount > 0) {
             // Get a random index in the range 0 to fileCount (exclusive).
             int randomIndex = rand() % fileCount;
@@ -425,7 +427,7 @@ void SystemScreenSaver::update(int deltaTime)
 {
     // Use this to update the fade value for the current fade stage.
     if (mState == STATE_FADE_OUT_WINDOW) {
-        mOpacity += (float)deltaTime / FADE_TIME;
+        mOpacity += static_cast<float>(deltaTime) / FADE_TIME;
         if (mOpacity >= 1.0f) {
             mOpacity = 1.0f;
 
@@ -434,7 +436,7 @@ void SystemScreenSaver::update(int deltaTime)
         }
     }
     else if (mState == STATE_FADE_IN_VIDEO) {
-        mOpacity -= (float)deltaTime / FADE_TIME;
+        mOpacity -= static_cast<float>(deltaTime) / FADE_TIME;
         if (mOpacity <= 0.0f) {
             mOpacity = 0.0f;
             // Update to the next state.
@@ -475,7 +477,7 @@ void SystemScreenSaver::launchGame()
         IGameListView* view = ViewController::get()->
                 getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
-        if (Settings::getInstance()->getBool("ScreenSaverControls"))
-            view->launch(mCurrentGame);
+        ViewController::get()->resetMovingCamera();
+        ViewController::get()->launch(mCurrentGame);
     }
 }

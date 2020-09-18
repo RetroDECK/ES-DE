@@ -37,7 +37,8 @@ SystemView::SystemView(
     mExtrasCamOffset = 0;
     mExtrasFadeOpacity = 0.0f;
 
-    setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+    setSize(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
     populate();
 }
 
@@ -218,13 +219,7 @@ bool SystemView::input(InputConfig* config, Input input)
             setCursor(SystemData::getRandomSystem(getSelected()));
             return true;
         }
-    }
-    else {
-        if (config->isMappedLike("left", input) ||
-            config->isMappedLike("right", input) ||
-            config->isMappedLike("up", input) ||
-            config->isMappedLike("down", input))
-            listInput(0);
+
         if (!UIModeController::getInstance()->isUIModeKid() &&
                 config->isMappedTo("select", input) &&
                 Settings::getInstance()->getBool("ScreenSaverControls")) {
@@ -232,11 +227,15 @@ bool SystemView::input(InputConfig* config, Input input)
                 mWindow->startScreenSaver();
                 mWindow->renderScreenSaver();
             }
-            else {
-                mWindow->cancelScreenSaver();
-            }
             return true;
         }
+    }
+    else {
+        if (config->isMappedLike("left", input) ||
+            config->isMappedLike("right", input) ||
+            config->isMappedLike("up", input) ||
+            config->isMappedLike("down", input))
+            listInput(0);
     }
 
     return GuiComponent::input(config, input);
@@ -255,8 +254,8 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 
     float startPos = mCamOffset;
 
-    float posMax = (float)mEntries.size();
-    float target = (float)mCursor;
+    float posMax = static_cast<float>(mEntries.size());
+    float target = static_cast<float>(mCursor);
 
     // What's the shortest way to get to our target?
     // It's one of these...
@@ -280,8 +279,9 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 
     Animation* infoFadeOut = new LambdaAnimation(
             [infoStartOpacity, this] (float t) {
-        mSystemInfo.setOpacity((unsigned char)(Math::lerp(infoStartOpacity, 0.f, t) * 255));
-    }, (int)(infoStartOpacity * (goFast ? 10 : 150)));
+        mSystemInfo.setOpacity(static_cast<unsigned char>(
+                Math::lerp(infoStartOpacity, 0.f, t) * 255));
+    }, static_cast<int>(infoStartOpacity * (goFast ? 10 : 150)));
 
     unsigned int gameCount = getSelected()->getDisplayedGameCount();
 
@@ -299,7 +299,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 
     Animation* infoFadeIn = new LambdaAnimation(
             [this](float t) {
-        mSystemInfo.setOpacity((unsigned char)(Math::lerp(0.f, 1.f, t) * 255));
+        mSystemInfo.setOpacity(static_cast<unsigned char>(Math::lerp(0.f, 1.f, t) * 255));
     }, goFast ? 10 : 300);
 
     // Wait 150ms to fade in.
@@ -467,8 +467,8 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
             mCarousel.origin.y() * mCarousel.size.y() * -1, 0.0f));
 
     Vector2f clipPos(carouselTrans.translation().x(), carouselTrans.translation().y());
-    Renderer::pushClipRect(Vector2i((int)clipPos.x(), (int)clipPos.y()),
-            Vector2i((int)mCarousel.size.x(), (int)mCarousel.size.y()));
+    Renderer::pushClipRect(Vector2i(static_cast<int>(clipPos.x()), static_cast<int>(clipPos.y())),
+            Vector2i(static_cast<int>(mCarousel.size.x()), static_cast<int>(mCarousel.size.y())));
 
     Renderer::setMatrix(carouselTrans);
     Renderer::drawRect(0.0f, 0.0f, mCarousel.size.x(), mCarousel.size.y(),
@@ -530,8 +530,8 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
             break;
     }
 
-    int center = (int)(mCamOffset);
-    int logoCount = Math::min(mCarousel.maxLogoCount, (int)mEntries.size());
+    int center = static_cast<int>(mCamOffset);
+    int logoCount = Math::min(mCarousel.maxLogoCount, static_cast<int>(mEntries.size()));
 
     // Adding texture loading buffers depending on scrolling speed and status.
     int bufferIndex = getScrollingVelocity() + 1;
@@ -546,9 +546,9 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
             i <= center + logoCount / 2 + bufferRight; i++) {
         int index = i;
         while (index < 0)
-            index += (int)mEntries.size();
-        while (index >= (int)mEntries.size())
-            index -= (int)mEntries.size();
+            index += static_cast<int>(mEntries.size());
+        while (index >= static_cast<int>(mEntries.size()))
+            index -= static_cast<int>(mEntries.size());
 
         Transform4x4f logoTrans = carouselTrans;
         logoTrans.translate(Vector3f(i * logoSpacing[0] + xOff, i * logoSpacing[1] + yOff, 0));
@@ -559,8 +559,9 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
         scale = Math::min(mCarousel.logoScale, Math::max(1.0f, scale));
         scale /= mCarousel.logoScale;
 
-        int opacity = (int)Math::round(0x80 + ((0xFF - 0x80) * (1.0f - fabs(distance))));
-        opacity = Math::max((int) 0x80, opacity);
+        int opacity = static_cast<int>(Math::round(0x80 + ((0xFF - 0x80) *
+                (1.0f - fabs(distance)))));
+        opacity = Math::max(static_cast<int>(0x80), opacity);
 
         const std::shared_ptr<GuiComponent> &comp = mEntries.at(index).data.logo;
         if (mCarousel.type == VERTICAL_WHEEL || mCarousel.type == HORIZONTAL_WHEEL) {
@@ -568,7 +569,7 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
             comp->setRotationOrigin(mCarousel.logoRotationOrigin);
         }
         comp->setScale(scale);
-        comp->setOpacity((unsigned char)opacity);
+        comp->setOpacity(static_cast<unsigned char>(opacity));
         comp->render(logoTrans);
     }
     Renderer::popClipRect();
@@ -583,20 +584,21 @@ void SystemView::renderInfoBar(const Transform4x4f& trans)
 // Draw background extras.
 void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upper)
 {
-    int extrasCenter = (int)mExtrasCamOffset;
+    int extrasCenter = static_cast<int>(mExtrasCamOffset);
 
     // Adding texture loading buffers depending on scrolling speed and status.
     int bufferIndex = getScrollingVelocity() + 1;
 
-    Renderer::pushClipRect(Vector2i::Zero(), Vector2i((int)mSize.x(), (int)mSize.y()));
+    Renderer::pushClipRect(Vector2i::Zero(), Vector2i(static_cast<int>(mSize.x()),
+            static_cast<int>(mSize.y())));
 
     for (int i = extrasCenter + logoBuffersLeft[bufferIndex]; i <= extrasCenter +
             logoBuffersRight[bufferIndex]; i++) {
         int index = i;
         while (index < 0)
-            index += (int)mEntries.size();
-        while (index >= (int)mEntries.size())
-            index -= (int)mEntries.size();
+            index += static_cast<int>(mEntries.size());
+        while (index >= static_cast<int>(mEntries.size()))
+            index -= static_cast<int>(mEntries.size());
 
         // Only render selected system when not showing.
         if (mShowing || index == mCursor)
@@ -607,9 +609,9 @@ void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upp
             else
                 extrasTrans.translate(Vector3f(0, (i - mExtrasCamOffset) * mSize.y(), 0));
 
-            Renderer::pushClipRect(Vector2i((int)extrasTrans.translation()[0],
-                    (int)extrasTrans.translation()[1]),
-                    Vector2i((int)mSize.x(), (int)mSize.y()));
+            Renderer::pushClipRect(Vector2i(static_cast<int>(extrasTrans.translation()[0]),
+                    static_cast<int>(extrasTrans.translation()[1])),
+                    Vector2i(static_cast<int>(mSize.x()), static_cast<int>(mSize.y())));
             SystemViewData data = mEntries.at(index).data;
             for (unsigned int j = 0; j < data.backgroundExtras.size(); j++) {
                 GuiComponent *extra = data.backgroundExtras[j];
@@ -627,7 +629,7 @@ void SystemView::renderFade(const Transform4x4f& trans)
 {
     // Fade extras if necessary.
     if (mExtrasFadeOpacity) {
-        unsigned int fadeColor = 0x00000000 | (unsigned char)(mExtrasFadeOpacity * 255);
+        unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mExtrasFadeOpacity * 255);
         Renderer::setMatrix(trans);
         Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), fadeColor, fadeColor);
     }
@@ -662,7 +664,7 @@ void  SystemView::getDefaultElements(void)
     mSystemInfo.setPosition(0, (mCarousel.pos.y() + mCarousel.size.y() - 0.2f));
     mSystemInfo.setBackgroundColor(0xDDDDDDD8);
     mSystemInfo.setRenderBackground(true);
-    mSystemInfo.setFont(Font::get((int)(0.035f * mSize.y()), Font::getDefaultPath()));
+    mSystemInfo.setFont(Font::get(static_cast<int>(0.035f * mSize.y()), Font::getDefaultPath()));
     mSystemInfo.setColor(0x000000FF);
     mSystemInfo.setZIndex(50);
     mSystemInfo.setDefaultZIndex(50);
@@ -699,7 +701,7 @@ void SystemView::getCarouselFromTheme(const ThemeData::ThemeElement* elem)
     if (elem->has("logoSize"))
         mCarousel.logoSize = elem->get<Vector2f>("logoSize") * mSize;
     if (elem->has("maxLogoCount"))
-        mCarousel.maxLogoCount = (int)Math::round(elem->get<float>("maxLogoCount"));
+        mCarousel.maxLogoCount = static_cast<int>(Math::round(elem->get<float>("maxLogoCount")));
     if (elem->has("zIndex"))
         mCarousel.zIndex = elem->get<float>("zIndex");
     if (elem->has("logoRotation"))

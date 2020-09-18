@@ -191,7 +191,7 @@ void ViewController::goToPrevGameList()
 void ViewController::goToGameList(SystemData* system)
 {
     // Stop any scrolling, animations and camera movements.
-    if (mSystemListView) {
+    if (mState.viewing == SYSTEM_SELECT) {
         mSystemListView->stopScrolling();
         if (mSystemListView->isAnimationPlaying(0))
             mSystemListView->finishAnimation(0);
@@ -201,9 +201,8 @@ void ViewController::goToGameList(SystemData* system)
     // Disable rendering of the system view.
     if (getSystemListView()->getRenderView())
         getSystemListView()->setRenderView(false);
-
     // If switching between gamelists, disable rendering of the current view.
-    if (mCurrentView)
+    else if (mCurrentView)
         mCurrentView->setRenderView(false);
 
     if (mState.viewing == SYSTEM_SELECT) {
@@ -329,8 +328,6 @@ void ViewController::launch(FileData* game, Vector3f center)
         while (NavigationSounds::getInstance()->isPlayingThemeNavigationSound(LAUNCHSOUND));
         game->launchGame(mWindow);
         onFileChanged(game, FILE_METADATA_CHANGED);
-        if (mCurrentView)
-            mCurrentView->onShow();
         // This is a workaround so that any key or button presses used for exiting the emulator
         // are not captured upon returning to ES.
         setAnimation(new LambdaAnimation([](float t){}, 1), 0, [this] {

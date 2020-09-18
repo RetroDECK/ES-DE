@@ -136,6 +136,8 @@ void Window::textInput(const char* text)
 
 void Window::input(InputConfig* config, Input input)
 {
+    mTimeSinceLastInput = 0;
+
     if (Settings::getInstance()->getBool("Debug"))
         logInput(config, input);
 
@@ -168,17 +170,17 @@ void Window::input(InputConfig* config, Input input)
 
     if (mSleeping) {
         // Wake up.
-        mTimeSinceLastInput = 0;
         cancelScreenSaver();
         mSleeping = false;
         onWake();
         return;
     }
 
-    mTimeSinceLastInput = 0;
-    if (!config->isMappedTo("select", input))
-        if (cancelScreenSaver())
-            return;
+    // Any keypress cancels the screensaver.
+    if (input.value != 0 && isScreenSaverActive()) {
+        cancelScreenSaver();
+        return;
+    }
 
     if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_g &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
