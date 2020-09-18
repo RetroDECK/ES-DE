@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiComplexTextEditPopup.h
 //
 //  Text edit popup with a title, two text strings, a text input box and buttons
@@ -6,7 +8,6 @@
 //  Intended for updating settings for configuration files and similar.
 //
 
-#pragma once
 #ifndef ES_CORE_GUIS_GUI_COMPLEX_TEXT_EDIT_POPUP_H
 #define ES_CORE_GUIS_GUI_COMPLEX_TEXT_EDIT_POPUP_H
 

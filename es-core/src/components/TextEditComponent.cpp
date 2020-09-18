@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TextEditComponent.cpp
 //
 //  Component for editing text fields in menus.
@@ -68,12 +70,12 @@ void TextEditComponent::textInput(const char* text)
             if (mCursor > 0) {
                 size_t newCursor = Utils::String::prevCursor(mText, mCursor);
                 mText.erase(mText.begin() + newCursor, mText.begin() + mCursor);
-                mCursor = (unsigned int)newCursor;
+                mCursor = static_cast<unsigned int>(newCursor);
             }
         }
         else {
             mText.insert(mCursor, text);
-            mCursor += (unsigned int)strlen(text);
+            mCursor += static_cast<unsigned int>(strlen(text));
         }
     }
 
@@ -83,6 +85,8 @@ void TextEditComponent::textInput(const char* text)
 
 void TextEditComponent::startEditing()
 {
+    if (!isMultiline())
+        setCursor(mText.size());
     SDL_StartTextInput();
     mEditing = true;
     updateHelpPrompts();
@@ -219,16 +223,16 @@ void TextEditComponent::updateCursorRepeat(int deltaTime)
 
 void TextEditComponent::moveCursor(int amt)
 {
-    mCursor = (unsigned int)Utils::String::moveCursor(mText, mCursor, amt);
+    mCursor = static_cast<unsigned int>(Utils::String::moveCursor(mText, mCursor, amt));
     onCursorChanged();
 }
 
 void TextEditComponent::setCursor(size_t pos)
 {
     if (pos == std::string::npos)
-        mCursor = (unsigned int)mText.length();
+        mCursor = static_cast<unsigned int>(mText.length());
     else
-        mCursor = (int)pos;
+        mCursor = static_cast<int>(pos);
 
     moveCursor(0);
 }
@@ -240,8 +244,8 @@ void TextEditComponent::onTextChanged()
     mTextCache = std::unique_ptr<TextCache>
             (mFont->buildTextCache(wrappedText, 0, 0, 0x77777700 | getOpacity()));
 
-    if (mCursor > (int)mText.length())
-        mCursor = (unsigned int)mText.length();
+    if (mCursor > static_cast<int>(mText.length()))
+        mCursor = static_cast<unsigned int>(mText.length());
 }
 
 void TextEditComponent::onCursorChanged()
@@ -275,11 +279,12 @@ void TextEditComponent::render(const Transform4x4f& parentTrans)
     // Offset into our "text area" (padding).
     trans.translation() += Vector3f(getTextAreaPos().x(), getTextAreaPos().y(), 0);
 
-    Vector2i clipPos((int)trans.translation().x(), (int)trans.translation().y());
+    Vector2i clipPos(static_cast<int>(trans.translation().x()),
+            static_cast<int>(trans.translation().y()));
     // Use "text area" size for clipping.
     Vector3f dimScaled = trans * Vector3f(getTextAreaSize().x(), getTextAreaSize().y(), 0);
-    Vector2i clipDim((int)(dimScaled.x() - trans.translation().x()), (int)(dimScaled.y() -
-            trans.translation().y()));
+    Vector2i clipDim(static_cast<int>((dimScaled.x()) - trans.translation().x()),
+            static_cast<int>((dimScaled.y()) - trans.translation().y()));
     Renderer::pushClipRect(clipPos, clipDim);
 
     trans.translate(Vector3f(-mScrollOffset.x(), -mScrollOffset.y(), 0));

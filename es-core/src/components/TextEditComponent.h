@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TextEditComponent.h
 //
 //  Component for editing text fields in menus.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
 #define ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
 

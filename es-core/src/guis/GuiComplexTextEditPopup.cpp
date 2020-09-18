@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiComplexTextEditPopup.cpp
 //
 //  Text edit popup with a title, two text strings, a text input box and buttons
@@ -7,11 +9,11 @@
 //
 
 #include "guis/GuiComplexTextEditPopup.h"
-#include "guis/GuiMsgBox.h"
 
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
 #include "components/TextEditComponent.h"
+#include "guis/GuiMsgBox.h"
 #include "Window.h"
 
 GuiComplexTextEditPopup::GuiComplexTextEditPopup(
@@ -53,15 +55,12 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     mText = std::make_shared<TextEditComponent>(mWindow);
     mText->setValue(initValue);
 
-    if (!multiLine)
-        mText->setCursor(initValue.size());
-
     std::vector< std::shared_ptr<ButtonComponent> > buttons;
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
             [this, okCallback] { okCallback(mText->getValue()); delete this; }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, loadBtnText, loadBtnHelpText,
             [this, infoString2] {
-                    mText->setValue(infoString2); mText->setCursor(infoString2.size()); }));
+                mText->setValue(infoString2); mText->setCursor(infoString2.size()); }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, clearBtnText, clearBtnHelpText,
             [this] { mText->setValue(""); }));
     if (!mHideCancelButton)

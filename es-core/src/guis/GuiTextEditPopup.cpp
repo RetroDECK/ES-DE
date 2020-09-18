@@ -1,15 +1,17 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiTextEditPopup.cpp
 //
 //  Simple text edit popup with a title, a text input box and OK and Cancel buttons.
 //
 
 #include "guis/GuiTextEditPopup.h"
-#include "guis/GuiMsgBox.h"
 
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
 #include "components/TextEditComponent.h"
+#include "guis/GuiMsgBox.h"
 #include "Window.h"
 
 GuiTextEditPopup::GuiTextEditPopup(
@@ -38,9 +40,6 @@ GuiTextEditPopup::GuiTextEditPopup(
 
     mText = std::make_shared<TextEditComponent>(mWindow);
     mText->setValue(initValue);
-
-    if (!multiLine)
-        mText->setCursor(initValue.size());
 
     std::vector< std::shared_ptr<ButtonComponent> > buttons;
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
