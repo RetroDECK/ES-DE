@@ -69,8 +69,15 @@ GuiGamelistOptions::GuiGamelistOptions(
             mCurrentFirstCharacter = FOLDER_CHAR;
         }
         else {
-            if (mFavoritesSorting && file->getFavorite() &&
-                    mFirstLetterIndex.front() == FAVORITE_CHAR)
+            // Check if the currently selected game is a favorite.
+            bool isFavorite = false;
+            if (mFirstLetterIndex.size() == 1 && mFirstLetterIndex.front() == FAVORITE_CHAR)
+                isFavorite = true;
+            else if (mFirstLetterIndex.size() > 1 && (mFirstLetterIndex.front() == FAVORITE_CHAR ||
+                    mFirstLetterIndex[1] == FAVORITE_CHAR))
+                isFavorite = true;
+
+            if (mFavoritesSorting && file->getFavorite() && isFavorite)
                 mCurrentFirstCharacter = FAVORITE_CHAR;
             else
                 mCurrentFirstCharacter = toupper(file->getSortName().front());
