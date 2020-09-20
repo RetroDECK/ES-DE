@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  BasicGameListView.h
 //
 //  Interface that defines a GameListView of the type 'basic'.
@@ -22,8 +24,11 @@ public:
 
     virtual FileData* getCursor() override;
     virtual void setCursor(FileData* file) override;
+    virtual FileData* getNextEntry() override;
+    virtual FileData* getPreviousEntry() override;
     virtual FileData* getFirstEntry() override;
     virtual FileData* getLastEntry() override;
+    virtual FileData* getFirstGameEntry() override;
 
     virtual const char* getName() const override { return "basic"; }
 
@@ -42,6 +47,8 @@ protected:
     virtual void addPlaceholder();
 
     TextListComponent<FileData*> mList;
+    // Points to the first game in the list, i.e. the first entry which is of the type 'GAME'.
+    FileData* firstGameEntry;
 
     const std::string FAVORITE_GAME_CHAR = "\uF005";
     const std::string FAVORITE_FOLDER_CHAR = "\uF07C";

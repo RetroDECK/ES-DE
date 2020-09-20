@@ -44,8 +44,11 @@ public:
 
     virtual FileData* getCursor() = 0;
     virtual void setCursor(FileData*) = 0;
+    virtual FileData* getNextEntry() = 0;
+    virtual FileData* getPreviousEntry() = 0;
     virtual FileData* getFirstEntry() = 0;
     virtual FileData* getLastEntry() = 0;
+    virtual FileData* getFirstGameEntry() = 0;
 
     virtual bool input(InputConfig* config, Input input) override;
     virtual void remove(FileData* game, bool deleteFile) = 0;

@@ -1,17 +1,18 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GridGameListView.h
 //
 //  Interface that defines a GameListView of the type 'grid'.
 //
 
-#pragma once
 #ifndef ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
 
 #include "components/DateTimeComponent.h"
+#include "components/ImageGridComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
-#include "components/ImageGridComponent.h"
 #include "components/VideoComponent.h"
 #include "views/gamelist/ISimpleGameListView.h"
 
@@ -27,8 +28,11 @@ public:
 
     virtual FileData* getCursor() override;
     virtual void setCursor(FileData*) override;
+    virtual FileData* getNextEntry() override;
+    virtual FileData* getPreviousEntry() override;
     virtual FileData* getFirstEntry() override;
     virtual FileData* getLastEntry() override;
+    virtual FileData* getFirstGameEntry() override;
 
     virtual bool input(InputConfig* config, Input input) override;
 
@@ -47,6 +51,8 @@ protected:
     virtual void addPlaceholder();
 
     ImageGridComponent<FileData*> mGrid;
+    // Points to the first game in the list, i.e. the first entry which is of the type 'GAME'.
+    FileData* firstGameEntry;
 
 private:
     void updateInfoPanel();

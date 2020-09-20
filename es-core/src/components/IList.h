@@ -144,6 +144,24 @@ public:
         return mEntries.at(mCursor).object;
     }
 
+    inline const UserData& getNext() const
+    {
+        // If there is a next entry, then return it, otherwise return the current entry.
+        if (mCursor + 1 < mEntries.size())
+            return mEntries.at(mCursor+1).object;
+        else
+            return mEntries.at(mCursor).object;
+    }
+
+    inline const UserData& getPrevious() const
+    {
+        // If there is a previous entry, then return it, otherwise return the current entry.
+        if (mCursor != 0)
+            return mEntries.at(mCursor-1).object;
+        else
+            return mEntries.at(mCursor).object;
+    }
+
     inline const UserData& getFirst() const
     {
         assert(size() > 0);

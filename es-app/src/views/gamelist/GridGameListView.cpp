@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GridGameListView.cpp
 //
 //  Interface that defines a GameListView of the type 'grid'.
@@ -11,8 +13,8 @@
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "Settings.h"
-#include "SystemData.h"
 #include "Sound.h"
+#include "SystemData.h"
 #if defined(_RPI_)
 #include "components/VideoPlayerComponent.h"
 #endif
@@ -159,6 +161,16 @@ void GridGameListView::setCursor(FileData* file)
     }
 }
 
+FileData* GridGameListView::getNextEntry()
+{
+    return mGrid.getNext();;
+}
+
+FileData* GridGameListView::getPreviousEntry()
+{
+    return mGrid.getPrevious();
+}
+
 FileData* GridGameListView::getFirstEntry()
 {
     return mGrid.getFirst();;
@@ -167,6 +179,11 @@ FileData* GridGameListView::getFirstEntry()
 FileData* GridGameListView::getLastEntry()
 {
     return mGrid.getLast();
+}
+
+FileData* GridGameListView::getFirstGameEntry()
+{
+    return firstGameEntry;
 }
 
 std::string GridGameListView::getQuickSystemSelectRightButton()
@@ -222,11 +239,16 @@ const std::string GridGameListView::getImagePath(FileData* file)
 
 void GridGameListView::populateList(const std::vector<FileData*>& files)
 {
+    firstGameEntry = nullptr;
+
     mGrid.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());
     if (files.size() > 0) {
-        for (auto it = files.cbegin(); it != files.cend(); it++)
+        for (auto it = files.cbegin(); it != files.cend(); it++) {
+            if (!firstGameEntry && (*it)->getType() == GAME)
+                firstGameEntry = (*it);
             mGrid.add((*it)->getName(), getImagePath(*it), *it);
+        }
     }
     else {
         addPlaceholder();

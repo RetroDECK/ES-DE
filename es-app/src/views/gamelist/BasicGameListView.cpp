@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  BasicGameListView.cpp
 //
 //  Interface that defines a GameListView of the type 'Basic'.
@@ -46,10 +48,15 @@ void BasicGameListView::onFileChanged(FileData* file, FileChangeType change)
 
 void BasicGameListView::populateList(const std::vector<FileData*>& files)
 {
+    firstGameEntry = nullptr;
+
     mList.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); it++) {
+            if (!firstGameEntry && (*it)->getType() == GAME)
+                firstGameEntry = (*it);
+
             if ((*it)->getFavorite() &&
                     mRoot->getSystem()->getName() != "favorites") {
                 mList.add(FAVORITE_GAME_CHAR + "  " + (*it)->getName(),
@@ -100,6 +107,16 @@ void BasicGameListView::setCursor(FileData* cursor)
     }
 }
 
+FileData* BasicGameListView::getNextEntry()
+{
+    return mList.getNext();
+}
+
+FileData* BasicGameListView::getPreviousEntry()
+{
+    return mList.getPrevious();
+}
+
 FileData* BasicGameListView::getFirstEntry()
 {
     return mList.getFirst();
@@ -108,6 +125,11 @@ FileData* BasicGameListView::getFirstEntry()
 FileData* BasicGameListView::getLastEntry()
 {
     return mList.getLast();
+}
+
+FileData* BasicGameListView::getFirstGameEntry()
+{
+    return firstGameEntry;
 }
 
 void BasicGameListView::addPlaceholder()
