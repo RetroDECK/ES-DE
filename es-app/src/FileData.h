@@ -64,6 +64,7 @@ public:
     const std::vector<std::string>& getFirstLetterIndex() const
             { return mFirstLetterIndex; };
     const bool getOnlyFoldersFlag() { return mOnlyFolders; }
+    bool viewHasOnlyFolders();
     static const std::string getROMDirectory();
     static const std::string getMediaDirectory();
     const std::string getMediafilePath(std::string subdirectory, std::string mediatype) const;

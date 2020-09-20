@@ -189,6 +189,11 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 bool favoritesSorting;
                 bool removedLastFavorite = false;
                 bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
+                // If the current list only contains folders, then treat it as if the folders
+                // are not sorted on top, this way the logic should work exactly as for mixed
+                // lists or files-only lists.
+                if (getCursor()->getType() == FOLDER && foldersOnTop == true)
+                    foldersOnTop = !getCursor()->viewHasOnlyFolders();
 
                 if (CollectionSystemManager::get()->getIsCustomCollection(mRoot->getSystem()))
                     favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
@@ -208,6 +213,11 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                         // If we are on the favorite marking boundary, select the next entry.
                         else if (getCursor()->getFavorite() != getPreviousEntry()->getFavorite())
                             entryToSelect = getNextEntry();
+                        // If we mark the second entry as favorite and the first entry is not a
+                        // favorite, then select this entry if they are of the same type.
+                        else if (getPreviousEntry() == getFirstEntry() &&
+                                getCursor()->getType() == getPreviousEntry()->getType())
+                            entryToSelect = getPreviousEntry();
                         // For all other scenarios try to select the next entry, and if it doesn't
                         // exist, select the previous entry.
                         else
@@ -271,9 +281,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     mWindow->setInfoPopup(s);
                     entryToUpdate->getSourceFileData()->getSystem()->onMetaDataSavePoint();
 
-                    if (!Settings::getInstance()->getBool("FoldersOnTop"))
-                        mRoot->sort(mRoot->getSortTypeFromString(mRoot->getSortTypeString()),
-                                Settings::getInstance()->getBool("FavoritesFirst"));
+                    getCursor()->getParent()->sort(
+                            mRoot->getSortTypeFromString(mRoot->getSortTypeString()),
+                            Settings::getInstance()->getBool("FavoritesFirst"));
 
                     ViewController::get()->onFileChanged(getCursor(), FILE_METADATA_CHANGED);
 

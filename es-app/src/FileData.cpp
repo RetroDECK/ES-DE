@@ -151,6 +151,17 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
     return childrenRecursive;
 }
 
+bool FileData::viewHasOnlyFolders()
+{
+    bool onlyFolders = true;
+    std::vector<FileData*> entrySiblings = this->getParent()->getChildren();
+    for (auto it = entrySiblings.cbegin(); it != entrySiblings.cend(); it++) {
+        if ((*it)->getType() != FOLDER)
+            onlyFolders = false;
+    }
+    return onlyFolders;
+}
+
 const std::string FileData::getROMDirectory()
 {
     std::string romDirSetting = Settings::getInstance()->getString("ROMDirectory");
@@ -463,6 +474,13 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
             }
         }
 
+        // If descending sorting is requested, always perform a ascending sort by filename first.
+        // This adds a slight (probably negligible) overhead but it will avoid strange sorting
+        // issues where the secondary sorting is reversed for some sort types.
+        if (!ascending)
+            std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
+                    getSortTypeFromString("filename, ascending").comparisonFunction);
+
         if (foldersOnTop && mOnlyFolders)
             std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
@@ -479,6 +497,10 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
         mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
     }
     else {
+        if (!ascending)
+            std::stable_sort(mChildren.begin(), mChildren.end(),
+                    getSortTypeFromString("filename, ascending").comparisonFunction);
+
         std::stable_sort(mChildren.begin(), mChildren.end(), comparator);
         if (!ascending)
             std::reverse(mChildren.begin(), mChildren.end());
@@ -523,6 +545,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     mFirstLetterIndex.clear();
     mOnlyFolders = true;
     std::vector<FileData*> mChildrenFolders;
+    std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
     std::vector<FileData*> mChildrenOthers;
     bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
@@ -538,7 +561,11 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
         }
 
         if (foldersOnTop && mChildren[i]->getType() == FOLDER) {
-            mChildrenFolders.push_back(mChildren[i]);
+            if (!mChildren[i]->getFavorite())
+                mChildrenFolders.push_back(mChildren[i]);
+            else
+                mChildrenFavoritesFolders.push_back(mChildren[i]);
+
             hasFolders = true;
         }
         else if (mChildren[i]->getFavorite()) {
@@ -553,6 +580,19 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
 
         if (mChildren[i]->getType() != FOLDER)
             mOnlyFolders = false;
+    }
+
+    // If there are favorite folders and this is a mixed list, then don't handle these
+    // separately but instead merge them into the same vector. This is a quite wasteful
+    // approach but the scenario where a user has a mixed folder and files list and marks
+    // some folders as favorites is probably a rare situation.
+    if (!mOnlyFolders && mChildrenFavoritesFolders.size() > 0) {
+        mChildrenFolders.insert(mChildrenFolders.end(), mChildrenFavoritesFolders.begin(),
+            mChildrenFavoritesFolders.end());
+        mChildrenFavoritesFolders.erase(mChildrenFavoritesFolders.begin(),
+                mChildrenFavoritesFolders.end());
+        std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(),
+                getSortTypeFromString("filename, ascending").comparisonFunction);
     }
 
     // If there are only favorites in the gamelist, it makes sense to still generate
@@ -584,20 +624,48 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     auto last = std::unique(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
     mFirstLetterIndex.erase(last, mFirstLetterIndex.end());
 
+    // If there were at least one favorite folder in the gamelist, insert the favorite
+    // unicode character in the first position.
+    if (foldersOnTop && mOnlyFolders && mChildrenFavoritesFolders.size() > 0)
+        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), FAVORITE_CHAR);
     // If there were at least one favorite in the gamelist, insert the favorite
     // unicode character in the first position.
-    if (mChildrenOthers.size() > 0 && mChildrenFavorites.size() > 0)
+    else if (mChildrenOthers.size() > 0 && mChildrenFavorites.size() > 0)
         mFirstLetterIndex.insert(mFirstLetterIndex.begin(), FAVORITE_CHAR);
 
     // If it's a mixed list and folders are sorted on top, add a folder icon to the index.
     if (foldersOnTop && hasFolders && !mOnlyFolders)
         mFirstLetterIndex.insert(mFirstLetterIndex.begin(), FOLDER_CHAR);
 
+    // If descending sorting is requested, always perform a ascending sort by filename first.
+    // This adds a slight (probably negligible) overhead but it will avoid strange sorting
+    // issues where the secondary sorting is reversed for some sort types.
+    if (!ascending) {
+        std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(),
+                getSortTypeFromString("filename, ascending").comparisonFunction);
+        std::stable_sort(mChildrenFavoritesFolders.begin(), mChildrenFavoritesFolders.end(),
+                getSortTypeFromString("filename, ascending").comparisonFunction);
+        std::stable_sort(mChildrenFavorites.begin(), mChildrenFavorites.end(),
+                getSortTypeFromString("filename, ascending").comparisonFunction);
+        std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
+                getSortTypeFromString("filename, ascending").comparisonFunction);
+    }
+
     // Sort favorite games and the other games separately.
-    if (foldersOnTop && mOnlyFolders)
+    if (foldersOnTop && mOnlyFolders) {
+        std::stable_sort(mChildrenFavoritesFolders.begin(),
+                mChildrenFavoritesFolders.end(), comparator);
         std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
+    }
     std::stable_sort(mChildrenFavorites.begin(), mChildrenFavorites.end(), comparator);
     std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
+
+    // Iterate through any child favorite folders.
+    for (auto it = mChildrenFavoritesFolders.cbegin(); it !=
+            mChildrenFavoritesFolders.cend(); it++) {
+        if ((*it)->getChildren().size() > 0)
+            (*it)->sortFavoritesOnTop(comparator, ascending);
+    }
 
     // Iterate through any child folders.
     for (auto it = mChildrenFolders.cbegin(); it != mChildrenFolders.cend(); it++) {
@@ -605,28 +673,21 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
             (*it)->sortFavoritesOnTop(comparator, ascending);
     }
 
-    // Iterate through any child folders.
-    for (auto it = mChildrenFavorites.cbegin(); it != mChildrenFavorites.cend(); it++) {
-        if ((*it)->getChildren().size() > 0)
-            (*it)->sortFavoritesOnTop(comparator, ascending);
-    }
-
-    // Iterate through any child folders.
-    for (auto it = mChildrenOthers.cbegin(); it != mChildrenOthers.cend(); it++) {
-        if ((*it)->getChildren().size() > 0)
-            (*it)->sortFavoritesOnTop(comparator, ascending);
-    }
-
     if (!ascending) {
-        if (foldersOnTop && mOnlyFolders)
+        if (foldersOnTop && mOnlyFolders) {
+            std::reverse(mChildrenFavoritesFolders.begin(), mChildrenFavoritesFolders.end());
             std::reverse(mChildrenFolders.begin(), mChildrenFolders.end());
+        }
         std::reverse(mChildrenFavorites.begin(), mChildrenFavorites.end());
         std::reverse(mChildrenOthers.begin(), mChildrenOthers.end());
     }
 
     // Combine the individually sorted favorite games and other games vectors.
     mChildren.erase(mChildren.begin(), mChildren.end());
-    mChildren.reserve(mChildrenFolders.size() + mChildrenFavorites.size() + mChildrenOthers.size());
+    mChildren.reserve(mChildrenFavoritesFolders.size() + mChildrenFolders.size() +
+            mChildrenFavorites.size() + mChildrenOthers.size());
+    mChildren.insert(mChildren.end(), mChildrenFavoritesFolders.begin(),
+            mChildrenFavoritesFolders.end());
     mChildren.insert(mChildren.end(), mChildrenFolders.begin(), mChildrenFolders.end());
     mChildren.insert(mChildren.end(), mChildrenFavorites.begin(), mChildrenFavorites.end());
     mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());

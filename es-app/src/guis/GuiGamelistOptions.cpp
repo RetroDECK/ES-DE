@@ -339,7 +339,7 @@ void GuiGamelistOptions::jumpToLetter()
         if (mFavoritesSorting && mFirstLetterIndex.front() == FAVORITE_CHAR) {
             if ((char)toupper(files.at(i)->getSortName().front()) ==
                     letter && !files.at(i)->getFavorite()) {
-                if (mFoldersOnTop && files.at(i)->getType() == FOLDER) {
+                if (!mOnlyHasFolders && mFoldersOnTop && files.at(i)->getType() == FOLDER) {
                     continue;
                 }
                 else {
@@ -368,9 +368,13 @@ void GuiGamelistOptions::jumpToFirstRow()
         // Get the gamelist.
         const std::vector<FileData*>& files = getGamelist()->getCursor()->
                 getParent()->getChildrenListToDisplay();
-        // Select the first game that is not a folder.
+        // Select the first game that is not a folder, unless it's a folder-only list in
+        // which case the first line overall is selected.
         for (auto it = files.cbegin(); it != files.cend(); it++) {
-            if ((*it)->getType() == GAME) {
+            if (!mOnlyHasFolders && mFoldersOnTop && (*it)->getType() == FOLDER) {
+                continue;
+            }
+            else {
                 getGamelist()->setCursor(*it);
                 break;
             }
