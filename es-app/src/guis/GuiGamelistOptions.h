@@ -59,7 +59,8 @@ private:
     bool mCancelled;
     std::vector<std::string> mFirstLetterIndex;
     std::string mCurrentFirstCharacter;
-    const std::string FAVORITE_CHAR = "\uF005";
+    std::string FAVORITE_CHAR;
+    std::string FOLDER_CHAR;
 
 };
 

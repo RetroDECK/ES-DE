@@ -132,6 +132,9 @@ public:
     // Return sort type based on a string description.
     FileData::SortType getSortTypeFromString(std::string desc);
 
+    const std::string FAVORITE_CHAR = "\uF005";
+    const std::string FOLDER_CHAR = "\uF07C";
+
 protected:
     FileData* mSourceFileData;
     FileData* mParent;
@@ -150,7 +153,7 @@ private:
     bool mOnlyFolders;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
-    const std::string FAVORITE_CHAR = "\uF005";
+
 };
 
 class CollectionFileData : public FileData

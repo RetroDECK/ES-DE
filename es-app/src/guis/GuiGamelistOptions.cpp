@@ -38,6 +38,8 @@ GuiGamelistOptions::GuiGamelistOptions(
 
     // Check that it's not a placeholder folder - if it is, only show "Filter Options".
     FileData* file = getGamelist()->getCursor();
+    FAVORITE_CHAR = file->FAVORITE_CHAR;
+    FOLDER_CHAR = file->FOLDER_CHAR;
     fromPlaceholder = file->isPlaceHolder();
     ComponentListRow row;
 
@@ -64,17 +66,14 @@ GuiGamelistOptions::GuiGamelistOptions(
         // Don't include the folder name starting characters if folders are sorted on top
         // unless the list only contains folders.
         if (!mOnlyHasFolders && mFoldersOnTop && file->getType() == FOLDER) {
-            mCurrentFirstCharacter = mFirstLetterIndex.front();
+            mCurrentFirstCharacter = FOLDER_CHAR;
         }
         else {
-            // Set the quick selector to the first character of the selected game.
             if (mFavoritesSorting && file->getFavorite() &&
-                    mFirstLetterIndex.front() == FAVORITE_CHAR) {
+                    mFirstLetterIndex.front() == FAVORITE_CHAR)
                 mCurrentFirstCharacter = FAVORITE_CHAR;
-            }
-            else {
+            else
                 mCurrentFirstCharacter = toupper(file->getSortName().front());
-            }
         }
 
         mJumpToLetterList = std::make_shared<LetterList>(mWindow, getHelpStyle(),
@@ -201,10 +200,9 @@ GuiGamelistOptions::~GuiGamelistOptions()
         }
 
         // Has the user changed the letter using the quick selector?
-        if ((mFoldersOnTop && !mOnlyHasFolders &&
-                getGamelist()->getCursor()->getType() == FOLDER) ||
-                mCurrentFirstCharacter != mJumpToLetterList->getSelected()) {
-            if (mJumpToLetterList->getSelected() == FAVORITE_CHAR)
+        if (mCurrentFirstCharacter != mJumpToLetterList->getSelected()) {
+            if (mJumpToLetterList->getSelected() == FAVORITE_CHAR ||
+                    mJumpToLetterList->getSelected() == FOLDER_CHAR)
                 jumpToFirstRow();
             else
                 jumpToLetter();
@@ -359,7 +357,7 @@ void GuiGamelistOptions::jumpToLetter()
 
 void GuiGamelistOptions::jumpToFirstRow()
 {
-    if (mFoldersOnTop) {
+    if (mFoldersOnTop && mJumpToLetterList->getSelected() == FAVORITE_CHAR) {
         // Get the gamelist.
         const std::vector<FileData*>& files = getGamelist()->getCursor()->
                 getParent()->getChildrenListToDisplay();

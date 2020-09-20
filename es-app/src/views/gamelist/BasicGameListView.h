@@ -50,8 +50,8 @@ protected:
     // Points to the first game in the list, i.e. the first entry which is of the type 'GAME'.
     FileData* firstGameEntry;
 
-    const std::string FAVORITE_GAME_CHAR = "\uF005";
-    const std::string FAVORITE_FOLDER_CHAR = "\uF07C";
+    std::string FAVORITE_CHAR;
+    std::string FOLDER_CHAR;
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H

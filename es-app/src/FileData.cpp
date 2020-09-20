@@ -430,6 +430,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
     mFirstLetterIndex.clear();
     mOnlyFolders = true;
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
+    bool hasFolders = false;
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
@@ -452,17 +453,23 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
 
     if (foldersOnTop) {
         for (unsigned int i = 0; i < mChildren.size(); i++) {
-            if (mChildren[i]->getType() == FOLDER)
+            if (mChildren[i]->getType() == FOLDER) {
                 mChildrenFolders.push_back(mChildren[i]);
-            else
+                hasFolders = true;
+            }
+            else {
                 mChildrenOthers.push_back(mChildren[i]);
+                mOnlyFolders = false;
+            }
         }
 
-        std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
+        if (foldersOnTop && mOnlyFolders)
+            std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
 
         if (!ascending) {
-            std::reverse(mChildrenFolders.begin(), mChildrenFolders.end());
+            if (foldersOnTop && mOnlyFolders)
+                std::reverse(mChildrenFolders.begin(), mChildrenFolders.end());
             std::reverse(mChildrenOthers.begin(), mChildrenOthers.end());
         }
 
@@ -505,6 +512,10 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
     std::sort(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
     auto last = std::unique(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
     mFirstLetterIndex.erase(last, mFirstLetterIndex.end());
+
+    // If it's a mixed list and folders are sorted on top, add a folder icon to the index.
+    if (foldersOnTop && hasFolders && !mOnlyFolders)
+        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), FOLDER_CHAR);
 }
 
 void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending)
@@ -516,6 +527,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     std::vector<FileData*> mChildrenOthers;
     bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
+    bool hasFolders = false;
 
     for (unsigned int i = 0; i < mChildren.size(); i++) {
         // Exclude game if it's marked as hidden and the hide setting has been set.
@@ -527,6 +539,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
 
         if (foldersOnTop && mChildren[i]->getType() == FOLDER) {
             mChildrenFolders.push_back(mChildren[i]);
+            hasFolders = true;
         }
         else if (mChildren[i]->getFavorite()) {
             mChildrenFavorites.push_back(mChildren[i]);
@@ -576,8 +589,13 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     if (mChildrenOthers.size() > 0 && mChildrenFavorites.size() > 0)
         mFirstLetterIndex.insert(mFirstLetterIndex.begin(), FAVORITE_CHAR);
 
+    // If it's a mixed list and folders are sorted on top, add a folder icon to the index.
+    if (foldersOnTop && hasFolders && !mOnlyFolders)
+        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), FOLDER_CHAR);
+
     // Sort favorite games and the other games separately.
-    std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
+    if (foldersOnTop && mOnlyFolders)
+        std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
     std::stable_sort(mChildrenFavorites.begin(), mChildrenFavorites.end(), comparator);
     std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
 
@@ -600,7 +618,8 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     }
 
     if (!ascending) {
-        std::reverse(mChildrenFolders.begin(), mChildrenFolders.end());
+        if (foldersOnTop && mOnlyFolders)
+            std::reverse(mChildrenFolders.begin(), mChildrenFolders.end());
         std::reverse(mChildrenFavorites.begin(), mChildrenFavorites.end());
         std::reverse(mChildrenOthers.begin(), mChildrenOthers.end());
     }
