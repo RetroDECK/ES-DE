@@ -189,6 +189,11 @@ void BasicGameListView::remove(FileData *game, bool deleteFile)
 
     // Remove before repopulating (removes from parent), then update the view.
     delete game;
+
+    if (deleteFile)
+        parent->sort(parent->getSortTypeFromString(parent->getSortTypeString()),
+                Settings::getInstance()->getBool("FavoritesFirst"));
+
     onFileChanged(parent, FILE_REMOVED);
 }
 
