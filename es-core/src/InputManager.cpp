@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  InputManager.cpp
 //
 //  Low-level input handling.
@@ -17,9 +19,9 @@
 #include "Window.h"
 
 #include <SDL2/SDL.h>
-#include <pugixml.hpp>
 #include <assert.h>
 #include <iostream>
+#include <pugixml.hpp>
 
 #define KEYBOARD_GUID_STRING "-1"
 #define CEC_GUID_STRING      "-2"

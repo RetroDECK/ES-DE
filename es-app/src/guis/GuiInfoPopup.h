@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiInfoPopup.h
 //
 //  Popup window used for user notifications.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_INFO_POPUP_H
 #define ES_APP_GUIS_GUI_INFO_POPUP_H
 

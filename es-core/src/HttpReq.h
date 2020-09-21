@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  HttpReq.h
 //
 //  HTTP request functions.
@@ -6,7 +8,6 @@
 //  ScreenScraper to download game information and media files.
 //
 
-#pragma once
 #ifndef ES_CORE_HTTP_REQ_H
 #define ES_CORE_HTTP_REQ_H
 

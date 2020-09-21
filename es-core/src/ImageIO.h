@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ImageIO.h
 //
 //  Image I/O functions.
 //
 
-#pragma once
 #ifndef ES_CORE_IMAGE_IO
 #define ES_CORE_IMAGE_IO
 

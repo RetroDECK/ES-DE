@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Misc.h
 //
 //  Miscellaneous math functions.
 //
 
-#pragma once
 #ifndef ES_CORE_MATH_MISC_H
 #define ES_CORE_MATH_MISC_H
 

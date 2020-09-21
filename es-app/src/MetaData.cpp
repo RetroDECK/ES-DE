@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  MetaData.cpp
 //
 //  Static data for default metadata values as well as functions
@@ -9,6 +11,7 @@
 
 #include "utils/FileSystemUtil.h"
 #include "Log.h"
+
 #include <pugixml.hpp>
 
 MetaDataDecl gameDecls[] = {

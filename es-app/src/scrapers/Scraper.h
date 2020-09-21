@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Scraper.h
 //
 //  Main scraper logic.
@@ -6,18 +8,18 @@
 //  Calls either GamesDBJSONScraper or ScreenScraper.
 //
 
-#pragma once
 #ifndef ES_APP_SCRAPERS_SCRAPER_H
 #define ES_APP_SCRAPERS_SCRAPER_H
 
 #include "AsyncHandle.h"
 #include "HttpReq.h"
 #include "MetaData.h"
+
+#include <assert.h>
 #include <functional>
 #include <memory>
 #include <queue>
 #include <utility>
-#include <assert.h>
 
 #define MAX_SCRAPER_RESULTS 7
 

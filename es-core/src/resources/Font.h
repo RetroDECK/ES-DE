@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.
 //  Also functions for word wrapping and similar.
 //
 
-#pragma once
 #ifndef ES_CORE_RESOURCES_FONT_H
 #define ES_CORE_RESOURCES_FONT_H
 

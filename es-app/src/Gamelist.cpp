@@ -1,12 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Gamelist.cpp
 //
 //  Parses and updates the gamelist.xml files.
 //
 
 #include "Gamelist.h"
-
-#include <chrono>
 
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
@@ -16,6 +16,7 @@
 #include "Settings.h"
 #include "SystemData.h"
 
+#include <chrono>
 #include <pugixml.hpp>
 
 FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType type)

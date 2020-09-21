@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TextureDataManager.h
 //
 //  Loading and unloading of texture data.
 //
 
-#pragma once
 #ifndef ES_CORE_RESOURCES_TEXTURE_DATA_MANAGER_H
 #define ES_CORE_RESOURCES_TEXTURE_DATA_MANAGER_H
 

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TimeUtil.cpp
 //
 //  Low-level date and time functions.

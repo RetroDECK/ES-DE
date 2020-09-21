@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  AsyncHandle.h
 //
 //  Asynchronous operations used by GuiScraperSearch and Scraper.
 //
 
-#pragma once
 #ifndef ES_CORE_ASYNC_HANDLE_H
 #define ES_CORE_ASYNC_HANDLE_H
 

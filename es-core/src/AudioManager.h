@@ -1,15 +1,15 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  AudioManager.h
 //
 //  Low-level audio functions (using SDL2).
 //
 
-#pragma once
 #ifndef ES_CORE_AUDIO_MANAGER_H
 #define ES_CORE_AUDIO_MANAGER_H
 
 #include <SDL2/SDL_audio.h>
-
 #include <memory>
 #include <vector>
 

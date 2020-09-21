@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  HelpComponent.h
 //
 //  Help information in icon and text pairs.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_HELP_COMPONENT_H
 #define ES_CORE_COMPONENTS_HELP_COMPONENT_H
 

@@ -1,15 +1,16 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GridTileComponent.h
 //
 //  X*Y grid.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_GRID_TILE_COMPONENT_H
 #define ES_CORE_COMPONENTS_GRID_TILE_COMPONENT_H
 
-#include "NinePatchComponent.h"
 #include "ImageComponent.h"
+#include "NinePatchComponent.h"
 
 struct GridTileProperties {
     Vector2f mSize;

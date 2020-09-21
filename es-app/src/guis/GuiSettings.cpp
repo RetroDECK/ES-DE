@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiSettings.cpp
 //
 //  User interface template for a settings GUI.

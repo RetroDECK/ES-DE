@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TextureData.cpp
 //
 //  Low-level texture data functions.
@@ -11,6 +13,7 @@
 #include "resources/ResourceManager.h"
 #include "ImageIO.h"
 #include "Log.h"
+
 #include <nanosvg/nanosvg.h>
 #include <nanosvg/nanosvgrast.h>
 #include <assert.h>

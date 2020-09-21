@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ButtonComponent.h
 //
 //  Basic on/off button.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_BUTTON_COMPONENT_H
 #define ES_CORE_COMPONENTS_BUTTON_COMPONENT_H
 

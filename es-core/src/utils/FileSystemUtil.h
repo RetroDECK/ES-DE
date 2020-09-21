@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  FileSystemUtil.h
 //
 //  Low-level filesystem functions.
@@ -6,7 +8,6 @@
 //  remove files etc.
 //
 
-#pragma once
 #ifndef ES_CORE_UTILS_FILE_SYSTEM_UTIL_H
 #define ES_CORE_UTILS_FILE_SYSTEM_UTIL_H
 

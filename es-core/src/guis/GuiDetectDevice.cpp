@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiDetectDevice.cpp
 //
 //  Detect input devices (keyboards, joysticks and gamepads).

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiGameScraper.cpp
 //
 //  Single game scraping user interface.

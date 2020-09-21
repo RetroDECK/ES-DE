@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Vector2i.h
 //
 //  2-dimensional integer vector functions.
 //
 
-#pragma once
 #ifndef ES_CORE_MATH_VECTOR2I_H
 #define ES_CORE_MATH_VECTOR2I_H
 

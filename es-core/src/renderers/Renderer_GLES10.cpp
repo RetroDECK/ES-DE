@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Renderer_GLES10.cpp
 //
 //  OpenGL ES 1.0 rendering functions.

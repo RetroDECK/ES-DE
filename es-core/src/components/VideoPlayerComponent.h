@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VideoPlayerComponent.h
 //
 //  OMXPlayer video playing for Raspberry Pi.
 //
 
 #if defined(_RPI_)
-#pragma once
 #ifndef ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H
 #define ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H
 

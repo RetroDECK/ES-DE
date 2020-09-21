@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  DateTimeEditComponent.h
 //
 //  Date and time edit component.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_DATE_TIME_EDIT_COMPONENT_H
 #define ES_CORE_COMPONENTS_DATE_TIME_EDIT_COMPONENT_H
 

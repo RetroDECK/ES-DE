@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  MameNames.cpp
 //
 //  Provides expanded game names based on short MAME name arguments. Also contains
@@ -13,6 +15,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "Log.h"
+
 #include <pugixml.hpp>
 #include <string.h>
 

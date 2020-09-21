@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  InputConfig.h
 //
 //  Input device configuration functions.
 //
 
-#pragma once
 #ifndef ES_CORE_INPUT_CONFIG_H
 #define ES_CORE_INPUT_CONFIG_H
 

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Vector4f.cpp
 //
 //  4-dimensional floating point vector functions.

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  FileSystemUtil.cpp
 //
 //  Low-level filesystem functions.
@@ -17,9 +19,9 @@
 #include "utils/StringUtil.h"
 #include "Log.h"
 
-#include <sys/stat.h>
 #include <fstream>
 #include <string.h>
+#include <sys/stat.h>
 
 #if defined(_WIN64)
 #include <direct.h>

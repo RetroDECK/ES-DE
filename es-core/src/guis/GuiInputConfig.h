@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiInputConfig.h
 //
 //  Input device configuration GUI (for keyboards, joysticks and gamepads).
 //
 
-#pragma once
 #ifndef ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 #define ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 

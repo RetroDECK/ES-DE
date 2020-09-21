@@ -1,15 +1,17 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  HelpStyle.h
 //
 //  Style (default colors, position and origin) for the help system.
 //  Also theme handling.
 //
 
-#pragma once
 #ifndef ES_CORE_HELP_STYLE_H
 #define ES_CORE_HELP_STYLE_H
 
 #include "math/Vector2f.h"
+
 #include <memory>
 #include <string>
 

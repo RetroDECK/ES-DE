@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiSettings.h
 //
 //  User interface template for a settings GUI.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_SETTINGS_H
 #define ES_APP_GUIS_GUI_SETTINGS_H
 

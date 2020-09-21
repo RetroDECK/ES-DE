@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Vector3f.h
 //
 //  3-dimensional floating point vector functions.
 //
 
-#pragma once
 #ifndef ES_CORE_MATH_VECTOR3F_H
 #define ES_CORE_MATH_VECTOR3F_H
 

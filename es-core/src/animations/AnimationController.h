@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  AnimationController.h
 //
 //  Basic animation controls.
 //
 
-#pragma once
 #ifndef ES_CORE_ANIMATIONS_ANIMATION_CONTROLLER_H
 #define ES_CORE_ANIMATIONS_ANIMATION_CONTROLLER_H
 

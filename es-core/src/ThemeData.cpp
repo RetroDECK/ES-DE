@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ThemeData.cpp
 //
 //  Finds available themes on the file system and loads these,
@@ -15,8 +17,9 @@
 #include "Log.h"
 #include "Platform.h"
 #include "Settings.h"
-#include <pugixml.hpp>
+
 #include <algorithm>
+#include <pugixml.hpp>
 
 std::vector<std::string> ThemeData::sSupportedViews {
             { "all" }, { "system" }, { "basic" }, { "detailed" }, { "grid" }, { "video" } };

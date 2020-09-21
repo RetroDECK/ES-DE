@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiInfoPopup.cpp
 //
 //  Popup window used for user notifications.

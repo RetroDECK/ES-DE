@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiGameScraper.h
 //
 //  Single game scraping user interface.
@@ -6,7 +8,6 @@
 //  GuiScraperSearch is called from here.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_GAME_SCRAPER_H
 #define ES_APP_GUIS_GUI_GAME_SCRAPER_H
 

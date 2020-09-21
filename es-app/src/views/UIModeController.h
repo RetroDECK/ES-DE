@@ -10,8 +10,8 @@
 #ifndef ES_APP_VIEWS_UI_MODE_CONTROLLER_H
 #define ES_APP_VIEWS_UI_MODE_CONTROLLER_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
 class FileData;
 class InputConfig;

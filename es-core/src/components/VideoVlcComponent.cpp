@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  VideoVlcComponent.cpp
 //
 //  Video playing using libVLC.
@@ -21,8 +23,8 @@
 #include <vlc/vlc.h>
 
 #if defined(_WIN64)
-#include <codecvt>
 #include <cstring>
+#include <codecvt>
 #endif
 
 libvlc_instance_t* VideoVlcComponent::mVLC = nullptr;

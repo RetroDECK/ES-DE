@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiSlideshowScreensaverOptions.h
 //
 //  User interface for the slideshow screensaver options.
 //  Submenu to GuiGeneralScreensaverOptions.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_SLIDESHOW_SCREENSAVER_OPTIONS_H
 #define ES_APP_GUIS_GUI_SLIDESHOW_SCREENSAVER_OPTIONS_H
 

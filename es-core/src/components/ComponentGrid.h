@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ComponentGrid.h
 //
 //  Provides basic layout of components in an X*Y grid.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_COMPONENT_GRID_H
 #define ES_CORE_COMPONENTS_COMPONENT_GRID_H
 

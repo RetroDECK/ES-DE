@@ -1,15 +1,16 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Log.h
 //
 //  Log handling.
 //
 
-#pragma once
 #ifndef ES_CORE_LOG_H
 #define ES_CORE_LOG_H
 
-#include <sstream>
 #include <map>
+#include <sstream>
 
 #define LOG(level) \
 if (level > Log::getReportingLevel()); \

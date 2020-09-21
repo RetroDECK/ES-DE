@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  AudioManager.cpp
 //
 //  Low-level audio functions (using SDL2).

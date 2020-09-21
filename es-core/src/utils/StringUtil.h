@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  StringUtil.h
 //
 //  Low-level string functions.
 //  Convert characters to Unicode, upper-/lowercase conversion, string formatting etc.
 //
 
-#pragma once
 #ifndef ES_CORE_UTILS_STRING_UTIL_H
 #define ES_CORE_UTILS_STRING_UTIL_H
 

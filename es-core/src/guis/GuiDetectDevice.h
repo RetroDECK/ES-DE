@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiDetectDevice.h
 //
 //  Detect input devices (keyboards, joysticks and gamepads).
 //
 
-#pragma once
 #ifndef ES_CORE_GUIS_GUI_DETECT_DEVICE_H
 #define ES_CORE_GUIS_GUI_DETECT_DEVICE_H
 

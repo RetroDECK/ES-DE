@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Scripting.cpp
 //
 //  Executes custom scripts for various events in EmulationStation.

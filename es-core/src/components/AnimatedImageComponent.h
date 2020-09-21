@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  AnimatedImageComponent.h
 //
 //  Creates animation from multiple images files.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_ANIMATED_IMAGE_COMPONENT_H
 #define ES_CORE_COMPONENTS_ANIMATED_IMAGE_COMPONENT_H
 

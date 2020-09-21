@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Vector4f.h
 //
 //  4-dimensional floating point vector functions.
 //
 
-#pragma once
 #ifndef ES_CORE_MATH_VECTOR4F_H
 #define ES_CORE_MATH_VECTOR4F_H
 

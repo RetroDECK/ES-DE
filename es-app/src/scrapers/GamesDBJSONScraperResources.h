@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GamesDBJSONScraperResources.h
 //
 //  Functions specifically for scraping from thegamesdb.net
@@ -10,16 +12,15 @@
 //  gamesdb_publishers.json
 //
 
-#pragma once
 #ifndef ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_RESOURCES_H
 #define ES_APP_SCRAPERS_GAMES_DB_JSON_SCRAPER_RESOURCES_H
+
+#include "HttpReq.h"
 
 #include <fstream>
 #include <memory>
 #include <string>
 #include <unordered_map>
-
-#include "HttpReq.h"
 
 struct TheGamesDBJSONRequestResources {
     TheGamesDBJSONRequestResources() = default;

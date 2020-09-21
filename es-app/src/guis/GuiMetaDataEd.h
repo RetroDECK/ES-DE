@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiMetaDataEd.h
 //
 //  Game metadata edit user interface.
@@ -7,7 +9,6 @@
 //  GuiScraperSearch.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_META_DATA_ED_H
 #define ES_APP_GUIS_GUI_META_DATA_ED_H
 

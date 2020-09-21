@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ComponentList.h
 //
 //  Used to lay out and navigate lists in GUI menus.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_COMPONENT_LIST_H
 #define ES_CORE_COMPONENTS_COMPONENT_LIST_H
 

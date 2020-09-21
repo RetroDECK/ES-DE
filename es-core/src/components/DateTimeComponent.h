@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  DateTimeComponent.h
 //
 //  Provides the date and time, in absolute (actual date) or relative
@@ -6,7 +8,6 @@
 //  Used by the gamelist views.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_DATE_TIME_COMPONENT_H
 #define ES_CORE_COMPONENTS_DATE_TIME_COMPONENT_H
 

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiScraperSearch.h
 //
 //  User interface for the scraper where the user is able to see an overview
@@ -11,7 +13,6 @@
 //  from GuiScraperMulti for multi-game scraping.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_SCRAPER_SEARCH_H
 #define ES_APP_GUIS_GUI_SCRAPER_SEARCH_H
 

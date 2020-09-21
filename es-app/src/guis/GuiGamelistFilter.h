@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiGamelistFilter.h
 //
 //  User interface for the gamelist filters.
@@ -6,7 +8,6 @@
 //  Actual filter logic is covered by FileFilterIndex.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
 #define ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
 

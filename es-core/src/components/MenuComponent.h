@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  MenuComponent.h
 //
 //  Basic component for building a menu.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_MENU_COMPONENT_H
 #define ES_CORE_COMPONENTS_MENU_COMPONENT_H
 

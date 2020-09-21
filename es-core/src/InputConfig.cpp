@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  InputConfig.cpp
 //
 //  Input device configuration functions.

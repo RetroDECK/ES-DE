@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TimeUtil.h
 //
 //  Low-level date and time functions.
 //  Set and get time, format to string formats, count days and months etc.
 //
 
-#pragma once
 #ifndef ES_CORE_UTILS_TIME_UTIL_H
 #define ES_CORE_UTILS_TIME_UTIL_H
 

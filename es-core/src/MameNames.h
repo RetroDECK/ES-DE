@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  MameNames.h
 //
 //  Provides expanded game names based on short MAME name arguments. Also contains
@@ -7,7 +9,6 @@
 //  as the files mamebioses.xml, mamedevices.xml and mamenames.xml.
 //
 
-#pragma once
 #ifndef ES_CORE_MAMENAMES_H
 #define ES_CORE_MAMENAMES_H
 

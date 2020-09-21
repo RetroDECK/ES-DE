@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  MetaData.h
 //
 //  Static data for default metadata values as well as functions
 //  to read and write metadata from the gamelist files.
 //
 
-#pragma once
 #ifndef ES_APP_META_DATA_H
 #define ES_APP_META_DATA_H
 

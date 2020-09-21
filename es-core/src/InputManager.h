@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  InputManager.h
 //
 //  Low-level input handling.
@@ -6,7 +8,6 @@
 //  Reads and writes the es_input.cfg configuration file.
 //
 
-#pragma once
 #ifndef ES_CORE_INPUT_MANAGER_H
 #define ES_CORE_INPUT_MANAGER_H
 

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Vector3f.cpp
 //
 //  3-dimensional floating point vector functions.

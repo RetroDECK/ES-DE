@@ -13,6 +13,7 @@
 #define ES_APP_SYSTEM_DATA_H
 
 #include "PlatformId.h"
+
 #include <algorithm>
 #include <memory>
 #include <string>

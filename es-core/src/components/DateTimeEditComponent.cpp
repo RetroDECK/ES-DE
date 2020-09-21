@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  DateTimeEditComponent.cpp
 //
 //  Date and time edit component.

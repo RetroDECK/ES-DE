@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ResourceManager.cpp
 //
 //  Handles the application resources (fonts, graphics, sounds etc.).

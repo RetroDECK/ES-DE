@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiCollectionSystemsOptions.h
 //
 //  User interface for the game collection settings.
 //  Submenu to the GuiMenu main menu.
 //
 
-#pragma once
 #ifndef ES_APP_GUIS_GUI_COLLECTION_SYSTEM_OPTIONS_H
 #define ES_APP_GUIS_GUI_COLLECTION_SYSTEM_OPTIONS_H
 

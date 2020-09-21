@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Settings.cpp
 //
 //  Functions to read from and write to the configuration file es_settings.cfg.
@@ -10,11 +12,11 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "Log.h"
-#include "Scripting.h"
 #include "Platform.h"
+#include "Scripting.h"
 
-#include <pugixml.hpp>
 #include <algorithm>
+#include <pugixml.hpp>
 #include <vector>
 
 Settings* Settings::sInstance = nullptr;

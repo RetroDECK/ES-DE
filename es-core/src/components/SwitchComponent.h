@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SwitchComponent.h
 //
 //  Basic switch used in the menus.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_SWITCH_COMPONENT_H
 #define ES_CORE_COMPONENTS_SWITCH_COMPONENT_H
 

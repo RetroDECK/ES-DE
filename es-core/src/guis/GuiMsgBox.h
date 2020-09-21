@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiMsgBox.h
 //
 //  Popup message dialog with a notification text and a choice of one,
 //  two or three buttons.
 //
 
-#pragma once
 #ifndef ES_CORE_GUIS_GUI_MSG_BOX_H
 #define ES_CORE_GUIS_GUI_MSG_BOX_H
 

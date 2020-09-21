@@ -1,23 +1,25 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GamesDBJSONScraper.cpp
 //
 //  Functions specifically for scraping from thegamesdb.net
 //  Called from Scraper.
 //
 
-#include <exception>
-#include <map>
-
 #include "scrapers/GamesDBJSONScraper.h"
 #include "scrapers/GamesDBJSONScraperResources.h"
 
+#include "utils/TimeUtil.h"
 #include "FileData.h"
 #include "Log.h"
+#include "MameNames.h"
 #include "PlatformId.h"
 #include "Settings.h"
 #include "SystemData.h"
-#include "MameNames.h"
-#include "utils/TimeUtil.h"
+
+#include <exception>
+#include <map>
 #include <pugixml.hpp>
 
 // When raspbian will get an up to date version of rapidjson we'll be

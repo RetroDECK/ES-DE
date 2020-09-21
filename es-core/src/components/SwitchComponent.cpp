@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SwitchComponent.cpp
 //
 //  Basic switch used in the menus.

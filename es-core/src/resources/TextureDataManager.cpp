@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TextureDataManager.cpp
 //
 //  Loading and unloading of texture data.

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  NinePatchComponent.cpp
 //
 //  Breaks up an image into 3x3 patches to accomodate resizing without distortions.

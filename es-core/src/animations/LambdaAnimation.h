@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  LambdaAnimation.h
 //
 //  Basic animation controls, to be used in lambda expressions.
 //
 
-#pragma once
 #ifndef ES_CORE_ANIMATIONS_LAMBDA_ANIMATION_H
 #define ES_CORE_ANIMATIONS_LAMBDA_ANIMATION_H
 

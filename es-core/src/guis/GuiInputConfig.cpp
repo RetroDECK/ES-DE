@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiInputConfig.cpp
 //
 //  Input device configuration GUI (for keyboards, joysticks and gamepads).

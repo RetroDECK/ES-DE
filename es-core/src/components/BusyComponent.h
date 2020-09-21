@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  BusyComponent.h
 //
 //  Animated busy indicator.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_BUSY_COMPONENT_H
 #define ES_CORE_COMPONENTS_BUSY_COMPONENT_H
 

@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ImageIO.cpp
 //
 //  Image I/O functions.
@@ -7,6 +9,7 @@
 #include "ImageIO.h"
 
 #include "Log.h"
+
 #include <FreeImage.h>
 #include <string.h>
 

@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ResourceManager.h
 //
 //  Handles the application resources (fonts, graphics, sounds etc.).
 //  Loading and unloading of these files are done here.
 //
 
-#pragma once
 #ifndef ES_CORE_RESOURCES_RESOURCE_MANAGER_H
 #define ES_CORE_RESOURCES_RESOURCE_MANAGER_H
 

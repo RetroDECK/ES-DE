@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Settings.h
 //
 //  Functions to read from and write to the configuration file es_settings.cfg.
 //  The default values for the application settings are defined here as well.
 //
 
-#pragma once
 #ifndef ES_CORE_SETTINGS_H
 #define ES_CORE_SETTINGS_H
 

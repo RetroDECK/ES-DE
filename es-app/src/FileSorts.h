@@ -1,15 +1,17 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  FileSorts.h
 //
 //  Gamelist sorting functions.
 //  Actual sorting takes place in FileData.
 //
 
-#pragma once
 #ifndef ES_APP_FILE_SORTS_H
 #define ES_APP_FILE_SORTS_H
 
 #include "FileData.h"
+
 #include <vector>
 
 namespace FileSorts

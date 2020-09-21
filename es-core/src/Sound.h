@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Sound.h
 //
 //  Higher-level audio functions.
 //  Reading theme sound setings, playing audio samples etc.
 //
 
-#pragma once
 #ifndef ES_CORE_SOUND_H
 #define ES_CORE_SOUND_H
 

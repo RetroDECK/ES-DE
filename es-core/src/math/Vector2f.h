@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Vector2f.h
 //
 //  2-dimensional floating point vector functions.
 //
 
-#pragma once
 #ifndef ES_CORE_MATH_VECTOR2F_H
 #define ES_CORE_MATH_VECTOR2F_H
 

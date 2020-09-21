@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Scripting.h
 //
 //  Executes custom scripts for various events in EmulationStation.
@@ -10,7 +12,6 @@
 //  $HOME/.emulationstation/scripts/game-start/ will be executed.
 //
 
-#pragma once
 #ifndef ES_CORE_SCRIPTING_H
 #define ES_CORE_SCRIPTING_H
 

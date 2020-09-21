@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ButtonComponent.cpp
 //
 //  Basic on/off button.

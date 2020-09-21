@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  BusyComponent.cpp
 //
 //  Animated busy indicator.

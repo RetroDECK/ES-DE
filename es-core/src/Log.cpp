@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Log.cpp
 //
 //  Log handling.
@@ -10,9 +12,9 @@
 #include "utils/StringUtil.h"
 #include "Platform.h"
 
+#include <fstream>
 #include <iostream>
 #include <iomanip>
-#include <fstream>
 
 LogLevel Log::reportingLevel = LogInfo;
 std::ofstream file;

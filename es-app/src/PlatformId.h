@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  PlatformId.h
 //
 //  Index of all supported systems/platforms.
 //
 
-#pragma once
 #ifndef ES_APP_PLATFORM_ID_H
 #define ES_APP_PLATFORM_ID_H
 

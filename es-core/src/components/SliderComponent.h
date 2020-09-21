@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SliderComponent.h
 //
 //  Slider to set value in a predefined range.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_SLIDER_COMPONENT_H
 #define ES_CORE_COMPONENTS_SLIDER_COMPONENT_H
 

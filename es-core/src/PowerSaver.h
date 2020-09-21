@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  PowerSaver.h
 //
 //  Power saving functions.
 //
 
-#pragma once
 #ifndef ES_CORE_POWER_SAVER_H
 #define ES_CORE_POWER_SAVER_H
 

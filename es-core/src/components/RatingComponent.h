@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  RatingComponent.h
 //
 //  Game rating icons.
 //  Used by gamelist views, metadata editor and scraper.
 //
 
-#pragma once
 #ifndef ES_APP_COMPONENTS_RATING_COMPONENT_H
 #define ES_APP_COMPONENTS_RATING_COMPONENT_H
 

@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  TextComponent.h
 //
 //  Displays text.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_TEXT_COMPONENT_H
 #define ES_CORE_COMPONENTS_TEXT_COMPONENT_H
 

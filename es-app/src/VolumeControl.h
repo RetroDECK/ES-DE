@@ -14,9 +14,9 @@
 #if defined(__APPLE__)
 //#error TODO: Not implemented for MacOS yet!!!
 #elif defined(__linux__)
-#include <unistd.h>
-#include <fcntl.h>
 #include <alsa/asoundlib.h>
+#include <fcntl.h>
+#include <unistd.h>
 #elif defined(_WIN64)
 #include <Windows.h>
 #include <endpointvolume.h>

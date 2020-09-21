@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  CECInput.h
 //
-//  CEC (Consumer Electronics Control).
+//  CEC (Consumer Electronics Control) input.
 //
 
-#pragma once
 #ifndef ES_CORE_CECINPUT_H
 #define ES_CORE_CECINPUT_H
 

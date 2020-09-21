@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  HelpStyle.cpp
 //
 //  Style (default colors, position and origin) for the help system.

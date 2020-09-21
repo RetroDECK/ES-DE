@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  Transform4x4f.h
 //
-//  4x4 transform functions.
+//  4x4 matrix functions.
 //
 
-#pragma once
 #ifndef ES_CORE_MATH_TRANSFORM4X4F_H
 #define ES_CORE_MATH_TRANSFORM4X4F_H
 

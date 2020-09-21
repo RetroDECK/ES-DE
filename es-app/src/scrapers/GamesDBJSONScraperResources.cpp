@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GamesDBJSONScraperResources.cpp
 //
 //  Functions specifically for scraping from thegamesdb.net
@@ -10,18 +12,18 @@
 //  gamesdb_publishers.json
 //
 
+#include "scrapers/GamesDBJSONScraperResources.h"
+
+#include "utils/FileSystemUtil.h"
+#include "Log.h"
+
+#include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
+
 #include <chrono>
 #include <fstream>
 #include <memory>
 #include <thread>
-
-#include "Log.h"
-
-#include "scrapers/GamesDBJSONScraperResources.h"
-#include "utils/FileSystemUtil.h"
-
-#include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
 
 using namespace rapidjson;
 

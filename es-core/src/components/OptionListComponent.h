@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  OptionListComponent.h
 //
-//  Provides a list of options.
+//  Provides a list of option components.
 //  Supports various types using templates.
 //
 
-#pragma once
 #ifndef ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 #define ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 

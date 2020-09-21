@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  MenuComponent.cpp
 //
 //  Basic component for building a menu.

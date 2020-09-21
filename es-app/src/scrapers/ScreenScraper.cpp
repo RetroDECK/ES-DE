@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ScreenScraper.cpp
 //
 //  Functions specifically for scraping from screenscraper.fr

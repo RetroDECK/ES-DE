@@ -1,10 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  FileFilterIndex.h
 //
 //  Gamelist filters.
 //
 
-#pragma once
 #ifndef ES_APP_FILE_FILTER_INDEX_H
 #define ES_APP_FILE_FILTER_INDEX_H
 

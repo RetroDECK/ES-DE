@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  GuiScraperSearch.cpp
 //
 //  User interface for the scraper where the user is able to see an overview

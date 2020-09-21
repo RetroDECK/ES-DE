@@ -1,11 +1,12 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  ScreenScraper.h
 //
 //  Functions specifically for scraping from screenscraper.fr
 //  Called from Scraper.
 //
 
-#pragma once
 #ifndef ES_APP_SCRAPERS_SCREEN_SCRAPER_H
 #define ES_APP_SCRAPERS_SCREEN_SCRAPER_H
 
