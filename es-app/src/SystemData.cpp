@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SystemData.cpp
 //
 //  Provides data structures for the game systems and populates and indexes them based
@@ -12,6 +14,7 @@
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
+#include "views/UIModeController.h"
 #include "CollectionSystemManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
@@ -20,10 +23,9 @@
 #include "Platform.h"
 #include "Settings.h"
 #include "ThemeData.h"
-#include "views/UIModeController.h"
 
-#include <pugixml.hpp>
 #include <fstream>
+#include <pugixml.hpp>
 
 std::vector<SystemData*> SystemData::sSystemVector;
 
@@ -32,12 +34,14 @@ SystemData::SystemData(
         const std::string& fullName,
         SystemEnvironmentData* envData,
         const std::string& themeFolder,
-        bool CollectionSystem)
+        bool CollectionSystem,
+        bool CustomCollectionSystem)
         : mName(name),
         mFullName(fullName),
         mEnvData(envData),
         mThemeFolder(themeFolder),
         mIsCollectionSystem(CollectionSystem),
+        mIsCustomCollectionSystem(CustomCollectionSystem),
         mIsGameSystem(true),
         mScrapeFlag(false)
 {
@@ -402,9 +406,11 @@ std::string SystemData::getConfigPath(bool forWrite)
 
 bool SystemData::isVisible()
 {
-   return (getDisplayedGameCount() > 0 ||
-           (UIModeController::getInstance()->isUIModeFull() && mIsCollectionSystem) ||
-           (mIsCollectionSystem && mName == "favorites"));
+    // This function doesn't make much sense at the moment; if a game system does not have any
+    // games available, it will not be processed during startup and will as such not exist.
+    // In the future this function may be used for an option to hide specific systems, but
+    // for the time being all systems will always be visible.
+    return true;
 }
 
 SystemData* SystemData::getNext() const
@@ -486,11 +492,6 @@ std::string SystemData::getThemePath() const
 bool SystemData::hasGamelist() const
 {
     return (Utils::FileSystem::exists(getGamelistPath(false)));
-}
-
-unsigned int SystemData::getGameCount() const
-{
-    return (unsigned int)mRootFolder->getFilesRecursive(GAME).size();
 }
 
 SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
@@ -612,10 +613,12 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
     return gameList.at(target);
 }
 
-unsigned int SystemData::getDisplayedGameCount() const
+std::pair<unsigned int, unsigned int> SystemData::getDisplayedGameCount() const
 {
-    // Pass the flag to only count games that are marked with the flag 'countasgame'.
-    return (unsigned int)mRootFolder->getFilesRecursive(GAME, true, false).size();
+    // Return all games for the system which are marked as 'countasgame'. As this flag is set
+    // by default, normally most games will be included in the number returned from here.
+    // The actual game counting takes place in FileData during sorting.
+    return mRootFolder->getGameCount();
 }
 
 void SystemData::loadTheme()

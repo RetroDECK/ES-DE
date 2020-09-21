@@ -200,7 +200,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 else
                     favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
-                if (favoritesSorting && static_cast<std::string>(getName()) != "recent") {
+                if (favoritesSorting && static_cast<std::string>(
+                        mRoot->getSystem()->getName()) != "recent") {
                     FileData* entryToSelect;
                     // Add favorite flag.
                     if (!getCursor()->getFavorite()) {
@@ -300,9 +301,11 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 }
                 else if (CollectionSystemManager::get()->toggleGameInCollection(entryToUpdate)) {
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
-                    if (foldersOnTop && removedLastFavorite)
+                    if (foldersOnTop && removedLastFavorite &&
+                            !entryToUpdate->getSystem()->isCustomCollection())
                         setCursor(getFirstGameEntry());
-                    else if (removedLastFavorite)
+                    else if (removedLastFavorite &&
+                            !entryToUpdate->getSystem()->isCustomCollection())
                         setCursor(getFirstEntry());
                     return true;
                 }

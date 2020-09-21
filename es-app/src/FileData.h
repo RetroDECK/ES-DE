@@ -51,6 +51,7 @@ public:
     const bool getFavorite();
     const bool getHidden();
     const bool getCountAsGame();
+    const std::pair<unsigned int, unsigned int> getGameCount() { return mGameCount; };
     const bool getExcludeFromScraper();
     const std::vector<FileData*> getChildrenRecursive() const;
     inline FileType getType() const { return mType; }
@@ -123,8 +124,10 @@ public:
                 description(sortDescription) {}
     };
 
-    void sort(ComparisonFunction& comparator, bool ascending = true);
-    void sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending = true);
+    void sort(ComparisonFunction& comparator, bool ascending,
+            std::pair<unsigned int, unsigned int>& gameCount);
+    void sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending,
+            std::pair<unsigned int, unsigned int>& gameCount);
     void sort(const SortType& type, bool mFavoritesOnTop = false);
     MetaDataList metadata;
 
@@ -151,6 +154,8 @@ private:
     std::vector<FileData*> mChildren;
     std::vector<FileData*> mFilteredChildren;
     std::vector<std::string> mFirstLetterIndex;
+    // The pair includes non-favorite games, and favorite games.
+    std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;

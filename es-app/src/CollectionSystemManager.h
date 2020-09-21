@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  CollectionSystemManager.h
 //
 //  Manages collections of the following two types:
@@ -17,7 +19,6 @@
 //  the required re-sort and refresh of the gamelists.
 //
 
-#pragma once
 #ifndef ES_APP_COLLECTION_SYSTEM_MANAGER_H
 #define ES_APP_COLLECTION_SYSTEM_MANAGER_H
 
@@ -111,7 +112,7 @@ private:
     void initCustomCollectionSystems();
     SystemData* getAllGamesCollection();
     SystemData* createNewCollectionEntry(std::string name,
-            CollectionSystemDecl sysDecl, bool index = true);
+            CollectionSystemDecl sysDecl, bool index = true, bool custom = false);
     void populateAutoCollection(CollectionSystemData* sysData);
     void populateCustomCollection(CollectionSystemData* sysData);
 
@@ -126,9 +127,7 @@ private:
     std::vector<std::string> getUserCollectionThemeFolders();
 
     void trimCollectionCount(FileData* rootFolder, int limit);
-
     bool themeFolderExists(std::string folder);
-
     bool includeFileInAutoCollections(FileData* file);
 
     SystemData* mCustomCollectionsBundle;

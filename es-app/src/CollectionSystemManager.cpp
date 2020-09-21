@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  CollectionSystemManager.cpp
 //
 //  Manages collections of the following two types:
@@ -30,8 +32,9 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "ThemeData.h"
-#include <pugixml.hpp>
+
 #include <fstream>
+#include <pugixml.hpp>
 
 std::string myCollectionsName = "collections";
 
@@ -237,8 +240,7 @@ void CollectionSystemManager::updateSystemsList()
     }
 
     // If we were editing a custom collection, and it's no longer enabled, exit edit mode.
-    if (mIsEditingCustom && !mEditingCollectionSystemData->isEnabled)
-    {
+    if (mIsEditingCustom && !mEditingCollectionSystemData->isEnabled) {
         exitEditMode();
     }
 }
@@ -385,11 +387,15 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
             if (sysData.decl.isCustom &&
                     Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
                 // In case of a returned null pointer, we know there is no parent.
-                if (rootFolder->getParent() == nullptr)
+                if (rootFolder->getParent() == nullptr) {
                     ViewController::get()->onFileChanged(rootFolder, FILE_METADATA_CHANGED);
-                else
+                }
+                else {
+                    rootFolder->getParent()->sort(rootFolder->getSortTypeFromString(
+                            rootFolder->getSortTypeString()), mFavoritesSorting);
                     ViewController::get()->onFileChanged(
                             rootFolder->getParent(), FILE_METADATA_CHANGED);
+                }
             }
         }
     }
@@ -591,6 +597,9 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
 
                 ViewController::get()->getGameListView(systemViewToUpdate).get()->
                         remove(collectionEntry, false);
+                systemViewToUpdate->getRootFolder()->sort(rootFolder->getSortTypeFromString(
+                        rootFolder->getSortTypeString()),
+                        Settings::getInstance()->getBool("FavFirstCustom"));
             }
             else {
                 // We didn't find it here, so we should add it.
@@ -601,10 +610,6 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                         onFileChanged(newGame, FILE_METADATA_CHANGED);
                 if (name == "recent")
                     rootFolder->sort(rootFolder->getSortTypeFromString("last played, descending"));
-                else
-                    rootFolder->sort(rootFolder->getSortTypeFromString(
-                            rootFolder->getSortTypeString()),
-                            Settings::getInstance()->getBool("FavFirstCustom"));
 
                 ViewController::get()->onFileChanged(systemViewToUpdate->
                         getRootFolder(), FILE_SORTED);
@@ -612,6 +617,7 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                 // Add to bundle index as well, if needed.
                 if (systemViewToUpdate != sysData)
                     systemViewToUpdate->getIndex()->addToIndex(newGame);
+                refreshCollectionSystems(newGame);
             }
             updateCollectionFolderMetadata(sysData);
         }
@@ -783,15 +789,15 @@ SystemData* CollectionSystemManager::addNewCustomCollection(std::string name)
     decl.name = name;
     decl.longName = name;
 
-    return createNewCollectionEntry(name, decl);
+    return createNewCollectionEntry(name, decl, true, true);
 }
 
 // Create a new empty collection system based on the name and declaration.
 SystemData* CollectionSystemManager::createNewCollectionEntry(
-        std::string name, CollectionSystemDecl sysDecl, bool index)
+        std::string name, CollectionSystemDecl sysDecl, bool index, bool custom)
 {
     SystemData* newSys = new SystemData(
-            name, sysDecl.longName, mCollectionEnvData, sysDecl.themeFolder, true);
+            name, sysDecl.longName, mCollectionEnvData, sysDecl.themeFolder, true, custom);
 
     CollectionSystemData newCollectionData;
     newCollectionData.system = newSys;

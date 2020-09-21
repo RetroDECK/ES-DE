@@ -1,4 +1,6 @@
+//  SPDX-License-Identifier: MIT
 //
+//  EmulationStation Desktop Edition
 //  SystemData.h
 //
 //  Provides data structures for the game systems and populates and indexes them based
@@ -7,7 +9,6 @@
 //  loading.
 //
 
-#pragma once
 #ifndef ES_APP_SYSTEM_DATA_H
 #define ES_APP_SYSTEM_DATA_H
 
@@ -36,7 +37,8 @@ public:
             const std::string& fullName,
             SystemEnvironmentData* envData,
             const std::string& themeFolder,
-            bool CollectionSystem = false);
+            bool CollectionSystem = false,
+            bool CustomCollectionSystem = false);
 
     ~SystemData();
 
@@ -60,8 +62,7 @@ public:
     bool hasGamelist() const;
     std::string getThemePath() const;
 
-    unsigned int getGameCount() const;
-    unsigned int getDisplayedGameCount() const;
+    std::pair<unsigned int, unsigned int> getDisplayedGameCount() const;
     bool getScrapeFlag() { return mScrapeFlag; };
     void setScrapeFlag(bool scrapeflag) { mScrapeFlag = scrapeflag; }
 
@@ -80,6 +81,7 @@ public:
     inline std::vector<SystemData*>::const_reverse_iterator getRevIterator() const
             { return std::find(sSystemVector.crbegin(), sSystemVector.crend(), this); };
     inline bool isCollection() { return mIsCollectionSystem; };
+    inline bool isCustomCollection() { return mIsCustomCollectionSystem; };
     inline bool isGameSystem() { return mIsGameSystem; };
 
     bool isVisible();
@@ -101,6 +103,7 @@ public:
 
 private:
     bool mIsCollectionSystem;
+    bool mIsCustomCollectionSystem;
     bool mIsGameSystem;
     bool mScrapeFlag;  // Only used by scraper GUI to remember which systems to scrape.
     std::string mName;

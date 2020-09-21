@@ -23,7 +23,9 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
 * In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using a different font color
 * Files or folders can now be flagged for exclusion when scraping with the multi-scraper, and for folders it can be set to apply recursively
-* Gamelist sorting now working as expected and is persistent throughout the application session
+* Gamelist sorting is now working as expected and is persistent throughout the application session
+* Game counting is now done during sorting instead of every time a system is selected. This should make the UI more responsive in case of large game libraries
+* Added a system view counter for favorite games in addition to the total number of games
 * Added support for jumping to the start and end of gamelists and menus using the controller trigger buttons (or equivalent keyboard mappings)
 * Full navigation sound support, configurable per theme with a fallback to the built-in sounds if the theme does not support it
 * New default theme rbsimple-DE bundled with the software, this theme is largely based on recalbox-multi by the Recalbox community

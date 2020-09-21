@@ -436,7 +436,8 @@ void FileData::removeChild(FileData* file)
     assert(false);
 }
 
-void FileData::sort(ComparisonFunction& comparator, bool ascending)
+void FileData::sort(ComparisonFunction& comparator, bool ascending,
+        std::pair<unsigned int, unsigned int>& gameCount)
 {
     mFirstLetterIndex.clear();
     mOnlyFolders = true;
@@ -507,6 +508,14 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
     }
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+        // Game count, which will be displayed in the system view.
+        if ((*it)->getType() == GAME && (*it)->getCountAsGame()) {
+            if (!(*it)->getFavorite())
+                gameCount.first++;
+            else
+                gameCount.second++;
+        }
+
         if ((*it)->getType() != FOLDER)
             mOnlyFolders = false;
 
@@ -517,7 +526,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
         }
         // Iterate through any child folders.
         if ((*it)->getChildren().size() > 0)
-            (*it)->sort(comparator, ascending);
+            (*it)->sort(comparator, ascending, gameCount);
     }
 
     // If there are only folders in the gamelist, then it makes sense to still
@@ -540,7 +549,8 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending)
         mFirstLetterIndex.insert(mFirstLetterIndex.begin(), FOLDER_CHAR);
 }
 
-void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending)
+void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending,
+        std::pair<unsigned int, unsigned int>& gameCount)
 {
     mFirstLetterIndex.clear();
     mOnlyFolders = true;
@@ -558,6 +568,14 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
             LOG(LogDebug) << "FileData::sortFavoritesOnTop(): Skipping hidden game '" <<
                         mChildren[i]->getName() << "'" << " (" << mChildren[i]->getPath() << ").";
             continue;
+        }
+
+        // Game count, which will be displayed in the system view.
+        if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
+            if (!mChildren[i]->getFavorite())
+                gameCount.first++;
+            else
+                gameCount.second++;
         }
 
         if (foldersOnTop && mChildren[i]->getType() == FOLDER) {
@@ -664,13 +682,13 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     for (auto it = mChildrenFavoritesFolders.cbegin(); it !=
             mChildrenFavoritesFolders.cend(); it++) {
         if ((*it)->getChildren().size() > 0)
-            (*it)->sortFavoritesOnTop(comparator, ascending);
+            (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
     }
 
     // Iterate through any child folders.
     for (auto it = mChildrenFolders.cbegin(); it != mChildrenFolders.cend(); it++) {
         if ((*it)->getChildren().size() > 0)
-            (*it)->sortFavoritesOnTop(comparator, ascending);
+            (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
     }
 
     if (!ascending) {
@@ -695,10 +713,12 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
 
 void FileData::sort(const SortType& type, bool mFavoritesOnTop)
 {
+    mGameCount = std::make_pair(0, 0);
+
     if (mFavoritesOnTop)
-        sortFavoritesOnTop(*type.comparisonFunction, type.ascending);
+        sortFavoritesOnTop(*type.comparisonFunction, type.ascending, mGameCount);
     else
-        sort(*type.comparisonFunction, type.ascending);
+        sort(*type.comparisonFunction, type.ascending, mGameCount);
 }
 
 FileData::SortType FileData::getSortTypeFromString(std::string desc) {
