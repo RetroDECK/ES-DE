@@ -51,6 +51,9 @@ GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
     mFilters->add("NO GAME VIDEO",
             [](SystemData*, FileData* g) -> bool {
         return g->getVideoPath().empty(); }, false);
+    mFilters->add("FOLDERS ONLY",
+            [](SystemData*, FileData* g) -> bool {
+        return g->getType() == FOLDER; }, false);
     mMenu.addWithLabel("Filter", mFilters);
 
     // Add systems (all systems with an existing platform ID are listed).

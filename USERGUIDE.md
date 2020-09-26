@@ -441,7 +441,7 @@ Scraper service selection, currently ScreenScraper.fr and TheGamesDB.net are sup
 
 **Filter**
 
-Criteria for what games to include in the scraping. It can be set to 'All games', 'Favorite games', 'No metadata', 'No game image' or 'No game video'.
+Criteria for what games to include in the scraping. It can be set to 'All games', 'Favorite games', 'No metadata', 'No game image', 'No game video' or 'Folders only'.
 
 **Systems**
 
@@ -1128,7 +1128,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 | samcoupe              | SAM Coupé                                      |                                      |
 | satellaview           | Nintendo Satellaview                           |                                      |
 | saturn                | Sega Saturn                                    |                                      |
-| scummvm               | ScummVM game engine                            |                                      |
+| scummvm               | ScummVM game engine                            | In separate folder (one folder per game, with complete file structure retained) |
 | sega32x               | Sega Mega Drive 32X                            | Single archive or ROM file in root folder |
 | sega32xjp             | Sega Super 32X (Japan)                         | Single archive or ROM file in root folder |
 | sega32xna             | Sega Genesis 32X (North America)               | Single archive or ROM file in root folder |
