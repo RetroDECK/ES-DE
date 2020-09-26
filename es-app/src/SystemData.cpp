@@ -15,6 +15,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "views/UIModeController.h"
+#include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
@@ -611,6 +612,28 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
     while (currentGame && gameList.at(target) == currentGame);
 
     return gameList.at(target);
+}
+
+void SystemData::sortSystem(bool reloadGamelist)
+{
+    if (getName() == "recent")
+        return;
+
+    bool favoritesSorting;
+
+    if (CollectionSystemManager::get()->getIsCustomCollection(this))
+        favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
+    else
+        favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
+
+    FileData* rootFolder = getRootFolder();
+    setupSystemSortType(rootFolder);
+
+    rootFolder->sort(rootFolder->getSortTypeFromString(
+            rootFolder->getSortTypeString()), favoritesSorting);
+
+    if (reloadGamelist)
+        ViewController::get()->reloadGameListView(this, false);
 }
 
 std::pair<unsigned int, unsigned int> SystemData::getDisplayedGameCount() const

@@ -93,6 +93,8 @@ public:
     static FileData* getRandomCollectionFolder(const FileData* currentFolder);
     FileData* getRandomGame(const FileData* currentGame = nullptr);
 
+    void sortSystem(bool reloadGamelist = true);
+
     // Load or re-load theme.
     void loadTheme();
 

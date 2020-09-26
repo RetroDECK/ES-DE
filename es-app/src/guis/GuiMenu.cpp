@@ -372,22 +372,7 @@ void GuiMenu::openUISettings()
             for (auto it = SystemData::sSystemVector.cbegin(); it !=
                     SystemData::sSystemVector.cend(); it++) {
 
-                bool favoritesSorting;
-
-                if ((*it)->getName() == "recent")
-                    continue;
-
-                if (CollectionSystemManager::get()->getIsCustomCollection(*it))
-                    favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
-                else
-                    favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
-
-                FileData* rootFolder = (*it)->getRootFolder();
-                rootFolder->getSystem()->setupSystemSortType(rootFolder);
-
-                rootFolder->sort(rootFolder->getSortTypeFromString(
-                        rootFolder->getSortTypeString()), favoritesSorting);
-                ViewController::get()->reloadGameListView(*it);
+                (*it)->sortSystem();
 
                 // Jump to the first row of the gamelist.
                 IGameListView* gameList = ViewController::get()->getGameListView((*it)).get();
