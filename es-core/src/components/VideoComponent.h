@@ -48,6 +48,7 @@ public:
     virtual void onShow() override;
     virtual void onHide() override;
     virtual void onPauseVideo() override;
+    virtual void onUnpauseVideo() override;
     virtual void onScreenSaverActivate() override;
     virtual void onScreenSaverDeactivate() override;
     virtual void onGameLaunchedActivate() override;

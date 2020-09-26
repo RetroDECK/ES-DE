@@ -522,6 +522,12 @@ void GuiComponent::onPauseVideo()
         getChild(i)->onPauseVideo();
 }
 
+void GuiComponent::onUnpauseVideo()
+{
+    for (unsigned int i = 0; i < getChildCount(); i++)
+        getChild(i)->onUnpauseVideo();
+}
+
 void GuiComponent::onScreenSaverActivate()
 {
     for (unsigned int i = 0; i < getChildCount(); i++)

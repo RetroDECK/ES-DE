@@ -358,6 +358,13 @@ void VideoComponent::onPauseVideo()
     manageState();
 }
 
+void VideoComponent::onUnpauseVideo()
+{
+    mBlockPlayer = false;
+    mPause = false;
+    manageState();
+}
+
 void VideoComponent::onScreenSaverActivate()
 {
     mBlockPlayer = true;
