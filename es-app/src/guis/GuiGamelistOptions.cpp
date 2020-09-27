@@ -332,7 +332,8 @@ void GuiGamelistOptions::jumpToLetter()
             getParent()->getChildrenListToDisplay();
 
     for (unsigned int i = 0; i < files.size(); i++) {
-        if (mFavoritesSorting && mFirstLetterIndex.front() == FAVORITE_CHAR) {
+        if (mFavoritesSorting && (mFirstLetterIndex.front() == FAVORITE_CHAR ||
+                mFirstLetterIndex.front() == FOLDER_CHAR)) {
             if ((char)toupper(files.at(i)->getSortName().front()) ==
                     letter && !files.at(i)->getFavorite()) {
                 if (!mOnlyHasFolders && mFoldersOnTop && files.at(i)->getType() == FOLDER) {
