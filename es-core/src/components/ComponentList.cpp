@@ -229,7 +229,6 @@ void ComponentList::render(const Transform4x4f& parentTrans)
                     }
                 }
                 else {
-                    it->component->setOpacity(mOpacity);
                     it->component->render(trans);
                 }
             }

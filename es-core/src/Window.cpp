@@ -336,9 +336,10 @@ void Window::render()
             }
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "fade-in") {
                 // Fade-in menu.
-                if (mTopOpacity < 255)
+                if (mTopOpacity < 255) {
                     mTopOpacity = Math::clamp(mTopOpacity+15, 0, 255);
-                top->setOpacity(mTopOpacity);
+                    top->setOpacity(mTopOpacity);
+                }
             }
             #endif
 

@@ -118,6 +118,12 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
             mVertices[0].shaders = Renderer::SHADER_OPACITY;
             mVertices[0].opacity = mOpacity / 255.0;
         }
+        else if (mVertices[0].shaders & Renderer::SHADER_OPACITY) {
+            // We have reached full opacity, so disable the opacity shader and set
+            // the vertex opacity to 1.0.
+            mVertices[0].shaders ^= Renderer::SHADER_OPACITY;
+            mVertices[0].opacity = 1.0;
+        }
         mTexture->bind();
         Renderer::drawTriangleStrips(&mVertices[0], 6*9, trans);
     }
