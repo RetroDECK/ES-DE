@@ -265,49 +265,45 @@ void GuiGamelistOptions::openMetaDataEd()
     p.game = file;
     p.system = file->getSystem();
 
+    std::function<void()> clearGameBtnFunc;
     std::function<void()> deleteGameBtnFunc;
-    std::function<void()> deleteMediaBtnFunc;
 
-    deleteMediaBtnFunc = [this, file] {
-        LOG(LogInfo) << "Deleting all game media files for '" << file->getFullPath() << "'.";
-        ViewController::get()->getGameListView(
-                file->getSystem()).get()->removeMedia(file);
-    };
-
-    if (file->getType() == FOLDER) {
-        deleteGameBtnFunc = [this, file] {
+    clearGameBtnFunc = [this, file] {
+        if (file->getType() == FOLDER) {
             LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder '" <<
                     file->getFullPath() << "'";
-            ViewController::get()->getGameListView(
-                file->getSystem()).get()->removeMedia(file);
+        }
+        else {
+            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file '" <<
+                    file->getFullPath() << "'";
+        }
+        ViewController::get()->getGameListView(file->getSystem()).get()->removeMedia(file);
 
-            // Manually reset all the metadata values, set the name to the actual folder name.
-            const std::vector<MetaDataDecl>& mdd = file->metadata.getMDD();
-            for (auto it = mdd.cbegin(); it != mdd.cend(); it++) {
-                if (it->key == "name") {
-                    file->metadata.set(it->key, file->getDisplayName());
-                    continue;
-                }
-                file->metadata.set(it->key, it->defaultValue);
+        // Manually reset all the metadata values, set the name to the actual file/folder name.
+        const std::vector<MetaDataDecl>& mdd = file->metadata.getMDD();
+        for (auto it = mdd.cbegin(); it != mdd.cend(); it++) {
+            if (it->key == "name") {
+                file->metadata.set(it->key, file->getDisplayName());
+                continue;
             }
+            file->metadata.set(it->key, it->defaultValue);
+        }
 
-            ViewController::get()->reloadGameListView(file->getParent()->getSystem());
-            // Remove the folder entry from the gamelist.xml file.
-            file->setDeletionFlag();
-            file->getParent()->getSystem()->writeMetaData();
-        };
-    }
-    else {
-        deleteGameBtnFunc = [this, file] {
-            LOG(LogInfo) << "Deleting the game file '" << file->getFullPath() <<
-                    "', all its media files and its gamelist.xml entry.";
-            CollectionSystemManager::get()->deleteCollectionFiles(file);
-            ViewController::get()->getGameListView(
-                file->getSystem()).get()->removeMedia(file);
-            ViewController::get()->getGameListView(
-                    file->getSystem()).get()->remove(file, true);
-        };
-    }
+        ViewController::get()->reloadGameListView(file->getParent()->getSystem());
+        // Remove the folder entry from the gamelist.xml file.
+        file->setDeletionFlag();
+        file->getParent()->getSystem()->writeMetaData();
+    };
+
+    deleteGameBtnFunc = [this, file] {
+        LOG(LogInfo) << "Deleting the game file '" << file->getFullPath() <<
+                "', all its media files and its gamelist.xml entry.";
+        CollectionSystemManager::get()->deleteCollectionFiles(file);
+        ViewController::get()->getGameListView(
+            file->getSystem()).get()->removeMedia(file);
+        ViewController::get()->getGameListView(
+                file->getSystem()).get()->remove(file, true);
+    };
 
     if (file->getType() == FOLDER) {
         mWindow->pushGui(new GuiMetaDataEd(mWindow, &file->metadata,
@@ -315,7 +311,7 @@ void GuiGamelistOptions::openMetaDataEd()
                 Utils::FileSystem::getFileName(file->getPath()), std::bind(
                 &IGameListView::onFileChanged, ViewController::get()->getGameListView(
                 file->getSystem()).get(), file, FILE_METADATA_CHANGED),
-                deleteGameBtnFunc, deleteMediaBtnFunc));
+                clearGameBtnFunc, deleteGameBtnFunc));
     }
     else {
         mWindow->pushGui(new GuiMetaDataEd(mWindow, &file->metadata,
@@ -323,7 +319,7 @@ void GuiGamelistOptions::openMetaDataEd()
                 Utils::FileSystem::getFileName(file->getPath()), std::bind(
                 &IGameListView::onFileChanged, ViewController::get()->getGameListView(
                 file->getSystem()).get(), file, FILE_METADATA_CHANGED),
-                deleteGameBtnFunc, deleteMediaBtnFunc));
+                clearGameBtnFunc, deleteGameBtnFunc));
     }
 }
 
