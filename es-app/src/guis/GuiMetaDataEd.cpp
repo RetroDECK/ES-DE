@@ -359,22 +359,19 @@ void GuiMetaDataEd::save()
     // Enter game in index.
     mScraperParams.system->getIndex()->addToIndex(mScraperParams.game);
 
+    // If it's a folder that has been updated, we need to manually sort the gamelist
+    // as CollectionSystemManager ignores folders.
+    if (mScraperParams.game->getType() == FOLDER)
+        mScraperParams.system->sortSystem(false);
+
     if (mSavedCallback)
         mSavedCallback();
 
     // Update respective Collection Entries.
     CollectionSystemManager::get()->refreshCollectionSystems(mScraperParams.game);
 
-    // If it's a folder that has been updated, we need to manually sort and reload the
-    // gamelist as CollectionSystemManager ignores folders.
-    if (mScraperParams.game->getType() == FOLDER) {
-        FileData* systemRoot = mScraperParams.system->getRootFolder();
-        systemRoot->sort(systemRoot->getSortTypeFromString(systemRoot->getSortTypeString()),
-                Settings::getInstance()->getBool("FavoritesFirst"));
-        ViewController::get()->reloadGameListView(mScraperParams.system);
-    }
-
     mScraperParams.system->onMetaDataSavePoint();
+
     // Make sure that the cached background is updated to reflect any possible visible
     // changes to the gamelist (e.g. the game name).
     mWindow->invalidateCachedBackground();
