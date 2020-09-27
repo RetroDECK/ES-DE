@@ -455,12 +455,21 @@ void GuiMetaDataEd::close()
     std::function<void()> closeFunc;
         closeFunc = [this] { delete this; };
 
+    std::function<void()> closeFuncReload;
+        closeFuncReload = [this] {
+            // Always reload the gamelist if media files were updated, even if the user
+            // selected to not save any metadata changes.
+            if (mMediaFilesUpdated)
+                ViewController::get()->reloadGameListView(mScraperParams.system);
+            delete this;
+        };
+
     if (metadataUpdated) {
         // Changes were made, ask if the user wants to save them.
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
             "SAVE CHANGES?",
             "YES", [this, closeFunc] { save(); closeFunc(); },
-            "NO", closeFunc
+            "NO", closeFuncReload
         ));
     }
     else {
