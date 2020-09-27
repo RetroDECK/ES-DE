@@ -19,6 +19,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Initial version, fork from RetroPie EmulationStation 2.10.0rp-dev (master)
 * Reorganization and general overhaul of the menu system, hopefully making it more intuitive and easy to understand
 * Many quality of life improvements and removal of GUI inconsistencies
+* Game systems are now sorted by full names which makes much more sense from a user perspective
 * New game media file logic using a media directory with files matching the ROM names instead of pointing to the media files in gamelist.xml
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
 * In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using a different font color

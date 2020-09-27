@@ -827,7 +827,9 @@ This is only shown if the system is a collection. This will also be described in
 
 ## Metadata editor
 
-In the metadata editor, you can modify the metadata for a game, scrape for game info and media files and delete media files or the entire game.
+In the metadata editor, you can modify the metadata for a game, scrape for game info and media files and delete media files and gamelist entries, or the entire game.
+
+### Metadata entries
 
 The following entries can be modified:
 
@@ -906,6 +908,30 @@ Here you can override the launch command for the game, for example to use a diff
 **Play count**
 
 A statistics counter that counts how many times you're played the game. You normally don't need to touch this, but if you want to, the possibility is there.
+
+### Buttons
+
+For game files, there will be four buttons displayed on the bottom of the metadata editor window, and for folders there will be three buttons. These are their functions:
+
+**Scrape**
+
+Opens the single-game scraper, which is explained earlier in this guide.
+
+**Save**
+
+Saves any changes and closes the window. If no changes have been done, it simply closes the window.
+
+**Cancel**
+
+Cancels any changes and closes the window. If no changes have been done, it simply closes the window.
+
+**Clear**
+
+This will remove any media files for the game file and also remove its entry from gamelist.xml. The actual game file will however _not_ be deleted. A prompt will be shown asking for confirmation.
+
+**Delete** _(Files only)_
+
+This will remove the actual game file and its gamelist.xml entry, as well as any media files. A prompt will be shown asking for confirmation. Note that deletion of folders is not supported as that would potentially be a bit dangerous, instead use the valid operating system tools to handle deletion of folders.
 
 
 ## Screensaver

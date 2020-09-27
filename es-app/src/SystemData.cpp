@@ -354,6 +354,12 @@ bool SystemData::loadConfig()
             sSystemVector.push_back(newSys);
         }
     }
+
+    // Sort systems by their full names.
+    std::sort(std::begin(sSystemVector), std::end(sSystemVector),
+            [](SystemData* a, SystemData* b) {
+                return a->getFullName() < b->getFullName(); });
+
     // Don't load any collections if there are no systems available.
     if (sSystemVector.size() > 0)
         CollectionSystemManager::get()->loadCollectionSystems();
