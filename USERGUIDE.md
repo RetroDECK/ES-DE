@@ -200,12 +200,12 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 ~/ROMs/c64/Tape
 ~/ROMs/c64/Disk
 ~/ROMs/c64/Multidisk
-~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2 (Disk 1 of 2).d64
-~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2 (Disk 2 of 2).d64
+~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2A.D64
+~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2B.D64
 ~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
-~/ROMs/c64/Multidisk/Pirates/Pirates! (Disk 1 of 3).d64
-~/ROMs/c64/Multidisk/Pirates/Pirates! (Disk 2 of 3).d64
-~/ROMs/c64/Multidisk/Pirates/Pirates! (Disk 3 of 3).d64
+~/ROMs/c64/Multidisk/Pirates/PIRAT-E0.d64
+~/ROMs/c64/Multidisk/Pirates/PIRAT-E1.d64
+~/ROMs/c64/Multidisk/Pirates/PIRAT-E2.d64
 ~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
@@ -214,15 +214,15 @@ It's highly recommended to create **.m3u** playlist files for multi-disk images 
 The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
 ```
-Last Ninja 2 (Disk 1 of 2).d64
-Last Ninja 2 (Disk 2 of 2).d64
+LNINJA2A.D64
+LNINJA2B.D64
 ```
 
-It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and the hide the game files, showing only the .m3u playlist. But it's probably quite confusing to start a game that looks like a single-disk game and then be prompted for disk swaps by the emulator.
+It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist. But it's probably quite confusing to start a game that looks like a single-disk game and then be prompted for disk swaps by the emulator (even if the .m3u playlists automates disk swapping, it's still somehow confusing and I wouldn't recommend it).
 
 When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see images and metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it looks ok when browsing, but when a game is part of a collection, the metadata and images will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
 
-As well it's recommended to set the flags **Exclude from game counter** and **Exclude from automatic scraper** for the actual game files so that they are not counted (the game counter is shown on the system view) and not scraped if running the multi-scraper. It's enough to scrape the .m3u playlist file and the game folder. But if you only intend to manually scrape file-per-file then you don't need to bother with this.
+As well it's recommended to set the flags **Exclude from game counter** and **Exclude from automatic scraper** for the actual game files so that they are not counted (the game counter is shown on the system view) and not scraped if running the multi-scraper. It's enough to scrape the .m3u playlist file and the game folder. But if you only intend to manually scrape file-per-file then you don't need to bother with this. For a cleaner look, it's also possible to set the flag **Hide metadata fields** for the game files.
 
 ### Special game installation considerations
 

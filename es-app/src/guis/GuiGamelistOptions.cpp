@@ -289,7 +289,8 @@ void GuiGamelistOptions::openMetaDataEd()
             file->metadata.set(it->key, it->defaultValue);
         }
 
-        ViewController::get()->reloadGameListView(file->getParent()->getSystem());
+        file->getSystem()->sortSystem();
+
         // Remove the folder entry from the gamelist.xml file.
         file->setDeletionFlag();
         file->getParent()->getSystem()->writeMetaData();
