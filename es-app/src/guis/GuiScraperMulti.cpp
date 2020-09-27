@@ -107,6 +107,7 @@ GuiScraperMulti::~GuiScraperMulti()
     for (auto it = SystemData::sSystemVector.cbegin();
             it !=SystemData::sSystemVector.cend(); it++)
         (*it)->sortSystem();
+    ViewController::get()->onPauseVideo();
 }
 
 void GuiScraperMulti::onSizeChanged()

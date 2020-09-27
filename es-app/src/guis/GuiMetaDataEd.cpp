@@ -453,14 +453,19 @@ void GuiMetaDataEd::close()
 //	}
 
     std::function<void()> closeFunc;
-        closeFunc = [this] { delete this; };
+        closeFunc = [this] {
+            ViewController::get()->onPauseVideo();
+            delete this;
+        };
 
     std::function<void()> closeFuncReload;
         closeFuncReload = [this] {
             // Always reload the gamelist if media files were updated, even if the user
             // selected to not save any metadata changes.
-            if (mMediaFilesUpdated)
+            if (mMediaFilesUpdated) {
                 ViewController::get()->reloadGameListView(mScraperParams.system);
+                ViewController::get()->onPauseVideo();
+            }
             delete this;
         };
 
