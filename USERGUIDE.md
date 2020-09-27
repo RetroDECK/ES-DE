@@ -911,7 +911,7 @@ A statistics counter that counts how many times you're played the game. You norm
 
 ### Buttons
 
-For game files, there will be four buttons displayed on the bottom of the metadata editor window, and for folders there will be three buttons. These are their functions:
+For game files, there will be five buttons displayed on the bottom of the metadata editor window, and for folders there will be four. These are their functions:
 
 **Scrape**
 

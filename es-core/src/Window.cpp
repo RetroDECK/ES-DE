@@ -604,8 +604,12 @@ bool Window::cancelScreenSaver()
         mScreenSaver->resetCounts();
 
         // Tell the GUI components the screensaver has stopped.
-        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
             (*it)->onScreenSaverDeactivate();
+            // If the menu is open, pause the video so it won't start playing beneath the menu.
+            if (mGuiStack.front() != mGuiStack.back())
+                (*it)->onPauseVideo();
+        }
 
         mSaturationAmount = 1.0;
         mDimValue = 1.0;

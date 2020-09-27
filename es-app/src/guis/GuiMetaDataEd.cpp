@@ -248,8 +248,11 @@ GuiMetaDataEd::GuiMetaDataEd(
         buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
                 std::bind(&GuiMetaDataEd::fetch, this)));
 
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata",
-            [&] { save(); delete this; }));
+    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata", [&] {
+        save();
+        ViewController::get()->onPauseVideo();
+        delete this;
+    }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel changes",
             [&] { delete this; }));
 
