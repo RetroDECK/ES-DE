@@ -202,21 +202,23 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 ~/ROMs/c64/Multidisk
 ~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2A.D64
 ~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2B.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
+~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2 (playlist).m3u
 ~/ROMs/c64/Multidisk/Pirates/PIRAT-E0.d64
 ~/ROMs/c64/Multidisk/Pirates/PIRAT-E1.d64
 ~/ROMs/c64/Multidisk/Pirates/PIRAT-E2.d64
-~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
+~/ROMs/c64/Multidisk/Pirates/Pirates! (playlist).m3u
 ```
 
 It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
-The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
+The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2 (playlist).m3u:
 
 ```
 LNINJA2A.D64
 LNINJA2B.D64
 ```
+
+It's recommended to not have the exact same filename for the .m3u file as for the directory as that will lead to a quite strange behavior where any game video that was playing when displaying the directory will continue to play when entering the directory (assuming the .m3u playlist is the first file that is selected). For some people this may be the desired behavior though, so the possibility is retained and it's not considered a bug. Putting the text within brackets will make the scraper skip this data so that automatic scraping still works correctly.
 
 It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist. But it's probably quite confusing to start a game that looks like a single-disk game and then be prompted for disk swaps by the emulator (even if the .m3u playlists automates disk swapping, it's still somehow confusing and I wouldn't recommend it).
 
@@ -267,12 +269,13 @@ Ports are not really executed using emulators, but is instead software running n
 
 It's of course possible to add these as single files to the root folder, but normally it's recommended to setup a separate folder per game as there may be more than a single file available per game. You very often want to have easy access to the game setup utility for instance.
 
-Here's an example for running Chocolate-doom and Quakespasm on Unix:
+Here's an example for setting up Chocolate-Doom, GZDoom and DarkPlaces on Unix:
 
 ```
-~/ROMs/ports/Chocolate-doom/chocolate-doom.sh
-~/ROMs/ports/Chocolate-doom/chocolate-doom-setup.sh
-~/ROMs/ports/Quakespasm/quakespasm.sh
+~/ROMs/ports/Chocolate-Doom/chocolate-doom.sh
+~/ROMs/ports/Chocolate-Doom/chocolate-doom-setup.sh
+~/ROMs/ports/GZDoom/gzdoom.sh
+~/ROMs/ports/DarkPlaces/darkplaces.sh
 ```
 
 chocolate-doom.sh:
@@ -289,15 +292,59 @@ chocolate-doom-setup.sh:
 chocolate-doom-setup
 ```
 
-quakespasm.sh:
+gzdoom.sh:
 
 ```
 #!/bin/bash
-cd ~/games/quake # Required to find the .pak files.
-quakespasm
+GZ_dir=/home/myusername/Games/Ports/GZDoom
+
+gzdoom -iwad /home/myusername/Games/Ports/GameData/Doom/doom.wad -config $GZ_dir/gzdoom.ini -savedir $GZ_dir/Savegames \
+-file $GZ_dir/Mods/DoomMetalVol4_44100.wad \
+-file $GZ_dir/Mods/brutalv21.pk3 \
+-file $GZ_dir/Mods/DHTP-2019_11_17.pk3
 ```
 
-Don't forget to make the scripts executable (e.g. 'chmod 755 ./chocolate-doom.sh').
+darkplaces.sh:
+
+```
+#!/bin/bash
+darkplaces -basedir ~/Games/Ports/GameData/Quake
+```
+
+You don't need to set execution permissions for these scripts, ES will run them anyway.
+
+#### Lutris
+
+Lutris runs only on Unix so it's not present in the es_systems.cfg templates for macOS or Windows.
+
+These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game with the following contents:
+
+`lutris lutris:rungame/<game name>`
+
+You can see the list of installed games by running the command `lutris --list-games`.
+
+Here's an example for adding Diablo and Fallout:
+
+```
+~/ROMs/lutris/Diablo.sh
+~/ROMs/lutris/Fallout.sh
+```
+
+Diablo.sh:
+
+```
+lutris lutris:rungame/diablo
+```
+
+Fallout.sh:
+
+```
+lutris lutris:rungame/fallout
+```
+
+You don't need to set execution permissions for these scripts, ES will run them anyway.
+
+As an alternative, you can add the Lutris games to the Ports game system, if you prefer to not separate them. The instructions above are identical in this case except that the shell scripts should be located inside the **ports** directory rather than inside the **lutris** directory.
 
 #### Steam
 
@@ -1113,6 +1160,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 | intellivision         | Mattel Electronics Intellivision               |                                      |
 | chailove              | ChaiLove game engine                           |                                      |
 | kodi                  | Kodi home theatre software                     |                                      |
+| lutris                | Lutris open gaming platform (Unix only)        | Shell script in root folder          |
 | lutro                 | Lutro game engine                              |                                      |
 | macintosh             | Apple Macintosh                                |                                      |
 | mame                  | Multiple Arcade Machine Emulator               | Single archive file following MAME name standard in root folder |

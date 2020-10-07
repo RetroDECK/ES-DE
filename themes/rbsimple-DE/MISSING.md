@@ -35,6 +35,7 @@ Missing (or not updated) theme data
 * intellivision: Intellivision - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * kodi: Kodi home theatre software - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * love: Löve game engine - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* lutris: Lutris open gaming platform - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * macintosh: Apple Macintosh - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * mess: MESS (Multi Emulator Super System) - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * naomi: Sega NAOMI - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg

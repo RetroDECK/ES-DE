@@ -443,6 +443,15 @@
     <theme>kodi</theme>
   </system>
   <system>
+    <name>lutris</name>
+    <fullname>Lutris open gaming platform</fullname>
+    <path>%ROMPATH%/lutris</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
+    <platform>pc</platform>
+    <theme>lutris</theme>
+  </system>
+  <system>
     <name>lutro</name>
     <fullname>Lutro game engine</fullname>
     <path>%ROMPATH%/lutro</path>
