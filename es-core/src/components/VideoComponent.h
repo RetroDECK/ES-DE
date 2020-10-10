@@ -49,6 +49,7 @@ public:
     virtual void onHide() override;
     virtual void onPauseVideo() override;
     virtual void onUnpauseVideo() override;
+    virtual bool isVideoPaused() override { return mPause; }
     virtual void onScreenSaverActivate() override;
     virtual void onScreenSaverDeactivate() override;
     virtual void onGameLaunchedActivate() override;

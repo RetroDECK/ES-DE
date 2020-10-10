@@ -453,7 +453,7 @@ void VideoGameListView::update(int deltaTime)
 {
     if (!mVideoPlaying)
         mVideo->onHide();
-    else
+    else if (mVideoPlaying && !mVideo->isVideoPaused())
         mVideo->onShow();
 
     BasicGameListView::update(deltaTime);

@@ -168,6 +168,7 @@ public:
     virtual void onHide();
     virtual void onPauseVideo();
     virtual void onUnpauseVideo();
+    virtual bool isVideoPaused() { return false; };
     virtual void setRenderView(bool status) { mRenderView = status; }
     virtual bool getRenderView() { return mRenderView; };
 
