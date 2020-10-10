@@ -123,7 +123,6 @@ DetailedGameListView::DetailedGameListView(
 
     initMDLabels();
     initMDValues();
-    updateInfoPanel();
 }
 
 void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
@@ -390,4 +389,10 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
     ret.push_back(&mLastPlayed);
     ret.push_back(&mPlayCount);
     return ret;
+}
+
+void DetailedGameListView::onShow()
+{
+    GuiComponent::onShow();
+    updateInfoPanel();
 }

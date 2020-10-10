@@ -249,6 +249,7 @@ void VideoGameListView::initMDValues()
         values[i]->setDefaultZIndex(40);
 
         float testBot = values[i]->getPosition().y() + values[i]->getSize().y();
+
         if (testBot > bottom)
             bottom = testBot;
     }

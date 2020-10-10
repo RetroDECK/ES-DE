@@ -19,10 +19,9 @@ class DetailedGameListView : public BasicGameListView
 public:
     DetailedGameListView(Window* window, FileData* root);
 
+    virtual void onShow() override;
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
-
     virtual const char* getName() const override { return "detailed"; }
-
     virtual void launch(FileData* game) override;
 
 private:
