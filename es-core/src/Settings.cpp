@@ -161,6 +161,7 @@ void Settings::setDefaults()
 //	mBoolMap["ScraperGenerateThumbnails"] = false;
     mBoolMap["ScraperInteractive"] = true;
     mBoolMap["ScraperSemiautomatic"] = true;
+    mBoolMap["ScraperSearchMetadataName"] = true;
     mBoolMap["ScraperOverwriteData"] = true;
     mBoolMap["ScraperRespectExclusions"] = true;
     mBoolMap["ScraperExcludeRecursively"] = true;

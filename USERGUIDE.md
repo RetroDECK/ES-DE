@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition - User Guide
+# EmulationStation Desktop Edition v1.0.0 - User Guide
 
 **Note:** This document is intended as a quick start guide, for more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to the [INSTALL.md](INSTALL.md) document.
 
@@ -541,6 +541,12 @@ The region to scrape for, affects game names.
 **Language** _(ScreenScraper only)_
 
 Currently only English or World are supported, not really significant at the moment.
+
+**Search using metadata name**
+
+By default ES will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical name of the game file or directory, then turn off this option. The default game name will correspond to the name of the physical file or directory, so for the first scraping of any given game, this option makes no difference.
+
+Note that when using TheGamesDB as scraper service for arcade games (MAME/Neo Geo), the short MAME name will always be expanded to the full game name as this scraper does not properly support searches using MAME names. Also note that you need to save the game name in the metadata editor before you can use it for scraping.
 
 **Overwrite files and data**
 

@@ -159,10 +159,15 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
 
     ScreenScraperRequest::ScreenScraperConfig ssConfig;
 
-    if (params.nameOverride == "")
-        path = ssConfig.getGameSearchUrl(params.game->getCleanName());
-    else
+    if (params.nameOverride == "") {
+        if (Settings::getInstance()->getBool("ScraperSearchMetadataName"))
+            path = ssConfig.getGameSearchUrl(params.game->metadata.get("name"));
+        else
+            path = ssConfig.getGameSearchUrl(params.game->getCleanName());
+    }
+    else {
         path = ssConfig.getGameSearchUrl(params.nameOverride);
+    }
 
     auto& platforms = params.system->getPlatformIds();
     std::vector<unsigned short> p_ids;

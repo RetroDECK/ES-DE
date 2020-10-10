@@ -266,6 +266,14 @@ void GuiScraperMenu::openOtherSettings()
                 scraper_language->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
     }
 
+    // Search using metadata name.
+    auto scrape_metadata_name = std::make_shared<SwitchComponent>(mWindow);
+    scrape_metadata_name->setState(Settings::getInstance()->getBool("ScraperSearchMetadataName"));
+    s->addWithLabel("SEARCH USING METADATA NAME", scrape_metadata_name);
+    s->addSaveFunc([scrape_metadata_name] {
+        Settings::getInstance()->setBool("ScraperSearchMetadataName",
+                scrape_metadata_name->getState()); });
+
     // Overwrite files and data.
     auto scrape_overwrite = std::make_shared<SwitchComponent>(mWindow);
     scrape_overwrite->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));

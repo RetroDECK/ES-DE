@@ -137,14 +137,20 @@ void thegamesdb_generate_json_scraper_requests(
     }
     else {
         if (cleanName.empty()) {
-            // If it's an arcade game (MAME or Neo Geo) then use the regular name.
-            if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
-                    params.system->hasPlatformId(PlatformIds::NEOGEO)) {
-                cleanName = params.game->getName();
-                cleanName = MameNames::getInstance()->getCleanName(params.game->getCleanName());
+            // If the setting to search based on the metadata name has been set, then search
+            // using this regardless of whether the entry is an arcade game.
+            if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
+                cleanName = params.game->metadata.get("name");
             }
             else {
-                cleanName = params.game->getCleanName();
+                // If not searching based on the metadata name, then check whether it's an
+                // arcade game and if so expand to the full game name. This is required as
+                // TheGamesDB has issues with searching using the short MAME names.
+                if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
+                        params.system->hasPlatformId(PlatformIds::NEOGEO))
+                    cleanName = MameNames::getInstance()->getCleanName(params.game->getCleanName());
+                else
+                    cleanName = params.game->getCleanName();
             }
         }
         path += "/Games/ByGameName?" + apiKey +

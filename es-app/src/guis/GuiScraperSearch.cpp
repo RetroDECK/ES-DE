@@ -632,22 +632,32 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 
     stop();
 
-    if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
-            params.system->hasPlatformId(PlatformIds::NEOGEO)) {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
-            // Initial value is last search if there was one, otherwise the clean path name.
-            // If it's a MAME or Neo Geo game, expand the game name accordingly.
-            params.nameOverride.empty() ?
-                    MameNames::getInstance()->getCleanName(params.game->getCleanName()) :
-                    params.nameOverride,
-            searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
+    std::string searchString;
+
+    if (params.nameOverride.empty()) {
+        // If the setting to search based on metadata name has been set, then show this string
+        // regardless of whether the entry is an arcade game and TheGamesDB is used.
+        if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
+            searchString = params.game->metadata.get("name");
+        }
+        else {
+            // If searching based on the actual file name, then expand to the full game name
+            // in case the scraper is set to TheGamesDB and it's an arcade game. This is required
+            // as TheGamesDB has issues with searches using the short MAME names.
+            if (Settings::getInstance()->getString("Scraper") == "thegamesdb" &&
+                    (params.system->hasPlatformId(PlatformIds::ARCADE) ||
+                    params.system->hasPlatformId(PlatformIds::NEOGEO)))
+                searchString = MameNames::getInstance()->getCleanName(params.game->getCleanName());
+            else
+                searchString = params.game->getCleanName();
+        }
     }
-    else {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
-            // Initial value is last search if there was one, otherwise the clean path name.
-            params.nameOverride.empty() ? params.game->getCleanName() : params.nameOverride,
-            searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
+    else  {
+        searchString = params.nameOverride;
     }
+
+    mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
+            searchString, searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
 }
 
 bool GuiScraperSearch::saveMetadata(
