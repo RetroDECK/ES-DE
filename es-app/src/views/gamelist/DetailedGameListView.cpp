@@ -393,6 +393,7 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
 
 void DetailedGameListView::onShow()
 {
+    mLastUpdated = nullptr;
     GuiComponent::onShow();
     updateInfoPanel();
 }

@@ -462,6 +462,7 @@ void VideoGameListView::update(int deltaTime)
 
 void VideoGameListView::onShow()
 {
+    mLastUpdated = nullptr;
     GuiComponent::onShow();
     updateInfoPanel();
 }
