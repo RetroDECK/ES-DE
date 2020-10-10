@@ -450,6 +450,11 @@ std::vector<GuiComponent*> VideoGameListView::getMDValues()
 
 void VideoGameListView::update(int deltaTime)
 {
+    if (!mVideoPlaying)
+        mVideo->onHide();
+    else
+        mVideo->onShow();
+
     BasicGameListView::update(deltaTime);
     mVideo->update(deltaTime);
 }
