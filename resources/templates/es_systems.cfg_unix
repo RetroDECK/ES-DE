@@ -293,7 +293,7 @@
     <name>dos</name>
     <fullname>DOS (PC)</fullname>
     <path>%ROMPATH%/dos</path>
-    <extension>.bat .BAT .com .COM .dos .DOS .exe .EXE .pc .PC .7z .7Z .zip .ZIP</extension>
+    <extension>.bat .BAT .com .COM .exe .EXE .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/dosbox_core_libretro.so %ROM%</command>
     <platform>dos</platform>
     <theme>dos</theme>
@@ -698,7 +698,7 @@
     <name>pc</name>
     <fullname>IBM PC</fullname>
     <path>%ROMPATH%/pc</path>
-    <extension>.bat .BAT .com .COM .dos .DOS .exe .EXE .pc .PC .7z .7Z .zip .ZIP</extension>
+    <extension>.bat .BAT .com .COM .exe .EXE .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L ~/.config/retroarch/cores/dosbox_core_libretro.so %ROM%</command>
     <platform>pc</platform>
     <theme>pc</theme>
