@@ -23,6 +23,9 @@ emulationstation
 EmulationStation
 EmulationStation.exe
 
+# Profiling data
+gmon.out
+
 # build directory
 build
 Debug
