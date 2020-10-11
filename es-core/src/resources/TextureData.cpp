@@ -25,7 +25,7 @@ TextureData::TextureData(
         bool tile)
         : mTile(tile),
         mTextureID(0),
-        mDataRGBA(nullptr),
+        mDataRGBA({}),
         mScalable(false),
         mWidth(0),
         mHeight(0),
@@ -48,54 +48,57 @@ void TextureData::initFromPath(const std::string& path)
     mReloadable = true;
 }
 
-bool TextureData::initSVGFromMemory(const unsigned char* fileData, size_t length)
+bool TextureData::initSVGFromMemory(const std::string& fileData)
 {
-    // If already initialised then don't read again.
+    // If already initialized then don't process it again.
     std::unique_lock<std::mutex> lock(mMutex);
-    if (mDataRGBA)
+
+    if (!mDataRGBA.empty())
         return true;
 
-    // nsvgParse excepts a modifiable, null-terminated string.
-    char* copy = (char*)malloc(length + 1);
-    assert(copy != nullptr);
-    memcpy(copy, fileData, length);
-    copy[length] = '\0';
+    NSVGimage* svgImage = nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI);
 
-    NSVGimage* svgImage = nsvgParse(copy, "px", DPI);
-    free(copy);
     if (!svgImage) {
         LOG(LogError) << "Error parsing SVG image.";
         return false;
     }
 
-    // We want to rasterise this texture at a specific resolution. If the source size
-    // variables are set then use them otherwise set them from the parsed file.
+    // We want to rasterize this texture at a specific resolution. If the source size
+    // variables are set then use them, otherwise get them from the parsed file.
     if ((mSourceWidth == 0.0f) && (mSourceHeight == 0.0f)) {
         mSourceWidth = svgImage->width;
         mSourceHeight = svgImage->height;
     }
-    mWidth = (size_t)Math::round(mSourceWidth);
-    mHeight = (size_t)Math::round(mSourceHeight);
+    mWidth = static_cast<size_t>(Math::round(mSourceWidth));
+    mHeight = static_cast<size_t>(Math::round(mSourceHeight));
 
     if (mWidth == 0) {
-        // Autoscale width to keep aspect.
-        mWidth = (size_t)Math::round(((float)mHeight / svgImage->height) * svgImage->width);
+        // Auto scale width to keep aspect ratio.
+        mWidth = static_cast<size_t>(Math::round((static_cast<float>(mHeight) /
+                svgImage->height) * svgImage->width));
     }
     else if (mHeight == 0) {
-        // Autoscale height to keep aspect.
-        mHeight = (size_t)Math::round(((float)mWidth / svgImage->width) * svgImage->height);
+        // Auto scale height to keep aspect ratio.
+        mHeight = static_cast<size_t>(Math::round((static_cast<float>(mWidth) /
+                svgImage->width) * svgImage->height));
     }
 
-    unsigned char* dataRGBA = new unsigned char[mWidth * mHeight * 4];
+    std::vector<unsigned char> tempVector;
+    tempVector.reserve(mWidth * mHeight * 4);
 
     NSVGrasterizer* rast = nsvgCreateRasterizer();
-    nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, dataRGBA,
-            (int)mWidth, (int)mHeight, (int)mWidth * 4);
+
+    nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, tempVector.data(),
+            static_cast<int>(mWidth), static_cast<int>(mHeight), static_cast<int>(mWidth) * 4);
+
+    // This is important in order to avoid memory leaks.
     nsvgDeleteRasterizer(rast);
+    nsvgDelete(svgImage);
 
-    ImageIO::flipPixelsVert(dataRGBA, mWidth, mHeight);
+    mDataRGBA.insert(mDataRGBA.begin(),
+            tempVector.data(), tempVector.data() + (mWidth * mHeight * 4));
 
-    mDataRGBA = dataRGBA;
+    ImageIO::flipPixelsVert(mDataRGBA.data(), mWidth, mHeight);
 
     return true;
 }
@@ -104,25 +107,25 @@ bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t leng
 {
     size_t width, height;
 
-    // If already initialised then don't read again.
+    // If already initialized then don't process it again.
     {
         std::unique_lock<std::mutex> lock(mMutex);
-        if (mDataRGBA)
+        if (!mDataRGBA.empty())
             return true;
     }
 
     std::vector<unsigned char> imageRGBA = ImageIO::loadFromMemoryRGBA32(
-            (const unsigned char*)(fileData), length, width, height);
+            static_cast<const unsigned char*>(fileData), length, width, height);
 
     if (imageRGBA.size() == 0) {
         LOG(LogError) << "Could not initialize texture from memory, invalid data!  (file path: "
-                << mPath << ", data ptr: " << (size_t)fileData <<
+                << mPath << ", data ptr: " << reinterpret_cast<size_t>(fileData) <<
                 ", reported size: " << length << ")";
         return false;
     }
 
-    mSourceWidth = (float) width;
-    mSourceHeight = (float) height;
+    mSourceWidth = static_cast<float>(width);
+    mSourceHeight = static_cast<float>(height);
     mScalable = false;
 
     return initFromRGBA(imageRGBA.data(), width, height);
@@ -130,14 +133,14 @@ bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t leng
 
 bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size_t height)
 {
-    // If already initialised then don't read again.
+    // If already initialized then don't process it again.
     std::unique_lock<std::mutex> lock(mMutex);
-    if (mDataRGBA)
+    if (!mDataRGBA.empty())
         return true;
 
-    // Take a copy.
-    mDataRGBA = new unsigned char[width * height * 4];
-    memcpy(mDataRGBA, dataRGBA, width * height * 4);
+    mDataRGBA.reserve(width * height * 4);
+    mDataRGBA.insert(mDataRGBA.begin(), dataRGBA, dataRGBA+(width * height * 4));
+
     mWidth = width;
     mHeight = height;
     return true;
@@ -154,10 +157,13 @@ bool TextureData::load()
         // Is it an SVG?
         if (mPath.substr(mPath.size() - 4, std::string::npos) == ".svg") {
             mScalable = true;
-            retval = initSVGFromMemory((const unsigned char*)data.ptr.get(), data.length);
+            std::string dataString;
+            dataString.assign(std::string(reinterpret_cast<char*>(data.ptr.get()), data.length));
+            retval = initSVGFromMemory(dataString);
         }
         else {
-            retval = initImageFromMemory((const unsigned char*)data.ptr.get(), data.length);
+            retval = initImageFromMemory(static_cast<const unsigned char*>(data.ptr.get()),
+                    data.length);
         }
     }
     return retval;
@@ -166,30 +172,27 @@ bool TextureData::load()
 bool TextureData::isLoaded()
 {
     std::unique_lock<std::mutex> lock(mMutex);
-    if (mDataRGBA || (mTextureID != 0))
+    if (!mDataRGBA.empty() || mTextureID != 0)
         return true;
+
     return false;
 }
 
 bool TextureData::uploadAndBind()
 {
-    // See if it's already been uploaded.
+    // Check if it has already been uploaded.
     std::unique_lock<std::mutex> lock(mMutex);
     if (mTextureID != 0) {
         Renderer::bindTexture(mTextureID);
     }
     else {
-        // Load it if necessary.
-        if (!mDataRGBA)
-            return false;
-
         // Make sure we're ready to upload.
-        if ((mWidth == 0) || (mHeight == 0) || (mDataRGBA == nullptr))
+        if (mWidth == 0 || mHeight == 0 || mDataRGBA.empty())
             return false;
 
         // Upload texture.
         mTextureID = Renderer::createTexture(Renderer::Texture::RGBA, true,
-                mTile, mWidth, mHeight, mDataRGBA);
+                mTile, mWidth, mHeight, mDataRGBA.data());
     }
     return true;
 }
@@ -206,8 +209,11 @@ void TextureData::releaseVRAM()
 void TextureData::releaseRAM()
 {
     std::unique_lock<std::mutex> lock(mMutex);
-    delete[] mDataRGBA;
-    mDataRGBA = 0;
+    std::vector<unsigned char> swapVector;
+    if (!mDataRGBA.empty()) {
+        mDataRGBA.clear();
+        mDataRGBA.swap(swapVector);
+    }
 }
 
 size_t TextureData::width()
@@ -252,7 +258,7 @@ void TextureData::setSourceSize(float width, float height)
 
 size_t TextureData::getVRAMUsage()
 {
-    if ((mTextureID != 0) || (mDataRGBA != nullptr))
+    if (mTextureID != 0 || !mDataRGBA.empty())
         return mWidth * mHeight * 4;
     else
         return 0;

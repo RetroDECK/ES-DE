@@ -11,6 +11,7 @@
 
 #include <mutex>
 #include <string>
+#include <vector>
 
 class TextureResource;
 
@@ -24,7 +25,7 @@ public:
 
     //!!!! Needs to be canonical path. Caller should check for duplicates before calling this.
     void initFromPath(const std::string& path);
-    bool initSVGFromMemory(const unsigned char* fileData, size_t length);
+    bool initSVGFromMemory(const std::string& fileData);
     bool initImageFromMemory(const unsigned char* fileData, size_t length);
     bool initFromRGBA(const unsigned char* dataRGBA, size_t width, size_t height);
 
@@ -34,7 +35,7 @@ public:
     bool isLoaded();
 
     // Upload the texture to VRAM if necessary and bind.
-    // Returns true if bound ok or false if either not loaded.
+    // Returns true if bound correctly.
     bool uploadAndBind();
 
     // Release the texture from VRAM.
@@ -59,7 +60,7 @@ private:
     bool mTile;
     std::string mPath;
     unsigned int mTextureID;
-    unsigned char* mDataRGBA;
+    std::vector<unsigned char> mDataRGBA;
     size_t mWidth;
     size_t mHeight;
     float mSourceWidth;
