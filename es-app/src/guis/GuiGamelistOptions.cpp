@@ -290,6 +290,7 @@ void GuiGamelistOptions::openMetaDataEd()
         }
 
         file->getSystem()->sortSystem();
+        mWindow->invalidateCachedBackground();
 
         // Remove the folder entry from the gamelist.xml file.
         file->setDeletionFlag();
@@ -304,6 +305,7 @@ void GuiGamelistOptions::openMetaDataEd()
             file->getSystem()).get()->removeMedia(file);
         ViewController::get()->getGameListView(
                 file->getSystem()).get()->remove(file, true);
+        mWindow->invalidateCachedBackground();
     };
 
     if (file->getType() == FOLDER) {
