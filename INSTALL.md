@@ -65,7 +65,15 @@ You can then profile the code with valgrind:
 valgrind --tool=callgrind ./emulationstation
 ```
 
-The output file from valgrind can be loaded into a tool such as KCachegrind for data analysis.
+The output file can be loaded into a tool such as KCachegrind for data analysis.
+
+To check for memory leaks, the following command is useful:
+
+```
+valgrind --tool=memcheck --leak-check=full ./emulationstation
+```
+
+Note that you can also profile either a normal build or a debug build, but it's recommended to use the profiling build for reasons that is beyond the scope of this document.
 
 To build ES with CEC support, add the corresponding option, for example:
 

@@ -51,10 +51,8 @@ static void display(void* /*data*/, void* /*id*/) {
 }
 
 VideoVlcComponent::VideoVlcComponent(Window* window, std::string subtitles)
-        : VideoComponent(window), mMediaPlayer(nullptr)
+        : VideoComponent(window), mMediaPlayer(nullptr), mContext({})
 {
-    memset(&mContext, 0, sizeof(mContext));
-
     // Get an empty texture for rendering the video.
     mTexture = TextureResource::get("");
 
@@ -65,6 +63,7 @@ VideoVlcComponent::VideoVlcComponent(Window* window, std::string subtitles)
 VideoVlcComponent::~VideoVlcComponent()
 {
     stopVideo();
+    mTexture.reset();
 }
 
 void VideoVlcComponent::setResize(float width, float height)

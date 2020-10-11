@@ -49,7 +49,8 @@ GuiMetaDataEd::GuiMetaDataEd(
         mMetaData(md),
         mSavedCallback(saveCallback),
         mClearGameFunc(clearGameFunc),
-        mDeleteGameFunc(deleteGameFunc)
+        mDeleteGameFunc(deleteGameFunc),
+        mMediaFilesUpdated(false)
 {
     addChild(&mBackground);
     addChild(&mGrid);

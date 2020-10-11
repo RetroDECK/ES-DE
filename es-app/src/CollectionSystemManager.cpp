@@ -98,6 +98,13 @@ CollectionSystemManager::~CollectionSystemManager()
             saveCustomCollection(it->second.system);
         delete it->second.system;
     }
+
+    // Delete the auto collections systems.
+    for (auto it = mAutoCollectionSystemsData.cbegin();
+            it != mAutoCollectionSystemsData.cend(); it++) {
+        delete (*it).second.system;
+    }
+
     sInstance = nullptr;
 }
 

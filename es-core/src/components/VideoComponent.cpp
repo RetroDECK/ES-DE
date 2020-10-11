@@ -74,6 +74,7 @@ VideoComponent::VideoComponent(
     mGameLaunched(false),
     mBlockPlayer(false),
     mTargetIsMax(false),
+    mFadeIn(1.0),
     mTargetSize(0, 0)
 {
     // Setup the default configuration.

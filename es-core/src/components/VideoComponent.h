@@ -108,7 +108,6 @@ protected:
     unsigned mVideoHeight;
     Vector2f mTargetSize;
     std::shared_ptr<TextureResource> mTexture;
-    float mFadeIn; // Used for fading in the video screensaver.
     std::string mStaticImagePath;
     ImageComponent mStaticImage;
 
@@ -125,6 +124,7 @@ protected:
     bool mGameLaunched;
     bool mBlockPlayer;
     bool mTargetIsMax;
+    float mFadeIn; // Used for fading in the video screensaver.
 
     Configuration mConfig;
 };

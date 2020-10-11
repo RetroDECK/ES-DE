@@ -16,6 +16,7 @@ SwitchComponent::SwitchComponent(
         : GuiComponent(window),
         mImage(window),
         mState(state),
+        mOriginalValue(state),
         mColorOriginalValue(DEFAULT_COLORSHIFT),
         mColorChangedValue(DEFAULT_COLORSHIFT)
 {
