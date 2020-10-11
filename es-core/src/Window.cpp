@@ -50,6 +50,9 @@ Window::~Window()
     while (peekGui())
         delete peekGui();
 
+    if (mInfoPopup)
+        delete mInfoPopup;
+
     delete mHelp;
 }
 

@@ -71,6 +71,8 @@ GuiInfoPopup::GuiInfoPopup(
 
 GuiInfoPopup::~GuiInfoPopup()
 {
+    delete mGrid;
+    delete mFrame;
 }
 
 void GuiInfoPopup::render(const Transform4x4f& /*parentTrans*/)
