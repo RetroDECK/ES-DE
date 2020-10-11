@@ -349,6 +349,7 @@ bool SystemData::loadConfig()
             LOG(LogDebug) << "SystemData::loadConfig(): System \"" << name <<
                     "\" has no games, ignoring it.";
             delete newSys;
+            delete envData;
         }
         else {
             sSystemVector.push_back(newSys);
