@@ -13,9 +13,10 @@
 #include "renderers/Renderer.h"
 #include "Window.h"
 
-#define AUTO_SCROLL_RESET_DELAY 3000 // ms to reset to top after we reach the bottom.
-#define AUTO_SCROLL_DELAY 2000 // ms to wait before we start to scroll.
-#define AUTO_SCROLL_SPEED 130 // ms between scrolls.
+#define AUTO_SCROLL_RESET_DELAY 6000 // Time before resetting to top after we reach the bottom.
+#define AUTO_SCROLL_DELAY 2600 // Time to wait before we start to scroll.
+#define AUTO_SCROLL_SPEED 30 // Relative scrolling speed (lower is faster).
+#define AUTO_WIDTH_MOD 350 // Line width modifier to use to calculate scrolling speed.
 
 ScrollableContainer::ScrollableContainer(
         Window* window)
@@ -87,11 +88,13 @@ void ScrollableContainer::update(int deltaTime)
         return;
     }
 
-    if (mAutoScrollSpeed != 0) {
-        mAutoScrollAccumulator += deltaTime;
+    const Vector2f contentSize = getContentSize();
+    // Scale speed by the text width, more text per line leads to slower scrolling.
+    const float widthMod = contentSize.x() / AUTO_WIDTH_MOD;
 
-        // Scale speed by our width! more text per line = slower scrolling.
-        const float widthMod = (680.0f / getSize().x());
+    if (mAutoScrollSpeed != 0) {
+        mAutoScrollAccumulator += deltaTime / widthMod;
+
         while (mAutoScrollAccumulator >= mAutoScrollSpeed) {
             mScrollPos += mScrollDir;
             mAutoScrollAccumulator -= mAutoScrollSpeed;
@@ -104,7 +107,6 @@ void ScrollableContainer::update(int deltaTime)
     if (mScrollPos.y() < 0)
         mScrollPos[1] = 0;
 
-    const Vector2f contentSize = getContentSize();
     if (mScrollPos.x() + getSize().x() > contentSize.x()) {
         mScrollPos[0] = contentSize.x() - getSize().x();
         mAtEnd = true;
