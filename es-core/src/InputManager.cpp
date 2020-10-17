@@ -289,9 +289,9 @@ bool InputManager::parseEvent(const SDL_Event& ev, Window* window)
             return false;
 
         if (ev.key.keysym.sym == SDLK_F4) {
-            SDL_Event* quit = new SDL_Event();
-            quit->type = SDL_QUIT;
-            SDL_PushEvent(quit);
+            SDL_Event quit;
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
             return false;
         }
 

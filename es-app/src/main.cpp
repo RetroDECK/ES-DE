@@ -511,18 +511,18 @@ int main(int argc, char* argv[])
             window.pushGui(new GuiMsgBox(&window, helpStyle,
                 errorMsg.c_str(),
                 "QUIT", [] {
-                    SDL_Event* quit = new SDL_Event();
-                    quit->type = SDL_QUIT;
-                    SDL_PushEvent(quit);
+                    SDL_Event quit;
+                    quit.type = SDL_QUIT;
+                    SDL_PushEvent(&quit);
                 }, "", nullptr, "", nullptr, true));
         }
         else if (returnCodeValue == NO_ROMS) {
             auto updateVal = [](const std::string& newROMDirectory) {
                 Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
                 Settings::getInstance()->saveFile();
-                SDL_Event* quit = new SDL_Event();
-                quit->type = SDL_QUIT;
-                SDL_PushEvent(quit);
+                SDL_Event quit;
+                quit.type = SDL_QUIT;
+                SDL_PushEvent(&quit);
             };
 
             window.pushGui(new GuiMsgBox(&window, helpStyle, errorMsg.c_str(),
@@ -553,9 +553,9 @@ int main(int argc, char* argv[])
                         true));
             },
             "QUIT", [] {
-                SDL_Event* quit = new SDL_Event();
-                quit->type = SDL_QUIT;
-                SDL_PushEvent(quit);
+                SDL_Event quit;
+                quit.type = SDL_QUIT;
+                SDL_PushEvent(&quit);
             }, "", nullptr, true));
         }
     }

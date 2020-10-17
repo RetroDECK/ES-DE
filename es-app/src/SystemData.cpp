@@ -513,7 +513,7 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
     if (total < 2)
         return nullptr;
 
-    SystemData* randomSystem;
+    SystemData* randomSystem = nullptr;
 
     do {
         // Get a random number in range.
