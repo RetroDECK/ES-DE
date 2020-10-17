@@ -68,13 +68,14 @@ FileData::FileData(
 
 FileData::~FileData()
 {
-    if (mParent)
-        mParent->removeChild(this);
-
     if (mType == GAME)
         mSystem->getIndex()->removeFromIndex(this);
 
-    mChildren.clear();
+    if (mParent)
+        mParent->removeChild(this);
+
+    while (mChildren.size() > 0)
+        delete (mChildren.front());
 }
 
 std::string FileData::getDisplayName() const
