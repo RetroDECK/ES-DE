@@ -102,8 +102,12 @@ public:
         std::string type;
 
         struct Property {
-            void operator= (const Vector4f& value) { r = value;
-                    v = Vector2f(value.x(), value.y()); }
+            void operator= (const Vector4f& value)
+            {
+                r = value;
+                const Vector4f initVector = value;
+                v = Vector2f(initVector.x(), initVector.y());
+            }
             void operator= (const Vector2f& value) { v = value; }
             void operator= (const std::string& value) { s = value; }
             void operator= (const unsigned int& value) { i = value; }

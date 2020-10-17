@@ -86,7 +86,7 @@ public:
 
 private:
     // Start the video immediately.
-    virtual void startVideo() = 0;
+    virtual void startVideo() {};
     // Stop the video.
     virtual void stopVideo() {};
     // Pause the video when a game has been launched.

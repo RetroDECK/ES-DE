@@ -542,7 +542,6 @@ void GuiScraperSearch::update(int deltaTime)
 
     if (mMDRetrieveURLsHandle && mMDRetrieveURLsHandle->status() != ASYNC_IN_PROGRESS) {
         if (mMDRetrieveURLsHandle->status() == ASYNC_DONE) {
-            auto status_media = mMDRetrieveURLsHandle->status();
             auto results_media = mMDRetrieveURLsHandle->getResults();
             auto statusString_media = mMDRetrieveURLsHandle->getStatusString();
             auto results_scrape = mScraperResults;

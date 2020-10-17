@@ -54,13 +54,13 @@ make
 ```
 Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
 
-To create a profiling build, run this:
+To create a profiling build (optimized with debug symbols), run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Profiling .
 make
 ```
 
-You can then profile the code with valgrind:
+You can then profile the code with Valgrind:
 ```
 valgrind --tool=callgrind ./emulationstation
 ```
@@ -73,7 +73,16 @@ To check for memory leaks, the following command is useful:
 valgrind --tool=memcheck --leak-check=full ./emulationstation
 ```
 
-Note that you can also profile either a normal build or a debug build, but it's recommended to use the profiling build for reasons that is beyond the scope of this document.
+Note that you can also profile either a normal build or a debug build, but it's normally recommended to use the profiling build as it's compiled with optimizations while retaining the debug symbols. But if you need to alternate between Valgrind and the normal debugger the optimizations can be very annoying and therefore a normal debug build could be recommended in that instance.
+
+Another useful tool is **scan-build**, assuming you use Clang/LLVM. This is a static analyzer that runs during compilation to provide a very helpful HTML report of potential bugs (well it should be actual bugs but some false positives could be included). You need to run it for both the cmake and make steps, here's an example:
+
+```
+scan-build cmake -DCMAKE_BUILD_TYPE=Debug .
+scan-build make -j6
+```
+
+You open the report with the **scan-view** command which lets you browse it using your web browser. Note that the compilation time is much higher when using the static analyzer compared to a normal compilation. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it on a separate copy of the ES source folder to avoid having to clean up all this extra data when the analysis has been completed.
 
 To build ES with CEC support, add the corresponding option, for example:
 

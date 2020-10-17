@@ -591,9 +591,11 @@ std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData
             else if (t == "text")
                 comp = new TextComponent(window);
 
-            comp->setDefaultZIndex(10);
-            comp->applyTheme(theme, view, *it, ThemeFlags::ALL);
-            comps.push_back(comp);
+            if (comp) {
+                comp->setDefaultZIndex(10);
+                comp->applyTheme(theme, view, *it, ThemeFlags::ALL);
+                comps.push_back(comp);
+            }
         }
     }
 
