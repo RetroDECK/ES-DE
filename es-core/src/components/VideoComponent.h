@@ -16,10 +16,6 @@
 
 class TextureResource;
 
-std::string	getTitlePath();
-std::string	getTitleFolder();
-void writeSubtitle(const char* gameName, const char* systemName, bool always);
-
 class VideoComponent : public GuiComponent
 {
     // Structure that groups together the configuration of the video component.

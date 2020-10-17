@@ -25,10 +25,9 @@ public:
     int getVolume() const;
 };
 
-VideoPlayerComponent::VideoPlayerComponent(Window* window, std::string path) :
+VideoPlayerComponent::VideoPlayerComponent(Window* window) :
     VideoComponent(window),
-    mPlayerPid(-1),
-    subtitlePath(path)
+    mPlayerPid(-1)
 {
 }
 
@@ -176,45 +175,13 @@ void VideoPlayerComponent::startVideo()
                     argv[8] = std::to_string(OMXVolume).c_str();
                 }
 
-                // Test if there's a path for possible subtitles, meaning we're a screensaver video.
-                if (!subtitlePath.empty()) {
-                    // If we are rendering a screensaver.
-                    // Check if we want to stretch the image.
-                    if (Settings::getInstance()->getBool("ScreenSaverStretchVideos"))
-                        argv[6] = "stretch";
-
-                    if (Settings::getInstance()->getString("ScreenSaverGameInfo") != "never") {
-                        // If we have chosen to render subtitles.
-                        argv[15] = "--subtitles";
-                        argv[16] = subtitlePath.c_str();
-                        argv[17] = mPlayingVideoPath.c_str();
-                        argv[18] = "--font";
-                        argv[19] = Settings::getInstance()->getString("SubtitleFont").c_str();
-                        argv[20] = "--italic-font";
-                        argv[21] = Settings::getInstance()->
-                                getString("SubtitleItalicFont").c_str();
-                        argv[22] = "--font-size";
-                        argv[23] = std::to_string(Settings::getInstance()->
-                                getInt("SubtitleSize")).c_str();
-                        argv[24] = "--align";
-                        argv[25] = Settings::getInstance()->
-                                getString("SubtitleAlignment").c_str();
-                    }
-                    else {
-                        // If we have chosen NOT to render subtitles in the screensaver.
-                        argv[15] = mPlayingVideoPath.c_str();
-                    }
-                }
-                else {
-                    // If we are rendering a video gamelist.
-                    if (!mTargetIsMax)
-                        argv[6] = "stretch";
-                    argv[15] = mPlayingVideoPath.c_str();
-                }
+                // If we are rendering a video gamelist.
+                if (!mTargetIsMax)
+                    argv[6] = "stretch";
+                argv[15] = mPlayingVideoPath.c_str();
 
                 argv[10] = Settings::getInstance()->getString("OMXAudioDev").c_str();
 
-                //const char* argv[] = args;
                 const char* env[] = { "LD_LIBRARY_PATH=/opt/vc/libs:/usr/lib/omxplayer", NULL };
 
                 // Redirect stdout.

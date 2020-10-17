@@ -18,41 +18,6 @@
 
 #define SCREENSAVER_FADE_IN_TIME 800
 
-std::string getTitlePath() {
-    std::string titleFolder = getTitleFolder();
-    return titleFolder + "last_title.srt";
-}
-
-std::string getTitleFolder() {
-    std::string home = Utils::FileSystem::getHomePath();
-    return home + "/.emulationstation/tmp/";
-}
-
-void writeSubtitle(const char* gameName, const char* systemName, bool always)
-{
-    FILE* file = fopen(getTitlePath().c_str(), "w");
-    int end = static_cast<int>((Settings::getInstance()->
-            getInt("ScreenSaverSwapVideoTimeout") / (1000)));
-
-    if (always)
-        fprintf(file, "1\n00:00:01,000 --> 00:00:%d,000\n", end);
-    else
-        fprintf(file, "1\n00:00:01,000 --> 00:00:08,000\n");
-
-    fprintf(file, "%s\n", gameName);
-    fprintf(file, "<i>%s</i>\n\n", systemName);
-
-    if (!always) {
-        if (end > 12)
-            fprintf(file, "2\n00:00:%d,000 --> 00:00:%d,000\n%s\n<i>%s</i>\n",
-                    end-4, end, gameName, systemName);
-    }
-
-    fflush(file);
-    fclose(file);
-    file = nullptr;
-}
-
 void VideoComponent::setScreensaverMode(bool isScreensaver)
 {
     mScreensaverMode = isScreensaver;
@@ -84,19 +49,12 @@ VideoComponent::VideoComponent(
 
     if (mWindow->getGuiStackSize() > 1)
         topWindow(false);
-
-    std::string path = getTitleFolder();
-
-    if (!Utils::FileSystem::exists(path))
-        Utils::FileSystem::createDirectory(path);
 }
 
 VideoComponent::~VideoComponent()
 {
     // Stop any currently running video.
     stopVideo();
-    // Delete subtitle file, if existing.
-    remove(getTitlePath().c_str());
 }
 
 void VideoComponent::onOriginChanged()

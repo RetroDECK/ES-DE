@@ -36,9 +36,9 @@ class VideoVlcComponent : public VideoComponent
     };
 
 public:
-    static void setupVLC(std::string subtitles);
+    static void setupVLC();
 
-    VideoVlcComponent(Window* window, std::string subtitles);
+    VideoVlcComponent(Window* window);
     virtual ~VideoVlcComponent();
 
     void render(const Transform4x4f& parentTrans) override;

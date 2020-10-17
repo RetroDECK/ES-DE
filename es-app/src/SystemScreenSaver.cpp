@@ -50,17 +50,13 @@ SystemScreenSaver::SystemScreenSaver(
     mStopBackgroundAudio(true)
 {
     mWindow->setScreenSaver(this);
-    std::string path = getTitleFolder();
-    if (!Utils::FileSystem::exists(path))
-        Utils::FileSystem::createDirectory(path);
+
     srand((unsigned int)time(nullptr));
     mVideoChangeTime = 30000;
 }
 
 SystemScreenSaver::~SystemScreenSaver()
 {
-    // Delete subtitle file, if it exists.
-    remove(getTitlePath().c_str());
     mCurrentGame = nullptr;
     delete mVideoScreensaver;
     delete mImageScreensaver;
@@ -108,11 +104,11 @@ void SystemScreenSaver::startScreenSaver()
             #if defined(_RPI_)
             // Create the correct type of video component
             if (Settings::getInstance()->getBool("ScreenSaverOmxPlayer"))
-                mVideoScreensaver = new VideoPlayerComponent(mWindow, getTitlePath());
+                mVideoScreensaver = new VideoPlayerComponent(mWindow);
             else
-                mVideoScreensaver = new VideoVlcComponent(mWindow, getTitlePath());
+                mVideoScreensaver = new VideoVlcComponent(mWindow);
             #else
-            mVideoScreensaver = new VideoVlcComponent(mWindow, getTitlePath());
+            mVideoScreensaver = new VideoVlcComponent(mWindow);
             #endif
 
             mVideoScreensaver->topWindow(true);
@@ -332,12 +328,6 @@ void SystemScreenSaver::pickGameListNode(unsigned long index,
                     mCurrentGame = (*itf);
 
                     // End of getting FileData.
-                    #if defined(_RPI_)
-                    if (Settings::getInstance()->getString("ScreenSaverGameInfo") != "never")
-                        writeSubtitle(mGameName.c_str(), mSystemName.c_str(),
-                                (Settings::getInstance()->getString("ScreenSaverGameInfo") ==
-                                "always"));
-                    #endif
                     return;
                 }
             }

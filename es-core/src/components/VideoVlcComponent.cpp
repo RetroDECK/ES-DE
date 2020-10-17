@@ -50,14 +50,14 @@ static void display(void* /*data*/, void* /*id*/) {
     // Data to be displayed.
 }
 
-VideoVlcComponent::VideoVlcComponent(Window* window, std::string subtitles)
+VideoVlcComponent::VideoVlcComponent(Window* window)
         : VideoComponent(window), mMediaPlayer(nullptr), mContext({})
 {
     // Get an empty texture for rendering the video.
     mTexture = TextureResource::get("");
 
     // Make sure VLC has been initialized.
-    setupVLC(subtitles);
+    setupVLC();
 }
 
 VideoVlcComponent::~VideoVlcComponent()
@@ -209,23 +209,11 @@ void VideoVlcComponent::freeContext()
     }
 }
 
-void VideoVlcComponent::setupVLC(std::string subtitles)
+void VideoVlcComponent::setupVLC()
 {
     // If VLC hasn't been initialised yet then do it now.
     if (!mVLC) {
-        const char** args;
-        const char* newargs[] = { "--quiet", "--sub-file", subtitles.c_str() };
-        const char* singleargs[] = { "--quiet" };
-        int argslen = 0;
-
-        if (!subtitles.empty()) {
-            argslen = sizeof(newargs) / sizeof(newargs[0]);
-            args = newargs;
-        }
-        else {
-            argslen = sizeof(singleargs) / sizeof(singleargs[0]);
-            args = singleargs;
-        }
+        const char* args[] = { "--quiet" };
 
         #if defined(__APPLE__)
         // It's required to set the VLC_PLUGIN_PATH variable on macOS, or the libVLC
@@ -237,7 +225,7 @@ void VideoVlcComponent::setupVLC(std::string subtitles)
             setenv("VLC_PLUGIN_PATH", "/Applications/VLC.app/Contents/MacOS/plugins/", 1);
         #endif
 
-        mVLC = libvlc_new(argslen, args);
+        mVLC = libvlc_new(1, args);
     }
 }
 
@@ -319,7 +307,6 @@ void VideoVlcComponent::startVideo()
                 libvlc_media_tracks_release(tracks, track_count);
 
                 // Make sure we found a valid video track.
-
                 if ((mVideoWidth > 0) && (mVideoHeight > 0)) {
                     PowerSaver::pause();
                     setupContext();

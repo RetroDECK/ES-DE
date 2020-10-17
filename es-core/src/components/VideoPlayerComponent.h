@@ -17,7 +17,7 @@ void catch_child(int sig_num);
 class VideoPlayerComponent : public VideoComponent
 {
 public:
-    VideoPlayerComponent(Window* window, std::string path);
+    VideoPlayerComponent(Window* window);
     virtual ~VideoPlayerComponent();
 
     void render(const Transform4x4f& parentTrans) override;
@@ -41,7 +41,6 @@ private:
 
 private:
     pid_t mPlayerPid;
-    std::string subtitlePath;
 };
 
 #endif // ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H

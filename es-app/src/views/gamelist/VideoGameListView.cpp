@@ -59,11 +59,11 @@ VideoGameListView::VideoGameListView(
     // Create the correct type of video window.
     #if defined(_RPI_)
     if (Settings::getInstance()->getBool("VideoOmxPlayer"))
-        mVideo = new VideoPlayerComponent(window, "");
+        mVideo = new VideoPlayerComponent(window);
     else
-        mVideo = new VideoVlcComponent(window, getTitlePath());
+        mVideo = new VideoVlcComponent(window);
     #else
-    mVideo = new VideoVlcComponent(window, getTitlePath());
+    mVideo = new VideoVlcComponent(window);
     #endif
 
     mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y());
@@ -262,7 +262,6 @@ void VideoGameListView::initMDValues()
 void VideoGameListView::updateInfoPanel()
 {
     FileData* file = (mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected();
-    Utils::FileSystem::removeFile(getTitlePath());
 
     // If the game data has already been rendered to the info panel, then skip it this time.
     if (file == mLastUpdated) {

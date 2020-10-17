@@ -58,11 +58,11 @@ GridGameListView::GridGameListView(
 // Create the correct type of video window.
     #if defined(_RPI_)
     if (Settings::getInstance()->getBool("VideoOmxPlayer"))
-        mVideo = new VideoPlayerComponent(window, "");
+        mVideo = new VideoPlayerComponent(window);
     else
-        mVideo = new VideoVlcComponent(window, getTitlePath());
+        mVideo = new VideoVlcComponent(window);
     #else
-    mVideo = new VideoVlcComponent(window, getTitlePath());
+    mVideo = new VideoVlcComponent(window);
     #endif
 
     mGrid.setPosition(mSize.x() * 0.1f, mSize.y() * 0.1f);
