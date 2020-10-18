@@ -13,9 +13,9 @@
 #include "renderers/Renderer.h"
 #include "Window.h"
 
-#define AUTO_SCROLL_RESET_DELAY 6000 // Time before resetting to top after we reach the bottom.
+#define AUTO_SCROLL_RESET_DELAY 6200 // Time before resetting to top after we reach the bottom.
 #define AUTO_SCROLL_DELAY 2600 // Time to wait before we start to scroll.
-#define AUTO_SCROLL_SPEED 30 // Relative scrolling speed (lower is faster).
+#define AUTO_SCROLL_SPEED 42 // Relative scrolling speed (lower is faster).
 #define AUTO_WIDTH_MOD 350 // Line width modifier to use to calculate scrolling speed.
 
 ScrollableContainer::ScrollableContainer(
