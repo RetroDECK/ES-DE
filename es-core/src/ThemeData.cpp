@@ -229,14 +229,14 @@ std::string resolvePlaceholders(const char* in)
         return inStr;
 
     const size_t variableBegin = inStr.find("${");
-    const size_t variableEnd   = inStr.find("}", variableBegin);
+    const size_t variableEnd = inStr.find("}", variableBegin);
 
     if ((variableBegin == std::string::npos) || (variableEnd == std::string::npos))
         return inStr;
 
-    std::string prefix  = inStr.substr(0, variableBegin);
+    std::string prefix = inStr.substr(0, variableBegin);
     std::string replace = inStr.substr(variableBegin + 2, variableEnd - (variableBegin + 2));
-    std::string suffix  = resolvePlaceholders(inStr.substr(variableEnd + 1).c_str());
+    std::string suffix = resolvePlaceholders(inStr.substr(variableEnd + 1).c_str());
 
     return prefix + mVariables[replace] + suffix;
 }
@@ -413,7 +413,7 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
         const char* delim = " \t\r\n,";
         const std::string nameAttr = node.attribute("name").as_string();
         size_t prevOff = nameAttr.find_first_not_of(delim, 0);
-        size_t off =  nameAttr.find_first_of(delim, prevOff);
+        size_t off = nameAttr.find_first_of(delim, prevOff);
         while (off != std::string::npos || prevOff != std::string::npos) {
             std::string elemKey = nameAttr.substr(prevOff, off - prevOff);
             prevOff = nameAttr.find_first_not_of(delim, off);
@@ -453,12 +453,16 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
             auto splits = Utils::String::delimitedStringToVector(str, " ");
             if (splits.size() == 2) {
-                val = Vector4f((float)atof(splits.at(0).c_str()), (float)atof(splits.at(1).c_str()),
-                    (float)atof(splits.at(0).c_str()), (float)atof(splits.at(1).c_str()));
+                val = Vector4f(static_cast<float>(atof(splits.at(0).c_str())),
+                        static_cast<float>(atof(splits.at(1).c_str())),
+                        static_cast<float>(atof(splits.at(0).c_str())),
+                        static_cast<float>(atof(splits.at(1).c_str())));
             }
             else if (splits.size() == 4) {
-                val = Vector4f((float)atof(splits.at(0).c_str()), (float)atof(splits.at(1).c_str()),
-                    (float)atof(splits.at(2).c_str()), (float)atof(splits.at(3).c_str()));
+                val = Vector4f(static_cast<float>(atof(splits.at(0).c_str())),
+                        static_cast<float>(atof(splits.at(1).c_str())),
+                        static_cast<float>(atof(splits.at(2).c_str())),
+                        static_cast<float>(atof(splits.at(3).c_str())));
             }
 
             element.properties[node.name()] = val;
@@ -473,7 +477,8 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             std::string first = str.substr(0, divider);
             std::string second = str.substr(divider, std::string::npos);
 
-            Vector2f val((float)atof(first.c_str()), (float)atof(second.c_str()));
+            Vector2f val(static_cast<float>(atof(first.c_str())),
+                    static_cast<float>(atof(second.c_str())));
 
             element.properties[node.name()] = val;
             break;
@@ -536,7 +541,8 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
         return nullptr; // Not found.
 
     auto elemIt = viewIt->second.elements.find(element);
-    if (elemIt == viewIt->second.elements.cend()) return nullptr;
+    if (elemIt == viewIt->second.elements.cend())
+        return nullptr;
 
     if (elemIt->second.type != expectedType && !expectedType.empty()) {
         LOG(LogWarning) << " requested mismatched theme type for [" <<

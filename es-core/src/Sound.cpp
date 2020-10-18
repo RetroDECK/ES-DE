@@ -86,7 +86,7 @@ bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
 }
 
 Sound::Sound(
-        const std::string & path)
+        const std::string& path)
         : mSampleData(nullptr),
         mSamplePos(0),
         mSampleLength(0),
@@ -100,7 +100,7 @@ Sound::~Sound()
     deinit();
 }
 
-void Sound::loadFile(const std::string & path)
+void Sound::loadFile(const std::string& path)
 {
     mPath = path;
     init();
@@ -116,7 +116,7 @@ void Sound::init()
 
     // Load WAV file via SDL.
     SDL_AudioSpec wave;
-    Uint8 * data = nullptr;
+    Uint8* data = nullptr;
     Uint32 dlen = 0;
     if (SDL_LoadWAV(mPath.c_str(), &wave, &data, &dlen) == nullptr) {
         LOG(LogError) << "Failed to load theme navigation sound file:";
@@ -203,7 +203,7 @@ void Sound::stop()
     SDL_UnlockAudio();
 }
 
-const Uint8 * Sound::getData() const
+const Uint8* Sound::getData() const
 {
     return mSampleData;
 }
@@ -232,5 +232,5 @@ Uint32 Sound::getLengthMS() const
 {
     // 44100 samples per second, 2 channels (stereo).
     // I have no idea why the *0.75 is necessary, but otherwise it's inaccurate.
-    return (Uint32)((mSampleLength / 44100.0f / 2.0f * 0.75f) * 1000);
+    return static_cast<Uint32>((mSampleLength / 44100.0f / 2.0f * 0.75f) * 1000);
 }

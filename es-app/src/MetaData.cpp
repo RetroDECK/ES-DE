@@ -66,10 +66,10 @@ const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls +
 const std::vector<MetaDataDecl>& getMDDByType(MetaDataListType type)
 {
     switch(type) {
-    case GAME_METADATA:
-        return gameMDD;
-    case FOLDER_METADATA:
-        return folderMDD;
+        case GAME_METADATA:
+            return gameMDD;
+        case FOLDER_METADATA:
+            return folderMDD;
     }
 
     LOG(LogError) << "Invalid MDD type";

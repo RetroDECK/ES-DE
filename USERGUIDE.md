@@ -984,7 +984,7 @@ This will remove any media files for the game file or folder and also remove its
 
 **Delete** _(Files only)_
 
-This will remove the actual game file and its gamelist.xml entry, as well as any media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be a bit dangerous, instead use the valid operating system tools to handle deletion of folders.
+This will remove the actual game file and its gamelist.xml entry, as well as any media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be a bit dangerous, instead use the appropriate operating system tools to handle deletion of folders.
 
 
 ## Screensaver

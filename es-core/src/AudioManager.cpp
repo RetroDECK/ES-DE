@@ -18,7 +18,7 @@ std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
 SDL_AudioSpec AudioManager::sAudioFormat;
 std::shared_ptr<AudioManager> AudioManager::sInstance;
 
-void AudioManager::mixAudio(void* /*unused*/, Uint8 *stream, int len)
+void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
 {
     bool stillPlaying = false;
 
@@ -32,7 +32,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8 *stream, int len)
         if (sound->isPlaying()) {
             // Calculate rest length of current sample.
             Uint32 restLength = (sound->getLength() - sound->getPosition());
-            if (restLength > (Uint32)len) {
+            if (restLength > static_cast<Uint32>(len)) {
                 // If stream length is smaller than sample length, clip it.
                 restLength = len;
             }
@@ -68,7 +68,7 @@ AudioManager::~AudioManager()
     deinit();
 }
 
-std::shared_ptr<AudioManager> & AudioManager::getInstance()
+std::shared_ptr<AudioManager>& AudioManager::getInstance()
 {
     // Check if an AudioManager instance is already created, if not create one.
     if (sInstance == nullptr && Settings::getInstance()->getBool("NavigationSounds")) {
@@ -116,13 +116,13 @@ void AudioManager::deinit()
     sInstance = nullptr;
 }
 
-void AudioManager::registerSound(std::shared_ptr<Sound> & sound)
+void AudioManager::registerSound(std::shared_ptr<Sound>& sound)
 {
     getInstance();
     sSoundVector.push_back(sound);
 }
 
-void AudioManager::unregisterSound(std::shared_ptr<Sound> & sound)
+void AudioManager::unregisterSound(std::shared_ptr<Sound>& sound)
 {
     getInstance();
     for (unsigned int i = 0; i < sSoundVector.size(); i++) {
