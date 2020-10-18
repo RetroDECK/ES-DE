@@ -90,7 +90,7 @@ CollectionSystemManager::~CollectionSystemManager()
     if (SystemData::sSystemVector.size() > 0)
         removeCollectionsFromDisplayedSystems();
 
-    // Iterate the map.
+    // Save and delete all custom collections.
     for (std::map<std::string, CollectionSystemData>::const_iterator
             it = mCustomCollectionSystemsData.cbegin();
             it != mCustomCollectionSystemsData.cend() ; it++) {
@@ -99,12 +99,17 @@ CollectionSystemManager::~CollectionSystemManager()
         delete it->second.system;
     }
 
+    // Delete the custom collections bundle.
+    if (mCustomCollectionsBundle)
+        delete mCustomCollectionsBundle;
+
     // Delete the auto collections systems.
     for (auto it = mAutoCollectionSystemsData.cbegin();
             it != mAutoCollectionSystemsData.cend(); it++) {
         delete (*it).second.system;
     }
 
+    delete mCollectionEnvData;
     sInstance = nullptr;
 }
 
