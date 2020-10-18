@@ -82,8 +82,10 @@ SystemData::SystemData(
 
 SystemData::~SystemData()
 {
-    if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit")
-        writeMetaData();
+    if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit") {
+        if (mRootFolder->getGameCount().first + mRootFolder->getGameCount().second != 0)
+            writeMetaData();
+    }
 
     delete mRootFolder;
     delete mFilterIndex;
