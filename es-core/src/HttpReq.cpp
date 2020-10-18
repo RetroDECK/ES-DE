@@ -16,8 +16,7 @@
 
 #include <assert.h>
 
-CURLM* HttpReq::s_multi_handle = curl_multi_init();
-
+CURLM* HttpReq::s_multi_handle;
 std::map<CURL*, HttpReq*> HttpReq::s_requests;
 
 std::string HttpReq::urlEncode(const std::string &s)
@@ -26,7 +25,7 @@ std::string HttpReq::urlEncode(const std::string &s)
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
 
     std::string escaped="";
-    for (size_t i=0; i<s.length(); i++) {
+    for (size_t i = 0; i < s.length(); i++) {
         if (unreserved.find_first_of(s[i]) != std::string::npos) {
             escaped.push_back(s[i]);
         }
@@ -50,6 +49,12 @@ bool HttpReq::isUrl(const std::string& str)
 
 HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nullptr)
 {
+    // The multi-handle is cleaned up via a call from GuiScraperSearch after the scraping
+    // has been completed for a game, meaning the handle is valid for all cURL requests
+    // performed for the current game.
+    if (!s_multi_handle)
+        s_multi_handle = curl_multi_init();
+
     mHandle = curl_easy_init();
 
     // On Windows, use the bundled cURL TLS/SSL certificates (which actually come from the
@@ -200,14 +205,8 @@ std::string HttpReq::getErrorMsg()
 // Return value is number of elements successfully read.
 size_t HttpReq::write_content(void* buff, size_t size, size_t nmemb, void* req_ptr)
 {
-    std::stringstream& ss = ((HttpReq*)req_ptr)->mContent;
-    ss.write((char*)buff, size * nmemb);
+    std::stringstream& ss = (static_cast<HttpReq*>(req_ptr))->mContent;
+    ss.write(static_cast<char*>(buff), size * nmemb);
 
     return nmemb;
 }
-
-// Used as a curl callback.
-//int HttpReq::update_progress(void* req_ptr, double dlTotal,
-//		double dlNow, double ulTotal, double ulNow)
-//{
-//}

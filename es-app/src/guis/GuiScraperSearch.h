@@ -38,6 +38,7 @@ public:
     };
 
     GuiScraperSearch(Window* window, SearchType searchType, unsigned int scrapeCount = 1);
+    ~GuiScraperSearch();
 
     void search(const ScraperSearchParams& params);
     void openInputScreen(ScraperSearchParams& from);

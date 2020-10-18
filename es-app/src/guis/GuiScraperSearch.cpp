@@ -43,7 +43,8 @@ GuiScraperSearch::GuiScraperSearch(
         mBusyAnim(window),
         mSearchType(type),
         mScrapeCount(scrapeCount),
-        mScrapeRatings(false)
+        mScrapeRatings(false),
+        mFoundGame(false)
 {
     addChild(&mGrid);
 
@@ -122,6 +123,11 @@ GuiScraperSearch::GuiScraperSearch(
             if (state == CURSOR_STOPPED) updateInfoPane(); });
 
     updateViewStyle();
+}
+
+GuiScraperSearch::~GuiScraperSearch()
+{
+    HttpReq::cleanupCurlMulti();
 }
 
 void GuiScraperSearch::onSizeChanged()

@@ -149,7 +149,7 @@ protected:
     friend std::unique_ptr<ScraperSearchHandle>
             startMediaURLsFetch(const std::string& gameIDs);
 
-    std::queue< std::unique_ptr<ScraperRequest> > mRequestQueue;
+    std::queue<std::unique_ptr<ScraperRequest>> mRequestQueue;
     std::vector<ScraperSearchResult> mResults;
 };
 

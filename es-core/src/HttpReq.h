@@ -40,31 +40,34 @@ class HttpReq
 {
 public:
     HttpReq(const std::string& url);
-
     ~HttpReq();
 
     enum Status {
         REQ_IN_PROGRESS,		// Request is in progress.
         REQ_SUCCESS,			// Request completed successfully, get it with getContent().
-
         REQ_IO_ERROR,			// Some error happened, get it with getErrorMsg().
         REQ_BAD_STATUS_CODE,	// Some invalid HTTP response status code happened (non-200).
         REQ_INVALID_RESPONSE	// The HTTP response was invalid.
     };
 
     Status status(); // Process any received data and return the status afterwards.
-
     std::string getErrorMsg();
-
     std::string getContent() const; // mStatus must be REQ_SUCCESS.
 
     static std::string urlEncode(const std::string &s);
     static bool isUrl(const std::string& s);
 
+    static void cleanupCurlMulti()
+    {
+        if (s_multi_handle != nullptr) {
+            curl_multi_cleanup(s_multi_handle);
+            s_multi_handle = nullptr;
+        }
+    };
+
 private:
     static size_t write_content(void* buff, size_t size, size_t nmemb, void* req_ptr);
-    //static int update_progress(void* req_ptr, double dlTotal, double dlNow,
-    //		double ulTotal, double ulNow);
+    void onError(const char* msg);
 
     // God dammit libcurl why can't you have some way to check the status of an
     // individual handle why do I have to handle ALL messages at once.
@@ -72,10 +75,7 @@ private:
 
     static CURLM* s_multi_handle;
 
-    void onError(const char* msg);
-
     CURL* mHandle;
-
     Status mStatus;
 
     std::stringstream mContent;
