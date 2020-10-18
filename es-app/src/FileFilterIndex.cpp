@@ -125,7 +125,7 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
             if (getSecondary)
                 break;
 
-            key = game->metadata.get("players");
+            key = Utils::String::toUpper(game->metadata.get("players"));
             break;
         }
         case PUBDEV_FILTER: {
@@ -493,8 +493,12 @@ void FileFilterIndex::manageIndexEntry(std::map<std::string, int>* index,
     if (remove) {
         // Removing entry.
         if (index->find(key) == index->cend()) {
-            // This shouldn't happen.
-            LOG(LogInfo) << "Couldn't find entry in index! " << key;
+            // Disabled for now, actually this WILL happen as default values are assigned
+            // as filters, such as 'FALSE' for favorites and kidgames for non-game entries.
+            // This whole logic needs to be rewritten later on, but for now this is a
+            // workaround to get rid of the annoying log messages.
+//            // This shouldn't happen.
+//            LOG(LogInfo) << "Couldn't find entry in index! " << key;
         }
         else {
             (index->at(key))--;
