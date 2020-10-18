@@ -884,15 +884,15 @@ In the metadata editor, you can modify the metadata for a game, scrape for game 
 
 ### Metadata entries
 
-The following entries can be modified:
+The following entries can be modified (note that some of these are not available for folders, only for game files):
 
 **Name**
 
 This is the game that will be shown when browsing the gamelist. If no sortname has been defined, the games are sorted using this field.
 
-**Sortname**
+**Sortname** _(files only)_
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _"Mille Miglia"_ as _"1000 Miglia"_ or _"The Punisher"_ as _"Punisher, The"_.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _"Mille Miglia"_ as _"1000 Miglia"_ or _"The Punisher"_ as _"Punisher, The"_. Be aware though that the 'Jump to...' quick selector will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist.
 
 **Description**
 
@@ -930,7 +930,7 @@ A flag to indicate whether this is a favorite. Can also be set directly from the
 
 A flag to indicate whether you have completed this game.
 
-**Kidgame**
+**Kidgame** _(files only)_
 
 A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES in 'Kid mode'.
 
@@ -942,7 +942,7 @@ A flag to indicate that the game is hidden. If the corresponding option has been
 
 A flag to indicate whether the game is broken. Useful for MAME games for instance where future releases may make the game functional.
 
-**Exclude from game counter**
+**Exclude from game counter** _(files only)_
 
 A flag to indicate whether the game should be excluded from being counted. It's only used for the game system counter on the main screen, but is quite useful for multi-file games such as multi-disk Amiga or Commodore 64 games, or for DOS games for configuration executables that you want to keep in ES and therefore can't hide. Games that have this flag set will have a lower opacity in the gamelists, making them easy to spot.
 
@@ -954,11 +954,11 @@ Whether to exclude the file from the multi-scraper. This is quite useful in orde
 
 This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disk, Cartridges etc.) and configuration files and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disk games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's still possible to display game images and videos with this setting enabled.
 
-**Launch command**
+**Launch command** _(files only)_
 
 Here you can override the launch command for the game, for example to use a different emulator than the default for the game system. Very useful for MAME/arcade games.
 
-**Play count**
+**Play count** _(files only)_
 
 A statistics counter that counts how many times you're played the game. You normally don't need to touch this, but if you want to, the possibility is there.
 
@@ -980,11 +980,11 @@ Cancels any changes and closes the window. If no changes have been done, it simp
 
 **Clear**
 
-This will remove any media files for the game file and also remove its entry from gamelist.xml. The actual game file will however _not_ be deleted. A prompt will be shown asking for confirmation.
+This will remove any media files for the game file or folder and also remove its entry from the gamelist.xml file. The actual game file or folder will however _not_ be deleted. A prompt will be shown asking for confirmation.
 
 **Delete** _(Files only)_
 
-This will remove the actual game file and its gamelist.xml entry, as well as any media files. A prompt will be shown asking for confirmation. Note that deletion of folders is not supported as that would potentially be a bit dangerous, instead use the valid operating system tools to handle deletion of folders.
+This will remove the actual game file and its gamelist.xml entry, as well as any media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be a bit dangerous, instead use the valid operating system tools to handle deletion of folders.
 
 
 ## Screensaver
