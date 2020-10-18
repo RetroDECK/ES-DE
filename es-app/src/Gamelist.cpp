@@ -158,6 +158,15 @@ void parseGamelist(SystemData* system)
 
                 file->metadata.resetChangedFlag();
             }
+            // If the game is flagged as hidden and the option has not been set to show hidden
+            // games, then delete the entry. This leaves no trace of the entry at all in ES
+            // but that is fine as the option to show hidden files is defined as requiring an
+            // application restart.
+            if (!Settings::getInstance()->getBool("ShowHiddenGames") && file->getHidden()) {
+                LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping hidden entry '" <<
+                        file->getName() << "'" << " (" << file->getPath() << ").";
+                delete file;
+            }
         }
     }
 }

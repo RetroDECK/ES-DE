@@ -71,11 +71,11 @@ FileData::~FileData()
     if (mType == GAME)
         mSystem->getIndex()->removeFromIndex(this);
 
-    if (mParent)
-        mParent->removeChild(this);
-
     while (mChildren.size() > 0)
         delete (mChildren.front());
+
+    if (mParent)
+        mParent->removeChild(this);
 }
 
 std::string FileData::getDisplayName() const
@@ -447,23 +447,6 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
-    // Only run this section of code if the setting to show hidden games has been disabled,
-    // in order to avoid unnecessary processing.
-    if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
-        std::vector<FileData*> mChildrenShown;
-        for (unsigned int i = 0; i < mChildren.size(); i++) {
-            if (mChildren[i]->getHidden()) {
-                LOG(LogDebug) << "FileData::sort(): Skipping hidden game '" <<
-                        mChildren[i]->getName() << "'" << " (" << mChildren[i]->getPath() << ").";
-                continue;
-            }
-            mChildrenShown.push_back(mChildren[i]);
-        }
-        mChildren.erase(mChildren.begin(), mChildren.end());
-        mChildren.reserve(mChildrenShown.size());
-        mChildren.insert(mChildren.end(), mChildrenShown.begin(), mChildrenShown.end());
-    }
-
     if (foldersOnTop) {
         for (unsigned int i = 0; i < mChildren.size(); i++) {
             if (mChildren[i]->getType() == FOLDER) {
@@ -559,18 +542,10 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
     std::vector<FileData*> mChildrenOthers;
-    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     bool hasFolders = false;
 
     for (unsigned int i = 0; i < mChildren.size(); i++) {
-        // Exclude game if it's marked as hidden and the hide setting has been set.
-        if (!showHiddenGames && mChildren[i]->getHidden()) {
-            LOG(LogDebug) << "FileData::sortFavoritesOnTop(): Skipping hidden game '" <<
-                        mChildren[i]->getName() << "'" << " (" << mChildren[i]->getPath() << ").";
-            continue;
-        }
-
         // Game count, which will be displayed in the system view.
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
             if (!mChildren[i]->getFavorite())
