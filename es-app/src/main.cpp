@@ -402,6 +402,7 @@ void onExit()
 int main(int argc, char* argv[])
 {
     srand((unsigned int)time(nullptr));
+    const auto applicationStartTime = std::chrono::system_clock::now();
 
     std::locale::global(std::locale("C"));
 
@@ -604,6 +605,11 @@ int main(int argc, char* argv[])
 
     int lastTime = SDL_GetTicks();
     int ps_time = SDL_GetTicks();
+    const auto applicationEndTime = std::chrono::system_clock::now();
+
+    LOG(LogDebug) << "Application startup time: " <<
+            std::chrono::duration_cast<std::chrono::milliseconds>
+            (applicationEndTime - applicationStartTime).count() << " ms";
 
     bool running = true;
 
