@@ -784,7 +784,7 @@ Can be set to Disabled, Default, Enhanced or Instant. Set to Disabled by default
 
 **When to save metadata**
 
-The metadata for a game is updated both by scraping and modifying data in the metadata editor, but also when launching a game, as the play count and last played date is then updated. This settings enabled you to define when to write such metadata changes to the gamelist.xml files. Setting the option to "Never" will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor. In theory "On exit" will give some performance gains, but it's normally recommended to leave the setting at its default value which is "Always".
+The metadata for a game is updated both by scraping and modifying data in the metadata editor, but also when launching a game, as the play count and last played date is then updated. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to "Never" will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, or when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files). In theory "On exit" will give some performance gains, but it's normally recommended to leave the setting at its default value which is "Always". Note that with the settings set to "Never", any updates such as the last played date will still be shown on screen, however during the next application startup, any values previously saved to the gamelist.xml files will be read in again.
 
 **Game media directory**
 

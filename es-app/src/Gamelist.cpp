@@ -275,20 +275,19 @@ void updateGamelist(SystemData* system)
             // Add the game to the file, unless it's flagged for deletion.
             if (!(*fit)->getDeletionFlag()) {
                 addFileDataNode(root, *fit, tag, system);
+                (*fit)->metadata.resetChangedFlag();
                 ++numUpdated;
             }
         }
 
         // Now write the file.
         if (numUpdated > 0) {
-            const auto startTs = std::chrono::system_clock::now();
-
             // Make sure the folders leading up to this path exist (or the write will fail).
             std::string xmlWritePath(system->getGamelistPath(true));
             Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(xmlWritePath));
 
-            LOG(LogInfo) << "Added/Updated " << numUpdated <<
-                    " entities in '" << xmlReadPath << "'";
+            LOG(LogDebug) << "Gamelist::updateGamelist(): Added/updated " << numUpdated <<
+                    (numUpdated == 1 ? " entity in '" : " entities in '") << xmlReadPath << "'";
 
             #if defined(_WIN64)
             if (!doc.save_file(Utils::String::stringToWideString(xmlWritePath).c_str())) {
@@ -298,11 +297,6 @@ void updateGamelist(SystemData* system)
                 LOG(LogError) << "Error saving gamelist.xml to \"" <<
                         xmlWritePath << "\" (for system " << system->getName() << ")!";
             }
-
-            const auto endTs = std::chrono::system_clock::now();
-            LOG(LogInfo) << "Saved gamelist.xml for system \"" << system->getName() << "\" in " <<
-                    std::chrono::duration_cast<std::chrono::milliseconds>
-                    (endTs - startTs).count() << " ms";
         }
     }
     else {
