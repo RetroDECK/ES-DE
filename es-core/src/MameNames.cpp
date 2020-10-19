@@ -50,7 +50,7 @@ MameNames::MameNames()
     if (!Utils::FileSystem::exists(xmlpath))
         return;
 
-    LOG(LogInfo) << "Parsing XML file \"" << xmlpath << "\"...";
+    LOG(LogInfo) << "Parsing MAME names file \"" << xmlpath << "\"...";
 
     pugi::xml_document doc;
     #if defined(_WIN64)
@@ -61,7 +61,7 @@ MameNames::MameNames()
     #endif
 
     if (!result) {
-        LOG(LogError) << "Error parsing XML file \"" << xmlpath << "\"!\n	"
+        LOG(LogError) << "Error parsing MAME names file \"" << xmlpath << "\": "
                 << result.description();
         return;
     }
@@ -81,7 +81,7 @@ MameNames::MameNames()
     if (!Utils::FileSystem::exists(xmlpath))
         return;
 
-    LOG(LogInfo) << "Parsing XML file \"" << xmlpath << "\"...";
+    LOG(LogInfo) << "Parsing MAME BIOSes file \"" << xmlpath << "\"...";
 
     #if defined(_WIN64)
     result = doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
@@ -90,7 +90,7 @@ MameNames::MameNames()
     #endif
 
     if (!result) {
-        LOG(LogError) << "Error parsing XML file \"" << xmlpath << "\"!\n	"
+        LOG(LogError) << "Error parsing MAME BIOSes file \"" << xmlpath << "\": "
                 << result.description();
         return;
     }
@@ -107,7 +107,7 @@ MameNames::MameNames()
     if (!Utils::FileSystem::exists(xmlpath))
         return;
 
-    LOG(LogInfo) << "Parsing XML file \"" << xmlpath << "\"...";
+    LOG(LogInfo) << "Parsing MAME devices file \"" << xmlpath << "\"...";
 
     #if defined(_WIN64)
     result = doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
@@ -116,7 +116,7 @@ MameNames::MameNames()
     #endif
 
     if (!result) {
-        LOG(LogError) << "Error parsing XML file \"" << xmlpath << "\"!\n	"
+        LOG(LogError) << "Error parsing MAME devices file \"" << xmlpath << "\": "
                 << result.description();
         return;
     }

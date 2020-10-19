@@ -35,16 +35,16 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
         const std::string& view, const std::string& element)
 {
     LOG(LogDebug) << "Sound::getFromTheme(): Looking for navigation sound tag <sound name=\"" <<
-            element << "\">.";
+            element << "\">";
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
     if (!elem || !elem->has("path")) {
-        LOG(LogDebug) << "Sound::getFromTheme(): " << "Tag not found, using fallback sound file.";
+        LOG(LogDebug) << "Sound::getFromTheme(): " << "Tag not found, using fallback sound file";
         return get(ResourceManager::getInstance()->
                 getResourcePath(":/sounds/" + element + ".wav"));
     }
 
-    LOG(LogDebug) << "Sound::getFromTheme(): Tag found, ready to load theme sound file.";
+    LOG(LogDebug) << "Sound::getFromTheme(): Tag found, ready to load theme sound file";
     return get(elem->get<std::string>("path"));
 }
 
@@ -133,7 +133,7 @@ void Sound::init()
     // Convert buffer to stereo, 16bit, 44.1kHz.
     if (SDL_ConvertAudio(&cvt) < 0) {
         LOG(LogError) << "Error converting sound \"" << mPath <<
-                "\" to 44.1kHz, 16bit, stereo format!\n" << "	" << SDL_GetError();
+                "\" to 44.1kHz, 16bit, stereo format: " << SDL_GetError();
         delete[] cvt.buf;
     }
     else {

@@ -163,7 +163,7 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
         }
     }
     else {
-        LOG(LogError) << "Couldn't find collection to save! " << name;
+        LOG(LogError) << "Couldn't find collection to save: " << name;
     }
 }
 
@@ -888,10 +888,10 @@ void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sys
     std::string path = getCustomCollectionConfigPath(newSys->getName());
 
     if (!Utils::FileSystem::exists(path)) {
-        LOG(LogInfo) << "Couldn't find custom collection config file at " << path;
+        LOG(LogInfo) << "Couldn't find custom collection config file \"" << path << "\"";
         return;
     }
-    LOG(LogInfo) << "Loading custom collection config file at " << path;
+    LOG(LogInfo) << "Parsing custom collection file \"" << path << "\"...";
 
     FileData* rootFolder = newSys->getRootFolder();
     FileFilterIndex* index = newSys->getIndex();
@@ -928,8 +928,7 @@ void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sys
             index->addToIndex(newGame);
         }
         else {
-            LOG(LogInfo) << "Couldn't find game referenced at '" << gameKey <<
-                "' for system config '" << path << "'";
+            LOG(LogWarning) << "File \"" << gameKey << "\" does not exist, ignoring entry";
         }
     }
 

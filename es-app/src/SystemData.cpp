@@ -104,12 +104,12 @@ bool SystemData::populateFolder(FileData* folder)
     const std::string& folderPath = folder->getPath();
     if (!Utils::FileSystem::exists(folderPath)) {
     LOG(LogDebug) << "SystemData::populateFolder(): Folder with path \"" <<
-                folderPath << "\" does not exist.";
+                folderPath << "\" does not exist";
         return false;
     }
     if (!Utils::FileSystem::isDirectory(folderPath)) {
         LOG(LogWarning) << "Folder with path \"" <<
-                folderPath << "\" is not a directory.";
+                folderPath << "\" is not a directory";
         return false;
     }
 
@@ -139,8 +139,12 @@ bool SystemData::populateFolder(FileData* folder)
         filePath = *it;
 
         // Skip hidden files and folders.
-        if (!showHiddenFiles && Utils::FileSystem::isHidden(filePath))
+        if (!showHiddenFiles && Utils::FileSystem::isHidden(filePath)) {
+            LOG(LogDebug) << "SystemData::populateFolder(): Skipping hidden " <<
+                    (Utils::FileSystem::isDirectory(filePath) ? "directory \"" : "file \"") <<
+                    filePath << "\"";
             continue;
+        }
 
         // This is a little complicated because we allow a list
         // of extensions to be defined (delimited with a space).
@@ -221,16 +225,16 @@ bool SystemData::loadConfig()
     deleteSystems();
 
     std::string path = getConfigPath(false);
-    const std::string rompath  = FileData::getROMDirectory();
-
-    LOG(LogInfo) << "Loading system configuration file " << path << "...";
+    const std::string rompath = FileData::getROMDirectory();
 
     if (!Utils::FileSystem::exists(path)) {
-        LOG(LogWarning) << "es_systems.cfg does not exist.";
+        LOG(LogWarning) << "Systems configuration file does not exist";
         if (copyConfigTemplate(getConfigPath(true)))
             return false;
         path = getConfigPath(false);
     }
+
+    LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
 
     pugi::xml_document doc;
     #if defined(_WIN64)
@@ -249,7 +253,7 @@ bool SystemData::loadConfig()
     pugi::xml_node systemList = doc.child("systemList");
 
     if (!systemList) {
-        LOG(LogError) << "es_systems.cfg is missing the <systemList> tag.";
+        LOG(LogError) << "es_systems.cfg is missing the <systemList> tag";
         return false;
     }
 
@@ -307,7 +311,7 @@ bool SystemData::loadConfig()
         // Validate.
         if (name.empty() || path.empty() || extensions.empty() || cmd.empty()) {
             LOG(LogError) << "System \"" << name <<
-                    "\" is missing name, path, extension, or command.";
+                    "\" is missing name, path, extension, or command";
             continue;
         }
 
@@ -349,7 +353,7 @@ bool SystemData::loadConfig()
 
         if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
             LOG(LogDebug) << "SystemData::loadConfig(): System \"" << name <<
-                    "\" has no games, ignoring it.";
+                    "\" has no games, ignoring it";
             delete newSys;
             delete envData;
         }
@@ -374,25 +378,30 @@ bool SystemData::copyConfigTemplate(const std::string& path)
 {
     std::string systemsTemplateFile;;
 
-    LOG(LogInfo) << "Attempting to copy template es_systems.cfg file from the resources directory.";
+    LOG(LogInfo) <<
+            "Attempting to copy template es_systems.cfg file from the resources directory...";
 
     #if defined(_WIN64)
     systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_windows");
+            getResourcePath(":/templates/es_systems.cfg_windows", false);
     #elif defined(__APPLE__)
     systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_macos");
+            getResourcePath(":/templates/es_systems.cfg_macos", false);
     #elif defined(__unix__)
     systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_unix");
+            getResourcePath(":/templates/es_systems.cfg_unix", false);
     #endif
 
-    if (Utils::FileSystem::copyFile(systemsTemplateFile, path, false)) {
-        LOG(LogError) << "Copying of es_systems.cfg template file failed.";
+    if (systemsTemplateFile == "") {
+        LOG(LogError) << "Can't find the es_systems.cfg template file";
+        return true;
+    }
+    else if (Utils::FileSystem::copyFile(systemsTemplateFile, path, false)) {
+        LOG(LogError) << "Copying of es_systems.cfg template file failed";
         return true;
     }
 
-    LOG(LogInfo) << "Template es_systems.cfg file copied successfully.";
+    LOG(LogInfo) << "Template es_systems.cfg file copied successfully";
 
     return false;
 }

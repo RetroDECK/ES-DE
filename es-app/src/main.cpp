@@ -361,7 +361,7 @@ bool verifyHomeFolderExists()
 returnCode loadSystemConfigFile(std::string& errorMsg)
 {
     if (!SystemData::loadConfig()) {
-        LOG(LogError) << "Could not parse systems configuration file.";
+        LOG(LogError) << "Could not parse systems configuration file";
         errorMsg = "COULDN'T FIND THE SYSTEMS CONFIGURATION FILE.\n"
                 "ATTEMPTED TO COPY A TEMPLATE ES_SYSTEMS.CFG FILE\n"
                 "FROM THE EMULATIONSTATION RESOURCES DIRECTORY,\n"
@@ -373,7 +373,7 @@ returnCode loadSystemConfigFile(std::string& errorMsg)
 
     if (SystemData::sSystemVector.size() == 0) {
         LOG(LogError) << "No systems found, does at least one system have a game present? "
-                "(Check that the file extensions are supported.)";
+                "(Check that the file extensions are supported)";
         errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
                 "GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES\n"
                 "IN THE CURRENTLY CONFIGURED ROM DIRECTORY OR\n"
@@ -462,7 +462,6 @@ int main(int argc, char* argv[])
     PowerSaver::init();
     ViewController::init(&window);
     CollectionSystemManager::init(&window);
-    MameNames::init();
     window.pushGui(ViewController::get());
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
@@ -470,7 +469,7 @@ int main(int argc, char* argv[])
     SDL_Event event {};
 
     if (!window.init()) {
-        LOG(LogError) << "Window failed to initialize.";
+        LOG(LogError) << "Window failed to initialize";
         return 1;
     }
 
@@ -478,6 +477,7 @@ int main(int argc, char* argv[])
     if (event.type == SDL_QUIT)
         return 1;
 
+    MameNames::init();
 
     if (splashScreen) {
         std::string progressText = "Loading...";
@@ -492,7 +492,7 @@ int main(int argc, char* argv[])
     if (returnCodeValue) {
         // Something went terribly wrong.
         if (errorMsg == "") {
-            LOG(LogError) << "Unknown error occured while parsing system config file.";
+            LOG(LogError) << "Unknown error occured while parsing systems configuration file";
             Renderer::deinit();
             return 1;
         }
@@ -686,7 +686,7 @@ int main(int argc, char* argv[])
 
     processQuitMode();
 
-    LOG(LogInfo) << "EmulationStation cleanly shutting down.";
+    LOG(LogInfo) << "EmulationStation cleanly shutting down";
 
     #if defined(_WIN64)
     closeConsole();

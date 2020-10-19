@@ -41,7 +41,7 @@ public:
     void unloadAll();
     void reloadAll();
 
-    std::string getResourcePath(const std::string& path) const;
+    std::string getResourcePath(const std::string& path, bool terminateOnFailure = true) const;
     const ResourceData getFileData(const std::string& path) const;
     bool fileExists(const std::string& path) const;
 

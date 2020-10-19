@@ -34,7 +34,8 @@ std::shared_ptr<ResourceManager>& ResourceManager::getInstance()
     return sInstance;
 }
 
-std::string ResourceManager::getResourcePath(const std::string& path) const
+std::string ResourceManager::getResourcePath(const std::string& path,
+        bool terminateOnFailure) const
 {
     // Check if this is a resource file.
     if ((path[0] == ':') && (path[1] == '/')) {
@@ -72,22 +73,27 @@ std::string ResourceManager::getResourcePath(const std::string& path) const
         if (Utils::FileSystem::exists(testExePath)) {
             return testExePath;
         }
-
         // For missing resources, log an error and terminate the application. This should
-        // indicate that we have a broken EmulationStation installation.
+        // indicate that we have a broken EmulationStation installation. If the argument
+        // terminateOnFailure is set to false though, then skip this step.
         else {
-            LOG(LogError) << "Program resource missing: " << path;
-            LOG(LogError) << "Tried to find the resource in the following locations:";
-            LOG(LogError) << testHome;
-            #if defined(__APPLE__)
-            LOG(LogError) << applePackagePath;
-            #elif defined(__unix__)
-            LOG(LogError) << testDataPath;
-            #endif
-            LOG(LogError) << testExePath;
-            LOG(LogError) << "Has EmulationStation been properly installed?";
-            Scripting::fireEvent("quit");
-            emergencyShutdown();
+            if (terminateOnFailure) {
+                LOG(LogError) << "Program resource missing: " << path;
+                LOG(LogError) << "Tried to find the resource in the following locations:";
+                LOG(LogError) << testHome;
+                #if defined(__APPLE__)
+                LOG(LogError) << applePackagePath;
+                #elif defined(__unix__)
+                LOG(LogError) << testDataPath;
+                #endif
+                LOG(LogError) << testExePath;
+                LOG(LogError) << "Has EmulationStation been properly installed?";
+                Scripting::fireEvent("quit");
+                emergencyShutdown();
+            }
+            else {
+                return "";
+            }
         }
     }
 

@@ -566,7 +566,7 @@ namespace Utils
 
             if (!_overwrite && exists(_destination_path)) {
                 LOG(LogError) << "Destination file exists and the overwrite flag "
-                        "has not been set.";
+                        "has not been set";
                 return true;
             }
 
@@ -578,8 +578,8 @@ namespace Utils
             #endif
 
             if (sourceFile.fail()) {
-                LOG(LogError) << "Couldn't read from source file (" << _source_path <<
-                        "), permission problems?";
+                LOG(LogError) << "Couldn't read from source file \"" << _source_path <<
+                        "\", permission problems?";
                 sourceFile.close();
                 return true;
             }
@@ -592,8 +592,8 @@ namespace Utils
             #endif
 
             if (targetFile.fail()) {
-                LOG(LogError) << "Couldn't write to target file (" << _destination_path <<
-                        "), permission problems?";
+                LOG(LogError) << "Couldn't write to target file \"" << _destination_path <<
+                        "\", permission problems?";
                 targetFile.close();
                 return true;
             }
@@ -624,7 +624,7 @@ namespace Utils
 
             if (!_overwrite && exists(_destination_path)) {
                 LOG(LogError) << "Destination file exists and the overwrite flag "
-                        "has not been set.";
+                        "has not been set";
                 return true;
             }
 
