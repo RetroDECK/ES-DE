@@ -542,15 +542,15 @@ The region to scrape for, affects game names.
 
 Currently only English or World are supported, not really significant at the moment.
 
+**Overwrite files and data**
+
+Affects both overwriting of metadata as well as actual game media files on the filesystem.
+
 **Search using metadata name**
 
 By default ES will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical name of the game file or directory, then turn off this option. The default game name will correspond to the name of the physical file or directory, so for the first scraping of any given game, this option makes no difference.
 
 Note that when using TheGamesDB as scraper service for arcade games (MAME/Neo Geo), the short MAME name will always be expanded to the full game name as this scraper does not properly support searches using MAME names. Also note that you need to save the game name in the metadata editor before you can use it for scraping.
-
-**Overwrite files and data**
-
-Affects both overwriting of metadata as well as actual game media files on the filesystem.
 
 **Interactive mode**
 
@@ -1049,7 +1049,7 @@ Any changes to custom collections (for example adding or removing a game) will b
 
 Note that if you for example copy or migrate a collection from a previous version of EmulationStation or if you're setting up EmulationStation Desktop Edition on a new computer, even though you copy the files into the collections directory, they will not show up in the application. You always need to enable the collection in the menu. ES looks inside the es_settings.cfg file during startup to see which collections should be shown.
 
-If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection. Be aware though that if at this time the ROM was not found by ES, the corresponding entry in the collections file will be deleted.
+If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection.
 
 
 ## Themes

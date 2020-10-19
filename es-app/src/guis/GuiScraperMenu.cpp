@@ -266,6 +266,13 @@ void GuiScraperMenu::openOtherSettings()
                 scraper_language->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
     }
 
+    // Overwrite files and data.
+    auto scrape_overwrite = std::make_shared<SwitchComponent>(mWindow);
+    scrape_overwrite->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));
+    s->addWithLabel("OVERWRITE FILES AND DATA", scrape_overwrite);
+    s->addSaveFunc([scrape_overwrite] { Settings::getInstance()->setBool("ScraperOverwriteData",
+            scrape_overwrite->getState()); });
+
     // Search using metadata name.
     auto scrape_metadata_name = std::make_shared<SwitchComponent>(mWindow);
     scrape_metadata_name->setState(Settings::getInstance()->getBool("ScraperSearchMetadataName"));
@@ -273,13 +280,6 @@ void GuiScraperMenu::openOtherSettings()
     s->addSaveFunc([scrape_metadata_name] {
         Settings::getInstance()->setBool("ScraperSearchMetadataName",
                 scrape_metadata_name->getState()); });
-
-    // Overwrite files and data.
-    auto scrape_overwrite = std::make_shared<SwitchComponent>(mWindow);
-    scrape_overwrite->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));
-    s->addWithLabel("OVERWRITE FILES AND DATA", scrape_overwrite);
-    s->addSaveFunc([scrape_overwrite] { Settings::getInstance()->setBool("ScraperOverwriteData",
-            scrape_overwrite->getState()); });
 
     // Interactive scraping.
     auto scraper_interactive = std::make_shared<SwitchComponent>(mWindow);
