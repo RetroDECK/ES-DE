@@ -51,7 +51,6 @@ struct CollectionSystemData {
     CollectionSystemDecl decl;
     bool isEnabled;
     bool isPopulated;
-    bool needsSave;
 };
 
 class CollectionSystemManager

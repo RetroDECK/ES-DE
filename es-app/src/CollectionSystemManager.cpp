@@ -90,14 +90,11 @@ CollectionSystemManager::~CollectionSystemManager()
     if (SystemData::sSystemVector.size() > 0)
         removeCollectionsFromDisplayedSystems();
 
-    // Save and delete all custom collections.
+    // Delete all custom collections.
     for (std::map<std::string, CollectionSystemData>::const_iterator
             it = mCustomCollectionSystemsData.cbegin();
-            it != mCustomCollectionSystemsData.cend() ; it++) {
-        if (it->second.isPopulated)
-            saveCustomCollection(it->second.system);
+            it != mCustomCollectionSystemsData.cend() ; it++)
         delete it->second.system;
-    }
 
     // Delete the custom collections bundle.
     if (mCustomCollectionsBundle)
@@ -141,66 +138,64 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
 
     if (found) {
         CollectionSystemData sysData = mCustomCollectionSystemsData.at(name);
-        if (sysData.needsSave) {
-            // Read back any entries from the configuration file for game files that are
-            // currently missing, and combine them with the active content. If we wouldn't do
-            // this, they would be purged from the collection. Maybe a directory has been
-            // temporarily moved or the files are not reachable for whatever reason. It would
-            // be incredibly annoying to have entries purged from the collection in such
-            // instances. Using the logic below, the handling of custom collections corresponds
-            // to the handling of gamelist.xml files, i.e. it's up to the user to make a
-            // conscious decision of what entries to remove.
-            std::vector<std::string> fileGameEntries;
-            std::vector<std::string> activeGameEntries;
-            std::ifstream configFileIn;
-            std::ofstream configFileOut;
+        // Read back any entries from the configuration file for game files that are
+        // currently missing, and combine them with the active content. If we wouldn't do
+        // this, they would be purged from the collection. Maybe a directory has been
+        // temporarily moved or the files are not reachable for whatever reason. It would
+        // be incredibly annoying to have entries purged from the collection in such
+        // instances. Using the logic below, the handling of custom collections corresponds
+        // to the handling of gamelist.xml files, i.e. it's up to the user to make a
+        // conscious decision of what entries to remove.
+        std::vector<std::string> fileGameEntries;
+        std::vector<std::string> activeGameEntries;
+        std::ifstream configFileIn;
+        std::ofstream configFileOut;
 
-            #if defined(_WIN64)
-            configFileIn.open(Utils::String::
-                    stringToWideString(getCustomCollectionConfigPath(name)).c_str());
-            #else
-            configFileIn.open(getCustomCollectionConfigPath(name));
-            #endif
-            for (std::string gameEntry; getline(configFileIn, gameEntry); ) {
-                std::string gamePath = Utils::String::replace(gameEntry, "%ROMPATH%", rompath);
-                gamePath = Utils::String::replace(gamePath, "//", "/");
-                // Only add the entry if it's not a regular file or a symlink, in other words
-                // only add missing files.
-                if (!Utils::FileSystem::isRegularFile(gamePath) &&
-                        !Utils::FileSystem::isSymlink(gamePath))
-                    fileGameEntries.push_back(gameEntry);
-            }
-            configFileIn.close();
-
-            for (std::unordered_map<std::string, FileData*>::const_iterator
-                    iter = games.cbegin(); iter != games.cend(); ++iter) {
-                std::string path = iter->first;
-                // If the ROM path of the game begins with the path from the setting
-                // ROMDirectory (or the default ROM directory), then replace it with %ROMPATH%.
-                if (path.find(rompath) == 0)
-                    path.replace(0, rompath.size(), "%ROMPATH%/");
-
-                activeGameEntries.push_back(path);
-            }
-
-            fileGameEntries.insert(fileGameEntries.cend(), activeGameEntries.cbegin(),
-                    activeGameEntries.cend());
-            std::sort(fileGameEntries.begin(), fileGameEntries.end());
-            auto last = std::unique(fileGameEntries.begin(), fileGameEntries.end());
-            fileGameEntries.erase(last, fileGameEntries.end());
-
-            #if defined(_WIN64)
-            configFile.open(Utils::String::
-                    stringToWideString(getCustomCollectionConfigPath(name)).c_str());
-            #else
-            configFileOut.open(getCustomCollectionConfigPath(name));
-            #endif
-
-            for (auto it = fileGameEntries.cbegin(); it != fileGameEntries.cend(); it++)
-                configFileOut << (*it) << std::endl;
-
-            configFileOut.close();
+        #if defined(_WIN64)
+        configFileIn.open(Utils::String::
+                stringToWideString(getCustomCollectionConfigPath(name)).c_str());
+        #else
+        configFileIn.open(getCustomCollectionConfigPath(name));
+        #endif
+        for (std::string gameEntry; getline(configFileIn, gameEntry); ) {
+            std::string gamePath = Utils::String::replace(gameEntry, "%ROMPATH%", rompath);
+            gamePath = Utils::String::replace(gamePath, "//", "/");
+            // Only add the entry if it's not a regular file or a symlink, in other words
+            // only add missing files.
+            if (!Utils::FileSystem::isRegularFile(gamePath) &&
+                    !Utils::FileSystem::isSymlink(gamePath))
+                fileGameEntries.push_back(gameEntry);
         }
+        configFileIn.close();
+
+        for (std::unordered_map<std::string, FileData*>::const_iterator
+                iter = games.cbegin(); iter != games.cend(); ++iter) {
+            std::string path = iter->first;
+            // If the ROM path of the game begins with the path from the setting
+            // ROMDirectory (or the default ROM directory), then replace it with %ROMPATH%.
+            if (path.find(rompath) == 0)
+                path.replace(0, rompath.size(), "%ROMPATH%/");
+
+            activeGameEntries.push_back(path);
+        }
+
+        fileGameEntries.insert(fileGameEntries.cend(), activeGameEntries.cbegin(),
+                activeGameEntries.cend());
+        std::sort(fileGameEntries.begin(), fileGameEntries.end());
+        auto last = std::unique(fileGameEntries.begin(), fileGameEntries.end());
+        fileGameEntries.erase(last, fileGameEntries.end());
+
+        #if defined(_WIN64)
+        configFile.open(Utils::String::
+                stringToWideString(getCustomCollectionConfigPath(name)).c_str());
+        #else
+        configFileOut.open(getCustomCollectionConfigPath(name));
+        #endif
+
+        for (auto it = fileGameEntries.cbegin(); it != fileGameEntries.cend(); it++)
+            configFileOut << (*it) << std::endl;
+
+        configFileOut.close();
     }
     else {
         LOG(LogError) << "Couldn't find collection to save: " << name;
@@ -314,7 +309,6 @@ void CollectionSystemManager::refreshCollectionSystems(FileData* file)
         realSys.system = file->getSystem();
         realSys.isEnabled = true;
         realSys.isPopulated = true;
-        realSys.needsSave = false;
         realSys.decl.isCustom = false;
 
         updateCollectionSystem(file, realSys);
@@ -483,11 +477,12 @@ void CollectionSystemManager::deleteCollectionFiles(FileData* file)
 
             bool found = children.find(key) != children.cend();
             if (found) {
-                sysDataIt->second.needsSave = true;
                 FileData* collectionEntry = children.at(key);
                 SystemData* systemViewToUpdate = getSystemToView(sysDataIt->second.system);
                 ViewController::get()->getGameListView(systemViewToUpdate).get()->
                         remove(collectionEntry, false);
+                if (sysDataIt->second.decl.isCustom)
+                    saveCustomCollection(sysDataIt->second.system);
             }
         }
     }
@@ -622,7 +617,6 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
         std::string sysName = mEditingCollection;
         if (mIsEditingCustom) {
             SystemData* sysData = mEditingCollectionSystemData->system;
-            mEditingCollectionSystemData->needsSave = true;
 
             if (!mEditingCollectionSystemData->isPopulated)
                 populateCustomCollection(mEditingCollectionSystemData);
@@ -672,6 +666,7 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                 refreshCollectionSystems(newGame);
             }
             updateCollectionFolderMetadata(sysData);
+            saveCustomCollection(sysData);
         }
         else {
             file->getSourceFileData()->getSystem()->getIndex()->removeFromIndex(file);
@@ -856,7 +851,6 @@ SystemData* CollectionSystemManager::createNewCollectionEntry(
     newCollectionData.decl = sysDecl;
     newCollectionData.isEnabled = false;
     newCollectionData.isPopulated = false;
-    newCollectionData.needsSave = false;
 
     if (index) {
         if (!sysDecl.isCustom)

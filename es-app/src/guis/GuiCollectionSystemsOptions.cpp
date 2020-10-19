@@ -134,6 +134,7 @@ void GuiCollectionSystemsOptions::addEntry(const char* name, unsigned int color,
 void GuiCollectionSystemsOptions::createCollection(std::string inName) {
     std::string name = CollectionSystemManager::get()->getValidNewCollectionName(inName);
     SystemData* newSys = CollectionSystemManager::get()->addNewCustomCollection(name);
+    CollectionSystemManager::get()->saveCustomCollection(newSys);
     customOptionList->add(name, name, true);
     std::string outAuto = Utils::String::vectorToCommaString(
             autoOptionList->getSelectedObjects());

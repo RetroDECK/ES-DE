@@ -984,7 +984,7 @@ This will remove any media files for the game file or folder and also remove its
 
 **Delete** _(Files only)_
 
-This will remove the actual game file and its gamelist.xml entry, as well as any media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be a bit dangerous, instead use the appropriate operating system tools to handle deletion of folders.
+This will remove the actual game file, its gamelist.xml entry, its entry in any custom collections and its media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be a bit dangerous, instead use the appropriate operating system tools to handle deletion of folders.
 
 
 ## Screensaver
@@ -1016,7 +1016,7 @@ Note that you should only enable these collections if you really need them as th
 
 ### Custom collections
 
-These are collections that you create yourself. Example of such collections could be grouping in genres like _Shoot 'em up_, _Fighting_ etc. or perhaps a time period like '1980s', '1990s' and so on.
+These are collections that you create yourself. Example of such collections could be grouping in genres like _Shoot em up_, _Fighting games_ etc. or perhaps a time period like '1980s', '1990s' and so on.
 
 If the theme set supports it, you can create a custom collection directly from a theme. However, as of version 1.0.0, rbsimple-DE does not provide such themes.
 
@@ -1044,6 +1044,8 @@ The file contents is simply a list of ROM files, such as the following:
 %ROMPATH%/c64/multidisk/Last Ninja 2/Last Ninja 2.m3u
 %ROMPATH%/nes/Legend of Zelda, The.zip
 ```
+
+Any changes to custom collections (for example adding or removing a game) will be immediately written to the corresponding collection configuration file.
 
 Note that if you for example copy or migrate a collection from a previous version of EmulationStation or if you're setting up EmulationStation Desktop Edition on a new computer, even though you copy the files into the collections directory, they will not show up in the application. You always need to enable the collection in the menu. ES looks inside the es_settings.cfg file during startup to see which collections should be shown.
 
