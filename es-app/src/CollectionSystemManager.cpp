@@ -186,7 +186,7 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
         fileGameEntries.erase(last, fileGameEntries.end());
 
         #if defined(_WIN64)
-        configFile.open(Utils::String::
+        configFileOut.open(Utils::String::
                 stringToWideString(getCustomCollectionConfigPath(name)).c_str());
         #else
         configFileOut.open(getCustomCollectionConfigPath(name));
