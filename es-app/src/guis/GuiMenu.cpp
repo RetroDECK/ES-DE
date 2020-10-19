@@ -618,7 +618,18 @@ void GuiMenu::openOtherSettings()
     }
     s->addWithLabel("WHEN TO SAVE GAME METADATA", gamelistsSaveMode);
     s->addSaveFunc([gamelistsSaveMode] {
-        Settings::getInstance()->setString("SaveGamelistsMode", gamelistsSaveMode->getSelected());
+        if (Settings::getInstance()->getString("SaveGamelistsMode") !=
+                gamelistsSaveMode->getSelected()) {
+            Settings::getInstance()->setString("SaveGamelistsMode",
+                    gamelistsSaveMode->getSelected());
+            // Always save the gamelist.xml files if switching to 'always' as there may
+            // be changes that will otherwise be lost.
+            if (Settings::getInstance()->getString("SaveGamelistsMode") == "always") {
+                for (auto it = SystemData::sSystemVector.cbegin();
+                        it != SystemData::sSystemVector.cend(); it++)
+                    (*it)->writeMetaData();
+            }
+        }
     });
 
     // Game media directory.
