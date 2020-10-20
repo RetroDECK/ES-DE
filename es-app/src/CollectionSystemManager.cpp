@@ -272,6 +272,11 @@ void CollectionSystemManager::updateSystemsList()
         if (rootFolder->getChildren().size() > 0) {
             rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->
                     getSortTypeString()), Settings::getInstance()->getBool("FavFirstCustom"));
+            // Update the custom collections metadata now that the sorting has been done.
+            std::vector<FileData*> customCollections = rootFolder->getChildren();
+            for (auto it = customCollections.cbegin(); it != customCollections.cend(); it++)
+                updateCollectionFolderMetadata((*it)->getSystem());
+
             SystemData::sSystemVector.push_back(mCustomCollectionsBundle);
         }
     }
@@ -588,17 +593,17 @@ void CollectionSystemManager::setEditMode(std::string collectionName)
     // If it's bundled, this needs to be the bundle system.
     mEditingCollectionSystemData = sysData;
 
-    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "Editing the '" +
+    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "EDITING THE '" +
             Utils::String::toUpper(collectionName) +
-            "' Collection. Add/remove games with Y.", 10000);
+            "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'", 10000);
 
     mWindow->setInfoPopup(s);
 }
 
 void CollectionSystemManager::exitEditMode()
 {
-    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "Finished editing the '" +
-            mEditingCollection + "' Collection.", 4000);
+    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "FINISHED EDITING THE '" +
+            Utils::String::toUpper(mEditingCollection) + "' COLLECTION", 4000);
 
     mWindow->setInfoPopup(s);
     mIsEditingCustom = false;
@@ -685,11 +690,13 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
             refreshCollectionSystems(file->getSourceFileData());
         }
         if (adding)
-            s = new GuiInfoPopup(mWindow, "Added '" + Utils::String::removeParenthesis(name) +
-                    "' to '" + Utils::String::toUpper(sysName) + "'", 4000);
+            s = new GuiInfoPopup(mWindow, "ADDED '" +
+                    Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
+                    "' TO '" + Utils::String::toUpper(sysName) + "'", 4000);
         else
-            s = new GuiInfoPopup(mWindow, "Removed '" + Utils::String::removeParenthesis(name) +
-                    "' from '" + Utils::String::toUpper(sysName) + "'", 4000);
+            s = new GuiInfoPopup(mWindow, "REMOVED '" +
+                    Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
+                    "' FROM '" + Utils::String::toUpper(sysName) + "'", 4000);
         mWindow->setInfoPopup(s);
         return true;
     }
@@ -729,87 +736,42 @@ void CollectionSystemManager::initAutoCollectionSystems()
     }
 }
 
-// This may come in handy if at any point in time in the future we want to
-// automatically generate metadata for a folder.
+// Used to generate a description of the collection, all other metadata fields are hidden.
 void CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sys)
 {
     FileData* rootFolder = sys->getRootFolder();
+    rootFolder->metadata.set("hidemetadata", "true");
 
     std::string desc = "This collection is empty.";
-    std::string rating = "0";
-    std::string players = "1";
-    std::string releasedate = "N/A";
-    std::string developer = "None";
-    std::string genre = "None";
-    std::string video = "";
-    std::string thumbnail = "";
-    std::string image = "";
+    std::vector<FileData*> gamesList = rootFolder->getChildren();
+    unsigned int gameCount = gamesList.size();
 
-    std::unordered_map<std::string, FileData*> games = rootFolder->getChildrenByFilename();
-
-    if (games.size() > 0) {
-        std::string games_list = "";
-        int games_counter = 0;
-        for (std::unordered_map<std::string, FileData*>::const_iterator
-                iter = games.cbegin(); iter != games.cend(); ++iter) {
-
-            games_counter++;
-            FileData* file = iter->second;
-
-            std::string new_rating = file->metadata.get("rating");
-            std::string new_releasedate = file->metadata.get("releasedate");
-            std::string new_developer = file->metadata.get("developer");
-            std::string new_genre = file->metadata.get("genre");
-            std::string new_players = file->metadata.get("players");
-
-            rating = (new_rating > rating ? (new_rating != "" ?
-                    new_rating : rating) : rating);
-
-            players = (new_players > players ? (new_players != "" ?
-                    new_players : players) : players);
-
-            releasedate = (new_releasedate < releasedate ? (new_releasedate != "" ?
-                    new_releasedate : releasedate) : releasedate);
-
-            developer = (developer == "None" ? new_developer : (new_developer != developer ?
-                    "Various" : new_developer));
-
-            genre = (genre == "None" ? new_genre : (new_genre != genre ?
-                    "Various" : new_genre));
-
-            switch (games_counter) {
-                case 2:
-                case 3:
-                    games_list += ", ";
-                case 1:
-                    games_list += "'" + file->getName() + "'";
-                    break;
-                case 4:
-                    games_list += " among other titles.";
-            }
-        }
-
-        desc = "This collection contains " + std::to_string(games_counter) +
-                " games, including " + games_list;
-
-        FileData* randomGame = sys->getRandomGame();
-
-        if (randomGame) {
-            video = randomGame->getVideoPath();
-            thumbnail = randomGame->getThumbnailPath();
-            image = randomGame->getImagePath();
+    if (gameCount > 0) {
+        switch (gameCount) {
+            case 1:
+                desc = "This collection contains 1 game: '" + gamesList[0]->metadata.get("name") +
+                        " [" + gamesList[0]->getSourceFileData()->getSystem()->getName() + "]'.";
+            break;
+            case 2:
+                desc = "This collection contains 2 games: '" + gamesList[0]->metadata.get("name") +
+                        " [" + gamesList[0]->getSourceFileData()->getSystem()->getName() +
+                        "]' and '" + gamesList[1]->metadata.get("name") + " [" +
+                        gamesList[1]->getSourceFileData()->getSystem()->getName() + "]'.";
+            break;
+            default:
+                desc = "This collection contains " + std::to_string(gameCount) +
+                        " games: '" + gamesList[0]->metadata.get("name") +
+                        " [" + gamesList[0]->getSourceFileData()->getSystem()->getName() +
+                        "]', '" + gamesList[1]->metadata.get("name") + " [" +
+                        gamesList[1]->getSourceFileData()->getSystem()->getName() + "]' and '" +
+                        gamesList[2]->metadata.get("name") + " [" +
+                        gamesList[2]->getSourceFileData()->getSystem()->getName() + "]'";
+                desc += (gameCount == 3 ? "." : ", among others.");
+            break;
         }
     }
 
     rootFolder->metadata.set("desc", desc);
-    rootFolder->metadata.set("rating", rating);
-    rootFolder->metadata.set("players", players);
-    rootFolder->metadata.set("genre", genre);
-    rootFolder->metadata.set("releasedate", releasedate);
-    rootFolder->metadata.set("developer", developer);
-    rootFolder->metadata.set("video", video);
-    rootFolder->metadata.set("thumbnail", thumbnail);
-    rootFolder->metadata.set("image", image);
 }
 
 void CollectionSystemManager::initCustomCollectionSystems()
@@ -962,11 +924,10 @@ void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sys
             index->addToIndex(newGame);
         }
         else {
-            LOG(LogWarning) << "File \"" << gameKey << "\" does not exist, ignoring entry";
+            LOG(LogWarning) << "File \"" << gameKey <<
+                    "\" does not exist, is hidden, or is not counted as a game, ignoring entry";
         }
     }
-
-    updateCollectionFolderMetadata(newSys);
 }
 
 // Functions below to handle System View removal and insertion of collections.

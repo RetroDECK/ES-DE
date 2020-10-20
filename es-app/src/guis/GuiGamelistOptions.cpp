@@ -204,6 +204,14 @@ GuiGamelistOptions::~GuiGamelistOptions()
 
             // Notify that the root folder was sorted (refresh).
             getGamelist()->onFileChanged(root, FILE_SORTED);
+            if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
+                // Update the custom collections metadata now that we have changed the sorting.
+                std::vector<FileData*> customCollections = root->getChildren();
+                for (auto it = customCollections.cbegin(); it != customCollections.cend(); it++)
+                    CollectionSystemManager::get()->
+                            updateCollectionFolderMetadata((*it)->getSystem());
+                ViewController::get()->reloadGameListView(mSystem);
+            }
         }
 
         // Has the user changed the letter using the quick selector?
@@ -270,12 +278,12 @@ void GuiGamelistOptions::openMetaDataEd()
 
     clearGameBtnFunc = [this, file] {
         if (file->getType() == FOLDER) {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder '" <<
-                    file->getFullPath() << "'";
+            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder \"" <<
+                    file->getFullPath() << "\"";
         }
         else {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file '" <<
-                    file->getFullPath() << "'";
+            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file \"" <<
+                    file->getFullPath() << "\"";
         }
         ViewController::get()->getGameListView(file->getSystem()).get()->removeMedia(file);
 
@@ -298,8 +306,8 @@ void GuiGamelistOptions::openMetaDataEd()
     };
 
     deleteGameBtnFunc = [this, file] {
-        LOG(LogInfo) << "Deleting the game file '" << file->getFullPath() <<
-                "', all its media files and its gamelist.xml entry.";
+        LOG(LogInfo) << "Deleting the game file \"" << file->getFullPath() <<
+                "\", all its media files and its gamelist.xml entry.";
         CollectionSystemManager::get()->deleteCollectionFiles(file);
         ViewController::get()->getGameListView(
             file->getSystem()).get()->removeMedia(file);

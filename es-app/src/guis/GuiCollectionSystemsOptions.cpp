@@ -132,6 +132,8 @@ void GuiCollectionSystemsOptions::addEntry(const char* name, unsigned int color,
 }
 
 void GuiCollectionSystemsOptions::createCollection(std::string inName) {
+    if (CollectionSystemManager::get()->isEditing())
+        CollectionSystemManager::get()->exitEditMode();
     std::string name = CollectionSystemManager::get()->getValidNewCollectionName(inName);
     SystemData* newSys = CollectionSystemManager::get()->addNewCustomCollection(name);
     CollectionSystemManager::get()->saveCustomCollection(newSys);

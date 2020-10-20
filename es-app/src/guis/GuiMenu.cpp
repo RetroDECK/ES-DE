@@ -362,7 +362,7 @@ void GuiMenu::openUISettings()
             defaultSortOrder->add(sort.description, &sort, false);
     }
     s->addWithLabel("DEFAULT SORT ORDER", defaultSortOrder);
-    s->addSaveFunc([defaultSortOrder, sortOrder] {
+    s->addSaveFunc([defaultSortOrder, sortOrder, this] {
         std::string selectedSortOrder = defaultSortOrder.get()->getSelected()->description;
         if (selectedSortOrder != sortOrder) {
             Settings::getInstance()->setString("DefaultSortOrder", selectedSortOrder);
@@ -374,11 +374,21 @@ void GuiMenu::openUISettings()
 
                 (*it)->sortSystem();
 
+                // Update the metadata for any custom collections.
+                if ((*it)->isCollection() && (*it)->getFullName() == "collections") {
+                    std::vector<FileData*> customCollections =
+                            (*it)->getRootFolder()->getChildren();
+                    for (auto it2 = customCollections.cbegin();
+                            it2 != customCollections.cend(); it2++)
+                        CollectionSystemManager::get()->
+                                updateCollectionFolderMetadata((*it2)->getSystem());
+                }
+
                 // Jump to the first row of the gamelist.
                 IGameListView* gameList = ViewController::get()->getGameListView((*it)).get();
                 gameList->setCursor(gameList->getFirstEntry());
-
             }
+            mWindow->invalidateCachedBackground();
         }
     });
 

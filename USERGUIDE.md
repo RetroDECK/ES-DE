@@ -1047,9 +1047,20 @@ The file contents is simply a list of ROM files, such as the following:
 
 Any changes to custom collections (for example adding or removing a game) will be immediately written to the corresponding collection configuration file.
 
+>>>
 Note that if you for example copy or migrate a collection from a previous version of EmulationStation or if you're setting up EmulationStation Desktop Edition on a new computer, even though you copy the files into the collections directory, they will not show up in the application. You always need to enable the collection in the menu. ES looks inside the es_settings.cfg file during startup to see which collections should be shown.
 
 If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection.
+>>>
+
+It's also possible to add media files to the custom collections entries if they are grouped under the _collections_ system (this is enabled by default). Simply create a directory under your media folder, for example `~/.emulationstation/downloaded_media`, which corresponds to the collection name. For our example it would be _1980s_. The media files themselves should also be named after the collection. This is an example of what this could look like:
+
+```
+~/.emulationstation/downloaded_media/1980s/covers/1980s.png
+~/.emulationstation/downloaded_media/1980s/videos/1980s.mp4
+```
+
+For more details on how to manually copy media files, see the section [Manually copying game media files](USERGUIDE.md#manually-copying-game-media-files) earlier in this guide.
 
 
 ## Themes

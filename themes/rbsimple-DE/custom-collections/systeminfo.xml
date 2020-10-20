@@ -3,7 +3,7 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Add your own custom collections here.</text>
+            <text>Find your own custom collections here.</text>
         </text>
     </view>
 </theme>

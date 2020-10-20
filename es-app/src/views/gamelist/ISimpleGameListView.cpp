@@ -179,7 +179,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedTo("y", input) &&
                 !UIModeController::getInstance()->isUIModeKid()) {
-            if (mRoot->getSystem()->isGameSystem()) {
+            if (mRoot->getSystem()->isGameSystem() &&
+                    getCursor()->getParent()->getPath() != "collections") {
                 if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
                     NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
                 // When marking or unmarking a game as favorite, don't jump to the new position
@@ -201,7 +202,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
                 if (favoritesSorting && static_cast<std::string>(
-                        mRoot->getSystem()->getName()) != "recent") {
+                        mRoot->getSystem()->getName()) != "recent" &&
+                        !CollectionSystemManager::get()->isEditing()) {
                     FileData* entryToSelect;
                     // Add favorite flag.
                     if (!getCursor()->getFavorite()) {
@@ -260,23 +262,29 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     setCursor(entryToSelect);
                 }
 
-                // Marking folders as favorites is only cosmetic as they're not sorted
-                // differently and they're not part of any collections. So it makes more
-                // sense to do it here than to add the function to CollectionSystemManager.
+                // Marking folders as favorites don't make them part of any collections,
+                // so it makes more sense to handle it here than to add the function to
+                // CollectionSystemManager.
                 if (entryToUpdate->getType() == FOLDER) {
                     GuiInfoPopup* s;
-                    MetaDataList* md = &entryToUpdate->getSourceFileData()->metadata;
-                    if (md->get("favorite") == "false") {
-                        md->set("favorite", "true");
-                        s = new GuiInfoPopup(mWindow, "Marked folder '" +
-                                Utils::String::removeParenthesis(entryToUpdate->getName()) +
-                                "' as favorite", 4000);
+                    if (CollectionSystemManager::get()->isEditing()) {
+                        s = new GuiInfoPopup(mWindow,
+                                "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS", 4000);
                     }
                     else {
-                        md->set("favorite", "false");
-                        s = new GuiInfoPopup(mWindow, "Removed favorite marking for folder '" +
-                                Utils::String::removeParenthesis(entryToUpdate->getName()) +
-                                "'", 4000);
+                        MetaDataList* md = &entryToUpdate->getSourceFileData()->metadata;
+                        if (md->get("favorite") == "false") {
+                            md->set("favorite", "true");
+                            s = new GuiInfoPopup(mWindow, "MARKED FOLDER '" +
+                                    Utils::String::toUpper(Utils::String::removeParenthesis(
+                                    entryToUpdate->getName())) + "' AS FAVORITE", 4000);
+                        }
+                        else {
+                            md->set("favorite", "false");
+                            s = new GuiInfoPopup(mWindow, "REMOVED FAVORITE MARKING FOR FOLDER '" +
+                                    Utils::String::toUpper(Utils::String::removeParenthesis(
+                                    entryToUpdate->getName())) + "'", 4000);
+                        }
                     }
 
                     mWindow->setInfoPopup(s);
@@ -298,6 +306,13 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     }
 
                     return true;
+                }
+                else if (CollectionSystemManager::get()->isEditing() &&
+                        entryToUpdate->metadata.get("nogamecount") == "true") {
+                    GuiInfoPopup* s = new GuiInfoPopup(mWindow,
+                            "CAN'T ADD ENTRIES THAT ARE NOT COUNTED "
+                            "AS GAMES TO CUSTOM COLLECTIONS", 4000);
+                    mWindow->setInfoPopup(s);
                 }
                 else if (CollectionSystemManager::get()->toggleGameInCollection(entryToUpdate)) {
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
