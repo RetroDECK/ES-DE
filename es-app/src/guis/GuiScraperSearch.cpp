@@ -377,14 +377,14 @@ void GuiScraperSearch::onSearchError(const std::string& error)
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
             "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
             "SKIP", mSkipCallback,
-            "CANCEL", mCancelCallback));
+            "CANCEL", mCancelCallback, true));
     }
     else {
         LOG(LogError) << "GuiScraperSearch search error: " <<
                 Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
             "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
-            "CANCEL", mCancelCallback));
+            "CANCEL", mCancelCallback, "", nullptr, true));
     }
 }
 
