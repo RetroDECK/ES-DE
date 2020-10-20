@@ -247,12 +247,13 @@ void GuiMenu::openUISettings()
         gamelist_style->add(*it, *it, Settings::getInstance()->
                 getString("GamelistViewStyle") == *it);
     s->addWithLabel("GAMELIST VIEW STYLE", gamelist_style);
-    s->addSaveFunc([gamelist_style] {
+    s->addSaveFunc([gamelist_style, this] {
         bool needReload = false;
         if (Settings::getInstance()->getString("GamelistViewStyle") !=
                 gamelist_style->getSelected())
             needReload = true;
         Settings::getInstance()->setString("GamelistViewStyle", gamelist_style->getSelected());
+        mWindow->invalidateCachedBackground();
         if (needReload)
             ViewController::get()->reloadAll();
     });
