@@ -573,6 +573,9 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
 {
     std::vector<FileData*> gameList = mRootFolder->getFilesRecursive(GAME, true);
 
+    if (gameList.size() == 1)
+        return gameList.front();
+
     if (currentGame && currentGame->getType() == PLACEHOLDER)
         return nullptr;
 
