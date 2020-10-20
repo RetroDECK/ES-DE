@@ -204,9 +204,13 @@ void VideoComponent::handleStartDelay()
         // If the setting to override the theme-supplied video delay setting has been enabled,
         // then play the video immediately.
         if (!Settings::getInstance()->getBool("PlayVideosImmediately")) {
-            if (mStartTime > SDL_GetTicks()) {
-                // Timeout not yet completed.
-                return;
+            // If there is a video file available but no static image, then start playing the
+            // video immediately regardless of theme configuration or settings.
+            if (mStaticImagePath != "") {
+                if (mStartTime > SDL_GetTicks()) {
+                    // Timeout not yet completed.
+                    return;
+                }
             }
         }
         // Completed.

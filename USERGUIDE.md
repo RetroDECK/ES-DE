@@ -634,7 +634,7 @@ Activating or deactivating the built-in help systems that provides contextual in
 
 **Play videos immediately (override theme)**
 
-Some themes (including rbsimple-DE) display the game images briefly before playing the game videos. This setting forces the videos to be played immediately, regardless of the configuration in the theme.
+Some themes (including rbsimple-DE) display the game images briefly before playing the game videos. This setting forces the videos to be played immediately, regardless of the configuration in the theme. Note though that if there is a video available for a game, but no images, the video will always start to play immediately no matter the theme configuration or whether this settings has been enabled or not.
 
 **Show start menu in kid mode**
 
