@@ -37,7 +37,7 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
             (mWindow, name1, name1, std::bind(&GuiMsgBox::deleteMeAndCall, this, func1)));
     if (!name2.empty())
         mButtons.push_back(std::make_shared<ButtonComponent>
-            (mWindow, name2, name3, std::bind(&GuiMsgBox::deleteMeAndCall, this, func2)));
+            (mWindow, name2, name2, std::bind(&GuiMsgBox::deleteMeAndCall, this, func2)));
     if (!name3.empty())
         mButtons.push_back(std::make_shared<ButtonComponent>
             (mWindow, name3, name3, std::bind(&GuiMsgBox::deleteMeAndCall, this, func3)));
