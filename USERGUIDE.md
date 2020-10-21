@@ -1018,9 +1018,9 @@ Note that you should only enable these collections if you really need them as th
 
 These are collections that you create yourself. Example of such collections could be grouping in genres like _Shoot em up_, _Fighting games_ etc. or perhaps a time period like '1980s', '1990s' and so on.
 
-If the theme set supports it, you can create a custom collection directly from a theme. However, bsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated **Collections** system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
+If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated **Collections** system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
-So if you have enabled the option **Group unthemed custom collections** (it's enabled by default), any collections you add will show up in the special 'Collections' system. Here you can access them just as you would access folders inside a regular game system. The amount of games per collection is shown in the description, and the game media for a random game from the collection is displayed each time you browse through the collection list.
+So if you have enabled the option **Group unthemed custom collections** (it's enabled by default), any collections you add will show up in the special **Collections** system. Here you can access them just as you would access folders inside a regular game system. The amount of games per collection is shown in the description, and the game media for a random game is displayed each time you browse through the list.
 
 To create a custom collection, go to 'Game collection settings' in the main menu and choose 'Create new custom collection'.
 
