@@ -447,6 +447,25 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
+    // For grouped custom collections, always sort the collection list as 'filename, ascending'.
+    // The individual collections are however sorted as any normal systems/folders.
+    if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
+        std::stable_sort(mChildren.begin(), mChildren.end(),
+                getSortTypeFromString("filename, ascending").comparisonFunction);
+        for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+            // Build mFirstLetterIndex.
+            const char firstChar = toupper((*it)->getSortName().front());
+            mFirstLetterIndex.push_back(std::string(1, firstChar));
+            if ((*it)->getChildren().size() > 0)
+                (*it)->sort(comparator, ascending, gameCount);
+        }
+        // Sort and make each entry unique in mFirstLetterIndex.
+        std::sort(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
+        auto last = std::unique(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
+        mFirstLetterIndex.erase(last, mFirstLetterIndex.end());
+        return;
+    }
+
     if (foldersOnTop) {
         for (unsigned int i = 0; i < mChildren.size(); i++) {
             if (mChildren[i]->getType() == FOLDER) {
@@ -544,6 +563,25 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     std::vector<FileData*> mChildrenOthers;
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     bool hasFolders = false;
+
+    // For grouped custom collections, always sort the collection list as 'filename, ascending'.
+    // The individual collections are however sorted as any normal systems/folders.
+    if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
+        std::stable_sort(mChildren.begin(), mChildren.end(),
+                getSortTypeFromString("filename, ascending").comparisonFunction);
+        for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+            // Build mFirstLetterIndex.
+            const char firstChar = toupper((*it)->getSortName().front());
+            mFirstLetterIndex.push_back(std::string(1, firstChar));
+            if ((*it)->getChildren().size() > 0)
+                (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
+        }
+        // Sort and make each entry unique in mFirstLetterIndex.
+        std::sort(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
+        auto last = std::unique(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
+        mFirstLetterIndex.erase(last, mFirstLetterIndex.end());
+        return;
+    }
 
     for (unsigned int i = 0; i < mChildren.size(); i++) {
         // Game count, which will be displayed in the system view.

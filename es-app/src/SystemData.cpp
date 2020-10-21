@@ -27,6 +27,7 @@
 
 #include <fstream>
 #include <pugixml.hpp>
+#include <random>
 
 std::vector<SystemData*> SystemData::sSystemVector;
 
@@ -528,7 +529,11 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
 
     do {
         // Get a random number in range.
-        int target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
+        std::random_device randDev;
+        //  Mersenne Twister pseudorandom number generator.
+        std::mt19937 engine{randDev()};
+        std::uniform_int_distribution<int> uniform_dist(0, total - 1);
+        int target = uniform_dist(engine);
 
         for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); it++) {
             if ((*it)->isGameSystem()) {
@@ -547,33 +552,11 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
     return randomSystem;
 }
 
-FileData* SystemData::getRandomCollectionFolder(const FileData* currentFolder)
-{
-    if (!currentFolder)
-        return nullptr;
-
-    std::vector<FileData*> collectionFolders = currentFolder->getParent()->getChildren();
-
-    unsigned int total = collectionFolders.size();
-    int target = 0;
-
-    if (total < 2)
-        return nullptr;
-
-    do {
-        // Get a random number in range.
-        target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
-    }
-    while (collectionFolders.at(target) == currentFolder);
-
-    return collectionFolders.at(target);
-}
-
 FileData* SystemData::getRandomGame(const FileData* currentGame)
 {
     std::vector<FileData*> gameList = mRootFolder->getFilesRecursive(GAME, true);
 
-    if (gameList.size() == 1)
+    if (!currentGame && gameList.size() == 1)
         return gameList.front();
 
     if (currentGame && currentGame->getType() == PLACEHOLDER)
@@ -628,7 +611,11 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
 
     do {
         // Get a random number in range.
-        target = (int)Math::round((std::rand() / (float)RAND_MAX) * (total - 1));
+        std::random_device randDev;
+        //  Mersenne Twister pseudorandom number generator.
+        std::mt19937 engine{randDev()};
+        std::uniform_int_distribution<int> uniform_dist(0, total - 1);
+        target = uniform_dist(engine);
     }
     while (currentGame && gameList.at(target) == currentGame);
 
@@ -648,6 +635,13 @@ void SystemData::sortSystem(bool reloadGamelist)
         favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
     FileData* rootFolder = getRootFolder();
+    // Assign the sort type to all grouped custom collections.
+    if (mIsCollectionSystem && mFullName == "collections") {
+        for (auto it = rootFolder->getChildren().begin();
+                it != rootFolder->getChildren().end(); it++) {
+            setupSystemSortType((*it)->getSystem()->getRootFolder());
+        }
+    }
     setupSystemSortType(rootFolder);
 
     rootFolder->sort(rootFolder->getSortTypeFromString(

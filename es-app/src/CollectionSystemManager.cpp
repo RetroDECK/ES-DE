@@ -35,6 +35,7 @@
 
 #include <fstream>
 #include <pugixml.hpp>
+#include <random>
 
 std::string myCollectionsName = "collections";
 
@@ -272,11 +273,6 @@ void CollectionSystemManager::updateSystemsList()
         if (rootFolder->getChildren().size() > 0) {
             rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->
                     getSortTypeString()), Settings::getInstance()->getBool("FavFirstCustom"));
-            // Update the custom collections metadata now that the sorting has been done.
-            std::vector<FileData*> customCollections = rootFolder->getChildren();
-            for (auto it = customCollections.cbegin(); it != customCollections.cend(); it++)
-                updateCollectionFolderMetadata((*it)->getSystem());
-
             SystemData::sSystemVector.push_back(mCustomCollectionsBundle);
         }
     }
@@ -670,7 +666,6 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                     systemViewToUpdate->getIndex()->addToIndex(newGame);
                 refreshCollectionSystems(newGame);
             }
-            updateCollectionFolderMetadata(sysData);
             saveCustomCollection(sysData);
         }
         else {
@@ -737,14 +732,34 @@ void CollectionSystemManager::initAutoCollectionSystems()
 }
 
 // Used to generate a description of the collection, all other metadata fields are hidden.
-void CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sys)
+FileData* CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sys)
 {
     FileData* rootFolder = sys->getRootFolder();
-    rootFolder->metadata.set("hidemetadata", "true");
-
     std::string desc = "This collection is empty.";
     std::vector<FileData*> gamesList = rootFolder->getChildren();
+    std::vector<FileData*> gamesListRandom;
     unsigned int gameCount = gamesList.size();
+
+    // If there is more than 1 game in the collection, then randomize the example game names.
+    if (gameCount > 1) {
+        std::random_device randDev;
+        //  Mersenne Twister pseudorandom number generator.
+        std::mt19937 engine{randDev()};
+        unsigned int target;
+
+        for (unsigned int i = 0; i < 3; i++) {
+            std::uniform_int_distribution<int> uniform_dist(0, gameCount - 1 - i);
+            target = uniform_dist(engine);
+            gamesListRandom.push_back(gamesList[target]);
+            std::vector<FileData*>::iterator it = (gamesList.begin() + target);
+            gamesList.erase(it);
+            if (gamesList.size() == 0)
+                break;
+        }
+        gamesList.clear();
+        gamesList.insert(gamesList.end(), gamesListRandom.begin(), gamesListRandom.end());
+        gamesListRandom.clear();
+    }
 
     if (gameCount > 0) {
         switch (gameCount) {
@@ -772,6 +787,12 @@ void CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sys)
     }
 
     rootFolder->metadata.set("desc", desc);
+    // Return a pointer to the first game so that its
+    // game media can be displayed in the gamelist.
+    if (gamesList.size() > 0)
+        return gamesList.front();
+    else
+        return nullptr;
 }
 
 void CollectionSystemManager::initCustomCollectionSystems()

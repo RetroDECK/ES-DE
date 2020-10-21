@@ -202,27 +202,27 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 ~/ROMs/c64/Multidisk
 ~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2A.D64
 ~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2B.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2 (playlist).m3u
+~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
 ~/ROMs/c64/Multidisk/Pirates/PIRAT-E0.d64
 ~/ROMs/c64/Multidisk/Pirates/PIRAT-E1.d64
 ~/ROMs/c64/Multidisk/Pirates/PIRAT-E2.d64
-~/ROMs/c64/Multidisk/Pirates/Pirates! (playlist).m3u
+~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
 It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
-The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2 (playlist).m3u:
+The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
 ```
 LNINJA2A.D64
 LNINJA2B.D64
 ```
 
-It's recommended to not have the exact same filename for the .m3u file as for the directory as that will lead to a quite strange behavior where any game video that was playing when displaying the directory will continue to play when entering the directory (assuming the .m3u playlist is the first file that is selected). For some people this may be the desired behavior though, so the possibility is retained and it's not considered a bug. Putting the text within brackets will make the scraper skip this data so that automatic scraping still works correctly.
+It's recommended to have the exact same filename for the .m3u file as for the directory as the game media files will then be shared between the two. This saves some unnecessary scraping as well as some disk space.
 
 It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist. But it's probably quite confusing to start a game that looks like a single-disk game and then be prompted for disk swaps by the emulator (even if the .m3u playlists automates disk swapping, it's still somehow confusing and I wouldn't recommend it).
 
-When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see images and metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it looks ok when browsing, but when a game is part of a collection, the metadata and images will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
+When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see the metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it looks ok when browsing, but when a game is part of a collection, the metadata will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
 
 As well it's recommended to set the flags **Exclude from game counter** and **Exclude from automatic scraper** for the actual game files so that they are not counted (the game counter is shown on the system view) and not scraped if running the multi-scraper. It's enough to scrape the .m3u playlist file and the game folder. But if you only intend to manually scrape file-per-file then you don't need to bother with this. For a cleaner look, it's also possible to set the flag **Hide metadata fields** for the game files.
 
@@ -1018,9 +1018,9 @@ Note that you should only enable these collections if you really need them as th
 
 These are collections that you create yourself. Example of such collections could be grouping in genres like _Shoot em up_, _Fighting games_ etc. or perhaps a time period like '1980s', '1990s' and so on.
 
-If the theme set supports it, you can create a custom collection directly from a theme. However, as of version 1.0.0, rbsimple-DE does not provide such themes.
+If the theme set supports it, you can create a custom collection directly from a theme. However, bsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated **Collections** system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
-But if you have enabled the option **Group unthemed custom collections** (it's active by default), any collections you add will show up in the special 'Collection' system. Here you can access them just as you would access folders inside a regular game system.
+So if you have enabled the option **Group unthemed custom collections** (it's enabled by default), any collections you add will show up in the special 'Collections' system. Here you can access them just as you would access folders inside a regular game system. The amount of games per collection is shown in the description, and the game media for a random game from the collection is displayed each time you browse through the collection list.
 
 To create a custom collection, go to 'Game collection settings' in the main menu and choose 'Create new custom collection'.
 
@@ -1047,20 +1047,9 @@ The file contents is simply a list of ROM files, such as the following:
 
 Any changes to custom collections (for example adding or removing a game) will be immediately written to the corresponding collection configuration file.
 
->>>
 Note that if you for example copy or migrate a collection from a previous version of EmulationStation or if you're setting up EmulationStation Desktop Edition on a new computer, even though you copy the files into the collections directory, they will not show up in the application. You always need to enable the collection in the menu. ES looks inside the es_settings.cfg file during startup to see which collections should be shown.
 
 If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection.
->>>
-
-It's also possible to add media files to the custom collections entries if they are grouped under the _collections_ system (this is enabled by default). Simply create a directory under your media folder, for example `~/.emulationstation/downloaded_media`, which corresponds to the collection name. For our example it would be _1980s_. The media files themselves should also be named after the collection. This is an example of what this could look like:
-
-```
-~/.emulationstation/downloaded_media/1980s/covers/1980s.png
-~/.emulationstation/downloaded_media/1980s/videos/1980s.mp4
-```
-
-For more details on how to manually copy media files, see the section [Manually copying game media files](USERGUIDE.md#manually-copying-game-media-files) earlier in this guide.
 
 
 ## Themes

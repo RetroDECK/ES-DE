@@ -57,6 +57,8 @@ private:
     bool fromPlaceholder;
     bool mFiltersChanged;
     bool mCancelled;
+    bool isCustomCollection;
+    bool isCustomCollectionGroup;
     std::vector<std::string> mFirstLetterIndex;
     std::string mCurrentFirstCharacter;
     std::string FAVORITE_CHAR;

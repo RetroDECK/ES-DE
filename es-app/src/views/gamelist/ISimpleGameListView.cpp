@@ -166,14 +166,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 FileData* randomGame = getCursor()->getSystem()->getRandomGame(getCursor());
                 if (randomGame)
                     setCursor(randomGame);
-                // If it's not a game, maybe it's a folder for an unthemed collection.
-                else if (getCursor()->getSystem()->isCollection()) {
-                    FileData* randomFolder =
-                            mRoot->getSystem()->getRandomCollectionFolder(getCursor());
-                    if (randomFolder)
-                        setCursor(randomFolder);
-                }
-
                 return true;
             }
         }

@@ -1,6 +1,5 @@
 Missing systems
 ===============
-* Themes for custom collections such as "Fighting games", "Driving games", "Shoot 'em up" etc.
 
 
 Missing (or not updated) theme data

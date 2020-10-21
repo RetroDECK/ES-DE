@@ -18,6 +18,8 @@
 #if defined(_RPI_)
 #include "Settings.h"
 #endif
+#include "CollectionSystemManager.h"
+#include "SystemData.h"
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 650
@@ -52,7 +54,8 @@ VideoGameListView::VideoGameListView(
         mPlayers(window),
         mLastPlayed(window),
         mPlayCount(window),
-        mName(window)
+        mName(window),
+        mLastUpdated(nullptr)
 {
     const float padding = 0.01f;
 
@@ -264,15 +267,30 @@ void VideoGameListView::updateInfoPanel()
     FileData* file = (mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected();
 
     // If the game data has already been rendered to the info panel, then skip it this time.
-    if (file == mLastUpdated) {
+    if (file == mLastUpdated)
         return;
-    }
-    mLastUpdated = file;
+
+    if (!mList.isScrolling())
+        mLastUpdated = file;
 
     bool hideMetaDataFields = false;
 
-    if (file)
-        hideMetaDataFields = (file->metadata.get("hidemetadata") == "true");
+    if (file) {
+        // Always hide the metadata fields if browsing grouped custom collections.
+        if (file->getSystem()->isCustomCollection() &&
+                file->getPath() == file->getSystem()->getName())
+            hideMetaDataFields = true;
+        else
+            hideMetaDataFields = (file->metadata.get("hidemetadata") == "true");
+    }
+
+    // If we're scrolling, hide the metadata fields if the last game had this options set,
+    // or if we're in the grouped custom collection view.
+    if (mList.isScrolling())
+        if (mLastUpdated && mLastUpdated->metadata.get("hidemetadata") == "true" ||
+                (mLastUpdated->getSystem()->isCustomCollection() &&
+                mLastUpdated->getPath() == mLastUpdated->getSystem()->getName()))
+        hideMetaDataFields = true;
 
     if (hideMetaDataFields) {
         mLblRating.setVisible(false);
@@ -317,12 +335,44 @@ void VideoGameListView::updateInfoPanel()
         fadingOut = true;
     }
     else {
-        mThumbnail.setImage(file->getThumbnailPath());
-        mMarquee.setImage(file->getMarqueePath());
-        mVideo->setImage(file->getImagePath());
+        // If we're browsing a grouped custom collection, then update the folder metadata
+        // which will generate a description of three random games and return a pointer to
+        // the first of these so that we can display its game media.
+        if (file->getSystem()->isCustomCollection() &&
+                file->getPath() == file->getSystem()->getName()) {
+            FileData* randomGame = CollectionSystemManager::get()->
+                    updateCollectionFolderMetadata(file->getSystem());
+            if (randomGame) {
+                mThumbnail.setImage(randomGame->getThumbnailPath());
+                mMarquee.setImage(randomGame->getMarqueePath());
+                mVideo->setImage(randomGame->getImagePath());
+                // Always stop the video before setting a new video as it will otherwise continue
+                // to play if it has the same path (i.e. it is the same physical video file) as
+                // the previously set video.
+                // That may happen when entering a folder with the same name as the first game
+                // file inside, or as in this case, when entering a custom collection.
+                mVideo->onHide();
 
-        if (!mVideo->setVideo(file->getVideoPath()))
-            mVideo->setDefaultVideo();
+                if (!mVideo->setVideo(randomGame->getVideoPath()))
+                    mVideo->setDefaultVideo();
+            }
+            else {
+                mThumbnail.setImage("");
+                mMarquee.setImage("");
+                mVideo->setImage("");
+                mVideo->setVideo("");
+                mVideo->setDefaultVideo();
+            }
+        }
+        else {
+            mThumbnail.setImage(file->getThumbnailPath());
+            mMarquee.setImage(file->getMarqueePath());
+            mVideo->setImage(file->getImagePath());
+            mVideo->onHide();
+
+            if (!mVideo->setVideo(file->getVideoPath()))
+                mVideo->setDefaultVideo();
+        }
 
         mVideoPlaying = true;
 

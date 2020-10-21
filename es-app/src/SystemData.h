@@ -90,7 +90,6 @@ public:
     SystemData* getNext() const;
     SystemData* getPrev() const;
     static SystemData* getRandomSystem(const SystemData* currentSystem);
-    static FileData* getRandomCollectionFolder(const FileData* currentFolder);
     FileData* getRandomGame(const FileData* currentGame = nullptr);
 
     void sortSystem(bool reloadGamelist = true);

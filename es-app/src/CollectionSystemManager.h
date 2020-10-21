@@ -91,7 +91,7 @@ public:
     bool toggleGameInCollection(FileData* file);
 
     SystemData* getSystemToView(SystemData* sys);
-    void updateCollectionFolderMetadata(SystemData* sys);
+    FileData* updateCollectionFolderMetadata(SystemData* sys);
 
     bool getIsCustomCollection(SystemData* system);
 
