@@ -756,7 +756,7 @@ This lets you create a completely custom collection with a name that you choose.
 
 **Sort favorites on top for custom collections**
 
-Whether to sort your favorite games above your other games.
+Whether to sort your favorite games above your other games. This is disabled by default, as for collections you normally want to be able to mix all games regardless of whether they are favorites or not.
 
 **Group unthemed custom collections**
 

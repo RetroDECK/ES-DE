@@ -150,7 +150,7 @@ void Settings::setDefaults()
     mStringMap["CollectionSystemsAuto"] = "";
     mStringMap["CollectionSystemsCustom"] = "";
     mBoolMap["UseCustomCollectionsSystem"] = true;
-    mBoolMap["FavFirstCustom"] = true;
+    mBoolMap["FavFirstCustom"] = false;
     mBoolMap["CollectionShowSystemInfo"] = true;
 
     // Scraper.
