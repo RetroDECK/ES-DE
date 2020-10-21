@@ -438,8 +438,6 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
                     ViewController::get()->onFileChanged(rootFolder, FILE_METADATA_CHANGED);
                 }
                 else {
-                    rootFolder->getParent()->sort(rootFolder->getSortTypeFromString(
-                            rootFolder->getSortTypeString()), mFavoritesSorting);
                     ViewController::get()->onFileChanged(
                             rootFolder->getParent(), FILE_METADATA_CHANGED);
                 }
