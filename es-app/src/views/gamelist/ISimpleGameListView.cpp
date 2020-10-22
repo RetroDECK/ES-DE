@@ -292,9 +292,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     // was unmarked. We couldn't do this earlier as we didn't have the list
                     // sorted yet.
                     if (removedLastFavorite) {
-                        ViewController::get()->getGameListView(mRoot->getSystem())->setCursor(
-                                ViewController::get()->getGameListView(mRoot->getSystem())->
-                                getFirstEntry());
+                         ViewController::get()->getGameListView(entryToUpdate->
+                                getSystem())->setCursor(ViewController::get()->
+                                getGameListView(entryToUpdate->getSystem())->getFirstEntry());
                     }
 
                     return true;
