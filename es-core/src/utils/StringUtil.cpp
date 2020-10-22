@@ -142,7 +142,7 @@ namespace Utils
             std::string string;
 
             for (size_t i = 0; i < _string.length(); ++i)
-                string += (char)tolower(_string[i]);
+                string += static_cast<char>(tolower(_string[i]));
 
             return string;
         }
@@ -152,7 +152,7 @@ namespace Utils
             std::string string;
 
             for (size_t i = 0; i < _string.length(); ++i)
-                string += (char)toupper(_string[i]);
+                string += static_cast<char>(toupper(_string[i]));
 
             return string;
         }
@@ -231,10 +231,10 @@ namespace Utils
             return trim(string);
         }
 
-        stringVector delimitedStringToVector(const std::string& _string,
-                const std::string& _delimiter, bool sort)
+        std::vector<std::string> delimitedStringToVector(const std::string& _string,
+                const std::string& _delimiter, bool sort, bool caseInsensitive)
         {
-            stringVector vector;
+            std::vector<std::string> vector;
             size_t start = 0;
             size_t comma = _string.find(_delimiter);
 
@@ -245,24 +245,37 @@ namespace Utils
             }
 
             vector.push_back(_string.substr(start));
-            if (sort)
-                std::sort(vector.begin(), vector.end());
+            if (sort) {
+                if (caseInsensitive)
+                    std::sort(std::begin(vector), std::end(vector),
+                        [](std::string a, std::string b) {
+                    return std::toupper(a.front()) < std::toupper(b.front()); });
+                else
+                    std::sort(vector.begin(), vector.end());
+            }
 
             return vector;
         }
 
-        stringVector commaStringToVector(const std::string& _string, bool sort)
+        std::vector<std::string> commaStringToVector(const std::string& _string,
+                bool sort, bool caseInsensitive)
         {
-            return delimitedStringToVector(_string, ",", sort);
+            return delimitedStringToVector(_string, ",", sort, caseInsensitive);
         }
 
-        std::string vectorToCommaString(stringVector _vector)
+        std::string vectorToCommaString(std::vector<std::string> _vector, bool caseInsensitive)
         {
             std::string string;
 
-            std::sort(_vector.begin(), _vector.end());
+            if (caseInsensitive)
+                std::sort(std::begin(_vector), std::end(_vector),
+                    [](std::string a, std::string b) {
+                return std::toupper(a.front()) < std::toupper(b.front()); });
+            else
+                std::sort(_vector.begin(), _vector.end());
 
-            for (stringVector::const_iterator it = _vector.cbegin(); it != _vector.cend(); ++it)
+            for (std::vector<std::string>::const_iterator it = _vector.cbegin();
+                    it != _vector.cend(); ++it)
                 string += (string.length() ? "," : "") + (*it);
 
             return string;
