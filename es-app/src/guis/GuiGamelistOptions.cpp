@@ -144,7 +144,7 @@ GuiGamelistOptions::GuiGamelistOptions(
         }
     }
 
-    std::map<std::string, CollectionSystemData> customCollections =
+    std::map<std::string, CollectionSystemData, stringComparator> customCollections =
             CollectionSystemManager::get()->getCustomCollectionSystems();
 
     if (UIModeController::getInstance()->isUIModeFull() &&

@@ -22,6 +22,8 @@
 #ifndef ES_APP_COLLECTION_SYSTEM_MANAGER_H
 #define ES_APP_COLLECTION_SYSTEM_MANAGER_H
 
+#include "utils/StringUtil.h"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -53,6 +55,13 @@ struct CollectionSystemData {
     bool isPopulated;
 };
 
+struct stringComparator {
+    bool operator()(const std::string& a, const std::string& b) const
+    {
+        return Utils::String::toUpper(a) < Utils::String::toUpper(b);
+    }
+};
+
 class CollectionSystemManager
 {
 public:
@@ -72,10 +81,10 @@ public:
     void updateCollectionSystem(FileData* file, CollectionSystemData sysData);
     void deleteCollectionFiles(FileData* file);
 
-    inline std::map<std::string, CollectionSystemData> getAutoCollectionSystems()
-            { return mAutoCollectionSystemsData; };
-    inline std::map<std::string, CollectionSystemData> getCustomCollectionSystems()
-            { return mCustomCollectionSystemsData; };
+    inline std::map<std::string, CollectionSystemData, stringComparator>
+            getAutoCollectionSystems() { return mAutoCollectionSystemsData; };
+    inline std::map<std::string, CollectionSystemData, stringComparator>
+            getCustomCollectionSystems() { return mCustomCollectionSystemsData; };
     inline SystemData* getCustomCollectionsBundle() { return mCustomCollectionsBundle; };
     std::vector<std::string> getUnusedSystemsFromTheme();
     SystemData* addNewCustomCollection(std::string name);
@@ -98,9 +107,9 @@ public:
 private:
     static CollectionSystemManager* sInstance;
     SystemEnvironmentData* mCollectionEnvData;
-    std::map<std::string, CollectionSystemDecl> mCollectionSystemDeclsIndex;
-    std::map<std::string, CollectionSystemData> mAutoCollectionSystemsData;
-    std::map<std::string, CollectionSystemData> mCustomCollectionSystemsData;
+    std::map<std::string, CollectionSystemDecl, stringComparator> mCollectionSystemDeclsIndex;
+    std::map<std::string, CollectionSystemData, stringComparator> mAutoCollectionSystemsData;
+    std::map<std::string, CollectionSystemData, stringComparator> mCustomCollectionSystemsData;
     Window* mWindow;
     bool mIsEditingCustom;
     bool mHasEnabledCustomCollection;
@@ -117,7 +126,7 @@ private:
 
     void removeCollectionsFromDisplayedSystems();
     void addEnabledCollectionsToDisplayedSystems(std::map<std::string,
-            CollectionSystemData>* colSystemData);
+            CollectionSystemData, stringComparator>* colSystemData);
 
     std::vector<std::string> getSystemsFromConfig();
     std::vector<std::string> getSystemsFromTheme();

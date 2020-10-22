@@ -92,7 +92,7 @@ CollectionSystemManager::~CollectionSystemManager()
         removeCollectionsFromDisplayedSystems();
 
     // Delete all custom collections.
-    for (std::map<std::string, CollectionSystemData>::const_iterator
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
             it = mCustomCollectionSystemsData.cbegin();
             it != mCustomCollectionSystemsData.cend() ; it++)
         delete it->second.system;
@@ -232,7 +232,7 @@ void CollectionSystemManager::loadEnabledListFromSettings()
             Settings::getInstance()->getString("CollectionSystemsAuto"), true);
 
     // Iterate the map.
-    for (std::map<std::string, CollectionSystemData>::iterator
+    for (std::map<std::string, CollectionSystemData, stringComparator>::iterator
             it = mAutoCollectionSystemsData.begin();
             it != mAutoCollectionSystemsData.end() ; it++ ) {
 
@@ -247,7 +247,7 @@ void CollectionSystemManager::loadEnabledListFromSettings()
             Settings::getInstance()->getString("CollectionSystemsCustom"), true);
 
     // Iterate the map.
-    for (std::map<std::string, CollectionSystemData>::iterator
+    for (std::map<std::string, CollectionSystemData, stringComparator>::iterator
             it = mCustomCollectionSystemsData.begin();
             it != mCustomCollectionSystemsData.end() ; it++ ) {
 
@@ -719,7 +719,7 @@ SystemData* CollectionSystemManager::getSystemToView(SystemData* sys)
 // Loads Automatic Collection systems (All, Favorites, Last Played).
 void CollectionSystemManager::initAutoCollectionSystems()
 {
-    for (std::map<std::string, CollectionSystemDecl>::const_iterator
+    for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator
             it = mCollectionSystemDeclsIndex.cbegin();
             it != mCollectionSystemDeclsIndex.cend() ; it++ ) {
         CollectionSystemDecl sysDecl = it->second;
@@ -824,8 +824,8 @@ SystemData* CollectionSystemManager::addNewCustomCollection(std::string name)
 SystemData* CollectionSystemManager::createNewCollectionEntry(
         std::string name, CollectionSystemDecl sysDecl, bool index, bool custom)
 {
-    SystemData* newSys = new SystemData(
-            name, sysDecl.longName, mCollectionEnvData, sysDecl.themeFolder, true, custom);
+    SystemData* newSys = new SystemData(name, sysDecl.longName,
+            mCollectionEnvData, sysDecl.themeFolder, true, custom);
 
     CollectionSystemData newCollectionData;
     newCollectionData.system = newSys;
@@ -976,10 +976,10 @@ void CollectionSystemManager::removeCollectionsFromDisplayedSystems()
 }
 
 void CollectionSystemManager::addEnabledCollectionsToDisplayedSystems(
-        std::map<std::string, CollectionSystemData>* colSystemData)
+        std::map<std::string, CollectionSystemData, stringComparator>* colSystemData)
 {
     // Add auto enabled collections.
-    for (std::map<std::string, CollectionSystemData>::iterator
+    for (std::map<std::string, CollectionSystemData, stringComparator>::iterator
             it = colSystemData->begin() ; it != colSystemData->end() ; it++ ) {
         if (it->second.isEnabled) {
             // Check if populated, otherwise populate.
@@ -1155,7 +1155,7 @@ std::vector<std::string> CollectionSystemManager::getCollectionsFromConfigFolder
 std::vector<std::string> CollectionSystemManager::getCollectionThemeFolders(bool custom)
 {
     std::vector<std::string> systems;
-    for (std::map<std::string, CollectionSystemDecl>::const_iterator
+    for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator
             it = mCollectionSystemDeclsIndex.cbegin();
             it != mCollectionSystemDeclsIndex.cend() ; it++ ) {
         CollectionSystemDecl sysDecl = it->second;
@@ -1169,7 +1169,7 @@ std::vector<std::string> CollectionSystemManager::getCollectionThemeFolders(bool
 std::vector<std::string> CollectionSystemManager::getUserCollectionThemeFolders()
 {
     std::vector<std::string> systems;
-    for (std::map<std::string, CollectionSystemData>::const_iterator
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
             it = mCustomCollectionSystemsData.cbegin();
             it != mCustomCollectionSystemsData.cend() ; it++ )
         systems.push_back(it->second.decl.themeFolder);
@@ -1213,7 +1213,7 @@ bool systemSort(SystemData* sys1, SystemData* sys2)
 bool CollectionSystemManager::getIsCustomCollection(SystemData* system)
 {
     // Iterate the map.
-    for (std::map<std::string, CollectionSystemData>::const_iterator
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
             it = mCustomCollectionSystemsData.cbegin();
             it != mCustomCollectionSystemsData.cend() ; it++) {
         if (it->second.system == system)

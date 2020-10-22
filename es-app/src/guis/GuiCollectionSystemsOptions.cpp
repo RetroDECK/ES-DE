@@ -140,8 +140,8 @@ void GuiCollectionSystemsOptions::createCollection(std::string inName) {
     customOptionList->add(name, name, true);
     std::string outAuto = Utils::String::vectorToCommaString(
             autoOptionList->getSelectedObjects());
-    std::string outCustom = Utils::String::vectorToCommaString(
-            customOptionList->getSelectedObjects());
+    std::vector<std::string> customSystems = customOptionList->getSelectedObjects();
+    std::string outCustom = Utils::String::vectorToCommaString(customSystems, true);
     updateSettings(outAuto, outCustom);
     ViewController::get()->goToSystemView(newSys);
 
@@ -164,27 +164,27 @@ GuiCollectionSystemsOptions::~GuiCollectionSystemsOptions()
 
 void GuiCollectionSystemsOptions::addSystemsToMenu()
 {
-    std::map<std::string, CollectionSystemData> autoSystems =
+    std::map<std::string, CollectionSystemData, stringComparator> autoSystems =
             CollectionSystemManager::get()->getAutoCollectionSystems();
 
     autoOptionList = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
 
     // Add automatic systems.
-    for (std::map<std::string, CollectionSystemData>::const_iterator it = autoSystems.cbegin();
-            it != autoSystems.cend() ; it++ )
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
+            it = autoSystems.cbegin(); it != autoSystems.cend() ; it++)
         autoOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
     mMenu.addWithLabel("AUTOMATIC GAME COLLECTIONS", autoOptionList);
 
-    std::map<std::string, CollectionSystemData> customSystems =
+    std::map<std::string, CollectionSystemData, stringComparator> customSystems =
             CollectionSystemManager::get()->getCustomCollectionSystems();
 
     customOptionList = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
 
     // Add custom systems.
-    for (std::map<std::string, CollectionSystemData>::const_iterator it = customSystems.cbegin();
-            it != customSystems.cend() ; it++ )
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
+            it = customSystems.cbegin(); it != customSystems.cend() ; it++)
         customOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
     mMenu.addWithLabel("CUSTOM GAME COLLECTIONS", customOptionList);
 }
@@ -194,8 +194,8 @@ void GuiCollectionSystemsOptions::applySettings()
     std::string outAuto = Utils::String::vectorToCommaString(
                 autoOptionList->getSelectedObjects());
     std::string prevAuto = Settings::getInstance()->getString("CollectionSystemsAuto");
-    std::string outCustom = Utils::String::vectorToCommaString(
-                customOptionList->getSelectedObjects());
+    std::vector<std::string> customSystems = customOptionList->getSelectedObjects();
+    std::string outCustom = Utils::String::vectorToCommaString(customSystems, true);
     std::string prevCustom = Settings::getInstance()->getString("CollectionSystemsCustom");
     bool outSort = sortFavFirstCustomSwitch->getState();
     bool prevSort = Settings::getInstance()->getBool("FavFirstCustom");

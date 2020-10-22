@@ -447,11 +447,9 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
-    // For grouped custom collections, always sort the collection list as 'filename, ascending'.
+    // The main custom collections view is sorted during startup in CollectionSystemManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
-        std::stable_sort(mChildren.begin(), mChildren.end(),
-                getSortTypeFromString("filename, ascending").comparisonFunction);
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             // Build mFirstLetterIndex.
             const char firstChar = toupper((*it)->getSortName().front());
@@ -564,11 +562,9 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     bool hasFolders = false;
 
-    // For grouped custom collections, always sort the collection list as 'filename, ascending'.
+    // The main custom collections view is sorted during startup in CollectionSystemManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
-        std::stable_sort(mChildren.begin(), mChildren.end(),
-                getSortTypeFromString("filename, ascending").comparisonFunction);
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             // Build mFirstLetterIndex.
             const char firstChar = toupper((*it)->getSortName().front());
