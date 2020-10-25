@@ -61,7 +61,7 @@ GuiGamelistOptions::GuiGamelistOptions(
 
     // Read the applicable favorite sorting setting depending on whether the
     // system is a custom collection or not.
-    if (CollectionSystemManager::get()->getIsCustomCollection(file->getSystem()))
+    if (isCustomCollection)
         mFavoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
     else
         mFavoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
@@ -253,8 +253,14 @@ GuiGamelistOptions::~GuiGamelistOptions()
 
 void GuiGamelistOptions::openGamelistFilter()
 {
+    GuiGamelistFilter* ggf;
     mFiltersChanged = true;
-    GuiGamelistFilter* ggf = new GuiGamelistFilter(mWindow, mSystem);
+
+    if (isCustomCollection)
+        ggf = new GuiGamelistFilter(mWindow, getGamelist()->getCursor()->getSystem());
+    else
+        ggf = new GuiGamelistFilter(mWindow, mSystem);
+
     mWindow->pushGui(ggf);
 }
 

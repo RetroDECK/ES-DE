@@ -134,9 +134,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 onFocusLost();
                 stopListScrolling();
                 SystemData* systemToView = getCursor()->getSystem();
-                if (systemToView->isCollection())
-                    systemToView = CollectionSystemManager::get()->getSystemToView(systemToView);
-
                 ViewController::get()->goToSystemView(systemToView);
             }
 

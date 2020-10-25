@@ -312,7 +312,7 @@ const std::string FileData::getVideoPath() const
 const std::vector<FileData*>& FileData::getChildrenListToDisplay()
 {
 
-    FileFilterIndex* idx = CollectionSystemManager::get()->getSystemToView(mSystem)->getIndex();
+    FileFilterIndex* idx = mSystem->getIndex();
     if (idx->isFiltered()) {
         mFilteredChildren.clear();
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
