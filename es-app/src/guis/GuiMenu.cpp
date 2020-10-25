@@ -482,6 +482,17 @@ void GuiMenu::openUISettings()
         }
     });
 
+    // Enable gamelist star markings for favorite games.
+    auto favorites_stars = std::make_shared<SwitchComponent>(mWindow);
+    favorites_stars->setState(Settings::getInstance()->getBool("FavoritesStar"));
+    s->addWithLabel("ADD STAR MARKINGS TO FAVORITE GAMES", favorites_stars);
+    s->addSaveFunc([favorites_stars] {
+        if (Settings::getInstance()->getBool("FavoritesStar") != favorites_stars->getState()) {
+            Settings::getInstance()->setBool("FavoritesStar", favorites_stars->getState());
+            ViewController::get()->reloadAll();
+        }
+    });
+
     // Enable filters (ForceDisableFilters).
     auto enable_filter = std::make_shared<SwitchComponent>(mWindow);
     enable_filter->setState(!Settings::getInstance()->getBool("ForceDisableFilters"));

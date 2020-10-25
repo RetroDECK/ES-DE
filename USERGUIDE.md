@@ -620,6 +620,9 @@ Whether to place all folders on top of the gamelists. If done so, the folders wi
 
 Whether to sort your favorite games above your other games in the gamelists.
 
+**Add star markings to favorite games**
+With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. It's strongly recommended to keep this setting enabled if the option to sort favorite games above non-favorites has been enabled. If not, favorite games would be sorted on top of the gamelist with no visual indication that they are favorites, which would be very confusing.
+
 **Gamelist filters**
 
 Activating or deactivating the ability to filter your gamelists. Can normally be left on.
@@ -756,7 +759,11 @@ This lets you create a completely custom collection with a name that you choose.
 
 **Sort favorites on top for custom collections**
 
-Whether to sort your favorite games above your other games. This is disabled by default, as for collections you normally want to be able to mix all games regardless of whether they are favorites or not.
+Whether to sort your favorite games above your other games. This is disabled by default, as for collections you probably want to be able to mix all games regardless of whether they are favorites or not.
+
+**Display star markings for custom collections**
+
+With this option enabled, there is a star marking added to each favorite game name. It works identically to the setting 'Add star markings to favorite games' but is applied specifically to custom collections. It's disabled by default.
 
 **Group unthemed custom collections**
 

@@ -760,27 +760,51 @@ FileData* CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sy
     }
 
     if (gameCount > 0) {
-        switch (gameCount) {
-            case 1:
-                desc = "This collection contains 1 game: '" + gamesList[0]->metadata.get("name") +
-                        " [" + gamesList[0]->getSourceFileData()->getSystem()->getName() + "]'.";
-            break;
-            case 2:
-                desc = "This collection contains 2 games: '" + gamesList[0]->metadata.get("name") +
-                        " [" + gamesList[0]->getSourceFileData()->getSystem()->getName() +
-                        "]' and '" + gamesList[1]->metadata.get("name") + " [" +
-                        gamesList[1]->getSourceFileData()->getSystem()->getName() + "]'.";
-            break;
-            default:
-                desc = "This collection contains " + std::to_string(gameCount) +
-                        " games: '" + gamesList[0]->metadata.get("name") +
-                        " [" + gamesList[0]->getSourceFileData()->getSystem()->getName() +
-                        "]', '" + gamesList[1]->metadata.get("name") + " [" +
-                        gamesList[1]->getSourceFileData()->getSystem()->getName() + "]' and '" +
-                        gamesList[2]->metadata.get("name") + " [" +
-                        gamesList[2]->getSourceFileData()->getSystem()->getName() + "]'";
-                desc += (gameCount == 3 ? "." : ", among others.");
-            break;
+        if (Settings::getInstance()->getBool("CollectionShowSystemInfo")) {
+            switch (gameCount) {
+                case 1:
+                    desc = "This collection contains 1 game: '" +
+                            gamesList[0]->metadata.get("name") + " [" +
+                            gamesList[0]->getSourceFileData()->getSystem()->getName() + "]'.";
+                break;
+                case 2:
+                    desc = "This collection contains 2 games: '" +
+                            gamesList[0]->metadata.get("name") + " [" +
+                            gamesList[0]->getSourceFileData()->getSystem()->getName() +
+                            "]' and '" + gamesList[1]->metadata.get("name") + " [" +
+                            gamesList[1]->getSourceFileData()->getSystem()->getName() + "]'.";
+                break;
+                default:
+                    desc = "This collection contains " + std::to_string(gameCount) +
+                            " games: '" + gamesList[0]->metadata.get("name") +
+                            " [" + gamesList[0]->getSourceFileData()->getSystem()->getName() +
+                            "]', '" + gamesList[1]->metadata.get("name") + " [" +
+                            gamesList[1]->getSourceFileData()->getSystem()->getName() + "]' and '" +
+                            gamesList[2]->metadata.get("name") + " [" +
+                            gamesList[2]->getSourceFileData()->getSystem()->getName() + "]'";
+                    desc += (gameCount == 3 ? "." : ", among others.");
+                break;
+            }
+        }
+        else {
+            switch (gameCount) {
+                case 1:
+                    desc = "This collection contains 1 game: '" +
+                            gamesList[0]->metadata.get("name") + " '.";
+                break;
+                case 2:
+                    desc = "This collection contains 2 games: '" +
+                            gamesList[0]->metadata.get("name") +
+                            "' and '" + gamesList[1]->metadata.get("name") + "'.";
+                break;
+                default:
+                    desc = "This collection contains " + std::to_string(gameCount) +
+                            " games: '" + gamesList[0]->metadata.get("name") +
+                            "', '" + gamesList[1]->metadata.get("name") + "' and '" +
+                            gamesList[2]->metadata.get("name") + "'";
+                    desc += (gameCount == 3 ? "." : ", among others.");
+                break;
+            }
         }
     }
 

@@ -52,6 +52,16 @@ void BasicGameListView::onFileChanged(FileData* file, FileChangeType change)
 void BasicGameListView::populateList(const std::vector<FileData*>& files)
 {
     firstGameEntry = nullptr;
+    bool favoriteStar = true;
+
+    // Read the settings that control whether a unicode star character should be added
+    // as a prefix to the game name.
+    if (files.size() > 0) {
+        if (files.front()->getSystem()->isCustomCollection())
+            favoriteStar = Settings::getInstance()->getBool("FavStarCustom");
+        else
+            favoriteStar = Settings::getInstance()->getBool("FavoritesStar");
+    }
 
     mList.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());
@@ -60,7 +70,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
             if (!firstGameEntry && (*it)->getType() == GAME)
                 firstGameEntry = (*it);
 
-            if ((*it)->getFavorite() &&
+            if ((*it)->getFavorite() && favoriteStar &&
                     mRoot->getSystem()->getName() != "favorites") {
                 mList.add(FAVORITE_CHAR + "  " + (*it)->getName(),
                     *it, ((*it)->getType() == FOLDER));

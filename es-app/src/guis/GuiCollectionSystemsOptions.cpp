@@ -89,6 +89,10 @@ void GuiCollectionSystemsOptions::initializeMenu()
     sortFavFirstCustomSwitch->setState(Settings::getInstance()->getBool("FavFirstCustom"));
     mMenu.addWithLabel("SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS", sortFavFirstCustomSwitch);
 
+    favoriteStarCustomSwitch = std::make_shared<SwitchComponent>(mWindow);
+    favoriteStarCustomSwitch->setState(Settings::getInstance()->getBool("FavStarCustom"));
+    mMenu.addWithLabel("DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS", favoriteStarCustomSwitch);
+
     bundleCustomCollections = std::make_shared<SwitchComponent>(mWindow);
     bundleCustomCollections->setState(Settings::getInstance()->
             getBool("UseCustomCollectionsSystem"));
@@ -199,12 +203,14 @@ void GuiCollectionSystemsOptions::applySettings()
     std::string prevCustom = Settings::getInstance()->getString("CollectionSystemsCustom");
     bool outSort = sortFavFirstCustomSwitch->getState();
     bool prevSort = Settings::getInstance()->getBool("FavFirstCustom");
+    bool outFavStar = favoriteStarCustomSwitch->getState();
+    bool prevFavStar = Settings::getInstance()->getBool("FavStarCustom");
     bool outBundle = bundleCustomCollections->getState();
     bool prevBundle = Settings::getInstance()->getBool("UseCustomCollectionsSystem");
     bool prevShow = Settings::getInstance()->getBool("CollectionShowSystemInfo");
     bool outShow = toggleSystemNameInCollections->getState();
     bool needUpdateSettings = prevAuto != outAuto || prevCustom != outCustom || outSort !=
-            prevSort || outBundle != prevBundle || prevShow != outShow ;
+            prevSort || outFavStar != prevFavStar || outBundle != prevBundle || prevShow != outShow;
 
     if (needUpdateSettings)
         updateSettings(outAuto, outCustom);
@@ -218,6 +224,7 @@ void GuiCollectionSystemsOptions::updateSettings(std::string newAutoSettings,
     Settings::getInstance()->setString("CollectionSystemsAuto", newAutoSettings);
     Settings::getInstance()->setString("CollectionSystemsCustom", newCustomSettings);
     Settings::getInstance()->setBool("FavFirstCustom", sortFavFirstCustomSwitch->getState());
+    Settings::getInstance()->setBool("FavStarCustom", favoriteStarCustomSwitch->getState());
     Settings::getInstance()->setBool("UseCustomCollectionsSystem",
             bundleCustomCollections->getState());
     Settings::getInstance()->setBool("CollectionShowSystemInfo",
@@ -227,6 +234,7 @@ void GuiCollectionSystemsOptions::updateSettings(std::string newAutoSettings,
     CollectionSystemManager::get()->updateSystemsList();
     ViewController::get()->goToStart();
     ViewController::get()->reloadAll();
+    mWindow->invalidateCachedBackground();
 }
 
 bool GuiCollectionSystemsOptions::input(InputConfig* config, Input input)

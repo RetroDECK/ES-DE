@@ -91,6 +91,7 @@ void Settings::setDefaults()
     mBoolMap["GamelistVideoScanlines"] = true;
     mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;
+    mBoolMap["FavoritesStar"] = true;
     mBoolMap["ForceDisableFilters"] = false;
     mBoolMap["QuickSystemSelect"] = true;
     mBoolMap["ShowHelpPrompts"] = true;
@@ -151,6 +152,7 @@ void Settings::setDefaults()
     mStringMap["CollectionSystemsCustom"] = "";
     mBoolMap["UseCustomCollectionsSystem"] = true;
     mBoolMap["FavFirstCustom"] = false;
+    mBoolMap["FavStarCustom"] = false;
     mBoolMap["CollectionShowSystemInfo"] = true;
 
     // Scraper.
