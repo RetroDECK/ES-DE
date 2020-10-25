@@ -115,6 +115,7 @@ private:
     bool mHasEnabledCustomCollection;
     std::string mEditingCollection;
     CollectionSystemData* mEditingCollectionSystemData;
+    SystemData* mCustomCollectionsBundle;
 
     void initAutoCollectionSystems();
     void initCustomCollectionSystems();
@@ -138,11 +139,8 @@ private:
     bool themeFolderExists(std::string folder);
     bool includeFileInAutoCollections(FileData* file);
 
-    SystemData* mCustomCollectionsBundle;
+    std::string getCustomCollectionConfigPath(std::string collectionName);
+    std::string getCollectionsFolder();
 };
-
-std::string getCustomCollectionConfigPath(std::string collectionName);
-std::string getCollectionsFolder();
-bool systemSort(SystemData* sys1, SystemData* sys2);
 
 #endif // ES_APP_COLLECTION_SYSTEM_MANAGER_H

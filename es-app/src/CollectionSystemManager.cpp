@@ -449,7 +449,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 void CollectionSystemManager::trimCollectionCount(FileData* rootFolder, int limit)
 {
     SystemData* curSys = rootFolder->getSystem();
-    while ((int)rootFolder->getChildrenListToDisplay().size() > limit) {
+    while (static_cast<int>(rootFolder->getChildrenListToDisplay().size()) > limit) {
         CollectionFileData* gameToRemove =
                 (CollectionFileData*)rootFolder->getChildrenListToDisplay().back();
         ViewController::get()->getGameListView(curSys).get()->remove(gameToRemove, false);
@@ -1191,22 +1191,15 @@ bool CollectionSystemManager::includeFileInAutoCollections(FileData* file)
     return file->getName() != "kodi" && file->getSystem()->isGameSystem();
 }
 
-std::string getCustomCollectionConfigPath(std::string collectionName)
+std::string CollectionSystemManager::getCustomCollectionConfigPath(std::string collectionName)
 {
     return getCollectionsFolder() + "/custom-" + collectionName + ".cfg";
 }
 
-std::string getCollectionsFolder()
+std::string CollectionSystemManager::getCollectionsFolder()
 {
     return Utils::FileSystem::getGenericPath(Utils::FileSystem::getHomePath() +
             "/.emulationstation/collections");
-}
-
-bool systemSort(SystemData* sys1, SystemData* sys2)
-{
-    std::string name1 = Utils::String::toUpper(sys1->getName());
-    std::string name2 = Utils::String::toUpper(sys2->getName());
-    return name1.compare(name2) < 0;
 }
 
 // Return whether the system is a custom collection.

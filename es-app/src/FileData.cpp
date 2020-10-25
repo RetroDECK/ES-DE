@@ -299,8 +299,8 @@ const std::string FileData::getVideoPath() const
     if (Settings::getInstance()->getBool("LocalArt"))
     {
         for (int i = 0; i < 5; i++) {
-            std::string localMediaPath = mEnvData->mStartPath + "/videos/" + getDisplayName() +
-                    "-video" + extList[i];
+            std::string localMediaPath = mEnvData->mStartPath + "/videos/" +
+                    getDisplayName() + "-video" + extList[i];
             if (Utils::FileSystem::exists(localMediaPath))
                 return localMediaPath;
         }
@@ -311,7 +311,6 @@ const std::string FileData::getVideoPath() const
 
 const std::vector<FileData*>& FileData::getChildrenListToDisplay()
 {
-
     FileFilterIndex* idx = mSystem->getIndex();
     if (idx->isFiltered()) {
         mFilteredChildren.clear();
