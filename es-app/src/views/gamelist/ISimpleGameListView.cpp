@@ -307,7 +307,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                             !entryToUpdate->getSystem()->isCustomCollection())
-                        setCursor(getFirstGameEntry());
+                        ViewController::get()->getGameListView(entryToUpdate->getSystem())->
+                                setCursor(ViewController::get()->getGameListView(entryToUpdate->
+                                getSystem())->getFirstGameEntry());
                     else if (removedLastFavorite &&
                             !entryToUpdate->getSystem()->isCustomCollection())
                         setCursor(getFirstEntry());
