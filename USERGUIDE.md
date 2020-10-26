@@ -621,6 +621,7 @@ Whether to place all folders on top of the gamelists. If done so, the folders wi
 Whether to sort your favorite games above your other games in the gamelists.
 
 **Add star markings to favorite games**
+
 With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. It's strongly recommended to keep this setting enabled if the option to sort favorite games above non-favorites has been enabled. If not, favorite games would be sorted on top of the gamelist with no visual indication that they are favorites, which would be very confusing.
 
 **Gamelist filters**

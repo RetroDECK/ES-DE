@@ -144,20 +144,22 @@ GuiGamelistOptions::GuiGamelistOptions(
         }
     }
 
-    std::map<std::string, CollectionSystemData, stringComparator> customCollections =
-            CollectionSystemManager::get()->getCustomCollectionSystems();
+    std::string customSystem;
+    if (Settings::getInstance()->getBool("UseCustomCollectionsSystem"))
+        customSystem = file->getSystem()->getName();
+    else
+        customSystem = system->getName();
 
     if (UIModeController::getInstance()->isUIModeFull() &&
-        ((customCollections.find(system->getName()) != customCollections.cend() &&
-        CollectionSystemManager::get()->getEditingCollection() != system->getName()) ||
-        CollectionSystemManager::get()->getCustomCollectionsBundle()->getName() ==
-                system->getName())) {
-        row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>(
-                mWindow, "ADD/REMOVE GAMES TO THIS GAME COLLECTION", Font::get(FONT_SIZE_MEDIUM),
-                0x777777FF), true);
-        row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::startEditMode, this));
-        mMenu.addRow(row);
+            (isCustomCollection || isCustomCollectionGroup)) {
+        if (CollectionSystemManager::get()->getEditingCollection() != customSystem) {
+            row.elements.clear();
+            row.addElement(std::make_shared<TextComponent>(
+                    mWindow, "ADD/REMOVE GAMES TO THIS GAME COLLECTION",
+                    Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+            row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::startEditMode, this));
+            mMenu.addRow(row);
+        }
     }
 
     if (UIModeController::getInstance()->isUIModeFull() &&
