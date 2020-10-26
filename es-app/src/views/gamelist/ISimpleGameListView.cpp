@@ -283,7 +283,11 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                             mRoot->getSortTypeFromString(mRoot->getSortTypeString()),
                             Settings::getInstance()->getBool("FavoritesFirst"));
 
-                    ViewController::get()->onFileChanged(getCursor(), FILE_METADATA_CHANGED);
+                    // This is actually a FILE_METADATA_CHANGED rather than a FILE_SORTED,
+                    // but the former initiates a reload of the gamelist which takes quite
+                    // some time and is not necessary at all when toggling the favorite
+                    // flag for a folder.
+                    ViewController::get()->onFileChanged(getCursor(), FILE_SORTED);
 
                     // Always jump to the first entry in the gamelist if the last favorite
                     // was unmarked. We couldn't do this earlier as we didn't have the list
@@ -293,7 +297,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                                 getSystem())->setCursor(ViewController::get()->
                                 getGameListView(entryToUpdate->getSystem())->getFirstEntry());
                     }
-
                     return true;
                 }
                 else if (CollectionSystemManager::get()->isEditing() &&
