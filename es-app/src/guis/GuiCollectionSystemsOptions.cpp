@@ -221,6 +221,9 @@ void GuiCollectionSystemsOptions::applySettings()
 void GuiCollectionSystemsOptions::updateSettings(std::string newAutoSettings,
         std::string newCustomSettings)
 {
+    if (CollectionSystemManager::get()->isEditing())
+        CollectionSystemManager::get()->exitEditMode();
+
     Settings::getInstance()->setString("CollectionSystemsAuto", newAutoSettings);
     Settings::getInstance()->setString("CollectionSystemsCustom", newCustomSettings);
     Settings::getInstance()->setBool("FavFirstCustom", sortFavFirstCustomSwitch->getState());
