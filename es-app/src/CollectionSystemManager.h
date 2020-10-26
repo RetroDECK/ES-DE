@@ -97,6 +97,7 @@ public:
     void exitEditMode();
     inline bool isEditing() { return mIsEditingCustom; };
     inline std::string getEditingCollection() { return mEditingCollection; };
+    bool inCustomCollection(const std::string& collectionName, FileData* gameFile);
     bool toggleGameInCollection(FileData* file);
 
     SystemData* getSystemToView(SystemData* sys);

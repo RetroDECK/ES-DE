@@ -24,6 +24,7 @@
 #include "guis/GuiInfoPopup.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
+#include "utils/TimeUtil.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
 #include "FileData.h"
@@ -331,6 +332,12 @@ void CollectionSystemManager::refreshCollectionSystems(FileData* file)
 void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionSystemData sysData)
 {
     if (sysData.isPopulated) {
+        // Skip all custom collections where the game does not exist.
+        if (sysData.decl.isCustom) {
+            if (!inCustomCollection(sysData.system->getFullName(), file))
+                return;
+        }
+
         // Collection files use the full path as key, to avoid clashes.
         std::string key = file->getFullPath();
 
@@ -390,7 +397,6 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
                 CollectionFileData* newGame = new CollectionFileData(file, curSys);
                 rootFolder->addChild(newGame);
                 fileIndex->addToIndex(newGame);
-                ViewController::get()->onFileChanged(file, FILE_METADATA_CHANGED);
                 ViewController::get()->
                         getGameListView(curSys)->onFileChanged(newGame, FILE_METADATA_CHANGED);
             }
@@ -419,11 +425,20 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
         if (name == "recent") {
             trimCollectionCount(rootFolder, LAST_PLAYED_MAX);
             ViewController::get()->onFileChanged(rootFolder, FILE_METADATA_CHANGED);
-
-            // Select the first row of the gamelist (the game just played).
-            IGameListView* gameList =
-                    ViewController::get()->getGameListView(getSystemToView(sysData.system)).get();
-            gameList->setCursor(gameList->getFirstEntry());
+            // This is a bit of a hack to prevent a jump to the first line of the gamelist
+            // if an entry is manually adjusted from within the 'recent' gamelist, for example
+            // by toggling a game as favorite. If the time since the last played timestamp is
+            // less than two seconds, then assume that the game was actually just launched,
+            // and therefore jump to the first line. The two seconds is incredibly generous
+            // as normally it would rather be some milliseconds, but who knows what special
+            // circumstances could cause a slight delay so let's keep a large margin.
+            if (Utils::Time::now() -
+                    Utils::Time::stringToTime(file->metadata.get("lastplayed")) < 2) {
+                // Select the first row of the gamelist (the game just played).
+                IGameListView* gameList = ViewController::get()->
+                        getGameListView(getSystemToView(sysData.system)).get();
+                gameList->setCursor(gameList->getFirstEntry());
+            }
         }
         else {
             ViewController::get()->onFileChanged(rootFolder, FILE_SORTED);
@@ -606,6 +621,20 @@ void CollectionSystemManager::exitEditMode()
     mEditingCollectionSystemData->system->onMetaDataSavePoint();
 }
 
+bool CollectionSystemManager::inCustomCollection(
+        const std::string& collectionName, FileData* gameFile)
+{
+    auto collectionEntry = mCustomCollectionSystemsData.find(collectionName);
+
+    if (collectionEntry != mCustomCollectionSystemsData.end()) {
+        const std::unordered_map<std::string, FileData*>& children =
+                collectionEntry->second.system->getRootFolder()->getChildrenByFilename();
+        return children.find(gameFile->getFullPath()) != children.cend();
+    }
+
+    return false;
+}
+
 // Add or remove a game from a specific collection.
 bool CollectionSystemManager::toggleGameInCollection(FileData* file)
 {
@@ -634,35 +663,32 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                 adding = false;
                 // If we found it, we need to remove it.
                 FileData* collectionEntry = children.at(key);
-                // Remove from index.
-                fileIndex->removeFromIndex(collectionEntry);
-                // Remove from bundle index as well, if needed.
-                if (systemViewToUpdate != sysData)
-                    systemViewToUpdate->getIndex()->removeFromIndex(collectionEntry);
-
                 ViewController::get()->getGameListView(systemViewToUpdate).get()->
                         remove(collectionEntry, false);
                 systemViewToUpdate->getRootFolder()->sort(rootFolder->getSortTypeFromString(
                         rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
+                if (rootFolder->getChildren().size() == 0) {
+                    ViewController::get()->reloadGameListView(systemViewToUpdate);
+                }
+
+                updateCollectionFolderMetadata(systemViewToUpdate);
             }
             else {
                 // We didn't find it here, so we should add it.
                 CollectionFileData* newGame = new CollectionFileData(file, sysData);
                 rootFolder->addChild(newGame);
-                fileIndex->addToIndex(newGame);
-                ViewController::get()->getGameListView(systemViewToUpdate)->
-                        onFileChanged(newGame, FILE_METADATA_CHANGED);
-                if (name == "recent")
-                    rootFolder->sort(rootFolder->getSortTypeFromString("last played, descending"));
 
+                systemViewToUpdate->getRootFolder()->sort(rootFolder->getSortTypeFromString(
+                        rootFolder->getSortTypeString()),
+                        Settings::getInstance()->getBool("FavFirstCustom"));
                 ViewController::get()->onFileChanged(systemViewToUpdate->
                         getRootFolder(), FILE_SORTED);
+                fileIndex->addToIndex(newGame);
 
                 // Add to bundle index as well, if needed.
                 if (systemViewToUpdate != sysData)
                     systemViewToUpdate->getIndex()->addToIndex(newGame);
-                refreshCollectionSystems(newGame);
             }
             saveCustomCollection(sysData);
         }
