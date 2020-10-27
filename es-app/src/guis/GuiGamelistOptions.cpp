@@ -231,7 +231,7 @@ GuiGamelistOptions::~GuiGamelistOptions()
             root->setSortTypeString((*mListSort->getSelected()).description);
 
             // Notify that the root folder was sorted (refresh).
-            getGamelist()->onFileChanged(root, FILE_SORTED);
+            getGamelist()->onFileChanged(root, false);
         }
 
         // Has the user changed the letter using the quick selector?
@@ -347,7 +347,7 @@ void GuiGamelistOptions::openMetaDataEd()
                 file->metadata.getMDD(FOLDER_METADATA), p,
                 Utils::FileSystem::getFileName(file->getPath()), std::bind(
                 &IGameListView::onFileChanged, ViewController::get()->getGameListView(
-                file->getSystem()).get(), file, FILE_METADATA_CHANGED),
+                file->getSystem()).get(), file, true),
                 clearGameBtnFunc, deleteGameBtnFunc));
     }
     else {
@@ -355,7 +355,7 @@ void GuiGamelistOptions::openMetaDataEd()
                 file->metadata.getMDD(GAME_METADATA), p,
                 Utils::FileSystem::getFileName(file->getPath()), std::bind(
                 &IGameListView::onFileChanged, ViewController::get()->getGameListView(
-                file->getSystem()).get(), file, FILE_METADATA_CHANGED),
+                file->getSystem()).get(), file, true),
                 clearGameBtnFunc, deleteGameBtnFunc));
     }
 }

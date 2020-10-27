@@ -21,11 +21,8 @@ public:
     ISimpleGameListView(Window* window, FileData* root);
     virtual ~ISimpleGameListView();
 
-    // Called when a new file is added, a file is removed, a file's metadata changes,
-    // or a file's children are sorted.
-    // Note: FILE_SORTED is only reported for the topmost FileData, where the sort started.
-    // Since sorts are recursive, FileData's children probably changed too.
-    virtual void onFileChanged(FileData* file, FileChangeType change) override;
+    // Called when a FileData* is added, has its metadata changed, or is removed.
+    virtual void onFileChanged(FileData* file, bool reloadGameList) override;
 
     // Called whenever the theme changes.
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;

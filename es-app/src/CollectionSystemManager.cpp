@@ -380,7 +380,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
             else {
                 // Re-index with new metadata.
                 fileIndex->addToIndex(collectionEntry);
-                ViewController::get()->onFileChanged(collectionEntry, FILE_METADATA_CHANGED);
+                ViewController::get()->onFileChanged(collectionEntry, false);
             }
         }
         else {
@@ -398,7 +398,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
                 rootFolder->addChild(newGame);
                 fileIndex->addToIndex(newGame);
                 ViewController::get()->
-                        getGameListView(curSys)->onFileChanged(newGame, FILE_METADATA_CHANGED);
+                        getGameListView(curSys)->onFileChanged(newGame, false);
             }
         }
 
@@ -424,7 +424,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
 
         if (name == "recent") {
             trimCollectionCount(rootFolder, LAST_PLAYED_MAX);
-            ViewController::get()->onFileChanged(rootFolder, FILE_METADATA_CHANGED);
+            ViewController::get()->onFileChanged(rootFolder, false);
             // This is a bit of a hack to prevent a jump to the first line of the gamelist
             // if an entry is manually adjusted from within the 'recent' gamelist, for example
             // by toggling a game as favorite. If the time since the last played timestamp is
@@ -441,7 +441,7 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
             }
         }
         else {
-            ViewController::get()->onFileChanged(rootFolder, FILE_SORTED);
+            ViewController::get()->onFileChanged(rootFolder, false);
             // If it's a custom collection and the setting to group the collections is
             // enabled, we may have to update the parent instead.
             // However it may not necessarily be so if some collections are themed and
@@ -450,11 +450,10 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
                     Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
                 // In case of a returned null pointer, we know there is no parent.
                 if (rootFolder->getParent() == nullptr) {
-                    ViewController::get()->onFileChanged(rootFolder, FILE_METADATA_CHANGED);
+                    ViewController::get()->onFileChanged(rootFolder, false);
                 }
                 else {
-                    ViewController::get()->onFileChanged(
-                            rootFolder->getParent(), FILE_METADATA_CHANGED);
+                    ViewController::get()->onFileChanged(rootFolder->getParent(), false);
                 }
             }
         }
@@ -682,8 +681,7 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                 systemViewToUpdate->getRootFolder()->sort(rootFolder->getSortTypeFromString(
                         rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
-                ViewController::get()->onFileChanged(systemViewToUpdate->
-                        getRootFolder(), FILE_SORTED);
+                ViewController::get()->onFileChanged(systemViewToUpdate->getRootFolder(), false);
                 fileIndex->addToIndex(newGame);
 
                 // Add to bundle index as well, if needed.

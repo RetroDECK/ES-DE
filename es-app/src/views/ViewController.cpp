@@ -286,11 +286,11 @@ void ViewController::playViewTransition()
     }
 }
 
-void ViewController::onFileChanged(FileData* file, FileChangeType change)
+void ViewController::onFileChanged(FileData* file, bool reloadGameList)
 {
     auto it = mGameListViews.find(file->getSystem());
     if (it != mGameListViews.cend())
-        it->second->onFileChanged(file, change);
+        it->second->onFileChanged(file, reloadGameList);
 }
 
 void ViewController::launch(FileData* game, Vector3f center)
@@ -327,7 +327,7 @@ void ViewController::launch(FileData* game, Vector3f center)
     setAnimation(new LambdaAnimation([](float t){}, 1700), 0, [this, game] {
         while (NavigationSounds::getInstance()->isPlayingThemeNavigationSound(LAUNCHSOUND));
         game->launchGame(mWindow);
-        onFileChanged(game, FILE_METADATA_CHANGED);
+        onFileChanged(game, true);
         // This is a workaround so that any key or button presses used for exiting the emulator
         // are not captured upon returning to ES.
         setAnimation(new LambdaAnimation([](float t){}, 1), 0, [this] {

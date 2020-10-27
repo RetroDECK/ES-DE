@@ -26,13 +26,6 @@ enum FileType {
     PLACEHOLDER = 3
 };
 
-enum FileChangeType {
-    FILE_ADDED,
-    FILE_METADATA_CHANGED,
-    FILE_REMOVED,
-    FILE_SORTED
-};
-
 // Used for loading/saving gamelist.xml.
 const char* fileTypeToString(FileType type);
 FileType stringToFileType(const char* str);

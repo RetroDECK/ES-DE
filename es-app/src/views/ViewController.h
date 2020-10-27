@@ -58,7 +58,7 @@ public:
     void resetMovingCamera();
     void stopScrolling();
 
-    void onFileChanged(FileData* file, FileChangeType change);
+    void onFileChanged(FileData* file, bool reloadGameList);
 
     void launch(FileData* game, Vector3f centerCameraOn =
             Vector3f(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f, 0));

@@ -18,7 +18,7 @@ public:
     BasicGameListView(Window* window, FileData* root);
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
-    virtual void onFileChanged(FileData* file, FileChangeType change) override;
+    virtual void onFileChanged(FileData* file, bool reloadGameList) override;
 
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
 

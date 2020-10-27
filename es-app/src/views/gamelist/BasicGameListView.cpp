@@ -38,15 +38,15 @@ void BasicGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     sortChildren();
 }
 
-void BasicGameListView::onFileChanged(FileData* file, FileChangeType change)
+void BasicGameListView::onFileChanged(FileData* file, bool reloadGameList)
 {
-    if (change == FILE_METADATA_CHANGED) {
+    if (reloadGameList) {
         // Might switch to a detailed view.
         ViewController::get()->reloadGameListView(this);
         return;
     }
 
-    ISimpleGameListView::onFileChanged(file, change);
+    ISimpleGameListView::onFileChanged(file, reloadGameList);
 }
 
 void BasicGameListView::populateList(const std::vector<FileData*>& files)
@@ -203,7 +203,7 @@ void BasicGameListView::remove(FileData *game, bool deleteFile)
     if (deleteFile) {
         parent->sort(parent->getSortTypeFromString(parent->getSortTypeString()),
                 Settings::getInstance()->getBool("FavoritesFirst"));
-        onFileChanged(parent, FILE_REMOVED);
+        onFileChanged(parent, false);
     }
 }
 

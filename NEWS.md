@@ -12,7 +12,7 @@ OpenGL GLSL shader support has been added (not for the OpenGL ES renderer though
 
 A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. However themes created for other EmulationStation ports should still work correctly.
 
-Many bugs have been fixed, and numerous features that were only partially implemented or broken have been updated to a fully working state.
+Many bugs have been fixed, and numerous features that were only partially implemented or broken have been updated to a fully working state. The application runs much faster as well due to lots of optimizations.
 
 ### Detailed list of changes
 
@@ -25,6 +25,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using a different font color
 * Files or folders can now be flagged for exclusion when scraping with the multi-scraper, and for folders it can be set to apply recursively
 * Gamelist sorting is now working as expected and is persistent throughout the application session
+* Overhaul of the game collection functionality including many bug fixes and optimizations
 * Game counting is now done during sorting instead of every time a system is selected. This should make the UI more responsive in case of large game libraries
 * Added a system view counter for favorite games in addition to the total number of games
 * Added support for jumping to the start and end of gamelists and menus using the controller trigger buttons (or equivalent keyboard mappings)
@@ -89,6 +90,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Fixed an annoying gamelist issue that caused the game images and data to be updated and rendered up to six times every time the list was scrolled
 * VRAM statistics overlay was somewhat broken and incorrectly displayed numbers in megabytes instead of mebibytes
 * Not all input events were logged when running with debug logging activated
+* Filters were not applied when leaving folders by using the back button
 * Editing long text entries made the cursor jump outside the editing field
 * Long game names would sometimes not scroll in the gamelist view
 * On Unix, adding a hidden folder with a game in it crashed the application on startup

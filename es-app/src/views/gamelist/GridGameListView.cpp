@@ -547,7 +547,7 @@ void GridGameListView::remove(FileData *game, bool deleteFile)
 
     // Remove before repopulating (removes from parent), then update the view.
     delete game;
-    onFileChanged(parent, FILE_REMOVED);
+    onFileChanged(parent, false);
 }
 
 void GridGameListView::removeMedia(FileData *game)
