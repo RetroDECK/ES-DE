@@ -875,7 +875,33 @@ This is the sort order for the gamelist. There's is a global sort order setting 
 
 ### Filter gamelist
 
-Choosing this entry opens a separate screen where it's possible to apply a filter for the gamelists, which is persistent throughout the program session, or until the filter is reset. The option to reset the filter is also shown on the separate screen.
+Choosing this entry opens a separate screen where it's possible to apply a filter for the gamelists, which is persistent throughout the program session, or until the filter is reset. The option to reset all filters is also shown on this separate screen.
+
+The following filters can be applied:
+
+**Favorites**
+
+**Genre**
+
+**Players**
+
+**Publisher / Developer**
+
+**Rating**
+
+**Kidgame**
+
+**Completed**
+
+**Broken**
+
+**Hidden**
+
+All possible filter values are assembled from metadata from the actual gamelist, so if there for instance are no games marked as completed, the Completed filter will only have the selectable option 'False', meaning 'True' will be missing.
+
+Be aware that although folders can have most of these metadata values set, the filters are only applied to files. So if you for example set a filter to only display your favorite games, any folder that contains a favorite game will be displayed, and other folders which are themselves marked as favorite but that do not contain any favorite games will be hidden.
+
+The filters are always applied for the complete game system, including all folder contents.
 
 ### Edit this game's metadata / Edit this folder's metadata
 
