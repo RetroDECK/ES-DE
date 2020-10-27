@@ -52,6 +52,26 @@ void GuiGamelistFilter::initializeMenu()
 
 void GuiGamelistFilter::resetAllFilters()
 {
+    // For grouped custom collections, if the user locks himself out by applying a filter
+    // and then removes all entries that are applied by the filter, then this workaround is
+    // required to reset the filters. This situation may occur if filtering on favorite games,
+    // and then unflagging all games as favorites, ending up with the <NO ENTRIES FOUND>
+    // indicator. Without this code an application restart would have been required to
+    // reset the filters.
+    if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
+        std::vector<FileData*> customCollections = mSystem->getRootFolder()->getChildren();
+        if (customCollections.size() > 0) {
+            for (auto it = customCollections.begin(); it != customCollections.end(); it++) {
+                FileFilterIndex* customIndex = (*it)->getSystem()->getIndex();
+                if (customIndex->isFiltered()) {
+                    std::vector<FileData*> customChildren = (*it)->getChildrenListToDisplay();
+                    if (customChildren.size() == 0)
+                        customIndex->resetFilters();
+                }
+            }
+        }
+    }
+
     mFilterIndex->resetFilters();
     for (std::map<FilterIndexType, std::shared_ptr< OptionListComponent<std::string>
              >>::const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); ++it ) {
