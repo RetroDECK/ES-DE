@@ -125,7 +125,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             ViewController::get()->resetMovingCamera();
             if (mCursorStack.size()) {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
-                populateList(mCursorStack.top()->getParent()->getChildren());
+                populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay());
                 setCursor(mCursorStack.top());
                 mCursorStack.pop();
             }
