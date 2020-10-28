@@ -127,14 +127,21 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
                 populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay());
                 setCursor(mCursorStack.top());
-                mCursorStack.pop();
+                if (mCursorStack.size() > 0)
+                    mCursorStack.pop();
+                onFileChanged(getCursor(), false);
             }
             else {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
                 onFocusLost();
                 stopListScrolling();
                 SystemData* systemToView = getCursor()->getSystem();
-                ViewController::get()->goToSystemView(systemToView);
+                if (systemToView->isCustomCollection() &&
+                        systemToView->getRootFolder()->getParent())
+                    ViewController::get()->goToSystemView(
+                            systemToView->getRootFolder()->getParent()->getSystem());
+                else
+                    ViewController::get()->goToSystemView(systemToView);
             }
 
             return true;
@@ -168,7 +175,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedTo("y", input) &&
                 !UIModeController::getInstance()->isUIModeKid()) {
-            if (mRoot->getSystem()->isGameSystem() &&
+            if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                     getCursor()->getParent()->getPath() != "collections") {
                 if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
                     NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
@@ -178,6 +185,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 FileData* entryToUpdate = getCursor();
                 bool favoritesSorting;
                 bool removedLastFavorite = false;
+                bool isEditing = CollectionSystemManager::get()->isEditing();
                 bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
                 // If the current list only contains folders, then treat it as if the folders
                 // are not sorted on top, this way the logic should work exactly as for mixed
@@ -191,8 +199,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
                 if (favoritesSorting && static_cast<std::string>(
-                        mRoot->getSystem()->getName()) != "recent" &&
-                        !CollectionSystemManager::get()->isEditing()) {
+                        mRoot->getSystem()->getName()) != "recent" && !isEditing) {
                     FileData* entryToSelect;
                     // Add favorite flag.
                     if (!getCursor()->getFavorite()) {
@@ -256,7 +263,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 // CollectionSystemManager.
                 if (entryToUpdate->getType() == FOLDER) {
                     GuiInfoPopup* s;
-                    if (CollectionSystemManager::get()->isEditing()) {
+                    if (isEditing) {
                         s = new GuiInfoPopup(mWindow,
                                 "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS", 4000);
                     }
@@ -295,8 +302,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     }
                     return true;
                 }
-                else if (CollectionSystemManager::get()->isEditing() &&
-                        entryToUpdate->metadata.get("nogamecount") == "true") {
+                else if (isEditing && entryToUpdate->metadata.get("nogamecount") == "true") {
                     GuiInfoPopup* s = new GuiInfoPopup(mWindow,
                             "CAN'T ADD ENTRIES THAT ARE NOT COUNTED "
                             "AS GAMES TO CUSTOM COLLECTIONS", 4000);
@@ -312,6 +318,17 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     else if (removedLastFavorite &&
                             !entryToUpdate->getSystem()->isCustomCollection())
                         setCursor(getFirstEntry());
+                    // Display the indication icons which show what games are part of the
+                    // custom collection currently being edited. This is done cheaply using
+                    // onFileChanged() which will trigger populateList().
+                    if (isEditing) {
+                        for (auto it = SystemData::sSystemVector.begin();
+                                it != SystemData::sSystemVector.end(); it++) {
+                            ViewController::get()->getGameListView((*it))->onFileChanged(
+                                    ViewController::get()->getGameListView((*it))->
+                                    getCursor(), false);
+                        }
+                    }
                     return true;
                 }
             }

@@ -281,12 +281,29 @@ void GuiGamelistOptions::startEditMode()
             editingSystem = file->getSystem()->getName();
     }
     CollectionSystemManager::get()->setEditMode(editingSystem);
+
+    // Display the indication icons which show what games are part of the custom collection
+    // currently being edited. This is done cheaply using onFileChanged() which will trigger
+    // populateList().
+    for (auto it = SystemData::sSystemVector.begin();
+            it != SystemData::sSystemVector.end(); it++) {
+        ViewController::get()->getGameListView((*it))->onFileChanged(
+                ViewController::get()->getGameListView((*it))->getCursor(), false);
+    }
+
     delete this;
 }
 
 void GuiGamelistOptions::exitEditMode()
 {
     CollectionSystemManager::get()->exitEditMode();
+
+    for (auto it = SystemData::sSystemVector.begin();
+            it != SystemData::sSystemVector.end(); it++) {
+        ViewController::get()->getGameListView((*it))->onFileChanged(
+                ViewController::get()->getGameListView((*it))->getCursor(), false);
+    }
+
     delete this;
 }
 

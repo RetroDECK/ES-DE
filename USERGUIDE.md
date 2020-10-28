@@ -1064,6 +1064,10 @@ The collection will now be added and the collection edit mode will be automatica
 
 Removing games works in the same way, just press 'Y' to remove it if it's already present in your collection. You can do this either from the game system where the game was added, or from the collection itself.
 
+Note that only files can be part of collections, not folders.
+
+During the time that the collection is being edited, any game that is already part of the collection will be marked with a leading tick mark in their game name to make it easy to see which games have already been added.
+
 When you are done adding games, you can either open the main menu and go to 'Game collection settings' and select the 'Finish editing '1980s' collection' or you can open the game options menu and select the same option there. The latter works from within any game system, you don't need to navigate back to the collection that you're editing.
 
 You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing 'Add/remove games to this game collection'.

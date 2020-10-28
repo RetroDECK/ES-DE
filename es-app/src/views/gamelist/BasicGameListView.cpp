@@ -53,6 +53,14 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
 {
     firstGameEntry = nullptr;
     bool favoriteStar = true;
+    bool isEditing = false;
+    std::string editingCollection;
+    std::string inCollectionPrefix;
+
+    if (CollectionSystemManager::get()->isEditing()) {
+        editingCollection = CollectionSystemManager::get()->getEditingCollection();
+        isEditing = true;
+    }
 
     // Read the settings that control whether a unicode star character should be added
     // as a prefix to the game name.
@@ -69,10 +77,17 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
         for (auto it = files.cbegin(); it != files.cend(); it++) {
             if (!firstGameEntry && (*it)->getType() == GAME)
                 firstGameEntry = (*it);
-
+            // Add a leading tick mark icon to the game name if it's part of the custom collection
+            // currently being edited.
+            if (isEditing && (*it)->getType() == GAME) {
+                if (CollectionSystemManager::get()->inCustomCollection(editingCollection, (*it)))
+                    inCollectionPrefix = "\uF14A  ";
+                else
+                    inCollectionPrefix = "";
+            }
             if ((*it)->getFavorite() && favoriteStar &&
                     mRoot->getSystem()->getName() != "favorites") {
-                mList.add(FAVORITE_CHAR + "  " + (*it)->getName(),
+                mList.add(inCollectionPrefix + FAVORITE_CHAR + "  " + (*it)->getName(),
                     *it, ((*it)->getType() == FOLDER));
             }
             else if ((*it)->getType() == FOLDER &&
@@ -80,7 +95,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
                 mList.add(FOLDER_CHAR + "  " + (*it)->getName(), *it, true);
             }
             else {
-                mList.add((*it)->getName(), *it, ((*it)->getType() == FOLDER));
+                mList.add(inCollectionPrefix + (*it)->getName(), *it, ((*it)->getType() == FOLDER));
             }
         }
     }
