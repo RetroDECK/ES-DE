@@ -543,7 +543,7 @@ std::string CollectionSystemManager::getValidNewCollectionName(std::string inNam
 
         // Get valid name.
         while ((remove = name.find_first_not_of(
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-[]() "))
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-[]()' "))
                 != std::string::npos)
             name.erase(remove, 1);
     }
@@ -552,10 +552,12 @@ std::string CollectionSystemManager::getValidNewCollectionName(std::string inNam
     }
 
     if (name == "") {
-        name = "New Collection";
+        name = "new collection";
     }
 
-    if (name != inName) {
+    name = Utils::String::toLower(name);
+
+    if (Utils::String::toLower(name) != Utils::String::toLower(inName)) {
         LOG(LogInfo) << "Had to change name, from: " << inName << " to: " << name;
     }
 
