@@ -257,6 +257,12 @@ void DetailedGameListView::updateInfoPanel()
             hideMetaDataFields = true;
         else
             hideMetaDataFields = (file->metadata.get("hidemetadata") == "true");
+
+        // Always hide the metadata fields for placeholders as well.
+        if (file->getType() == PLACEHOLDER) {
+            hideMetaDataFields = true;
+            mLastUpdated = nullptr;
+        }
     }
 
     // If we're scrolling, hide the metadata fields if the last game had this options set,
