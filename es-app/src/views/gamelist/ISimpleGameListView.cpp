@@ -373,3 +373,65 @@ void ISimpleGameListView::generateGamelistInfo(const std::vector<FileData*>& fil
     if (files.size() > 0 && files.front()->getParent() != mRoot)
         mIsFolder = true;
 }
+
+void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>& files)
+{
+    const std::string favoriteChar = mRoot->FAVORITE_CHAR;
+    const std::string folderChar = mRoot->FOLDER_CHAR;
+    std::string firstChar;
+
+    bool onlyFavorites = true;
+    bool onlyFolders = true;
+    bool hasFavorites = false;
+    bool hasFolders = false;
+    bool favoritesSorting = false;
+
+    mFirstLetterIndex.clear();
+
+    if (files.size() > 0 && files.front()->getSystem()->isGroupedCustomCollection())
+        favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
+    else
+        favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
+
+     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
+
+    // Find out if there are only favorites and/or only folders in the list.
+    for (auto it = files.begin(); it != files.end(); it++) {
+        if (!((*it)->getFavorite()))
+            onlyFavorites = false;
+        if (!((*it)->getType() == FOLDER))
+            onlyFolders = false;
+    }
+
+    // Build the index.
+    for (auto it = files.begin(); it != files.end(); it++) {
+        if ((*it)->getType() == FOLDER && (*it)->getFavorite() &&
+                favoritesSorting && !onlyFavorites) {
+            hasFavorites = true;
+        }
+        else if ((*it)->getType() == FOLDER && foldersOnTop && !onlyFolders) {
+            hasFolders = true;
+        }
+        else if ((*it)->getType() == GAME && (*it)->getFavorite() &&
+                favoritesSorting && !onlyFavorites) {
+            hasFavorites = true;
+        }
+        else {
+            firstChar = toupper((*it)->getSortName().front());
+            mFirstLetterIndex.push_back(firstChar);
+        }
+    }
+
+    // Sort and make each entry unique.
+    std::sort(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
+    auto last = std::unique(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
+    mFirstLetterIndex.erase(last, mFirstLetterIndex.end());
+
+    // If there are any favorites and/or folders in the list, insert their respective
+    // Unicode characters at the beginning of the vector.
+    if (hasFavorites)
+        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), favoriteChar);
+
+    if (hasFolders)
+        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), folderChar);
+}

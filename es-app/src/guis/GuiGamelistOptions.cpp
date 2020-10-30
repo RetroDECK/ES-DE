@@ -71,7 +71,7 @@ GuiGamelistOptions::GuiGamelistOptions(
         row.elements.clear();
 
         // The letter index is generated in FileData during gamelist sorting.
-        mFirstLetterIndex = file->getParent()->getFirstLetterIndex();
+        mFirstLetterIndex = getGamelist()->getFirstLetterIndex();
 
         // Don't include the folder name starting characters if folders are sorted on top
         // unless the list only contains folders.

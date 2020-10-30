@@ -58,6 +58,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
     std::string inCollectionPrefix;
 
     generateGamelistInfo(files);
+    generateFirstLetterIndex(files);
 
     if (CollectionSystemManager::get()->isEditing()) {
         editingCollection = CollectionSystemManager::get()->getEditingCollection();

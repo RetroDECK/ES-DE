@@ -41,6 +41,9 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
     virtual void launch(FileData* game) override;
 
+    virtual const std::vector<std::string>& getFirstLetterIndex() override
+            { return mFirstLetterIndex; };
+
 protected:
     virtual void update(int deltaTime) override;
     virtual std::string getQuickSystemSelectRightButton() override;

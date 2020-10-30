@@ -249,6 +249,7 @@ void GridGameListView::populateList(const std::vector<FileData*>& files)
     firstGameEntry = nullptr;
 
     generateGamelistInfo(files);
+    generateFirstLetterIndex(files);
 
     mGrid.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());

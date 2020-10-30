@@ -55,8 +55,6 @@ public:
     inline const std::vector<FileData*>& getChildren() const { return mChildren; }
     inline SystemData* getSystem() const { return mSystem; }
     inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
-    const std::vector<std::string>& getFirstLetterIndex() const
-            { return mFirstLetterIndex; };
     const bool getOnlyFoldersFlag() { return mOnlyFolders; }
     bool viewHasOnlyFolders();
     static const std::string getROMDirectory();
@@ -148,7 +146,6 @@ private:
     std::unordered_map<std::string,FileData*> mChildrenByFilename;
     std::vector<FileData*> mChildren;
     std::vector<FileData*> mFilteredChildren;
-    std::vector<std::string> mFirstLetterIndex;
     // The pair includes non-favorite games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;

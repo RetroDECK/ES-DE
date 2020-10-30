@@ -38,6 +38,9 @@ public:
     virtual bool isListScrolling() override { return mList.isScrolling(); };
     virtual void stopListScrolling() override { mList.stopScrolling(); };
 
+    virtual const std::vector<std::string>& getFirstLetterIndex() override
+            { return mFirstLetterIndex; };
+
 protected:
     virtual std::string getQuickSystemSelectRightButton() override;
     virtual std::string getQuickSystemSelectLeftButton() override;

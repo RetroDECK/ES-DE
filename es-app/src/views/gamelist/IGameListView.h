@@ -46,6 +46,7 @@ public:
     virtual FileData* getFirstEntry() = 0;
     virtual FileData* getLastEntry() = 0;
     virtual FileData* getFirstGameEntry() = 0;
+    virtual const std::vector<std::string>& getFirstLetterIndex() = 0;
 
     virtual bool input(InputConfig* config, Input input) override;
     virtual void remove(FileData* game, bool deleteFile) = 0;

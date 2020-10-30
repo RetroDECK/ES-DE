@@ -33,12 +33,15 @@ public:
     virtual bool input(InputConfig* config, Input input) override;
     virtual void launch(FileData* game) override = 0;
 
+    virtual const std::vector<std::string>& getFirstLetterIndex() override = 0;
+
 protected:
     virtual std::string getQuickSystemSelectRightButton() = 0;
     virtual std::string getQuickSystemSelectLeftButton() = 0;
     virtual void populateList(const std::vector<FileData*>& files) = 0;
 
     void generateGamelistInfo(const std::vector<FileData*>& files);
+    void generateFirstLetterIndex(const std::vector<FileData*>& files);
 
     TextComponent mHeaderText;
     ImageComponent mHeaderImage;
@@ -46,6 +49,8 @@ protected:
 
     std::vector<GuiComponent*> mThemeExtras;
     std::stack<FileData*> mCursorStack;
+
+    std::vector<std::string> mFirstLetterIndex;
 
     unsigned int mGameCount;
     unsigned int mFavoritesGameCount;
