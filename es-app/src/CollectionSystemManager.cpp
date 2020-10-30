@@ -686,7 +686,7 @@ bool CollectionSystemManager::toggleGameInCollection(FileData* file)
                 systemViewToUpdate->getRootFolder()->sort(rootFolder->getSortTypeFromString(
                         rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
-                ViewController::get()->onFileChanged(systemViewToUpdate->getRootFolder(), false);
+                ViewController::get()->onFileChanged(systemViewToUpdate->getRootFolder(), true);
                 fileIndex->addToIndex(newGame);
 
                 // Add to bundle index as well, if needed.
