@@ -70,6 +70,7 @@ It's possible to manually set a specific gamelist view style in the UI settings 
 
 In additions to the styles just described, there is a **Grid** view style as well, but as of version 1.0.0 this is very limited and not recommended. Future versions of EmulationStation may update this style to a more useful state.
 
+If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered (as in 'filtered / total games'). This functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
 ## Help system
 

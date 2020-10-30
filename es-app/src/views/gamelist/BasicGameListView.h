@@ -48,7 +48,7 @@ protected:
 
     TextListComponent<FileData*> mList;
     // Points to the first game in the list, i.e. the first entry which is of the type 'GAME'.
-    FileData* firstGameEntry;
+    FileData* mFirstGameEntry;
 
     std::string FAVORITE_CHAR;
     std::string FOLDER_CHAR;

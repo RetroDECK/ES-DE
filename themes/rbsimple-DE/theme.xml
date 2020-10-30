@@ -233,6 +233,13 @@ based on: 'recalbox-multi' by the Recalbox community
             <alignment>left</alignment>
             <horizontalMargin>0.01</horizontalMargin>
         </textlist>
+        <text name="gamelistInfo">
+            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+            <fontSize>0.025</fontSize>
+            <size>0.2 0.1</size>
+            <pos>0.873 0.212</pos>
+            <alignment>right</alignment>
+        </text>
         <image name="md_marquee">
             <origin>1 1</origin>
             <pos>0.9135 0.165</pos>
@@ -299,9 +306,16 @@ based on: 'recalbox-multi' by the Recalbox community
             <alignment>left</alignment>
         </text>
         <imagegrid name="gamegrid">
-            <pos>0.05 0.13</pos>
+            <pos>0.05 0.14</pos>
             <margin>0.05 0.05</margin>
         </imagegrid>
+        <text name="gamelistInfo">
+            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+            <fontSize>0.025</fontSize>
+            <size>0.2 0.1</size>
+            <pos>0.165 0.105</pos>
+            <alignment>left</alignment>
+        </text>
         <image name="logo">
             <pos>0.792 0.085</pos>
             <maxSize>0.22 0.07</maxSize>

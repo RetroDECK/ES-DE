@@ -51,11 +51,13 @@ void BasicGameListView::onFileChanged(FileData* file, bool reloadGameList)
 
 void BasicGameListView::populateList(const std::vector<FileData*>& files)
 {
-    firstGameEntry = nullptr;
+    mFirstGameEntry = nullptr;
     bool favoriteStar = true;
     bool isEditing = false;
     std::string editingCollection;
     std::string inCollectionPrefix;
+
+    generateGamelistInfo(files);
 
     if (CollectionSystemManager::get()->isEditing()) {
         editingCollection = CollectionSystemManager::get()->getEditingCollection();
@@ -75,8 +77,8 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
     mHeaderText.setText(mRoot->getSystem()->getFullName());
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); it++) {
-            if (!firstGameEntry && (*it)->getType() == GAME)
-                firstGameEntry = (*it);
+            if (!mFirstGameEntry && (*it)->getType() == GAME)
+                mFirstGameEntry = (*it);
             // Add a leading tick mark icon to the game name if it's part of the custom collection
             // currently being edited.
             if (isEditing && (*it)->getType() == GAME) {
@@ -157,7 +159,7 @@ FileData* BasicGameListView::getLastEntry()
 
 FileData* BasicGameListView::getFirstGameEntry()
 {
-    return firstGameEntry;
+    return mFirstGameEntry;
 }
 
 void BasicGameListView::addPlaceholder()

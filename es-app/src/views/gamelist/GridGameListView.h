@@ -89,6 +89,7 @@ private:
 
     ScrollableContainer mDescContainer;
     TextComponent mDescription;
+    TextComponent mGamelistInfo;
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H

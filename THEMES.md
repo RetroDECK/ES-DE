@@ -366,6 +366,8 @@ Example `navigationsounds.xml`, to be included from the main theme file:
 * System Logo/Text - 50
     * `text name="logoText"`
     * `image name="logo"`
+* Gamelist information - 50
+    * `text name="gamelistInfo"`
 
 ### Theme variables
 
@@ -431,6 +433,8 @@ Reference
     - A header image.  If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
 * `textlist name="gamelist"` - ALL
     - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders.  Left aligned by default.
+* `text name="gamelistInfo"` - ALL
+    - Displays the game count (all games as well as favorites), any applied filters, and an folder icon if a folder has been entered.
 
 * Metadata
     * Labels
@@ -480,6 +484,8 @@ Reference
     - A header image.  If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
 * `textlist name="gamelist"` - ALL
     - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders.  Left aligned by default.
+* `text name="gamelistInfo"` - ALL
+    - Displays the game count (all games as well as favorites), any applied filters, and an folder icon if a folder has been entered.
 
 * Metadata
     * Labels
@@ -539,6 +545,8 @@ Reference
     - Note that many of the default gridtile parameters change the selected gridtile parameters if they are not explicitly set by the theme. For example, changing the background image of the default gridtile also change the background image of the selected gridtile. Refer to the gridtile documentation for more informations.
 * `gridtile name="selected"` - ALL
     - See default gridtile description right above.
+* `text name="gamelistInfo"` - ALL
+    - Displays the game count (all games as well as favorites), any applied filters, and an folder icon if a folder has been entered.
 
 * Metadata
     * Labels

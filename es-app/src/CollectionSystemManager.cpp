@@ -944,6 +944,15 @@ void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysDa
 
     if (sysDecl.type == AUTO_LAST_PLAYED)
         trimCollectionCount(rootFolder, LAST_PLAYED_MAX);
+
+    // For the 'recent' collection we need to populate the gamelist once more as the
+    // collection was trimmed down to 50 items. If we don't do this, the game count will
+    // not be correct as it would include all the games prior to trimming.
+    if (rootFolder->getName() == "recent") {
+        ViewController::get()->getGameListView(rootFolder->getSystem()).get()->
+                onFileChanged(rootFolder->getChildren().front(), false);
+    }
+
     sysData->isPopulated = true;
 }
 

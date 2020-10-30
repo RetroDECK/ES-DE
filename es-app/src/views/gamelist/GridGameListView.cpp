@@ -33,6 +33,7 @@ GridGameListView::GridGameListView(
 
         mDescContainer(window),
         mDescription(window),
+        mGamelistInfo(window),
 
         mLblRating(window),
         mLblReleaseDate(window),
@@ -55,7 +56,7 @@ GridGameListView::GridGameListView(
 {
     const float padding = 0.01f;
 
-// Create the correct type of video window.
+    // Create the correct type of video window.
     #if defined(_RPI_)
     if (Settings::getInstance()->getBool("VideoOmxPlayer"))
         mVideo = new VideoPlayerComponent(window);
@@ -137,6 +138,12 @@ GridGameListView::GridGameListView(
     mVideo->setDefaultZIndex(15);
     mVideo->setVisible(false);
     addChild(mVideo);
+
+    mGamelistInfo.setOrigin(0.5f, 0.5f);
+    mGamelistInfo.setFont(Font::get(FONT_SIZE_SMALL));
+    mGamelistInfo.setDefaultZIndex(50);
+    mGamelistInfo.setVisible(true);
+    addChild(&mGamelistInfo);
 
     initMDLabels();
     initMDValues();
@@ -241,6 +248,8 @@ void GridGameListView::populateList(const std::vector<FileData*>& files)
 {
     firstGameEntry = nullptr;
 
+    generateGamelistInfo(files);
+
     mGrid.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());
     if (files.size() > 0) {
@@ -302,6 +311,8 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     FileData* file = mGrid.getSelected();
     populateList(mRoot->getChildrenListToDisplay());
     mGrid.setCursor(file);
+
+    mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
 
     sortChildren();
 }
@@ -425,15 +436,29 @@ void GridGameListView::updateInfoPanel()
         fadingOut = true;
     }
     else {
-// 		Temporary fix to disable only audio from playing.
-//		if (!mVideo->setVideo(file->getVideoPath()))
-//			mVideo->setDefaultVideo();
-
-//		mVideoPlaying = true;
-
-//		mVideo->setImage(file->getThumbnailPath());
         mMarquee.setImage(file->getMarqueePath());
-//		mImage.setImage(file->getImagePath());
+
+        // Populate the gamelistInfo field which shows an icon if a folder has been entered
+        // as well as the game count for the entire system (total and favorites separately).
+        // If a filter has been applied, then the number of filtered and total games replaces
+        // the game counter.
+        std::string gamelistInfoString;
+
+        if (mIsFiltered) {
+            gamelistInfoString += "\uF0b0 " + std::to_string(mFilteredGameCount) + " / " +
+                    std::to_string(mGameCount);
+        }
+        else {
+            gamelistInfoString += "\uF11b " + std::to_string(mGameCount);
+            if (!(file->getSystem()->isCollection() &&
+                    file->getSystem()->getFullName() == "favorites"))
+                gamelistInfoString += "  \uF005 " + std::to_string(mFavoritesGameCount);
+        }
+
+        if (mIsFolder)
+            gamelistInfoString += "  \uF07C";
+
+        mGamelistInfo.setValue(gamelistInfoString);
 
         mDescription.setText(file->metadata.get("desc"));
         mDescContainer.reset();

@@ -65,6 +65,7 @@ private:
 
     ScrollableContainer mDescContainer;
     TextComponent mDescription;
+    TextComponent mGamelistInfo;
 
     bool mVideoPlaying;
     FileData* mLastUpdated;

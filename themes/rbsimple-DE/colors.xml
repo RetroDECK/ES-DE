@@ -37,6 +37,9 @@
             <primaryColor>262626</primaryColor>
             <secondaryColor>4d4d4d</secondaryColor>
         </textlist>
+        <text name="gamelistInfo">
+            <color>505050</color>
+        </text>
     </view>
 
     <view name="detailed, video">

@@ -38,12 +38,20 @@ protected:
     virtual std::string getQuickSystemSelectLeftButton() = 0;
     virtual void populateList(const std::vector<FileData*>& files) = 0;
 
+    void generateGamelistInfo(const std::vector<FileData*>& files);
+
     TextComponent mHeaderText;
     ImageComponent mHeaderImage;
     ImageComponent mBackground;
 
     std::vector<GuiComponent*> mThemeExtras;
     std::stack<FileData*> mCursorStack;
+
+    unsigned int mGameCount;
+    unsigned int mFavoritesGameCount;
+    unsigned int mFilteredGameCount;
+    bool mIsFiltered;
+    bool mIsFolder;
 };
 
 #endif // ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H

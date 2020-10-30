@@ -22,6 +22,7 @@ DetailedGameListView::DetailedGameListView(
         : BasicGameListView(window, root),
         mDescContainer(window),
         mDescription(window),
+        mGamelistInfo(window),
 
         mThumbnail(window),
         mMarquee(window),
@@ -123,6 +124,12 @@ DetailedGameListView::DetailedGameListView(
     mDescription.setSize(mDescContainer.getSize().x(), 0);
     mDescContainer.addChild(&mDescription);
 
+    mGamelistInfo.setOrigin(0.5f, 0.5f);
+    mGamelistInfo.setFont(Font::get(FONT_SIZE_SMALL));
+    mGamelistInfo.setDefaultZIndex(50);
+    mGamelistInfo.setVisible(true);
+    addChild(&mGamelistInfo);
+
     initMDLabels();
     initMDValues();
 }
@@ -167,6 +174,8 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
     mDescription.setSize(mDescContainer.getSize().x(), 0);
     mDescription.applyTheme(theme, getName(), "md_description",
             ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
+
+    mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
 
     sortChildren();
 }
@@ -268,7 +277,7 @@ void DetailedGameListView::updateInfoPanel()
     // If we're scrolling, hide the metadata fields if the last game had this options set,
     // or if we're in the grouped custom collection view.
     if (mList.isScrolling())
-        if (mLastUpdated && mLastUpdated->metadata.get("hidemetadata") == "true" ||
+        if ((mLastUpdated && mLastUpdated->metadata.get("hidemetadata") == "true") ||
                 (mLastUpdated->getSystem()->isCustomCollection() &&
                 mLastUpdated->getPath() == mLastUpdated->getSystem()->getName()))
         hideMetaDataFields = true;
@@ -338,6 +347,28 @@ void DetailedGameListView::updateInfoPanel()
             mMarquee.setImage(file->getMarqueePath());
             mImage.setImage(file->getImagePath());
         }
+
+        // Populate the gamelistInfo field which shows an icon if a folder has been entered
+        // as well as the game count for the entire system (total and favorites separately).
+        // If a filter has been applied, then the number of filtered and total games replaces
+        // the game counter.
+        std::string gamelistInfoString;
+
+        if (mIsFolder)
+            gamelistInfoString = "\uF07C  ";
+
+        if (mIsFiltered) {
+            gamelistInfoString += "\uF0b0 " + std::to_string(mFilteredGameCount) + " / " +
+                    std::to_string(mGameCount);
+        }
+        else {
+            gamelistInfoString += "\uF11b " + std::to_string(mGameCount);
+            if (!(file->getSystem()->isCollection() &&
+                    file->getSystem()->getFullName() == "favorites"))
+                gamelistInfoString += "  \uF005 " + std::to_string(mFavoritesGameCount);
+        }
+
+        mGamelistInfo.setValue(gamelistInfoString);
 
         // Fade in the game image.
         auto func = [this](float t) {

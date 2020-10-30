@@ -58,6 +58,7 @@ private:
 
     ScrollableContainer mDescContainer;
     TextComponent mDescription;
+    TextComponent mGamelistInfo;
 
     FileData* mLastUpdated;
 };

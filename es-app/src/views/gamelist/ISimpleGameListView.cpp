@@ -13,6 +13,7 @@
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
+#include "FileFilterIndex.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
@@ -336,4 +337,39 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
     }
 
     return IGameListView::input(config, input);
+}
+
+void ISimpleGameListView::generateGamelistInfo(const std::vector<FileData*>& files)
+{
+    // Generate data needed for the gamelistInfo field, which is displayed from the
+    // gamelist interfaces (Detailed/Video/Grid).
+    mIsFiltered = false;
+    mIsFolder = false;
+
+    std::pair<unsigned int, unsigned int> gameCount;
+    FileFilterIndex* idx = mRoot->getSystem()->getIndex();
+
+    // For the 'recent' collection we need to recount the games as the collection was
+    // trimmed down to 50 items. If we don't do this, the game count will not be correct
+    // as it would include all the games prior to trimming.
+    if (mRoot->getPath() == "recent")
+        mRoot->countGames(gameCount);
+
+    if (files.size() > 0 && files.front()->getParent() != mRoot &&
+            files.front()->getSystem()->isGroupedCustomCollection())
+        gameCount = files.front()->getSystem()->getRootFolder()->getGameCount();
+    else
+        gameCount = mRoot->getGameCount();
+
+    mGameCount = gameCount.first + gameCount.second;
+    mFavoritesGameCount = gameCount.second;
+    mFilteredGameCount = 0;
+
+    if (idx->isFiltered()) {
+        mIsFiltered = true;
+        mFilteredGameCount = mRoot->getFilesRecursive(GAME, true, false).size();
+    }
+
+    if (files.size() > 0 && files.front()->getParent() != mRoot)
+        mIsFolder = true;
 }
