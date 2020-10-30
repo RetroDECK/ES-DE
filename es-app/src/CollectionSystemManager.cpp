@@ -414,8 +414,17 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
         // collection, then skip the sorting.
         else if (sysData.decl.isCustom &&
                 children.find(file->getFullPath()) != children.cend()) {
-            rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
-                    mFavoritesSorting);
+            // For custom collections, update either the actual system or its parent depending
+            // on whether the collection is grouped or not.
+            if (rootFolder->getSystem()->isGroupedCustomCollection()) {
+                rootFolder->getParent()->sort(rootFolder->getParent()->
+                        getSortTypeFromString(rootFolder->getParent()->
+                        getSortTypeString()), mFavoritesSorting);
+            }
+            else {
+                rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                        mFavoritesSorting);
+            }
         }
         else if (!sysData.decl.isCustom) {
             rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
@@ -1051,6 +1060,7 @@ void CollectionSystemManager::addEnabledCollectionsToDisplayedSystems(
                     if (!gameList->getCursor()->isPlaceHolder()) {
                         gameList->setCursor(gameList->getFirstEntry());
                     }
+                    it->second.system->setIsGroupedCustomCollection(false);
                 }
             }
             else {
