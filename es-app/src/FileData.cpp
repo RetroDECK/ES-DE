@@ -446,16 +446,24 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
+    if (mSystem->isGroupedCustomCollection())
+        gameCount = {};
+
     // The main custom collections view is sorted during startup in CollectionSystemManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
+        std::pair<unsigned int, unsigned int> tempGameCount = {};
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             // Build mFirstLetterIndex.
             const char firstChar = toupper((*it)->getSortName().front());
             mFirstLetterIndex.push_back(std::string(1, firstChar));
             if ((*it)->getChildren().size() > 0)
                 (*it)->sort(comparator, ascending, gameCount);
+            tempGameCount.first += gameCount.first;
+            tempGameCount.second += gameCount.second;
+            gameCount = {};
         }
+        gameCount = tempGameCount;
         // Sort and make each entry unique in mFirstLetterIndex.
         std::sort(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
         auto last = std::unique(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
@@ -529,6 +537,9 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
             (*it)->sort(comparator, ascending, gameCount);
     }
 
+    if (mSystem->isGroupedCustomCollection())
+        mGameCount = gameCount;
+
     // If there are only folders in the gamelist, then it makes sense to still
     // generate a letter index.
     if (mOnlyFolders) {
@@ -561,16 +572,24 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     bool hasFolders = false;
 
+    if (mSystem->isGroupedCustomCollection())
+        gameCount = {};
+
     // The main custom collections view is sorted during startup in CollectionSystemManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
+        std::pair<unsigned int, unsigned int> tempGameCount = {};
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             // Build mFirstLetterIndex.
             const char firstChar = toupper((*it)->getSortName().front());
             mFirstLetterIndex.push_back(std::string(1, firstChar));
             if ((*it)->getChildren().size() > 0)
                 (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
+            tempGameCount.first += gameCount.first;
+            tempGameCount.second += gameCount.second;
+            gameCount = {};
         }
+        gameCount = tempGameCount;
         // Sort and make each entry unique in mFirstLetterIndex.
         std::sort(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
         auto last = std::unique(mFirstLetterIndex.begin(), mFirstLetterIndex.end());
@@ -608,6 +627,9 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
         if (mChildren[i]->getType() != FOLDER)
             mOnlyFolders = false;
     }
+
+    if (mSystem->isGroupedCustomCollection())
+        mGameCount = gameCount;
 
     // If there are favorite folders and this is a mixed list, then don't handle these
     // separately but instead merge them into the same vector. This is a quite wasteful
