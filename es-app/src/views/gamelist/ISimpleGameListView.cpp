@@ -193,7 +193,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 if (getCursor()->getType() == FOLDER && foldersOnTop == true)
                     foldersOnTop = !getCursor()->viewHasOnlyFolders();
 
-                if (CollectionSystemManager::get()->getIsCustomCollection(mRoot->getSystem()))
+                if (mRoot->getSystem()->isCustomCollection())
                     favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
                 else
                     favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
