@@ -123,6 +123,8 @@ public:
             std::pair<unsigned int, unsigned int>& gameCount);
     void sort(const SortType& type, bool mFavoritesOnTop = false);
     MetaDataList metadata;
+    // Only count the games, a cheaper alternative to a full sort when that is not required.
+    void countGames(std::pair<unsigned int, unsigned int>& gameCount);
 
     inline void setSortTypeString(std::string typestring) { mSortTypeString = typestring; }
     inline std::string getSortTypeString() { return mSortTypeString; }

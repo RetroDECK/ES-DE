@@ -752,6 +752,22 @@ void FileData::sort(const SortType& type, bool mFavoritesOnTop)
         sort(*type.comparisonFunction, type.ascending, mGameCount);
 }
 
+void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
+{
+    for (unsigned int i = 0; i < mChildren.size(); i++) {
+        if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
+            if (!mChildren[i]->getFavorite())
+                gameCount.first++;
+            else
+                gameCount.second++;
+        }
+        // Iterate through any folders.
+        else if (mChildren[i]->getType() == FOLDER)
+            mChildren[i]->countGames(gameCount);
+    }
+    mGameCount = gameCount;
+}
+
 FileData::SortType FileData::getSortTypeFromString(std::string desc) {
     std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
 
