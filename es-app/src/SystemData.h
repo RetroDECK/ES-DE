@@ -83,6 +83,9 @@ public:
             { return std::find(sSystemVector.crbegin(), sSystemVector.crend(), this); };
     inline bool isCollection() { return mIsCollectionSystem; };
     inline bool isCustomCollection() { return mIsCustomCollectionSystem; };
+    inline bool isGroupedCustomCollection() { return mIsGroupedCustomCollectionSystem; };
+    void setIsGroupedCustomCollection(bool isGroupedCustom)
+                { mIsGroupedCustomCollectionSystem = isGroupedCustom; };
     inline bool isGameSystem() { return mIsGameSystem; };
 
     bool isVisible();
@@ -106,6 +109,7 @@ public:
 private:
     bool mIsCollectionSystem;
     bool mIsCustomCollectionSystem;
+    bool mIsGroupedCustomCollectionSystem;
     bool mIsGameSystem;
     bool mScrapeFlag;  // Only used by scraper GUI to remember which systems to scrape.
     std::string mName;

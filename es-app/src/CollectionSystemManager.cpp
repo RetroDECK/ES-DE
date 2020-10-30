@@ -442,19 +442,13 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
         }
         else {
             ViewController::get()->onFileChanged(rootFolder, false);
-            // If it's a custom collection and the setting to group the collections is
-            // enabled, we may have to update the parent instead.
-            // However it may not necessarily be so if some collections are themed and
-            // some are not, so we always need to check whether a parent exists.
-            if (sysData.decl.isCustom &&
-                    Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
-                // In case of a returned null pointer, we know there is no parent.
-                if (rootFolder->getParent() == nullptr) {
-                    ViewController::get()->onFileChanged(rootFolder, false);
-                }
-                else {
+            // For custom collections, update either the actual system or its parent depending
+            // on whether the collection is grouped or not.
+            if (sysData.decl.isCustom) {
+                if (rootFolder->getSystem()->isGroupedCustomCollection())
                     ViewController::get()->onFileChanged(rootFolder->getParent(), false);
-                }
+                else
+                    ViewController::get()->onFileChanged(rootFolder, false);
             }
         }
     }
@@ -1063,6 +1057,7 @@ void CollectionSystemManager::addEnabledCollectionsToDisplayedSystems(
                 FileData* newSysRootFolder = it->second.system->getRootFolder();
                 mCustomCollectionsBundle->getRootFolder()->addChild(newSysRootFolder);
                 mCustomCollectionsBundle->getIndex()->importIndex(it->second.system->getIndex());
+                it->second.system->setIsGroupedCustomCollection(true);
             }
         }
     }
@@ -1250,18 +1245,4 @@ std::string CollectionSystemManager::getCollectionsFolder()
 {
     return Utils::FileSystem::getGenericPath(Utils::FileSystem::getHomePath() +
             "/.emulationstation/collections");
-}
-
-// Return whether the system is a custom collection.
-bool CollectionSystemManager::getIsCustomCollection(SystemData* system)
-{
-    // Iterate the map.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
-            it = mCustomCollectionSystemsData.cbegin();
-            it != mCustomCollectionSystemsData.cend() ; it++) {
-        if (it->second.system == system)
-            return true;
-    }
-
-    return false;
 }

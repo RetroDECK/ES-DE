@@ -103,8 +103,6 @@ public:
     SystemData* getSystemToView(SystemData* sys);
     FileData* updateCollectionFolderMetadata(SystemData* sys);
 
-    bool getIsCustomCollection(SystemData* system);
-
 private:
     static CollectionSystemManager* sInstance;
     SystemEnvironmentData* mCollectionEnvData;

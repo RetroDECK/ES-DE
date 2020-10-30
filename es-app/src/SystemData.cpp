@@ -44,6 +44,7 @@ SystemData::SystemData(
         mThemeFolder(themeFolder),
         mIsCollectionSystem(CollectionSystem),
         mIsCustomCollectionSystem(CustomCollectionSystem),
+        mIsGroupedCustomCollectionSystem(false),
         mIsGameSystem(true),
         mScrapeFlag(false)
 {
@@ -629,7 +630,7 @@ void SystemData::sortSystem(bool reloadGamelist)
 
     bool favoritesSorting;
 
-    if (CollectionSystemManager::get()->getIsCustomCollection(this))
+    if (this->isCustomCollection())
         favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
     else
         favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");

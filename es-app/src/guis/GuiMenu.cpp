@@ -468,7 +468,7 @@ void GuiMenu::openUISettings()
                 continue;
             // Don't re-sort custom collections as they have their own option
             // for whether to sort favorites on top or not (FavFirstCustom).
-            if (CollectionSystemManager::get()->getIsCustomCollection((*it)))
+            if ((*it)->isCustomCollection())
                 continue;
 
             FileData* rootFolder = (*it)->getRootFolder();
