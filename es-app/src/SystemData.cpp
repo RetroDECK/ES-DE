@@ -14,6 +14,7 @@
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
+#include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
@@ -555,56 +556,51 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
 
 FileData* SystemData::getRandomGame(const FileData* currentGame)
 {
-    std::vector<FileData*> gameList = mRootFolder->getFilesRecursive(GAME, true);
+    std::vector<FileData*> gameList;
+    bool onlyFolders = false;
+    bool hasFolders = false;
+
+    // If we're in the custom collection group list, then get the list of collections,
+    // otherwise get a list of all the folder and file entries in the view.
+    if (currentGame && currentGame->getType() == FOLDER && currentGame->
+            getSystem()->isGroupedCustomCollection()) {
+        gameList = ViewController::get()->getGameListView(mRootFolder->getSystem()).get()->
+                getCursor()->getParent()->getParent()->getChildrenListToDisplay();
+    }
+    else {
+        gameList = ViewController::get()->getGameListView(mRootFolder->
+                getSystem()).get()->getCursor()->getParent()->getChildrenListToDisplay();
+    }
+
+    if (gameList.size() > 0 && gameList.front()->getParent()->getOnlyFoldersFlag())
+        onlyFolders = true;
+
+    if (gameList.size() > 0 && gameList.front()->getParent()->getHasFoldersFlag())
+        hasFolders = true;
+
+    // If this is a mixed view of folders and files, then remove all the folder entries
+    // as we want to exclude them from the random selection.
+    if (!onlyFolders && hasFolders) {
+        unsigned int i = 0;
+        do {
+            if (gameList[i]->getType() == FOLDER)
+                gameList.erase(gameList.begin() + i);
+            else
+                i++;
+        } while (i < gameList.size());
+    }
 
     if (!currentGame && gameList.size() == 1)
+        return gameList.front();
+
+    // If there is only one folder and one file in the list, then return the file.
+    if (!onlyFolders && hasFolders && gameList.size() == 1)
         return gameList.front();
 
     if (currentGame && currentGame->getType() == PLACEHOLDER)
         return nullptr;
 
-    if (currentGame) {
-        // If the parent of the game only contains folders, then simply make all these
-        // folders the selection list for the random function. This covers folder-only
-        // views regardless of how many levels deep they're located.
-        if (currentGame->getParent()->getOnlyFoldersFlag()) {
-            std::vector<FileData*> childrenList = currentGame->getParent()->getChildren();
-            gameList.erase(gameList.cbegin(), gameList.cend());
-            gameList.reserve(childrenList.size());
-            gameList.insert(gameList.cend(), childrenList.cbegin(), childrenList.cend());
-        }
-        // If the game is inside a folder where there are only other files, update gameList
-        // to only contain these files.
-        else if (currentGame->getParent()->getFullPath() !=
-                currentGame->getSystem()->getRootFolder()->getFullPath()) {
-            std::vector<FileData*> folderList;
-
-            for (auto it = gameList.cbegin(); it != gameList.cend(); it++) {
-                if ((*it)->getParent()->getFullPath() == currentGame->getParent()->getFullPath())
-                    folderList.push_back((*it));
-            }
-
-            gameList.erase(gameList.cbegin(), gameList.cend());
-            gameList.reserve(folderList.size());
-            gameList.insert(gameList.cend(), folderList.cbegin(), folderList.cend());
-        }
-        // If the game is inside a folder with a mix of files and folders, then update
-        // gameList to exclude all folders so we don't jump into one of them.
-        else {
-            std::vector<FileData*> childrenList = mRootFolder->getChildren();
-            std::vector<FileData*> noFolderList;
-
-            for (auto it = childrenList.cbegin(); it != childrenList.cend(); it++) {
-                if ((*it)->getType() == GAME || (*it)->getParent()->getOnlyFoldersFlag())
-                    noFolderList.push_back((*it));
-            }
-            gameList.erase(gameList.cbegin(), gameList.cend());
-            gameList.reserve(noFolderList.size());
-            gameList.insert(gameList.cend(), noFolderList.cbegin(), noFolderList.cend());
-        }
-    }
-
-    unsigned int total = (int)gameList.size();
+    unsigned int total = static_cast<int>(gameList.size());
     int target = 0;
 
     if (total < 2)
