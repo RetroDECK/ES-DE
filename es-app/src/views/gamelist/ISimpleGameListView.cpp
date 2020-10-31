@@ -175,7 +175,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedTo("y", input) &&
-                !UIModeController::getInstance()->isUIModeKid()) {
+                !UIModeController::getInstance()->isUIModeKid() &&
+                !UIModeController::getInstance()->isUIModeKiosk()) {
             if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                     getCursor()->getParent()->getPath() != "collections") {
                 if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
