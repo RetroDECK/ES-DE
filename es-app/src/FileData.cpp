@@ -152,17 +152,6 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
     return childrenRecursive;
 }
 
-bool FileData::viewHasOnlyFolders()
-{
-    bool onlyFolders = true;
-    std::vector<FileData*> entrySiblings = this->getParent()->getChildren();
-    for (auto it = entrySiblings.cbegin(); it != entrySiblings.cend(); it++) {
-        if ((*it)->getType() != FOLDER)
-            onlyFolders = false;
-    }
-    return onlyFolders;
-}
-
 const std::string FileData::getROMDirectory()
 {
     std::string romDirSetting = Settings::getInstance()->getString("ROMDirectory");
@@ -440,6 +429,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
         std::pair<unsigned int, unsigned int>& gameCount)
 {
     mOnlyFolders = true;
+    mHasFolders = false;
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
@@ -517,6 +507,8 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
 
         if ((*it)->getType() != FOLDER)
             mOnlyFolders = false;
+        else
+            mHasFolders = true;
 
         // Iterate through any child folders.
         if ((*it)->getChildren().size() > 0)
@@ -531,6 +523,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
         std::pair<unsigned int, unsigned int>& gameCount)
 {
     mOnlyFolders = true;
+    mHasFolders = false;
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
@@ -579,6 +572,8 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
 
         if (mChildren[i]->getType() != FOLDER)
             mOnlyFolders = false;
+        else
+            mHasFolders = true;
     }
 
     if (mSystem->isGroupedCustomCollection())

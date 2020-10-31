@@ -56,7 +56,7 @@ public:
     inline SystemData* getSystem() const { return mSystem; }
     inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
     const bool getOnlyFoldersFlag() { return mOnlyFolders; }
-    bool viewHasOnlyFolders();
+    const bool getHasFoldersFlag() { return mHasFolders; }
     static const std::string getROMDirectory();
     static const std::string getMediaDirectory();
     const std::string getMediafilePath(std::string subdirectory, std::string mediatype) const;
@@ -149,6 +149,7 @@ private:
     // The pair includes non-favorite games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;
+    bool mHasFolders;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
 

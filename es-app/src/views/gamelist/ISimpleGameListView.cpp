@@ -198,7 +198,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 // are not sorted on top, this way the logic should work exactly as for mixed
                 // lists or files-only lists.
                 if (getCursor()->getType() == FOLDER && foldersOnTop == true)
-                    foldersOnTop = !getCursor()->viewHasOnlyFolders();
+                    foldersOnTop = !getCursor()->getParent()->getOnlyFoldersFlag();
 
                 if (mRoot->getSystem()->isCustomCollection())
                     favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
