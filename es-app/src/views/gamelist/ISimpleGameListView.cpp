@@ -175,6 +175,11 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedTo("y", input) &&
+                !Settings::getInstance()->getBool("FavoritesAddButton") &&
+                !CollectionSystemManager::get()->isEditing()) {
+            return true;
+        }
+        else if (config->isMappedTo("y", input) &&
                 !UIModeController::getInstance()->isUIModeKid() &&
                 !UIModeController::getInstance()->isUIModeKiosk()) {
             if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&

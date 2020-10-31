@@ -264,7 +264,9 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
     if (mRoot->getSystem()->isGameSystem())
         prompts.push_back(HelpPrompt("x", "random"));
     if (mRoot->getSystem()->isGameSystem() && !UIModeController::getInstance()->isUIModeKid() &&
-                !UIModeController::getInstance()->isUIModeKiosk()) {
+                !UIModeController::getInstance()->isUIModeKiosk() &&
+                (Settings::getInstance()->getBool("FavoritesAddButton") ||
+                CollectionSystemManager::get()->isEditing())) {
         std::string prompt = CollectionSystemManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }

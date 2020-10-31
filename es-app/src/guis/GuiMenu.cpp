@@ -197,7 +197,7 @@ void GuiMenu::openSoundSettings()
         auto navigation_sounds = std::make_shared<SwitchComponent>(mWindow);
         navigation_sounds->setState(Settings::getInstance()->
                 getBool("NavigationSounds"));
-        s->addWithLabel("NAVIGATION SOUNDS", navigation_sounds);
+        s->addWithLabel("ENABLE NAVIGATION SOUNDS", navigation_sounds);
         s->addSaveFunc([navigation_sounds] {
             if (navigation_sounds->getState() &&
                     !Settings::getInstance()->getBool("NavigationSounds") &&
@@ -410,7 +410,7 @@ void GuiMenu::openUISettings()
     // Carousel transition option.
     auto move_carousel = std::make_shared<SwitchComponent>(mWindow);
     move_carousel->setState(Settings::getInstance()->getBool("MoveCarousel"));
-    s->addWithLabel("CAROUSEL TRANSITIONS", move_carousel);
+    s->addWithLabel("DISPLAY CAROUSEL TRANSITIONS", move_carousel);
     s->addSaveFunc([move_carousel] {
         if (move_carousel->getState() &&
             !Settings::getInstance()->getBool("MoveCarousel") &&
@@ -493,10 +493,22 @@ void GuiMenu::openUISettings()
         }
     });
 
+    // Enable the 'Y' button for tagging games as favorites.
+    auto favorites_add_button = std::make_shared<SwitchComponent>(mWindow);
+    favorites_add_button->setState(Settings::getInstance()->getBool("FavoritesAddButton"));
+    s->addWithLabel("ENABLE BUTTON SHORTCUT TO TOGGLE FAVORITES", favorites_add_button);
+    s->addSaveFunc([favorites_add_button] {
+        if (Settings::getInstance()->getBool("FavoritesAddButton") !=
+                favorites_add_button->getState()) {
+            Settings::getInstance()->setBool("FavoritesAddButton",
+                    favorites_add_button->getState());
+        }
+    });
+
     // Enable filters (ForceDisableFilters).
     auto enable_filter = std::make_shared<SwitchComponent>(mWindow);
     enable_filter->setState(!Settings::getInstance()->getBool("ForceDisableFilters"));
-    s->addWithLabel("GAMELIST FILTERS", enable_filter);
+    s->addWithLabel("ENABLE GAMELIST FILTERS", enable_filter);
     s->addSaveFunc([enable_filter] {
         bool filter_is_enabled = !Settings::getInstance()->getBool("ForceDisableFilters");
         Settings::getInstance()->setBool("ForceDisableFilters", !enable_filter->getState());
@@ -507,14 +519,14 @@ void GuiMenu::openUISettings()
     // Quick system select (left/right in game list view).
     auto quick_sys_select = std::make_shared<SwitchComponent>(mWindow);
     quick_sys_select->setState(Settings::getInstance()->getBool("QuickSystemSelect"));
-    s->addWithLabel("QUICK SYSTEM SELECT", quick_sys_select);
+    s->addWithLabel("ENABLE QUICK SYSTEM SELECT", quick_sys_select);
     s->addSaveFunc([quick_sys_select] { Settings::getInstance()->setBool("QuickSystemSelect",
             quick_sys_select->getState()); });
 
     // Show help.
     auto show_help = std::make_shared<SwitchComponent>(mWindow);
     show_help->setState(Settings::getInstance()->getBool("ShowHelpPrompts"));
-    s->addWithLabel("ON-SCREEN HELP", show_help);
+    s->addWithLabel("DISPLAY ON-SCREEN HELP", show_help);
     s->addSaveFunc([show_help] { Settings::getInstance()->setBool("ShowHelpPrompts",
             show_help->getState()); });
 
@@ -719,7 +731,7 @@ void GuiMenu::openOtherSettings()
     // Custom event scripts, fired using Scripting::fireEvent().
     auto custom_eventscripts = std::make_shared<SwitchComponent>(mWindow);
     custom_eventscripts->setState(Settings::getInstance()->getBool("CustomEventScripts"));
-    s->addWithLabel("CUSTOM EVENT SCRIPTS", custom_eventscripts);
+    s->addWithLabel("ENABLE CUSTOM EVENT SCRIPTS", custom_eventscripts);
     s->addSaveFunc([custom_eventscripts] { Settings::getInstance()->
             setBool("CustomEventScripts", custom_eventscripts->getState()); });
 
@@ -748,14 +760,14 @@ void GuiMenu::openOtherSettings()
     // Hide Reboot System option in the quit menu.
     auto show_rebootsystem = std::make_shared<SwitchComponent>(mWindow);
     show_rebootsystem->setState(Settings::getInstance()->getBool("ShowRebootSystem"));
-    s->addWithLabel("SHOW \"REBOOT SYSTEM\" MENU ENTRY", show_rebootsystem);
+    s->addWithLabel("SHOW 'REBOOT SYSTEM' MENU ENTRY", show_rebootsystem);
     s->addSaveFunc([show_rebootsystem] { Settings::getInstance()->setBool("ShowRebootSystem",
             show_rebootsystem->getState()); });
 
     // Hide Power Off System option in the quit menu.
     auto show_poweroffsystem = std::make_shared<SwitchComponent>(mWindow);
     show_poweroffsystem->setState(Settings::getInstance()->getBool("ShowPoweroffSystem"));
-    s->addWithLabel("SHOW \"POWER OFF SYSTEM\" MENU ENTRY", show_poweroffsystem);
+    s->addWithLabel("SHOW 'POWER OFF SYSTEM' MENU ENTRY", show_poweroffsystem);
     s->addSaveFunc([show_poweroffsystem] { Settings::getInstance()->setBool("ShowPoweroffSystem",
             show_poweroffsystem->getState()); });
     #endif

@@ -92,6 +92,7 @@ void Settings::setDefaults()
     mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;
     mBoolMap["FavoritesStar"] = true;
+    mBoolMap["FavoritesAddButton"] = true;
     mBoolMap["ForceDisableFilters"] = false;
     mBoolMap["QuickSystemSelect"] = true;
     mBoolMap["ShowHelpPrompts"] = true;

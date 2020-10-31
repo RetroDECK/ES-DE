@@ -605,7 +605,7 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 Animation to play when opening the main menu or the game options menu. Can be set to _scale-up_, _fade-in_ or _none_.
 
-**Carousel transitions**
+**Display carousel transitions**
 
 Whether to perform an animation when transitioning between systems in the system view.
 
@@ -625,15 +625,19 @@ Whether to sort your favorite games above your other games in the gamelists.
 
 With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. It's strongly recommended to keep this setting enabled if the option to sort favorite games above non-favorites has been enabled. If not, favorite games would be sorted on top of the gamelist with no visual indication that they are favorites, which would be very confusing.
 
-**Gamelist filters**
+**Enable button shortcut to toggle favorites**
+
+This setting enables the 'Y' button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained elsewhere in this document. Note that this setting does not affect the functionality to use the 'Y' button to add games to custom collections.
+
+**Enable gamelist filters**
 
 Activating or deactivating the ability to filter your gamelists. Can normally be left on.
 
-**Quick system select**
+**Enable quick system select**
 
 If activated, it will be possible to jump between gamelists using the Left and Right buttons without having to first go back to the system view.
 
-**On-screen help**
+**Display on-screen help**
 
 Activating or deactivating the built-in help systems that provides contextual information regarding button usage.
 
@@ -734,7 +738,7 @@ As the name implies, this sets the overall system volume and not the volume spec
 
 With this turned off, audio won't play for you game videos in the gamelists.
 
-**Navigation sounds**
+**Enable navigation sounds**
 
 Enable or disable navigation sounds throughout the application. Sounds are played when browsing systems and lists, starting games, adding and removing games as favorites etc. The sounds can be customized per theme, but if the theme does not support navigation sounds, ES will fall back to built-in sounds.
 
@@ -805,13 +809,13 @@ If enabled, you can override the launch command defined in es_systems.cfg on a p
 
 **Show hidden files and folders (requires restart)**
 
-Allows hiding of hidden files, which on Unix means files and directories starting with a dot, and on Windows it's directories set as hidden as an NTFS option.
+Allows hiding of hidden files, which on Unix means files and directories starting with a dot, and on Windows it's directories and files set as hidden using an NTFS option. Not to be confused with the next option which hides files based on metadata configuration within ES.
 
 **Show hidden games (requires restart)**
 
-You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES.
+You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES. This is entirely different that the previous option as this is based on metadata configured within ES and the previous options relates to files that are hidden on the operating system level.
 
-**Custom event scripts**
+**Enable custom event scripts**
 
 It's possible to trigger custom scripts for a number of actions in ES. _(Details on how this works are discussed later in this guide.)_
 
@@ -827,11 +831,11 @@ Using this option, you can locate game images in the ROM directory tree. The ima
 
 Displays the framerate and VRAM statistics as an overlay. You normally never need to use this. **Note:** As of version 1.0.0 the VRAM usage statistics is not accurate; this issue will be addressed in future ES versions.
 
-**Show "reboot system" menu entry - Unix and Windows only**
+**Show 'Reboot System' menu entry - Unix and Windows only**
 
 Gives the ability to hide the "Reboot system" entry on the quit menu. Anyone who has accidentally rebooted a system from such a menu will appreciate this.
 
-**Show "power off system" menu entry - Unix and Windows only**
+**Show 'Power Off System' menu entry - Unix and Windows only**
 
 Gives the ability to hide the "Power off system" entry on the quit menu. Anyone who has accidentally powered off a system from such a menu will appreciate this.
 
