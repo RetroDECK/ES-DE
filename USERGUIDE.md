@@ -316,7 +316,7 @@ You don't need to set execution permissions for these scripts, ES will run them 
 
 #### Lutris
 
-Lutris runs only on Unix so it's not present in the es_systems.cfg templates for macOS or Windows.
+Lutris runs only on Unix so it's only present as a placeholder in the es_systems.cfg templates for macOS and Windows.
 
 These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game with the following contents:
 
