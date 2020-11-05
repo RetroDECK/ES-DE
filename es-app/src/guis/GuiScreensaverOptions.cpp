@@ -1,13 +1,13 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  GuiGeneralScreensaverOptions.cpp
+//  GuiScreensaverOptions.cpp
 //
 //  User interface for the screensaver options.
 //  Submenu to the GuiMenu main menu.
 //
 
-#include "guis/GuiGeneralScreensaverOptions.h"
+#include "guis/GuiScreensaverOptions.h"
 
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
@@ -15,7 +15,7 @@
 #include "guis/GuiMsgBox.h"
 #include "Settings.h"
 
-GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const char* title)
+GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const char* title)
         : GuiSettings(window, title)
 {
     // Screensaver timer.
@@ -84,7 +84,7 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
             "SLIDESHOW SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
     row.addElement(makeArrow(mWindow), false);
     row.makeAcceptInputHandler(std::bind(
-            &GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions, this));
+            &GuiScreensaverOptions::openSlideshowScreensaverOptions, this));
     addRow(row);
 
     row.elements.clear();
@@ -92,11 +92,11 @@ GuiGeneralScreensaverOptions::GuiGeneralScreensaverOptions(Window* window, const
             "VIDEO SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
     row.addElement(makeArrow(mWindow), false);
     row.makeAcceptInputHandler(std::bind(
-                &GuiGeneralScreensaverOptions::openVideoScreensaverOptions, this));
+                &GuiScreensaverOptions::openVideoScreensaverOptions, this));
     addRow(row);
 }
 
-void GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions()
+void GuiScreensaverOptions::openSlideshowScreensaverOptions()
 {
     auto s = new GuiSettings(mWindow, "SLIDESHOW SCREENSAVER");
 
@@ -209,7 +209,7 @@ void GuiGeneralScreensaverOptions::openSlideshowScreensaverOptions()
     mWindow->pushGui(s);
 }
 
-void GuiGeneralScreensaverOptions::openVideoScreensaverOptions()
+void GuiScreensaverOptions::openVideoScreensaverOptions()
 {
     auto s = new GuiSettings(mWindow, "VIDEO SCREENSAVER");
 

@@ -15,7 +15,7 @@
 #include "guis/GuiCollectionSystemsOptions.h"
 #include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
-#include "guis/GuiGeneralScreensaverOptions.h"
+#include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiSettings.h"
@@ -895,7 +895,7 @@ void GuiMenu::addVersionInfo()
 }
 
 void GuiMenu::openScreensaverOptions() {
-    mWindow->pushGui(new GuiGeneralScreensaverOptions(mWindow, "SCREENSAVER SETTINGS"));
+    mWindow->pushGui(new GuiScreensaverOptions(mWindow, "SCREENSAVER SETTINGS"));
 }
 
 void GuiMenu::openCollectionSystemSettings() {
