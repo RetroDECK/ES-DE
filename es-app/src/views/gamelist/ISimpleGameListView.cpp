@@ -394,7 +394,7 @@ void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>&
 
     mFirstLetterIndex.clear();
 
-    if (files.size() > 0 && files.front()->getSystem()->isGroupedCustomCollection())
+    if (files.size() > 0 && files.front()->getSystem()->isCustomCollection())
         favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
     else
         favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
