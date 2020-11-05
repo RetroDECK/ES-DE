@@ -29,14 +29,15 @@ private:
     void addEntry(const char* name, unsigned int color,
             bool add_arrow, const std::function<void()>& func);
     void addVersionInfo();
-    void openCollectionSystemSettings();
-    void openConfigInput();
-    void openOtherSettings();
-    void openQuitMenu();
+
     void openScraperSettings();
+    void openUISettings();
     void openScreensaverOptions();
     void openSoundSettings();
-    void openUISettings();
+    void openCollectionSystemSettings();
+    void openOtherSettings();
+    void openConfigInput();
+    void openQuitMenu();
 
     MenuComponent mMenu;
     TextComponent mVersion;

@@ -61,6 +61,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
+* Overhaul of application settings, now the configuration file is only updated when there have been actual configuration changes
 * Decreased CPU usage dramatically by only rendering the currently visible view (previously all views were always rendered)
 * Updated the CMake/CPack install and package build script to work as expected (it can now generate .deb, .rpm, .dmg and NSIS installation packages)
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix and macOS only)

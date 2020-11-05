@@ -165,7 +165,7 @@ void VideoPlayerComponent::startVideo()
                 // Check if we want to mute the audio.
                 if ((!Settings::getInstance()->getBool("GamelistVideoAudio") ||
                         (float)VolumeControl::getInstance()->getVolume() == 0) ||
-                        (!Settings::getInstance()->getBool("ScreenSaverVideoAudio") &&
+                        (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
                         mScreensaverMode)) {
                     argv[8] = "-1000000";
                 }

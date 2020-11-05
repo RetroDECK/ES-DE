@@ -288,7 +288,7 @@ void FileFilterIndex::resetFilters()
 
 void FileFilterIndex::setUIModeFilters()
 {
-    if (!Settings::getInstance()->getBool("ForceDisableFilters")){
+    if (Settings::getInstance()->getBool("GamelistFilters")){
         if (UIModeController::getInstance()->isUIModeKiosk()) {
             filterByHidden = true;
             std::vector<std::string> val = { "FALSE" };

@@ -74,7 +74,7 @@ bool SystemScreenSaver::isScreenSaverActive()
 
 void SystemScreenSaver::startScreenSaver()
 {
-    std::string screensaver_behavior = Settings::getInstance()->getString("ScreenSaverBehavior");
+    std::string screensaver_behavior = Settings::getInstance()->getString("ScreensaverBehavior");
 
     // Set mPreviousGame which will be used to avoid showing the same game again during
     // the random selection.
@@ -86,7 +86,7 @@ void SystemScreenSaver::startScreenSaver()
         // Configure to fade out the windows, skip fading if mode is set to Instant.
         mState =  PowerSaver::getMode() ==
                 PowerSaver::INSTANT ? STATE_SCREENSAVER_ACTIVE : STATE_FADE_OUT_WINDOW;
-        mVideoChangeTime = Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout");
+        mVideoChangeTime = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout");
         mOpacity = 0.0f;
 
         // Load a random video.
@@ -103,7 +103,7 @@ void SystemScreenSaver::startScreenSaver()
         if (!path.empty() && Utils::FileSystem::exists(path)) {
             #if defined(_RPI_)
             // Create the correct type of video component
-            if (Settings::getInstance()->getBool("ScreenSaverOmxPlayer"))
+            if (Settings::getInstance()->getBool("ScreensaverOmxPlayer"))
                 mVideoScreensaver = new VideoPlayerComponent(mWindow);
             else
                 mVideoScreensaver = new VideoVlcComponent(mWindow);
@@ -116,7 +116,7 @@ void SystemScreenSaver::startScreenSaver()
             mVideoScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
                     Renderer::getScreenHeight() / 2.0f);
 
-            if (Settings::getInstance()->getBool("ScreenSaverStretchVideos"))
+            if (Settings::getInstance()->getBool("ScreensaverStretchVideos"))
                 mVideoScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
                         static_cast<float>(Renderer::getScreenHeight()));
             else
@@ -135,12 +135,12 @@ void SystemScreenSaver::startScreenSaver()
         // Configure to fade out the windows, skip fading if mode is set to Instant.
         mState =  PowerSaver::getMode() ==
                 PowerSaver::INSTANT ? STATE_SCREENSAVER_ACTIVE : STATE_FADE_OUT_WINDOW;
-        mVideoChangeTime = Settings::getInstance()->getInt("ScreenSaverSwapImageTimeout");
+        mVideoChangeTime = Settings::getInstance()->getInt("ScreensaverSwapImageTimeout");
         mOpacity = 0.0f;
 
         // Load a random image.
         std::string path = "";
-        if (Settings::getInstance()->getBool("SlideshowScreenSaverCustomImageSource")) {
+        if (Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages")) {
             pickRandomCustomImage(path);
             // Custom images are not tied to the game list.
             mCurrentGame = nullptr;
@@ -159,7 +159,7 @@ void SystemScreenSaver::startScreenSaver()
         mImageScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
                 Renderer::getScreenHeight() / 2.0f);
 
-        if (Settings::getInstance()->getBool("ScreenSaverStretchImages"))
+        if (Settings::getInstance()->getBool("ScreensaverStretchImages"))
             mImageScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
                     static_cast<float>(Renderer::getScreenHeight()));
         else
@@ -167,7 +167,7 @@ void SystemScreenSaver::startScreenSaver()
                     static_cast<float>(Renderer::getScreenHeight()));
 
         std::string bg_audio_file = Settings::getInstance()->
-                getString("SlideshowScreenSaverBackgroundAudioFile");
+                getString("ScreensaverSlideshowAudioFile");
         if ((!mBackgroundAudio) && (bg_audio_file != "")) {
             if (Utils::FileSystem::exists(bg_audio_file)) {
                 // Pause PowerSaver so that the background audio keeps playing.
@@ -210,7 +210,7 @@ void SystemScreenSaver::stopScreenSaver()
 
 void SystemScreenSaver::renderScreenSaver()
 {
-    std::string screensaver_behavior = Settings::getInstance()->getString("ScreenSaverBehavior");
+    std::string screensaver_behavior = Settings::getInstance()->getString("ScreensaverBehavior");
     if (mVideoScreensaver && screensaver_behavior == "video") {
         // Render black background.
         Renderer::setMatrix(Transform4x4f::Identity());
@@ -241,7 +241,7 @@ void SystemScreenSaver::renderScreenSaver()
 
         // Check if we need to restart the background audio.
         if ((mBackgroundAudio) && (Settings::getInstance()->
-                getString("SlideshowScreenSaverBackgroundAudioFile") != "")) {
+                getString("ScreensaverSlideshowAudioFile") != "")) {
             if (!mBackgroundAudio->isPlaying())
                 mBackgroundAudio->play();
         }
@@ -377,14 +377,13 @@ void SystemScreenSaver::pickRandomGameListImage(std::string& path)
 
 void SystemScreenSaver::pickRandomCustomImage(std::string& path)
 {
-    std::string imageDir = Settings::getInstance()->getString("SlideshowScreenSaverImageDir");
+    std::string imageDir = Settings::getInstance()->getString("ScreensaverSlideshowImageDir");
 
     if ((imageDir != "") && (Utils::FileSystem::exists(imageDir))) {
-        std::string imageFilter = Settings::getInstance()->
-                getString("SlideshowScreenSaverImageFilter");
+        std::string imageFilter = ".jpg, .JPG, .png, .PNG";
         std::vector<std::string> matchingFiles;
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(
-                imageDir, Settings::getInstance()->getBool("SlideshowScreenSaverRecurse"));
+                imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
 
         for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
                 it != dirContent.cend(); ++it) {

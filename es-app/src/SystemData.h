@@ -95,7 +95,7 @@ public:
     static SystemData* getRandomSystem(const SystemData* currentSystem);
     FileData* getRandomGame(const FileData* currentGame = nullptr);
 
-    void sortSystem(bool reloadGamelist = true);
+    void sortSystem(bool reloadGamelist = true, bool jumpToFirstRow = false);
 
     // Load or re-load theme.
     void loadTheme();

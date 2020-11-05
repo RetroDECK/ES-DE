@@ -14,7 +14,7 @@
 #include "Log.h"
 #include "Window.h"
 
-UIModeController*  UIModeController::sInstance = nullptr;
+UIModeController* UIModeController::sInstance = nullptr;
 
 UIModeController* UIModeController::getInstance()
 {
@@ -24,8 +24,7 @@ UIModeController* UIModeController::getInstance()
     return sInstance;
 }
 
-UIModeController::UIModeController()
-    :mPassKeyCounter(0)
+UIModeController::UIModeController() : mPassKeyCounter(0)
 {
     mPassKeySequence = Settings::getInstance()->getString("UIMode_passkey");
     mCurrentUIMode = Settings::getInstance()->getString("UIMode");

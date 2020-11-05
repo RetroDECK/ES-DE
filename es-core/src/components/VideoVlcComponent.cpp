@@ -237,7 +237,7 @@ void VideoVlcComponent::handleLooping()
             libvlc_media_player_set_media(mMediaPlayer, mMedia);
 
             if ((!Settings::getInstance()->getBool("GamelistVideoAudio") && !mScreensaverMode) ||
-                (!Settings::getInstance()->getBool("ScreenSaverVideoAudio") && mScreensaverMode))
+                (!Settings::getInstance()->getBool("ScreensaverVideoAudio") && mScreensaverMode))
                 libvlc_audio_set_mute(mMediaPlayer, 1);
 
             libvlc_media_player_play(mMediaPlayer);
@@ -316,7 +316,7 @@ void VideoVlcComponent::startVideo()
 
                     if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
                             !mScreensaverMode) ||
-                            (!Settings::getInstance()->getBool("ScreenSaverVideoAudio") &&
+                            (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
                             mScreensaverMode))
                         libvlc_audio_set_mute(mMediaPlayer, 1);
 

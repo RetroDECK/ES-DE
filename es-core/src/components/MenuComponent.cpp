@@ -22,7 +22,8 @@ MenuComponent::MenuComponent(
         const std::shared_ptr<Font>& titleFont)
         : GuiComponent(window),
         mBackground(window),
-        mGrid(window, Vector2i(1, 3))
+        mGrid(window, Vector2i(1, 3)),
+        mNeedsSaving(false)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -59,7 +60,10 @@ void MenuComponent::save()
     for (auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); it++)
         (*it)();
 
-    Settings::getInstance()->saveFile();
+    if (mNeedsSaving) {
+        Settings::getInstance()->saveFile();
+        mNeedsSaving = false;
+    }
 }
 
 void MenuComponent::setTitle(const char* title, const std::shared_ptr<Font>& font)

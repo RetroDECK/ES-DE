@@ -34,6 +34,8 @@ public:
     void save();
     void onSizeChanged() override;
 
+    void setNeedsSaving() { mNeedsSaving = true; };
+
     inline void addRow(const ComponentListRow& row, bool setCursorHere = false)
             { mList->addRow(row, setCursorHere); updateSize(); }
 
@@ -70,8 +72,10 @@ private:
     std::shared_ptr<TextComponent> mTitle;
     std::shared_ptr<ComponentList> mList;
     std::shared_ptr<ComponentGrid> mButtonGrid;
-    std::vector< std::shared_ptr<ButtonComponent> > mButtons;
-    std::vector< std::function<void()> > mSaveFuncs;
+    std::vector<std::shared_ptr<ButtonComponent>> mButtons;
+    std::vector<std::function<void()>> mSaveFuncs;
+
+    bool mNeedsSaving;
 };
 
 #endif // ES_CORE_COMPONENTS_MENU_COMPONENT_H

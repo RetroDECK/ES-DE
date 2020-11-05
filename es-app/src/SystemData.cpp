@@ -619,14 +619,15 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
     return gameList.at(target);
 }
 
-void SystemData::sortSystem(bool reloadGamelist)
+void SystemData::sortSystem(bool reloadGamelist, bool jumpToFirstRow)
 {
     if (getName() == "recent")
         return;
 
     bool favoritesSorting;
 
-    if (this->isCustomCollection())
+    if (this->isCustomCollection() ||
+            (this->isCollection() && this->getFullName() == "collections"))
         favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
     else
         favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
@@ -646,6 +647,11 @@ void SystemData::sortSystem(bool reloadGamelist)
 
     if (reloadGamelist)
         ViewController::get()->reloadGameListView(this, false);
+
+    if (jumpToFirstRow) {
+        IGameListView* gameList = ViewController::get()->getGameListView(this).get();
+        gameList->setCursor(gameList->getFirstEntry());
+    }
 }
 
 std::pair<unsigned int, unsigned int> SystemData::getDisplayedGameCount() const

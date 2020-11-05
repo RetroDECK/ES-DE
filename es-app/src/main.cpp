@@ -286,9 +286,6 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--force-kid") == 0) {
             Settings::getInstance()->setBool("ForceKid", true);
         }
-        else if (strcmp(argv[i], "--force-disable-filters") == 0) {
-            Settings::getInstance()->setBool("ForceDisableFilters", true);
-        }
         else if (strcmp(argv[i], "--force-input-config") == 0) {
             forceInputConfig = true;
         }
@@ -321,7 +318,6 @@ bool parseArgs(int argc, char* argv[])
 "  --force-full                    Force the UI mode to Full\n"
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-kiosk                   Force the UI mode to Kiosk\n"
-"  --force-disable-filters         Force the UI to ignore applied filters in gamelist\n"
 "  --force-input-config            Force configuration of input device\n"
 "  --home [path]                   Directory to use as home path\n"
 "  --version, -v                   Display version information\n"

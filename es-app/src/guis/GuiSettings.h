@@ -4,6 +4,8 @@
 //  GuiSettings.h
 //
 //  User interface template for a settings GUI.
+//  The saving of es_settings.cfg and the reload of the gamelists are triggered from here
+//  based on the flags set by the actual menu entries' lambda functions.
 //
 
 #ifndef ES_APP_GUIS_GUI_SETTINGS_H
@@ -16,13 +18,21 @@ class GuiSettings : public GuiComponent
 {
 public:
     GuiSettings(Window* window, const char* title);
-    virtual ~GuiSettings(); // Just calls save()
+    virtual ~GuiSettings();
 
     void save();
     inline void addRow(const ComponentListRow& row) { mMenu.addRow(row); };
     inline void addWithLabel(const std::string& label,
             const std::shared_ptr<GuiComponent>& comp) { mMenu.addWithLabel(label, comp); };
+    void addEditableTextComponent(const std::string label, std::shared_ptr<GuiComponent> ed,
+            std::string value, std::string defaultValue = "");
     inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
+
+    void setNeedsSaving() { mNeedsSaving = true; };
+    void setNeedsGoToStart() { mNeedsGoToStart = true; };
+    void setNeedsReloading() { mNeedsReloading = true; };
+    void setNeedsSorting() { mNeedsSorting = true; };
+    void setNeedsSortingCollections() { mNeedsSortingCollections = true; };
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -30,7 +40,12 @@ public:
 
 private:
     MenuComponent mMenu;
-    std::vector< std::function<void()> > mSaveFuncs;
+    std::vector<std::function<void()>> mSaveFuncs;
+    bool mNeedsSaving;
+    bool mNeedsGoToStart;
+    bool mNeedsReloading;
+    bool mNeedsSorting;
+    bool mNeedsSortingCollections;
 };
 
 #endif // ES_APP_GUIS_GUI_SETTINGS_H

@@ -4,24 +4,22 @@
 //  GuiGeneralScreensaverOptions.h
 //
 //  User interface for the screensaver options.
-//  Based on the GuiScreenSaverOptions template.
 //  Submenu to the GuiMenu main menu.
 //
 
 #ifndef ES_APP_GUIS_GUI_GENERAL_SCREENSAVER_OPTIONS_H
 #define ES_APP_GUIS_GUI_GENERAL_SCREENSAVER_OPTIONS_H
 
-#include "GuiScreensaverOptions.h"
+#include "guis/GuiSettings.h"
 
-class GuiGeneralScreensaverOptions : public GuiScreensaverOptions
+class GuiGeneralScreensaverOptions : public GuiSettings
 {
 public:
     GuiGeneralScreensaverOptions(Window* window, const char* title);
-    virtual ~GuiGeneralScreensaverOptions();
 
 private:
-    void openVideoScreensaverOptions();
     void openSlideshowScreensaverOptions();
+    void openVideoScreensaverOptions();
 };
 
 #endif // ES_APP_GUIS_GUI_GENERAL_SCREENSAVER_OPTIONS_H

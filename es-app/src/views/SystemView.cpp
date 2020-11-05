@@ -218,7 +218,7 @@ bool SystemView::input(InputConfig* config, Input input)
 
         if (!UIModeController::getInstance()->isUIModeKid() &&
                 config->isMappedTo("select", input) &&
-                Settings::getInstance()->getBool("ScreenSaverControls")) {
+                Settings::getInstance()->getBool("ScreensaverControls")) {
             if (!mWindow->isScreenSaverActive()) {
                 mWindow->startScreenSaver();
                 mWindow->renderScreenSaver();
@@ -315,11 +315,11 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         return;
 
     Animation* anim;
-    bool move_carousel = Settings::getInstance()->getBool("MoveCarousel");
+    bool carousel_transitions = Settings::getInstance()->getBool("CarouselTransitions");
     if (transition_style == "fade") {
         float startExtrasFade = mExtrasFadeOpacity;
         anim = new LambdaAnimation(
-                [this, startExtrasFade, startPos, endPos, posMax, move_carousel](float t) {
+                [this, startExtrasFade, startPos, endPos, posMax, carousel_transitions](float t) {
             t -= 1;
             float f = Math::lerp(startPos, endPos, t*t*t + 1);
             if (f < 0)
@@ -327,7 +327,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             if (f >= posMax)
                 f -= posMax;
 
-            this->mCamOffset = move_carousel ? f : endPos;
+            this->mCamOffset = carousel_transitions ? f : endPos;
 
             t += 1;
             if (t < 0.3f)
@@ -345,7 +345,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     else if (transition_style == "slide") {
         // Slide.
         anim = new LambdaAnimation(
-                [this, startPos, endPos, posMax, move_carousel](float t) {
+                [this, startPos, endPos, posMax, carousel_transitions](float t) {
             t -= 1;
             float f = Math::lerp(startPos, endPos, t*t*t + 1);
             if (f < 0)
@@ -353,14 +353,14 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             if (f >= posMax)
                 f -= posMax;
 
-            this->mCamOffset = move_carousel ? f : endPos;
+            this->mCamOffset = carousel_transitions ? f : endPos;
             this->mExtrasCamOffset = f;
         }, 500);
     }
     else {
         // Instant.
         anim = new LambdaAnimation(
-                [this, startPos, endPos, posMax, move_carousel ](float t) {
+                [this, startPos, endPos, posMax, carousel_transitions ](float t) {
             t -= 1;
             float f = Math::lerp(startPos, endPos, t*t*t + 1);
             if (f < 0)
@@ -368,9 +368,9 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             if (f >= posMax)
                 f -= posMax;
 
-            this->mCamOffset = move_carousel ? f : endPos;
+            this->mCamOffset = carousel_transitions ? f : endPos;
             this->mExtrasCamOffset = endPos;
-        }, move_carousel ? 500 : 1);
+        }, carousel_transitions ? 500 : 1);
     }
 
     setAnimation(anim, 0, nullptr, false, 0);
@@ -419,7 +419,7 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
     prompts.push_back(HelpPrompt("x", "random"));
 
     if (!UIModeController::getInstance()->isUIModeKid() &&
-            Settings::getInstance()->getBool("ScreenSaverControls"))
+            Settings::getInstance()->getBool("ScreensaverControls"))
         prompts.push_back(HelpPrompt("select", "toggle screensaver"));
 
     return prompts;

@@ -468,7 +468,7 @@ JPG and PNG file formats and file extensions are supported.
 
 Remember that on Unix files are case sensitive, and as well the file extensions must be in lower case, i.e. .png intead of .PNG or .Png or the file won't be found.
 
-As an alternative, you can also locate your game media in the ROM directory. This is explained below in this guide under the option **Display game art from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
+As an alternative, you can also locate your game media in the ROM directory. This is explained below in this guide under the option **Display game media from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
 
 Note that it's possible to change the game media directory from within ES, see the option **Game media directory** detailed below.
 
@@ -671,7 +671,7 @@ Options specific to the slideshow screensaver.
 
 **Swap images after (secs)**
 
-How long to show images before change to the next game.
+How long to play videos before changing to the next game. Allowed range is between 5 and 120 seconds.
 
 **Stretch images to screen resolution**
 
@@ -707,7 +707,7 @@ Options specific to the video screensaver.
 
 **Swap videos after (secs)**
 
-How long to play videos before change to the next game.
+How long to play videos before changing to the next game. Allowed range is between 5 and 120 seconds.
 
 **Stretch videos to screen resolution**
 
@@ -791,10 +791,6 @@ The amount of video RAM to use for the application. Defaults to 128 MiB which se
 
 This gives you a choice between Normal and Borderless modes. With the borderless being more seamless as the ES window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES will run in a window. For the borderless mode, any changes to the resolution will make ES run in a window.
 
-**Power saver modes**
-
-Can be set to Disabled, Default, Enhanced or Instant. Set to Disabled by default.
-
 **When to save metadata**
 
 The metadata for a game is updated both by scraping and modifying data in the metadata editor, but also when launching a game, as the play count and last played date is then updated. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to "Never" will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, or when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files). In theory "On exit" will give some performance gains, but it's normally recommended to leave the setting at its default value which is "Always". Note that with the settings set to "Never", any updates such as the last played date will still be shown on screen, however during the next application startup, any values previously saved to the gamelist.xml files will be read in again. As well, when changing this setting to "Always" from either of the two other options, any pending changes will be immediately written to the gamelist.xml files.
@@ -823,9 +819,9 @@ It's possible to trigger custom scripts for a number of actions in ES. _(Details
 
 If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
 
-**Display game art from ROM directories**
+**Display game media from ROM directories**
 
-Using this option, you can locate game images in the ROM directory tree. The images are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and the filenames must be the same as the ROM names, followed by a dash and the image type. For example "~/ROMs/nes/images/Contra-screenshot.jpg" and "~/ROMs/nes/images/Contra-marquee.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
+Using this option, you can place game images and videos in the ROM directory tree. The media files are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and "\<ROM directory\>/\<system name\>/videos/" and the filenames must be the same as the ROM names, followed by a dash and the media type. For example "~/ROMs/nes/images/Contra-screenshot.jpg", "~/ROMs/nes/images/Contra-marquee.jpg" and "~/ROMs/nes/videos/Contra-video.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
 
 **Display GPU statistics overlay**
 

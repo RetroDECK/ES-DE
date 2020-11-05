@@ -22,19 +22,21 @@
 GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
         mMenu(window, "SCRAPER")
 {
-    // Scrape from.
-    auto scraper_list = std::make_shared<OptionListComponent<std::string>>
+    // Scraper service.
+    mScraper = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "SCRAPE FROM", false);
     std::vector<std::string> scrapers = getScraperList();
-
     // Select either the first entry or the one read from the settings,
     // just in case the scraper from settings has vanished.
     for (auto it = scrapers.cbegin(); it != scrapers.cend(); it++)
-        scraper_list->add(*it, *it, *it == Settings::getInstance()->getString("Scraper"));
-
-    mMenu.addWithLabel("SCRAPE FROM", scraper_list);
-    mMenu.addSaveFunc([scraper_list] { Settings::getInstance()->setString("Scraper",
-            scraper_list->getSelected()); });
+        mScraper->add(*it, *it, *it == Settings::getInstance()->getString("Scraper"));
+    mMenu.addWithLabel("SCRAPE FROM", mScraper);
+    mMenu.addSaveFunc([this] {
+        if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper")) {
+            Settings::getInstance()->setString("Scraper", mScraper->getSelected());
+            mMenu.setNeedsSaving();
+        }
+    });
 
     // Search filters, getSearches() will generate a queue of games to scrape
     // based on the outcome of the checks below.
@@ -71,15 +73,19 @@ GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
     mMenu.addWithLabel("Systems", mSystems);
 
     addEntry("CONTENT SETTINGS", 0x777777FF, true, [this] {
-        // Always save the settings when entering this menu, so the options that are
-        // not supported by TheGamesDB can be disabled.
-        mMenu.save();
+        // If the scraper service has been changed before entering this menu, then save the
+        // settings so that the specific options supported by the respective scrapers
+        // can be enabled or disabled.
+        if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper"))
+            mMenu.save();
         openContentSettings();
     });
     addEntry("OTHER SETTINGS", 0x777777FF, true, [this] {
-        // Always save the settings when entering this menu, so the options that are
-        // not supported by TheGamesDB can be disabled.
-        mMenu.save();
+        // If the scraper service has been changed before entering this menu, then save the
+        // settings so that the specific options supported by the respective scrapers
+        // can be enabled or disabled.
+        if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper"))
+            mMenu.save();
         openOtherSettings();
     });
 
@@ -114,18 +120,26 @@ void GuiScraperMenu::openContentSettings()
     auto s = new GuiSettings(mWindow, "SCRAPER CONTENT SETTINGS");
 
     // Scrape game names.
-    auto scrape_gamename = std::make_shared<SwitchComponent>(mWindow);
-    scrape_gamename->setState(Settings::getInstance()->getBool("ScrapeGameNames"));
-    s->addWithLabel("SCRAPE GAME NAMES", scrape_gamename);
-    s->addSaveFunc([scrape_gamename] { Settings::getInstance()->setBool("ScrapeGameNames",
-            scrape_gamename->getState()); });
+    auto scrape_game_names = std::make_shared<SwitchComponent>(mWindow);
+    scrape_game_names->setState(Settings::getInstance()->getBool("ScrapeGameNames"));
+    s->addWithLabel("SCRAPE GAME NAMES", scrape_game_names);
+    s->addSaveFunc([scrape_game_names, s] {
+        if (scrape_game_names->getState() != Settings::getInstance()->getBool("ScrapeGameNames")) {
+            Settings::getInstance()->setBool("ScrapeGameNames", scrape_game_names->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Scrape ratings.
     auto scrape_ratings = std::make_shared<SwitchComponent>(mWindow);
     scrape_ratings->setState(Settings::getInstance()->getBool("ScrapeRatings"));
     s->addWithLabel("SCRAPE RATINGS", scrape_ratings);
-    s->addSaveFunc([scrape_ratings] { Settings::getInstance()->setBool("ScrapeRatings",
-            scrape_ratings->getState()); });
+    s->addSaveFunc([scrape_ratings, s] {
+        if (scrape_ratings->getState() != Settings::getInstance()->getBool("ScrapeRatings")) {
+            Settings::getInstance()->setBool("ScrapeRatings", scrape_ratings->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Ratings are not supported by TheGamesDB, so disable the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
@@ -140,15 +154,23 @@ void GuiScraperMenu::openContentSettings()
     auto scrape_metadata = std::make_shared<SwitchComponent>(mWindow);
     scrape_metadata->setState(Settings::getInstance()->getBool("ScrapeMetadata"));
     s->addWithLabel("SCRAPE OTHER METADATA", scrape_metadata);
-    s->addSaveFunc([scrape_metadata] { Settings::getInstance()->setBool("ScrapeMetadata",
-            scrape_metadata->getState()); });
+    s->addSaveFunc([scrape_metadata, s] {
+        if (scrape_metadata->getState() != Settings::getInstance()->getBool("ScrapeMetadata")) {
+            Settings::getInstance()->setBool("ScrapeMetadata", scrape_metadata->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Scrape videos.
     auto scrape_videos = std::make_shared<SwitchComponent>(mWindow);
     scrape_videos->setState(Settings::getInstance()->getBool("ScrapeVideos"));
     s->addWithLabel("SCRAPE VIDEOS", scrape_videos);
-    s->addSaveFunc([scrape_videos] { Settings::getInstance()->setBool("ScrapeVideos",
-            scrape_videos->getState()); });
+    s->addSaveFunc([scrape_videos, s] {
+        if (scrape_videos->getState() != Settings::getInstance()->getBool("ScrapeVideos")) {
+            Settings::getInstance()->setBool("ScrapeVideos", scrape_videos->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Videos are not supported by TheGamesDB, so disable the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
@@ -163,29 +185,46 @@ void GuiScraperMenu::openContentSettings()
     auto scrape_screenshots = std::make_shared<SwitchComponent>(mWindow);
     scrape_screenshots->setState(Settings::getInstance()->getBool("ScrapeScreenshots"));
     s->addWithLabel("SCRAPE SCREENSHOT IMAGES", scrape_screenshots);
-    s->addSaveFunc([scrape_screenshots] { Settings::getInstance()->setBool("ScrapeScreenshots",
-            scrape_screenshots->getState()); });
+    s->addSaveFunc([scrape_screenshots, s] {
+        if (scrape_screenshots->getState() !=
+                Settings::getInstance()->getBool("ScrapeScreenshots")) {
+            Settings::getInstance()->setBool("ScrapeScreenshots", scrape_screenshots->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Scrape cover images.
     auto scrape_covers = std::make_shared<SwitchComponent>(mWindow);
     scrape_covers->setState(Settings::getInstance()->getBool("ScrapeCovers"));
     s->addWithLabel("SCRAPE BOX COVER IMAGES", scrape_covers);
-    s->addSaveFunc([scrape_covers] { Settings::getInstance()->setBool("ScrapeCovers",
-            scrape_covers->getState()); });
+    s->addSaveFunc([scrape_covers, s] {
+        if (scrape_covers->getState() != Settings::getInstance()->getBool("ScrapeCovers")) {
+            Settings::getInstance()->setBool("ScrapeCovers", scrape_covers->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Scrape marquee images.
     auto scrape_marquees = std::make_shared<SwitchComponent>(mWindow);
     scrape_marquees->setState(Settings::getInstance()->getBool("ScrapeMarquees"));
     s->addWithLabel("SCRAPE MARQUEE (WHEEL) IMAGES", scrape_marquees);
-    s->addSaveFunc([scrape_marquees] { Settings::getInstance()->setBool("ScrapeMarquees",
-            scrape_marquees->getState()); });
+    s->addSaveFunc([scrape_marquees, s] {
+        if (scrape_marquees->getState() != Settings::getInstance()->getBool("ScrapeMarquees")) {
+            Settings::getInstance()->setBool("ScrapeMarquees", scrape_marquees->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Scrape 3D box images.
     auto scrape_3dboxes = std::make_shared<SwitchComponent>(mWindow);
     scrape_3dboxes->setState(Settings::getInstance()->getBool("Scrape3DBoxes"));
     s->addWithLabel("SCRAPE 3D BOX IMAGES", scrape_3dboxes);
-    s->addSaveFunc([scrape_3dboxes] { Settings::getInstance()->setBool("Scrape3DBoxes",
-            scrape_3dboxes->getState()); });
+    s->addSaveFunc([scrape_3dboxes, s] {
+        if (scrape_3dboxes->getState() != Settings::getInstance()->getBool("Scrape3DBoxes")) {
+            Settings::getInstance()->setBool("Scrape3DBoxes", scrape_3dboxes->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // 3D box images are not supported by TheGamesDB, so disable the option if this scraper
     // is selected.
@@ -213,7 +252,6 @@ void GuiScraperMenu::openOtherSettings()
     transitions_rg.push_back("us");
     transitions_rg.push_back("ss");
     transitions_rg.push_back("wor");
-
     if (Settings::getInstance()->getString("ScraperRegion") != "") {
         if (std::find(transitions_rg.begin(), transitions_rg.end(),
                 Settings::getInstance()->getString("ScraperRegion")) == transitions_rg.end()) {
@@ -223,8 +261,11 @@ void GuiScraperMenu::openOtherSettings()
     for (auto it = transitions_rg.cbegin(); it != transitions_rg.cend(); it++)
         scraper_region->add(*it, *it, Settings::getInstance()->getString("ScraperRegion") == *it);
     s->addWithLabel("REGION", scraper_region);
-    s->addSaveFunc([scraper_region] {
-        Settings::getInstance()->setString("ScraperRegion", scraper_region->getSelected());
+    s->addSaveFunc([scraper_region, s] {
+        if (scraper_region->getSelected() != Settings::getInstance()->getString("ScraperRegion")) {
+            Settings::getInstance()->setString("ScraperRegion", scraper_region->getSelected());
+            s->setNeedsSaving();
+        }
     });
 
     // Regions are not supported by TheGamesDB, so disable the option if this scraper is selected.
@@ -242,7 +283,6 @@ void GuiScraperMenu::openOtherSettings()
     std::vector<std::string> transitions_lg;
     transitions_lg.push_back("en");
     transitions_lg.push_back("wor");
-
     if (Settings::getInstance()->getString("ScraperLanguage") != "") {
         if (std::find(transitions_lg.begin(), transitions_lg.end(),
                 Settings::getInstance()->getString("ScraperLanguage")) == transitions_lg.end()) {
@@ -253,8 +293,12 @@ void GuiScraperMenu::openOtherSettings()
         scraper_language->add(*it, *it,
                 Settings::getInstance()->getString("ScraperLanguage") == *it);
     s->addWithLabel("LANGUAGE", scraper_language);
-    s->addSaveFunc([scraper_language] {
-        Settings::getInstance()->setString("ScraperLanguage", scraper_language->getSelected());
+    s->addSaveFunc([scraper_language, s] {
+        if (scraper_language->getSelected() !=
+                Settings::getInstance()->getString("ScraperLanguage")) {
+            Settings::getInstance()->setString("ScraperLanguage", scraper_language->getSelected());
+            s->setNeedsSaving();
+        }
     });
 
     // Languages are not supported by TheGamesDB, so disable the option if this scraper is selected.
@@ -267,69 +311,108 @@ void GuiScraperMenu::openOtherSettings()
     }
 
     // Overwrite files and data.
-    auto scrape_overwrite = std::make_shared<SwitchComponent>(mWindow);
-    scrape_overwrite->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));
-    s->addWithLabel("OVERWRITE FILES AND DATA", scrape_overwrite);
-    s->addSaveFunc([scrape_overwrite] { Settings::getInstance()->setBool("ScraperOverwriteData",
-            scrape_overwrite->getState()); });
+    auto scraper_overwrite_data = std::make_shared<SwitchComponent>(mWindow);
+    scraper_overwrite_data->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));
+    s->addWithLabel("OVERWRITE FILES AND DATA", scraper_overwrite_data);
+    s->addSaveFunc([scraper_overwrite_data, s] {
+        if (scraper_overwrite_data->getState() !=
+                Settings::getInstance()->getBool("ScraperOverwriteData")) {
+            Settings::getInstance()->setBool("ScraperOverwriteData",
+                    scraper_overwrite_data->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Search using metadata name.
-    auto scrape_metadata_name = std::make_shared<SwitchComponent>(mWindow);
-    scrape_metadata_name->setState(Settings::getInstance()->getBool("ScraperSearchMetadataName"));
-    s->addWithLabel("SEARCH USING METADATA NAME", scrape_metadata_name);
-    s->addSaveFunc([scrape_metadata_name] {
-        Settings::getInstance()->setBool("ScraperSearchMetadataName",
-                scrape_metadata_name->getState()); });
+    auto scraper_search_metadata_name = std::make_shared<SwitchComponent>(mWindow);
+    scraper_search_metadata_name->
+            setState(Settings::getInstance()->getBool("ScraperSearchMetadataName"));
+    s->addWithLabel("SEARCH USING METADATA NAME", scraper_search_metadata_name);
+    s->addSaveFunc([scraper_search_metadata_name, s] {
+        if (scraper_search_metadata_name->getState() !=
+                Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
+            Settings::getInstance()->setBool("ScraperSearchMetadataName",
+                    scraper_search_metadata_name->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Interactive scraping.
     auto scraper_interactive = std::make_shared<SwitchComponent>(mWindow);
     scraper_interactive->setState(Settings::getInstance()->getBool("ScraperInteractive"));
     s->addWithLabel("INTERACTIVE MODE", scraper_interactive);
-    s->addSaveFunc([scraper_interactive] { Settings::getInstance()->setBool("ScraperInteractive",
-            scraper_interactive->getState()); });
+    s->addSaveFunc([scraper_interactive, s] {
+        if (scraper_interactive->getState() !=
+                Settings::getInstance()->getBool("ScraperInteractive")) {
+            Settings::getInstance()->setBool("ScraperInteractive", scraper_interactive->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Semi-automatic scraping.
     auto scraper_semiautomatic = std::make_shared<SwitchComponent>(mWindow);
     scraper_semiautomatic->setState(Settings::getInstance()->getBool("ScraperSemiautomatic"));
     s->addWithLabel("AUTO-ACCEPT SINGLE GAME MATCHES", scraper_semiautomatic);
-    s->addSaveFunc([scraper_semiautomatic] {
+    s->addSaveFunc([scraper_semiautomatic ,s] {
+         if (scraper_semiautomatic->getState() !=
+                Settings::getInstance()->getBool("ScraperSemiautomatic")) {
             Settings::getInstance()->setBool("ScraperSemiautomatic",
-            scraper_semiautomatic->getState()); });
+                    scraper_semiautomatic->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Respect the per-file multi-scraper exclusion flag.
     auto scraper_respect_exclusions = std::make_shared<SwitchComponent>(mWindow);
     scraper_respect_exclusions->setState(
                 Settings::getInstance()->getBool("ScraperRespectExclusions"));
     s->addWithLabel("RESPECT PER-FILE SCRAPER EXCLUSIONS", scraper_respect_exclusions);
-    s->addSaveFunc([scraper_respect_exclusions] {
+    s->addSaveFunc([scraper_respect_exclusions, s] {
+        if (scraper_respect_exclusions->getState() !=
+                Settings::getInstance()->getBool("ScraperRespectExclusions")) {
             Settings::getInstance()->setBool("ScraperRespectExclusions",
-            scraper_respect_exclusions->getState()); });
+                    scraper_respect_exclusions->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Exclude files recursively for excluded folders.
     auto scraper_exclude_recursively = std::make_shared<SwitchComponent>(mWindow);
     scraper_exclude_recursively->setState(
                 Settings::getInstance()->getBool("ScraperExcludeRecursively"));
     s->addWithLabel("EXCLUDE FOLDERS RECURSIVELY", scraper_exclude_recursively);
-    s->addSaveFunc([scraper_exclude_recursively] {
+    s->addSaveFunc([scraper_exclude_recursively, s] {
+        if (scraper_exclude_recursively->getState() !=
+                Settings::getInstance()->getBool("ScraperExcludeRecursively")) {
             Settings::getInstance()->setBool("ScraperExcludeRecursively",
-            scraper_exclude_recursively->getState()); });
+                    scraper_exclude_recursively->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Include actual folders when scraping.
     auto scraper_include_folders = std::make_shared<SwitchComponent>(mWindow);
     scraper_include_folders->setState(
                 Settings::getInstance()->getBool("ScraperIncludeFolders"));
     s->addWithLabel("SCRAPE ACTUAL FOLDERS", scraper_include_folders);
-    s->addSaveFunc([scraper_include_folders] {
+    s->addSaveFunc([scraper_include_folders, s] {
+        if (scraper_include_folders->getState() !=
+                Settings::getInstance()->getBool("ScraperIncludeFolders")) {
             Settings::getInstance()->setBool("ScraperIncludeFolders",
-            scraper_include_folders->getState()); });
+                    scraper_include_folders->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     mWindow->pushGui(s);
 }
 
 void GuiScraperMenu::pressedStart()
 {
-    // Save any GUI settings that may have been modified.
-    mMenu.save();
+    // If the scraper service has been changed, then save the settings as otherwise the
+    // wrong scraper would be used.
+    if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper"))
+        mMenu.save();
 
     std::vector<SystemData*> sys = mSystems->getSelectedObjects();
     for (auto it = sys.cbegin(); it != sys.cend(); it++) {

@@ -79,6 +79,26 @@ void Settings::setDefaults()
     // Settings configured via the in-program settings menu.
     //
 
+    // Scraper.
+    mStringMap["Scraper"] = "screenscraper";
+    mBoolMap["ScrapeGameNames"] = true;
+    mBoolMap["ScrapeRatings"] = true;
+    mBoolMap["ScrapeMetadata"] = true;
+    mBoolMap["ScrapeVideos"] = true;
+    mBoolMap["ScrapeScreenshots"] = true;
+    mBoolMap["ScrapeCovers"] = true;
+    mBoolMap["ScrapeMarquees"] = true;
+    mBoolMap["Scrape3DBoxes"] = true;
+    mStringMap["ScraperRegion"] = "eu";
+    mStringMap["ScraperLanguage"] = "en";
+    mBoolMap["ScraperOverwriteData"] = true;
+    mBoolMap["ScraperSearchMetadataName"] = true;
+    mBoolMap["ScraperInteractive"] = true;
+    mBoolMap["ScraperSemiautomatic"] = true;
+    mBoolMap["ScraperRespectExclusions"] = true;
+    mBoolMap["ScraperExcludeRecursively"] = true;
+    mBoolMap["ScraperIncludeFolders"] = false;
+
     // UI settings.
     mStringMap["StartupSystem"] = "";
     mStringMap["GamelistViewStyle"] = "automatic";
@@ -87,44 +107,42 @@ void Settings::setDefaults()
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
     mStringMap["MenuOpeningEffect"] = "scale-up";
-    mBoolMap["MoveCarousel"] = true;
+    mBoolMap["CarouselTransitions"] = true;
     mBoolMap["GamelistVideoScanlines"] = true;
     mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;
     mBoolMap["FavoritesStar"] = true;
     mBoolMap["FavoritesAddButton"] = true;
-    mBoolMap["ForceDisableFilters"] = false;
+    mBoolMap["GamelistFilters"] = true;
     mBoolMap["QuickSystemSelect"] = true;
     mBoolMap["ShowHelpPrompts"] = true;
     mBoolMap["PlayVideosImmediately"] = false;
     mBoolMap["ShowKidStartMenu"] = false;
 
-    // UI settings -> scrensaver settings.
-    mIntMap["ScreenSaverTime"] = 5*60*1000; // 5 minutes
-    mBoolMap["ScreenSaverControls"] = true;
-    mStringMap["ScreenSaverBehavior"] = "dim";
+    // UI settings -> screensaver settings.
+    mIntMap["ScreensaverTimer"] = 5*60*1000; // 5 minutes
+    mBoolMap["ScreensaverControls"] = true;
+    mStringMap["ScreensaverBehavior"] = "dim";
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
-    mIntMap["ScreenSaverSwapImageTimeout"] = 10000;
-    mBoolMap["ScreenSaverStretchImages"] = false;
-    mBoolMap["ScreenSaverImageScanlines"] = true;
-    mStringMap["SlideshowScreenSaverBackgroundAudioFile"] = Utils::FileSystem::getHomePath() +
-            "/.emulationstation/slideshow/audio/slideshow_bg.wav";
-    mBoolMap["SlideshowScreenSaverCustomImageSource"] = false;
-    mStringMap["SlideshowScreenSaverImageDir"] = Utils::FileSystem::getHomePath() +
-            "/.emulationstation/slideshow/image";
-    mBoolMap["SlideshowScreenSaverRecurse"] = false;
-    mStringMap["SlideshowScreenSaverImageFilter"] = ".png,.jpg";
+    mIntMap["ScreensaverSwapImageTimeout"] = 8000;
+    mBoolMap["ScreensaverStretchImages"] = false;
+    mBoolMap["ScreensaverImageScanlines"] = true;
+    mStringMap["ScreensaverSlideshowAudioFile"] =
+            "~/.emulationstation/slideshow/audio/slideshow.wav";
+    mBoolMap["ScreensaverSlideshowCustomImages"] = false;
+    mStringMap["ScreensaverSlideshowImageDir"] = "~/.emulationstation/slideshow/custom_images";
+    mBoolMap["ScreensaverSlideshowRecurse"] = false;
 
     // UI settings -> screensaver settings -> video screensaver settings.
-    mIntMap["ScreenSaverSwapVideoTimeout"] = 25000;
-    mBoolMap["ScreenSaverStretchVideos"] = false;
+    mIntMap["ScreensaverSwapVideoTimeout"] = 25000;
+    mBoolMap["ScreensaverStretchVideos"] = false;
     #if defined(_RPI_)
-    mStringMap["ScreenSaverGameInfo"] = "never";
+    mStringMap["ScreensaverGameInfo"] = "never";
     #endif
-    mBoolMap["ScreenSaverVideoAudio"] = false;
-    mBoolMap["ScreenSaverVideoScanlines"] = true;
-    mBoolMap["ScreenSaverVideoBlur"] = false;
+    mBoolMap["ScreensaverVideoAudio"] = false;
+    mBoolMap["ScreensaverVideoScanlines"] = true;
+    mBoolMap["ScreensaverVideoBlur"] = false;
 
     // Sound settings.
     // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
@@ -151,66 +169,43 @@ void Settings::setDefaults()
     // Game collection settings.
     mStringMap["CollectionSystemsAuto"] = "";
     mStringMap["CollectionSystemsCustom"] = "";
-    mBoolMap["UseCustomCollectionsSystem"] = true;
     mBoolMap["FavFirstCustom"] = false;
     mBoolMap["FavStarCustom"] = false;
+    mBoolMap["UseCustomCollectionsSystem"] = true;
     mBoolMap["CollectionShowSystemInfo"] = true;
-
-    // Scraper.
-    mStringMap["Scraper"] = "screenscraper";
-    mStringMap["ScraperRegion"] = "eu";
-    mStringMap["ScraperLanguage"] = "en";
-//	mBoolMap["ScraperGenerateMiximages"] = false;
-//	mBoolMap["ScraperGenerateThumbnails"] = false;
-    mBoolMap["ScraperInteractive"] = true;
-    mBoolMap["ScraperSemiautomatic"] = true;
-    mBoolMap["ScraperSearchMetadataName"] = true;
-    mBoolMap["ScraperOverwriteData"] = true;
-    mBoolMap["ScraperRespectExclusions"] = true;
-    mBoolMap["ScraperExcludeRecursively"] = true;
-    mBoolMap["ScraperIncludeFolders"] = false;
-    mBoolMap["ScrapeMetadata"] = true;
-    mBoolMap["ScrapeGameNames"] = true;
-    mBoolMap["ScrapeRatings"] = true;
-    mBoolMap["Scrape3DBoxes"] = true;
-    mBoolMap["ScrapeCovers"] = true;
-    mBoolMap["ScrapeMarquees"] = true;
-    mBoolMap["ScrapeScreenshots"] = true;
-    mBoolMap["ScrapeVideos"] = true;
 
     // Other settings.
     #if defined(_RPI_)
-        mIntMap["MaxVRAM"] = 80;
+    mIntMap["MaxVRAM"] = 80;
     #else
-        mIntMap["MaxVRAM"] = 128;
+    mIntMap["MaxVRAM"] = 128;
     #endif
     #if defined (__unix__)
     mStringMap["FullscreenMode"] = "normal";
     #endif
     mStringMap["PowerSaverMode"] = "disabled";
-    // This setting only applies to raspberry pi but set it for all platforms so
+    // This setting only applies to Raspberry Pi but we set it for all platforms so
     // we don't get a warning if we encounter it on a different platform.
     mBoolMap["VideoOmxPlayer"] = false;
     #if defined(_RPI_)
     // We're defaulting to OMX Player for full screen video on the Pi.
-    mBoolMap["ScreenSaverOmxPlayer"] = true;
-    #else
-    mBoolMap["ScreenSaverOmxPlayer"] = false;
+    mBoolMap["ScreensaverOmxPlayer"] = true;
     #endif
     mStringMap["SaveGamelistsMode"] = "always";
     #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = false;
-    // Set this to true as default as it's unreliable to suspend ES during game launches
-    // on some Windows versions/installations.
-    mBoolMap["RunInBackground"] = true;
+    // This setting may cause problems on some Windows versions, but it seems as if Windows 10
+    // handles the suspension of ES correctly. As there are some adverse affects from running ES
+    // in the background while a game is running, by default this is set to false.
+    mBoolMap["RunInBackground"] = false;
     #endif
     mStringMap["MediaDirectory"] = "";
     mBoolMap["LaunchCommandOverride"] = true;
-    mBoolMap["CustomEventScripts"] = false;
-    mBoolMap["ParseGamelistOnly"] = false;
-    mBoolMap["LocalArt"] = false;
     mBoolMap["ShowHiddenFiles"] = true;
     mBoolMap["ShowHiddenGames"] = true;
+    mBoolMap["CustomEventScripts"] = false;
+    mBoolMap["ParseGamelistOnly"] = false;
+    mBoolMap["ROMDirGameMedia"] = false;
     mBoolMap["DisplayGPUStatistics"] = false;
     // macOS requires root privileges to reboot and power off so it doesn't make much
     // sense to enable these settings and menu entries for this operating system.
@@ -293,7 +288,6 @@ void Settings::saveFile()
     saveMap<std::string, int>(doc, mIntMap, "int");
     saveMap<std::string, float>(doc, mFloatMap, "float");
 
-    //saveMap<std::string, std::string>(doc, mStringMap, "string");
     for (auto iter = mStringMap.cbegin(); iter != mStringMap.cend(); iter++) {
         pugi::xml_node node = doc.append_child("string");
         node.append_attribute("name").set_value(iter->first.c_str());

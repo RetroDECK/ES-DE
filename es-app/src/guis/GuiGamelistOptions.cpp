@@ -133,8 +133,7 @@ GuiGamelistOptions::GuiGamelistOptions(
 
     // Add the filters entry, unless this is the grouped custom collections list.
     if (!isCustomCollectionGroup) {
-        if (system->getName() != "recent" &&
-                !Settings::getInstance()->getBool("ForceDisableFilters")) {
+        if (system->getName() != "recent" && Settings::getInstance()->getBool("GamelistFilters")) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>
                     (mWindow, "FILTER GAMELIST", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);

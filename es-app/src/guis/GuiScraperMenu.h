@@ -45,6 +45,7 @@ private:
     std::queue<ScraperSearchParams> getSearches(
             std::vector<SystemData*> systems, GameFilterFunc selector);
 
+    std::shared_ptr<OptionListComponent<std::string>> mScraper;
     std::shared_ptr<OptionListComponent<GameFilterFunc>> mFilters;
     std::shared_ptr<OptionListComponent<SystemData*>> mSystems;
 

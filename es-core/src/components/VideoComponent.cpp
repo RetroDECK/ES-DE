@@ -332,7 +332,7 @@ void VideoComponent::onScreenSaverActivate()
 {
     mBlockPlayer = true;
     mPause = true;
-    if (Settings::getInstance()->getString("ScreenSaverBehavior") == "dim")
+    if (Settings::getInstance()->getString("ScreensaverBehavior") == "dim")
         stopVideo();
     manageState();
 }

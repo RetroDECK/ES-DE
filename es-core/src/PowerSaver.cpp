@@ -40,18 +40,18 @@ int PowerSaver::getTimeout()
 void PowerSaver::loadWakeupTime()
 {
     // TODO : Move this to Screensaver Class.
-    std::string behaviour = Settings::getInstance()->getString("ScreenSaverBehavior");
+    std::string behaviour = Settings::getInstance()->getString("ScreensaverBehavior");
     if (behaviour == "video")
-        mWakeupTimeout = Settings::getInstance()->getInt("ScreenSaverSwapVideoTimeout") - getMode();
+        mWakeupTimeout = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout") - getMode();
     else if (behaviour == "slideshow")
-        mWakeupTimeout = Settings::getInstance()->getInt("ScreenSaverSwapImageTimeout") - getMode();
+        mWakeupTimeout = Settings::getInstance()->getInt("ScreensaverSwapImageTimeout") - getMode();
     else // Dim and Blank.
         mWakeupTimeout = -1;
 }
 
 void PowerSaver::updateTimeouts()
 {
-    mScreenSaverTimeout = (unsigned int) Settings::getInstance()->getInt("ScreenSaverTime");
+    mScreenSaverTimeout = (unsigned int) Settings::getInstance()->getInt("ScreensaverTimer");
     mScreenSaverTimeout = mScreenSaverTimeout > 0 ? mScreenSaverTimeout - getMode() : -1;
     loadWakeupTime();
 }
