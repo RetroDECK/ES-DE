@@ -18,7 +18,7 @@
 
 MenuComponent::MenuComponent(
         Window* window,
-        const char* title,
+        std::string title,
         const std::shared_ptr<Font>& titleFont)
         : GuiComponent(window),
         mBackground(window),
@@ -66,7 +66,7 @@ void MenuComponent::save()
     }
 }
 
-void MenuComponent::setTitle(const char* title, const std::shared_ptr<Font>& font)
+void MenuComponent::setTitle(std::string title, const std::shared_ptr<Font>& font)
 {
     mTitle->setText(Utils::String::toUpper(title));
     mTitle->setFont(font);

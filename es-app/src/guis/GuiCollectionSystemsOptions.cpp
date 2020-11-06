@@ -13,257 +13,219 @@
 #include "components/SwitchComponent.h"
 #include "guis/GuiSettings.h"
 #include "guis/GuiTextEditPopup.h"
-#include "utils/StringUtil.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
-#include "SystemData.h"
-#include "Window.h"
 
-GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window)
-        : GuiComponent(window), mMenu(window, "GAME COLLECTION SETTINGS")
+GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::string title)
+        : GuiSettings(window, title), mAddedCustomCollection(false)
 {
-    initializeMenu();
-}
 
-void GuiCollectionSystemsOptions::initializeMenu()
-{
-    addChild(&mMenu);
+    // Finish editing custom collection.
+    if (CollectionSystemManager::get()->isEditing()) {
+        ComponentListRow row;
+        row.addElement(std::make_shared<TextComponent>(mWindow, "FINISH EDITING '" +
+                Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection()) +
+                "' COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+        row.makeAcceptInputHandler([this] {
+            CollectionSystemManager::get()->exitEditMode();
+            delete this;
+        });
+        addRow(row);
+    }
 
-    // Get collections.
-    addSystemsToMenu();
+    // Automatic collections.
+    collection_systems_auto = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
+    std::map<std::string, CollectionSystemData, stringComparator> autoSystems =
+            CollectionSystemManager::get()->getAutoCollectionSystems();
+    // Add automatic systems.
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
+            it = autoSystems.cbegin(); it != autoSystems.cend() ; it++)
+        collection_systems_auto->add(it->second.decl.longName, it->second.decl.name,
+                it->second.isEnabled);
+    addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
+    addSaveFunc([this] {
+        std::string autoSystemsSelected =
+            Utils::String::vectorToCommaString(collection_systems_auto->getSelectedObjects(), true);
+        std::string autoSystemsConfig = Settings::getInstance()->getString("CollectionSystemsAuto");
+        if (autoSystemsSelected != autoSystemsConfig) {
+            if (CollectionSystemManager::get()->isEditing())
+                CollectionSystemManager::get()->exitEditMode();
+            Settings::getInstance()->setString("CollectionSystemsAuto", autoSystemsSelected);
+            setNeedsSaving();
+            setNeedsReloading();
+            setNeedsCollectionsUpdate();
+            if (!mAddedCustomCollection)
+                setNeedsGoToSystemView(SystemData::sSystemVector.front());
+        }
+    });
 
-    // Add "Create New Custom Collection from Theme".
+    // Custom collections.
+    collection_systems_custom = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
+    std::map<std::string, CollectionSystemData, stringComparator> customSystems =
+            CollectionSystemManager::get()->getCustomCollectionSystems();
+    // Add custom systems.
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
+            it = customSystems.cbegin(); it != customSystems.cend() ; it++)
+        collection_systems_custom->add(it->second.decl.longName, it->second.decl.name,
+                it->second.isEnabled);
+    addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
+    addSaveFunc([this] {
+        std::string customSystemsSelected = Utils::String::vectorToCommaString(
+                collection_systems_custom->getSelectedObjects(), true);
+        std::string customSystemsConfig = Settings::getInstance()->
+                getString("CollectionSystemsCustom");
+        if (customSystemsSelected != customSystemsConfig) {
+            if (CollectionSystemManager::get()->isEditing())
+                CollectionSystemManager::get()->exitEditMode();
+            Settings::getInstance()->setString("CollectionSystemsCustom", customSystemsSelected);
+            setNeedsSaving();
+            setNeedsReloading();
+            setNeedsCollectionsUpdate();
+            if (!mAddedCustomCollection)
+                setNeedsGoToSystemView(SystemData::sSystemVector.front());
+        }
+    });
+
+    // Create custom collection from theme.
     std::vector<std::string> unusedFolders =
             CollectionSystemManager::get()->getUnusedSystemsFromTheme();
     if (unusedFolders.size() > 0) {
-        addEntry("CREATE NEW CUSTOM COLLECTION FROM THEME", 0x777777FF, true,
-                [this, unusedFolders] {
-            auto s = new GuiSettings(mWindow, "SELECT THEME FOLDER");
-            std::shared_ptr< OptionListComponent<std::string>>
-                    folderThemes = std::make_shared< OptionListComponent<std::string>>
-                    (mWindow, getHelpStyle(), "SELECT THEME FOLDER", true);
-
+        ComponentListRow row;
+        auto themeCollection = std::make_shared<TextComponent>(mWindow,
+                "CREATE NEW CUSTOM COLLECTION FROM THEME", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        auto bracketThemeCollection = std::make_shared<ImageComponent>(mWindow);
+        bracketThemeCollection->setImage(":/graphics/arrow.svg");
+        bracketThemeCollection->setResize(Vector2f(0,
+                Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+        row.addElement(themeCollection, true);
+        row.addElement(bracketThemeCollection, false);
+        row.makeAcceptInputHandler([this, unusedFolders] {
+            auto ss = new GuiSettings(mWindow, "SELECT THEME FOLDER");
+            std::shared_ptr<OptionListComponent<std::string>> folderThemes =
+                    std::make_shared<OptionListComponent<std::string>>(mWindow,
+                    getHelpStyle(), "SELECT THEME FOLDER", true);
             // Add custom systems.
             for (auto it = unusedFolders.cbegin() ; it != unusedFolders.cend() ; it++ ) {
                 ComponentListRow row;
                 std::string name = *it;
-
-                std::function<void()> createCollectionCall = [name, this, s] {
-                    createCollection(name);
+                std::function<void()> createCollectionCall = [this, name] {
+                    createCustomCollection(name);
                 };
                 row.makeAcceptInputHandler(createCollectionCall);
-
                 auto themeFolder = std::make_shared<TextComponent>(mWindow,
                         Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
                 row.addElement(themeFolder, true);
-                s->addRow(row);
+                ss->addRow(row);
             }
-            mWindow->pushGui(s);
+            mWindow->pushGui(ss);
         });
+        addRow(row);
     }
 
+    // Create new custom collection.
     ComponentListRow row;
-    row.addElement(std::make_shared<TextComponent>(mWindow,
-            "CREATE NEW CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-    auto bracket = std::make_shared<ImageComponent>(mWindow);
-    bracket->setImage(":/graphics/arrow.svg");
-    bracket->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
-    row.addElement(bracket, false);
-    auto createCustomCollection = [this](const std::string& newVal) {
+    auto newCollection = std::make_shared<TextComponent>(mWindow,
+            "CREATE NEW CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto bracketNewCollection = std::make_shared<ImageComponent>(mWindow);
+    bracketNewCollection->setImage(":/graphics/arrow.svg");
+    bracketNewCollection->setResize(Vector2f(0,
+            Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    row.addElement(newCollection, true);
+    row.addElement(bracketNewCollection, false);
+    auto createCollectionCall = [this](const std::string& newVal) {
         std::string name = newVal;
-        // We need to store the first GUI and remove it, as it'll
-        // be deleted by the actual GUI.
+        // We need to store the first GUI and remove it, as it'll be deleted
+        // by the actual GUI.
         Window* window = mWindow;
         GuiComponent* topGui = window->peekGui();
         window->removeGui(topGui);
-        createCollection(name);
+        createCustomCollection(name);
     };
-    row.makeAcceptInputHandler([this, createCustomCollection] {
+    row.makeAcceptInputHandler([this, createCollectionCall] {
         mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(),
-                "New Collection Name", "", createCustomCollection, false, "SAVE"));
+                "New Collection Name", "", createCollectionCall, false, "SAVE"));
+    });
+    addRow(row);
+
+    // Sort favorites on top for custom collections.
+    auto fav_first_custom = std::make_shared<SwitchComponent>(mWindow);
+    fav_first_custom->setState(Settings::getInstance()->getBool("FavFirstCustom"));
+    addWithLabel("SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS", fav_first_custom);
+    addSaveFunc([this, fav_first_custom] {
+        if (fav_first_custom->getState() != Settings::getInstance()->getBool("FavFirstCustom")) {
+            Settings::getInstance()->setBool("FavFirstCustom", fav_first_custom->getState());
+            setNeedsSaving();
+            setNeedsReloading();
+            setNeedsSorting();
+            setNeedsSortingCollections();
+        }
     });
 
-    mMenu.addRow(row);
+    // Display star markings for custom collections.
+    auto fav_star_custom = std::make_shared<SwitchComponent>(mWindow);
+    fav_star_custom->setState(Settings::getInstance()->getBool("FavStarCustom"));
+    addWithLabel("DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS", fav_star_custom);
+    addSaveFunc([this, fav_star_custom] {
+        if (fav_star_custom->getState() != Settings::getInstance()->getBool("FavStarCustom")) {
+            Settings::getInstance()->setBool("FavStarCustom", fav_star_custom->getState());
+            setNeedsSaving();
+            setNeedsReloading();
+        }
+    });
 
-    sortFavFirstCustomSwitch = std::make_shared<SwitchComponent>(mWindow);
-    sortFavFirstCustomSwitch->setState(Settings::getInstance()->getBool("FavFirstCustom"));
-    mMenu.addWithLabel("SORT FAVORITES ON TOP FOR CUSTOM COLLECTIONS", sortFavFirstCustomSwitch);
-
-    favoriteStarCustomSwitch = std::make_shared<SwitchComponent>(mWindow);
-    favoriteStarCustomSwitch->setState(Settings::getInstance()->getBool("FavStarCustom"));
-    mMenu.addWithLabel("DISPLAY STAR MARKINGS FOR CUSTOM COLLECTIONS", favoriteStarCustomSwitch);
-
-    bundleCustomCollections = std::make_shared<SwitchComponent>(mWindow);
-    bundleCustomCollections->setState(Settings::getInstance()->
+    // Group unthemed custom collections.
+    auto use_custom_collections_system = std::make_shared<SwitchComponent>(mWindow);
+    use_custom_collections_system->setState(Settings::getInstance()->
             getBool("UseCustomCollectionsSystem"));
-    mMenu.addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", bundleCustomCollections);
+    addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", use_custom_collections_system);
+    addSaveFunc([this, use_custom_collections_system] {
+        if (use_custom_collections_system->getState() !=
+                Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
+            Settings::getInstance()->setBool("UseCustomCollectionsSystem",
+                    use_custom_collections_system->getState());
+            setNeedsSaving();
+            setNeedsCollectionsUpdate();
+            setNeedsReloading();
+            setNeedsGoToSystemView(SystemData::sSystemVector.front());
+        }
+    });
 
-    toggleSystemNameInCollections = std::make_shared<SwitchComponent>(mWindow);
-    toggleSystemNameInCollections->setState(Settings::getInstance()->
+    // Show system names in collections.
+    auto collection_show_system_info = std::make_shared<SwitchComponent>(mWindow);
+    collection_show_system_info->setState(Settings::getInstance()->
             getBool("CollectionShowSystemInfo"));
-    mMenu.addWithLabel("SHOW SYSTEM NAMES IN COLLECTIONS", toggleSystemNameInCollections);
-
-    if (CollectionSystemManager::get()->isEditing()) {
-        row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>(mWindow, "FINISH EDITING '" +
-                Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection()) +
-                "' COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-        row.makeAcceptInputHandler(std::bind(&GuiCollectionSystemsOptions::exitEditMode, this));
-        mMenu.addRow(row);
-    }
-
-    mMenu.addButton("BACK", "back", std::bind(&GuiCollectionSystemsOptions::applySettings, this));
-    mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2,
-            Renderer::getScreenHeight() * 0.15f);
+    addWithLabel("SHOW SYSTEM NAMES IN COLLECTIONS", collection_show_system_info);
+    addSaveFunc([this, collection_show_system_info] {
+        if (collection_show_system_info->getState() !=
+                Settings::getInstance()->getBool("CollectionShowSystemInfo")) {
+            Settings::getInstance()->setBool("CollectionShowSystemInfo",
+                    collection_show_system_info->getState());
+            setNeedsSaving();
+            setNeedsReloading();
+        }
+    });
 }
 
-void GuiCollectionSystemsOptions::addEntry(const char* name, unsigned int color,
-        bool add_arrow, const std::function<void()>& func)
+void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
 {
-    std::shared_ptr<Font> font = Font::get(FONT_SIZE_MEDIUM);
-
-    // Populate the list.
-    ComponentListRow row;
-    row.addElement(std::make_shared<TextComponent>(mWindow, name, font, color), true);
-
-    if (add_arrow) {
-        std::shared_ptr<ImageComponent> bracket = makeArrow(mWindow);
-        row.addElement(bracket, false);
-    }
-
-    row.makeAcceptInputHandler(func);
-    mMenu.addRow(row);
-}
-
-void GuiCollectionSystemsOptions::createCollection(std::string inName) {
     if (CollectionSystemManager::get()->isEditing())
         CollectionSystemManager::get()->exitEditMode();
-    std::string name = CollectionSystemManager::get()->getValidNewCollectionName(inName);
-    SystemData* newSys = CollectionSystemManager::get()->addNewCustomCollection(name);
-    CollectionSystemManager::get()->saveCustomCollection(newSys);
-    customOptionList->add(name, name, true);
-    std::string outAuto = Utils::String::vectorToCommaString(
-            autoOptionList->getSelectedObjects());
-    std::vector<std::string> customSystems = customOptionList->getSelectedObjects();
-    std::string outCustom = Utils::String::vectorToCommaString(customSystems, true);
-    updateSettings(outAuto, outCustom);
-    ViewController::get()->goToSystemView(newSys);
+
+    std::string collectionName = CollectionSystemManager::get()->
+            getValidNewCollectionName(inName);
+    SystemData* newCollection = CollectionSystemManager::get()->
+            addNewCustomCollection(collectionName);
+
+    CollectionSystemManager::get()->saveCustomCollection(newCollection);
+    collection_systems_custom->add(collectionName, collectionName, true);
+
+    mAddedCustomCollection = true;
+    setNeedsGoToSystemView(newCollection);
 
     Window* window = mWindow;
-    CollectionSystemManager::get()->setEditMode(name);
     while (window->peekGui() && window->peekGui() != ViewController::get())
         delete window->peekGui();
-    return;
-}
-
-void GuiCollectionSystemsOptions::exitEditMode()
-{
-    CollectionSystemManager::get()->exitEditMode();
-    applySettings();
-}
-
-GuiCollectionSystemsOptions::~GuiCollectionSystemsOptions()
-{
-}
-
-void GuiCollectionSystemsOptions::addSystemsToMenu()
-{
-    std::map<std::string, CollectionSystemData, stringComparator> autoSystems =
-            CollectionSystemManager::get()->getAutoCollectionSystems();
-
-    autoOptionList = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
-
-    // Add automatic systems.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
-            it = autoSystems.cbegin(); it != autoSystems.cend() ; it++)
-        autoOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
-    mMenu.addWithLabel("AUTOMATIC GAME COLLECTIONS", autoOptionList);
-
-    std::map<std::string, CollectionSystemData, stringComparator> customSystems =
-            CollectionSystemManager::get()->getCustomCollectionSystems();
-
-    customOptionList = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
-
-    // Add custom systems.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
-            it = customSystems.cbegin(); it != customSystems.cend() ; it++)
-        customOptionList->add(it->second.decl.longName, it->second.decl.name, it->second.isEnabled);
-    mMenu.addWithLabel("CUSTOM GAME COLLECTIONS", customOptionList);
-}
-
-void GuiCollectionSystemsOptions::applySettings()
-{
-    std::string outAuto = Utils::String::vectorToCommaString(
-                autoOptionList->getSelectedObjects());
-    std::string prevAuto = Settings::getInstance()->getString("CollectionSystemsAuto");
-    std::vector<std::string> customSystems = customOptionList->getSelectedObjects();
-    std::string outCustom = Utils::String::vectorToCommaString(customSystems, true);
-    std::string prevCustom = Settings::getInstance()->getString("CollectionSystemsCustom");
-    bool outSort = sortFavFirstCustomSwitch->getState();
-    bool prevSort = Settings::getInstance()->getBool("FavFirstCustom");
-    bool outFavStar = favoriteStarCustomSwitch->getState();
-    bool prevFavStar = Settings::getInstance()->getBool("FavStarCustom");
-    bool outBundle = bundleCustomCollections->getState();
-    bool prevBundle = Settings::getInstance()->getBool("UseCustomCollectionsSystem");
-    bool prevShow = Settings::getInstance()->getBool("CollectionShowSystemInfo");
-    bool outShow = toggleSystemNameInCollections->getState();
-    bool needUpdateSettings = prevAuto != outAuto || prevCustom != outCustom || outSort !=
-            prevSort || outFavStar != prevFavStar || outBundle != prevBundle || prevShow != outShow;
-
-    if (needUpdateSettings)
-        updateSettings(outAuto, outCustom);
-
-    delete this;
-}
-
-void GuiCollectionSystemsOptions::updateSettings(std::string newAutoSettings,
-        std::string newCustomSettings)
-{
-    if (CollectionSystemManager::get()->isEditing())
-        CollectionSystemManager::get()->exitEditMode();
-
-    Settings::getInstance()->setString("CollectionSystemsAuto", newAutoSettings);
-    Settings::getInstance()->setString("CollectionSystemsCustom", newCustomSettings);
-    Settings::getInstance()->setBool("FavFirstCustom", sortFavFirstCustomSwitch->getState());
-    Settings::getInstance()->setBool("FavStarCustom", favoriteStarCustomSwitch->getState());
-    Settings::getInstance()->setBool("UseCustomCollectionsSystem",
-            bundleCustomCollections->getState());
-    Settings::getInstance()->setBool("CollectionShowSystemInfo",
-            toggleSystemNameInCollections->getState());
-    Settings::getInstance()->saveFile();
-    CollectionSystemManager::get()->loadEnabledListFromSettings();
-    CollectionSystemManager::get()->updateSystemsList();
-    ViewController::get()->goToStart();
-    ViewController::get()->reloadAll();
-    mWindow->invalidateCachedBackground();
-}
-
-bool GuiCollectionSystemsOptions::input(InputConfig* config, Input input)
-{
-    bool consumed = GuiComponent::input(config, input);
-
-    if (consumed)
-        return true;
-
-    if (config->isMappedTo("b", input) && input.value != 0)
-        applySettings();
-
-    return false;
-}
-
-std::vector<HelpPrompt> GuiCollectionSystemsOptions::getHelpPrompts()
-{
-    std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
-    prompts.push_back(HelpPrompt("a", "select"));
-    prompts.push_back(HelpPrompt("b", "back"));
-    return prompts;
-}
-
-HelpStyle GuiCollectionSystemsOptions::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
-    return style;
+    CollectionSystemManager::get()->setEditMode(collectionName);
 }

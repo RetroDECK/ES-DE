@@ -10,40 +10,23 @@
 #ifndef ES_APP_GUIS_GUI_COLLECTION_SYSTEM_OPTIONS_H
 #define ES_APP_GUIS_GUI_COLLECTION_SYSTEM_OPTIONS_H
 
-#include "components/MenuComponent.h"
+#include "GuiSettings.h"
 
 template<typename T>
 class OptionListComponent;
-class SwitchComponent;
-class SystemData;
 
-class GuiCollectionSystemsOptions : public GuiComponent
+class GuiCollectionSystemsOptions : public GuiSettings
 {
 public:
-    GuiCollectionSystemsOptions(Window* window);
-    ~GuiCollectionSystemsOptions();
-    bool input(InputConfig* config, Input input) override;
-
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    GuiCollectionSystemsOptions(Window* window, std::string title);
 
 private:
-    void initializeMenu();
-    void applySettings();
-    void addSystemsToMenu();
-    void addEntry(const char* name, unsigned int color,
-            bool add_arrow, const std::function<void()>& func);
-    void updateSettings(std::string newAutoSettings, std::string newCustomSettings);
-    void createCollection(std::string inName);
-    void exitEditMode();
-    std::shared_ptr<OptionListComponent<std::string>> autoOptionList;
-    std::shared_ptr<OptionListComponent<std::string>> customOptionList;
-    std::shared_ptr<SwitchComponent> bundleCustomCollections;
-    std::shared_ptr<SwitchComponent> sortFavFirstCustomSwitch;
-    std::shared_ptr<SwitchComponent> favoriteStarCustomSwitch;
-    std::shared_ptr<SwitchComponent> toggleSystemNameInCollections;
-    MenuComponent mMenu;
-    SystemData* mSystem;
+    void createCustomCollection(std::string inName);
+
+    std::shared_ptr<OptionListComponent<std::string>> collection_systems_auto;
+    std::shared_ptr<OptionListComponent<std::string>> collection_systems_custom;
+
+    bool mAddedCustomCollection;
 };
 
 #endif // ES_APP_GUIS_GUI_COLLECTION_SYSTEM_OPTIONS_H

@@ -19,8 +19,8 @@
 #include "SystemData.h"
 #include "guis/GuiSettings.h"
 
-GuiScraperMenu::GuiScraperMenu(Window* window) : GuiComponent(window),
-        mMenu(window, "SCRAPER")
+GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
+        : GuiComponent(window), mMenu(window, title)
 {
     // Scraper service.
     mScraper = std::make_shared<OptionListComponent<std::string>>

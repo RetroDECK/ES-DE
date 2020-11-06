@@ -27,7 +27,7 @@ std::shared_ptr<ImageComponent> makeArrow(Window* window);
 class MenuComponent : public GuiComponent
 {
 public:
-    MenuComponent(Window* window, const char* title,
+    MenuComponent(Window* window, std::string title,
             const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
     virtual ~MenuComponent(); // just calls save();
 
@@ -54,7 +54,7 @@ public:
     void addButton(const std::string& label, const std::string& helpText,
             const std::function<void()>& callback);
 
-    void setTitle(const char* title, const std::shared_ptr<Font>& font);
+    void setTitle(std::string title, const std::shared_ptr<Font>& font);
 
     inline void setCursorToList() { mGrid.setCursorTo(mList); }
     inline void setCursorToButtons() { assert(mButtonGrid); mGrid.setCursorTo(mButtonGrid); }

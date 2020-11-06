@@ -25,7 +25,7 @@ typedef std::function<bool(SystemData*, FileData*)> GameFilterFunc;
 class GuiScraperMenu : public GuiComponent
 {
 public:
-    GuiScraperMenu(Window* window);
+    GuiScraperMenu(Window* window, std::string title);
     ~GuiScraperMenu();
 
     bool input(InputConfig* config, Input input) override;

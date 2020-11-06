@@ -154,6 +154,9 @@ void ViewController::goToSystemView(SystemData* system)
         mCurrentView->setRenderView(false);
     }
 
+    if (system->isGroupedCustomCollection())
+        system = system->getRootFolder()->getParent()->getSystem();
+
     mState.viewing = SYSTEM_SELECT;
     mState.system = system;
 

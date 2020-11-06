@@ -12,12 +12,13 @@
 #define ES_APP_GUIS_GUI_SETTINGS_H
 
 #include "components/MenuComponent.h"
+#include "SystemData.h"
 
 // This is just a really simple template for a GUI that calls some save functions when closed.
 class GuiSettings : public GuiComponent
 {
 public:
-    GuiSettings(Window* window, const char* title);
+    GuiSettings(Window* window, std::string title);
     virtual ~GuiSettings();
 
     void save();
@@ -29,10 +30,14 @@ public:
     inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
 
     void setNeedsSaving() { mNeedsSaving = true; };
-    void setNeedsGoToStart() { mNeedsGoToStart = true; };
+    void setNeedsCollectionsUpdate() { mNeedsCollectionsUpdate = true; };
     void setNeedsReloading() { mNeedsReloading = true; };
     void setNeedsSorting() { mNeedsSorting = true; };
     void setNeedsSortingCollections() { mNeedsSortingCollections = true; };
+    void setNeedsGoToStart() { mNeedsGoToStart = true; };
+    void setNeedsGoToSystemView(SystemData* goToSystem)
+            { mNeedsGoToSystemView = true; mGoToSystem = goToSystem; };
+    void setNeedsDestroyAllWindows() { mNeedsDestroyAllWindows = true; };
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -42,10 +47,15 @@ private:
     MenuComponent mMenu;
     std::vector<std::function<void()>> mSaveFuncs;
     bool mNeedsSaving;
-    bool mNeedsGoToStart;
+    bool mNeedsCollectionsUpdate;
     bool mNeedsReloading;
     bool mNeedsSorting;
     bool mNeedsSortingCollections;
+    bool mNeedsGoToStart;
+    bool mNeedsGoToSystemView;
+    bool mNeedsDestroyAllWindows;
+
+    SystemData* mGoToSystem;
 };
 
 #endif // ES_APP_GUIS_GUI_SETTINGS_H

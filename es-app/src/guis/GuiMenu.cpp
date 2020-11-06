@@ -75,8 +75,7 @@ GuiMenu::~GuiMenu()
 
 void GuiMenu::openScraperSettings()
 {
-    // Open the scrape menu.
-    mWindow->pushGui(new GuiScraperMenu(mWindow));
+    mWindow->pushGui(new GuiScraperMenu(mWindow, "SCRAPER"));
 }
 
 void GuiMenu::openUISettings()
@@ -163,7 +162,7 @@ void GuiMenu::openUISettings()
                 CollectionSystemManager::get()->updateSystemsList();
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
                 s->setNeedsSaving();
-                s->setNeedsGoToStart();
+                s->setNeedsGoToSystemView(SystemData::sSystemVector.front());
                 s->setNeedsReloading();
             }
         });
@@ -894,12 +893,14 @@ void GuiMenu::addVersionInfo()
     addChild(&mVersion);
 }
 
-void GuiMenu::openScreensaverOptions() {
+void GuiMenu::openScreensaverOptions()
+{
     mWindow->pushGui(new GuiScreensaverOptions(mWindow, "SCREENSAVER SETTINGS"));
 }
 
-void GuiMenu::openCollectionSystemSettings() {
-    mWindow->pushGui(new GuiCollectionSystemsOptions(mWindow));
+void GuiMenu::openCollectionSystemSettings()
+{
+    mWindow->pushGui(new GuiCollectionSystemsOptions(mWindow, "GAME COLLECTION SETTINGS"));
 }
 
 void GuiMenu::onSizeChanged()

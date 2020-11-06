@@ -13,20 +13,25 @@
 #include "guis/GuiTextEditPopup.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
+#include "CollectionSystemManager.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "Window.h"
 
 GuiSettings::GuiSettings(
         Window* window,
-        const char* title)
+        std::string title)
         : GuiComponent(window),
         mMenu(window, title),
         mNeedsSaving(false),
-        mNeedsGoToStart(false),
+        mNeedsCollectionsUpdate(false),
         mNeedsReloading(false),
         mNeedsSorting(false),
-        mNeedsSortingCollections(false)
+        mNeedsSortingCollections(false),
+        mGoToSystem(nullptr),
+        mNeedsGoToStart(false),
+        mNeedsGoToSystemView(false),
+        mNeedsDestroyAllWindows(false)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -51,8 +56,10 @@ void GuiSettings::save()
     if (mNeedsSaving)
         Settings::getInstance()->saveFile();
 
-    if (mNeedsGoToStart)
-        ViewController::get()->goToStart();
+    if (mNeedsCollectionsUpdate) {
+        CollectionSystemManager::get()->loadEnabledListFromSettings();
+        CollectionSystemManager::get()->updateSystemsList();
+    }
 
     if (mNeedsReloading)
         ViewController::get()->reloadAll();
@@ -69,7 +76,19 @@ void GuiSettings::save()
         }
     }
 
-    if (mNeedsSaving || mNeedsGoToStart || mNeedsReloading || mNeedsSorting)
+    if (mNeedsGoToStart)
+        ViewController::get()->goToStart();
+
+    if (mNeedsGoToSystemView)
+        ViewController::get()->goToSystemView(mGoToSystem);
+
+    if (mNeedsDestroyAllWindows) {
+        while (mWindow->peekGui() && mWindow->peekGui() != ViewController::get())
+            delete mWindow->peekGui();
+    }
+
+    if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
+            mNeedsGoToStart || mNeedsGoToSystemView || mNeedsDestroyAllWindows)
         mWindow->invalidateCachedBackground();
 }
 
