@@ -161,6 +161,9 @@ public:
     virtual std::string getValue() const;
     virtual void setValue(const std::string& value);
 
+    virtual std::string getHiddenValue() const;
+    virtual void setHiddenValue(const std::string& value);
+
     virtual void onFocusGained() {};
     virtual void onFocusLost() {};
 

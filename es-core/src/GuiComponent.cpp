@@ -319,13 +319,22 @@ const Transform4x4f& GuiComponent::getTransform()
     return mTransform;
 }
 
+std::string GuiComponent::getValue() const
+{
+    return "";
+}
+
 void GuiComponent::setValue(const std::string& /*value*/)
 {
 }
 
-std::string GuiComponent::getValue() const
+std::string GuiComponent::getHiddenValue() const
 {
     return "";
+}
+
+void GuiComponent::setHiddenValue(const std::string& /*value*/)
+{
 }
 
 void GuiComponent::textInput(const char* text)

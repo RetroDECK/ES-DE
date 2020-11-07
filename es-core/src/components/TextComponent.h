@@ -39,6 +39,7 @@ public:
     void setUppercase(bool uppercase);
     void onSizeChanged() override;
     void setText(const std::string& text);
+    void setHiddenText(const std::string& text);
     void setColor(unsigned int color) override;
     void setHorizontalAlignment(Alignment align);
     void setVerticalAlignment(Alignment align);
@@ -52,6 +53,9 @@ public:
     std::string getValue() const override;
     void setValue(const std::string& value) override;
 
+    std::string getHiddenValue() const override;
+    void setHiddenValue(const std::string& value) override;
+
     unsigned char getOpacity() const override;
     void setOpacity(unsigned char opacity) override;
 
@@ -64,6 +68,7 @@ protected:
     virtual void onTextChanged();
 
     std::string mText;
+    std::string mHiddenText;
     std::shared_ptr<Font> mFont;
 
 private:

@@ -114,6 +114,11 @@ void TextComponent::setText(const std::string& text)
     onTextChanged();
 }
 
+void TextComponent::setHiddenText(const std::string& text)
+{
+    mHiddenText = text;
+}
+
 void TextComponent::setUppercase(bool uppercase)
 {
     mUppercase = uppercase;
@@ -265,14 +270,24 @@ void TextComponent::setLineSpacing(float spacing)
     onTextChanged();
 }
 
+std::string TextComponent::getValue() const
+{
+    return mText;
+}
+
 void TextComponent::setValue(const std::string& value)
 {
     setText(value);
 }
 
-std::string TextComponent::getValue() const
+std::string TextComponent::getHiddenValue() const
 {
-    return mText;
+    return mHiddenText;
+}
+
+void TextComponent::setHiddenValue(const std::string& value)
+{
+    setHiddenText(value);
 }
 
 void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
