@@ -34,6 +34,9 @@ public:
     void setValue(const std::string& val) override;
     std::string getValue() const override;
 
+    void startEditing();
+    void stopEditing();
+
     inline bool isEditing() const { return mEditing; };
     inline const std::shared_ptr<Font>& getFont() const { return mFont; }
 
@@ -42,9 +45,6 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    void startEditing();
-    void stopEditing();
-
     void onTextChanged();
     void onCursorChanged();
 

@@ -88,6 +88,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
             textHeight + mButtonGrid->getSize().y() + 220);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
+    mText->startEditing();
 }
 
 void GuiComplexTextEditPopup::onSizeChanged()
