@@ -25,8 +25,12 @@ public:
     inline void addRow(const ComponentListRow& row) { mMenu.addRow(row); };
     inline void addWithLabel(const std::string& label,
             const std::shared_ptr<GuiComponent>& comp) { mMenu.addWithLabel(label, comp); };
-    void addEditableTextComponent(const std::string label, std::shared_ptr<GuiComponent> ed,
-            std::string value, std::string defaultValue = "");
+    void addEditableTextComponent(
+            const std::string label,
+            std::shared_ptr<GuiComponent> ed,
+            std::string value,
+            std::string defaultValue = "",
+            bool isPassword = false);
     inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
 
     void setNeedsSaving() { mNeedsSaving = true; };

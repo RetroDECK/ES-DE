@@ -22,6 +22,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Game systems are now sorted by full names which makes much more sense from a user perspective
 * New game media file logic using a media directory with files matching the ROM names instead of pointing to the media files in gamelist.xml
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
+* Added user account support when scraping using ScreenScraper
 * In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using a different font color
 * Files or folders can now be flagged for exclusion when scraping with the multi-scraper, and for folders it can be set to apply recursively
 * Gamelist sorting is now working as expected and is persistent throughout the application session

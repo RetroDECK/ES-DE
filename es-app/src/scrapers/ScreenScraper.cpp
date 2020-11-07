@@ -358,6 +358,24 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                     result.mdl.get("players");
         }
 
+        // Username, if an account is used for scraping.
+        if (Settings::getInstance()->getBool("ScraperUseAccountScreenScraper") &&
+                Settings::getInstance()->getString("ScraperUsernameScreenScraper") != "" &&
+                Settings::getInstance()->getString("ScraperPasswordScreenScraper") != "") {
+            // Check if our username was included in the response.
+            std::string userID = data.child("ssuser").child("id").text().get();
+            if (userID != "") {
+                LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account '" <<
+                        userID << "'.";
+            }
+            else {
+                LOG(LogDebug) << "ScreenScraperRequest::processGame(): The configured account '" <<
+                        Settings::getInstance()->getString("ScraperUsernameScreenScraper") <<
+                        "' was not included in the scraper response, wrong username or password?";
+            }
+        }
+
+        // Scraping allowance.
         if (maxRequestsPerDay > 0) {
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: " <<
                     requestsToday << "/" << maxRequestsPerDay << " (" <<
@@ -487,10 +505,21 @@ void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
 std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
         const std::string gameName) const
 {
-    return API_URL_BASE
+    std::string screenScraperURL = API_URL_BASE
         + "/jeuInfos.php?devid=" + Utils::String::scramble(API_DEV_U, API_DEV_KEY)
         + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
         + "&softname=" + HttpReq::urlEncode(API_SOFT_NAME)
         + "&output=xml"
         + "&romnom=" + HttpReq::urlEncode(gameName);
+
+    // Username / password, if this has been setup and activated.
+    if (Settings::getInstance()->getBool("ScraperUseAccountScreenScraper")) {
+        std::string username = Settings::getInstance()->getString("ScraperUsernameScreenScraper");
+        std::string password = Settings::getInstance()->getString("ScraperPasswordScreenScraper");
+        if (!username.empty() && !password.empty())
+            screenScraperURL += "&ssid=" + HttpReq::urlEncode(username) + "&sspassword=" +
+                    HttpReq::urlEncode(password);
+    }
+
+    return screenScraperURL;
 }

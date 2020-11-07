@@ -92,8 +92,12 @@ void GuiSettings::save()
         mWindow->invalidateCachedBackground();
 }
 
-void GuiSettings::addEditableTextComponent(const std::string label,
-        std::shared_ptr<GuiComponent> ed, std::string value, std::string defaultValue)
+void GuiSettings::addEditableTextComponent(
+        const std::string label,
+        std::shared_ptr<GuiComponent> ed,
+        std::string value,
+        std::string defaultValue,
+        bool isPassword)
 {
     ComponentListRow row;
     row.elements.clear();
@@ -114,16 +118,33 @@ void GuiSettings::addEditableTextComponent(const std::string label,
     row.addElement(bracket, false);
 
     // OK callback (apply new value to ed).
-    auto updateVal = [ed, defaultValue](const std::string& newVal) {
+    auto updateVal = [ed, defaultValue, isPassword](const std::string& newVal) {
         // If the field is blank, apply the default value if it's been passes as an argument.
-        if (defaultValue != "" && newVal == "")
+        if (defaultValue != "" && newVal == "") {
             ed->setValue(defaultValue);
-        else
+        }
+        // If it's a password and actually set to something, then show a star mask.
+        else if (isPassword && newVal == "") {
+            ed->setValue("");
+            ed->setHiddenValue("");
+        }
+        else if (isPassword) {
+            ed->setValue("********");
+            ed->setHiddenValue(newVal);
+        }
+        else {
             ed->setValue(newVal);
+        }
     };
-    row.makeAcceptInputHandler([this, label, ed, updateVal] {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
-                ed->getValue(), updateVal, false));
+
+    row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
+        // Never display the value if it's a password, instead set it to blank.
+        if (isPassword)
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
+                    "", updateVal, false));
+        else
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
+                    ed->getValue(), updateVal, false));
     });
     assert(ed);
     addRow(row);

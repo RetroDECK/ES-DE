@@ -495,6 +495,22 @@ Criteria for what games to include in the scraping. It can be set to 'All games'
 
 A selection of which systems to scrape for. It's possible to automatically scrape several or all systems in one go.
 
+#### Account settings
+
+Setup of ScreenScraper account.
+
+**Use this account for ScreenScraper**
+
+Whether to use the account that has been setup here. If this is disabled, the username and password configured on this screen will be ignored during scraping. This can be useful if you have scraping issues and want to check whether it's related to your account or if it's a general problem. Note that screenscraper.fr does not seem to return a proper error message regarding incorrect username and password, but starting ES with the --debug flag will indicate in the log file whether the username was included in the server response.
+
+**ScreenScraper username**
+
+Username as registered on screenscraper.fr.
+
+**ScreenScraper password**
+
+The password as registered on screenscraper.fr. Note that the password is masked using asterisks on this screen, and the password input field will be blank when attempting to update an existing password. Entering a new password will of course work, and it will be saved accordingly. Be aware though that the es_settings.cfg file contains the password in clear text.
+
 #### Content settings
 
 Describes the content types to include in the scraping. Most users will probably not need to adjust so many of these.

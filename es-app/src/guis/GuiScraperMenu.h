@@ -39,6 +39,7 @@ private:
 
     void addEntry(const char* name, unsigned int color,
             bool add_arrow, const std::function<void()>& func);
+    void openAccountSettings();
     void openContentSettings();
     void openOtherSettings();
 

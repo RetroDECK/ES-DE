@@ -72,6 +72,9 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     }
     mMenu.addWithLabel("Systems", mSystems);
 
+    addEntry("ACCOUNT SETTINGS", 0x777777FF, true, [this] {
+        openAccountSettings();
+    });
     addEntry("CONTENT SETTINGS", 0x777777FF, true, [this] {
         // If the scraper service has been changed before entering this menu, then save the
         // settings so that the specific options supported by the respective scrapers
@@ -113,6 +116,61 @@ GuiScraperMenu::~GuiScraperMenu()
                 (*it)->setScrapeFlag(true);
         }
     }
+}
+
+void GuiScraperMenu::openAccountSettings()
+{
+    auto s = new GuiSettings(mWindow, "ACCOUNT SETTINGS");
+
+    // Whether to use the ScreenScraper account when scraping.
+    auto scraper_use_account_screenscraper = std::make_shared<SwitchComponent>(mWindow);
+    scraper_use_account_screenscraper->setState(Settings::getInstance()->
+            getBool("ScraperUseAccountScreenScraper"));
+    s->addWithLabel("USE THIS ACCOUNT FOR SCREENSCRAPER", scraper_use_account_screenscraper);
+    s->addSaveFunc([scraper_use_account_screenscraper, s] {
+        if (scraper_use_account_screenscraper->getState() !=
+                Settings::getInstance()->getBool("ScraperUseAccountScreenScraper")) {
+            Settings::getInstance()->setBool("ScraperUseAccountScreenScraper",
+                    scraper_use_account_screenscraper->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // ScreenScraper username.
+    auto scraper_username_screenscraper = std::make_shared<TextComponent>(mWindow, "",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
+    s->addEditableTextComponent("SCREENSCRAPER USERNAME", scraper_username_screenscraper,
+            Settings::getInstance()->getString("ScraperUsernameScreenScraper"));
+    s->addSaveFunc([scraper_username_screenscraper, s] {
+        if (scraper_username_screenscraper->getValue() !=
+                Settings::getInstance()->getString("ScraperUsernameScreenScraper")) {
+            Settings::getInstance()->setString("ScraperUsernameScreenScraper",
+                    scraper_username_screenscraper->getValue());
+            s->setNeedsSaving();
+        }
+    });
+
+    // ScreenScraper password.
+    auto scraper_password_screenscraper = std::make_shared<TextComponent>(mWindow, "",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
+    std::string passwordMasked;
+    if (Settings::getInstance()->getString("ScraperPasswordScreenScraper") != "") {
+        passwordMasked = "********";
+        scraper_password_screenscraper->setHiddenValue(
+                Settings::getInstance()->getString("ScraperPasswordScreenScraper"));
+    }
+    s->addEditableTextComponent("SCREENSCRAPER PASSWORD",
+            scraper_password_screenscraper, passwordMasked, "", true);
+    s->addSaveFunc([scraper_password_screenscraper, s] {
+        if (scraper_password_screenscraper->getHiddenValue() !=
+                Settings::getInstance()->getString("ScraperPasswordScreenScraper")) {
+            Settings::getInstance()->setString("ScraperPasswordScreenScraper",
+                    scraper_password_screenscraper->getHiddenValue());
+            s->setNeedsSaving();
+        }
+    });
+
+    mWindow->pushGui(s);
 }
 
 void GuiScraperMenu::openContentSettings()
