@@ -66,6 +66,8 @@ public:
     void setColorShiftEnd(unsigned int color);
     void setColorGradientHorizontal(bool horizontal);
 
+    unsigned int getColorShift() const override { return mColorShift; };
+
     void setOpacity(unsigned char opacity) override;
     void setSaturation(float saturation) override;
 
