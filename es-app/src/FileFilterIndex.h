@@ -55,9 +55,9 @@ public:
     void clearAllFilters();
     void debugPrintIndexes();
     bool showFile(FileData* game);
-    bool isFiltered() { return (mFilterByText || filterByFavorites || filterByGenre ||
-            filterByPlayers || filterByPubDev || filterByRatings || filterByKidGame ||
-            filterByCompleted || filterByBroken || filterByHidden ); };
+    bool isFiltered() { return (mFilterByText || mFilterByFavorites || mFilterByGenre ||
+            mFilterByPlayers || mFilterByPubDev || mFilterByRatings || mFilterByKidGame ||
+            mFilterByCompleted || mFilterByBroken || mFilterByHidden ); };
     bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
     std::vector<FilterDataDecl>& getFilterDataDecls();
 
@@ -87,35 +87,35 @@ private:
     std::string mTextFilter;
     bool mFilterByText;
 
-    bool filterByFavorites;
-    bool filterByGenre;
-    bool filterByPlayers;
-    bool filterByPubDev;
-    bool filterByRatings;
-    bool filterByKidGame;
-    bool filterByCompleted;
-    bool filterByBroken;
-    bool filterByHidden;
+    bool mFilterByFavorites;
+    bool mFilterByGenre;
+    bool mFilterByPlayers;
+    bool mFilterByPubDev;
+    bool mFilterByRatings;
+    bool mFilterByKidGame;
+    bool mFilterByCompleted;
+    bool mFilterByBroken;
+    bool mFilterByHidden;
 
-    std::map<std::string, int> favoritesIndexAllKeys;
-    std::map<std::string, int> genreIndexAllKeys;
-    std::map<std::string, int> playersIndexAllKeys;
-    std::map<std::string, int> pubDevIndexAllKeys;
-    std::map<std::string, int> ratingsIndexAllKeys;
-    std::map<std::string, int> kidGameIndexAllKeys;
-    std::map<std::string, int> completedIndexAllKeys;
-    std::map<std::string, int> brokenIndexAllKeys;
-    std::map<std::string, int> hiddenIndexAllKeys;
+    std::map<std::string, int> mFavoritesIndexAllKeys;
+    std::map<std::string, int> mGenreIndexAllKeys;
+    std::map<std::string, int> mPlayersIndexAllKeys;
+    std::map<std::string, int> mPubDevIndexAllKeys;
+    std::map<std::string, int> mRatingsIndexAllKeys;
+    std::map<std::string, int> mKidGameIndexAllKeys;
+    std::map<std::string, int> mCompletedIndexAllKeys;
+    std::map<std::string, int> mBrokenIndexAllKeys;
+    std::map<std::string, int> mHiddenIndexAllKeys;
 
-    std::vector<std::string> favoritesIndexFilteredKeys;
-    std::vector<std::string> genreIndexFilteredKeys;
-    std::vector<std::string> playersIndexFilteredKeys;
-    std::vector<std::string> pubDevIndexFilteredKeys;
-    std::vector<std::string> ratingsIndexFilteredKeys;
-    std::vector<std::string> kidGameIndexFilteredKeys;
-    std::vector<std::string> completedIndexFilteredKeys;
-    std::vector<std::string> brokenIndexFilteredKeys;
-    std::vector<std::string> hiddenIndexFilteredKeys;
+    std::vector<std::string> mFavoritesIndexFilteredKeys;
+    std::vector<std::string> mGenreIndexFilteredKeys;
+    std::vector<std::string> mPlayersIndexFilteredKeys;
+    std::vector<std::string> mPubDevIndexFilteredKeys;
+    std::vector<std::string> mRatingsIndexFilteredKeys;
+    std::vector<std::string> mKidGameIndexFilteredKeys;
+    std::vector<std::string> mCompletedIndexFilteredKeys;
+    std::vector<std::string> mBrokenIndexFilteredKeys;
+    std::vector<std::string> mHiddenIndexFilteredKeys;
 
     FileData* mRootFolder;
 
