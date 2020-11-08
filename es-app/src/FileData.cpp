@@ -431,11 +431,29 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     mOnlyFolders = true;
     mHasFolders = false;
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
+    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
     if (mSystem->isGroupedCustomCollection())
         gameCount = {};
+
+    if (!showHiddenGames) {
+        for (auto it = mChildren.begin(); it != mChildren.end();) {
+        // If the option to hide hidden games has been set and the game is hidden,
+        // then skip it. Normally games are hidden during loading of the gamelists in
+        // Gamelist::parseGamelist() and this code should only run when a user has marked
+        // an entry manually as hidden. So upon the next application startup, this game
+        // should be filtered already at that earlier point.
+            if ((*it)->getHidden())
+                it = mChildren.erase(it);
+            // Also hide folders where all its entries have been hidden.
+            else if ((*it)->getType() == FOLDER && (*it)->getChildren().size() == 0)
+                it = mChildren.erase(it);
+            else
+                it++;
+        }
+    }
 
     // The main custom collections view is sorted during startup in CollectionSystemManager.
     // The individual collections are however sorted as any normal systems/folders.
@@ -524,11 +542,12 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
 {
     mOnlyFolders = true;
     mHasFolders = false;
+    bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
+    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
     std::vector<FileData*> mChildrenOthers;
-    bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
 
     if (mSystem->isGroupedCustomCollection())
         gameCount = {};
@@ -549,6 +568,17 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     }
 
     for (unsigned int i = 0; i < mChildren.size(); i++) {
+        // If the option to hide hidden games has been set and the game is hidden,
+        // then skip it. Normally games are hidden during loading of the gamelists in
+        // Gamelist::parseGamelist() and this code should only run when a user has marked
+        // an entry manually as hidden. So upon the next application startup, this game
+        // should be filtered already at that earlier point.
+        if (!showHiddenGames && mChildren[i]->getHidden())
+            continue;
+        // Also hide folders where all its entries have been hidden.
+        else if (mChildren[i]->getType() == FOLDER && mChildren[i]->getChildren().size() == 0)
+            continue;
+
         // Game count, which will be displayed in the system view.
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
             if (!mChildren[i]->getFavorite())

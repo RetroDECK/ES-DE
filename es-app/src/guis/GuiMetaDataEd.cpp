@@ -352,7 +352,7 @@ void GuiMetaDataEd::save()
         mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
     }
 
-    // If hidden games are not shown and the hide flag was set for the game, then write the
+    // If hidden games are not shown and the hide flag was set for the entry, then write the
     // metadata immediately regardless of the SaveGamelistsMode setting. Otherwise the file
     // will never be written as the game will be filtered from the gamelist. This solution is not
     // really good as the gamelist will be written twice, but it's a very special and hopefully
@@ -375,6 +375,12 @@ void GuiMetaDataEd::save()
     CollectionSystemManager::get()->refreshCollectionSystems(mScraperParams.game);
 
     mScraperParams.system->onMetaDataSavePoint();
+
+    // If hidden games are not shown and the hide flag was set for the entry, we also need
+    // to re-sort the gamelist as we may need to remove the parent folder if all the entries
+    // within this folder are now hidden.
+    if (hideGameWhileHidden)
+        mScraperParams.system->sortSystem(true);
 
     // Make sure that the cached background is updated to reflect any possible visible
     // changes to the gamelist (e.g. the game name).

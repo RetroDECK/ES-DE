@@ -164,11 +164,17 @@ void parseGamelist(SystemData* system)
             // games, then delete the entry. This leaves no trace of the entry at all in ES
             // but that is fine as the option to show hidden files is defined as requiring an
             // application restart.
-            if (!Settings::getInstance()->getBool("ShowHiddenGames") && file->getHidden()) {
-                LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping hidden " <<
-                        (type == GAME ? "file" : "folder") << " entry \"" <<
-                        file->getName() << "\"" << " (\"" << file->getPath() << "\")";
-                delete file;
+            if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
+                if (file->getHidden()) {
+                    LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping hidden " <<
+                            (type == GAME ? "file" : "folder") << " entry \"" <<
+                            file->getName() << "\"" << " (\"" << file->getPath() << "\")";
+                    delete file;
+                }
+                // Also delete any folders which are empty, i.e. all their entries are hidden.
+                else if (file->getType() == FOLDER && file->getChildren().size() == 0) {
+                    delete file;
+                }
             }
         }
     }
