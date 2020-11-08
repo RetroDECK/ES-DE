@@ -55,6 +55,7 @@ protected:
     unsigned int mGameCount;
     unsigned int mFavoritesGameCount;
     unsigned int mFilteredGameCount;
+    unsigned int mFilteredGameCountAll;
     bool mIsFiltered;
     bool mIsFolder;
 };

@@ -401,8 +401,13 @@ void VideoGameListView::updateInfoPanel()
             gamelistInfoString = "\uF07C  ";
 
         if (mIsFiltered) {
-            gamelistInfoString += "\uF0b0 " + std::to_string(mFilteredGameCount) + " / " +
-                    std::to_string(mGameCount);
+            if (mFilteredGameCountAll == mFilteredGameCount)
+                gamelistInfoString += "\uF0b0 " + std::to_string(mFilteredGameCount) + " / " +
+                        std::to_string(mGameCount);
+            else
+                gamelistInfoString += "\uF0b0 " + std::to_string(mFilteredGameCount) + " + " +
+                        std::to_string(mFilteredGameCountAll - mFilteredGameCount) + " / " +
+                        std::to_string(mGameCount);
         }
         else {
             gamelistInfoString += "\uF11b " + std::to_string(mGameCount);

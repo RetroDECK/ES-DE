@@ -370,10 +370,15 @@ void ISimpleGameListView::generateGamelistInfo(const std::vector<FileData*>& fil
     mGameCount = gameCount.first + gameCount.second;
     mFavoritesGameCount = gameCount.second;
     mFilteredGameCount = 0;
+    mFilteredGameCountAll = 0;
 
     if (idx->isFiltered()) {
         mIsFiltered = true;
         mFilteredGameCount = mRoot->getFilesRecursive(GAME, true, false).size();
+        // Also count the games that are set to not be counted as games, as the filter may
+        // apply to such entries as well and this will be indicated with a separate '+ XX'
+        // in the GamelistInfo field.
+        mFilteredGameCountAll = mRoot->getFilesRecursive(GAME, true, true).size();
     }
 
     if (files.size() > 0 && files.front()->getParent() != mRoot)
