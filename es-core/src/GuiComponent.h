@@ -20,6 +20,7 @@
 
 #define DEFAULT_TEXTCOLOR 0x777777FF
 #define DEFAULT_INVERTED_TEXTCOLOR 0x444444FF
+#define DEFAULT_INVERTED_IMAGECOLOR 0x666666FF
 #define DEFAULT_COLORSHIFT 0xFFFFFFFF
 #define ICONCOLOR_SCRAPERMARKED 0xFF5555FF
 #define ICONCOLOR_USERMARKED 0x5555FFFF
@@ -145,6 +146,7 @@ public:
     virtual unsigned char getOpacity() const;
     virtual void setOpacity(unsigned char opacity);
     virtual unsigned int getColor() const;
+    virtual unsigned int getColorShift() const;
     virtual void setColor(unsigned int color);
     virtual float getSaturation() const;
     virtual void setSaturation(float saturation);

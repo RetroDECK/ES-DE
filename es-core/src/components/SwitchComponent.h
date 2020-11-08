@@ -34,6 +34,8 @@ public:
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;
 
+    unsigned int getColorShift() const override;
+
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:

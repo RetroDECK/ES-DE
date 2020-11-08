@@ -196,11 +196,17 @@ void ComponentList::render(const Transform4x4f& parentTrans)
         for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
             if (drawAll || it->invert_when_selected) {
                 // For the row where the cursor is at, we want to remove any hue from the
-                // font color before inverting, as it would otherwise lead to an ugly
-                // inverted color (e.g. red text inverting to a green hue).
+                // font or image before inverting, as it would otherwise lead to an ugly
+                // inverted color (e.g. red inverting to a green hue).
                 if (i == mCursor && it->component->getValue() != "" ) {
-                    // Check if the text color is neutral.
+                    // Check if we're dealing with text or an image component.
+                    bool isTextComponent = true;
                     unsigned int origColor = it->component->getColor();
+                    if (origColor == 0) {
+                        origColor = it->component->getColorShift();
+                        isTextComponent = false;
+                    }
+                    // Check if the color is neutral.
                     unsigned char byteRed = origColor >> 24 & 0xFF;
                     unsigned char byteGreen = origColor >> 16 & 0xFF;
                     unsigned char byteBlue = origColor >> 8 & 0xFF;
@@ -210,22 +216,28 @@ void ComponentList::render(const Transform4x4f& parentTrans)
                     }
                     else {
                         // Note: I've disabled this code as it's overly complicated,
-                        // instead we're now using a simple constant which should be
+                        // instead we're now using simple constants which should be
                         // good enough. Let's keep the code though if needed in the
                         // future for some reason.
 //                        // If there is a hue, average the brightness values to make
-//                        // an equivalent gray value before inverting the text.
+//                        // an equivalent gray value before inverting.
 //                        // This is not the proper way to do a BW conversion as the RGB values
 //                        // should not be evenly distributed, but it's definitely good enough
 //                        // for this situation.
 //                        unsigned char byteAverage = (byteRed + byteGreen + byteBlue) / 3;
 //                        unsigned int averageColor = byteAverage << 24 | byteAverage << 16 |
 //                                byteAverage << 8 | 0xFF;
-//                        it->component->setColor(averageColor);
-                        it->component->setColor(DEFAULT_INVERTED_TEXTCOLOR);
+                        if (isTextComponent)
+                            it->component->setColor(DEFAULT_INVERTED_TEXTCOLOR);
+                        else
+                            it->component->setColorShift(DEFAULT_INVERTED_IMAGECOLOR);
+
                         it->component->render(trans);
                         // Revert to the original color after rendering.
-                        it->component->setColor(origColor);
+                        if (isTextComponent)
+                            it->component->setColor(origColor);
+                        else
+                            it->component->setColorShift(origColor);
                     }
                 }
                 else {

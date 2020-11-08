@@ -40,6 +40,7 @@ public:
 
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;
+    unsigned int getColorShift() const override { return mColorShift; };
 
     void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; };
     void setChangedColor(unsigned int color) override { mColorChangedValue = color; };

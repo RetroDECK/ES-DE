@@ -89,6 +89,11 @@ void SwitchComponent::setColorShift(unsigned int color)
     mImage.setColorShift(color);
 }
 
+unsigned int SwitchComponent::getColorShift() const
+{
+    return mImage.getColorShift();
+}
+
 void SwitchComponent::onStateChanged()
 {
     mImage.setImage(mState ? ":/graphics/on.svg" : ":/graphics/off.svg");

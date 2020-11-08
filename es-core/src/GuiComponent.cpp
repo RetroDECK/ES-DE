@@ -20,6 +20,9 @@
 GuiComponent::GuiComponent(Window* window)
         : mWindow(window),
         mParent(nullptr),
+        mColor(0),
+        mColorShift(0),
+        mColorShiftEnd(0),
         mOpacity(255),
         mSaturation(1.0),
         mPosition(Vector3f::Zero()),
@@ -267,6 +270,11 @@ void GuiComponent::setOpacity(unsigned char opacity)
 unsigned int GuiComponent::getColor() const
 {
     return mColor;
+}
+
+unsigned int GuiComponent::getColorShift() const
+{
+    return mColorShift;
 }
 
 void GuiComponent::setColor(unsigned int color)
