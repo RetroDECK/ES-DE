@@ -499,12 +499,18 @@ bool GuiMetaDataEd::input(InputConfig* config, Input input)
         return true;
     }
 
+    if (input.value != 0 && (config->isMappedTo("y", input))) {
+        fetch();
+        return true;
+    }
+
     return false;
 }
 
 std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    prompts.push_back(HelpPrompt("y", "scrape"));
     prompts.push_back(HelpPrompt("b", "back"));
     return prompts;
 }
