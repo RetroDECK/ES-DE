@@ -18,27 +18,18 @@
 #include "Settings.h"
 #include "SystemData.h"
 
+#include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
 #include <exception>
 #include <map>
 #include <pugixml.hpp>
 
-// When raspbian will get an up to date version of rapidjson we'll be
-// able to have it throw in case of error with the following:
-//ifndef RAPIDJSON_ASSERT
-//#define RAPIDJSON_ASSERT(x)                                                      \
-//  if (!(x)) {                                                                    \
-//      throw std::runtime_error("rapidjson internal assertion failure: " #x);     \
-//  }
-//#endif // RAPIDJSON_ASSERT
-
-#include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
-
 using namespace PlatformIds;
 using namespace rapidjson;
 
-namespace {
-TheGamesDBJSONRequestResources resources;
+namespace
+{
+    TheGamesDBJSONRequestResources resources;
 }
 
 const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
@@ -117,8 +108,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { TANDY, "4941" },
 };
 
-void thegamesdb_generate_json_scraper_requests(
-        const ScraperSearchParams& params,
+void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params,
         std::queue<std::unique_ptr<ScraperRequest>>& requests,
         std::vector<ScraperSearchResult>& results)
 {
@@ -242,7 +232,7 @@ std::string getDeveloperString(const Value& v)
 
     std::string out = "";
     bool first = true;
-    for (int i = 0; i < (int)v.Size(); ++i) {
+    for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
         auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
 
         if (mapIt == resources.gamesdb_new_developers_map.cend())
@@ -264,7 +254,7 @@ std::string getPublisherString(const Value& v)
 
     std::string out = "";
     bool first = true;
-    for (int i = 0; i < (int)v.Size(); ++i) {
+    for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
         auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
 
         if (mapIt == resources.gamesdb_new_publishers_map.cend())
@@ -286,8 +276,9 @@ std::string getGenreString(const Value& v)
 
     std::string out = "";
     bool first = true;
-    for (int i = 0; i < (int)v.Size(); ++i) {
+    for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
         auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
+
         if (mapIt == resources.gamesdb_new_genres_map.cend())
             continue;
 
@@ -457,7 +448,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     const Value& games = doc["data"]["games"];
     resources.ensureResources();
 
-    for (int i = 0; i < (int)games.Size(); ++i) {
+    for (int i = 0; i < static_cast<int>(games.Size()); ++i) {
         auto& v = games[i];
         try {
             processGame(v, results);

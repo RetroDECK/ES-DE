@@ -13,23 +13,21 @@
 #include "scrapers/Scraper.h"
 
 namespace pugi {
-class xml_document;
+    class xml_document;
 }
 
-void thegamesdb_generate_json_scraper_requests(
-        const ScraperSearchParams& params,
+void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params,
         std::queue<std::unique_ptr<ScraperRequest>>& requests,
         std::vector<ScraperSearchResult>& results);
 
-void thegamesdb_generate_json_scraper_requests(
-        const std::string& gameIDs,
+void thegamesdb_generate_json_scraper_requests(const std::string& gameIDs,
         std::queue<std::unique_ptr<ScraperRequest>>& requests,
         std::vector<ScraperSearchResult>& results);
 
 class TheGamesDBJSONRequest : public ScraperHttpRequest
 {
   public:
-    // ctor for a GetGameList request.
+    // Constructor for a GetGameList request.
     TheGamesDBJSONRequest(
             std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
             std::vector<ScraperSearchResult>& resultsWrite,
@@ -38,18 +36,13 @@ class TheGamesDBJSONRequest : public ScraperHttpRequest
             mRequestQueue(&requestsWrite)
     {
     }
-    // ctor for a GetGame request
-    TheGamesDBJSONRequest(
-            std::vector<ScraperSearchResult>& resultsWrite,
-            const std::string& url)
-            : ScraperHttpRequest(resultsWrite, url),
-            mRequestQueue(nullptr)
+    // Constructior for a GetGame request
+    TheGamesDBJSONRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url)
+            : ScraperHttpRequest(resultsWrite, url), mRequestQueue(nullptr)
     {
     }
 
   protected:
-    //void retrieveMediaURLs()
-
     void process(const std::unique_ptr<HttpReq>& req,
             std::vector<ScraperSearchResult>& results) override;
     bool isGameRequest() { return !mRequestQueue; }

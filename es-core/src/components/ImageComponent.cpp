@@ -141,7 +141,7 @@ void ImageComponent::resize()
     mSize[0] = Math::round(mSize.x());
     mSize[1] = Math::round(mSize.y());
     // mSize.y() should already be rounded.
-    mTexture->rasterizeAt((size_t)mSize.x(), (size_t)mSize.y());
+    mTexture->rasterizeAt(static_cast<size_t>(mSize.x()), static_cast<size_t>(mSize.y()));
 
     onSizeChanged();
 }
@@ -461,7 +461,8 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
         if (elem->has("colorEnd"))
             setColorShiftEnd(elem->get<unsigned int>("colorEnd"));
         if (elem->has("gradientType"))
-            setColorGradientHorizontal(!(elem->get<std::string>("gradientType").compare("horizontal")));
+            setColorGradientHorizontal(!(elem->
+                    get<std::string>("gradientType").compare("horizontal")));
     }
 }
 

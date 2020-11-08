@@ -86,8 +86,8 @@ public:
     inline std::map<std::string, CollectionSystemData, stringComparator>
             getCustomCollectionSystems() { return mCustomCollectionSystemsData; };
     inline SystemData* getCustomCollectionsBundle() { return mCustomCollectionsBundle; };
-    std::vector<std::string> getUnusedSystemsFromTheme();
-    SystemData* addNewCustomCollection(std::string name);
+    inline bool isEditing() { return mIsEditingCustom; };
+    inline std::string getEditingCollection() { return mEditingCollection; };
 
     bool isThemeGenericCollectionCompatible(bool genericCustomCollections);
     bool isThemeCustomCollectionCompatible(std::vector<std::string> stringVector);
@@ -95,13 +95,14 @@ public:
 
     void setEditMode(std::string collectionName);
     void exitEditMode();
-    inline bool isEditing() { return mIsEditingCustom; };
-    inline std::string getEditingCollection() { return mEditingCollection; };
     bool inCustomCollection(const std::string& collectionName, FileData* gameFile);
     bool toggleGameInCollection(FileData* file);
 
     SystemData* getSystemToView(SystemData* sys);
     FileData* updateCollectionFolderMetadata(SystemData* sys);
+    std::vector<std::string> getUnusedSystemsFromTheme();
+
+    SystemData* addNewCustomCollection(std::string name);
 
 private:
     static CollectionSystemManager* sInstance;

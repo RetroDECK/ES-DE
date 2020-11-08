@@ -647,7 +647,7 @@ This setting enables the 'Y' button for quickly toggling a game as favorite. Alt
 
 **Enable gamelist filters**
 
-Activating or deactivating the ability to filter your gamelists. Can normally be left on.
+Activating or deactivating the ability to filter your gamelists. This can normally be left enabled.
 
 **Enable quick system select**
 
@@ -896,6 +896,8 @@ Choosing this entry opens a separate screen where it's possible to apply a filte
 
 The following filters can be applied:
 
+**Text Filter (Game Name)**
+
 **Favorites**
 
 **Genre**
@@ -914,9 +916,9 @@ The following filters can be applied:
 
 **Hidden**
 
-All possible filter values are assembled from metadata from the actual gamelist, so if there for instance are no games marked as completed, the Completed filter will only have the selectable option 'False', meaning 'True' will be missing.
+With the exception of the text filter, all available filter values are assembled from metadata from the actual gamelist, so if there for instance are no games marked as completed, the Completed filter will only have the selectable option 'False', i.e. 'True' will be missing.
 
-Be aware that although folders can have most of these metadata values set, the filters are only applied to files. So if you for example set a filter to only display your favorite games, any folder that contains a favorite game will be displayed, and other folders which are themselves marked as favorite but that do not contain any favorite games will be hidden.
+Be aware that although folders can have most of the metadata values set, the filters are only applied to files (this is also true for the text/game name filter). So if you for example set a filter to only display your favorite games, any folder that contains a favorite game will be displayed, and other folders which are themselves marked as favorites but that do not contain any favorite games will be hidden.
 
 The filters are always applied for the complete game system, including all folder contents.
 

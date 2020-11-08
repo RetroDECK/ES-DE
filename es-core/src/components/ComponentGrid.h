@@ -23,7 +23,6 @@ namespace GridFlags
 
     enum Border : unsigned int {
         BORDER_NONE = 0,
-
         BORDER_TOP = 1,
         BORDER_BOTTOM = 2,
         BORDER_LEFT = 4,
@@ -96,11 +95,22 @@ private:
         GridFlags::UpdateType updateType;
         unsigned int border;
 
-        GridEntry(const Vector2i& p = Vector2i::Zero(), const Vector2i& d = Vector2i::Zero(),
-            const std::shared_ptr<GuiComponent>& cmp = nullptr, bool f = false, bool r = true,
-            GridFlags::UpdateType u = GridFlags::UPDATE_ALWAYS, unsigned int b =
-                    GridFlags::BORDER_NONE) :
-            pos(p), dim(d), component(cmp), canFocus(f), resize(r), updateType(u), border(b)
+        GridEntry(
+                const Vector2i& p = Vector2i::Zero(),
+                const Vector2i& d = Vector2i::Zero(),
+                const std::shared_ptr<GuiComponent>& cmp = nullptr,
+                bool f = false,
+                bool r = true,
+                GridFlags::UpdateType u = GridFlags::UPDATE_ALWAYS,
+                unsigned int b =
+                GridFlags::BORDER_NONE)
+                : pos(p),
+                dim(d),
+                component(cmp),
+                canFocus(f),
+                resize(r),
+                updateType(u),
+                border(b)
         {};
 
         operator bool() const

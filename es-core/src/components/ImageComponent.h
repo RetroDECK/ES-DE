@@ -9,8 +9,8 @@
 #ifndef ES_CORE_COMPONENTS_IMAGE_COMPONENT_H
 #define ES_CORE_COMPONENTS_IMAGE_COMPONENT_H
 
-#include "renderers/Renderer.h"
 #include "math/Vector2i.h"
+#include "renderers/Renderer.h"
 #include "GuiComponent.h"
 
 class TextureResource;
