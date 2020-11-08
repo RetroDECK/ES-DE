@@ -41,6 +41,7 @@ private:
     MenuComponent mMenu;
     SystemData* mSystem;
     FileFilterIndex* mFilterIndex;
+    std::shared_ptr<TextComponent> mTextFilterField;
 };
 
 #endif // ES_APP_GUIS_GUI_GAME_LIST_FILTER_H

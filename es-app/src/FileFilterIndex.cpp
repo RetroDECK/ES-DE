@@ -19,7 +19,8 @@
 #define INCLUDE_UNKNOWN false;
 
 FileFilterIndex::FileFilterIndex()
-        : filterByFavorites(false),
+        : mFilterByText(false),
+        filterByFavorites(false),
         filterByGenre(false),
         filterByPlayers(false),
         filterByPubDev(false),
@@ -269,6 +270,16 @@ void FileFilterIndex::setFilter(FilterIndexType type, std::vector<std::string>* 
     return;
 }
 
+ void FileFilterIndex::setTextFilter(std::string textFilter)
+ {
+    mTextFilter = textFilter;
+
+    if (textFilter == "")
+        mFilterByText = false;
+    else
+        mFilterByText = true;
+ };
+
 void FileFilterIndex::clearAllFilters()
 {
     for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
@@ -353,7 +364,18 @@ bool FileFilterIndex::showFile(FileData* game)
         return false;
     }
 
+    bool nameMatch = false;
     bool keepGoing = false;
+
+    // Name filters take precedence over all other filters, so if there is no match for
+    // the game name, then always return false.
+    if (mTextFilter != "" && !(Utils::String::toUpper(game->
+            getName()).find(mTextFilter) != std::string::npos)) {
+        return false;
+    }
+    else if (mTextFilter != "") {
+        nameMatch = true;
+    }
 
     for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
             it != filterDataDecl.cend(); ++it ) {
@@ -377,7 +399,13 @@ bool FileFilterIndex::showFile(FileData* game)
                 return false;
         }
     }
-    return keepGoing;
+
+    // If there is a match for the game name, but not for any other filters, then return
+    // true as it means that the name filter is the only applied filter.
+    if (!keepGoing && nameMatch)
+        return true;
+    else
+        return keepGoing;
 }
 
 bool FileFilterIndex::isKeyBeingFilteredBy(std::string key, FilterIndexType type)

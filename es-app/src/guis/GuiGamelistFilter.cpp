@@ -11,6 +11,7 @@
 #include "guis/GuiGamelistFilter.h"
 
 #include "components/OptionListComponent.h"
+#include "guis/GuiTextEditPopup.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "SystemData.h"
@@ -73,11 +74,15 @@ void GuiGamelistFilter::resetAllFilters()
     }
 
     mFilterIndex->resetFilters();
-    for (std::map<FilterIndexType, std::shared_ptr< OptionListComponent<std::string>
-             >>::const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); ++it ) {
-        std::shared_ptr< OptionListComponent<std::string> > optionList = it->second;
+    for (std::map<FilterIndexType, std::shared_ptr< OptionListComponent<std::string>>>::
+            const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); ++it ) {
+        std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         optionList->selectNone();
     }
+    bool testbool = mFilterIndex->isFiltered();
+
+    mFilterIndex->setTextFilter("");
+    mTextFilterField->setValue("");
 }
 
 GuiGamelistFilter::~GuiGamelistFilter()
@@ -87,6 +92,43 @@ GuiGamelistFilter::~GuiGamelistFilter()
 
 void GuiGamelistFilter::addFiltersToMenu()
 {
+    ComponentListRow row;
+
+    auto lbl = std::make_shared<TextComponent>(mWindow,
+            Utils::String::toUpper("TEXT FILTER (GAME NAME)"),
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+
+    mTextFilterField = std::make_shared<TextComponent>(mWindow, "",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
+
+    row.addElement(lbl, true);
+    row.addElement(mTextFilterField, true);
+
+    auto spacer = std::make_shared<GuiComponent>(mWindow);
+    spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
+    row.addElement(spacer, false);
+
+    auto bracket = std::make_shared<ImageComponent>(mWindow);
+    bracket->setImage(":/graphics/arrow.svg");
+    bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
+    row.addElement(bracket, false);
+
+    mTextFilterField->setValue(mFilterIndex->getTextFilter());
+
+    // Callback function.
+    auto updateVal = [this](const std::string& newVal) {
+       mTextFilterField->setValue(Utils::String::toUpper(newVal));
+       mFilterIndex->setTextFilter(Utils::String::toUpper(newVal));
+    };
+
+    row.makeAcceptInputHandler([this, updateVal] {
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(),
+                    "TEXT FILTER (GAME NAME)", mTextFilterField->getValue(),
+                    updateVal, false, "OK", "APPLY CHANGES?"));
+    });
+
+    mMenu.addRow(row);
+
     std::vector<FilterDataDecl> decls = mFilterIndex->getFilterDataDecls();
 
     int skip = 0;
@@ -108,7 +150,7 @@ void GuiGamelistFilter::addFiltersToMenu()
         ComponentListRow row;
 
         // Add genres.
-        optionList = std::make_shared< OptionListComponent<std::string>>
+        optionList = std::make_shared<OptionListComponent<std::string>>
                 (mWindow, getHelpStyle(), menuLabel, true);
         for (auto it: *allKeys)
             optionList->add(it.first, it.first, mFilterIndex->isKeyBeingFilteredBy(it.first, type));

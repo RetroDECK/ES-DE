@@ -50,12 +50,14 @@ public:
     void addToIndex(FileData* game);
     void removeFromIndex(FileData* game);
     void setFilter(FilterIndexType type, std::vector<std::string>* values);
+    void setTextFilter(std::string textFilter);
+    std::string getTextFilter() { return mTextFilter; };
     void clearAllFilters();
     void debugPrintIndexes();
     bool showFile(FileData* game);
-    bool isFiltered() { return (filterByFavorites || filterByGenre || filterByPlayers ||
-            filterByPubDev || filterByRatings || filterByKidGame || filterByCompleted ||
-            filterByBroken || filterByHidden ); };
+    bool isFiltered() { return (mFilterByText || filterByFavorites || filterByGenre ||
+            filterByPlayers || filterByPubDev || filterByRatings || filterByKidGame ||
+            filterByCompleted || filterByBroken || filterByHidden ); };
     bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
     std::vector<FilterDataDecl>& getFilterDataDecls();
 
@@ -81,6 +83,9 @@ private:
     void manageIndexEntry(std::map<std::string, int>* index, std::string key, bool remove);
 
     void clearIndex(std::map<std::string, int> indexMap);
+
+    std::string mTextFilter;
+    bool mFilterByText;
 
     bool filterByFavorites;
     bool filterByGenre;
