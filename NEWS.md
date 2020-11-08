@@ -51,6 +51,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Expanded the metadata for folders and made it possible to mark them as favorites
 * Added new component GuiComplexTextEditPopup to handle changes to configuration file entries and similar
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
+* Replaced the on and off button icons with new graphics
 * Added metadata entry to mark games as broken/not working
 * Added metadata entry to indicate whether the file should be counted as a game (for example useful to exclude setup files and similar for DOS games)
 * Added metadata entry to hide the metadata values from the gamelist views (useful for general folders, DOS game configuration utilities etc.)
