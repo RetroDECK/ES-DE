@@ -857,6 +857,42 @@ SystemData* CollectionSystemManager::addNewCustomCollection(std::string name)
     return createNewCollectionEntry(name, decl, true, true);
 }
 
+void CollectionSystemManager::deleteCustomCollection(std::string collectionName)
+{
+    auto collectionEntry = mCustomCollectionSystemsData.find(collectionName);
+
+    // The window deletion needs to be located here instead of in GuiCollectionSystemsOptions
+    // (where the custom collection deletions are initiated), as there seems to be some random
+    // issue with accessing mWindow via the lambda expression.
+    while (mWindow->peekGui() && mWindow->peekGui() != ViewController::get())
+        delete mWindow->peekGui();
+
+    if (collectionEntry != mCustomCollectionSystemsData.end()) {
+        CollectionSystemManager::get()->loadEnabledListFromSettings();
+        CollectionSystemManager::get()->updateSystemsList();
+
+        ViewController::get()->removeGameListView(collectionEntry->second.system);
+        ViewController::get()->reloadAll();
+
+        delete collectionEntry->second.system;
+        mCustomCollectionSystemsData.erase(collectionName);
+
+        // Remove the collection configuration file.
+        std::string configFile = getCustomCollectionConfigPath(collectionName);
+        Utils::FileSystem::removeFile(configFile);
+        LOG(LogDebug) << "CollectionSystemManager::deleteCustomCollection(): Deleted the "
+                "configuration file '" << configFile << "'.";
+
+        GuiInfoPopup* s = new GuiInfoPopup(mWindow, "DELETED THE COLLECTION '" +
+            Utils::String::toUpper(collectionName) + "'", 5000);
+        mWindow->setInfoPopup(s);
+    }
+    else {
+        LOG(LogError) << "Attempted to delete custom collection '" + collectionName + "' " +
+                "which doesn't exist.";
+    }
+}
+
 // Functions below to Handle loading of collection systems, creating empty ones,
 // and populating on demand.
 

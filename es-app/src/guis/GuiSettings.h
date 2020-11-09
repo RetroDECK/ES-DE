@@ -41,7 +41,6 @@ public:
     void setNeedsGoToStart() { mNeedsGoToStart = true; };
     void setNeedsGoToSystemView(SystemData* goToSystem)
             { mNeedsGoToSystemView = true; mGoToSystem = goToSystem; };
-    void setNeedsDestroyAllWindows() { mNeedsDestroyAllWindows = true; };
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -57,7 +56,6 @@ private:
     bool mNeedsSortingCollections;
     bool mNeedsGoToStart;
     bool mNeedsGoToSystemView;
-    bool mNeedsDestroyAllWindows;
 
     SystemData* mGoToSystem;
 };

@@ -30,8 +30,7 @@ GuiSettings::GuiSettings(
         mNeedsSortingCollections(false),
         mGoToSystem(nullptr),
         mNeedsGoToStart(false),
-        mNeedsGoToSystemView(false),
-        mNeedsDestroyAllWindows(false)
+        mNeedsGoToSystemView(false)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -82,13 +81,8 @@ void GuiSettings::save()
     if (mNeedsGoToSystemView)
         ViewController::get()->goToSystemView(mGoToSystem);
 
-    if (mNeedsDestroyAllWindows) {
-        while (mWindow->peekGui() && mWindow->peekGui() != ViewController::get())
-            delete mWindow->peekGui();
-    }
-
     if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
-            mNeedsGoToStart || mNeedsGoToSystemView || mNeedsDestroyAllWindows)
+            mNeedsGoToStart || mNeedsGoToSystemView)
         mWindow->invalidateCachedBackground();
 }
 

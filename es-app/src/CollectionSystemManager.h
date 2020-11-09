@@ -103,6 +103,7 @@ public:
     std::vector<std::string> getUnusedSystemsFromTheme();
 
     SystemData* addNewCustomCollection(std::string name);
+    void deleteCustomCollection(std::string collectionName);
 
 private:
     static CollectionSystemManager* sInstance;

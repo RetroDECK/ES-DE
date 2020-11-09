@@ -330,7 +330,7 @@ void GuiMenu::openUISettings()
     // Enable the 'Y' button for tagging games as favorites.
     auto favorites_add_button = std::make_shared<SwitchComponent>(mWindow);
     favorites_add_button->setState(Settings::getInstance()->getBool("FavoritesAddButton"));
-    s->addWithLabel("ENABLE BUTTON SHORTCUT TO TOGGLE FAVORITES", favorites_add_button);
+    s->addWithLabel("ENABLE SHORTCUT TO TOGGLE FAVORITES", favorites_add_button);
     s->addSaveFunc([favorites_add_button, s] {
         if (Settings::getInstance()->getBool("FavoritesAddButton") !=
                 favorites_add_button->getState()) {

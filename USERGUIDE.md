@@ -641,7 +641,7 @@ Whether to sort your favorite games above your other games in the gamelists.
 
 With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. It's strongly recommended to keep this setting enabled if the option to sort favorite games above non-favorites has been enabled. If not, favorite games would be sorted on top of the gamelist with no visual indication that they are favorites, which would be very confusing.
 
-**Enable button shortcut to toggle favorites**
+**Enable shortcut to toggle favorites**
 
 This setting enables the 'Y' button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained elsewhere in this document. Note that this setting does not affect the functionality to use the 'Y' button to add games to custom collections.
 
@@ -763,6 +763,10 @@ Enable or disable navigation sounds throughout the application. Sounds are playe
 
 Handles collections, which are built using the games already present for your game systems. _(Details on how this works are discussed later in this guide.)_
 
+**Finish editing _'COLLECTION NAME'_ collection**
+
+Self explanatory. This menu entry is only visible when editing a collection.
+
 **Automatic game collections**
 
 This opens a screen that lets you enable or disable the automatic game collections _All games_, _Favorites_ and _Last played_.
@@ -773,11 +777,15 @@ This lets you create your own custom game collections.
 
 **Create new custom collection from theme**
 
-If the theme set in use provides themes for custom collections, then this can be selected here. For example, there could be themes for _"Fighting games"_ or _"Driving games"_ etc. As of version 1.0.0, the default rbsimple-DE theme set does not provides such themes for custom collections.
+If the theme set in use provides themes for custom collections, then this entry can be selected here. For example, there could be themes for _"Fighting games"_ or _"Driving games"_ etc. The default rbsimple-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE.md#custom-collections) in this guide. This menu entry is not visible if the theme does not have any available themes to use for custom collections.
 
 **Create new custom collection**
 
 This lets you create a completely custom collection with a name that you choose.
+
+**Delete custom collection**
+
+This permanently deletes a custom collection, including its configuration file on the file system. A list of available collections is shown, and a confirmation dialog is displayed before committing the actual deletion. Only one collection at a time can be deleted.
 
 **Sort favorites on top for custom collections**
 
@@ -929,6 +937,10 @@ This opens the metadata editor, which will be described in detail below.
 ### Add/remove games to this game collection
 
 This is only shown if the system is a collection. This will also be described in more detail below.
+
+### Finish editing _'COLLECTION NAME'_ collection
+
+This menu entry is only visible when editing the collection.
 
 
 ## Metadata editor

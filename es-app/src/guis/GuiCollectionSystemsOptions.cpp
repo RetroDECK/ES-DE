@@ -11,15 +11,19 @@
 
 #include "components/OptionListComponent.h"
 #include "components/SwitchComponent.h"
+#include "guis/GuiMsgBox.h"
 #include "guis/GuiSettings.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/ViewController.h"
 #include "CollectionSystemManager.h"
 
-GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::string title)
-        : GuiSettings(window, title), mAddedCustomCollection(false)
+GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
+        Window* window,
+        std::string title)
+        : GuiSettings(window, title),
+        mAddedCustomCollection(false),
+        mDeletedCustomCollection(false)
 {
-
     // Finish editing custom collection.
     if (CollectionSystemManager::get()->isEditing()) {
         ComponentListRow row;
@@ -72,19 +76,22 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                 it->second.isEnabled);
     addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
     addSaveFunc([this] {
-        std::string customSystemsSelected = Utils::String::vectorToCommaString(
-                collection_systems_custom->getSelectedObjects(), true);
-        std::string customSystemsConfig = Settings::getInstance()->
-                getString("CollectionSystemsCustom");
-        if (customSystemsSelected != customSystemsConfig) {
-            if (CollectionSystemManager::get()->isEditing())
-                CollectionSystemManager::get()->exitEditMode();
-            Settings::getInstance()->setString("CollectionSystemsCustom", customSystemsSelected);
-            setNeedsSaving();
-            setNeedsReloading();
-            setNeedsCollectionsUpdate();
-            if (!mAddedCustomCollection)
-                setNeedsGoToSystemView(SystemData::sSystemVector.front());
+        if (!mDeletedCustomCollection) {
+            std::string customSystemsSelected = Utils::String::vectorToCommaString(
+                    collection_systems_custom->getSelectedObjects(), true);
+            std::string customSystemsConfig = Settings::getInstance()->
+                    getString("CollectionSystemsCustom");
+            if (customSystemsSelected != customSystemsConfig) {
+                if (CollectionSystemManager::get()->isEditing())
+                    CollectionSystemManager::get()->exitEditMode();
+                Settings::getInstance()->setString("CollectionSystemsCustom",
+                        customSystemsSelected);
+                setNeedsSaving();
+                setNeedsReloading();
+                setNeedsCollectionsUpdate();
+                if (!mAddedCustomCollection)
+                    setNeedsGoToSystemView(SystemData::sSystemVector.front());
+            }
         }
     });
 
@@ -117,6 +124,11 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                 auto themeFolder = std::make_shared<TextComponent>(mWindow,
                         Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
                 row.addElement(themeFolder, true);
+                // This transparent bracket is only added to generate the correct help prompts.
+                auto bracket = std::make_shared<ImageComponent>(mWindow);
+                bracket->setImage(":/graphics/arrow.svg");
+                bracket->setOpacity(0);
+                row.addElement(bracket, false);
                 ss->addRow(row);
             }
             mWindow->pushGui(ss);
@@ -146,6 +158,79 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     row.makeAcceptInputHandler([this, createCollectionCall] {
         mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(),
                 "New Collection Name", "", createCollectionCall, false, "SAVE"));
+    });
+    addRow(row);
+
+    // Delete custom collection.
+    row.elements.clear();
+    auto deleteCollection = std::make_shared<TextComponent>(mWindow,
+            "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto bracketDeleteCollection = std::make_shared<ImageComponent>(mWindow);
+    bracketDeleteCollection->setImage(":/graphics/arrow.svg");
+    bracketDeleteCollection->setResize(Vector2f(0,
+            Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    row.addElement(deleteCollection, true);
+    row.addElement(bracketDeleteCollection, false);
+    row.makeAcceptInputHandler([this, customSystems] {
+        auto ss = new GuiSettings(mWindow, "SELECT COLLECTION TO DELETE");
+        std::shared_ptr<OptionListComponent<std::string>> customCollections =
+                std::make_shared<OptionListComponent<std::string>>(mWindow,
+                getHelpStyle(), "", true);
+        for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
+                it = customSystems.cbegin(); it != customSystems.cend() ; it++) {
+            ComponentListRow row;
+            std::string name = (*it).first;
+            std::function<void()> deleteCollectionCall = [this, name] {
+                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                        "THIS WILL PERMANENTLY\nDELETE THE COLLECTION\n'" +
+                        Utils::String::toUpper(name) + "'.\n"
+                        "ARE YOU SURE?",
+                        "YES", [this, name] {
+                            if (CollectionSystemManager::get()->isEditing())
+                                CollectionSystemManager::get()->exitEditMode();
+                            mDeletedCustomCollection = true;
+                            std::vector<std::string> selectedCustomCollections =
+                                    collection_systems_custom->getSelectedObjects();
+                            std::string collectionsConfigEntry;
+                            // Create the configuration file entry. If the collection to be
+                            // deleted was activated, then exclude it.
+                            for (auto it = selectedCustomCollections.begin();
+                                    it != selectedCustomCollections.end(); it++) {
+                                if ((*it) != name) {
+                                    if ((*it) != selectedCustomCollections.front() &&
+                                            collectionsConfigEntry != "")
+                                        collectionsConfigEntry += ",";
+                                    collectionsConfigEntry += (*it);
+                                }
+                            }
+                            // If the system to be deleted was present in es_settings.cfg, we
+                            // need to re-write it.
+                            if (collectionsConfigEntry !=
+                                    Settings::getInstance()->getString("CollectionSystemsCustom")) {
+                                Settings::getInstance()->setString("CollectionSystemsCustom",
+                                        collectionsConfigEntry);
+                                setNeedsSaving();
+                                setNeedsGoToSystemView(SystemData::sSystemVector.front());
+                            }
+                            CollectionSystemManager::get()->deleteCustomCollection(name);
+                            return true;
+                        },
+                        "NO", [this] {
+                            return false;
+                        }));
+            };
+            row.makeAcceptInputHandler(deleteCollectionCall);
+            auto customCollection = std::make_shared<TextComponent>(mWindow,
+                    Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+            row.addElement(customCollection, true);
+            // This transparent bracket is only added generate the correct help prompts.
+            auto bracket = std::make_shared<ImageComponent>(mWindow);
+            bracket->setImage(":/graphics/arrow.svg");
+            bracket->setOpacity(0);
+            row.addElement(bracket, false);
+            ss->addRow(row);
+        }
+        mWindow->pushGui(ss);
     });
     addRow(row);
 
