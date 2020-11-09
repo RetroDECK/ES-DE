@@ -183,7 +183,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             std::function<void()> deleteCollectionCall = [this, name] {
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
                         "THIS WILL PERMANENTLY\nDELETE THE COLLECTION\n'" +
-                        Utils::String::toUpper(name) + "'.\n"
+                        Utils::String::toUpper(name) + "'\n"
                         "ARE YOU SURE?",
                         "YES", [this, name] {
                             if (CollectionSystemManager::get()->isEditing())
