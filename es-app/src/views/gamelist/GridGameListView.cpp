@@ -71,7 +71,7 @@ GridGameListView::GridGameListView(
     mGrid.setCursorChangedCallback([&](const CursorState& /*state*/) { updateInfoPanel(); });
     addChild(&mGrid);
 
-    populateList(root->getChildrenListToDisplay());
+    populateList(root->getChildrenListToDisplay(), root);
 
     // Metadata labels + values.
     mLblRating.setText("Rating: ");
@@ -162,8 +162,8 @@ FileData* GridGameListView::getCursor()
 
 void GridGameListView::setCursor(FileData* file)
 {
-    if (!mGrid.setCursor(file)) {
-        populateList(file->getParent()->getChildrenListToDisplay());
+    if (!mGrid.setCursor(file) && (!file->isPlaceHolder())) {
+        populateList(file->getParent()->getChildrenListToDisplay(), file->getParent());
         mGrid.setCursor(file);
     }
 }
@@ -244,12 +244,9 @@ const std::string GridGameListView::getImagePath(FileData* file)
     return file->getThumbnailPath();
 }
 
-void GridGameListView::populateList(const std::vector<FileData*>& files)
+void GridGameListView::populateList(const std::vector<FileData*>& files, FileData* firstEntry)
 {
     firstGameEntry = nullptr;
-
-    generateGamelistInfo(files);
-    generateFirstLetterIndex(files);
 
     mGrid.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());
@@ -261,8 +258,11 @@ void GridGameListView::populateList(const std::vector<FileData*>& files)
         }
     }
     else {
-        addPlaceholder();
+        addPlaceholder(firstEntry);
     }
+
+    generateGamelistInfo(getCursor(), firstEntry);
+    generateFirstLetterIndex(files);
 }
 
 void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
@@ -310,7 +310,7 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     // Repopulate list in case a new theme is displaying a different image.
     // Preserve selection.
     FileData* file = mGrid.getSelected();
-    populateList(mRoot->getChildrenListToDisplay());
+    populateList(mRoot->getChildrenListToDisplay(), mRoot);
     mGrid.setCursor(file);
 
     mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
@@ -517,11 +517,17 @@ void GridGameListView::updateInfoPanel()
     }
 }
 
-void GridGameListView::addPlaceholder()
+void GridGameListView::addPlaceholder(FileData* firstEntry)
 {
-    // Empty grid - add a placeholder.
+    // Empty list - add a placeholder.
+    SystemData* system;
+    if (firstEntry && firstEntry->getSystem()->isGroupedCustomCollection())
+        system = firstEntry->getSystem();
+    else
+        system = this->mRoot->getSystem();
+
     FileData* placeholder = new FileData(PLACEHOLDER, "<No Entries Found>",
-            this->mRoot->getSystem()->getSystemEnvData(), this->mRoot->getSystem());
+            this->mRoot->getSystem()->getSystemEnvData(), system);
     mGrid.add(placeholder->getName(), "", placeholder);
 }
 

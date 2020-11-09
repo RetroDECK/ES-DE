@@ -48,10 +48,10 @@ protected:
     virtual void update(int deltaTime) override;
     virtual std::string getQuickSystemSelectRightButton() override;
     virtual std::string getQuickSystemSelectLeftButton() override;
-    virtual void populateList(const std::vector<FileData*>& files) override;
+    virtual void populateList(const std::vector<FileData*>& files, FileData* firstEntry) override;
     virtual void remove(FileData* game, bool deleteFile) override;
     virtual void removeMedia(FileData* game) override;
-    virtual void addPlaceholder();
+    virtual void addPlaceholder(FileData* firstEntry = nullptr);
 
     ImageGridComponent<FileData*> mGrid;
     // Points to the first game in the list, i.e. the first entry which is of the type 'GAME'.

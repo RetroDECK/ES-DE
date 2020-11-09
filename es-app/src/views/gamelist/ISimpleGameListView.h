@@ -38,9 +38,9 @@ public:
 protected:
     virtual std::string getQuickSystemSelectRightButton() = 0;
     virtual std::string getQuickSystemSelectLeftButton() = 0;
-    virtual void populateList(const std::vector<FileData*>& files) = 0;
+    virtual void populateList(const std::vector<FileData*>& files, FileData* firstEntry) = 0;
 
-    void generateGamelistInfo(const std::vector<FileData*>& files);
+    void generateGamelistInfo(FileData* cursor, FileData* firstEntry);
     void generateFirstLetterIndex(const std::vector<FileData*>& files);
 
     TextComponent mHeaderText;

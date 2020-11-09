@@ -89,11 +89,11 @@ void ISimpleGameListView::onFileChanged(FileData* file, bool reloadGameList)
     // but this shouldn't happen very often so we'll just always repopulate.
     FileData* cursor = getCursor();
     if (!cursor->isPlaceHolder()) {
-        populateList(cursor->getParent()->getChildrenListToDisplay());
+        populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
         setCursor(cursor);
     }
     else {
-        populateList(mRoot->getChildrenListToDisplay());
+        populateList(mRoot->getChildrenListToDisplay(), mRoot);
         setCursor(cursor);
     }
 }
@@ -114,7 +114,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     ViewController::get()->resetMovingCamera();
                     NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
                     mCursorStack.push(cursor);
-                    populateList(cursor->getChildrenListToDisplay());
+                    populateList(cursor->getChildrenListToDisplay(), cursor);
                     FileData* cursor = getCursor();
                     setCursor(cursor);
                 }
@@ -126,7 +126,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             ViewController::get()->resetMovingCamera();
             if (mCursorStack.size()) {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
-                populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay());
+                populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay(),
+                        mCursorStack.top()->getParent());
                 setCursor(mCursorStack.top());
                 if (mCursorStack.size() > 0)
                     mCursorStack.pop();
@@ -345,15 +346,16 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
     return IGameListView::input(config, input);
 }
 
-void ISimpleGameListView::generateGamelistInfo(const std::vector<FileData*>& files)
+void ISimpleGameListView::generateGamelistInfo(FileData* cursor, FileData* firstEntry)
 {
     // Generate data needed for the gamelistInfo field, which is displayed from the
     // gamelist interfaces (Detailed/Video/Grid).
     mIsFiltered = false;
     mIsFolder = false;
+    FileData* rootFolder = firstEntry->getSystem()->getRootFolder();
 
     std::pair<unsigned int, unsigned int> gameCount;
-    FileFilterIndex* idx = mRoot->getSystem()->getIndex();
+    FileFilterIndex* idx = rootFolder->getSystem()->getIndex();
 
     // For the 'recent' collection we need to recount the games as the collection was
     // trimmed down to 50 items. If we don't do this, the game count will not be correct
@@ -361,11 +363,7 @@ void ISimpleGameListView::generateGamelistInfo(const std::vector<FileData*>& fil
     if (mRoot->getPath() == "recent")
         mRoot->countGames(gameCount);
 
-    if (files.size() > 0 && files.front()->getParent() != mRoot &&
-            files.front()->getSystem()->isGroupedCustomCollection())
-        gameCount = files.front()->getSystem()->getRootFolder()->getGameCount();
-    else
-        gameCount = mRoot->getGameCount();
+    gameCount = rootFolder->getGameCount();
 
     mGameCount = gameCount.first + gameCount.second;
     mFavoritesGameCount = gameCount.second;
@@ -374,14 +372,14 @@ void ISimpleGameListView::generateGamelistInfo(const std::vector<FileData*>& fil
 
     if (idx->isFiltered()) {
         mIsFiltered = true;
-        mFilteredGameCount = mRoot->getFilesRecursive(GAME, true, false).size();
+        mFilteredGameCount = rootFolder->getFilesRecursive(GAME, true, false).size();
         // Also count the games that are set to not be counted as games, as the filter may
         // apply to such entries as well and this will be indicated with a separate '+ XX'
         // in the GamelistInfo field.
-        mFilteredGameCountAll = mRoot->getFilesRecursive(GAME, true, true).size();
+        mFilteredGameCountAll = rootFolder->getFilesRecursive(GAME, true, true).size();
     }
 
-    if (files.size() > 0 && files.front()->getParent() != mRoot)
+    if (firstEntry->getParent() && firstEntry->getParent()->getType() == FOLDER)
         mIsFolder = true;
 }
 

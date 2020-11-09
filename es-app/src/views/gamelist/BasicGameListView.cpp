@@ -26,7 +26,7 @@ BasicGameListView::BasicGameListView(Window* window, FileData* root)
     mList.setDefaultZIndex(20);
     addChild(&mList);
 
-    populateList(root->getChildrenListToDisplay());
+    populateList(root->getChildrenListToDisplay(), root);
 }
 
 void BasicGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
@@ -49,16 +49,13 @@ void BasicGameListView::onFileChanged(FileData* file, bool reloadGameList)
     ISimpleGameListView::onFileChanged(file, reloadGameList);
 }
 
-void BasicGameListView::populateList(const std::vector<FileData*>& files)
+void BasicGameListView::populateList(const std::vector<FileData*>& files, FileData* firstEntry)
 {
     mFirstGameEntry = nullptr;
     bool favoriteStar = true;
     bool isEditing = false;
     std::string editingCollection;
     std::string inCollectionPrefix;
-
-    generateGamelistInfo(files);
-    generateFirstLetterIndex(files);
 
     if (CollectionSystemManager::get()->isEditing()) {
         editingCollection = CollectionSystemManager::get()->getEditingCollection();
@@ -103,8 +100,11 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files)
         }
     }
     else {
-        addPlaceholder();
+        addPlaceholder(firstEntry);
     }
+
+    generateGamelistInfo(getCursor(), firstEntry);
+    generateFirstLetterIndex(files);
 }
 
 FileData* BasicGameListView::getCursor()
@@ -115,7 +115,7 @@ FileData* BasicGameListView::getCursor()
 void BasicGameListView::setCursor(FileData* cursor)
 {
     if (!mList.setCursor(cursor) && (!cursor->isPlaceHolder())) {
-        populateList(cursor->getParent()->getChildrenListToDisplay());
+        populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
         mList.setCursor(cursor);
 
         // Update our cursor stack in case our cursor just
@@ -163,11 +163,17 @@ FileData* BasicGameListView::getFirstGameEntry()
     return mFirstGameEntry;
 }
 
-void BasicGameListView::addPlaceholder()
+void BasicGameListView::addPlaceholder(FileData* firstEntry)
 {
     // Empty list - add a placeholder.
+    SystemData* system;
+    if (firstEntry && firstEntry->getSystem()->isGroupedCustomCollection())
+        system = firstEntry->getSystem();
+    else
+        system = this->mRoot->getSystem();
+
     FileData* placeholder = new FileData(PLACEHOLDER, "<No Entries Found>",
-            this->mRoot->getSystem()->getSystemEnvData(), this->mRoot->getSystem());
+            this->mRoot->getSystem()->getSystemEnvData(), system);
     mList.add(placeholder->getName(), placeholder, (placeholder->getType() == PLACEHOLDER));
 }
 
