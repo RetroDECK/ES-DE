@@ -545,16 +545,16 @@ void GuiComponent::onUnpauseVideo()
         getChild(i)->onUnpauseVideo();
 }
 
-void GuiComponent::onScreenSaverActivate()
+void GuiComponent::onScreensaverActivate()
 {
     for (unsigned int i = 0; i < getChildCount(); i++)
-        getChild(i)->onScreenSaverActivate();
+        getChild(i)->onScreensaverActivate();
 }
 
-void GuiComponent::onScreenSaverDeactivate()
+void GuiComponent::onScreensaverDeactivate()
 {
     for (unsigned int i = 0; i < getChildCount(); i++)
-        getChild(i)->onScreenSaverDeactivate();
+        getChild(i)->onScreensaverDeactivate();
 }
 
 void GuiComponent::onGameLaunchedActivate()

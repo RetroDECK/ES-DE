@@ -16,10 +16,10 @@
 #endif
 
 bool PowerSaver::mState = false;
-bool PowerSaver::mRunningScreenSaver = false;
+bool PowerSaver::mRunningScreensaver = false;
 
 int PowerSaver::mWakeupTimeout = -1;
-int PowerSaver::mScreenSaverTimeout = -1;
+int PowerSaver::mScreensaverTimeout = -1;
 PowerSaver::mode PowerSaver::mMode = PowerSaver::DISABLED;
 
 void PowerSaver::init()
@@ -34,7 +34,7 @@ int PowerSaver::getTimeout()
         AudioManager::getInstance()->deinit();
 
     // Used only for SDL_WaitEventTimeout. Use `getMode()` for modes.
-    return mRunningScreenSaver ? mWakeupTimeout : mScreenSaverTimeout;
+    return mRunningScreensaver ? mWakeupTimeout : mScreensaverTimeout;
 }
 
 void PowerSaver::loadWakeupTime()
@@ -51,8 +51,8 @@ void PowerSaver::loadWakeupTime()
 
 void PowerSaver::updateTimeouts()
 {
-    mScreenSaverTimeout = (unsigned int) Settings::getInstance()->getInt("ScreensaverTimer");
-    mScreenSaverTimeout = mScreenSaverTimeout > 0 ? mScreenSaverTimeout - getMode() : -1;
+    mScreensaverTimeout = (unsigned int) Settings::getInstance()->getInt("ScreensaverTimer");
+    mScreensaverTimeout = mScreensaverTimeout > 0 ? mScreensaverTimeout - getMode() : -1;
     loadWakeupTime();
 }
 
@@ -93,7 +93,7 @@ void PowerSaver::setState(bool state)
 
 void PowerSaver::runningScreensaver(bool state)
 {
-    mRunningScreenSaver = state;
+    mRunningScreensaver = state;
     if (mWakeupTimeout < mMode) {
         // Disable PS if wake up time is less than mode as PS will never trigger.
         setState(!state);
@@ -102,5 +102,5 @@ void PowerSaver::runningScreensaver(bool state)
 
 bool PowerSaver::isScreensaverActive()
 {
-    return mRunningScreenSaver;
+    return mRunningScreensaver;
 }

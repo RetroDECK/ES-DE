@@ -33,7 +33,7 @@
 #include "PowerSaver.h"
 #include "Settings.h"
 #include "SystemData.h"
-#include "SystemScreenSaver.h"
+#include "SystemScreensaver.h"
 
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_main.h>

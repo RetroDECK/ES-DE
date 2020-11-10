@@ -328,7 +328,7 @@ void VideoComponent::onUnpauseVideo()
     manageState();
 }
 
-void VideoComponent::onScreenSaverActivate()
+void VideoComponent::onScreensaverActivate()
 {
     mBlockPlayer = true;
     mPause = true;
@@ -337,7 +337,7 @@ void VideoComponent::onScreenSaverActivate()
     manageState();
 }
 
-void VideoComponent::onScreenSaverDeactivate()
+void VideoComponent::onScreensaverDeactivate()
 {
     mBlockPlayer = false;
     // Stop video when deactivating the screensaver to force a reload of the

@@ -20,7 +20,7 @@
 #include <iomanip>
 
 Window::Window()
-        : mScreenSaver(nullptr),
+        : mScreensaver(nullptr),
         mInfoPopup(nullptr),
         mNormalizeNextUpdate(false),
         mFrameTimeElapsed(0),
@@ -29,7 +29,7 @@ Window::Window()
         mAllowSleep(true),
         mSleeping(false),
         mTimeSinceLastInput(0),
-        mRenderScreenSaver(false),
+        mRenderScreensaver(false),
         mGameLaunchedState(false),
         mAllowTextScrolling(true),
         mCachedBackground(false),
@@ -144,8 +144,8 @@ void Window::input(InputConfig* config, Input input)
     if (Settings::getInstance()->getBool("Debug"))
         logInput(config, input);
 
-    if (mScreenSaver) {
-        if (mScreenSaver->isScreensaverActive() &&
+    if (mScreensaver) {
+        if (mScreensaver->isScreensaverActive() &&
                 Settings::getInstance()->getBool("ScreensaverControls") &&
                 ((Settings::getInstance()->getString("ScreensaverType") == "video") ||
                 (Settings::getInstance()->getString("ScreensaverType") == "slideshow"))) {
@@ -154,21 +154,21 @@ void Window::input(InputConfig* config, Input input)
                     Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages"))
                 customImageSlideshow = true;
 
-            if (customImageSlideshow || mScreenSaver->getCurrentGame() != nullptr &&
+            if (customImageSlideshow || mScreensaver->getCurrentGame() != nullptr &&
                     (config->isMappedTo("a", input) ||
                     config->isMappedLike("left", input) || config->isMappedLike("right", input))) {
                 // Left or right browses to the next video or image.
                 if (config->isMappedLike("left", input) || config->isMappedLike("right", input)) {
                     if (input.value != 0) {
                         // Handle screensaver control.
-                        mScreenSaver->nextGame();
+                        mScreensaver->nextGame();
                     }
                     return;
                 }
                 else if (config->isMappedTo("a", input) && input.value != 0) {
                     // Launch game.
                     cancelScreensaver();
-                    mScreenSaver->launchGame();
+                    mScreensaver->launchGame();
                     // To force handling the wake up process.
                     mSleeping = true;
                 }
@@ -279,8 +279,8 @@ void Window::update(int deltaTime)
         peekGui()->update(deltaTime);
 
     // Update the screensaver.
-    if (mScreenSaver)
-        mScreenSaver->update(deltaTime);
+    if (mScreensaver)
+        mScreensaver->update(deltaTime);
 }
 
 void Window::render()
@@ -294,7 +294,7 @@ void Window::render()
         auto& bottom = mGuiStack.front();
         auto& top = mGuiStack.back();
 
-        if (mRenderScreenSaver) {
+        if (mRenderScreensaver) {
             bottom->cancelAllAnimations();
             bottom->stopAllAnimations();
         }
@@ -373,7 +373,7 @@ void Window::render()
         // the screensaver in the background when running a game.
         else if (mGameLaunchedState)
             mTimeSinceLastInput = 0;
-        else if (!isProcessing() && !mScreenSaver->isScreensaverActive())
+        else if (!isProcessing() && !mScreensaver->isScreensaverActive())
             startScreensaver();
     }
 
@@ -381,11 +381,11 @@ void Window::render()
     // or not because it may perform a fade on transition.
     renderScreensaver();
 
-    if (!mRenderScreenSaver && mInfoPopup)
+    if (!mRenderScreensaver && mInfoPopup)
         mInfoPopup->render(transform);
 
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
-        if (!isProcessing() && mAllowSleep && (!mScreenSaver)) {
+        if (!isProcessing() && mAllowSleep && (!mScreensaver)) {
             // Go to sleep.
             if (mSleeping == false) {
                 mSleeping = true;
@@ -396,9 +396,9 @@ void Window::render()
 
     #if defined(USE_OPENGL_21)
     // Shaders for the screensavers.
-    if (mScreenSaver->isScreensaverActive()) {
+    if (mScreensaver->isScreensaverActive()) {
         if (Settings::getInstance()->getString("ScreensaverType") == "video") {
-            if (mScreenSaver->getHasMediaFiles()) {
+            if (mScreensaver->getHasMediaFiles()) {
                 if (Settings::getInstance()->getBool("ScreensaverVideoBlur"))
                     Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL);
                 if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
@@ -414,7 +414,7 @@ void Window::render()
             }
         }
         else if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
-            if (mScreenSaver->getHasMediaFiles()) {
+            if (mScreensaver->getHasMediaFiles()) {
                 if (Settings::getInstance()->getBool("ScreensaverImageScanlines"))
                     Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
             }
@@ -607,26 +607,26 @@ void Window::unsetLaunchedGame()
 
 void Window::startScreensaver()
 {
-    if (mScreenSaver && !mRenderScreenSaver) {
+    if (mScreensaver && !mRenderScreensaver) {
         // Tell the GUI components the screensaver is starting.
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
-            (*it)->onScreenSaverActivate();
+            (*it)->onScreensaverActivate();
 
         stopInfoPopup();
-        mScreenSaver->startScreensaver(true);
-        mRenderScreenSaver = true;
+        mScreensaver->startScreensaver(true);
+        mRenderScreensaver = true;
     }
 }
 
 bool Window::cancelScreensaver()
 {
-    if (mScreenSaver && mRenderScreenSaver) {
-        mScreenSaver->stopScreensaver();
-        mRenderScreenSaver = false;
+    if (mScreensaver && mRenderScreensaver) {
+        mScreensaver->stopScreensaver();
+        mRenderScreensaver = false;
 
         // Tell the GUI components the screensaver has stopped.
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
-            (*it)->onScreenSaverDeactivate();
+            (*it)->onScreensaverDeactivate();
             // If the menu is open, pause the video so it won't start playing beneath the menu.
             if (mGuiStack.front() != mGuiStack.back())
                 (*it)->onPauseVideo();
@@ -643,6 +643,6 @@ bool Window::cancelScreensaver()
 
 void Window::renderScreensaver()
 {
-    if (mScreenSaver)
-        mScreenSaver->renderScreensaver();
+    if (mScreensaver)
+        mScreensaver->renderScreensaver();
 }

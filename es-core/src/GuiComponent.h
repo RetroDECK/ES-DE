@@ -177,8 +177,8 @@ public:
     virtual void setRenderView(bool status) { mRenderView = status; }
     virtual bool getRenderView() { return mRenderView; };
 
-    virtual void onScreenSaverActivate();
-    virtual void onScreenSaverDeactivate();
+    virtual void onScreensaverActivate();
+    virtual void onScreensaverDeactivate();
     virtual void onGameLaunchedActivate();
     virtual void onGameLaunchedDeactivate();
     virtual void topWindow(bool isTop);

@@ -42,17 +42,17 @@ public:
     static void pause() { setState(false); }
     static void resume() { setState(true); }
 
-    // This is used by ScreenSaver to let PS know when to switch to SS timeouts.
+    // This is used by Screensaver to let PS know when to switch to SS timeouts.
     static void runningScreensaver(bool state);
     static bool isScreensaverActive();
 
 private:
     static bool mState;
-    static bool mRunningScreenSaver;
+    static bool mRunningScreensaver;
 
     static mode mMode;
     static int mWakeupTimeout;
-    static int mScreenSaverTimeout;
+    static int mScreensaverTimeout;
 
     static void loadWakeupTime();
 };

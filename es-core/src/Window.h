@@ -81,14 +81,14 @@ public:
     void renderHelpPromptsEarly(); // Used to render HelpPrompts before a fade.
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
 
-    void setScreensaver(Screensaver* screenSaver) { mScreenSaver = screenSaver; }
+    void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
     void setInfoPopup(InfoPopup* infoPopup) { delete mInfoPopup; mInfoPopup = infoPopup; }
     inline void stopInfoPopup() { if (mInfoPopup) mInfoPopup->stop(); };
 
     void startScreensaver();
     bool cancelScreensaver();
     void renderScreensaver();
-    bool isScreensaverActive() { return mRenderScreenSaver; };
+    bool isScreensaverActive() { return mRenderScreensaver; };
 
     void setLaunchedGame();
     void unsetLaunchedGame();
@@ -107,7 +107,7 @@ private:
 
     HelpComponent* mHelp;
     ImageComponent* mBackgroundOverlay;
-    Screensaver* mScreenSaver;
+    Screensaver* mScreensaver;
     InfoPopup* mInfoPopup;
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;
@@ -121,7 +121,7 @@ private:
     bool mSleeping;
     unsigned int mTimeSinceLastInput;
 
-    bool mRenderScreenSaver;
+    bool mRenderScreensaver;
     bool mGameLaunchedState;
     bool mAllowTextScrolling;
     bool mCachedBackground;

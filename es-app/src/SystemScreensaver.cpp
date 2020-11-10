@@ -1,13 +1,13 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  SystemScreenSaver.cpp
+//  SystemScreensaver.cpp
 //
 //  Screensaver, supporting the following types:
 //  Dim, black, slideshow, video.
 //
 
-#include "SystemScreenSaver.h"
+#include "SystemScreensaver.h"
 
 #if defined(_RPI_)
 #include "components/VideoPlayerComponent.h"

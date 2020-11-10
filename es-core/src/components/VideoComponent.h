@@ -46,8 +46,8 @@ public:
     virtual void onPauseVideo() override;
     virtual void onUnpauseVideo() override;
     virtual bool isVideoPaused() override { return mPause; }
-    virtual void onScreenSaverActivate() override;
-    virtual void onScreenSaverDeactivate() override;
+    virtual void onScreensaverActivate() override;
+    virtual void onScreensaverDeactivate() override;
     virtual void onGameLaunchedActivate() override;
     virtual void onGameLaunchedDeactivate() override;
     virtual void topWindow(bool isTop) override;
