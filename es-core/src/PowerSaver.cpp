@@ -40,7 +40,7 @@ int PowerSaver::getTimeout()
 void PowerSaver::loadWakeupTime()
 {
     // TODO : Move this to Screensaver Class.
-    std::string behaviour = Settings::getInstance()->getString("ScreensaverBehavior");
+    std::string behaviour = Settings::getInstance()->getString("ScreensaverType");
     if (behaviour == "video")
         mWakeupTimeout = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout") - getMode();
     else if (behaviour == "slideshow")
@@ -91,7 +91,7 @@ void PowerSaver::setState(bool state)
     mState = ps_enabled && state;
 }
 
-void PowerSaver::runningScreenSaver(bool state)
+void PowerSaver::runningScreensaver(bool state)
 {
     mRunningScreenSaver = state;
     if (mWakeupTimeout < mMode) {
@@ -100,7 +100,7 @@ void PowerSaver::runningScreenSaver(bool state)
     }
 }
 
-bool PowerSaver::isScreenSaverActive()
+bool PowerSaver::isScreensaverActive()
 {
     return mRunningScreenSaver;
 }

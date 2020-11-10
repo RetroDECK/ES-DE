@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  SystemScreenSaver.h
 //
-//  Screensaver, supporting the following modes:
+//  Screensaver, supporting the following types:
 //  Dim, black, slideshow, video.
 //
 
@@ -16,36 +16,34 @@ class ImageComponent;
 class Sound;
 class VideoComponent;
 
-// Screensaver implementation for main window.
-class SystemScreenSaver : public Window::ScreenSaver
+// Screensaver implementation.
+class SystemScreensaver : public Window::Screensaver
 {
 public:
-    SystemScreenSaver(Window* window);
-    virtual ~SystemScreenSaver();
+    SystemScreensaver(Window* window);
+    virtual ~SystemScreensaver();
 
-    virtual void startScreenSaver();
-    virtual void stopScreenSaver();
-    virtual void nextGame();
-    virtual void renderScreenSaver();
     virtual bool allowSleep();
-    virtual void update(int deltaTime);
-    virtual bool isScreenSaverActive();
+    virtual bool isScreensaverActive();
 
-    virtual FileData* getCurrentGame();
+    virtual void startScreensaver(bool generateMediaList);
+    virtual void stopScreensaver();
+    virtual void nextGame();
     virtual void launchGame();
-    virtual void resetCounts() { mVideosCounted = false; mImagesCounted = false; };
-    virtual unsigned int getVideoCount() { return mVideoCount; };
+
+    virtual void renderScreensaver();
+    virtual void update(int deltaTime);
+
+    virtual bool getHasMediaFiles() { return mHasMediaFiles; };
+    virtual FileData* getCurrentGame() { return mCurrentGame; };
 
 private:
-    unsigned long countGameListNodes(const char *nodeName);
-    void countVideos();
-    void countImages();
-    void pickGameListNode(unsigned long index, const char *nodeName, std::string& path);
+    void generateImageList();
+    void generateVideoList();
+    void generateCustomImageList();
+    void pickRandomImage(std::string& path);
     void pickRandomVideo(std::string& path);
-    void pickRandomGameListImage(std::string& path);
     void pickRandomCustomImage(std::string& path);
-
-    void input(InputConfig* config, Input input);
 
     enum STATE {
         STATE_INACTIVE,
@@ -54,11 +52,11 @@ private:
         STATE_SCREENSAVER_ACTIVE
     };
 
-    bool mVideosCounted;
-    unsigned long mVideoCount;
+    std::vector<FileData*> mImageFiles;
+    std::vector<FileData*> mVideoFiles;
+    std::vector<std::string> mImageCustomFiles;
+    bool mHasMediaFiles;
     VideoComponent* mVideoScreensaver;
-    bool mImagesCounted;
-    unsigned long mImageCount;
     ImageComponent* mImageScreensaver;
     Window* mWindow;
     STATE mState;
@@ -66,11 +64,10 @@ private:
     int mTimer;
     FileData* mCurrentGame;
     FileData* mPreviousGame;
+    std::string mPreviousCustomImage;
     std::string mGameName;
     std::string mSystemName;
     int mVideoChangeTime;
-    std::shared_ptr<Sound> mBackgroundAudio;
-    bool mStopBackgroundAudio;
 };
 
 #endif // ES_APP_SYSTEM_SCREEN_SAVER_H

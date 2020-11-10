@@ -669,25 +669,25 @@ Hiding or showing the menu when the UI mode is set to Kid.
 
 Settings for the built-in screensaver.
 
-**Screensaver after**
+**Start screensaver after (minutes)**
 
-After how many minutes to start the screensaver. If set to 0 minutes, the automatic screensaver will be deactivated. It can however still be started manually, if the Screensaver controls settings is activated.
+After how many minutes to start the screensaver. If set to 0 minutes, the timer will be deactivated and the screensaver will never start automatically. It's however still possible to start the screensaver manually in this case, assuming the _Enable screensaver controls_ setting is enabled. Note that while any menu is open, the screensaver will not start.
 
-**Screensaver controls**
+**Screensaver type**
+
+The screensaven type to use; _Dim_, _Black_, _Slideshow_ or _Video_.
+
+**Enable screensaver controls**
 
 This includes the ability to start the screensaver manually, but also to browse Left and Right between images or videos, and to launch the game shown by the screensaver using the A button.
-
-**Screensaver behavior**
-
-The screensaven style to use, which includes _Dim_, _Black_, _Slideshow_ and _Video_.
 
 #### Slideshow screensaver settings
 
 Options specific to the slideshow screensaver.
 
-**Swap images after (secs)**
+**Swap images after (seconds)**
 
-How long to play videos before changing to the next game. Allowed range is between 5 and 120 seconds.
+For how long to display images before changing to the next game. Allowed range is between 5 and 120 seconds.
 
 **Stretch images to screen resolution**
 
@@ -697,33 +697,29 @@ This will fill the entire screen surface but will possibly break the aspect rati
 
 Whether to use a shader to render scanlines on top of the images.
 
-**Background audio**
-
-Background audio to play when the screensaver is active.
-
 **Use custom images**
 
 Using this option, it's possible to use custom images instead of random images from the game library.
 
-**Custom image dir**
-
-The directory for the custom images.
-
-**Custom image dir recursive**
+**Custom image directory recursive search**
 
 Whether to search the custom image directory recursively.
 
-**Custom image filter**
+**Custom image directory**
 
-The file extensions to consider for the custom images.
+The directory for the custom images.
 
 #### Video screensaver settings
 
 Options specific to the video screensaver.
 
-**Swap videos after (secs)**
+**Swap videos after (seconds)**
 
-How long to play videos before changing to the next game. Allowed range is between 5 and 120 seconds.
+For how long to play videos before changing to the next game. Allowed range is between 5 and 120 seconds.
+
+**Show game info overlay**
+
+This will display an overlay on top of the videos, showing the game name and game system name.
 
 **Stretch videos to screen resolution**
 

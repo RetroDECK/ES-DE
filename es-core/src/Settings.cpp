@@ -124,25 +124,22 @@ void Settings::setDefaults()
 
     // UI settings -> screensaver settings.
     mIntMap["ScreensaverTimer"] = 5*60*1000; // 5 minutes
+    mStringMap["ScreensaverType"] = "dim";
     mBoolMap["ScreensaverControls"] = true;
-    mStringMap["ScreensaverBehavior"] = "dim";
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
     mIntMap["ScreensaverSwapImageTimeout"] = 8000;
     mBoolMap["ScreensaverStretchImages"] = false;
     mBoolMap["ScreensaverImageScanlines"] = true;
-    mStringMap["ScreensaverSlideshowAudioFile"] =
-            "~/.emulationstation/slideshow/audio/slideshow.wav";
     mBoolMap["ScreensaverSlideshowCustomImages"] = false;
-    mStringMap["ScreensaverSlideshowImageDir"] = "~/.emulationstation/slideshow/custom_images";
     mBoolMap["ScreensaverSlideshowRecurse"] = false;
+    mStringMap["ScreensaverSlideshowImageDir"] =
+            "~/.emulationstation/slideshow/custom_images";
 
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreensaverSwapVideoTimeout"] = 25000;
     mBoolMap["ScreensaverStretchVideos"] = false;
-    #if defined(_RPI_)
-    mStringMap["ScreensaverGameInfo"] = "never";
-    #endif
+    mStringMap["ScreensaverVideoGameInfo"] = "always";
     mBoolMap["ScreensaverVideoAudio"] = false;
     mBoolMap["ScreensaverVideoScanlines"] = true;
     mBoolMap["ScreensaverVideoBlur"] = false;

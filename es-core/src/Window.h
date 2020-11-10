@@ -30,20 +30,19 @@ struct HelpStyle;
 class Window
 {
 public:
-    class ScreenSaver
+    class Screensaver
     {
     public:
-        virtual void startScreenSaver() = 0;
-        virtual void stopScreenSaver() = 0;
+        virtual void startScreensaver(bool generateMediaList) = 0;
+        virtual void stopScreensaver() = 0;
         virtual void nextGame() = 0;
-        virtual void renderScreenSaver() = 0;
+        virtual void renderScreensaver() = 0;
         virtual bool allowSleep() = 0;
         virtual void update(int deltaTime) = 0;
-        virtual bool isScreenSaverActive() = 0;
+        virtual bool isScreensaverActive() = 0;
         virtual FileData* getCurrentGame() = 0;
         virtual void launchGame() = 0;
-        virtual void resetCounts() = 0;
-        virtual unsigned int getVideoCount() = 0;
+        virtual bool getHasMediaFiles() = 0;
     };
 
     class InfoPopup
@@ -82,14 +81,14 @@ public:
     void renderHelpPromptsEarly(); // Used to render HelpPrompts before a fade.
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
 
-    void setScreenSaver(ScreenSaver* screenSaver) { mScreenSaver = screenSaver; }
+    void setScreensaver(Screensaver* screenSaver) { mScreenSaver = screenSaver; }
     void setInfoPopup(InfoPopup* infoPopup) { delete mInfoPopup; mInfoPopup = infoPopup; }
     inline void stopInfoPopup() { if (mInfoPopup) mInfoPopup->stop(); };
 
-    void startScreenSaver();
-    bool cancelScreenSaver();
-    void renderScreenSaver();
-    bool isScreenSaverActive() { return mRenderScreenSaver; };
+    void startScreensaver();
+    bool cancelScreensaver();
+    void renderScreensaver();
+    bool isScreensaverActive() { return mRenderScreenSaver; };
 
     void setLaunchedGame();
     void unsetLaunchedGame();
@@ -108,7 +107,7 @@ private:
 
     HelpComponent* mHelp;
     ImageComponent* mBackgroundOverlay;
-    ScreenSaver* mScreenSaver;
+    Screensaver* mScreenSaver;
     InfoPopup* mInfoPopup;
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;

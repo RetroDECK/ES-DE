@@ -219,9 +219,9 @@ bool SystemView::input(InputConfig* config, Input input)
         if (!UIModeController::getInstance()->isUIModeKid() &&
                 config->isMappedTo("select", input) &&
                 Settings::getInstance()->getBool("ScreensaverControls")) {
-            if (!mWindow->isScreenSaverActive()) {
-                mWindow->startScreenSaver();
-                mWindow->renderScreenSaver();
+            if (!mWindow->isScreensaverActive()) {
+                mWindow->startScreensaver();
+                mWindow->renderScreensaver();
             }
             return true;
         }

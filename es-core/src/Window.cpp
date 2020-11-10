@@ -145,11 +145,16 @@ void Window::input(InputConfig* config, Input input)
         logInput(config, input);
 
     if (mScreenSaver) {
-        if (mScreenSaver->isScreenSaverActive() &&
+        if (mScreenSaver->isScreensaverActive() &&
                 Settings::getInstance()->getBool("ScreensaverControls") &&
-                ((Settings::getInstance()->getString("ScreensaverBehavior") == "video") ||
-                (Settings::getInstance()->getString("ScreensaverBehavior") == "slideshow"))) {
-            if (mScreenSaver->getCurrentGame() != nullptr &&
+                ((Settings::getInstance()->getString("ScreensaverType") == "video") ||
+                (Settings::getInstance()->getString("ScreensaverType") == "slideshow"))) {
+            bool customImageSlideshow = false;
+            if (Settings::getInstance()->getString("ScreensaverType") == "slideshow" &&
+                    Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages"))
+                customImageSlideshow = true;
+
+            if (customImageSlideshow || mScreenSaver->getCurrentGame() != nullptr &&
                     (config->isMappedTo("a", input) ||
                     config->isMappedLike("left", input) || config->isMappedLike("right", input))) {
                 // Left or right browses to the next video or image.
@@ -162,7 +167,7 @@ void Window::input(InputConfig* config, Input input)
                 }
                 else if (config->isMappedTo("a", input) && input.value != 0) {
                     // Launch game.
-                    cancelScreenSaver();
+                    cancelScreensaver();
                     mScreenSaver->launchGame();
                     // To force handling the wake up process.
                     mSleeping = true;
@@ -173,15 +178,15 @@ void Window::input(InputConfig* config, Input input)
 
     if (mSleeping) {
         // Wake up.
-        cancelScreenSaver();
+        cancelScreensaver();
         mSleeping = false;
         onWake();
         return;
     }
 
     // Any keypress cancels the screensaver.
-    if (input.value != 0 && isScreenSaverActive()) {
-        cancelScreenSaver();
+    if (input.value != 0 && isScreensaverActive()) {
+        cancelScreensaver();
         return;
     }
 
@@ -360,18 +365,21 @@ void Window::render()
 
     unsigned int screensaverTimer =
             static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"));
-    // If a game has been launched, reset the screensaver timer when it's been reached as we
-    // don't want to start the screensaver in the background when running a game.
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
-        if (mGameLaunchedState)
+        // If a menu is open, reset the screensaver timer so that the screensaver won't start.
+        if (mGuiStack.front() != mGuiStack.back())
             mTimeSinceLastInput = 0;
-        else if (!isProcessing() && !mScreenSaver->isScreenSaverActive())
-            startScreenSaver();
+        // If a game has been launched, reset the screensaver timer as we don't want to start
+        // the screensaver in the background when running a game.
+        else if (mGameLaunchedState)
+            mTimeSinceLastInput = 0;
+        else if (!isProcessing() && !mScreenSaver->isScreensaverActive())
+            startScreensaver();
     }
 
     // Always call the screensaver render function regardless of whether the screensaver is active
     // or not because it may perform a fade on transition.
-    renderScreenSaver();
+    renderScreensaver();
 
     if (!mRenderScreenSaver && mInfoPopup)
         mInfoPopup->render(transform);
@@ -388,16 +396,16 @@ void Window::render()
 
     #if defined(USE_OPENGL_21)
     // Shaders for the screensavers.
-    if (mScreenSaver->isScreenSaverActive()) {
-        if (Settings::getInstance()->getString("ScreensaverBehavior") == "video") {
-            if (mScreenSaver->getVideoCount() > 0) {
+    if (mScreenSaver->isScreensaverActive()) {
+        if (Settings::getInstance()->getString("ScreensaverType") == "video") {
+            if (mScreenSaver->getHasMediaFiles()) {
                 if (Settings::getInstance()->getBool("ScreensaverVideoBlur"))
                     Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL);
                 if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
                     Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
             }
             else {
-                // If there are no videos, render a black screen.
+                // If there are no videos, fade in a black screen.
                 Renderer::shaderParameters blackParameters;
                 blackParameters.fragmentDimValue = mDimValue;
                 Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
@@ -405,11 +413,21 @@ void Window::render()
                     mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
             }
         }
-        else if (Settings::getInstance()->getString("ScreensaverBehavior") == "slideshow") {
-            if (Settings::getInstance()->getBool("ScreensaverImageScanlines"))
-                Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+        else if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
+            if (mScreenSaver->getHasMediaFiles()) {
+                if (Settings::getInstance()->getBool("ScreensaverImageScanlines"))
+                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+            }
+            else {
+                // If there are no images, fade in a black screen.
+                Renderer::shaderParameters blackParameters;
+                blackParameters.fragmentDimValue = mDimValue;
+                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+                if (mDimValue > 0.0)
+                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+            }
         }
-        else if (Settings::getInstance()->getString("ScreensaverBehavior") == "dim") {
+        else if (Settings::getInstance()->getString("ScreensaverType") == "dim") {
             Renderer::shaderParameters dimParameters;
             dimParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
@@ -420,7 +438,7 @@ void Window::render()
             if (mSaturationAmount > 0.0)
                 mSaturationAmount = Math::clamp(mSaturationAmount-0.035, 0.0, 1.0);
         }
-        else if (Settings::getInstance()->getString("ScreensaverBehavior") == "black") {
+        else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
             Renderer::shaderParameters blackParameters;
             blackParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
@@ -587,7 +605,7 @@ void Window::unsetLaunchedGame()
     mGameLaunchedState = false;
 }
 
-void Window::startScreenSaver()
+void Window::startScreensaver()
 {
     if (mScreenSaver && !mRenderScreenSaver) {
         // Tell the GUI components the screensaver is starting.
@@ -595,17 +613,16 @@ void Window::startScreenSaver()
             (*it)->onScreenSaverActivate();
 
         stopInfoPopup();
-        mScreenSaver->startScreenSaver();
+        mScreenSaver->startScreensaver(true);
         mRenderScreenSaver = true;
     }
 }
 
-bool Window::cancelScreenSaver()
+bool Window::cancelScreensaver()
 {
     if (mScreenSaver && mRenderScreenSaver) {
-        mScreenSaver->stopScreenSaver();
+        mScreenSaver->stopScreensaver();
         mRenderScreenSaver = false;
-        mScreenSaver->resetCounts();
 
         // Tell the GUI components the screensaver has stopped.
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
@@ -624,8 +641,8 @@ bool Window::cancelScreenSaver()
     return false;
 }
 
-void Window::renderScreenSaver()
+void Window::renderScreensaver()
 {
     if (mScreenSaver)
-        mScreenSaver->renderScreenSaver();
+        mScreenSaver->renderScreensaver();
 }

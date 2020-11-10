@@ -454,7 +454,7 @@ int main(int argc, char* argv[])
     }
 
     Window window;
-    SystemScreenSaver screensaver(&window);
+    SystemScreensaver screensaver(&window);
     PowerSaver::init();
     ViewController::init(&window);
     CollectionSystemManager::init(&window);

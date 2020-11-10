@@ -82,7 +82,7 @@ void ScrollableContainer::setScrollPos(const Vector2f& pos)
 void ScrollableContainer::update(int deltaTime)
 {
     // Don't scroll if the screensaver is active or text scrolling is disabled;
-    if (mWindow->isScreenSaverActive() || !mWindow->getAllowTextScrolling()) {
+    if (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling()) {
         if (mScrollPos != 0)
             reset();
         return;

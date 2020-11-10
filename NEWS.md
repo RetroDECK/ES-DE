@@ -27,6 +27,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Files or folders can now be flagged for exclusion when scraping with the multi-scraper, and for folders it can be set to apply recursively
 * Gamelist sorting is now working as expected and is persistent throughout the application session
 * Overhaul of the game collection functionality including many bug fixes and optimizations
+* Added ability to delete custom collections from the GUI menu
 * Game counting is now done during sorting instead of every time a system is selected. This should make the UI more responsive in case of large game libraries
 * Added a system view counter for favorite games in addition to the total number of games
 * Added support for jumping to the start and end of gamelists and menus using the controller trigger buttons (or equivalent keyboard mappings)
@@ -90,8 +91,10 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The random game selection traversed folders, i.e. a game could be selected inside a subdirectory and vice versa
 * Deleting a game from the metadata editor did not delete the game media files or the entry in the gamelist.xml file
 * SystemView didn't properly loop the systems if only two systems were available
+* Switching to the Grid view style with a placeholder shown in the gamelist crashed the application
 * When changing to the video view style from inside a gamelist, the view was not completely initialized
 * Hidden files still showed up if they had a gamelist.xml entry
+* FileSystemUtil::getDirContent() crashed when searching through directories recursively
 * Fixed an annoying gamelist issue that caused the game images and data to be updated and rendered up to six times every time the list was scrolled
 * VRAM statistics overlay was somewhat broken and incorrectly displayed numbers in megabytes instead of mebibytes
 * Not all input events were logged when running with debug logging activated

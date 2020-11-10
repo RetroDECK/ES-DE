@@ -327,7 +327,7 @@ void TextListComponent<T>::update(int deltaTime)
 {
     listUpdate(deltaTime);
 
-    if (mWindow->isScreenSaverActive() || !mWindow->getAllowTextScrolling())
+    if (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling())
         stopScrolling();
 
     if (!isScrolling() && size() > 0) {
