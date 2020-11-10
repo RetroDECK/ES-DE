@@ -204,9 +204,6 @@ void CollectionSystemManager::saveCustomCollection(SystemData* sys)
     }
 }
 
-// Functions below to load all collections into memory, and to enable the active ones.
-
-// Load all collection systems.
 void CollectionSystemManager::loadCollectionSystems()
 {
     initAutoCollectionSystems();
@@ -225,7 +222,6 @@ void CollectionSystemManager::loadCollectionSystems()
     }
 }
 
-// Load settings.
 void CollectionSystemManager::loadEnabledListFromSettings()
 {
     // We parse the auto collection settings list.
@@ -259,7 +255,6 @@ void CollectionSystemManager::loadEnabledListFromSettings()
     }
 }
 
-// Update enabled system list in System View.
 void CollectionSystemManager::updateSystemsList()
 {
     // Remove all collection systems.
@@ -294,9 +289,6 @@ void CollectionSystemManager::updateSystemsList()
     }
 }
 
-// Functions below to manage collection files related to a source FileData.
-
-// Update all collection files related to the source file.
 void CollectionSystemManager::refreshCollectionSystems(FileData* file)
 {
     if (!file->getSystem()->isGameSystem() || file->getType() != GAME)
@@ -463,7 +455,6 @@ void CollectionSystemManager::updateCollectionSystem(FileData* file, CollectionS
     }
 }
 
-// Delete all collection files from collection systems related to the source file.
 void CollectionSystemManager::deleteCollectionFiles(FileData* file)
 {
     // Collection files use the full path as key, to avoid clashes.
@@ -494,7 +485,6 @@ void CollectionSystemManager::deleteCollectionFiles(FileData* file)
     }
 }
 
-// Return whether the current theme is compatible with Automatic or Custom Collections.
 bool CollectionSystemManager::isThemeGenericCollectionCompatible(bool genericCustomCollections)
 {
     std::vector<std::string> cfgSys = getCollectionThemeFolders(genericCustomCollections);
@@ -629,7 +619,6 @@ bool CollectionSystemManager::inCustomCollection(
     return false;
 }
 
-// Add or remove a game from a specific collection.
 bool CollectionSystemManager::toggleGameInCollection(FileData* file)
 {
     if (file->getType() == GAME) {
@@ -732,7 +721,6 @@ SystemData* CollectionSystemManager::getSystemToView(SystemData* sys)
     return systemToView;
 }
 
-// Used to generate a description of the collection, all other metadata fields are hidden.
 FileData* CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sys)
 {
     FileData* rootFolder = sys->getRootFolder();
@@ -820,7 +808,6 @@ FileData* CollectionSystemManager::updateCollectionFolderMetadata(SystemData* sy
         return nullptr;
 }
 
-// Return the unused folders from current theme path.
 std::vector<std::string> CollectionSystemManager::getUnusedSystemsFromTheme()
 {
     // Get used systems in es_systems.cfg.
@@ -893,10 +880,6 @@ void CollectionSystemManager::deleteCustomCollection(std::string collectionName)
     }
 }
 
-// Functions below to Handle loading of collection systems, creating empty ones,
-// and populating on demand.
-
-// Loads Automatic Collection systems (All, Favorites, Last Played).
 void CollectionSystemManager::initAutoCollectionSystems()
 {
     for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator
@@ -926,7 +909,6 @@ SystemData* CollectionSystemManager::getAllGamesCollection()
     return allSysData->system;
 }
 
-// Create a new empty collection system based on the name and declaration.
 SystemData* CollectionSystemManager::createNewCollectionEntry(
         std::string name, CollectionSystemDecl sysDecl, bool index, bool custom)
 {
@@ -949,7 +931,6 @@ SystemData* CollectionSystemManager::createNewCollectionEntry(
     return newSys;
 }
 
-// Populate an automatic collection system.
 void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysData)
 {
     SystemData* newSys = sysData->system;
@@ -1009,7 +990,6 @@ void CollectionSystemManager::populateAutoCollection(CollectionSystemData* sysDa
     sysData->isPopulated = true;
 }
 
-// Populate a custom collection system.
 void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sysData)
 {
     SystemData* newSys = sysData->system;
@@ -1063,8 +1043,6 @@ void CollectionSystemManager::populateCustomCollection(CollectionSystemData* sys
         }
     }
 }
-
-// Functions below to handle System View removal and insertion of collections.
 
 void CollectionSystemManager::removeCollectionsFromDisplayedSystems()
 {
@@ -1134,8 +1112,6 @@ void CollectionSystemManager::addEnabledCollectionsToDisplayedSystems(
         }
     }
 }
-
-// Auxiliary functions below to get available custom collection possibilities.
 
 std::vector<std::string> CollectionSystemManager::getSystemsFromConfig()
 {
@@ -1209,7 +1185,6 @@ std::vector<std::string> CollectionSystemManager::getSystemsFromTheme()
     return systems;
 }
 
-// Return which collection config files exist in the user folder.
 std::vector<std::string> CollectionSystemManager::getCollectionsFromConfigFolder()
 {
     std::vector<std::string> systems;
@@ -1240,8 +1215,6 @@ std::vector<std::string> CollectionSystemManager::getCollectionsFromConfigFolder
     return systems;
 }
 
-// Return the theme folders for automatic collections (All, Favorites, Last Played)
-// or a generic custom collections folder.
 std::vector<std::string> CollectionSystemManager::getCollectionThemeFolders(bool custom)
 {
     std::vector<std::string> systems;
@@ -1255,7 +1228,6 @@ std::vector<std::string> CollectionSystemManager::getCollectionThemeFolders(bool
     return systems;
 }
 
-// Return the theme folders in use for the user-defined custom collections.
 std::vector<std::string> CollectionSystemManager::getUserCollectionThemeFolders()
 {
     std::vector<std::string> systems;
@@ -1276,7 +1248,6 @@ void CollectionSystemManager::trimCollectionCount(FileData* rootFolder, int limi
     }
 }
 
-// Return whether a specific folder exists in the theme.
 bool CollectionSystemManager::themeFolderExists(std::string folder)
 {
     std::vector<std::string> themeSys = getSystemsFromTheme();

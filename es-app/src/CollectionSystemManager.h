@@ -73,13 +73,41 @@ public:
     static void deinit();
     void saveCustomCollection(SystemData* sys);
 
+    // Functions to load all collections into memory, and enable the active ones:
+    // Load all collection systems.
     void loadCollectionSystems();
+    // Load settings.
     void loadEnabledListFromSettings();
+    // Update enabled system list in System View.
     void updateSystemsList();
 
+    // Functions to manage collection files related to a source FileData:
+    // Update all collection files related to the source file.
     void refreshCollectionSystems(FileData* file);
+    // Update the collections, such as when marking or unmarking a game as favorite.
     void updateCollectionSystem(FileData* file, CollectionSystemData sysData);
+    // Delete all collection files from all collection systems related to the source file.
     void deleteCollectionFiles(FileData* file);
+
+    // Return whether the current theme is compatible with Automatic or Custom Collections.
+    bool isThemeGenericCollectionCompatible(bool genericCustomCollections);
+    bool isThemeCustomCollectionCompatible(std::vector<std::string> stringVector);
+    std::string getValidNewCollectionName(std::string name, int index = 0);
+
+    void setEditMode(std::string collectionName);
+    void exitEditMode();
+    bool inCustomCollection(const std::string& collectionName, FileData* gameFile);
+    // Add or remove a game from a specific collection.
+    bool toggleGameInCollection(FileData* file);
+
+    SystemData* getSystemToView(SystemData* sys);
+    // Used to generate a description of the collection (all other metadata fields are hidden).
+    FileData* updateCollectionFolderMetadata(SystemData* sys);
+    // Return the unused folders from current theme path.
+    std::vector<std::string> getUnusedSystemsFromTheme();
+
+    SystemData* addNewCustomCollection(std::string name);
+    void deleteCustomCollection(std::string collectionName);
 
     inline std::map<std::string, CollectionSystemData, stringComparator>
             getAutoCollectionSystems() { return mAutoCollectionSystemsData; };
@@ -88,22 +116,6 @@ public:
     inline SystemData* getCustomCollectionsBundle() { return mCustomCollectionsBundle; };
     inline bool isEditing() { return mIsEditingCustom; };
     inline std::string getEditingCollection() { return mEditingCollection; };
-
-    bool isThemeGenericCollectionCompatible(bool genericCustomCollections);
-    bool isThemeCustomCollectionCompatible(std::vector<std::string> stringVector);
-    std::string getValidNewCollectionName(std::string name, int index = 0);
-
-    void setEditMode(std::string collectionName);
-    void exitEditMode();
-    bool inCustomCollection(const std::string& collectionName, FileData* gameFile);
-    bool toggleGameInCollection(FileData* file);
-
-    SystemData* getSystemToView(SystemData* sys);
-    FileData* updateCollectionFolderMetadata(SystemData* sys);
-    std::vector<std::string> getUnusedSystemsFromTheme();
-
-    SystemData* addNewCustomCollection(std::string name);
-    void deleteCustomCollection(std::string collectionName);
 
 private:
     static CollectionSystemManager* sInstance;
@@ -118,25 +130,36 @@ private:
     CollectionSystemData* mEditingCollectionSystemData;
     SystemData* mCustomCollectionsBundle;
 
+    // Functions to handle the initialization and loading of collection systems:
+    // Loads Automatic Collection systems (All, Favorites, Last Played).
     void initAutoCollectionSystems();
     void initCustomCollectionSystems();
     SystemData* getAllGamesCollection();
+    // Create a new empty collection system based on the name and declaration.
     SystemData* createNewCollectionEntry(std::string name,
             CollectionSystemDecl sysDecl, bool index = true, bool custom = false);
+    // Populate an automatic collection system.
     void populateAutoCollection(CollectionSystemData* sysData);
+    // Populate a custom collection system.
     void populateCustomCollection(CollectionSystemData* sysData);
 
+    // Functions to handle System View removal and insertion of collections:
     void removeCollectionsFromDisplayedSystems();
     void addEnabledCollectionsToDisplayedSystems(std::map<std::string,
             CollectionSystemData, stringComparator>* colSystemData);
 
+    // Auxiliary functions:
     std::vector<std::string> getSystemsFromConfig();
     std::vector<std::string> getSystemsFromTheme();
+    // Return which collection config files exist in the user folder.
     std::vector<std::string> getCollectionsFromConfigFolder();
+    // Return the theme folders for automatic collections (All, Favorites and Last Played)
+    // or a generic custom collections folder.
     std::vector<std::string> getCollectionThemeFolders(bool custom);
+    // Return the theme folders in use for the user-defined custom collections.
     std::vector<std::string> getUserCollectionThemeFolders();
-
     void trimCollectionCount(FileData* rootFolder, int limit);
+    // Return whether a specific folder exists in the theme.
     bool themeFolderExists(std::string folder);
     bool includeFileInAutoCollections(FileData* file);
 
