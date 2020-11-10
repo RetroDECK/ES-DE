@@ -154,7 +154,7 @@ void Window::input(InputConfig* config, Input input)
                     Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages"))
                 customImageSlideshow = true;
 
-            if (customImageSlideshow || mScreensaver->getCurrentGame() != nullptr &&
+            if ((customImageSlideshow || mScreensaver->getCurrentGame() != nullptr) &&
                     (config->isMappedTo("a", input) ||
                     config->isMappedLike("left", input) || config->isMappedLike("right", input))) {
                 // Left or right browses to the next video or image.
