@@ -73,8 +73,10 @@ namespace Utils
                             std::string fullName(getGenericPath(path + "/" + name));
                             contentList.push_back(fullName);
 
-                            if (_recursive && isDirectory(fullName))
+                            if (_recursive && isDirectory(fullName)) {
+                                contentList.sort();
                                 contentList.merge(getDirContent(fullName, true));
+                            }
                         }
                     }
                     while (FindNextFileW(hFind, &findData));
@@ -94,8 +96,10 @@ namespace Utils
                             std::string fullName(getGenericPath(path + "/" + name));
                             contentList.push_back(fullName);
 
-                            if (_recursive && isDirectory(fullName))
+                            if (_recursive && isDirectory(fullName)) {
+                                contentList.sort();
                                 contentList.merge(getDirContent(fullName, true));
+                            }
                         }
                     }
                     closedir(dir);
