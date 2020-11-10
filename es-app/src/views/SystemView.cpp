@@ -284,19 +284,18 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     // Also change the text after we've fully faded out.
     setAnimation(infoFadeOut, 0, [this, gameCount] {
         std::stringstream ss;
-        unsigned int totalGameCount = gameCount.first + gameCount.second;
 
         if (!getSelected()->isGameSystem())
             ss << "CONFIGURATION";
         else if (getSelected()->isCollection() && (getSelected()->getName() == "favorites"))
-            ss << totalGameCount << " GAME" << (totalGameCount == 1 ? " " : "S");
+            ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S");
         // The 'recent' gamelist has probably been trimmed after sorting, so we'll cap it at
         // its maximum limit of 50 games.
         else if (getSelected()->isCollection() && (getSelected()->getName() == "recent"))
-            ss << (totalGameCount > 50 ? 50 : totalGameCount) << " GAME" <<
-                    (totalGameCount == 1 ? " " : "S");
+            ss << (gameCount.first > 50 ? 50 : gameCount.first) << " GAME" <<
+                    (gameCount.first == 1 ? " " : "S");
         else
-            ss << totalGameCount << " GAME" << (totalGameCount == 1 ? " " : "S ") << "(" <<
+            ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S ") << "(" <<
                     gameCount.second << " FAVORITE" << (gameCount.second == 1 ? ")" : "S)");
 
         mSystemInfo.setText(ss.str());

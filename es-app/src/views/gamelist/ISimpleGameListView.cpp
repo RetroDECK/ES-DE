@@ -365,7 +365,7 @@ void ISimpleGameListView::generateGamelistInfo(FileData* cursor, FileData* first
 
     gameCount = rootFolder->getGameCount();
 
-    mGameCount = gameCount.first + gameCount.second;
+    mGameCount = gameCount.first;
     mFavoritesGameCount = gameCount.second;
     mFilteredGameCount = 0;
     mFilteredGameCountAll = 0;

@@ -146,7 +146,7 @@ private:
     std::unordered_map<std::string,FileData*> mChildrenByFilename;
     std::vector<FileData*> mChildren;
     std::vector<FileData*> mFilteredChildren;
-    // The pair includes non-favorite games, and favorite games.
+    // The pair includes all games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;
     bool mHasFolders;

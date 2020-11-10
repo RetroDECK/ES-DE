@@ -517,9 +517,8 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
         // Game count, which will be displayed in the system view.
         if ((*it)->getType() == GAME && (*it)->getCountAsGame()) {
-            if (!(*it)->getFavorite())
-                gameCount.first++;
-            else
+            gameCount.first++;
+            if ((*it)->getFavorite())
                 gameCount.second++;
         }
 
@@ -581,9 +580,8 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
 
         // Game count, which will be displayed in the system view.
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
-            if (!mChildren[i]->getFavorite())
-                gameCount.first++;
-            else
+            gameCount.first++;
+            if (mChildren[i]->getFavorite())
                 gameCount.second++;
         }
 
@@ -702,9 +700,8 @@ void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
 {
     for (unsigned int i = 0; i < mChildren.size(); i++) {
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
-            if (!mChildren[i]->getFavorite())
-                gameCount.first++;
-            else
+            gameCount.first++;
+            if (mChildren[i]->getFavorite())
                 gameCount.second++;
         }
         // Iterate through any folders.
