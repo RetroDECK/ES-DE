@@ -13,7 +13,6 @@
 #include "Window.h"
 
 class ImageComponent;
-class Sound;
 class VideoComponent;
 
 // Screensaver implementation.
@@ -34,7 +33,6 @@ public:
     virtual void renderScreensaver();
     virtual void update(int deltaTime);
 
-    virtual bool getHasMediaFiles() { return mHasMediaFiles; };
     virtual FileData* getCurrentGame() { return mCurrentGame; };
 
 private:
@@ -44,6 +42,7 @@ private:
     void pickRandomImage(std::string& path);
     void pickRandomVideo(std::string& path);
     void pickRandomCustomImage(std::string& path);
+    void generateOverlayInfo();
 
     enum STATE {
         STATE_INACTIVE,
@@ -52,22 +51,33 @@ private:
         STATE_SCREENSAVER_ACTIVE
     };
 
+    Window* mWindow;
+    STATE mState;
+
     std::vector<FileData*> mImageFiles;
     std::vector<FileData*> mVideoFiles;
     std::vector<std::string> mImageCustomFiles;
-    bool mHasMediaFiles;
-    VideoComponent* mVideoScreensaver;
     ImageComponent* mImageScreensaver;
-    Window* mWindow;
-    STATE mState;
-    float mOpacity;
-    int mTimer;
+    VideoComponent* mVideoScreensaver;
+
     FileData* mCurrentGame;
     FileData* mPreviousGame;
     std::string mPreviousCustomImage;
     std::string mGameName;
     std::string mSystemName;
+
+    int mTimer;
     int mVideoChangeTime;
+    bool mHasMediaFiles;
+    float mOpacity;
+    float mDimValue;
+    unsigned char mRectangleFadeIn;
+    unsigned char mTextFadeIn;
+    float mSaturationAmount;
+
+    std::unique_ptr<TextCache> mGameOverlay;
+    std::vector<std::shared_ptr<Font>> mGameOverlayFont;
+    std::vector<float> mGameOverlayRectangleCoords;
 };
 
 #endif // ES_APP_SYSTEM_SCREEN_SAVER_H

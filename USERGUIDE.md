@@ -693,6 +693,10 @@ For how long to display images before changing to the next game. Allowed range i
 
 This will fill the entire screen surface but will possibly break the aspect ratio of the image.
 
+**Display game info overlay**
+
+This will display an overlay in the bottom left corner, showing the game name and the game system name.
+
 **Render scanlines** _(OpenGL renderer only)_
 
 Whether to use a shader to render scanlines on top of the images.
@@ -717,17 +721,17 @@ Options specific to the video screensaver.
 
 For how long to play videos before changing to the next game. Allowed range is between 5 and 120 seconds.
 
-**Show game info overlay**
+**Play audio for screensaver videos**
 
-This will display an overlay on top of the videos, showing the game name and game system name.
+Muting or playing the audio.
 
 **Stretch videos to screen resolution**
 
 This will fill the entire screen surface but will possibly break the aspect ratio of the video.
 
-**Play audio for screensaver video files**
+**Display game info overlay**
 
-Muting or playing the audio.
+This will display an overlay in the bottom left corner, showing the game name and the game system name.
 
 **Render scanlines** _(OpenGL renderer only)_
 

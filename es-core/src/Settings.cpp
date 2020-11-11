@@ -130,7 +130,8 @@ void Settings::setDefaults()
     // UI settings -> screensaver settings -> slideshow screensaver settings.
     mIntMap["ScreensaverSwapImageTimeout"] = 8000;
     mBoolMap["ScreensaverStretchImages"] = false;
-    mBoolMap["ScreensaverImageScanlines"] = true;
+    mBoolMap["ScreensaverSlideshowGameInfo"] = true;
+    mBoolMap["ScreensaverSlideshowScanlines"] = true;
     mBoolMap["ScreensaverSlideshowCustomImages"] = false;
     mBoolMap["ScreensaverSlideshowRecurse"] = false;
     mStringMap["ScreensaverSlideshowImageDir"] =
@@ -138,9 +139,9 @@ void Settings::setDefaults()
 
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreensaverSwapVideoTimeout"] = 25000;
-    mBoolMap["ScreensaverStretchVideos"] = false;
-    mStringMap["ScreensaverVideoGameInfo"] = "always";
     mBoolMap["ScreensaverVideoAudio"] = false;
+    mBoolMap["ScreensaverStretchVideos"] = false;
+    mBoolMap["ScreensaverVideoGameInfo"] = true;
     mBoolMap["ScreensaverVideoScanlines"] = true;
     mBoolMap["ScreensaverVideoBlur"] = false;
 

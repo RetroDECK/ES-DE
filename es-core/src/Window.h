@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Window.h
 //
-//  Window management, screensaver and help prompts.
+//  Window management, screensaver management, and help prompts.
 //  The input stack starts here as well, as this is the first instance called by InputManager.
 //
 
@@ -42,7 +42,6 @@ public:
         virtual bool isScreensaverActive() = 0;
         virtual FileData* getCurrentGame() = 0;
         virtual void launchGame() = 0;
-        virtual bool getHasMediaFiles() = 0;
     };
 
     class InfoPopup
@@ -96,7 +95,8 @@ public:
     void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; };
     bool getAllowTextScrolling() { return mAllowTextScrolling; };
 
-    void invalidateCachedBackground() { mCachedBackground = false; };
+    void invalidateCachedBackground()
+            { mCachedBackground = false; mInvalidatedCachedBackground = true;};
 
 private:
     void onSleep();
@@ -107,6 +107,7 @@ private:
 
     HelpComponent* mHelp;
     ImageComponent* mBackgroundOverlay;
+    unsigned char mBackgroundOverlayOpacity;
     Screensaver* mScreensaver;
     InfoPopup* mInfoPopup;
     std::vector<GuiComponent*> mGuiStack;
@@ -125,11 +126,10 @@ private:
     bool mGameLaunchedState;
     bool mAllowTextScrolling;
     bool mCachedBackground;
+    bool mInvalidatedCachedBackground;
 
-    float mSaturationAmount;
     unsigned char mTopOpacity;
     float mTopScale;
-    float mDimValue;
     bool mRenderedHelpPrompts;
 };
 

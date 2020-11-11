@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Window.cpp
 //
-//  Window management, screensaver and help prompts.
+//  Window management, screensaver management, and help prompts.
 //  The input stack starts here as well, as this is the first instance called by InputManager.
 //
 
@@ -33,10 +33,9 @@ Window::Window()
         mGameLaunchedState(false),
         mAllowTextScrolling(true),
         mCachedBackground(false),
-        mSaturationAmount(1.0),
+        mInvalidatedCachedBackground(false),
         mTopOpacity(0),
-        mTopScale(0.5),
-        mDimValue(1.0)
+        mTopScale(0.5)
 {
     mHelp = new HelpComponent(this);
     mBackgroundOverlay = new ImageComponent(this);
@@ -266,7 +265,8 @@ void Window::update(int deltaTime)
                     textureVramUsageMiB << " MiB\nMax Texture VRAM: " <<
                     textureTotalUsageMiB << " MiB";
             mFrameDataText = std::unique_ptr<TextCache>
-                    (mDefaultFonts.at(1)->buildTextCache(ss.str(), 30.f, 30.f, 0xFF00FFFF));
+                    (mDefaultFonts.at(1)->buildTextCache(ss.str(), Renderer::getScreenWidth() *
+                    0.02 , Renderer::getScreenHeight() * 0.02, 0xFF00FFFF));
         }
 
         mFrameTimeElapsed = 0;
@@ -322,17 +322,43 @@ void Window::render()
                         Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
                 mBackgroundOverlay->setImage(mPostprocessedBackground);
+                mBackgroundOverlay->render(transform);
+
+                // Dim the background. We need to do this as a separate step as combining
+                // it with the blurring leads to very strange and severe artifacts.
+                // This is for sure a bug that needs to be resolved at some later date.
+                Renderer::shaderParameters blackParameters;
+                blackParameters.fragmentDimValue = 0.6;
+                Renderer::shaderPostprocessing(Renderer::SHADER_DIM,
+                        blackParameters, processedTexture);
+
+                mPostprocessedBackground->initFromPixels(processedTexture,
+                        Renderer::getScreenWidth(), Renderer::getScreenHeight());
+
+                mBackgroundOverlay->setImage(mPostprocessedBackground);
+
+                // The following is done to avoid fading in if the cached image was
+                // invalidated (rather than the menu being opened).
+                if (mInvalidatedCachedBackground) {
+                    mBackgroundOverlayOpacity = 255;
+                    mInvalidatedCachedBackground = false;
+                }
+                else {
+                    mBackgroundOverlayOpacity = 25;
+                }
 
                 delete[] processedTexture;
                 mCachedBackground = true;
             }
+            // Fade in the cached background.
+            mBackgroundOverlay->setOpacity(mBackgroundOverlayOpacity);
+            if (mBackgroundOverlayOpacity < 255)
+                mBackgroundOverlayOpacity = Math::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
             #endif
+
             mBackgroundOverlay->render(transform);
 
             #if defined(USE_OPENGL_21)
-            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                    Renderer::getScreenHeight(), 0x00000070, 0x00000070);
-
             // Menu opening effects (scale-up and fade-in).
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 if (mTopScale < 1.0)
@@ -393,60 +419,6 @@ void Window::render()
             }
         }
     }
-
-    #if defined(USE_OPENGL_21)
-    // Shaders for the screensavers.
-    if (mScreensaver->isScreensaverActive()) {
-        if (Settings::getInstance()->getString("ScreensaverType") == "video") {
-            if (mScreensaver->getHasMediaFiles()) {
-                if (Settings::getInstance()->getBool("ScreensaverVideoBlur"))
-                    Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL);
-                if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
-                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
-            }
-            else {
-                // If there are no videos, fade in a black screen.
-                Renderer::shaderParameters blackParameters;
-                blackParameters.fragmentDimValue = mDimValue;
-                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
-                if (mDimValue > 0.0)
-                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
-            }
-        }
-        else if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
-            if (mScreensaver->getHasMediaFiles()) {
-                if (Settings::getInstance()->getBool("ScreensaverImageScanlines"))
-                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
-            }
-            else {
-                // If there are no images, fade in a black screen.
-                Renderer::shaderParameters blackParameters;
-                blackParameters.fragmentDimValue = mDimValue;
-                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
-                if (mDimValue > 0.0)
-                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
-            }
-        }
-        else if (Settings::getInstance()->getString("ScreensaverType") == "dim") {
-            Renderer::shaderParameters dimParameters;
-            dimParameters.fragmentDimValue = mDimValue;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
-            if (mDimValue > 0.4)
-                mDimValue = Math::clamp(mDimValue-0.021, 0.4, 1.0);
-            dimParameters.fragmentSaturation = mSaturationAmount;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
-            if (mSaturationAmount > 0.0)
-                mSaturationAmount = Math::clamp(mSaturationAmount-0.035, 0.0, 1.0);
-        }
-        else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
-            Renderer::shaderParameters blackParameters;
-            blackParameters.fragmentDimValue = mDimValue;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
-            if (mDimValue > 0.0)
-                mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
-        }
-    }
-    #endif
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         Renderer::setMatrix(Transform4x4f::Identity());
@@ -631,9 +603,6 @@ bool Window::cancelScreensaver()
             if (mGuiStack.front() != mGuiStack.back())
                 (*it)->onPauseVideo();
         }
-
-        mSaturationAmount = 1.0;
-        mDimValue = 1.0;
 
         return true;
     }

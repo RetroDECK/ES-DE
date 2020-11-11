@@ -131,17 +131,31 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
         }
     });
 
+    // Show game info overlay for slideshow screensaver.
+    auto screensaver_slideshow_game_info = std::make_shared<SwitchComponent>(mWindow);
+    screensaver_slideshow_game_info->
+            setState(Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo"));
+    s->addWithLabel("DISPLAY GAME INFO OVERLAY", screensaver_slideshow_game_info);
+    s->addSaveFunc([screensaver_slideshow_game_info, s] {
+        if (screensaver_slideshow_game_info->getState() !=
+                Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo")) {
+            Settings::getInstance()->setBool("ScreensaverSlideshowGameInfo",
+                    screensaver_slideshow_game_info->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     #if defined(USE_OPENGL_21)
     // Render scanlines using a shader.
-    auto screensaver_image_scanlines = std::make_shared<SwitchComponent>(mWindow);
-    screensaver_image_scanlines->
-            setState(Settings::getInstance()->getBool("ScreensaverImageScanlines"));
-    s->addWithLabel("RENDER SCANLINES", screensaver_image_scanlines);
-    s->addSaveFunc([screensaver_image_scanlines, s] {
-        if (screensaver_image_scanlines->getState() !=
-                Settings::getInstance()->getBool("ScreensaverImageScanlines")) {
-            Settings::getInstance()->
-                    setBool("ScreensaverImageScanlines", screensaver_image_scanlines->getState());
+    auto screensaver_slideshow_scanlines = std::make_shared<SwitchComponent>(mWindow);
+    screensaver_slideshow_scanlines->
+            setState(Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"));
+    s->addWithLabel("RENDER SCANLINES", screensaver_slideshow_scanlines);
+    s->addSaveFunc([screensaver_slideshow_scanlines, s] {
+        if (screensaver_slideshow_scanlines->getState() !=
+                Settings::getInstance()->getBool("ScreensaverSlideshowScanlines")) {
+            Settings::getInstance()->setBool("ScreensaverSlideshowScanlines",
+                        screensaver_slideshow_scanlines->getState());
             s->setNeedsSaving();
         }
     });
@@ -215,22 +229,15 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
         }
     });
 
-    // Show game info overlay.
-    auto screensaver_video_game_info = std::make_shared<OptionListComponent<std::string>>
-            (mWindow,getHelpStyle(), "SHOW GAME INFO OVERLAY", false);
-    std::vector<std::string> info_type;
-    info_type.push_back("always");
-    info_type.push_back("start & end");
-    info_type.push_back("never");
-    for (auto it = info_type.cbegin(); it != info_type.cend(); it++)
-        screensaver_video_game_info->add(*it, *it,
-                Settings::getInstance()->getString("ScreensaverVideoGameInfo") == *it);
-    s->addWithLabel("SHOW GAME INFO OVERLAY", screensaver_video_game_info);
-    s->addSaveFunc([screensaver_video_game_info, s] {
-        if (screensaver_video_game_info->getSelected() !=
-                Settings::getInstance()->getString("ScreensaverVideoGameInfo")) {
-            Settings::getInstance()->setString("ScreensaverVideoGameInfo",
-                        screensaver_video_game_info->getSelected());
+    // PLay audio for screensaver videos.
+    auto screensaver_video_audio = std::make_shared<SwitchComponent>(mWindow);
+    screensaver_video_audio->setState(Settings::getInstance()->getBool("ScreensaverVideoAudio"));
+    s->addWithLabel("PLAY AUDIO FOR SCREENSAVER VIDEOS", screensaver_video_audio);
+    s->addSaveFunc([screensaver_video_audio, s] {
+        if (screensaver_video_audio->getState() !=
+                Settings::getInstance()->getBool("ScreensaverVideoAudio")) {
+            Settings::getInstance()->setBool("ScreensaverVideoAudio",
+                    screensaver_video_audio->getState());
             s->setNeedsSaving();
         }
     });
@@ -249,7 +256,22 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
         }
     });
 
+    // Show game info overlay for video screensaver.
+    auto screensaver_video_game_info = std::make_shared<SwitchComponent>(mWindow);
+    screensaver_video_game_info->
+            setState(Settings::getInstance()->getBool("ScreensaverVideoGameInfo"));
+    s->addWithLabel("DISPLAY GAME INFO OVERLAY", screensaver_video_game_info);
+    s->addSaveFunc([screensaver_video_game_info, s] {
+        if (screensaver_video_game_info->getState() !=
+                Settings::getInstance()->getBool("ScreensaverVideoGameInfo")) {
+            Settings::getInstance()->setBool("ScreensaverVideoGameInfo",
+                    screensaver_video_game_info->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     #if defined(_RPI_)
+    // Use OMX player for screensaver.
     auto screensaver_omx_player = std::make_shared<SwitchComponent>(mWindow);
     screensaver_omx_player->setState(Settings::getInstance()->getBool("ScreensaverOmxPlayer"));
     s->addWithLabel("USE OMX PLAYER FOR SCREENSAVER", screensaver_omx_player);
@@ -262,42 +284,6 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
         }
     });
     #endif
-
-//    ComponentListRow row;
-
-    // Set subtitle position.
-//    auto ss_omx_subs_align = std::make_shared<OptionListComponent<std::string>>
-//            (mWindow, getHelpStyle(), "GAME INFO ALIGNMENT", false);
-//    std::vector<std::string> align_mode;
-//    align_mode.push_back("left");
-//    align_mode.push_back("center");
-//    for (auto it = align_mode.cbegin(); it != align_mode.cend(); it++)
-//        ss_omx_subs_align->add(*it, *it, Settings::getInstance()->
-//                getString("SubtitleAlignment") == *it);
-//    addWithLabel("GAME INFO ALIGNMENT", ss_omx_subs_align);
-//    addSaveFunc([ss_omx_subs_align, this] { Settings::getInstance()->
-//            setString("SubtitleAlignment", ss_omx_subs_align->getSelected()); });
-
-    // Set font size.
-//    auto ss_omx_font_size = std::make_shared<SliderComponent>(mWindow, 1.f, 64.f, 1.f, "h");
-//    ss_omx_font_size->setValue((float)(Settings::getInstance()->getInt("SubtitleSize")));
-//    addWithLabel("GAME INFO FONT SIZE", ss_omx_font_size);
-//    addSaveFunc([ss_omx_font_size] {
-//        int subSize = (int)Math::round(ss_omx_font_size->getValue());
-//        Settings::getInstance()->setInt("SubtitleSize", subSize);
-//    });
-
-    auto screensaver_video_audio = std::make_shared<SwitchComponent>(mWindow);
-    screensaver_video_audio->setState(Settings::getInstance()->getBool("ScreensaverVideoAudio"));
-    s->addWithLabel("PLAY AUDIO FOR SCREENSAVER VIDEOS", screensaver_video_audio);
-    s->addSaveFunc([screensaver_video_audio, s] {
-        if (screensaver_video_audio->getState() !=
-                Settings::getInstance()->getBool("ScreensaverVideoAudio")) {
-            Settings::getInstance()->setBool("ScreensaverVideoAudio",
-                    screensaver_video_audio->getState());
-            s->setNeedsSaving();
-        }
-    });
 
     #if defined(USE_OPENGL_21)
     // Render scanlines using a shader.

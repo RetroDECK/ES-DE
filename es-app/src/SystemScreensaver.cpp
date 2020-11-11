@@ -13,7 +13,9 @@
 #include "components/VideoPlayerComponent.h"
 #endif
 #include "components/VideoVlcComponent.h"
+#include "resources/Font.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
 #include "FileData.h"
@@ -33,19 +35,22 @@
 
 SystemScreensaver::SystemScreensaver(
         Window* window)
-        : mImageScreensaver(nullptr),
-        mVideoScreensaver(nullptr),
-        mWindow(window),
+        : mWindow(window),
         mState(STATE_INACTIVE),
-        mOpacity(0.0f),
-        mTimer(0),
-        mSystemName(""),
-        mGameName(""),
+        mImageScreensaver(nullptr),
+        mVideoScreensaver(nullptr),
         mCurrentGame(nullptr),
-        mHasMediaFiles(false)
+        mPreviousGame(nullptr),
+        mTimer(0),
+        mVideoChangeTime(30000),
+        mHasMediaFiles(false),
+        mOpacity(0.0f),
+        mDimValue(1.0),
+        mRectangleFadeIn(50),
+        mTextFadeIn(0),
+        mSaturationAmount(1.0)
 {
     mWindow->setScreensaver(this);
-    mVideoChangeTime = 30000;
 }
 
 SystemScreensaver::~SystemScreensaver()
@@ -70,11 +75,18 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
     std::string path = "";
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
     mHasMediaFiles = false;
+    mOpacity = 0.0f;
+
+    // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
+    if (mGameOverlayFont.empty()) {
+        mGameOverlayFont.push_back(Font::get(FONT_SIZE_SMALL));
+        mGameOverlayFont.push_back(Font::get(FONT_SIZE_MEDIUM));
+        mGameOverlayFont.push_back(Font::get(FONT_SIZE_LARGE));
+    }
 
     // Set mPreviousGame which will be used to avoid showing the same game again during
     // the random selection.
-    if ((screensaverType == "video" || screensaverType == "slideshow") &&
-            mCurrentGame != nullptr)
+    if ((screensaverType == "slideshow" || screensaverType == "video") && mCurrentGame != nullptr)
         mPreviousGame = mCurrentGame;
 
     if (screensaverType == "slideshow") {
@@ -87,7 +99,6 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
         mState = STATE_FADE_OUT_WINDOW;
 
         mVideoChangeTime = Settings::getInstance()->getInt("ScreensaverSwapImageTimeout");
-        mOpacity = 0.0f;
 
         // Load a random image.
         if (Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages")) {
@@ -110,9 +121,12 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             mHasMediaFiles = true;
 
         // Don't attempt to render the screensaver if there are no images available, but
-        // do flag it as running. This way Window::render() will fade to a black screen, i.e.
-        // it will activate the 'Black' screensaver type.
+        // do flag it as running. This way render() will fade to a black screen, i.e. it
+        // will activate the 'Black' screensaver type.
         if (mImageFiles.size() > 0 || mImageCustomFiles.size() > 0) {
+            if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo"))
+                generateOverlayInfo();
+
             if (!mImageScreensaver)
                 mImageScreensaver = new ImageComponent(mWindow, false, false);
 
@@ -142,7 +156,6 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
         mState = STATE_FADE_OUT_WINDOW;
 
         mVideoChangeTime = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout");
-        mOpacity = 0.0f;
 
         // Load a random video.
         if (generateMediaList)
@@ -153,8 +166,11 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             mHasMediaFiles = true;
 
         if (!path.empty() && Utils::FileSystem::exists(path)) {
+            if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo"))
+                generateOverlayInfo();
+
             #if defined(_RPI_)
-            // Create the correct type of video component
+            // Create the correct type of video component.
             if (Settings::getInstance()->getBool("ScreensaverOmxPlayer"))
                 mVideoScreensaver = new VideoPlayerComponent(mWindow);
             else
@@ -197,6 +213,14 @@ void SystemScreensaver::stopScreensaver()
 
     mState = STATE_INACTIVE;
     PowerSaver::runningScreensaver(false);
+
+    mDimValue = 1.0;
+    mRectangleFadeIn = 50;
+    mTextFadeIn = 0;
+    mSaturationAmount = 1.0;
+
+    if (mGameOverlay)
+        mGameOverlay.release();
 }
 
 void SystemScreensaver::nextGame() {
@@ -221,7 +245,7 @@ void SystemScreensaver::renderScreensaver()
 {
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
     if (mVideoScreensaver && screensaverType == "video") {
-        // Render black background.
+        // Render a black background below the video.
         Renderer::setMatrix(Transform4x4f::Identity());
         Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                 Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
@@ -233,12 +257,12 @@ void SystemScreensaver::renderScreensaver()
         }
     }
     else if (mImageScreensaver && screensaverType == "slideshow") {
-        // Render a black background.
+        // Render a black background below the image.
         Renderer::setMatrix(Transform4x4f::Identity());
         Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                 Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
 
-        // Only render the video if the state requires it.
+        // Only render the image if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
             if (mImageScreensaver->hasImage()) {
                 mImageScreensaver->setOpacity(255 - static_cast<unsigned char>(mOpacity * 255));
@@ -248,14 +272,117 @@ void SystemScreensaver::renderScreensaver()
             }
         }
     }
-    #if !defined(USE_OPENGL_21)
-    else if (mState != STATE_INACTIVE) {
+
+    if (isScreensaverActive()) {
         Renderer::setMatrix(Transform4x4f::Identity());
-        unsigned char color = screensaverType == "dim" ? 0x000000A0 : 0x000000FF;
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                Renderer::getScreenHeight(), color, color);
+        if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
+            if (mHasMediaFiles) {
+                #if defined(USE_OPENGL_21)
+                if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
+                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+                #endif
+                if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
+                        mGameOverlay) {
+                    if (mGameOverlayRectangleCoords.size() == 4) {
+                        Renderer::drawRect(mGameOverlayRectangleCoords[0],
+                                mGameOverlayRectangleCoords[1], mGameOverlayRectangleCoords[2],
+                                mGameOverlayRectangleCoords[3], 0x00000000 | mRectangleFadeIn,
+                                0x00000000 | mRectangleFadeIn );
+                    }
+                    if (mRectangleFadeIn < 180)
+                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 4, 0, 255);
+
+                    mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
+                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    if (mTextFadeIn < 255)
+                        mTextFadeIn = Math::clamp(mTextFadeIn + 8, 0, 255);
+                }
+            }
+            else {
+                // If there are no images, fade in a black screen.
+                #if defined(USE_OPENGL_21)
+                Renderer::shaderParameters blackParameters;
+                blackParameters.fragmentDimValue = mDimValue;
+                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+                #else
+                Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
+                        Renderer::getScreenHeight(), 0x000000FF, 0x000000FF, mDimValue);
+                #endif
+                if (mDimValue > 0.0)
+                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+            }
+        }
+        if (Settings::getInstance()->getString("ScreensaverType") == "video") {
+            if (mHasMediaFiles) {
+                #if defined(USE_OPENGL_21)
+                if (Settings::getInstance()->getBool("ScreensaverVideoBlur"))
+                    Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL);
+                if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
+                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+                #endif
+                if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
+                    if (mGameOverlayRectangleCoords.size() == 4) {
+                        #if defined(USE_OPENGL_21)
+                        Renderer::shaderPostprocessing(Renderer::SHADER_OPACITY);
+                        #endif
+                        Renderer::drawRect(mGameOverlayRectangleCoords[0],
+                                mGameOverlayRectangleCoords[1], mGameOverlayRectangleCoords[2],
+                                mGameOverlayRectangleCoords[3], 0x00000000 | mRectangleFadeIn,
+                                0x00000000 | mRectangleFadeIn );
+                    }
+                    if (mRectangleFadeIn < 180)
+                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 4, 0, 255);
+
+                    mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
+                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    if (mTextFadeIn < 255)
+                        mTextFadeIn = Math::clamp(mTextFadeIn + 8, 0, 255);
+                }
+            }
+            else {
+                // If there are no videos, fade in a black screen.
+                #if defined(USE_OPENGL_21)
+                Renderer::shaderParameters blackParameters;
+                blackParameters.fragmentDimValue = mDimValue;
+                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+                #else
+                Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
+                        Renderer::getScreenHeight(), 0x000000FF, 0x000000FF, mDimValue);
+                #endif
+                if (mDimValue > 0.0)
+                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+            }
+        }
+
+        else if (Settings::getInstance()->getString("ScreensaverType") == "dim") {
+            #if defined(USE_OPENGL_21)
+            Renderer::shaderParameters dimParameters;
+            dimParameters.fragmentDimValue = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
+            if (mDimValue > 0.4)
+                mDimValue = Math::clamp(mDimValue-0.021, 0.4, 1.0);
+            dimParameters.fragmentSaturation = mSaturationAmount;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
+            if (mSaturationAmount > 0.0)
+                mSaturationAmount = Math::clamp(mSaturationAmount-0.035, 0.0, 1.0);
+            #else
+            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
+                    Renderer::getScreenHeight(), 0x000000A0, 0x000000A0);
+            #endif
+        }
+        else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
+            #if defined(USE_OPENGL_21)
+            Renderer::shaderParameters blackParameters;
+            blackParameters.fragmentDimValue = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+            if (mDimValue > 0.0)
+                mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+            #else
+            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
+                    Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
+            #endif
+        }
     }
-    #endif
 }
 
 void SystemScreensaver::update(int deltaTime)
@@ -437,4 +564,42 @@ void SystemScreensaver::pickRandomCustomImage(std::string& path)
     mPreviousCustomImage = path;
     mGameName = "";
     mSystemName = "";
+}
+
+void SystemScreensaver::generateOverlayInfo()
+{
+    if (mGameName == "" || mSystemName == "")
+        return;
+
+    float posX = static_cast<float>(Renderer::getWindowWidth()) * 0.03;
+    float posY = static_cast<float>(Renderer::getWindowHeight()) * 0.87;
+
+    const std::string gameName = Utils::String::toUpper(mGameName);
+    const std::string systemName = Utils::String::toUpper(mSystemName);
+    const std::string overlayText = gameName + "\n" + systemName;
+
+    mGameOverlay = std::unique_ptr<TextCache>(mGameOverlayFont.at(0)->
+            buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
+
+    float textSizeX;
+    float textSizeY = mGameOverlayFont[0].get()->sizeText(overlayText).y();
+
+    // There is a weird issue with sizeText() where the X size value is returned
+    // as too large if there are two rows in a string and the second row is longer
+    // than the first row. Possibly it's the newline character that is somehow
+    // injected in the size calculation. Regardless, this workaround is working
+    // fine for the time being.
+    if (mGameOverlayFont[0].get()->sizeText(gameName).x() >
+            mGameOverlayFont[0].get()->sizeText(systemName).x())
+        textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x();
+    else
+        textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x();
+
+    float marginX = Renderer::getWindowWidth() * 0.01;
+
+    mGameOverlayRectangleCoords.clear();
+    mGameOverlayRectangleCoords.push_back(posX - marginX);
+    mGameOverlayRectangleCoords.push_back(posY);
+    mGameOverlayRectangleCoords.push_back(textSizeX + marginX * 2);
+    mGameOverlayRectangleCoords.push_back(textSizeY);
 }

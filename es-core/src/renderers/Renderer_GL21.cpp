@@ -266,6 +266,7 @@ namespace Renderer
         GL_CHECK_ERROR(glBlendFunc(convertBlendFactor(_srcBlendFactor),
                 convertBlendFactor(_dstBlendFactor)));
 
+        #if defined(USE_OPENGL_21)
         if (_vertices[0].shaders == 0) {
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
         }
@@ -348,6 +349,7 @@ namespace Renderer
                 }
             }
         }
+        #endif
     }
 
     void setProjection(const Transform4x4f& _projection)

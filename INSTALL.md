@@ -92,6 +92,13 @@ make
 ```
 I have however not been able to test the CEC support and I'm not entirely sure how it's supposed to work.
 
+To build ES with the GLES renderer, run the following:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -DGLES=on .
+make
+```
+Note that the GLES renderer is quite limited as there is no shader support for it, so ES will definitely not look as pretty as when using the default OpenGL renderer.
+
 Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
 
 ```

@@ -370,8 +370,7 @@ namespace Renderer
         else {
             bindTexture(0);
         }
-        drawTriangleStrips(vertices, 4, _trans,
-                _srcBlendFactor, _dstBlendFactor);
+        drawTriangleStrips(vertices, 4, _trans, _srcBlendFactor, _dstBlendFactor);
     }
 
     unsigned int rgbaToABGR(const unsigned int _color)
