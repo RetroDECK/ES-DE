@@ -1,13 +1,13 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  VideoPlayerComponent.cpp
+//  VideoOmxComponent.cpp
 //
-//  OMXPlayer video playing for Raspberry Pi.
+//  Video playing using OMXPlayer for Raspberry Pi.
 //
 
 #if defined(_RPI_)
-#include "components/VideoPlayerComponent.h"
+#include "components/VideoOmxComponent.h"
 
 #include "renderers/Renderer.h"
 #include "utils/StringUtil.h"
@@ -25,18 +25,18 @@ public:
     int getVolume() const;
 };
 
-VideoPlayerComponent::VideoPlayerComponent(Window* window) :
+VideoOmxComponent::VideoOmxComponent(Window* window) :
     VideoComponent(window),
     mPlayerPid(-1)
 {
 }
 
-VideoPlayerComponent::~VideoPlayerComponent()
+VideoOmxComponent::~VideoOmxComponent()
 {
     stopVideo();
 }
 
-void VideoPlayerComponent::render(const Transform4x4f& parentTrans)
+void VideoOmxComponent::render(const Transform4x4f& parentTrans)
 {
     if (!isVisible())
         return;
@@ -47,7 +47,7 @@ void VideoPlayerComponent::render(const Transform4x4f& parentTrans)
         VideoComponent::renderSnapshot(parentTrans);
 }
 
-void VideoPlayerComponent::setResize(float width, float height)
+void VideoOmxComponent::setResize(float width, float height)
 {
     setSize(width, height);
     mTargetSize = Vector2f(width, height);
@@ -56,7 +56,7 @@ void VideoPlayerComponent::setResize(float width, float height)
     onSizeChanged();
 }
 
-void VideoPlayerComponent::setMaxSize(float width, float height)
+void VideoOmxComponent::setMaxSize(float width, float height)
 {
     setSize(width, height);
     mTargetSize = Vector2f(width, height);
@@ -65,7 +65,7 @@ void VideoPlayerComponent::setMaxSize(float width, float height)
     onSizeChanged();
 }
 
-void VideoPlayerComponent::startVideo()
+void VideoOmxComponent::startVideo()
 {
     if (!mIsPlaying) {
         mVideoWidth = 0;
@@ -205,7 +205,7 @@ void catch_child(int sig_num)
     wait(&child_status);
 }
 
-void VideoPlayerComponent::stopVideo()
+void VideoOmxComponent::stopVideo()
 {
     mIsPlaying = false;
     mStartDelayed = false;

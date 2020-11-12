@@ -10,7 +10,7 @@
 #include "SystemScreensaver.h"
 
 #if defined(_RPI_)
-#include "components/VideoPlayerComponent.h"
+#include "components/VideoOmxComponent.h"
 #endif
 #include "components/VideoVlcComponent.h"
 #include "resources/Font.h"
@@ -173,7 +173,7 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             #if defined(_RPI_)
             // Create the correct type of video component.
             if (Settings::getInstance()->getBool("ScreensaverOmxPlayer"))
-                mVideoScreensaver = new VideoPlayerComponent(mWindow);
+                mVideoScreensaver = new VideoOmxComponent(mWindow);
             else
                 mVideoScreensaver = new VideoVlcComponent(mWindow);
             #else

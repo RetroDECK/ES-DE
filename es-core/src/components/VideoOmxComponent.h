@@ -1,24 +1,24 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  VideoPlayerComponent.h
+//  VideoOmxComponent.h
 //
-//  OMXPlayer video playing for Raspberry Pi.
+//  Video playing using OMXPlayer for Raspberry Pi.
 //
 
 #if defined(_RPI_)
-#ifndef ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H
-#define ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_VIDEO_OMX_COMPONENT_H
+#define ES_CORE_COMPONENTS_VIDEO_OMX_COMPONENT_H
 
 #include "components/VideoComponent.h"
 
 void catch_child(int sig_num);
 
-class VideoPlayerComponent : public VideoComponent
+class VideoOmxComponent : public VideoComponent
 {
 public:
-    VideoPlayerComponent(Window* window);
-    virtual ~VideoPlayerComponent();
+    VideoOmxComponent(Window* window);
+    virtual ~VideoOmxComponent();
 
     void render(const Transform4x4f& parentTrans) override;
 
@@ -43,5 +43,5 @@ private:
     pid_t mPlayerPid;
 };
 
-#endif // ES_CORE_COMPONENTS_VIDEO_PLAYER_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_VIDEO_OMX_COMPONENT_H
 #endif // _RPI_

@@ -185,10 +185,8 @@ void Settings::setDefaults()
     mStringMap["FullscreenMode"] = "normal";
     #endif
     mStringMap["PowerSaverMode"] = "disabled";
-    // This setting only applies to Raspberry Pi but we set it for all platforms so
-    // we don't get a warning if we encounter it on a different platform.
-    mBoolMap["VideoOmxPlayer"] = false;
     #if defined(_RPI_)
+    mBoolMap["VideoOmxPlayer"] = false;
     // We're defaulting to OMX Player for full screen video on the Pi.
     mBoolMap["ScreensaverOmxPlayer"] = true;
     #endif

@@ -10,7 +10,7 @@
 
 #include "animations/LambdaAnimation.h"
 #if defined(_RPI_)
-#include "components/VideoPlayerComponent.h"
+#include "components/VideoOmxComponent.h"
 #endif
 #include "components/VideoVlcComponent.h"
 #include "utils/FileSystemUtil.h"
@@ -63,7 +63,7 @@ VideoGameListView::VideoGameListView(
     // Create the correct type of video window.
     #if defined(_RPI_)
     if (Settings::getInstance()->getBool("VideoOmxPlayer"))
-        mVideo = new VideoPlayerComponent(window);
+        mVideo = new VideoOmxComponent(window);
     else
         mVideo = new VideoVlcComponent(window);
     #else

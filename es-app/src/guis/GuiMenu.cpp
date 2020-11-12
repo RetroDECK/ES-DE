@@ -503,7 +503,7 @@ void GuiMenu::openSoundSettings()
         #endif
 
         #if defined(_RPI_)
-        // OMX player Audio Device
+        // OMXPlayer audio device.
         auto omx_audio_dev = std::make_shared<OptionListComponent<std::string>>
                 (mWindow, getHelpStyle(), "OMX PLAYER AUDIO DEVICE", false);
         std::vector<std::string> omx_cards;
@@ -655,7 +655,7 @@ void GuiMenu::openOtherSettings()
     s->addRow(row);
 
     #if defined(_RPI_)
-    // Video Player - VideoOmxPlayer.
+    // Video playing using OMXPlayer.
     auto video_omx_player = std::make_shared<SwitchComponent>(mWindow);
     video_omx_player->setState(Settings::getInstance()->getBool("VideoOmxPlayer"));
     s->addWithLabel("USE OMX PLAYER (HW ACCELERATED)", video_omx_player);
