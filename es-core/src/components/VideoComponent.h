@@ -100,6 +100,7 @@ private:
     void manageState();
 
 protected:
+    Window* mWindow;
     unsigned mVideoWidth;
     unsigned mVideoHeight;
     Vector2f mTargetSize;

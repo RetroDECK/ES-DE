@@ -128,7 +128,7 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverControls"] = true;
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
-    mIntMap["ScreensaverSwapImageTimeout"] = 8000;
+    mIntMap["ScreensaverSwapImageTimeout"] = 10000;
     mBoolMap["ScreensaverStretchImages"] = false;
     mBoolMap["ScreensaverSlideshowGameInfo"] = true;
     mBoolMap["ScreensaverSlideshowScanlines"] = true;
@@ -138,7 +138,7 @@ void Settings::setDefaults()
             "~/.emulationstation/slideshow/custom_images";
 
     // UI settings -> screensaver settings -> video screensaver settings.
-    mIntMap["ScreensaverSwapVideoTimeout"] = 25000;
+    mIntMap["ScreensaverSwapVideoTimeout"] = 0;
     mBoolMap["ScreensaverVideoAudio"] = false;
     mBoolMap["ScreensaverStretchVideos"] = false;
     mBoolMap["ScreensaverVideoGameInfo"] = true;

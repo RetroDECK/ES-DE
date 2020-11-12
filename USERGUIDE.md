@@ -116,7 +116,7 @@ Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
 **A button**\
 _(Enter)_
 
-Select button to open gamelists from the systems view, start games, choose menu entries etc.
+Select button to open gamelists from the systems view, launch games, choose menu entries etc.
 
 **B button**\
 _(Back key)_
@@ -131,7 +131,7 @@ Selects random games and systems.
 **Y button**\
 _(Insert on Unix and Windows, F13 on macOS)_
 
-Marks games as favorites in the gamelist views. Used by some other minor functions as explained by the help system.
+Marks games as favorites in the gamelist views. Used by some other minor functions as explained by the help system and this guide.
 
 
 ## Getting your games into EmulationStation
@@ -679,7 +679,7 @@ The screensaven type to use; _Dim_, _Black_, _Slideshow_ or _Video_.
 
 **Enable screensaver controls**
 
-This includes the ability to start the screensaver manually, but also to browse Left and Right between images or videos, and to launch the game shown by the screensaver using the A button.
+This includes the ability to start the screensaver manually, but also to jump to a new random game using the Left and Right buttons, to launch the game currently shown using the A button and to jump to the game in its gamelist by using the Y button. If this setting is disabled, any key or button press will stop the screensaver.
 
 #### Slideshow screensaver settings
 
@@ -687,7 +687,7 @@ Options specific to the slideshow screensaver.
 
 **Swap images after (seconds)**
 
-For how long to display images before changing to the next game. Allowed range is between 5 and 120 seconds.
+For how long to display images before changing to the next game. Allowed range is between 2 and 120 seconds in 2-second increments. The default value is 10 seconds.
 
 **Stretch images to screen resolution**
 
@@ -719,7 +719,7 @@ Options specific to the video screensaver.
 
 **Swap videos after (seconds)**
 
-For how long to play videos before changing to the next game. Allowed range is between 5 and 120 seconds.
+For how long to play videos before changing to the next game. Allowed range is between 0 and 120 seconds in 2-second increments. If set to 0 (which is the default setting), the next game will be selected when the entire video has finished playing.
 
 **Play audio for screensaver videos**
 
@@ -1060,7 +1060,7 @@ There are numerous options for the screensaver, refer to the Main menu section a
 
 The _Dim_ screensaver simply dims and desaturates the current view and _Black_ will show a black screen. The _Slideshow_ and _Video_ screensavers are a bit more interesting as they can display images and videos from your game collection. (In addition to this, Slideshow can be configured to only show images from a specified directory).
 
-If the option **Screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this the controls will allow you to jump to a new random image video or by using the left and right buttons on your keyboard or controller, and it allows you to actually launch the game just shown by pressing the 'A' button.
+If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this, the controls will allow you to jump to a new random image or video using the left and right buttons on your keyboard or controller. It's also possible to launch the game currently displayed by pressing the 'A' button, and pressing the 'Y' button will jump to the game in its gamelist without starting it.
 
 
 ## Game collections

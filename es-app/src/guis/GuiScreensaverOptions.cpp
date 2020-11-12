@@ -101,7 +101,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
 
     // Timer for swapping images (in seconds).
     auto screensaver_swap_image_timeout =
-            std::make_shared<SliderComponent>(mWindow, 5.f, 120.f, 1.f, "s");
+            std::make_shared<SliderComponent>(mWindow, 2.f, 120.f, 2.f, "s");
     screensaver_swap_image_timeout->setValue(static_cast<float>(Settings::getInstance()->
             getInt("ScreensaverSwapImageTimeout") / (1000)));
     s->addWithLabel("SWAP IMAGES AFTER (SECONDS)", screensaver_swap_image_timeout);
@@ -213,7 +213,7 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
 
     // Timer for swapping videos (in seconds).
     auto screensaver_swap_video_timeout =
-            std::make_shared<SliderComponent>(mWindow, 5.f, 120.f, 1.f, "s");
+            std::make_shared<SliderComponent>(mWindow, 0.f, 120.f, 2.f, "s");
     screensaver_swap_video_timeout->setValue(static_cast<float>(Settings::getInstance()->
             getInt("ScreensaverSwapVideoTimeout") / (1000)));
     s->addWithLabel("SWAP VIDEOS AFTER (SECONDS)", screensaver_swap_video_timeout);

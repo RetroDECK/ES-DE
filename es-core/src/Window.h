@@ -33,15 +33,20 @@ public:
     class Screensaver
     {
     public:
+        virtual bool allowSleep() = 0;
+        virtual bool isScreensaverActive() = 0;
+
         virtual void startScreensaver(bool generateMediaList) = 0;
         virtual void stopScreensaver() = 0;
         virtual void nextGame() = 0;
-        virtual void renderScreensaver() = 0;
-        virtual bool allowSleep() = 0;
-        virtual void update(int deltaTime) = 0;
-        virtual bool isScreensaverActive() = 0;
-        virtual FileData* getCurrentGame() = 0;
         virtual void launchGame() = 0;
+        virtual void goToGame() = 0;
+
+        virtual void renderScreensaver() = 0;
+        virtual void update(int deltaTime) = 0;
+
+        virtual FileData* getCurrentGame() = 0;
+        virtual void triggerNextGame() = 0;
     };
 
     class InfoPopup
@@ -84,10 +89,11 @@ public:
     void setInfoPopup(InfoPopup* infoPopup) { delete mInfoPopup; mInfoPopup = infoPopup; }
     inline void stopInfoPopup() { if (mInfoPopup) mInfoPopup->stop(); };
 
-    void startScreensaver();
-    bool cancelScreensaver();
-    void renderScreensaver();
     bool isScreensaverActive() { return mRenderScreensaver; };
+    void startScreensaver();
+    bool stopScreensaver();
+    void renderScreensaver();
+    void screensaverTriggerNextGame() { mScreensaver->triggerNextGame(); };
 
     void setLaunchedGame();
     void unsetLaunchedGame();

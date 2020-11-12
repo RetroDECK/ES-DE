@@ -13,6 +13,7 @@
 #include "utils/StringUtil.h"
 #include "PowerSaver.h"
 #include "Settings.h"
+#include "Window.h"
 
 #if defined(__APPLE__)
 #include "utils/FileSystemUtil.h"
@@ -234,13 +235,22 @@ void VideoVlcComponent::handleLooping()
     if (mIsPlaying && mMediaPlayer) {
         libvlc_state_t state = libvlc_media_player_get_state(mMediaPlayer);
         if (state == libvlc_Ended) {
-            libvlc_media_player_set_media(mMediaPlayer, mMedia);
+            // If the screensaver video swap time is set to 0, it means we should
+            // skip to the next game when the video has finished playing.
+            if (mScreensaverMode &&
+                    Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout") == 0) {
+                mWindow->screensaverTriggerNextGame();
+            }
+            else {
+                libvlc_media_player_set_media(mMediaPlayer, mMedia);
 
-            if ((!Settings::getInstance()->getBool("GamelistVideoAudio") && !mScreensaverMode) ||
-                (!Settings::getInstance()->getBool("ScreensaverVideoAudio") && mScreensaverMode))
-                libvlc_audio_set_mute(mMediaPlayer, 1);
+                if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
+                        !mScreensaverMode) || (!Settings::getInstance()->
+                        getBool("ScreensaverVideoAudio") && mScreensaverMode))
+                    libvlc_audio_set_mute(mMediaPlayer, 1);
 
-            libvlc_media_player_play(mMediaPlayer);
+                libvlc_media_player_play(mMediaPlayer);
+            }
         }
     }
 }

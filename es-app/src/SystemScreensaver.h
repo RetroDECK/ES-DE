@@ -29,11 +29,13 @@ public:
     virtual void stopScreensaver();
     virtual void nextGame();
     virtual void launchGame();
+    virtual void goToGame();
 
     virtual void renderScreensaver();
     virtual void update(int deltaTime);
 
     virtual FileData* getCurrentGame() { return mCurrentGame; };
+    virtual void triggerNextGame() { mTriggerNextGame = true; };
 
 private:
     void generateImageList();
@@ -67,7 +69,8 @@ private:
     std::string mSystemName;
 
     int mTimer;
-    int mVideoChangeTime;
+    int mMediaSwapTime;
+    bool mTriggerNextGame;
     bool mHasMediaFiles;
     float mOpacity;
     float mDimValue;

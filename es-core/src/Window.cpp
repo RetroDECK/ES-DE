@@ -12,6 +12,7 @@
 #include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
 #include "resources/Font.h"
+#include "Sound.h"
 #include "InputManager.h"
 #include "Log.h"
 #include "Scripting.h"
@@ -154,7 +155,7 @@ void Window::input(InputConfig* config, Input input)
                 customImageSlideshow = true;
 
             if ((customImageSlideshow || mScreensaver->getCurrentGame() != nullptr) &&
-                    (config->isMappedTo("a", input) ||
+                    (config->isMappedTo("a", input) ||  config->isMappedTo("y", input) ||
                     config->isMappedLike("left", input) || config->isMappedLike("right", input))) {
                 // Left or right browses to the next video or image.
                 if (config->isMappedLike("left", input) || config->isMappedLike("right", input)) {
@@ -166,8 +167,16 @@ void Window::input(InputConfig* config, Input input)
                 }
                 else if (config->isMappedTo("a", input) && input.value != 0) {
                     // Launch game.
-                    cancelScreensaver();
+                    stopScreensaver();
                     mScreensaver->launchGame();
+                    // To force handling the wake up process.
+                    mSleeping = true;
+                }
+                else if (config->isMappedTo("y", input) && input.value != 0) {
+                    // Jump to the game in its gamelist, but do not launch it.
+                    stopScreensaver();
+                    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                    mScreensaver->goToGame();
                     // To force handling the wake up process.
                     mSleeping = true;
                 }
@@ -177,7 +186,7 @@ void Window::input(InputConfig* config, Input input)
 
     if (mSleeping) {
         // Wake up.
-        cancelScreensaver();
+        stopScreensaver();
         mSleeping = false;
         onWake();
         return;
@@ -185,7 +194,7 @@ void Window::input(InputConfig* config, Input input)
 
     // Any keypress cancels the screensaver.
     if (input.value != 0 && isScreensaverActive()) {
-        cancelScreensaver();
+        stopScreensaver();
         return;
     }
 
@@ -590,7 +599,7 @@ void Window::startScreensaver()
     }
 }
 
-bool Window::cancelScreensaver()
+bool Window::stopScreensaver()
 {
     if (mScreensaver && mRenderScreensaver) {
         mScreensaver->stopScreensaver();

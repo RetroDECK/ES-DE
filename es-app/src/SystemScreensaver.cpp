@@ -42,7 +42,8 @@ SystemScreensaver::SystemScreensaver(
         mCurrentGame(nullptr),
         mPreviousGame(nullptr),
         mTimer(0),
-        mVideoChangeTime(30000),
+        mMediaSwapTime(0),
+        mTriggerNextGame(false),
         mHasMediaFiles(false),
         mOpacity(0.0f),
         mDimValue(1.0),
@@ -98,7 +99,7 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
         // This creates a fade transition between the images.
         mState = STATE_FADE_OUT_WINDOW;
 
-        mVideoChangeTime = Settings::getInstance()->getInt("ScreensaverSwapImageTimeout");
+        mMediaSwapTime = Settings::getInstance()->getInt("ScreensaverSwapImageTimeout");
 
         // Load a random image.
         if (Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages")) {
@@ -155,7 +156,7 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
         // This creates a fade transition between the videos.
         mState = STATE_FADE_OUT_WINDOW;
 
-        mVideoChangeTime = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout");
+        mMediaSwapTime = Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout");
 
         // Load a random video.
         if (generateMediaList)
@@ -241,6 +242,18 @@ void SystemScreensaver::launchGame()
     }
 }
 
+void SystemScreensaver::goToGame()
+{
+    if (mCurrentGame != nullptr) {
+        // Go to the game in the gamelist view, but don't launch it.
+        ViewController::get()->goToGameList(mCurrentGame->getSystem());
+        IGameListView* view = ViewController::get()->
+                getGameListView(mCurrentGame->getSystem()).get();
+        view->setCursor(mCurrentGame);
+        ViewController::get()->resetMovingCamera();
+    }
+}
+
 void SystemScreensaver::renderScreensaver()
 {
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
@@ -290,7 +303,7 @@ void SystemScreensaver::renderScreensaver()
                                 0x00000000 | mRectangleFadeIn );
                     }
                     if (mRectangleFadeIn < 180)
-                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 4, 0, 255);
+                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6, 0, 255);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
@@ -331,7 +344,7 @@ void SystemScreensaver::renderScreensaver()
                                 0x00000000 | mRectangleFadeIn );
                     }
                     if (mRectangleFadeIn < 180)
-                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 4, 0, 255);
+                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6, 0, 255);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
@@ -406,13 +419,21 @@ void SystemScreensaver::update(int deltaTime)
         }
     }
     else if (mState == STATE_SCREENSAVER_ACTIVE) {
-        // Update the timer that swaps the videos.
-        mTimer += deltaTime;
-        if (mTimer > mVideoChangeTime)
+        // Update the timer that swaps the media, unless the swap time is set to 0 (only
+        // applicable for the video screensaver). This means that videos play to the end,
+        // at which point VideoVlcComponent will trigger a skip to the next game.
+        if (mMediaSwapTime != 0) {
+            mTimer += deltaTime;
+            if (mTimer > mMediaSwapTime)
+                nextGame();
+        }
+        if (mTriggerNextGame) {
+            mTriggerNextGame = false;
             nextGame();
+        }
     }
 
-    // If we have a loaded video then update it.
+    // If we have a loaded a video or image, then update it.
     if (mVideoScreensaver)
         mVideoScreensaver->update(deltaTime);
     if (mImageScreensaver)
@@ -571,10 +592,14 @@ void SystemScreensaver::generateOverlayInfo()
     if (mGameName == "" || mSystemName == "")
         return;
 
-    float posX = static_cast<float>(Renderer::getWindowWidth()) * 0.03;
-    float posY = static_cast<float>(Renderer::getWindowHeight()) * 0.87;
+    float posX = static_cast<float>(Renderer::getWindowWidth()) * 0.023;
+    float posY = static_cast<float>(Renderer::getWindowHeight()) * 0.02;
 
-    const std::string gameName = Utils::String::toUpper(mGameName);
+    std::string favoriteChar;
+    if (mCurrentGame->getFavorite())
+        favoriteChar = "  " + mCurrentGame->FAVORITE_CHAR;
+
+    const std::string gameName = Utils::String::toUpper(mGameName) + favoriteChar;
     const std::string systemName = Utils::String::toUpper(mSystemName);
     const std::string overlayText = gameName + "\n" + systemName;
 
