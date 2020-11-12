@@ -695,7 +695,7 @@ This will fill the entire screen surface but will possibly break the aspect rati
 
 **Display game info overlay**
 
-This will display an overlay in the bottom left corner, showing the game name and the game system name.
+This will display an overlay in the bottom left corner, showing the game name and the game system name. A star following the game name indicates that it's a favorite.
 
 **Render scanlines** _(OpenGL renderer only)_
 
@@ -731,7 +731,7 @@ This will fill the entire screen surface but will possibly break the aspect rati
 
 **Display game info overlay**
 
-This will display an overlay in the bottom left corner, showing the game name and the game system name.
+This will display an overlay in the bottom left corner, showing the game name and the game system name. A star following the game name indicates that it's a favorite.
 
 **Render scanlines** _(OpenGL renderer only)_
 

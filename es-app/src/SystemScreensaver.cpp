@@ -302,13 +302,14 @@ void SystemScreensaver::renderScreensaver()
                                 mGameOverlayRectangleCoords[3], 0x00000000 | mRectangleFadeIn,
                                 0x00000000 | mRectangleFadeIn );
                     }
-                    if (mRectangleFadeIn < 180)
-                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6, 0, 255);
+                    mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6 +
+                            mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
-                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    if (mTextFadeIn > 50)
+                        mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
                     if (mTextFadeIn < 255)
-                        mTextFadeIn = Math::clamp(mTextFadeIn + 8, 0, 255);
+                        mTextFadeIn = Math::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
                 }
             }
             else {
@@ -343,13 +344,14 @@ void SystemScreensaver::renderScreensaver()
                                 mGameOverlayRectangleCoords[3], 0x00000000 | mRectangleFadeIn,
                                 0x00000000 | mRectangleFadeIn );
                     }
-                    if (mRectangleFadeIn < 180)
-                        mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6, 0, 255);
+                    mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6 +
+                            mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
-                    mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
+                    if (mTextFadeIn > 50)
+                        mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
                     if (mTextFadeIn < 255)
-                        mTextFadeIn = Math::clamp(mTextFadeIn + 8, 0, 255);
+                        mTextFadeIn = Math::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
                 }
             }
             else {
