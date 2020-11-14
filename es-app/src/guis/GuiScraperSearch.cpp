@@ -323,7 +323,7 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
         else {
             mFoundGame = false;
             ComponentListRow row;
-            row.addElement(std::make_shared<TextComponent>(mWindow, "NO GAMES FOUND - SKIP",
+            row.addElement(std::make_shared<TextComponent>(mWindow, "NO GAMES FOUND",
                     font, color), true);
 
             if (mSkipCallback)
@@ -659,15 +659,13 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         // If the setting to search based on metadata name has been set, then show this string
         // regardless of whether the entry is an arcade game and TheGamesDB is used.
         if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
-            searchString = params.game->metadata.get("name");
+            searchString = Utils::String::removeParenthesis(params.game->metadata.get("name"));
         }
         else {
             // If searching based on the actual file name, then expand to the full game name
             // in case the scraper is set to TheGamesDB and it's an arcade game. This is required
             // as TheGamesDB has issues with searches using the short MAME names.
-            if (Settings::getInstance()->getString("Scraper") == "thegamesdb" &&
-                    (params.system->hasPlatformId(PlatformIds::ARCADE) ||
-                    params.system->hasPlatformId(PlatformIds::NEOGEO)))
+            if (params.game->isArcadeGame())
                 searchString = MameNames::getInstance()->getCleanName(params.game->getCleanName());
             else
                 searchString = params.game->getCleanName();

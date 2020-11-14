@@ -11,12 +11,10 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "FileData.h"
-#include "FileFilterIndex.h"
 #include "Log.h"
 #include "Settings.h"
 #include "SystemData.h"
 
-#include <chrono>
 #include <pugixml.hpp>
 
 FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType type)

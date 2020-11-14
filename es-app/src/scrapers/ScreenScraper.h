@@ -71,6 +71,8 @@ public:
         std::string media_screenshot = "ss";
         std::string media_video = "video";
 
+        bool isArcadeSystem;
+
         // Which Region to use when selecting the artwork.
         // Applies to: artwork, name of the game, date of release.
         // This is read from es_settings.cfg, setting 'ScraperRegion'.
@@ -96,7 +98,7 @@ protected:
             std::string region);
     bool isGameRequest() { return !mRequestQueue; }
 
-    std::queue< std::unique_ptr<ScraperRequest> >* mRequestQueue;
+    std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;
 };
 
 #endif // ES_APP_SCRAPERS_SCREEN_SCRAPER_H

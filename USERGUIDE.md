@@ -424,11 +424,15 @@ The multi-scraper is launched from the main menu, it's the first option on the m
 
 ### Scraping process
 
-The process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes just removing some extra characters such as disk information or other data from the search name yields a better result.
+The process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes small changes like adding or removing a colon or a minus sign can yield better results. Note that the searching is handled entirely by the scraper service, ES just presents the results returned from the service.
 
-In general the actual file name of the game is used for the scraper, the exception being MAME/arcade games when using TheGamesDB, as the MAME names are then expanded to the full game names.
+By default, ES will search using the metadata name of the game. If no name has been defined via scraping or manually using the metadata editor, this name will correspond to the physical file name minus all text inside either normal brackets '()' or square brackets '[]'. So for example the physical filename 'Mygame (U) [v2].zip' will be stripped to simply 'Mygame' when performing the scraping.
 
-Hopefully the scraping process should be self-explanatory once you try it in ES.
+The behavior of using the metadata name rather than the file name can be changed using the setting _Search using metadata name_ as described [below](USERGUIDE.md#other-settings).
+
+Note that there is  an exception to this behavior for arcade games (MAME and Neo Geo). For ScreenScraper the short MAME names are used by default as this scraper service fully supports that. For TheGamesDB the short names are instead expanded to the full games names using a lookup in the MAME name database supplied with the ES installation. It's possible to override this automatic behavior by using the _Refine Search_ button in the scraper GUI if the search did not yield any results, or if the wrong game was returned. In general though, searching for arcade games is very reliable assuming the physical game files follow the MAME name standard.
+
+Apart from this, hopefully the scraping process should be self-explanatory once you try it in ES.
 
 ### Manually copying game media files
 
@@ -695,7 +699,7 @@ This will fill the entire screen surface but will possibly break the aspect rati
 
 **Display game info overlay**
 
-This will display an overlay in the bottom left corner, showing the game name and the game system name. A star following the game name indicates that it's a favorite.
+This will display an overlay in the upper left corner, showing the game name and the game system name. A star following the game name indicates that it's a favorite.
 
 **Render scanlines** _(OpenGL renderer only)_
 
@@ -731,7 +735,7 @@ This will fill the entire screen surface but will possibly break the aspect rati
 
 **Display game info overlay**
 
-This will display an overlay in the bottom left corner, showing the game name and the game system name. A star following the game name indicates that it's a favorite.
+This will display an overlay in the upper left corner, showing the game name and the game system name. A star following the game name indicates that it's a favorite.
 
 **Render scanlines** _(OpenGL renderer only)_
 

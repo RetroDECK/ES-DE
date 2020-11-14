@@ -21,6 +21,7 @@
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "GuiMetaDataEd.h"
+#include "MameNames.h"
 #include "Sound.h"
 #include "SystemData.h"
 
@@ -333,7 +334,14 @@ void GuiGamelistOptions::openMetaDataEd()
         const std::vector<MetaDataDecl>& mdd = file->metadata.getMDD();
         for (auto it = mdd.cbegin(); it != mdd.cend(); it++) {
             if (it->key == "name") {
-                file->metadata.set(it->key, file->getDisplayName());
+               if (file->isArcadeGame()) {
+                    // If it's a MAME or Neo Geo game, expand the game name accordingly.
+                    file->metadata.set(it->key, MameNames::getInstance()->
+                            getCleanName(file->getCleanName()));
+                }
+                else {
+                    file->metadata.set(it->key, file->getDisplayName());
+                }
                 continue;
             }
             file->metadata.set(it->key, it->defaultValue);
@@ -343,8 +351,9 @@ void GuiGamelistOptions::openMetaDataEd()
         mWindow->invalidateCachedBackground();
 
         // Remove the folder entry from the gamelist.xml file.
-        file->setDeletionFlag();
+        file->setDeletionFlag(true);
         file->getParent()->getSystem()->writeMetaData();
+        file->setDeletionFlag(false);
     };
 
     deleteGameBtnFunc = [this, file] {

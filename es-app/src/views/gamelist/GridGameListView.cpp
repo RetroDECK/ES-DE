@@ -579,7 +579,7 @@ void GridGameListView::remove(FileData *game, bool deleteFile)
 
     // If a game has been deleted, immediately remove the entry from gamelist.xml
     // regardless of the value of the setting SaveGamelistsMode.
-    game->setDeletionFlag();
+    game->setDeletionFlag(true);
     parent->getSystem()->writeMetaData();
 
     // Remove before repopulating (removes from parent), then update the view.

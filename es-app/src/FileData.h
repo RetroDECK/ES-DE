@@ -70,7 +70,7 @@ public:
     const std::string getVideoPath() const;
 
     bool getDeletionFlag() { return mDeletionFlag; };
-    void setDeletionFlag() { mDeletionFlag = true; };
+    void setDeletionFlag(bool setting) { mDeletionFlag = setting; };
 
     const std::vector<FileData*>& getChildrenListToDisplay();
     std::vector<FileData*> getFilesRecursive(unsigned int typeMask,
@@ -87,6 +87,7 @@ public:
 
     virtual std::string getKey();
     const bool isArcadeAsset();
+    const bool isArcadeGame();
     inline std::string getFullPath() { return getPath(); };
     inline std::string getFileName() { return Utils::FileSystem::getFileName(getPath()); };
     virtual FileData* getSourceFileData();

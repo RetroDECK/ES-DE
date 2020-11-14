@@ -390,6 +390,15 @@ const bool FileData::isArcadeAsset()
             MameNames::getInstance()->isDevice(stem)));
 }
 
+const bool FileData::isArcadeGame()
+{
+    const std::string stem = Utils::FileSystem::getStem(mPath);
+    return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
+            mSystem->hasPlatformId(PlatformIds::NEOGEO))) &&
+            (!MameNames::getInstance()->isBios(stem) &&
+            !MameNames::getInstance()->isDevice(stem)));
+}
+
 FileData* FileData::getSourceFileData()
 {
     return this;

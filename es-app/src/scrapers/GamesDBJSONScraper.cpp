@@ -10,6 +10,7 @@
 #include "scrapers/GamesDBJSONScraper.h"
 #include "scrapers/GamesDBJSONScraperResources.h"
 
+#include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "FileData.h"
 #include "Log.h"
@@ -130,14 +131,13 @@ void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params
             // If the setting to search based on the metadata name has been set, then search
             // using this regardless of whether the entry is an arcade game.
             if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
-                cleanName = params.game->metadata.get("name");
+                cleanName = Utils::String::removeParenthesis(params.game->metadata.get("name"));
             }
             else {
                 // If not searching based on the metadata name, then check whether it's an
                 // arcade game and if so expand to the full game name. This is required as
                 // TheGamesDB has issues with searching using the short MAME names.
-                if (params.system->hasPlatformId(PlatformIds::ARCADE) ||
-                        params.system->hasPlatformId(PlatformIds::NEOGEO))
+                if (params.game->isArcadeGame())
                     cleanName = MameNames::getInstance()->getCleanName(params.game->getCleanName());
                 else
                     cleanName = params.game->getCleanName();
@@ -456,5 +456,9 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         catch (std::runtime_error& e) {
             LOG(LogError) << "Error while processing game: " << e.what();
         }
+    }
+
+    if (results.size() == 0) {
+        LOG(LogDebug) << "TheGamesDBJSONRequest::process(): No games found.";
     }
 }

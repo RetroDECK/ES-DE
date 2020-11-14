@@ -152,16 +152,22 @@ pugi::xml_node find_child_by_attribute_list(const pugi::xml_node& node_parent,
 }
 
 void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
-        std::queue< std::unique_ptr<ScraperRequest> >& requests,
+        std::queue<std::unique_ptr<ScraperRequest>>& requests,
         std::vector<ScraperSearchResult>& results)
 {
     std::string path;
 
     ScreenScraperRequest::ScreenScraperConfig ssConfig;
 
+    if (params.game->isArcadeGame())
+         ssConfig.isArcadeSystem = true;
+    else
+        ssConfig.isArcadeSystem = false;
+
     if (params.nameOverride == "") {
         if (Settings::getInstance()->getBool("ScraperSearchMetadataName"))
-            path = ssConfig.getGameSearchUrl(params.game->metadata.get("name"));
+            path = ssConfig.getGameSearchUrl(
+                    Utils::String::removeParenthesis(params.game->metadata.get("name")));
         else
             path = ssConfig.getGameSearchUrl(params.game->getCleanName());
     }
@@ -252,23 +258,54 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         std::vector<ScraperSearchResult>& out_results)
 {
     pugi::xml_node data = xmldoc.child("Data");
-    pugi::xml_node game = data.child("jeu");
 
-    if (game) {
+    // Check if our username was included in the response (assuming an account is used).
+    // It seems as if this information is randomly missing from the server response, which
+    // also seems to correlate with missing scraper allowance data. This is however a scraper
+    // service issue so we're not attempting to compensate for it here.
+    if (Settings::getInstance()->getBool("ScraperUseAccountScreenScraper") &&
+            Settings::getInstance()->getString("ScraperUsernameScreenScraper") != "" &&
+            Settings::getInstance()->getString("ScraperPasswordScreenScraper") != "") {
+        std::string userID = data.child("ssuser").child("id").text().get();
+        if (userID != "") {
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account '" <<
+                    userID << "'.";
+        }
+        else {
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): The configured account '" <<
+                    Settings::getInstance()->getString("ScraperUsernameScreenScraper") <<
+                    "' was not included in the scraper response, wrong username or password?";
+        }
+    }
+
+    // Find how many more requests we can make before the scraper request
+    // allowance counter is reset. For some strange reason the ssuser information
+    // is not provided for all games even though the request looks identical apart
+    // from the game name.
+    unsigned requestsToday = data.child("ssuser").child("requeststoday").text().as_uint();
+    unsigned maxRequestsPerDay = data.child("ssuser").child("maxrequestsperday").text().as_uint();
+    unsigned int scraperRequestAllowance = maxRequestsPerDay - requestsToday;
+
+    // Scraping allowance.
+    if (maxRequestsPerDay > 0) {
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: " <<
+                requestsToday << "/" << maxRequestsPerDay << " (" <<
+                scraperRequestAllowance << " remaining).";
+    }
+    else {
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: "
+                "No statistics were provided with the response.";
+    }
+
+    if (data.child("jeux"))
+		data = data.child("jeux");
+
+    for (pugi::xml_node game = data.child("jeu"); game; game = game.next_sibling("jeu")) {
         ScraperSearchResult result;
         ScreenScraperRequest::ScreenScraperConfig ssConfig;
 
+        result.scraperRequestAllowance = scraperRequestAllowance;
         result.gameID = game.attribute("id").as_string();
-
-        // Find how many more requests we can make before the scraper request
-        // allowance counter is reset. For some strange reason the ssuser information
-        // is not provided for all games even though the request looks identical apart
-        // from the game name.
-        unsigned requestsToday =
-                data.child("ssuser").child("requeststoday").text().as_uint();
-        unsigned maxRequestsPerDay =
-                data.child("ssuser").child("maxrequestsperday").text().as_uint();
-        result.scraperRequestAllowance = maxRequestsPerDay - requestsToday;
 
         std::string region =
                 Utils::String::toLower(Settings::getInstance()->getString("ScraperRegion"));
@@ -325,7 +362,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                     result.mdl.get("releasedate");
         }
 
-        /// Developer for the game( Xpath: Data/jeu[0]/developpeur ).
+        // Developer for the game (Xpath: Data/jeu[0]/developpeur).
         std::string developer = game.child("developpeur").text().get();
         if (!developer.empty()) {
             result.mdl.set("developer", Utils::String::replace(developer, "&nbsp;", " "));
@@ -333,7 +370,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                     result.mdl.get("developer");
         }
 
-        // Publisher for the game ( Xpath: Data/jeu[0]/editeur ).
+        // Publisher for the game (Xpath: Data/jeu[0]/editeur).
         std::string publisher = game.child("editeur").text().get();
         if (!publisher.empty()) {
             result.mdl.set("publisher", Utils::String::replace(publisher, "&nbsp;", " "));
@@ -341,7 +378,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                     result.mdl.get("publisher");
         }
 
-        // Genre fallback language: EN. ( Xpath: Data/jeu[0]/genres/genre[*] ).
+        // Genre fallback language: EN. (Xpath: Data/jeu[0]/genres/genre[*]).
         std::string genre = find_child_by_attribute_list(game.child("genres"),
                 "genre", "langue", { language, "en" }).text().get();
         if (!genre.empty()) {
@@ -356,34 +393,6 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             result.mdl.set("players", players);
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): Players: " <<
                     result.mdl.get("players");
-        }
-
-        // Username, if an account is used for scraping.
-        if (Settings::getInstance()->getBool("ScraperUseAccountScreenScraper") &&
-                Settings::getInstance()->getString("ScraperUsernameScreenScraper") != "" &&
-                Settings::getInstance()->getString("ScraperPasswordScreenScraper") != "") {
-            // Check if our username was included in the response.
-            std::string userID = data.child("ssuser").child("id").text().get();
-            if (userID != "") {
-                LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account '" <<
-                        userID << "'.";
-            }
-            else {
-                LOG(LogDebug) << "ScreenScraperRequest::processGame(): The configured account '" <<
-                        Settings::getInstance()->getString("ScraperUsernameScreenScraper") <<
-                        "' was not included in the scraper response, wrong username or password?";
-            }
-        }
-
-        // Scraping allowance.
-        if (maxRequestsPerDay > 0) {
-            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: " <<
-                    requestsToday << "/" << maxRequestsPerDay << " (" <<
-                    result.scraperRequestAllowance << " remaining).";
-        }
-        else {
-            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: "
-                    "No statistics were provided with the response.";
         }
 
         // Media super-node.
@@ -409,6 +418,10 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         result.mediaURLFetch = COMPLETED;
         out_results.push_back(result);
     } // Game.
+
+    if (out_results.size() == 0) {
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): No games found.";
+    }
 }
 
 void ScreenScraperRequest::processMedia(
@@ -505,12 +518,31 @@ void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
 std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
         const std::string gameName) const
 {
-    std::string screenScraperURL = API_URL_BASE
-        + "/jeuInfos.php?devid=" + Utils::String::scramble(API_DEV_U, API_DEV_KEY)
-        + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
-        + "&softname=" + HttpReq::urlEncode(API_SOFT_NAME)
-        + "&output=xml"
-        + "&romnom=" + HttpReq::urlEncode(gameName);
+    std::string screenScraperURL;
+
+    // If the game is a arcade game, then search using the individual ROM name rather than
+    // running a wider text matching search. Also run this search mode if the game name is
+    // shorter than four characters, as screenscraper.fr will otherwise throw an error that
+    // the necessary search parameters were not provided with the search.
+    // Possibly this is because a search using less than four characters would return too
+    // many results. But there are some games with really short names, so it's annoying that
+    // they can't be searched using this method.
+    if (isArcadeSystem || gameName.size() < 4) {
+        screenScraperURL = API_URL_BASE
+                + "/jeuInfos.php?devid=" + Utils::String::scramble(API_DEV_U, API_DEV_KEY)
+                + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
+                + "&softname=" + HttpReq::urlEncode(API_SOFT_NAME)
+                + "&output=xml"
+                + "&romnom=" + HttpReq::urlEncode(gameName);
+    }
+    else {
+        screenScraperURL = API_URL_BASE
+                + "/jeuRecherche.php?devid=" + Utils::String::scramble(API_DEV_U, API_DEV_KEY)
+                + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
+                + "&softname=" + HttpReq::urlEncode(API_SOFT_NAME)
+                + "&output=xml"
+                + "&recherche=" + HttpReq::urlEncode(gameName);
+    }
 
     // Username / password, if this has been setup and activated.
     if (Settings::getInstance()->getBool("ScraperUseAccountScreenScraper")) {
