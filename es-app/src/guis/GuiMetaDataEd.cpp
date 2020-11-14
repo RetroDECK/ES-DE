@@ -464,18 +464,16 @@ void GuiMetaDataEd::close()
 
     std::function<void()> closeFunc;
         closeFunc = [this] {
-            ViewController::get()->onPauseVideo();
-            delete this;
-        };
-
-    std::function<void()> closeFuncReload;
-        closeFuncReload = [this] {
-            // Always reload the gamelist if media files were updated, even if the user
-            // selected to not save any metadata changes.
             if (mMediaFilesUpdated) {
+                // Always reload the gamelist if media files were updated, even if the user
+                // chose to not save any metadata changes. Also manually unload the game image
+                // and marquee, as otherwise they would not get updated until the user scrolls up
+                // and down the gamelist.
+                TextureResource::manualUnload(mScraperParams.game->getImagePath(), false);
+                TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
                 ViewController::get()->reloadGameListView(mScraperParams.system);
-                ViewController::get()->onPauseVideo();
             }
+            ViewController::get()->onPauseVideo();
             delete this;
         };
 
@@ -484,7 +482,7 @@ void GuiMetaDataEd::close()
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
             "SAVE CHANGES?",
             "YES", [this, closeFunc] { save(); closeFunc(); },
-            "NO", closeFuncReload
+            "NO", closeFunc
         ));
     }
     else {

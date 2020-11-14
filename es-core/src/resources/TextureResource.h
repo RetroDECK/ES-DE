@@ -9,8 +9,8 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 #define ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 
-#include "math/Vector2i.h"
 #include "math/Vector2f.h"
+#include "math/Vector2i.h"
 #include "resources/ResourceManager.h"
 #include "resources/TextureDataManager.h"
 
@@ -28,6 +28,7 @@ public:
             bool forceLoad = false, bool dynamic = true);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
+    static void manualUnload(std::string path, bool tile);
 
     // For scalable source images in textures we want to set the resolution to rasterize at.
     void rasterizeAt(size_t width, size_t height);
@@ -65,7 +66,7 @@ private:
 
     typedef std::pair<std::string, bool> TextureKeyType;
     // Map of textures, used to prevent duplicate textures.
-    static std::map< TextureKeyType, std::weak_ptr<TextureResource> > sTextureMap;
+    static std::map<TextureKeyType, std::weak_ptr<TextureResource>> sTextureMap;
     // Set of all textures, used for memory management.
     static std::set<TextureResource*> sAllTextures;
 };

@@ -87,6 +87,18 @@ void TextureResource::initFromMemory(const char* data, size_t length)
     mSourceSize = Vector2f(mTextureData->sourceWidth(), mTextureData->sourceHeight());
 }
 
+void TextureResource::manualUnload(std::string path, bool tile)
+{
+    const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(path);
+
+    TextureKeyType key(canonicalPath, tile);
+    auto foundTexture = sTextureMap.find(key);
+
+    if (foundTexture != sTextureMap.cend()) {
+        sTextureMap.erase(foundTexture);
+    }
+}
+
 const Vector2i TextureResource::getSize() const
 {
     return mSize;
