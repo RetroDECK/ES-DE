@@ -140,8 +140,8 @@ GuiScraperSearch::~GuiScraperSearch()
     if (mMDResolveHandle)
         mMDResolveHandle.reset();
 
-    if (mThumbnailReq)
-        mThumbnailReq.reset();
+    if (mThumbnailReqMap.size() > 0)
+        mThumbnailReqMap.clear();
 
     HttpReq::cleanupCurlMulti();
 }
@@ -287,7 +287,7 @@ void GuiScraperSearch::search(const ScraperSearchParams& params)
     mResultList->clear();
     mScraperResults.clear();
     mMDRetrieveURLsHandle.reset();
-    mThumbnailReq.reset();
+    mThumbnailReqMap.clear();
     mMDResolveHandle.reset();
     updateInfoPane();
 
@@ -297,7 +297,7 @@ void GuiScraperSearch::search(const ScraperSearchParams& params)
 
 void GuiScraperSearch::stop()
 {
-    mThumbnailReq.reset();
+    mThumbnailReqMap.clear();
     mSearchHandle.reset();
     mMDResolveHandle.reset();
     mMDRetrieveURLsHandle.reset();
@@ -353,14 +353,14 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
     // If there is no thumbnail to download and we're in semi-automatic mode, proceed to return
     // the results or we'll get stuck forever waiting for a thumbnail to be downloaded.
     if (mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1 &&
-            mScraperResults.front().ThumbnailImageUrl == "")
+            mScraperResults.front().thumbnailImageUrl == "")
         returnResult(mScraperResults.front());
 
     // For automatic mode, if there's no thumbnail to download or no matching games found,
     // proceed directly or we'll get stuck forever.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
         if (mScraperResults.size() == 0 || (mScraperResults.size() > 0 &&
-                mScraperResults.front().ThumbnailImageUrl == "")) {
+                mScraperResults.front().thumbnailImageUrl == "")) {
             if (mScraperResults.size() == 0)
                 mSkipCallback();
             else
@@ -423,12 +423,12 @@ void GuiScraperSearch::updateInfoPane()
 
         mResultThumbnail->setImage("");
         const std::string& thumb = res.screenshotUrl.empty() ? res.coverUrl : res.screenshotUrl;
-        mScraperResults[i].ThumbnailImageUrl = thumb;
+        mScraperResults[i].thumbnailImageUrl = thumb;
 
         // Cache the thumbnail image in mScraperResults so that we don't need to download
         // it every time the list is scrolled back and forth.
-        if (mScraperResults[i].ThumbnailImageData.size() > 0) {
-            std::string content = mScraperResults[i].ThumbnailImageData;
+        if (mScraperResults[i].thumbnailImageData.size() > 0) {
+            std::string content = mScraperResults[i].thumbnailImageData;
             mResultThumbnail->setImage(content.data(), content.length());
             mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
         }
@@ -437,13 +437,15 @@ void GuiScraperSearch::updateInfoPane()
         else {
             if (!thumb.empty()) {
                 // Make sure we don't attempt to download the same thumbnail twice.
-                if (!mThumbnailReq && mScraperResults[i].thumbnailDownloadStatus != IN_PROGRESS) {
+                if (mScraperResults[i].thumbnailDownloadStatus != IN_PROGRESS) {
                     mScraperResults[i].thumbnailDownloadStatus = IN_PROGRESS;
-                    mThumbnailReq = std::unique_ptr<HttpReq>(new HttpReq(thumb));
+                    // Add an entry into the thumbnail map, this way we can track and download
+                    // each thumbnail separately even as they're downloading while scrolling
+                    // through the result list.
+                    mThumbnailReqMap.insert(std::pair<std::string,
+                            std::unique_ptr<HttpReq>>(mScraperResults[i].thumbnailImageUrl,
+                            std::unique_ptr<HttpReq>(new HttpReq(thumb))));
                 }
-            }
-            else {
-                mThumbnailReq.reset();
             }
         }
 
@@ -528,8 +530,13 @@ void GuiScraperSearch::update(int deltaTime)
     if (mBlockAccept)
         mBusyAnim.update(deltaTime);
 
-    if (mThumbnailReq && mThumbnailReq->status() != HttpReq::REQ_IN_PROGRESS)
-        updateThumbnail();
+    // Check if the thumbnail for the currently selected game has finished downloading.
+    if (mScraperResults.size() > 0) {
+        auto it = mThumbnailReqMap.find(mScraperResults[mResultList->
+                getCursorId()].thumbnailImageUrl);
+        if (it != mThumbnailReqMap.end() && it->second->status() != HttpReq::REQ_IN_PROGRESS)
+            updateThumbnail();
+    }
 
     if (mSearchHandle && mSearchHandle->status() != ASYNC_IN_PROGRESS) {
         auto status = mSearchHandle->status();
@@ -610,26 +617,29 @@ void GuiScraperSearch::update(int deltaTime)
 
 void GuiScraperSearch::updateThumbnail()
 {
-    if (mThumbnailReq && mThumbnailReq->status() == HttpReq::REQ_SUCCESS) {
+    auto it = mThumbnailReqMap.find(mScraperResults[mResultList->getCursorId()].thumbnailImageUrl);
+
+    if (it != mThumbnailReqMap.end() && it->second->status() == HttpReq::REQ_SUCCESS) {
         // Save thumbnail to mScraperResults cache and set the flag that the
         // thumbnail download has been completed for this game.
-        for (auto i = 0; i < mScraperResults.size(); i++) {
-            if (mScraperResults[i].thumbnailDownloadStatus == IN_PROGRESS) {
-                mScraperResults[i].ThumbnailImageData = mThumbnailReq->getContent();
-                mScraperResults[i].thumbnailDownloadStatus = COMPLETED;
-            }
+        if (mScraperResults[mResultList->getCursorId()].thumbnailDownloadStatus == IN_PROGRESS) {
+            mScraperResults[mResultList->getCursorId()].thumbnailImageData =
+                    it->second->getContent();
+            mScraperResults[mResultList->getCursorId()].thumbnailDownloadStatus = COMPLETED;
         }
         // Activate the thumbnail in the GUI.
-        std::string content = mThumbnailReq->getContent();
-        mResultThumbnail->setImage(content.data(), content.length());
-        mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
+        std::string content = mScraperResults[mResultList->getCursorId()].thumbnailImageData;
+        if (content.size() > 0) {
+            mResultThumbnail->setImage(content.data(), content.length());
+            mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
+        }
     }
     else {
-        LOG(LogWarning) << "thumbnail req failed: " << mThumbnailReq->getErrorMsg();
+        LOG(LogWarning) << "Thumbnail download failed: " << it->second->getErrorMsg();
         mResultThumbnail->setImage("");
     }
 
-    mThumbnailReq.reset();
+    mThumbnailReqMap.erase(it);
 
     // When the thumbnail has been downloaded and we are in automatic mode, or if
     // we are in semi-automatic mode with a single matching game result, we proceed

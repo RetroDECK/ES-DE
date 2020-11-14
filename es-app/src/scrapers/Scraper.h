@@ -53,8 +53,8 @@ struct ScraperSearchResult {
     enum downloadStatus thumbnailDownloadStatus = NOT_STARTED;
     enum downloadStatus mediaFilesDownloadStatus = NOT_STARTED;
 
-    std::string ThumbnailImageData; // Thumbnail cache, will contain entire image.
-    std::string ThumbnailImageUrl;
+    std::string thumbnailImageData; // Thumbnail cache, this will contain the entire image.
+    std::string thumbnailImageUrl;
 
     std::string box3dUrl;
     std::string coverUrl;

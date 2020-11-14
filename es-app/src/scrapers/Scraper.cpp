@@ -239,8 +239,8 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
 
         // If the image is cached already as the thumbnail, then we don't need
         // to download it again, in this case just save it to disk and resize it.
-        if (mResult.ThumbnailImageUrl == it->fileURL &&
-                mResult.ThumbnailImageData.size() > 0) {
+        if (mResult.thumbnailImageUrl == it->fileURL &&
+                mResult.thumbnailImageData.size() > 0) {
 
             // Remove any existing media file before attempting to write a new one.
             // This avoids the problem where there's already a file for this media type
@@ -268,7 +268,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
                 return;
             }
 
-            const std::string& content = mResult.ThumbnailImageData;
+            const std::string& content = mResult.thumbnailImageData;
             stream.write(content.data(), content.length());
             stream.close();
             if (stream.bad()) {

@@ -127,7 +127,7 @@ private:
     std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;
     std::unique_ptr<MDResolveHandle> mMDResolveHandle;
     std::vector<ScraperSearchResult> mScraperResults;
-    std::unique_ptr<HttpReq> mThumbnailReq;
+    std::map<std::string, std::unique_ptr<HttpReq>> mThumbnailReqMap;
 
     BusyComponent mBusyAnim;
 };
