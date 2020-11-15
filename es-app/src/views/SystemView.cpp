@@ -31,6 +31,7 @@ SystemView::SystemView(
         : IList<SystemViewData, SystemData*>
         (window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP),
         mPreviousScrollVelocity(0),
+        mUpdatedGameCount(false),
         mViewNeedsReload(true),
         mSystemInfo(window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER)
 {
@@ -152,9 +153,31 @@ void SystemView::populate()
     }
 }
 
+void SystemView::updateGameCount()
+{
+    std::pair<unsigned int, unsigned int> gameCount = getSelected()->getDisplayedGameCount();
+    std::stringstream ss;
+
+    if (!getSelected()->isGameSystem())
+        ss << "CONFIGURATION";
+    else if (getSelected()->isCollection() && (getSelected()->getName() == "favorites"))
+        ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S");
+    // The 'recent' gamelist has probably been trimmed after sorting, so we'll cap it at
+    // its maximum limit of 50 games.
+    else if (getSelected()->isCollection() && (getSelected()->getName() == "recent"))
+        ss << (gameCount.first > 50 ? 50 : gameCount.first) << " GAME" <<
+                (gameCount.first == 1 ? " " : "S");
+    else
+        ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S ") << "(" <<
+                gameCount.second << " FAVORITE" << (gameCount.second == 1 ? ")" : "S)");
+
+    mSystemInfo.setText(ss.str());
+}
+
 void SystemView::goToSystem(SystemData* system, bool animate)
 {
     setCursor(system);
+    updateGameCount();
 
     if (!animate)
         finishAnimation(0);
@@ -273,19 +296,9 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             mPreviousScrollVelocity = 1;
     }
 
-    // Animate mSystemInfo's opacity (fade out, wait, fade back in).
-    cancelAnimation(1);
-    cancelAnimation(2);
-
     std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
     bool goFast = transition_style == "instant";
     const float infoStartOpacity = mSystemInfo.getOpacity() / 255.f;
-
-    Animation* infoFadeOut = new LambdaAnimation(
-            [infoStartOpacity, this] (float t) {
-        mSystemInfo.setOpacity(static_cast<unsigned char>(
-                Math::lerp(infoStartOpacity, 0.f, t) * 255));
-    }, static_cast<int>(infoStartOpacity * (goFast ? 10 : 150)));
 
     // To prevent ugly jumps with two systems when quickly repeating the same direction.
     if (mPreviousScrollVelocity != 0 && posMax == 2 &&
@@ -293,50 +306,21 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         if (fabs(endPos - startPos) < 0.5 || fabs(endPos - startPos) > 1.5) {
             (mScrollVelocity < 0) ? endPos -= 1 : endPos += 1;
             (mCursor == 0) ? mCursor = 1 : mCursor = 0;
+            updateGameCount();
             return;
         }
     }
-
-    std::pair<unsigned int, unsigned int> gameCount = getSelected()->getDisplayedGameCount();
-
-    // Also change the text after we've fully faded out.
-    setAnimation(infoFadeOut, 0, [this, gameCount] {
-        std::stringstream ss;
-
-        if (!getSelected()->isGameSystem())
-            ss << "CONFIGURATION";
-        else if (getSelected()->isCollection() && (getSelected()->getName() == "favorites"))
-            ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S");
-        // The 'recent' gamelist has probably been trimmed after sorting, so we'll cap it at
-        // its maximum limit of 50 games.
-        else if (getSelected()->isCollection() && (getSelected()->getName() == "recent"))
-            ss << (gameCount.first > 50 ? 50 : gameCount.first) << " GAME" <<
-                    (gameCount.first == 1 ? " " : "S");
-        else
-            ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S ") << "(" <<
-                    gameCount.second << " FAVORITE" << (gameCount.second == 1 ? ")" : "S)");
-
-        mSystemInfo.setText(ss.str());
-    }, false, 1);
-
-    Animation* infoFadeIn = new LambdaAnimation(
-            [this](float t) {
-        mSystemInfo.setOpacity(static_cast<unsigned char>(Math::lerp(0.f, 1.f, t) * 255));
-    }, goFast ? 10 : 300);
-
-    // Wait 150ms to fade in.
-    setAnimation(infoFadeIn, goFast ? 0 : 500, nullptr, false, 2);
 
     // No need to animate transition, we're not going anywhere (probably mEntries.size() == 1).
     if (endPos == mCamOffset && endPos == mExtrasCamOffset)
         return;
 
     Animation* anim;
-    bool carousel_transitions = Settings::getInstance()->getBool("CarouselTransitions");
+
     if (transition_style == "fade") {
         float startExtrasFade = mExtrasFadeOpacity;
         anim = new LambdaAnimation(
-                [this, startExtrasFade, startPos, endPos, posMax, carousel_transitions](float t) {
+                [this, startExtrasFade, startPos, endPos, posMax](float t) {
             t -= 1;
             float f = Math::lerp(startPos, endPos, t*t*t + 1);
             if (f < 0)
@@ -344,7 +328,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             if (f >= posMax)
                 f -= posMax;
 
-            this->mCamOffset = carousel_transitions ? f : endPos;
+            this->mCamOffset = f;
 
             t += 1;
             if (t < 0.3f)
@@ -357,12 +341,15 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             if (t > 0.5f)
                 this->mExtrasCamOffset = endPos;
 
+            // Update the game count when the entire animation has been completed.
+            if (mExtrasFadeOpacity == 1.0)
+                updateGameCount();
         }, 500);
     }
     else if (transition_style == "slide") {
-        // Slide.
+        mUpdatedGameCount = false;
         anim = new LambdaAnimation(
-                [this, startPos, endPos, posMax, carousel_transitions](float t) {
+                [this, startPos, endPos, posMax](float t) {
             t -= 1;
             float f = Math::lerp(startPos, endPos, t*t*t + 1);
             if (f < 0)
@@ -370,14 +357,30 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             if (f >= posMax)
                 f -= posMax;
 
-            this->mCamOffset = carousel_transitions ? f : endPos;
+            this->mCamOffset = f;
             this->mExtrasCamOffset = f;
+
+            // Hack to make the game count being updated in the middle of the animation.
+            bool update = false;
+            if (endPos == -1 && fabs(fabs(posMax) - fabs(mCamOffset)) > 0.5 && !mUpdatedGameCount)
+                update = true;
+            else if (endPos > posMax && fabs(endPos - posMax - fabs(mCamOffset)) <
+                    0.5 && !mUpdatedGameCount)
+                update = true;
+            else if (fabs(fabs(endPos) - fabs(mCamOffset)) < 0.5 && !mUpdatedGameCount)
+                update = true;
+
+            if (update) {
+                mUpdatedGameCount = true;
+                updateGameCount();
+            }
         }, 500);
     }
     else {
         // Instant.
+        updateGameCount();
         anim = new LambdaAnimation(
-                [this, startPos, endPos, posMax, carousel_transitions ](float t) {
+                [this, startPos, endPos, posMax ](float t) {
             t -= 1;
             float f = Math::lerp(startPos, endPos, t*t*t + 1);
             if (f < 0)
@@ -385,9 +388,9 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             if (f >= posMax)
                 f -= posMax;
 
-            this->mCamOffset = carousel_transitions ? f : endPos;
+            this->mCamOffset = f;
             this->mExtrasCamOffset = endPos;
-        }, carousel_transitions ? 500 : 1);
+        }, 500);
     }
 
     setAnimation(anim, 0, nullptr, false, 0);
@@ -400,29 +403,16 @@ void SystemView::render(const Transform4x4f& parentTrans)
 
     Transform4x4f trans = getTransform() * parentTrans;
 
-    auto systemInfoZIndex = mSystemInfo.getZIndex();
-    auto minMax = std::minmax(mCarousel.zIndex, systemInfoZIndex);
+    renderExtras(trans, INT16_MIN, INT16_MAX);
 
-    renderExtras(trans, INT16_MIN, minMax.first);
-    renderFade(trans);
+    // Fade the screen if we're using fade transitions and we're currently transitioning.
+    // This basically renders a black rectangle on top of the currently visible extras
+    // (and beneath the carousel and help prompts).
+    if (mExtrasFadeOpacity)
+        renderFade(trans);
 
-    if (mCarousel.zIndex > mSystemInfo.getZIndex()) {
-        renderInfoBar(trans);
-    }
-    else {
-        renderCarousel(trans);
-    }
-
-    renderExtras(trans, minMax.first, minMax.second);
-
-    if (mCarousel.zIndex > mSystemInfo.getZIndex()) {
-        renderCarousel(trans);
-    }
-    else {
-        renderInfoBar(trans);
-    }
-
-    renderExtras(trans, minMax.second, INT16_MAX);
+    // Always render the carousel on top so that it's not faded.
+    renderCarousel(trans);
 }
 
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
@@ -597,12 +587,6 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
     Renderer::popClipRect();
 }
 
-void SystemView::renderInfoBar(const Transform4x4f& trans)
-{
-    Renderer::setMatrix(trans);
-    mSystemInfo.render(trans);
-}
-
 // Draw background extras.
 void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upper)
 {
@@ -637,10 +621,10 @@ void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upp
             SystemViewData data = mEntries.at(index).data;
             for (unsigned int j = 0; j < data.backgroundExtras.size(); j++) {
                 GuiComponent *extra = data.backgroundExtras[j];
-                if (extra->getZIndex() >= lower && extra->getZIndex() < upper) {
+                if (extra->getZIndex() >= lower && extra->getZIndex() < upper)
                     extra->render(extrasTrans);
-                }
             }
+            mSystemInfo.render(extrasTrans);
             Renderer::popClipRect();
         }
     }
@@ -649,12 +633,9 @@ void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upp
 
 void SystemView::renderFade(const Transform4x4f& trans)
 {
-    // Fade extras if necessary.
-    if (mExtrasFadeOpacity) {
-        unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mExtrasFadeOpacity * 255);
-        Renderer::setMatrix(trans);
-        Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), fadeColor, fadeColor);
-    }
+    unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mExtrasFadeOpacity * 255);
+    Renderer::setMatrix(trans);
+    Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), fadeColor, fadeColor);
 }
 
 // Populate the system carousel with the legacy values.

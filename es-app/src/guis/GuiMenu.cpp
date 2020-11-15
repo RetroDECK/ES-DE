@@ -258,22 +258,7 @@ void GuiMenu::openUISettings()
             s->setNeedsSaving();
         }
     });
-    #endif
 
-    // Carousel transitions.
-    auto carousel_transitions = std::make_shared<SwitchComponent>(mWindow);
-    carousel_transitions->setState(Settings::getInstance()->getBool("CarouselTransitions"));
-    s->addWithLabel("DISPLAY CAROUSEL TRANSITIONS", carousel_transitions);
-    s->addSaveFunc([carousel_transitions, s] {
-        if (carousel_transitions->getState() !=
-                Settings::getInstance()->getBool("CarouselTransitions")) {
-            Settings::getInstance()->setBool("CarouselTransitions",
-                    carousel_transitions->getState());
-            s->setNeedsSaving();
-        }
-    });
-
-    #if defined(USE_OPENGL_21)
     // Render scanlines for videos in the gamelists.
     auto gamelist_video_scanlines = std::make_shared<SwitchComponent>(mWindow);
     gamelist_video_scanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));

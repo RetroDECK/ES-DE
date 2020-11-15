@@ -76,13 +76,13 @@ protected:
 
 private:
     void populate();
+    void updateGameCount();
     void getViewElements(const std::shared_ptr<ThemeData>& theme);
     void getDefaultElements(void);
     void getCarouselFromTheme(const ThemeData::ThemeElement* elem);
 
     void renderCarousel(const Transform4x4f& parentTrans);
     void renderExtras(const Transform4x4f& parentTrans, float lower, float upper);
-    void renderInfoBar(const Transform4x4f& trans);
     void renderFade(const Transform4x4f& trans);
 
     SystemViewCarousel mCarousel;
@@ -94,6 +94,7 @@ private:
     float mExtrasFadeOpacity;
 
     int mPreviousScrollVelocity;
+    bool mUpdatedGameCount;
     bool mViewNeedsReload;
     bool mShowing;
 };

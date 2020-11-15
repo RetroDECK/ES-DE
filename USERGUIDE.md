@@ -625,10 +625,6 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 Animation to play when opening the main menu or the game options menu. Can be set to _scale-up_, _fade-in_ or _none_.
 
-**Display carousel transitions**
-
-Whether to perform an animation when transitioning between systems in the system view.
-
 **Render scanlines for gamelist videos** _(OpenGL renderer only)_
 
 Whether to use a shader to render scanlines for videos in the gamelist view. The effect is usually pretty subtle as the video is normally renderered in a limited size in the GUI, and the scanlines are sized relative to the video window size.
