@@ -49,7 +49,7 @@ public:
     void goToNextGameList();
     void goToPrevGameList();
     void goToGameList(SystemData* system);
-    void goToSystemView(SystemData* system);
+    void goToSystemView(SystemData* system, bool playTransition);
     void goToStart();
     void ReloadAndGoToStart();
 
@@ -109,14 +109,19 @@ private:
     ViewController(Window* window);
     static ViewController* sInstance;
 
-    void playViewTransition();
+    void playViewTransition(bool instant = false);
     int getSystemId(SystemData* system);
+    // Restore view position if it was moved during wrap around.
+    void restoreViewPosition();
 
     std::shared_ptr<GuiComponent> mCurrentView;
+    std::shared_ptr<GuiComponent> mPreviousView;
     std::map<SystemData*, std::shared_ptr<IGameListView>> mGameListViews;
     std::shared_ptr<SystemView> mSystemListView;
 
     Transform4x4f mCamera;
+    bool mWrappedViews;
+    float mWrapPreviousPositionX;
     float mFadeOpacity;
     bool mLockInput;
 

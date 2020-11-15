@@ -141,9 +141,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 if (systemToView->isCustomCollection() &&
                         systemToView->getRootFolder()->getParent())
                     ViewController::get()->goToSystemView(
-                            systemToView->getRootFolder()->getParent()->getSystem());
+                            systemToView->getRootFolder()->getParent()->getSystem(), true);
                 else
-                    ViewController::get()->goToSystemView(systemToView);
+                    ViewController::get()->goToSystemView(systemToView, true);
             }
 
             return true;

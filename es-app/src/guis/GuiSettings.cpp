@@ -79,7 +79,7 @@ void GuiSettings::save()
         ViewController::get()->goToStart();
 
     if (mNeedsGoToSystemView)
-        ViewController::get()->goToSystemView(mGoToSystem);
+        ViewController::get()->goToSystemView(mGoToSystem, false);
 
     if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
             mNeedsGoToStart || mNeedsGoToSystemView)

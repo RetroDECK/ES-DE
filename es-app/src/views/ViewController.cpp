@@ -49,7 +49,9 @@ ViewController::ViewController(
         Window* window)
         : GuiComponent(window),
         mCurrentView(nullptr),
+        mPreviousView(nullptr),
         mCamera(Transform4x4f::Identity()),
+        mWrappedViews(false),
         mFadeOpacity(0),
         mLockInput(false)
 {
@@ -102,7 +104,7 @@ void ViewController::goToStart()
         Settings::getInstance()->setString("StartupSystem", "");
     }
     // Get the first system entry.
-    goToSystemView(getSystemListView()->getFirst());
+    goToSystemView(getSystemListView()->getFirst(), false);
 }
 
 void ViewController::ReloadAndGoToStart()
@@ -124,7 +126,7 @@ bool ViewController::isCameraMoving()
 
 void ViewController::resetMovingCamera()
 {
-    if (isCameraMoving()) {
+    if (Settings::getInstance()->getString("TransitionStyle") == "slide" && isCameraMoving()) {
         mCamera.r3().x() = -mCurrentView->getPosition().x();
         mCamera.r3().y() = -mCurrentView->getPosition().y();
         stopAllAnimations();
@@ -146,8 +148,25 @@ int ViewController::getSystemId(SystemData* system)
     return static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin());
 }
 
-void ViewController::goToSystemView(SystemData* system)
+void ViewController::restoreViewPosition()
 {
+    if (mPreviousView) {
+        Vector3f restorePosition = mPreviousView->getPosition();
+        restorePosition.x() = mWrapPreviousPositionX;
+        mPreviousView->setPosition(restorePosition);
+        mWrapPreviousPositionX = 0;
+        mPreviousView.reset();
+        mPreviousView = nullptr;
+        mWrappedViews = false;
+    }
+}
+
+void ViewController::goToSystemView(SystemData* system, bool playTransition)
+{
+    // Restore the X position for the view, if it was previously moved.
+    if (mWrappedViews)
+        restoreViewPosition();
+
     // Tell any current view it's about to be hidden and stop its rendering.
     if (mCurrentView) {
         mCurrentView->onHide();
@@ -170,7 +189,11 @@ void ViewController::goToSystemView(SystemData* system)
     mCurrentView->setRenderView(true);
     PowerSaver::setState(true);
 
-    playViewTransition();
+    if (playTransition)
+        playViewTransition();
+    else
+        playViewTransition(true);
+
 }
 
 void ViewController::goToNextGameList()
@@ -193,6 +216,28 @@ void ViewController::goToPrevGameList()
 
 void ViewController::goToGameList(SystemData* system)
 {
+    bool wrapFirstToLast = false;
+    bool wrapLastToFirst = false;
+
+    // Restore the X position for the view, if it was previously moved.
+    if (mWrappedViews)
+        restoreViewPosition();
+
+    // Find if we're wrapping around the first and last systems, which requires the gamelist
+    // to be moved in order to avoid weird camera movements. This is only needed for the
+    // slide transition style though.
+    if (mState.viewing == GAME_LIST &&
+            Settings::getInstance()->getString("TransitionStyle") == "slide") {
+        if (SystemData::sSystemVector.front() == mState.getSystem()) {
+            if (SystemData::sSystemVector.back() == system)
+                wrapFirstToLast = true;
+        }
+        else if (SystemData::sSystemVector.back() == mState.getSystem()) {
+            if (SystemData::sSystemVector.front() == system)
+                wrapLastToFirst = true;
+        }
+    }
+
     // Stop any scrolling, animations and camera movements.
     if (mState.viewing == SYSTEM_SELECT) {
         mSystemListView->stopScrolling();
@@ -211,13 +256,40 @@ void ViewController::goToGameList(SystemData* system)
     if (mState.viewing == SYSTEM_SELECT) {
         // Move system list.
         auto sysList = getSystemListView();
-        float offX = sysList->getPosition().x();
+        float offsetX = sysList->getPosition().x();
         int sysId = getSystemId(system);
 
-        sysList->setPosition(sysId * static_cast<float>(Renderer::getScreenWidth()),
+        sysList->setPosition(sysId* static_cast<float>(Renderer::getScreenWidth()),
                 sysList->getPosition().y());
-        offX = sysList->getPosition().x() - offX;
-        mCamera.translation().x() -= offX;
+        offsetX = sysList->getPosition().x() - offsetX;
+        mCamera.translation().x() -= offsetX;
+    }
+
+    // If we are wrapping around, either from the first to last system, or the other way
+    // around, we need to temporarily move the gamelist view location so that the camera
+    // movements will be correct. This is accomplished by simply offsetting the X position
+    // with the position of the first or last system plus the screen width.
+    if (wrapFirstToLast) {
+        Vector3f currentPosition = mCurrentView->getPosition();
+        mWrapPreviousPositionX = currentPosition.x();
+        float offsetX = getGameListView(system)->getPosition().x();
+        offsetX += Renderer::getScreenWidth();
+        currentPosition.x() = offsetX;
+        mCurrentView->setPosition(currentPosition);
+        mCamera.translation().x() -= offsetX;
+        mPreviousView = mCurrentView;
+        mWrappedViews = true;
+    }
+    else if (wrapLastToFirst) {
+        Vector3f currentPosition = mCurrentView->getPosition();
+        mWrapPreviousPositionX = currentPosition.x();
+        float offsetX = getGameListView(system)->getPosition().x();
+        offsetX -= Renderer::getScreenWidth();
+        currentPosition.x() = offsetX;
+        mCurrentView->setPosition(currentPosition);
+        mCamera.translation().x() = -offsetX;
+        mPreviousView = mCurrentView;
+        mWrappedViews = true;
     }
 
     mState.viewing = GAME_LIST;
@@ -235,7 +307,7 @@ void ViewController::goToGameList(SystemData* system)
     playViewTransition();
 }
 
-void ViewController::playViewTransition()
+void ViewController::playViewTransition(bool instant)
 {
     Vector3f target(Vector3f::Zero());
     if (mCurrentView)
@@ -248,8 +320,12 @@ void ViewController::playViewTransition()
 
     std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
 
-    if (transition_style == "fade") {
-        // Fade.
+    if (instant || transition_style == "instant") {
+        setAnimation(new LambdaAnimation([this, target](float /*t*/) {
+                    this->mCamera.translation() = -target; }, 1));
+        updateHelpPrompts();
+    }
+    else if (transition_style == "fade") {
         // Stop whatever's currently playing, leaving mFadeOpacity wherever it is.
         cancelAnimation(0);
 
@@ -280,12 +356,6 @@ void ViewController::playViewTransition()
         // Slide or simple slide.
         setAnimation(new MoveCameraAnimation(mCamera, target));
         updateHelpPrompts(); // Update help prompts immediately.
-    }
-    else {
-        // Instant.
-        setAnimation(new LambdaAnimation([this, target](float /*t*/) {
-                    this->mCamera.translation() = -target; }, 1));
-        updateHelpPrompts();
     }
 }
 
@@ -632,12 +702,12 @@ void ViewController::reloadAll()
     }
     else if (mState.viewing == SYSTEM_SELECT) {
         SystemData* system = mState.getSystem();
-        goToSystemView(SystemData::sSystemVector.front());
+        goToSystemView(SystemData::sSystemVector.front(), false);
         mSystemListView->goToSystem(system, false);
         mCurrentView = mSystemListView;
     }
     else {
-        goToSystemView(SystemData::sSystemVector.front());
+        goToSystemView(SystemData::sSystemVector.front(), false);
     }
 
     // Load navigation sounds.
