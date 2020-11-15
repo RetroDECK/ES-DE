@@ -93,6 +93,7 @@ private:
     float mExtrasCamOffset;
     float mExtrasFadeOpacity;
 
+    int mPreviousScrollVelocity;
     bool mViewNeedsReload;
     bool mShowing;
 };

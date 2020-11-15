@@ -30,6 +30,7 @@ SystemView::SystemView(
         Window* window)
         : IList<SystemViewData, SystemData*>
         (window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP),
+        mPreviousScrollVelocity(0),
         mViewNeedsReload(true),
         mSystemInfo(window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER)
 {
@@ -249,13 +250,10 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     updateHelpPrompts();
 
     float startPos = mCamOffset;
-
     float posMax = static_cast<float>(mEntries.size());
     float target = static_cast<float>(mCursor);
 
-    // What's the shortest way to get to our target?
-    // It's one of these...
-
+    // Find the shortest path to the target.
     float endPos = target; // Directly.
     float dist = fabs(endPos - startPos);
 
@@ -264,8 +262,18 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     if (fabs(target - posMax - startPos - mScrollVelocity) < dist)
         endPos = target - posMax; // Loop around the start (max - 1 -> -1).
 
-    // Animate mSystemInfo's opacity (fade out, wait, fade back in).
+    // This logic is only needed when there are two game systems, to prevent ugly jumps back
+    // an forth when selecting the same direction rapidly several times in a row.
+    if (posMax == 2) {
+        if (mPreviousScrollVelocity == 0)
+            mPreviousScrollVelocity = mScrollVelocity;
+        else if (mScrollVelocity < 0 && startPos < endPos)
+            mPreviousScrollVelocity = -1;
+        else if (mScrollVelocity > 0 && startPos > endPos)
+            mPreviousScrollVelocity = 1;
+    }
 
+    // Animate mSystemInfo's opacity (fade out, wait, fade back in).
     cancelAnimation(1);
     cancelAnimation(2);
 
@@ -278,6 +286,16 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         mSystemInfo.setOpacity(static_cast<unsigned char>(
                 Math::lerp(infoStartOpacity, 0.f, t) * 255));
     }, static_cast<int>(infoStartOpacity * (goFast ? 10 : 150)));
+
+    // To prevent ugly jumps with two systems when quickly repeating the same direction.
+    if (mPreviousScrollVelocity != 0 && posMax == 2 &&
+            mScrollVelocity == mPreviousScrollVelocity ) {
+        if (fabs(endPos - startPos) < 0.5 || fabs(endPos - startPos) > 1.5) {
+            (mScrollVelocity < 0) ? endPos -= 1 : endPos += 1;
+            (mCursor == 0) ? mCursor = 1 : mCursor = 0;
+            return;
+        }
+    }
 
     std::pair<unsigned int, unsigned int> gameCount = getSelected()->getDisplayedGameCount();
 
