@@ -150,14 +150,40 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
     VideoComponent::render(parentTrans);
     Transform4x4f trans = parentTrans * getTransform();
     GuiComponent::renderChildren(trans);
-    Renderer::setMatrix(trans);
 
-    if (mIsPlaying && mContext.valid) {
-        // This fade in is only used by the video screensaver.
-        const unsigned int fadeIn = (unsigned int)(Math::clamp(mFadeIn, 0.0f, 1.0f) * 255.0f);
-        const unsigned int color  =
-                Renderer::convertColor((fadeIn << 24) | (fadeIn << 16) | (fadeIn << 8) | 255);
+    // Check the actual VLC state, i.e. if the video is really playing rather than
+    // still being opened.
+    if (mMediaPlayer && mIsPlaying && !mIsActuallyPlaying) {
+        libvlc_state_t state;
+        state = libvlc_media_player_get_state(mMediaPlayer);
+        if (state == libvlc_Playing)
+            mIsActuallyPlaying = true;
+    }
+
+    if (!mIsActuallyPlaying && !mStaticImage.isVisible())
+        mStaticImage.setVisible(true);
+
+    if (mIsPlaying && mContext.valid && mIsActuallyPlaying) {
+        unsigned int color;
+        if (mFadeIn < 1) {
+            const unsigned int fadeIn = mFadeIn * 255.0f;
+            color = Renderer::convertColor((fadeIn << 24) | (fadeIn << 16) | (fadeIn << 8) | 255);
+        }
+        else {
+            color = 0xFFFFFFFF;
+        }
+
         Renderer::Vertex vertices[4];
+        Renderer::setMatrix(parentTrans);
+
+        // Render the black rectangle behind the video.
+        if (mVideoRectangleCoords.size() == 4) {
+            Renderer::drawRect(mVideoRectangleCoords[0], mVideoRectangleCoords[1],
+                    mVideoRectangleCoords[2], mVideoRectangleCoords[3],
+                    0x000000FF, 0x000000FF);
+            if (mStaticImage.isVisible())
+                mStaticImage.setVisible(false);
+        }
 
         vertices[0] = { { 0.0f     , 0.0f      }, { 0.0f, 0.0f }, color };
         vertices[1] = { { 0.0f     , mSize.y() }, { 0.0f, 1.0f }, color };
@@ -175,13 +201,14 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
 
         #if defined(USE_OPENGL_21)
         // Render scanlines if this option is enabled. However, if this is the video
-        // screensaver, then skip this as screensaver scanline rendering is handled from
-        // Window.cpp as a postprocessing step.
+        // screensaver, then skip this as screensaver scanline rendering is handled in
+        // SystemScreenSaver as a postprocessing step.
         if (!mScreensaverMode && Settings::getInstance()->getBool("GamelistVideoScanlines"))
             vertices[0].shaders = Renderer::SHADER_SCANLINES;
         #endif
 
         // Render it.
+        Renderer::setMatrix(trans);
         Renderer::drawTriangleStrips(&vertices[0], 4, trans);
     }
     else {
@@ -292,8 +319,8 @@ void VideoVlcComponent::startVideo()
                 libvlc_event_t vlcEvent;
 
                 // Asynchronous media parsing.
-                libvlc_event_attach(libvlc_media_event_manager(
-                            mMedia), libvlc_MediaParsedChanged, VlcMediaParseCallback, 0);
+                libvlc_event_attach(libvlc_media_event_manager(mMedia),
+                        libvlc_MediaParsedChanged, VlcMediaParseCallback, 0);
                 parseResult = libvlc_media_parse_with_options(mMedia, libvlc_media_parse_local, -1);
 
                 if (!parseResult) {
@@ -340,6 +367,48 @@ void VideoVlcComponent::startVideo()
                     mIsPlaying = true;
                     mFadeIn = 0.0f;
                 }
+                if (mIsPlaying) {
+                    // Create the position and size for the black rectangle that will be
+                    // rendered behind videos that are not filling the whole md_video area.
+                    if (mVideoAreaPos != 0 && mVideoAreaSize != 0) {
+                        mVideoRectangleCoords.clear();
+                        float rectHeight;
+                        float rectWidth;
+                        // Video is in landscape orientation.
+                        if (mSize.x() > mSize.y()) {
+                            // Checking the Y size should not normally be required as landscape
+                            // format should mean the height can't be higher than the max size
+                            // defined by the theme. But as the height in mSize is provided by
+                            // libVLC in integer format and then scaled, there could be rounding
+                            // errors that make the video height slightly higher than allowed.
+                            // It's only a pixel or so, but it's still visible for some videos.
+                            if (mSize.y() < mVideoAreaSize.y() &&
+                                    mSize.y() / mVideoAreaSize.y() < 0.97)
+                                rectHeight = mVideoAreaSize.y();
+                            else
+                                rectHeight = mSize.y();
+                            // Don't add a black border that is too narrow, that's what the
+                            // 0.85 constant takes care of.
+                            if (mSize.x() < mVideoAreaSize.x() &&
+                                    mSize.x() / mVideoAreaSize.x() < 0.85)
+                                rectWidth = mVideoAreaSize.x();
+                            else
+                                rectWidth = mSize.x();
+                        }
+                        // Video is in portrait orientation (or completely square).
+                        else {
+                            rectWidth = mVideoAreaSize.x();
+                            rectHeight = mSize.y();
+                        }
+                        // Populate the rectangle coordinates to be used in render().
+                        mVideoRectangleCoords.push_back(mVideoAreaPos.x() -
+                                rectWidth * mOrigin.x());
+                        mVideoRectangleCoords.push_back(mVideoAreaPos.y() -
+                                rectHeight * mOrigin.y());
+                        mVideoRectangleCoords.push_back(rectWidth);
+                        mVideoRectangleCoords.push_back(rectHeight);
+                    }
+                }
             }
         }
     }
@@ -348,6 +417,7 @@ void VideoVlcComponent::startVideo()
 void VideoVlcComponent::stopVideo()
 {
     mIsPlaying = false;
+    mIsActuallyPlaying = false;
     mStartDelayed = false;
     mPause = false;
     // Release the media player so it stops calling back to us.

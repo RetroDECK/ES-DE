@@ -16,7 +16,7 @@
 
 #include <SDL2/SDL_timer.h>
 
-#define SCREENSAVER_FADE_IN_TIME 800
+#define SCREENSAVER_FADE_IN_TIME 1200
 
 void VideoComponent::setScreensaverMode(bool isScreensaver)
 {
@@ -24,24 +24,27 @@ void VideoComponent::setScreensaverMode(bool isScreensaver)
 }
 
 VideoComponent::VideoComponent(
-    Window* window)
-    : GuiComponent(window),
-    mWindow(window),
-    mStaticImage(window),
-    mVideoHeight(0),
-    mVideoWidth(0),
-    mStartDelayed(false),
-    mIsPlaying(false),
-    mPause(false),
-    mShowing(false),
-    mDisable(false),
-    mScreensaverActive(false),
-    mScreensaverMode(false),
-    mGameLaunched(false),
-    mBlockPlayer(false),
-    mTargetIsMax(false),
-    mFadeIn(1.0),
-    mTargetSize(0, 0)
+        Window* window)
+        : GuiComponent(window),
+        mWindow(window),
+        mStaticImage(window),
+        mVideoHeight(0),
+        mVideoWidth(0),
+        mStartDelayed(false),
+        mIsPlaying(false),
+        mIsActuallyPlaying(false),
+        mPause(false),
+        mShowing(false),
+        mDisable(false),
+        mScreensaverActive(false),
+        mScreensaverMode(false),
+        mGameLaunched(false),
+        mBlockPlayer(false),
+        mTargetIsMax(false),
+        mFadeIn(1.0),
+        mTargetSize(0, 0),
+        mVideoAreaPos(0, 0),
+        mVideoAreaSize(0, 0)
 {
     // Setup the default configuration.
     mConfig.showSnapshotDelay = false;
@@ -169,10 +172,19 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
             static_cast<float>(Renderer::getScreenHeight()));
 
     if (properties & ThemeFlags::SIZE) {
-        if (elem->has("size"))
+        if (elem->has("size")) {
             setResize(elem->get<Vector2f>("size") * scale);
-        else if (elem->has("maxSize"))
+            mVideoAreaSize = elem->get<Vector2f>("size") * scale;
+        }
+        else if (elem->has("maxSize")) {
             setMaxSize(elem->get<Vector2f>("maxSize") * scale);
+            mVideoAreaSize = elem->get<Vector2f>("maxSize") * scale;
+        }
+    }
+
+    if (properties & ThemeFlags::POSITION) {
+        if (elem->has("pos"))
+            mVideoAreaPos = elem->get<Vector2f>("pos") * scale;
     }
 
     if (elem->has("default"))
@@ -258,11 +270,13 @@ void VideoComponent::update(int deltaTime)
 
     manageState();
 
-    // This is only used to fade in the screensaver, fade-in of the static image is
-    // handled using a lambda animation in VideoGameListView.
-    if (mFadeIn < 1.0f)
+    // Fade in videos, which is handled a bit differently depending on whether it's the
+    // video screensaver that is running, or if it's the video in the gamelist.
+    if (mScreensaverMode && mFadeIn < 1.0f)
         mFadeIn = Math::clamp(mFadeIn + (deltaTime /
                 static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0, 1.0);
+    else if (mFadeIn < 1.0f)
+        mFadeIn = Math::clamp(mFadeIn + 0.01, 0.0f, 1.0f);
 
     GuiComponent::update(deltaTime);
 }

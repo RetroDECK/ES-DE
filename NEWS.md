@@ -49,6 +49,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Improved input device configuration, and default keyboard mappings are now applied if the keyboard has not been configured by the user
 * GUI-configurable option to sort favorite games above non-favorite games (favorites marked with stars)
 * GUI-configurable option to sort folders on top of the gamelists
+* Added the ability to display a black area around videos with non-standard aspect ratios, for example vertical shooters
 * Added a gamelist info text field displaying the game count, any applied filters as well as an icon if a folder has been entered
 * Expanded the gamelist filter functionality to include completed and broken games as well as the ability to filter on game names (via free text entry)
 * Expanded the metadata for folders and made it possible to mark them as favorites

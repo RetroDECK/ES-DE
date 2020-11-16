@@ -104,6 +104,8 @@ protected:
     unsigned mVideoWidth;
     unsigned mVideoHeight;
     Vector2f mTargetSize;
+    Vector2f mVideoAreaPos;
+    Vector2f mVideoAreaSize;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
     ImageComponent mStaticImage;
@@ -113,6 +115,7 @@ protected:
     unsigned mStartTime;
     bool mStartDelayed;
     bool mIsPlaying;
+    bool mIsActuallyPlaying;
     bool mPause;
     bool mShowing;
     bool mDisable;

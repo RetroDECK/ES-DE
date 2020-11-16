@@ -79,6 +79,7 @@ private:
     libvlc_media_player_t* mMediaPlayer;
     VideoContext mContext;
     std::shared_ptr<TextureResource> mTexture;
+    std::vector<float> mVideoRectangleCoords;
 };
 
 #endif // ES_CORE_COMPONENTS_VIDEO_VLC_COMPONENT_H
