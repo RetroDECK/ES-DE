@@ -55,7 +55,7 @@ public:
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     Vector2f sizeText(std::string text, float lineSpacing = 1.5f);
     TextCache* buildTextCache(const std::string& text, float offsetX,
-            float offsetY, unsigned int color);
+            float offsetY, unsigned int color, float lineSpacing = 1.5f);
     TextCache* buildTextCache(
             const std::string& text,
             Vector2f offset,

@@ -212,7 +212,7 @@ void Window::input(InputConfig* config, Input input)
     }
     else if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_i &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
-        // Toggle TextComponent debug view with Ctrl-I.
+        // Toggle ImageComponent debug view with Ctrl-I.
         Settings::getInstance()->setBool("DebugImage",
                 !Settings::getInstance()->getBool("DebugImage"));
     }
@@ -274,8 +274,8 @@ void Window::update(int deltaTime)
                     textureVramUsageMiB << " MiB\nMax Texture VRAM: " <<
                     textureTotalUsageMiB << " MiB";
             mFrameDataText = std::unique_ptr<TextCache>
-                    (mDefaultFonts.at(1)->buildTextCache(ss.str(), Renderer::getScreenWidth() *
-                    0.02 , Renderer::getScreenHeight() * 0.02, 0xFF00FFFF));
+                    (mDefaultFonts.at(0)->buildTextCache(ss.str(), Renderer::getScreenWidth() *
+                    0.02 , Renderer::getScreenHeight() * 0.02, 0xFF00FFFF, 1.3));
         }
 
         mFrameTimeElapsed = 0;

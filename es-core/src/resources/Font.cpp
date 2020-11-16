@@ -636,10 +636,14 @@ TextCache* Font::buildTextCache(
     return cache;
 }
 
-TextCache* Font::buildTextCache(const std::string& text, float offsetX,
-        float offsetY, unsigned int color)
+TextCache* Font::buildTextCache(
+        const std::string& text,
+        float offsetX,
+        float offsetY,
+        unsigned int color,
+        float lineSpacing)
 {
-    return buildTextCache(text, Vector2f(offsetX, offsetY), color, 0.0f);
+    return buildTextCache(text, Vector2f(offsetX, offsetY), color, 0.0f, ALIGN_LEFT, lineSpacing);
 }
 
 void TextCache::setColor(unsigned int color)
