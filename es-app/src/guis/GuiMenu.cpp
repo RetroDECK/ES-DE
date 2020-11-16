@@ -162,7 +162,6 @@ void GuiMenu::openUISettings()
                 CollectionSystemManager::get()->updateSystemsList();
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
                 s->setNeedsSaving();
-                s->setNeedsGoToSystemView(SystemData::sSystemVector.front());
                 s->setNeedsReloading();
             }
         });

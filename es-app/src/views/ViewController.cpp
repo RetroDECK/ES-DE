@@ -53,6 +53,7 @@ ViewController::ViewController(
         mCamera(Transform4x4f::Identity()),
         mWrappedViews(false),
         mFadeOpacity(0),
+        mCancelledAnimation(false),
         mLockInput(false)
 {
     mState.viewing = NOTHING;
@@ -124,12 +125,20 @@ bool ViewController::isCameraMoving()
     return false;
 }
 
-void ViewController::resetMovingCamera()
+void ViewController::cancelViewTransitions()
 {
     if (Settings::getInstance()->getString("TransitionStyle") == "slide" && isCameraMoving()) {
         mCamera.r3().x() = -mCurrentView->getPosition().x();
         mCamera.r3().y() = -mCurrentView->getPosition().y();
         stopAllAnimations();
+    }
+    else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
+        if (isAnimationPlaying(0)) {
+            finishAnimation(0);
+            mCancelledAnimation = true;
+            mFadeOpacity = 0;
+            mWindow->invalidateCachedBackground();
+        }
     }
 }
 
@@ -218,6 +227,10 @@ void ViewController::goToGameList(SystemData* system)
 {
     bool wrapFirstToLast = false;
     bool wrapLastToFirst = false;
+    bool slideTransitions = false;
+
+    if (Settings::getInstance()->getString("TransitionStyle") == "slide")
+        slideTransitions = true;
 
     // Restore the X position for the view, if it was previously moved.
     if (mWrappedViews)
@@ -226,8 +239,7 @@ void ViewController::goToGameList(SystemData* system)
     // Find if we're wrapping around the first and last systems, which requires the gamelist
     // to be moved in order to avoid weird camera movements. This is only needed for the
     // slide transition style though.
-    if (mState.viewing == GAME_LIST &&
-            Settings::getInstance()->getString("TransitionStyle") == "slide") {
+    if (mState.viewing == GAME_LIST && slideTransitions) {
         if (SystemData::sSystemVector.front() == mState.getSystem()) {
             if (SystemData::sSystemVector.back() == system)
                 wrapFirstToLast = true;
@@ -244,7 +256,9 @@ void ViewController::goToGameList(SystemData* system)
         if (mSystemListView->isAnimationPlaying(0))
             mSystemListView->finishAnimation(0);
     }
-    resetMovingCamera();
+
+    if (slideTransitions)
+        cancelViewTransitions();
 
     // Disable rendering of the system view.
     if (getSystemListView()->getRenderView())
@@ -259,7 +273,7 @@ void ViewController::goToGameList(SystemData* system)
         float offsetX = sysList->getPosition().x();
         int sysId = getSystemId(system);
 
-        sysList->setPosition(sysId* static_cast<float>(Renderer::getScreenWidth()),
+        sysList->setPosition(sysId * static_cast<float>(Renderer::getScreenWidth()),
                 sysList->getPosition().y());
         offsetX = sysList->getPosition().x() - offsetX;
         mCamera.translation().x() -= offsetX;
@@ -309,6 +323,8 @@ void ViewController::goToGameList(SystemData* system)
 
 void ViewController::playViewTransition(bool instant)
 {
+    mCancelledAnimation = false;
+
     Vector3f target(Vector3f::Zero());
     if (mCurrentView)
         target = mCurrentView->getPosition();
@@ -330,7 +346,12 @@ void ViewController::playViewTransition(bool instant)
         cancelAnimation(0);
 
         auto fadeFunc = [this](float t) {
-            mFadeOpacity = Math::lerp(0, 1, t);
+            // The flag mCancelledAnimation is required only when cancelViewTransitions()
+            // cancels the animation, and it's only needed for the Fade transitions.
+            // Without this, a (much shorter) fade transition would still play as
+            // finishedCallback is calling this function.
+            if (!mCancelledAnimation)
+                mFadeOpacity = Math::lerp(0, 1, t);
         };
 
         const static int FADE_DURATION = 120; // Fade in/out time.
@@ -540,7 +561,7 @@ bool ViewController::input(InputConfig* config, Input input)
         // also continue to run after closing the menu.
         mCurrentView->stopListScrolling();
         // Finally, if the camera is currently moving, reset its position.
-        resetMovingCamera();
+        cancelViewTransitions();
 
         mWindow->pushGui(new GuiMenu(mWindow));
         return true;
@@ -705,6 +726,7 @@ void ViewController::reloadAll()
         goToSystemView(SystemData::sSystemVector.front(), false);
         mSystemListView->goToSystem(system, false);
         mCurrentView = mSystemListView;
+        mCamera.r3().x() = 0;
     }
     else {
         goToSystemView(SystemData::sSystemVector.front(), false);

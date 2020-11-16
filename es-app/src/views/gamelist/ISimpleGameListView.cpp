@@ -104,14 +104,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input)) {
             FileData* cursor = getCursor();
             if (cursor->getType() == GAME) {
-                ViewController::get()->resetMovingCamera();
+                ViewController::get()->cancelViewTransitions();
                 stopListScrolling();
                 launch(cursor);
             }
             else {
                 // It's a folder.
                 if (cursor->getChildren().size() > 0) {
-                    ViewController::get()->resetMovingCamera();
+                    ViewController::get()->cancelViewTransitions();
                     NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
                     mCursorStack.push(cursor);
                     populateList(cursor->getChildrenListToDisplay(), cursor);
@@ -123,7 +123,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             return true;
         }
         else if (config->isMappedTo("b", input)) {
-            ViewController::get()->resetMovingCamera();
+            ViewController::get()->cancelViewTransitions();
             if (mCursorStack.size()) {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
                 populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay(),

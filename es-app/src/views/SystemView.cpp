@@ -200,12 +200,12 @@ bool SystemView::input(InputConfig* config, Input input)
         case VERTICAL:
         case VERTICAL_WHEEL:
             if (config->isMappedLike("up", input)) {
-                ViewController::get()->resetMovingCamera();
+                ViewController::get()->cancelViewTransitions();
                 listInput(-1);
                 return true;
             }
             if (config->isMappedLike("down", input)) {
-                ViewController::get()->resetMovingCamera();
+                ViewController::get()->cancelViewTransitions();
                 listInput(1);
                 return true;
             }
@@ -214,12 +214,12 @@ bool SystemView::input(InputConfig* config, Input input)
         case HORIZONTAL_WHEEL:
         default:
             if (config->isMappedLike("left", input)) {
-                ViewController::get()->resetMovingCamera();
+                ViewController::get()->cancelViewTransitions();
                 listInput(-1);
                 return true;
             }
             if (config->isMappedLike("right", input)) {
-                ViewController::get()->resetMovingCamera();
+                ViewController::get()->cancelViewTransitions();
                 listInput(1);
                 return true;
             }
@@ -244,6 +244,8 @@ bool SystemView::input(InputConfig* config, Input input)
                 config->isMappedTo("select", input) &&
                 Settings::getInstance()->getBool("ScreensaverControls")) {
             if (!mWindow->isScreensaverActive()) {
+                ViewController::get()->stopScrolling();
+                ViewController::get()->cancelViewTransitions();
                 mWindow->startScreensaver();
                 mWindow->renderScreensaver();
             }

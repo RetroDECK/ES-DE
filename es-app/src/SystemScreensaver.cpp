@@ -237,7 +237,7 @@ void SystemScreensaver::launchGame()
         IGameListView* view = ViewController::get()->
                 getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
-        ViewController::get()->resetMovingCamera();
+        ViewController::get()->cancelViewTransitions();
         ViewController::get()->launch(mCurrentGame);
     }
 }
@@ -250,7 +250,7 @@ void SystemScreensaver::goToGame()
         IGameListView* view = ViewController::get()->
                 getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
-        ViewController::get()->resetMovingCamera();
+        ViewController::get()->cancelViewTransitions();
     }
 }
 

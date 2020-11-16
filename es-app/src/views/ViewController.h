@@ -55,7 +55,7 @@ public:
 
     // Functions to make the GUI behave properly.
     bool isCameraMoving();
-    void resetMovingCamera();
+    void cancelViewTransitions();
     void stopScrolling();
 
     void onFileChanged(FileData* file, bool reloadGameList);
@@ -123,6 +123,7 @@ private:
     bool mWrappedViews;
     float mWrapPreviousPositionX;
     float mFadeOpacity;
+    bool mCancelledAnimation; // Needed only for the Fade transition style.
     bool mLockInput;
 
     State mState;

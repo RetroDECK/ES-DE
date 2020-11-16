@@ -393,14 +393,14 @@ bool GuiComponent::cancelAnimation(unsigned char slot)
 bool GuiComponent::finishAnimation(unsigned char slot)
 {
     assert(slot < MAX_ANIMATIONS);
-    if (mAnimationMap[slot]) {
+    AnimationController* anim = mAnimationMap[slot];
+    if (anim) {
         // Skip to animation's end.
-        const bool done = mAnimationMap[slot]->update(mAnimationMap[slot]->
-                getAnimation()->getDuration() - mAnimationMap[slot]->getTime());
-        assert(done);
-
-        delete mAnimationMap[slot]; // Will also call finishedCallback.
-        mAnimationMap[slot] = nullptr;
+        const bool done = anim->update(anim->getAnimation()->getDuration() - anim->getTime());
+        if(done) {
+            mAnimationMap[slot] = nullptr;
+            delete anim; // Will also call finishedCallback.
+        }
         return true;
     }
     else {
@@ -416,7 +416,7 @@ bool GuiComponent::advanceAnimation(unsigned char slot, unsigned int time)
         bool done = anim->update(time);
         if (done) {
             mAnimationMap[slot] = nullptr;
-            delete anim;
+            delete anim; // Will also call finishedCallback.
         }
         return true;
     }

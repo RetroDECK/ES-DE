@@ -105,7 +105,7 @@ void Settings::setDefaults()
     // UI settings.
     mStringMap["StartupSystem"] = "";
     mStringMap["GamelistViewStyle"] = "automatic";
-    mStringMap["TransitionStyle"] = "instant";
+    mStringMap["TransitionStyle"] = "slide";
     mStringMap["ThemeSet"] = "rbsimple-DE";
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
