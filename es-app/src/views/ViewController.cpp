@@ -290,11 +290,14 @@ void ViewController::goToGameList(SystemData* system)
         cancelViewTransitions();
 
     // Disable rendering of the system view.
-    if (getSystemListView()->getRenderView())
+    if (getSystemListView()->getRenderView()) {
         getSystemListView()->setRenderView(false);
+    }
     // If switching between gamelists, disable rendering of the current view.
-    else if (mCurrentView)
+    else if (mCurrentView) {
+        mCurrentView->onHide();
         mCurrentView->setRenderView(false);
+    }
 
     if (mState.viewing == SYSTEM_SELECT) {
         // Move system list.
