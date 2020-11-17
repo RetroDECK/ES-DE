@@ -110,6 +110,7 @@ void Settings::setDefaults()
     mStringMap["UIMode"] = "full";
     mStringMap["DefaultSortOrder"] = "filename, ascending";
     mStringMap["MenuOpeningEffect"] = "scale-up";
+    mBoolMap["GamelistVideoPillarbox"] = true;
     mBoolMap["GamelistVideoScanlines"] = true;
     mBoolMap["FoldersOnTop"] = true;
     mBoolMap["FavoritesFirst"] = true;

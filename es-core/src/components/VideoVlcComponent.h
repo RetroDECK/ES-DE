@@ -36,12 +36,8 @@ class VideoVlcComponent : public VideoComponent
     };
 
 public:
-    static void setupVLC();
-
     VideoVlcComponent(Window* window);
     virtual ~VideoVlcComponent();
-
-    void render(const Transform4x4f& parentTrans) override;
 
     // Resize the video to fit this size. If one axis is zero, scale that axis to maintain
     // aspect ratio. If both are non-zero, potentially break the aspect ratio. If both are
@@ -55,9 +51,16 @@ public:
     void setMaxSize(float width, float height) override;
 
 private:
+    static void setupVLC();
+    void setupContext();
+    void freeContext();
+
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
     // Used internally whenever the resizing parameters or texture change.
     void resize();
+
+    void render(const Transform4x4f& parentTrans) override;
+    void calculateBlackRectangle();
 
     // Start the video immediately.
     virtual void startVideo() override;
@@ -67,9 +70,6 @@ private:
     virtual void pauseVideo() override;
     // Handle looping the video. Must be called periodically.
     virtual void handleLooping() override;
-
-    void setupContext();
-    void freeContext();
 
     static void VlcMediaParseCallback(const libvlc_event_t *event, void *user_data) {};
 

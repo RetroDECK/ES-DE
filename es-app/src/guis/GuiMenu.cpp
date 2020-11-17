@@ -257,7 +257,22 @@ void GuiMenu::openUISettings()
             s->setNeedsSaving();
         }
     });
+    #endif
 
+    // Display pillarboxes (and letterboxes) for videos in the gamelists.
+    auto gamelist_video_pillarbox = std::make_shared<SwitchComponent>(mWindow);
+    gamelist_video_pillarbox->setState(Settings::getInstance()->getBool("GamelistVideoPillarbox"));
+    s->addWithLabel("DISPLAY PILLARBOXES FOR GAMELIST VIDEOS", gamelist_video_pillarbox);
+    s->addSaveFunc([gamelist_video_pillarbox, s] {
+        if (gamelist_video_pillarbox->getState() !=
+                Settings::getInstance()->getBool("GamelistVideoPillarbox")) {
+            Settings::getInstance()->setBool("GamelistVideoPillarbox",
+                    gamelist_video_pillarbox->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    #if defined(USE_OPENGL_21)
     // Render scanlines for videos in the gamelists.
     auto gamelist_video_scanlines = std::make_shared<SwitchComponent>(mWindow);
     gamelist_video_scanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));

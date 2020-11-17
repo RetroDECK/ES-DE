@@ -625,6 +625,10 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 Animation to play when opening the main menu or the game options menu. Can be set to _scale-up_, _fade-in_ or _none_.
 
+**Display pillarboxes for gamelist videos**
+
+With this option enabled, there are black pillarboxes (and to a lesser extent letterboxes) displayed around videos with non-standard aspect ratios. This will probably be most commonly used for vertical arcade shooters, or for game systems that has a screen in portrait orientation. For wider than normal videos, letterboxes are added, but this is quite rare compared to videos in portrait orientation. This option looks good on some themes such as rbsimple-DE, but on others it may be more visually pleasing to disable it.
+
 **Render scanlines for gamelist videos** _(OpenGL renderer only)_
 
 Whether to use a shader to render scanlines for videos in the gamelist view. The effect is usually pretty subtle as the video is normally renderered in a limited size in the GUI, and the scanlines are sized relative to the video window size.
@@ -739,7 +743,7 @@ Whether to use a shader to render scanlines for the videos.
 
 **Render blur** _(OpenGL renderer only)_
 
-Whether to use a shader to render a slight blur which somewhat simulates a well-used CRT monitor.
+Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor.
 
 
 ### Sound settings
