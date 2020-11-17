@@ -18,11 +18,6 @@
 
 #define SCREENSAVER_FADE_IN_TIME 1200
 
-void VideoComponent::setScreensaverMode(bool isScreensaver)
-{
-    mScreensaverMode = isScreensaver;
-}
-
 VideoComponent::VideoComponent(
         Window* window)
         : GuiComponent(window),
@@ -61,24 +56,6 @@ VideoComponent::~VideoComponent()
     stopVideo();
 }
 
-void VideoComponent::onOriginChanged()
-{
-    // Update the embeded static image.
-    mStaticImage.setOrigin(mOrigin);
-}
-
-void VideoComponent::onPositionChanged()
-{
-    // Update the embeded static image.
-    mStaticImage.setPosition(mPosition);
-}
-
-void VideoComponent::onSizeChanged()
-{
-    // Update the embeded static image.
-    mStaticImage.onSizeChanged();
-}
-
 bool VideoComponent::setVideo(std::string path)
 {
     // Convert the path into a generic format.
@@ -101,6 +78,11 @@ bool VideoComponent::setVideo(std::string path)
     return false;
 }
 
+void VideoComponent::setDefaultVideo()
+{
+    setVideo(mConfig.defaultVideoPath);
+}
+
 void VideoComponent::setImage(std::string path)
 {
     // Check that the image has changed.
@@ -111,15 +93,104 @@ void VideoComponent::setImage(std::string path)
     mStaticImagePath = path;
 }
 
-void VideoComponent::setDefaultVideo()
+void VideoComponent::setScreensaverMode(bool isScreensaver)
 {
-    setVideo(mConfig.defaultVideoPath);
+    mScreensaverMode = isScreensaver;
 }
 
 void VideoComponent::setOpacity(unsigned char opacity)
 {
-    // Set the opacity for the embedded static image.
     mOpacity = opacity;
+}
+
+void VideoComponent::onShow()
+{
+    mBlockPlayer = false;
+    mPause = false;
+    mShowing = true;
+    manageState();
+}
+
+void VideoComponent::onHide()
+{
+    mShowing = false;
+    manageState();
+}
+
+void VideoComponent::onPauseVideo()
+{
+    mBlockPlayer = true;
+    mPause = true;
+    manageState();
+}
+
+void VideoComponent::onUnpauseVideo()
+{
+    mBlockPlayer = false;
+    mPause = false;
+    manageState();
+}
+
+void VideoComponent::onScreensaverActivate()
+{
+    mBlockPlayer = true;
+    mPause = true;
+    if (Settings::getInstance()->getString("ScreensaverType") == "dim")
+        stopVideo();
+    manageState();
+}
+
+void VideoComponent::onScreensaverDeactivate()
+{
+    mBlockPlayer = false;
+    // Stop video when deactivating the screensaver to force a reload of the
+    // static image (if the theme is configured as such).
+    stopVideo();
+    manageState();
+}
+
+void VideoComponent::onGameLaunchedActivate()
+{
+    mGameLaunched = true;
+    manageState();
+}
+
+void VideoComponent::onGameLaunchedDeactivate()
+{
+    mGameLaunched = false;
+    stopVideo();
+    manageState();
+}
+
+void VideoComponent::topWindow(bool isTop)
+{
+    if (isTop) {
+        mBlockPlayer = false;
+        mPause = false;
+        // Stop video when closing the menu to force a reload of the
+        // static image (if the theme is configured as such).
+        stopVideo();
+    }
+    else {
+        mBlockPlayer = true;
+        mPause = true;
+    }
+    manageState();
+}
+
+void VideoComponent::onOriginChanged()
+{
+    mStaticImage.setOrigin(mOrigin);
+}
+
+void VideoComponent::onPositionChanged()
+{
+    mStaticImage.setPosition(mPosition);
+}
+
+void VideoComponent::onSizeChanged()
+{
+    mStaticImage.onSizeChanged();
 }
 
 void VideoComponent::render(const Transform4x4f& parentTrans)
@@ -207,35 +278,24 @@ std::vector<HelpPrompt> VideoComponent::getHelpPrompts()
     return ret;
 }
 
-void VideoComponent::handleStartDelay()
+void VideoComponent::update(int deltaTime)
 {
-    if (mBlockPlayer)
+    if (mBlockPlayer) {
+        setImage(mStaticImagePath);
         return;
-
-    // Only play if any delay has timed out.
-    if (mStartDelayed) {
-        // If the setting to override the theme-supplied video delay setting has been enabled,
-        // then play the video immediately.
-        if (!Settings::getInstance()->getBool("PlayVideosImmediately")) {
-            // If there is a video file available but no static image, then start playing the
-            // video immediately regardless of theme configuration or settings.
-            if (mStaticImagePath != "") {
-                if (mStartTime > SDL_GetTicks()) {
-                    // Timeout not yet completed.
-                    return;
-                }
-            }
-        }
-        // Completed.
-        mStartDelayed = false;
-        // Clear the playing flag so startVideo works.
-        mIsPlaying = false;
-        startVideo();
     }
-}
 
-void VideoComponent::handleLooping()
-{
+    manageState();
+
+    // Fade in videos, which is handled a bit differently depending on whether it's the
+    // video screensaver that is running, or if it's the video in the gamelist.
+    if (mScreensaverMode && mFadeIn < 1.0f)
+        mFadeIn = Math::clamp(mFadeIn + (deltaTime /
+                static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0, 1.0);
+    else if (mFadeIn < 1.0f)
+        mFadeIn = Math::clamp(mFadeIn + 0.01, 0.0f, 1.0f);
+
+    GuiComponent::update(deltaTime);
 }
 
 void VideoComponent::startVideoWithDelay()
@@ -261,24 +321,31 @@ void VideoComponent::startVideoWithDelay()
     }
 }
 
-void VideoComponent::update(int deltaTime)
+void VideoComponent::handleStartDelay()
 {
-    if (mBlockPlayer) {
-        setImage(mStaticImagePath);
+    if (mBlockPlayer)
         return;
+
+    // Only play if any delay has timed out.
+    if (mStartDelayed) {
+        // If the setting to override the theme-supplied video delay setting has been enabled,
+        // then play the video immediately.
+        if (!Settings::getInstance()->getBool("PlayVideosImmediately")) {
+            // If there is a video file available but no static image, then start playing the
+            // video immediately regardless of theme configuration or settings.
+            if (mStaticImagePath != "") {
+                if (mStartTime > SDL_GetTicks()) {
+                    // Timeout not yet completed.
+                    return;
+                }
+            }
+        }
+        // Completed.
+        mStartDelayed = false;
+        // Clear the playing flag so startVideo works.
+        mIsPlaying = false;
+        startVideo();
     }
-
-    manageState();
-
-    // Fade in videos, which is handled a bit differently depending on whether it's the
-    // video screensaver that is running, or if it's the video in the gamelist.
-    if (mScreensaverMode && mFadeIn < 1.0f)
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime /
-                static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0, 1.0);
-    else if (mFadeIn < 1.0f)
-        mFadeIn = Math::clamp(mFadeIn + 0.01, 0.0f, 1.0f);
-
-    GuiComponent::update(deltaTime);
 }
 
 void VideoComponent::manageState()
@@ -313,80 +380,4 @@ void VideoComponent::manageState()
     // game is running.
     if (mGameLaunched && show && !mPause)
         mPause = true;
-}
-
-void VideoComponent::onShow()
-{
-    mBlockPlayer = false;
-    mPause = false;
-    mShowing = true;
-    manageState();
-}
-
-void VideoComponent::onHide()
-{
-    mShowing = false;
-    manageState();
-}
-
-void VideoComponent::onPauseVideo()
-{
-    mBlockPlayer = true;
-    mPause = true;
-    manageState();
-}
-
-void VideoComponent::onUnpauseVideo()
-{
-    mBlockPlayer = false;
-    mPause = false;
-    manageState();
-}
-
-void VideoComponent::onScreensaverActivate()
-{
-    mBlockPlayer = true;
-    mPause = true;
-    if (Settings::getInstance()->getString("ScreensaverType") == "dim")
-        stopVideo();
-    manageState();
-}
-
-void VideoComponent::onScreensaverDeactivate()
-{
-    mBlockPlayer = false;
-    // Stop video when deactivating the screensaver to force a reload of the
-    // static image (if the theme is configured as such).
-    stopVideo();
-    manageState();
-}
-
-void VideoComponent::onGameLaunchedActivate()
-{
-    mGameLaunched = true;
-    manageState();
-}
-
-void VideoComponent::onGameLaunchedDeactivate()
-{
-    mGameLaunched = false;
-    stopVideo();
-    manageState();
-}
-
-void VideoComponent::topWindow(bool isTop)
-{
-
-    if (isTop) {
-        mBlockPlayer = false;
-        mPause = false;
-        // Stop video when closing the menu to force a reload of the
-        // static image (if the theme is configured as such).
-        stopVideo();
-    }
-    else {
-        mBlockPlayer = true;
-        mPause = true;
-    }
-    manageState();
 }

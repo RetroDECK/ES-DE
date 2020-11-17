@@ -32,14 +32,14 @@ public:
 
     // Loads the video at the given filepath.
     bool setVideo(std::string path);
-    // Loads a static image that is displayed if the video cannot be played.
-    void setImage(std::string path);
-
     // Configures the component to show the default video.
     void setDefaultVideo();
-
+    // Loads a static image that is displayed if the video cannot be played.
+    void setImage(std::string path);
     // Sets whether it's going to render in screensaver mode.
     void setScreensaverMode(bool isScreensaver);
+    // Set the opacity for the embedded static image.
+    void setOpacity(unsigned char opacity) override;
 
     virtual void onShow() override;
     virtual void onHide() override;
@@ -52,10 +52,10 @@ public:
     virtual void onGameLaunchedDeactivate() override;
     virtual void topWindow(bool isTop) override;
 
+    // These functions update the embedded static image.
     void onOriginChanged() override;
     void onPositionChanged() override;
     void onSizeChanged() override;
-    void setOpacity(unsigned char opacity) override;
 
     void render(const Transform4x4f& parentTrans) override;
     void renderSnapshot(const Transform4x4f& parentTrans);
@@ -87,15 +87,13 @@ private:
     virtual void stopVideo() {};
     // Pause the video when a game has been launched.
     virtual void pauseVideo() {};
-    // Handle looping the video. Must be called periodically.
-    virtual void handleLooping();
+    // Handle looping of the video. Must be called periodically.
+    virtual void handleLooping() {};
 
     // Start the video after any configured delay.
     void startVideoWithDelay();
-
     // Handle any delay to the start of playing the video clip. Must be called periodically.
     void handleStartDelay();
-
     // Manage the playing state of the component.
     void manageState();
 
