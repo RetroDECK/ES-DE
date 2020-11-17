@@ -233,12 +233,12 @@ void SystemScreensaver::launchGame()
 {
     if (mCurrentGame != nullptr) {
         // Launching game
+        ViewController::get()->triggerGameLaunch(mCurrentGame);
         ViewController::get()->goToGameList(mCurrentGame->getSystem());
         IGameListView* view = ViewController::get()->
                 getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
         ViewController::get()->cancelViewTransitions();
-        ViewController::get()->launch(mCurrentGame);
     }
 }
 

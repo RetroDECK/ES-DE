@@ -69,6 +69,8 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
     virtual HelpStyle getHelpStyle() override;
 
+    CarouselType getCarouselType() { return mCarousel.type; };
+
 protected:
     void onCursorChanged(const CursorState& state) override;
     virtual void onScroll() override {

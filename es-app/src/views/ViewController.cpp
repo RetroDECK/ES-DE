@@ -29,6 +29,7 @@
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
+#include "SystemView.h"
 #include "Window.h"
 
 ViewController* ViewController::sInstance = nullptr;
@@ -54,7 +55,8 @@ ViewController::ViewController(
         mWrappedViews(false),
         mFadeOpacity(0),
         mCancelledAnimation(false),
-        mLockInput(false)
+        mLockInput(false),
+        mGameToLaunch(nullptr)
 {
     mState.viewing = NOTHING;
 }
@@ -172,6 +174,11 @@ void ViewController::restoreViewPosition()
 
 void ViewController::goToSystemView(SystemData* system, bool playTransition)
 {
+    bool applicationStartup = false;
+
+    if (mState.viewing == NOTHING)
+        applicationStartup = true;
+
     // Restore the X position for the view, if it was previously moved.
     if (mWrappedViews)
         restoreViewPosition();
@@ -198,11 +205,33 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     mCurrentView->setRenderView(true);
     PowerSaver::setState(true);
 
-    if (playTransition)
+    // Application startup animation.
+    if (applicationStartup) {
+        mCamera.translation() = -mCurrentView->getPosition();
+        if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
+            if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
+                    getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
+                mCamera.translation().y() += Renderer::getScreenHeight();
+            else
+                mCamera.translation().x() -= Renderer::getScreenWidth();
+            updateHelpPrompts();
+        }
+        else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
+            if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
+                    getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
+                mCamera.translation().y() += Renderer::getScreenHeight();
+            else
+                mCamera.translation().x() += Renderer::getScreenWidth();
+        }
+        else {
+            updateHelpPrompts();
+        }
+    }
+
+    if (playTransition || applicationStartup)
         playViewTransition();
     else
         playViewTransition(true);
-
 }
 
 void ViewController::goToNextGameList()
@@ -306,13 +335,28 @@ void ViewController::goToGameList(SystemData* system)
         mWrappedViews = true;
     }
 
+    mCurrentView = getGameListView(system);
+
+    // Application startup animation, if starting in a gamelist rather than in the system view.
+    if (mState.viewing == NOTHING) {
+        mCamera.translation() = -mCurrentView->getPosition();
+        if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
+            mCamera.translation().y() -= Renderer::getScreenHeight();
+            updateHelpPrompts();
+        }
+        else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
+            mCamera.translation().y() += Renderer::getScreenHeight() * 2;
+        }
+        else {
+            updateHelpPrompts();
+        }
+    }
+
     mState.viewing = GAME_LIST;
     mState.system = system;
 
     if (mCurrentView)
         mCurrentView->onHide();
-
-    mCurrentView = getGameListView(system);
 
     if (mCurrentView) {
         mCurrentView->onShow();
@@ -387,7 +431,7 @@ void ViewController::onFileChanged(FileData* file, bool reloadGameList)
         it->second->onFileChanged(file, reloadGameList);
 }
 
-void ViewController::launch(FileData* game, Vector3f center)
+void ViewController::launch(FileData* game)
 {
     if (game->getType() != GAME) {
         LOG(LogError) << "tried to launch something that isn't a game.";
@@ -404,7 +448,6 @@ void ViewController::launch(FileData* game, Vector3f center)
 
     stopAnimation(1); // Make sure the fade in isn't still playing.
     mWindow->stopInfoPopup(); // Make sure we disable any existing info popup.
-    mLockInput = true;
 
     // Until a proper game launch screen is implemented, at least this will let the
     // user know that something is actually happening (in addition to the launch sound,
@@ -583,6 +626,11 @@ void ViewController::update(int deltaTime)
         mCurrentView->update(deltaTime);
 
     updateSelf(deltaTime);
+
+    if (mGameToLaunch) {
+        launch(mGameToLaunch);
+        mGameToLaunch = nullptr;
+    }
 }
 
 void ViewController::render(const Transform4x4f& parentTrans)

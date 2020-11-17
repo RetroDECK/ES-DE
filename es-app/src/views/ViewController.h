@@ -59,9 +59,8 @@ public:
     void stopScrolling();
 
     void onFileChanged(FileData* file, bool reloadGameList);
-
-    void launch(FileData* game, Vector3f centerCameraOn =
-            Vector3f(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f, 0));
+    void triggerGameLaunch(FileData* game) { mGameToLaunch = game; mLockInput = true; };
+    bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); };
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -109,6 +108,8 @@ private:
     ViewController(Window* window);
     static ViewController* sInstance;
 
+    void launch(FileData* game);
+
     void playViewTransition(bool instant = false);
     int getSystemId(SystemData* system);
     // Restore view position if it was moved during wrap around.
@@ -125,6 +126,7 @@ private:
     float mFadeOpacity;
     bool mCancelledAnimation; // Needed only for the Fade transition style.
     bool mLockInput;
+    FileData* mGameToLaunch;
 
     State mState;
 };

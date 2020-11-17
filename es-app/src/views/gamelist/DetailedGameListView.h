@@ -24,6 +24,9 @@ public:
     virtual const char* getName() const override { return "detailed"; }
     virtual void launch(FileData* game) override;
 
+protected:
+    virtual void update(int deltaTime) override;
+
 private:
     void updateInfoPanel();
 

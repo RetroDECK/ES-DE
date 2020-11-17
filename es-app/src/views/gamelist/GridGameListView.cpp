@@ -533,24 +533,7 @@ void GridGameListView::addPlaceholder(FileData* firstEntry)
 
 void GridGameListView::launch(FileData* game)
 {
-    float screenWidth = (float) Renderer::getScreenWidth();
-    float screenHeight = (float) Renderer::getScreenHeight();
-
-    Vector3f target(screenWidth / 2.0f, screenHeight / 2.0f, 0);
-
-    if (mMarquee.hasImage() &&
-            (mMarquee.getPosition().x() < screenWidth && mMarquee.getPosition().x() > 0.0f &&
-            mMarquee.getPosition().y() < screenHeight && mMarquee.getPosition().y() > 0.0f))
-        target = Vector3f(mMarquee.getCenter().x(), mMarquee.getCenter().y(), 0);
-    else if (mImage.hasImage() &&
-            (mImage.getPosition().x() < screenWidth && mImage.getPosition().x() > 2.0f &&
-            mImage.getPosition().y() < screenHeight && mImage.getPosition().y() > 2.0f))
-        target = Vector3f(mImage.getCenter().x(), mImage.getCenter().y(), 0);
-    else if (mVideo->getPosition().x() < screenWidth && mVideo->getPosition().x() > 0.0f &&
-            mVideo->getPosition().y() < screenHeight && mVideo->getPosition().y() > 0.0f)
-        target = Vector3f(mVideo->getCenter().x(), mVideo->getCenter().y(), 0);
-
-    ViewController::get()->launch(game, target);
+    ViewController::get()->triggerGameLaunch(game);
 }
 
 void GridGameListView::remove(FileData *game, bool deleteFile)

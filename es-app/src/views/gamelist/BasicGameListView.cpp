@@ -189,7 +189,7 @@ std::string BasicGameListView::getQuickSystemSelectLeftButton()
 
 void BasicGameListView::launch(FileData* game)
 {
-    ViewController::get()->launch(game);
+    ViewController::get()->triggerGameLaunch(game);
 }
 
 void BasicGameListView::remove(FileData *game, bool deleteFile)

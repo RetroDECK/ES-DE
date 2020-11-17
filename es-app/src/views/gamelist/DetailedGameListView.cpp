@@ -14,7 +14,7 @@
 #include "SystemData.h"
 
 #define FADE_IN_START_OPACITY 0.5f
-#define FADE_IN_TIME 300
+#define FADE_IN_TIME 650
 
 DetailedGameListView::DetailedGameListView(
         Window* window,
@@ -435,11 +435,7 @@ void DetailedGameListView::updateInfoPanel()
 
 void DetailedGameListView::launch(FileData* game)
 {
-    Vector3f target(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f, 0);
-    if (mImage.hasImage())
-        target = Vector3f(mImage.getCenter().x(), mImage.getCenter().y(), 0);
-
-    ViewController::get()->launch(game, target);
+    ViewController::get()->triggerGameLaunch(game);
 }
 
 std::vector<TextComponent*> DetailedGameListView::getMDLabels()
@@ -468,6 +464,15 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
     ret.push_back(&mLastPlayed);
     ret.push_back(&mPlayCount);
     return ret;
+}
+
+void DetailedGameListView::update(int deltaTime)
+{
+    BasicGameListView::update(deltaTime);
+    mImage.update(deltaTime);
+
+    if (ViewController::get()->getGameLaunchTriggered() && mImage.isAnimationPlaying(0))
+        mImage.finishAnimation(0);
 }
 
 void DetailedGameListView::onShow()
