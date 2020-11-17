@@ -546,7 +546,8 @@ namespace Utils
             // Check if lstat succeeded.
             if (lstat(path.c_str(), &info) == 0) {
                 resolved.resize(info.st_size);
-                if (readlink(path.c_str(), (char*)resolved.data(), resolved.size()) > 0)
+                if (readlink(path.c_str(), const_cast<char*>(resolved.data()),
+                        resolved.size()) > 0)
                     resolved = getGenericPath(resolved);
             }
             #endif

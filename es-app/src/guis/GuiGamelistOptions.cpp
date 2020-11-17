@@ -201,7 +201,8 @@ GuiGamelistOptions::GuiGamelistOptions(
     mMenu.addButton("CANCEL", "cancel", [&] { mCancelled = true; delete this; });
 
     // Center the menu.
-    setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+    setSize(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
     mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2, (mSize.y() -
             mMenu.getSize().y()) / 2);
 }
@@ -396,7 +397,7 @@ void GuiGamelistOptions::jumpToLetter()
     for (unsigned int i = 0; i < files.size(); i++) {
         if (mFavoritesSorting && (mFirstLetterIndex.front() == FAVORITE_CHAR ||
                 mFirstLetterIndex.front() == FOLDER_CHAR)) {
-            if ((char)toupper(files.at(i)->getSortName().front()) ==
+            if (static_cast<char>(toupper(files.at(i)->getSortName().front())) ==
                     letter && !files.at(i)->getFavorite()) {
                 if (!mOnlyHasFolders && mFoldersOnTop && files.at(i)->getType() == FOLDER) {
                     continue;
@@ -408,7 +409,7 @@ void GuiGamelistOptions::jumpToLetter()
             }
         }
         else {
-            if ((char)toupper(files.at(i)->getSortName().front()) == letter) {
+            if (static_cast<char>(toupper(files.at(i)->getSortName().front())) == letter) {
                 if (!mOnlyHasFolders && mFoldersOnTop && files.at(i)->getType() == FOLDER) {
                     continue;
                 }

@@ -107,7 +107,7 @@ GuiScraperSearch::GuiScraperSearch(
             (mWindow, "", font, mdLblColor), mMD_Filler));
 
     mMD_Grid = std::make_shared<ComponentGrid>(mWindow,
-            Vector2i(2, (int)mMD_Pairs.size()*2 - 1));
+            Vector2i(2, static_cast<int>(mMD_Pairs.size()*2 - 1)));
     unsigned int i = 0;
     for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); it++) {
         mMD_Grid->setEntry(it->first, Vector2i(0, i), false, true);
@@ -203,7 +203,7 @@ void GuiScraperSearch::resizeMetadata()
 {
     mMD_Grid->setSize(mGrid.getColWidth(2), mGrid.getRowHeight(1));
     if (mMD_Grid->getSize().y() > mMD_Pairs.size()) {
-        const int fontHeight = (int)(mMD_Grid->getSize().y() / mMD_Pairs.size() * 0.8f);
+        const int fontHeight = static_cast<int>(mMD_Grid->getSize().y() / mMD_Pairs.size() * 0.8f);
         auto fontLbl = Font::get(fontHeight, FONT_PATH_REGULAR);
         auto fontComp = Font::get(fontHeight, FONT_PATH_LIGHT);
 
@@ -402,7 +402,7 @@ void GuiScraperSearch::updateInfoPane()
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size())
         i = 0;
 
-    if (i != -1 && (int)mScraperResults.size() > i) {
+    if (i != -1 && static_cast<int>(mScraperResults.size() > i)) {
         ScraperSearchResult& res = mScraperResults.at(i);
         std::string formattedName;
 

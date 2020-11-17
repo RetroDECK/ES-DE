@@ -60,7 +60,7 @@ namespace Utils
 
         Duration::Duration(const time_t& _time)
         {
-            mTotalSeconds = (unsigned int)_time;
+            mTotalSeconds = static_cast<unsigned int>(_time);
             mDays = (mTotalSeconds - (mTotalSeconds % (60*60*24))) / (60*60*24);
             mHours = ((mTotalSeconds % (60*60*24)) - (mTotalSeconds % (60*60))) / (60*60);
             mMinutes = ((mTotalSeconds % (60*60)) - (mTotalSeconds % (60))) / 60;
@@ -183,46 +183,46 @@ namespace Utils
                     // The year, including the century (1900)
                     case 'Y': {
                         const int year = timeStruct.tm_year + 1900;
-                        *s++ = (char)((year - (year % 1000)) / 1000) + '0';
-                        *s++ = (char)(((year % 1000) - (year % 100)) / 100) + '0';
-                        *s++ = (char)(((year % 100) - (year % 10)) / 10) + '0';
-                        *s++ = (char)(year % 10) + '0';
+                        *s++ = static_cast<char>((year - (year % 1000)) / 1000) + '0';
+                        *s++ = static_cast<char>(((year % 1000) - (year % 100)) / 100) + '0';
+                        *s++ = static_cast<char>(((year % 100) - (year % 10)) / 10) + '0';
+                        *s++ = static_cast<char>(year % 10) + '0';
                     }
                     break;
 
                     // The month number [00,11]
                     case 'm': {
                         const int mon = timeStruct.tm_mon + 1;
-                        *s++ = (char)(mon / 10) + '0';
-                        *s++ = (char)(mon % 10) + '0';
+                        *s++ = static_cast<char>(mon / 10) + '0';
+                        *s++ = static_cast<char>(mon % 10) + '0';
                     }
                     break;
 
                     // The day of the month [01,31]
                     case 'd': {
-                        *s++ = (char)(timeStruct.tm_mday / 10) + '0';
-                        *s++ = (char)(timeStruct.tm_mday % 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_mday / 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_mday % 10) + '0';
                     }
                     break;
 
                     // The hour (24-hour clock) [00,23]
                     case 'H': {
-                        *s++ = (char)(timeStruct.tm_hour / 10) + '0';
-                        *s++ = (char)(timeStruct.tm_hour % 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_hour / 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_hour % 10) + '0';
                     }
                     break;
 
                     // The minute [00,59]
                     case 'M': {
-                        *s++ = (char)(timeStruct.tm_min / 10) + '0';
-                        *s++ = (char)(timeStruct.tm_min % 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_min / 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_min % 10) + '0';
                     }
                     break;
 
                     // The second [00,59]
                     case 'S': {
-                        *s++ = (char)(timeStruct.tm_sec / 10) + '0';
-                        *s++ = (char)(timeStruct.tm_sec % 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_sec / 10) + '0';
+                        *s++ = static_cast<char>(timeStruct.tm_sec % 10) + '0';
                     }
                     break;
                     }

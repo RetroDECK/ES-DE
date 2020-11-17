@@ -420,7 +420,7 @@ void VideoGameListView::updateInfoPanel()
 
         // Fade in the game image.
         auto func = [this](float t) {
-            mVideo->setOpacity((unsigned char)(Math::lerp(
+            mVideo->setOpacity(static_cast<unsigned char>(Math::lerp(
                     static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
             };
         mVideo->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);

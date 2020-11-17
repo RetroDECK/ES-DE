@@ -21,7 +21,7 @@ class Window;
 struct SystemEnvironmentData;
 
 enum FileType {
-    GAME = 1,   // Cannot have children.
+    GAME = 1, // Cannot have children.
     FOLDER = 2,
     PLACEHOLDER = 3
 };

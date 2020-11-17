@@ -22,8 +22,10 @@ public:
     Vector2f() {}
     Vector2f(const float _f) : mX(_f), mY(_f) {}
     Vector2f(const float _x, const float _y) : mX(_x), mY(_y) {}
-    explicit Vector2f(const Vector3f& _v) : mX(((Vector2f&)_v).mX), mY(((Vector2f&)_v).mY) {}
-    explicit Vector2f(const Vector4f& _v) : mX(((Vector2f&)_v).mX), mY(((Vector2f&)_v).mY) {}
+    explicit Vector2f(const Vector3f& _v) : mX((reinterpret_cast<const Vector2f&>(_v)).mX),
+                mY((reinterpret_cast<const Vector2f&>(_v)).mY) {}
+    explicit Vector2f(const Vector4f& _v) : mX((reinterpret_cast<const Vector2f&>(_v)).mX),
+                mY((reinterpret_cast<const Vector2f&>(_v)).mY) {}
 
     const bool operator==(const Vector2f& _other) const
             { return ((mX == _other.mX) && (mY == _other.mY)); }

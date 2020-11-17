@@ -104,7 +104,7 @@ void RatingComponent::onSizeChanged()
         mSize[0] = mSize.y() * NUM_RATING_STARS;
 
     if (mSize.y() > 0) {
-        size_t heightPx = (size_t)Math::round(mSize.y());
+        size_t heightPx = static_cast<size_t>(Math::round(mSize.y()));
         if (mFilledTexture)
             mFilledTexture->rasterizeAt(heightPx, heightPx);
         if (mUnfilledTexture)
@@ -116,11 +116,11 @@ void RatingComponent::onSizeChanged()
 
 void RatingComponent::updateVertices()
 {
-    const float        numStars = NUM_RATING_STARS;
-    const float        h        = getSize().y(); // Ss the same as a single star's width.
-    const float        w        = getSize().y() * mValue * numStars;
-    const float        fw       = getSize().y() * numStars;
-    const unsigned int color    = Renderer::convertColor(mColorShift);
+    const float numStars = NUM_RATING_STARS;
+    const float h = getSize().y(); // Ss the same as a single star's width.
+    const float w = getSize().y() * mValue * numStars;
+    const float fw = getSize().y() * numStars;
+    const unsigned int color = Renderer::convertColor(mColorShift);
 
     mVertices[0] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
     mVertices[1] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };

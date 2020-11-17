@@ -60,7 +60,7 @@ namespace Math
 
     float round(const float _num)
     {
-        return (float)(int)(_num + 0.5);
+        return static_cast<float>(static_cast<int>((_num + 0.5)));
     }
 
     float lerp(const float _start, const float _end, const float _fraction)

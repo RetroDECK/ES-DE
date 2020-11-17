@@ -70,8 +70,8 @@ void GridTileComponent::update(int deltaTime)
 
 void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTileProperties* properties)
 {
-    Vector2f screen = Vector2f((float)Renderer::getScreenWidth(),
-            (float)Renderer::getScreenHeight());
+    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     if (elem->has("size"))
         properties->mSize = elem->get<Vector2f>("size") * screen;
@@ -103,8 +103,8 @@ void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTilePropert
 void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const std::string& view, const std::string& /*element*/, unsigned int /*properties*/)
 {
-    Vector2f screen = Vector2f((float)Renderer::getScreenWidth(),
-            (float)Renderer::getScreenHeight());
+    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     // Apply theme to the default gridtile.
     const ThemeData::ThemeElement* elem = theme->getElement(view, "default", "gridtile");
@@ -129,8 +129,8 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 // max size to calculate the grid dimension before it instantiates the GridTileComponents.
 Vector2f GridTileComponent::getDefaultTileSize()
 {
-    Vector2f screen = Vector2f((float)Renderer::getScreenWidth(),
-            (float)Renderer::getScreenHeight());
+    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     return screen * 0.22f;
 }
@@ -259,10 +259,10 @@ unsigned int mixColors(unsigned int first, unsigned int second, float percent)
     unsigned char green1 = (second >> 8) & 0xFF;
     unsigned char red1 = second & 0xFF;
 
-    unsigned char alpha = (unsigned char)(alpha0 * (1.0 - percent) + alpha1 * percent);
-    unsigned char blue = (unsigned char)(blue0 * (1.0 - percent) + blue1 * percent);
-    unsigned char green = (unsigned char)(green0 * (1.0 - percent) + green1 * percent);
-    unsigned char red = (unsigned char)(red0 * (1.0 - percent) + red1 * percent);
+    unsigned char alpha = static_cast<unsigned char>(alpha0 * (1.0 - percent) + alpha1 * percent);
+    unsigned char blue = static_cast<unsigned char>(blue0 * (1.0 - percent) + blue1 * percent);
+    unsigned char green = static_cast<unsigned char>(green0 * (1.0 - percent) + green1 * percent);
+    unsigned char red = static_cast<unsigned char>(red0 * (1.0 - percent) + red1 * percent);
 
     return (alpha << 24) | (blue << 16) | (green << 8) | red;
 }

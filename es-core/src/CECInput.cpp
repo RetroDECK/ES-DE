@@ -37,7 +37,7 @@ static void onAlert(void* /*cbParam*/, const CEC::libcec_alert type,
         const CEC::libcec_parameter param)
 {
     LOG(LogDebug) << "CECInput::onAlert type: " << CECInput::getAlertTypeString(type) <<
-            " parameter: " << (char*)(param.paramData);
+            " parameter: " << reinterpret_cast<char*>(param.paramData);
 }
 
 static void onCommand(void* /*cbParam*/, const CEC::cec_command* command)

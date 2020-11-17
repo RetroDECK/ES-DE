@@ -39,7 +39,7 @@ GuiScraperMulti::GuiScraperMulti(
     PowerSaver::pause();
     mIsProcessing = true;
 
-    mTotalGames = (int)mSearchQueue.size();
+    mTotalGames = static_cast<int>(mSearchQueue.size());
     mCurrentGame = 0;
     mTotalSuccessful = 0;
     mTotalSkipped = 0;

@@ -397,7 +397,6 @@ void onExit()
 
 int main(int argc, char* argv[])
 {
-    srand((unsigned int)time(nullptr));
     const auto applicationStartTime = std::chrono::system_clock::now();
 
     std::locale::global(std::locale("C"));
@@ -611,7 +610,7 @@ int main(int argc, char* argv[])
 
     while (running) {
         SDL_Event event;
-        bool ps_standby = PowerSaver::getState() && (int) SDL_GetTicks() -
+        bool ps_standby = PowerSaver::getState() && static_cast<int>(SDL_GetTicks()) -
                 ps_time > PowerSaver::getMode();
 
         if (ps_standby ? SDL_WaitEventTimeout(&event, PowerSaver::getTimeout())

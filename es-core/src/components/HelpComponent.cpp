@@ -68,7 +68,8 @@ void HelpComponent::updateGrid()
 
     std::shared_ptr<Font>& font = mStyle.font;
 
-    mGrid = std::make_shared<ComponentGrid>(mWindow, Vector2i((int)mPrompts.size() * 4, 1));
+    mGrid = std::make_shared<ComponentGrid>(mWindow,
+            Vector2i(static_cast<int>(mPrompts.size()) * 4, 1));
 
     // [icon] [spacer1] [text] [spacer2]
 

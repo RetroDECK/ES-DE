@@ -35,7 +35,8 @@ GuiSettings::GuiSettings(
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
 
-    setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+    setSize(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
     mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2, Renderer::getScreenHeight() * 0.15f);
 }
 

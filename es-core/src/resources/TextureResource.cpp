@@ -42,7 +42,7 @@ TextureResource::TextureResource(
             data->load();
         }
 
-        mSize = Vector2i((int)data->width(), (int)data->height());
+        mSize = Vector2i(static_cast<int>(data->width()), static_cast<int>(data->height()));
         mSourceSize = Vector2f(data->sourceWidth(), data->sourceHeight());
     }
     else {
@@ -71,7 +71,7 @@ void TextureResource::initFromPixels(const unsigned char* dataRGBA, size_t width
     mTextureData->releaseRAM();
     mTextureData->initFromRGBA(dataRGBA, width, height);
     // Cache the image dimensions.
-    mSize = Vector2i((int)width, (int)height);
+    mSize = Vector2i(static_cast<int>(width), static_cast<int>(height));
     mSourceSize = Vector2f(mTextureData->sourceWidth(), mTextureData->sourceHeight());
 }
 
@@ -83,7 +83,8 @@ void TextureResource::initFromMemory(const char* data, size_t length)
     mTextureData->releaseRAM();
     mTextureData->initImageFromMemory((const unsigned char*)data, length);
     // Get the size from the texture data.
-    mSize = Vector2i((int)mTextureData->width(), (int)mTextureData->height());
+    mSize = Vector2i(static_cast<int>(mTextureData->width()),
+            static_cast<int>(mTextureData->height()));
     mSourceSize = Vector2f(mTextureData->sourceWidth(), mTextureData->sourceHeight());
 }
 
@@ -176,8 +177,8 @@ void TextureResource::rasterizeAt(size_t width, size_t height)
         data = mTextureData;
     else
         data = sTextureDataManager.get(this);
-    mSourceSize = Vector2f((float)width, (float)height);
-    data->setSourceSize((float)width, (float)height);
+    mSourceSize = Vector2f(static_cast<float>(width), static_cast<float>(height));
+    data->setSourceSize(static_cast<float>(width), static_cast<float>(height));
     if (mForceLoad || (mTextureData != nullptr))
         data->load();
 }

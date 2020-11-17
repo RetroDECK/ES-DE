@@ -315,15 +315,15 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     Glyph& glyph = mGlyphMap[id];
 
     glyph.texture = tex;
-    glyph.texPos = Vector2f(cursor.x() / (float)tex->textureSize.x(), cursor.y() /
-            (float)tex->textureSize.y());
-    glyph.texSize = Vector2f(glyphSize.x() / (float)tex->textureSize.x(), glyphSize.y() /
-            (float)tex->textureSize.y());
+    glyph.texPos = Vector2f(cursor.x() / static_cast<float>(tex->textureSize.x()),
+            cursor.y() / static_cast<float>(tex->textureSize.y()));
+    glyph.texSize = Vector2f(glyphSize.x() / static_cast<float>(tex->textureSize.x()),
+            glyphSize.y() / static_cast<float>(tex->textureSize.y()));
 
-    glyph.advance = Vector2f((float)g->metrics.horiAdvance / 64.0f,
-            (float)g->metrics.vertAdvance / 64.0f);
-    glyph.bearing = Vector2f((float)g->metrics.horiBearingX / 64.0f,
-            (float)g->metrics.horiBearingY / 64.0f);
+    glyph.advance = Vector2f(static_cast<float>(g->metrics.horiAdvance) / 64.0f,
+            static_cast<float>(g->metrics.vertAdvance) / 64.0f);
+    glyph.bearing = Vector2f(static_cast<float>(g->metrics.horiBearingX) / 64.0f,
+            static_cast<float>(g->metrics.horiBearingY) / 64.0f);
 
     // Upload glyph bitmap to texture.
     Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x(),
@@ -355,10 +355,10 @@ void Font::rebuildTextures()
         FontTexture* tex = it->second.texture;
 
         // Find the position/size.
-        Vector2i cursor((int)(it->second.texPos.x() * tex->textureSize.x()),
-                (int)(it->second.texPos.y() * tex->textureSize.y()));
-        Vector2i glyphSize((int)(it->second.texSize.x() * tex->textureSize.x()),
-                (int)(it->second.texSize.y() * tex->textureSize.y()));
+        Vector2i cursor(static_cast<int>(it->second.texPos.x() * tex->textureSize.x()),
+                static_cast<int>(it->second.texPos.y() * tex->textureSize.y()));
+        Vector2i glyphSize(static_cast<int>(it->second.texSize.x() * tex->textureSize.x()),
+                static_cast<int>(it->second.texSize.y() * tex->textureSize.y()));
 
         // Upload to texture.
         Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA,
@@ -525,12 +525,12 @@ float Font::getNewlineStartOffset(const std::string& text, const unsigned int& c
         return 0;
     case ALIGN_CENTER: {
             int endChar = 0;
-            endChar = (int)text.find('\n', charStart);
+            endChar = static_cast<int>(text.find('\n', charStart));
             return (xLen - sizeText(text.substr(charStart, endChar !=
                     std::string::npos ? endChar - charStart : endChar)).x()) / 2.0f;
     }
     case ALIGN_RIGHT: {
-            int endChar = (int)text.find('\n', charStart);
+            int endChar = static_cast<int>(text.find('\n', charStart));
             return xLen - (sizeText(text.substr(charStart, endChar !=
                     std::string::npos ? endChar - charStart : endChar)).x());
     }
@@ -666,9 +666,9 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
     int size = (orig ? orig->mSize : FONT_SIZE_MEDIUM);
     std::string path = (orig ? orig->mPath : getDefaultPath());
 
-    float sh = (float)Renderer::getScreenHeight();
+    float sh = static_cast<float>(Renderer::getScreenHeight());
     if (properties & FONT_SIZE && elem->has("fontSize"))
-        size = (int)(sh * elem->get<float>("fontSize"));
+        size = static_cast<int>(sh * elem->get<float>("fontSize"));
     if (properties & FONT_PATH && elem->has("fontPath"))
         path = elem->get<std::string>("fontPath");
 

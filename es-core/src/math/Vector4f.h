@@ -24,15 +24,22 @@ public:
     Vector4f(const float _x, const float _y, const float _z, const float _w)
             : mX(_x), mY(_y), mZ(_z), mW(_w) {}
     explicit Vector4f(const Vector2f& _v)
-            : mX(((Vector4f&)_v).mX), mY(((Vector4f&)_v).mY), mZ(0), mW(0) {}
+            : mX((reinterpret_cast<const Vector4f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector4f&>(_v)).mY), mZ(0), mW(0) {}
     explicit Vector4f(const Vector2f& _v, const float _z)
-            : mX(((Vector4f&)_v).mX), mY(((Vector4f&)_v).mY), mZ(_z), mW(0) {}
+            : mX((reinterpret_cast<const Vector4f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector4f&>(_v)).mY), mZ(_z), mW(0) {}
     explicit Vector4f(const Vector2f& _v, const float _z, const float _w)
-            : mX(((Vector4f&)_v).mX), mY(((Vector4f&)_v).mY), mZ(_z), mW(_w) {}
+            : mX((reinterpret_cast<const Vector4f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector4f&>(_v)).mY), mZ(_z), mW(_w) {}
     explicit Vector4f(const Vector3f& _v)
-            : mX(((Vector4f&)_v).mX), mY(((Vector4f&)_v).mY), mZ(((Vector4f&)_v).mZ), mW(0) {}
+            : mX((reinterpret_cast<const Vector4f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector4f&>(_v)).mY),
+            mZ((reinterpret_cast<const Vector4f&>(_v)).mZ), mW(0) {}
     explicit Vector4f(const Vector3f& _v, const float _w)
-            : mX(((Vector4f&)_v).mX), mY(((Vector4f&)_v).mY), mZ(((Vector4f&)_v).mZ), mW(_w) {}
+            : mX((reinterpret_cast<const Vector4f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector4f&>(_v)).mY),
+            mZ((reinterpret_cast<const Vector4f&>(_v)).mZ), mW(_w) {}
 
     const bool operator==(const Vector4f& _other) const
             { return ((mX == _other.mX) && (mY == _other.mY) &&
@@ -85,11 +92,11 @@ public:
     inline const float& z() const { return mZ; }
     inline const float& w() const { return mW; }
 
-    inline Vector2f& v2() { return *(Vector2f*)this; }
-    inline const Vector2f& v2() const { return *(Vector2f*)this; }
+    inline Vector2f& v2() { return *reinterpret_cast<Vector2f*>(this); }
+    inline const Vector2f& v2() const { return *reinterpret_cast<const Vector2f*>(this); }
 
-    inline Vector3f& v3() { return *(Vector3f*)this; }
-    inline const Vector3f& v3() const { return *(Vector3f*)this; }
+    inline Vector3f& v3() { return *reinterpret_cast<Vector3f*>(this); }
+    inline const Vector3f& v3() const { return *reinterpret_cast<const Vector3f*>(this); }
 
     Vector4f& round();
     Vector4f& lerp (const Vector4f& _start, const Vector4f& _end, const float _fraction);

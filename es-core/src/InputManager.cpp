@@ -24,7 +24,7 @@
 #include <pugixml.hpp>
 
 #define KEYBOARD_GUID_STRING "-1"
-#define CEC_GUID_STRING      "-2"
+#define CEC_GUID_STRING "-2"
 
 // There are four distinct IDs used for joysticks:
 // 1. Device index - this is the "lowest level" identifier, and is just the Nth joystick plugged
@@ -319,11 +319,11 @@ bool InputManager::parseEvent(const SDL_Event& ev, Window* window)
         return false;
     }
 
-    if ((ev.type == (unsigned int)SDL_USER_CECBUTTONDOWN) ||
-            (ev.type == (unsigned int)SDL_USER_CECBUTTONUP)) {
+    if ((ev.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN)) ||
+            (ev.type == static_cast<unsigned int>(SDL_USER_CECBUTTONUP))) {
         window->input(getInputConfigByDevice(DEVICE_CEC), Input(DEVICE_CEC,
                 TYPE_CEC_BUTTON, ev.user.code, ev.type ==
-                (unsigned int)SDL_USER_CECBUTTONDOWN, false));
+                static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN), false));
         return true;
     }
 

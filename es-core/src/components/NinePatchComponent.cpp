@@ -61,8 +61,8 @@ void NinePatchComponent::buildVertices()
 
     mVertices = new Renderer::Vertex[6 * 9];
 
-    const Vector2f texSize = Vector2f((float)mTexture->getSize().x(),
-            (float)mTexture->getSize().y());
+    const Vector2f texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
+            static_cast<float>(mTexture->getSize().y()));
 
     const float imgSizeX[3] = { mCornerSize.x(), mSize.x() - mCornerSize.x() * 2, mCornerSize.x()};
     const float imgSizeY[3] = { mCornerSize.y(), mSize.y() - mCornerSize.y() * 2, mCornerSize.y()};

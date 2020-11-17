@@ -227,7 +227,7 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
             vertices[i].pos.round();
 
         // Build a texture for the video frame.
-        mTexture->initFromPixels((unsigned char*)mContext.surface->pixels,
+        mTexture->initFromPixels(reinterpret_cast<unsigned char*>(mContext.surface->pixels),
                 mContext.surface->w, mContext.surface->h);
         mTexture->bind();
 

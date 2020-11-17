@@ -50,7 +50,7 @@ bool UIModeController::listen(InputConfig* config, Input input)
     if (!inputIsMatch(config, input))
         mPassKeyCounter = 0; // Current input is incorrect, reset counter.
 
-    if (mPassKeyCounter == (int)mPassKeySequence.length()) {
+    if (mPassKeyCounter == static_cast<int>(mPassKeySequence.length())) {
         unlockUIMode();
         return true;
     }

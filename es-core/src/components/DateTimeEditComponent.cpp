@@ -126,7 +126,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
 
         if (config->isMappedLike("right", input)) {
             mEditIndex++;
-            if (mEditIndex >= (int)mCursorBoxes.size())
+            if (mEditIndex >= static_cast<int>(mCursorBoxes.size()))
                 mEditIndex--;
             return true;
         }
@@ -172,7 +172,7 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
         font->renderTextCache(mTextCache.get());
 
         if (mEditing) {
-            if (mEditIndex >= 0 && (unsigned int)mEditIndex < mCursorBoxes.size())
+            if (mEditIndex >= 0 && static_cast<unsigned int>(mEditIndex) < mCursorBoxes.size())
                 Renderer::drawRect(mCursorBoxes[mEditIndex][0], mCursorBoxes[mEditIndex][1],
                     mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
                     0x00000022, 0x00000022);

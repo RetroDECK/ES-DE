@@ -120,8 +120,8 @@ private:
 template<typename T>
 ImageGridComponent<T>::ImageGridComponent(Window* window) : IList<ImageGridData, T>(window)
 {
-    Vector2f screen = Vector2f((float)Renderer::getScreenWidth(),
-            (float)Renderer::getScreenHeight());
+    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     mCamera = 0.0;
     mCameraDirection = 1.0;
@@ -225,10 +225,10 @@ void ImageGridComponent<T>::render(const Transform4x4f& parentTrans)
     float scaleX = trans.r0().x();
     float scaleY = trans.r1().y();
 
-    Vector2i pos((int)Math::round(trans.translation()[0]),
-            (int)Math::round(trans.translation()[1]));
-    Vector2i size((int)Math::round(mSize.x() * scaleX),
-            (int)Math::round(mSize.y() * scaleY));
+    Vector2i pos(static_cast<int>(Math::round(trans.translation()[0])),
+            static_cast<int>(Math::round(trans.translation()[1])));
+    Vector2i size(static_cast<int>(Math::round(mSize.x() * scaleX)),
+            static_cast<int>(Math::round(mSize.y() * scaleY)));
 
     Renderer::pushClipRect(pos, size);
 
@@ -265,8 +265,8 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Keep the theme pointer to apply it on the tiles later on.
     mTheme = theme;
 
-    Vector2f screen = Vector2f((float)Renderer::getScreenWidth(),
-            (float)Renderer::getScreenHeight());
+    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "imagegrid");
     if (elem) {
@@ -393,7 +393,7 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
     int dimScrollable = (isVertical() ? mGridDimension.y() : mGridDimension.x()) - 2 * EXTRAITEMS;
     int dimOpposite = isVertical() ? mGridDimension.x() : mGridDimension.y();
 
-    int centralCol = (int)(dimScrollable - 0.5) / 2;
+    int centralCol = static_cast<int>((dimScrollable - 0.5) / 2);
     int maxCentralCol = dimScrollable / 2;
 
     int oldCol = (mLastCursor / dimOpposite);
@@ -520,16 +520,16 @@ void ImageGridComponent<T>::buildTiles()
     if (mCenterSelection) {
         int dimScrollable = (isVertical() ? mGridDimension.y() :
                 mGridDimension.x()) - 2 * EXTRAITEMS;
-        mStartPosition -= (int) Math::floorf(dimScrollable / 2.0f);
+        mStartPosition -= static_cast<int>(Math::floorf(dimScrollable / 2.0f));
     }
 
     Vector2f tileDistance = mTileSize + mMargin;
 
     if (mAutoLayout.x() != 0 && mAutoLayout.y() != 0) {
         auto x = (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1)) - mPadding.x() -
-                mPadding.z()) / (int) mAutoLayout.x();
+                mPadding.z()) / static_cast<int>(mAutoLayout.x());
         auto y = (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1)) - mPadding.y() -
-                mPadding.w()) / (int) mAutoLayout.y();
+                mPadding.w()) / static_cast<int>(mAutoLayout.y());
 
         mTileSize = Vector2f(x, y);
         tileDistance = mTileSize + mMargin;
@@ -578,7 +578,7 @@ void ImageGridComponent<T>::updateTiles(bool ascending, bool allowAnimation,
 
     // Stop updating the tiles at highest scroll speed.
     if (mScrollTier == 3) {
-        for (int ti = 0; ti < (int)mTiles.size(); ti++) {
+        for (int ti = 0; ti < static_cast<int>(mTiles.size()); ti++) {
             std::shared_ptr<GridTileComponent> tile = mTiles.at(ti);
 
             tile->setSelected(false);
@@ -590,7 +590,7 @@ void ImageGridComponent<T>::updateTiles(bool ascending, bool allowAnimation,
 
     // Temporary store previous texture so they can't be unloaded.
     std::vector<std::shared_ptr<TextureResource>> previousTextures;
-    for (int ti = 0; ti < (int)mTiles.size(); ti++) {
+    for (int ti = 0; ti < static_cast<int>(mTiles.size()); ti++) {
         std::shared_ptr<GridTileComponent> tile = mTiles.at(ti);
         previousTextures.push_back(tile->getTexture());
     }
@@ -598,8 +598,8 @@ void ImageGridComponent<T>::updateTiles(bool ascending, bool allowAnimation,
     // If going down, update from top to bottom.
     // If going up, update from bottom to top.
     int scrollDirection = ascending ? 1 : -1;
-    int ti = ascending ? 0 : (int)mTiles.size() - 1;
-    int end = ascending ? (int)mTiles.size() : -1;
+    int ti = ascending ? 0 : static_cast<int>(mTiles.size()) - 1;
+    int end = ascending ? static_cast<int>(mTiles.size()) : -1;
     int img = mStartPosition + ti;
 
     img -= EXTRAITEMS * (isVertical() ? mGridDimension.x() : mGridDimension.y());
@@ -633,7 +633,8 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos, int imgPos,
 
     // If we have more tiles than we have to display images on screen, hide them.
     // Same for tiles out of the buffer.
-    if (imgPos < 0 || imgPos >= size() || tilePos < 0 || tilePos >= (int) mTiles.size()) {
+    if (imgPos < 0 || imgPos >= size() || tilePos < 0 ||
+            tilePos >= static_cast<int>(mTiles.size())) {
         if (updateSelectedState)
             tile->setSelected(false, allowAnimation);
         tile->reset();

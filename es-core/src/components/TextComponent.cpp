@@ -93,11 +93,13 @@ void TextComponent::setOpacity(unsigned char opacity)
     // This function is mostly called to do fading in-out of the Text component element.
     // Therefore, we assume here that opacity is a fractional value (expressed as an int 0-255),
     // of the opacity originally set with setColor() or setBackgroundColor().
-    unsigned char o = (unsigned char)((float)opacity / 255.f * (float) mColorOpacity);
-    mColor = (mColor & 0xFFFFFF00) | (unsigned char) o;
+    unsigned char o = static_cast<unsigned char>(static_cast<float>(opacity) / 255.f *
+            static_cast<float>(mColorOpacity));
+    mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(o);
 
-    unsigned char bgo = (unsigned char)((float)opacity / 255.f * (float)mBgColorOpacity);
-    mBgColor = (mBgColor & 0xFFFFFF00) | (unsigned char)bgo;
+    unsigned char bgo = static_cast<unsigned char>(static_cast<float>(opacity) / 255.f *
+            static_cast<float>(mBgColorOpacity));
+    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(bgo);
 
     onColorChanged();
     GuiComponent::setOpacity(opacity);

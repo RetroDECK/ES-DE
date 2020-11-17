@@ -113,7 +113,7 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
         return;
     // Not loaded. Make sure there is room.
     size_t size = TextureResource::getTotalMemUsage();
-    size_t settingVRAM = (size_t)Settings::getInstance()->getInt("MaxVRAM");
+    size_t settingVRAM = static_cast<size_t>(Settings::getInstance()->getInt("MaxVRAM"));
 
     if (settingVRAM < 80) {
         LOG(LogWarning) << "MaxVRAM is too low at " << settingVRAM <<

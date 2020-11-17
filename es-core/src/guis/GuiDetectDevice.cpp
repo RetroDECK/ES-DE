@@ -150,8 +150,8 @@ void GuiDetectDevice::update(int deltaTime)
         }
         else {
             mHoldTime -= deltaTime;
-            const float t = (float)mHoldTime / HOLD_TIME;
-            unsigned int c = (unsigned char)(t * 255);
+            const float t = static_cast<float>(mHoldTime) / HOLD_TIME;
+            unsigned int c = static_cast<unsigned char>(t * 255);
             mDeviceHeld->setColor((c << 24) | (c << 16) | (c << 8) | 0xFF);
             if (mHoldTime <= 0) {
                 // Picked one!

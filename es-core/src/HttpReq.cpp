@@ -32,7 +32,7 @@ std::string HttpReq::urlEncode(const std::string &s)
         else {
             escaped.append("%");
             char buf[3];
-            sprintf(buf, "%.2X", (unsigned char)s[i]);
+            sprintf(buf, "%.2X", static_cast<unsigned char>(s[i]));
             escaped.append(buf);
         }
     }

@@ -35,7 +35,7 @@ void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
     updateElementPosition(mEntries.back().data);
 
     if (setCursorHere) {
-        mCursor = (int)mEntries.size() - 1;
+        mCursor = static_cast<int>(mEntries.size()) - 1;
         onCursorChanged(CURSOR_STOPPED);
     }
 }
@@ -181,8 +181,9 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     // Clip everything to be inside our bounds.
     Vector3f dim(mSize.x(), mSize.y(), 0);
     dim = trans * dim - trans.translation();
-    Renderer::pushClipRect(Vector2i((int)trans.translation().x(), (int)trans.translation().y()),
-        Vector2i((int)Math::round(dim.x()), (int)Math::round(dim.y() + 1)));
+    Renderer::pushClipRect(Vector2i(static_cast<int>(trans.translation().x()),
+            static_cast<int>(trans.translation().y())), Vector2i(static_cast<int>(
+            Math::round(dim.x())), static_cast<int>(Math::round(dim.y() + 1))));
 
     // Scroll the camera.
     trans.translate(Vector3f(0, -Math::round(mCameraOffset), 0));
@@ -192,7 +193,7 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     bool drawAll;
     for (unsigned int i = 0; i < mEntries.size(); i++) {
         auto& entry = mEntries.at(i);
-        drawAll = !mFocused || i != (unsigned int)mCursor;
+        drawAll = !mFocused || i != static_cast<unsigned int>(mCursor);
         for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
             if (drawAll || it->invert_when_selected) {
                 // For the row where the cursor is at, we want to remove any hue from the

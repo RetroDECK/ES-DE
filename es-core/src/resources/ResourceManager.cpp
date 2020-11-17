@@ -125,12 +125,12 @@ ResourceData ResourceManager::loadFile(const std::string& path) const
     #endif
 
     stream.seekg(0, stream.end);
-    size_t size = (size_t)stream.tellg();
+    size_t size = static_cast<size_t>(stream.tellg());
     stream.seekg(0, stream.beg);
 
     // Supply custom deleter to properly free array.
     std::shared_ptr<unsigned char> data(new unsigned char[size], array_deleter);
-    stream.read((char*)data.get(), size);
+    stream.read(reinterpret_cast<char*>(data.get()), size);
     stream.close();
 
     ResourceData ret = {data, size};

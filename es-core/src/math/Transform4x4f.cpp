@@ -10,8 +10,8 @@
 
 const Transform4x4f Transform4x4f::operator*(const Transform4x4f& _other) const
 {
-    const float* tm = (float*)this;
-    const float* om = (float*)&_other;
+    const float* tm = reinterpret_cast<const float*>(this);
+    const float* om = reinterpret_cast<const float*>(&_other);
 
     return
     {
@@ -44,8 +44,8 @@ const Transform4x4f Transform4x4f::operator*(const Transform4x4f& _other) const
 
 const Vector3f Transform4x4f::operator*(const Vector3f& _other) const
 {
-    const float* tm = (float*)this;
-    const float* ov = (float*)&_other;
+    const float* tm = reinterpret_cast<const float*>(this);
+    const float* ov = reinterpret_cast<const float*>(&_other);
 
     return
     {
@@ -63,7 +63,8 @@ Transform4x4f& Transform4x4f::orthoProjection(
         float _near,
         float _far)
 {
-    float*      tm       = (float*)this;
+    float* tm = reinterpret_cast<float*>(this);
+
     const float o[6]     = {  2 / (_right - _left),
                               2 / (_top   - _bottom),
                              -2 / (_far   - _near),
@@ -101,8 +102,8 @@ Transform4x4f& Transform4x4f::orthoProjection(
 
 Transform4x4f& Transform4x4f::invert(const Transform4x4f& _other)
 {
-    float*       tm = (float*)this;
-    const float* om = (float*)&_other;
+    float* tm = reinterpret_cast<float*>(this);
+    const float* om = reinterpret_cast<const float*>(&_other);
 
     // Full invert
     // tm[ 0] =  ((om[ 5] * (om[10] * om[15] - om[11] * om[14])) - (om[ 9] * (om[ 6] * om[15] - om[ 7] * om[14])) + (om[13] * (om[ 6] * om[11] - om[ 7] * om[10])));
@@ -166,8 +167,8 @@ Transform4x4f& Transform4x4f::invert(const Transform4x4f& _other)
 
 Transform4x4f& Transform4x4f::scale(const Vector3f& _scale)
 {
-    float*       tm = (float*)this;
-    const float* sv = (float*)&_scale;
+    float* tm = reinterpret_cast<float*>(this);
+    const float* sv = reinterpret_cast<const float*>(&_scale);
 
     tm[ 0] *= sv[0];
     tm[ 1] *= sv[0];
@@ -184,8 +185,8 @@ Transform4x4f& Transform4x4f::scale(const Vector3f& _scale)
 
 Transform4x4f& Transform4x4f::rotate(const float _angle, const Vector3f& _axis)
 {
-    float*       tm      = (float*)this;
-    const float* av      = (float*)&_axis;
+    float*       tm      = reinterpret_cast<float*>(this);
+    const float* av      = reinterpret_cast<const float*>(&_axis);
     const float  s       = Math::sinf(-_angle);
     const float  c       = Math::cosf(-_angle);
     const float  t       = 1 - c;
@@ -232,7 +233,7 @@ Transform4x4f& Transform4x4f::rotate(const float _angle, const Vector3f& _axis)
 
 Transform4x4f& Transform4x4f::rotateX(const float _angle)
 {
-    float*      tm      = (float*)this;
+    float*      tm      = reinterpret_cast<float*>(this);
     const float s       = Math::sinf(-_angle);
     const float c       = Math::cosf(-_angle);
     const float temp[6] = { tm[ 4] * c + tm[ 8] * -s,
@@ -254,7 +255,7 @@ Transform4x4f& Transform4x4f::rotateX(const float _angle)
 
 Transform4x4f& Transform4x4f::rotateY(const float _angle)
 {
-    float*      tm      = (float*)this;
+    float*      tm      = reinterpret_cast<float*>(this);
     const float s       = Math::sinf(-_angle);
     const float c       = Math::cosf(-_angle);
     const float temp[6] = { tm[ 0] *  c + tm[ 8] * s,
@@ -276,7 +277,7 @@ Transform4x4f& Transform4x4f::rotateY(const float _angle)
 
 Transform4x4f& Transform4x4f::rotateZ(const float _angle)
 {
-    float*      tm      = (float*)this;
+    float*      tm      = reinterpret_cast<float*>(this);
     const float s       = Math::sinf(-_angle);
     const float c       = Math::cosf(-_angle);
     const float temp[6] = { tm[ 0] * c + tm[ 4] * -s,
@@ -298,8 +299,8 @@ Transform4x4f& Transform4x4f::rotateZ(const float _angle)
 
 Transform4x4f& Transform4x4f::translate(const Vector3f& _translation)
 {
-    float*       tm = (float*)this;
-    const float* tv = (float*)&_translation;
+    float* tm = reinterpret_cast<float*>(this);
+    const float* tv = reinterpret_cast<const float*>(&_translation);
 
     tm[12] += tm[ 0] * tv[0] + tm[ 4] * tv[1] + tm[ 8] * tv[2];
     tm[13] += tm[ 1] * tv[0] + tm[ 5] * tv[1] + tm[ 9] * tv[2];
@@ -310,11 +311,11 @@ Transform4x4f& Transform4x4f::translate(const Vector3f& _translation)
 
 Transform4x4f& Transform4x4f::round()
 {
-    float* tm = (float*)this;
+    float* tm = reinterpret_cast<float*>(this);
 
-    tm[12] = (float)(int)(tm[12] + 0.5f);
-    tm[13] = (float)(int)(tm[13] + 0.5f);
-    tm[14] = (float)(int)(tm[14] + 0.5f);
+    tm[12] = static_cast<float>(static_cast<int>(tm[12] + 0.5f));
+    tm[13] = static_cast<float>(static_cast<int>(tm[13] + 0.5f));
+    tm[14] = static_cast<float>(static_cast<int>(tm[14] + 0.5f));
 
     return *this;
 }

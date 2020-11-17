@@ -153,7 +153,7 @@ int MetaDataList::getInt(const std::string& key) const
 
 float MetaDataList::getFloat(const std::string& key) const
 {
-    return (float)atof(get(key).c_str());
+    return static_cast<float>(atof(get(key).c_str()));
 }
 
 bool MetaDataList::wasChanged() const

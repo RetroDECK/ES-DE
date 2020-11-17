@@ -32,7 +32,8 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
 
     if (elem->has("pos"))
         position = elem->get<Vector2f>("pos") *
-                Vector2f((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+                Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+                static_cast<float>(Renderer::getScreenHeight()));
 
     if (elem->has("origin"))
         origin = elem->get<Vector2f>("origin");

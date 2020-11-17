@@ -95,8 +95,8 @@ void MenuComponent::updateSize()
         }
     }
 
-    float width = (float)Math::min((int)Renderer::getScreenHeight(),
-            (int)(Renderer::getScreenWidth() * 0.90f));
+    float width = static_cast<float>(Math::min(static_cast<int>(Renderer::getScreenHeight()),
+            static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
     setSize(width, height);
 }
 
@@ -142,11 +142,11 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(Window* window,
         const std::vector< std::shared_ptr<ButtonComponent> >& buttons)
 {
     std::shared_ptr<ComponentGrid> buttonGrid = std::make_shared<ComponentGrid>
-            (window, Vector2i((int)buttons.size(), 2));
+            (window, Vector2i(static_cast<int>(buttons.size()), 2));
 
      // Initialize to padding.
-    float buttonGridWidth = (float)BUTTON_GRID_HORIZ_PADDING * buttons.size();
-    for (int i = 0; i < (int)buttons.size(); i++) {
+    float buttonGridWidth = static_cast<float>(BUTTON_GRID_HORIZ_PADDING) * buttons.size();
+    for (int i = 0; i < static_cast<int>(buttons.size()); i++) {
         buttonGrid->setEntry(buttons.at(i), Vector2i(i, 0), true, false);
         buttonGridWidth += buttons.at(i)->getSize().x();
     }

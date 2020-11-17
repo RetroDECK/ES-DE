@@ -22,12 +22,14 @@ public:
     Vector3f() {}
     Vector3f(const float _f) : mX(_f), mY(_f), mZ(_f) {}
     Vector3f(const float _x, const float _y, const float _z) : mX(_x), mY(_y), mZ(_z) {}
-    explicit Vector3f(const Vector2f& _v)
-            : mX(((Vector3f&)_v).mX), mY(((Vector3f&)_v).mY), mZ(0) {}
+    explicit Vector3f(const Vector2f& _v) : mX((reinterpret_cast<const Vector3f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector3f&>(_v)).mY), mZ(0) {}
     explicit Vector3f(const Vector2f& _v, const float _z)
-            : mX(((Vector3f&)_v).mX), mY(((Vector3f&)_v).mY), mZ(_z) {}
-    explicit Vector3f(const Vector4f& _v)
-            : mX(((Vector3f&)_v).mX), mY(((Vector3f&)_v).mY), mZ(((Vector3f&)_v).mZ) {}
+            : mX((reinterpret_cast<const Vector3f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector3f&>(_v)).mY), mZ(_z) {}
+    explicit Vector3f(const Vector4f& _v) : mX((reinterpret_cast<const Vector3f&>(_v)).mX),
+            mY((reinterpret_cast<const Vector3f&>(_v)).mY),
+            mZ((reinterpret_cast<const Vector3f&>(_v)).mZ) {}
 
     const bool operator==(const Vector3f& _other) const
             { return ((mX == _other.mX) && (mY == _other.mY) && (mZ == _other.mZ)); }
@@ -76,8 +78,8 @@ public:
     inline const float& y() const { return mY; }
     inline const float& z() const { return mZ; }
 
-    inline Vector2f& v2() { return *(Vector2f*)this; }
-    inline const Vector2f& v2() const { return *(Vector2f*)this; }
+    inline Vector2f& v2() { return *reinterpret_cast<Vector2f*>(this); }
+    inline const Vector2f& v2() const { return *reinterpret_cast<const Vector2f*>(this); }
 
     Vector3f& round();
     Vector3f& lerp(const Vector3f& _start, const Vector3f& _end, const float _fraction);

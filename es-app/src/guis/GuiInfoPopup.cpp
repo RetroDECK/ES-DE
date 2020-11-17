@@ -46,8 +46,8 @@ GuiInfoPopup::GuiInfoPopup(
     }
 
     // Add a padding to the box.
-    int paddingX = (int) (Renderer::getScreenWidth() * 0.03f);
-    int paddingY = (int) (Renderer::getScreenHeight() * 0.02f);
+    int paddingX = static_cast<int>(Renderer::getScreenWidth() * 0.03f);
+    int paddingY = static_cast<int>(Renderer::getScreenHeight() * 0.02f);
     mSize[0] = mSize.x() + paddingX;
     mSize[1] = mSize.y() + paddingY;
 
@@ -114,10 +114,10 @@ bool GuiInfoPopup::updateState()
     else {
         alpha = ((-(curTime - mStartTime - mDuration)*255)/500);
     }
-    mGrid->setOpacity((unsigned char)alpha);
+    mGrid->setOpacity(static_cast<unsigned char>(alpha));
 
     // Apply fade-in effect to popup frame.
-    mFrame->setEdgeColor(0xFFFFFF00 | (unsigned char)(alpha));
-    mFrame->setCenterColor(0xFFFFFF00 | (unsigned char)(alpha));
+    mFrame->setEdgeColor(0xFFFFFF00 | static_cast<unsigned char>(alpha));
+    mFrame->setCenterColor(0xFFFFFF00 | static_cast<unsigned char>(alpha));
     return true;
 }

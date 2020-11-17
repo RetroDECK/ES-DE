@@ -51,7 +51,8 @@ void PowerSaver::loadWakeupTime()
 
 void PowerSaver::updateTimeouts()
 {
-    mScreensaverTimeout = (unsigned int) Settings::getInstance()->getInt("ScreensaverTimer");
+    mScreensaverTimeout = static_cast<unsigned int>(Settings::getInstance()->
+            getInt("ScreensaverTimer"));
     mScreensaverTimeout = mScreensaverTimeout > 0 ? mScreensaverTimeout - getMode() : -1;
     loadWakeupTime();
 }

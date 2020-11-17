@@ -449,8 +449,8 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
         return false;
     }
 
-    float width = (float)FreeImage_GetWidth(image);
-    float height = (float)FreeImage_GetHeight(image);
+    float width = static_cast<float>(FreeImage_GetWidth(image));
+    float height = static_cast<float>(FreeImage_GetHeight(image));
 
     // If the image is smaller than maxWidth or maxHeight, then don't do any
     // scaling. It doesn't make sense to upscale the image and waste disk space.
@@ -458,9 +458,9 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
         return true;
 
     if (maxWidth == 0)
-        maxWidth = (int)((maxHeight / height) * width);
+        maxWidth = static_cast<int>((maxHeight / height) * width);
     else if (maxHeight == 0)
-        maxHeight = (int)((maxWidth / width) * height);
+        maxHeight = static_cast<int>((maxWidth / width) * height);
 
     FIBITMAP* imageRescaled = FreeImage_Rescale(image, maxWidth, maxHeight, FILTER_BILINEAR);
     FreeImage_Unload(image);

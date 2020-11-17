@@ -107,9 +107,9 @@ public:
                         return true;
                     // Move selection to previous.
                     unsigned int i = getSelectedId();
-                    int next = (int)i - 1;
+                    int next = static_cast<int>(i) - 1;
                     if (next < 0)
-                        next += (int)mEntries.size();
+                        next += static_cast<int>(mEntries.size());
 
                     mEntries.at(i).selected = false;
                     mEntries.at(next).selected = true;

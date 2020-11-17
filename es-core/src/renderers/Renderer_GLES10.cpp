@@ -83,13 +83,13 @@ namespace Renderer
         SDL_GL_MakeCurrent(getSDLWindow(), sdlContext);
 
         std::string vendor = glGetString(GL_VENDOR) ?
-                (const char*)glGetString(GL_VENDOR) : "";
+                reinterpret_cast<const char*>(glGetString(GL_VENDOR)) : "";
         std::string renderer = glGetString(GL_RENDERER) ?
-                (const char*)glGetString(GL_RENDERER) : "";
+                reinterpret_cast<const char*>(glGetString(GL_RENDERER)) : "";
         std::string version = glGetString(GL_VERSION) ?
-                (const char*)glGetString(GL_VERSION) : "";
+                reinterpret_cast<const char*>(glGetString(GL_VERSION)) : "";
         std::string extensions = glGetString(GL_EXTENSIONS) ?
-                (const char*)glGetString(GL_EXTENSIONS) : "";
+                reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)) : "";
 
         LOG(LogInfo) << "GL vendor: " << vendor;
         LOG(LogInfo) << "GL renderer: " << renderer;
@@ -97,7 +97,7 @@ namespace Renderer
         LOG(LogInfo) << "EmulationStation renderer: OpenGL ES 1.0";
         LOG(LogInfo) << "Checking available OpenGL extensions...";
         std::string glExts = glGetString(GL_EXTENSIONS) ?
-                (const char*)glGetString(GL_EXTENSIONS) : "";
+                reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)) : "";
         LOG(LogInfo) << "GL_OES_texture_npot: " <<
                 (extensions.find("GL_OES_texture_npot") !=
                 std::string::npos ? "OK" : "MISSING");

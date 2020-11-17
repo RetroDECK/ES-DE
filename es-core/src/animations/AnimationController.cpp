@@ -38,7 +38,7 @@ bool AnimationController::update(int deltaTime)
     if (mTime < 0) // Are we still in delay?
         return false;
 
-    float t = (float)mTime / mAnimation->getDuration();
+    float t = static_cast<float>(mTime) / mAnimation->getDuration();
 
     if (t > 1.0f)
         t = 1.0f;

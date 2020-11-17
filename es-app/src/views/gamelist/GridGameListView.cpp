@@ -323,7 +323,7 @@ void GridGameListView::initMDLabels()
     std::vector<TextComponent*> components = getMDLabels();
 
     const unsigned int colCount = 2;
-    const unsigned int rowCount = (int)(components.size() / 2);
+    const unsigned int rowCount = static_cast<int>(components.size() / 2);
 
     Vector3f start(mSize.x() * 0.01f, mSize.y() * 0.625f, 0.0f);
 
@@ -354,7 +354,7 @@ void GridGameListView::initMDValues()
     std::vector<GuiComponent*> values = getMDValues();
 
     std::shared_ptr<Font> defaultFont = Font::get(FONT_SIZE_SMALL);
-    mRating.setSize(defaultFont->getHeight() * 5.0f, (float)defaultFont->getHeight());
+    mRating.setSize(defaultFont->getHeight() * 5.0f, static_cast<float>(defaultFont->getHeight()));
     mReleaseDate.setFont(defaultFont);
     mDeveloper.setFont(defaultFont);
     mPublisher.setFont(defaultFont);
@@ -510,7 +510,7 @@ void GridGameListView::updateInfoPanel()
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {
-                comp->setOpacity((unsigned char)(Math::lerp(0.0f, 1.0f, t)*255));
+                comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
             };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
@@ -547,9 +547,9 @@ void GridGameListView::remove(FileData *game, bool deleteFile)
     if (getCursor() == game) {
         std::vector<FileData*> siblings = parent->getChildrenListToDisplay();
         auto gameIter = std::find(siblings.cbegin(), siblings.cend(), game);
-        int gamePos = (int)std::distance(siblings.cbegin(), gameIter);
+        int gamePos = static_cast<int>(std::distance(siblings.cbegin(), gameIter));
         if (gameIter != siblings.cend()) {
-            if ((gamePos + 1) < (int)siblings.size())
+            if ((gamePos + 1) < static_cast<int>(siblings.size()))
                 setCursor(siblings.at(gamePos + 1));
             else if ((gamePos - 1) > 0)
                 setCursor(siblings.at(gamePos - 1));

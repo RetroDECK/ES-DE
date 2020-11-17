@@ -10,9 +10,9 @@
 
 Vector3f& Vector3f::round()
 {
-    mX = (float)(int)(mX + 0.5f);
-    mY = (float)(int)(mY + 0.5f);
-    mZ = (float)(int)(mZ + 0.5f);
+    mX = static_cast<float>(static_cast<int>(mX + 0.5f));
+    mY = static_cast<float>(static_cast<int>(mY + 0.5f));
+    mZ = static_cast<float>(static_cast<int>(mZ + 0.5f));
 
     return *this;
 }

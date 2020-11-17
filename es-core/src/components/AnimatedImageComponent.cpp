@@ -68,7 +68,7 @@ void AnimatedImageComponent::update(int deltaTime)
     while (mFrames.at(mCurrentFrame).second <= mFrameAccumulator) {
         mCurrentFrame++;
 
-        if (mCurrentFrame == (int)mFrames.size()) {
+        if (mCurrentFrame == static_cast<int>(mFrames.size())) {
             if (mLoop) {
                 // Restart.
                 mCurrentFrame = 0;
