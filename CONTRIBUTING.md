@@ -4,19 +4,63 @@ Contributing to EmulationStation Desktop Edition
 
 ### Help needed:
 
-There are many cards in the Kanban backlog that would be nice to implement. And for this, code contributions are very welcome. There may be a bug or two as well that needs fixing ;)
+Contributions to ES are very much appreciated as there are many things that need to be implemented and improved! Code commits is only one part of it, as work is also needed on the rbsimple-DE theme as well as thorough application testing.
 
-And to put it mildly, I'm confused regarding CMake, so help is needed in this area. Although the building and package generation works more or less correctly, there are some hacks and similar in the CMakeLists.txt files that need improving by someone who really knows how this software package works.
+A review of the CMake configuration files would be  helpful. Although the building and package generation works more or less correctly, there are some hacks and similar in the CMakeLists.txt files that need improving by someone who really knows how this software package works.
 
-Apart from code commits, help is especially needed for thorough testing of the software and for working on the rbsimple-DE theme.
+Regarding testing, it's impossible for me to test every game system as rbsimple-DE has support for more than a 100 different systems. There could be issues with the configuration template files, or within ES itself. So more testing is needed!
 
-It's impossible for me to test every game system (rbsimple-DE has support for more than a 100 different systems!) so it would be especially useful to hear about any issues with starting games using the default es_systems.cfg configuration file and also if there are any problems with scraping for certain systems.
-
-And it's a fact that some configuration is simply missing in these files for some systems, so that would need to be added as well.
-
-In general, a review of the [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) files including the supported file extensions would be great!
+In general, a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great!
 
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details of what needs to be added or updated.
+
+### High level release plan
+
+This plan is under constant review so expect it to change from time to time. Still it should give some feeling for which direction to move and what to work on first. These are only the larger topics, there are of course many smaller changes and improvements in addition to these.
+
+#### v1.1.0
+
+* Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
+* Move to SDL2 GameController API
+* Different button graphics applied depending on controller type (Xbox, PlayStation and SNES style)
+* Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
+* Web proxy support for the scraper
+* Checksum support for the scraper to verify each file before accepting/saving it
+* Requests per minute limitation setting for the scraper
+* Proper game launching screen
+* On-screen keyboard
+* Ability to show game media in full screen from the gamelist view
+* Improve full-screen support, remove the temporary full screen hacks
+* Decals displaying things like if it's a favorite game, a completed game etc. (will require theme support)
+* Better shader support (more adaptive to screen resolution, higher performance, cleaner code)
+* Preload all built-in resources and never clear them from the cache
+* Improve text and font functions, e.g. faster and cleaner line wrapping code
+
+#### v1.2.0
+
+* Complete overhaul of the grid view style
+* A nice and useful grid view implementation in rbsimple-DE
+* Internationalization/multi-language support
+* Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
+* Support for additional scraper services (?)
+* Authoring tools to clean up orphaned gamelist entries, media files etc.
+* Improved multi-threading
+* Add 'time played' counter per game, similar to how it works in Steam
+* Scrollbars for menus and gamelists
+* Flatpak and Snap support on Linux
+* Add to Debian repository
+
+#### v2.0.0
+
+* Vulkan renderer for all supported operating systems
+* Dependency on MoltenVK to get Metal support on macOS
+* Decommission of the OpenGL 2.1 and OpenGL ES renderers
+* Better and more accurate GPU and memory usage statistics overlay
+* Animated menu elements like switches, tick boxes, smooth scrolling etc.
+* Migration tools for importing game metadata and media from other front-end applications
+* Auto-import tools for Steam, Lutris etc.
+
+To see which features have been implemented in previous versions, refer to [NEWS.md](NEWS.md).
 
 ### Coding style:
 

@@ -7,14 +7,14 @@ Maybe you're familiar with EmulationStation: yes there are multiple forks availa
 
 The goal is to make the software as easy as possible to install and use, and to suppport the major desktop operating systems: Unix/Linux, macOS and Windows.
 
-The following operating systems have been tested and confirmed as working with ES:
+The following operating systems have been tested and confirmed as working with ES-DE v1.0.0:
 
 * Kubuntu 20.04
 * macOS 10.11.6 (El Capitan)
 * Windows 10 (x86)
 * Windows 8.1 (x86)
 
-It's possible that the application still compiles and works on devices such as the Raspberry Pi, but again it's not the goal of this fork to run on such devices.
+The application probably also works fine on devices such as the Raspberry Pi, but this is beyond the scope of this software fork.
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
@@ -26,21 +26,19 @@ Check out the [User Guide](USERGUIDE.md) for how to quickly get the application 
 
 ### Help needed:
 
-If you would like to contribute to the development of EmulationStation Desktop Edition, please read the [CONTRIBUTING](CONTRIBUTING.md) file!
+If you would like to contribute to the development of EmulationStation Desktop Edition, please read how to participate [here](CONTRIBUTING.md)! (You can also read about planned future features there).
 
 
 Other information
 =================
 
-[NEWS.md](NEWS.md) contains information about new functionality, improvements and bug fixes. \
-(An overview of all previous versions will be included here as well.)
+[NEWS.md](NEWS.md) contains information about the current release as well as previous releases. This includes features, improvements and bug fixes.
 
-[INSTALL.md](INSTALL.md) provides details on how to build and configure the application.
+[INSTALL.md](INSTALL.md) provides details on how to build the application from source code, and also discusses more advanced configuration topics.
 
 [CREDITS.md](CREDITS.md) is an attempt to credit the individuals and projects which made this application possible.
 
 [THEMES.md](THEMES.md) is a guide on how theming works and is useful for those who would like to develop a new theme, or perhaps customize an existing theme.
-
 
 Some feature highlights
 =======================
