@@ -182,9 +182,6 @@ void VideoVlcComponent::resize()
 
 void VideoVlcComponent::render(const Transform4x4f& parentTrans)
 {
-    if (!isVisible())
-        return;
-
     VideoComponent::render(parentTrans);
     Transform4x4f trans = parentTrans * getTransform();
     GuiComponent::renderChildren(trans);

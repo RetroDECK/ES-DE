@@ -87,6 +87,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Fixed a massive memory leak related to SVG images
 * Toggling the screensaver didn't work as expected
 * Wrapping around the first and last game systems generated strange camera movements when using the slide transition style
+* Game media was not rendered when moving between gamelists using the slide transition style
 * The setting to enable or disable audio for the video screensaver only worked on Raspberry Pi
 * The screensaver random function did not consider the previously selected game and could potentially show the same image or video over and over again
 * The random system selection did not consider the currently selected system

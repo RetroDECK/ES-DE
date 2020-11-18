@@ -51,10 +51,11 @@ ViewController::ViewController(
         : GuiComponent(window),
         mCurrentView(nullptr),
         mPreviousView(nullptr),
+        mSkipView(nullptr),
         mCamera(Transform4x4f::Identity()),
         mWrappedViews(false),
         mFadeOpacity(0),
-        mCancelledAnimation(false),
+        mCancelledTransition(false),
         mLockInput(false),
         mGameToLaunch(nullptr)
 {
@@ -129,15 +130,24 @@ bool ViewController::isCameraMoving()
 
 void ViewController::cancelViewTransitions()
 {
-    if (Settings::getInstance()->getString("TransitionStyle") == "slide" && isCameraMoving()) {
-        mCamera.r3().x() = -mCurrentView->getPosition().x();
-        mCamera.r3().y() = -mCurrentView->getPosition().y();
-        stopAllAnimations();
+    if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
+        if (isCameraMoving()) {
+            mCamera.r3().x() = -mCurrentView->getPosition().x();
+            mCamera.r3().y() = -mCurrentView->getPosition().y();
+            stopAllAnimations();
+        }
+        // mSkipView is used when skipping through the gamelists in quick succession.
+        // Without this, the game video (or static image) would not get rendered during
+        // the slide transition animation.
+        else if (mSkipView) {
+            mSkipView.reset();
+            mSkipView = nullptr;
+        }
     }
     else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
         if (isAnimationPlaying(0)) {
             finishAnimation(0);
-            mCancelledAnimation = true;
+            mCancelledTransition = true;
             mFadeOpacity = 0;
             mWindow->invalidateCachedBackground();
         }
@@ -166,8 +176,6 @@ void ViewController::restoreViewPosition()
         restorePosition.x() = mWrapPreviousPositionX;
         mPreviousView->setPosition(restorePosition);
         mWrapPreviousPositionX = 0;
-        mPreviousView.reset();
-        mPreviousView = nullptr;
         mWrappedViews = false;
     }
 }
@@ -183,9 +191,18 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     if (mWrappedViews)
         restoreViewPosition();
 
-    // Tell any current view it's about to be hidden and stop its rendering.
+    if (mPreviousView) {
+        mPreviousView.reset();
+        mPreviousView = nullptr;
+    }
+
+    mPreviousView = mCurrentView;
+
+    // Pause the video and flag the view to not be rendered. The onHide() will take place
+    // later in the transition animation lambda function. For views without videos this has
+    // no effect (and no adverse effect either).
     if (mCurrentView) {
-        mCurrentView->onHide();
+        mCurrentView->onPauseVideo();
         mCurrentView->setRenderView(false);
     }
 
@@ -265,6 +282,19 @@ void ViewController::goToGameList(SystemData* system)
     if (mWrappedViews)
         restoreViewPosition();
 
+    if (mPreviousView && Settings::getInstance()->getString("TransitionStyle") == "fade" &&
+            isAnimationPlaying(0))
+        mPreviousView->onHide();
+
+    if (mPreviousView) {
+        mSkipView = mPreviousView;
+        mPreviousView.reset();
+        mPreviousView = nullptr;
+    }
+
+    if (mState.viewing != SYSTEM_SELECT)
+        mPreviousView = mCurrentView;
+
     // Find if we're wrapping around the first and last systems, which requires the gamelist
     // to be moved in order to avoid weird camera movements. This is only needed for the
     // slide transition style though.
@@ -293,14 +323,16 @@ void ViewController::goToGameList(SystemData* system)
     if (getSystemListView()->getRenderView()) {
         getSystemListView()->setRenderView(false);
     }
-    // If switching between gamelists, disable rendering of the current view.
+    // Pause the video and flag the view to not be rendered. The onHide() will take place
+    // later in the transition animation lambda function. For views without videos this has
+    // no effect (and no adverse effect either).
     else if (mCurrentView) {
-        mCurrentView->onHide();
+        mCurrentView->onPauseVideo();
         mCurrentView->setRenderView(false);
     }
 
     if (mState.viewing == SYSTEM_SELECT) {
-        // Move system list.
+        // Move the system list.
         auto sysList = getSystemListView();
         float offsetX = sysList->getPosition().x();
         int sysId = getSystemId(system);
@@ -323,7 +355,6 @@ void ViewController::goToGameList(SystemData* system)
         currentPosition.x() = offsetX;
         mCurrentView->setPosition(currentPosition);
         mCamera.translation().x() -= offsetX;
-        mPreviousView = mCurrentView;
         mWrappedViews = true;
     }
     else if (wrapLastToFirst) {
@@ -334,7 +365,6 @@ void ViewController::goToGameList(SystemData* system)
         currentPosition.x() = offsetX;
         mCurrentView->setPosition(currentPosition);
         mCamera.translation().x() = -offsetX;
-        mPreviousView = mCurrentView;
         mWrappedViews = true;
     }
 
@@ -358,9 +388,6 @@ void ViewController::goToGameList(SystemData* system)
     mState.viewing = GAME_LIST;
     mState.system = system;
 
-    if (mCurrentView)
-        mCurrentView->onHide();
-
     if (mCurrentView) {
         mCurrentView->onShow();
         mCurrentView->setRenderView(true);
@@ -370,7 +397,7 @@ void ViewController::goToGameList(SystemData* system)
 
 void ViewController::playViewTransition(bool instant)
 {
-    mCancelledAnimation = false;
+    mCancelledTransition = false;
 
     Vector3f target(Vector3f::Zero());
     if (mCurrentView)
@@ -385,7 +412,10 @@ void ViewController::playViewTransition(bool instant)
 
     if (instant || transition_style == "instant") {
         setAnimation(new LambdaAnimation([this, target](float /*t*/) {
-                    this->mCamera.translation() = -target; }, 1));
+            this->mCamera.translation() = -target;
+            if (mPreviousView)
+                mPreviousView->onHide();
+        }, 1));
         updateHelpPrompts();
     }
     else if (transition_style == "fade") {
@@ -393,20 +423,27 @@ void ViewController::playViewTransition(bool instant)
         cancelAnimation(0);
 
         auto fadeFunc = [this](float t) {
-            // The flag mCancelledAnimation is required only when cancelViewTransitions()
+            // The flag mCancelledTransition is required only when cancelViewTransitions()
             // cancels the animation, and it's only needed for the Fade transitions.
             // Without this, a (much shorter) fade transition would still play as
             // finishedCallback is calling this function.
-            if (!mCancelledAnimation)
+            if (!mCancelledTransition)
                 mFadeOpacity = Math::lerp(0, 1, t);
+        };
+
+        auto fadeCallback = [this]() {
+            if (mPreviousView)
+                mPreviousView->onHide();
         };
 
         const static int FADE_DURATION = 120; // Fade in/out time.
         const static int FADE_WAIT = 200; // Time to wait between in/out.
-        setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), 0, [this, fadeFunc, target] {
+        setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), 0,
+                [this, fadeFunc, fadeCallback, target] {
             this->mCamera.translation() = -target;
             updateHelpPrompts();
-            setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), FADE_WAIT, nullptr, true);
+            setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION),
+                    FADE_WAIT, fadeCallback, true);
         });
 
         // Fast-forward animation if we're partway faded.
@@ -421,8 +458,17 @@ void ViewController::playViewTransition(bool instant)
         }
     }
     else if (transition_style == "slide") {
-        // Slide or simple slide.
-        setAnimation(new MoveCameraAnimation(mCamera, target));
+        auto slideCallback = [this]() {
+            if (mSkipView) {
+                mSkipView->onHide();
+                mSkipView.reset();
+                mSkipView = nullptr;
+            }
+            else if (mPreviousView) {
+                mPreviousView->onHide();
+            }
+        };
+        setAnimation(new MoveCameraAnimation(mCamera, target), 0, slideCallback);
         updateHelpPrompts(); // Update help prompts immediately.
     }
 }

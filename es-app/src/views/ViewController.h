@@ -117,6 +117,7 @@ private:
 
     std::shared_ptr<GuiComponent> mCurrentView;
     std::shared_ptr<GuiComponent> mPreviousView;
+    std::shared_ptr<GuiComponent> mSkipView;
     std::map<SystemData*, std::shared_ptr<IGameListView>> mGameListViews;
     std::shared_ptr<SystemView> mSystemListView;
 
@@ -124,7 +125,7 @@ private:
     bool mWrappedViews;
     float mWrapPreviousPositionX;
     float mFadeOpacity;
-    bool mCancelledAnimation; // Needed only for the Fade transition style.
+    bool mCancelledTransition; // Needed only for the Fade transition style.
     bool mLockInput;
     FileData* mGameToLaunch;
 
