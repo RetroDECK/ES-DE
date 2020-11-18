@@ -174,8 +174,6 @@ public:
     virtual void onPauseVideo();
     virtual void onUnpauseVideo();
     virtual bool isVideoPaused() { return false; };
-    virtual void setRenderView(bool status) { mRenderView = status; }
-    virtual bool getRenderView() { return mRenderView; };
 
     virtual void onScreensaverActivate();
     virtual void onScreensaverDeactivate();
@@ -234,7 +232,6 @@ protected:
     bool mIsProcessing;
     bool mVisible;
     bool mEnabled;
-    bool mRenderView;
 
 private:
     // Don't access this directly! Use getTransform()!

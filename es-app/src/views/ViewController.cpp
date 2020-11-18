@@ -53,6 +53,7 @@ ViewController::ViewController(
         mPreviousView(nullptr),
         mSkipView(nullptr),
         mCamera(Transform4x4f::Identity()),
+        mSystemViewTransition(false),
         mWrappedViews(false),
         mFadeOpacity(0),
         mCancelledTransition(false),
@@ -198,19 +199,17 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
     mPreviousView = mCurrentView;
 
-    // Pause the video and flag the view to not be rendered. The onHide() will take place
-    // later in the transition animation lambda function. For views without videos this has
-    // no effect (and no adverse effect either).
-    if (mCurrentView) {
+    // Pause the video. The onHide() call will take place later in the transition animation lambda
+    // function. For views without videos this has no effect (and no adverse effect either).
+    if (mCurrentView)
         mCurrentView->onPauseVideo();
-        mCurrentView->setRenderView(false);
-    }
 
     if (system->isGroupedCustomCollection())
         system = system->getRootFolder()->getParent()->getSystem();
 
     mState.viewing = SYSTEM_SELECT;
     mState.system = system;
+    mSystemViewTransition = true;
 
     auto systemList = getSystemListView();
     systemList->setPosition(getSystemId(system) * static_cast<float>(Renderer::getScreenWidth()),
@@ -219,7 +218,6 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     systemList->goToSystem(system, false);
     mCurrentView = systemList;
     mCurrentView->onShow();
-    mCurrentView->setRenderView(true);
     PowerSaver::setState(true);
 
     // Application startup animation.
@@ -292,8 +290,13 @@ void ViewController::goToGameList(SystemData* system)
         mPreviousView = nullptr;
     }
 
-    if (mState.viewing != SYSTEM_SELECT)
+    if (mState.viewing != SYSTEM_SELECT) {
         mPreviousView = mCurrentView;
+        mSystemViewTransition = false;
+    }
+    else {
+        mSystemViewTransition = true;
+    }
 
     // Find if we're wrapping around the first and last systems, which requires the gamelist
     // to be moved in order to avoid weird camera movements. This is only needed for the
@@ -319,17 +322,10 @@ void ViewController::goToGameList(SystemData* system)
     if (slideTransitions)
         cancelViewTransitions();
 
-    // Disable rendering of the system view.
-    if (getSystemListView()->getRenderView()) {
-        getSystemListView()->setRenderView(false);
-    }
-    // Pause the video and flag the view to not be rendered. The onHide() will take place
-    // later in the transition animation lambda function. For views without videos this has
-    // no effect (and no adverse effect either).
-    else if (mCurrentView) {
+    // Pause the video. The onHide() call will take place later in the transition animation lambda
+    // function. For views without videos this has no effect (and no adverse effect either).
+    else if (mCurrentView)
         mCurrentView->onPauseVideo();
-        mCurrentView->setRenderView(false);
-    }
 
     if (mState.viewing == SYSTEM_SELECT) {
         // Move the system list.
@@ -388,10 +384,9 @@ void ViewController::goToGameList(SystemData* system)
     mState.viewing = GAME_LIST;
     mState.system = system;
 
-    if (mCurrentView) {
+    if (mCurrentView)
         mCurrentView->onShow();
-        mCurrentView->setRenderView(true);
-    }
+
     playViewTransition();
 }
 
@@ -696,17 +691,15 @@ void ViewController::render(const Transform4x4f& parentTrans)
     // Keep track of UI mode changes.
     UIModeController::getInstance()->monitorUIMode();
 
-    // Draw the system view if it's flagged to be rendered.
-    // If the camera is moving, we're transitioning and in that case render it regardless
-    // of whether it's flagged for rendering or not. (Otherwise there will be a black portion
-    // shown on the screen during the animation).
-    if (getSystemListView()->getRenderView() || isCameraMoving())
+    // Render the system view if it's the currently displayed view, or if we're in the progress
+    // of transitioning to or from this view.
+    if (mSystemListView == mCurrentView || (mSystemViewTransition && isCameraMoving()))
         getSystemListView()->render(trans);
 
     // Draw the gamelists.
     for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++) {
         // Same thing as for the system view, limit the rendering only to what needs to be drawn.
-        if (it->second->getRenderView() || isCameraMoving()) {
+        if (it->second == mCurrentView || (it->second == mPreviousView && isCameraMoving())) {
             // Clipping.
             Vector3f guiStart = it->second->getPosition();
             Vector3f guiEnd = it->second->getPosition() + Vector3f(it->second->getSize().x(),
@@ -788,10 +781,8 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
     #endif
 
     // Redisplay the current view.
-    if (mCurrentView) {
+    if (mCurrentView)
         mCurrentView->onShow();
-        mCurrentView->setRenderView(true);
-    }
 }
 
 void ViewController::reloadAll()
@@ -835,7 +826,6 @@ void ViewController::reloadAll()
             SystemData::sSystemVector.front()->getTheme());
 
     mCurrentView->onShow();
-    mCurrentView->setRenderView(true);
     updateHelpPrompts();
 }
 

@@ -32,8 +32,7 @@ GuiComponent::GuiComponent(Window* window)
         mTransform(Transform4x4f::Identity()),
         mIsProcessing(false),
         mVisible(true),
-        mEnabled(true),
-        mRenderView(false)
+        mEnabled(true)
 {
     for (unsigned char i = 0; i < MAX_ANIMATIONS; i++)
         mAnimationMap[i] = nullptr;

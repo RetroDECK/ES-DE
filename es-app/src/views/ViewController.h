@@ -122,6 +122,7 @@ private:
     std::shared_ptr<SystemView> mSystemListView;
 
     Transform4x4f mCamera;
+    bool mSystemViewTransition;
     bool mWrappedViews;
     float mWrapPreviousPositionX;
     float mFadeOpacity;
