@@ -308,7 +308,12 @@ void Window::render()
             bottom->stopAllAnimations();
         }
 
-        bottom->render(transform);
+        // Don't render the system view or gamelist view if the video or slideshow screensaver
+        // is running.
+        if (!(mRenderScreensaver && (Settings::getInstance()->getString("ScreensaverType") ==
+                "video" || Settings::getInstance()->getString("ScreensaverType") == "slideshow")))
+            bottom->render(transform);
+
         if (bottom != top) {
             #if defined(USE_OPENGL_21)
             if (!mCachedBackground) {
