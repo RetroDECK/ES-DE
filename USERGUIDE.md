@@ -35,6 +35,9 @@ There's a log file in the home directory as well named **es_log.txt**, please re
 
 After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default path. Please refer to the game installation procedure below in this document for more information regarding this.
 
+![alt text](images/v1.0/es-de_v1.0_ui_easy_setup.png "ES-DE Easy Setup")
+_This is the error dialog shown if no game files were found. But it also lets you configure the ROM directory if you don't want to use the default one._
+
 
 ## Input device configuration
 
@@ -57,6 +60,8 @@ Depending on the theme, the system navigation carousel can be either horizontal 
 
 The game systems are sorted by their full names, as defined in es_systems.cfg.
 
+![alt text](images/v1.0/es-de_v1.0_system_view.png "ES-DE System View")
+_The System view is the default starting point for the application, it's here that you browse through your game systems._
 
 ## Gamelist view
 
@@ -71,6 +76,9 @@ It's possible to manually set a specific gamelist view style in the UI settings 
 In additions to the styles just described, there is a **Grid** view style as well, but as of version 1.0.0 this is very limited and not recommended. Future versions of EmulationStation may update this style to a more useful state.
 
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated like 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
+
+![alt text](images/v1.0/es-de_v1.0_gamelist_view.png "ES-DE Gamelist View")
+_The Gamelist view is where you browse the games for a specific system._
 
 ## Help system
 
@@ -412,6 +420,9 @@ The category **Other game metadata** includes Description, Release date, Develop
 
 There are two approaches to scraping, either for a single game from the metadata editor, or for many games and systems using the multi-scraper.
 
+![alt text](images/v1.0/es-de_v1.0_scraper_running.png "ES-DE Scraper Running")
+_Here's an example of the multi-scraper running in interactive-mode, asking the user to make a selection from the multiple matching games returned by the scraper service._
+
 ### Single-game scraper
 
 The single-game scraper is launched from the metadata editor. You navigate to a game, open the game options menu, choose **Edit this game's metadata** and then select the **Scrape** button. The metadata editor is explained in more depth later in this guide so it won't be covered here.
@@ -476,6 +487,8 @@ As an alternative, you can also locate your game media in the ROM directory. Thi
 
 Note that it's possible to change the game media directory from within ES-DE, see the option **Game media directory** detailed below.
 
+![alt text](images/v1.0/es-de_v1.0_scraper_settings.png "ES-DE Scraper Settings")
+_Some of the scraper settings._
 
 ## Main menu
 
@@ -951,6 +964,9 @@ This menu entry is only visible when editing the collection.
 
 In the metadata editor, you can modify the metadata for a game, scrape for game info and media files and delete media files and gamelist entries, or the entire game.
 
+![alt text](images/v1.0/es-de_v1.0_metadata_editor.png "ES-DE Metadata Editor")
+_The metadata editor._
+
 ### Metadata entries
 
 The following entries can be modified (note that some of these are not available for folders, only for game files):
@@ -1066,6 +1082,8 @@ The _Dim_ screensaver simply dims and desaturates the current view and _Black_ w
 
 If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this, the controls will allow you to jump to a new random image or video using the left and right buttons on your keyboard or controller. It's also possible to launch the game currently displayed by pressing the 'A' button, and pressing the 'Y' button will jump to the game in its gamelist without starting it.
 
+![alt text](images/v1.0/es-de_v1.0_screensaver.png "ES-DE Screensaver")
+_An example of what the video screensaver looks like, with scanline rendering applied._
 
 ## Game collections
 
@@ -1106,6 +1124,9 @@ During the time that the collection is being edited, any game that is already pa
 When you are done adding games, you can either open the main menu and go to 'Game collection settings' and select the 'Finish editing '1980s' collection' or you can open the game options menu and select the same option there. The latter works from within any game system, you don't need to navigate back to the collection that you're editing.
 
 You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing 'Add/remove games to this game collection'.
+
+![alt text](images/v1.0/es-de_v1.0_custom_collections.png "ES-DE Custom Collections")
+_Example of custom collections, here configured as genres._
 
 The way that custom collection are implemented is very simple. There is a folder for the collections in `~/.emulationstation/collections` with a separate file for each collection.
 
@@ -1159,6 +1180,10 @@ https://github.com/RetroPie
 https://gitlab.com/recalbox/recalbox-themes
 
 https://wiki.batocera.org/themes
+
+![alt text](images/v1.0/es-de_v1.0_ui_theme_support.png "ES-DE Theme Support")
+_An example of a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme applied._
+
 
 
 ## Custom event scripts
