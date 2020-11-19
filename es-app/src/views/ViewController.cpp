@@ -199,11 +199,6 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
     mPreviousView = mCurrentView;
 
-    // Pause the video. The onHide() call will take place later in the transition animation lambda
-    // function. For views without videos this has no effect (and no adverse effect either).
-    if (mCurrentView)
-        mCurrentView->onPauseVideo();
-
     if (system->isGroupedCustomCollection())
         system = system->getRootFolder()->getParent()->getSystem();
 
@@ -321,11 +316,6 @@ void ViewController::goToGameList(SystemData* system)
 
     if (slideTransitions)
         cancelViewTransitions();
-
-    // Pause the video. The onHide() call will take place later in the transition animation lambda
-    // function. For views without videos this has no effect (and no adverse effect either).
-    else if (mCurrentView)
-        mCurrentView->onPauseVideo();
 
     if (mState.viewing == SYSTEM_SELECT) {
         // Move the system list.

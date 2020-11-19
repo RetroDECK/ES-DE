@@ -104,6 +104,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input)) {
             FileData* cursor = getCursor();
             if (cursor->getType() == GAME) {
+                onPauseVideo();
                 ViewController::get()->cancelViewTransitions();
                 stopListScrolling();
                 launch(cursor);
@@ -135,6 +136,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
             else {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
+                onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
                 SystemData* systemToView = getCursor()->getSystem();
@@ -150,6 +152,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect")) {
+                onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
                 ViewController::get()->goToNextGameList();
@@ -158,6 +161,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect")) {
+                onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
                 ViewController::get()->goToPrevGameList();
