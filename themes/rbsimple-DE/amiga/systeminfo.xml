@@ -3,7 +3,22 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Commodore Amiga</text>
+            <text>Manufacturer : Commodore</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>Year of Release : 1985</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>Units sold : 7.2 million</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>OS : AmigaOS on Kickstart</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>CPU : Motorola 680x0 @ ≈7 MHz & higher</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>RAM : 256 kilobytes and higher, expandable</text>
         </text>
     </view>
 </theme>

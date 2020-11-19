@@ -6,7 +6,7 @@ Missing (or not updated) theme data
 ===================================
 * 3do: 3DO - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * ags: Adventure Game Studio - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
-* amiga: Amiga (general) - system info
+* amiga: Amiga (general) - system info (improve it)
 * amiga600: Amiga 600 - system info
 * amiga1200: Amiga 1200 - system info
 * amigacd32: Amiga CD32 - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
