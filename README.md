@@ -18,7 +18,7 @@ The application probably also works fine on devices such as the Raspberry Pi, bu
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
-A comprehensive theme set, `rbsimple-DE` (which is based on Recalbox Multi from the Recalbox community) is bundled with the application.
+A comprehensive theme set, **rbsimple-DE** (which is based on Recalbox Multi from the Recalbox community) is bundled with the application.
 
 Check out the [User Guide](USERGUIDE.md) for how to quickly get the application up and running! \
 (It will also show how to use some of its more advanced features.)
@@ -73,4 +73,4 @@ _There are four types of built-in screensavers available, including a slideshow 
 _ES-DE is fully themeable, so if you prefer another look than what the default theme rbsimple-DE gives you, it's possible to apply another theme. In the example above a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme is showed. Be aware though that although ES-DE is backwards compatible with older EmulationStation themes, some newer features which are specific to ES-DE will not work, at least not until the theme authors update their themes._
 
 ![alt text](images/v1.0/es-de_v1.0_ui_easy_setup.png "ES-DE Easy Setup")
-_A lot of effort has been spent on trying to make ES-DE easy to setup and use. The above screenshot shows the dialog if starting the application without any game files present in the default ROM directory. Also, ES-DE ships with a very comprehensive game systems configuration file that is automatically installed upon first startup. Note though that the emulator setup is outside the scope of what ES-DE does, and as RetroArch is mostly used, please refer to their [website](https://www.retroarch.com) for more information about that part of the configuration._
+_A lot of effort has been spent on trying to make ES-DE easy to setup and use. The above screenshot shows the dialog if starting the application without any game files present in the default ROM directory. Also, ES-DE ships with a very comprehensive game systems configuration file that is automatically installed upon first startup. Note though that the emulator setup is outside the scope of what ES-DE does, and as RetroArch is mostly used, please refer to their [web site](https://www.retroarch.com) for more information about that part of the configuration._
