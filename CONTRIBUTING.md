@@ -18,7 +18,7 @@ As for rbsimple-DE there are quite some missing graphic files and other customiz
 
 This plan is under constant review so expect it to change from time to time. Still it should give some feeling for which direction to move and what to work on first. These are only the larger topics, there are of course many smaller changes and improvements in addition to these.
 
-#### v1.1.0
+#### v1.1
 
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
 * Move to SDL2 GameController API
@@ -36,7 +36,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Preload all built-in resources and never clear them from the cache
 * Improve text and font functions, e.g. faster and cleaner line wrapping code
 
-#### v1.2.0
+#### v1.2
 
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
@@ -50,7 +50,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Flatpak and Snap support on Linux
 * Add to Debian repository
 
-#### v2.0.0
+#### v2.0
 
 * Vulkan renderer for all supported operating systems
 * Dependency on MoltenVK to get Metal support on macOS

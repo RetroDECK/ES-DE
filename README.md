@@ -1,5 +1,5 @@
-EmulationStation Desktop Edition
-================================
+EmulationStation Desktop Edition (ES-DE)
+========================================
 
 EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
 
@@ -7,7 +7,7 @@ Maybe you're familiar with EmulationStation: yes there are multiple forks availa
 
 The goal is to make the software as easy as possible to install and use, and to suppport the major desktop operating systems: Unix/Linux, macOS and Windows.
 
-The following operating systems have been tested and confirmed as working with ES-DE v1.0.0:
+The following operating systems have been tested and confirmed as working with ES-DE v1.0:
 
 * Kubuntu 20.04
 * macOS 10.11.6 (El Capitan)
@@ -42,3 +42,8 @@ Other information
 
 Some feature highlights
 =======================
+
+Here are some highlights of what EmulationStation Desktop Edition provides, displayed using the default theme set rbsimple-DE!
+
+![alt text](images/v1.0/es-de_v1.0_system_view.png "ES-DE System view")
+_The 'System view', which is the default starting point for the application, it's here that you browse through your game systems._
