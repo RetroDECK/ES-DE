@@ -3,42 +3,41 @@ EmulationStation Desktop Edition (ES-DE)
 
 EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
 
-Maybe you're familiar with EmulationStation: yes there are multiple forks available for this software! However this version is intended for use primarily on desktop computers where it's not the primary interface for the computer. As such, the aim is not to provide full control over emulator settings or emulator button mappings, or include system administration functions and similar. Instead it's assumed that the emulators and the overall environment has been properly configured upfront.
+As the name implies, this software is intended to be used on desktop computers. There is no support planned for Android or iOS or for any other closed software ecosystems.
 
-The goal is to make the software as easy as possible to install and use, and to suppport the major desktop operating systems: Unix/Linux, macOS and Windows.
+Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to suppport the major desktop operating systems, i.e. Unix/Linux, macOS and Windows.
 
-The following operating systems have been tested and confirmed as working with ES-DE v1.0:
+ES-DE v1.0 (the current version) has been tested on the following operating systems:
 
 * Kubuntu 20.04
 * macOS 10.11.6 (El Capitan)
 * Windows 10 (x86)
 * Windows 8.1 (x86)
 
-The application probably also works fine on devices such as the Raspberry Pi, but this is beyond the scope of this software fork.
+At the moment Raspberry Pi is not supported, but this is planned for future releases.
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
-A comprehensive theme set, **rbsimple-DE** (which is based on Recalbox Multi from the Recalbox community) is bundled with the application.
+A comprehensive theme set, **rbsimple-DE** (which is based on Recalbox Multi from the [Recalbox](https://www.recalbox.com) community) is bundled with the application.
 
-Check out the [User Guide](USERGUIDE.md) for how to quickly get the application up and running! \
-(It will also show how to use some of its more advanced features.)
+Check out the [User Guide](USERGUIDE.md) for how to quickly get the application up and running. (It will also show how to use some of its more advanced features.)
 
 
 ### Help needed:
 
-If you would like to contribute to the development of EmulationStation Desktop Edition, please read how to participate [here](CONTRIBUTING.md)! (You can also read about planned future features there).
+If you would like to contribute to the development of EmulationStation Desktop Edition, please read how to participate [here](CONTRIBUTING.md). (You can also read about planned future features there).
 
 
 Other information
 =================
 
-[NEWS.md](NEWS.md) contains information about the current release as well as previous releases. This includes features, improvements and bug fixes.
+[NEWS.md](NEWS.md) contains information about the current release as well as previous releases. This covers the features, improvements and bug fixes.
 
-[INSTALL.md](INSTALL.md) provides details on how to build the application from source code, and also discusses more advanced configuration topics.
+[INSTALL.md](INSTALL.md) provides details on how to build the application from source code, and also discusses some more advanced configuration topics.
 
 [CREDITS.md](CREDITS.md) is an attempt to credit the individuals and projects which made this application possible.
 
-[THEMES.md](THEMES.md) is a guide on how theming works and is useful for those who would like to develop a new theme, or perhaps customize an existing theme.
+[THEMES.md](THEMES.md) is a guide on how theming works which is useful for those who would like to develop a new theme, or perhaps customize an existing theme.
 
 Some feature highlights
 =======================

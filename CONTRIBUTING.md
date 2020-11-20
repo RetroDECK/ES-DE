@@ -20,6 +20,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.1
 
+* Support for Raspberry Pi 4 (Ubuntu and Raspberry Pi OS)
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
 * Move to SDL2 GameController API
 * Different button graphics applied depending on controller type (Xbox, PlayStation and SNES style)
