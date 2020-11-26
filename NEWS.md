@@ -17,6 +17,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 ### Detailed list of changes
 
 * Initial version, fork from RetroPie EmulationStation 2.10.0rp-dev (master)
+* Added support for Windows, macOS, FreeBSD, NetBSD and OpenBSD
 * Reorganization and general overhaul of the menu system, hopefully making it more intuitive and easy to understand
 * Many quality of life improvements and removal of GUI inconsistencies
 * Game systems are now sorted by full names which makes much more sense from a user perspective

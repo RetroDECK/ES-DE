@@ -155,9 +155,9 @@ For some systems though, a more elaborate setup is required, and we will attempt
 
 Let's start with the simple scenario of a single ROM game file per platform, which is the case for the majority of systems. In this example we're setting up ES-DE to play Nintendo Entertainment System games.
 
-The supported file extensions are listed in [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
+The supported file extensions are listed in [es_systems.cfg_linux](resources/templates/es_systems.cfg_linux), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
 
-Here is the snippet from the es_systems.cfg_unix file:
+Here is the snippet from the es_systems.cfg_linux file:
 
 ```
 <system>
@@ -1218,7 +1218,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 
 The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside the brackets.
 
-For additional details regarding which game file extensions are supported per system, refer to the **es_systems.cfg** templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support though.
+For additional details regarding which game file extensions are supported per system, refer to the **es_systems.cfg** templates [es_systems.cfg_linux](resources/templates/es_systems.cfg_linux), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support though.
 
 
 | Game system name      | Full name                                      | Default emulator                  | Recommended game setup               |

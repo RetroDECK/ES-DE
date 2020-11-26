@@ -6,13 +6,15 @@ Contributing to EmulationStation Desktop Edition (ES-DE)
 
 Contributions to ES are very much appreciated as there are many things that need to be implemented and improved. Code commits is only one part of it, as work is also needed on the rbsimple-DE theme as well as thorough application testing.
 
-A review of the CMake configuration files would be helpful. Although the building and package generation works more or less correctly, there are some hacks and similar in the CMakeLists.txt files that need improving by someone who really knows how this software package works.
+A review of the CMake configuration files would also be helpful. Although the building and package generation works more or less correctly, there are some hacks and similar in the CMakeLists.txt files that need improving by someone who really knows how this software package works.
 
 Work is also needed to get ES-DE into the repositories of the various supported operating systems. For example Debian, Fedora, FreeBSD, NetBSD and OpenBSD. This is an area where I have no experience so help with this would be fantastic.
 
 Regarding testing, it's impossible for me to test every game system as rbsimple-DE has support for more than a 100 different systems. There could be issues with the configuration template files, or within ES itself. So more testing is needed!
 
-In general, a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great!
+In general, a thorough review of [es_systems.cfg_linux](resources/templates/es_systems.cfg_linux), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great!
+
+To a lesser extent, a review would also be needed of [es_systems.cfg_freebsd](resources/templates/es_systems.cfg_freebsd), [es_systems.cfg_netbsd](resources/templates/es_systems.cfg_netbsd) and [es_systems.cfg_openbsd](resources/templates/es_systems.cfg_openbsd) but these are really minority systems and mostly a copy of the Linux templates with modified paths to the RetroArch cores.
 
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details of what needs to be added or updated.
 
