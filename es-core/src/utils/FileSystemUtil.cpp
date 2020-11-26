@@ -710,7 +710,7 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #if defined(__APPLE__)
+            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
             return (stat(path.c_str(), &info) == 0);
             #elif defined(_WIN64)
@@ -756,7 +756,7 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #if defined(__APPLE__)
+            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
             if (stat(path.c_str(), &info) != 0)
                 return false;
@@ -778,7 +778,7 @@ namespace Utils
         {
             std::string path = getGenericPath(_path);
 
-            #if defined(__APPLE__)
+            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
             if (stat(path.c_str(), &info) != 0)
                 return false;
@@ -809,7 +809,7 @@ namespace Utils
                 return true;
             #else
 
-            #if defined(__APPLE__)
+            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
 
             if (lstat(path.c_str(), &info) != 0)

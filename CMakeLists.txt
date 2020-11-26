@@ -71,6 +71,9 @@ endif()
 
 if(APPLE)
     # For some strange reason, macOS complains about an uppercase 'P' in Pugixml.
+    # FreeBSD, NetBSD and OpenBSD also complain about this, but applying the same rule to
+    # these OSs lead to linking issues for some reason, so we'll have to live with those
+    # warnings for now.
     find_package(pugixml REQUIRED)
 elseif(UNIX)
     find_package(Pugixml REQUIRED)

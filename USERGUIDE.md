@@ -15,7 +15,10 @@ The installation procedure will not be covered here as it differs between operat
 The following operating systems have been tested:
 
 * Kubuntu 20.04
-* macOS 10.11.6 (El Capitan)
+* FreeBSD 12.2 (x86)
+* NetBSD 9.1 (x86)
+* OpenBSD 6.8 (x86) (limited testing only)
+* macOS 10.11.6 - El Capitan
 * Windows 10 (x86)
 * Windows 8.1 (x86)
 
@@ -1083,7 +1086,7 @@ The _Dim_ screensaver simply dims and desaturates the current view and _Black_ w
 If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this, the controls will allow you to jump to a new random image or video using the left and right buttons on your keyboard or controller. It's also possible to launch the game currently displayed by pressing the 'A' button, and pressing the 'Y' button will jump to the game in its gamelist without starting it.
 
 ![alt text](images/v1.0/es-de_v1.0_screensaver.png "ES-DE Screensaver")
-_An example of what the video screensaver looks like, with scanline rendering applied._
+_An example of what the video screensaver looks like._
 
 ## Game collections
 

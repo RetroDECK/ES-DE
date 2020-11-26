@@ -8,7 +8,7 @@ Table of contents:
 
 ## Development Environment
 
-EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and GCC (MinGW) on Windows. I'm intending to get Clang/LLVM working on Windows as well.
+EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and GCC (MinGW) on Windows. I may try to get Clang/LLVM working on Windows as well.
 
 There are more details regarding compilers later in this document.
 
@@ -19,19 +19,66 @@ Any code editor can be used of course, but I recommend [VSCode](https://code.vis
 
 The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
+### Installing dependencies
+
 **On Debian/Ubuntu:**
-All of the required packages can be easily installed with apt-get:
+All of the required packages can be installed with apt-get:
 ```
 sudo apt-get install build-essential cmake libsdl2-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libvlc-dev libgl1-mesa-dev
 ```
 
 **On Fedora:**
-For this operating system, use dnf (with rpmfusion activated) :
+For this operating system, use dnf (with rpmfusion activated):
 ```
 sudo dnf install cmake SDL2-devel freeimage-devel freetype-devel curl-devel rapidjson-devel alsa-lib-devel vlc-devel mesa-libGL-devel
 ```
 
-**Cloning and compiling:**
+**On FreeBSD:**
+Use pkg to install the dependencies:
+```
+pkg install git pkgconf cmake sdl2 freeimage pugixml rapidjson vlc
+```
+
+Clang/LLVM and cURL should already be installed in the base OS image.
+
+**On NetBSD:**
+Use pkgin to install the dependencies:
+```
+pkgin install git cmake pkgconf SDL2 freeimage pugixml rapidjson vlc
+```
+
+NetBSD ships with GCC by default, and although you should be able to install and use Clang/LLVM, it's probably easier to just stick to the default compiler environment.
+
+**On OpenBSD:**
+Use pkg_add to install the dependencies:
+```
+pkg_add cmake pkgconf sdl2 freeimage vlc
+```
+
+In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
+
+RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to compile the master branch:
+
+```
+git clone https://github.com/Tencent/rapidjson
+cd rapidjson
+cmake .
+make
+make install
+```
+
+Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
+
+```
+git clone git://github.com/zeux/pugixml
+cd pugixml
+git checkout v1.10
+cmake .
+make
+make install
+```
+
+### Cloning and compiling ES-DE
 
 To clone the source repository, run the following:
 

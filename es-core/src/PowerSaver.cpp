@@ -11,7 +11,7 @@
 #include "AudioManager.h"
 #include "Settings.h"
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__)
 #include <sstream>
 #endif
 

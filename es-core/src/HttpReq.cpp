@@ -61,7 +61,10 @@ HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nul
     // Mozilla project). There is a possibility to use the OS provided Schannel certificates
     // but I haven't been able to get this to work and it also seems to be problematic on
     // older Windows versions.
-    #if defined(_WIN64)
+    // For NetBSD 9.1 there is something wrong with the bundled Mozilla certificates,
+    // requiring us to bundle our own certificates. Maybe this will be resolved in future
+    // NetBSD versions, in which case this code can be disabled.
+    #if defined(_WIN64) || defined(__NetBSD__)
     curl_easy_setopt(mHandle, CURLOPT_CAINFO, ResourceManager::getInstance()->
             getResourcePath(":/certificates/curl-ca-bundle.crt").c_str());
     #endif

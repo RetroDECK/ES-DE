@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
-<!-- This is the EmulationStation-DE game systems configuration file for Windows. -->
+<!-- This is the EmulationStation-DE game systems configuration file for FreeBSD. -->
 <systemList>
   <system>
     <name>3do</name>
     <fullname>3DO</fullname>
-    <path>%ROMPATH%\3do</path>
+    <path>%ROMPATH%/3do</path>
     <extension>.iso .ISO .bin .BIN .chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\4do_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/4do_libretro.so %ROM%</command>
     <platform>3do</platform>
     <theme>3do</theme>
   </system>
   <system>
     <name>ags</name>
     <fullname>Adventure Game Studio</fullname>
-    <path>%ROMPATH%\ags</path>
+    <path>%ROMPATH%/ags</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>ags</platform>
@@ -22,52 +22,52 @@
   <system>
     <name>amiga</name>
     <fullname>Commodore Amiga</fullname>
-    <path>%ROMPATH%\amiga</path>
+    <path>%ROMPATH%/amiga</path>
     <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\puae_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/puae_libretro.so %ROM%</command>
     <platform>amiga</platform>
     <theme>amiga</theme>
   </system>
   <system>
     <name>amiga600</name>
     <fullname>Commodore Amiga 600</fullname>
-    <path>%ROMPATH%\amiga600</path>
+    <path>%ROMPATH%/amiga600</path>
     <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\puae_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/puae_libretro.so %ROM%</command>
     <platform>amiga</platform>
     <theme>amiga600</theme>
   </system>
   <system>
     <name>amiga1200</name>
     <fullname>Commodore Amiga 1200</fullname>
-    <path>%ROMPATH%\amiga1200</path>
+    <path>%ROMPATH%/amiga1200</path>
     <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\puae_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/puae_libretro.so %ROM%</command>
     <platform>amiga</platform>
     <theme>amiga1200</theme>
   </system>
   <system>
     <name>amigacd32</name>
     <fullname>Commodore Amiga CD32</fullname>
-    <path>%ROMPATH%\amigacd32</path>
+    <path>%ROMPATH%/amigacd32</path>
     <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\puae_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/puae_libretro.so %ROM%</command>
     <platform>amigacd32</platform>
     <theme>amigacd32</theme>
   </system>
   <system>
     <name>amstradcpc</name>
     <fullname>Amstrad CPC</fullname>
-    <path>%ROMPATH%\amstradcpc</path>
+    <path>%ROMPATH%/amstradcpc</path>
     <extension>.dsk .DSK .sna .SNA .tap .TAR .cdt .CDT .voc .VOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\cap32_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/cap32_libretro.so %ROM%</command>
     <platform>amstradcpc</platform>
     <theme>amstradcpc</theme>
   </system>
   <system>
     <name>apple2</name>
     <fullname>Apple II</fullname>
-    <path>%ROMPATH%\apple2</path>
+    <path>%ROMPATH%/apple2</path>
     <extension>.nib .NIB .do .DO .po .PO .dsk .DSK .7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>apple2</platform>
@@ -76,7 +76,7 @@
   <system>
     <name>apple2gs</name>
     <fullname>Apple IIGS</fullname>
-    <path>%ROMPATH%\apple2gs</path>
+    <path>%ROMPATH%/apple2gs</path>
     <extension>.nib .NIB .do .DO .po .PO .dsk .DSK .7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>apple2gs</platform>
@@ -85,16 +85,16 @@
   <system>
     <name>arcade</name>
     <fullname>Arcade</fullname>
-    <path>%ROMPATH%\arcade</path>
+    <path>%ROMPATH%/arcade</path>
     <extension>.chd .cue .CUE .CHD .cmd .CMD .fba .FBA .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mame2016_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mame2016_libretro.so %ROM%</command>
     <platform>arcade</platform>
     <theme>arcade</theme>
   </system>
   <system>
     <name>astrocade</name>
     <fullname>Bally Astrocade</fullname>
-    <path>%ROMPATH%\astrocade</path>
+    <path>%ROMPATH%/astrocade</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>astrocade</platform>
@@ -103,97 +103,97 @@
   <system>
     <name>atari2600</name>
     <fullname>Atari 2600</fullname>
-    <path>%ROMPATH%\atari2600</path>
+    <path>%ROMPATH%/atari2600</path>
     <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\stella2014_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/stella2014_libretro.so %ROM%</command>
     <platform>atari2600</platform>
     <theme>atari2600</theme>
   </system>
   <system>
     <name>atari5200</name>
     <fullname>Atari 5200</fullname>
-    <path>%ROMPATH%\atari5200</path>
+    <path>%ROMPATH%/atari5200</path>
     <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\atari800_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/atari800_libretro.so %ROM%</command>
     <platform>atari5200</platform>
     <theme>atari5200</theme>
   </system>
   <system>
     <name>atari7800</name>
     <fullname>Atari 7800 ProSystem</fullname>
-    <path>%ROMPATH%\atari7800</path>
+    <path>%ROMPATH%/atari7800</path>
     <extension>.a78 .A78 .bin .BIN .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\prosystem_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/prosystem_libretro.so %ROM%</command>
     <platform>atari7800</platform>
     <theme>atari7800</theme>
   </system>
   <system>
     <name>atari800</name>
     <fullname>Atari 800</fullname>
-    <path>%ROMPATH%\atari800</path>
+    <path>%ROMPATH%/atari800</path>
     <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\atari800_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/atari800_libretro.so %ROM%</command>
     <platform>atari800</platform>
     <theme>atari800</theme>
   </system>
   <system>
     <name>atarijaguar</name>
     <fullname>Atari Jaguar</fullname>
-    <path>%ROMPATH%\atarijaguar</path>
+    <path>%ROMPATH%/atarijaguar</path>
     <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\virtualjaguar_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/virtualjaguar_libretro.so %ROM%</command>
     <platform>atarijaguar, atarijaguarcd</platform>
     <theme>atarijaguar</theme>
   </system>
   <system>
     <name>atarijaguarcd</name>
     <fullname>Atari Jaguar CD</fullname>
-    <path>%ROMPATH%\atarijaguarcd</path>
+    <path>%ROMPATH%/atarijaguarcd</path>
     <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\virtualjaguar_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/virtualjaguar_libretro.so %ROM%</command>
     <platform>atarijaguarcd</platform>
-    <theme>atarijaguar</theme>
+    <theme>atarijaguarcd</theme>
   </system>
   <system>
     <name>atarilynx</name>
     <fullname>Atari Lynx</fullname>
-    <path>%ROMPATH%\atarilynx</path>
+    <path>%ROMPATH%/atarilynx</path>
     <extension>.lnx .LNX .o .O .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_lynx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_lynx_libretro.so %ROM%</command>
     <platform>atarilynx</platform>
     <theme>atarilynx</theme>
   </system>
   <system>
     <name>atarist</name>
     <fullname>Atari ST</fullname>
-    <path>%ROMPATH%\atarist</path>
+    <path>%ROMPATH%/atarist</path>
     <extension>.st .ST .msa .MSA .stx .STX .dim .DIM .ipf .IPF .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\hatari_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/hatari_libretro.so %ROM%</command>
     <platform>atarist</platform>
     <theme>atarist</theme>
   </system>
   <system>
     <name>atarixe</name>
     <fullname>Atari XE</fullname>
-    <path>%ROMPATH%\atarixe</path>
+    <path>%ROMPATH%/atarixe</path>
     <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\atari800_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/atari800_libretro.so %ROM%</command>
     <platform>atarixe</platform>
     <theme>atarixe</theme>
   </system>
   <system>
     <name>atomiswave</name>
     <fullname>Atomiswave</fullname>
-    <path>%ROMPATH%\atomiswave</path>
+    <path>%ROMPATH%/atomiswave</path>
     <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\flycast_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/flycast_libretro.so %ROM%</command>
     <platform>atomiswave</platform>
     <theme>atomiswave</theme>
   </system>
   <system>
     <name>bbcmicro</name>
     <fullname>BBC Micro</fullname>
-    <path>%ROMPATH%\bbcmicro</path>
+    <path>%ROMPATH%/bbcmicro</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>bbcmicro</platform>
@@ -202,25 +202,25 @@
   <system>
     <name>c64</name>
     <fullname>Commodore 64</fullname>
-    <path>%ROMPATH%\c64</path>
+    <path>%ROMPATH%/c64</path>
     <extension>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .gz .GZ .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\vice_x64_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/vice_x64_libretro.so %ROM%</command>
     <platform>c64</platform>
     <theme>c64</theme>
   </system>
   <system>
     <name>cavestory</name>
     <fullname>Cave Story (NXEngine)</fullname>
-    <path>%ROMPATH%\cavestory</path>
+    <path>%ROMPATH%/cavestory</path>
     <extension>.exe .EXE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\nxengine_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/nxengine_libretro.so %ROM%</command>
     <platform>cavestory</platform>
     <theme>cavestory</theme>
   </system>
   <system>
     <name>cdtv</name>
     <fullname>Commodore CDTV</fullname>
-    <path>%ROMPATH%\cdtv</path>
+    <path>%ROMPATH%/cdtv</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>cdtv</platform>
@@ -229,25 +229,25 @@
   <system>
     <name>chailove</name>
     <fullname>ChaiLove game engine</fullname>
-    <path>%ROMPATH%\chailove</path>
+    <path>%ROMPATH%/chailove</path>
     <extension>.chai .CHAI .chailove .CHAILOVE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\chailove_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/chailove_libretro.so %ROM%</command>
     <platform>love</platform>
     <theme>chailove</theme>
   </system>
   <system>
     <name>channelf</name>
     <fullname>Fairchild Channel F</fullname>
-    <path>%ROMPATH%\channelf</path>
+    <path>%ROMPATH%/channelf</path>
     <extension>.bin .BIN .chf .CHF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\freechaf_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/freechaf_libretro.so %ROM%</command>
     <platform>channelf</platform>
     <theme>channelf</theme>
   </system>
   <system>
     <name>coco</name>
     <fullname>Tandy Color Computer</fullname>
-    <path>%ROMPATH%\coco</path>
+    <path>%ROMPATH%/coco</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>coco</platform>
@@ -256,52 +256,52 @@
   <system>
     <name>coleco</name>
     <fullname>ColecoVision</fullname>
-    <path>%ROMPATH%\coleco</path>
+    <path>%ROMPATH%/coleco</path>
     <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\bluemsx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/bluemsx_libretro.so %ROM%</command>
     <platform>colecovision</platform>
     <theme>colecovision</theme>
   </system>
   <system>
     <name>daphne</name>
     <fullname>Daphne Arcade Laserdisc Emulator</fullname>
-    <path>%ROMPATH%\daphne</path>
+    <path>%ROMPATH%/daphne</path>
     <extension>.7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\daphne_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/daphne_libretro.so %ROM%</command>
     <platform>daphne</platform>
     <theme>daphne</theme>
   </system>
   <system>
     <name>desktop</name>
     <fullname>Desktop applications</fullname>
-    <path>%ROMPATH%\desktop</path>
-    <extension>.bat .ps1</extension>
-    <command>%ROM%</command>
+    <path>%ROMPATH%/desktop</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>desktop</theme>
   </system>
   <system>
     <name>doom</name>
     <fullname>Doom</fullname>
-    <path>%ROMPATH%\doom</path>
+    <path>%ROMPATH%/doom</path>
     <extension>.wad .WAD .iwad .IWAD .pwad .PWAD</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\prboom_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/prboom_libretro.so %ROM%</command>
     <platform>pc</platform>
     <theme>doom</theme>
   </system>
   <system>
     <name>dos</name>
     <fullname>DOS (PC)</fullname>
-    <path>%ROMPATH%\dos</path>
+    <path>%ROMPATH%/dos</path>
     <extension>.bat .BAT .com .COM .exe .EXE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\dosbox_core_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/dosbox_core_libretro.so %ROM%</command>
     <platform>dos</platform>
     <theme>dos</theme>
   </system>
   <system>
     <name>dragon32</name>
     <fullname>Dragon 32</fullname>
-    <path>%ROMPATH%\dragon32</path>
+    <path>%ROMPATH%/dragon32</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>dragon32</platform>
@@ -310,115 +310,115 @@
   <system>
     <name>dreamcast</name>
     <fullname>Sega Dreamcast</fullname>
-    <path>%ROMPATH%\dreamcast</path>
+    <path>%ROMPATH%/dreamcast</path>
     <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\flycast_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/flycast_libretro.so %ROM%</command>
     <platform>dreamcast</platform>
     <theme>dreamcast</theme>
   </system>
   <system>
     <name>famicom</name>
     <fullname>Nintendo Family Computer</fullname>
-    <path>%ROMPATH%\famicom</path>
+    <path>%ROMPATH%/famicom</path>
     <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fceumm_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/fceumm_libretro.so %ROM%</command>
     <platform>nes, famicom</platform>
     <theme>famicom</theme>
   </system>
   <system>
     <name>fba</name>
     <fullname>Final Burn Alpha</fullname>
-    <path>%ROMPATH%\fba</path>
+    <path>%ROMPATH%/fba</path>
     <extension>.chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fbneo_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/fbneo_libretro.so %ROM%</command>
     <platform>arcade</platform>
     <theme>fba</theme>
   </system>
   <system>
     <name>fbneo</name>
     <fullname>FinalBurn Neo</fullname>
-    <path>%ROMPATH%\fbneo</path>
+    <path>%ROMPATH%/fbneo</path>
     <extension>.chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fbneo_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/fbneo_libretro.so %ROM%</command>
     <platform>arcade</platform>
     <theme>fbneo</theme>
   </system>
   <system>
     <name>fds</name>
     <fullname>Nintendo Famicom Disk System</fullname>
-    <path>%ROMPATH%\fds</path>
+    <path>%ROMPATH%/fds</path>
     <extension>.nes .NES .fds .FDS .unf .UNF .UNIF .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\nestopia_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/nestopia_libretro.so %ROM%</command>
     <platform>fds</platform>
     <theme>fds</theme>
   </system>
   <system>
     <name>gameandwatch</name>
     <fullname>Nintendo Game and Watch</fullname>
-    <path>%ROMPATH%\gameandwatch</path>
+    <path>%ROMPATH%/gameandwatch</path>
     <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\gw_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/gw_libretro.so %ROM%</command>
     <platform>gameandwatch</platform>
     <theme>gameandwatch</theme>
   </system>
   <system>
     <name>gamegear</name>
     <fullname>Sega Game Gear</fullname>
-    <path>%ROMPATH%\gamegear</path>
+    <path>%ROMPATH%/gamegear</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>gamegear</platform>
     <theme>gamegear</theme>
   </system>
   <system>
     <name>gamecube</name>
     <fullname>Nintendo GameCube</fullname>
-    <path>%ROMPATH%\gamecube</path>
+    <path>%ROMPATH%/gamecube</path>
     <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .tgc .TGC .wad .WAD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\dolphin_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/dolphin_libretro.so %ROM%</command>
     <platform>gamecube</platform>
     <theme>gc</theme>
   </system>
   <system>
     <name>gb</name>
     <fullname>Nintendo Game Boy</fullname>
-    <path>%ROMPATH%\gb</path>
+    <path>%ROMPATH%/gb</path>
     <extension>.sfc .SFC .smc .SMC .gb .GB .gbc .GBC .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\bsnes_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/bsnes_libretro.so %ROM%</command>
     <platform>gb</platform>
     <theme>gb</theme>
   </system>
   <system>
     <name>gba</name>
     <fullname>Nintendo Game Boy Advance</fullname>
-    <path>%ROMPATH%\gba</path>
+    <path>%ROMPATH%/gba</path>
     <extension>.gba .GBA .agb .AGB .bin .BIN .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_gba_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_gba_libretro.so %ROM%</command>
     <platform>gba</platform>
     <theme>gba</theme>
   </system>
   <system>
     <name>gbc</name>
     <fullname>Nintendo Game Boy Color</fullname>
-    <path>%ROMPATH%\gbc</path>
+    <path>%ROMPATH%/gbc</path>
     <extension>.sfc .SFC .smc .SMC .gb .GB .gbc .GBC .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\bsnes_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/bsnes_libretro.so %ROM%</command>
     <platform>gbc</platform>
     <theme>gbc</theme>
   </system>
   <system>
     <name>genesis</name>
     <fullname>Sega Genesis</fullname>
-    <path>%ROMPATH%\genesis</path>
+    <path>%ROMPATH%/genesis</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>genesis, megadrive</platform>
     <theme>genesis</theme>
   </system>
   <system>
     <name>gx4000</name>
     <fullname>Amstrad GX4000</fullname>
-    <path>%ROMPATH%\gx4000</path>
+    <path>%ROMPATH%/gx4000</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>gx4000</platform>
@@ -427,43 +427,43 @@
   <system>
     <name>intellivision</name>
     <fullname>Mattel Electronics Intellivision</fullname>
-    <path>%ROMPATH%\intellivision</path>
+    <path>%ROMPATH%/intellivision</path>
     <extension>.int .INT .bin .BIN .rom .ROM .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\freeintv_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/freeintv_libretro.so %ROM%</command>
     <platform>intellivision</platform>
     <theme>intellivision</theme>
   </system>
   <system>
     <name>kodi</name>
     <fullname>Kodi home theatre software</fullname>
-    <path>%ROMPATH%\kodi</path>
-    <extension>.bat .ps1</extension>
-    <command>%ROM%</command>
+    <path>%ROMPATH%/kodi</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>kodi</theme>
   </system>
   <system>
     <name>lutris</name>
     <fullname>Lutris open gaming platform</fullname>
-    <path>%ROMPATH%\lutris</path>
-    <extension>.7z .7Z .zip .ZIP</extension>
-    <command>PLACEHOLDER %ROM%</command>
+    <path>%ROMPATH%/lutris</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>lutris</theme>
   </system>
   <system>
     <name>lutro</name>
     <fullname>Lutro game engine</fullname>
-    <path>%ROMPATH%\lutro</path>
+    <path>%ROMPATH%/lutro</path>
     <extension>.lua .LUA .lutro .LUTRO .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\lutro_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/lutro_libretro.so %ROM%</command>
     <platform>lutro</platform>
     <theme>lutro</theme>
   </system>
   <system>
     <name>macintosh</name>
     <fullname>Apple Macintosh</fullname>
-    <path>%ROMPATH%\macintosh</path>
+    <path>%ROMPATH%/macintosh</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>macintosh</platform>
@@ -472,16 +472,16 @@
   <system>
     <name>mame</name>
     <fullname>Multiple Arcade Machine Emulator</fullname>
-    <path>%ROMPATH%\mame</path>
+    <path>%ROMPATH%/mame</path>
     <extension>.chd .cue .CUE .CHD .cmd .CMD .fba .FBA .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mame2016_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mame2016_libretro.so %ROM%</command>
     <platform>arcade</platform>
     <theme>mame</theme>
   </system>
   <system>
     <name>mame-advmame</name>
     <fullname>AdvanceMAME</fullname>
-    <path>%ROMPATH%\mame-advmame</path>
+    <path>%ROMPATH%/mame-advmame</path>
     <extension>.chd .cue .CUE .CHD .cmd .CMD .fba .FBA .iso .ISO .7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>arcade</platform>
@@ -490,16 +490,16 @@
   <system>
     <name>mame-libretro</name>
     <fullname>Multiple Arcade Machine Emulator</fullname>
-    <path>%ROMPATH%\mame-libretro</path>
+    <path>%ROMPATH%/mame-libretro</path>
     <extension>.chd .cue .CUE .CHD .cmd .CMD .fba .FBA .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mame_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mame_libretro.so %ROM%</command>
     <platform>arcade</platform>
     <theme>mame-libretro</theme>
   </system>
   <system>
     <name>mame-mame4all</name>
     <fullname>MAME4ALL</fullname>
-    <path>%ROMPATH%\mame-advmame</path>
+    <path>%ROMPATH%/mame-advmame</path>
     <extension>.chd .cue .CUE .CHD .cmd .CMD .fba .FBA .iso .ISO .7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>arcade</platform>
@@ -508,52 +508,52 @@
   <system>
     <name>mastersystem</name>
     <fullname>Sega Master System</fullname>
-    <path>%ROMPATH%\mastersystem</path>
+    <path>%ROMPATH%/mastersystem</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>mastersystem</platform>
     <theme>mastersystem</theme>
   </system>
   <system>
     <name>megacd</name>
     <fullname>Sega Mega-CD</fullname>
-    <path>%ROMPATH%\megacd</path>
+    <path>%ROMPATH%/megacd</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>segacd</platform>
     <theme>megacd</theme>
   </system>
   <system>
     <name>megacdjp</name>
     <fullname>Sega Mega-CD</fullname>
-    <path>%ROMPATH%\megacdjp</path>
+    <path>%ROMPATH%/megacdjp</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>segacd</platform>
     <theme>megacdjp</theme>
   </system>
   <system>
     <name>megadrive</name>
     <fullname>Sega Mega Drive</fullname>
-    <path>%ROMPATH%\megadrive</path>
+    <path>%ROMPATH%/megadrive</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>megadrive, genesis</platform>
     <theme>megadrive</theme>
   </system>
   <system>
     <name>mess</name>
     <fullname>Multi Emulator Super System</fullname>
-    <path>%ROMPATH%\mess</path>
+    <path>%ROMPATH%/mess</path>
     <extension>.chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mess2015_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mess2015_libretro.so %ROM%</command>
     <platform>mess</platform>
     <theme>mess</theme>
   </system>
   <system>
     <name>moonlight</name>
     <fullname>Moonlight game streaming</fullname>
-    <path>%ROMPATH%\moonlight</path>
+    <path>%ROMPATH%/moonlight</path>
     <extension>.moonlight .MOONLIGHT .7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>moonlight</platform>
@@ -562,115 +562,115 @@
   <system>
     <name>msx</name>
     <fullname>MSX</fullname>
-    <path>%ROMPATH%\msx</path>
+    <path>%ROMPATH%/msx</path>
     <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\bluemsx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/bluemsx_libretro.so %ROM%</command>
     <platform>msx</platform>
     <theme>msx</theme>
   </system>
   <system>
     <name>msx1</name>
     <fullname>MSX1</fullname>
-    <path>%ROMPATH%\msx1</path>
+    <path>%ROMPATH%/msx1</path>
     <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\bluemsx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/bluemsx_libretro.so %ROM%</command>
     <platform>msx</platform>
     <theme>msx1</theme>
   </system>
   <system>
     <name>msx2</name>
     <fullname>MSX2</fullname>
-    <path>%ROMPATH%\msx2</path>
+    <path>%ROMPATH%/msx2</path>
     <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\bluemsx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/bluemsx_libretro.so %ROM%</command>
     <platform>msx</platform>
     <theme>msx2</theme>
   </system>
   <system>
     <name>n64</name>
     <fullname>Nintendo 64</fullname>
-    <path>%ROMPATH%\n64</path>
+    <path>%ROMPATH%/n64</path>
     <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\parallel_n64_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mupen64plus_next_libretro.so %ROM%</command>
     <platform>n64</platform>
     <theme>n64</theme>
   </system>
   <system>
     <name>naomi</name>
     <fullname>Sega NAOMI</fullname>
-    <path>%ROMPATH%\naomi</path>
+    <path>%ROMPATH%/naomi</path>
     <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\flycast_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/flycast_libretro.so %ROM%</command>
     <platform>naomi</platform>
     <theme>naomi</theme>
   </system>
   <system>
     <name>nds</name>
     <fullname>Nintendo DS</fullname>
-    <path>%ROMPATH%\nds</path>
+    <path>%ROMPATH%/nds</path>
     <extension>.nds .NDS .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\melonds_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/melonds_libretro.so %ROM%</command>
     <platform>nds</platform>
     <theme>nds</theme>
   </system>
   <system>
     <name>neogeo</name>
     <fullname>Neo Geo</fullname>
-    <path>%ROMPATH%\neogeo</path>
+    <path>%ROMPATH%/neogeo</path>
     <extension>.chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fbneo_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/fbneo_libretro.so %ROM%</command>
     <platform>neogeo</platform>
     <theme>neogeo</theme>
   </system>
   <system>
     <name>neogeocd</name>
     <fullname>Neo Geo CD</fullname>
-    <path>%ROMPATH%\neogeocd</path>
+    <path>%ROMPATH%/neogeocd</path>
     <extension>.chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\neocd_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/neocd_libretro.so %ROM%</command>
     <platform>neogeocd</platform>
     <theme>neogeocd</theme>
   </system>
   <system>
     <name>nes</name>
     <fullname>Nintendo Entertainment System</fullname>
-    <path>%ROMPATH%\nes</path>
+    <path>%ROMPATH%/nes</path>
     <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fceumm_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/fceumm_libretro.so %ROM%</command>
     <platform>nes</platform>
     <theme>nes</theme>
   </system>
   <system>
     <name>ngp</name>
     <fullname>Neo Geo Pocket</fullname>
-    <path>%ROMPATH%\ngp</path>
+    <path>%ROMPATH%/ngp</path>
     <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_ngp_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_ngp_libretro.so %ROM%</command>
     <platform>ngp</platform>
     <theme>ngp</theme>
   </system>
   <system>
     <name>ngpc</name>
     <fullname>Neo Geo Pocket Color</fullname>
-    <path>%ROMPATH%\ngpc</path>
+    <path>%ROMPATH%/ngpc</path>
     <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_ngp_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_ngp_libretro.so %ROM%</command>
     <platform>ngpc</platform>
     <theme>ngpc</theme>
   </system>
   <system>
     <name>odyssey2</name>
     <fullname>Magnavox Odyssey2</fullname>
-    <path>%ROMPATH%\odyssey2</path>
+    <path>%ROMPATH%/odyssey2</path>
     <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\o2em_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/o2em_libretro.so %ROM%</command>
     <platform>odyssey2</platform>
     <theme>odyssey2</theme>
   </system>
   <system>
     <name>openbor</name>
     <fullname>OpenBOR game engine</fullname>
-    <path>%ROMPATH%\openbor</path>
+    <path>%ROMPATH%/openbor</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>openbor</platform>
@@ -679,7 +679,7 @@
   <system>
     <name>oric</name>
     <fullname>Tangerine Computer Systems Oric</fullname>
-    <path>%ROMPATH%\oric</path>
+    <path>%ROMPATH%/oric</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>oric</platform>
@@ -688,88 +688,88 @@
   <system>
     <name>palm</name>
     <fullname>Palm OS</fullname>
-    <path>%ROMPATH%\palm</path>
+    <path>%ROMPATH%/palm</path>
     <extension>.prc .PRC .pqa .PQA .img .IMG .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mu_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mu_libretro.so %ROM%</command>
     <platform>palm</platform>
     <theme>palm</theme>
   </system>
   <system>
     <name>pc</name>
     <fullname>IBM PC</fullname>
-    <path>%ROMPATH%\pc</path>
+    <path>%ROMPATH%/pc</path>
     <extension>.bat .BAT .com .COM .exe .EXE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\dosbox_core_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/dosbox_core_libretro.so %ROM%</command>
     <platform>pc</platform>
     <theme>pc</theme>
   </system>
   <system>
     <name>pcengine</name>
     <fullname>NEC PC Engine</fullname>
-    <path>%ROMPATH%\pcengine</path>
+    <path>%ROMPATH%/pcengine</path>
     <extension>.pce .PCE .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_pce_fast_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_pce_fast_libretro.so %ROM%</command>
     <platform>pcengine</platform>
     <theme>pcengine</theme>
   </system>
   <system>
     <name>pcenginecd</name>
     <fullname>NEC PC Engine CD</fullname>
-    <path>%ROMPATH%\pcenginecd</path>
+    <path>%ROMPATH%/pcenginecd</path>
     <extension>.pce .PCE .cue .CUE .ccd .CCD .iso .ISO .img .IMG .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_pce_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_pce_libretro.so %ROM%</command>
     <platform>pcenginecd</platform>
     <theme>pcenginecd</theme>
   </system>
   <system>
     <name>pcfx</name>
     <fullname>NEC PC-FX</fullname>
-    <path>%ROMPATH%\pcfx</path>
+    <path>%ROMPATH%/pcfx</path>
     <extension>.cue CUE .ccd .CCD .toc .TOC .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_pcfx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_pcfx_libretro.so %ROM%</command>
     <platform>pcfx</platform>
     <theme>pcfx</theme>
   </system>
   <system>
     <name>pokemini</name>
     <fullname>Nintendo Pokémon Mini</fullname>
-    <path>%ROMPATH%\pokemini</path>
+    <path>%ROMPATH%/pokemini</path>
     <extension>.min .MIN .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\pokemini_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/pokemini_libretro.so %ROM%</command>
     <platform>pokemini</platform>
     <theme>pokemini</theme>
   </system>
   <system>
     <name>ports</name>
     <fullname>Ports</fullname>
-    <path>%ROMPATH%\ports</path>
-    <extension>.bat .ps1</extension>
-    <command>%ROM%</command>
+    <path>%ROMPATH%/ports</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>ports</theme>
   </system>
   <system>
     <name>ps2</name>
     <fullname>Sony PlayStation 2</fullname>
-    <path>%ROMPATH%\ps2</path>
+    <path>%ROMPATH%/ps2</path>
     <extension>.iso .ISO .isz .ISZ .cso .CSO .bin .BIN .elf .ELF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\play_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/play_libretro.so %ROM%</command>
     <platform>ps2</platform>
     <theme>ps2</theme>
   </system>
   <system>
     <name>psp</name>
     <fullname>PlayStation Portable</fullname>
-    <path>%ROMPATH%\psp</path>
+    <path>%ROMPATH%/psp</path>
     <extension>.elf .ELF .iso .ISO .cso .CSO .prx .PRX .pbp .PBP .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\ppsspp_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/ppsspp_libretro.so %ROM%</command>
     <platform>psp</platform>
     <theme>psp</theme>
   </system>
   <system>
     <name>psvita</name>
     <fullname>PlayStation Vita</fullname>
-    <path>%ROMPATH%\psp</path>
+    <path>%ROMPATH%/psp</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>psvita</platform>
@@ -778,16 +778,16 @@
   <system>
     <name>psx</name>
     <fullname>Sony PlayStation 1</fullname>
-    <path>%ROMPATH%\psx</path>
+    <path>%ROMPATH%/psx</path>
     <extension>.cue .CUE .toc .TOC .m3u .M3U .ccd .CCD .exe .EXE .pbp .PBP .chd .CHD .cbn .CBN .img .IMG .iso .ISO .mdf .MDF .z .Z .znx .ZNX .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_psx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_psx_libretro.so %ROM%</command>
     <platform>psx</platform>
     <theme>psx</theme>
   </system>
   <system>
     <name>residualvm</name>
     <fullname>ResidualVM game engine</fullname>
-    <path>%ROMPATH%\residualvm</path>
+    <path>%ROMPATH%/residualvm</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>residualvm</platform>
@@ -796,106 +796,106 @@
   <system>
     <name>samcoupe</name>
     <fullname>SAM Coupé</fullname>
-    <path>%ROMPATH%\samcoupe</path>
+    <path>%ROMPATH%/samcoupe</path>
     <extension>.dsk .DSK .mgt .MGT .sbt .SBT .sad .SAD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\simcp_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/simcp_libretro.so %ROM%</command>
     <platform>samcoupe</platform>
     <theme>samcoupe</theme>
   </system>
   <system>
     <name>satellaview</name>
     <fullname>Nintendo Satellaview</fullname>
-    <path>%ROMPATH%\satellaview</path>
+    <path>%ROMPATH%/satellaview</path>
     <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/snes9x_libretro.so %ROM%</command>
     <platform>satellaview</platform>
     <theme>satellaview</theme>
   </system>
   <system>
     <name>saturn</name>
     <fullname>Sega Saturn</fullname>
-    <path>%ROMPATH%\saturn</path>
+    <path>%ROMPATH%/saturn</path>
     <extension>.ccd .CCD .chd .CHD .cue .CUE .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_saturn_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_saturn_libretro.so %ROM%</command>
     <platform>saturn</platform>
     <theme>saturn</theme>
   </system>
   <system>
     <name>scummvm</name>
     <fullname>ScummVM game engine</fullname>
-    <path>%ROMPATH%\scummvm</path>
+    <path>%ROMPATH%/scummvm</path>
     <extension>.scummvm .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\scummvm_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/scummvm_libretro.so %ROM%</command>
     <platform>scummvm</platform>
     <theme>scummvm</theme>
   </system>
   <system>
     <name>sega32x</name>
     <fullname>Sega Mega Drive 32X</fullname>
-    <path>%ROMPATH%\sega32x</path>
+    <path>%ROMPATH%/sega32x</path>
     <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\picodrive_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/picodrive_libretro.so %ROM%</command>
     <platform>sega32x</platform>
     <theme>sega32x</theme>
   </system>
   <system>
     <name>sega32xjp</name>
     <fullname>Sega Super 32X</fullname>
-    <path>%ROMPATH%\sega32xjp</path>
+    <path>%ROMPATH%/sega32xjp</path>
     <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\picodrive_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/picodrive_libretro.so %ROM%</command>
     <platform>sega32x</platform>
     <theme>sega32xjp</theme>
   </system>
   <system>
     <name>sega32xna</name>
     <fullname>Sega Genesis 32X</fullname>
-    <path>%ROMPATH%\sega32xna</path>
+    <path>%ROMPATH%/sega32xna</path>
     <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\picodrive_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/picodrive_libretro.so %ROM%</command>
     <platform>sega32x</platform>
     <theme>sega32xna</theme>
   </system>
   <system>
     <name>segacd</name>
     <fullname>Sega CD</fullname>
-    <path>%ROMPATH%\segacd</path>
+    <path>%ROMPATH%/segacd</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>segacd</platform>
     <theme>segacd</theme>
   </system>
   <system>
     <name>sg-1000</name>
     <fullname>Sega SG-1000</fullname>
-    <path>%ROMPATH%\sg-1000</path>
+    <path>%ROMPATH%/sg-1000</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\genesis_plus_gx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>sg-1000</platform>
     <theme>sg1000</theme>
   </system>
   <system>
     <name>snes</name>
     <fullname>Nintendo SNES (Super Nintendo)</fullname>
-    <path>%ROMPATH%\snes</path>
+    <path>%ROMPATH%/snes</path>
     <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/snes9x_libretro.so %ROM%</command>
     <platform>snes</platform>
     <theme>snes</theme>
   </system>
   <system>
     <name>snesna</name>
     <fullname>Nintendo SNES (Super Nintendo)</fullname>
-    <path>%ROMPATH%\snesna</path>
+    <path>%ROMPATH%/snesna</path>
     <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/snes9x_libretro.so %ROM%</command>
     <platform>snes</platform>
     <theme>snesna</theme>
   </system>
   <system>
     <name>solarus</name>
     <fullname>Solarus game engine</fullname>
-    <path>%ROMPATH%\solarus</path>
+    <path>%ROMPATH%/solarus</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>solarus</platform>
@@ -904,25 +904,25 @@
   <system>
     <name>spectravideo</name>
     <fullname>Spectravideo</fullname>
-    <path>%ROMPATH%\spectravideo</path>
+    <path>%ROMPATH%/spectravideo</path>
     <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\bluemsx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/bluemsx_libretro.so %ROM%</command>
     <platform>spectravideo</platform>
     <theme>spectravideo</theme>
   </system>
   <system>
     <name>steam</name>
     <fullname>Valve Steam</fullname>
-    <path>%ROMPATH%\steam</path>
-    <extension>.bat .ps1</extension>
-    <command>%ROM%</command>
+    <path>%ROMPATH%/steam</path>
+    <extension>.sh .csh</extension>
+    <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>steam</theme>
   </system>
   <system>
     <name>stratagus</name>
     <fullname>Stratagus game engine</fullname>
-    <path>%ROMPATH%\stratagus</path>
+    <path>%ROMPATH%/stratagus</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>stratagus</platform>
@@ -931,52 +931,52 @@
   <system>
     <name>sufami</name>
     <fullname>Bandai SuFami Turbo</fullname>
-    <path>%ROMPATH%\sufami</path>
+    <path>%ROMPATH%/sufami</path>
     <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/snes9x_libretro.so %ROM%</command>
     <platform>sufami</platform>
     <theme>sufami</theme>
   </system>
   <system>
     <name>supergrafx</name>
     <fullname>NEC SuperGrafx</fullname>
-    <path>%ROMPATH%\supergrafx</path>
+    <path>%ROMPATH%/supergrafx</path>
     <extension>.pce .PCE .sgx .SGX .cue .CUE .ccd .CCD .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_supergrafx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_supergrafx_libretro.so %ROM%</command>
     <platform>supergrafx</platform>
     <theme>supergrafx</theme>
   </system>
   <system>
     <name>thomson</name>
     <fullname>Thomson TO/MO series</fullname>
-    <path>%ROMPATH%\thomson</path>
+    <path>%ROMPATH%/thomson</path>
     <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\theodore_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/theodore_libretro.so %ROM%</command>
     <platform>thomson</platform>
     <theme>thomson</theme>
   </system>
   <system>
     <name>tg16</name>
     <fullname>NEC TurboGrafx-16</fullname>
-    <path>%ROMPATH%\tg16</path>
+    <path>%ROMPATH%/tg16</path>
     <extension>.pce .PCE .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_pce_fast_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_pce_fast_libretro.so %ROM%</command>
     <platform>pcengine</platform>
     <theme>tg16</theme>
   </system>
   <system>
     <name>tg-cd</name>
     <fullname>NEC TurboGrafx-CD</fullname>
-    <path>%ROMPATH%\tg-cd</path>
+    <path>%ROMPATH%/tg-cd</path>
     <extension>.pce .PCE .cue .CUE .ccd .CCD .iso .ISO .img .IMG .bin .BIN .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_pce_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_pce_libretro.so %ROM%</command>
     <platform>pcenginecd</platform>
     <theme>tg-cd</theme>
   </system>
   <system>
     <name>ti99</name>
     <fullname>Texas Instruments TI-99</fullname>
-    <path>%ROMPATH%\ti99</path>
+    <path>%ROMPATH%/ti99</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>ti99</platform>
@@ -985,7 +985,7 @@
   <system>
     <name>trs-80</name>
     <fullname>Tandy TRS-80</fullname>
-    <path>%ROMPATH%\trs-80</path>
+    <path>%ROMPATH%/trs-80</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>trs-80</platform>
@@ -994,52 +994,52 @@
   <system>
     <name>uzebox</name>
     <fullname>Uzebox</fullname>
-    <path>%ROMPATH%\uzebox</path>
+    <path>%ROMPATH%/uzebox</path>
     <extension>.uze .UZE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\uzem_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/uzem_libretro.so %ROM%</command>
     <platform>uzebox</platform>
     <theme>uzebox</theme>
   </system>
   <system>
     <name>vectrex</name>
     <fullname>Vectrex</fullname>
-    <path>%ROMPATH%\vectrex</path>
+    <path>%ROMPATH%/vectrex</path>
     <extension>.bin .BIN .vec .VEC .gam .GAM .vc .VC .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\vecx_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/vecx_libretro.so %ROM%</command>
     <platform>vectrex</platform>
     <theme>vectrex</theme>
   </system>
   <system>
     <name>videopac</name>
     <fullname>Philips Videopac G7000 (Magnavox Odyssey2)</fullname>
-    <path>%ROMPATH%\videopac</path>
+    <path>%ROMPATH%/videopac</path>
     <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\o2em_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/o2em_libretro.so %ROM%</command>
     <platform>videopac</platform>
     <theme>videopac</theme>
   </system>
   <system>
     <name>virtualboy</name>
     <fullname>Nintendo Virtual Boy</fullname>
-    <path>%ROMPATH%\virtualboy</path>
+    <path>%ROMPATH%/virtualboy</path>
     <extension>.vb .VB .vboy .VBOY .bin .BIN .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_vb_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_vb_libretro.so %ROM%</command>
     <platform>virtualboy</platform>
     <theme>virtualboy</theme>
   </system>
   <system>
     <name>wii</name>
     <fullname>Nintendo Wii</fullname>
-    <path>%ROMPATH%\wii</path>
+    <path>%ROMPATH%/wii</path>
     <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .tgc .TGC .wad .WAD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\dolphin_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/dolphin_libretro.so %ROM%</command>
     <platform>wii</platform>
     <theme>wii</theme>
   </system>
   <system>
     <name>wiiu</name>
     <fullname>Nintendo Wii U</fullname>
-    <path>%ROMPATH%\wiiu</path>
+    <path>%ROMPATH%/wiiu</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>wiiu</platform>
@@ -1048,34 +1048,34 @@
   <system>
     <name>wonderswan</name>
     <fullname>Bandai WonderSwan</fullname>
-    <path>%ROMPATH%\wonderswan</path>
+    <path>%ROMPATH%/wonderswan</path>
     <extension>.ws .WS .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_wswan_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_wswan_libretro.so %ROM%</command>
     <platform>wonderswan</platform>
     <theme>wonderswan</theme>
   </system>
   <system>
     <name>wonderswancolor</name>
     <fullname>Bandai WonderSwan Color</fullname>
-    <path>%ROMPATH%\wonderswancolor</path>
+    <path>%ROMPATH%/wonderswancolor</path>
     <extension>.ws .WS .wsc .WSC .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\mednafen_wswan_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/mednafen_wswan_libretro.so %ROM%</command>
     <platform>wonderswancolor</platform>
     <theme>wonderswancolor</theme>
   </system>
   <system>
     <name>x68000</name>
     <fullname>Sharp X68000</fullname>
-    <path>%ROMPATH%\x68000</path>
+    <path>%ROMPATH%/x68000</path>
     <extension>.dim .DIM .img .IMG .d88 .D88 .88d .88D .hdm .HDM .dup .DUP .2hd .2HD .xdf .XDF .hdf .HDF .cmd .CMD .m3u .M3U .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\px68k_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/px68k_libretro.so %ROM%</command>
     <platform>x68000</platform>
     <theme>x68000</theme>
   </system>
   <system>
     <name>xbox</name>
     <fullname>Microsoft Xbox</fullname>
-    <path>%ROMPATH%\xbox</path>
+    <path>%ROMPATH%/xbox</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>xbox</platform>
@@ -1084,7 +1084,7 @@
   <system>
     <name>xbox360</name>
     <fullname>Microsoft Xbox 360</fullname>
-    <path>%ROMPATH%\xbox360</path>
+    <path>%ROMPATH%/xbox360</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>xbox360</platform>
@@ -1093,7 +1093,7 @@
   <system>
     <name>zmachine</name>
     <fullname>Infocom Z-machine</fullname>
-    <path>%ROMPATH%\zmachine</path>
+    <path>%ROMPATH%/zmachine</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>zmachine</platform>
@@ -1102,18 +1102,18 @@
   <system>
     <name>zx81</name>
     <fullname>Sinclair ZX81</fullname>
-    <path>%ROMPATH%\zx81</path>
+    <path>%ROMPATH%/zx81</path>
     <extension>.tzx .TZX .p .P .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\81_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/81_libretro.so %ROM%</command>
     <platform>zx81</platform>
     <theme>zx81</theme>
   </system>
   <system>
     <name>zxspectrum</name>
     <fullname>Sinclair ZX Spectrum</fullname>
-    <path>%ROMPATH%\zxspectrum</path>
+    <path>%ROMPATH%/zxspectrum</path>
     <extension>.tzx .TZX .tap .TAP .z80 .Z80 .rzx .RZX .scl .SCL .trd .TRD .sh .SH .sna .SNA .szx .SZX .udi .UDI .mgt .MGT .img .IMG .dsk .DSK .gz .GZ .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fuse_libretro.dll" %ROM%</command>
+    <command>retroarch -L /usr/local/lib/libretro/fuse_libretro.so %ROM%</command>
     <platform>zxspectrum</platform>
     <theme>zxspectrum</theme>
   </system>

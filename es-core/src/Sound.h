@@ -10,7 +10,7 @@
 #ifndef ES_CORE_SOUND_H
 #define ES_CORE_SOUND_H
 
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__)
 #include <sstream>
 #endif
 
