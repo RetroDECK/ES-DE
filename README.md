@@ -13,7 +13,8 @@ The current version 1.0 has been tested on the following operating systems:
 * FreeBSD 12.2 (x86)
 * NetBSD 9.1 (x86)
 * OpenBSD 6.8 (x86) (limited testing only)
-* macOS 10.11.6 - El Capitan
+* macOS 10.15 "Catalina" (limited testing only)
+* macOS 10.11 "El Capitan"
 * Windows 10 (x86)
 * Windows 8.1 (x86)
 

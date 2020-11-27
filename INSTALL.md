@@ -19,7 +19,7 @@ Any code editor can be used of course, but I recommend [VSCode](https://code.vis
 
 The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
-### Installing dependencies
+**Installing dependencies:**
 
 **On Debian/Ubuntu:**
 All of the required packages can be installed with apt-get:
@@ -78,7 +78,7 @@ make
 make install
 ```
 
-### Cloning and compiling ES-DE
+**Cloning and compiling ES-DE:**
 
 To clone the source repository, run the following:
 
@@ -282,7 +282,7 @@ sudo apt-get install rpm
 
 ## Building on macOS
 
-EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. Although it's a bizarre Unix variant with a very strange window manager, it is still a proper system with good tools. The main deficiency is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, `Homebrew`, is detailed below.
+EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main deficiency is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, `Homebrew`, is detailed below.
 
 As for code editing, I use [VSCode](https://code.visualstudio.com). I suppose Xcode could be used instead but I have no experience with this tool and no interest in it as I want to use the same tools for all the operating systems that I develop on.
 
@@ -294,23 +294,19 @@ Following this, install the Homebrew package manager which will simplify the res
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
-Be aware though that Homebrew is really slow as it often compiles the packages from source code, so you need some patience when using it.
+Be aware though that Homebrew can be really slow, especially when it compiles packages from source code.
 
 **Package installation with Homebrew:**
 
-Install cmake, which will also install pkg-config that we need as well:
+Install the required tools and dependencies:
 
 ```
-brew install cmake
+brew install cmake pkg-config sdl2 freeimage freetype pugixml rapidjson
 ```
 
-Following this, install the dependency packages needed by ES:
-```
-brew install sdl2 freeimage freetype pugixml rapidjson
-```
 Curl could optionally be installed too, but normally the version shipped with macOS is fine to use.
 
-Finally, install VLC/libVLC:
+Install VLC/libVLC as well:
 ```
 brew cask install vlc
 ```
@@ -480,6 +476,8 @@ CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.0.0.dmg generated.
 ```
+
+Generating .dmg installers on older version of macOS seems to make them forward compatible to a pretty good extent, for instance building on El Capitan seems to generate an application that is usable on Catalina. The other way around does however not seem to be true, which is quite unsurprising.
 
 **Special considerations regarding run-paths:**
 
