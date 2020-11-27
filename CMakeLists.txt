@@ -134,7 +134,11 @@ else()
     # Enable the C++11 standard and enable optimizations as it's a release build.
     # This will also disable all assert() macros. Strip the binary as well.
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -DNDEBUG")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
+    if(APPLE)
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2")
+    else()
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
+    endif()
 endif()
 
 # This removes half of the ranlib warnings on macOS regarding no symbols for files that
