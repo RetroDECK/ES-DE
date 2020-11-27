@@ -64,19 +64,10 @@ if(NOT WIN32)
     find_package(CURL REQUIRED)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
+    find_package(Pugixml REQUIRED)
     find_package(RapidJSON REQUIRED)
     find_package(SDL2 REQUIRED)
     find_package(VLC REQUIRED)
-endif()
-
-if(APPLE)
-    # For some strange reason, macOS complains about an uppercase 'P' in Pugixml.
-    # FreeBSD, NetBSD and OpenBSD also complain about this, but applying the same rule to
-    # these OSs lead to linking issues for some reason, so we'll have to live with those
-    # warnings for now.
-    find_package(pugixml REQUIRED)
-elseif(UNIX)
-    find_package(Pugixml REQUIRED)
 endif()
 
 # Add libCEC support.
