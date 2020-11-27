@@ -148,22 +148,30 @@ elseif(APPLE)
             -change /usr/lib/libcurl.4.dylib @rpath/libcurl.4.dylib
             -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
             -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
+            -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
             -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
             $<TARGET_FILE:EmulationStation>)
 
+    set(APPLE_DYLIB_PERMISSIONS
+            OWNER_WRITE OWNER_READ OWNER_EXECUTE
+            GROUP_READ GROUP_EXECUTE
+            WORLD_READ WORLD_EXECUTE)
+
     if(NOT APPLE_SKIP_INSTALL_LIBS)
         install(FILES ${CMAKE_SOURCE_DIR}/libcurl.4.dylib
-                DESTINATION ../MacOS)
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
-                DESTINATION ../MacOS)
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
-                DESTINATION ../MacOS)
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libpng16.16.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
-                DESTINATION ../MacOS)
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
-                DESTINATION ../MacOS)
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
-                DESTINATION ../MacOS)
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
                 DESTINATION ../MacOS)
     endif()

@@ -370,13 +370,35 @@ libSDL2-2.0.0.dylib
 libcurl.4.dylib
 libfreeimage.dylib
 libfreetype.6.dylib
+libpng16.16.dylib
 libvlc.dylib
 libvlccore.dylib
 ```
 
 Note that the filenames could be slightly different depending on what versions you have installed on your system.
 
-In addition to these, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
+For libfreetype there is a dependency on libpng and you need to rewrite the rpath to point to the local directory, otherwise any generated installation package will not work on other computers. Make sure that you have write permissions to libfreetype.6.dylib before attempting to run this:
+
+```
+cd emulationstation-de
+install_name_tool -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib libfreetype.6.dylib
+install_name_tool -add_rpath @executable_path libfreetype.6.dylib
+```
+
+Verify that it worked as expected by running `otool -L libfreetype.6.dylib`. You should see something like the following:
+
+```
+libfreetype.6.dylib:
+	/usr/local/opt/freetype/lib/libfreetype.6.dylib (compatibility version 24.0.0, current version 24.2.0)
+	/usr/lib/libbz2.1.0.dylib (compatibility version 1.0.0, current version 1.0.5)
+	@rpath/libpng16.16.dylib (compatibility version 54.0.0, current version 54.0.0)
+	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.5)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1226.10.1)
+```
+
+You of course only need to run this once, well at least until you replace the library in case of moving to a newer version or so.
+
+In addition to these libraries, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
 
 ```
 libaudio_format_plugin.dylib
@@ -399,9 +421,9 @@ If you only want to build EmulationStation to be used on your own computer, ther
 cmake -DAPPLE_SKIP_INSTALL_LIBS=ON .
 ```
 
-**Note:** This also affects the .dmg package generation using cpack, so if this options is enabled, the package will be unusable for everyone but yourself as the required libraries will not be bundled with the application.
+**Note:** This also affects the .dmg package generation using cpack, so if this option is enabled, the package will be unusable for anyone but yourself as the required libraries will not be bundled with the application.
 
-On macOS you can then install the application as a normal user, i.e. no root privileges are required. Simply run the following to install the application to `/Applications/EmulationStation Desktop Edition.app`:
+On macOS you can install the application as a normal user, i.e. no root privileges are required. Simply run the following to install ES-DE to `/Applications/EmulationStation Desktop Edition.app`:
 
 ```
 make install
@@ -416,6 +438,7 @@ This will be the directory structure for the installation:
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libcurl.4.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreeimage.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreetype.6.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpng16.16.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlc.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlccore.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/plugins/*
