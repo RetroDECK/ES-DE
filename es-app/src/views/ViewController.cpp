@@ -84,7 +84,7 @@ void ViewController::goToStart()
                     "DEFAULT KEYBOARD MAPPINGS. IT'S HOWEVER\n"
                     "RECOMMENDED TO SETUP YOUR OWN KEYBOARD\n"
                     "CONFIGURATION. TO DO SO, CHOOSE THE ENTRY\n"
-                    "\"CONFIGURE INPUT\" ON THE MAIN MENU.";
+                    "'CONFIGURE INPUT' ON THE MAIN MENU.";
 
         mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(), message.c_str(),
             "OK", nullptr, "DON'T SHOW AGAIN", [] {
