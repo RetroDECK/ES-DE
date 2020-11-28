@@ -15,6 +15,8 @@
 #include <sstream>
 #endif
 
+#include <string>
+
 bool PowerSaver::mState = false;
 bool PowerSaver::mRunningScreensaver = false;
 

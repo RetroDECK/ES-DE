@@ -15,6 +15,7 @@
 #endif
 
 #include <map>
+#include <string>
 #include <vector>
 
 namespace pugi { class xml_node; }

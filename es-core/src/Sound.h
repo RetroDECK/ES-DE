@@ -17,6 +17,7 @@
 #include <SDL2/SDL_audio.h>
 #include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 class ThemeData;

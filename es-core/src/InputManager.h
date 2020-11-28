@@ -18,6 +18,7 @@
 #endif
 
 #include <map>
+#include <string>
 
 class InputConfig;
 class Window;
