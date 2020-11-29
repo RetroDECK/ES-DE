@@ -1,6 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE) v1.0 - User Guide
 
-**Note:** This document is intended as a quick start guide, for more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to the [INSTALL.md](INSTALL.md) document.
+**Note:** This document is intended as a quick start guide as well as a reference for the user interface settings and functionality. For more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to the [INSTALL.md](INSTALL.md) document.
 
 Table of contents:
 
@@ -8,39 +8,80 @@ Table of contents:
 
 ## Getting started
 
-Getting started with EmulationStation is very easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows you'll use the installer instead of a package.
+Getting started with EmulationStation is easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows and macOS you'll use the installer instead of a package.
 
-The installation procedure will not be covered here as it differs between operating system, so please refer to your operating system documentation for information regarding this topic. EmulationStation Desktop Edition is currently supplied as .deb and .rpm packages for Linux and as a standard NSIS installer for Windows.
+The following operating systems have been tested (all for the x86 architecture):
 
-The following operating systems have been tested:
-
-* Kubuntu 20.04
-* FreeBSD 12.2 (x86)
-* NetBSD 9.1 (x86)
-* OpenBSD 6.8 (x86) (limited testing only)
+* Ubuntu 20.04
+* Linux Mint 20
+* Manjaro
+* Fedora 33 Workstation
+* FreeBSD 12.2
+* NetBSD 9.1
+* OpenBSD 6.8 (limited testing only)
+* macOS 11 "Big Sur" (limited testing only)
 * macOS 10.15 "Catalina" (limited testing only)
 * macOS 10.11 "El Capitan"
-* Windows 10 (x86)
-* Windows 8.1 (x86)
+* Windows 10
+* Windows 8.1
+
+
+The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
+
+**Installing a Linux .deb package**
+
+Thes .deb package is used for Linux distributions based on Debian, such as Ubuntu, Linux Mint etc.
+Running the following should install ES-DE and resolve any dependencies:
+
+```
+sudo apt install ./emulationstation-de-1.0.0.deb
+```
+
+**Installing a Linux .rpm package**
+
+On Fedora you run this command to install ES-DE, which should automatically resolve all dependencies:
+
+```
+sudo dnf install ./emulationstation-de-1.0.0.rpm
+```
+
+Note that this requires the RPM Fusion repository as there's a depedency on VLC, which is not part of the standard operating system repo. See [INSTALL.md](INSTALL.md#building-on-unix) for details on how to add this.
+
+**Installing on macOS and Windows**
+
+There's not really much to say about these operating systems, just install ES-DE as you would any other application. On maCOS it's via the .dmg drag-and-drop installer, and on Windows it's just a normal application installer (basically next, next, finish).
+
+**On first application startup**
 
 Upon first startup, ES-DE will create its home directory, by default the location is ~/.emulationstation.
 
-On Unix this defaults to /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username>\\.emulationstation\
+On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username>\\.emulationstation\
 
-A settings file, **es_settings.cfg** will be generated with all the default settings, and a **es_systems.cfg** file will also be copied from the program resource folder. This file contains the game ROM and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md) document.
+**Note:** As of ES-DE v1.0 there is no internationalization support, so you would always need to supply the English directory name for your home directory, which is by the way always the real physical name on the file system. For instance in macOS, /Users/leon will be required instead of /Användare/leon which is what's shown inside the operating system for a Swedish localized installation. But using the tilde home symbol '~' is a workaround for this, and it's recommended to always use it for any ES-DE configuration settings that require a path to your home directory as it removes any confusion regarding localized home directory paths.
 
-**Note:** On Unix it's assumed that RetroArch is using the default configuration directory location, i.e. the cores should be located in ~/.config/retroarch/cores. If you've installed RetroArch via a Snap package, make a symlink from the Snap .config directory:
+Also on first startup, a configuration file, **es_settings.cfg** will be generated with all the default settings, and a **es_systems.cfg** file will also be copied from the program resource folder. This file contains the game ROM and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md#es_systemscfg) document.
+
+**Note:** On Linux it's assumed that RetroArch is using the default configuration directory location, i.e. the cores should be located in ~/.config/retroarch/cores. If you've installed RetroArch via a Snap package, make a symlink from the Snap .config directory:
 
 ```
 ln -s ~/snap/retroarch/current/.config/retroarch ~/.config/
 ```
 
-There's a log file in the home directory as well named **es_log.txt**, please refer to this in case of any errors as it should provide information on what went wrong.
+Similarly, if you've installed RetroArch and its cores from your operating system repository, make a symlink to the default directory as well. For instance, this is how to do it for Linux Mint:
+
+```
+mv ~/.config/retroarch/cores ~/.config/retroarch/cores_OLD
+ln -s /usr/lib/x86_64-linux-gnu/libretro ~/.config/retroarch/cores
+```
+
+As an alternative to this, you can also modify es_systems.cfg which will be located in ~/.emulationstation after you've started the application at least once.
+
+**Note:** There's a log file in the home directory named **es_log.txt**, please refer to this in case of any errors as it should provide information on what went wrong. Starting ES-DE with the --debug flag provides more detailed information and is a good idea to use in case of problems.
 
 After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default path. Please refer to the game installation procedure below in this document for more information regarding this.
 
 ![alt text](images/v1.0/es-de_v1.0_ui_easy_setup.png "ES-DE Easy Setup")
-_This is the error dialog shown if no game files were found. But it also lets you configure the ROM directory if you don't want to use the default one._
+_This is the error dialog shown if no game files were found. It also lets you configure the ROM directory if you don't want to use the default one. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
 ## Input device configuration
