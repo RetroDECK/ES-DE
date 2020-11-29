@@ -27,17 +27,17 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Support for Raspberry Pi 4 (Ubuntu and Raspberry Pi OS)
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
 * Move to SDL2 GameController API
-* Different button graphics applied depending on controller type (Xbox, PlayStation and SNES style)
+* Improve full-screen support, remove the temporary full screen hacks
+* Better shader support (more adaptive to screen resolution, higher performance, cleaner code)
+* Decals highlighting things like favorite games, completed games etc. (will require theme support)
 * Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
+* Proper game launching screen
+* On-screen keyboard
 * Web proxy support for the scraper
 * Checksum support for the scraper to verify each file before accepting/saving it
 * Requests per minute limitation setting for the scraper
-* Proper game launching screen
-* On-screen keyboard
+* Different button graphics applied depending on controller type (Xbox, PlayStation and SNES style)
 * Ability to show game media in full screen from the gamelist view
-* Improve full-screen support, remove the temporary full screen hacks
-* Decals displaying things like if it's a favorite game, a completed game etc. (will require theme support)
-* Better shader support (more adaptive to screen resolution, higher performance, cleaner code)
 * Preload all built-in resources and never clear them from the cache
 * Improve text and font functions, e.g. faster and cleaner line wrapping code
 
@@ -46,14 +46,15 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
 * Internationalization/multi-language support
+* Possibly replace libVLC with FFmpeg
 * Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
-* Support for additional scraper services (?)
+* Support for additional scraper services (if feasible?)
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
 * Improved multi-threading
 * Add 'time played' counter per game, similar to how it works in Steam
 * Scrollbars for menus and gamelists
 * Flatpak and Snap support on Linux
-* Add to Debian repository
+* Add to Linux repositories, BSD ports collections etc.
 
 #### v2.0
 
