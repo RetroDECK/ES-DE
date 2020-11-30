@@ -97,13 +97,12 @@ win64ConsoleType outputToConsole(bool allocConsole)
     // If we are attached to the parent console or we have opened a new console window,
     // then redirect stdin, stdout and stderr accordingly.
     if (consoleType == PARENT_CONSOLE || consoleType == ALLOCATED_CONSOLE) {
-
         FILE* fp = nullptr;
         freopen_s(&fp, "CONIN$", "rb", stdin);
         freopen_s(&fp, "CONOUT$", "wb", stdout);
-        setvbuf(stdout, NULL, _IONBF, 0);
+        setvbuf(stdout, 0, _IONBF, 0);
         freopen_s(&fp, "CONOUT$", "wb", stderr);
-        setvbuf(stderr, NULL, _IONBF, 0);
+        setvbuf(stderr, 0, _IONBF, 0);
 
         // Point the standard streams to the console.
         std::ios::sync_with_stdio(true);
