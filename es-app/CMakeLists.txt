@@ -117,7 +117,7 @@ if(WIN32)
     install(FILES ../FreeImage.dll ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll
             ../libfreetype.dll ../libgcc_s_seh-1.dll ../libpugixml.dll ../libssl-1_1-x64.dll
             ../libstdc++-6.dll ../libvlc.dll ../libvlccore.dll ../libwinpthread-1.dll
-            ../SDL2.dll DESTINATION .)
+            ../SDL2.dll ../vcomp140.dll DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
     install(FILES ../LICENSE DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION .)
@@ -208,12 +208,15 @@ include(InstallRequiredSystemLibraries)
 # General CPack settings.
 set(CPACK_PACKAGE_NAME "emulationstation-de")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An emulator front-end with controller navigation and theming support.")
-set(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition is a fast and flexible front-end for browsing and launching games from your multi-platform retro game collection. It's intended to be used in conjunction with emulators such as the RetroArch cores.")
+set(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition is a fast and feature-rich front-end for browsing and launching games from your multi-platform retro game collection. It's intended to be used in conjunction with emulators such as the RetroArch cores.")
 if(APPLE)
-# Shorter line length license file to be able to fit inside the macOS drag and drop installer window without causing ugly line breaks.
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_LICENSE")
+    # Shorter line length license file to be able to fit inside the drag-and-drop installer window without introducing extra line breaks.
+    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_LICENSE_macOS")
+elseif(WIN32)
+    # The installer window looks a bit different on Windows so a specific file for this OS is required.
+    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_LICENSE_Windows")
 else()
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+    set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 endif()
 set(CPACK_PACKAGE_VENDOR "Leon Styhre")
 
@@ -233,15 +236,14 @@ if(APPLE)
 elseif(WIN32)
     set(CPACK_GENERATOR "NSIS")
     set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}")
-    set(CPACK_PACKAGE_INSTALL_DIRECTORY "EmulationStation")
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "EmulationStation-DE")
     set(CPACK_PACKAGE_EXECUTABLES "EmulationStation" "EmulationStation")
     set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
     set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
     set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation.ico")
     set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
     set(CPACK_NSIS_DISPLAY_NAME "EmulationStation Desktop Edition")
-    set(CPACK_NSIS_INSTALLED_ICON_NAME
-            "${CMAKE_CURRENT_SOURCE_DIR}/es-app/assets/EmulationStation.ico")
+    set(CPACK_NSIS_INSTALLED_ICON_NAME "EmulationStation.exe")
     set(CPACK_NSIS_WELCOME_TITLE "EmulationStation Desktop Edition Installer")
     set(CPACK_NSIS_FINISH_TITLE "EmulationStation Desktop Edition Installation Completed")
     set(CPACK_NSIS_MANIFEST_DPI_AWARE ON)

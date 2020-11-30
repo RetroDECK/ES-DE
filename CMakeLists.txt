@@ -247,7 +247,6 @@ elseif(WIN32)
             "${PROJECT_SOURCE_DIR}/libSDL2main.a"
             "${PROJECT_SOURCE_DIR}/libvlc.dll"
             "${PROJECT_SOURCE_DIR}/SDL2.dll"
-            "${PROJECT_SOURCE_DIR}/vcomp140.dll"
             "mingw32"
             "nanosvg"
             "Winmm.dll")
