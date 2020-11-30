@@ -695,10 +695,10 @@ libgcc_s_seh-1.dll        (located in Git MinGW/MSYS under /mingw/bin/)
 libpugixml.dll
 libSDL2main.a
 libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under /mingw/bin/)
-libstdc++-6.dll           (from the MinGW/bin folder)
+libstdc++-6.dll           (from the TDM-GCC-64/bin folder)
 libvlc.dll
 libvlccore.dll
-libwinpthread-1.dll       (from the MinGW/bin folder)
+libwinpthread-1.dll       (from the TDM-GCC-64/bin folder)
 SDL2.dll
 vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
 ```
@@ -722,7 +722,6 @@ codec\libavcodec_plugin.dll
 codec\libx264_plugin.dll
 codec\libx265_plugin.dll
 logger\libconsole_logger_plugin.dll
-text_renderer\libfreetype_plugin.dll        ????? remove ?????
 video_chroma\libswscale_plugin.dll
 video_output\libvmem_plugin.dll
 ```
@@ -750,6 +749,14 @@ The make command works fine directly in PowerShell though so it can be run from 
 Running `make -j6` (or whatever number of parallel jobs you prefer) should now build the binary.
 
 Note that compilation time is much longer than on Unix or macOS, and linking time is excessive for a debug build (around 10 times longer on my computer). The debug binary is also much larger than on Unix.
+
+**Running with OpenGL software rendering:**
+
+If you are running Windows in a virtualized environment such as QEMU-KVM that does not support HW accelerated OpenGL, you can install the Mesa3D for Windows library, which can be downloaded at [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag).
+
+You simply extract the opengl32.dll file into the ES-DE directory and this will enable the llvmpipe renderer. The performance will be terrible of course, but everything should work and it should be good enough for test building on Windows without having to reboot your computer to a native Windows installation.
+
+Obviously this library is only intended for development and will not be shipped with ES-DE.
 
 **Creating an NSIS installer:**
 
