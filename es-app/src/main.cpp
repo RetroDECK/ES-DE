@@ -492,19 +492,13 @@ int main(int argc, char* argv[])
             return 1;
         }
 
-        HelpStyle helpStyle = HelpStyle();
-
-        if (errorMsg == "")
-            helpStyle.applyTheme(ViewController::get()->
-                    getState().getSystem()->getTheme(), "system");
-
         // If there was an issue with installing the es_systems.cfg file from the
         // template directory, then display an error message and let the user quit.
         // If there are no game files found, give the option to the user to quit or
         // to configure a different ROM directory. The application will need to be
         // restarted though, to activate any new ROM directory setting.
         if (returnCodeValue == NO_SYSTEMS_FILE) {
-            window.pushGui(new GuiMsgBox(&window, helpStyle,
+            window.pushGui(new GuiMsgBox(&window, HelpStyle(),
                 errorMsg.c_str(),
                 "QUIT", [] {
                     SDL_Event quit;
@@ -521,8 +515,8 @@ int main(int argc, char* argv[])
                 SDL_PushEvent(&quit);
             };
 
-            window.pushGui(new GuiMsgBox(&window, helpStyle, errorMsg.c_str(),
-                    "CHANGE ROM DIRECTORY", [&window, &helpStyle, updateVal] {
+            window.pushGui(new GuiMsgBox(&window, HelpStyle(), errorMsg.c_str(),
+                    "CHANGE ROM DIRECTORY", [&window, updateVal] {
                 std::string currentROMDirectory;
                 #if defined(_WIN64)
                 currentROMDirectory =
@@ -533,7 +527,7 @@ int main(int argc, char* argv[])
 
                 window.pushGui(new GuiComplexTextEditPopup(
                         &window,
-                        helpStyle,
+                        HelpStyle(),
                         "ENTER ROM DIRECTORY",
                         "Currently configured directory:",
                         currentROMDirectory,
