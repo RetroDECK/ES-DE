@@ -25,44 +25,58 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.1
 
 * Support for Raspberry Pi 4 (Ubuntu and Raspberry Pi OS)
-* Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
-* Move to SDL2 GameController API
-* Improve full-screen support, remove the temporary full screen hacks
-* Better shader support (more adaptive to screen resolution, higher performance, cleaner code)
-* Decals highlighting things like favorite games, completed games etc. (will require theme support)
 * Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
+* Improve full-screen support, remove the temporary full screen hacks
 * Proper game launching screen
-* On-screen keyboard
-* Web proxy support for the scraper
-* Checksum support for the scraper to verify each file before accepting/saving it
-* Requests per minute limitation setting for the scraper
-* Different button graphics applied depending on controller type (Xbox, PlayStation and SNES style)
 * Ability to show game media in full screen from the gamelist view
-* Preload all built-in resources and never clear them from the cache
-* Improve text and font functions, e.g. faster and cleaner line wrapping code
+* Checksum support for the scraper to verify each file before accepting/saving it
+* Move to the SDL2 GameController API
 
 #### v1.2
 
+* Decals highlighting things like favorite games, completed games etc. (will require theme support)
+* On-screen keyboard
+* Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)
+* Web proxy support for the scraper
+* Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
+* Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
+* Add to Linux repositories, BSD ports collections etc.
+
+#### v1.3
+
+* Internationalization/multi-language support
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
-* Internationalization/multi-language support
-* Possibly replace libVLC with FFmpeg
-* Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
-* Support for additional scraper services (if feasible?)
-* Authoring tools to clean up orphaned gamelist entries, media files etc.
-* Improved multi-threading
-* Add 'time played' counter per game, similar to how it works in Steam
-* Scrollbars for menus and gamelists
+* Better shader support (more adaptive to screen resolution, higher performance, cleaner code)
+* Improve text and font functions, e.g. faster and cleaner line wrapping code
 * Flatpak and Snap support on Linux
-* Add to Linux repositories, BSD ports collections etc.
+
+#### v1.4
+
+* Authoring tools to clean up orphaned gamelist entries, media files etc.
+* Simple file browsing component
+* Requests per minute limitation setting for the scraper
+* Add 'time played' counter per game, similar to how it works in Steam
+* Preload all built-in resources and never clear them from the cache
+* Improved multi-threading
+
+#### v1.5
+
+* Overhaul of the GUI element scaling and placement logic to make ES-DE look more consistent across different resolutions
+* Scrollbars for menus and gamelists
+* Animated menu elements like switches, tick boxes, smooth scrolling etc.
+* Possibly replace libVLC with FFmpeg
+* Support for additional scraper services (if feasible?)
 
 #### v2.0
 
 * Vulkan renderer for all supported operating systems
 * Dependency on MoltenVK to get Metal support on macOS
-* Decommission of the OpenGL 2.1 and OpenGL ES renderers
+* Decommission of the OpenGL 2.1 and OpenGL ES renderers (or keep as legacy mode/legacy build?)
 * Better and more accurate GPU and memory usage statistics overlay
-* Animated menu elements like switches, tick boxes, smooth scrolling etc.
+
+#### v2.1
+
 * Migration tools for importing game metadata and media from other front-end applications
 * Auto-import tools for Steam, Lutris etc.
 
