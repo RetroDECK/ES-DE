@@ -10,6 +10,7 @@ Although there are multiple forks of EmulationStation in existence, the goal of 
 The current version 1.0 has been tested on the following operating systems (all for the x86 architecture):
 
 * Ubuntu 20.04
+* Ubuntu 20.10 *
 * Linux Mint 20
 * Manjaro
 * Fedora 33 Workstation
@@ -21,6 +22,8 @@ The current version 1.0 has been tested on the following operating systems (all 
 * macOS 10.11 "El Capitan"
 * Windows 10
 * Windows 8.1
+
+***)** For Ubuntu 20.10, the included VLC version 3.0.11.1-2 is broken so ES-DE will crash when attempting to play videos. This can be fixed by manually replacing the file /lib/x86_64-linux-gnu/libvlccore.so.9.0.0 with the corresponding file from version 3.0.9.2-1 from Ubuntu 20.04. Make sure that the /lib/x86_64-linux-gnu/libvlccore.so.9 symlink points to this file as well. Hopefully this issue will soon be patched so that this manual workaround is not required.
 
 At the moment Raspberry Pi is not supported, but this is planned for future releases. It may still be possible to compile and run ES-DE on this device, but as of v1.0 it's not actively used during development and therefore not tested.
 

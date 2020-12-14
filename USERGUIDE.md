@@ -13,6 +13,7 @@ Getting started with EmulationStation is easy, just make sure to install the sof
 The following operating systems have been tested (all for the x86 architecture):
 
 * Ubuntu 20.04
+* Ubuntu 20.10 *
 * Linux Mint 20
 * Manjaro
 * Fedora 33 Workstation
@@ -25,6 +26,7 @@ The following operating systems have been tested (all for the x86 architecture):
 * Windows 10
 * Windows 8.1
 
+***)** For Ubuntu 20.10, the included VLC version 3.0.11.1-2 is broken so ES-DE will crash when attempting to play videos. This can be fixed by manually replacing the file /lib/x86_64-linux-gnu/libvlccore.so.9.0.0 with the corresponding file from version 3.0.9.2-1 from Ubuntu 20.04. Make sure that the /lib/x86_64-linux-gnu/libvlccore.so.9 symlink points to this file as well. Hopefully this issue will soon be patched so that this manual workaround is not required.
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 
@@ -82,6 +84,21 @@ After ES-DE finds at least one game file, it will populate that game system and 
 
 ![alt text](images/v1.0/es-de_v1.0_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the error dialog shown if no game files were found. It also lets you configure the ROM directory if you don't want to use the default one. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
+
+
+## Running on 4K displays
+
+ES-DE fully supports 4K displays, but some emulators such as RetroArch will start with the same resolution as the calling program, meaning the emulation will also run in 4K. On slower computers and where expensive shaders are in use, the performance may be quite bad. A workaround for this is to start ES-DE with the **--resolution** option. For example, to set the resolution to 1920x1080 run the following:
+
+```
+emulationstation --resolution 1920 1080
+```
+
+This can of course be set in the ES-DE launcher entry for the desktop environment so that the normal menu entry can be used.
+
+A drawback with this approach is that the complete system resolution will be switced temporarily, meaning alt-tab switching between application will display them also in this lower resolution. Upon exiting ES-DE the previous 4K resolution will however be restored.
+
+Note though that this only works well for Unix/Linux at the moment as Windows and macOS will run in windowed mode due to technical limitations in these operating systems. But there may be workarounds for the actual emulator as well that I'm not aware of, making it possible to force a specific resolution while still running ES-DE in 4K.
 
 
 ## Input device configuration
