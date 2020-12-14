@@ -24,9 +24,13 @@ public:
 
     //	You will get a warning if you try a get on a key that is not already present.
     bool getBool(const std::string& name);
+    bool getDefaultBool(const std::string& name);
     int getInt(const std::string& name);
+    int getDefaultInt(const std::string& name);
     float getFloat(const std::string& name);
+    float getDefaultFloat(const std::string& name);
     const std::string& getString(const std::string& name);
+    const std::string& getDefaultString(const std::string& name);
 
     bool setBool(const std::string& name, bool value);
     bool setInt(const std::string& name, int value);
@@ -43,10 +47,11 @@ private:
 
     bool mWasChanged;
 
-    std::map<std::string, bool> mBoolMap;
-    std::map<std::string, int> mIntMap;
-    std::map<std::string, float> mFloatMap;
-    std::map<std::string, std::string> mStringMap;
+    // Pair of settings: default value, current value.
+    std::map<std::string, std::pair<bool, bool>> mBoolMap;
+    std::map<std::string, std::pair<int, int>> mIntMap;
+    std::map<std::string, std::pair<float, float>> mFloatMap;
+    std::map<std::string, std::pair<std::string, std::string>> mStringMap;
 };
 
 #endif // ES_CORE_SETTINGS_H

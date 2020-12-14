@@ -194,7 +194,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
             Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_RIGHT);
     s->addEditableTextComponent("CUSTOM IMAGE DIRECTORY", screensaver_slideshow_image_dir,
             Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),
-            "~/.emulationstation/slideshow/custom_images");
+            Settings::getInstance()->getDefaultString("ScreensaverSlideshowImageDir"));
     s->addSaveFunc([screensaver_slideshow_image_dir, s] {
         if (screensaver_slideshow_image_dir->getValue() !=
                 Settings::getInstance()->getString("ScreensaverSlideshowImageDir")) {

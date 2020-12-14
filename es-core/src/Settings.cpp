@@ -25,7 +25,7 @@ Settings* Settings::sInstance = nullptr;
 // the in-program settings menu. Most can be set using command-line arguments,
 // but some are debug flags that are either hardcoded or set by internal debug
 // functions.
-std::vector<const char*> settings_dont_save {
+std::vector<std::string> settings_dont_save {
     // These options can be set using command-line arguments:
     "Debug",                // --debug
     "ForceKid",             // --force-kid
@@ -75,75 +75,79 @@ void Settings::setDefaults()
     mBoolMap.clear();
     mIntMap.clear();
 
+    // All settings are in pairs of default values and current values.
+    // As such, in this function we set these pairs identically.
+
     //
     // Settings configured via the in-program settings menu.
     //
 
     // Scraper.
-    mStringMap["Scraper"] = "screenscraper";
-    mBoolMap["ScraperUseAccountScreenScraper"] = false;
-    mStringMap["ScraperUsernameScreenScraper"] = "";
-    mStringMap["ScraperPasswordScreenScraper"] = "";
-    mBoolMap["ScrapeGameNames"] = true;
-    mBoolMap["ScrapeRatings"] = true;
-    mBoolMap["ScrapeMetadata"] = true;
-    mBoolMap["ScrapeVideos"] = true;
-    mBoolMap["ScrapeScreenshots"] = true;
-    mBoolMap["ScrapeCovers"] = true;
-    mBoolMap["ScrapeMarquees"] = true;
-    mBoolMap["Scrape3DBoxes"] = true;
-    mStringMap["ScraperRegion"] = "eu";
-    mStringMap["ScraperLanguage"] = "en";
-    mBoolMap["ScraperOverwriteData"] = true;
-    mBoolMap["ScraperSearchMetadataName"] = true;
-    mBoolMap["ScraperInteractive"] = true;
-    mBoolMap["ScraperSemiautomatic"] = true;
-    mBoolMap["ScraperRespectExclusions"] = true;
-    mBoolMap["ScraperExcludeRecursively"] = true;
-    mBoolMap["ScraperIncludeFolders"] = false;
+    mStringMap["Scraper"] = { "screenscraper", "screenscraper" };
+    mBoolMap["ScraperUseAccountScreenScraper"] = { false, false };
+    mStringMap["ScraperUsernameScreenScraper"] = { "", "" };
+    mStringMap["ScraperPasswordScreenScraper"] = { "", "" };
+    mBoolMap["ScrapeGameNames"] = { true, true };
+    mBoolMap["ScrapeRatings"] = { true, true };
+    mBoolMap["ScrapeMetadata"] = { true, true };
+    mBoolMap["ScrapeVideos"] = { true, true };
+    mBoolMap["ScrapeScreenshots"] = { true, true };
+    mBoolMap["ScrapeCovers"] = { true, true };
+    mBoolMap["ScrapeMarquees"] = { true, true };
+    mBoolMap["Scrape3DBoxes"] = { true, true };
+    mStringMap["ScraperRegion"] = { "eu", "eu" };
+    mStringMap["ScraperLanguage"] = { "en", "en" };
+    mBoolMap["ScraperOverwriteData"] = { true, true };
+    mBoolMap["ScraperSearchMetadataName"] = { true, true };
+    mBoolMap["ScraperInteractive"] = { true, true };
+    mBoolMap["ScraperSemiautomatic"] = { true, true };
+    mBoolMap["ScraperRespectExclusions"] = { true, true };
+    mBoolMap["ScraperExcludeRecursively"] = { true, true };
+    mBoolMap["ScraperIncludeFolders"] = { false, false };
 
     // UI settings.
-    mStringMap["StartupSystem"] = "";
-    mStringMap["GamelistViewStyle"] = "automatic";
-    mStringMap["TransitionStyle"] = "slide";
-    mStringMap["ThemeSet"] = "rbsimple-DE";
-    mStringMap["UIMode"] = "full";
-    mStringMap["DefaultSortOrder"] = "filename, ascending";
-    mStringMap["MenuOpeningEffect"] = "scale-up";
-    mBoolMap["GamelistVideoPillarbox"] = true;
-    mBoolMap["GamelistVideoScanlines"] = true;
-    mBoolMap["FoldersOnTop"] = true;
-    mBoolMap["FavoritesFirst"] = true;
-    mBoolMap["FavoritesStar"] = true;
-    mBoolMap["FavoritesAddButton"] = true;
-    mBoolMap["GamelistFilters"] = true;
-    mBoolMap["QuickSystemSelect"] = true;
-    mBoolMap["ShowHelpPrompts"] = true;
-    mBoolMap["PlayVideosImmediately"] = false;
-    mBoolMap["ShowKidStartMenu"] = false;
+    mStringMap["StartupSystem"] = { "", "" };
+    mStringMap["GamelistViewStyle"] = { "automatic", "automatic" };
+    mStringMap["TransitionStyle"] = { "slide", "slide" };
+    mStringMap["ThemeSet"] = { "rbsimple-DE", "rbsimple-DE" };
+    mStringMap["UIMode"] = { "full", "full" };
+    mStringMap["DefaultSortOrder"] = { "filename, ascending", "filename, ascending" };
+    mStringMap["MenuOpeningEffect"] = { "scale-up", "scale-up" };
+    mBoolMap["GamelistVideoPillarbox"] = { true, true };
+    mBoolMap["GamelistVideoScanlines"] = { true, true };
+    mBoolMap["FoldersOnTop"] = { true, true };
+    mBoolMap["FavoritesFirst"] = { true, true };
+    mBoolMap["FavoritesStar"] = { true, true };
+    mBoolMap["FavoritesAddButton"] = { true, true };
+    mBoolMap["GamelistFilters"] = { true, true };
+    mBoolMap["QuickSystemSelect"] = { true, true };
+    mBoolMap["ShowHelpPrompts"] = { true, true };
+    mBoolMap["PlayVideosImmediately"] = { false, false };
+    mBoolMap["ShowKidStartMenu"] = { false, false };
 
     // UI settings -> screensaver settings.
-    mIntMap["ScreensaverTimer"] = 5*60*1000; // 5 minutes
-    mStringMap["ScreensaverType"] = "dim";
-    mBoolMap["ScreensaverControls"] = true;
+    mIntMap["ScreensaverTimer"] = { 5*60*1000, 5*60*1000 }; // 5 minutes
+    mStringMap["ScreensaverType"] = { "dim", "dim" };
+    mBoolMap["ScreensaverControls"] = { true, true };
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
-    mIntMap["ScreensaverSwapImageTimeout"] = 10000;
-    mBoolMap["ScreensaverStretchImages"] = false;
-    mBoolMap["ScreensaverSlideshowGameInfo"] = true;
-    mBoolMap["ScreensaverSlideshowScanlines"] = true;
-    mBoolMap["ScreensaverSlideshowCustomImages"] = false;
-    mBoolMap["ScreensaverSlideshowRecurse"] = false;
-    mStringMap["ScreensaverSlideshowImageDir"] =
-            "~/.emulationstation/slideshow/custom_images";
+    mIntMap["ScreensaverSwapImageTimeout"] = { 10000, 10000 };
+    mBoolMap["ScreensaverStretchImages"] = { false, false };
+    mBoolMap["ScreensaverSlideshowGameInfo"] = { true, true };
+    mBoolMap["ScreensaverSlideshowScanlines"] = { true, true };
+    mBoolMap["ScreensaverSlideshowCustomImages"] = { false, false };
+    mBoolMap["ScreensaverSlideshowRecurse"] = { false, false };
+    mStringMap["ScreensaverSlideshowImageDir"] = {
+            "~/.emulationstation/slideshow/custom_images",
+            "~/.emulationstation/slideshow/custom_images" };
 
     // UI settings -> screensaver settings -> video screensaver settings.
-    mIntMap["ScreensaverSwapVideoTimeout"] = 0;
-    mBoolMap["ScreensaverVideoAudio"] = false;
-    mBoolMap["ScreensaverStretchVideos"] = false;
-    mBoolMap["ScreensaverVideoGameInfo"] = true;
-    mBoolMap["ScreensaverVideoScanlines"] = true;
-    mBoolMap["ScreensaverVideoBlur"] = false;
+    mIntMap["ScreensaverSwapVideoTimeout"] = { 0, 0 };
+    mBoolMap["ScreensaverVideoAudio"] = { false, false };
+    mBoolMap["ScreensaverStretchVideos"] = { false, false };
+    mBoolMap["ScreensaverVideoGameInfo"] = { true, true };
+    mBoolMap["ScreensaverVideoScanlines"] = { true, true };
+    mBoolMap["ScreensaverVideoBlur"] = { false, false };
 
     // Sound settings.
     // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
@@ -154,63 +158,63 @@ void Settings::setDefaults()
     // The code is still active for Raspberry Pi though as I'm not sure if this is
     // useful for that device.
     #if defined(_RPI_)
-    mStringMap["AudioCard"] = "default";
+    mStringMap["AudioCard"] = { "default", "default" };
     // Audio out device for volume control.
     //#endif
     //#if defined(_RPI_)
-    mStringMap["AudioDevice"] = "PCM";
+    mStringMap["AudioDevice"] = { "PCM", "PCM" };
     // Audio out device for Video playback using OMX player.
-    mStringMap["OMXAudioDev"] = "both";
+    mStringMap["OMXAudioDev"] = { "both", "both" };
     //#else
-    //    mStringMap["AudioDevice"] = "Master";
+    //    mStringMap["AudioDevice"] = { "Master", "Master" };
     #endif
-    mBoolMap["GamelistVideoAudio"] = true;
-    mBoolMap["NavigationSounds"] = true;
+    mBoolMap["GamelistVideoAudio"] = { true, true };
+    mBoolMap["NavigationSounds"] = { true, true };
 
     // Game collection settings.
-    mStringMap["CollectionSystemsAuto"] = "";
-    mStringMap["CollectionSystemsCustom"] = "";
-    mBoolMap["FavFirstCustom"] = false;
-    mBoolMap["FavStarCustom"] = false;
-    mBoolMap["UseCustomCollectionsSystem"] = true;
-    mBoolMap["CollectionShowSystemInfo"] = true;
+    mStringMap["CollectionSystemsAuto"] = { "", "" };
+    mStringMap["CollectionSystemsCustom"] = { "", "" };
+    mBoolMap["FavFirstCustom"] = { false, false };
+    mBoolMap["FavStarCustom"] = { false, false };
+    mBoolMap["UseCustomCollectionsSystem"] = { true, true };
+    mBoolMap["CollectionShowSystemInfo"] = { true, true };
 
     // Other settings.
     #if defined(_RPI_)
-    mIntMap["MaxVRAM"] = 80;
+    mIntMap["MaxVRAM"] = { 80, 80 };
     #else
-    mIntMap["MaxVRAM"] = 128;
+    mIntMap["MaxVRAM"] = { 128, 128 };
     #endif
     #if defined (__unix__)
-    mStringMap["FullscreenMode"] = "normal";
+    mStringMap["FullscreenMode"] = { "normal", "normal" };
     #endif
-    mStringMap["PowerSaverMode"] = "disabled";
+    mStringMap["PowerSaverMode"] = { "disabled", "disabled" };
     #if defined(_RPI_)
-    mBoolMap["VideoOmxPlayer"] = false;
+    mBoolMap["VideoOmxPlayer"] = { false, false };
     // We're defaulting to OMX Player for full screen video on the Pi.
-    mBoolMap["ScreensaverOmxPlayer"] = true;
+    mBoolMap["ScreensaverOmxPlayer"] = { true, true };
     #endif
-    mStringMap["SaveGamelistsMode"] = "always";
+    mStringMap["SaveGamelistsMode"] = { "always", "always" };
     #if defined(_WIN64)
-    mBoolMap["HideTaskbar"] = false;
+    mBoolMap["HideTaskbar"] = { false, false };
     // This setting may cause problems on some Windows versions, but it seems as if Windows 10
     // handles the suspension of ES correctly. As there are some adverse affects from running ES
     // in the background while a game is running, by default this is set to false.
-    mBoolMap["RunInBackground"] = false;
+    mBoolMap["RunInBackground"] = { false, false };
     #endif
-    mStringMap["MediaDirectory"] = "";
-    mBoolMap["LaunchCommandOverride"] = true;
-    mBoolMap["ShowHiddenFiles"] = true;
-    mBoolMap["ShowHiddenGames"] = true;
-    mBoolMap["CustomEventScripts"] = false;
-    mBoolMap["ParseGamelistOnly"] = false;
-    mBoolMap["ROMDirGameMedia"] = false;
-    mBoolMap["DisplayGPUStatistics"] = false;
+    mStringMap["MediaDirectory"] = { "", "" };
+    mBoolMap["LaunchCommandOverride"] = { true, true };
+    mBoolMap["ShowHiddenFiles"] = { true, true };
+    mBoolMap["ShowHiddenGames"] = { true, true };
+    mBoolMap["CustomEventScripts"] = { false, false };
+    mBoolMap["ParseGamelistOnly"] = { false, false };
+    mBoolMap["ROMDirGameMedia"] = { false, false };
+    mBoolMap["DisplayGPUStatistics"] = { false, false };
     // macOS requires root privileges to reboot and power off so it doesn't make much
     // sense to enable these settings and menu entries for this operating system.
     #if !defined(__APPLE__)
-    mBoolMap["ShowRebootSystem"] = true;
-    mBoolMap["ShowPoweroffSystem"] = true;
+    mBoolMap["ShowRebootSystem"] = { true, true };
+    mBoolMap["ShowPoweroffSystem"] = { true, true };
     #endif
 
     //
@@ -218,50 +222,50 @@ void Settings::setDefaults()
     //
 
     // Options listed using --help
-    mBoolMap["Debug"] = false;
-    mBoolMap["ForceKid"] = false;
-    mBoolMap["ForceKiosk"] = false;
-    mBoolMap["IgnoreGamelist"] = false;
-    mBoolMap["ShowExit"] = true;
-    mBoolMap["SplashScreen"] = true;
-    mBoolMap["VSync"] = true;
+    mBoolMap["Debug"] = { false, false };
+    mBoolMap["ForceKid"] = { false, false };
+    mBoolMap["ForceKiosk"] = { false, false };
+    mBoolMap["IgnoreGamelist"] = { false, false };
+    mBoolMap["ShowExit"] = { true, true };
+    mBoolMap["SplashScreen"] = { true, true };
+    mBoolMap["VSync"] = { true, true };
     #if !defined(_WIN64)
-    mBoolMap["Windowed"] = false;
+    mBoolMap["Windowed"] = { false, false };
     #endif
-    mIntMap["WindowWidth"]   = 0;
-    mIntMap["WindowHeight"]  = 0;
-    mIntMap["ScreenWidth"]   = 0;
+    mIntMap["WindowWidth"]   = { 0, 0 };
+    mIntMap["WindowHeight"]  = { 0, 0 };
+    mIntMap["ScreenWidth"]   = { 0, 0 };
 
     // Undocumented options.
-    mIntMap["ScreenHeight"]  = 0;
-    mIntMap["ScreenOffsetX"] = 0;
-    mIntMap["ScreenOffsetY"] = 0;
-    mIntMap["ScreenRotate"]  = 0;
+    mIntMap["ScreenHeight"]  = { 0, 0 };
+    mIntMap["ScreenOffsetX"] = { 0, 0 };
+    mIntMap["ScreenOffsetY"] = { 0, 0 };
+    mIntMap["ScreenRotate"]  = { 0, 0 };
 
     //
     // Settings that can be changed in es_settings.cfg
     // but that are not configurable via the GUI.
     //
 
-    mBoolMap["ShowDefaultKeyboardWarning"] = true;
-    mStringMap["ROMDirectory"] = "";
-    mIntMap["ScraperResizeMaxWidth"] = 600;
-    mIntMap["ScraperResizeMaxHeight"] = 0;
+    mBoolMap["ShowDefaultKeyboardWarning"] = { true, true };
+    mStringMap["ROMDirectory"] = { "", "" };
+    mIntMap["ScraperResizeMaxWidth"] = { 600, 600 };
+    mIntMap["ScraperResizeMaxHeight"] = { 0, 0 };
 
     //
     // Hardcoded or program-internal settings.
     //
 
-    mBoolMap["BackgroundJoystickInput"] = false;
-    mBoolMap["DebugGrid"] = false;
-    mBoolMap["DebugText"] = false;
-    mBoolMap["DebugImage"] = false;
-    mBoolMap["SplashScreenProgress"] = true;
-    mStringMap["UIMode_passkey"] = "uuddlrlrba";
+    mBoolMap["BackgroundJoystickInput"] = { false, false };
+    mBoolMap["DebugGrid"] = { false, false };
+    mBoolMap["DebugText"] = { false, false };
+    mBoolMap["DebugImage"] = { false, false };
+    mBoolMap["SplashScreenProgress"] = { true, true };
+    mStringMap["UIMode_passkey"] = { "uuddlrlrba", "uuddlrlrba" };
 }
 
 template <typename K, typename V>
-void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const char* type)
+void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& type)
 {
     for (auto iter = map.cbegin(); iter != map.cend(); iter++) {
         // Key is on the "don't save" list, so don't save it.
@@ -269,9 +273,9 @@ void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const char* type)
                 iter->first) != settings_dont_save.cend())
             continue;
 
-        pugi::xml_node node = doc.append_child(type);
+        pugi::xml_node node = doc.append_child(type.c_str());
         node.append_attribute("name").set_value(iter->first.c_str());
-        node.append_attribute("value").set_value(iter->second);
+        node.append_attribute("value").set_value(iter->second.second);
     }
 }
 
@@ -283,14 +287,14 @@ void Settings::saveFile()
 
     pugi::xml_document doc;
 
-    saveMap<std::string, bool>(doc, mBoolMap, "bool");
-    saveMap<std::string, int>(doc, mIntMap, "int");
-    saveMap<std::string, float>(doc, mFloatMap, "float");
+    saveMap<std::string, std::pair<bool, bool>>(doc, mBoolMap, "bool");
+    saveMap<std::string, std::pair<int, int>>(doc, mIntMap, "int");
+    saveMap<std::string, std::pair<float, float>>(doc, mFloatMap, "float");
 
     for (auto iter = mStringMap.cbegin(); iter != mStringMap.cend(); iter++) {
         pugi::xml_node node = doc.append_child("string");
         node.append_attribute("name").set_value(iter->first.c_str());
-        node.append_attribute("value").set_value(iter->second.c_str());
+        node.append_attribute("value").set_value(iter->second.second.c_str());
     }
 
     #if defined(_WIN64)
@@ -334,18 +338,25 @@ void Settings::loadFile()
 
 // Print a warning message if the setting we're trying to get doesn't already exist in
 // the map. Then return the value in the map.
-#define SETTINGS_GETSET(type, mapName, getMethodName, setMethodName) \
-        type Settings::getMethodName(const std::string& name) \
+#define SETTINGS_GETSET(type, mapName, getFunction, getDefaultFunction, setFunction) \
+type Settings::getFunction(const std::string& name) \
 { \
     if (mapName.find(name) == mapName.cend()) { \
         LOG(LogError) << "Tried to use unset setting " << name << "!"; \
     } \
-    return mapName[name]; \
+    return mapName[name].second; \
 } \
-bool Settings::setMethodName(const std::string& name, type value) \
+type Settings::getDefaultFunction(const std::string& name) \
 { \
-    if (mapName.count(name) == 0 || mapName[name] != value) { \
-        mapName[name] = value; \
+    if (mapName.find(name) == mapName.cend()) { \
+        LOG(LogError) << "Tried to use unset setting " << name << "!"; \
+    } \
+    return mapName[name].first; \
+} \
+bool Settings::setFunction(const std::string& name, type value) \
+{ \
+    if (mapName.count(name) == 0 || mapName[name].second != value) { \
+        mapName[name].second = value; \
 \
         if (std::find(settings_dont_save.cbegin(), settings_dont_save.cend(), name) \
                  == settings_dont_save.cend()) \
@@ -356,7 +367,7 @@ bool Settings::setMethodName(const std::string& name, type value) \
     return false; \
 }
 
-SETTINGS_GETSET(bool, mBoolMap, getBool, setBool);
-SETTINGS_GETSET(int, mIntMap, getInt, setInt);
-SETTINGS_GETSET(float, mFloatMap, getFloat, setFloat);
-SETTINGS_GETSET(const std::string&, mStringMap, getString, setString);
+SETTINGS_GETSET(bool, mBoolMap, getBool, getDefaultBool, setBool);
+SETTINGS_GETSET(int, mIntMap, getInt, getDefaultInt, setInt);
+SETTINGS_GETSET(float, mFloatMap, getFloat, getDefaultFloat, setFloat);
+SETTINGS_GETSET(const std::string&, mStringMap, getString, getDefaultString, setString);

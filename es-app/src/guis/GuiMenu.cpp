@@ -218,7 +218,7 @@ void GuiMenu::openUISettings()
     // If an invalid sort order was defined in es_settings.cfg, then apply the default
     // sort order 'filename, ascending'.
     if (sortOrder == "")
-        sortOrder = "filename, ascending";
+        sortOrder = Settings::getInstance()->getDefaultString("DefaultSortOrder");
     for (auto it = FileSorts::SortTypes.cbegin(); it != FileSorts::SortTypes.cend(); it++) {
         const FileData::SortType& sort = *it;
         if (sort.description == sortOrder)

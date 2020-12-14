@@ -724,8 +724,8 @@ void SystemData::setupSystemSortType(FileData* mRootFolder)
             }
         }
     }
-    // If no valid sort type was defined in the configuration
-    // file, set sorting to "filename, ascending".
+    // If no valid sort type was defined in the configuration file, set to default sorting.
     if (mRootFolder->getSortTypeString() == "")
-        mRootFolder->setSortTypeString(FileSorts::SortTypes.at(0).description);
+        mRootFolder->setSortTypeString(Settings::getInstance()->
+                getDefaultString("DefaultSortOrder"));
 }
