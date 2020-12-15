@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  SwitchComponent.h
 //
-//  Basic switch used in the menus.
+//  Basic on/off switch used in menus.
 //
 
 #ifndef ES_CORE_COMPONENTS_SWITCH_COMPONENT_H
@@ -29,7 +29,9 @@ public:
 
     void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; };
     void setChangedColor(unsigned int color) override { mColorChangedValue = color; };
+    void setCallback(const std::function<void()>& callbackFunc) { mToggleCallback = callbackFunc; };
 
+    unsigned char getOpacity() const override;
     void setOpacity(unsigned char opacity) override;
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;
@@ -46,6 +48,7 @@ private:
     bool mOriginalValue;
     unsigned int mColorOriginalValue;
     unsigned int mColorChangedValue;
+    std::function<void()> mToggleCallback;
 };
 
 #endif // ES_CORE_COMPONENTS_SWITCH_COMPONENT_H

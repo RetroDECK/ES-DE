@@ -239,6 +239,17 @@ unsigned int GuiComponent::getChildCount() const
     return static_cast<int>(mChildren.size());
 }
 
+int GuiComponent::getChildIndex() const
+{
+    std::vector<GuiComponent*>::iterator it =
+            std::find(getParent()->mChildren.begin(), getParent()->mChildren.end(), this);
+
+    if (it != getParent()->mChildren.end())
+        return std::distance(getParent()->mChildren.begin(), it);
+    else
+        return -1;
+}
+
 GuiComponent* GuiComponent::getChild(unsigned int i) const
 {
     return mChildren.at(i);

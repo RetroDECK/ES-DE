@@ -21,7 +21,7 @@ public:
             const std::string& helpText = "", const std::function<void()>& func = nullptr);
 
     void setPressedFunc(std::function<void()> f);
-    void setEnabled(bool enable);
+    void setEnabled(bool state) override;
 
     bool input(InputConfig* config, Input input) override;
     void render(const Transform4x4f& parentTrans) override;

@@ -120,6 +120,7 @@ public:
     void clearChildren();
     void sortChildren();
     unsigned int getChildCount() const;
+    int getChildIndex() const;
     GuiComponent* getChild(unsigned int i) const;
 
     // Animation will be automatically deleted when it completes or is stopped.
@@ -155,8 +156,8 @@ public:
     virtual void setChangedColor(unsigned int color) { mColorChangedValue = color; };
 
     // These functions are used to enable and disable options in menus, i.e. switches and similar.
-    virtual void setEnabled() { mEnabled = true; };
-    virtual void setDisabled() { mEnabled = false; };
+    virtual bool getEnabled() { return mEnabled; };
+    virtual void setEnabled(bool state) { mEnabled = state; };
 
     const Transform4x4f& getTransform();
 

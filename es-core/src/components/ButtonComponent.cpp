@@ -73,9 +73,9 @@ void ButtonComponent::onFocusLost()
     updateImage();
 }
 
-void ButtonComponent::setEnabled(bool enabled)
+void ButtonComponent::setEnabled(bool state)
 {
-    mEnabled = enabled;
+    mEnabled = state;
     updateImage();
 }
 

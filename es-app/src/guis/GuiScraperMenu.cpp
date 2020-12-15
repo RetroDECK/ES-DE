@@ -201,11 +201,10 @@ void GuiScraperMenu::openContentSettings()
 
     // Ratings are not supported by TheGamesDB, so disable the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scrape_ratings->setDisabled();
+        scrape_ratings->setEnabled(false);
         scrape_ratings->setOpacity(DISABLED_OPACITY);
-        // I'm sure there is a better way to find the text component...
-        scrape_ratings->getParent()->getChild(
-                scrape_ratings->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+        scrape_ratings->getParent()->getChild(scrape_ratings->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
     }
 
     // Scrape other metadata.
@@ -232,11 +231,10 @@ void GuiScraperMenu::openContentSettings()
 
     // Videos are not supported by TheGamesDB, so disable the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scrape_videos->setDisabled();
+        scrape_videos->setEnabled(false);
         scrape_videos->setOpacity(DISABLED_OPACITY);
-        // I'm sure there is a better way to find the text component...
-        scrape_videos->getParent()->getChild(
-                scrape_videos->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+        scrape_videos->getParent()->getChild(scrape_videos->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
     }
 
     // Scrape screenshots images.
@@ -287,11 +285,10 @@ void GuiScraperMenu::openContentSettings()
     // 3D box images are not supported by TheGamesDB, so disable the option if this scraper
     // is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scrape_3dboxes->setDisabled();
+        scrape_3dboxes->setEnabled(false);
         scrape_3dboxes->setOpacity(DISABLED_OPACITY);
-        // I'm sure there is a better way to find the text component...
-        scrape_3dboxes->getParent()->getChild(
-                scrape_3dboxes->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+        scrape_3dboxes->getParent()->getChild(scrape_3dboxes->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
     }
 
     mWindow->pushGui(s);
@@ -328,11 +325,10 @@ void GuiScraperMenu::openOtherSettings()
 
     // Regions are not supported by TheGamesDB, so disable the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scraper_region->setDisabled();
+        scraper_region->setEnabled(false);
         scraper_region->setOpacity(DISABLED_OPACITY);
-        // I'm sure there is a better way to find the text component...
-        scraper_region->getParent()->getChild(
-                scraper_region->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+        scraper_region->getParent()->getChild(scraper_region->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
     }
 
     // Scraper language.
@@ -361,11 +357,10 @@ void GuiScraperMenu::openOtherSettings()
 
     // Languages are not supported by TheGamesDB, so disable the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scraper_language->setDisabled();
+        scraper_language->setEnabled(false);
         scraper_language->setOpacity(DISABLED_OPACITY);
-        // I'm sure there is a better way to find the text component...
-        scraper_language->getParent()->getChild(
-                scraper_language->getParent()->getChildCount()-2)->setOpacity(DISABLED_OPACITY);
+        scraper_language->getParent()->getChild(scraper_language->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
     }
 
     // Overwrite files and data.
@@ -420,6 +415,15 @@ void GuiScraperMenu::openOtherSettings()
         }
     });
 
+    // If interactive mode is set to off, then disable this option.
+    if (!Settings::getInstance()->getBool("ScraperInteractive")) {
+        scraper_semiautomatic->setEnabled(false);
+        scraper_semiautomatic->setOpacity(DISABLED_OPACITY);
+        scraper_semiautomatic->getParent()->getChild(scraper_semiautomatic->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+    }
+
+
     // Respect the per-file multi-scraper exclusion flag.
     auto scraper_respect_exclusions = std::make_shared<SwitchComponent>(mWindow);
     scraper_respect_exclusions->setState(
@@ -448,6 +452,14 @@ void GuiScraperMenu::openOtherSettings()
         }
     });
 
+    // If respecting excluded files is set to off, then disable this option.
+    if (!Settings::getInstance()->getBool("ScraperRespectExclusions")) {
+        scraper_exclude_recursively->setEnabled(false);
+        scraper_exclude_recursively->setOpacity(DISABLED_OPACITY);
+        scraper_exclude_recursively->getParent()->getChild(scraper_exclude_recursively->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+    }
+
     // Include actual folders when scraping.
     auto scraper_include_folders = std::make_shared<SwitchComponent>(mWindow);
     scraper_include_folders->setState(
@@ -461,6 +473,40 @@ void GuiScraperMenu::openOtherSettings()
             s->setNeedsSaving();
         }
     });
+
+    // Switch callbacks.
+    auto interactiveToggleFunc = [scraper_semiautomatic]() {
+        if (scraper_semiautomatic->getEnabled()) {
+            scraper_semiautomatic->setEnabled(false);
+            scraper_semiautomatic->setOpacity(DISABLED_OPACITY);
+            scraper_semiautomatic->getParent()->getChild(scraper_semiautomatic->
+                    getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            scraper_semiautomatic->setEnabled(true);
+            scraper_semiautomatic->setOpacity(255);
+            scraper_semiautomatic->getParent()->getChild(scraper_semiautomatic->
+                    getChildIndex() - 1)->setOpacity(255);
+        }
+    };
+
+    auto excludeRecursivelyToggleFunc = [scraper_exclude_recursively]() {
+        if (scraper_exclude_recursively->getEnabled()) {
+            scraper_exclude_recursively->setEnabled(false);
+            scraper_exclude_recursively->setOpacity(DISABLED_OPACITY);
+            scraper_exclude_recursively->getParent()->getChild(scraper_exclude_recursively->
+                    getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            scraper_exclude_recursively->setEnabled(true);
+            scraper_exclude_recursively->setOpacity(255);
+            scraper_exclude_recursively->getParent()->getChild(scraper_exclude_recursively->
+                    getChildIndex() - 1)->setOpacity(255);
+        }
+    };
+
+    scraper_interactive->setCallback(interactiveToggleFunc);
+    scraper_respect_exclusions->setCallback(excludeRecursivelyToggleFunc);
 
     mWindow->pushGui(s);
 }

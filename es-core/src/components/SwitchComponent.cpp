@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  SwitchComponent.cpp
 //
-//  Basic switch used in the menus.
+//  Basic on/off switch used in menus.
 //
 
 #include "SwitchComponent.h"
@@ -39,6 +39,10 @@ bool SwitchComponent::input(InputConfig* config, Input input)
 
         mState = !mState;
         onStateChanged();
+
+        if (mToggleCallback)
+            mToggleCallback();
+
         return true;
     }
 
@@ -77,6 +81,11 @@ void SwitchComponent::setValue(const std::string& statestring)
 
     mOriginalValue = mState;
     onStateChanged();
+}
+
+unsigned char SwitchComponent::getOpacity() const
+{
+    return mImage.getOpacity();
 }
 
 void SwitchComponent::setOpacity(unsigned char opacity)
