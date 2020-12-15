@@ -94,6 +94,11 @@ void ViewController::goToStart()
         }
     }
 
+    // If the system view does not exist, then create it. We do this here as it would
+    // otherwise not be done if jumping directly into a specific game system on startup.
+    if (!mSystemListView)
+        getSystemListView();
+
     // If a specific system is requested, go directly to its game list.
     auto requestedSystem = Settings::getInstance()->getString("StartupSystem");
     if ("" != requestedSystem && "retropie" != requestedSystem) {
