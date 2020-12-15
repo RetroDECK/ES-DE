@@ -321,7 +321,7 @@
     <fullname>Nintendo Family Computer</fullname>
     <path>%ROMPATH%\famicom</path>
     <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fceumm_libretro.dll" %ROM%</command>
+    <command>retroarch.exe -L "%EMUPATH%\cores\nestopia_libretro.dll" %ROM%</command>
     <platform>nes, famicom</platform>
     <theme>famicom</theme>
   </system>
@@ -636,7 +636,7 @@
     <fullname>Nintendo Entertainment System</fullname>
     <path>%ROMPATH%\nes</path>
     <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\fceumm_libretro.dll" %ROM%</command>
+    <command>retroarch.exe -L "%EMUPATH%\cores\nestopia_libretro.dll" %ROM%</command>
     <platform>nes</platform>
     <theme>nes</theme>
   </system>

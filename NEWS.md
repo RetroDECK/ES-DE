@@ -42,7 +42,8 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added multiple animations and shader effects, such as when opening menus, playing videos in the gamelists and via the screensaver etc.
 * Seamless (almost) launch of games without showing the desktop when starting and when returning from RetroArch and other emulators
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
-* Core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful for Windows)
+* The emulator core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful on Windows)
+* Core locations can be searched in a configurable list of directories and used in the es_systems.cfg file through the %COREPATH% variable (mostly useful on Unix where there are no standardized core directories)
 * Properly implemented the option to show or hide hidden files and folders
 * Properly implemented the option to show or hide games flagged as hidden in the metadata editor
 * Custom event scripts can now be enabled or disabled with a menu option

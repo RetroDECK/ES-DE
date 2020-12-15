@@ -1029,10 +1029,14 @@ Here's an overview of the file layout:
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
         <!-- The command executed when a game is launched. A few special variables are replaced if found in a command, like %ROM% (see below).
-        This example for Unix would run RetroArch with the the snes9x_libretro core.
+        This example for Unix would run RetroArch with the the snes9x_libretro core, using an absolute path to the core.
         If there are spaces in the path or file name, you must enclose them in quotation marks, for example:
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
         <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
+
+        <!-- This example for Unix searches the pre-configured core directories for the snes9x_libretro RetroArch core, see more info about this below.
+        Spaces are not allowed in the core file names. -->
+        <command>retroarch -L %COREPATH%/snes9x_libretro.so %ROM%</command>
 
         <!-- This is an example for macOS. It uses the %EMUPATH% variable to point to the RetroArch cores relative to the emulator binary.
         As there is a somehow standardized installation structure for this operating system, an absolute path is defined for the emulator. -->
@@ -1070,6 +1074,8 @@ The following variables are expanded by ES for the `command` tag:
 
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
+`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath (in es_settings.cfg). This is done until the first match occurs, or until the last directory is exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for Unix as well as for RetroArch but it can also be used on macOS and Windows and for other emulators that utilizes discrete emulator cores. For macOS and Windows the EmulatorCorePath setting is blank by default, and for Unix it's set to the following value: `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories. This path setting can be changed from within the GUI, as described in the [User Guide](USERGUIDE.md#other-settings-1). Never use quotation marks around the directories for this setting. It's strongly adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command.
+
 `%ROM_RAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded either using the PATH environmental variable of the operating system, or if an absolute emulator path is defined, this will be used instead. This variable is mostly useful to define the emulator core path for Windows, as this operating system does not have a standardized program installation directory structure.
@@ -1078,7 +1084,7 @@ The following variables are expanded by ES for the `command` tag:
 
 For the `path` tag, the following variable is expanded by ES:
 
-`%ROMPATH%` - Replaced with the path defined for the setting ROMDirectory in `es_settings.cfg`.
+`%ROMPATH%` - Replaced with the path defined for the setting ROMDirectory in es_settings.cfg.
 
 
 ## gamelist.xml

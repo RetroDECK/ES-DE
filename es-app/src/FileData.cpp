@@ -752,6 +752,7 @@ void FileData::launchGame(Window* window)
     const std::string basename = Utils::FileSystem::getStem(getPath());
     const std::string rom_raw = Utils::FileSystem::getPreferredPath(getPath());
     const std::string emupath = Utils::FileSystem::getExePath();
+    const std::string emulatorCorePath = Settings::getInstance()->getString("EmulatorCorePath");
 
     command = Utils::String::replace(command, "%ROM%", rom);
     command = Utils::String::replace(command, "%BASENAME%", basename);
@@ -764,6 +765,64 @@ void FileData::launchGame(Window* window)
     #if defined(_WIN64)
     std::wstring commandWide = Utils::String::stringToWideString(command);
     #endif
+
+    // If %COREPATH% is used in es_systems.cfg for this system, try to find the emulator
+    // core using the core paths defined in the setting EmulatorCorePath.
+    auto corePos = command.find("%COREPATH%");
+    if (corePos != std::string::npos && emulatorCorePath.size() > 0) {
+        std::string coreName;
+        bool foundCoreFile = false;
+        std::vector<std::string> corePaths =
+                Utils::String::delimitedStringToVector(emulatorCorePath, ":");
+        auto spacePos = command.find(" ", corePos);
+        if (spacePos != std::string::npos) {
+            coreName = command.substr(corePos + 10, spacePos - corePos - 10);
+            for (auto path : corePaths) {
+                bool pathHasSpaces = false;
+                if (path.find(" ") != std::string::npos)
+                    pathHasSpaces = true;
+                std::string coreFile = Utils::FileSystem::expandHomePath(path + coreName);
+                if (Utils::FileSystem::isRegularFile(coreFile) ||
+                        Utils::FileSystem::isSymlink(coreFile)) {
+                    foundCoreFile = true;
+                    if (pathHasSpaces)
+                        command.replace(corePos, spacePos - corePos, "\"" + coreFile + "\"");
+                    else
+                        command.replace(corePos, spacePos - corePos, coreFile);
+                    break;
+                }
+            }
+        }
+        else {
+            LOG(LogError) << "Invalid entry in systems configuration file es_systems.cfg.";
+            LOG(LogError) << "Raw emulator launch command:";
+            LOG(LogError) << commandRaw;
+
+            GuiInfoPopup* s = new GuiInfoPopup(window, "ERROR: INVALID ENTRY IN SYSTEMS " \
+                    "CONFIGURATION FILE", 6000);
+            window->setInfoPopup(s);
+            return;
+        }
+        if (!foundCoreFile && coreName.size() > 0) {
+            LOG(LogError) << "Couldn't launch game, emulator core file '" <<
+                    coreName.substr(1, coreName.size() - 1) << "' does not exist.";
+            LOG(LogError) << "Raw emulator launch command:";
+            LOG(LogError) << commandRaw;
+
+            GuiInfoPopup* s = new GuiInfoPopup(window, "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
+                    Utils::String::toUpper(coreName.substr(1, coreName.size() - 1) + "'"), 6000);
+            window->setInfoPopup(s);
+            return;
+        }
+    }
+    else if (corePos != std::string::npos) {
+        LOG(LogError) << "The variable %COREPATH% is used in es_systems.cfg but " \
+                "no paths are defined in the setting EmulatorCorePath.";
+        GuiInfoPopup* s = new GuiInfoPopup(window, "ERROR: NO CORE PATHS CONFIGURED, " \
+                "CAN'T LOCATE EMULATOR CORE", 6000);
+        window->setInfoPopup(s);
+        return;
+    }
 
     Scripting::fireEvent("game-start", rom, getSourceFileData()->metadata.get("name"));
     int returnValue = 0;

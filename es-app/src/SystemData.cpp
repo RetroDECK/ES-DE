@@ -390,19 +390,9 @@ bool SystemData::copyConfigTemplate(const std::string& path)
     #elif defined(__APPLE__)
     systemsTemplateFile = ResourceManager::getInstance()->
             getResourcePath(":/templates/es_systems.cfg_macos", false);
-    #elif defined(__FreeBSD__)
-    systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_freebsd", false);
-    #elif defined(__NetBSD__)
-    systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_netbsd", false);
-    #elif defined(__OpenBSD__)
-    systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_openbsd", false);
     #else
-    // Assume that anything else is some type of Linux system.
     systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_linux", false);
+            getResourcePath(":/templates/es_systems.cfg_unix", false);
     #endif
 
     if (systemsTemplateFile == "") {

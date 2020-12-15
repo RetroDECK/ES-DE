@@ -49,8 +49,13 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
             Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
     mInfoString1 = std::make_shared<TextComponent>(mWindow, infoString1,
             Font::get(FONT_SIZE_SMALL), 0x555555FF,	ALIGN_CENTER);
-    mInfoString2 = std::make_shared<TextComponent>(mWindow, infoString2,
-            Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
+
+    if (infoString2.size() > 92)
+        mInfoString2 = std::make_shared<TextComponent>(mWindow, infoString2.substr(0 ,90) + "...",
+                Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
+    else
+        mInfoString2 = std::make_shared<TextComponent>(mWindow, infoString2,
+                Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
 
     mText = std::make_shared<TextEditComponent>(mWindow);
     mText->setValue(initValue);

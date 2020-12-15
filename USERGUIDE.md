@@ -214,9 +214,9 @@ For some systems though, a more elaborate setup is required, and we will attempt
 
 Let's start with the simple scenario of a single ROM game file per platform, which is the case for the majority of systems. In this example we're setting up ES-DE to play Nintendo Entertainment System games.
 
-The supported file extensions are listed in [es_systems.cfg_linux](resources/templates/es_systems.cfg_linux), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
+The supported file extensions are listed in [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
 
-Here is the snippet from the es_systems.cfg_linux file:
+Here is the snippet from the es_systems.cfg_unix file:
 
 ```
 <system>
@@ -224,7 +224,7 @@ Here is the snippet from the es_systems.cfg_linux file:
   <fullname>Nintendo Entertainment System</fullname>
   <path>%ROMPATH%/nes</path>
   <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-  <command>retroarch -L ~/.config/retroarch/cores/fceumm_libretro.so %ROM%</command>
+  <command>retroarch -L %COREPATH%/nestopia_libretro.so %ROM%</command>
   <platform>nes</platform>
   <theme>nes</theme>
 </system>
@@ -258,7 +258,7 @@ Then simply copy your game ROMs into this folder, and you should end up with som
 
 **Note: These directories are case sensitive on Unix, so creating a directory named _NES_ instead of _nes_ won't work!**
 
-That's it, start ES-DE and the NES game system should be populated. You can now scrape game information and media for the games, and assuming you've setup RetroArch correctly with the FCEUmm core, you can launch the games.
+That's it, start ES-DE and the NES game system should be populated. You can now scrape game information and media for the games, and assuming you've setup RetroArch correctly with the Nestopia UE core, you can launch the games.
 
 ### Multiple gamefiles installation
 
@@ -902,6 +902,10 @@ The metadata for a game is updated both by scraping and modifying data in the me
 
 Here you can override the directory to your game media, i.e. the game images and videos. The default location is "~/.emulationstation/downloaded_media".
 
+**Emulator core path**
+
+This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be defined in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is only used on Unix. For macOS and Windows it's not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for these operating systems, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons. Please see [INSTALL.md](INSTALL.md#es_systemscfg) for more information about this.
+
 **Per game launch command override**
 
 If enabled, you can override the launch command defined in es_systems.cfg on a per-game basis. It's only recommended to disable this option for testing purposes, such as when a game won't start and you're unsure if it's your custom launch command that causes the problem.
@@ -1277,7 +1281,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 
 The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside the brackets.
 
-For additional details regarding which game file extensions are supported per system, refer to the **es_systems.cfg** templates [es_systems.cfg_linux](resources/templates/es_systems.cfg_linux), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support though.
+For additional details regarding which game file extensions are supported per system, refer to the **es_systems.cfg** templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support though.
 
 
 | Game system name      | Full name                                      | Default emulator                  | Recommended game setup               |
@@ -1316,7 +1320,7 @@ For additional details regarding which game file extensions are supported per sy
 | dos                   | DOS (PC)                                       | RetroArch (DOSBox-core)           | In separate folder (one folder per game, with complete file structure retained) |
 | dragon32              | Dragon 32                                      |                                   |                                      |
 | dreamcast             | Sega Dreamcast                                 |                                   |                                      |
-| famicom               | Nintendo Family Computer                       | RetroArch (FCEUmm)                | Single archive or ROM file in root folder |
+| famicom               | Nintendo Family Computer                       | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | fba                   | Final Burn Alpha                               |                                   | Single archive file following MAME name standard |
 | fbneo                 | FinalBurn Neo                                  |                                   | Single archive file following MAME name standard |
 | fds                   | Nintendo Famicom Disk System                   | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
@@ -1352,7 +1356,7 @@ For additional details regarding which game file extensions are supported per sy
 | nds                   | Nintendo DS                                    |                                   |                                      |
 | neogeo                | Neo Geo                                        | RetroArch (FinalBurn Neo)         | Single archive file following MAME name standard |
 | neogeocd              | Neo Geo CD                                     |                                   |                                      |
-| nes                   | Nintendo Entertainment System                  | RetroArch (FCEUmm)                | Single archive or ROM file in root folder |
+| nes                   | Nintendo Entertainment System                  | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | ngp                   | Neo Geo Pocket                                 |                                   |                                      |
 | ngpc                  | Neo Geo Pocket Color                           |                                   |                                      |
 | odyssey2              | Magnavox Odyssey2                              |                                   |                                      |

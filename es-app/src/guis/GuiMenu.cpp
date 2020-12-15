@@ -625,33 +625,63 @@ void GuiMenu::openOtherSettings()
     });
 
     // Game media directory.
-    ComponentListRow row;
+    ComponentListRow rowMediaDir;
     auto media_directory = std::make_shared<TextComponent>(mWindow, "GAME MEDIA DIRECTORY",
             Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
-    auto bracket = std::make_shared<ImageComponent>(mWindow);
-    bracket->setImage(":/graphics/arrow.svg");
-    bracket->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
-    row.addElement(media_directory, true);
-    row.addElement(bracket, false);
-    std::string title = "ENTER GAME MEDIA DIRECTORY";
+    auto bracketMediaDirectory = std::make_shared<ImageComponent>(mWindow);
+    bracketMediaDirectory->setImage(":/graphics/arrow.svg");
+    bracketMediaDirectory->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    rowMediaDir.addElement(media_directory, true);
+    rowMediaDir.addElement(bracketMediaDirectory, false);
+    std::string titleMediaDir = "ENTER GAME MEDIA DIRECTORY";
     std::string mediaDirectoryStaticText = "Default directory:";
     std::string defaultDirectoryText = "~/.emulationstation/downloaded_media/";
-    std::string initValue = Settings::getInstance()->getString("MediaDirectory");
-    bool multiLine = false;
-    auto updateVal = [this](const std::string& newVal) {
+    std::string initValueMediaDir = Settings::getInstance()->getString("MediaDirectory");
+    bool multiLineMediaDir = false;
+    auto updateValMediaDir = [this](const std::string& newVal) {
         Settings::getInstance()->setString("MediaDirectory", newVal);
         Settings::getInstance()->saveFile();
         ViewController::get()->reloadAll();
         mWindow->invalidateCachedBackground();
     };
-    row.makeAcceptInputHandler([this, title, mediaDirectoryStaticText,
-            defaultDirectoryText, initValue, updateVal, multiLine] {
-                mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
-                title, mediaDirectoryStaticText, defaultDirectoryText,
+    rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
+            defaultDirectoryText, initValueMediaDir, updateValMediaDir, multiLineMediaDir] {
+        mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
+                titleMediaDir, mediaDirectoryStaticText, defaultDirectoryText,
                 Settings::getInstance()->getString("MediaDirectory"),
-                updateVal, multiLine, "SAVE", "SAVE CHANGES?"));
+                updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
     });
-    s->addRow(row);
+    s->addRow(rowMediaDir);
+
+    // Emulator core path.
+    ComponentListRow rowCorePath;
+    auto emulator_core_path = std::make_shared<TextComponent>(mWindow, "EMULATOR CORE PATH",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto bracketCorePath = std::make_shared<ImageComponent>(mWindow);
+    bracketCorePath->setImage(":/graphics/arrow.svg");
+    bracketCorePath->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    rowCorePath.addElement(emulator_core_path, true);
+    rowCorePath.addElement(bracketCorePath, false);
+    std::string titleCorePath = "ENTER EMULATOR CORE PATH (USE COLON AS SEPARATOR)";
+    std::string emulatorCorePathStaticText = "Default path:";
+    std::string defaultEmulatorCorePath = Settings::getInstance()->
+            getDefaultString("EmulatorCorePath");
+    if (defaultEmulatorCorePath == "")
+        defaultEmulatorCorePath = "<No default path defined>";
+    std::string initValueCorePath = Settings::getInstance()->getString("EmulatorCorePath");
+    bool multiLineCorePath = false;
+    auto updateValCorePath = [this](const std::string& newVal) {
+        Settings::getInstance()->setString("EmulatorCorePath", newVal);
+        Settings::getInstance()->saveFile();
+    };
+    rowCorePath.makeAcceptInputHandler([this, titleCorePath, emulatorCorePathStaticText,
+            defaultEmulatorCorePath, initValueCorePath, updateValCorePath, multiLineCorePath] {
+        mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
+                titleCorePath, emulatorCorePathStaticText, defaultEmulatorCorePath,
+                Settings::getInstance()->getString("EmulatorCorePath"),
+                updateValCorePath, multiLineCorePath, "SAVE", "SAVE CHANGES?"));
+    });
+    s->addRow(rowCorePath);
 
     #if defined(_RPI_)
     // Video playing using OMXPlayer.

@@ -203,6 +203,20 @@ void Settings::setDefaults()
     mBoolMap["RunInBackground"] = { false, false };
     #endif
     mStringMap["MediaDirectory"] = { "", "" };
+    #if defined(__APPLE__) || defined(_WIN64)
+    mStringMap["EmulatorCorePath"] = { "", "" };
+    #else
+    const std::string emulatorCorePaths =
+            "~/.config/retroarch/cores:"                        // Compiled from source
+            "~/snap/retroarch/current/.config/retroarch/cores:" // Snap package
+            // As installed via the OS repositories:
+            "/usr/lib/x86_64-linux-gnu/libretro:"               // Ubuntu and Linux Mint
+            "/usr/lib64/libretro:"                              // Fedora
+            "/usr/lib/libretro:"                                // Manjaro
+            "/usr/local/lib/libretro:"                          // FreeBSD and OpenBSD
+            "/usr/pkg/lib/libretro";                            // NetBSD
+    mStringMap["EmulatorCorePath"] = { emulatorCorePaths, emulatorCorePaths };
+    #endif
     mBoolMap["LaunchCommandOverride"] = { true, true };
     mBoolMap["ShowHiddenFiles"] = { true, true };
     mBoolMap["ShowHiddenGames"] = { true, true };
