@@ -86,11 +86,10 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 
     if (multiLine)
         textHeight *= 6;
-
     mText->setSize(0, textHeight);
 
-    setSize(Renderer::getScreenWidth() * 0.75f,mTitle->getFont()->getHeight() +
-            textHeight + mButtonGrid->getSize().y() + 220);
+    setSize(Renderer::getScreenWidth() * 0.75f, mTitle->getFont()->getHeight() +
+            textHeight + mButtonGrid->getSize().y() + mButtonGrid->getSize().y() * 1.85);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
     mText->startEditing();

@@ -63,7 +63,7 @@ GuiTextEditPopup::GuiTextEditPopup(
     mText->setSize(0, textHeight);
 
     setSize(Renderer::getScreenWidth() * 0.5f, mTitle->getFont()->getHeight() +
-            textHeight + mButtonGrid->getSize().y() + 40);
+            textHeight + mButtonGrid->getSize().y() + mButtonGrid->getSize().y() / 2);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2, (Renderer::getScreenHeight() -
             mSize.y()) / 2);
     mText->startEditing();
