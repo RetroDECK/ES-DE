@@ -65,9 +65,9 @@ public:
     GuiComponent* peekGui();
     inline int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
 
-    void textInput(const char* text);
+    void textInput(const std::string& text);
     void input(InputConfig* config, Input input);
-    void logInput(InputConfig * config, Input input);
+    void logInput(InputConfig* config, Input input);
     void update(int deltaTime);
     void render();
 

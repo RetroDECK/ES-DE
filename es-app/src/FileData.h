@@ -26,10 +26,6 @@ enum FileType {
     PLACEHOLDER = 3
 };
 
-// Used for loading/saving gamelist.xml.
-const char* fileTypeToString(FileType type);
-FileType stringToFileType(const char* str);
-
 // A tree node that holds information for a file.
 class FileData
 {

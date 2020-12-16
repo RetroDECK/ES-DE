@@ -569,7 +569,7 @@ TextCache* Font::buildTextCache(
         if (character == '\n') {
             y += getHeight(lineSpacing);
             x = offset[0] + (xLen != 0 ? getNewlineStartOffset(text,
-                    (const unsigned int)cursor /* cursor is already advanced */,
+                    static_cast<const unsigned int>(cursor) /* cursor is already advanced */,
                     xLen, alignment) : 0);
             continue;
         }

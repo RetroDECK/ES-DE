@@ -9,6 +9,8 @@
 #ifndef ES_APP_PLATFORM_ID_H
 #define ES_APP_PLATFORM_ID_H
 
+#include <string>
+
 namespace PlatformIds
 {
     enum PlatformId : unsigned int {
@@ -123,8 +125,8 @@ namespace PlatformIds
         PLATFORM_COUNT
     };
 
-    PlatformId getPlatformId(const char* str);
-    const char* getPlatformName(PlatformId id);
+    PlatformId getPlatformId(const std::string& str);
+    const std::string getPlatformName(PlatformId id);
 }
 
 #endif // ES_APP_PLATFORM_ID_H

@@ -41,7 +41,7 @@ public:
     GuiComponent(Window* window);
     virtual ~GuiComponent();
 
-    virtual void textInput(const char* text);
+    virtual void textInput(const std::string& text);
 
     // Called when input is received.
     // Return true if the input is consumed, false if

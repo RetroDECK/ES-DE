@@ -16,6 +16,7 @@
 #include "utils/StringUtil.h"
 #include "Log.h"
 
+#include <algorithm>
 #include <pugixml.hpp>
 #include <string.h>
 
@@ -171,19 +172,5 @@ const bool MameNames::isDevice(const std::string& _deviceName)
 
 const bool MameNames::find(std::vector<std::string> devices, const std::string& name)
 {
-    size_t start = 0;
-    size_t end = devices.size();
-
-    while (start < end) {
-        const size_t index = (start + end) / 2;
-        const int compare = strcmp(devices[index].c_str(), name.c_str());
-
-        if (compare < 0)
-            start = index + 1;
-        else if (compare > 0)
-            end = index;
-        else
-            return true;
-    }
-    return false;
+    return (std::find(devices.begin(), devices.end(), name) != devices.end());
 }

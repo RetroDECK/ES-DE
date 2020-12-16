@@ -357,7 +357,7 @@ void ComponentList::updateElementSize(const ComponentListRow& row)
         (*it)->setSize(width, (*it)->getSize().y());
 }
 
-void ComponentList::textInput(const char* text)
+void ComponentList::textInput(const std::string& text)
 {
     if (!size())
         return;

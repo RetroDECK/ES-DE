@@ -14,7 +14,7 @@
 class ImageComponent;
 
 struct AnimationFrame {
-    const char* path;
+    std::string path;
     int time;
 };
 

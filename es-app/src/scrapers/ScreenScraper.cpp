@@ -143,7 +143,7 @@ pugi::xml_node find_child_by_attribute_list(const pugi::xml_node& node_parent,
 {
     for (auto _val : attribute_values) {
         for (pugi::xml_node node : node_parent.children(node_name.c_str())) {
-            if (strcmp(node.attribute(attribute_name.c_str()).value(), _val.c_str()) == 0)
+            if (node.attribute(attribute_name.c_str()).value() == _val)
                 return node;
         }
     }

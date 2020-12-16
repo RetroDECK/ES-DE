@@ -62,7 +62,7 @@ std::string TextEditComponent::getValue() const
     return mText;
 }
 
-void TextEditComponent::textInput(const char* text)
+void TextEditComponent::textInput(const std::string& text)
 {
     if (mEditing) {
         mCursorRepeatDir = 0;
@@ -75,7 +75,7 @@ void TextEditComponent::textInput(const char* text)
         }
         else {
             mText.insert(mCursor, text);
-            mCursor += static_cast<unsigned int>(strlen(text));
+            mCursor += static_cast<unsigned int>(text.size());
         }
     }
 

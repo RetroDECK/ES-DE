@@ -206,7 +206,7 @@ void SystemData::indexAllGameFilters(const FileData* folder)
     }
 }
 
-std::vector<std::string> readList(const std::string& str, const char* delims = " \t\r\n,")
+std::vector<std::string> readList(const std::string& str, const std::string& delims = " \t\r\n,")
 {
     std::vector<std::string> ret;
 
@@ -285,11 +285,11 @@ bool SystemData::loadConfig()
         cmd = system.child("command").text().get();
 
         // Platform ID list
-        const char* platformList = system.child("platform").text().get();
+        const std::string platformList = system.child("platform").text().get();
         std::vector<std::string> platformStrs = readList(platformList);
         std::vector<PlatformIds::PlatformId> platformIds;
         for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
-            const char* str = it->c_str();
+            std::string str = it->c_str();
             PlatformIds::PlatformId platformId = PlatformIds::getPlatformId(str);
 
             if (platformId == PlatformIds::PLATFORM_IGNORE) {
@@ -301,7 +301,7 @@ bool SystemData::loadConfig()
 
             // If there appears to be an actual platform ID supplied
             // but it didn't match the list, generate a warning.
-            if (str != nullptr && str[0] != '\0' && platformId == PlatformIds::PLATFORM_UNKNOWN)
+            if (str != "" && platformId == PlatformIds::PLATFORM_UNKNOWN)
                 LOG(LogWarning) << "Unknown platform for system \"" << name <<
                         "\" (platform \"" << str << "\" from list \"" << platformList << "\")";
             else if (platformId != PlatformIds::PLATFORM_UNKNOWN)

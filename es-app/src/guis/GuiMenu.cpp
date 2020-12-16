@@ -938,7 +938,7 @@ void GuiMenu::onSizeChanged()
     mVersion.setPosition(0, mSize.y() - mVersion.getSize().y());
 }
 
-void GuiMenu::addEntry(const char* name, unsigned int color,
+void GuiMenu::addEntry(const std::string& name, unsigned int color,
         bool add_arrow, const std::function<void()>& func)
 {
     std::shared_ptr<Font> font = Font::get(FONT_SIZE_MEDIUM);

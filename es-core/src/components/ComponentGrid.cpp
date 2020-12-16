@@ -358,7 +358,7 @@ void ComponentGrid::render(const Transform4x4f& parentTrans)
     }
 }
 
-void ComponentGrid::textInput(const char* text)
+void ComponentGrid::textInput(const std::string& text)
 {
     const GridEntry* selectedEntry = getCellAt(mCursor);
     if (selectedEntry != nullptr && selectedEntry->canFocus)

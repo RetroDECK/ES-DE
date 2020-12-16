@@ -67,7 +67,7 @@ public:
 
 private:
     static size_t write_content(void* buff, size_t size, size_t nmemb, void* req_ptr);
-    void onError(const char* msg);
+    void onError(const std::string& msg);
 
     // God dammit libcurl why can't you have some way to check the status of an
     // individual handle why do I have to handle ALL messages at once.

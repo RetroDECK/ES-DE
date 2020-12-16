@@ -81,7 +81,7 @@ void TextureResource::initFromMemory(const char* data, size_t length)
     assert(mTextureData != nullptr);
     mTextureData->releaseVRAM();
     mTextureData->releaseRAM();
-    mTextureData->initImageFromMemory((const unsigned char*)data, length);
+    mTextureData->initImageFromMemory(reinterpret_cast<const unsigned char*>(data), length);
     // Get the size from the texture data.
     mSize = Vector2i(static_cast<int>(mTextureData->width()),
             static_cast<int>(mTextureData->height()));

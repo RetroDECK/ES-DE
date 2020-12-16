@@ -30,7 +30,7 @@ public:
     virtual FileData* getLastEntry() override;
     virtual FileData* getFirstGameEntry() override;
 
-    virtual const char* getName() const override { return "basic"; }
+    virtual std::string getName() const override { return "basic"; }
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
     virtual void launch(FileData* game) override;

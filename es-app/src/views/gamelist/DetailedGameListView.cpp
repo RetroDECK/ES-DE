@@ -150,9 +150,9 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
     initMDLabels();
     std::vector<TextComponent*> labels = getMDLabels();
     assert(labels.size() == 8);
-    const char* lblElements[8] = {
-        "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher",
-        "md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
+    std::vector<std::string> lblElements = {
+            "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher",
+            "md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
     };
 
     for (unsigned int i = 0; i < labels.size(); i++)
@@ -161,9 +161,9 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
     initMDValues();
     std::vector<GuiComponent*> values = getMDValues();
     assert(values.size() == 8);
-    const char* valElements[8] = {
-        "md_rating", "md_releasedate", "md_developer", "md_publisher",
-        "md_genre", "md_players", "md_lastplayed", "md_playcount"
+    std::vector<std::string> valElements = {
+            "md_rating", "md_releasedate", "md_developer", "md_publisher",
+            "md_genre", "md_players", "md_lastplayed", "md_playcount"
     };
 
     for (unsigned int i = 0; i < values.size(); i++)

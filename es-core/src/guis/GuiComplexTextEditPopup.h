@@ -30,12 +30,12 @@ public:
             const std::string& initValue,
             const std::function<void(const std::string&)>& okCallback,
             bool multiLine,
-            const char* acceptBtnText = "OK",
-            const char* saveConfirmationText = "SAVE CHANGES?",
-            const char* loadBtnText = "LOAD",
-            const char* loadBtnHelpText = "load default",
-            const char* clearBtnText = "CLEAR",
-            const char* clearBtnHelpText = "clear",
+            const std::string& acceptBtnText = "OK",
+            const std::string& saveConfirmationText = "SAVE CHANGES?",
+            const std::string& loadBtnText = "LOAD",
+            const std::string& loadBtnHelpText = "load default",
+            const std::string& clearBtnText = "CLEAR",
+            const std::string& clearBtnHelpText = "clear",
             bool hideCancelButton = false);
 
     bool input(InputConfig* config, Input input) override;

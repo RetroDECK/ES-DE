@@ -22,7 +22,7 @@
 #define ICON_TEXT_SPACING 8 // Space between [icon] and [text] (px).
 #define ENTRY_SPACING 16 // Space between [text] and next [icon] (px).
 
-static const std::map<std::string, const char*> ICON_PATH_MAP {
+static const std::map<std::string, std::string> ICON_PATH_MAP {
     { "up/down", ":/help/dpad_updown.svg" },
     { "left/right", ":/help/dpad_leftright.svg" },
     { "up/down/left/right", ":/help/dpad_all.svg" },

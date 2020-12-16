@@ -24,7 +24,7 @@ void AnimatedImageComponent::load(const AnimationDef* def)
     assert(def->frameCount >= 1);
 
     for (size_t i = 0; i < def->frameCount; i++) {
-        if (def->frames[i].path != nullptr &&
+        if (def->frames[i].path != "" &&
                 !ResourceManager::getInstance()->fileExists(def->frames[i].path)) {
             LOG(LogError) << "Missing animation frame " << i <<
                     " (\"" << def->frames[i].path << "\")";

@@ -26,11 +26,11 @@
 // the rest of the volume control code in here compiles and works fine.
 #if defined(__linux__)
 #if defined(_RPI_) || defined(_VERO4K_)
-const char * VolumeControl::mixerName = "PCM";
+const std::string VolumeControl::mixerName = "PCM";
 #else
-const char * VolumeControl::mixerName = "Master";
+const std::string VolumeControl::mixerName = "Master";
 #endif
-const char * VolumeControl::mixerCard = "default";
+const std::string VolumeControl::mixerCard = "default";
 #endif
 
 std::weak_ptr<VolumeControl> VolumeControl::sInstance;
@@ -113,19 +113,19 @@ void VolumeControl::init()
     if (mixerHandle == nullptr) {
         // Allow user to override the AudioCard and AudioDevice in es_settings.cfg.
         #if defined(_RPI_)
-        mixerCard = Settings::getInstance()->getString("AudioCard").c_str();
-        mixerName = Settings::getInstance()->getString("AudioDevice").c_str();
+        mixerCard = Settings::getInstance()->getString("AudioCard");
+        mixerName = Settings::getInstance()->getString("AudioDevice");
         #endif
 
         snd_mixer_selem_id_alloca(&mixerSelemId);
         // Sets simple-mixer index and name.
         snd_mixer_selem_id_set_index(mixerSelemId, mixerIndex);
-        snd_mixer_selem_id_set_name(mixerSelemId, mixerName);
+        snd_mixer_selem_id_set_name(mixerSelemId, mixerName.c_str());
         // Open mixer.
         if (snd_mixer_open(&mixerHandle, 0) >= 0) {
             LOG(LogDebug) << "VolumeControl::init() - Opened ALSA mixer";
             // Ok, attach to defualt card.
-            if (snd_mixer_attach(mixerHandle, mixerCard) >= 0) {
+            if (snd_mixer_attach(mixerHandle, mixerCard.c_str()) >= 0) {
                 LOG(LogDebug) << "VolumeControl::init() - Attached to default card";
                 // Ok, register simple element class.
                 if (snd_mixer_selem_register(mixerHandle, nullptr, nullptr) >= 0) {
@@ -253,7 +253,7 @@ void VolumeControl::deinit()
 //    #error TODO: Not implemented for MacOS yet!!!
     #elif defined(__linux__)
     if (mixerHandle != nullptr) {
-        snd_mixer_detach(mixerHandle, mixerCard);
+        snd_mixer_detach(mixerHandle, mixerCard.c_str());
         snd_mixer_free(mixerHandle);
         snd_mixer_close(mixerHandle);
         mixerHandle = nullptr;

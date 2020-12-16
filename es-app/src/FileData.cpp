@@ -200,12 +200,12 @@ const std::string FileData::getMediaDirectory()
 
 const std::string FileData::getMediafilePath(std::string subdirectory, std::string mediatype) const
 {
-    const char* extList[2] = { ".png", ".jpg" };
+    std::vector<std::string> extList = { ".png", ".jpg" };
 
     // Look for an image file in the media directory.
     std::string tempPath = getMediaDirectory() + mSystemName + "/" +
             subdirectory + "/" + getDisplayName();
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < extList.size(); i++) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -214,7 +214,7 @@ const std::string FileData::getMediafilePath(std::string subdirectory, std::stri
     // No media found in the media directory, so look
     // for local art as well (if configured to do so).
     if (Settings::getInstance()->getBool("ROMDirGameMedia")) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < extList.size(); i++) {
             std::string localMediaPath = mEnvData->mStartPath + "/images/" +
                     getDisplayName() + "-" + mediatype + extList[i];
             if (Utils::FileSystem::exists(localMediaPath))
@@ -273,11 +273,11 @@ const std::string FileData::getThumbnailPath() const
 
 const std::string FileData::getVideoPath() const
 {
-    const char* extList[5] = { ".avi", ".mkv", ".mov", ".mp4", ".wmv" };
+    std::vector<std::string> extList = { ".avi", ".mkv", ".mov", ".mp4", ".wmv" };
     std::string tempPath = getMediaDirectory() + mSystemName + "/videos/" + getDisplayName();
 
     // Look for media in the media directory.
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < extList.size(); i++) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -287,7 +287,7 @@ const std::string FileData::getVideoPath() const
     // for local art as well (if configured to do so).
     if (Settings::getInstance()->getBool("ROMDirGameMedia"))
     {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < extList.size(); i++) {
             std::string localMediaPath = mEnvData->mStartPath + "/videos/" +
                     getDisplayName() + "-video" + extList[i];
             if (Utils::FileSystem::exists(localMediaPath))

@@ -16,10 +16,10 @@
 #include "Window.h"
 
 struct InputConfigStructure {
-    const char* name;
+    std::string name;
     const bool  skippable;
-    const char* dispName;
-    const char* icon;
+    std::string dispName;
+    std::string icon;
 };
 
 static const int inputCount = 22;
@@ -355,7 +355,7 @@ bool GuiInputConfig::assign(Input input, int inputId)
     // generate an error. (If it's the same as what it was before, allow it.)
     if (mTargetConfig->getMappedTo(input).size() > 0 &&
             !mTargetConfig->isMappedTo(GUI_INPUT_CONFIG_LIST[inputId].name, input) &&
-            strcmp(GUI_INPUT_CONFIG_LIST[inputId].name, "HotKeyEnable") != 0) {
+            GUI_INPUT_CONFIG_LIST[inputId].name != "HotKeyEnable") {
         error(mMappings.at(inputId), "Already mapped!");
         return false;
     }

@@ -62,7 +62,7 @@ public:
 
     void addRow(const ComponentListRow& row, bool setCursorHere = false);
 
-    void textInput(const char* text) override;
+    void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const Transform4x4f& parentTrans) override;

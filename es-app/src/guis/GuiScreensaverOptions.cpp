@@ -15,7 +15,7 @@
 #include "guis/GuiMsgBox.h"
 #include "Settings.h"
 
-GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const char* title)
+GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& title)
         : GuiSettings(window, title)
 {
     // Screensaver timer.

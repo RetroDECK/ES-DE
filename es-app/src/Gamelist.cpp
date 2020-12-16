@@ -116,13 +116,13 @@ void parseGamelist(SystemData* system)
     std::string relativeTo = system->getStartPath();
     bool showHiddenFiles = Settings::getInstance()->getBool("ShowHiddenFiles");
 
-    const char* tagList[2] = { "game", "folder" };
+    std::vector<std::string> tagList = { "game", "folder" };
     FileType typeList[2] = { GAME, FOLDER };
     for (int i = 0; i < 2; i++) {
-        const char* tag = tagList[i];
+        std::string tag = tagList[i];
         FileType type = typeList[i];
-        for (pugi::xml_node fileNode = root.child(tag); fileNode; fileNode =
-                fileNode.next_sibling(tag)) {
+        for (pugi::xml_node fileNode = root.child(tag.c_str()); fileNode; fileNode =
+                fileNode.next_sibling(tag.c_str())) {
             const std::string path =
                     Utils::FileSystem::resolveRelativePath(fileNode.child("path").text().get(),
                     relativeTo, false);
@@ -179,10 +179,10 @@ void parseGamelist(SystemData* system)
 }
 
 void addFileDataNode(pugi::xml_node& parent, const FileData* file,
-                    const char* tag, SystemData* system)
+        const std::string& tag, SystemData* system)
 {
     // Create game and add to parent node.
-    pugi::xml_node newNode = parent.append_child(tag);
+    pugi::xml_node newNode = parent.append_child(tag.c_str());
 
     // Write metadata.
     file->metadata.appendToXML(newNode, true, system->getStartPath());
@@ -258,7 +258,7 @@ void updateGamelist(SystemData* system)
         // Iterate through all files, checking if they're already in the XML file.
         for (std::vector<FileData*>::const_iterator fit = files.cbegin();
                 fit != files.cend(); ++fit) {
-            const char* tag = ((*fit)->getType() == GAME) ? "game" : "folder";
+            const std::string tag = ((*fit)->getType() == GAME) ? "game" : "folder";
 
             // Do not touch if it wasn't changed and is not flagged for deletion.
             if (!(*fit)->metadata.wasChanged() && !(*fit)->getDeletionFlag())
@@ -266,8 +266,8 @@ void updateGamelist(SystemData* system)
 
             // Check if the file already exists in the XML file.
             // If it does, remove the entry before adding it back.
-            for (pugi::xml_node fileNode = root.child(tag); fileNode;
-                    fileNode = fileNode.next_sibling(tag)) {
+            for (pugi::xml_node fileNode = root.child(tag.c_str()); fileNode;
+                    fileNode = fileNode.next_sibling(tag.c_str())) {
                 pugi::xml_node pathNode = fileNode.child("path");
                 if (!pathNode) {
                     LOG(LogError) << "<" << tag << "> node contains no <path> child";

@@ -208,7 +208,7 @@ namespace Utils
 
         std::string removeParenthesis(const std::string& _string)
         {
-            static const char remove[4] = { '(', ')', '[', ']' };
+            static std::vector<char> remove = { '(', ')', '[', ']' };
             std::string string = _string;
             size_t start;
             size_t end;
@@ -217,9 +217,9 @@ namespace Utils
             while (!done) {
                 done = true;
 
-                for (size_t i = 0; i < sizeof(remove); i += 2) {
-                    end   = string.find_first_of(remove[i + 1]);
-                    start = string.find_last_of( remove[i + 0], end);
+                for (size_t i = 0; i < remove.size(); i += 2) {
+                    end = string.find_first_of(remove[i + 1]);
+                    start = string.find_last_of(remove[i + 0], end);
 
                     if ((start != std::string::npos) && (end != std::string::npos)) {
                         string.erase(start, end - start + 1);

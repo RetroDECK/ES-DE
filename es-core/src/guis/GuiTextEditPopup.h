@@ -26,8 +26,8 @@ public:
             const std::string& initValue,
             const std::function<void(const std::string&)>& okCallback,
             bool multiLine,
-            const char* acceptBtnText = "OK",
-            const char* saveConfirmationText = "SAVE CHANGES?");
+            const std::string& acceptBtnText = "OK",
+            const std::string& saveConfirmationText = "SAVE CHANGES?");
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;

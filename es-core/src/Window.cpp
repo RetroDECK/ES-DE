@@ -131,7 +131,7 @@ void Window::deinit()
     Renderer::deinit();
 }
 
-void Window::textInput(const char* text)
+void Window::textInput(const std::string& text)
 {
     if (peekGui())
         peekGui()->textInput(text);
@@ -530,19 +530,18 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
     std::sort(addPrompts.begin(), addPrompts.end(),
             [](const HelpPrompt& a, const HelpPrompt& b) -> bool {
 
-        static const char* map[] = {
-            "up/down/left/right",
-            "up/down",
-            "left/right",
-            "a", "b", "x", "y", "l", "r",
-            "start", "select",
-            nullptr
+        static const std::vector<std::string> map = {
+                "up/down/left/right",
+                "up/down",
+                "left/right",
+                "a", "b", "x", "y", "l", "r",
+                "start", "select"
         };
 
         int i = 0;
         int aVal = 0;
         int bVal = 0;
-        while (map[i] != nullptr) {
+        while (i < map.size()) {
             if (a.first == map[i])
                 aVal = i;
             if (b.first == map[i])

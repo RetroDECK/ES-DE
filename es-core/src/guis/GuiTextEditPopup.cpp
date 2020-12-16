@@ -21,8 +21,8 @@ GuiTextEditPopup::GuiTextEditPopup(
         const std::string& initValue,
         const std::function<void(const std::string&)>& okCallback,
         bool multiLine,
-        const char* acceptBtnText,
-        const char* saveConfirmationText)
+        const std::string& acceptBtnText,
+        const std::string& saveConfirmationText)
         : GuiComponent(window),
         mHelpStyle(helpstyle),
         mBackground(window, ":/graphics/frame.png"),

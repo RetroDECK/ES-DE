@@ -15,7 +15,7 @@
 class GuiScreensaverOptions : public GuiSettings
 {
 public:
-    GuiScreensaverOptions(Window* window, const char* title);
+    GuiScreensaverOptions(Window* window, const std::string& title);
 
 private:
     void openSlideshowScreensaverOptions();

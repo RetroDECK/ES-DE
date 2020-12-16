@@ -15,6 +15,7 @@
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
 #include "ThemeData.h"
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <vector>
@@ -82,7 +83,7 @@ public:
     int getSize() const;
     inline const std::string& getPath() const { return mPath; }
 
-    inline static const char* getDefaultPath() { return FONT_PATH_REGULAR; }
+    inline static std::string getDefaultPath() { return FONT_PATH_REGULAR; }
 
     static std::shared_ptr<Font> getFromTheme(const ThemeData::ThemeElement* elem,
             unsigned int properties, const std::shared_ptr<Font>& orig);

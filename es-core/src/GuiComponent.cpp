@@ -355,7 +355,7 @@ void GuiComponent::setHiddenValue(const std::string& /*value*/)
 {
 }
 
-void GuiComponent::textInput(const char* text)
+void GuiComponent::textInput(const std::string& text)
 {
     for (auto iter = mChildren.cbegin(); iter != mChildren.cend(); iter++)
         (*iter)->textInput(text);

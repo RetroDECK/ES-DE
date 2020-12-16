@@ -9,10 +9,11 @@
 #include "PlatformId.h"
 
 #include <string.h>
+#include <vector>
 
 namespace PlatformIds
 {
-    const char* PlatformNames[PLATFORM_COUNT + 1] = {
+    std::vector<std::string> PlatformNames = {
         "unknown", // Nothing set.
 
         "3do",
@@ -124,20 +125,20 @@ namespace PlatformIds
         "invalid"
     };
 
-    PlatformId getPlatformId(const char* str)
+    PlatformId getPlatformId(const std::string& str)
     {
-        if (str == nullptr)
+        if (str == "")
             return PLATFORM_UNKNOWN;
 
         for (unsigned int i = 1; i < PLATFORM_COUNT; i++) {
-            if (strcmp(PlatformNames[i], str) == 0)
+            if (PlatformNames[i] == str)
                 return (PlatformId)i;
         }
 
         return PLATFORM_UNKNOWN;
     }
 
-    const char* getPlatformName(PlatformId id)
+    const std::string getPlatformName(PlatformId id)
     {
         return PlatformNames[id];
     }

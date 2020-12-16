@@ -190,7 +190,7 @@ std::string HttpReq::getContent() const
     return mContent.str();
 }
 
-void HttpReq::onError(const char* msg)
+void HttpReq::onError(const std::string& msg)
 {
     mErrorMsg = msg;
 }

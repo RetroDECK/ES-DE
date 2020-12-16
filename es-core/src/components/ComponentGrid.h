@@ -48,7 +48,7 @@ public:
             unsigned int border = GridFlags::BORDER_NONE,
             GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
 
-    void textInput(const char* text) override;
+    void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const Transform4x4f& parentTrans) override;

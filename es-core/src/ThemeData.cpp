@@ -198,13 +198,13 @@ std::map<std::string, std::map<std::string,
 #define CURRENT_THEME_FORMAT_VERSION 6
 
 // Helper.
-unsigned int getHexColor(const char* str)
+unsigned int getHexColor(const std::string& str)
 {
     ThemeException error;
-    if (!str)
+    if (str == "")
         throw error << "Empty color";
 
-    size_t len = strlen(str);
+    size_t len = str.size();
     if (len != 6 && len != 8)
         throw error << "Invalid color (bad length, \"" << str << "\" - must be 6 or 8)";
 
@@ -221,22 +221,20 @@ unsigned int getHexColor(const char* str)
 
 std::map<std::string, std::string> mVariables;
 
-std::string resolvePlaceholders(const char* in)
+std::string resolvePlaceholders(const std::string& in)
 {
-    std::string inStr(in);
+    if (in.empty())
+        return in;
 
-    if (inStr.empty())
-        return inStr;
-
-    const size_t variableBegin = inStr.find("${");
-    const size_t variableEnd = inStr.find("}", variableBegin);
+    const size_t variableBegin = in.find("${");
+    const size_t variableEnd = in.find("}", variableBegin);
 
     if ((variableBegin == std::string::npos) || (variableEnd == std::string::npos))
-        return inStr;
+        return in;
 
-    std::string prefix = inStr.substr(0, variableBegin);
-    std::string replace = inStr.substr(variableBegin + 2, variableEnd - (variableBegin + 2));
-    std::string suffix = resolvePlaceholders(inStr.substr(variableEnd + 1).c_str());
+    std::string prefix = in.substr(0, variableBegin);
+    std::string replace = in.substr(variableBegin + 2, variableEnd - (variableBegin + 2));
+    std::string suffix = resolvePlaceholders(in.substr(variableEnd + 1).c_str());
 
     return prefix + mVariables[replace] + suffix;
 }
@@ -377,7 +375,7 @@ void ThemeData::parseViews(const pugi::xml_node& root)
         if (!node.attribute("name"))
             throw error << "View missing \"name\" attribute!";
 
-        const char* delim = " \t\r\n,";
+        const std::string delim = " \t\r\n,";
         const std::string nameAttr = node.attribute("name").as_string();
         size_t prevOff = nameAttr.find_first_not_of(delim, 0);
         size_t off = nameAttr.find_first_of(delim, prevOff);
@@ -410,7 +408,7 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
         if (elemTypeIt == sElementMap.cend())
             throw error << "Unknown element of type \"" << node.name() << "\"!";
 
-        const char* delim = " \t\r\n,";
+        const std::string delim = " \t\r\n,";
         const std::string nameAttr = node.attribute("name").as_string();
         size_t prevOff = nameAttr.find_first_not_of(delim, 0);
         size_t off = nameAttr.find_first_of(delim, prevOff);
@@ -502,7 +500,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             break;
         }
         case COLOR: {
-            element.properties[node.name()] = getHexColor(str.c_str());
+            element.properties[node.name()] = getHexColor(str);
             break;
         }
         case FLOAT: {
