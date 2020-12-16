@@ -329,8 +329,7 @@ void Window::render()
                 Renderer::shaderParameters blurParameters;
                 blurParameters.shaderPasses = 3;
                 Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
-                        Renderer::SHADER_BLUR_VERTICAL,
-                        blurParameters, processedTexture);
+                        Renderer::SHADER_BLUR_VERTICAL, blurParameters, processedTexture);
 
                 mPostprocessedBackground->initFromPixels(processedTexture,
                         Renderer::getScreenWidth(), Renderer::getScreenHeight());

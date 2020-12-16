@@ -675,7 +675,8 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
             // If searching based on the actual file name, then expand to the full game name
             // in case the scraper is set to TheGamesDB and it's an arcade game. This is required
             // as TheGamesDB has issues with searches using the short MAME names.
-            if (params.game->isArcadeGame())
+            if (params.game->isArcadeGame() &&
+                    Settings::getInstance()->getString("Scraper") == "thegamesdb")
                 searchString = MameNames::getInstance()->getCleanName(params.game->getCleanName());
             else
                 searchString = params.game->getCleanName();
