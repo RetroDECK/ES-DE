@@ -31,18 +31,12 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     for (auto it = scrapers.cbegin(); it != scrapers.cend(); it++)
         mScraper->add(*it, *it, *it == Settings::getInstance()->getString("Scraper"));
     mMenu.addWithLabel("SCRAPE FROM", mScraper);
-    mMenu.addSaveFunc([this] {
-        if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper")) {
-            Settings::getInstance()->setString("Scraper", mScraper->getSelected());
-            mMenu.setNeedsSaving();
-        }
-    });
 
     // Search filters, getSearches() will generate a queue of games to scrape
     // based on the outcome of the checks below.
     mFilters = std::make_shared< OptionListComponent<GameFilterFunc>>
             (mWindow, getHelpStyle(), "SCRAPE THESE GAMES", false);
-    mFilters->add("ALL GAMES", [](SystemData*, FileData*) -> bool { return true; }, true);
+    mFilters->add("ALL GAMES", [](SystemData*, FileData*) -> bool { return true; }, false);
     mFilters->add("FAVORITE GAMES", [](SystemData*, FileData* g) -> bool {
         return g->getFavorite(); }, false);
     mFilters->add("NO METADATA", [](SystemData*, FileData* g) -> bool {
@@ -56,7 +50,20 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     mFilters->add("FOLDERS ONLY",
             [](SystemData*, FileData* g) -> bool {
         return g->getType() == FOLDER; }, false);
+
+    mFilters->selectEntry(Settings::getInstance()->getInt("ScraperFilter"));
     mMenu.addWithLabel("Filter", mFilters);
+
+    mMenu.addSaveFunc([this] {
+        if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper")) {
+            Settings::getInstance()->setString("Scraper", mScraper->getSelected());
+            mMenu.setNeedsSaving();
+        }
+        // The filter setting is only retained during the program session i.e. it's not saved
+        // to es_settings.cfg.
+        if (mFilters->getSelectedId() != Settings::getInstance()->getInt("ScraperFilter"))
+            Settings::getInstance()->setInt("ScraperFilter", mFilters->getSelectedId());
+    });
 
     // Add systems (all systems with an existing platform ID are listed).
     mSystems = std::make_shared< OptionListComponent<SystemData*>>
@@ -535,8 +542,8 @@ void GuiScraperMenu::pressedStart()
 
 void GuiScraperMenu::start()
 {
-    std::queue<ScraperSearchParams> searches = getSearches(mSystems->getSelectedObjects(),
-            mFilters->getSelected());
+    std::queue<ScraperSearchParams> searches =
+            getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
 
     if (searches.empty()) {
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),

@@ -208,17 +208,6 @@ public:
                 [](OptionListData a, OptionListData b) { return a.name < b.name; });
     }
 
-    HelpStyle getHelpStyle() override { return mHelpStyle; };
-
-private:
-    struct OptionListData {
-        std::string name;
-        T object;
-        bool selected;
-    };
-
-    HelpStyle mHelpStyle;
-
     unsigned int getSelectedId()
     {
         assert(mMultiSelect == false);
@@ -231,6 +220,17 @@ private:
                 "no selected element found, defaulting to 0";
         return 0;
     }
+
+    HelpStyle getHelpStyle() override { return mHelpStyle; };
+
+private:
+    struct OptionListData {
+        std::string name;
+        T object;
+        bool selected;
+    };
+
+    HelpStyle mHelpStyle;
 
     void open()
     {

@@ -52,7 +52,8 @@ std::vector<std::string> settings_dont_save {
     "DebugGrid",
     "DebugText",
     "DebugImage",
-    "SplashScreenProgress"
+    "SplashScreenProgress",
+    "ScraperFilter"
 };
 
 Settings::Settings()
@@ -275,6 +276,7 @@ void Settings::setDefaults()
     mBoolMap["DebugText"] = { false, false };
     mBoolMap["DebugImage"] = { false, false };
     mBoolMap["SplashScreenProgress"] = { true, true };
+    mIntMap["ScraperFilter"] = { 0, 0 };
     mStringMap["UIMode_passkey"] = { "uuddlrlrba", "uuddlrlrba" };
 }
 
