@@ -26,11 +26,11 @@
 // the rest of the volume control code in here compiles and works fine.
 #if defined(__linux__)
 #if defined(_RPI_) || defined(_VERO4K_)
-const std::string VolumeControl::mixerName = "PCM";
+std::string VolumeControl::mixerName = "PCM";
 #else
-const std::string VolumeControl::mixerName = "Master";
+std::string VolumeControl::mixerName = "Master";
 #endif
-const std::string VolumeControl::mixerCard = "default";
+std::string VolumeControl::mixerCard = "default";
 #endif
 
 std::weak_ptr<VolumeControl> VolumeControl::sInstance;
