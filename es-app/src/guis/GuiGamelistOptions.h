@@ -61,9 +61,6 @@ private:
     bool isCustomCollectionGroup;
     std::vector<std::string> mFirstLetterIndex;
     std::string mCurrentFirstCharacter;
-    std::string FAVORITE_CHAR;
-    std::string FOLDER_CHAR;
-
 };
 
 #endif // ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H

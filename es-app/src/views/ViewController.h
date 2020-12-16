@@ -104,6 +104,9 @@ public:
     std::shared_ptr<SystemView> getSystemListView();
     void removeGameListView(SystemData* system);
 
+    static const std::string FAVORITE_CHAR;
+    static const std::string FOLDER_CHAR;
+
 private:
     ViewController(Window* window);
     static ViewController* sInstance;

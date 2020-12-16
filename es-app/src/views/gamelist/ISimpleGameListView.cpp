@@ -389,8 +389,6 @@ void ISimpleGameListView::generateGamelistInfo(FileData* cursor, FileData* first
 
 void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>& files)
 {
-    const std::string favoriteChar = mRoot->FAVORITE_CHAR;
-    const std::string folderChar = mRoot->FOLDER_CHAR;
     std::string firstChar;
 
     bool onlyFavorites = true;
@@ -443,8 +441,8 @@ void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>&
     // If there are any favorites and/or folders in the list, insert their respective
     // Unicode characters at the beginning of the vector.
     if (hasFavorites)
-        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), favoriteChar);
+        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), ViewController::FAVORITE_CHAR);
 
     if (hasFolders)
-        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), folderChar);
+        mFirstLetterIndex.insert(mFirstLetterIndex.begin(), ViewController::FOLDER_CHAR);
 }

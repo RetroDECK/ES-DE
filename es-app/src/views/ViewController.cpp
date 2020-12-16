@@ -33,6 +33,8 @@
 #include "Window.h"
 
 ViewController* ViewController::sInstance = nullptr;
+const std::string ViewController::FAVORITE_CHAR = "\uF005";
+const std::string ViewController::FOLDER_CHAR = "\uF07C";
 
 ViewController* ViewController::get()
 {

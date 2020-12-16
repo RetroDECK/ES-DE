@@ -595,7 +595,7 @@ void SystemScreensaver::generateOverlayInfo()
 
     std::string favoriteChar;
     if (mCurrentGame->getFavorite())
-        favoriteChar = "  " + mCurrentGame->FAVORITE_CHAR;
+        favoriteChar = "  " + ViewController::FAVORITE_CHAR;
 
     const std::string gameName = Utils::String::toUpper(mGameName) + favoriteChar;
     const std::string systemName = Utils::String::toUpper(mSystemName);

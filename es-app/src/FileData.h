@@ -130,9 +130,6 @@ public:
     // Return sort type based on a string description.
     FileData::SortType getSortTypeFromString(std::string desc);
 
-    const std::string FAVORITE_CHAR = "\uF005";
-    const std::string FOLDER_CHAR = "\uF07C";
-
 protected:
     FileData* mSourceFileData;
     FileData* mParent;

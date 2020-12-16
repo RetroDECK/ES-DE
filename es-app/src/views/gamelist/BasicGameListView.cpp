@@ -18,9 +18,6 @@
 BasicGameListView::BasicGameListView(Window* window, FileData* root)
         : ISimpleGameListView(window, root), mList(window)
 {
-    FAVORITE_CHAR = root->FAVORITE_CHAR;
-    FOLDER_CHAR = root->FOLDER_CHAR;
-
     mList.setSize(mSize.x(), mSize.y() * 0.8f);
     mList.setPosition(0, mSize.y() * 0.2f);
     mList.setDefaultZIndex(20);
@@ -87,12 +84,12 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
             }
             if ((*it)->getFavorite() && favoriteStar &&
                     mRoot->getSystem()->getName() != "favorites") {
-                mList.add(inCollectionPrefix + FAVORITE_CHAR + "  " + (*it)->getName(),
+                mList.add(inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " + (*it)->getName(),
                     *it, ((*it)->getType() == FOLDER));
             }
             else if ((*it)->getType() == FOLDER &&
                     mRoot->getSystem()->getName() != "collections") {
-                mList.add(FOLDER_CHAR + "  " + (*it)->getName(), *it, true);
+                mList.add(ViewController::FOLDER_CHAR + "  " + (*it)->getName(), *it, true);
             }
             else {
                 mList.add(inCollectionPrefix + (*it)->getName(), *it, ((*it)->getType() == FOLDER));

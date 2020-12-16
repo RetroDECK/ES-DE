@@ -17,7 +17,7 @@
 
 NavigationSounds* NavigationSounds::sInstance = nullptr;
 
-std::map< std::string, std::shared_ptr<Sound> > Sound::sMap;
+std::map<std::string, std::shared_ptr<Sound>> Sound::sMap;
 
 std::shared_ptr<Sound> Sound::get(const std::string& path)
 {
