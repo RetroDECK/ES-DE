@@ -136,6 +136,8 @@ void VideoComponent::onScreensaverActivate()
     mPause = true;
     if (Settings::getInstance()->getString("ScreensaverType") == "dim")
         stopVideo();
+    else
+        pauseVideo();
     manageState();
 }
 
