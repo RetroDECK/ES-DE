@@ -1,6 +1,4 @@
-Contributing to EmulationStation Desktop Edition (ES-DE)
-========================================================
-
+# Contributing to EmulationStation Desktop Edition (ES-DE)
 
 ### Help needed:
 

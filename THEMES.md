@@ -1,5 +1,4 @@
-Themes
-======
+# Themes
 
 EmulationStation allows each system to have its own "theme." A theme is a collection **views** that define some **elements**, each with their own **properties**.
 
@@ -45,8 +44,7 @@ If both files happen to exist, ES will pick the first one (the one located in th
 
 Again, the `[CURRENT_THEME_SET]` value is set in the "UI Settings" menu.  If it has not been set yet or the previously selected theme set is missing, the first available theme set will be used as the default.
 
-Simple Example
-==============
+# Simple Example
 
 Here is a very simple theme that changes the description text's color:
 
@@ -67,8 +65,7 @@ Here is a very simple theme that changes the description text's color:
 </theme>
 ```
 
-How it works
-============
+# How it works
 
 Everything must be inside a `<theme>` tag.
 
@@ -113,10 +110,7 @@ Or, you can create your own elements by adding `extra="true"` (as is done in the
 ```
 
 
-
-
-Advanced Features
-=================
+# Advanced Features
 
 It is recommended that if you are writing a theme you launch EmulationStation with the `--debug` and `--windowed` switches.  This way you can read error messages without having to check the log file.  You can also reload the current gamelist view and system view with `Ctrl-R` if `--debug` is specified.
 
@@ -166,7 +160,6 @@ Is equivalent to this `snes/theme.xml`:
 Notice that properties that were not specified got merged (`<fontPath>`) and the `snes/theme.xml` could overwrite the included files' values (`<color>`).  Also notice the included file still needed the `<formatVersion>` tag.
 
 
-
 ### Theming multiple views simultaneously
 
 Sometimes you want to apply the same properties to the same elements across multiple views.  The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas).  So, for example, to easily apply the same header to the basic, grid, and system views:
@@ -214,7 +207,6 @@ This is equivalent to:
     ... and any other view that might try to look up "logo" ...
 </theme>
 ```
-
 
 
 ### Theming multiple elements simultaneously
@@ -272,7 +264,6 @@ Just remember, *this only works if the elements have the same type!*
 ### Element rendering order with z-index
 
 You can now change the order in which elements are rendered by setting `zIndex` values.  Default values correspond to the default rendering order while allowing elements to easily be shifted without having to set `zIndex` values for every element.  Elements will be rendered in order from smallest z-index to largest.
-
 
 
 #### Navigation sounds
@@ -403,8 +394,8 @@ or to specify only a portion of the value of a theme property:
 <path>./art/logo/${system.theme}.svg</path>
 ````
 
-Reference
-=========
+
+# Reference
 
 ## Views, their elements, and themable properties:
 

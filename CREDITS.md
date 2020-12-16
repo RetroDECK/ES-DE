@@ -1,5 +1,4 @@
-Programming
-===========
+# Programming
 
 Alec "Aloshi" Lofquist (original version) \
 http://www.aloshi.com
@@ -10,21 +9,20 @@ https://retropie.org.uk
 Leon Styhre (Desktop Edition fork, based on the RetroPie version) \
 https://gitlab.com/leonstyhre/emulationstation-de
 
+The shader code for blur_horizontal.glsl, blur_vertical_glsl and scanlines.glsl has been borrowed from the [RetroArch](https://www.retroarch.com) project.
 
-UI Art & Design
-===============
+
+# UI Art & Design
 
 Nils Bonenberger
 
 
-Licenses
-========
+# Licenses
 
-Please find the individual license files inside the `licenses` directory.
+Please find the individual license files inside the `licenses` directory. There is also additional license information in the headers of the source files.
 
 
-Libraries
-=========
+# Libraries
 
 cURL \
 http://curl.haxx.se
@@ -34,6 +32,9 @@ http://www.freetype.org
 
 FreeImage \
 http://www.freeimage.sourceforge.net
+
+GLEW \
+http://glew.sourceforge.net
 
 libVLC \
 https://wiki.videolan.org/LibVLC
@@ -51,8 +52,7 @@ SDL2 \
 http://www.libsdl.org
 
 
-Resources
-=========
+# Resources
 
 DejaVu font \
 https://dejavu-fonts.github.io
@@ -76,8 +76,7 @@ MAME ROM information \
 https://www.mamedev.org
 
 
-rbsimple-DE theme
-=================
+# rbsimple-DE theme
 
 Recalbox Multi (rbsimple-DE is based on this theme) \
 https://gitlab.com/recalbox/recalbox-themes
@@ -86,8 +85,7 @@ Carbon (some graphics taken from this theme) \
 https://github.com/RetroPie/es-theme-carbon
 
 
-Sounds
-======
+# Sounds
 
 Used by the default rbsimple-DE theme as well as for fallback sounds (for themes that lack navigation sounds).
 

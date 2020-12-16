@@ -1,5 +1,4 @@
-EmulationStation Desktop Edition (ES-DE)
-========================================
+# EmulationStation Desktop Edition (ES-DE)
 
 EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
 
@@ -41,8 +40,7 @@ Check out the [User Guide](USERGUIDE.md) for how to quickly get the application 
 If you would like to contribute to the development of ES-DE, then that's great! Please read how to participate [here](CONTRIBUTING.md). (You can also read about planned future features there).
 
 
-Other information
-=================
+# Other information
 
 [NEWS.md](NEWS.md) contains information about the current release as well as previous releases. This covers the features, improvements and bug fixes.
 
@@ -52,8 +50,7 @@ Other information
 
 [THEMES.md](THEMES.md) is a guide on how theming works which is useful for those who would like to develop a new theme, or perhaps customize an existing theme.
 
-Some feature highlights
-=======================
+# Some feature highlights
 
 Here are some highlights of what EmulationStation Desktop Edition provides, displayed using the default theme set rbsimple-DE. There are of course many more features available, please refer to the [User Guide](USERGUIDE.md) for a comprehensive overview of all options and functionality.
 
