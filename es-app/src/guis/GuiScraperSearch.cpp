@@ -83,8 +83,7 @@ GuiScraperSearch::GuiScraperSearch(
     mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
     mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
-    if (Settings::getInstance()->getBool("ScrapeRatings") &&
-            Settings::getInstance()->getString("Scraper") != "thegamesdb")
+    if (Settings::getInstance()->getString("Scraper") != "thegamesdb")
         mScrapeRatings = true;
 
     if (mScrapeRatings)

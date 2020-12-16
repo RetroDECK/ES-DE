@@ -319,7 +319,11 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                 result.mdl.get("name");
 
         // Validate rating.
-        if (Settings::getInstance()->getBool("ScrapeRatings") && game.child("note")) {
+        // Process the rating even if the setting to scrape ratings has been disabled.
+        // This is required so that the rating can still be shown in the scraper GUI.
+        // GuiScraperSearch::saveMetadata() will take care of skipping the rating saving
+        // if this option has been set as such.
+        if (game.child("note")) {
             float ratingVal = (game.child("note").text().as_int() / 20.0f);
             // Round up to the closest .1 value, i.e. to the closest half-star.
             ratingVal = Math::ceilf(ratingVal / 0.1) / 10;
