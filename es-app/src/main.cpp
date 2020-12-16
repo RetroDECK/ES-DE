@@ -30,7 +30,6 @@
 #include "Log.h"
 #include "MameNames.h"
 #include "Platform.h"
-#include "PowerSaver.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "SystemScreensaver.h"
@@ -453,7 +452,6 @@ int main(int argc, char* argv[])
 
     Window window;
     SystemScreensaver screensaver(&window);
-    PowerSaver::init();
     ViewController::init(&window);
     CollectionSystemManager::init(&window);
     window.pushGui(ViewController::get());
@@ -603,11 +601,8 @@ int main(int argc, char* argv[])
 
     while (running) {
         SDL_Event event;
-        bool ps_standby = PowerSaver::getState() && static_cast<int>(SDL_GetTicks()) -
-                ps_time > PowerSaver::getMode();
 
-        if (ps_standby ? SDL_WaitEventTimeout(&event, PowerSaver::getTimeout())
-                : SDL_PollEvent(&event)) {
+        if (SDL_PollEvent(&event)) {
             do {
                 InputManager::getInstance()->parseEvent(event, &window);
 
@@ -616,17 +611,7 @@ int main(int argc, char* argv[])
             }
             while (SDL_PollEvent(&event));
 
-            // Triggered if exiting from SDL_WaitEvent due to event.
-            if (ps_standby)
-                // Show as if continuing from last event.
-                lastTime = SDL_GetTicks();
-
             // Reset counter.
-            ps_time = SDL_GetTicks();
-        }
-        else if (ps_standby) {
-            // If exiting SDL_WaitEventTimeout due to timeout.
-            // Trail considering timeout as an event.
             ps_time = SDL_GetTicks();
         }
 

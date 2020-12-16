@@ -20,7 +20,6 @@
 #include "views/ViewController.h"
 #include "FileData.h"
 #include "Log.h"
-#include "PowerSaver.h"
 #include "SystemData.h"
 
 #include <random>
@@ -145,7 +144,6 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
                 mImageScreensaver->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
                         static_cast<float>(Renderer::getScreenHeight()));
         }
-        PowerSaver::runningScreensaver(true);
         mTimer = 0;
         return;
     }
@@ -195,7 +193,6 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             mVideoScreensaver->setVideo(path);
             mVideoScreensaver->setScreensaverMode(true);
             mVideoScreensaver->onShow();
-            PowerSaver::runningScreensaver(true);
             mTimer = 0;
             return;
         }
@@ -213,7 +210,6 @@ void SystemScreensaver::stopScreensaver()
     mImageScreensaver = nullptr;
 
     mState = STATE_INACTIVE;
-    PowerSaver::runningScreensaver(false);
 
     mDimValue = 1.0;
     mRectangleFadeIn = 50;

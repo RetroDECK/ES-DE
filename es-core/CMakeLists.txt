@@ -13,7 +13,6 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MameNames.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Platform.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/PowerSaver.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Settings.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Sound.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ThemeData.h
@@ -95,7 +94,6 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MameNames.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Platform.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/PowerSaver.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Scripting.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Settings.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Sound.cpp

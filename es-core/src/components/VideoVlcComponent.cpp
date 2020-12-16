@@ -11,7 +11,6 @@
 #include "renderers/Renderer.h"
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
-#include "PowerSaver.h"
 #include "Settings.h"
 #include "Window.h"
 
@@ -352,7 +351,6 @@ void VideoVlcComponent::startVideo()
 
                 // Make sure we found a valid video track.
                 if ((mVideoWidth > 0) && (mVideoHeight > 0)) {
-                    PowerSaver::pause();
                     setupContext();
 
                     // Setup the media player.
@@ -395,7 +393,6 @@ void VideoVlcComponent::stopVideo()
         libvlc_media_release(mMedia);
         mMediaPlayer = nullptr;
         freeContext();
-        PowerSaver::resume();
     }
 }
 

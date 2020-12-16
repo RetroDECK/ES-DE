@@ -13,7 +13,6 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "InputManager.h"
-#include "PowerSaver.h"
 #include "Window.h"
 
 #define HOLD_TIME 1000
@@ -98,12 +97,9 @@ void GuiDetectDevice::onSizeChanged()
 
 bool GuiDetectDevice::input(InputConfig* config, Input input)
 {
-    PowerSaver::pause();
-
     if (!mFirstRun && input.device == DEVICE_KEYBOARD && input.type == TYPE_KEY &&
             input.value && input.id == SDLK_ESCAPE) {
         // Cancel the configuration.
-        PowerSaver::resume();
         delete this; // Delete GUI element.
         return true;
     }
@@ -113,7 +109,6 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
             input.value && input.id == SDLK_ESCAPE) {
             if (mDoneCallback)
                 mDoneCallback();
-            PowerSaver::resume();
             delete this; // Delete GUI element.
             return true;
     }
@@ -145,7 +140,6 @@ void GuiDetectDevice::update(int deltaTime)
                 InputManager::getInstance()->getNumConfiguredDevices() > 0) {
             if (mDoneCallback)
                 mDoneCallback();
-            PowerSaver::resume();
             delete this; // Delete GUI element.
         }
         else {
@@ -156,7 +150,6 @@ void GuiDetectDevice::update(int deltaTime)
             if (mHoldTime <= 0) {
                 // Picked one!
                 mWindow->pushGui(new GuiInputConfig(mWindow, mHoldingConfig, true, mDoneCallback));
-                PowerSaver::resume();
                 delete this;
             }
         }

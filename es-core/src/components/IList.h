@@ -11,7 +11,6 @@
 
 #include "components/ImageComponent.h"
 #include "resources/Font.h"
-#include "PowerSaver.h"
 #include "Window.h"
 
 enum CursorState {
@@ -245,8 +244,6 @@ protected:
 
     bool listInput(int velocity) // A velocity of 0 = stop scrolling.
     {
-        PowerSaver::setState(velocity == 0);
-
         mScrollVelocity = velocity;
         mScrollTier = 0;
         mScrollTierAccumulator = 0;

@@ -15,7 +15,6 @@
 #include "components/TextComponent.h"
 #include "views/ViewController.h"
 #include "FileData.h"
-#include "PowerSaver.h"
 #include "SystemData.h"
 
 GuiGameScraper::GuiGameScraper(
@@ -28,7 +27,6 @@ GuiGameScraper::GuiGameScraper(
         mSearchParams(params),
         mClose(false)
 {
-    PowerSaver::pause();
     addChild(&mBox);
     addChild(&mGrid);
 
@@ -120,7 +118,6 @@ void GuiGameScraper::onSizeChanged()
 bool GuiGameScraper::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("b", input) && input.value) {
-        PowerSaver::resume();
         delete this;
         return true;
     }

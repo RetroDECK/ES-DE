@@ -28,7 +28,6 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const char* title)
                 Settings::getInstance()->getInt("ScreensaverTimer")) {
             Settings::getInstance()->setInt("ScreensaverTimer",
                     static_cast<int>(Math::round(screensaver_timer->getValue()) * (1000 * 60)));
-            PowerSaver::updateTimeouts();
             setNeedsSaving();
         }
     });
@@ -59,7 +58,6 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const char* title)
             Settings::getInstance()->setString("ScreensaverType",
                     screensaver_type->getSelected());
             setNeedsSaving();
-            PowerSaver::updateTimeouts();
         }
     });
 
@@ -113,7 +111,6 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
                     static_cast<int>(Math::round(screensaver_swap_image_timeout->getValue()) *
                     (1000)));
             s->setNeedsSaving();
-            PowerSaver::updateTimeouts();
         }
     });
 
@@ -225,7 +222,6 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
                     static_cast<int>(Math::round(screensaver_swap_video_timeout->getValue()) *
                     (1000)));
             s->setNeedsSaving();
-            PowerSaver::updateTimeouts();
         }
     });
 

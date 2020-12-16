@@ -18,7 +18,6 @@
 #include "guis/GuiScraperSearch.h"
 #include "views/ViewController.h"
 #include "Gamelist.h"
-#include "PowerSaver.h"
 #include "SystemData.h"
 #include "Window.h"
 
@@ -36,7 +35,6 @@ GuiScraperMulti::GuiScraperMulti(
     addChild(&mBackground);
     addChild(&mGrid);
 
-    PowerSaver::pause();
     mIsProcessing = true;
 
     mTotalGames = static_cast<int>(mSearchQueue.size());
@@ -182,8 +180,6 @@ void GuiScraperMulti::finish()
         mIsProcessing = false;
         delete this;
     }));
-
-    PowerSaver::resume();
 }
 
 std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()

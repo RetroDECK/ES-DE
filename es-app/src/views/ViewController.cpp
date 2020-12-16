@@ -218,7 +218,6 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     systemList->goToSystem(system, false);
     mCurrentView = systemList;
     mCurrentView->onShow();
-    PowerSaver::setState(true);
 
     // Application startup animation.
     if (applicationStartup) {

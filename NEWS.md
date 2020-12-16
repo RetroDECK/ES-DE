@@ -29,6 +29,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Gamelist sorting is now working as expected and is persistent throughout the application session
 * Overhaul of the game collection functionality including many bug fixes and optimizations
 * Overhaul of the screensaver (the game info overlay now works correctly for instance)
+* Removed the PowerSaver
 * Added ability to delete custom collections from the GUI menu
 * Game counting is now done during sorting instead of every time a system is selected. This should make the UI more responsive in case of large game libraries
 * Added a system view counter for favorite games in addition to the total number of games
