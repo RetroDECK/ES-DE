@@ -22,6 +22,8 @@ public:
     void render(const Transform4x4f& parentTrans) override;
     void onSizeChanged() override;
 
+    void setResize(float width, float height) override;
+
     bool getState() const;
     void setState(bool state);
     std::string getValue() const override;

@@ -38,7 +38,7 @@ public:
     // zero, don't do any resizing.
     // Can be set before or after an image is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
-    void setResize(float width, float height);
+    void setResize(float width, float height) override;
     inline void setResize(const Vector2f& size) { setResize(size.x(), size.y()); }
 
     // Resize the image to be as large as possible but fit within a box of this size.

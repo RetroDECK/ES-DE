@@ -106,6 +106,11 @@ GuiMetaDataEd::GuiMetaDataEd(
         switch (iter->type) {
         case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
+                // Make the switches slightly smaller.
+                auto switchSize = ed->getSize() * 0.9;
+                ed->setResize(switchSize.x(), switchSize.y());
+                ed->setOrigin(-0.05, -0.09);
+
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
                 row.addElement(ed, false, true);
                 break;
@@ -219,6 +224,15 @@ GuiMetaDataEd::GuiMetaDataEd(
                             ed->setColor(DEFAULT_TEXTCOLOR);
                         else
                             ed->setColor(TEXTCOLOR_USERMARKED);
+                    }
+                    else if (newVal == "" && (currentKey == "developer" ||
+                            currentKey == "publisher" || currentKey == "genre" ||
+                            currentKey == "players")) {
+                        ed->setValue("unknown");
+                        if (originalValue == "unknown")
+                            ed->setColor(DEFAULT_TEXTCOLOR);
+                        else
+                           ed->setColor(TEXTCOLOR_USERMARKED);
                     }
                     else {
                         ed->setValue(newVal);

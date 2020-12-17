@@ -30,6 +30,11 @@ void SwitchComponent::onSizeChanged()
     mImage.setSize(mSize);
 }
 
+void SwitchComponent::setResize(float width, float height)
+{
+    mImage.setResize(width, height);
+}
+
 bool SwitchComponent::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("a", input) && input.value) {

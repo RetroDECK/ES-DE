@@ -71,7 +71,7 @@ public:
     // aspect ratio. If both are non-zero, potentially break the aspect ratio. If both are
     // zero, no resizing. This can be set before or after a video is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
-    virtual void setResize(float width, float height) = 0;
+    virtual void setResize(float width, float height) override = 0;
     inline void setResize(const Vector2f& size) { setResize(size.x(), size.y()); }
 
     // Resize the video to be as large as possible but fit within a box of this size.
