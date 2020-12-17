@@ -95,7 +95,6 @@ void CECInput::deinit()
 
 CECInput::CECInput() : mlibCEC(nullptr)
 {
-
     #if defined(HAVE_LIBCEC)
     #if defined(_RPI_)
     // Restart vchi tv and CEC in case we just came back from another app using CEC (like Kodi).

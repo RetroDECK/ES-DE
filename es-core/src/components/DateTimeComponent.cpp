@@ -76,16 +76,20 @@ std::string DateTimeComponent::getDisplayString() const
         Utils::Time::DateTime now(Utils::Time::now());
         Utils::Time::Duration dur(now.getTime() - mTime.getTime());
 
-        char buf[64];
+        std::string buf;
 
         if (dur.getDays() > 0)
-            sprintf(buf, "%d day%s ago", dur.getDays(), (dur.getDays() > 1) ? "s" : "");
+            buf = std::to_string(dur.getDays()) + " day" +
+                    (dur.getDays() > 1 ? "s" : "") + " ago";
         else if (dur.getHours() > 0)
-            sprintf(buf, "%d hour%s ago", dur.getHours(), (dur.getHours() > 1) ? "s" : "");
+            buf = std::to_string(dur.getHours()) + " hour" +
+                    (dur.getHours() > 1 ? "s" : "") + " ago";
         else if (dur.getMinutes() > 0)
-            sprintf(buf, "%d minute%s ago", dur.getMinutes(), (dur.getMinutes() > 1) ? "s" : "");
+            buf = std::to_string(dur.getMinutes()) + " minute" +
+                    (dur.getMinutes() > 1 ? "s" : "") + " ago";
         else
-            sprintf(buf, "%d second%s ago", dur.getSeconds(), (dur.getSeconds() > 1) ? "s" : "");
+            buf = std::to_string(dur.getSeconds()) + " second" +
+                    (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") + " ago";
 
         return std::string(buf);
     }

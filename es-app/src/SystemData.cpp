@@ -289,7 +289,7 @@ bool SystemData::loadConfig()
         std::vector<std::string> platformStrs = readList(platformList);
         std::vector<PlatformIds::PlatformId> platformIds;
         for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
-            std::string str = it->c_str();
+            std::string str = *it;
             PlatformIds::PlatformId platformId = PlatformIds::getPlatformId(str);
 
             if (platformId == PlatformIds::PLATFORM_IGNORE) {
