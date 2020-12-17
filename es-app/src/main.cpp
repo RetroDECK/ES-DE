@@ -243,9 +243,6 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--show-hidden-games") == 0) {
             Settings::getInstance()->setBool("ShowHiddenGames", true);
         }
-        else if (strcmp(argv[i], "--no-exit") == 0) {
-            Settings::getInstance()->setBool("ShowExit", false);
-        }
         else if (strcmp(argv[i], "--no-splash") == 0) {
             Settings::getInstance()->setBool("SplashScreen", false);
         }
@@ -277,6 +274,7 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--force-full") == 0) {
             Settings::getInstance()->setString("UIMode", "full");
+            Settings::getInstance()->setBool("ForceFull", true);
         }
         else if (strcmp(argv[i], "--force-kiosk") == 0) {
             Settings::getInstance()->setBool("ForceKiosk", true);
@@ -302,7 +300,6 @@ bool parseArgs(int argc, char* argv[])
 "  --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
 "  --show-hidden-files             Show hidden files and folders\n"
 "  --show-hidden-games             Show hidden games\n"
-"  --no-exit                       Don't show the exit option in the menu\n"
 "  --no-splash                     Don't show the splash screen\n"
 "  --debug                         Print debug information\n"
 #if defined(__unix__)

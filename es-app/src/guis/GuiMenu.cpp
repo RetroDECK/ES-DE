@@ -56,7 +56,13 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
     if (isFullUI)
         addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
 
-    addEntry("QUIT", 0x777777FF, true, [this] {openQuitMenu(); });
+    if (!Settings::getInstance()->getBool("ForceKiosk") &&
+            Settings::getInstance()->getString("UIMode") != "kiosk") {
+        if (Settings::getInstance()->getBool("ShowQuitMenu"))
+            addEntry("QUIT", 0x777777FF, true, [this] {openQuitMenu(); });
+        else
+            addEntry("QUIT", 0x777777FF, false, [this] {openQuitMenu(); });
+    }
 
     addChild(&mMenu);
     addVersionInfo();
@@ -174,10 +180,20 @@ void GuiMenu::openUISettings()
     uiModes.push_back("full");
     uiModes.push_back("kiosk");
     uiModes.push_back("kid");
+    std::string setMode;
+    if (Settings::getInstance()->getBool("ForceKiosk"))
+        setMode = "kiosk";
+    else if (Settings::getInstance()->getBool("ForceKid"))
+        setMode = "kid";
+    else
+        setMode = Settings::getInstance()->getString("UIMode");
     for (auto it = uiModes.cbegin(); it != uiModes.cend(); it++)
-        ui_mode->add(*it, *it, Settings::getInstance()->getString("UIMode") == *it);
+        ui_mode->add(*it, *it, setMode == *it);
     s->addWithLabel("UI MODE", ui_mode);
     s->addSaveFunc([ui_mode, this, s] {
+        // Always save settings if mode was forced to 'full'.
+        if (Settings::getInstance()->getBool("ForceFull"))
+            s->setNeedsSaving();
         std::string selectedMode = ui_mode->getSelected();
         if (selectedMode != Settings::getInstance()->getString("UIMode") &&
                 selectedMode != "full") {
@@ -192,6 +208,9 @@ void GuiMenu::openUISettings()
                 LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '"
                     << selectedMode << "'.";
                 Settings::getInstance()->setString("UIMode", selectedMode);
+                Settings::getInstance()->setBool("ForceFull", false);
+                Settings::getInstance()->setBool("ForceKiosk", false);
+                Settings::getInstance()->setBool("ForceKid", false);
                 Settings::getInstance()->saveFile();
             }, "NO", nullptr));
         }
@@ -200,6 +219,9 @@ void GuiMenu::openUISettings()
             LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '" <<
                     selectedMode << "'.";
             Settings::getInstance()->setString("UIMode", ui_mode->getSelected());
+            Settings::getInstance()->setBool("ForceFull", false);
+            Settings::getInstance()->setBool("ForceKiosk", false);
+            Settings::getInstance()->setBool("ForceKid", false);
             s->setNeedsSaving();
         }
     });
@@ -384,18 +406,6 @@ void GuiMenu::openUISettings()
                 play_videos_immediately->getState()) {
             Settings::getInstance()->setBool("PlayVideosImmediately",
                     play_videos_immediately->getState());
-            s->setNeedsSaving();
-        }
-    });
-
-    // Whether to show start menu in Kid mode.
-    auto show_kid_start_menu = std::make_shared<SwitchComponent>(mWindow);
-    show_kid_start_menu->setState(Settings::getInstance()->getBool("ShowKidStartMenu"));
-    s->addWithLabel("SHOW START MENU IN KID MODE", show_kid_start_menu);
-    s->addSaveFunc([show_kid_start_menu, s] {
-        if (Settings::getInstance()->getBool("ShowKidStartMenu") !=
-                show_kid_start_menu->getState()) {
-            Settings::getInstance()->setBool("ShowKidStartMenu", show_kid_start_menu->getState());
             s->setNeedsSaving();
         }
     });
@@ -808,30 +818,31 @@ void GuiMenu::openOtherSettings()
         }
     });
 
-    // macOS requires root privileges to reboot and power off so it doesn't make much
-    // sense to enable these settings and menu entries for this operating system.
-    #if !defined(__APPLE__)
-    // Hide Reboot System option in the quit menu.
-    auto show_reboot_system = std::make_shared<SwitchComponent>(mWindow);
-    show_reboot_system->setState(Settings::getInstance()->getBool("ShowRebootSystem"));
-    s->addWithLabel("SHOW 'REBOOT SYSTEM' MENU ENTRY", show_reboot_system);
-    s->addSaveFunc([show_reboot_system, s] {
-        if (show_reboot_system->getState() !=
-                Settings::getInstance()->getBool("ShowRebootSystem")) {
-        Settings::getInstance()->setBool("ShowRebootSystem", show_reboot_system->getState());
-        s->setNeedsSaving();
+    // Whether to enable the menu in Kid mode.
+    auto enable_menu_kid_mode = std::make_shared<SwitchComponent>(mWindow);
+    enable_menu_kid_mode->setState(Settings::getInstance()->getBool("EnableMenuKidMode"));
+    s->addWithLabel("ENABLE MENU IN KID MODE", enable_menu_kid_mode);
+    s->addSaveFunc([enable_menu_kid_mode, s] {
+        if (Settings::getInstance()->getBool("EnableMenuKidMode") !=
+                enable_menu_kid_mode->getState()) {
+            Settings::getInstance()->setBool("EnableMenuKidMode", enable_menu_kid_mode->getState());
+            s->setNeedsSaving();
         }
     });
 
-    // Hide Power Off System option in the quit menu.
-    auto show_poweroff_system = std::make_shared<SwitchComponent>(mWindow);
-    show_poweroff_system->setState(Settings::getInstance()->getBool("ShowPoweroffSystem"));
-    s->addWithLabel("SHOW 'POWER OFF SYSTEM' MENU ENTRY", show_poweroff_system);
-    s->addSaveFunc([show_poweroff_system, s] {
-        if (show_poweroff_system->getState() !=
-                Settings::getInstance()->getBool("ShowPoweroffSystem")) {
-        Settings::getInstance()->setBool("ShowPoweroffSystem", show_poweroff_system->getState());
-        s->setNeedsSaving();
+    // macOS requires root privileges to reboot and power off so it doesn't make much
+    // sense to show the quit menu for this operating system.
+    #if !defined(__APPLE__)
+    // Whether to show the quit menu with the options to reboot and shutdown the computer.
+    auto show_quit_menu = std::make_shared<SwitchComponent>(mWindow);
+    show_quit_menu->setState(Settings::getInstance()->getBool("ShowQuitMenu"));
+    s->addWithLabel("SHOW QUIT MENU (REBOOT AND POWER OFF ENTRIES)", show_quit_menu);
+    s->addSaveFunc([this, show_quit_menu, s] {
+        if (show_quit_menu->getState() !=
+                Settings::getInstance()->getBool("ShowQuitMenu")) {
+            Settings::getInstance()->setBool("ShowQuitMenu", show_quit_menu->getState());
+            s->setNeedsSaving();
+            GuiMenu::close(false);
         }
     });
     #endif
@@ -851,31 +862,40 @@ void GuiMenu::openConfigInput()
 
 void GuiMenu::openQuitMenu()
 {
-    auto s = new GuiSettings(mWindow, "QUIT");
-
-    Window* window = mWindow;
-    HelpStyle style = getHelpStyle();
-
-    ComponentListRow row;
-    if (UIModeController::getInstance()->isUIModeFull()) {
-        if (Settings::getInstance()->getBool("ShowExit")) {
-            row.makeAcceptInputHandler([window, this] {
-                window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
-                    "REALLY QUIT?", "YES", [] {
-                        Scripting::fireEvent("quit");
-                        quitES();
-                }, "NO", nullptr));
-            });
-            row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION",
-                    Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
-            s->addRow(row);
-        }
+    if (!Settings::getInstance()->getBool("ShowQuitMenu")) {
+        mWindow->pushGui(new GuiMsgBox(mWindow, this->getHelpStyle(),
+                "REALLY QUIT?", "YES", [this] {
+            Scripting::fireEvent("quit");
+            close(true);
+            quitES();
+        }, "NO", nullptr));
     }
+    else {
+        auto s = new GuiSettings(mWindow, "QUIT");
 
-    // macOS requires root privileges to reboot and power off so it doesn't make much
-    // sense to enable these settings and menu entries for this operating system.
-    #if !defined(__APPLE__)
-    if (Settings::getInstance()->getBool("ShowRebootSystem")) {
+        Window* window = mWindow;
+        HelpStyle style = getHelpStyle();
+
+        // This transparent bracket is only neeeded to generate the correct help prompts.
+        auto bracket = std::make_shared<ImageComponent>(mWindow);
+        bracket->setImage(":/graphics/arrow.svg");
+        bracket->setOpacity(0);
+
+        ComponentListRow row;
+
+        row.makeAcceptInputHandler([window, this] {
+            window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
+                "REALLY QUIT?", "YES", [this] {
+                    Scripting::fireEvent("quit");
+                    close(true);
+                    quitES();
+            }, "NO", nullptr));
+        });
+        row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION",
+                Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+        row.addElement(bracket, false);
+        s->addRow(row);
+
         row.elements.clear();
         row.makeAcceptInputHandler([window, this] {
             window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
@@ -889,10 +909,9 @@ void GuiMenu::openQuitMenu()
         });
         row.addElement(std::make_shared<TextComponent>(window, "REBOOT SYSTEM",
                 Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+        row.addElement(bracket, false);
         s->addRow(row);
-    }
 
-    if (Settings::getInstance()->getBool("ShowPoweroffSystem")) {
         row.elements.clear();
         row.makeAcceptInputHandler([window, this] {
             window->pushGui(new GuiMsgBox(window, this->getHelpStyle(),
@@ -906,11 +925,11 @@ void GuiMenu::openQuitMenu()
         });
         row.addElement(std::make_shared<TextComponent>(window, "POWER OFF SYSTEM",
                 Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+        row.addElement(bracket, false);
         s->addRow(row);
-    }
-    #endif
 
-    mWindow->pushGui(s);
+        mWindow->pushGui(s);
+    }
 }
 
 void GuiMenu::addVersionInfo()

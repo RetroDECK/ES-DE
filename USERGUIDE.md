@@ -690,7 +690,7 @@ The theme to use. Defaults to rbsimple-DE, the theme shipped with EmulationStati
 
 **UI mode**
 
-Defaults to Full which enables all functionality within the application. If set to Kid, only games marked as being suitable for children will be displayed, and there will be an option to disable the menu. In Kiosk mode, most settings are disabled.
+Defaults to Full which enables all functionality within the application. If set to Kid, only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see 'Enable menu in kid mode' further below. In Kiosk mode, the main menu will be available, but it will only display the entry to change the system audio volume. The game options menu will be usable, but the metadata editor and the ability to modify custom game collections will be disabled. Finally, screensaver controls will be enabled when in Kiosk mode.
 
 **Default sort order**
 
@@ -739,10 +739,6 @@ Activating or deactivating the built-in help systems that provides contextual in
 **Play videos immediately (override theme)**
 
 Some themes (including rbsimple-DE) display the game images briefly before playing the game videos. This setting forces the videos to be played immediately, regardless of the configuration in the theme. Note though that if there is a video available for a game, but no images, the video will always start to play immediately no matter the theme configuration or whether this settings has been enabled or not.
-
-**Show start menu in kid mode**
-
-Hiding or showing the menu when the UI mode is set to Kid.
 
 #### Screensaver settings
 
@@ -934,13 +930,13 @@ Using this option, you can place game images and videos in the ROM directory tre
 
 Displays the framerate and VRAM statistics as an overlay. You normally never need to use this. **Note:** As of version 1.0.0 the VRAM usage statistics is not accurate; this issue will be addressed in future ES-DE versions.
 
-**Show 'Reboot System' menu entry - Unix and Windows only**
+**Enable menu in kid mode**
 
-Gives the ability to hide the "Reboot system" entry on the quit menu. Anyone who has accidentally rebooted a system from such a menu will appreciate this.
+Enabling or disabling the menu when the UI mode is set to Kid.
 
-**Show 'Power Off System' menu entry - Unix and Windows only**
+**Show quit menu (reboot and power off entries)** _(Unix and Windows only)_
 
-Gives the ability to hide the "Power off system" entry on the quit menu. Anyone who has accidentally powered off a system from such a menu will appreciate this.
+With this setting enabled, there is a Quit menu shown as the last entry on the main menu which provides options to quit ES-DE, to reboot the computer or to power off the computer. With this setting disabled, there will simply be an entry shown to quit the application instead of the complete quit menu.
 
 
 ### Configure input

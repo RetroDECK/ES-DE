@@ -81,7 +81,9 @@ void UIModeController::unlockUIMode()
 
 bool UIModeController::isUIModeFull()
 {
-    return ((mCurrentUIMode == "full") && !Settings::getInstance()->getBool("ForceKiosk"));
+    return ((mCurrentUIMode == "full" || (isUIModeKid() &&
+            Settings::getInstance()->getBool("EnableMenuKidMode")))
+            && !Settings::getInstance()->getBool("ForceKiosk"));
 }
 
 bool UIModeController::isUIModeKid()

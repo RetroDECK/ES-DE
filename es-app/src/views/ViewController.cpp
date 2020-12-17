@@ -630,7 +630,7 @@ bool ViewController::input(InputConfig* config, Input input)
 
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&
-            !Settings::getInstance()->getBool("ShowKidStartMenu")) &&
+            !Settings::getInstance()->getBool("EnableMenuKidMode")) &&
             config->isMappedTo("start", input) && input.value != 0) {
         // If we don't stop the scrolling here, it will continue to
         // run after closing the menu.
@@ -833,7 +833,7 @@ std::vector<HelpPrompt> ViewController::getHelpPrompts()
 
     prompts = mCurrentView->getHelpPrompts();
     if (!(UIModeController::getInstance()->isUIModeKid() &&
-            !Settings::getInstance()->getBool("ShowKidStartMenu")))
+            !Settings::getInstance()->getBool("EnableMenuKidMode")))
         prompts.push_back(HelpPrompt("start", "menu"));
     return prompts;
 }

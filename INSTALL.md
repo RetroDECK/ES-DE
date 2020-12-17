@@ -925,7 +925,6 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
 --windowed                      Windowed mode, should be combined with --resolution
@@ -951,7 +950,6 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)
@@ -974,7 +972,6 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---no-exit                       Don't show the exit option in the menu
 --no-splash                     Don't show the splash screen
 --debug                         Print debug information
 --vsync [1/on or 0/off]         Turn vsync on or off (default is on)

@@ -59,7 +59,6 @@ void GuiGamelistFilter::resetAllFilters()
         std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         optionList->selectNone();
     }
-    bool testbool = mFilterIndex->isFiltered();
 
     mFilterIndex->setTextFilter("");
     mTextFilterField->setValue("");

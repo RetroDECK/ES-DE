@@ -28,10 +28,10 @@ Settings* Settings::sInstance = nullptr;
 std::vector<std::string> settings_dont_save {
     // These options can be set using command-line arguments:
     "Debug",                // --debug
+    "ForceFull",            // --force-full
     "ForceKid",             // --force-kid
     "ForceKiosk",           // --force-kiosk
     "IgnoreGamelist",       // --ignore-gamelist
-    "ShowExit",             // --no-exit
     "SplashScreen",         // --no-splash
     "VSync",                // --vsync [1/on or 0/off]
     #if !defined(_WIN64)
@@ -124,7 +124,7 @@ void Settings::setDefaults()
     mBoolMap["QuickSystemSelect"] = { true, true };
     mBoolMap["ShowHelpPrompts"] = { true, true };
     mBoolMap["PlayVideosImmediately"] = { false, false };
-    mBoolMap["ShowKidStartMenu"] = { false, false };
+    mBoolMap["EnableMenuKidMode"] = { false, false };
 
     // UI settings -> screensaver settings.
     mIntMap["ScreensaverTimer"] = { 5*60*1000, 5*60*1000 }; // 5 minutes
@@ -226,9 +226,10 @@ void Settings::setDefaults()
     mBoolMap["DisplayGPUStatistics"] = { false, false };
     // macOS requires root privileges to reboot and power off so it doesn't make much
     // sense to enable these settings and menu entries for this operating system.
-    #if !defined(__APPLE__)
-    mBoolMap["ShowRebootSystem"] = { true, true };
-    mBoolMap["ShowPoweroffSystem"] = { true, true };
+    #if defined(__APPLE__)
+    mBoolMap["ShowQuitMenu"] = { false, false };
+    #else
+    mBoolMap["ShowQuitMenu"] = { true, true };
     #endif
 
     //
@@ -237,10 +238,10 @@ void Settings::setDefaults()
 
     // Options listed using --help
     mBoolMap["Debug"] = { false, false };
+    mBoolMap["ForceFull"] = { false, false };
     mBoolMap["ForceKid"] = { false, false };
     mBoolMap["ForceKiosk"] = { false, false };
     mBoolMap["IgnoreGamelist"] = { false, false };
-    mBoolMap["ShowExit"] = { true, true };
     mBoolMap["SplashScreen"] = { true, true };
     mBoolMap["VSync"] = { true, true };
     #if !defined(_WIN64)
