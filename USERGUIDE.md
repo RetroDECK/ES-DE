@@ -491,9 +491,7 @@ The single-game scraper is launched from the metadata editor. You navigate to a 
 
 ### Multi-scraper
 
-The multi-scraper is launched from the main menu, it's the first option on the menu actually. Here you can configure a number of scraping options, all which are explained in more depth below when covering the main menu entries.
-
-**_Tip: Pressing the 's' key on the keyboard is a quick-skip shortcut rather than having to navigate to the 'Skip' button and selecting it._**
+The multi-scraper is launched from the main menu, it's the first option on the menu. Here you can configure a number of scraping options, all which are explained in more depth below when covering the main menu entries.
 
 ### Scraping process
 
@@ -641,6 +639,10 @@ Currently only English or World are supported, not really significant at the mom
 **Overwrite files and data**
 
 Affects both overwriting of metadata as well as actual game media files on the filesystem.
+
+**Halt on invalid media files**
+
+With this setting enabled, if any media files returned by the scraper seem to be invalid, the scraping is halted and an error message is presented where it's possible to retry or cancel the scraping of the specific game. In the case of multi-scraping it's also possible to skip the game and proceed to the next one in the queue. With this setting disabled, all media files will always be accepted and saved to disk. As of ES-DE v1.0 the file verification is crude as it's just checking if the file is less than 350 bytes in size which should indicate a server error response rather than a real media file. In some exceedingly rare situations, proper media files may be smaller than 350 bytes, and for those rare instances, simply disabling this setting temporarily allows these files to be scraped. Future versions of ES-DE will implement proper CRC/checksum verifications for ScreenScraper and possibly media file integrity checks for TheGamesDB (as this scraper service does not provide file checksums).
 
 **Search using metadata name**
 

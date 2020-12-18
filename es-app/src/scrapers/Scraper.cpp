@@ -242,6 +242,20 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         if (mResult.thumbnailImageUrl == it->fileURL &&
                 mResult.thumbnailImageData.size() > 0) {
 
+            // This is just a temporary workaround to avoid saving media files to disk that
+            // are actually just containing error messages from the scraper service. The
+            // proper solution is to implement file checksum checks to determine if the
+            // server response contains valid media. The problem with this temporary
+            // solution is of course that any tiny media files of less than 300 bytes
+            // will not be saved to disk.
+            if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
+                    mResult.thumbnailImageData.size() < 350) {
+                setError("The file '" + Utils::FileSystem::getFileName(filePath) +
+                        "' returned by the scraper seems to be invalid as it's less than " +
+                        "350 bytes in size.");
+                return;
+            }
+
             // Remove any existing media file before attempting to write a new one.
             // This avoids the problem where there's already a file for this media type
             // with a different format/extension (e.g. game.jpg and we're going to write
@@ -373,6 +387,19 @@ void MediaDownloadHandle::update()
         return;
 
     // Download is done, save it to disk.
+
+    // This is just a temporary workaround to avoid saving media files to disk that
+    // are actually just containing error messages from the scraper service. The
+    // proper solution is to implement file checksum checks to determine if the
+    // server response contains valid media. The problem with this temporary
+    // solution is of course that any tiny media files of less than 300 bytes
+    // will not be saved to disk.
+    if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
+            mReq->getContent().size() < 350) {
+        setError("The file '" + Utils::FileSystem::getFileName(mSavePath) + "' returned by the " +
+                "scraper seems to be invalid as it's less than 350 bytes in size.");
+        return;
+    }
 
     // Remove any existing media file before attempting to write a new one.
     // This avoids the problem where there's already a file for this media type

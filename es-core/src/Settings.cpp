@@ -99,6 +99,7 @@ void Settings::setDefaults()
     mStringMap["ScraperRegion"] = { "eu", "eu" };
     mStringMap["ScraperLanguage"] = { "en", "en" };
     mBoolMap["ScraperOverwriteData"] = { true, true };
+    mBoolMap["ScraperHaltOnInvalidMedia"] = { true, true };
     mBoolMap["ScraperSearchMetadataName"] = { true, true };
     mBoolMap["ScraperInteractive"] = { true, true };
     mBoolMap["ScraperSemiautomatic"] = { true, true };

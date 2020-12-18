@@ -119,6 +119,7 @@ private:
     std::function<void()> mSkipCallback;
     std::function<void()> mCancelCallback;
     unsigned int mScrapeCount;
+    bool mRefinedSearch;
     bool mBlockAccept;
     bool mFoundGame;
     bool mScrapeRatings;

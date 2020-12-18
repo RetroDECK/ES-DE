@@ -383,6 +383,20 @@ void GuiScraperMenu::openOtherSettings()
         }
     });
 
+    // Halt scraping on invalid media files.
+    auto scraper_halt_on_invalid_media = std::make_shared<SwitchComponent>(mWindow);
+    scraper_halt_on_invalid_media->
+            setState(Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia"));
+    s->addWithLabel("HALT ON INVALID MEDIA FILES", scraper_halt_on_invalid_media);
+    s->addSaveFunc([scraper_halt_on_invalid_media, s] {
+        if (scraper_halt_on_invalid_media->getState() !=
+                Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia")) {
+            Settings::getInstance()->setBool("ScraperHaltOnInvalidMedia",
+                    scraper_halt_on_invalid_media->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Search using metadata name.
     auto scraper_search_metadata_name = std::make_shared<SwitchComponent>(mWindow);
     scraper_search_metadata_name->
@@ -602,8 +616,7 @@ bool GuiScraperMenu::input(InputConfig* config, Input input)
     if (GuiComponent::input(config, input))
         return true;
 
-    if (config->isMappedTo("b", input) &&
-            input.value != 0) {
+    if (config->isMappedTo("b", input) && input.value != 0) {
         delete this;
         return true;
     }

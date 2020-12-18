@@ -44,6 +44,7 @@ GuiScraperSearch::GuiScraperSearch(
         mSearchType(type),
         mScrapeCount(scrapeCount),
         mScrapeRatings(false),
+        mRefinedSearch(false),
         mFoundGame(false)
 {
     addChild(&mGrid);
@@ -487,8 +488,12 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
             return true;
     }
 
-    // Quick-skip option activated by pressing 's' on the keyboard.
-    if (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_s && input.value != 0)
+    // Refine search.
+    if (config->isMappedTo("y", input) && input.value != 0)
+        openInputScreen(mLastSearch);
+
+    // Skip game.
+    if (mScrapeCount > 1 && config->isMappedTo("x", input) && input.value != 0)
         mSkipCallback();
 
     return GuiComponent::input(config, input);
@@ -644,8 +649,10 @@ void GuiScraperSearch::updateThumbnail()
     // we are in semi-automatic mode with a single matching game result, we proceed
     // to immediately download the rest of the media files.
     if ((mSearchType == ALWAYS_ACCEPT_FIRST_RESULT ||
-            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() == 1)) &&
+            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() == 1 &&
+            mRefinedSearch == false)) &&
             mScraperResults.front().thumbnailDownloadStatus == COMPLETED) {
+        mRefinedSearch = false;
         if (mScraperResults.size() == 0)
             mSkipCallback();
         else
@@ -656,6 +663,7 @@ void GuiScraperSearch::updateThumbnail()
 void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 {
     auto searchForFunc = [&](const std::string& name) {
+        mRefinedSearch = true;
         params.nameOverride = name;
         search(params);
     };
@@ -757,6 +765,9 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
 
+    prompts.push_back(HelpPrompt("y", "refine search"));
+    if (mScrapeCount > 1)
+        prompts.push_back(HelpPrompt("x", "skip"));
     if (mFoundGame)
         prompts.push_back(HelpPrompt("a", "accept result"));
 
