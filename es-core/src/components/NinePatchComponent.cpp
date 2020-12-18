@@ -36,8 +36,8 @@ NinePatchComponent::~NinePatchComponent()
 
 void NinePatchComponent::updateColors()
 {
-    const unsigned int edgeColor = Renderer::convertColor(mEdgeColor);
-    const unsigned int centerColor = Renderer::convertColor(mCenterColor);
+    const unsigned int edgeColor = Renderer::convertRGBAToABGR(mEdgeColor);
+    const unsigned int centerColor = Renderer::convertRGBAToABGR(mCenterColor);
 
     for (int i = 0; i < 6*9; ++i)
         mVertices[i].col = edgeColor;

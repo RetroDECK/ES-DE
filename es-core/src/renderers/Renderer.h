@@ -157,8 +157,8 @@ namespace Renderer
     int getScreenOffsetY();
     int getScreenRotate();
 
-    unsigned int rgbaToABGR(unsigned int color);
-    unsigned int abgrToRGBA(unsigned int color);
+    unsigned int convertRGBAToABGR(unsigned int color);
+    unsigned int convertABGRToRGBA(unsigned int color);
 
     Shader* getShaderProgram(unsigned int shaderID);
     const Transform4x4f getProjectionMatrix();
@@ -167,7 +167,6 @@ namespace Renderer
             unsigned char* textureRGBA = nullptr);
 
     // API specific.
-    unsigned int convertColor(const unsigned int _color);
     unsigned int getWindowFlags();
     void setupWindow();
     bool createContext();

@@ -338,9 +338,9 @@ void ImageComponent::updateVertices()
 void ImageComponent::updateColors()
 {
     const float opacity = (mOpacity * (mFading ? mFadeOpacity / 255.0 : 1.0)) / 255.0;
-    const unsigned int color = Renderer::convertColor((mColorShift & 0xFFFFFF00) |
+    const unsigned int color = Renderer::convertRGBAToABGR((mColorShift & 0xFFFFFF00) |
             static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
-    const unsigned int colorEnd = Renderer::convertColor((mColorShiftEnd & 0xFFFFFF00) |
+    const unsigned int colorEnd = Renderer::convertRGBAToABGR((mColorShiftEnd & 0xFFFFFF00) |
             static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity));
 
     mVertices[0].col = color;

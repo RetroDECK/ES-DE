@@ -585,7 +585,7 @@ TextCache* Font::buildTextCache(
 
         const float glyphStartX = x + glyph->bearing.x();
         const Vector2i& textureSize = glyph->texture->textureSize;
-        const unsigned int convertedColor = Renderer::convertColor(color);
+        const unsigned int convertedColor = Renderer::convertRGBAToABGR(color);
 
         vertices[1] = {
                 { glyphStartX, y - glyph->bearing.y() },
@@ -648,7 +648,7 @@ TextCache* Font::buildTextCache(
 
 void TextCache::setColor(unsigned int color)
 {
-    const unsigned int convertedColor = Renderer::convertColor(color);
+    const unsigned int convertedColor = Renderer::convertRGBAToABGR(color);
 
     for (auto it = vertexLists.begin(); it != vertexLists.end(); it++)
         for (auto it2 = it->verts.begin(); it2 != it->verts.end(); it2++)

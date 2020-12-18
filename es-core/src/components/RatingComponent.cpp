@@ -120,7 +120,7 @@ void RatingComponent::updateVertices()
     const float h = getSize().y(); // Ss the same as a single star's width.
     const float w = getSize().y() * mValue * numStars;
     const float fw = getSize().y() * numStars;
-    const unsigned int color = Renderer::convertColor(mColorShift);
+    const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
 
     mVertices[0] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
     mVertices[1] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
@@ -142,7 +142,7 @@ void RatingComponent::updateVertices()
 
 void RatingComponent::updateColors()
 {
-    const unsigned int color = Renderer::convertColor(mColorShift);
+    const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
 
     for (int i = 0; i < 8; ++i)
         mVertices[i].col = color;
@@ -165,7 +165,7 @@ void RatingComponent::render(const Transform4x4f& parentTrans)
 
         if (mUnfilledTexture->bind()) {
             if (mUnfilledColor != mColorShift) {
-                const unsigned int color = Renderer::convertColor(mUnfilledColor);
+                const unsigned int color = Renderer::convertRGBAToABGR(mUnfilledColor);
                 for (int i = 0; i < 8; ++i)
                     mVertices[i].col = color;
             }

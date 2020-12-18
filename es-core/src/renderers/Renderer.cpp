@@ -350,8 +350,8 @@ namespace Renderer
             const Blend::Factor _srcBlendFactor,
             const Blend::Factor _dstBlendFactor)
     {
-        const unsigned int color = convertColor(_color);
-        const unsigned int colorEnd = convertColor(_colorEnd);
+        const unsigned int color = convertRGBAToABGR(_color);
+        const unsigned int colorEnd = convertRGBAToABGR(_colorEnd);
         Vertex vertices[4];
 
         vertices[0] = { { _x     ,_y      }, { 0.0f, 0.0f }, color };
@@ -373,7 +373,7 @@ namespace Renderer
         drawTriangleStrips(vertices, 4, _trans, _srcBlendFactor, _dstBlendFactor);
     }
 
-    unsigned int rgbaToABGR(const unsigned int _color)
+    unsigned int convertRGBAToABGR(const unsigned int _color)
     {
         unsigned char red = ((_color & 0xff000000) >> 24) & 255;
         unsigned char green = ((_color & 0x00ff0000) >> 16) & 255;
@@ -383,7 +383,7 @@ namespace Renderer
         return alpha << 24 | blue << 16 | green << 8 | red;
     }
 
-    unsigned int abgrToRGBA(const unsigned int _color)
+    unsigned int convertABGRToRGBA(const unsigned int _color)
     {
         unsigned char alpha = ((_color & 0xff000000) >> 24) & 255;
         unsigned char blue = ((_color & 0x00ff0000) >> 16) & 255;

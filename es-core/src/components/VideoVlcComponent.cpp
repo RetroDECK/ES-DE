@@ -198,7 +198,8 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
         unsigned int color;
         if (mFadeIn < 1) {
             const unsigned int fadeIn = mFadeIn * 255.0f;
-            color = Renderer::convertColor((fadeIn << 24) | (fadeIn << 16) | (fadeIn << 8) | 255);
+            color = Renderer::convertRGBAToABGR((fadeIn << 24) |
+                    (fadeIn << 16) | (fadeIn << 8) | 255);
         }
         else {
             color = 0xFFFFFFFF;

@@ -163,7 +163,7 @@ void ComponentGrid::updateSeparators()
 {
     mLines.clear();
 
-    const unsigned int color = Renderer::convertColor(0xC6C7C6FF);
+    const unsigned int color = Renderer::convertRGBAToABGR(0xC6C7C6FF);
     bool drawAll = Settings::getInstance()->getBool("DebugGrid");
 
     Vector2f pos;
