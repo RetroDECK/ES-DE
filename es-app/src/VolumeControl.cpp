@@ -57,7 +57,7 @@ VolumeControl::VolumeControl()
 }
 
 VolumeControl::VolumeControl(
-        const VolumeControl & right):
+        const VolumeControl& right):
         originalVolume(0),
         internalVolume(0)
         #if defined(__APPLE__)
@@ -72,7 +72,7 @@ VolumeControl::VolumeControl(
         endpointVolume(nullptr)
         #endif
 {
-    (void)right;
+    static_cast<void>(right);
     sInstance = right.sInstance;
 }
 
@@ -92,7 +92,7 @@ VolumeControl::~VolumeControl()
     deinit();
 }
 
-std::shared_ptr<VolumeControl> & VolumeControl::getInstance()
+std::shared_ptr<VolumeControl>& VolumeControl::getInstance()
 {
     // Check if an VolumeControl instance is already created, if not create one.
     static std::shared_ptr<VolumeControl> sharedInstance = sInstance.lock();

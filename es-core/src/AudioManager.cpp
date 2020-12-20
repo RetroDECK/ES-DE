@@ -14,9 +14,10 @@
 
 #include <SDL2/SDL.h>
 
-std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
-SDL_AudioSpec AudioManager::sAudioFormat;
 std::shared_ptr<AudioManager> AudioManager::sInstance;
+std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
+SDL_AudioDeviceID AudioManager::sAudioDevice = 0;
+SDL_AudioSpec AudioManager::sAudioFormat;
 
 void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
 {
@@ -37,7 +38,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
                 restLength = len;
             }
             // Mix sample into stream.
-            SDL_MixAudio(stream, &(sound->getData()[sound->getPosition()]),
+            SDL_MixAudioFormat(stream, &(sound->getData()[sound->getPosition()]), AUDIO_S16,
                     restLength, Settings::getInstance()->getInt("SoundVolumeNavigation") * 1.28);
             if (sound->getPosition() + restLength < sound->getLength()) {
                 //sample hasn't ended yet
@@ -53,8 +54,8 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
 
     // We have processed all samples. check if some will still be playing.
     if (!stillPlaying) {
-        // No. pause audio till a Sound::play() wakes us up.
-        SDL_PauseAudio(1);
+        // Nothing is playing, pause the audio until Sound::play() wakes us up.
+        SDL_PauseAudioDevice(sAudioDevice, 1);
     }
 }
 
@@ -70,15 +71,17 @@ AudioManager::~AudioManager()
 
 std::shared_ptr<AudioManager>& AudioManager::getInstance()
 {
-    // Check if an AudioManager instance is already created, if not create one.
-    if (sInstance == nullptr && Settings::getInstance()->getBool("NavigationSounds")) {
+    // Check if an AudioManager instance is already created, if not create it.
+    if (sInstance == nullptr)
         sInstance = std::shared_ptr<AudioManager>(new AudioManager);
-    }
+
     return sInstance;
 }
 
 void AudioManager::init()
 {
+    LOG(LogInfo) << "Setting up AudioManager...";
+
     if (SDL_InitSubSystem(SDL_INIT_AUDIO) != 0) {
         LOG(LogError) << "Error initializing SDL audio!\n" << SDL_GetError();
         return;
@@ -90,18 +93,46 @@ void AudioManager::init()
             sSoundVector[i]->stop();
     }
 
-    // Set up format and callback. Play 16-bit stereo audio at 44.1Khz.
-    sAudioFormat.freq = 44100;
-    sAudioFormat.format = AUDIO_S16;
-    sAudioFormat.channels = 2;
-    sAudioFormat.samples = 4096;
-    sAudioFormat.callback = mixAudio;
-    sAudioFormat.userdata = nullptr;
+    SDL_AudioSpec sRequestedAudioFormat;
 
-    // Open the audio device and pause.
-    if (SDL_OpenAudio(&sAudioFormat, nullptr) < 0) {
-        LOG(LogError) << "AudioManager - Unable to open SDL audio: " <<
-                SDL_GetError() << std::endl;
+    SDL_memset(&sRequestedAudioFormat, 0, sizeof(sRequestedAudioFormat));
+    SDL_memset(&sAudioFormat, 0, sizeof(sAudioFormat));
+
+    // Set up format and callback. Play 16-bit stereo audio at 44.1Khz.
+    sRequestedAudioFormat.freq = 44100;
+    sRequestedAudioFormat.format = AUDIO_S16;
+    sRequestedAudioFormat.channels = 2;
+    sRequestedAudioFormat.samples = 4096;
+    sRequestedAudioFormat.callback = mixAudio;
+    sRequestedAudioFormat.userdata = nullptr;
+
+    for (unsigned int i = 0; i < SDL_GetNumAudioDevices(0); i++) {
+        LOG(LogDebug) << "Detected playback device '" << SDL_GetAudioDeviceName(i, 0) << "'.";
+    }
+
+    sAudioDevice = SDL_OpenAudioDevice(0, 0, &sRequestedAudioFormat, &sAudioFormat,
+            SDL_AUDIO_ALLOW_ANY_CHANGE);
+
+    if (sAudioDevice == 0) {
+        LOG(LogError) << "Unable to open audio device: " << SDL_GetError() << std::endl;
+        return;
+    }
+
+    if (sAudioFormat.freq != sRequestedAudioFormat.freq) {
+        LOG(LogDebug) << "AudioManager::init(): Requested frequency 44100 could not be "
+                "set, obtained " << std::to_string(sAudioFormat.freq) << ".";
+    }
+    if (sAudioFormat.format != sRequestedAudioFormat.format) {
+        LOG(LogDebug) << "AudioManager::init(): Requested format " << AUDIO_S16 << " could not be "
+                "set, obtained " << std::to_string(sAudioFormat.format) << ".";
+    }
+    if (sAudioFormat.channels != sRequestedAudioFormat.channels) {
+        LOG(LogDebug) << "AudioManager::init(): Requested channel count 2 could not be "
+                "set, obtained " << std::to_string(sAudioFormat.channels) << ".";
+    }
+    if (sAudioFormat.samples != sRequestedAudioFormat.samples) {
+        LOG(LogDebug) << "AudioManager::init(): Requested sample buffer size 4096 could not be "
+                "set, obtained " << std::to_string(sAudioFormat.samples) << ".";
     }
 
     // Just in case someone changed the es_settings.cfg file manually to invalid values.
@@ -128,13 +159,11 @@ void AudioManager::deinit()
 
 void AudioManager::registerSound(std::shared_ptr<Sound>& sound)
 {
-    getInstance();
     sSoundVector.push_back(sound);
 }
 
 void AudioManager::unregisterSound(std::shared_ptr<Sound>& sound)
 {
-    getInstance();
     for (unsigned int i = 0; i < sSoundVector.size(); i++) {
         if (sSoundVector.at(i) == sound) {
             sSoundVector[i]->stop();
@@ -147,10 +176,8 @@ void AudioManager::unregisterSound(std::shared_ptr<Sound>& sound)
 
 void AudioManager::play()
 {
-    getInstance();
-
     // Unpause audio, the mixer will figure out if samples need to be played...
-    SDL_PauseAudio(0);
+    SDL_PauseAudioDevice(sAudioDevice, 0);
 }
 
 void AudioManager::stop()
@@ -161,5 +188,5 @@ void AudioManager::stop()
             sSoundVector[i]->stop();
     }
     // Pause audio.
-    SDL_PauseAudio(1);
+    SDL_PauseAudioDevice(sAudioDevice, 1);
 }

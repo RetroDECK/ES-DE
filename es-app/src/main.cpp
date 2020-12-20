@@ -24,6 +24,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
+#include "AudioManager.h"
 #include "CollectionSystemManager.h"
 #include "EmulationStation.h"
 #include "InputManager.h"
@@ -466,6 +467,7 @@ int main(int argc, char* argv[])
     if (event.type == SDL_QUIT)
         return 1;
 
+    AudioManager::getInstance();
     MameNames::init();
 
     if (splashScreen) {

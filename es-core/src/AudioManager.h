@@ -26,6 +26,7 @@ class AudioManager
     AudioManager();
 
 public:
+    static SDL_AudioDeviceID sAudioDevice;
     static std::shared_ptr<AudioManager>& getInstance();
 
     void init();

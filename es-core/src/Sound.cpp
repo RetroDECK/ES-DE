@@ -138,14 +138,14 @@ void Sound::init()
     }
     else {
         // Worked. set up member data.
-        SDL_LockAudio();
+        SDL_LockAudioDevice(AudioManager::sAudioDevice);
         mSampleData = cvt.buf;
         mSampleLength = cvt.len_cvt;
         mSamplePos = 0;
         mSampleFormat.channels = 2;
         mSampleFormat.freq = 44100;
         mSampleFormat.format = AUDIO_S16;
-        SDL_UnlockAudio();
+        SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
     }
     // Free WAV data now.
     SDL_FreeWAV(data);
@@ -156,12 +156,12 @@ void Sound::deinit()
     playing = false;
 
     if (mSampleData != nullptr) {
-        SDL_LockAudio();
+        SDL_LockAudioDevice(AudioManager::sAudioDevice);
         delete[] mSampleData;
         mSampleData = nullptr;
         mSampleLength = 0;
         mSamplePos = 0;
-        SDL_UnlockAudio();
+        SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
     }
 }
 
@@ -173,9 +173,7 @@ void Sound::play()
     if (!Settings::getInstance()->getBool("NavigationSounds"))
         return;
 
-    AudioManager::getInstance();
-
-    SDL_LockAudio();
+    SDL_LockAudioDevice(AudioManager::sAudioDevice);
 
     if (playing)
         // Replay from start. rewind the sample to the beginning.
@@ -184,7 +182,7 @@ void Sound::play()
         // Flag our sample as playing.
         playing = true;
 
-    SDL_UnlockAudio();
+    SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
     // Tell the AudioManager to start playing samples.
     AudioManager::getInstance()->play();
 }
@@ -197,10 +195,10 @@ bool Sound::isPlaying() const
 void Sound::stop()
 {
     // Flag our sample as not playing and rewind its position.
-    SDL_LockAudio();
+    SDL_LockAudioDevice(AudioManager::sAudioDevice);
     playing = false;
     mSamplePos = 0;
-    SDL_UnlockAudio();
+    SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
 }
 
 const Uint8* Sound::getData() const
