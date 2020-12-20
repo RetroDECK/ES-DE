@@ -104,6 +104,7 @@ if(APPLE OR WIN32)
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_executable(EmulationStation ${ES_SOURCES} ${ES_HEADERS})
     target_link_libraries(EmulationStation ${COMMON_LIBRARIES} es-core)
+    set_target_properties(EmulationStation PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 else()
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_executable(emulationstation ${ES_SOURCES} ${ES_HEADERS})
@@ -145,7 +146,6 @@ elseif(APPLE)
     # on your system (e.g. if using libSDL2-2.1.0.dylib instead of libSDL2-2.0.0.dylib).
     # This problem definitely needs to be resolved properly at a later date.
     add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
-            -change /usr/lib/libcurl.4.dylib @rpath/libcurl.4.dylib
             -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
             -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
             -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
@@ -158,8 +158,6 @@ elseif(APPLE)
             WORLD_READ WORLD_EXECUTE)
 
     if(NOT APPLE_SKIP_INSTALL_LIBS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libcurl.4.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
