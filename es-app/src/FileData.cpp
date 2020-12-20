@@ -768,12 +768,22 @@ void FileData::launchGame(Window* window)
 
     // If %COREPATH% is used in es_systems.cfg for this system, try to find the emulator
     // core using the core paths defined in the setting EmulatorCorePath.
+    #if defined(_WIN64)
+    auto corePos = commandWide.find(L"%COREPATH%");
+    if (corePos != std::wstring::npos && emulatorCorePath.size() > 0) {
+    #else
     auto corePos = command.find("%COREPATH%");
     if (corePos != std::string::npos && emulatorCorePath.size() > 0) {
+    #endif
         std::string coreName;
         bool foundCoreFile = false;
+        #if defined(_WIN64)
+        std::vector<std::string> corePaths =
+                Utils::String::delimitedStringToVector(emulatorCorePath, ";");
+        #else
         std::vector<std::string> corePaths =
                 Utils::String::delimitedStringToVector(emulatorCorePath, ":");
+        #endif
         auto spacePos = command.find(" ", corePos);
         if (spacePos != std::string::npos) {
             coreName = command.substr(corePos + 10, spacePos - corePos - 10);
@@ -786,9 +796,17 @@ void FileData::launchGame(Window* window)
                         Utils::FileSystem::isSymlink(coreFile)) {
                     foundCoreFile = true;
                     if (pathHasSpaces)
+                    #if defined(_WIN64)
+                        commandWide.replace(corePos, spacePos - corePos, L"\"" +
+                                Utils::String::stringToWideString(coreFile) + L"\"");
+                    else
+                        commandWide.replace(corePos, spacePos - corePos,
+                                Utils::String::stringToWideString(coreFile));
+                    #else
                         command.replace(corePos, spacePos - corePos, "\"" + coreFile + "\"");
                     else
                         command.replace(corePos, spacePos - corePos, coreFile);
+                    #endif
                     break;
                 }
             }

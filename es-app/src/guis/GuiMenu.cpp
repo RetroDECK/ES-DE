@@ -672,7 +672,11 @@ void GuiMenu::openOtherSettings()
     bracketCorePath->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
     rowCorePath.addElement(emulator_core_path, true);
     rowCorePath.addElement(bracketCorePath, false);
+    #if defined(_WIN64)
+    std::string titleCorePath = "ENTER EMULATOR CORE PATH (USE SEMICOLON AS SEPARATOR)";
+    #else
     std::string titleCorePath = "ENTER EMULATOR CORE PATH (USE COLON AS SEPARATOR)";
+    #endif
     std::string emulatorCorePathStaticText = "Default path:";
     std::string defaultEmulatorCorePath = Settings::getInstance()->
             getDefaultString("EmulatorCorePath");
