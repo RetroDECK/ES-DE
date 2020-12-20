@@ -170,6 +170,8 @@ void Settings::setDefaults()
     //#else
     //    mStringMap["AudioDevice"] = { "Master", "Master" };
     #endif
+    mIntMap["SoundVolumeNavigation"] = { 80, 80 };
+    mIntMap["SoundVolumeVideos"] = { 100, 100 };
     mBoolMap["GamelistVideoAudio"] = { true, true };
     mBoolMap["NavigationSounds"] = { true, true };
 

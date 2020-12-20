@@ -214,7 +214,7 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
     screensaver_swap_video_timeout->setValue(static_cast<float>(Settings::getInstance()->
             getInt("ScreensaverSwapVideoTimeout") / (1000)));
     s->addWithLabel("SWAP VIDEOS AFTER (SECONDS)", screensaver_swap_video_timeout);
-    s->addSaveFunc([screensaver_swap_video_timeout,s ] {
+    s->addSaveFunc([screensaver_swap_video_timeout, s] {
         if (screensaver_swap_video_timeout->getValue() !=
                 static_cast<float>(Settings::getInstance()->
                 getInt("ScreensaverSwapVideoTimeout") / (1000))) {

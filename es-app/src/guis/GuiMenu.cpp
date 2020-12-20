@@ -439,6 +439,36 @@ void GuiMenu::openSoundSettings()
     });
     #endif
 
+    // Volume for navigation sounds.
+    auto sound_volume_navigation =
+            std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
+    sound_volume_navigation->setValue(static_cast<float>(Settings::getInstance()->
+            getInt("SoundVolumeNavigation")));
+    s->addWithLabel("NAVIGATION VOLUME", sound_volume_navigation);
+    s->addSaveFunc([sound_volume_navigation, s] {
+        if (sound_volume_navigation->getValue() !=
+                static_cast<float>(Settings::getInstance()->getInt("SoundVolumeNavigation"))) {
+            Settings::getInstance()->setInt("SoundVolumeNavigation",
+                    static_cast<int>(sound_volume_navigation->getValue()));
+            s->setNeedsSaving();
+        }
+    });
+
+    // Volume for videos.
+    auto sound_volume_videos =
+            std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
+    sound_volume_videos->setValue(static_cast<float>(Settings::getInstance()->
+            getInt("SoundVolumeVideos")));
+    s->addWithLabel("VIDEO VOLUME", sound_volume_videos);
+    s->addSaveFunc([sound_volume_videos, s] {
+        if (sound_volume_videos->getValue() !=
+                static_cast<float>(Settings::getInstance()->getInt("SoundVolumeVideos"))) {
+            Settings::getInstance()->setInt("SoundVolumeVideos",
+                    static_cast<int>(sound_volume_videos->getValue()));
+            s->setNeedsSaving();
+        }
+    });
+
     if (UIModeController::getInstance()->isUIModeFull()) {
     // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
     // As PulseAudio controls the sound devices for the desktop environment, it doesn't

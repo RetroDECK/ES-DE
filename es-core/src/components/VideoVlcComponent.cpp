@@ -360,8 +360,14 @@ void VideoVlcComponent::startVideo()
                     if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
                             !mScreensaverMode) ||
                             (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
-                            mScreensaverMode))
+                            mScreensaverMode)) {
                         libvlc_audio_set_mute(mMediaPlayer, 1);
+                    }
+                    else {
+                        libvlc_audio_set_mute(mMediaPlayer, 0);
+                        libvlc_audio_set_volume(mMediaPlayer,
+                                Settings::getInstance()->getInt("SoundVolumeVideos"));
+                    }
 
                     libvlc_media_player_play(mMediaPlayer);
                     libvlc_video_set_callbacks(mMediaPlayer, lock, unlock, display,

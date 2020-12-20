@@ -38,7 +38,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
             }
             // Mix sample into stream.
             SDL_MixAudio(stream, &(sound->getData()[sound->getPosition()]),
-                    restLength, SDL_MIX_MAXVOLUME);
+                    restLength, Settings::getInstance()->getInt("SoundVolumeNavigation") * 1.28);
             if (sound->getPosition() + restLength < sound->getLength()) {
                 //sample hasn't ended yet
                 stillPlaying = true;
@@ -103,6 +103,16 @@ void AudioManager::init()
         LOG(LogError) << "AudioManager - Unable to open SDL audio: " <<
                 SDL_GetError() << std::endl;
     }
+
+    // Just in case someone changed the es_settings.cfg file manually to invalid values.
+    if (Settings::getInstance()->getInt("SoundVolumeNavigation") > 100)
+        Settings::getInstance()->setInt("SoundVolumeNavigation", 100);
+    if (Settings::getInstance()->getInt("SoundVolumeNavigation") < 0)
+        Settings::getInstance()->setInt("SoundVolumeNavigation", 0);
+    if (Settings::getInstance()->getInt("SoundVolumeVideos") > 100)
+        Settings::getInstance()->setInt("SoundVolumeVideos", 100);
+    if (Settings::getInstance()->getInt("SoundVolumeVideos") < 0)
+        Settings::getInstance()->setInt("SoundVolumeVideos", 0);
 }
 
 void AudioManager::deinit()
