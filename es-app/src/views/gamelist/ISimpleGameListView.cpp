@@ -153,7 +153,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 setCursor(mCursorStack.top());
                 if (mCursorStack.size() > 0)
                     mCursorStack.pop();
-                onFileChanged(getCursor(), false);
             }
             else {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
