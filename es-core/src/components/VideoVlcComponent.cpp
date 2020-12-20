@@ -30,7 +30,8 @@
 libvlc_instance_t* VideoVlcComponent::mVLC = nullptr;
 
 // VLC prepares to render a video frame.
-static void* lock(void* data, void** p_pixels) {
+static void* lock(void* data, void** p_pixels)
+{
     struct VideoContext* c = reinterpret_cast<struct VideoContext*>(data);
     SDL_LockMutex(c->mutex);
     SDL_LockSurface(c->surface);
@@ -39,14 +40,16 @@ static void* lock(void* data, void** p_pixels) {
 }
 
 // VLC just rendered a video frame.
-static void unlock(void* data, void* /*id*/, void *const* /*p_pixels*/) {
+static void unlock(void* data, void* /*id*/, void *const* /*p_pixels*/)
+{
     struct VideoContext* c = reinterpret_cast<struct VideoContext*>(data);
     SDL_UnlockSurface(c->surface);
     SDL_UnlockMutex(c->mutex);
 }
 
 // VLC wants to display a video frame.
-static void display(void* /*data*/, void* /*id*/) {
+static void display(void* /*data*/, void* /*id*/)
+{
     // Data to be displayed.
 }
 
@@ -357,23 +360,23 @@ void VideoVlcComponent::startVideo()
                     // Setup the media player.
                     mMediaPlayer = libvlc_media_player_new_from_media(mMedia);
 
+                    libvlc_media_player_play(mMediaPlayer);
+                    libvlc_video_set_callbacks(mMediaPlayer, lock, unlock, display,
+                            reinterpret_cast<void*>(&mContext));
+                    libvlc_video_set_format(mMediaPlayer, "RGBA", static_cast<int>(mVideoWidth),
+                            static_cast<int>(mVideoHeight), static_cast<int>(mVideoWidth * 4));
+
                     if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
                             !mScreensaverMode) ||
                             (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
                             mScreensaverMode)) {
-                        libvlc_audio_set_mute(mMediaPlayer, 1);
+                        libvlc_audio_set_volume(mMediaPlayer, 0);
                     }
                     else {
                         libvlc_audio_set_mute(mMediaPlayer, 0);
                         libvlc_audio_set_volume(mMediaPlayer,
                                 Settings::getInstance()->getInt("SoundVolumeVideos"));
                     }
-
-                    libvlc_media_player_play(mMediaPlayer);
-                    libvlc_video_set_callbacks(mMediaPlayer, lock, unlock, display,
-                            reinterpret_cast<void*>(&mContext));
-                    libvlc_video_set_format(mMediaPlayer, "RGBA", static_cast<int>(mVideoWidth),
-                            static_cast<int>(mVideoHeight), static_cast<int>(mVideoWidth * 4));
 
                     // Update the playing state.
                     mIsPlaying = true;
@@ -429,13 +432,12 @@ void VideoVlcComponent::handleLooping()
             }
             else {
                 libvlc_media_player_set_media(mMediaPlayer, mMedia);
+                libvlc_media_player_play(mMediaPlayer);
 
                 if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
                         !mScreensaverMode) || (!Settings::getInstance()->
                         getBool("ScreensaverVideoAudio") && mScreensaverMode))
-                    libvlc_audio_set_mute(mMediaPlayer, 1);
-
-                libvlc_media_player_play(mMediaPlayer);
+                    libvlc_audio_set_volume(mMediaPlayer, 0);
             }
         }
     }
