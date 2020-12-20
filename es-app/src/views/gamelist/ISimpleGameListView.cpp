@@ -18,6 +18,8 @@
 #include "Sound.h"
 #include "SystemData.h"
 
+#include "Log.h"
+
 ISimpleGameListView::ISimpleGameListView(
         Window* window,
         FileData* root)
@@ -116,8 +118,25 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
                     mCursorStack.push(cursor);
                     populateList(cursor->getChildrenListToDisplay(), cursor);
-                    FileData* cursor = getCursor();
-                    setCursor(cursor);
+
+                    FileData* newCursor = nullptr;
+                    std::vector<FileData*> listEntries = cursor->getChildrenListToDisplay();
+                    // Check if there is an entry in the cursor stack history matching any entry
+                    // in the currect folder. If so, select that entry.
+                    for (auto it = mCursorStackHistory.begin();
+                            it != mCursorStackHistory.end(); it++) {
+                        if (std::find(listEntries.begin(), listEntries.end(), *it) !=
+                                listEntries.end()) {
+                            newCursor = *it;
+                            mCursorStackHistory.erase(it);
+                            break;
+                        }
+                    }
+
+                    // If there was no match in the cursor history, simply select the first entry.
+                    if (!newCursor)
+                        newCursor = getCursor();
+                    setCursor(newCursor);
                 }
             }
 
@@ -126,6 +145,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedTo("b", input)) {
             ViewController::get()->cancelViewTransitions();
             if (mCursorStack.size()) {
+                // Save the position to the cursor stack history.
+                mCursorStackHistory.push_back(getCursor());
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
                 populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay(),
                         mCursorStack.top()->getParent());

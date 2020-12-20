@@ -35,6 +35,13 @@ public:
 
     virtual const std::vector<std::string>& getFirstLetterIndex() override = 0;
 
+    // These functions are used to retain the folder cursor history, for instance
+    // during a view reload. The calling function stores the history temporarily.
+    void copyCursorHistory(std::vector<FileData*>& cursorHistory) override
+            { cursorHistory = mCursorStackHistory; };
+    void populateCursorHistory(std::vector<FileData*>& cursorHistory) override
+            { mCursorStackHistory = cursorHistory; };
+
 protected:
     virtual std::string getQuickSystemSelectRightButton() = 0;
     virtual std::string getQuickSystemSelectLeftButton() = 0;
@@ -49,6 +56,7 @@ protected:
 
     std::vector<GuiComponent*> mThemeExtras;
     std::stack<FileData*> mCursorStack;
+    std::vector<FileData*> mCursorStackHistory;
 
     std::vector<std::string> mFirstLetterIndex;
 

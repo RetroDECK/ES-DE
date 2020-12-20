@@ -48,6 +48,9 @@ public:
     virtual FileData* getFirstGameEntry() = 0;
     virtual const std::vector<std::string>& getFirstLetterIndex() = 0;
 
+    virtual void copyCursorHistory(std::vector<FileData*>& cursorHistory) = 0;
+    virtual void populateCursorHistory(std::vector<FileData*>& cursorHistory) = 0;
+
     virtual bool input(InputConfig* config, Input input) override;
     virtual void remove(FileData* game, bool deleteFile) = 0;
     virtual void removeMedia(FileData* game) = 0;

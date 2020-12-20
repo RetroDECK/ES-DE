@@ -56,6 +56,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added a gamelist info text field displaying the game count, any applied filters as well as an icon if a folder has been entered
 * Expanded the gamelist filter functionality to include completed and broken games as well as the ability to filter on game names (via free text entry)
 * Expanded the metadata for folders and made it possible to mark them as favorites
+* Added functionality to remember cursor positions inside folders and grouped custom collections
 * Added new component GuiComplexTextEditPopup to handle changes to configuration file entries and similar
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
 * Replaced the on and off button icons with new graphics

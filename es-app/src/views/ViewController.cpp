@@ -747,6 +747,11 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
             bool isCurrent = (mCurrentView == it->second);
             SystemData* system = it->first;
             FileData* cursor = view->getCursor();
+
+            // Retain the cursor history for the view.
+            std::vector<FileData*> cursorHistoryTemp;
+            it->second->copyCursorHistory(cursorHistoryTemp);
+
             mGameListViews.erase(it);
 
             if (reloadTheme)
@@ -761,6 +766,7 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
             if (isCurrent)
                 mCurrentView = newView;
 
+            newView->populateCursorHistory(cursorHistoryTemp);
             break;
         }
     }
