@@ -48,43 +48,6 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
     return get(elem->get<std::string>("path"));
 }
 
-NavigationSounds* NavigationSounds::getInstance()
-{
-    if (sInstance == nullptr)
-        sInstance = new NavigationSounds();
-
-    return sInstance;
-}
-
-void NavigationSounds::deinit()
-{
-    if (sInstance)
-        delete sInstance;
-
-    sInstance = nullptr;
-}
-
-void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
-{
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowse"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselect"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "select"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "back"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scroll"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favorite"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launch"));
-}
-
-void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)
-{
-    NavigationSounds::getInstance()->navigationSounds[soundID]->play();
-}
-
-bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
-{
-    return NavigationSounds::getInstance()->navigationSounds[soundID]->isPlaying();
-}
-
 Sound::Sound(
         const std::string& path)
         : mSampleData(nullptr),
@@ -123,31 +86,43 @@ void Sound::init()
         LOG(LogError) << SDL_GetError();
         return;
     }
-    // Build conversion buffer.
-    SDL_AudioCVT cvt;
-    SDL_BuildAudioCVT(&cvt, wave.format, wave.channels, wave.freq, AUDIO_S16, 2, 44100);
-    // Copy data to conversion buffer.
-    cvt.len = dlen;
-    cvt.buf = new Uint8[cvt.len * cvt.len_mult];
-    memcpy(cvt.buf, data, dlen);
-    // Convert buffer to stereo, 16bit, 44.1kHz.
-    if (SDL_ConvertAudio(&cvt) < 0) {
-        LOG(LogError) << "Error converting sound \"" << mPath <<
-                "\" to 44.1kHz, 16bit, stereo format: " << SDL_GetError();
-        delete[] cvt.buf;
+
+    // Convert sound file to the format required by ES-DE.
+    SDL_AudioStream *conversionStream = SDL_NewAudioStream(wave.format, wave.channels, wave.freq,
+            AudioManager::sAudioFormat.format, AudioManager::sAudioFormat.channels,
+            AudioManager::sAudioFormat.freq);
+
+    if (conversionStream == nullptr) {
+        LOG(LogError) << "Failed to create sample conversion stream:";
+        LOG(LogError) << SDL_GetError();
+        return;
     }
-    else {
-        // Worked. set up member data.
-        SDL_LockAudioDevice(AudioManager::sAudioDevice);
-        mSampleData = cvt.buf;
-        mSampleLength = cvt.len_cvt;
-        mSamplePos = 0;
-        mSampleFormat.channels = 2;
-        mSampleFormat.freq = 44100;
-        mSampleFormat.format = AUDIO_S16;
-        SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
+
+    if (SDL_AudioStreamPut(conversionStream, data, dlen) == -1) {
+        LOG(LogError) << "Failed to put samples in the conversion stream:";
+        LOG(LogError) << SDL_GetError();
+        SDL_FreeAudioStream(conversionStream);
+        return;
     }
-    // Free WAV data now.
+
+    int sampleLength = SDL_AudioStreamAvailable(conversionStream);
+
+    Uint8* converted = new Uint8[sampleLength];
+    if (SDL_AudioStreamGet(conversionStream, converted, sampleLength) == -1) {
+        LOG(LogError) << "Failed to convert sound file '" << mPath << "':";
+        LOG(LogError) << SDL_GetError();
+        SDL_FreeAudioStream(conversionStream);
+        delete[] converted;
+        return;
+    }
+
+    mSampleData = converted;
+    mSampleLength = sampleLength;
+    mSamplePos = 0;
+    mSampleFormat.freq = AudioManager::sAudioFormat.freq;
+    mSampleFormat.channels = AudioManager::sAudioFormat.channels;
+    mSampleFormat.format = AudioManager::sAudioFormat.format;
+    SDL_FreeAudioStream(conversionStream);
     SDL_FreeWAV(data);
 }
 
@@ -226,9 +201,39 @@ Uint32 Sound::getLength() const
     return mSampleLength;
 }
 
-Uint32 Sound::getLengthMS() const
+NavigationSounds* NavigationSounds::getInstance()
 {
-    // 44100 samples per second, 2 channels (stereo).
-    // I have no idea why the *0.75 is necessary, but otherwise it's inaccurate.
-    return static_cast<Uint32>((mSampleLength / 44100.0f / 2.0f * 0.75f) * 1000);
+    if (sInstance == nullptr)
+        sInstance = new NavigationSounds();
+
+    return sInstance;
+}
+
+void NavigationSounds::deinit()
+{
+    if (sInstance)
+        delete sInstance;
+
+    sInstance = nullptr;
+}
+
+void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
+{
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowse"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselect"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "select"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "back"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scroll"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favorite"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launch"));
+}
+
+void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)
+{
+    NavigationSounds::getInstance()->navigationSounds[soundID]->play();
+}
+
+bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
+{
+    return NavigationSounds::getInstance()->navigationSounds[soundID]->isPlaying();
 }

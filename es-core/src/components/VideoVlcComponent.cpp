@@ -11,6 +11,7 @@
 #include "renderers/Renderer.h"
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
+#include "AudioManager.h"
 #include "Settings.h"
 #include "Window.h"
 
@@ -28,30 +29,6 @@
 #endif
 
 libvlc_instance_t* VideoVlcComponent::mVLC = nullptr;
-
-// VLC prepares to render a video frame.
-static void* lock(void* data, void** p_pixels)
-{
-    struct VideoContext* c = reinterpret_cast<struct VideoContext*>(data);
-    SDL_LockMutex(c->mutex);
-    SDL_LockSurface(c->surface);
-    *p_pixels = c->surface->pixels;
-    return nullptr; // Picture identifier, not needed here.
-}
-
-// VLC just rendered a video frame.
-static void unlock(void* data, void* /*id*/, void *const* /*p_pixels*/)
-{
-    struct VideoContext* c = reinterpret_cast<struct VideoContext*>(data);
-    SDL_UnlockSurface(c->surface);
-    SDL_UnlockMutex(c->mutex);
-}
-
-// VLC wants to display a video frame.
-static void display(void* /*data*/, void* /*id*/)
-{
-    // Data to be displayed.
-}
 
 VideoVlcComponent::VideoVlcComponent(Window* window)
         : VideoComponent(window), mMediaPlayer(nullptr), mContext({})
@@ -71,6 +48,7 @@ VideoVlcComponent::~VideoVlcComponent()
 
 void VideoVlcComponent::setResize(float width, float height)
 {
+    // This resize function is used when stretching videos to full screen in the video screensaver.
     mTargetSize = Vector2f(width, height);
     mTargetIsMax = false;
     mStaticImage.setResize(width, height);
@@ -79,6 +57,8 @@ void VideoVlcComponent::setResize(float width, float height)
 
 void VideoVlcComponent::setMaxSize(float width, float height)
 {
+    // This resize function is used in most instances, such as non-stretched video screensaver
+    // and the gamelist videos.
     mTargetSize = Vector2f(width, height);
     mTargetIsMax = true;
     mStaticImage.setMaxSize(width, height);
@@ -136,11 +116,6 @@ void VideoVlcComponent::resize()
     if (textureSize == Vector2f::Zero())
         return;
 
-    // SVG rasterization is determined by height and rasterization is done in terms of pixels.
-    // If rounding is off enough in the rasterization step (for images with extreme aspect
-    // ratios), it can cause cutoff when the aspect ratio breaks.
-    // So we always make sure the resultant height is an integer to make sure cutoff doesn't
-    // happen, and scale width from that.
     if (mTargetIsMax) {
         mSize = textureSize;
 
@@ -155,7 +130,6 @@ void VideoVlcComponent::resize()
             mSize[1] *= resizeScale.y();
         }
 
-        // For SVG rasterization, always calculate width from rounded height.
         mSize[1] = Math::round(mSize[1]);
         mSize[0] = (mSize[1] / textureSize.y()) * textureSize.x();
 
@@ -335,6 +309,8 @@ void VideoVlcComponent::startVideo()
 
                 if (!parseResult) {
                     // Wait for a maximum of 1 second for the media parsing.
+                    // This maximum time is quite excessive as this step should normally
+                    // be completed in 15 - 30 ms or so.
                     for (int i = 0; i < 200; i++) {
                         if (libvlc_media_get_parsed_status(mMedia))
                             break;
@@ -360,11 +336,54 @@ void VideoVlcComponent::startVideo()
                     // Setup the media player.
                     mMediaPlayer = libvlc_media_player_new_from_media(mMedia);
 
-                    libvlc_media_player_play(mMediaPlayer);
-                    libvlc_video_set_callbacks(mMediaPlayer, lock, unlock, display,
-                            reinterpret_cast<void*>(&mContext));
+                    // The code below enables the libVLC audio output to be processed inside ES-DE.
+                    // Unfortunately this causes excessive stuttering for some reason that I still
+                    // don't understand, so at the moment this code is disabled. A proper mixer
+                    // such as SDL_mixer would be needed anyway to fully support this.
+//                    auto audioFormatCallback = [](void **data, char *format,
+//                            unsigned *rate, unsigned *channels) -> int {
+//                        format = const_cast<char*>("S16N");
+//                        *rate = 44100;
+//                        *channels = 2;
+//                        return 0;
+//                    };
+//
+//                    libvlc_audio_set_format_callbacks(mMediaPlayer,
+//                            audioFormatCallback, nullptr);
+//
+//                    auto audioPlayCallback = [](void* data, const void* samples,
+//                            unsigned count, int64_t pts) {
+//                        AudioManager::getInstance()->processStream(samples, count);
+//                    };
+//
+//                    libvlc_audio_set_callbacks(mMediaPlayer, audioPlayCallback,
+//                            nullptr, nullptr, nullptr, nullptr, this);
+
                     libvlc_video_set_format(mMediaPlayer, "RGBA", static_cast<int>(mVideoWidth),
                             static_cast<int>(mVideoHeight), static_cast<int>(mVideoWidth * 4));
+
+                    // Lock video memory as a preparation for rendering a frame.
+                    auto videoLockCallback = [](void* data, void** p_pixels) -> void* {
+                        struct VideoContext* videoContext =
+                                reinterpret_cast<struct VideoContext*>(data);
+                        SDL_LockMutex(videoContext->mutex);
+                        SDL_LockSurface(videoContext->surface);
+                        *p_pixels = videoContext->surface->pixels;
+                        return nullptr; // Picture identifier, not needed here.
+                    };
+
+                    // Unlock the video memory after rendering a frame.
+                    auto videoUnlockCallback = [](void* data, void*, void *const*) {
+                        struct VideoContext* videoContext =
+                                reinterpret_cast<struct VideoContext*>(data);
+                        SDL_UnlockSurface(videoContext->surface);
+                        SDL_UnlockMutex(videoContext->mutex);
+                    };
+
+                    libvlc_video_set_callbacks(mMediaPlayer, videoLockCallback,
+                            videoUnlockCallback, nullptr, reinterpret_cast<void*>(&mContext));
+
+                    libvlc_media_player_play(mMediaPlayer);
 
                     if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
                             !mScreensaverMode) ||

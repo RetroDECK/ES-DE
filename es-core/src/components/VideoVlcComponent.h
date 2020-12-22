@@ -27,14 +27,6 @@ struct VideoContext {
 
 class VideoVlcComponent : public VideoComponent
 {
-    // Structure that groups together the configuration of the video component.
-    struct Configuration {
-        unsigned startDelay;
-        bool showSnapshotNoVideo;
-        bool showSnapshotDelay;
-        std::string defaultVideoPath;
-    };
-
 public:
     VideoVlcComponent(Window* window);
     virtual ~VideoVlcComponent();
@@ -73,7 +65,7 @@ private:
 
     static void VlcMediaParseCallback(const libvlc_event_t *event, void *user_data) {};
 
-private:
+    static VideoVlcComponent* sInstance;
     static libvlc_instance_t* mVLC;
     libvlc_media_t* mMedia;
     libvlc_media_player_t* mMediaPlayer;
