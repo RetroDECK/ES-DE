@@ -59,7 +59,10 @@ void AudioManager::init()
     SDL_memset(&sRequestedAudioFormat, 0, sizeof(sRequestedAudioFormat));
     SDL_memset(&sAudioFormat, 0, sizeof(sAudioFormat));
 
-    // Set up format and callback. Play 16-bit stereo audio at 44.1Khz.
+    // Set up format and callback. SDL will negotiate these settings with the audio driver, so
+    // if for instance the driver/hardware does not support 32-bit floating point output, 16-bit
+    // integer may be selected instead. ES-DE will handle this automatically as there are no
+    // hardcoded audio settings elsewhere in the code.
     sRequestedAudioFormat.freq = 44100;
     sRequestedAudioFormat.format = AUDIO_F32;
     sRequestedAudioFormat.channels = 2;
@@ -94,8 +97,8 @@ void AudioManager::init()
                 std::to_string(sRequestedAudioFormat.channels) << " could not be "
                 "set, obtained " << std::to_string(sAudioFormat.channels) << ".";
     }
-    #if defined(_WIN64)
-    // Beats me why the buffer size is not divided by the channel count on Windows.
+    #if defined(_WIN64) || defined(__APPLE__)
+    // Beats me why the buffer size is not divided by the channel count on some operating systems.
     if (sAudioFormat.samples != sRequestedAudioFormat.samples) {
     #else
     if (sAudioFormat.samples != sRequestedAudioFormat.samples / sRequestedAudioFormat.channels) {
@@ -170,6 +173,8 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
     }
 
     // Process video stream audio.
+    // The calling function in VideoVlcComponent is currently disabled as the internal
+    // handling of audio streaming from videos does not work correctly.
     int chunkLength = SDL_AudioStreamAvailable(sConversionStream);
 
     if (chunkLength != 0) {
@@ -199,13 +204,14 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
                 return;
             }
 
-            // Currently disabled as it generates a lot of debug output.
+            // Enable only when needed, as it generates a lot of debug output.
 //            LOG(LogDebug) << "AudioManager::mixAudio(): chunkLength / chunkSegment "
 //                    "/ processedLength: " << chunkLength << " / " << chunkSegment <<
 //                    " / " << processedLength;
 
             if (processedLength > 0)
-                SDL_MixAudioFormat(stream, converted, sAudioFormat.format, processedLength, 128);
+                SDL_MixAudioFormat(stream, converted, sAudioFormat.format, processedLength,
+                        Settings::getInstance()->getInt("SoundVolumeVideos") * 1.28);
         }
 
         delete[] converted;
@@ -246,7 +252,7 @@ void AudioManager::stop()
 {
     // Stop playing all Sounds.
     for (unsigned int i = 0; i < sSoundVector.size(); i++) {
-        if (sSoundVector.at(i) && sSoundVector.at(i)->isPlaying())
+        if (sSoundVector.at(i)->isPlaying())
             sSoundVector[i]->stop();
     }
     // Pause audio.
