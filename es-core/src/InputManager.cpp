@@ -336,7 +336,7 @@ bool InputManager::loadInputConfig(InputConfig* config)
     if (!Utils::FileSystem::exists(path)) {
         if (config->getDeviceName() == "Keyboard") {
             LOG(LogDebug) << "InputManager::loadInputConfig(): Assigning default keyboard "
-                    "mappings as there is no es_input.cfg configuration file.";
+                    "mappings as there is no es_input.cfg configuration file";
             loadDefaultKBConfig();
             config->setDefaultConfigFlag();
         }

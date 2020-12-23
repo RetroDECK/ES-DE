@@ -77,8 +77,7 @@ void ViewController::goToStart()
     // configuration has been performed.
     if (InputManager::getInstance()->
             getInputConfigByDevice(DEVICE_KEYBOARD)->getDefaultConfigFlag()) {
-
-        LOG(LogInfo) << "Applying default keyboard mappings.";
+        LOG(LogInfo) << "Applying default keyboard mappings";
 
         if (Settings::getInstance()->getBool("ShowDefaultKeyboardWarning")) {
             std::string message = "NO KEYBOARD CONFIGURATION COULD BE\n"

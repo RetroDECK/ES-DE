@@ -592,7 +592,7 @@ int main(int argc, char* argv[])
     int ps_time = SDL_GetTicks();
     const auto applicationEndTime = std::chrono::system_clock::now();
 
-    LOG(LogDebug) << "Application startup time: " <<
+    LOG(LogInfo) << "Application startup time: " <<
             std::chrono::duration_cast<std::chrono::milliseconds>
             (applicationEndTime - applicationStartTime).count() << " ms";
 

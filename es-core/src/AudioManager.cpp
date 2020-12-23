@@ -48,11 +48,7 @@ void AudioManager::init()
         return;
     }
 
-    // Stop playing all Sounds.
-    for (unsigned int i = 0; i < sSoundVector.size(); i++) {
-        if (sSoundVector.at(i)->isPlaying())
-            sSoundVector[i]->stop();
-    }
+    LOG(LogInfo) << "Audio driver: " << SDL_GetCurrentAudioDriver();
 
     SDL_AudioSpec sRequestedAudioFormat;
 
@@ -70,32 +66,31 @@ void AudioManager::init()
     sRequestedAudioFormat.callback = mixAudio;
     sRequestedAudioFormat.userdata = nullptr;
 
-    for (unsigned int i = 0; i < SDL_GetNumAudioDevices(0); i++) {
-        LOG(LogDebug) << "Detected playback device '" << SDL_GetAudioDeviceName(i, 0) << "'.";
+    for (int i = 0; i < SDL_GetNumAudioDevices(0); i++) {
+        LOG(LogInfo) << "Detected playback device: " << SDL_GetAudioDeviceName(i, 0);
     }
 
     sAudioDevice = SDL_OpenAudioDevice(0, 0, &sRequestedAudioFormat, &sAudioFormat,
             SDL_AUDIO_ALLOW_ANY_CHANGE);
 
     if (sAudioDevice == 0) {
-        LOG(LogError) << "Unable to open audio device: " << SDL_GetError() << std::endl;
-        return;
+        LOG(LogError) << "Unable to open audio device: " << SDL_GetError();
     }
 
     if (sAudioFormat.freq != sRequestedAudioFormat.freq) {
-        LOG(LogDebug) << "AudioManager::init(): Requested sampling rate " <<
+        LOG(LogDebug) << "AudioManager::init(): Requested sample rate " <<
                 std::to_string(sRequestedAudioFormat.freq) << " could not be "
-                "set, obtained " << std::to_string(sAudioFormat.freq) << ".";
+                "set, obtained " << std::to_string(sAudioFormat.freq);
     }
     if (sAudioFormat.format != sRequestedAudioFormat.format) {
         LOG(LogDebug) << "AudioManager::init(): Requested format " <<
                 std::to_string(sRequestedAudioFormat.format) << " could not be "
-                "set, obtained " << std::to_string(sAudioFormat.format) << ".";
+                "set, obtained " << std::to_string(sAudioFormat.format);
     }
     if (sAudioFormat.channels != sRequestedAudioFormat.channels) {
         LOG(LogDebug) << "AudioManager::init(): Requested channel count " <<
                 std::to_string(sRequestedAudioFormat.channels) << " could not be "
-                "set, obtained " << std::to_string(sAudioFormat.channels) << ".";
+                "set, obtained " << std::to_string(sAudioFormat.channels);
     }
     #if defined(_WIN64) || defined(__APPLE__)
     // Beats me why the buffer size is not divided by the channel count on some operating systems.
@@ -105,7 +100,7 @@ void AudioManager::init()
     #endif
         LOG(LogDebug) << "AudioManager::init(): Requested sample buffer size " <<
                 std::to_string(sRequestedAudioFormat.samples / sRequestedAudioFormat.channels) <<
-                " could not be set, obtained " << std::to_string(sAudioFormat.samples) << ".";
+                " could not be set, obtained " << std::to_string(sAudioFormat.samples);
     }
 
     // Just in case someone changed the es_settings.cfg file manually to invalid values.
@@ -129,8 +124,6 @@ void AudioManager::init()
 
 void AudioManager::deinit()
 {
-    // Stop all playback.
-    stop();
     SDL_FreeAudioStream(sConversionStream);
     SDL_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
