@@ -17,7 +17,7 @@
 #include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "GuiMetaDataEd.h"
@@ -152,7 +152,7 @@ GuiGamelistOptions::GuiGamelistOptions(
 
     if (UIModeController::getInstance()->isUIModeFull() &&
             (isCustomCollection || isCustomCollectionGroup)) {
-        if (CollectionSystemManager::get()->getEditingCollection() != customSystem) {
+        if (CollectionSystemsManager::get()->getEditingCollection() != customSystem) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>(
                     mWindow, "ADD/REMOVE GAMES TO THIS GAME COLLECTION",
@@ -163,11 +163,11 @@ GuiGamelistOptions::GuiGamelistOptions(
     }
 
     if (UIModeController::getInstance()->isUIModeFull() &&
-            CollectionSystemManager::get()->isEditing()) {
+            CollectionSystemsManager::get()->isEditing()) {
         row.elements.clear();
         row.addElement(std::make_shared<TextComponent>(
                     mWindow, "FINISH EDITING '" + Utils::String::toUpper(
-                    CollectionSystemManager::get()->getEditingCollection()) +
+                    CollectionSystemsManager::get()->getEditingCollection()) +
                     "' COLLECTION",Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
         row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::exitEditMode, this));
         mMenu.addRow(row);
@@ -272,7 +272,7 @@ void GuiGamelistOptions::startEditMode()
     std::string editingSystem = mSystem->getName();
     // Need to check if we're editing the collections bundle,
     // as we will want to edit the selected collection within.
-    if (editingSystem == CollectionSystemManager::get()->getCustomCollectionsBundle()->getName()) {
+    if (editingSystem == CollectionSystemsManager::get()->getCustomCollectionsBundle()->getName()) {
         FileData* file = getGamelist()->getCursor();
         // Do we have the cursor on a specific collection?.
         if (file->getType() == FOLDER)
@@ -281,7 +281,7 @@ void GuiGamelistOptions::startEditMode()
             // We are inside a specific collection. We want to edit that one.
             editingSystem = file->getSystem()->getName();
     }
-    CollectionSystemManager::get()->setEditMode(editingSystem);
+    CollectionSystemsManager::get()->setEditMode(editingSystem);
 
     // Display the indication icons which show what games are part of the custom collection
     // currently being edited. This is done cheaply using onFileChanged() which will trigger
@@ -297,7 +297,7 @@ void GuiGamelistOptions::startEditMode()
 
 void GuiGamelistOptions::exitEditMode()
 {
-    CollectionSystemManager::get()->exitEditMode();
+    CollectionSystemsManager::get()->exitEditMode();
 
     for (auto it = SystemData::sSystemVector.begin();
             it != SystemData::sSystemVector.end(); it++) {
@@ -360,7 +360,7 @@ void GuiGamelistOptions::openMetaDataEd()
     deleteGameBtnFunc = [this, file] {
         LOG(LogInfo) << "Deleting the game file \"" << file->getFullPath() <<
                 "\", all its media files and its gamelist.xml entry.";
-        CollectionSystemManager::get()->deleteCollectionFiles(file);
+        CollectionSystemsManager::get()->deleteCollectionFiles(file);
         ViewController::get()->getGameListView(
             file->getSystem()).get()->removeMedia(file);
         ViewController::get()->getGameListView(

@@ -11,7 +11,7 @@
 #include "utils/FileSystemUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "Settings.h"
 #include "SystemData.h"
 
@@ -54,8 +54,8 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
     std::string editingCollection;
     std::string inCollectionPrefix;
 
-    if (CollectionSystemManager::get()->isEditing()) {
-        editingCollection = CollectionSystemManager::get()->getEditingCollection();
+    if (CollectionSystemsManager::get()->isEditing()) {
+        editingCollection = CollectionSystemsManager::get()->getEditingCollection();
         isEditing = true;
     }
 
@@ -77,7 +77,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
             // Add a leading tick mark icon to the game name if it's part of the custom collection
             // currently being edited.
             if (isEditing && (*it)->getType() == GAME) {
-                if (CollectionSystemManager::get()->inCustomCollection(editingCollection, (*it)))
+                if (CollectionSystemsManager::get()->inCustomCollection(editingCollection, (*it)))
                     inCollectionPrefix = "\uF14A  ";
                 else
                     inCollectionPrefix = "";
@@ -269,8 +269,8 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
     if (mRoot->getSystem()->isGameSystem() && !UIModeController::getInstance()->isUIModeKid() &&
                 !UIModeController::getInstance()->isUIModeKiosk() &&
                 (Settings::getInstance()->getBool("FavoritesAddButton") ||
-                CollectionSystemManager::get()->isEditing())) {
-        std::string prompt = CollectionSystemManager::get()->getEditingCollection();
+                CollectionSystemsManager::get()->isEditing())) {
+        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     return prompts;

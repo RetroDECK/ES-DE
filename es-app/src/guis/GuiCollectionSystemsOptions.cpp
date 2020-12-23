@@ -15,7 +15,7 @@
 #include "guis/GuiSettings.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 
 GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
         Window* window,
@@ -25,13 +25,13 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
         mDeletedCustomCollection(false)
 {
     // Finish editing custom collection.
-    if (CollectionSystemManager::get()->isEditing()) {
+    if (CollectionSystemsManager::get()->isEditing()) {
         ComponentListRow row;
         row.addElement(std::make_shared<TextComponent>(mWindow, "FINISH EDITING '" +
-                Utils::String::toUpper(CollectionSystemManager::get()->getEditingCollection()) +
+                Utils::String::toUpper(CollectionSystemsManager::get()->getEditingCollection()) +
                 "' COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
         row.makeAcceptInputHandler([this] {
-            CollectionSystemManager::get()->exitEditMode();
+            CollectionSystemsManager::get()->exitEditMode();
             delete this;
         });
         addRow(row);
@@ -41,7 +41,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
     collection_systems_auto = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
     std::map<std::string, CollectionSystemData, stringComparator> autoSystems =
-            CollectionSystemManager::get()->getAutoCollectionSystems();
+            CollectionSystemsManager::get()->getAutoCollectionSystems();
     // Add automatic systems.
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
             it = autoSystems.cbegin(); it != autoSystems.cend() ; it++)
@@ -53,8 +53,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             Utils::String::vectorToCommaString(collection_systems_auto->getSelectedObjects(), true);
         std::string autoSystemsConfig = Settings::getInstance()->getString("CollectionSystemsAuto");
         if (autoSystemsSelected != autoSystemsConfig) {
-            if (CollectionSystemManager::get()->isEditing())
-                CollectionSystemManager::get()->exitEditMode();
+            if (CollectionSystemsManager::get()->isEditing())
+                CollectionSystemsManager::get()->exitEditMode();
             Settings::getInstance()->setString("CollectionSystemsAuto", autoSystemsSelected);
             setNeedsSaving();
             setNeedsReloading();
@@ -68,7 +68,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
     collection_systems_custom = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
     std::map<std::string, CollectionSystemData, stringComparator> customSystems =
-            CollectionSystemManager::get()->getCustomCollectionSystems();
+            CollectionSystemsManager::get()->getCustomCollectionSystems();
     // Add custom systems.
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
             it = customSystems.cbegin(); it != customSystems.cend() ; it++)
@@ -82,8 +82,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             std::string customSystemsConfig = Settings::getInstance()->
                     getString("CollectionSystemsCustom");
             if (customSystemsSelected != customSystemsConfig) {
-                if (CollectionSystemManager::get()->isEditing())
-                    CollectionSystemManager::get()->exitEditMode();
+                if (CollectionSystemsManager::get()->isEditing())
+                    CollectionSystemsManager::get()->exitEditMode();
                 Settings::getInstance()->setString("CollectionSystemsCustom",
                         customSystemsSelected);
                 setNeedsSaving();
@@ -97,7 +97,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
 
     // Create custom collection from theme.
     std::vector<std::string> unusedFolders =
-            CollectionSystemManager::get()->getUnusedSystemsFromTheme();
+            CollectionSystemsManager::get()->getUnusedSystemsFromTheme();
     if (unusedFolders.size() > 0) {
         ComponentListRow row;
         auto themeCollection = std::make_shared<TextComponent>(mWindow,
@@ -186,8 +186,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                         Utils::String::toUpper(name) + "'\n"
                         "ARE YOU SURE?",
                         "YES", [this, name] {
-                            if (CollectionSystemManager::get()->isEditing())
-                                CollectionSystemManager::get()->exitEditMode();
+                            if (CollectionSystemsManager::get()->isEditing())
+                                CollectionSystemsManager::get()->exitEditMode();
                             mDeletedCustomCollection = true;
                             std::vector<std::string> selectedCustomCollections =
                                     collection_systems_custom->getSelectedObjects();
@@ -212,7 +212,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                                 setNeedsSaving();
                                 setNeedsGoToSystemView(SystemData::sSystemVector.front());
                             }
-                            CollectionSystemManager::get()->deleteCustomCollection(name);
+                            CollectionSystemsManager::get()->deleteCustomCollection(name);
                             return true;
                         },
                         "NO", [this] {
@@ -295,15 +295,15 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
 
 void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
 {
-    if (CollectionSystemManager::get()->isEditing())
-        CollectionSystemManager::get()->exitEditMode();
+    if (CollectionSystemsManager::get()->isEditing())
+        CollectionSystemsManager::get()->exitEditMode();
 
-    std::string collectionName = CollectionSystemManager::get()->
+    std::string collectionName = CollectionSystemsManager::get()->
             getValidNewCollectionName(inName);
-    SystemData* newCollection = CollectionSystemManager::get()->
+    SystemData* newCollection = CollectionSystemsManager::get()->
             addNewCustomCollection(collectionName);
 
-    CollectionSystemManager::get()->saveCustomCollection(newCollection);
+    CollectionSystemsManager::get()->saveCustomCollection(newCollection);
     collection_systems_custom->add(collectionName, collectionName, true);
 
     mAddedCustomCollection = true;
@@ -312,5 +312,5 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
     Window* window = mWindow;
     while (window->peekGui() && window->peekGui() != ViewController::get())
         delete window->peekGui();
-    CollectionSystemManager::get()->setEditMode(collectionName);
+    CollectionSystemsManager::get()->setEditMode(collectionName);
 }

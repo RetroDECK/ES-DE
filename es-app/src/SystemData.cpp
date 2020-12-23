@@ -17,7 +17,7 @@
 #include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Gamelist.h"
@@ -74,7 +74,7 @@ SystemData::SystemData(
         indexAllGameFilters(mRootFolder);
     }
     else {
-        // Virtual systems are updated afterwards by CollectionSystemManager.
+        // Virtual systems are updated afterwards by CollectionSystemsManager.
         // We're just creating the data structure here.
         mRootFolder = new FileData(FOLDER, "" + name, mEnvData, this);
         setupSystemSortType(mRootFolder);
@@ -372,7 +372,7 @@ bool SystemData::loadConfig()
 
     // Don't load any collections if there are no systems available.
     if (sSystemVector.size() > 0)
-        CollectionSystemManager::get()->loadCollectionSystems();
+        CollectionSystemsManager::get()->loadCollectionSystems();
 
     return true;
 }

@@ -26,7 +26,7 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "FileData.h"
 #include "Log.h"
 #include "MameNames.h"

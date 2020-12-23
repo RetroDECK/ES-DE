@@ -25,7 +25,7 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 #include "AudioManager.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "EmulationStation.h"
 #include "InputManager.h"
 #include "Log.h"
@@ -451,7 +451,7 @@ int main(int argc, char* argv[])
     Window window;
     SystemScreensaver screensaver(&window);
     ViewController::init(&window);
-    CollectionSystemManager::init(&window);
+    CollectionSystemsManager::init(&window);
     window.pushGui(ViewController::get());
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
@@ -642,7 +642,7 @@ int main(int argc, char* argv[])
     window.deinit();
 
     MameNames::deinit();
-    CollectionSystemManager::deinit();
+    CollectionSystemsManager::deinit();
     SystemData::deleteSystems();
 
     // Call this ONLY when linking with FreeImage as a static library.

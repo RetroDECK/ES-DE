@@ -10,7 +10,7 @@
 
 #include "animations/LambdaAnimation.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "SystemData.h"
 
 #define FADE_IN_START_OPACITY 0.5f
@@ -329,7 +329,7 @@ void DetailedGameListView::updateInfoPanel()
         // the first of these so that we can display its game media.
         if (file->getSystem()->isCustomCollection() &&
                 file->getPath() == file->getSystem()->getName()) {
-            FileData* randomGame = CollectionSystemManager::get()->
+            FileData* randomGame = CollectionSystemsManager::get()->
                     updateCollectionFolderMetadata(file->getSystem());
             if (randomGame) {
                 mThumbnail.setImage(randomGame->getThumbnailPath());

@@ -11,7 +11,7 @@ set(ES_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
 
         # Guis
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
@@ -59,7 +59,7 @@ set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.cpp
 
         # Guis
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp

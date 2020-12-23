@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  CollectionSystemManager.h
+//  CollectionSystemsManager.h
 //
 //  Manages collections of the following two types:
 //  1) Automatically populated (All games, Favorites and Recent/Last Played)
@@ -9,12 +9,12 @@
 //
 //  The automatic collections are basically virtual systems that have no
 //  gamelist.xml files and that only exist in memory during the program session.
-//  SystemData sets up the basic data structures and CollectionSystemManager
+//  SystemData sets up the basic data structures and CollectionSystemsManager
 //  populates and manages the collections.
 //
 //  The custom collections have simple data files which are just lists of ROM files.
 //
-//  In addition to this, CollectionSystemManager also handles some logic for
+//  In addition to this, CollectionSystemsManager also handles some logic for
 //  normal systems such as adding and removing favorite games, including triggering
 //  the required re-sort and refresh of the gamelists.
 //
@@ -62,13 +62,13 @@ struct stringComparator {
     }
 };
 
-class CollectionSystemManager
+class CollectionSystemsManager
 {
 public:
-    CollectionSystemManager(Window* window);
-    ~CollectionSystemManager();
+    CollectionSystemsManager(Window* window);
+    ~CollectionSystemsManager();
 
-    static CollectionSystemManager* get();
+    static CollectionSystemsManager* get();
     static void init(Window* window);
     static void deinit();
     void saveCustomCollection(SystemData* sys);
@@ -118,7 +118,7 @@ public:
     inline std::string getEditingCollection() { return mEditingCollection; };
 
 private:
-    static CollectionSystemManager* sInstance;
+    static CollectionSystemsManager* sInstance;
     SystemEnvironmentData* mCollectionEnvData;
     std::map<std::string, CollectionSystemDecl, stringComparator> mCollectionSystemDeclsIndex;
     std::map<std::string, CollectionSystemData, stringComparator> mAutoCollectionSystemsData;

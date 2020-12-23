@@ -22,7 +22,7 @@
 #include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "EmulationStation.h"
 #include "FileSorts.h"
 #include "Platform.h"
@@ -165,7 +165,7 @@ void GuiMenu::openUISettings()
             if (theme_set->getSelected() != Settings::getInstance()->getString("ThemeSet")) {
                 Scripting::fireEvent("theme-changed", theme_set->getSelected(),
                         Settings::getInstance()->getString("ThemeSet"));
-                CollectionSystemManager::get()->updateSystemsList();
+                CollectionSystemsManager::get()->updateSystemsList();
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
                 s->setNeedsSaving();
                 s->setNeedsReloading();

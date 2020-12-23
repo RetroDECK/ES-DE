@@ -11,7 +11,7 @@
 #include "animations/LambdaAnimation.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
@@ -637,7 +637,7 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
     if (mRoot->getSystem()->isGameSystem())
         prompts.push_back(HelpPrompt("x", "random"));
     if (mRoot->getSystem()->isGameSystem() && !UIModeController::getInstance()->isUIModeKid()) {
-        std::string prompt = CollectionSystemManager::get()->getEditingCollection();
+        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     return prompts;

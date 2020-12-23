@@ -12,7 +12,7 @@
 #include "utils/StringUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "Settings.h"
 #include "Sound.h"
@@ -201,7 +201,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedTo("y", input) &&
                 !Settings::getInstance()->getBool("FavoritesAddButton") &&
-                !CollectionSystemManager::get()->isEditing()) {
+                !CollectionSystemsManager::get()->isEditing()) {
             return true;
         }
         else if (config->isMappedTo("y", input) &&
@@ -217,7 +217,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 FileData* entryToUpdate = getCursor();
                 bool favoritesSorting;
                 bool removedLastFavorite = false;
-                bool isEditing = CollectionSystemManager::get()->isEditing();
+                bool isEditing = CollectionSystemsManager::get()->isEditing();
                 bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
                 // If the current list only contains folders, then treat it as if the folders
                 // are not sorted on top, this way the logic should work exactly as for mixed
@@ -292,7 +292,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 
                 // Marking folders as favorites don't make them part of any collections,
                 // so it makes more sense to handle it here than to add the function to
-                // CollectionSystemManager.
+                // CollectionSystemsManager.
                 if (entryToUpdate->getType() == FOLDER) {
                     GuiInfoPopup* s;
                     if (isEditing) {
@@ -340,7 +340,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                             "AS GAMES TO CUSTOM COLLECTIONS", 4000);
                     mWindow->setInfoPopup(s);
                 }
-                else if (CollectionSystemManager::get()->toggleGameInCollection(entryToUpdate)) {
+                else if (CollectionSystemsManager::get()->toggleGameInCollection(entryToUpdate)) {
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                             !entryToUpdate->getSystem()->isCustomCollection())

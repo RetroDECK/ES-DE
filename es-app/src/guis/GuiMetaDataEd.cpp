@@ -25,7 +25,7 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "FileData.h"
 #include "FileFilterIndex.h"
 #include "Gamelist.h"
@@ -378,7 +378,7 @@ void GuiMetaDataEd::save()
     mScraperParams.system->getIndex()->addToIndex(mScraperParams.game);
 
     // If it's a folder that has been updated, we need to manually sort the gamelist
-    // as CollectionSystemManager ignores folders.
+    // as CollectionSystemsManager ignores folders.
     if (mScraperParams.game->getType() == FOLDER)
         mScraperParams.system->sortSystem(false);
 
@@ -386,7 +386,7 @@ void GuiMetaDataEd::save()
         mSavedCallback();
 
     // Update respective Collection Entries.
-    CollectionSystemManager::get()->refreshCollectionSystems(mScraperParams.game);
+    CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
 
     mScraperParams.system->onMetaDataSavePoint();
 

@@ -15,7 +15,7 @@
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "AudioManager.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Log.h"
@@ -464,7 +464,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
         }
     }
 
-    // The main custom collections view is sorted during startup in CollectionSystemManager.
+    // The main custom collections view is sorted during startup in CollectionSystemsManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
         std::pair<unsigned int, unsigned int> tempGameCount = {};
@@ -560,7 +560,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     if (mSystem->isGroupedCustomCollection())
         gameCount = {};
 
-    // The main custom collections view is sorted during startup in CollectionSystemManager.
+    // The main custom collections view is sorted during startup in CollectionSystemsManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
         std::pair<unsigned int, unsigned int> tempGameCount = {};
@@ -964,7 +964,7 @@ void FileData::launchGame(Window* window)
                 gameToUpdate->metadata.get("lastplayed"));
     }
 
-    CollectionSystemManager::get()->refreshCollectionSystems(gameToUpdate);
+    CollectionSystemsManager::get()->refreshCollectionSystems(gameToUpdate);
 
     gameToUpdate->mSystem->onMetaDataSavePoint();
 }

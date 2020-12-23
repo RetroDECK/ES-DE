@@ -13,7 +13,7 @@
 #include "guis/GuiTextEditPopup.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
-#include "CollectionSystemManager.h"
+#include "CollectionSystemsManager.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "Window.h"
@@ -57,8 +57,8 @@ void GuiSettings::save()
         Settings::getInstance()->saveFile();
 
     if (mNeedsCollectionsUpdate) {
-        CollectionSystemManager::get()->loadEnabledListFromSettings();
-        CollectionSystemManager::get()->updateSystemsList();
+        CollectionSystemsManager::get()->loadEnabledListFromSettings();
+        CollectionSystemsManager::get()->updateSystemsList();
     }
 
     if (mNeedsReloading)
