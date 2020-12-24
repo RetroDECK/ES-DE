@@ -934,8 +934,8 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
 --gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
---force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
+--force-kid                     Force the UI mode to Kid
 --force-input-config            Force configuration of input device
 --home [path]                   Directory to use as home path
 --version, -v                   Displays version information
@@ -956,8 +956,8 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
 --gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
---force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
+--force-kid                     Force the UI mode to Kid
 --force-input-config            Force configuration of input device
 --home [path]                   Directory to use as home path
 --version, -v                   Displays version information
@@ -978,8 +978,8 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
 --gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
---force-kid                     Force the UI mode to Kid
 --force-kiosk                   Force the UI mode to Kiosk
+--force-kid                     Force the UI mode to Kid
 --force-input-config            Force configuration of input device
 --home [path]                   Directory to use as home path
 --version, -v                   Displays version information

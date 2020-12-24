@@ -32,7 +32,7 @@ The installation procedure is just covered briefly here and may differ a bit for
 
 **Installing a Linux .deb package**
 
-Thes .deb package is used for Linux distributions based on Debian, such as Ubuntu, Linux Mint etc.
+The .deb package is used for Linux distributions based on Debian, such as Ubuntu, Linux Mint etc.
 Running the following should install ES-DE and resolve any dependencies:
 
 ```
@@ -47,7 +47,7 @@ On Fedora you run this command to install ES-DE, which should automatically reso
 sudo dnf install ./emulationstation-de-1.0.0.rpm
 ```
 
-Note that this requires the RPM Fusion repository as there's a depedency on VLC, which is not part of the standard operating system repo. See [INSTALL.md](INSTALL.md#building-on-unix) for details on how to add this.
+Note that this requires the RPM Fusion repository as there's a dependency on VLC, which is not part of the standard operating system repo. See [INSTALL.md](INSTALL.md#building-on-unix) for details on how to add this.
 
 **Installing on macOS and Windows**
 
@@ -82,7 +82,7 @@ As an alternative to this, you can also modify es_systems.cfg which will be loca
 
 After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default path. Please refer to the game installation procedure below in this document for more information regarding this.
 
-![alt text](images/v1.0/es-de_v1.0_ui_easy_setup.png "ES-DE Easy Setup")
+![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the error dialog shown if no game files were found. It also lets you configure the ROM directory if you don't want to use the default one. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
@@ -122,7 +122,7 @@ Depending on the theme, the system navigation carousel can be either horizontal 
 
 The game systems are sorted by their full names, as defined in es_systems.cfg.
 
-![alt text](images/v1.0/es-de_v1.0_system_view.png "ES-DE System View")
+![alt text](images/current/es-de_system_view.png "ES-DE System View")
 _The System view is the default starting point for the application, it's here that you browse through your game systems._
 
 ## Gamelist view
@@ -139,8 +139,23 @@ In additions to the styles just described, there is a **Grid** view style as wel
 
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated like 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
-![alt text](images/v1.0/es-de_v1.0_gamelist_view.png "ES-DE Gamelist View")
+![alt text](images/current/es-de_gamelist_view.png "ES-DE Gamelist View")
 _The Gamelist view is where you browse the games for a specific system._
+
+
+## UI modes
+
+ES-DE supports three separate modes, **Full**, **Kiosk** and **Kid**.
+
+These modes mandate the functionalty provided by the application in the following way:
+
+* Full - This is the default mode which enables all functionality.
+* Kiosk - The main menu will be severely restricted, only displaying the entry to change the system audio volume. The game options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag games as favorites will be removed. Apart from this all games will be playable.
+* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see **Enable menu in kid mode** further [below](USERGUIDE.md#other-settings-1)
+
+There is an unlock code available to revert to the full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A**. It works to use either a keyboard or a configured controller to input the passkey sequence, but it can't be entered when a menu is open.
+
+The application can also be forced into any of the three modes via the command line options **-force-full**, **--force-kiosk** and **-force-kid**. Note that this is only temporary until the restart of the application, unless the settings menu is entered and the setting is saved to the configuration file. (This assumes that the main menu is available in the selected UI mode of course).
 
 ## Help system
 
@@ -482,7 +497,7 @@ The category **Other game metadata** includes Description, Release date, Develop
 
 There are two approaches to scraping, either for a single game from the metadata editor, or for many games and systems using the multi-scraper.
 
-![alt text](images/v1.0/es-de_v1.0_scraper_running.png "ES-DE Scraper Running")
+![alt text](images/current/es-de_scraper_running.png "ES-DE Scraper Running")
 _Here's an example of the multi-scraper running in interactive-mode, asking the user to make a selection from the multiple matching games returned by the scraper service._
 
 ### Single-game scraper
@@ -547,7 +562,7 @@ As an alternative, you can also locate your game media in the ROM directory. Thi
 
 Note that it's possible to change the game media directory from within ES-DE, see the option **Game media directory** detailed below.
 
-![alt text](images/v1.0/es-de_v1.0_scraper_settings.png "ES-DE Scraper Settings")
+![alt text](images/current/es-de_scraper_settings.png "ES-DE Scraper Settings")
 _Some of the scraper settings._
 
 ## Main menu
@@ -692,7 +707,7 @@ The theme to use. Defaults to rbsimple-DE, the theme shipped with EmulationStati
 
 **UI mode**
 
-Defaults to Full which enables all functionality within the application. If set to Kid, only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see 'Enable menu in kid mode' further below. In Kiosk mode, the main menu will be available, but it will only display the entry to change the system audio volume. The game options menu will be usable, but the metadata editor and the ability to modify custom game collections will be disabled. Finally, screensaver controls will be enabled when in Kiosk mode.
+Sets the mode for the application, as described in detail [above](USERGUIDE.md#ui-modes).
 
 **Default sort order**
 
@@ -823,9 +838,17 @@ Whether to use a shader to render a slight horizontal blur which somewhat simula
 
 General sound settings.
 
-**System volume**
+**System volume** _(Unix and Windows only)_
 
-As the name implies, this sets the overall system volume and not the volume specifically for ES-DE.
+As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. Note that the volume change is applied only after leaving the sound settings menu.
+
+**Navigation sounds volume**
+
+Sets the volume for the navigation sounds.
+
+**Video player volume**
+
+Sets the volume for the video player. This applies to both the gamelist views and the video screensaver.
 
 **Play audio for video files in gamelist views**
 
@@ -902,7 +925,7 @@ Here you can override the directory to your game media, i.e. the game images and
 
 **Emulator core path**
 
-This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be defined in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is only used on Unix. For macOS and Windows it's not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for these operating systems, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and semicolons on Windows. Please see [INSTALL.md](INSTALL.md#es_systemscfg) for more information about this.
+This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be defined in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is only used on Unix. For macOS and Windows it's not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for these operating systems, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL.md](INSTALL.md#es_systemscfg) for more information about this.
 
 **Per game launch command override**
 
@@ -1028,7 +1051,7 @@ This menu entry is only visible when editing the collection.
 
 In the metadata editor, you can modify the metadata for a game, scrape for game info and media files and delete media files and gamelist entries, or the entire game.
 
-![alt text](images/v1.0/es-de_v1.0_metadata_editor.png "ES-DE Metadata Editor")
+![alt text](images/current/es-de_metadata_editor.png "ES-DE Metadata Editor")
 _The metadata editor._
 
 ### Metadata entries
@@ -1146,7 +1169,7 @@ The _Dim_ screensaver simply dims and desaturates the current view and _Black_ w
 
 If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this, the controls will allow you to jump to a new random image or video using the left and right buttons on your keyboard or controller. It's also possible to launch the game currently displayed by pressing the 'A' button, and pressing the 'Y' button will jump to the game in its gamelist without starting it.
 
-![alt text](images/v1.0/es-de_v1.0_screensaver.png "ES-DE Screensaver")
+![alt text](images/current/es-de_screensaver.png "ES-DE Screensaver")
 _An example of what the video screensaver looks like._
 
 ## Game collections
@@ -1189,7 +1212,7 @@ When you are done adding games, you can either open the main menu and go to 'Gam
 
 You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing 'Add/remove games to this game collection'.
 
-![alt text](images/v1.0/es-de_v1.0_custom_collections.png "ES-DE Custom Collections")
+![alt text](images/current/es-de_custom_collections.png "ES-DE Custom Collections")
 _Example of custom collections, here configured as genres._
 
 The way that custom collection are implemented is very simple. There is a folder for the collections in `~/.emulationstation/collections` with a separate file for each collection.
@@ -1245,7 +1268,7 @@ https://gitlab.com/recalbox/recalbox-themes
 
 https://wiki.batocera.org/themes
 
-![alt text](images/v1.0/es-de_v1.0_ui_theme_support.png "ES-DE Theme Support")
+![alt text](images/current/es-de_ui_theme_support.png "ES-DE Theme Support")
 _An example of a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme applied._
 
 

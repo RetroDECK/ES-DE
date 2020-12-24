@@ -1,16 +1,18 @@
-# EmulationStation Desktop Edition v1.0.0
+# EmulationStation Desktop Edition (ES-DE) Releases
 
-**Release date:** YYYY-MM-DD
+## Version 1.0.0 (in development)
+
+**Release date:** TBD
 
 ### Release overview
 
-First release, a major update to the application compared to the RetroPie version on which it is based. This includes new gamelist sorting logic, new game media handling and an updated Windows port as well as a macOS port (which both work about as well as the Unix version). The menu system has also been completely overhauled and the scraper has been expanded to support multiple media types (including videos) as well as providing detailed scraping configuration options.
+First release, a major update to the application compared to the RetroPie version on which it is based. This includes new gamelist sorting logic, new game media handling and an updated Windows port as well as a macOS port. The menu system has also been completely overhauled and the scraper has been expanded to support multiple media types as well as providing detailed scraping configuration options.
 
 Full navigation sound support has been implemented, and the metadata editor has seen a lot of updates including color coding of all changes done by the user and by the scraper. Favorite games can now also be sorted on top of the gamelists and game collections.
 
 OpenGL GLSL shader support has been added (not for the OpenGL ES renderer though) and there are multiple effects implemented such as scanlines for videos, blurred background when opening menus etc.
 
-A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. However themes created for other EmulationStation ports should still work correctly.
+A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. However themes created for other EmulationStation forks should still work correctly.
 
 Many bugs have been fixed, and numerous features that were only partially implemented or broken have been updated to a fully working state. The application runs much faster as well due to lots of optimizations.
 
@@ -90,6 +92,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Unknown command line options were silently accepted instead of generating an error and notifying the user
 * The scraper didn't handle error conditions correctly
 * Fixed a massive memory leak related to SVG images
+* Fixed an issue where SVG images would sometimes be cut off slightly on the right side (e.g. logos on the system view carousel)
 * Toggling the screensaver didn't work as expected
 * Wrapping around the first and last game systems generated strange camera movements when using the slide transition style
 * Game media was not rendered when moving between gamelists using the slide transition style
