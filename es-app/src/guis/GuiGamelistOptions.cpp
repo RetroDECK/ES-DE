@@ -155,7 +155,7 @@ GuiGamelistOptions::GuiGamelistOptions(
         if (CollectionSystemsManager::get()->getEditingCollection() != customSystem) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>(
-                    mWindow, "ADD/REMOVE GAMES TO THIS GAME COLLECTION",
+                    mWindow, "ADD/REMOVE GAMES TO THIS COLLECTION",
                     Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::startEditMode, this));
             mMenu.addRow(row);
