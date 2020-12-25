@@ -61,7 +61,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
             addEntry("QUIT", 0x777777FF, true, [this] {openQuitMenu(); });
         else
-            addEntry("QUIT", 0x777777FF, false, [this] {openQuitMenu(); });
+            addEntry("QUIT EMULATIONSTATION", 0x777777FF, false, [this] {openQuitMenu(); });
     }
 
     addChild(&mMenu);
