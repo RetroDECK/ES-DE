@@ -131,9 +131,11 @@ void GuiScraperMulti::doNextSearch()
     mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()));
 
     // Update subtitle.
-    ss.str(""); // Clear.
+    ss.str("");
     ss << "GAME " << (mCurrentGame + 1) << " OF " << mTotalGames << " - " <<
-            Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath());
+            Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath()) <<
+            ((mSearchQueue.front().game->getType() == FOLDER) ? "  " +
+            ViewController::FOLDER_CHAR : "");
     mSubtitle->setText(ss.str());
 
     mSearchComp->search(mSearchQueue.front());
