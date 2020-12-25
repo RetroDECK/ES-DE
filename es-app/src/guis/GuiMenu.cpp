@@ -134,8 +134,8 @@ void GuiMenu::openUISettings()
     auto transition_style = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "TRANSITION STYLE", false);
     std::vector<std::string> transitions;
-    transitions.push_back("fade");
     transitions.push_back("slide");
+    transitions.push_back("fade");
     transitions.push_back("instant");
     for (auto it = transitions.cbegin(); it != transitions.cend(); it++)
         transition_style->add(*it, *it, Settings::getInstance()->
