@@ -129,7 +129,7 @@ _The **System view** is the default starting point for the application, it's her
 
 The gamelist view is where you browse and start your games, and it's where you will spend most of your time using ES-DE.
 
-Upon startup with the default settings, ES-DE is set to the gamelist view style **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video**will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view will be selected. Note that this automatic selection is applied per game system.
+Upon startup with the default settings, ES-DE is set to the gamelist view style **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video** will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view will be selected. Note that this automatic selection is applied per game system.
 
 Also note that the Video view style requires that the theme supports it. If not, the Detailed style will be selected instead. (The default theme rbsimple-DE supports both of these view styles).
 
@@ -256,7 +256,7 @@ The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<us
 
 If ES-DE can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
 
-Assuming the default ROM directory is used, we need to create a directory corresponding to the \<path\> tag in es_systems.cfg, in this example it's **nes**.
+Assuming the default ROM directory is used, we need to create a directory corresponding to the \<path\> tag in es_systems.cfg, in this example it's `nes`.
 
 This would look something like the following:
 
@@ -407,7 +407,7 @@ You don't need to set execution permissions for these scripts, ES-DE will run th
 
 Lutris runs only on Unix so it's only present as a placeholder in the es_systems.cfg templates for macOS and Windows.
 
-These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game using the syntax **lutris lutris:rungame/\<game name\>**
+These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game using the syntax `lutris lutris:rungame/<game name>`
 
 You can see the list of installed games by running this command:
 ```
@@ -504,7 +504,7 @@ _Here's an example of the multi-scraper running in interactive mode, asking the 
 
 ### Single-game scraper
 
-The single-game scraper is launched from the metadata editor. You navigate to a game, open the game options menu, choose **Edit this game's metadata** and then select the **Scrape** button. The metadata editor is explained in more depth [later](USERGUIDE.md#metadata-editor) in this guide.
+The single-game scraper is launched from the metadata editor. You navigate to a game, open the game options menu, choose **Edit this game's metadata** and then select the **Scrape** button.
 
 ### Multi-scraper
 
@@ -526,7 +526,7 @@ Apart from this, hopefully the scraping process should be self-explanatory once 
 
 If you already have a library of game media (images and videos) you can manually copy it into ES-DE.
 
-The default directory is `~/.emulationstation/downloaded_media/<game system>/<media type>/`
+The default directory is `~/.emulationstation/downloaded_media/<game system>/<media type>`
 
 For example on Unix:
 ```
@@ -1213,9 +1213,9 @@ Note that you should only enable these collections if you really need them as th
 
 These are collections that you create yourself. Examples could be grouping in genres like `Shoot em up`, `Fighting games` etc. or perhaps a time period like `1980s`, `1990s` and so on.
 
-If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated **Collections** system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
+If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated Collections system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
-So if you have enabled the option **Group unthemed custom collections** (it's enabled by default), any collections you add will show up in the special **Collections** system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list.
+So if you have enabled the option **Group unthemed custom collections** (it's enabled by default), any collections you add will show up in the special Collections system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list.
 
 To create a custom collection, go to **Game collection settings** from the main menu and choose **Create new custom collection**.
 

@@ -2,7 +2,7 @@
 
 EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
 
-Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to suppport the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control of emulator settings from within ES-DE.
+Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
 The current version 1.0 has been tested on the following operating systems (all for the x86 architecture):
 
