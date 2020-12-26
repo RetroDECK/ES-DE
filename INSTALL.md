@@ -844,12 +844,68 @@ The %ESPATH% variable is explained later in this document.
 
 Following this, optionally copy any existing gamelists and game media files to the removable media. By default these files should be located here:
 
-`f:\ES-Home\.emulationstation\gamelists\` \
-`f:\ES-Home\.emulationstation\downloaded_media\`
+```
+f:\ES-Home\.emulationstation\gamelists\
+f:\ES-Home\.emulationstation\downloaded_media\
+```
 
 You now have a fully functional portable emulator installation!
 
 The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
+
+
+## CA certificates and MAME ROM information
+
+**CA certificates:**
+
+There are some files shipped with ES-DE that need to be pulled from external resources, the first one being the CA certificate bundle to get TLS/SSL support working on Windows.
+
+The CA certificates shipped with ES-DE come directly from the curl project but they're originally supplied by the Mozilla foundation. See [https://wiki.mozilla.org/CA](https://wiki.mozilla.org/CA) for more information about this certificate bundle.
+
+The latest version can be downloaded from [https://curl.se/docs/caextract.html](https://curl.se/docs/caextract.html)
+
+After downloading the file, rename it from **cacert.pem** to **curl-ca-bundle.crt** and move it to the certificates directory so that it looks like this:
+
+```
+emulationstation-de/resources/certificates/curl-ca-bundle.crt
+```
+
+**MAME ROM info:**
+
+This is a bit tricky as the data needs to be converted to an internal format used by ES-DE. The original file is huge and most of the information is not required.
+
+Go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named someting like **mame0226lx.zip** and unzipping it will give you a file name such as **mame0226.xml**.
+
+Move the XML driver file to the resources/MAME directory and then convert it to the ES-DE internal format:
+
+```
+cd emulationstation-de/resources/MAME
+mv mamebioses.xml mamebioses.xml_OLD
+mv mamedevices.xml mamedevices.xml_OLD
+../../tools/mame_create_index_files.sh mame0226.xml
+mv mamebioses.xml mamebioses.xml_NEW
+mv mamedevices.xml mamedevices.xml_NEW
+../../tools/mame_merge_index_files.sh mamebioses.xml_OLD mamebioses.xml_NEW mamebioses.xml
+../../tools/mame_merge_index_files.sh mamedevices.xml_OLD mamedevices.xml_NEW mamedevices.xml
+diff mamebioses.xml mamebioses.xml_OLD
+diff mamedevices.xml mamedevices.xml_OLD
+rm *NEW *OLD mame0226.xml
+```
+
+You need **xmlstarlet** installed for these scripts to work.
+
+The diff command is of course used to do a sanity check that the changes look reasonable before deleting the old files. This is an example for the BIOS file when going from driver version 0221 to 0226:
+```
+diff mamebioses.xml mamebioses.xml_OLD
+1c1
+< <!-- Last updated with information from MAME driver file mame0226.xml -->
+---
+> <!-- Last updated with information from MAME driver file mame0221.xml -->
+51d50
+< <bios>kpython</bios>
+```
+
+The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions will having missing information. This is so as the MAME project sometimes remove older entries when they're reorganizing the ROM sets. By merging the files we retain backwards compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
 
 
 ## Configuration

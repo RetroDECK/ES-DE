@@ -1,9 +1,8 @@
-Missing systems
-===============
+# Missing systems
 
 
-Missing (or not updated) theme data
-===================================
+# Missing (or not updated) theme data
+
 * 3do: 3DO - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * ags: Adventure Game Studio - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * amiga: Amiga (general) - system info (improve it)

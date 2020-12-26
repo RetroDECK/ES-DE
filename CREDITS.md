@@ -19,7 +19,7 @@ Nils Bonenberger
 
 # Licenses
 
-Please find the individual license files inside the `licenses` directory. There is also additional license information in the headers of the source files.
+Please find the individual license files inside the `licenses` directory. There is also additional license information in the headers of most source files.
 
 
 # Libraries
@@ -74,6 +74,9 @@ https://fonts.google.com/specimen/Open+Sans
 
 MAME ROM information \
 https://www.mamedev.org
+
+CA certificates (for TLS/SSL support on Windows) \
+https://wiki.mozilla.org/CA
 
 
 # rbsimple-DE theme

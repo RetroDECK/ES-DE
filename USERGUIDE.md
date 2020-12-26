@@ -1,10 +1,24 @@
 # EmulationStation Desktop Edition (ES-DE) v1.0 - User Guide
 
-**Note:** This document is intended as a quick start guide as well as a reference for the user interface settings and functionality. For more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to the [INSTALL.md](INSTALL.md) document.
+**Note:** This document is intended as a quick start guide as well as a reference for the user interface settings and functionality. For more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to [INSTALL.md](INSTALL.md).
 
 Table of contents:
 
 [[_TOC_]]
+
+## Basic steps to get ES-DE up and running
+
+If you just want to get started as quickly as possible, just follow these steps:
+
+1) Install ES-DE
+2) Install and configure [RetroArch](https://www.retroarch.com)
+3) _Windows only: add the RetroArch directory to your system path environmental variable_
+4) Start RetroArch and install the emulator cores you want to use, see the [end](USERGUIDE.md#supported-game-systems) of this guide which ones are used by default by ES-DE
+5) Put your game ROMs in separate directories per game system under ~/ROMs, again see the end of this guide which directory names should be used
+6) Start ES-DE and follow the on-screen instructions to configure your controller
+7) Scrape game media for your collection and play some games!
+
+For additional details, read on below.
 
 ## Getting started
 
@@ -51,36 +65,22 @@ Note that this requires the RPM Fusion repository as there's a dependency on VLC
 
 **Installing on macOS and Windows**
 
-There's not really much to say about these operating systems, just install ES-DE as you would any other application. On maCOS it's via the .dmg drag-and-drop installer, and on Windows it's just a normal application installer (basically next, next, finish).
+There's not really much to say about these operating systems, just install ES-DE as you would any other application. On maCOS it's via the .dmg drag-and-drop installer, and on Windows it's just a normal application installer.
 
 **On first application startup**
 
 Upon first startup, ES-DE will create its home directory, by default the location is ~/.emulationstation.
 
-On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username>\\.emulationstation\
+On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username\>\\.emulationstation\
 
 **Note:** As of ES-DE v1.0 there is no internationalization support, so you would always need to supply the English directory name for your home directory, which is by the way always the real physical name on the file system. For instance in macOS, /Users/leon will be required instead of /Användare/leon which is what's shown inside the operating system for a Swedish localized installation. But using the tilde home symbol '~' is a workaround for this, and it's recommended to always use it for any ES-DE configuration settings that require a path to your home directory as it removes any confusion regarding localized home directory paths.
 
-Also on first startup, a configuration file, **es_settings.cfg** will be generated with all the default settings, and a **es_systems.cfg** file will also be copied from the program resource folder. This file contains the game ROM and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md#es_systemscfg) document.
+On first startup the configuration file **es_settings.cfg** will be generated in the ES-DE home directory, containing all the default settings. A file named **es_systems.cfg** will also be copied from the program resource folder. This file contains the game ROM paths and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md#es_systemscfg) document.
 
-**Note:** On Linux it's assumed that RetroArch is using the default configuration directory location, i.e. the cores should be located in ~/.config/retroarch/cores. If you've installed RetroArch via a Snap package, make a symlink from the Snap .config directory:
 
-```
-ln -s ~/snap/retroarch/current/.config/retroarch ~/.config/
-```
+**Note:** There's a log file in the ES-DE home directory named **es_log.txt**, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
-Similarly, if you've installed RetroArch and its cores from your operating system repository, make a symlink to the default directory as well. For instance, this is how to do it for Linux Mint:
-
-```
-mv ~/.config/retroarch/cores ~/.config/retroarch/cores_OLD
-ln -s /usr/lib/x86_64-linux-gnu/libretro ~/.config/retroarch/cores
-```
-
-As an alternative to this, you can also modify es_systems.cfg which will be located in ~/.emulationstation after you've started the application at least once.
-
-**Note:** There's a log file in the home directory named **es_log.txt**, please refer to this in case of any errors as it should provide information on what went wrong. Starting ES-DE with the --debug flag provides more detailed information and is a good idea to use in case of problems.
-
-After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default path. Please refer to the game installation procedure below in this document for more information regarding this.
+After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default one.
 
 ![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the error dialog shown if no game files were found. It also lets you configure the ROM directory if you don't want to use the default one. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
@@ -88,7 +88,7 @@ _This is the error dialog shown if no game files were found. It also lets you co
 
 ## Running on 4K displays
 
-ES-DE fully supports 4K displays, but some emulators such as RetroArch will start with the same resolution as the calling program, meaning the emulation will also run in 4K. On slower computers and where expensive shaders are in use, the performance may be quite bad. A workaround for this is to start ES-DE with the **--resolution** option. For example, to set the resolution to 1920x1080 run the following:
+ES-DE fully supports 4K displays, but some emulators such as RetroArch will start with the same resolution as the calling program, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. A workaround for this is to start ES-DE with the **--resolution** option. For example, to set the resolution to 1920x1080 run the following:
 
 ```
 emulationstation --resolution 1920 1080
@@ -98,25 +98,25 @@ This can of course be set in the ES-DE launcher entry for the desktop environmen
 
 A drawback with this approach is that the complete system resolution will be switced temporarily, meaning alt-tab switching between application will display them also in this lower resolution. Upon exiting ES-DE the previous 4K resolution will however be restored.
 
-Note though that this only works well for Unix/Linux at the moment as Windows and macOS will run in windowed mode due to technical limitations in these operating systems. But there may be workarounds for the actual emulator as well that I'm not aware of, making it possible to force a specific resolution while still running ES-DE in 4K.
+This only works well for Unix/Linux at the moment as Windows and macOS will run in windowed mode due to technical limitations in these operating systems. There may be workarounds for the actual emulator as well that I'm not aware of, making it possible to force a specific resolution while still running ES-DE in 4K.
 
 
 ## Input device configuration
 
-When first starting ES-DE, the application will look for any attached controllers (joysticks and gamepads). If no devices are found, it will be assumed that only keyboard navigation is to be used and the default keyboard mappings will be applied. It's recommended to change these default values, and a message will be displayed describing just this. It's however possible to hide this notification permanently and continue to use the default keyboard mappings indefinitely if you're happy with them.
+When first starting ES-DE, the application will look for any attached controllers (joysticks and gamepads). If no devices are found, it will be assumed that only keyboard navigation is to be used and the default keyboard mappings will be applied. It's recommended to change these default values, and a message will be displayed describing just this. It's however possible to hide this notification permanently and continue to use the default keyboard mappings if you're happy with them.
 
 If a controller is attached when starting ES-DE and no **es_input.cfg** input configuration file exists, you will be presented with the input configuration dialog. Just follow the steps as described to map the inputs.
 
-If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you however need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES-DE with the command line argument **--force-input-config** or you can manually delete the es_input.cfg file prior to starting the application. Alternatively you can navigate to the menu using your keyboard and select **Configure input** manually to configure your new device.
+If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES-DE with the command line argument **--force-input-config** or you can manually delete the es_input.cfg file prior to starting the application. Alternatively you can navigate to the menu using your keyboard and select **Configure input** to configure your new device.
 
 The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions.
 
-Both new and old devices can be (re)configured at any time by pressing the Start button and choosing "CONFIGURE INPUT". New devices will be appended to the existing input configuration file, so your old devices will retain their configuration.
+Both new and old devices can be (re)configured at any time via the **Configure input** menu entry. New devices will be appended to the existing input configuration file, so your old devices will retain their configuration.
 
 
 ## System view (main screen)
 
-When starting EmulationStation with the default settings, you will see the main screen first. From here you can navigate your game systems and enter their respective gamelists. If there are no game systems installed, you will not see this screen but rather an error message will be displayed, informing you that no games could be found.
+When starting EmulationStation with the default settings, you will see the main screen first. From here you can navigate your game systems and enter their respective gamelists.
 
 Depending on the theme, the system navigation carousel can be either horizontal or vertical. The default theme rbsimple-DE provides horizontal navigation, i.e. you browse your systems be scrolling left or right.
 
@@ -129,15 +129,15 @@ _The System view is the default starting point for the application, it's here th
 
 The gamelist view is where you browse and start your games, and it's where you will spend most of your time using ES-DE.
 
-Upon startup with the default settings, ES-DE is set to the gamelist view style to **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video** will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view will be selected. Note that this automatic selection is applied per game system.
+Upon startup with the default settings, ES-DE is set to the gamelist view style **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video** will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view will be selected. Note that this automatic selection is applied per game system.
 
 Also note that the Video view style requires that the theme supports it. If not, the Detailed style will be selected instead. (The default theme rbsimple-DE supports both of these view styles).
 
 It's possible to manually set a specific gamelist view style in the UI settings entry of the main menu, but this is applied globally regardless of what media files are available per game system. The manual setting also overrides the theme-supported view styles which has the potential of making ES-DE very ugly indeed.
 
-In additions to the styles just described, there is a **Grid** view style as well, but as of version 1.0.0 this is very limited and not recommended. Future versions of EmulationStation may update this style to a more useful state.
+In addition to the styles just described, there is a **Grid** view style as well, but as of ES-DE version 1.0 this is very limited and not recommended. Future versions may update this style to a more useful state.
 
-If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated like 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
+If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated as 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
 ![alt text](images/current/es-de_gamelist_view.png "ES-DE Gamelist View")
 _The Gamelist view is where you browse the games for a specific system._
@@ -150,33 +150,36 @@ ES-DE supports three separate modes, **Full**, **Kiosk** and **Kid**.
 These modes mandate the functionalty provided by the application in the following way:
 
 * Full - This is the default mode which enables all functionality.
-* Kiosk - The main menu will be severely restricted, only displaying the entry to change the system audio volume. The game options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag games as favorites will be removed. Apart from this all games will be playable.
-* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see **Enable menu in kid mode** further [below](USERGUIDE.md#other-settings-1)
+* Kiosk - The main menu will be severely restricted, only displaying the entry to change the audio volume. The game options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag or unflag games as favorites will be removed. Apart from this all games will be playable.
+* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see **Enable menu in kid mode** further [below](USERGUIDE.md#other-settings-1)
 
-There is an unlock code available to revert to the full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A**. It works to use either a keyboard or a configured controller to input the passkey sequence, but it can't be entered when a menu is open.
+There is an unlock code available to revert to the Full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A**. It works to use either a keyboard or a configured controller to input the passkey sequence, but it can't be entered when a menu is open.
 
-The application can also be forced into any of the three modes via the command line options **-force-full**, **--force-kiosk** and **-force-kid**. Note that this is only temporary until the restart of the application, unless the settings menu is entered and the setting is saved to the configuration file. (This assumes that the main menu is available in the selected UI mode of course).
+The application can also be forced into any of the three modes via the command line options **-force-full**, **--force-kiosk** and **-force-kid**. Note that this is only temporary until the restart of the application, unless the settings menu is entered and the setting is saved to the configuration file (this assumes that the main menu is available in the selected UI mode of course).
 
 ## Help system
 
-There is a help system available throughout the application that provides an overview of the possible actions and buttons that can be used. It's possible to disable the help system for a somewhat cleaner look using a menu option. Note that some general button actions are never shown, such as the ability to quick jump in gamelists, menus and text input fields using the shoulder and trigger buttons.
+There is a help system available throughout the application that provides an overview of the possible actions and buttons that can be used. Note though that some general button actions are never shown, such as the ability to quick jump in gamelists, menus and text input fields using the shoulder and trigger buttons. It's also possible to disable the help system using a menu option for a somewhat cleaner look.
+
+![alt text](images/current/es-de_folder_support.png "ES-DE Help System")
+_The help system is displayed at the bottom of the screen, showing the various actions currently available._
 
 
 ## General navigation
 
-The help system will provide an overview per screen on the navigation options for the application, however here is a general overview. These are the inputs you mapped in the previous input device configuration step. Note that this is not an exhaustive list, but it covers most situations.
+The built-in help system will provide a contextual summary of the available navigation options, but here's still a general overview. These are the inputs you mapped in the previous input device configuration step. Note that this is not an exhaustive list, but it covers most situations.
 
-The default keyboard mappings are shown in brackets. These can be changed by running the input device configuration as described earlier in this document.
+The default keyboard mappings are shown in brackets.
 
 **Up and down**\
-_(Arrow up/Arrow down)_
+_(Arrow up / Arrow down)_
 
-Navigate up and down in gamelists, system view (if the theme has a vertical carousel) and in menus.
+Navigate up and down in gamelists, between systems in the system view (if the theme has a vertical carousel) and in menus.
 
 **Left and right**\
-_(Arrow left/Arrow right)_
+_(Arrow left / Arrow right)_
 
-Navigate between gamelists (if 'Quick system select' has been activated in the options), or between systems (if the theme has a horizontal carousel).
+Navigate between gamelists (if _Quick system select_ has been activated in the options), or between systems in the system view (if the theme has a horizontal carousel).
 
 **Start button**\
 _(Escape)_
@@ -186,22 +189,22 @@ Opens and closes the main menu.
 **Select button**\
 _(F1)_
 
-Opens and closes the game options menu if in the gamelist view, or toggles the screensaver if in the system view (main screen).
+Opens and closes the game options menu in the gamelist view, or toggles the screensaver in the system view (if the _Enable screensaver controls_ setting is activated).
 
 **Shoulder buttons left and right**\
-_(Page up/Page down)_
+_(Page up / Page down)_
 
 Provides quick jumping in gamelists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Also jumps forward in text edit dialogs.
 
 **Trigger buttons left and right**\
-_(Home/End)_
+_(Home / End)_
 
 Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
 
 **A button**\
 _(Enter)_
 
-Select button to open gamelists from the systems view, launch games, choose menu entries etc.
+Select button to open gamelists from the system view, launch games, choose menu entries etc.
 
 **B button**\
 _(Back key)_
@@ -211,21 +214,21 @@ Back button, self explanatory.
 **X button**\
 _(Delete)_
 
-Selects random games and systems.
+Selects random games and systems. Used by some other minor functions as explained by the help system and/or this guide.
 
 **Y button**\
 _(Insert on Unix and Windows, F13 on macOS)_
 
-Marks games as favorites in the gamelist views. Used by some other minor functions as explained by the help system and this guide.
+Marks games as favorites in the gamelist views. Used by some other minor functions as explained by the help system and/or this guide.
 
 
-## Getting your games into EmulationStation
+## Getting your games into ES-DE
 
-For most systems, this is very straightforward, just put your game files into the folder corresponding to the platform name. (These names can be found at the end of this document.)
+For most systems, this is very straightforward, just put your game files into the folder corresponding to the platform name (these names can be found at the [end](USERGUIDE.md#supported-game-systems) of this guide.)
 
 For some systems though, a more elaborate setup is required, and we will attempt to cover such situations in this guide as well.
 
-### Single gamefile installation
+### Single game file installation
 
 Let's start with the simple scenario of a single ROM game file per platform, which is the case for the majority of systems. In this example we're setting up ES-DE to play Nintendo Entertainment System games.
 
@@ -247,9 +250,9 @@ Here is the snippet from the es_systems.cfg_unix file:
 
 It's required that the ROM files are in one of the supported file extensions, or ES-DE won't find them.
 
-It's highly recommended to use filenames that are corresponding to the full name of the game, or otherwise you will need to manually feed the scraper the game name when scraping which is very tedious.
+It's highly recommended to use filenames that are corresponding to the full name of the game, otherwise you will need to manually feed the scraper the game name when scraping which is very tedious.
 
-The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs/, on macOS /Users/\<username\>/ROMs/ and on Windows C:\Users\\<username\>\ROMs\.
+The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs, on macOS /Users/\<username\>/ROMs and on Windows C:\Users\\<username\>\ROMs\.
 
 If ES-DE can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
 
@@ -271,13 +274,13 @@ Then simply copy your game ROMs into this folder, and you should end up with som
 ~/ROMs/nes/Super Mario Bros. 3.zip
 ```
 
-**Note: These directories are case sensitive on Unix, so creating a directory named _NES_ instead of _nes_ won't work!**
+**Note:** These directories are case sensitive on Unix, so creating a directory named **Nes** instead of **nes** won't work.
 
-That's it, start ES-DE and the NES game system should be populated. You can now scrape game information and media for the games, and assuming you've setup RetroArch correctly with the Nestopia UE core, you can launch the games.
+That's it, start ES-DE and the NES game system should be populated. You can now scrape information and media for the games, and assuming you've setup RetroArch correctly with the Nestopia UE core, you can launch the games.
 
-### Multiple gamefiles installation
+### Multiple game files installation
 
-For some systems, there are sometimes (or always) multiple gamefiles per game. Such an example would be the Commodore 64, when multidisk games are being played. For such instances, simply group the files inside folders.
+For some systems, there are sometimes (or always) multiple gamefiles per game. Such an example would be the Commodore 64 when multidisk games are being played. For such instances, simply group the files inside folders.
 
 The platform name for the Commodore 64 is **c64**, so the following structure would be a possible approach:
 
@@ -295,7 +298,7 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 ~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
-It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
+It's highly recommended to create **.m3u** playlist files for multi-disk images as this automates (well it should) disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
 The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
@@ -306,35 +309,36 @@ LNINJA2B.D64
 
 It's recommended to have the exact same filename for the .m3u file as for the directory as the game media files will then be shared between the two. This saves some unnecessary scraping as well as some disk space.
 
-It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist. But it's probably quite confusing to start a game that looks like a single-disk game and then be prompted for disk swaps by the emulator (even if the .m3u playlists automates disk swapping, it's still somehow confusing and I wouldn't recommend it).
+It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist files. ES-DE is flexible so do whatever makes most sense for the situation.
 
-When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see the metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it looks ok when browsing, but when a game is part of a collection, the metadata will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
+When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see the metadata for the games also when browsing the folders. ES fully supports scraping folders, although some metadata is not included for folders for logical reasons. If you only scrape the folders and not the actual game files, it may look somehow ok when browsing, but when a game is part of a collection, the metadata will be missing there. This includes the **Last played** and **All games** collections for instance. Also note that while it's possible to mark a folder as a favorite, it will never be part of a collection, such as **Favorites**.
 
-As well it's recommended to set the flags **Exclude from game counter** and **Exclude from automatic scraper** for the actual game files so that they are not counted (the game counter is shown on the system view) and not scraped if running the multi-scraper. It's enough to scrape the .m3u playlist file and the game folder. But if you only intend to manually scrape file-per-file then you don't need to bother with this. For a cleaner look, it's also possible to set the flag **Hide metadata fields** for the game files.
+As well it's recommended to set the flags **Exclude from game counter** and **Exclude from automatic scraper** for the actual game files so that they are not counted for the game statistics display and not scraped when running the multi-scraper. If you don't want to hide the individual game files but still want a cleaner look, it's also possible to set the flag **Hide metadata fields** for the game files.
 
 ### Special game installation considerations
 
-Not all systems are as simple as described above, or sometimes there are multiple ways to configure the systems. So specifics to such systems will be covered here. Consider this a work in progress though as there are many systems supported by ES-DE.
+Not all systems are as simple as described above, or sometimes there are multiple ways to configure the systems. So specifics to such systems will be covered here. Consider this a work in progress as there are many systems supported by ES-DE.
 
 #### Arcade and Neo Geo
 
-For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. However these should retain the MAME names as filenames since ES-DE ships with MAME lookup tables, meaning the MAME names are expanded to the full game names.
+For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. But these should retain the MAME names as filenames since ES-DE ships with MAME lookup tables, meaning the MAME names are expanded to the full game names.
 
 For instance **topgunnr.7z** will be expanded to **Top Gunner**.
 
-This is used by the TheGamesDB scraper where the expanded file name is used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
+This is used by the TheGamesDB scraper where the expanded file names are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
 #### Commodore Amiga
 
 There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in **.hdf** or **.hdz** format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
-An alternative would be to use **.adf** images as not all games may be available with WHDLoad support. For this, you can either put single-disk images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create **.m3u** playlist files for multi-disk images as this simplifies the disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
+An alternative would be to use **.adf** images as not all games may be available with WHDLoad support. For this, you can either put single-disk images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create **.m3u** playlist files for multi-disk images as described [above](USERGUIDE.md#multiple-gamefiles-installation).
 
 Here's an example of what the file structure could look like:
 
 ```
 ~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken (Disk 1 of 2).adf
 ~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken (Disk 2 of 2).adf
+~/ROMs/amiga/Multidisk/ZakMcKracken/ZakMcKracken.m3u
 ~/ROMs/amiga/Robbeary.adf
 ~/ROMs/amiga/Dungeon Master.hdf
 ```
@@ -345,13 +349,13 @@ Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games
 
 #### DOS / PC
 
-The DOS (and PC) platform uses the DOSBox emulator and the recommended approach here is to keep the directory structure intact, just as if running the game on a real DOS computer. So this means one folder per game in ES-DE. It's also recommended to set the metadata field **Count as game** to off for all files but the actual file used to launch the game (the binary or a .bat batch file). This is done so that the game counter on the system view screen correctly reflects the number of games you have installed. It's also possible to mark files and subdirectories as hidden to avoid seeing them in ES-DE. Both of these fields can be set using the metadata editor. The metadata field **Sortname** can also be set to sort the files in any preferred order without changing their names. For example, simply putting a '1' as sortname will sort the entry above all entries starting with a character.
+The DOS (and PC) platform uses the DOSBox emulator and the recommended approach here is to keep the directory structure intact, just as if running the game on a real DOS computer. So this means one folder per game in ES-DE. It's also recommended to set the metadata field **Count as game** to off for all files but the actual file used to launch the game, i.e. the binary or a .bat batch file. This is done so that the game counter correctly reflects the number of games you have installed. It's also possible to mark files and subdirectories as hidden to avoid seeing them in ES-DE. Both of these fields can be set using the metadata editor.
 
-Apart from this the game should work as normal. The game folders can be scraped so that it looks nice when browsing the list of games, but make sure to also scrape the files used to launch the games, otherwise the entries in the collections **Last played**, **Favorites** and **All games** as well as any custom collections will miss the game metadata and game media. If you don't have these collections activated, then this can of course be skipped.
+Apart from this, DOS games should work the same as any other system. The game folders can be scraped so that it looks nice when browsing the list of games, but make sure to also scrape the files used to launch the games or otherwise the entries in the collections **Last played**, **Favorites** and **All games** as well as any custom collections will miss the game metadata and game media. If you don't have these collections activated, then this can of course be skipped.
 
 #### Ports
 
-Ports are not really executed using emulators, but is instead software running natively on your operating system. The easiest way to handle these is to add a simple shell script or batch file where you can customize the exact launch parameters for the game.
+Ports are not really executed using emulators, but are rather applications running natively in the operating system. The easiest way to handle these is to add a simple shell script or batch file where you can customize the exact launch parameters for the game.
 
 It's of course possible to add these as single files to the root folder, but normally it's recommended to setup a separate folder per game as there may be more than a single file available per game. You very often want to have easy access to the game setup utility for instance.
 
@@ -403,11 +407,12 @@ You don't need to set execution permissions for these scripts, ES-DE will run th
 
 Lutris runs only on Unix so it's only present as a placeholder in the es_systems.cfg templates for macOS and Windows.
 
-These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game with the following contents:
+These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game using the syntax **lutris lutris:rungame/\<game name\>**
 
-`lutris lutris:rungame/<game name>`
-
-You can see the list of installed games by running the command `lutris --list-games`.
+You can see the list of installed games by running this command:
+```
+lutris --list-games
+```
 
 Here's an example for adding Diablo and Fallout:
 
@@ -436,13 +441,11 @@ As an alternative, you can add the Lutris games to the Ports game system, if you
 
 For steam, it's recommended to put shell scripts/batch files directly in the root folder, where the file names of these scripts correspond to the game names.
 
-Add the following information to each file:
-
-`steam steam://rungameid/<game ID>`
+Add the game information to each file using the syntax **steam steam://rungameid/\<game ID\>**
 
 Here's an example for the game Broforce:
 
-`steam steam://rungameid/274190`
+```steam steam://rungameid/274190```
 
 The game ID can be found by going to [https://store.steampowered.com](https://store.steampowered.com) and searching for a game. The Broforce example would have an URL such as this:
 
@@ -457,26 +460,25 @@ grep steam ~/.local/share/applications/*desktop | grep rungameid
 /home/myusername/.local/share/applications/Subnautica.desktop:Exec=steam steam://rungameid/264710
 ```
 
-This of course assumes that you have desktop entries setup for the games in question.
+This of course assumes that you have menu entries setup for the games in question.
 
 
 ## Emulator setup
 
-EmulationStation is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the **es_systems.cfg** file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL.md](INSTALL.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
+ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the **es_systems.cfg** file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL.md](INSTALL.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
-In order to use the default es_systems.cfg file, for Unix and Windows you need to make sure that the emulator binary directory is in the operating system's path variable. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and there is a standardized directory structure. But for Windows you may need to add the emulator directory to your %PATH% variable manually. If on Windows, a simple test is to open a command window and type the name of the emulator and press enter, if the emulator is not found, then EmulationStation won't find it either and you need to update your %PATH% variable.
+In order to use the default es_systems.cfg file, you need to make sure that the emulator binary directory is in the operating system's path. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and even if compiled from source there is a standardized directory structure which should have you covered. Likewise on macOS, it's assumed that the emulator is installed under the Applications folder so everything should just work. But for Windows you may need to add the emulator directory to your %PATH% variable manually (Tip: open Settings and search for _path_). If on Windows, a simple test is to open a command window and type the name of the emulator and press enter, if the emulator is not found, then EmulationStation won't find it either and you need to update your %PATH% variable.
 
-As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator path relative to the EmulationStation location. Again, please refer to the INSTALL.md document on details regarding this.
+As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL.md](INSTALL.md#es_systemscfg) for details regarding this.
 
-For macOS the emulator directory is normally not an issue as there is a somehow standardized installation structure, and the es_systems.cfg template for this operating systems has absolute paths defined for the emulators.
 
 ## Scraping
 
 Scraping means downloading metadata and game media files (images and videos) for the games in your collections.
 
-EmulationStation Desktop Edition supports the two scrapers ScreenScraper.fr and TheGamesDB.net. In general TheGamesDB supports less formats and less systems, but in some areas such PC gaming, the quality is better and sometimes ScreenScraper is missing some specific information such as release dates where TheGamesDB may be able to fill in the gaps.
+ES-DE supports the two scrapers [ScreenScraper.fr](https://www.screenscraper.fr) and [TheGamesDB.net](https://thegamesdb.net). In general TheGamesDB supports less formats and less systems, but in some areas such PC gaming, the quality is better and sometimes ScreenScraper is missing some specific information such as release dates where TheGamesDB may be able to fill in the gaps.
 
 Here is an overview of what's supported by ES-DE and these scrapers:
 
@@ -498,21 +500,21 @@ The category **Other game metadata** includes Description, Release date, Develop
 There are two approaches to scraping, either for a single game from the metadata editor, or for many games and systems using the multi-scraper.
 
 ![alt text](images/current/es-de_scraper_running.png "ES-DE Scraper Running")
-_Here's an example of the multi-scraper running in interactive-mode, asking the user to make a selection from the multiple matching games returned by the scraper service._
+_Here's an example of the multi-scraper running in interactive mode, asking the user to make a selection from the multiple matching games returned by the scraper service._
 
 ### Single-game scraper
 
-The single-game scraper is launched from the metadata editor. You navigate to a game, open the game options menu, choose **Edit this game's metadata** and then select the **Scrape** button. The metadata editor is explained in more depth later in this guide so it won't be covered here.
+The single-game scraper is launched from the metadata editor. You navigate to a game, open the game options menu, choose **Edit this game's metadata** and then select the **Scrape** button. The metadata editor is explained in more depth [later](USERGUIDE.md#metadata-editor) in this guide.
 
 ### Multi-scraper
 
-The multi-scraper is launched from the main menu, it's the first option on the menu. Here you can configure a number of scraping options, all which are explained in more depth below when covering the main menu entries.
+The multi-scraper is accessed from the main menu by selecting **Scrape**.
 
 ### Scraping process
 
 The process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes small changes like adding or removing a colon or a minus sign can yield better results. Note that the searching is handled entirely by the scraper service, ES-DE just presents the results returned from the service.
 
-By default, ES-DE will search using the metadata name of the game. If no name has been defined via scraping or manually using the metadata editor, this name will correspond to the physical file name minus all text inside either normal brackets '()' or square brackets '[]'. So for example the physical filename 'Mygame (U) [v2].zip' will be stripped to simply 'Mygame' when performing the scraping.
+By default, ES-DE will search using the metadata name of the game. If no name has been defined via scraping or manually using the metadata editor, this name will correspond to the physical file name minus all text inside either normal brackets **()** or square brackets **[]**. So for example the physical filename **Mygame (U) [v2].zip** will be stripped to simply **Mygame** when performing the scraping.
 
 The behavior of using the metadata name rather than the file name can be changed using the setting _Search using metadata name_ as described [below](USERGUIDE.md#other-settings).
 
@@ -524,56 +526,73 @@ Apart from this, hopefully the scraping process should be self-explanatory once 
 
 If you already have a library of game media (images and videos) you can manually copy it into ES-DE.
 
-The default directory is ~/.emulationstation/downloaded_media/\<game system\>/\<media type\>/
+The default directory is **~/.emulationstation/downloaded_media/\<game system\>/\<media type\>/**
 
 For example on Unix:
-
-`/home/myusername/.emulationstation/downloaded_media/c64/screenshots/`
+```
+/home/myusername/.emulationstation/downloaded_media/c64/screenshots/
+```
 
 For example on macOS:
 
-`/Users/myusername/.emulationstation/downloaded_media/c64/screenshots/`
+```
+/Users/myusername/.emulationstation/downloaded_media/c64/screenshots/
+```
 
 For example on Windows:
 
-`C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\`
+```
+C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\
+```
 
 The media type directories are:
 
 * 3dboxes
 * covers
 * marquees
+* miximages
 * screenshots
 * videos
 
-The files must correspond directly to the game file. For example the following game:
+**Note:** The miximages files are not generated by ES-DE as of v1.0, but if you have used something like [Skyscraper](https://github.com/muldjord/skyscraper) to generate this type of images for your game collection, then they can be displayed inside ES-DE by locating them in this directory.
 
-`~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u`
+The media files must correspond exactly to the game files. For example the following game:
 
-Must have the filename:
+```
+~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
+```
 
-`~/.emulationstation/downloaded_media/c64/screenshots/Last Ninja 2.jpg`
+Must have a corresponding filename for its media files in this fashion:
 
-JPG and PNG file formats and file extensions are supported.
+```
+~/.emulationstation/downloaded_media/c64/screenshots/Last Ninja 2.jpg
+~/.emulationstation/downloaded_media/c64/videos/Last Ninja 2.mp4
+```
 
-Remember that on Unix files are case sensitive, and as well the file extensions must be in lower case, i.e. .png intead of .PNG or .Png or the file won't be found.
+JPG and PNG file formats and file extensions are supported for images, and AVI, MKV, MOV, MP4 and WMV are supported for videos.
 
-As an alternative, you can also locate your game media in the ROM directory. This is explained below in this guide under the option **Display game media from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
+Remember that on Unix files are case sensitive, and as well the file extensions must be in lower case, such as .png instead of .PNG or .Png or the file won't be found.
 
-Note that it's possible to change the game media directory from within ES-DE, see the option **Game media directory** detailed below.
+As an alternative, you can also locate your game media in the ROM directory. This is explained below when covering the option **Display game media from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
 
-![alt text](images/current/es-de_scraper_settings.png "ES-DE Scraper Settings")
-_Some of the scraper settings._
+It's possible to change the game media directory from within ES-DE, for this see the option **Game media directory** detailed below.
+
 
 ## Main menu
 
-This menu can be accessed from both the main screen and from the gamelist views. It contains the scraper, the quit menu as well as the application settings. When it comes to saving settings, this is done automatically when navigating back from a screen, or when closing the menu altogether.
+This menu can be accessed from both the system view and gamelist views. It contains the scraper, the input configuration tool and the application settings. Settings are saved when navigating back from any settings screen, assuming at least one setting was changed. Pressing F4 to quit the application will mean any settings changed on the current screen will NOT be saved to the configuration file.
 
-Here is a breakdown of the main menu entires:
+![alt text](images/current/es-de_main_menu.png "ES-DE Main Menu")
+_The ES-DE main menu._
+
+Following is a breakdown of the main menu entries.
 
 ### Scraper
 
-Contains the various options for the scraper, which is used to download metadata and images for your games.
+Contains the various options for the scraper, which is used to download metadata, images and videos for your games.
+
+![alt text](images/current/es-de_scraper_settings.png "ES-DE Scraper Settings")
+_Some of the scraper settings._
 
 **Scrape from**
 
@@ -581,7 +600,7 @@ Scraper service selection, currently ScreenScraper.fr and TheGamesDB.net are sup
 
 **Filter**
 
-Criteria for what games to include in the scraping. It can be set to 'All games', 'Favorite games', 'No metadata', 'No game image', 'No game video' or 'Folders only'.
+Criteria for what games to include in the scraping. It can be set to _All games, Favorite games, No metadata, No game image, No game video_ or _Folders only_.
 
 **Systems**
 
@@ -609,11 +628,11 @@ Describes the content types to include in the scraping. Most users will probably
 
 **Scrape game names**
 
-Whether to scrape the names of the games. This does not affect the actual files on the filesystem and is only used for viewing and sorting purposes. The downloaded media files are also matched against the actually game file on the filesystem, not against this name.
+Whether to scrape the names of the games. This does not affect the actual files on the filesystem and is only used for viewing and sorting purposes. The downloaded media files are also matched against the physical game files on the filesystem, and not against this name.
 
 **Scrape ratings** _(ScreenScraper only)_
 
-Currently only supported by ScreenScraper.
+Downloads game ratings.
 
 **Scrape other metadata**
 
@@ -633,11 +652,11 @@ Cover art.
 
 **Scrape marquee (wheel) images**
 
-Logotype for the game, is used primarily for the Video view style.
+Logotype for the game.
 
 **Scrape 3D box images** _(ScreenScraper only)_
 
-These images are currently unused, but will be used for future versions of ES-DE so it's recommended to keep this option ticked.
+These images are currently unused, but will be used for future versions of ES-DE so it's recommended to keep this option enabled.
 
 #### Other settings
 
@@ -661,29 +680,29 @@ With this setting enabled, if any media files returned by the scraper seem to be
 
 **Search using metadata name**
 
-By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical name of the game file or directory, then turn off this option. The default game name will correspond to the name of the physical file or directory, so for the first scraping of any given game, this option makes no difference.
+By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical name regardless of such data being available, then turn off this option.
 
 Note that when using TheGamesDB as scraper service for arcade games (MAME/Neo Geo), the short MAME name will always be expanded to the full game name as this scraper does not properly support searches using MAME names. Also note that you need to save the game name in the metadata editor before you can use it for scraping.
 
-**Interactive mode**
+**Interactive mode** _(Multi-scraper only)_
 
 If turned off, the scraping will be fully automatic and will not stop on multiple results or on missing games.
 
-**Auto-accept single game matches**
+**Auto-accept single game matches** _(Multi-scraper only)_
 
-Used in conjunction with interactive mode, to not having to confirm every single game if a single matched is returned from the scraper service.
+Used in conjunction with interactive mode, to not having to confirm searches where a single result is returned from the scraper service.
 
-**Respect per-file scraper exclusions**
+**Respect per-file scraper exclusions** _(Multi-scraper only)_
 
-It's possible to set a flag per file to indicate that the file should be excluded from the multi-scraper. With this flag it's possible to override this setting and scrape all files anyway.
+It's possible to set a flag per game file or directory to indicate that it should be excluded from the multi-scraper. This setting makes it possible to override that restriction and scrape all entries anyway.
 
-**Exclude folders recursively**
+**Exclude folders recursively** _(Multi-scraper only)_
 
-If this settings is enabled and a directory has its flag set to be excluded from the scraping, then the entire folder contents are skipped when running the multi-scraper.
+If this setting is enabled and a folder has its flag set to be excluded from the scraper, then the entire folder contents are skipped when running the multi-scraper.
 
-**Scrape actual folders**
+**Scrape actual folders** _(Multi-scraper only)_
 
-Enabling this option causes folders themselves to be included in the scraping. This is useful when games are grouped into folders that should themselves be scraped. For instance for DOS games or any multi-disk games where there is a folder for each game.
+Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS games or any multi-disk games where there is a folder for each individual game.
 
 ### UI settings
 
@@ -691,23 +710,23 @@ Various settings that affects the user interface.
 
 **Gamelist to show on startup**
 
-If set to None, the system view will be showed. Any other value will jump to that game system automatically on startup.
+If set to _None_, the system view will be showed. Any other value will jump to that game system automatically on startup.
 
 **Gamelist view style**
 
-See the description earlier in this document regarding gamelist view styles.
+Sets the view style to _Automatic, Basic, Detailed, Video_ or _Grid_. See the description [earlier](USERGUIDE.md#gamelist-view) in this document for more information regarding view styles.
 
 **Transition style**
 
-Graphical transition effect, either Instant (the default value), Fade or Slide.
+Graphical transition effect, either _Slide, Fade_ or _Instant_.
 
 **Theme set**
 
-The theme to use. Defaults to rbsimple-DE, the theme shipped with EmulationStation Desktop Edition.
+The theme to use. Defaults to rbsimple-DE, the theme shipped with ES-DE.
 
 **UI mode**
 
-Sets the mode for the application, as described in detail [above](USERGUIDE.md#ui-modes).
+Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [earlier](USERGUIDE.md#ui-modes) in this document for additional information.
 
 **Default sort order**
 
@@ -715,7 +734,7 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 **Menu opening effect** _(OpenGL renderer only)_
 
-Animation to play when opening the main menu or the game options menu. Can be set to _scale-up_, _fade-in_ or _none_.
+Animation to play when opening the main menu or the game options menu. Can be set to _Scale-up, _Fade-in_ or _None_.
 
 **Display pillarboxes for gamelist videos**
 
@@ -727,7 +746,7 @@ Whether to use a shader to render scanlines for videos in the gamelist view. The
 
 **Sort folders on top of gamelists**
 
-Whether to place all folders on top of the gamelists. If done so, the folders will not be part of the quick selector index, meaning they can no longer be quick-jumped to. Also, if this option is enabled, folders marked as favorites will not be sorted above non-favorite folders.
+Whether to place all folders on top of the gamelists. If enabled the folders will not be part of the quick selector index, meaning they can no longer be quick-jumped to. That is, unless there are only folders in the gamelist in which case the folders will be handled like files.
 
 **Sort favorite games above non-favorites**
 
@@ -739,7 +758,7 @@ With this setting enabled, there is a star symbol added at the beginning of the 
 
 **Enable shortcut to toggle favorites**
 
-This setting enables the 'Y' button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained elsewhere in this document. Note that this setting does not affect the functionality to use the 'Y' button to add games to custom collections.
+This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained [elsewhere](USERGUIDE.md#ui-modes) in this guide. Note that this setting does not affect the functionality to use the _Y_ button to add games to custom collections.
 
 **Enable gamelist filters**
 
@@ -747,11 +766,11 @@ Activating or deactivating the ability to filter your gamelists. This can normal
 
 **Enable quick system select**
 
-If activated, it will be possible to jump between gamelists using the Left and Right buttons without having to first go back to the system view.
+If enabled, it will be possible to jump between gamelists using the _Left_ and _Right_ buttons without having to first go back to the system view.
 
 **Display on-screen help**
 
-Activating or deactivating the built-in help systems that provides contextual information regarding button usage.
+Activating or deactivating the built-in help system that provides contextual information regarding button usage.
 
 **Play videos immediately (override theme)**
 
@@ -763,7 +782,7 @@ Settings for the built-in screensaver.
 
 **Start screensaver after (minutes)**
 
-After how many minutes to start the screensaver. If set to 0 minutes, the timer will be deactivated and the screensaver will never start automatically. It's however still possible to start the screensaver manually in this case, assuming the _Enable screensaver controls_ setting is enabled. Note that while any menu is open, the screensaver will not start.
+After how many minutes to start the screensaver. If set to 0 minutes, the timer will be deactivated and the screensaver will never start automatically. It's however still possible to start the screensaver manually in this case, assuming the _Enable screensaver controls_ setting is enabled. Note that while any menu is open, the screensaver will not start regardless of how this timer setting is configured.
 
 **Screensaver type**
 
@@ -771,7 +790,7 @@ The screensaven type to use; _Dim_, _Black_, _Slideshow_ or _Video_.
 
 **Enable screensaver controls**
 
-This includes the ability to start the screensaver manually, but also to jump to a new random game using the Left and Right buttons, to launch the game currently shown using the A button and to jump to the game in its gamelist by using the Y button. If this setting is disabled, any key or button press will stop the screensaver.
+This includes the ability to start the screensaver manually using the _Select_ button from the system view, but also while the screensaver is running to jump to a new random game using the _Left_ and _Right_ buttons, to launch the game currently shown using the _A_ button and to jump to the game in its gamelist using the _Y_ button. If this setting is disabled, any key or button press will stop the screensaver.
 
 #### Slideshow screensaver settings
 
@@ -791,11 +810,11 @@ This will display an overlay in the upper left corner, showing the game name and
 
 **Render scanlines** _(OpenGL renderer only)_
 
-Whether to use a shader to render scanlines on top of the images.
+Whether to use a shader to render scanlines for the images.
 
 **Use custom images**
 
-Using this option, it's possible to use custom images instead of random images from the game library.
+Using this option, it's possible to use custom images instead of random images from the game library. As is the case with the rest of ES-DE, the supported file formats are JPG and PNG.
 
 **Custom image directory recursive search**
 
@@ -811,7 +830,7 @@ Options specific to the video screensaver.
 
 **Swap videos after (seconds)**
 
-For how long to play videos before changing to the next game. Allowed range is between 0 and 120 seconds in 2-second increments. If set to 0 (which is the default setting), the next game will be selected when the entire video has finished playing.
+For how long to play videos before changing to the next game. Allowed range is between 0 and 120 seconds in 2-second increments. If set to 0 (which is the default setting), the next game will be selected after the entire video has finished playing.
 
 **Play audio for screensaver videos**
 
@@ -840,7 +859,7 @@ General sound settings.
 
 **System volume** _(Unix and Windows only)_
 
-As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. Note that the volume change is applied only after leaving the sound settings menu.
+As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. Be aware that the volume change is applied only after leaving the sound settings menu.
 
 **Navigation sounds volume**
 
@@ -852,36 +871,36 @@ Sets the volume for the video player. This applies to both the gamelist views an
 
 **Play audio for video files in gamelist views**
 
-With this turned off, audio won't play for you game videos in the gamelists.
+With this turned off, audio won't play for game videos in the gamelists.
 
 **Enable navigation sounds**
 
-Enable or disable navigation sounds throughout the application. Sounds are played when browsing systems and lists, starting games, adding and removing games as favorites etc. The sounds can be customized per theme, but if the theme does not support navigation sounds, ES-DE will fall back to built-in sounds.
+Enable or disable navigation sounds throughout the application. Sounds are played when browsing systems and lists, starting games, adding and removing games as favorites etc. The sounds can be customized per theme, but if the theme does not support navigation sounds, ES-DE will fall back to its built-in sounds.
 
 
 ### Game collection settings
 
-Handles collections, which are built using the games already present for your game systems. _(Details on how this works are discussed later in this guide.)_
+Handles collections, which are built using the games already present in your game systems. See the [collections](USERGUIDE.md#game-collections) section below in this document for more information.
 
-**Finish editing _'COLLECTION NAME'_ collection**
+**Finish editing _'COLLECTION NAME'_ collection** _(Entry only displayed when editing a custom collection)_
 
-Self explanatory. This menu entry is only visible when editing a collection.
+Self explanatory.
 
 **Automatic game collections**
 
-This opens a screen that lets you enable or disable the automatic game collections _All games_, _Favorites_ and _Last played_.
+This opens a screen that lets you enable or disable the automatic game collections _All games, Favorites_ and _Last played_.
 
 **Custom game collections**
 
-This lets you create your own custom game collections.
+This lets you enable or disable your own custom game collections.
 
-**Create new custom collection from theme**
+**Create new custom collection from theme** _(Entry only displayed if the ability is provided by the theme set)_
 
-If the theme set in use provides themes for custom collections, then this entry can be selected here. For example, there could be themes for _"Fighting games"_ or _"Driving games"_ etc. The default rbsimple-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE.md#custom-collections) in this guide. This menu entry is not visible if the theme does not have any available themes to use for custom collections.
+If the theme set in use provides themes for custom collections, then this entry can be selected here. For example, there could be themes for _"Fighting games"_ or _"Driving games"_ etc. The default rbsimple-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE.md#custom-collections) in this guide.
 
 **Create new custom collection**
 
-This lets you create a completely custom collection with a name that you choose.
+This lets you create a completely custom collection with a name of your choice.
 
 **Delete custom collection**
 
@@ -893,15 +912,15 @@ Whether to sort your favorite games above your other games. This is disabled by 
 
 **Display star markings for custom collections**
 
-With this option enabled, there is a star marking added to each favorite game name. It works identically to the setting 'Add star markings to favorite games' but is applied specifically to custom collections. It's disabled by default.
+With this option enabled, there is a star marking added to each favorite game name. It works identically to the setting _Add star markings to favorite games_ under the _UI settings_ but is applied specifically to custom collections. It's disabled by default.
 
 **Group unthemed custom collections**
 
-With this enabled, if you have created custom collections and there is no theme support for the names you've selected, the collections will be grouped in a general collection which is correctly themed. It's strongly recommended to keep this option enabled as otherwise your collections would be completely unthemed which doesn't make much sense.
+With this enabled, if you have created custom collections and there is no theme support for the names you've selected, the collections will be grouped in a general collection which is correctly themed. It's strongly recommended to keep this option enabled as otherwise your collections would be completely unthemed which doesn't make much sense. This option is provided mostly for testing and theme development purposes.
 
 **Show system names in collections**
 
-Enables the system name to be shown in square brackets after the game name, for example "CONTRA [NES]" or "DOOM [DOS]". It's recommended to keep this option enabled.
+Enables the system name to be shown in square brackets after the game name, for example _CONTRA [NES]_ or _DOOM [DOS]_. This is applied to both automatic and custom collections. It's recommended to keep this option enabled.
 
 ### Other settings
 
@@ -911,21 +930,21 @@ These are mostly technical settings.
 
 The amount of video RAM to use for the application. Defaults to 128 MiB which seems to work fine most of the time. The allowed range is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or edit the es_settings.cfg file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
-**Fullscreen mode (requires restart) - Unix only**
+**Fullscreen mode (requires restart)** _(Unix only)_
 
-This gives you a choice between Normal and Borderless modes. With the borderless being more seamless as the ES-DE window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES-DE will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES-DE will run in a window. For the borderless mode, any changes to the resolution will make ES-DE run in a window.
+This gives you a choice between _Normal_ and _Borderless_ modes. With the borderless being more seamless as the ES-DE window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES-DE will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES-DE will run in a window. For the borderless mode, any changes to the resolution will make ES-DE run in a window.
 
-**When to save metadata**
+**When to save game metadata**
 
-The metadata for a game is updated both by scraping and modifying data in the metadata editor, but also when launching a game, as the play count and last played date is then updated. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to "Never" will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, or when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files). In theory "On exit" will give some performance gains, but it's normally recommended to leave the setting at its default value which is "Always". Note that with the settings set to "Never", any updates such as the last played date will still be shown on screen, however during the next application startup, any values previously saved to the gamelist.xml files will be read in again. As well, when changing this setting to "Always" from either of the two other options, any pending changes will be immediately written to the gamelist.xml files.
+The metadata for a game is updated by scraping and by manual editing it using the metadata editor, but also when launching a game, as the play count and last played date is then updated. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to _Never_ will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, or when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files). In theory _On exit_ will give some performance gains, but it's normally recommended to leave the setting at its default value which is _Always_. Note that with the settings set to _Never_, any updates such as the last played date will still be shown on screen, but during the next application startup, any values previously saved to the gamelist.xml files will be read in again. As well, when changing this setting to _Always_ from either of the two other options, any pending changes will be immediately written to the gamelist.xml files.
 
 **Game media directory**
 
-Here you can override the directory to your game media, i.e. the game images and videos. The default location is "~/.emulationstation/downloaded_media".
+This setting defines the directory for the game media, i.e. game images and videos. The default location is _~/.emulationstation/downloaded_media_
 
 **Emulator core path**
 
-This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be defined in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is only used on Unix. For macOS and Windows it's not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for these operating systems, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL.md](INSTALL.md#es_systemscfg) for more information about this.
+This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be included in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is only used on Unix. For macOS and Windows the %COREPATH% variable is not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for these operating systems, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores if compiled from source code but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL.md](INSTALL.md#es_systemscfg) for more information about this.
 
 **Per game launch command override**
 
@@ -933,27 +952,27 @@ If enabled, you can override the launch command defined in es_systems.cfg on a p
 
 **Show hidden files and folders (requires restart)**
 
-Allows hiding of hidden files, which on Unix means files and directories starting with a dot, and on Windows it's directories and files set as hidden using an NTFS option. Not to be confused with the next option which hides files based on metadata configuration within ES-DE.
+If this option is disabled, hidden files and folders within the ROM directory tree are excluded from ES-DE. On Unix this means those starting with a dot, and on Windows it's those set as hidden by using an NTFS attribute. This setting is probably mostly useful for special situations and is not to be confused with the next option which hides files based on metadata configuration within ES-DE.
 
 **Show hidden games (requires restart)**
 
-You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE. This is entirely different that the previous option as this is based on metadata configured within ES-DE and the previous options relates to files that are hidden on the operating system level.
+You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disk games where you may only want to show the .m3u playlists and not the individual game files, as is discussed [here](USERGUIDE.md#multiple-gamefiles-installation). By disabling this option these files will not be processed at all when ES-dE starts up. If you enable the setting you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden.
 
 **Enable custom event scripts**
 
-It's possible to trigger custom scripts for a number of actions in ES-DE. _(Details on how this works are discussed later in this guide.)_
+It's possible to trigger custom scripts for a number of actions in ES-DE, as is discussed [below](USERGUIDE.md#custom-event-scripts), and this setting decides whether this functionality is enabled. It's recommended to leave it at its default off value unless you need it as it generates unnecessary debug logging.
 
-**Only show roms from gamelist.xml files**
+**Only show ROMs from gamelist.xml files**
 
 If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES-DE. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
 
 **Display game media from ROM directories**
 
-Using this option, you can place game images and videos in the ROM directory tree. The media files are searched inside the directory "\<ROM directory\>/\<system name\>/images/" and "\<ROM directory\>/\<system name\>/videos/" and the filenames must be the same as the ROM names, followed by a dash and the media type. For example "~/ROMs/nes/images/Contra-screenshot.jpg", "~/ROMs/nes/images/Contra-marquee.jpg" and "~/ROMs/nes/videos/Contra-video.jpg". This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES-DE. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
+Using this option, you can place game images and videos in the ROM directory tree. The media files are searched inside the directory _\<ROM directory\>/\<system name\>/images/_ and _\<ROM directory\>/\<system name\>/videos/_ and the filenames must match the ROM names, followed by a dash and the media type. For example _~/ROMs/nes/images/Contra-screenshot.jpg, ~/ROMs/nes/images/Contra-marquee.jpg_ and _~/ROMs/nes/videos/Contra-video.jpg_. This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES-DE. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
 
 **Display GPU statistics overlay**
 
-Displays the framerate and VRAM statistics as an overlay. You normally never need to use this. **Note:** As of version 1.0.0 the VRAM usage statistics is not accurate; this issue will be addressed in future ES-DE versions.
+Displays the framerate and VRAM statistics as an overlay. You normally never need to use this unless you're debugging a performance problem or similar. **Note:** As of ES-DE version 1.0 the VRAM usage statistics is not accurate. This will be addressed in a future version.
 
 **Enable menu in kid mode**
 
@@ -966,31 +985,32 @@ With this setting enabled, there is a Quit menu shown as the last entry on the m
 
 ### Configure input
 
-Gives you the possibility to reconfigure you devices or configure additional devices. This procedure is explained earlier in this guide.
-
+This tool allows the configuration of button mappings for known or new input devices, as is explained [here](USERGUIDE.md#input-device-configuration).
 
 ### Quit
+The menu where you quit ES-DE, or reboot or power off your computer. This menu can be disabled using an option, and in this case it's replaced with a _Quit EmulationStation_ entry.
 
-The menu where you quit ES-DE, or reboot or power off your system.
+**Quit EmulationStation**
 
-**Quit emulationstation**
+If the option _When to save game metadata_ has been set to _On exit_, the gamelist.xml files will be updated at this point.
 
-If the option _"When to save metadata"_ has been set to _"On exit"_, the gamelist.xml files will be updated at this point.
+**Reboot system** _(Unix and Windows only)_
 
-**Reboot system - Unix and Windows only**
+Self explanatory.
 
-Can be disabled, meaning the entry will not show up at all.
+**Power off system** _(Unix and Windows only)_
 
-**Power off system - Unix and Windows only**
-
-Can be disabled, meaning the entry will not show up at all.
+Self explanatory.
 
 
 ## Game options menu
 
-This menu is opened from the gamelists, and can't be accessed directly from the main screen. The menu changes slightly depending on the context, namely whether a game file or a folder is selected, and whether the current system is a collection or a normal game platform.
+This menu is opened from the gamelist views, and can't be accessed from the system view. The menu changes slightly depending on the context, for example if a game file or a folder is selected, or whether the current system is a collection or a normal game platform.
 
-You open this menu by pressing the **Select** key.
+You open the menu using the **Select** button, and by pressing **B** or selecting the **Apply** button any settings such as letter jumping using the quick selector or sorting changes are applied. If you instead press the Select button again, the menu is closed without applying any changes.
+
+![alt text](images/current/es-de_game_options_menu.png "ES-DE Game Options Menu")
+_The game options menu as laid out when opening it from within a custom collection, which adds the menu entry to add or remove games from the collection._
 
 Here's a summary of the menu entries:
 
@@ -1000,15 +1020,18 @@ This provides the ability to jump to a certain letter using a quick selector. If
 
 ### Sort games by
 
-This is the sort order for the gamelist. There's is a global sort order setting that can be changed in the main menu, and it's this sort order that is also shown here unless it's been modified during the program sessions. The sort order is persistent per game system throughout the program session.
+This is the sort order for the gamelist. The default sorting shown here is taken from the setting **Default sort order** under **UI settings** in the main menu. Any sorting that is applied in the game options menu will be persistent throughout the program session and it can be set individually per game system and custom collection.
 
 ### Filter gamelist
 
-Choosing this entry opens a separate screen where it's possible to apply a filter for the gamelists, which is persistent throughout the program session, or until the filter is reset. The option to reset all filters is also shown on this separate screen.
+Choosing this entry opens a separate screen where it's possible to apply a filter to the gamelist. The filter is persistent throughout the program session, or until it's manually reset. The option to reset all filters is also shown on the same screen.
+
+![alt text](images/current/es-de_gamelist_filters.png "ES-DE Gamelist Filters")
+_The gamelist filter screen, accessed from the game options menu._
 
 The following filters can be applied:
 
-**Text Filter (Game Name)**
+**Text Filter (Game name)**
 
 **Favorites**
 
@@ -1028,28 +1051,28 @@ The following filters can be applied:
 
 **Hidden**
 
-With the exception of the text filter, all available filter values are assembled from metadata from the actual gamelist, so if there for instance are no games marked as completed, the Completed filter will only have the selectable option 'False', i.e. 'True' will be missing.
+With the exception of the text filter, all available filter values are assembled from metadata from the actual gamelist, so if there for instance are no games marked as completed, the Completed filter will only have the selectable option False, i.e. True will be missing.
 
 Be aware that although folders can have most of the metadata values set, the filters are only applied to files (this is also true for the text/game name filter). So if you for example set a filter to only display your favorite games, any folder that contains a favorite game will be displayed, and other folders which are themselves marked as favorites but that do not contain any favorite games will be hidden.
 
-The filters are always applied for the complete game system, including all folder contents.
+The filters are always applied for the complete game system, including all folder content.
 
-### Edit this game's metadata / Edit this folder's metadata
+### Add/remove games to this collection
 
-This opens the metadata editor, which will be described in detail below.
-
-### Add/remove games to this game collection
-
-This is only shown if the system is a collection. This will also be described in more detail below.
+This entry is only shown if the system is a custom collection. The way this works is described in more detail [below](USERGUIDE.md#custom-collections).
 
 ### Finish editing _'COLLECTION NAME'_ collection
 
-This menu entry is only visible when editing the collection.
+This entry is only visible if the system is a custom collection and it's currently being edited.
+
+### Edit this game's metadata / Edit this folder's metadata
+
+This opens the metadata editor for the currently selected game file or folder.
 
 
 ## Metadata editor
 
-In the metadata editor, you can modify the metadata for a game, scrape for game info and media files and delete media files and gamelist entries, or the entire game.
+In the metadata editor, you can modify the metadata for a game, scrape for game info and media files, delete media files and gamelist entries, or delete the entire game. When manually modifying a value, it will change color from gray to blue, and if the scraper has changed a value, it will change to red. When leaving the metadata editor you will be asked whether you want to save any settings done manually or by the scraper.
 
 ![alt text](images/current/es-de_metadata_editor.png "ES-DE Metadata Editor")
 _The metadata editor._
@@ -1060,11 +1083,11 @@ The following entries can be modified (note that some of these are not available
 
 **Name**
 
-This is the game that will be shown when browsing the gamelist. If no sortname has been defined, the games are sorted using this field.
+This is the name that will be shown when browsing the gamelist. If no sortname has been defined, the games are sorted using this field.
 
 **Sortname** _(files only)_
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _"Mille Miglia"_ as _"1000 Miglia"_ or _"The Punisher"_ as _"Punisher, The"_. Be aware though that the 'Jump to...' quick selector will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Be aware though that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist.
 
 **Description**
 
@@ -1072,7 +1095,7 @@ Usually provided by the scraper although it's possible to update this manually o
 
 **Rating**
 
-Ratings in half-star increments. Can be set as such manually or be scraped, if the scraper service provides ratings (currently only ScreenScraper does).
+Rating in half-star increments. This can be set as such manually or it can be scraped, assuming the scraper service provides ratings (currently only ScreenScraper does). If an external scraper application such as [Skyscraper](https://github.com/muldjord/skyscraper) has been used that may set the ratings in fractional values such as three-quarter stars, then ES-DE will round them to the nearest half-star. When this happens, the rating stars will be colored green to notify that a rounding has taken place and a question will be asked whether to save the changes even if no other manual changes were performed.
 
 **Release date**
 
@@ -1096,19 +1119,19 @@ The amount of players the game supports.
 
 **Favorite**
 
-A flag to indicate whether this is a favorite. Can also be set directly from the gamelist by using the **Y** key.
+A flag to indicate whether this is a favorite. Can also be set directly from the gamelist view by using the _Y_ button (unless this has been disabled in the main menu settings).
 
 **Completed**
 
-A flag to indicate whether you have completed this game.
+A flag to indicate whether you have completed the game.
 
 **Kidgame** _(files only)_
 
-A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES-DE in 'Kid mode'.
+A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES-DE in _Kid mode_, as is explained [here](USERGUIDE.md#ui-modes)
 
 **Hidden**
 
-A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts, configuration tools etc. If a file or folder is flagged as hidden but the correponding option to hide hidden games has not been set, then the opacity of the text will be lowered significantly to make it clear that it's a hidden game.
+A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts and unnecessary binaries or to hide the actual game files for multi-disk games. If a file or folder is flagged as hidden but the correponding option to hide hidden games has not been enabled, then the opacity of the text will be lowered significantly to make it clear that it's a hidden game.
 
 **Broken/not working**
 
@@ -1116,7 +1139,7 @@ A flag to indicate whether the game is broken. Useful for MAME games for instanc
 
 **Exclude from game counter** _(files only)_
 
-A flag to indicate whether the game should be excluded from being counted. It's only used for the game system counter on the main screen, but is quite useful for multi-file games such as multi-disk Amiga or Commodore 64 games, or for DOS games for configuration executables that you want to keep in ES-DE and therefore can't hide. Games that have this flag set will have a lower opacity in the gamelists, making them easy to spot.
+A flag to indicate whether the game should be excluded from being counted. If this is set for a game, it will not be included in the game counter shown per system on the system view, and it will not be included in the system information field in the gamelist view. As well, it will be excluded from all automatic and custom collections. This option is quite useful for multi-file games such as multi-disk Amiga or Commodore 64 games, or for DOS games where you want to exclude setup programs and similar but still need them available in ES-DE and therefore can't hide them. Files that have this flag set will have a lower opacity in the gamelists, making them easy to spot.
 
 **Exclude from multi-scraper**
 
@@ -1124,15 +1147,15 @@ Whether to exclude the file from the multi-scraper. This is quite useful in orde
 
 **Hide metadata fields**
 
-This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disk, Cartridges etc.) and configuration files and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disk games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's still possible to display game images and videos with this setting enabled.
+This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disk, Cartridges etc.) and for setup programs and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disk games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's also possible to display game images and videos with this setting enabled.
 
 **Launch command** _(files only)_
 
-Here you can override the launch command for the game, for example to use a different emulator than the default for the game system. Very useful for MAME/arcade games.
+Here you can override the launch command for the game, for example to use a different emulator than the default one for the game system. Very useful for MAME/arcade games.
 
 **Play count** _(files only)_
 
-A statistics counter that counts how many times you're played the game. You normally don't need to touch this, but if you want to, the possibility is there.
+A statistics counter that tracks how many times you have played the game. You normally don't need to touch this, but if you want to, the possibility is there.
 
 ### Buttons
 
@@ -1140,19 +1163,19 @@ For game files, there will be five buttons displayed on the bottom of the metada
 
 **Scrape**
 
-Opens the single-game scraper, which is explained earlier in this guide.
+Opens the single-game scraper, which is explained [earlier](USERGUIDE.md#single-game-scraper) in this guide. The _Y_ button can also be used as a shortcut to start the scraper without having to navigate to this button.
 
 **Save**
 
-Saves any changes and closes the window. If no changes have been done, it simply closes the window.
+Saves any changes and closes the window.
 
 **Cancel**
 
-Cancels any changes and closes the window. If no changes have been done, it simply closes the window.
+Cancels any changes and closes the window.
 
 **Clear**
 
-This will remove any media files for the game file or folder and also remove its entry from the gamelist.xml file. The actual game file or folder will however _not_ be deleted. A prompt will be shown asking for confirmation.
+This will remove any media files for the file or folder and also remove its entry from the gamelist.xml file. The actual game file or folder will however _not_ be deleted. A prompt will be shown asking for confirmation.
 
 **Delete** _(Files only)_
 
@@ -1161,74 +1184,81 @@ This will remove the actual game file, its gamelist.xml entry, its entry in any 
 
 ## Screensaver
 
-There is a screensaver built into ES-DE with four different behaviours: _Dim_, _Black_, _Slideshow_ and _Video_.
+There are four types of screensavers built into ES-DE: **Dim**, **Black**, **Slideshow** and **Video**.
 
-There are numerous options for the screensaver, refer to the Main menu section above to find out about them.
+Numerous options can be set for these screensavers, as detailed [here](USERGUIDE.md#screensaver-settings).
 
-The _Dim_ screensaver simply dims and desaturates the current view and _Black_ will show a black screen. The _Slideshow_ and _Video_ screensavers are a bit more interesting as they can display images and videos from your game collection. (In addition to this, Slideshow can be configured to only show images from a specified directory).
+The Dim screensaver simply dims and desaturates the current view and Black will show a black screen. The Slideshow and Video screensavers are more interesting as they can display images and videos from your game collection. In addition to this, the Slideshow screensaver can be configured to only show images from a specified directory.
 
-If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the 'Select' key. In addition to this, the controls will allow you to jump to a new random image or video using the left and right buttons on your keyboard or controller. It's also possible to launch the game currently displayed by pressing the 'A' button, and pressing the 'Y' button will jump to the game in its gamelist without starting it.
+If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the **Select** key. In addition to this, for the Slideshow and Video screensavers, the controls will allow you to jump to a new random image or video using the **Left** and **Right** buttons on your keyboard or controller. It's also possible to launch the game currently displayed using the **A** button, and the **Y** button will jump to the game in its gamelist without starting it.
 
 ![alt text](images/current/es-de_screensaver.png "ES-DE Screensaver")
 _An example of what the video screensaver looks like._
 
 ## Game collections
 
-ES-DE provides two types of collections, automatic collections as well as custom collections defined by the user. Each collection can be individually enabled or disabled in the main menu.
+ES-DE provides two types of collections, **Automatic collections** and **Custom collections**, the latter being defined by the user. Collections are as the name implies only collections of games already present in your actual game systems, so they're basically grouping your games together into convenient views. As such the use of collections is entirely optional, but it is a very nice feature and it's worth some effort to setup.
 
-Collections are, as the name implies, only collections of games already present games from your game systems and any given game can be part of as many collections as you want.
-
-There are multiple settings for the game collections, but these are covered above in the 'Main menu' section so that information won't be repeated here.
+The numerous collection settings available are detailed [here](USERGUIDE.md#game-collection-settings).
 
 ### Automatic collections
 
-These are **All games**, **Favorites** and **Last played**. The 'All games' collection simply groups all your game system into one big list, 'Favorites' combines all your games marked as favorites from all your game systems, and 'Last played' is a list of the 50 last games you have launched.
+The automatic collections are named **All games**, **Favorites** and **Last played**. The 'All games' collection simply groups all your game systems into one big list, 'Favorites' combines all your games marked as favorites from all your game systems, and 'Last played' is a list of the 50 last games you have launched.
 
 These automatic collections can be individually enabled or disabled by going to the main menu, selecting **Game collection settings** and then **Automatic game collections**.
 
-Note that you should only enable these collections if you really need them as they slow down the application quite significantly. By default these collections are therefore disabled.
+Note that you should only enable these collections if you really need them as they slow down the application quite a bit. By default these collections are therefore disabled.
 
 ### Custom collections
 
-These are collections that you create yourself. Example of such collections could be grouping in genres like _Shoot em up_, _Fighting games_ etc. or perhaps a time period like '1980s', '1990s' and so on.
+These are collections that you create yourself. Examples could be grouping in genres like **Shoot em up**, **Fighting games** etc. or perhaps a time period like **1980s**, **1990s** and so on.
 
 If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated **Collections** system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
-So if you have enabled the option **Group unthemed custom collections** (it's enabled by default), any collections you add will show up in the special **Collections** system. Here you can access them just as you would access folders inside a regular game system. The amount of games per collection is shown in the description, and the game media for a random game is displayed each time you browse through the list.
+So if you have enabled the option **Group unthemed custom collections** (it's enabled by default), any collections you add will show up in the special **Collections** system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list.
 
-To create a custom collection, go to 'Game collection settings' in the main menu and choose 'Create new custom collection'.
+To create a custom collection, go to **Game collection settings** from the main menu and choose **Create new custom collection**.
 
-Select a name and press enter, let's use the name '1980s' for this example.
+Choose a name and press enter, let's use the name **Platform** for this example.
 
-The collection will now be added and the collection edit mode will be automatically selected. You can now add games to your collection by navigating to any game system and adding a game by pressing the 'Y' key, just as you would normally do to flag the game as a favorite. Any number of games from any of your game systems can be added to your collection.
+The collection will now be created and the collection edit mode will be entered. You can now add games to the collection by navigating to any gamelist and pressing the **Y** button. Any number of games from any of your game systems can be added. A game can also be part of multiple collections, there is no real limit for this in ES-DE.
 
-Removing games works in the same way, just press 'Y' to remove it if it's already present in your collection. You can do this either from the game system where the game was added, or from the collection itself.
+Removing games works the same way, just press **Y** to remove it if it's already present in your collection. You can do this either from the gamelist where the game was added, or from the collection itself.
 
-Note that only files can be part of collections, not folders.
+Only files can be part of collections, not folders. As well, games marked as hidden or to not be counted as games can't be added either.
 
-During the time that the collection is being edited, any game that is already part of the collection will be marked with a leading tick mark in their game name to make it easy to see which games have already been added.
+During the time that the collection is being edited, any game that is part of the collection is marked with a leading tick symbol in the game name.
 
-When you are done adding games, you can either open the main menu and go to 'Game collection settings' and select the 'Finish editing '1980s' collection' or you can open the game options menu and select the same option there. The latter works from within any game system, you don't need to navigate back to the collection that you're editing.
+When you are done adding games, you can either open the main menu and go to **Game collection settings** and select the **Finish editing 'Platform' collection** or you can open the game options menu and select the same option there. The latter works from within any game system, so you don't need to first navigate back to the collection that you're editing.
 
-You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing 'Add/remove games to this game collection'.
+You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing **Add/remove games to this game collection**.
 
 ![alt text](images/current/es-de_custom_collections.png "ES-DE Custom Collections")
 _Example of custom collections, here configured as genres._
 
-The way that custom collection are implemented is very simple. There is a folder for the collections in `~/.emulationstation/collections` with a separate file for each collection.
+![alt text](images/current/es-de_custom_collections_editing.png "ES-DE Custom Collections")
+_When editing a custom collection, a tick symbol will be displayed for any game that is already part of the collection._
 
-For this example a file will have been created named `~/.emulationstation/collections/custom-1980s.cfg`.
+
+The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder **~/.emulationstation/collections**
+
+For this example a file will have been created named **~/.emulationstation/collections/custom-platform.cfg**
 
 The file contents is simply a list of ROM files, such as the following:
 
 ```
-%ROMPATH%/c64/multidisk/Last Ninja 2/Last Ninja 2.m3u
-%ROMPATH%/nes/Legend of Zelda, The.zip
+%ROMPATH%/amiga/Flashback_v3.2_1163.hdf
+%ROMPATH%/amiga/JamesPond2_v1.1_AGA_1354.hdf
+%ROMPATH%/amiga/Nebulus_v1.3_0361.hdf
+%ROMPATH%/c64/Bionic Commando.d64
+%ROMPATH%/c64/Great Giana Sisters, The.d64
+%ROMPATH%/c64/Trantor.d64
+%ROMPATH%/c64/Zorro.d64
 ```
 
 Any changes to custom collections (for example adding or removing a game) will be immediately written to the corresponding collection configuration file.
 
-Note that if you for example copy or migrate a collection from a previous version of EmulationStation or if you're setting up EmulationStation Desktop Edition on a new computer, even though you copy the files into the collections directory, they will not show up in the application. You always need to enable the collection in the menu. ES-DE looks inside the es_settings.cfg file during startup to see which collections should be shown.
+Note that if you copy or migrate a collection from a previous version of EmulationStation or if you're setting up ES-DE on a new computer, even though you copy the files into the collections directory, they will not show up inside the application as you always need to enable the collections from the menu. ES-DE looks inside the es_settings.cfg file during startup to see which collections should be enabled.
 
 If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection.
 
@@ -1238,25 +1268,25 @@ If you're migrating from a previous version of EmulationStation that has absolut
 ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE theme set, you can replace it with a number of themes available from various locations on the Internet.
 
 >>>
-Somewhat confusingly the term 'theme' and 'theme set' are used to refer to the same thing. The correct term for what you apply to the application to achieve a different look is actually 'theme set' as it's a collection of a number of themes for a number of game systems. The supplied rbsimple-DE is an example of such a theme set. But in this guide and in other EmulationStation resources on the Internet, the term 'theme' is often used to refer to the same thing as a 'theme set'.
+Somewhat confusingly the terms **theme** and **theme set** are used to refer to the same thing. The technically correct term for what you apply to the application to achieve a different look is actually _theme set_ as it's a collection of a number of themes for a number of game systems. The supplied rbsimple-DE is an example of such a theme set. But in this guide and in other EmulationStation resources on the Internet, the term theme is often used to refer to the same thing as a theme set. As long as you are aware of the distinction, it doesn't really matter which term is used.
 >>>
 
-Note that this Desktop Edition fork adds additional features to the themes and more still will be added in the future. This means that you may not get the full benefit of the application if you're using a different theme set. But effort is spent trying to make sure that the application is backwards compatible with the available themes used by other ES-DE versions, even with the limited functionality.
+Note that this Desktop Edition fork adds additional features to the themes and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a different theme set. But effort is spent trying to make ES-DE backwards compatible with the available themes used by other EmulationStation versions, even if the functionality they provide is limited.
 
-Themes are most easily installed in your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you're given an option to choose which one to use from the 'UI Settings' on the main menu.
+Themes are most easily installed in your ES-DE home directory, i.e. **~/.emulationstation/themes**. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you can then choose between them via **UI Settings** on the main menu.
 
-Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be something like `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation\themes` on Windows.
+Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be **/usr/local/share/emulationstation/themes** on Unix, **/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes** on macOS or **C:\Program Files\EmulationStation-DE\themes** on Windows.
 
-Note: If you would like to customize the rbsimple-DE theme, simply make a copy of the complete rbsimple-DE directory to ~/.emulationstation/themes and then that copy of the theme will take precedence over the one in the application installation directory.
+If you would like to customize the rbsimple-DE theme, simply make a copy of the complete rbsimple-DE directory to ~/.emulationstation/themes and then that copy of the theme will take precedence over the one in the application installation directory.
 
-In this example, we've downloaded the Carbon and Fundamental themes and uncompressed them to the ES-DE folder:
+In this example, we've downloaded the [Carbon](https://github.com/RetroPie/es-theme-carbon) and [Fundamental](https://github.com/G-rila/es-theme-fundamental) themes and uncompressed them to the ES-DE home folder:
 
 ```
 ~/.emulationstation/themes/es-theme-carbon
 ~/.emulationstation/themes/es-theme-fundamental
 ```
 
-You will now have three entries for the Theme set selector in the UI settings menu, i.e. rbsimple-DE, es-theme-carbon and es-theme-fundamental.
+You would now have three entries for the Theme set selector in the UI settings menu, i.e. rbsimple-DE, es-theme-carbon and es-theme-fundamental.
 
 Here are some resources where additional theme sets can be downloaded.
 
@@ -1269,7 +1299,7 @@ https://gitlab.com/recalbox/recalbox-themes
 https://wiki.batocera.org/themes
 
 ![alt text](images/current/es-de_ui_theme_support.png "ES-DE Theme Support")
-_An example of a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme applied._
+_An example of a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme applied to ES-DE._
 
 
 
@@ -1277,12 +1307,12 @@ _An example of a modified version of the [Fundamental](https://github.com/G-rila
 
 There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. By default it's deactivated so be sure to enable it to use this feature.
 
-The setup for this is a bit technical, so please refer to the [INSTALL.md](INSTALL.md) document to see how it's configured.
+The setup for event scripts is a bit technical, so please refer to the [INSTALL.md](INSTALL.md#custom-event-scripts) document to see how it's configured.
 
 
 ## Portable installation (Windows only)
 
-On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, please refer to the [INSTALL.md](INSTALL.md) document to see how it's configured.
+On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, please refer to the [INSTALL.md](INSTALL.md#building-on-windows) document to see how it's done.
 
 
 ## Command line arguments
@@ -1292,18 +1322,19 @@ Please refer to the [INSTALL.md](INSTALL.md#command-line-arguments) document for
 
 ## Supported game systems
 
-**Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. EmulationStation will still work but the game system will not be themed which looks very ugly.
+**Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. EmulationStation will still work but the game system will not be themed which looks very ugly.
 
-The column **Game system name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
+The column **Game system name** corresponds to the directory where you should put your game files, e.g. **~/ROMs/c64** or **~/ROMs/megadrive**.
 
-Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although people from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be modified in the es_systems.cfg file if you wish to.
+Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be modified in the es_systems.cfg file if you wish to.
 
-Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For example 'na' for North America has been added to `snes` (Super Nintendo). The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
+Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For instance **na** for North America has been added to **snes** (Super Nintendo) giving the system name **snesna**. The same goes for Japan, as in **megacd** and **megacdjp**. Again, this only affects the theme and theme graphics.
 
-The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside the brackets.
+The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside brackets.
 
-For additional details regarding which game file extensions are supported per system, refer to the **es_systems.cfg** templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support though.
+For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support though.
 
+Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
 | Game system name      | Full name                                      | Default emulator                  | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :----------------------------------- |
