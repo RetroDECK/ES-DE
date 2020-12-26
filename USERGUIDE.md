@@ -1,6 +1,6 @@
-# EmulationStation Desktop Edition (ES-DE) v1.0 - User Guide
+# EmulationStation Desktop Edition (ES-DE) - User guide
 
-**Note:** This document is intended as a quick start guide as well as a reference for the user interface settings and functionality. For more in-depth information and details on how to compile EmulationStation and perform more advanced configuration, please refer to [INSTALL.md](INSTALL.md).
+**Note:** This document is intended as a quick start guide as well as a reference for the user interface settings and functionality. For more in-depth information and details on how to compile ES-DE and perform more advanced configuration, please refer to [INSTALL.md](INSTALL.md).
 
 Table of contents:
 
@@ -8,7 +8,7 @@ Table of contents:
 
 ## Basic steps to get ES-DE up and running
 
-If you just want to get started as quickly as possible, just follow these steps:
+If you just want to get started as quickly as possible, simply follow these steps:
 
 1) Install ES-DE
 2) Install and configure [RetroArch](https://www.retroarch.com)
@@ -22,7 +22,7 @@ For additional details, read on below.
 
 ## Getting started
 
-Getting started with EmulationStation is easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows and macOS you'll use the installer instead of a package.
+Getting started with ES-DE is easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows and macOS you'll use the installer instead of a package.
 
 The following operating systems have been tested (all for the x86 architecture):
 
@@ -123,7 +123,7 @@ Depending on the theme, the system navigation carousel can be either horizontal 
 The game systems are sorted by their full names, as defined in es_systems.cfg.
 
 ![alt text](images/current/es-de_system_view.png "ES-DE System View")
-_The System view is the default starting point for the application, it's here that you browse through your game systems._
+_The **System view** is the default starting point for the application, it's here that you browse through your game systems._
 
 ## Gamelist view
 
@@ -140,7 +140,7 @@ In addition to the styles just described, there is a **Grid** view style as well
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated as 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
 ![alt text](images/current/es-de_gamelist_view.png "ES-DE Gamelist View")
-_The Gamelist view is where you browse the games for a specific system._
+_The **Gamelist view** is where you browse the games for a specific system._
 
 
 ## UI modes
@@ -151,7 +151,7 @@ These modes mandate the functionalty provided by the application in the followin
 
 * Full - This is the default mode which enables all functionality.
 * Kiosk - The main menu will be severely restricted, only displaying the entry to change the audio volume. The game options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag or unflag games as favorites will be removed. Apart from this all games will be playable.
-* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see **Enable menu in kid mode** further [below](USERGUIDE.md#other-settings-1)
+* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see **Enable menu in kid mode** further [below](USERGUIDE.md#other-settings-1).
 
 There is an unlock code available to revert to the Full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A**. It works to use either a keyboard or a configured controller to input the passkey sequence, but it can't be entered when a menu is open.
 
@@ -516,7 +516,7 @@ The process of scraping games is basically identical between the single-game scr
 
 By default, ES-DE will search using the metadata name of the game. If no name has been defined via scraping or manually using the metadata editor, this name will correspond to the physical file name minus all text inside either normal brackets **()** or square brackets **[]**. So for example the physical filename **Mygame (U) [v2].zip** will be stripped to simply **Mygame** when performing the scraping.
 
-The behavior of using the metadata name rather than the file name can be changed using the setting _Search using metadata name_ as described [below](USERGUIDE.md#other-settings).
+The behavior of using the metadata name rather than the file name can be changed using the setting **Search using metadata name**.
 
 Note that there is  an exception to this behavior for arcade games (MAME and Neo Geo). For ScreenScraper the short MAME names are used by default as this scraper service fully supports that. For TheGamesDB the short names are instead expanded to the full games names using a lookup in the MAME name database supplied with the ES-DE installation. It's possible to override this automatic behavior by using the _Refine Search_ button in the scraper GUI if the search did not yield any results, or if the wrong game was returned. In general though, searching for arcade games is very reliable assuming the physical game files follow the MAME name standard.
 
@@ -575,7 +575,7 @@ Remember that on Unix files are case sensitive, and as well the file extensions 
 
 As an alternative, you can also locate your game media in the ROM directory. This is explained below when covering the option **Display game media from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
 
-It's possible to change the game media directory from within ES-DE, for this see the option **Game media directory** detailed below.
+It's possible to change the game media directory from within ES-DE, for this see the option **Game media directory**.
 
 
 ## Main menu
@@ -714,7 +714,7 @@ If set to _None_, the system view will be showed. Any other value will jump to t
 
 **Gamelist view style**
 
-Sets the view style to _Automatic, Basic, Detailed, Video_ or _Grid_. See the description [earlier](USERGUIDE.md#gamelist-view) in this document for more information regarding view styles.
+Sets the view style to _Automatic, Basic, Detailed, Video_ or _Grid_. See the description [above](USERGUIDE.md#gamelist-view) in this document for more information regarding view styles.
 
 **Transition style**
 
@@ -726,7 +726,7 @@ The theme to use. Defaults to rbsimple-DE, the theme shipped with ES-DE.
 
 **UI mode**
 
-Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [earlier](USERGUIDE.md#ui-modes) in this document for additional information.
+Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [above](USERGUIDE.md#ui-modes) in this document for additional information.
 
 **Default sort order**
 
@@ -1127,7 +1127,7 @@ A flag to indicate whether you have completed the game.
 
 **Kidgame** _(files only)_
 
-A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES-DE in _Kid mode_, as is explained [here](USERGUIDE.md#ui-modes)
+A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES-DE in _Kid_ mode.
 
 **Hidden**
 
@@ -1163,7 +1163,7 @@ For game files, there will be five buttons displayed on the bottom of the metada
 
 **Scrape**
 
-Opens the single-game scraper, which is explained [earlier](USERGUIDE.md#single-game-scraper) in this guide. The _Y_ button can also be used as a shortcut to start the scraper without having to navigate to this button.
+Opens the single-game scraper, which is explained [above](USERGUIDE.md#single-game-scraper) in this guide. The _Y_ button can also be used as a shortcut to start the scraper without having to navigate to this button.
 
 **Save**
 
@@ -1199,7 +1199,7 @@ _An example of what the video screensaver looks like._
 
 ES-DE provides two types of collections, **Automatic collections** and **Custom collections**, the latter being defined by the user. Collections are as the name implies only collections of games already present in your actual game systems, so they're basically grouping your games together into convenient views. As such the use of collections is entirely optional, but it is a very nice feature and it's worth some effort to setup.
 
-The numerous collection settings available are detailed [here](USERGUIDE.md#game-collection-settings).
+The numerous collection settings available are covered [here](USERGUIDE.md#game-collection-settings).
 
 ### Automatic collections
 
@@ -1267,13 +1267,11 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE theme set, you can replace it with a number of themes available from various locations on the Internet.
 
->>>
 Somewhat confusingly the terms **theme** and **theme set** are used to refer to the same thing. The technically correct term for what you apply to the application to achieve a different look is actually _theme set_ as it's a collection of a number of themes for a number of game systems. The supplied rbsimple-DE is an example of such a theme set. But in this guide and in other EmulationStation resources on the Internet, the term theme is often used to refer to the same thing as a theme set. As long as you are aware of the distinction, it doesn't really matter which term is used.
->>>
 
 Note that this Desktop Edition fork adds additional features to the themes and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a different theme set. But effort is spent trying to make ES-DE backwards compatible with the available themes used by other EmulationStation versions, even if the functionality they provide is limited.
 
-Themes are most easily installed in your ES-DE home directory, i.e. **~/.emulationstation/themes**. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you can then choose between them via **UI Settings** on the main menu.
+Themes are most easily installed in your ES-DE home directory, i.e. **~/.emulationstation/themes**. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you can then choose between them via UI Settings on the main menu.
 
 Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be **/usr/local/share/emulationstation/themes** on Unix, **/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes** on macOS or **C:\Program Files\EmulationStation-DE\themes** on Windows.
 

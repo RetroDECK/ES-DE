@@ -1,6 +1,6 @@
-# EmulationStation Desktop Edition - Installation and configuration
+# EmulationStation Desktop Edition (ES-DE) - Installation and configuration
 
-**Note:** This is a quite technical document intended for those that are interested in compiling EmulationStation from source code, or would like to customize the configuration. If you just want to start using the software, check out the [User Guide](USERGUIDE.md) instead.
+**Note:** This is a quite technical document intended for those that are interested in compiling ES-DE from source code, or would like to customize the configuration. If you just want to start using the software, check out the [User guide](USERGUIDE.md) instead.
 
 Table of contents:
 
@@ -8,16 +8,14 @@ Table of contents:
 
 ## Development Environment
 
-EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and GCC (MinGW) on Windows. I may try to get Clang/LLVM working on Windows as well.
-
-There are more details regarding compilers later in this document.
+EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and GCC (MinGW) on Windows.
 
 Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
 
 
 ## Building on Unix
 
-The code has a few dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
+The code has some dependencies. For building, you'll need CMake and development packages for cURL, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
 
 **Installing dependencies:**
 
@@ -76,7 +74,7 @@ pkg_add cmake pkgconf sdl2 freeimage vlc
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
 
-RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to compile the master branch:
+RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the master branch:
 
 ```
 git clone https://github.com/Tencent/rapidjson
@@ -118,7 +116,7 @@ To create a debug build, run this instead:
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
-Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
+Keep in mind that a debug version will be much slower due to all compiler optimizations being disabled.
 
 To create a profiling build (optimized with debug symbols), run this:
 ```
@@ -148,7 +146,7 @@ scan-build cmake -DCMAKE_BUILD_TYPE=Debug .
 scan-build make -j6
 ```
 
-You open the report with the **scan-view** command which lets you browse it using your web browser. Note that the compilation time is much higher when using the static analyzer compared to a normal compilation. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it on a separate copy of the ES source folder to avoid having to clean up all this extra data when the analysis has been completed.
+You open the report with the **scan-view** command which lets you browse it using your web browser. Note that the compilation time is much higher when using the static analyzer compared to a normal compilation. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
 
 To build ES with CEC support, add the corresponding option, for example:
 
@@ -158,12 +156,12 @@ make
 ```
 I have however not been able to test the CEC support and I'm not entirely sure how it's supposed to work.
 
-To build ES with the GLES renderer, run the following:
+To build with the GLES renderer, run the following:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DGLES=on .
 make
 ```
-Note that the GLES renderer is quite limited as there is no shader support for it, so ES will definitely not look as pretty as when using the default OpenGL renderer.
+Note that the GLES renderer is quite limited as there is no shader support for it, so ES-DE will definitely not look as pretty as when using the default OpenGL renderer.
 
 Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
 
@@ -171,20 +169,20 @@ Running multiple compile jobs in parallel is a good thing as it speeds up the bu
 make -j6
 ```
 
-By default EmulationStation will install under `/usr/local` but this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.\
-The following example will build the application for installtion under `/opt`:
+By default ES-DE will install under /usr/local but this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.\
+The following example will build the application for installtion under /opt:
 
 ```
 cmake -DCMAKE_INSTALL_PREFIX=/opt .
 ```
 
-It's important to know that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code inside ES used to locate the required program resources. So it's necessary that the install prefix corresponds to the location where the application will actually be installed.
+It's important to know that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code inside ES-DE used to locate the required program resources. So it's necessary that the install prefix corresponds to the location where the application will actually be installed.
 
 **Compilers**
 
-Both Clang/LLVM and GCC work fine for building ES.
+Both Clang/LLVM and GCC work fine for building ES-DE.
 
-I did some small benchmarks comparing Clang to GCC with the ES codebase (as of writing it's year 2020) and it's pretty interesting.
+I did some small benchmarks comparing Clang to GCC with the ES-DE codebase (as of writing it's year 2020) and it's pretty interesting.
 
 Advantages with Clang (vs GCC):
 * 10% smaller binary size for a release build
@@ -199,13 +197,13 @@ Advantage with GCC (vs Clang):
 *Release build: Optimizations enabled, debug info disabled, binary stripped.* \
 *Debug build: Optimizations disabled, debug info enabled, binary not stripped.*
 
-This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCode that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance `std::string` variables.
+This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCode that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance std::string variables.
 
 It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 36% slower! The same goes for the binary size, instead of 17% smaller it's now 17% larger.
 
 I'm expecting this to be resolved in the near future though, and as I think Clang is an interesting compiler, I use it as the default when working on the project (I sometimes test with GCC to make sure that it still builds the software correctly).
 
-It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
+It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the **update-alternatives** command:
 
 ```
 myusername@computer:~$ sudo update-alternatives --config c++
@@ -232,7 +230,7 @@ Installing the software requires root permissions, the following command will in
 sudo make install
 ```
 
-Assuming the default installation prefix `/usr/local` has been used, this is the directory structure for the installation:
+Assuming the default installation prefix /usr/local has been used, this is the directory structure for the installation:
 
 ```
 /usr/local/bin/emulationstation
@@ -245,27 +243,27 @@ Assuming the default installation prefix `/usr/local` has been used, this is the
 /usr/local/share/pixmaps/emulationstation.svg
 ```
 
-ES will look in the following locations for the resources, in the listed order:
+ES-DE will look in the following locations for the resources, in the listed order:
 
-* `[HOME]/.emulationstation/resources/`
-* `[INSTALL PREFIX]/share/emulationstation/resources/`
-* `[ES EXECUTABLE DIRECTORY]/resources/`
+* \<home\>/.emulationstation/resources/
+* \<install prefix\>/share/emulationstation/resources/
+* \<ES-DE executable directory\>/resources/
 
-**Note:** The resources directory is critical, without it the application won't start.
+The resources directory is critical, without it the application won't start.
 
 And it will look in the following locations for the themes, also in the listed order:
 
-* `[HOME]/.emulationstation/themes/`
-* `[INSTALL PREFIX]/share/emulationstation/themes/`
-* `[ES EXECUTABLE DIRECTORY]/themes/`
+* \<home\>/.emulationstation/themes/
+* \<install prefix\>/share/emulationstation/themes/
+* \<ES-DE executable directory\>/themes/
 
-A theme is not mandatory to start the application, but ES will be basically useless without it.
+A theme is not mandatory to start the application, but ES-DE will be basically useless without it.
 
-The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES executable.
+The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES-DE executable.
 
 **Creating .deb and .rpm packages**
 
-Creation of Debian .deb packages is enabled by default, simply run `cpack` to generate the package:
+Creation of Debian .deb packages is enabled by default, simply run **cpack** to generate the package:
 
 ```
 myusername@computer:~/emulationstation-de$ cpack
@@ -290,7 +288,7 @@ The package can now be installed using a package manager, for example apt:
 sudo apt install ./emulationstation-de-1.0.0.deb
 ```
 
-For RPM packages, remove the comment in the `CMakeLists.txt` accordingly, from:
+For RPM packages, remove the comment in CMakeLists.txt accordingly, from:
 
 ```
 #SET(CPACK_GENERATOR "RPM")
@@ -300,7 +298,7 @@ to:
 SET(CPACK_GENERATOR "RPM")
 ```
 
-Then simply run `cpack`.
+Then simply run cpack.
 
 On Fedora, you need to install rpmbuild before this command can be run though:
 ```
@@ -324,19 +322,19 @@ sudo dnf install ./emulationstation-de-1.0.0.rpm
 
 ## Building on macOS
 
-EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main deficiency is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, `Homebrew`, is detailed below.
+EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main deficiency is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, [Homebrew](https://brew.sh), is detailed below.
 
 As for code editing, I use [VSCode](https://code.visualstudio.com). I suppose Xcode could be used instead but I have no experience with this tool and no interest in it as I want to use the same tools for all the operating systems that I develop on.
 
 **Setting up the build tools:**
 
-Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command `clang`. This will open a dialog that will let you download and install the tools.
+Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command **clang**. This will open a dialog that will let you download and install the tools.
 
 Following this, install the Homebrew package manager which will simplify the rest of the installation greatly. Install it by runing the following in a terminal window:
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
-Be aware though that Homebrew can be really slow, especially when it compiles packages from source code.
+Be aware that Homebrew can be really slow, especially when it compiles packages from source code.
 
 **Package installation with Homebrew:**
 
@@ -366,7 +364,7 @@ If required, define SDKROOT. This is only needed if during compilation you get e
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 ```
 
-I suppose you should add this to your .bash_profile or similar, but I didn't have to do this step so I'm not sure.
+I suppose you should add this to your shell profile file or similar, but I didn't have to do this step so I'm not sure.
 
 **Cloning and compiling:**
 
@@ -393,11 +391,13 @@ Keep in mind though that a debug version will be much slower due to all compiler
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
-After building ES and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES using 'make install'. It's only needed to be able to run the ES binary from the build directory. The following will of course only be active during your session, and you need to set the variable for each terminal window that you want to start ES from, unless you add it to your shell profile file:
+After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using 'make install'. It's only needed to be able to run the binary from the build directory. The following will of course only be active during your session, and you need to set the variable for each terminal window that you want to start ES-DE from, unless you add it to your shell profile file:
 
-```export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib```
+```
+export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
+```
 
-**Note:** According to the SDL documentation, there could be issues with attempting to run ES from the build directory when using a High DPI display as the required NSHighResolutionCapable key is not set as there is no Info.plist file available. In this case, doing a 'make install' and running ES from the installation folder would solve the problem. I've been unable to verify if this is really required though as I don't have the necessary hardware to test it on.
+**Note:** According to the SDL documentation, there could be issues with attempting to run ES-DE from the build directory when using a High DPI display as the required NSHighResolutionCapable key is not set as there is no Info.plist file available. In this case, doing a 'make install' and running from the installation folder would solve the problem. I've been unable to verify if this is really required though.
 
 **Installing:**
 
@@ -436,7 +436,7 @@ libfreetype.6.dylib:
 
 You of course only need to run this once, well at least until you replace the library in case of moving to a newer version or so.
 
-In addition to these libraries, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
+In addition to these libraries, you need to create a **plugins** directory and copy over the following VLC libraries, which are normally located in **/Applications/VLC.app/Contents/MacOS/plugins/**:
 
 ```
 libaudio_format_plugin.dylib
@@ -453,15 +453,15 @@ libx264_plugin.dylib
 libx265_plugin.dylib
 ```
 
-If you only want to build EmulationStation to be used on your own computer, there's the option to skip the entire bundling of the libraries and use the ones already installed using Homebrew, meaning you can skip the previous .dylib copying. To do so, run CMake with the following option:
+If you only want to build ES-DE to be used on your own computer, there's the option to skip the entire bundling of the libraries and use the ones already installed using Homebrew, meaning you can skip the previous .dylib copying. To do so, run CMake with the following option:
 
 ```
 cmake -DAPPLE_SKIP_INSTALL_LIBS=ON .
 ```
 
-**Note:** This also affects the .dmg package generation using cpack, so if this option is enabled, the package will be unusable for anyone but yourself as the required libraries will not be bundled with the application.
+This also affects the .dmg package generation using cpack, so if this option is enabled, the package will be unusable for anyone but yourself as the required libraries will not be bundled with the application.
 
-On macOS you can install the application as a normal user, i.e. no root privileges are required. Simply run the following to install ES-DE to `/Applications/EmulationStation Desktop Edition.app`:
+On macOS you can install the application as a normal user, i.e. no root privileges are required. Simply run the following:
 
 ```
 make install
@@ -473,7 +473,6 @@ This will be the directory structure for the installation:
 /Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/EmulationStation
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.0.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libcurl.4.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreeimage.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreetype.6.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpng16.16.dylib
@@ -489,17 +488,17 @@ This will be the directory structure for the installation:
 
 ES will look in the following locations for the resources, in the listed order:
 
-* `[HOME]/.emulationstation/resources/`
-* `[ES EXECUTABLE DIRECTORY]/../Resources/resources/`
-* `[ES EXECUTABLE DIRECTORY]/resources/`
+* \<home\>/.emulationstation/resources/
+* \<ES-DE executable directory\>/../Resources/resources/
+* \<ES-DE executable directory\>/resources/
 
 **Note:** The resources directory is critical, without it the application won't start.
 
 And it will look in the following locations for the themes, also in the listed order:
 
-* `[HOME]/.emulationstation/themes/`
-* `[ES EXECUTABLE DIRECTORY]/../Resources/themes/`
-* `[ES EXECUTABLE DIRECTORY]/themes/`
+* \<HOME\>/.emulationstation/themes/
+* \<ES-DE executable directory\>/../Resources/themes/
+* \<ES-DE executable directory\>/themes/
 
 A theme is not mandatory to start the application, but ES will be basically useless without it.
 
@@ -507,7 +506,7 @@ The home directory will always take precedence, and any resources or themes loca
 
 **Creating a .dmg installer:**
 
-Simply run `cpack` to build a .dmg disk image/installer:
+Simply run **cpack** to build a .dmg disk image/installer:
 
 ```
 myusername@computer:~/emulationstation-de$ cpack
@@ -519,7 +518,7 @@ CPack: Create package
 CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.0.0.dmg generated.
 ```
 
-Generating .dmg installers on older version of macOS seems to make them forward compatible to a pretty good extent, for instance building on El Capitan seems to generate an application that is usable on Catalina. The other way around does however not seem to be true, which is quite unsurprising.
+Generating .dmg installers on older version of macOS seems to make them forward compatible to a pretty good extent, for instance building on El Capitan seems to generate an application that is usable on Catalina and Big Sur. The other way around does however not seem to be true, which is quite unsurprising.
 
 **Special considerations regarding run-paths:**
 
@@ -531,7 +530,7 @@ Simply run `otool -L EmulationStation` and verify that the result looks somethin
 
 ```
 EmulationStation:
-	@rpath/libcurl.4.dylib (compatibility version 7.0.0, current version 8.0.0)
+	/usr/lib/libcurl.4.dylib (compatibility version 7.0.0, current version 8.0.0)
 	@rpath/libfreeimage.dylib (compatibility version 3.0.0, current version 3.18.0)
 	@rpath/libfreetype.6.dylib (compatibility version 24.0.0, current version 24.2.0)
 	@rpath/libSDL2-2.0.0.dylib (compatibility version 13.0.0, current version 13.0.0)
@@ -542,17 +541,19 @@ EmulationStation:
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1226.10.1)
 ```
 
-If any of the lines that should start with @rpath instead has an absolute path, then you have a problem and need to modify the install_name_tools parameters in es-app/CMakeLists.txt, for example:
+If any of the lines that should start with @rpath instead has an absolute path, then you have a problem and need to modify the install_name_tools parameters in es-app/CMakeLists.txt.
+
+This is what an incorrect line would look like:
 
 `/usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib (compatibility version 13.0.0, current version 13.0.0)`
 
-This is the section that would need to be modified:
+This is the section in es-app/CMakeLists.txt that would need to be modified:
 
 ```
 add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
-        -change /usr/lib/libcurl.4.dylib @rpath/libcurl.4.dylib
         -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
         -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
+        -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
         -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
         $<TARGET_FILE:EmulationStation>)
 ```
@@ -560,7 +561,7 @@ add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NA
 
 ## Building on Windows
 
-At the moment I have only built the software using GCC on Windows, but I aim to get Clang/LLVM working at a later date.
+Up until now I have only built the software using GCC (MinGW) on Windows, but I may try to get Clang/LLVM working at a later date.
 
 I did a brief evaluation of the Microsoft Visual C++ compiler (MSVC) but as far as I'm concerned it's an abomination so I won't cover it here and it won't be supported.
 
@@ -576,13 +577,13 @@ Anyway, here's a quite long summary of how to get a build environment up and run
 
 [https://jmeubank.github.io/tdm-gcc](https://jmeubank.github.io/tdm-gcc)
 
-After installation, make a copy of `TDM-GCC-64/bin/mingw32-make` to `make` just for convenience.
+After installation, make a copy of **TDM-GCC-64/bin/mingw32-make** to **make** just for convenience.
 
-I won't get into the details on how to configure Git, but there are many resources available online to support with this. The `Git Bash` shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
+I won't get into the details on how to configure Git, but there are many resources available online to support with this. The **Git Bash** shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
 
 Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
 
-It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor, although it can also be configured in Git for conversion during commit. The source code for EmulationStation-DE only uses Unix-style line breaks.
+It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor, although it can also be configured in Git for conversion during commits. The source code for ES-DE only uses Unix-style line breaks.
 
 Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The MinGW installation recommended above should work fine though.
 
@@ -602,14 +603,14 @@ libVLC\
 
 For VLC, download both the binary distribution for win64 as well as the source code package.
 
-Uncompress the files for the above packages to a suitable directory, for example C:\Programming\Dependencies\
+Uncompress the files for the above packages to a suitable directory, for example **C:\Programming\Dependencies**
 
 GLEW\
 [http://glew.sourceforge.net](http://glew.sourceforge.net)
 
 This library needs to be compiled from source as the pre-built libraries don't seem to work with GCC. The GitHub repo seems to be somewhat broken as well, therefore the manual download is required. It's recommended to get the source in zip format and uncompress it to the same directory as the other libraries listed above.
 
-Now simply build the required glew32.dll library:
+Then simply build the required glew32.dll library:
 
 ```
 unzip glew-2.1.0.zip
@@ -648,9 +649,9 @@ cd rapidjson
 git checkout v1.1.0
 ```
 
-**Clone the EmulationStation-DE repository:**
+**Clone the ES-DE repository:**
 
-This works the same as in Unix or macOS, just run the following:
+This works the same as on Unix or macOS, just run the following:
 
 ```
 git clone https://gitlab.com/leonstyhre/emulationstation-de
@@ -660,7 +661,7 @@ git clone https://gitlab.com/leonstyhre/emulationstation-de
 
 As there is no standardized include directory structure in Windows, you need to provide the include files manually.
 
-Make a directory in your build environment tree, for instance under C:\Programming\include\
+Make a directory in your build environment tree, for instance under **C:\Programming\include**
 
 Copy the include files from cURL, FreeImage, FreeType, GLEW, pugixml, RapidJSON, SDL2 and VLC to this directory.
 It should then look something like this:
@@ -679,11 +680,11 @@ SDL2/
 vlc/
 ```
 
-**Copy the required DLL files to the EmulationStation build directory:**
+**Copy the required DLL files to the ES-DE build directory:**
 
 As there's no package manager in Windows and no way to handle dependencies, we need to ship all the required shared libraries with the application.
 
-Copy the following files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide:
+Copy the following files to the **emulationstation-de** build directory. Most of them will come from the packages that were provided in the previous steps of this guide:
 
 ```
 FreeImage.dll
@@ -703,15 +704,13 @@ SDL2.dll
 vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
 ```
 
-The files from the MinGW installation must correspond to the version used to compile the binary.
+The files from the MinGW installation must correspond to the version used to compile the binary. So if the MinGW installation is upgraded to a newer version, make sure to copy the .dll files again, overwriting the old ones.
 
-*So if the MinGW installation is upgraded to a newer version or so, make sure to copy the .dll files again, overwriting the old ones.*
-
-In addition to these, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder and although there is no requirement to retain these as libVLC apparently looks recursively for the required .dll files, it still makes it a bit more tidy to keep the folder names for each type of plugin. The CMake install script will however copy all the contents of this plugins folder regardless of whether subdirectories are in use or not.
+In addition to these, you need to copy some libraries from the VLC **plugins** folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the required .dll files.
 
 It's a bit tricky to know which libraries are really needed. But as the plugins directory is around 120 MB (as of VLC version 3.0.11), we definitely only want to copy the files we need.
 
-The following files seem to be required to play most video and audio formats (place them in `emulationstation-de\plugins\`):
+The following files seem to be required to play most video and audio formats (place them in **emulationstation-de\plugins**):
 
 ```
 access\libfilesystem_plugin.dll
@@ -742,7 +741,7 @@ Or for a debug build:
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
 ```
 
-For some reason defining the '../include' path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
+For some reason defining the **../include** path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 
 The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
 
@@ -762,7 +761,6 @@ Obviously this library is only intended for development and will not be shipped 
 
 To create an NSIS installer (Nullsoft Scriptable Install System) you need to first install the NSIS creation tool:
 
-NSIS\
 [https://nsis.sourceforge.io/Download](https://nsis.sourceforge.io/Download)
 
 Simply install the application using its installer.
@@ -776,48 +774,48 @@ CPack: Install projects
 CPack: - Run preinstall target for: emulationstation-de
 CPack: - Install project: emulationstation-de []
 CPack: Create package
-CPack: - package: C:/Programming/emulationstation-de/emulationstation-de-1.0.0-win64.exe generated.
+CPack: - package: C:/Programming/emulationstation-de/EmulationStation-DE-1.0.0.exe generated.
 ```
 
-The default installation directory suggested by the installer is `C:\Program Files\EmulationStation`. However this can of course be changed by the user.
+The default installation directory suggested by the installer is **C:\Program Files\EmulationStation-DE** but this can of course be changed by the user.
 
 ES will look in the following locations for the resources, in the listed order:
 
-* `[HOME]\.emulationstation\resources\`
-* `[ES EXECUTABLE DIRECTORY]\resources\`
+* \<home\>\\.emulationstation\resources\
+* \<ES-DE executable directory\>\resources\
 
-**Note:** The resources directory is critical, without it the application won't start.
+The resources directory is critical, without it the application won't start.
 
 And it will look in the following locations for the themes, also in the listed order:
 
-* `[HOME]\.emulationstation\themes\`
-* `[ES EXECUTABLE DIRECTORY]\themes\`
+* \<home\>\\.emulationstation\themes\
+* \<ES-DE executable directory\>\themes\
 
-The theme is not mandatory to start the application, but ES will be basically useless without it.
+The theme is not mandatory to start the application, but ES-DE will be basically useless without it.
 
 So the home directory will always take precedence, and any resources or themes located there will override the ones in the path of the ES executable.
 
 **Setting up a portable installation:**
 
-It's possible to easily create a portable installation of ES for Windows, for example on a USB memory stick.
+It's possible to easily create a portable installation of ES-DE for Windows, for example on a USB memory stick.
 
 For the sake of this example, let's assume that the removable media has the device name `f:\`.
 
-* Copy the EmulationStation installation directory to f:\
-* Create the directory `ES-Home` directly under f:\
-* Copy your game ROMs into `f:\ES-Home\ROMs`
+* Copy the EmulationStation-DE installation directory to f:\
+* Create the directory **ES-Home** directly under f:\
+* Copy your game ROMs into **f:\ES-Home\ROMs**
 * Copy your emulators to f:\ (such as the RetroArch directory)
-* Create the file `start_es.bat` directly under f:\
+* Create the file **start_es.bat** directly under f:\
 
 Add the following lines to the start_es.bat file:
 ```
 @echo off
-EmulationStation\emulationstation.exe --home %CD:~0,3%ES-Home
+EmulationStation-DE\EmulationStation.exe --home %CD:~0,3%ES-Home
 ```
 
 The contents of f:\ should now look something like this:
 ```
-EmulationStation
+EmulationStation-DE
 ES-Home
 RetroArch
 start_es.bat
@@ -826,11 +824,11 @@ start_es.bat
 
 Now run the batch script, ES should start and ask you to configure any attached controllers. Following this, check that everything works as expected, i.e. the gamelists are properly populated etc.
 
-You can optionally skip the configuration of the controllers by copying any existing `es_input.cfg` file to `f:\ES-Home\.emulationstation\es_input.cfg`.
+You can optionally skip the configuration of the controllers by copying any existing es_input.cfg file to f:\ES-Home\\.emulationstation\\`
 
-Exit ES and modify the file `f:\ES-Home\.emulationstation\es_systems.cfg` to point to the emulators on the portable media.
+Exit ES and modify the file **f:\ES-Home\.emulationstation\es_systems.cfg** to point to the emulators on the portable media.
 
-Example change, from this:
+For example, change from this:
 ```
 <command>retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
 ```
@@ -849,7 +847,7 @@ f:\ES-Home\.emulationstation\gamelists\
 f:\ES-Home\.emulationstation\downloaded_media\
 ```
 
-You now have a fully functional portable emulator installation!
+You now have a fully functional portable retro gaming installation!
 
 The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
 
@@ -864,7 +862,7 @@ The CA certificates shipped with ES-DE come directly from the curl project but t
 
 The latest version can be downloaded from [https://curl.se/docs/caextract.html](https://curl.se/docs/caextract.html)
 
-After downloading the file, rename it from **cacert.pem** to **curl-ca-bundle.crt** and move it to the certificates directory so that it looks like this:
+After downloading the file, rename it from **cacert.pem** to **curl-ca-bundle.crt** and move it to the certificates directory i.e.:
 
 ```
 emulationstation-de/resources/certificates/curl-ca-bundle.crt
@@ -874,9 +872,9 @@ emulationstation-de/resources/certificates/curl-ca-bundle.crt
 
 This is a bit tricky as the data needs to be converted to an internal format used by ES-DE. The original file is huge and most of the information is not required.
 
-Go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named someting like **mame0226lx.zip** and unzipping it will give you a file name such as **mame0226.xml**.
+Go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like **mame0226lx.zip** and unzipping it will give you a file name such as **mame0226.xml**.
 
-Move the XML driver file to the resources/MAME directory and then convert it to the ES-DE internal format:
+Move the XML driver file to the resources/MAME directory and then convert it to the ES-DE internal files:
 
 ```
 cd emulationstation-de/resources/MAME
@@ -894,7 +892,7 @@ rm *NEW *OLD mame0226.xml
 
 You need **xmlstarlet** installed for these scripts to work.
 
-The diff command is of course used to do a sanity check that the changes look reasonable before deleting the old files. This is an example for the BIOS file when going from driver version 0221 to 0226:
+The diff command is used to do a sanity check that the changes look reasonable before deleting the old files. This is an example for the BIOS file when going from driver version 0.221 to 0.226:
 ```
 diff mamebioses.xml mamebioses.xml_OLD
 1c1
@@ -905,46 +903,39 @@ diff mamebioses.xml mamebioses.xml_OLD
 < <bios>kpython</bios>
 ```
 
-The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions will having missing information. This is so as the MAME project sometimes remove older entries when they're reorganizing the ROM sets. By merging the files we retain backwards compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
+The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions will have missing information. This is so as the MAME project sometimes remove older entries when they're reorganizing the ROM sets. By merging the files we retain backwards compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
 
 
 ## Configuration
 
 **~/.emulationstation/es_systems.cfg:**
 
-EmulationStation Desktop Edition ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
+ES-DE ships with a comprehensive **es_systems.cfg** configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in **es_settings.cfg**), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
 
-Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates` on Unix, `/Applications/EmulationStation.app/Contents/Resources/resources/templates` on macOS and `C:\Program Files\EmulationStation\resources\templates` on Windows.
+Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance **/usr/local/share/emulationstation/resources/templates** on Unix, **/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/templates** on macOS and **C:\Program Files\EmulationStation-DE\resources\templates** on Windows.
 
-The template file will be copied to `~/.emulationstation/es_systems.cfg`. \
-`~` is `$HOME` on Unix and macOS, and `%HOMEPATH%` on Windows.
+The template file will be copied to **~/.emulationstation/es_systems.cfg**.
 
-**Note:** Keep in mind that you have to set up your emulators separately from EmulationStation, the es_systems.cfg file assumes that your emulator environment is properly configured.
+The tilde symbol **~** translates to **$HOME** on Unix and macOS, and to **%HOMEPATH%** on Windows.
 
-On Unix it's assumed that RetroArch is using the default configuration directory location, i.e. the cores should be located in ~/.config/retroarch/cores. If you've installed RetroArch via a Snap package, make a symlink from the Snap .config directory:
-
-```
-ln -s ~/snap/retroarch/current/.config/retroarch ~/.config/
-```
+Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.cfg file assumes that your emulator environment is properly configured.
 
 
 **~/.emulationstation/es_settings.cfg:**
 
-When ES is first run, a configuration file will be created as `~/.emulationstation/es_settings.cfg`.
+When ES-DE is first run, a configuration file will be created as **~/.emulationstation/es_settings.cfg**.
 
-This file contains all the settings supported by ES, at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES to update all the necessary settings.
-
-For the ROM directory, you can either change it manually in es_settings.cfg, or use the dialog that is shown on application startup to change the path to your liking.
+This file will contain all supported settings at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES-DE to update all the necessary settings.
 
 **Setting the ROM directory in es_settings.cfg:**
 
-**Note:** This complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
+This complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
 
-By default, ES looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
+By default, ES-DE looks in **~/ROMs** for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
 
 ```
 myusername@computer:~ROMs$ ls -1
-arcade
+c64
 megadrive
 pcengine
 ```
@@ -954,7 +945,7 @@ Here's an example:
 
 `<string name="ROMDirectory" value="~/games/ROMs" />`
 
-Keep in mind though that you still need to group the ROMs into directories corresponding to the \<path\> tags in es_systems.cfg.
+Keep in mind that you still need to group the ROMs into directories corresponding to the \<path\> tags in es_systems.cfg.
 
 There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. You would normally not need this, but the option is there, should you require it for some reason.
 
@@ -964,14 +955,14 @@ Here is such an example:
 
 **~/.emulationstation/es_input.cfg:**
 
-You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User Guide](USERGUIDE.md#input-device-configuration).
+You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User guide](USERGUIDE.md#input-device-configuration).
 
-If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next run.
+If your controller and keyboard stop working, you can delete the **~/.emulationstation/es_input.cfg** file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the **--force-input-config** command line argument.
 
 
 ## Command line arguments
 
-You can use `--help` or `-h` to view a list of command line options, as shown here.
+You can use **--help** or **-h** to view the list of command line options, as shown here.
 
 ### Unix
 
@@ -1042,46 +1033,44 @@ You can use `--help` or `-h` to view a list of command line options, as shown he
 --help, -h                      Summon a sentient, angry tuba
 ```
 
-As long as ES hasn't frozen, you can always press F4 to close the application.
+As long as ES-DE hasn't frozen, you can always press F4 to close the application.
 
-As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES will use `~/games/emulation/.emulationstation` as its base directory.
+As you can see above, you can override the home directory path using the **--home** flag. So by running for instance the command **emulationstation --home ~/games/emulation**, ES will use **~/games/emulation/.emulationstation** as its base directory.
 
 
 ## es_systems.cfg
 
-The es_systems.cfg file contains the system configuration data for EmulationStation, written in XML format. \
-This tells EmulationStation what systems you have, what platform they correspond to (for scraping), and where the games are located.
+The es_systems.cfg file contains the system configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
 
-ES will only check in your home directory for an es_systems.cfg file, for example `~/.emulationstation/es_systems.cfg`.
+ES-DE will only check in your home directory for an es_systems.cfg file, for example **~/.emulationstation/es_systems.cfg**, but if this file is not present, it will attempt to install it from the systems template directory as explained earlier in this document.
 
-The order EmulationStation displays systems reflects the order you define them in. In the case of the default es_systems.cfg file, the systems are listed in alphabetical order.
+It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
 
-**Note:** A system *must* have at least one game present in its `path` directory, or ES will ignore it! If no valid systems are found, ES will report an error and quit.
-
-Here's an overview of the file layout:
+Below is an overview of the file layout with various examples. For a real system entry there can of course not be multiple entries for the same tag such as the multiple \<command\> entries listed here.
 
 ```xml
 <?xml version="1.0"?>
 <!-- This is the EmulationStation-DE game systems configuration file. -->
 <systemList>
-    <!-- Here's an example system to get you started. -->
+    <!-- Any tag not explicitly described as optional in the description is mandatory.
+    If omitting a mandatory tag, ES-DE will skip the system entry during startup. -->
     <system>
         <!-- A short name, used internally. -->
         <name>snes</name>
 
-        <!-- A "pretty" name, displayed in the menus and such. This one is optional. -->
+        <!-- The full system name, used for sorting the systems, for selecting the systems to multi-scrape etc. -->
         <fullname>Super Nintendo Entertainment System</fullname>
 
-        <!-- The path to start searching for ROMs in. '~' will be expanded to $HOME or %HOMEPATH%, depending on platform.
-        The optional %ROMPATH% variable will expand to the path defined for the setting ROMDirectory in es_settings.cfg.
+        <!-- The path to look for ROMs in. '~' will be expanded to $HOME or %HOMEPATH%, depending on the operating system.
+        The optional %ROMPATH% variable will expand to the path defined in the setting ROMDirectory in es_settings.cfg.
         All subdirectories (and non-recursive links) will be included. -->
         <path>%ROMPATH%/snes</path>
 
         <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t").
-        You MUST include the period at the start of the extension! It's also case sensitive. -->
+        You must include the period at the start of the extension and it's case sensitive. -->
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
-        <!-- The command executed when a game is launched. A few special variables are replaced if found in a command, like %ROM% (see below).
+        <!-- The command executed when a game is launched. A few special variables are replaced if found for a command tag (see below).
         This example for Unix would run RetroArch with the the snes9x_libretro core, using an absolute path to the core.
         If there are spaces in the path or file name, you must enclose them in quotation marks, for example:
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
@@ -1106,150 +1095,222 @@ Here's an overview of the file layout:
         configuration as the %EMUPATH% will expand to the path of the emulator binary, which will of course also include the spaces. -->
         <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
 
-        <!-- An example for use in a portable emulator installation, for instance on a USB memory stick. The %ESPATH% variable is
+        <!-- An example for use in a portable Windows emulator installation, for instance on a USB memory stick. The %ESPATH% variable is
         expanded to the directory of the ES executable. -->
         <command>"%ESPATH%\..\RetroArch\retroarch.exe" -L "%ESPATH%\..\RetroArch\cores\snes9x_libretro.dll" %ROM%</command>
 
-        <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in src/PlatformIds.cpp.
-        It's case sensitive, but everything is lowercase. This tag is optional.
-        You can use multiple platforms too, delimited with any of the whitespace characters (", \r\n\t"), e.g.: "megadrive, genesis" -->
+        <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
+        The entry is case insensitive as it will be converted to lower case during startup.
+        This tag is optional but the system can't be scraped if it's left out.
+        You can use multiple platforms too, delimited with any of the whitespace characters (", \r\n\t"), e.g. "megadrive, genesis". -->
         <platform>snes</platform>
 
-        <!-- The theme to load from the current theme set. See THEMES.md for more information. -->
+        <!-- The theme to load from the current theme set. See THEMES.md for more information.
+        This tag is optional and if it doesn't exist, ES-DE will attempt to find a theme with the same name as the system name.
+        If no such match is made, the system will be unthemed.
+        It's strongly recommended to include this tag even if it's just to clarify that the theme should correspond to the system name. -->
         <theme>snes</theme>
     </system>
 </systemList>
 ```
 
-The following variables are expanded by ES for the `command` tag:
+The following variable is expanded for the `path` tag:
 
-`%ROM%` - Replaced with absolute path to the selected ROM, with most Bash special characters escaped with a backslash.
+`%ROMPATH%` - Replaced with the path defined in the setting ROMDirectory in es_settings.cfg.
+
+The following variables are expanded for the `command` tag:
+
+`%ROM%` - Replaced with the absolute path to the selected ROM, with most Bash special characters escaped with a backslash.
 
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
-`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath (in es_settings.cfg). This is done until the first match occurs, or until the last directory is exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for Unix as well as for RetroArch but it can also be used on macOS and Windows and for other emulators that utilizes discrete emulator cores. For macOS and Windows the EmulatorCorePath setting is blank by default, and for Unix it's set to the following value: `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories on Unix and macOS and semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User Guide](USERGUIDE.md#other-settings-1). Never use quotation marks around the directories for this setting. It's strongly adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command.
-
-`%ROM_RAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
+`%ROMRAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded either using the PATH environmental variable of the operating system, or if an absolute emulator path is defined, this will be used instead. This variable is mostly useful to define the emulator core path for Windows, as this operating system does not have a standardized program installation directory structure.
 
 `%ESPATH%` - Replaced with the path to the EmulationStation binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
-For the `path` tag, the following variable is expanded by ES:
+`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.cfg. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for Unix as well as for RetroArch but it can also be used on macOS and Windows and for other emulators that utilizes discrete emulator cores. For macOS and Windows the EmulatorCorePath setting is blank by default, and for Unix it's set to the following value: `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE.md#other-settings-1). Never use quotation marks around the directories for this setting. It's strongly adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command.
 
-`%ROMPATH%` - Replaced with the path defined for the setting ROMDirectory in es_settings.cfg.
+Here are some additional real world examples of system entries, the first one for Unix:
+
+```xml
+  <system>
+    <name>dos</name>
+    <fullname>DOS (PC)</fullname>
+    <path>%ROMPATH%/dos</path>
+    <extension>.bat .BAT .com .COM .exe .EXE .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L %COREPATH%/dosbox_core_libretro.so %ROM%</command>
+    <platform>dos</platform>
+    <theme>dos</theme>
+  </system>
+
+```
+
+Then one for macOS:
+
+```xml
+  <system>
+    <name>nes</name>
+    <fullname>Nintendo Entertainment System</fullname>
+    <path>%ROMPATH%/nes</path>
+    <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/nestopia_libretro.dylib %ROM%</command>
+    <platform>nes</platform>
+    <theme>nes</theme>
+  </system>
+```
+
+And one for Windows:
+
+```xml
+  <system>
+    <name>sega32x</name>
+    <fullname>Sega Mega Drive 32X</fullname>
+    <path>%ROMPATH%\sega32x</path>
+    <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
+    <command>retroarch.exe -L "%EMUPATH%\cores\picodrive_libretro.dll" %ROM%</command>
+    <platform>sega32x</platform>
+    <theme>sega32x</theme>
+  </system>
+
+```
 
 
 ## gamelist.xml
 
-The gamelist.xml file for a system defines metadata for games, such as a name, description, release date, and rating.
+The gamelist.xml file for a system defines the metadata for its entries, such as the game names, descriptions, release dates and ratings.
 
-As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game art is configurable either manually in `es_settings.cfg` or via the GUI. If configured manually in es_settings.cfg, it looks something like this:
+As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in **es_settings.cfg** or via the GUI. If configured manually in es_settings.cfg, it looks something like this:
 
-`<string name="MediaDirectory" value="~/games/images/emulationstation" />`
+```
+<string name="MediaDirectory" value="~/games/images/emulationstation" />
+```
 
-The default game media directory is `~/.emulationstation/downloaded_media`.
+The default directory is **~/.emulationstation/downloaded_media**
 
-You can use ES's [scraping](http://en.wikipedia.org/wiki/Web_scraping) tools to populate the gamelist.xml files. There are two ways to run the scraper:
+You can use ES-DE's scraping tools to populate the gamelist.xml files, or manually update individual entries using the metadata editor. All of this is explained in the [User guide](USERGUIDE.md).
 
-* **If you want to scrape multiple games:** press the Start button to open the menu and choose the "SCRAPER" option.  Adjust your settings and press "START".
-* **If you just want to scrape one game:** find the game on the game list in ES and press the Select button.  Choose "EDIT THIS GAME'S METADATA" and then press the "SCRAPE" button at the bottom of the metadata editor.
+The gamelist.xml files are searched for in the ES-DE home directory, i.e. **~/.emulationstation/gamelists/\<system name\>/gamelist.xml**
 
-You can also edit metadata within ES by using the metadata editor - just find the game you wish to edit on the gamelist, press Select, and choose "EDIT THIS GAME'S METADATA."
+For example:
 
-The switch `--ignore-gamelist` can be used to ignore the gamelists upon start of the application.
+```
+~/.emulationstation/gamelists/c64/gamelist.xml
+~/.emulationstation/gamelists/megadrive/gamelist.xml
+```
 
-**File location and structure:**
+**gamelist.xml file structure:**
 
-ES checks for the `gamelist.xml` files in the user's home directory:
-
-`~/.emulationstation/gamelists/[SYSTEM_NAME]/gamelist.xml`
-
-The home directory can be overridden using the `--home` option from the command line, see above in this document for details regarding that.
-
-An example gamelist.xml:
+An example gamelist.xml entry for the Commodore 64 game Popeye:
 
 ```xml
+<?xml version="1.0"?>
 <gameList>
-	<game>
-		<path>./mm2.nes</path>
-		<name>Mega Man 2</name>
-		<desc>Mega Man 2 is a classic NES game which follows Mega Man as he murders eight robot masters in cold blood.</desc>
-	</game>
+    <game>
+        <path>./cartridge/Popeye/Popeye.crt</path>
+        <name>Popeye</name>
+        <desc>Popeye is a conversion of the arcade action/platform game.</desc>
+        <rating>0.7</rating>
+        <releasedate>19860101T000000</releasedate>
+        <developer>Parker Brothers</developer>
+        <publisher>Nintendo</publisher>
+        <genre>Action</genre>
+        <players>1-2</players>
+        <favorite>true</favorite>
+    </game>
 </gameList>
 ```
 
-Everything is enclosed in a `<gameList>` tag.  The information for each game or folder is enclosed in a corresponding tag (`<game>` or `<folder>`).  Each piece of metadata is encoded as a string.
+Everything is enclosed in a `<gameList>` tag, and the information for each game or folder is enclosed in a corresponding `<game>` or `<folder>` tag. Each piece of metadata is encoded as a string.
 
 **gamelist.xml reference:**
 
-There are a few types of metadata:
+There are a few different data types for the metadata which the string values in the gamelist.xml files are converted to during file loading:
 
-* `string` - just text.
-* `float` - a floating-point decimal value (written as a string).
-* `integer` - an integer value (written as a string).
-* `datetime` - a date and, potentially, a time.  These are encoded as an ISO string, in the following format: "%Y%m%dT%H%M%S%F%q".  For example, the release date for Chrono Trigger is encoded as "19950311T000000" (no time specified).
+* `string` - just text
+* `float` - a floating-point decimal value (written as a string)
+* `integer` - an integer value (written as a string)
+* `datetime` - a date and, potentially, a time.  These are encoded as an ISO string, in the following format: "%Y%m%dT%H%M%S%F%q".  For example, the release date for Chrono Trigger is encoded as "19950311T000000" (no time specified)
+* `bool` - a true or false value
 
-Some metadata is also marked as "statistic" - these are kept track of by ES and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
+Some metadata is also marked as "statistic" - these are kept track of by ES-DE and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
+
+There are two basic categories of metadata, `game` and `folders` and the metdata tags for these are described in detail below.
 
 **\<game\>**
+* `path` - string, the path to the game file, either relative to the %ROMPATH% variable or as an absolute path on the filesystem
+* `name` - string, the displayed name for the game
+* `sortname` - string, used in sorting the gamelist in a system, instead of `name`
+* `desc` - string, a description of the game, longer descriptions will automatically scroll, so don't worry about the size
+* `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1. Fractional values will be rounded to 0.1 increments (half-stars) during processing
+* `releasedate` - datetime, the date the game was released, displayed as date only, time is ignored
+* `developer` - string, the developer for the game
+* `publisher` - string, the publisher for the game
+* `genre` - string, the genre(s) for the game
+* `players` - integer, the number of players the game supports
+* `favorite` - bool, indicates whether the game is a favorite
+* `completed` - bool, indicates whether the game has been completed
+* `kidgame` - bool, indicates whether the game is suitable for children, as used by the `Kid' UI mode
+* `hidden` - bool, indicates whether the game is hidden
+* `broken` - bool, indicates a game that doesn't work (useful for MAME)
+* `nogamecount` - bool, indicates whether the game should be excluded from the game counter and the automatic and custom collections
+* `nomultiscrape` - bool, indicates whether the game should be excluded from the multi-scraper
+* `hidemetadata` - bool, indicates whether to hide most of the metadata fields when displaying the game in the gamelist view
+* `launchcommand` - string, overrides the emulator and core settings on a per-game basis
+* `playcount` - integer, the number of times this game has been played
+* `lastplayed` - statistic, datetime, the last date and time this game was played
 
-* `name` - string, the displayed name for the game.
-* `desc` - string, a description of the game.  Longer descriptions will automatically scroll, so don't worry about size.
-* `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1. ES will round fractional values to half-stars.
-* `releasedate` - datetime, the date the game was released.  Displayed as date only, time is ignored.
-* `developer` - string, the developer for the game.
-* `publisher` - string, the publisher for the game.
-* `genre` - string, the (primary) genre for the game.
-* `players` - integer, the number of players the game supports.
-* `favorite` - bool, indicates whether the game is a favorite.
-* `completed`- bool, indicates whether the game has been completed.
-* `broken` - bool, indicates a game that doesn't work (useful for MAME).
-* `kidgame` - bool, indicates whether the game is suitable for children, used by the `kid' UI mode.
-* `playcount` - integer, the number of times this game has been played.
-* `lastplayed` - statistic, datetime, the last date and time this game was played.
-* `sortname` - string, used in sorting the gamelist in a system, instead of `name`.
-* `launchcommand` - optional tag that is used to override the emulator and core settings on a per-game basis.
+For folders, most of the fields are identical although some are removed. In the list below, the fields with identical function compared to the game files described above have been left without a description.
 
 **\<folder\>**
-* `name` - string, the displayed name for the folder.
-* `desc` - string, the description for the folder.
-* `developer` - string, developer(s).
-* `publisher` - string, publisher(s).
-* `genre` - string, genre(s).
-* `players` - integer, the number of players the game supports.
-
+* `path`
+* `name`
+* `desc`
+* `rating`
+* `releasedate`
+* `developer`
+* `publisher`
+* `genre`
+* `players`
+* `favorite`
+* `completed`
+* `hidden`
+* `broken`
+* `nomultiscrape`
+* `hidemetadata`
+* `lastplayed` - statistic, for folders this is inherited by the latest game file launched inside the folder.
 
 **Additional gamelist.xml information:**
 
-* If a value matches the default for a particular piece of metadata, ES will not write it to the gamelist.xml (for example, if `genre` isn't specified, ES won't write an empty genre tag)
+* If a value matches the default for a particular piece of metadata, ES-DE will not write it to the gamelist.xml file (for example, if `genre` isn't specified, an empty genre tag will not be written)
 
-* A `game` can actually point to a folder/directory if the folder has a matching extension
+* A `game` can actually point to a folder/directory if the folder has a matching extension, although this is exceedingly rare
 
-* `folder` metadata will only be used if a game is found inside of that folder
+* The `folder` metadata will only be used if a game file is found inside that folder, as empty folders will be skipped during startup even if they have metadata values defined for themselves
 
-* ES will keep entries for games and folders that it can't find the game/ROM files for
+* ES-DE will keep entries for games and folders that it can't find the game/ROM files for, i.e. it will not clean up the gamelist.xml files automatically when game files are missing
 
-* The switch `--gamelist-only` can be used to skip automatic searching, and only display games defined in the system's gamelist.xml
+* The switch `--gamelist-only` can be used to skip automatic searching, and only display games defined in the gamelist.xml files
 
-* The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application
+* The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application (mostly useful for debugging purposes)
 
 
 ## Custom event scripts
 
-There are numerous locations throughout ES where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under **Other settings**. By default it's deactivated so be sure to enable it to use this feature.
+There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under **Other settings**. By default it's deactivated so be sure to enable it to use this feature.
 
-The approach is quite straightforward, ES will look for any files inside a script directory that correspond to the event that is triggered and execute all files located there.
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that correspond to the event that is triggered and execute all files located there.
 
 As an example, let's create a log that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming.
 
-**Note: The following example is for Unix systems, but it works the same in Windows (though .bat batch files are then used instead of shell scripts).**
+**Note:** The following example is for Unix systems, but it works the same way in macOS, and on Windows (although .bat batch files are then used instead of shell scripts).
 
-The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names is easily achieved by starting ES with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names is easily achieved by starting ES-DE with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
 
-So let's create the folders for these events in the scripts directory. The location of this directory is **~/.emulationstation/scripts/**.
+So let's create the folders for these events in the scripts directory. The location of this directory is **~/.emulationstation/scripts**.
 
-After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist.
+After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist view.
 
 Let's name the start script **game_start_logging.sh** with the following contents:
 
@@ -1276,7 +1337,7 @@ After creating the two scripts, you should have something like this on the files
 
 Don't forget to make the scripts executable (e.g. 'chmod 755 ./game_start_logging.sh').
 
-If we now start ES with the debug flag and launch a game, something like the following should show up in es_log.txt:
+If we now start ES-DE with the debug flag and launch a game, something like the following should show up in es_log.txt:
 
 ```
 Aug 05 14:19:24 Debug:  Scripting::fireEvent(): game-start "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"

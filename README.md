@@ -35,7 +35,7 @@ If you would like to contribute to the development of ES-DE, then that's great! 
 
 # Additional information
 
-[USERGUIDE.md](USERGUIDE.md) is a comprehensive guide on how to use ES-DE and it also contains a complete reference of all application settings
+[USERGUIDE.md](USERGUIDE.md) is a comprehensive guide on how to use ES-DE and it also contains a complete reference to all application settings.
 
 [RELEASES.md](RELEASES.md) contains information about the current release as well as previous releases. This covers the features, improvements and bug fixes.
 
@@ -47,7 +47,7 @@ If you would like to contribute to the development of ES-DE, then that's great! 
 
 # Some feature highlights
 
-Here are some highlights of what EmulationStation Desktop Edition provides, displayed using the default theme set rbsimple-DE. There are of course many more features available, as covered in the  [User Guide](USERGUIDE.md).
+Here are some highlights of what EmulationStation Desktop Edition provides, displayed using the default theme set rbsimple-DE. There are of course many more features available, as covered in the  [User guide](USERGUIDE.md).
 
 ![alt text](images/current/es-de_system_view.png "ES-DE System View")
 _The **System view**, which is the default starting point for the application, it's here that you browse through your game systems._
@@ -71,7 +71,7 @@ _There are many settings for the scraper including options to define which type 
 _In addition to the scraper there is a fully-featured metadata editor that can be used to modify information on a per-game basis. Here you can also toggle some additional flags which the scraper does not set, such as if the game is a favorite or if you have completed it. Some of these flags can then be filtered in the gamelist view, letting you for instance only display games that you have not played through._
 
 ![alt text](images/current/es-de_screensaver.png "ES-DE Screensaver")
-_There are four types of built-in screensavers available, including a slideshow and the video screensaver showed in action above. These screensavers start after a configurable number of minutes of inactivity, and randomly display game media that you have previously scraped. If the corresponding option has been enabled, you can jump to the game from the screensaver, or even start it directly. There is shader support in ES-DE to render scanlines and screen blur on top of the videos (for the Slideshow screensaver, scanline rendering is provided)._
+_There are four types of built-in screensavers available, including a slideshow and the video screensaver showed in action above. These screensavers start after a configurable number of minutes of inactivity, and randomly display game media that you have previously scraped. If the corresponding option has been enabled, you can jump to the game from the screensaver, or even start it directly. There is shader support in ES-DE to render scanlines and screen blur on top of the videos (for the slideshow screensaver, scanline rendering is provided)._
 
 ![alt text](images/current/es-de_ui_theme_support.png "ES-DE Theme Support")
 _ES-DE is fully themeable, so if you prefer another look than what the default theme rbsimple-DE gives you, it's possible to apply another theme set. In the example above a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme is used. Be aware though that although ES-DE is backwards compatible with older EmulationStation themes, some newer features which are specific to ES-DE will not work, at least not until the theme authors update their themes._
