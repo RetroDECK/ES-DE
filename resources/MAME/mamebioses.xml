@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0221.xml -->
+<!-- Last updated with information from MAME driver file mame0226.xml -->
 <bios>3dobios</bios>
 <bios>airlbios</bios>
 <bios>aleck64</bios>
@@ -48,6 +48,7 @@
 <bios>konamigv</bios>
 <bios>konamigx</bios>
 <bios>konendev</bios>
+<bios>kpython</bios>
 <bios>kviper</bios>
 <bios>lindbios</bios>
 <bios>list.txt</bios>
