@@ -285,7 +285,8 @@ bool SystemData::loadConfig()
         cmd = system.child("command").text().get();
 
         // Platform ID list
-        const std::string platformList = system.child("platform").text().get();
+        const std::string platformList =
+                Utils::String::toLower(system.child("platform").text().get());
         std::vector<std::string> platformStrs = readList(platformList);
         std::vector<PlatformIds::PlatformId> platformIds;
         for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
@@ -312,9 +313,15 @@ bool SystemData::loadConfig()
         themeFolder = system.child("theme").text().as_string(name.c_str());
 
         // Validate.
-        if (name.empty() || path.empty() || extensions.empty() || cmd.empty()) {
-            LOG(LogError) << "System \"" << name <<
-                    "\" is missing name, path, extension, or command";
+
+        if (name.empty()) {
+            LOG(LogError) <<
+                    "A system in the es_systems.cfg file has no name defined, skipping entry.";
+            continue;
+        }
+        else if (fullname.empty() || path.empty() || extensions.empty() || cmd.empty()) {
+            LOG(LogError) << "System \"" << name << "\" is missing the fullname, path, "
+                    "extension, or command tag, skipping entry.";
             continue;
         }
 
