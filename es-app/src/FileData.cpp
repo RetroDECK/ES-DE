@@ -750,13 +750,13 @@ void FileData::launchGame(Window* window)
 
     const std::string rom = Utils::FileSystem::getEscapedPath(getPath());
     const std::string basename = Utils::FileSystem::getStem(getPath());
-    const std::string rom_raw = Utils::FileSystem::getPreferredPath(getPath());
+    const std::string romraw = Utils::FileSystem::getPreferredPath(getPath());
     const std::string emupath = Utils::FileSystem::getExePath();
     const std::string emulatorCorePath = Settings::getInstance()->getString("EmulatorCorePath");
 
     command = Utils::String::replace(command, "%ROM%", rom);
     command = Utils::String::replace(command, "%BASENAME%", basename);
-    command = Utils::String::replace(command, "%ROM_RAW%", rom_raw);
+    command = Utils::String::replace(command, "%ROMRAW%", romraw);
     command = Utils::String::replace(command, "%ESPATH%", emupath);
 
     // Expand home path if ~ is used.
