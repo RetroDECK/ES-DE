@@ -139,14 +139,14 @@ valgrind --tool=memcheck --leak-check=full ./emulationstation
 
 Note that you can also profile either a normal build or a debug build, but it's normally recommended to use the profiling build as it's compiled with optimizations while retaining the debug symbols. But if you need to alternate between Valgrind and the normal debugger the optimizations can be very annoying and therefore a normal debug build could be recommended in that instance.
 
-Another useful tool is **scan-build**, assuming you use Clang/LLVM. This is a static analyzer that runs during compilation to provide a very helpful HTML report of potential bugs (well it should be actual bugs but some false positives could be included). You need to run it for both the cmake and make steps, here's an example:
+Another useful tool is `scan-build`, assuming you use Clang/LLVM. This is a static analyzer that runs during compilation to provide a very helpful HTML report of potential bugs (well it should be actual bugs but some false positives could be included). You need to run it for both the cmake and make steps, here's an example:
 
 ```
 scan-build cmake -DCMAKE_BUILD_TYPE=Debug .
 scan-build make -j6
 ```
 
-You open the report with the **scan-view** command which lets you browse it using your web browser. Note that the compilation time is much higher when using the static analyzer compared to a normal compilation. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
+You open the report with the `scan-view` command which lets you browse it using your web browser. Note that the compilation time is much higher when using the static analyzer compared to a normal compilation. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
 
 To build ES with CEC support, add the corresponding option, for example:
 
@@ -203,7 +203,7 @@ It's possible to activate the additional debug info needed by GDB by using the f
 
 I'm expecting this to be resolved in the near future though, and as I think Clang is an interesting compiler, I use it as the default when working on the project (I sometimes test with GCC to make sure that it still builds the software correctly).
 
-It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the **update-alternatives** command:
+It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
 
 ```
 myusername@computer:~$ sudo update-alternatives --config c++
@@ -263,7 +263,7 @@ The home directory will always take precedence, and any resources or themes loca
 
 **Creating .deb and .rpm packages**
 
-Creation of Debian .deb packages is enabled by default, simply run **cpack** to generate the package:
+Creation of Debian .deb packages is enabled by default, simply run `cpack` to generate the package:
 
 ```
 myusername@computer:~/emulationstation-de$ cpack
@@ -328,7 +328,7 @@ As for code editing, I use [VSCode](https://code.visualstudio.com). I suppose Xc
 
 **Setting up the build tools:**
 
-Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command **clang**. This will open a dialog that will let you download and install the tools.
+Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command `clang`. This will open a dialog that will let you download and install the tools.
 
 Following this, install the Homebrew package manager which will simplify the rest of the installation greatly. Install it by runing the following in a terminal window:
 ```
@@ -436,7 +436,7 @@ libfreetype.6.dylib:
 
 You of course only need to run this once, well at least until you replace the library in case of moving to a newer version or so.
 
-In addition to these libraries, you need to create a **plugins** directory and copy over the following VLC libraries, which are normally located in **/Applications/VLC.app/Contents/MacOS/plugins/**:
+In addition to these libraries, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
 
 ```
 libaudio_format_plugin.dylib
@@ -506,7 +506,7 @@ The home directory will always take precedence, and any resources or themes loca
 
 **Creating a .dmg installer:**
 
-Simply run **cpack** to build a .dmg disk image/installer:
+Simply run `cpack` to build a .dmg disk image/installer:
 
 ```
 myusername@computer:~/emulationstation-de$ cpack
@@ -577,9 +577,9 @@ Anyway, here's a quite long summary of how to get a build environment up and run
 
 [https://jmeubank.github.io/tdm-gcc](https://jmeubank.github.io/tdm-gcc)
 
-After installation, make a copy of **TDM-GCC-64/bin/mingw32-make** to **make** just for convenience.
+After installation, make a copy of `TDM-GCC-64/bin/mingw32-make` to `make` just for convenience.
 
-I won't get into the details on how to configure Git, but there are many resources available online to support with this. The **Git Bash** shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
+I won't get into the details on how to configure Git, but there are many resources available online to support with this. The `Git Bash` shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
 
 Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
 
@@ -603,7 +603,7 @@ libVLC\
 
 For VLC, download both the binary distribution for win64 as well as the source code package.
 
-Uncompress the files for the above packages to a suitable directory, for example **C:\Programming\Dependencies**
+Uncompress the files for the above packages to a suitable directory, for example `C:\Programming\Dependencies`
 
 GLEW\
 [http://glew.sourceforge.net](http://glew.sourceforge.net)
@@ -661,7 +661,7 @@ git clone https://gitlab.com/leonstyhre/emulationstation-de
 
 As there is no standardized include directory structure in Windows, you need to provide the include files manually.
 
-Make a directory in your build environment tree, for instance under **C:\Programming\include**
+Make a directory in your build environment tree, for instance under `C:\Programming\include`
 
 Copy the include files from cURL, FreeImage, FreeType, GLEW, pugixml, RapidJSON, SDL2 and VLC to this directory.
 It should then look something like this:
@@ -684,7 +684,7 @@ vlc/
 
 As there's no package manager in Windows and no way to handle dependencies, we need to ship all the required shared libraries with the application.
 
-Copy the following files to the **emulationstation-de** build directory. Most of them will come from the packages that were provided in the previous steps of this guide:
+Copy the following files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide:
 
 ```
 FreeImage.dll
@@ -706,11 +706,11 @@ vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 201
 
 The files from the MinGW installation must correspond to the version used to compile the binary. So if the MinGW installation is upgraded to a newer version, make sure to copy the .dll files again, overwriting the old ones.
 
-In addition to these, you need to copy some libraries from the VLC **plugins** folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the required .dll files.
+In addition to these, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the required .dll files.
 
 It's a bit tricky to know which libraries are really needed. But as the plugins directory is around 120 MB (as of VLC version 3.0.11), we definitely only want to copy the files we need.
 
-The following files seem to be required to play most video and audio formats (place them in **emulationstation-de\plugins**):
+The following files seem to be required to play most video and audio formats (place them in `emulationstation-de\plugins`):
 
 ```
 access\libfilesystem_plugin.dll
@@ -741,7 +741,7 @@ Or for a debug build:
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
 ```
 
-For some reason defining the **../include** path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
+For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 
 The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
 
@@ -777,7 +777,7 @@ CPack: Create package
 CPack: - package: C:/Programming/emulationstation-de/EmulationStation-DE-1.0.0.exe generated.
 ```
 
-The default installation directory suggested by the installer is **C:\Program Files\EmulationStation-DE** but this can of course be changed by the user.
+The default installation directory suggested by the installer is `C:\Program Files\EmulationStation-DE` but this can of course be changed by the user.
 
 ES will look in the following locations for the resources, in the listed order:
 
@@ -802,10 +802,10 @@ It's possible to easily create a portable installation of ES-DE for Windows, for
 For the sake of this example, let's assume that the removable media has the device name `f:\`.
 
 * Copy the EmulationStation-DE installation directory to f:\
-* Create the directory **ES-Home** directly under f:\
-* Copy your game ROMs into **f:\ES-Home\ROMs**
+* Create the directory `ES-Home` directly under f:\
+* Copy your game ROMs into `f:\ES-Home\ROMs`
 * Copy your emulators to f:\ (such as the RetroArch directory)
-* Create the file **start_es.bat** directly under f:\
+* Create the file `start_es.bat` directly under f:\
 
 Add the following lines to the start_es.bat file:
 ```
@@ -826,7 +826,7 @@ Now run the batch script, ES should start and ask you to configure any attached 
 
 You can optionally skip the configuration of the controllers by copying any existing es_input.cfg file to f:\ES-Home\\.emulationstation\\`
 
-Exit ES and modify the file **f:\ES-Home\.emulationstation\es_systems.cfg** to point to the emulators on the portable media.
+Exit ES and modify the file `f:\ES-Home\.emulationstation\es_systems.cfg` to point to the emulators on the portable media.
 
 For example, change from this:
 ```
@@ -862,7 +862,7 @@ The CA certificates shipped with ES-DE come directly from the curl project but t
 
 The latest version can be downloaded from [https://curl.se/docs/caextract.html](https://curl.se/docs/caextract.html)
 
-After downloading the file, rename it from **cacert.pem** to **curl-ca-bundle.crt** and move it to the certificates directory i.e.:
+After downloading the file, rename it from `cacert.pem` to `curl-ca-bundle.crt` and move it to the certificates directory i.e.:
 
 ```
 emulationstation-de/resources/certificates/curl-ca-bundle.crt
@@ -872,7 +872,7 @@ emulationstation-de/resources/certificates/curl-ca-bundle.crt
 
 This is a bit tricky as the data needs to be converted to an internal format used by ES-DE. The original file is huge and most of the information is not required.
 
-Go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like **mame0226lx.zip** and unzipping it will give you a file name such as **mame0226.xml**.
+Go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like `mame0226lx.zip` and unzipping it will give you a file name such as `mame0226.xml`.
 
 Move the XML driver file to the resources/MAME directory and then convert it to the ES-DE internal files:
 
@@ -890,7 +890,7 @@ diff mamedevices.xml mamedevices.xml_OLD
 rm *NEW *OLD mame0226.xml
 ```
 
-You need **xmlstarlet** installed for these scripts to work.
+You need `xmlstarlet` installed for these scripts to work.
 
 The diff command is used to do a sanity check that the changes look reasonable before deleting the old files. This is an example for the BIOS file when going from driver version 0.221 to 0.226:
 ```
@@ -910,20 +910,20 @@ The reason to not simply replace the BIOS and devices files with the new version
 
 **~/.emulationstation/es_systems.cfg:**
 
-ES-DE ships with a comprehensive **es_systems.cfg** configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in **es_settings.cfg**), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
+ES-DE ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
 
-Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance **/usr/local/share/emulationstation/resources/templates** on Unix, **/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/templates** on macOS and **C:\Program Files\EmulationStation-DE\resources\templates** on Windows.
+Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/templates` on macOS and `C:\Program Files\EmulationStation-DE\resources\templates`on Windows.
 
-The template file will be copied to **~/.emulationstation/es_systems.cfg**.
+The template file will be copied to `~/.emulationstation/es_systems.cfg`.
 
-The tilde symbol **~** translates to **$HOME** on Unix and macOS, and to **%HOMEPATH%** on Windows.
+The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows.
 
 Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.cfg file assumes that your emulator environment is properly configured.
 
 
 **~/.emulationstation/es_settings.cfg:**
 
-When ES-DE is first run, a configuration file will be created as **~/.emulationstation/es_settings.cfg**.
+When ES-DE is first run, a configuration file will be created as `~/.emulationstation/es_settings.cfg`.
 
 This file will contain all supported settings at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES-DE to update all the necessary settings.
 
@@ -931,7 +931,7 @@ This file will contain all supported settings at their default values. Normally 
 
 This complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
 
-By default, ES-DE looks in **~/ROMs** for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
+By default, ES-DE looks in `~/ROMs` for the ROM files, where they are expected to be grouped into directories corresponding to the game systems, for example:
 
 ```
 myusername@computer:~ROMs$ ls -1
@@ -945,7 +945,7 @@ Here's an example:
 
 `<string name="ROMDirectory" value="~/games/ROMs" />`
 
-Keep in mind that you still need to group the ROMs into directories corresponding to the \<path\> tags in es_systems.cfg.
+Keep in mind that you still need to group the ROMs into directories corresponding to the `<path>` tags in es_systems.cfg.
 
 There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. You would normally not need this, but the option is there, should you require it for some reason.
 
@@ -957,7 +957,7 @@ Here is such an example:
 
 You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User guide](USERGUIDE.md#input-device-configuration).
 
-If your controller and keyboard stop working, you can delete the **~/.emulationstation/es_input.cfg** file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the **--force-input-config** command line argument.
+If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the `--force-input-config` command line argument.
 
 
 ## Command line arguments
@@ -1035,14 +1035,14 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 
 As long as ES-DE hasn't frozen, you can always press F4 to close the application.
 
-As you can see above, you can override the home directory path using the **--home** flag. So by running for instance the command **emulationstation --home ~/games/emulation**, ES will use **~/games/emulation/.emulationstation** as its base directory.
+As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES will use `~/games/emulation/.emulationstation` as its base directory.
 
 
 ## es_systems.cfg
 
 The es_systems.cfg file contains the system configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
 
-ES-DE will only check in your home directory for an es_systems.cfg file, for example **~/.emulationstation/es_systems.cfg**, but if this file is not present, it will attempt to install it from the systems template directory as explained earlier in this document.
+ES-DE will only check in your home directory for an es_systems.cfg file, for example `~/.emulationstation/es_systems.cfg`, but if this file is not present, it will attempt to install it from the systems template directory as explained earlier in this document.
 
 It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
 
@@ -1181,17 +1181,17 @@ And one for Windows:
 
 The gamelist.xml file for a system defines the metadata for its entries, such as the game names, descriptions, release dates and ratings.
 
-As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in **es_settings.cfg** or via the GUI. If configured manually in es_settings.cfg, it looks something like this:
+As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in `es_settings.cfg` or via the GUI. If configured manually in es_settings.cfg, it looks something like this:
 
 ```
 <string name="MediaDirectory" value="~/games/images/emulationstation" />
 ```
 
-The default directory is **~/.emulationstation/downloaded_media**
+The default directory is `~/.emulationstation/downloaded_media`
 
 You can use ES-DE's scraping tools to populate the gamelist.xml files, or manually update individual entries using the metadata editor. All of this is explained in the [User guide](USERGUIDE.md).
 
-The gamelist.xml files are searched for in the ES-DE home directory, i.e. **~/.emulationstation/gamelists/\<system name\>/gamelist.xml**
+The gamelist.xml files are searched for in the ES-DE home directory, i.e. `~/.emulationstation/gamelists/\<system name\>/gamelist.xml`
 
 For example:
 
@@ -1298,7 +1298,7 @@ For folders, most of the fields are identical although some are removed. In the 
 
 ## Custom event scripts
 
-There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under **Other settings**. By default it's deactivated so be sure to enable it to use this feature.
+There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under `Other settings`. By default it's deactivated so be sure to enable it to use this feature.
 
 The approach is quite straightforward, ES-DE will look for any files inside a script directory that correspond to the event that is triggered and execute all files located there.
 
@@ -1306,13 +1306,13 @@ As an example, let's create a log that will record the start and end time for ea
 
 **Note:** The following example is for Unix systems, but it works the same way in macOS, and on Windows (although .bat batch files are then used instead of shell scripts).
 
-The events when the game starts and ends are called **game-start** and **game-end** respectively. Finding these event names is easily achieved by starting ES-DE with the **--debug** flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+The events when the game starts and ends are called `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
 
-So let's create the folders for these events in the scripts directory. The location of this directory is **~/.emulationstation/scripts**.
+So let's create the folders for these events in the scripts directory. The location of this directory is `~/.emulationstation/scripts`.
 
 After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist view.
 
-Let's name the start script **game_start_logging.sh** with the following contents:
+Let's name the start script `game_start_logging.sh` with the following contents:
 
 ```
 #!/bin/bash
@@ -1320,7 +1320,7 @@ TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
 echo Starting game "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
 ```
 
-And let's name the end script **game_end_logging.sh** with the following contents:
+And let's name the end script `game_end_logging.sh` with the following contents:
 
 ```
 #!/bin/bash
