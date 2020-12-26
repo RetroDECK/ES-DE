@@ -1191,7 +1191,7 @@ The default directory is `~/.emulationstation/downloaded_media`
 
 You can use ES-DE's scraping tools to populate the gamelist.xml files, or manually update individual entries using the metadata editor. All of this is explained in the [User guide](USERGUIDE.md).
 
-The gamelist.xml files are searched for in the ES-DE home directory, i.e. `~/.emulationstation/gamelists/\<system name\>/gamelist.xml`
+The gamelist.xml files are searched for in the ES-DE home directory, i.e. `~/.emulationstation/gamelists/<system name>/gamelist.xml`
 
 For example:
 

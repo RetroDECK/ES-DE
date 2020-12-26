@@ -75,10 +75,10 @@ On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<user
 
 **Note:** As of ES-DE v1.0 there is no internationalization support, so you would always need to supply the English directory name for your home directory, which is by the way always the real physical name on the file system. For instance in macOS, /Users/leon will be required instead of /Användare/leon which is what's shown inside the operating system for a Swedish localized installation. But using the tilde home symbol '~' is a workaround for this, and it's recommended to always use it for any ES-DE configuration settings that require a path to your home directory as it removes any confusion regarding localized home directory paths.
 
-On first startup the configuration file **es_settings.cfg** will be generated in the ES-DE home directory, containing all the default settings. A file named **es_systems.cfg** will also be copied from the program resource folder. This file contains the game ROM paths and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md#es_systemscfg) document.
+On first startup the configuration file `es_settings.cfg` will be generated in the ES-DE home directory, containing all the default settings. A file named `es_systems.cfg` will also be copied from the program resource folder. This file contains the game ROM paths and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md#es_systemscfg) document.
 
 
-**Note:** There's a log file in the ES-DE home directory named **es_log.txt**, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
+There's a log file in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
 After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default one.
 
@@ -88,7 +88,7 @@ _This is the error dialog shown if no game files were found. It also lets you co
 
 ## Running on 4K displays
 
-ES-DE fully supports 4K displays, but some emulators such as RetroArch will start with the same resolution as the calling program, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. A workaround for this is to start ES-DE with the **--resolution** option. For example, to set the resolution to 1920x1080 run the following:
+ES-DE fully supports 4K displays, but some emulators such as RetroArch will start with the same resolution as the calling program, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. A workaround for this is to start ES-DE with the `--resolution` option. For example, to set the resolution to 1920x1080 run the following:
 
 ```
 emulationstation --resolution 1920 1080
@@ -105,13 +105,13 @@ This only works well for Unix/Linux at the moment as Windows and macOS will run 
 
 When first starting ES-DE, the application will look for any attached controllers (joysticks and gamepads). If no devices are found, it will be assumed that only keyboard navigation is to be used and the default keyboard mappings will be applied. It's recommended to change these default values, and a message will be displayed describing just this. It's however possible to hide this notification permanently and continue to use the default keyboard mappings if you're happy with them.
 
-If a controller is attached when starting ES-DE and no **es_input.cfg** input configuration file exists, you will be presented with the input configuration dialog. Just follow the steps as described to map the inputs.
+If a controller is attached when starting ES-DE and no `es_input.cfg` input configuration file exists, you will be presented with the input configuration dialog. Just follow the steps as described to map the inputs.
 
-If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES-DE with the command line argument **--force-input-config** or you can manually delete the es_input.cfg file prior to starting the application. Alternatively you can navigate to the menu using your keyboard and select **Configure input** to configure your new device.
+If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES-DE with the command line argument `--force-input-config` or you can manually delete the es_input.cfg file prior to starting the application. Alternatively you can navigate to the menu using your keyboard and select **Configure input** to configure your new device.
 
 The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions.
 
-Both new and old devices can be (re)configured at any time via the **Configure input** menu entry. New devices will be appended to the existing input configuration file, so your old devices will retain their configuration.
+Both new and old devices can be (re)configured at any time via the `Configure input` menu entry. New devices will be appended to the existing input configuration file, so your old devices will retain their configuration.
 
 
 ## System view (main screen)
@@ -129,7 +129,7 @@ _The **System view** is the default starting point for the application, it's her
 
 The gamelist view is where you browse and start your games, and it's where you will spend most of your time using ES-DE.
 
-Upon startup with the default settings, ES-DE is set to the gamelist view style **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video** will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view will be selected. Note that this automatic selection is applied per game system.
+Upon startup with the default settings, ES-DE is set to the gamelist view style **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video**will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view will be selected. Note that this automatic selection is applied per game system.
 
 Also note that the Video view style requires that the theme supports it. If not, the Detailed style will be selected instead. (The default theme rbsimple-DE supports both of these view styles).
 
@@ -151,11 +151,11 @@ These modes mandate the functionalty provided by the application in the followin
 
 * Full - This is the default mode which enables all functionality.
 * Kiosk - The main menu will be severely restricted, only displaying the entry to change the audio volume. The game options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag or unflag games as favorites will be removed. Apart from this all games will be playable.
-* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see **Enable menu in kid mode** further [below](USERGUIDE.md#other-settings-1).
+* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see **Enable menu in kid mode** for additional information.
 
 There is an unlock code available to revert to the Full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A**. It works to use either a keyboard or a configured controller to input the passkey sequence, but it can't be entered when a menu is open.
 
-The application can also be forced into any of the three modes via the command line options **-force-full**, **--force-kiosk** and **-force-kid**. Note that this is only temporary until the restart of the application, unless the settings menu is entered and the setting is saved to the configuration file (this assumes that the main menu is available in the selected UI mode of course).
+The application can also be forced into any of the three modes via the command line options `-force-full`, `--force-kiosk` and `-force-kid`. Note that this is only temporary until the restart of the application, unless the settings menu is entered and the setting is saved to the configuration file (this assumes that the main menu is available in the selected UI mode of course).
 
 ## Help system
 
@@ -274,7 +274,7 @@ Then simply copy your game ROMs into this folder, and you should end up with som
 ~/ROMs/nes/Super Mario Bros. 3.zip
 ```
 
-**Note:** These directories are case sensitive on Unix, so creating a directory named **Nes** instead of **nes** won't work.
+**Note:** These directories are case sensitive on Unix, so creating a directory named `Nes` instead of `nes` won't work.
 
 That's it, start ES-DE and the NES game system should be populated. You can now scrape information and media for the games, and assuming you've setup RetroArch correctly with the Nestopia UE core, you can launch the games.
 
@@ -282,7 +282,7 @@ That's it, start ES-DE and the NES game system should be populated. You can now 
 
 For some systems, there are sometimes (or always) multiple gamefiles per game. Such an example would be the Commodore 64 when multidisk games are being played. For such instances, simply group the files inside folders.
 
-The platform name for the Commodore 64 is **c64**, so the following structure would be a possible approach:
+The platform name for the Commodore 64 is `c64`, so the following structure would be a possible approach:
 
 ```
 ~/ROMs/c64/Cartridge
@@ -298,7 +298,7 @@ The platform name for the Commodore 64 is **c64**, so the following structure wo
 ~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
-It's highly recommended to create **.m3u** playlist files for multi-disk images as this automates (well it should) disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
+It's highly recommended to create `.m3u` playlist files for multi-disk images as this automates (well it should) disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
 The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
@@ -323,15 +323,15 @@ Not all systems are as simple as described above, or sometimes there are multipl
 
 For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. But these should retain the MAME names as filenames since ES-DE ships with MAME lookup tables, meaning the MAME names are expanded to the full game names.
 
-For instance **topgunnr.7z** will be expanded to **Top Gunner**.
+For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is used by the TheGamesDB scraper where the expanded file names are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
 #### Commodore Amiga
 
-There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in **.hdf** or **.hdz** format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
+There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf` or `.hdz` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
-An alternative would be to use **.adf** images as not all games may be available with WHDLoad support. For this, you can either put single-disk images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create **.m3u** playlist files for multi-disk images as described [above](USERGUIDE.md#multiple-gamefiles-installation).
+An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disk images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disk images as described above.
 
 Here's an example of what the file structure could look like:
 
@@ -435,13 +435,13 @@ lutris lutris:rungame/fallout
 
 You don't need to set execution permissions for these scripts, ES-DE will run them anyway.
 
-As an alternative, you can add the Lutris games to the Ports game system, if you prefer to not separate them. The instructions above are identical in this case except that the shell scripts should be located inside the **ports** directory rather than inside the **lutris** directory.
+As an alternative, you can add the Lutris games to the Ports game system, if you prefer to not separate them. The instructions above are identical in this case except that the shell scripts should be located inside the `ports` directory rather than inside the `lutris` directory.
 
 #### Steam
 
 For steam, it's recommended to put shell scripts/batch files directly in the root folder, where the file names of these scripts correspond to the game names.
 
-Add the game information to each file using the syntax **steam steam://rungameid/\<game ID\>**
+Add the game information to each file using the syntax `steam steam://rungameid/<game ID>`
 
 Here's an example for the game Broforce:
 
@@ -465,7 +465,7 @@ This of course assumes that you have menu entries setup for the games in questio
 
 ## Emulator setup
 
-ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the **es_systems.cfg** file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL.md](INSTALL.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
+ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.cfg` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL.md](INSTALL.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
@@ -514,7 +514,7 @@ The multi-scraper is accessed from the main menu by selecting **Scrape**.
 
 The process of scraping games is basically identical between the single-game scraper and the multi-scraper. You're presented with the returned scraper results, and you're able to refine the search if the scraper could not find your game. Sometimes small changes like adding or removing a colon or a minus sign can yield better results. Note that the searching is handled entirely by the scraper service, ES-DE just presents the results returned from the service.
 
-By default, ES-DE will search using the metadata name of the game. If no name has been defined via scraping or manually using the metadata editor, this name will correspond to the physical file name minus all text inside either normal brackets **()** or square brackets **[]**. So for example the physical filename **Mygame (U) [v2].zip** will be stripped to simply **Mygame** when performing the scraping.
+By default, ES-DE will search using the metadata name of the game. If no name has been defined via scraping or manually using the metadata editor, this name will correspond to the physical file name minus all text inside either normal brackets `()` or square brackets `[]`. So for example the physical filename `Mygame (U) [v2].zip` will be stripped to simply `Mygame` when performing the scraping.
 
 The behavior of using the metadata name rather than the file name can be changed using the setting **Search using metadata name**.
 
@@ -526,7 +526,7 @@ Apart from this, hopefully the scraping process should be self-explanatory once 
 
 If you already have a library of game media (images and videos) you can manually copy it into ES-DE.
 
-The default directory is **~/.emulationstation/downloaded_media/\<game system\>/\<media type\>/**
+The default directory is `~/.emulationstation/downloaded_media/<game system>/<media type>/`
 
 For example on Unix:
 ```
@@ -1211,7 +1211,7 @@ Note that you should only enable these collections if you really need them as th
 
 ### Custom collections
 
-These are collections that you create yourself. Examples could be grouping in genres like **Shoot em up**, **Fighting games** etc. or perhaps a time period like **1980s**, **1990s** and so on.
+These are collections that you create yourself. Examples could be grouping in genres like `Shoot em up`, `Fighting games` etc. or perhaps a time period like `1980s`, `1990s` and so on.
 
 If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated **Collections** system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
@@ -1219,7 +1219,7 @@ So if you have enabled the option **Group unthemed custom collections** (it's en
 
 To create a custom collection, go to **Game collection settings** from the main menu and choose **Create new custom collection**.
 
-Choose a name and press enter, let's use the name **Platform** for this example.
+Choose a name and press enter, let's use the name `Platform` for this example.
 
 The collection will now be created and the collection edit mode will be entered. You can now add games to the collection by navigating to any gamelist and pressing the **Y** button. Any number of games from any of your game systems can be added. A game can also be part of multiple collections, there is no real limit for this in ES-DE.
 
@@ -1240,9 +1240,9 @@ _Example of custom collections, here configured as genres._
 _When editing a custom collection, a tick symbol will be displayed for any game that is already part of the collection._
 
 
-The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder **~/.emulationstation/collections**
+The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder `~/.emulationstation/collections`
 
-For this example a file will have been created named **~/.emulationstation/collections/custom-platform.cfg**
+For this example a file will have been created named `~/.emulationstation/collections/custom-platform.cfg`
 
 The file contents is simply a list of ROM files, such as the following:
 
@@ -1267,13 +1267,13 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE theme set, you can replace it with a number of themes available from various locations on the Internet.
 
-Somewhat confusingly the terms **theme** and **theme set** are used to refer to the same thing. The technically correct term for what you apply to the application to achieve a different look is actually _theme set_ as it's a collection of a number of themes for a number of game systems. The supplied rbsimple-DE is an example of such a theme set. But in this guide and in other EmulationStation resources on the Internet, the term theme is often used to refer to the same thing as a theme set. As long as you are aware of the distinction, it doesn't really matter which term is used.
+Somewhat confusingly the terms _theme_ and _theme set_ are used to refer to the same thing. The technically correct term for what you apply to the application to achieve a different look is actually _theme set_ as it's a collection of a number of themes for a number of game systems. The supplied rbsimple-DE is an example of such a theme set. But in this guide and in other EmulationStation resources on the Internet, the term theme is often used to refer to the same thing as a theme set. As long as you are aware of the distinction, it doesn't really matter which term is used.
 
 Note that this Desktop Edition fork adds additional features to the themes and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a different theme set. But effort is spent trying to make ES-DE backwards compatible with the available themes used by other EmulationStation versions, even if the functionality they provide is limited.
 
-Themes are most easily installed in your ES-DE home directory, i.e. **~/.emulationstation/themes**. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you can then choose between them via UI Settings on the main menu.
+Themes are most easily installed in your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you can then choose between them via UI Settings on the main menu.
 
-Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be **/usr/local/share/emulationstation/themes** on Unix, **/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes** on macOS or **C:\Program Files\EmulationStation-DE\themes** on Windows.
+Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
 
 If you would like to customize the rbsimple-DE theme, simply make a copy of the complete rbsimple-DE directory to ~/.emulationstation/themes and then that copy of the theme will take precedence over the one in the application installation directory.
 
@@ -1322,11 +1322,11 @@ Please refer to the [INSTALL.md](INSTALL.md#command-line-arguments) document for
 
 **Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. EmulationStation will still work but the game system will not be themed which looks very ugly.
 
-The column **Game system name** corresponds to the directory where you should put your game files, e.g. **~/ROMs/c64** or **~/ROMs/megadrive**.
+The column **Game system name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
 
 Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be modified in the es_systems.cfg file if you wish to.
 
-Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For instance **na** for North America has been added to **snes** (Super Nintendo) giving the system name **snesna**. The same goes for Japan, as in **megacd** and **megacdjp**. Again, this only affects the theme and theme graphics.
+Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For instance `na` for North America has been added to `snes` (Super Nintendo) giving the system name `snesna`. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
 
 The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside brackets.
 
