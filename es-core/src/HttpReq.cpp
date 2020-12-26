@@ -63,7 +63,7 @@ HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nul
     // older Windows versions.
     #if defined(_WIN64)
     curl_easy_setopt(mHandle, CURLOPT_CAINFO, ResourceManager::getInstance()->
-            getResourcePath(":/certificates/cacert.pem").c_str());
+            getResourcePath(":/certificates/curl-ca-bundle.crt").c_str());
     #endif
 
     if (mHandle == nullptr) {
