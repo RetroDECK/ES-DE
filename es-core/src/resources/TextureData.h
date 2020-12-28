@@ -9,6 +9,7 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_DATA_H
 #define ES_CORE_RESOURCES_TEXTURE_DATA_H
 
+#include <cmath>
 #include <mutex>
 #include <string>
 #include <vector>

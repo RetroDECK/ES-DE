@@ -14,6 +14,7 @@
 #include "resources/ResourceManager.h"
 #include "resources/TextureDataManager.h"
 
+#include <cmath>
 #include <set>
 #include <string>
 

@@ -117,7 +117,9 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     add_definitions(-DNOMINMAX)
 endif()
 
-message("-- Build type is ${CMAKE_BUILD_TYPE}")
+if (CMAKE_BUILD_TYPE)
+    message("-- Build type is ${CMAKE_BUILD_TYPE}")
+endif()
 
 # Set up compiler and linker flags for debug, profiling or release builds.
 if(CMAKE_BUILD_TYPE MATCHES Debug)
