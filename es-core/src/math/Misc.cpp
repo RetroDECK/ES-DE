@@ -8,59 +8,13 @@
 
 #include "math/Misc.h"
 
-#include <math.h>
+#include <cmath>
 
 namespace Math
 {
-    // Added here to avoid including math.h whenever these are used.
-    float cosf(const float _num)
-    {
-        return ::cosf(_num);
-    }
-
-    float sinf(const float _num)
-    {
-        return ::sinf(_num);
-    }
-
-    float floorf(const float _num)
-    {
-        return ::floorf(_num);
-    }
-
-    float ceilf(const float _num)
-    {
-        return ::ceilf(_num);
-    }
-
-    int min(const int _num1, const int _num2)
-    {
-        return (_num1 < _num2) ? _num1 : _num2;
-    }
-
-    int max(const int _num1, const int _num2)
-    {
-        return (_num1 > _num2) ? _num1 : _num2;
-    }
-
-    float min(const float _num1, const float _num2)
-    {
-        return (_num1 < _num2) ? _num1 : _num2;
-    }
-
-    float max(const float _num1, const float _num2)
-    {
-        return (_num1 > _num2) ? _num1 : _num2;
-    }
-
     float clamp(const float _num, const float _min, const float _max)
     {
-        return max(min(_num, _max), _min);
-    }
-
-    float round(const float _num)
-    {
-        return static_cast<float>(static_cast<int>((_num + 0.5)));
+        return std::fmax(std::fmin(_num, _max), _min);
     }
 
     float lerp(const float _start, const float _end, const float _fraction)

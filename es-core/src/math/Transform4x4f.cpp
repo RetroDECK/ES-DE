@@ -8,6 +8,8 @@
 
 #include "math/Transform4x4f.h"
 
+#include <cmath>
+
 const Transform4x4f Transform4x4f::operator*(const Transform4x4f& _other) const
 {
     const float* tm = reinterpret_cast<const float*>(this);
@@ -187,8 +189,8 @@ Transform4x4f& Transform4x4f::rotate(const float _angle, const Vector3f& _axis)
 {
     float*       tm      = reinterpret_cast<float*>(this);
     const float* av      = reinterpret_cast<const float*>(&_axis);
-    const float  s       = Math::sinf(-_angle);
-    const float  c       = Math::cosf(-_angle);
+    const float  s       = sinf(-_angle);
+    const float  c       = cosf(-_angle);
     const float  t       = 1 - c;
     const float  x       = av[0];
     const float  y       = av[1];
@@ -234,8 +236,8 @@ Transform4x4f& Transform4x4f::rotate(const float _angle, const Vector3f& _axis)
 Transform4x4f& Transform4x4f::rotateX(const float _angle)
 {
     float*      tm      = reinterpret_cast<float*>(this);
-    const float s       = Math::sinf(-_angle);
-    const float c       = Math::cosf(-_angle);
+    const float s       = sinf(-_angle);
+    const float c       = cosf(-_angle);
     const float temp[6] = { tm[ 4] * c + tm[ 8] * -s,
                             tm[ 5] * c + tm[ 9] * -c,
                             tm[ 6] * c + tm[10] * -s,
@@ -256,8 +258,8 @@ Transform4x4f& Transform4x4f::rotateX(const float _angle)
 Transform4x4f& Transform4x4f::rotateY(const float _angle)
 {
     float*      tm      = reinterpret_cast<float*>(this);
-    const float s       = Math::sinf(-_angle);
-    const float c       = Math::cosf(-_angle);
+    const float s       = sinf(-_angle);
+    const float c       = cosf(-_angle);
     const float temp[6] = { tm[ 0] *  c + tm[ 8] * s,
                             tm[ 1] *  c + tm[ 9] * s,
                             tm[ 2] *  c + tm[10] * s,
@@ -278,8 +280,8 @@ Transform4x4f& Transform4x4f::rotateY(const float _angle)
 Transform4x4f& Transform4x4f::rotateZ(const float _angle)
 {
     float*      tm      = reinterpret_cast<float*>(this);
-    const float s       = Math::sinf(-_angle);
-    const float c       = Math::cosf(-_angle);
+    const float s       = sinf(-_angle);
+    const float c       = cosf(-_angle);
     const float temp[6] = { tm[ 0] * c + tm[ 4] * -s,
                             tm[ 1] * c + tm[ 5] * -s,
                             tm[ 2] * c + tm[ 6] * -s,

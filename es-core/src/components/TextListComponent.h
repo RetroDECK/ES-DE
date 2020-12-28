@@ -156,7 +156,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
     if (size() == 0)
         return;
 
-    const float entrySize = Math::max(font->getHeight(1.0),
+    const float entrySize = std::max(font->getHeight(1.0),
             static_cast<float>(font->getSize())) * mLineSpacing;
 
     int startEntry = 0;
@@ -420,7 +420,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     setFont(Font::getFromTheme(elem, properties, mFont));
-    const float selectorHeight = Math::max(mFont->getHeight(1.0),
+    const float selectorHeight = std::max(mFont->getHeight(1.0),
             static_cast<float>(mFont->getSize())) * mLineSpacing;
     setSelectorHeight(selectorHeight);
 

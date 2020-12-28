@@ -74,13 +74,14 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Game counting is now done during sorting instead of every time a system is selected. This should make the UI more responsive in case of large game libraries
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
+* Replaced the custom math functions with standard C++ functions whenever possible
 * Modernized the audio code, for example using SDL_AudioStream instead of the older SDL_AudioCVT
 * Overhaul of application settings, now the configuration file is only updated when there have been actual configuration changes
 * Decreased CPU usage dramatically by only rendering the currently visible view (previously all views were always rendered)
 * Updated the CMake/CPack install and package configuration files to work as expected (can now generate DEB, RPM, DMG and NSIS installation packages with correct dependencies)
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix and macOS only)
 * License files included for all the libraries and resources that are bundled with the application
-* Updated the MAME ROM index files to include ROMs up to MAME version 0.221 and created scripts to easily generate these index files in the future
+* Updated the MAME ROM index files to include ROMs up to MAME version 0.226 and created scripts to easily generate these index files in the future
 * Greatly expanded the application documentation (which is hosted in the ES-DE repository on GitLab)
 
 ### Bug fixes

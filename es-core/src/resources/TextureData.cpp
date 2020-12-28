@@ -69,17 +69,17 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         mSourceWidth = svgImage->width;
         mSourceHeight = svgImage->height;
     }
-    mWidth = static_cast<size_t>(Math::round(mSourceWidth));
-    mHeight = static_cast<size_t>(Math::round(mSourceHeight));
+    mWidth = static_cast<size_t>(std::round(mSourceWidth));
+    mHeight = static_cast<size_t>(std::round(mSourceHeight));
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.
-        mWidth = static_cast<size_t>(Math::round((static_cast<float>(mHeight) /
+        mWidth = static_cast<size_t>(std::round((static_cast<float>(mHeight) /
                 svgImage->height) * svgImage->width));
     }
     else if (mHeight == 0) {
         // Auto scale height to keep aspect ratio.
-        mHeight = static_cast<size_t>(Math::round((static_cast<float>(mWidth) /
+        mHeight = static_cast<size_t>(std::round((static_cast<float>(mWidth) /
                 svgImage->width) * svgImage->height));
     }
 

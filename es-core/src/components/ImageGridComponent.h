@@ -225,10 +225,10 @@ void ImageGridComponent<T>::render(const Transform4x4f& parentTrans)
     float scaleX = trans.r0().x();
     float scaleY = trans.r1().y();
 
-    Vector2i pos(static_cast<int>(Math::round(trans.translation()[0])),
-            static_cast<int>(Math::round(trans.translation()[1])));
-    Vector2i size(static_cast<int>(Math::round(mSize.x() * scaleX)),
-            static_cast<int>(Math::round(mSize.y() * scaleY)));
+    Vector2i pos(static_cast<int>(std::round(trans.translation()[0])),
+            static_cast<int>(std::round(trans.translation()[1])));
+    Vector2i size(static_cast<int>(std::round(mSize.x() * scaleX)),
+            static_cast<int>(std::round(mSize.y() * scaleY)));
 
     Renderer::pushClipRect(pos, size);
 
@@ -520,7 +520,7 @@ void ImageGridComponent<T>::buildTiles()
     if (mCenterSelection) {
         int dimScrollable = (isVertical() ? mGridDimension.y() :
                 mGridDimension.x()) - 2 * EXTRAITEMS;
-        mStartPosition -= static_cast<int>(Math::floorf(dimScrollable / 2.0f));
+        mStartPosition -= static_cast<int>(floorf(dimScrollable / 2.0f));
     }
 
     Vector2f tileDistance = mTileSize + mMargin;
@@ -683,10 +683,10 @@ void ImageGridComponent<T>::calcGridDimension()
     if (mAutoLayout.x() != 0 && mAutoLayout.y() != 0)
         gridDimension = mAutoLayout;
 
-    mLastRowPartial = Math::floorf(gridDimension.y()) != gridDimension.y();
+    mLastRowPartial = floorf(gridDimension.y()) != gridDimension.y();
 
     // Ceil y dim so we can display partial last row.
-    mGridDimension = Vector2i(gridDimension.x(), Math::ceilf(gridDimension.y()));
+    mGridDimension = Vector2i(gridDimension.x(), ceilf(gridDimension.y()));
 
     // Grid dimension validation.
     if (mGridDimension.x() < 1) {

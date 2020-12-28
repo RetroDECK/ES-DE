@@ -22,13 +22,13 @@
 
 class TextCache;
 
-#define FONT_SIZE_MINI (static_cast<unsigned int>(0.030f * Math::min(static_cast<int>( \
+#define FONT_SIZE_MINI (static_cast<unsigned int>(0.030f * std::min(static_cast<int>( \
         Renderer::getScreenHeight()), static_cast<int>(Renderer::getScreenWidth()))))
-#define FONT_SIZE_SMALL (static_cast<unsigned int>(0.035f * Math::min(static_cast<int>( \
+#define FONT_SIZE_SMALL (static_cast<unsigned int>(0.035f * std::min(static_cast<int>( \
         Renderer::getScreenHeight()), static_cast<int>(Renderer::getScreenWidth()))))
-#define FONT_SIZE_MEDIUM (static_cast<unsigned int>(0.045f * Math::min(static_cast<int>( \
+#define FONT_SIZE_MEDIUM (static_cast<unsigned int>(0.045f * std::min(static_cast<int>( \
         Renderer::getScreenHeight()), static_cast<int>(Renderer::getScreenWidth()))))
-#define FONT_SIZE_LARGE (static_cast<unsigned int>(0.085f * Math::min(static_cast<int>( \
+#define FONT_SIZE_LARGE (static_cast<unsigned int>(0.085f * std::min(static_cast<int>( \
         Renderer::getScreenHeight()), static_cast<int>(Renderer::getScreenWidth()))))
 
 #define FONT_PATH_LIGHT ":/fonts/opensans_hebrew_condensed_light.ttf"

@@ -24,10 +24,10 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
             getInt("ScreensaverTimer") / (1000 * 60)));
     addWithLabel("START SCREENSAVER AFTER (MINUTES)", screensaver_timer);
     addSaveFunc([screensaver_timer, this] {
-        if (static_cast<int>(Math::round(screensaver_timer->getValue()) * (1000 * 60)) !=
+        if (static_cast<int>(std::round(screensaver_timer->getValue()) * (1000 * 60)) !=
                 Settings::getInstance()->getInt("ScreensaverTimer")) {
             Settings::getInstance()->setInt("ScreensaverTimer",
-                    static_cast<int>(Math::round(screensaver_timer->getValue()) * (1000 * 60)));
+                    static_cast<int>(std::round(screensaver_timer->getValue()) * (1000 * 60)));
             setNeedsSaving();
         }
     });
@@ -108,7 +108,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
                 static_cast<float>(Settings::getInstance()->
                 getInt("ScreensaverSwapImageTimeout") / (1000))) {
             Settings::getInstance()->setInt("ScreensaverSwapImageTimeout",
-                    static_cast<int>(Math::round(screensaver_swap_image_timeout->getValue()) *
+                    static_cast<int>(std::round(screensaver_swap_image_timeout->getValue()) *
                     (1000)));
             s->setNeedsSaving();
         }
@@ -219,7 +219,7 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
                 static_cast<float>(Settings::getInstance()->
                 getInt("ScreensaverSwapVideoTimeout") / (1000))) {
             Settings::getInstance()->setInt("ScreensaverSwapVideoTimeout",
-                    static_cast<int>(Math::round(screensaver_swap_video_timeout->getValue()) *
+                    static_cast<int>(std::round(screensaver_swap_video_timeout->getValue()) *
                     (1000)));
             s->setNeedsSaving();
         }

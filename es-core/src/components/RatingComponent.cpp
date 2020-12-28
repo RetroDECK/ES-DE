@@ -39,7 +39,7 @@ void RatingComponent::setValue(const std::string& value)
     }
     else {
         // Round up to the closest .1 value, i.e. to the closest half-icon.
-        mValue = Math::ceilf(stof(value) / 0.1) / 10;
+        mValue = ceilf(stof(value) / 0.1) / 10;
         mOriginalValue = static_cast<int>(mValue * 10);
 
         // If the argument to colorize the rating icons has been passed, set the
@@ -104,7 +104,7 @@ void RatingComponent::onSizeChanged()
         mSize[0] = mSize.y() * NUM_RATING_STARS;
 
     if (mSize.y() > 0) {
-        size_t heightPx = static_cast<size_t>(Math::round(mSize.y()));
+        size_t heightPx = static_cast<size_t>(std::round(mSize.y()));
         if (mFilledTexture)
             mFilledTexture->rasterizeAt(heightPx, heightPx);
         if (mUnfilledTexture)

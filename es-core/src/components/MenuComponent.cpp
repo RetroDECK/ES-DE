@@ -95,7 +95,7 @@ void MenuComponent::updateSize()
         }
     }
 
-    float width = static_cast<float>(Math::min(static_cast<int>(Renderer::getScreenHeight()),
+    float width = static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight()),
             static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
     setSize(width, height);
 }
@@ -166,6 +166,6 @@ std::shared_ptr<ImageComponent> makeArrow(Window* window)
 {
     auto bracket = std::make_shared<ImageComponent>(window);
     bracket->setImage(":/graphics/arrow.svg");
-    bracket->setResize(0, Math::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    bracket->setResize(0, std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
     return bracket;
 }

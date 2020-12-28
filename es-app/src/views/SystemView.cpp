@@ -545,7 +545,7 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
     }
 
     int center = static_cast<int>(mCamOffset);
-    int logoCount = Math::min(mCarousel.maxLogoCount, static_cast<int>(mEntries.size()));
+    int logoCount = std::min(mCarousel.maxLogoCount, static_cast<int>(mEntries.size()));
 
     // Adding texture loading buffers depending on scrolling speed and status.
     int bufferIndex = getScrollingVelocity() + 1;
@@ -570,12 +570,12 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
         float distance = i - mCamOffset;
 
         float scale = 1.0f + ((mCarousel.logoScale - 1.0f) * (1.0f - fabs(distance)));
-        scale = Math::min(mCarousel.logoScale, Math::max(1.0f, scale));
+        scale = std::min(mCarousel.logoScale, std::max(1.0f, scale));
         scale /= mCarousel.logoScale;
 
-        int opacity = static_cast<int>(Math::round(0x80 + ((0xFF - 0x80) *
+        int opacity = static_cast<int>(std::round(0x80 + ((0xFF - 0x80) *
                 (1.0f - fabs(distance)))));
-        opacity = Math::max(static_cast<int>(0x80), opacity);
+        opacity = std::max(static_cast<int>(0x80), opacity);
 
         const std::shared_ptr<GuiComponent> &comp = mEntries.at(index).data.logo;
         if (mCarousel.type == VERTICAL_WHEEL || mCarousel.type == HORIZONTAL_WHEEL) {
@@ -706,7 +706,7 @@ void SystemView::getCarouselFromTheme(const ThemeData::ThemeElement* elem)
     if (elem->has("logoSize"))
         mCarousel.logoSize = elem->get<Vector2f>("logoSize") * mSize;
     if (elem->has("maxLogoCount"))
-        mCarousel.maxLogoCount = static_cast<int>(Math::round(elem->get<float>("maxLogoCount")));
+        mCarousel.maxLogoCount = static_cast<int>(std::round(elem->get<float>("maxLogoCount")));
     if (elem->has("zIndex"))
         mCarousel.zIndex = elem->get<float>("zIndex");
     if (elem->has("logoRotation"))

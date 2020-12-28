@@ -435,7 +435,7 @@ void GuiMenu::openSoundSettings()
     s->addWithLabel("SYSTEM VOLUME", system_volume);
     s->addSaveFunc([system_volume] {
         VolumeControl::getInstance()->
-                setVolume(static_cast<int>(Math::round(system_volume->getValue())));
+                setVolume(static_cast<int>(std::round(system_volume->getValue())));
     });
     #endif
 
@@ -612,7 +612,7 @@ void GuiMenu::openOtherSettings()
     s->addSaveFunc([max_vram, s] {
         if (max_vram->getValue() != Settings::getInstance()->getInt("MaxVRAM")) {
             Settings::getInstance()->setInt("MaxVRAM",
-                    static_cast<int>(Math::round(max_vram->getValue())));
+                    static_cast<int>(std::round(max_vram->getValue())));
             s->setNeedsSaving();
         }
     });

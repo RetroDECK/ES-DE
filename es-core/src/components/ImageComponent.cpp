@@ -72,8 +72,8 @@ void ImageComponent::resize()
         // ratios), it can cause cutoff when the aspect ratio breaks.
         // So we always make sure the resultant height is an integer to make sure cutoff doesn't
         // happen, and scale width from that (you'll see this scattered throughout the function).
-        // It's important to use the floorf() function rather than round() for this, as we never
-        // want to round up since that can lead to the cutoff just described.
+        // It's important to use the floorf rather than round for this, as we never want to round
+        // up since that can lead to the cutoff just described.
         if (mTargetIsMax) {
             mSize = textureSize;
 
@@ -83,14 +83,14 @@ void ImageComponent::resize()
                 // This will be mTargetSize.x(). We can't exceed it, nor be lower than it.
                 mSize[0] *= resizeScale.x();
                 // We need to make sure we're not creating an image larger than max size.
-                mSize[1] = Math::min(Math::floorf(mSize[1] *= resizeScale.x()), mTargetSize.y());
+                mSize[1] = std::min(floorf(mSize[1] *= resizeScale.x()), mTargetSize.y());
             }
             else {
                 // This will be mTargetSize.y(). We can't exceed it.
-                mSize[1] = Math::floorf(mSize[1] * resizeScale.y());
+                mSize[1] = floorf(mSize[1] * resizeScale.y());
                 // For SVG rasterization, always calculate width from rounded height (see comment
                 // above). We need to make sure we're not creating an image larger than max size.
-                mSize[0] = Math::min((mSize[1] / textureSize.y()) * textureSize.x(),
+                mSize[0] = std::min((mSize[1] / textureSize.y()) * textureSize.x(),
                         mTargetSize.x());
             }
         }
@@ -115,8 +115,8 @@ void ImageComponent::resize()
             }
             // For SVG rasterization, always calculate width from rounded height (see comment
             // above). We need to make sure we're not creating an image smaller than min size.
-            mSize[1] = Math::max(Math::floorf(mSize[1]), mTargetSize.y());
-            mSize[0] = Math::max((mSize[1] / textureSize.y()) * textureSize.x(), mTargetSize.x());
+            mSize[1] = std::max(floorf(mSize[1]), mTargetSize.y());
+            mSize[0] = std::max((mSize[1] / textureSize.y()) * textureSize.x(), mTargetSize.x());
 
         }
         else {
@@ -128,18 +128,18 @@ void ImageComponent::resize()
             // For SVG rasterization, we always calculate width from rounded height (see
             // comment above).
             if (!mTargetSize.x() && mTargetSize.y()) {
-                mSize[1] = Math::floorf(mTargetSize.y());
+                mSize[1] = floorf(mTargetSize.y());
                 mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
             }
             else if (mTargetSize.x() && !mTargetSize.y()) {
-                mSize[1] = Math::floorf((mTargetSize.x() / textureSize.x()) * textureSize.y());
+                mSize[1] = floorf((mTargetSize.x() / textureSize.x()) * textureSize.y());
                 mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
             }
         }
     }
 
-    mSize[0] = Math::floorf(mSize.x());
-    mSize[1] = Math::floorf(mSize.y());
+    mSize[0] = floorf(mSize.x());
+    mSize[1] = floorf(mSize.y());
     // mSize.y() should already be rounded.
     mTexture->rasterizeAt(static_cast<size_t>(mSize.x()), static_cast<size_t>(mSize.y()));
 

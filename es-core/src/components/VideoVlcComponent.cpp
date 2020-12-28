@@ -130,7 +130,7 @@ void VideoVlcComponent::resize()
             mSize[1] *= resizeScale.y();
         }
 
-        mSize[1] = Math::round(mSize[1]);
+        mSize[1] = std::round(mSize[1]);
         mSize[0] = (mSize[1] / textureSize.y()) * textureSize.x();
 
     }
@@ -141,17 +141,17 @@ void VideoVlcComponent::resize()
 
         // If only one component is set, we resize in a way that maintains aspect ratio.
         if (!mTargetSize.x() && mTargetSize.y()) {
-            mSize[1] = Math::round(mTargetSize.y());
+            mSize[1] = std::round(mTargetSize.y());
             mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
         }
         else if (mTargetSize.x() && !mTargetSize.y()) {
-            mSize[1] = Math::round((mTargetSize.x() / textureSize.x()) * textureSize.y());
+            mSize[1] = std::round((mTargetSize.x() / textureSize.x()) * textureSize.y());
             mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
         }
     }
 
-    mTexture->rasterizeAt(static_cast<size_t>(Math::round(mSize.x())),
-            static_cast<size_t>(Math::round(mSize.y())));
+    mTexture->rasterizeAt(static_cast<size_t>(std::round(mSize.x())),
+            static_cast<size_t>(std::round(mSize.y())));
 
     onSizeChanged();
 }
@@ -261,20 +261,20 @@ void VideoVlcComponent::calculateBlackRectangle()
                 rectHeight = mSize.y();
             }
             // Populate the rectangle coordinates to be used in render().
-            mVideoRectangleCoords.push_back(Math::round(mVideoAreaPos.x() -
+            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.x() -
                     rectWidth * mOrigin.x()));
-            mVideoRectangleCoords.push_back(Math::round(mVideoAreaPos.y() -
+            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.y() -
                     rectHeight * mOrigin.y()));
-            mVideoRectangleCoords.push_back(Math::round(rectWidth));
-            mVideoRectangleCoords.push_back(Math::round(rectHeight));
+            mVideoRectangleCoords.push_back(std::round(rectWidth));
+            mVideoRectangleCoords.push_back(std::round(rectHeight));
         }
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.
         else {
-            mVideoRectangleCoords.push_back(Math::round(mPosition.x() - mSize.x() * mOrigin.x()));
-            mVideoRectangleCoords.push_back(Math::round(mPosition.y() - mSize.y() * mOrigin.y()));
-            mVideoRectangleCoords.push_back(Math::round(mSize.x()));
-            mVideoRectangleCoords.push_back(Math::round(mSize.y()));
+            mVideoRectangleCoords.push_back(std::round(mPosition.x() - mSize.x() * mOrigin.x()));
+            mVideoRectangleCoords.push_back(std::round(mPosition.y() - mSize.y() * mOrigin.y()));
+            mVideoRectangleCoords.push_back(std::round(mSize.x()));
+            mVideoRectangleCoords.push_back(std::round(mSize.y()));
         }
     }
 }

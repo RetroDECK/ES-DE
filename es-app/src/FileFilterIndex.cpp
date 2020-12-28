@@ -15,6 +15,8 @@
 #include "Log.h"
 #include "Settings.h"
 
+#include <cmath>
+
 #define UNKNOWN_LABEL "UNKNOWN"
 #define INCLUDE_UNKNOWN false;
 
@@ -165,7 +167,7 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
                         // been used for scraping the ratings, or if the gamelist.xml file
                         // has been manually edited.
                         ratingNumber = static_cast<int>(
-                                (Math::ceilf(stof(ratingString) / 0.1) / 10) * 5);
+                                (ceilf(stof(ratingString) / 0.1) / 10) * 5);
 
                         if (ratingNumber < 0)
                             ratingNumber = 0;
