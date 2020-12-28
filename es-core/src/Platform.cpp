@@ -21,7 +21,9 @@
 #include <array>
 #endif
 
+#if !defined(_WIN64)
 #include <unistd.h>
+#endif
 #include <fcntl.h>
 
 int runRebootCommand()

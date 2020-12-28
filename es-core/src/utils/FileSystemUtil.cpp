@@ -26,8 +26,11 @@
 #if defined(_WIN64)
 #include <direct.h>
 #include <Windows.h>
-//#define S_ISREG(x) (((x) & S_IFMT) == S_IFREG)
-//#define S_ISDIR(x) (((x) & S_IFMT) == S_IFDIR)
+#if defined(_MSC_VER) // MSVC compiler.
+#define stat64 _stat64
+#define S_ISREG(x) (((x) & S_IFMT) == S_IFREG)
+#define S_ISDIR(x) (((x) & S_IFMT) == S_IFDIR)
+#endif
 #else
 #include <dirent.h>
 #include <unistd.h>

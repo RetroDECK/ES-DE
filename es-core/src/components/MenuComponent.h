@@ -15,6 +15,8 @@
 #include "components/TextComponent.h"
 #include "utils/StringUtil.h"
 
+#include <cmath>
+
 class ButtonComponent;
 class ImageComponent;
 

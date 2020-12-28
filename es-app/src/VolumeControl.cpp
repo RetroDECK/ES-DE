@@ -15,6 +15,10 @@
 #include "Settings.h"
 #endif
 
+#if defined(_WIN64)
+#include <cmath>
+#endif
+
 // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
 // As PulseAudio controls the sound devices for the desktop environment, it doesn't
 // make much sense to be able to select ALSA devices directly. Normally (always?)
@@ -318,7 +322,7 @@ int VolumeControl::getVolume() const
         mixerControlDetails.cbDetails = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
         if (mixerGetControlDetails(reinterpret_cast<HMIXEROBJ>(mixerHandle), &mixerControlDetails,
                 MIXER_GETCONTROLDETAILSF_VALUE) == MMSYSERR_NOERROR)
-            volume = static_cast<int>(Math::round((value.dwValue * 100) / 65535.0f));
+            volume = static_cast<int>(std::round((value.dwValue * 100) / 65535.0f));
         else
             LOG(LogError) << "VolumeControl::getVolume() - Failed to get mixer volume!";
     }
@@ -326,7 +330,7 @@ int VolumeControl::getVolume() const
         // Windows Vista or above. use EndpointVolume API.
         float floatVolume = 0.0f; // 0-1
         if (endpointVolume->GetMasterVolumeLevelScalar(&floatVolume) == S_OK) {
-            volume = static_cast<int>(Math::round(floatVolume * 100.0f));
+            volume = static_cast<int>(std::round(floatVolume * 100.0f));
             LOG(LogInfo) << "System audio volume is " << volume;
         }
         else {

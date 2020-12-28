@@ -111,14 +111,23 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
 #        set(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc ${CMAKE_CXX_FLAGS}")
     endif()
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    message("-- Compiler is MSVC")
+    # If using the MSVC compiler on Windows, disable the built-in min() and max() macros.
+    add_definitions(-DNOMINMAX)
 endif()
+
+message("-- Build type is ${CMAKE_BUILD_TYPE}")
 
 # Set up compiler and linker flags for debug, profiling or release builds.
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     # Enable the C++11 standard and disable optimizations as it's a debug build.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O0")
-
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c11 /Od /DEBUG:FULL")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O0")
+    endif()
     # If using Clang, then add additional debug data needed by GDB.
     # Comment this out if you're using LLDB for debugging as this flag makes the binary
     # much larger and the application much slower. On macoOS this setting is never enabled
@@ -128,21 +137,29 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     endif()
 elseif(CMAKE_BUILD_TYPE MATCHES Profiling)
     # For the profiling build, we enable optimizations and supply the required profiler flags.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -pg -g")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -pg")
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c11 /O2 /DEBUG:FULL")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -pg -g")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -pg")
+    endif()
 else()
     # Enable the C++11 standard and enable optimizations as it's a release build.
-    # This will also disable all assert() macros. Strip the binary as well.
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -DNDEBUG")
-    if(APPLE)
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2")
+    # This will also disable all assert() macros. Strip the binary too.
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG /std:c11 /O2 /DEBUG:NONE")
     else()
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -DNDEBUG")
+        if(APPLE)
+            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2")
+        else()
+            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
+        endif()
     endif()
 endif()
 
-# This removes half of the ranlib warnings on macOS regarding no symbols for files that
-# are #ifdef'ed away. There must be a way to remove the other half as well?
+# The following removes half of the ranlib warnings on macOS regarding no symbols for files
+# that are #ifdef'ed away. There must be a way to remove the other half as well?
 if(APPLE)
     SET(CMAKE_C_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
     SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
@@ -238,18 +255,32 @@ if(NOT WIN32)
             ${VLC_LIBRARIES}
             nanosvg)
 elseif(WIN32)
-    set(COMMON_LIBRARIES
-            "${PROJECT_SOURCE_DIR}/FreeImage.dll"
-            "${PROJECT_SOURCE_DIR}/glew32.dll"
-            "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
-            "${PROJECT_SOURCE_DIR}/libfreetype.dll"
-            "${PROJECT_SOURCE_DIR}/libpugixml.dll"
-            "${PROJECT_SOURCE_DIR}/libSDL2main.a"
-            "${PROJECT_SOURCE_DIR}/libvlc.dll"
-            "${PROJECT_SOURCE_DIR}/SDL2.dll"
-            "mingw32"
-            "nanosvg"
-            "Winmm.dll")
+    if(DEFINED MSVC)
+        set(COMMON_LIBRARIES
+                "${PROJECT_SOURCE_DIR}/FreeImage.lib"
+                "${PROJECT_SOURCE_DIR}/glew32.lib"
+                "${PROJECT_SOURCE_DIR}/libcurl-x64.lib"
+                "${PROJECT_SOURCE_DIR}/freetyped.lib"
+                "${PROJECT_SOURCE_DIR}/pugixml.lib"
+                "${PROJECT_SOURCE_DIR}/SDL2main.lib"
+                "${PROJECT_SOURCE_DIR}/libvlc.lib"
+                "${PROJECT_SOURCE_DIR}/SDL2.lib"
+                "nanosvg"
+                "Winmm.dll")
+    else()
+        set(COMMON_LIBRARIES
+                "${PROJECT_SOURCE_DIR}/FreeImage.dll"
+                "${PROJECT_SOURCE_DIR}/glew32.dll"
+                "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
+                "${PROJECT_SOURCE_DIR}/libfreetype.dll"
+                "${PROJECT_SOURCE_DIR}/libpugixml.dll"
+                "${PROJECT_SOURCE_DIR}/libSDL2main.a"
+                "${PROJECT_SOURCE_DIR}/libvlc.dll"
+                "${PROJECT_SOURCE_DIR}/SDL2.dll"
+                "mingw32"
+                "nanosvg"
+                "Winmm.dll")
+    endif()
 endif()
 
 if(APPLE)

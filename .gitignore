@@ -18,6 +18,11 @@
 # Dependency makefiles
 *.d
 
+# MSVC-specific
+*.lib
+EmulationStation.ilk
+EmulationStation.pdb
+
 # Compiled executable
 emulationstation
 EmulationStation
