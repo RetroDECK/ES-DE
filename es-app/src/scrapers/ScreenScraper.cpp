@@ -327,7 +327,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         if (game.child("note")) {
             float ratingVal = (game.child("note").text().as_int() / 20.0f);
             // Round up to the closest .1 value, i.e. to the closest half-star.
-            ratingVal = ceilf(ratingVal / 0.1) / 10;
+            ratingVal = ceilf(ratingVal / 0.1f) / 10;
             std::stringstream ss;
             ss << ratingVal;
             if (ratingVal > 0) {

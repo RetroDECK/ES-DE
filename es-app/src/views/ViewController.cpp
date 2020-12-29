@@ -713,14 +713,14 @@ void ViewController::render(const Transform4x4f& parentTrans)
     if (mFadeOpacity) {
         unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255);
         Renderer::setMatrix(parentTrans);
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                Renderer::getScreenHeight(), fadeColor, fadeColor);
+        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
+                static_cast<float>(Renderer::getScreenHeight()), fadeColor, fadeColor);
     }
 }
 
 void ViewController::preload()
 {
-    unsigned int systemCount = SystemData::sSystemVector.size();
+    unsigned int systemCount = static_cast<int>(SystemData::sSystemVector.size());
 
     for (auto it = SystemData::sSystemVector.cbegin();
             it != SystemData::sSystemVector.cend(); it ++) {

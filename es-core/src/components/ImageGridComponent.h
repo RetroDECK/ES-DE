@@ -399,7 +399,7 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
     int oldCol = (mLastCursor / dimOpposite);
     int col = (mCursor / dimOpposite);
 
-    int lastCol = ((mEntries.size() - 1) / dimOpposite);
+    int lastCol = static_cast<int>((mEntries.size() - 1) / dimOpposite);
 
     int lastScroll = std::max(0, (lastCol + 1 - dimScrollable));
 
@@ -423,9 +423,9 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
         int newIdx = mCursor - mStartPosition + (dimOpposite * EXTRAITEMS);
         if (isScrollLoop()) {
             if (newIdx < 0)
-                newIdx += mEntries.size();
+                newIdx += static_cast<int>(mEntries.size());
             else if (newIdx >= mTiles.size())
-                newIdx -= mEntries.size();
+                newIdx -= static_cast<int>(mEntries.size());
         }
 
         if (newIdx >= 0 && newIdx < mTiles.size())
@@ -626,9 +626,9 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos, int imgPos,
 
     if (isScrollLoop()) {
         if (imgPos < 0)
-            imgPos += mEntries.size();
+            imgPos += static_cast<int>(mEntries.size());
         else if (imgPos >= size())
-            imgPos -= mEntries.size();
+            imgPos -= static_cast<int>(mEntries.size());
     }
 
     // If we have more tiles than we have to display images on screen, hide them.
@@ -686,7 +686,8 @@ void ImageGridComponent<T>::calcGridDimension()
     mLastRowPartial = floorf(gridDimension.y()) != gridDimension.y();
 
     // Ceil y dim so we can display partial last row.
-    mGridDimension = Vector2i(gridDimension.x(), ceilf(gridDimension.y()));
+    mGridDimension = Vector2i(static_cast<const int>(gridDimension.x()),
+            static_cast<const int>(ceilf(gridDimension.y())));
 
     // Grid dimension validation.
     if (mGridDimension.x() < 1) {

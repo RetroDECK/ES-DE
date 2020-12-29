@@ -93,7 +93,7 @@ void ScrollableContainer::update(int deltaTime)
     const float widthMod = contentSize.x() / AUTO_WIDTH_MOD;
 
     if (mAutoScrollSpeed != 0) {
-        mAutoScrollAccumulator += deltaTime / widthMod;
+        mAutoScrollAccumulator += deltaTime / static_cast<int>(widthMod);
 
         while (mAutoScrollAccumulator >= mAutoScrollSpeed) {
             mScrollPos += mScrollDir;

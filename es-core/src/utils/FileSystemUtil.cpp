@@ -177,8 +177,6 @@ namespace Utils
 
         std::string getCWDPath()
         {
-            char temp[512];
-
             // Return current working directory.
             #if defined(_WIN64)
             wchar_t tempWide[512];

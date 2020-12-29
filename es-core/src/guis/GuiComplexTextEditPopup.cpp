@@ -80,7 +80,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     mGrid.setEntry(mText, Vector2i(0, 3), true, false, Vector2i(1, 1),
             GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
     mGrid.setEntry(mButtonGrid, Vector2i(0, 4), true, false);
-    mGrid.setRowHeightPerc(1, 0.15, true);
+    mGrid.setRowHeightPerc(1, 0.15f, true);
 
     float textHeight = mText->getFont()->getHeight();
 
@@ -89,7 +89,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     mText->setSize(0, textHeight);
 
     setSize(Renderer::getScreenWidth() * 0.75f, mTitle->getFont()->getHeight() +
-            textHeight + mButtonGrid->getSize().y() + mButtonGrid->getSize().y() * 1.85);
+            textHeight + mButtonGrid->getSize().y() + mButtonGrid->getSize().y() * 1.85f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
     mText->startEditing();

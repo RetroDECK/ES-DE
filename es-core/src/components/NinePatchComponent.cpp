@@ -116,7 +116,7 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
         Renderer::setMatrix(trans);
         if (mOpacity < 255) {
             mVertices[0].shaders = Renderer::SHADER_OPACITY;
-            mVertices[0].opacity = mOpacity / 255.0;
+            mVertices[0].opacity = mOpacity / 255.0f;
         }
         else if (mVertices[0].shaders & Renderer::SHADER_OPACITY) {
             // We have reached full opacity, so disable the opacity shader and set
@@ -133,17 +133,6 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
 
 void NinePatchComponent::onSizeChanged()
 {
-    buildVertices();
-}
-
-const Vector2f& NinePatchComponent::getCornerSize() const
-{
-    return mCornerSize;
-}
-
-void NinePatchComponent::setCornerSize(int sizeX, int sizeY)
-{
-    mCornerSize = Vector2f(sizeX, sizeY);
     buildVertices();
 }
 

@@ -174,7 +174,7 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
     if (mIsPlaying && mContext.valid && mIsActuallyPlaying) {
         unsigned int color;
         if (mFadeIn < 1) {
-            const unsigned int fadeIn = mFadeIn * 255.0f;
+            const unsigned int fadeIn = static_cast<int>(mFadeIn * 255.0f);
             color = Renderer::convertRGBAToABGR((fadeIn << 24) |
                     (fadeIn << 16) | (fadeIn << 8) | 255);
         }
@@ -300,7 +300,6 @@ void VideoVlcComponent::startVideo()
             if (mMedia) {
                 unsigned track_count;
                 int parseResult;
-                libvlc_event_t vlcEvent;
 
                 // Asynchronous media parsing.
                 libvlc_event_attach(libvlc_media_event_manager(mMedia),

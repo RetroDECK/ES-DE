@@ -727,7 +727,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
     std::string desc = "This collection is empty.";
     std::vector<FileData*> gamesList = rootFolder->getChildren();
     std::vector<FileData*> gamesListRandom;
-    unsigned int gameCount = gamesList.size();
+    unsigned int gameCount = static_cast<unsigned int>(gamesList.size());
 
     // If there is more than 1 game in the collection, then randomize the example game names.
     if (gameCount > 1) {

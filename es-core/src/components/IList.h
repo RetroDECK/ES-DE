@@ -235,7 +235,7 @@ protected:
 
     bool listLastRow()
     {
-        mCursor = mEntries.size() - 1;
+        mCursor = static_cast<int>(mEntries.size()) - 1;
         onCursorChanged(CURSOR_STOPPED);
         onScroll();
         return true;

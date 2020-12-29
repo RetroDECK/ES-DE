@@ -192,7 +192,8 @@ bool TextureData::uploadAndBind()
 
         // Upload texture.
         mTextureID = Renderer::createTexture(Renderer::Texture::RGBA, true,
-                mTile, mWidth, mHeight, mDataRGBA.data());
+                mTile, static_cast<const unsigned int>(mWidth),
+                static_cast<const unsigned int>(mHeight), mDataRGBA.data());
     }
     return true;
 }

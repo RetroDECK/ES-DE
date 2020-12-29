@@ -107,9 +107,9 @@ GuiMetaDataEd::GuiMetaDataEd(
         case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
                 // Make the switches slightly smaller.
-                auto switchSize = ed->getSize() * 0.9;
+                auto switchSize = ed->getSize() * 0.9f;
                 ed->setResize(switchSize.x(), switchSize.y());
-                ed->setOrigin(-0.05, -0.09);
+                ed->setOrigin(-0.05f, -0.09f);
 
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
                 row.addElement(ed, false, true);

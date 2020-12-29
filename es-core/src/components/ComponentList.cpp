@@ -101,7 +101,7 @@ bool ComponentList::input(InputConfig* config, Input input)
     }
     else if (config->isMappedLike("righttrigger", input)) {
         if (input.value != 0) {
-            mSelectorBarOffset = mEntries.size() - 1;
+            mSelectorBarOffset = mEntries.size() - 1.0f;
             return listLastRow();
         }
     }
@@ -254,7 +254,7 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     // Custom rendering.
     Renderer::setMatrix(trans);
 
-    float opacity = mOpacity / 255.0;
+    float opacity = mOpacity / 255.0f;
 
     // Draw selector bar.
     if (mFocused) {

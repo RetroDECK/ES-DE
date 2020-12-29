@@ -230,7 +230,6 @@ bool GridGameListView::input(InputConfig* config, Input input)
 const std::string GridGameListView::getImagePath(FileData* file)
 {
     ImageSource src = mGrid.getImageSource();
-    FileData* returnFile;
 
     if (src == ImageSource::IMAGE)
         return file->getImagePath();

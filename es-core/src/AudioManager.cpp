@@ -151,8 +151,8 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
             }
             // Mix sample into stream.
             SDL_MixAudioFormat(stream, &(sound->getData()[sound->getPosition()]),
-                    sAudioFormat.format, restLength,
-                    Settings::getInstance()->getInt("SoundVolumeNavigation") * 1.28f);
+                    sAudioFormat.format, restLength, static_cast<int>(Settings::getInstance()->
+                    getInt("SoundVolumeNavigation") * 1.28f));
             if (sound->getPosition() + restLength < sound->getLength()) {
                 // Sample hasn't ended yet.
                 stillPlaying = true;
@@ -204,7 +204,8 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
 
             if (processedLength > 0)
                 SDL_MixAudioFormat(stream, converted, sAudioFormat.format, processedLength,
-                        Settings::getInstance()->getInt("SoundVolumeVideos") * 1.28);
+                        static_cast<int>(Settings::getInstance()->
+                        getInt("SoundVolumeVideos") * 1.28f));
         }
 
         delete[] converted;

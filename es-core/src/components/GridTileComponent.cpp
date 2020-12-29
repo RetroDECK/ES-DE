@@ -213,7 +213,7 @@ void GridTileComponent::setSelected(bool selected, bool allowAnimation,
             auto func = [this](float t) {
                 t -= 1; // Cubic ease out.
                 float pct = Math::lerp(0, 1, t*t*t + 1);
-                this->setSelectedZoom(1.0 - pct);
+                this->setSelectedZoom(1.0f - pct);
             };
 
             cancelAnimation(3);
@@ -271,7 +271,7 @@ void GridTileComponent::calcCurrentProperties()
 {
     mCurrentProperties = mSelected ? mSelectedProperties : mDefaultProperties;
 
-    float zoomPercentInverse = 1.0 - mSelectedZoomPercent;
+    float zoomPercentInverse = 1.0f - mSelectedZoomPercent;
 
     if (mSelectedZoomPercent != 0.0f && mSelectedZoomPercent != 1.0f) {
         if (mDefaultProperties.mSize != mSelectedProperties.mSize)

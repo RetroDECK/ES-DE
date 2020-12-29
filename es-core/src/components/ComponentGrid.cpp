@@ -354,7 +354,7 @@ void ComponentGrid::render(const Transform4x4f& parentTrans)
     if (mLines.size()) {
         Renderer::setMatrix(trans);
         Renderer::bindTexture(0);
-        Renderer::drawLines(&mLines[0], mLines.size());
+        Renderer::drawLines(&mLines[0], static_cast<const unsigned int>(mLines.size()));
     }
 }
 

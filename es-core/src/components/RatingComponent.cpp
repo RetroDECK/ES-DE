@@ -39,7 +39,7 @@ void RatingComponent::setValue(const std::string& value)
     }
     else {
         // Round up to the closest .1 value, i.e. to the closest half-icon.
-        mValue = ceilf(stof(value) / 0.1) / 10;
+        mValue = ceilf(stof(value) / 0.1f) / 10;
         mOriginalValue = static_cast<int>(mValue * 10);
 
         // If the argument to colorize the rating icons has been passed, set the

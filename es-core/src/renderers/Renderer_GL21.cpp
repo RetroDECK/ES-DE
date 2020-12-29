@@ -177,11 +177,11 @@ namespace Renderer
         GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
 
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _repeat ?
-                GL_REPEAT : GL_CLAMP_TO_EDGE));
+                static_cast<GLfloat>(GL_REPEAT) : static_cast<GLfloat>(GL_CLAMP_TO_EDGE)));
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _repeat ?
-                GL_REPEAT : GL_CLAMP_TO_EDGE));
+                static_cast<GLfloat>(GL_REPEAT) : static_cast<GLfloat>(GL_CLAMP_TO_EDGE)));
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _linear ?
-                GL_LINEAR : GL_NEAREST));
+                static_cast<GLfloat>(GL_LINEAR) : static_cast<GLfloat>(GL_NEAREST)));
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
         GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, type, _width, _height, 0, type,
@@ -323,10 +323,10 @@ namespace Renderer
 
                 if (_vertices->shaders & SHADER_SCANLINES) {
                     Shader* runShader = getShaderProgram(SHADER_SCANLINES);
-                    float shaderWidth = width * 1.2;
+                    float shaderWidth = width * 1.2f;
                     // Workaround to get the scanlines to render somehow proportional to the
                     // resolution. A better solution is for sure needed.
-                    float shaderHeight = height + height / (static_cast<int>(height) >> 7) * 2.0;
+                    float shaderHeight = height + height / (static_cast<int>(height) >> 7) * 2.0f;
                     if (runShader) {
                         runShader->activateShaders();
                         runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);

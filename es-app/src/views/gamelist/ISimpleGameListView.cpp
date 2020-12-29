@@ -396,11 +396,13 @@ void ISimpleGameListView::generateGamelistInfo(FileData* cursor, FileData* first
 
     if (idx->isFiltered()) {
         mIsFiltered = true;
-        mFilteredGameCount = rootFolder->getFilesRecursive(GAME, true, false).size();
+        mFilteredGameCount = static_cast<unsigned int>(rootFolder->
+                getFilesRecursive(GAME, true, false).size());
         // Also count the games that are set to not be counted as games, as the filter may
         // apply to such entries as well and this will be indicated with a separate '+ XX'
         // in the GamelistInfo field.
-        mFilteredGameCountAll = rootFolder->getFilesRecursive(GAME, true, true).size();
+        mFilteredGameCountAll = static_cast<unsigned int>(rootFolder->
+                getFilesRecursive(GAME, true, true).size());
     }
 
     if (firstEntry->getParent() && firstEntry->getParent()->getType() == FOLDER)

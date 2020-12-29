@@ -229,7 +229,8 @@ namespace Renderer
                 viewport.y = screenOffsetY;
                 viewport.w = screenWidth;
                 viewport.h = screenHeight;
-                projection.orthoProjection(0, screenWidth, screenHeight, 0, -1.0, 1.0);
+                projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
+                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
             }
             break;
             case 1: {
@@ -237,7 +238,8 @@ namespace Renderer
                 viewport.y = screenOffsetX;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
-                projection.orthoProjection(0, screenHeight, screenWidth, 0, -1.0, 1.0);
+                projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
+                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
                 projection.rotate(static_cast<float>(ES_DEG_TO_RAD(90)), {0, 0, 1});
                 projection.translate({0, screenHeight * -1.0f, 0});
             }
@@ -247,7 +249,8 @@ namespace Renderer
                 viewport.y = windowHeight - screenOffsetY - screenHeight;
                 viewport.w = screenWidth;
                 viewport.h = screenHeight;
-                projection.orthoProjection(0, screenWidth, screenHeight, 0, -1.0, 1.0);
+                projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
+                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
                 projection.rotate(static_cast<float>(ES_DEG_TO_RAD(180)), {0, 0, 1});
                 projection.translate({screenWidth * -1.0f, screenHeight * -1.0f, 0});
             }
@@ -257,7 +260,8 @@ namespace Renderer
                 viewport.y = windowHeight - screenOffsetX - screenWidth;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
-                projection.orthoProjection(0, screenHeight, screenWidth, 0, -1.0, 1.0);
+                projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
+                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
                 projection.rotate(static_cast<float>(ES_DEG_TO_RAD(270)), {0, 0, 1});
                 projection.translate({screenWidth * -1.0f, 0, 0});
             }
