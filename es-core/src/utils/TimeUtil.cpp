@@ -44,7 +44,11 @@ namespace Utils
         void DateTime::setTime(const time_t& _time)
         {
             mTime = (_time < 0) ? 0 : _time;
-            mTimeStruct = *localtime(&mTime);
+            #if defined(_WIN64)
+            localtime_s(&mTimeStruct, &mTime);
+            #else
+            localtime_r(&mTime, &mTimeStruct);
+            #endif
             mIsoString = timeToString(mTime);
         }
 
@@ -171,7 +175,12 @@ namespace Utils
         std::string timeToString(const time_t& _time, const std::string& _format)
         {
             const char* f = _format.c_str();
-            const tm timeStruct = *localtime(&_time);
+            tm timeStruct;
+            #if defined(_WIN64)
+            localtime_s(&timeStruct, &_time);
+            #else
+            localtime_r(&_time, &timeStruct);
+            #endif
             char buf[256] = { '\0' };
             char* s = buf;
 

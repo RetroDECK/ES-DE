@@ -54,7 +54,15 @@ void Log::open()
 std::ostringstream& Log::get(LogLevel level)
 {
     time_t t = time(nullptr);
-    os << std::put_time(localtime(&t), "%b %d %T ") << logLevelMap[level] << ":\t";
+    struct tm tm;
+    #if defined(_WIN64)
+    // Of course Windows does not follow standards and puts the parameters the other way
+    // around compared to POSIX.
+    localtime_s(&tm, &t);
+    #else
+    localtime_r(&t, &tm);
+    #endif
+    os << std::put_time(&tm, "%b %d %T ") << logLevelMap[level] << ":\t";
     messageLevel = level;
 
     return os;
