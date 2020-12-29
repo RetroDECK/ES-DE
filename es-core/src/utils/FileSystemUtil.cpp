@@ -183,6 +183,7 @@ namespace Utils
             return (_wgetcwd(tempWide, 512) ?
                     getGenericPath(Utils::String::wideStringToString(tempWide)) : "");
             #else
+            char temp[512];
             return (getcwd(temp, 512) ? getGenericPath(temp) : "");
             #endif
         }
