@@ -439,6 +439,8 @@ You of course only need to run this once, well at least until you replace the li
 In addition to these libraries, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
 
 ```
+libadummy_plugin.dylib
+libamem_plugin.dylib
 libaudio_format_plugin.dylib
 libauhal_plugin.dylib
 libavcodec_plugin.dylib
@@ -561,15 +563,40 @@ add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NA
 
 ## Building on Windows
 
-Up until now I have only built the software using GCC (MinGW) on Windows, but I may try to get Clang/LLVM working at a later date.
+Both MSVC and MinGW (GCC) work fine for building ES-DE on Windows.
 
-I did a brief evaluation of the Microsoft Visual C++ compiler (MSVC) but as far as I'm concerned it's an abomination so I won't cover it here and it won't be supported.
+As much as I would like to exclude support for MSVC, this proprietary compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. For release builds though MinGW is very fast and it seems as if ES-DE starts around 18% faster when built with MinGW so this compiler probably generates more efficient code overall. As well MSVC requires a lot more junk DLL files to be distributed with the application so it's not a good candidate for the final release build.
 
-The OpenGL library shipped with Windows is unfortunately garbage, so the OpenGL Extension Wrangler (GLEW) library needs to be used as well to provide shader support. Its installation is explained below.
+For this reason I think MSVC makes sense for development and MinGW for the releases.
 
-Anyway, here's a quite long summary of how to get a build environment up and running on Windows.
+**MSVC setup:**
 
-**Install Git, CMake, MinGW and your code editor:**
+Install Git for Windows: \
+[https://gitforwindows.org](https://gitforwindows.org)
+
+Download the Visual Studio Build Tools (choose Visual Studio Community edition): \
+[https://visualstudio.microsoft.com/downloads](https://visualstudio.microsoft.com/downloads)
+
+It seems as if Microsoft has dropped support for installing the Build Tools without the Visual Studio IDE, at least I've been unable to find a way to exclude it. But I just pretend it's not installed and use VSCode instead which works perfectly fine.
+
+During installation, choose the Desktop development with C++ workload with the following options (version details excluded):
+
+```
+MSVC and x64/x86 build tools
+Windows 10 SDK
+Just-In-Time debugger
+C++ CMake tools for Windows
+```
+
+If you intend to use both MinGW and MSVC on the machine, it's probably better to exclude CMake and install it manually as described in the MinGW setup instructions below.
+
+The way the MSVC environment works is that a specific developer shell is provided where the build environment is properly configured. You open this from the Start menu via `Visual Studio 2019` -> `Visual Studio tools` -> `VC` -> `x64 Native Tools Command Prompt for VS 2019`.
+
+It's very important to choose the x64-specific shell and not the x86 variant, as ES-DE will only compile as a 64-bit application.
+
+**MinGW (GCC) setup:**
+
+Download the following packages and install them:
 
 [https://gitforwindows.org](https://gitforwindows.org)
 
@@ -579,36 +606,41 @@ Anyway, here's a quite long summary of how to get a build environment up and run
 
 After installation, make a copy of `TDM-GCC-64/bin/mingw32-make` to `make` just for convenience.
 
-I won't get into the details on how to configure Git, but there are many resources available online to support with this. The `Git Bash` shell is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS.
+Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW installation should work fine though.
+
+**Other preparations:**
 
 Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
 
+Configure Git. I won't get into the details on how it's done, but there are many resources available online to support with this. The `Git Bash` shell shipped with Git for Windows is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS2.
+
 It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor, although it can also be configured in Git for conversion during commits. The source code for ES-DE only uses Unix-style line breaks.
 
-Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The MinGW installation recommended above should work fine though.
+In the description below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
+
 
 **Download the dependency packages:**
 
-FreeImage\
+FreeImage (binary distribution) \
 [https://sourceforge.net/projects/freeimage](https://sourceforge.net/projects/freeimage)
 
-cURL\
+cURL (Windows 64 bit binary, the MinGW version even if using MSVC) \
 [https://curl.haxx.se/download.html](https://curl.haxx.se/download.html)
 
-SDL2\
+SDL2 (development libraries, MinGW or VC/MSVC) \
 [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)
 
-libVLC\
+libVLC (both win64 binary and source distributions) \
 [https://ftp.lysator.liu.se/pub/videolan/vlc](https://ftp.lysator.liu.se/pub/videolan/vlc)
 
-For VLC, download both the binary distribution for win64 as well as the source code package.
+Uncompress the files from the above packages to a suitable directory, for example `C:\Programming\Dependencies`
 
-Uncompress the files for the above packages to a suitable directory, for example `C:\Programming\Dependencies`
+Append `_src` or something appropriate to the VLC source distribution directory as it has the same name as the binary distribution.
 
 GLEW\
 [http://glew.sourceforge.net](http://glew.sourceforge.net)
 
-This library needs to be compiled from source as the pre-built libraries don't seem to work with GCC. The GitHub repo seems to be somewhat broken as well, therefore the manual download is required. It's recommended to get the source in zip format and uncompress it to the same directory as the other libraries listed above.
+If using MinGW, this library needs to be compiled from source as the pre-built libraries don't seem to work with GCC. The GitHub repo seems to be somewhat broken as well, therefore the manual download is required. It's recommended to get the source in zip format and uncompress it to the same directory as the other libraries listed above.
 
 Then simply build the required glew32.dll library:
 
@@ -619,14 +651,27 @@ make
 ```
 You will probably see a huge amount of compiler warnings, and the glewinfo.exe tool may fail to build, but we don't need it so it's not an issue.
 
-The following packages are not readily available for Windows either, so clone the repos and build them yourself:
+If using MSVC, simply download the binary distribution of GLEW.
+
+The following packages are not readily available for Windows, so clone the repos and build them yourself:
 
 [FreeType](https://www.freetype.org)
 ```
 git clone git://git.savannah.gnu.org/freetype/freetype2.git
+cd freetype2
 git checkout VER-2-10-4
 mkdir build
 cd build
+```
+
+MSVC:
+```
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+nmake
+```
+
+MinGW:
+```
 cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON ..
 make
 ```
@@ -636,18 +681,32 @@ make
 git clone git://github.com/zeux/pugixml
 cd pugixml
 git checkout v1.10
+```
+
+MSVC:
+
+```
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON .
+nmake
+```
+
+MinGW:
+```
 cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
 make
 ```
 
-As for RapidJSON, you don't need to compile it, you just need the include files:
-
 [RapidJSON](http://rapidjson.org)
+
+For RapidJSON, you don't need to compile it, you just need the include files:
+
 ```
 git clone git://github.com/Tencent/rapidjson
 cd rapidjson
 git checkout v1.1.0
 ```
+
+
 
 **Clone the ES-DE repository:**
 
@@ -664,6 +723,9 @@ As there is no standardized include directory structure in Windows, you need to 
 Make a directory in your build environment tree, for instance under `C:\Programming\include`
 
 Copy the include files from cURL, FreeImage, FreeType, GLEW, pugixml, RapidJSON, SDL2 and VLC to this directory.
+
+You may need to create the SDL2 directory manually and copy the header files there.
+
 It should then look something like this:
 
 ```
@@ -680,33 +742,76 @@ SDL2/
 vlc/
 ```
 
-**Copy the required DLL files to the ES-DE build directory:**
+**Copy the required library files to the ES-DE build directory:**
 
 As there's no package manager in Windows and no way to handle dependencies, we need to ship all the required shared libraries with the application.
 
-Copy the following files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide:
+Copy the files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide.
+
+MSVC:
+```
+FreeImage.dll
+FreeImage.lib
+freetype.dll
+freetype.lib
+glew32.dll
+glew32.lib
+libcurl-x64.dll
+libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
+libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
+libvlc.dll
+libvlccore.dll
+pugixml.dll
+pugixml.lib
+SDL2.dll
+SDL2.lib
+SDL2main.lib
+MSVCP140.dll              (from Windows\System32)
+VCOMP140.DLL              (from Windows\System32)
+VCRUNTIME140.dll          (from Windows\System32)
+VCRUNTIME140_1.dll        (from Windows\System32)
+```
+
+In addition to these files, you need libcurl-x64.lib and libvlc.lib, but these are not available for download so you need to generate them yourself from their corresponding DLL files. Do this inside the respective library directory and not within the emulationstation-de folder.
+
+libcurl-x64.lib:
+```
+dumpbin /exports libcurl-x64.dll > exports.txt
+echo LIBRARY libcurl-x64 > libcurl-x64.def
+echo EXPORTS >> libcurl-x64.def
+for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libcurl-x64.def
+lib /def:libcurl-x64.def /out:libcurl-x64.lib /machine:x64
+```
+
+libvlc.lib:
+```
+dumpbin /exports libvlc.dll > exports.txt
+echo LIBRARY libvlc > libvlc.def
+echo EXPORTS >> libvlc.def
+for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libvlc.def
+lib /def:libvlc.def /out:libvlc.lib /machine:x64
+```
+
+MinGW:
 
 ```
 FreeImage.dll
 glew32.dll
-libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS under /mingw/bin/)
+libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
 libcurl-x64.dll
 libfreetype.dll
-libgcc_s_seh-1.dll        (located in Git MinGW/MSYS under /mingw/bin/)
 libpugixml.dll
 libSDL2main.a
-libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under /mingw/bin/)
-libstdc++-6.dll           (from the TDM-GCC-64/bin folder)
+libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
 libvlc.dll
 libvlccore.dll
-libwinpthread-1.dll       (from the TDM-GCC-64/bin folder)
 SDL2.dll
 vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
 ```
 
-The files from the MinGW installation must correspond to the version used to compile the binary. So if the MinGW installation is upgraded to a newer version, make sure to copy the .dll files again, overwriting the old ones.
+Both MinGW and MSVC:
 
-In addition to these, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the required .dll files.
+In addition to the files above, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
 
 It's a bit tricky to know which libraries are really needed. But as the plugins directory is around 120 MB (as of VLC version 3.0.11), we definitely only want to copy the files we need.
 
@@ -716,6 +821,11 @@ The following files seem to be required to play most video and audio formats (pl
 access\libfilesystem_plugin.dll
 audio_filter\libaudio_format_plugin.dll
 audio_filter\libtrivial_channel_mixer_plugin.dll
+audio_output\libadummy_plugin.dll
+audio_output\libamem_plugin.dll
+audio_output\libdirectsound_plugin.dll
+audio_output\libmmdevice_plugin.dll
+audio_output\libwasapi_plugin.dll
 audio_output\libwaveout_plugin.dll
 codec\libavcodec_plugin.dll
 codec\libx264_plugin.dll
@@ -725,29 +835,57 @@ video_chroma\libswscale_plugin.dll
 video_output\libvmem_plugin.dll
 ```
 
-The combined size of these files is around 24 MB which is more reasonable.
+The combined size of these files is around 22 MB which is more reasonable.
 
-**Building the application:**
+**Building ES-DE using MSVC:**
+
+There is a bug in libVLC when building using MSVC, so three lines need to be commented out from `libvlc_media.h`. The compiler error messages will provide you with the line numbers, but they involve the callback `libvlc_media_read_cb`.
+
+After doing this, ES-DE should build correctly.
+
+For a release build:
+
+```
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../include .
+nmake
+```
+
+Or for a debug build:
+```
+cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include .
+nmake
+```
+
+For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
+
+Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this much. Embrace this as a retro experience as in the 1990s we normally just had a single core available in our computers.
+
+Be aware that MSVC links against different VC++ libraries for debug and release builds (e.g. MSVCP140.dll or MSVCP140d.dll), so any NSIS package made from a debug build will not work on computers without the MSVC development environment installed.
+
+**Building ES-DE using MinGW:**
 
 For a release build:
 
 ```
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include .
+make
 ```
 
 Or for a debug build:
 
 ```
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
+make
 ```
 
 For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 
 The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
 
-Running `make -j6` (or whatever number of parallel jobs you prefer) should now build the binary.
+You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 
-Note that compilation time is much longer than on Unix or macOS, and linking time is excessive for a debug build (around 10 times longer on my computer). The debug binary is also much larger than on Unix.
+Note that compilation time is much longer than on Unix or macOS, and linking time is unendurable for a debug build (around 10 times longer on my computer compared to Linux). The debug binary is also much larger than on Unix.
+
 
 **Running with OpenGL software rendering:**
 
