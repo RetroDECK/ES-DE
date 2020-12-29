@@ -8,29 +8,24 @@
 
 #include "math/Misc.h"
 
-#include <cmath>
+#include <algorithm>
 
 namespace Math
 {
-    float clamp(const float _num, const float _min, const float _max)
-    {
-        return std::fmax(std::fmin(_num, _max), _min);
-    }
-
     float lerp(const float _start, const float _end, const float _fraction)
     {
-        return (_start + ((_end - _start) * clamp(_fraction, 0, 1)));
+        return (_start + ((_end - _start) * clamp(_fraction, 0.0f, 1.0f)));
     }
 
     float smoothStep(const float _left, const float _right, const float _x)
     {
-        const float x = clamp((_x - _left)/(_right - _left), 0, 1);
+        const float x = clamp((_x - _left)/(_right - _left), 0.0f, 1.0f);
         return x * x * (3 - (2 * x));
     }
 
     float smootherStep(const float _left, const float _right, const float _x)
     {
-        const float x = clamp((_x - _left)/(_right - _left), 0, 1);
+        const float x = clamp((_x - _left)/(_right - _left), 0.0f, 1.0f);
         return x * x * x * (x * ((x * 6) - 15) + 10);
     }
 

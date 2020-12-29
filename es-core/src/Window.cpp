@@ -275,7 +275,7 @@ void Window::update(int deltaTime)
                     textureTotalUsageMiB << " MiB";
             mFrameDataText = std::unique_ptr<TextCache>
                     (mDefaultFonts.at(0)->buildTextCache(ss.str(), Renderer::getScreenWidth() *
-                    0.02 , Renderer::getScreenHeight() * 0.02, 0xFF00FFFF, 1.3));
+                    0.02f, Renderer::getScreenHeight() * 0.02f, 0xFF00FFFF, 1.3f));
         }
 
         mFrameTimeElapsed = 0;
@@ -341,7 +341,7 @@ void Window::render()
                 // it with the blurring leads to very strange and severe artifacts.
                 // This is for sure a bug that needs to be resolved at some later date.
                 Renderer::shaderParameters blackParameters;
-                blackParameters.fragmentDimValue = 0.6;
+                blackParameters.fragmentDimValue = 0.6f;
                 Renderer::shaderPostprocessing(Renderer::SHADER_DIM,
                         blackParameters, processedTexture);
 
@@ -375,7 +375,7 @@ void Window::render()
             // Menu opening effects (scale-up and fade-in).
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 if (mTopScale < 1.0)
-                    mTopScale = Math::clamp(mTopScale+0.07, 0, 1.0);
+                    mTopScale = Math::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
                 Vector2f topCenter = top->getCenter();
                 top->setOrigin({0.5, 0.5});
                 top->setPosition({topCenter.x(), topCenter.y(), 0});
@@ -458,8 +458,8 @@ void Window::renderLoadingScreen(std::string text)
 {
     Transform4x4f trans = Transform4x4f::Identity();
     Renderer::setMatrix(trans);
-    Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-            Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
+    Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
     ImageComponent splash(this, true);
     splash.setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);

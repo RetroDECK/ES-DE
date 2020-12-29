@@ -39,11 +39,11 @@ namespace Renderer
         unsigned int shaderPasses;
 
         shaderParameters()
-                : textureSize({0.0, 0.0}),
-                textureCoordinates({0.0, 0.0, 0.0, 0.0}),
-                fragmentSaturation(1.0),
-                fragmentDimValue(0.4),
-                fragmentOpacity(1.0),
+                : textureSize({0.0f, 0.0f}),
+                textureCoordinates({0.0f, 0.0f, 0.0f, 0.0f}),
+                fragmentSaturation(1.0f),
+                fragmentDimValue(0.4f),
+                fragmentOpacity(1.0f),
                 shaderPasses(1)
                 {};
     };

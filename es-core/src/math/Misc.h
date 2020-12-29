@@ -16,7 +16,12 @@
 namespace Math
 {
     // When moving to the C++20 standard these functions are no longer required.
-    float clamp(const float _num, const float _min, const float _max);
+    template<typename T>
+    T const& clamp(const T& _num, const T& _min, const T& _max)
+    {
+        T newVal = std::max(std::min(_num, _max), _min);
+        return std::max(std::min(_num, _max), _min);
+    }
     float lerp(const float _start, const float _end, const float _fraction);
 
     float smoothStep(const float _left, const float _right, const float _x);

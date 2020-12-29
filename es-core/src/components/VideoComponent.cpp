@@ -292,9 +292,9 @@ void VideoComponent::update(int deltaTime)
     // video screensaver that is running, or if it's the video in the gamelist.
     if (mScreensaverMode && mFadeIn < 1.0f)
         mFadeIn = Math::clamp(mFadeIn + (deltaTime /
-                static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0, 1.0);
+                static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0f, 1.0f);
     else if (mFadeIn < 1.0f)
-        mFadeIn = Math::clamp(mFadeIn + 0.01, 0.0f, 1.0f);
+        mFadeIn = Math::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);
 
     GuiComponent::update(deltaTime);
 }

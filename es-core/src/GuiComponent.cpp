@@ -245,7 +245,7 @@ int GuiComponent::getChildIndex() const
             std::find(getParent()->mChildren.begin(), getParent()->mChildren.end(), this);
 
     if (it != getParent()->mChildren.end())
-        return std::distance(getParent()->mChildren.begin(), it);
+        return static_cast<int>(std::distance(getParent()->mChildren.begin(), it));
     else
         return -1;
 }
@@ -295,7 +295,7 @@ void GuiComponent::setColor(unsigned int color)
 
 float GuiComponent::getSaturation() const
 {
-    return mColor;
+    return static_cast<float>(mColor);
 }
 
 void GuiComponent::setSaturation(float saturation)

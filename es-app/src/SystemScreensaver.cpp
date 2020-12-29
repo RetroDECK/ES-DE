@@ -256,8 +256,8 @@ void SystemScreensaver::renderScreensaver()
     if (mVideoScreensaver && screensaverType == "video") {
         // Render a black background below the video.
         Renderer::setMatrix(Transform4x4f::Identity());
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
+        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
+                static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
@@ -268,8 +268,8 @@ void SystemScreensaver::renderScreensaver()
     else if (mImageScreensaver && screensaverType == "slideshow") {
         // Render a black background below the image.
         Renderer::setMatrix(Transform4x4f::Identity());
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
+        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
+                static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
         // Only render the image if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
@@ -319,7 +319,7 @@ void SystemScreensaver::renderScreensaver()
                         Renderer::getScreenHeight(), 0x000000FF, 0x000000FF, mDimValue);
                 #endif
                 if (mDimValue > 0.0)
-                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+                    mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
             }
         }
         if (Settings::getInstance()->getString("ScreensaverType") == "video") {
@@ -361,7 +361,7 @@ void SystemScreensaver::renderScreensaver()
                         Renderer::getScreenHeight(), 0x000000FF, 0x000000FF, mDimValue);
                 #endif
                 if (mDimValue > 0.0)
-                    mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+                    mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
             }
         }
 
@@ -371,11 +371,11 @@ void SystemScreensaver::renderScreensaver()
             dimParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
             if (mDimValue > 0.4)
-                mDimValue = Math::clamp(mDimValue-0.021, 0.4, 1.0);
+                mDimValue = Math::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
             dimParameters.fragmentSaturation = mSaturationAmount;
             Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
             if (mSaturationAmount > 0.0)
-                mSaturationAmount = Math::clamp(mSaturationAmount-0.035, 0.0, 1.0);
+                mSaturationAmount = Math::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
             #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                     Renderer::getScreenHeight(), 0x000000A0, 0x000000A0);
@@ -387,7 +387,7 @@ void SystemScreensaver::renderScreensaver()
             blackParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
             if (mDimValue > 0.0)
-                mDimValue = Math::clamp(mDimValue-0.045, 0.0, 1.0);
+                mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
             #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                     Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
@@ -515,7 +515,8 @@ void SystemScreensaver::pickRandomImage(std::string& path)
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
         std::mt19937 engine{randDev()};
-        std::uniform_int_distribution<int> uniform_dist(0, mImageFiles.size() - 1);
+        std::uniform_int_distribution<int>
+                uniform_dist(0, static_cast<int>(mImageFiles.size()) - 1);
         index = uniform_dist(engine);
     }
     while (mPreviousGame && mImageFiles.at(index) == mPreviousGame);
@@ -546,7 +547,8 @@ void SystemScreensaver::pickRandomVideo(std::string& path)
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
         std::mt19937 engine{randDev()};
-        std::uniform_int_distribution<int> uniform_dist(0, mVideoFiles.size() - 1);
+        std::uniform_int_distribution<int>
+                uniform_dist(0, static_cast<int>(mVideoFiles.size()) - 1);
         index = uniform_dist(engine);
     }
     while (mPreviousGame && mVideoFiles.at(index) == mPreviousGame);
@@ -574,7 +576,8 @@ void SystemScreensaver::pickRandomCustomImage(std::string& path)
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
         std::mt19937 engine{randDev()};
-        std::uniform_int_distribution<int> uniform_dist(0, mImageCustomFiles.size() - 1);
+        std::uniform_int_distribution<int>
+                uniform_dist(0, static_cast<int>(mImageCustomFiles.size()) - 1);
         index = uniform_dist(engine);
     }
     while (mPreviousCustomImage != "" && mImageCustomFiles.at(index) == mPreviousCustomImage);
@@ -590,8 +593,8 @@ void SystemScreensaver::generateOverlayInfo()
     if (mGameName == "" || mSystemName == "")
         return;
 
-    float posX = static_cast<float>(Renderer::getWindowWidth()) * 0.023;
-    float posY = static_cast<float>(Renderer::getWindowHeight()) * 0.02;
+    float posX = static_cast<float>(Renderer::getWindowWidth()) * 0.023f;
+    float posY = static_cast<float>(Renderer::getWindowHeight()) * 0.02f;
 
     std::string favoriteChar;
     if (mCurrentGame->getFavorite())
@@ -618,7 +621,7 @@ void SystemScreensaver::generateOverlayInfo()
     else
         textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x();
 
-    float marginX = Renderer::getWindowWidth() * 0.01;
+    float marginX = Renderer::getWindowWidth() * 0.01f;
 
     mGameOverlayRectangleCoords.clear();
     mGameOverlayRectangleCoords.push_back(posX - marginX);
