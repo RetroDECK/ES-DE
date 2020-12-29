@@ -78,14 +78,14 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
             // currently being edited.
             if (isEditing && (*it)->getType() == GAME) {
                 if (CollectionSystemsManager::get()->inCustomCollection(editingCollection, (*it)))
-                    inCollectionPrefix = "\uF14A  ";
+                    inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
                 else
                     inCollectionPrefix = "";
             }
             if ((*it)->getFavorite() && favoriteStar &&
                     mRoot->getSystem()->getName() != "favorites") {
-                mList.add(inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " + (*it)->getName(),
-                    *it, ((*it)->getType() == FOLDER));
+                mList.add(inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
+                    (*it)->getName(), *it, ((*it)->getType() == FOLDER));
             }
             else if ((*it)->getType() == FOLDER &&
                     mRoot->getSystem()->getName() != "collections") {

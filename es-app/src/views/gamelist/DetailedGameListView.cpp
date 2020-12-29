@@ -355,22 +355,26 @@ void DetailedGameListView::updateInfoPanel()
         std::string gamelistInfoString;
 
         if (mIsFolder)
-            gamelistInfoString = "\uF07C  ";
+            gamelistInfoString = ViewController::FOLDER_CHAR + "  ";
 
         if (mIsFiltered) {
             if (mFilteredGameCountAll == mFilteredGameCount)
-                gamelistInfoString += "\uF0b0 " + std::to_string(mFilteredGameCount) + " / " +
+                gamelistInfoString += ViewController::FILTER_CHAR + " " +
+                        std::to_string(mFilteredGameCount) + " / " +
                         std::to_string(mGameCount);
             else
-                gamelistInfoString += "\uF0b0 " + std::to_string(mFilteredGameCount) + " + " +
+                gamelistInfoString += ViewController::FILTER_CHAR + " " +
+                        std::to_string(mFilteredGameCount) + " + " +
                         std::to_string(mFilteredGameCountAll - mFilteredGameCount) + " / " +
                         std::to_string(mGameCount);
         }
         else {
-            gamelistInfoString += "\uF11b " + std::to_string(mGameCount);
+            gamelistInfoString += ViewController::CONTROLLER_CHAR + " " +
+                    std::to_string(mGameCount);
             if (!(file->getSystem()->isCollection() &&
                     file->getSystem()->getFullName() == "favorites"))
-                gamelistInfoString += "  \uF005 " + std::to_string(mFavoritesGameCount);
+                gamelistInfoString += "  " + ViewController::FAVORITE_CHAR + " "
+                        + std::to_string(mFavoritesGameCount);
         }
 
         mGamelistInfo.setValue(gamelistInfoString);

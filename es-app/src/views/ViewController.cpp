@@ -33,8 +33,19 @@
 #include "Window.h"
 
 ViewController* ViewController::sInstance = nullptr;
+#if defined(_MSC_VER) // MSVC compiler.
+const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uF005");
+const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uF07C");
+const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uF14A");
+const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uF11b");
+const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uF0b0");
+#else
 const std::string ViewController::FAVORITE_CHAR = "\uF005";
 const std::string ViewController::FOLDER_CHAR = "\uF07C";
+const std::string ViewController::TICKMARK_CHAR = "\uF14A";
+const std::string ViewController::CONTROLLER_CHAR = "\uF11b";
+const std::string ViewController::FILTER_CHAR = "\uF0b0";
+#endif
 
 ViewController* ViewController::get()
 {

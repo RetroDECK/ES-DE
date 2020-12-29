@@ -106,6 +106,9 @@ public:
 
     static const std::string FAVORITE_CHAR;
     static const std::string FOLDER_CHAR;
+    static const std::string TICKMARK_CHAR;
+    static const std::string CONTROLLER_CHAR;
+    static const std::string FILTER_CHAR;
 
 private:
     ViewController(Window* window);
