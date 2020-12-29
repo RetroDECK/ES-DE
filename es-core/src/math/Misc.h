@@ -9,6 +9,8 @@
 #ifndef ES_CORE_MATH_MISC_H
 #define ES_CORE_MATH_MISC_H
 
+#include <algorithm>
+
 #define	ES_PI (3.1415926535897932384626433832795028841971693993751058209749445923)
 #define	ES_RAD_TO_DEG(_x) ((_x) * (180.0 / ES_PI))
 #define	ES_DEG_TO_RAD(_x) ((_x) * (ES_PI / 180.0))
@@ -19,7 +21,6 @@ namespace Math
     template<typename T>
     T const& clamp(const T& _num, const T& _min, const T& _max)
     {
-        T newVal = std::max(std::min(_num, _max), _min);
         return std::max(std::min(_num, _max), _min);
     }
     float lerp(const float _start, const float _end, const float _fraction);

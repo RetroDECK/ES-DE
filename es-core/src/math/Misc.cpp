@@ -8,8 +8,6 @@
 
 #include "math/Misc.h"
 
-#include <algorithm>
-
 namespace Math
 {
     float lerp(const float _start, const float _end, const float _fraction)
