@@ -122,9 +122,8 @@ if(WIN32)
                 ../VCRUNTIME140_1.dll DESTINATION .)
     else()
         install(FILES ../FreeImage.dll ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll
-                ../libfreetype.dll ../libgcc_s_seh-1.dll ../libpugixml.dll ../libssl-1_1-x64.dll
-                ../libstdc++-6.dll ../libvlc.dll ../libvlccore.dll ../libwinpthread-1.dll
-                ../SDL2.dll ../vcomp140.dll DESTINATION .)
+                ../libfreetype.dll ../libpugixml.dll ../libssl-1_1-x64.dll ../libvlc.dll
+                ../libvlccore.dll ../SDL2.dll ../vcomp140.dll DESTINATION .)
     endif()
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
     install(FILES ../LICENSE DESTINATION .)
