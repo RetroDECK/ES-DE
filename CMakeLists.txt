@@ -109,7 +109,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     endif()
     if(WIN32)
         set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
-#        set(CMAKE_CXX_FLAGS "-static-libstdc++ -static-libgcc ${CMAKE_CXX_FLAGS}")
     endif()
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     message("-- Compiler is MSVC")
@@ -262,7 +261,7 @@ elseif(WIN32)
                 "${PROJECT_SOURCE_DIR}/FreeImage.lib"
                 "${PROJECT_SOURCE_DIR}/glew32.lib"
                 "${PROJECT_SOURCE_DIR}/libcurl-x64.lib"
-                "${PROJECT_SOURCE_DIR}/freetyped.lib"
+                "${PROJECT_SOURCE_DIR}/freetype.lib"
                 "${PROJECT_SOURCE_DIR}/pugixml.lib"
                 "${PROJECT_SOURCE_DIR}/SDL2main.lib"
                 "${PROJECT_SOURCE_DIR}/libvlc.lib"

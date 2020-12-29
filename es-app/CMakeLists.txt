@@ -117,8 +117,9 @@ if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
         install(FILES ../FreeImage.dll ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll
-                ../freetyped.dll ../pugixml.dll ../libssl-1_1-x64.dll ../libvlc.dll
-                ../libvlccore.dll ../SDL2.dll DESTINATION .)
+                ../freetype.dll ../pugixml.dll ../libssl-1_1-x64.dll ../libvlc.dll
+                ../libvlccore.dll ../SDL2.dll ../MSVCP140.dll ../VCOMP140.DLL ../VCRUNTIME140.dll
+                ../VCRUNTIME140_1.dll DESTINATION .)
     else()
         install(FILES ../FreeImage.dll ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll
                 ../libfreetype.dll ../libgcc_s_seh-1.dll ../libpugixml.dll ../libssl-1_1-x64.dll
