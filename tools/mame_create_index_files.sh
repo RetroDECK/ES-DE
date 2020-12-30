@@ -15,6 +15,8 @@
 # https://www.mamedev.org/release.php
 # It's enough to download the driver information, not the complete emulator.
 #
+# This script is intended to only be used on Linux systems.
+#
 # Leon Styhre
 # 2020-06-16
 #

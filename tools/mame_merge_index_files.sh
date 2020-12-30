@@ -11,6 +11,8 @@
 # There is not much error checking going on here, this script is not intended to be
 # used by the end user.
 #
+# This script is intended to only be used on Linux systems.
+#
 # Leon Styhre
 # 2020-06-16
 #

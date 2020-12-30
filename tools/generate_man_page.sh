@@ -8,6 +8,8 @@
 #
 # The command help2man must be installed, or the script will fail.
 #
+# This script is intended to only be used on Linux systems.
+#
 # Leon Styhre
 # 2020-07-16
 #

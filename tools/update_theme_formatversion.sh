@@ -3,6 +3,8 @@
 # update_theme_formatversion.sh
 # Update the format version of all the XML files in a theme set.
 #
+# This script is intended to only be used on Linux systems.
+#
 # Leon Styhre
 # 2020-06-22
 #

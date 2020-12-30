@@ -16,6 +16,8 @@
 # es-app/assets/EmulationStation-DE_Info.plist
 # es-app/assets/emulationstation.desktop
 #
+# This script is intended to only be used on Linux systems.
+#
 # Leon Styhre
 # 2020-12-30
 #
