@@ -748,7 +748,7 @@ As there's no package manager in Windows and no way to handle dependencies, we n
 
 Copy the files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide.
 
-MSVC:
+**Required files for MSVC:**
 ```
 FreeImage.dll
 FreeImage.lib
@@ -792,7 +792,7 @@ for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libvlc.def
 lib /def:libvlc.def /out:libvlc.lib /machine:x64
 ```
 
-MinGW:
+**Required files for MinGW:**
 
 ```
 FreeImage.dll
@@ -809,7 +809,7 @@ SDL2.dll
 vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
 ```
 
-Both MinGW and MSVC:
+**Required files for both MSVC and MinGW:**
 
 In addition to the files above, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
 
@@ -1260,9 +1260,9 @@ The following variables are expanded for the `command` tag:
 
 `%ROM%` - Replaced with the absolute path to the selected ROM, with most Bash special characters escaped with a backslash.
 
-`%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
-
 `%ROMRAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
+
+`%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded either using the PATH environmental variable of the operating system, or if an absolute emulator path is defined, this will be used instead. This variable is mostly useful to define the emulator core path for Windows, as this operating system does not have a standardized program installation directory structure.
 

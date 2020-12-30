@@ -32,16 +32,16 @@ A comprehensive theme set, **rbsimple-DE** (which is based on Recalbox Multi fro
 
 **_The ES-DE repository was just opened for public access and there are no binary distributions available yet. But the plan is to have Beta 1 available in the near future when most of the known bugs have been fixed. Stay tuned._**
 
-| Package             | Operating systems                   | Architecture | Version     | Download link  |
-| :------------------ | :---------------------------------- | :----------- | :---------- | :------------- |
-| Debian DEB package  | Ubuntu, Linux Mint and similar      | x64 (x86)    | 1.0.0-beta1 | Available soon |
-| Fedora RPM package  | Fedora Workstation, possibly others | x64 (x86)    | 1.0.0-beta1 | Available soon |
-| macOS DMG installer | 10.11 "El Capitan" to 11 "Big Sur"  | x64 (x86)    | 1.0.0-beta1 | Available soon |
-| Windows installer   | Windows 10 and 8.1                  | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| Package             | Operating systems                        | Architecture | Version     | Download link  |
+| :------------------ | :--------------------------------------- | :----------- | :---------- | :------------- |
+| Debian DEB package  | Ubuntu, Linux Mint and similar           | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| Fedora RPM package  | Fedora Workstation, possibly others      | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| macOS DMG installer | macOS 10.11 "El Capitan" to 11 "Big Sur" | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| Windows installer   | Windows 10 and 8.1                       | x64 (x86)    | 1.0.0-beta1 | Available soon |
 
 For some of the rarer operating systems listed at the top you need to build ES-DE from source. The plan is to have ES-DE available in the software repositories of all supported operating systems (where this is applicable), so in the long term building from source should not be required.
 
-**Note:** The software is currently in beta status which means it's also beta quality and may contain bugs. The application should still (hopefully) be good enough for every day use and bugs will be fixed continuously.
+**Note:** The software is currently in beta status which means it's also beta quality and may contain bugs. The application should still hopefully be good enough for every day use and bugs will be fixed continuously.
 
 
 ### Contributing
