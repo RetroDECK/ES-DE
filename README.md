@@ -1,6 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE)
 
-EmulationStation Desktop Edition is a cross-platform graphical front-end for emulators with controller and keyboard navigation.
+EmulationStation Desktop Edition is a front-end for browsing and launching games from your multi-platform game collection.
 
 Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
@@ -28,9 +28,25 @@ The software comes preconfigured for use primarily with [RetroArch](https://www.
 
 A comprehensive theme set, **rbsimple-DE** (which is based on Recalbox Multi from the [Recalbox](https://www.recalbox.com) community) is bundled with the application.
 
-### Contributing:
+### Download
 
-If you would like to contribute to the development of ES-DE, then that's great! Please read how to participate [here](CONTRIBUTING.md). (You can also read about planned future features there).
+**_The ES-DE repository was just opened for public access and there are no binary distributions available yet. But the plan is to have Beta 1 available in the near future when most of the known bugs have been fixed. Stay tuned._**
+
+| Package             | Operating systems                   | Architecture | Version     | Download link  |
+| :------------------ | :---------------------------------- | :----------- | :---------- | :------------- |
+| Debian DEB package  | Ubuntu, Linux Mint and similar      | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| Fedora RPM package  | Fedora Workstation, possibly others | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| macOS DMG installer | 10.11 "El Capitan" to 11 "Big Sur"  | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| Windows installer   | Windows 10 and 8.1                  | x64 (x86)    | 1.0.0-beta1 | Available soon |
+
+For some of the rarer operating systems listed at the top you need to build ES-DE from source. The plan is to have ES-DE available in the software repositories of all supported operating systems (where this is applicable), so in the long term building from source should not be required.
+
+**Note:** The software is currently in beta status which means it's also beta quality and may contain bugs. The application should still (hopefully) be good enough for every day use and bugs will be fixed continuously.
+
+
+### Contributing
+
+If you would like to contribute to the development of ES-DE, then that's great! Please read how to participate [here](CONTRIBUTING.md). (You can also read about planned future releases and features there).
 
 
 # Additional information
