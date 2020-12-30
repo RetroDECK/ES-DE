@@ -225,7 +225,7 @@ endif()
 set(CPACK_PACKAGE_VENDOR "Leon Styhre")
 
 # Update this when there has been a new release.
-set(CPACK_PACKAGE_VERSION "1.0.0-beta")
+set(CPACK_PACKAGE_VERSION "1.0.0-beta1")
 
 # Settings per operating system and generator type.
 if(APPLE)
