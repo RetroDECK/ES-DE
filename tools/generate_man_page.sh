@@ -3,10 +3,8 @@
 # generate_man_page.sh
 # Generate a Unix manual page for EmulationStation Desktop Edition.
 #
-# This script only takes an optional argument which is the location to the ES binary.
-# If not provided, the default path will be searched for the binary 'emulationstation'.
-#
-# The man page will be generated in the same directory as where the script is executed.
+# The script takes no arguments and replaces the man page file es-app/assets/emulationstation.6.gz
+# It has to be run from within the tools directory.
 #
 # The command help2man must be installed, or the script will fail.
 #
@@ -14,11 +12,12 @@
 # 2020-07-16
 #
 
-if [ $# -ne 1 ]; then
-  ESBINARY=emulationstation
-else
-  ESBINARY=$1
+if [ ! -f ../es-app/CMakeLists.txt ]; then
+  echo "You need to run this script from within the tools directory."
+  exit
 fi
+
+ESBINARY=../emulationstation
 
 TEMPFILE_INPUT=tempfile_input_$(date +%H%M%S)
 TEMPFILE_OUTPUT=tempfile_output_$(date +%H%M%S)
@@ -54,6 +53,7 @@ cat $TEMPFILE_OUTPUT | sed s/"EmulationStation Desktop Edition, Emulator Front\\
 sed s/"Set to at least"/".br\nSet to at least"/ > $TARGET_FILENAME
 
 gzip $TARGET_FILENAME
+mv ${TARGET_FILENAME}.gz ../es-app/assets/
 
 rm $TEMPFILE_INPUT
 rm $TEMPFILE_OUTPUT
