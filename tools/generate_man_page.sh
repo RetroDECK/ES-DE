@@ -29,7 +29,7 @@ MAN_INCLUDE="
 emulationstation - EmulationStation Desktop Edition
 
 [DESCRIPTION]
-EmulationStation Desktop Edition is a fast and flexible front-end for browsing and launching games from your multi-platform retro game collection.
+EmulationStation Desktop Edition is a feature-rich front-end for browsing and launching games from your multi-platform retro game collection.
 
 It's intended to be used in conjunction with emulators such as the RetroArch cores.
 
