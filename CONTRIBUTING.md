@@ -1,6 +1,6 @@
 # Contributing to EmulationStation Desktop Edition (ES-DE)
 
-### Help needed:
+### Help needed
 
 Contributions to ES-DE are very much appreciated as there are many things that need to be implemented and improved. Code commits is only one part of it, as work is also needed on the rbsimple-DE theme set as well as thorough application testing.
 
@@ -44,7 +44,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
 * Better shader support (more adaptive to screen resolution, higher performance, cleaner code)
-* Improve text and font functions, e.g. faster and cleaner line wrapping
+* Improved text and font functions, e.g. faster and cleaner line wrapping
 * Flatpak and Snap support on Linux
 
 #### v1.4
@@ -78,7 +78,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 To see which features have been implemented in previous versions, refer to [RELEASES.md](RELEASES.md).
 
-### Coding style:
+### Coding style
 
 The coding style for ES-DE is mostly a combination of the Linux kernel style (although that's C it's close enough to C++ as far as I'm concerned) and Google's C++ guidelines.
 
@@ -111,6 +111,6 @@ https://google.github.io/styleguide/cppguide.html
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
 * For the rest, check the code and have fun! :)
 
-### Building and configuring:
+### Building and configuring
 
 Please refer to [INSTALL.md](INSTALL.md) for details on everything related to building ES-DE.
