@@ -889,7 +889,7 @@ Sets the volume for the navigation sounds.
 
 Sets the volume for the video player. This applies to both the gamelist views and the video screensaver.
 
-**Play audio for video files in gamelist views**
+**Play audio for videos in the gamelist view**
 
 With this turned off, audio won't play for game videos in the gamelists.
 

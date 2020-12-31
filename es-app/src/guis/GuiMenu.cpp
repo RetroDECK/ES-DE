@@ -573,7 +573,7 @@ void GuiMenu::openSoundSettings()
         // Video audio.
         auto gamelist_video_audio = std::make_shared<SwitchComponent>(mWindow);
         gamelist_video_audio->setState(Settings::getInstance()->getBool("GamelistVideoAudio"));
-        s->addWithLabel("PLAY AUDIO FOR VIDEO FILES IN GAMELIST VIEWS", gamelist_video_audio);
+        s->addWithLabel("PLAY AUDIO FOR VIDEOS IN THE GAMELIST VIEW", gamelist_video_audio);
         s->addSaveFunc([gamelist_video_audio, s] {
             if (gamelist_video_audio->getState() !=
                     Settings::getInstance()->getBool("GamelistVideoAudio")) {
