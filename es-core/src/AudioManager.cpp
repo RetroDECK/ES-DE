@@ -19,6 +19,7 @@ std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
 SDL_AudioDeviceID AudioManager::sAudioDevice = 0;
 SDL_AudioSpec AudioManager::sAudioFormat;
 SDL_AudioStream* AudioManager::sConversionStream;
+bool AudioManager::sHasAudioDevice = true;
 
 AudioManager::AudioManager()
 {
@@ -75,6 +76,7 @@ void AudioManager::init()
 
     if (sAudioDevice == 0) {
         LOG(LogError) << "Unable to open audio device: " << SDL_GetError();
+        sHasAudioDevice = false;
     }
 
     if (sAudioFormat.freq != sRequestedAudioFormat.freq) {

@@ -148,6 +148,9 @@ void Sound::play()
     if (!Settings::getInstance()->getBool("NavigationSounds"))
         return;
 
+    if (!AudioManager::getInstance()->getHasAudioDevice())
+        return;
+
     SDL_LockAudioDevice(AudioManager::sAudioDevice);
 
     if (playing)
