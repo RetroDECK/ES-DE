@@ -120,18 +120,6 @@ win64ConsoleType outputToConsole(bool allocConsole)
 
     return consoleType;
 }
-
-void closeConsole()
-{
-    FILE* fp;
-
-    // Redirect stdin, stdout and stderr to NUL.
-    freopen_s(&fp, "NUL:", "r", stdin);
-    freopen_s(&fp, "NUL:", "w", stdout);
-    freopen_s(&fp, "NUL:", "w", stderr);
-
-    FreeConsole();
-}
 #endif
 
 bool parseArgs(int argc, char* argv[])
@@ -399,7 +387,7 @@ int main(int argc, char* argv[])
 
     if (!parseArgs(argc, argv)) {
         #if defined(_WIN64)
-        closeConsole();
+        FreeConsole();
         #endif
         return 0;
     }
@@ -661,7 +649,7 @@ int main(int argc, char* argv[])
     LOG(LogInfo) << "EmulationStation cleanly shutting down";
 
     #if defined(_WIN64)
-    closeConsole();
+    FreeConsole();
     #endif
 
     return 0;
