@@ -7,9 +7,9 @@
 //  By calling fireEvent() the scripts inside the directory corresponding to the
 //  argument 'eventName' will be executed with arg1 and arg2 as the script arguments.
 //
-//  The scripts are searched for in $HOME/.emulationstation/scripts/<eventName>.
+//  The scripts are searched for in ~/.emulationstation/scripts/<eventName>
 //  For example, if the event is called 'game-start', all scripts inside the directory
-//  $HOME/.emulationstation/scripts/game-start/ will be executed.
+//  ~/.emulationstation/scripts/game-start/ will be executed.
 //
 
 #include "Scripting.h"
@@ -30,20 +30,28 @@ namespace Scripting
                 "\" \"" << arg2 << "\"";
 
         std::list<std::string> scriptDirList;
-        std::string test;
+        std::string scriptDir;
 
         // Check in homepath.
-        test = Utils::FileSystem::getHomePath() + "/.emulationstation/scripts/" + eventName;
-        if (Utils::FileSystem::exists(test))
-            scriptDirList.push_back(test);
+        scriptDir = Utils::FileSystem::getHomePath() + "/.emulationstation/scripts/" + eventName;
+        if (Utils::FileSystem::exists(scriptDir))
+            scriptDirList.push_back(scriptDir);
 
         for (std::list<std::string>::const_iterator dirIt = scriptDirList.cbegin();
                 dirIt != scriptDirList.cend(); ++dirIt) {
             std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
             for (std::list<std::string>::const_iterator it = scripts.cbegin();
                     it != scripts.cend(); ++it) {
-                // Append folder to path.
-                std::string script = *it + " \"" + arg1 + "\" \"" + arg2 + "\"";
+                std::string arg1Quotation;
+                std::string arg2Quotation;
+                // Add quotation marks around the arguments as long as these are not already
+                // present (i.e. for arguments with spaces in them).
+                if (arg1.front() != '\"')
+                    arg1Quotation = "\"";
+                if (arg2.front() != '\"')
+                    arg2Quotation = "\"";
+                std::string script = *it + " " + arg1Quotation + arg1 + arg1Quotation + " " +
+                        arg2Quotation + arg2 + arg2Quotation;
                 LOG(LogDebug) << "Executing: " << script;
                 runSystemCommand(script);
             }

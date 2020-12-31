@@ -7,9 +7,9 @@
 //  By calling fireEvent() the scripts inside the directory corresponding to the
 //  argument 'eventName' will be executed with arg1 and arg2 as the script arguments.
 //
-//  The scripts are searched for in $HOME/.emulationstation/scripts/<eventName>.
+//  The scripts are searched for in ~/.emulationstation/scripts/<eventName>
 //  For example, if the event is called 'game-start', all scripts inside the directory
-//  $HOME/.emulationstation/scripts/game-start/ will be executed.
+//  ~/.emulationstation/scripts/game-start/ will be executed.
 //
 
 #ifndef ES_CORE_SCRIPTING_H
