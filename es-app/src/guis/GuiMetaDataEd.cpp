@@ -385,8 +385,9 @@ void GuiMetaDataEd::save()
     if (mSavedCallback)
         mSavedCallback();
 
-    // Update respective Collection Entries.
-    CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+    // Update all collections where the game is present.
+    if (mScraperParams.game->getType() == GAME)
+        CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
 
     mScraperParams.system->onMetaDataSavePoint();
 

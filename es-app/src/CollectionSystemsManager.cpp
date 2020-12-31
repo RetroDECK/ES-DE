@@ -304,7 +304,6 @@ void CollectionSystemsManager::refreshCollectionSystems(FileData* file)
         realSys.isEnabled = true;
         realSys.isPopulated = true;
         realSys.decl.isCustom = false;
-
         updateCollectionSystem(file, realSys);
     }
 
@@ -343,7 +342,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
         else
             mFavoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
-        const std::unordered_map<std::string, FileData*>&children =
+        const std::unordered_map<std::string, FileData*>& children =
                 curSys->getRootFolder()->getChildrenByFilename();
 
         bool found = children.find(key) != children.cend();
@@ -365,8 +364,12 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             }
             else if (curSys->isCollection() && !file->getCountAsGame()) {
                 // If the countasgame flag has been set to false, then remove the game.
-                ViewController::get()->
-                        getGameListView(curSys).get()->remove(collectionEntry, false);
+                if (curSys->isGroupedCustomCollection())
+                    ViewController::get()->getGameListView(curSys->getRootFolder()->getParent()->
+                            getSystem()).get()->remove(collectionEntry, false);
+                else
+                    ViewController::get()->
+                            getGameListView(curSys).get()->remove(collectionEntry, false);
             }
 
             else {
