@@ -86,6 +86,26 @@ After ES-DE finds at least one game file, it will populate that game system and 
 _This is the error dialog shown if no game files were found. It also lets you configure the ROM directory if you don't want to use the default one. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
+## Migrating from other EmulationStation forks
+
+**IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!**
+
+ES-DE is designed to be backwards compatible to a certain degree, that is, it should be able to read data from other/previous EmulationStation versions such as the RetroPie fork. But the opposite is not true and it's a one-way ticket for your gamelist.xml files and your custom collection files when migrating to ES-DE as they will be modified in ways that previous ES versions will see as data loss. For instance ES-DE does not use image tags inside the gamelist.xml files to find game media but instead matches the media to the names of the game/ROM files. So it will not save any such tags back to the gamelist files during updates, effectively removing the display of the game media if the files are opened in another ES fork.
+
+Due to this, always make backups of at least the following data:
+
+```
+~/.emulationstation/gameslists/
+~/.emulationstation/collections/
+~/.emulationstation/es_settings.cfg
+~/.emulationstation/es_systems.cfg
+```
+
+Actually as for `es_systems.cfg` you should probably rename or move it somewhere else as it's strongly recommended to use the es_systems.cfg template shipped with ES-DE (which will be automatically copied from the resources directory on startup as long as a file with this name does not already exist). It may still work to use an existing customized es_systems.cfg file, as again ES-DE should be backwards compatible, but if you have issues launching games this is the first thing to look at.
+
+It's probably also a good idea to rename or move `es_settings.cfg` elsewhere as a huge amount of things have changed in the configuration files in ES-DE.
+
+
 ## Running on 4K displays
 
 ES-DE fully supports 4K displays, but some emulators such as RetroArch will start with the same resolution as the calling program, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. A workaround for this is to start ES-DE with the `--resolution` option. For example, to set the resolution to 1920x1080 run the following:
@@ -96,7 +116,7 @@ emulationstation --resolution 1920 1080
 
 This can of course be set in the ES-DE launcher entry for the desktop environment so that the normal menu entry can be used.
 
-A drawback with this approach is that the complete system resolution will be switced temporarily, meaning alt-tab switching between application will display them also in this lower resolution. Upon exiting ES-DE the previous 4K resolution will however be restored.
+A drawback with this approach is that the complete system resolution will be switced temporarily, meaning alt-tab switching between application will display them also in this lower resolution. Upon exiting ES-DE the previous 4K resolution should however be restored. This seems to be somehow driver-dependent though as for example the proprietary Nvidia Linux drivers (as always) do not seem to behave properly but the AMD open source drivers apparently work fine. So testing is required to see if this approach of running the application at a lower resolution than the screen resolution is possible.
 
 This only works well for Unix/Linux at the moment as Windows and macOS will run in windowed mode due to technical limitations in these operating systems. There may be workarounds for the actual emulator as well that I'm not aware of, making it possible to force a specific resolution while still running ES-DE in 4K.
 

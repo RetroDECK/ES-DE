@@ -8,7 +8,9 @@ Table of contents:
 
 ## Development Environment
 
-EmulationStation-DE is developed and compiled using both Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and GCC (MinGW) on Windows.
+ES-DE is developed and compiled using Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and MSVC and GCC (MinGW) on Windows.
+
+CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `nmake` and `make` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during the development.
 
 Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
 
@@ -1442,7 +1444,7 @@ The approach is quite straightforward, ES-DE will look for any files inside a sc
 
 As an example, let's create a log that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming.
 
-**Note:** The following example is for Unix systems, but it works the same way in macOS, and on Windows (although .bat batch files are then used instead of shell scripts).
+**Note:** The following example is for Unix systems, but it works the same way in macOS (which is also Unix after all), and on Windows (although .bat batch files are then used instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix).
 
 The events when the game starts and ends are called `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
 
