@@ -95,7 +95,7 @@ CollectionSystemsManager::~CollectionSystemsManager()
     // Delete all custom collections.
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
             it = mCustomCollectionSystemsData.cbegin();
-            it != mCustomCollectionSystemsData.cend() ; it++)
+            it != mCustomCollectionSystemsData.cend(); it++)
         delete it->second.system;
 
     // Delete the custom collections bundle.
@@ -231,7 +231,7 @@ void CollectionSystemsManager::loadEnabledListFromSettings()
     // Iterate the map.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator
             it = mAutoCollectionSystemsData.begin();
-            it != mAutoCollectionSystemsData.end() ; it++ ) {
+            it != mAutoCollectionSystemsData.end(); it++) {
 
         it->second.isEnabled = (std::find(autoSelected.cbegin(),
                 autoSelected.cend(), it->first) != autoSelected.cend());
@@ -246,7 +246,7 @@ void CollectionSystemsManager::loadEnabledListFromSettings()
     // Iterate the map.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator
             it = mCustomCollectionSystemsData.begin();
-            it != mCustomCollectionSystemsData.end() ; it++ ) {
+            it != mCustomCollectionSystemsData.end(); it++) {
 
         it->second.isEnabled = (std::find(customSelected.cbegin(),
                 customSelected.cend(), it->first) != customSelected.cend());
@@ -380,7 +380,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
         }
         else {
             bool addGame = false;
-            // We didn't find it here - we need to check if we should add it.
+            // We didn't find the entry in the collection, so we need to check if we should add it.
             if ((name == "recent" && file->metadata.get("playcount") > "0" &&
                     file->getCountAsGame() && includeFileInAutoCollections(file)) ||
                     (name == "favorites" && file->metadata.get("favorite") == "true" &&
@@ -573,7 +573,7 @@ std::string CollectionSystemsManager::getValidNewCollectionName(std::string inNa
     return name;
 }
 
-void CollectionSystemsManager::setEditMode(std::string collectionName)
+void CollectionSystemsManager::setEditMode(std::string collectionName, bool showPopup)
 {
     if (mCustomCollectionSystemsData.find(collectionName) == mCustomCollectionSystemsData.cend()) {
         LOG(LogError) << "Tried to edit a non-existing collection: " << collectionName;
@@ -589,19 +589,24 @@ void CollectionSystemsManager::setEditMode(std::string collectionName)
     // If it's bundled, this needs to be the bundle system.
     mEditingCollectionSystemData = sysData;
 
-    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "EDITING THE '" +
-            Utils::String::toUpper(collectionName) +
-            "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'", 10000);
+    if (showPopup) {
+        GuiInfoPopup* s = new GuiInfoPopup(mWindow, "EDITING THE '" +
+                Utils::String::toUpper(collectionName) +
+                "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'", 10000);
 
-    mWindow->setInfoPopup(s);
+        mWindow->setInfoPopup(s);
+    }
 }
 
-void CollectionSystemsManager::exitEditMode()
+void CollectionSystemsManager::exitEditMode(bool showPopup)
 {
-    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "FINISHED EDITING THE '" +
-            Utils::String::toUpper(mEditingCollection) + "' COLLECTION", 4000);
+    if (showPopup) {
+        GuiInfoPopup* s = new GuiInfoPopup(mWindow, "FINISHED EDITING THE '" +
+                Utils::String::toUpper(mEditingCollection) + "' COLLECTION", 4000);
 
-    mWindow->setInfoPopup(s);
+        mWindow->setInfoPopup(s);
+    }
+
     mIsEditingCustom = false;
     mEditingCollection = "Favorites";
 
@@ -883,11 +888,39 @@ void CollectionSystemsManager::deleteCustomCollection(std::string collectionName
     }
 }
 
+void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
+{
+    std::string gamePath = Utils::FileSystem::getFileName(game->getFullPath());
+    gamePath = "%ROMPATH%/" + game->getSystemName() + "/" + gamePath;
+
+    // Try to read from all custom collection configuration files to see if there are any
+    // matching entries for the game passed as the parameter. If so, then enable it in each
+    // of those collections. This is done also for disabled collections, as otherwise the
+    // game would be missing if the collection was enabled during the program session.
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
+            it = mCustomCollectionSystemsData.cbegin();
+            it != mCustomCollectionSystemsData.cend(); it++) {
+        std::string path = getCustomCollectionConfigPath(it->first);
+        if (Utils::FileSystem::exists(path)) {
+            std::ifstream input(path);
+            for (std::string gameKey; getline(input, gameKey);) {
+                if (gameKey == gamePath) {
+                    setEditMode(it->first, false);
+                    toggleGameInCollection(game);
+                    exitEditMode(false);
+                }
+            }
+            if (input.is_open())
+                input.close();
+        }
+    }
+}
+
 void CollectionSystemsManager::initAutoCollectionSystems()
 {
     for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator
             it = mCollectionSystemDeclsIndex.cbegin();
-            it != mCollectionSystemDeclsIndex.cend() ; it++ ) {
+            it != mCollectionSystemDeclsIndex.cend(); it++) {
         CollectionSystemDecl sysDecl = it->second;
 
         if (!sysDecl.isCustom)
@@ -1025,7 +1058,7 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
     const std::string rompath = FileData::getROMDirectory();
 
     // Iterate list of files in the config file.
-    for (std::string gameKey; getline(input, gameKey); ) {
+    for (std::string gameKey; getline(input, gameKey);) {
         // If there is a %ROMPATH% variable set for the game, expand it. By doing this
         // it's possible to use either absolute ROM paths in the collection files or using
         // the path variable. The absolute ROM paths are only used for backward compatibility
@@ -1045,6 +1078,9 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
                     "\" does not exist, is hidden, or is not counted as a game, ignoring entry";
         }
     }
+
+    if (input.is_open())
+        input.close();
 }
 
 void CollectionSystemsManager::removeCollectionsFromDisplayedSystems()
@@ -1076,7 +1112,7 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
 {
     // Add auto enabled collections.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator
-            it = colSystemData->begin() ; it != colSystemData->end() ; it++ ) {
+            it = colSystemData->begin(); it != colSystemData->end(); it++) {
         if (it->second.isEnabled) {
             // Check if populated, otherwise populate.
             if (!it->second.isPopulated) {
@@ -1223,7 +1259,7 @@ std::vector<std::string> CollectionSystemsManager::getCollectionThemeFolders(boo
     std::vector<std::string> systems;
     for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator
             it = mCollectionSystemDeclsIndex.cbegin();
-            it != mCollectionSystemDeclsIndex.cend() ; it++ ) {
+            it != mCollectionSystemDeclsIndex.cend(); it++) {
         CollectionSystemDecl sysDecl = it->second;
         if (sysDecl.isCustom == custom)
             systems.push_back(sysDecl.themeFolder);
@@ -1236,7 +1272,7 @@ std::vector<std::string> CollectionSystemsManager::getUserCollectionThemeFolders
     std::vector<std::string> systems;
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
             it = mCustomCollectionSystemsData.cbegin();
-            it != mCustomCollectionSystemsData.cend() ; it++ )
+            it != mCustomCollectionSystemsData.cend(); it++)
         systems.push_back(it->second.decl.themeFolder);
     return systems;
 }

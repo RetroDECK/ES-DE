@@ -354,6 +354,7 @@ void GuiMetaDataEd::save()
     // ShowHiddenGames is set to false, meaning it will immediately disappear from the gamelist.
     bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
     bool hideGameWhileHidden = false;
+    bool setGameAsCounted = false;
 
     for (unsigned int i = 0; i < mEditors.size(); i++) {
         if (mMetaDataDecl.at(i).isStatistic)
@@ -362,6 +363,13 @@ void GuiMetaDataEd::save()
         if (!showHiddenGames && mMetaDataDecl.at(i).key == "hidden" &&
                 mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
+
+        // Check whether the flag to count the entry as a game was set to enabled.
+        if (mMetaDataDecl.at(i).key == "nogamecount" &&
+                mEditors.at(i)->getValue() != mMetaData->get("nogamecount") &&
+                mMetaData->get("nogamecount") == "true") {
+            setGameAsCounted = true;
+        }
 
         mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
     }
@@ -388,6 +396,11 @@ void GuiMetaDataEd::save()
     // Update all collections where the game is present.
     if (mScraperParams.game->getType() == GAME)
         CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+
+    // If game counting was re-enabled for the game, then reactivate it in any custom collections
+    // where it may exist.
+    if (setGameAsCounted)
+        CollectionSystemsManager::get()->reactivateCustomCollectionEntry(mScraperParams.game);
 
     mScraperParams.system->onMetaDataSavePoint();
 

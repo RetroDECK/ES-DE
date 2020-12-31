@@ -94,8 +94,8 @@ public:
     bool isThemeCustomCollectionCompatible(std::vector<std::string> stringVector);
     std::string getValidNewCollectionName(std::string name, int index = 0);
 
-    void setEditMode(std::string collectionName);
-    void exitEditMode();
+    void setEditMode(std::string collectionName, bool showPopup = true);
+    void exitEditMode(bool showPopup = true);
     bool inCustomCollection(const std::string& collectionName, FileData* gameFile);
     // Add or remove a game from a specific collection.
     bool toggleGameInCollection(FileData* file);
@@ -108,6 +108,9 @@ public:
 
     SystemData* addNewCustomCollection(std::string name);
     void deleteCustomCollection(std::string collectionName);
+
+    // Reactivate a game in all custom collections where it has an entry in the configuration file.
+    void reactivateCustomCollectionEntry(FileData* game);
 
     inline std::map<std::string, CollectionSystemData, stringComparator>
             getAutoCollectionSystems() { return mAutoCollectionSystemsData; };
