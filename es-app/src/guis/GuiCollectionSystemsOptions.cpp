@@ -14,8 +14,10 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiSettings.h"
 #include "guis/GuiTextEditPopup.h"
+#include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
+#include "SystemData.h"
 
 GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
         Window* window,
@@ -32,6 +34,12 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                 "' COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
         row.makeAcceptInputHandler([this] {
             CollectionSystemsManager::get()->exitEditMode();
+            for (auto it = SystemData::sSystemVector.begin();
+                    it != SystemData::sSystemVector.end(); it++) {
+                ViewController::get()->getGameListView((*it))->onFileChanged(
+                        ViewController::get()->getGameListView((*it))->getCursor(), false);
+            }
+            mWindow->invalidateCachedBackground();
             delete this;
         });
         addRow(row);
