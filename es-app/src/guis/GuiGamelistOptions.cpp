@@ -348,6 +348,10 @@ void GuiGamelistOptions::openMetaDataEd()
             file->metadata.set(it->key, it->defaultValue);
         }
 
+        // Update all collections where the game is present.
+        if (file->getType() == GAME)
+            CollectionSystemsManager::get()->refreshCollectionSystems(file);
+
         file->getSystem()->sortSystem();
         mWindow->invalidateCachedBackground();
 
