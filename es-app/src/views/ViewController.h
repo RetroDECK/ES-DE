@@ -134,6 +134,7 @@ private:
     float mFadeOpacity;
     bool mCancelledTransition; // Needed only for the Fade transition style.
     bool mLockInput;
+    bool mNextSystem;
     FileData* mGameToLaunch;
 
     State mState;

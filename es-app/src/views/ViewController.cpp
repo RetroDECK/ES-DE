@@ -71,6 +71,7 @@ ViewController::ViewController(
         mFadeOpacity(0),
         mCancelledTransition(false),
         mLockInput(false),
+        mNextSystem(false),
         mGameToLaunch(nullptr)
 {
     mState.viewing = NOTHING;
@@ -266,6 +267,7 @@ void ViewController::goToNextGameList()
     SystemData* system = getState().getSystem();
     assert(system);
     NavigationSounds::getInstance()->playThemeNavigationSound(QUICKSYSSELECTSOUND);
+    mNextSystem = true;
     goToGameList(system->getNext());
 }
 
@@ -275,6 +277,7 @@ void ViewController::goToPrevGameList()
     SystemData* system = getState().getSystem();
     assert(system);
     NavigationSounds::getInstance()->playThemeNavigationSound(QUICKSYSSELECTSOUND);
+    mNextSystem = false;
     goToGameList(system->getPrev());
 }
 
@@ -353,7 +356,11 @@ void ViewController::goToGameList(SystemData* system)
         Vector3f currentPosition = mCurrentView->getPosition();
         mWrapPreviousPositionX = currentPosition.x();
         float offsetX = getGameListView(system)->getPosition().x();
-        offsetX += Renderer::getScreenWidth();
+        // This is needed to move the camera in the correct direction if there are only two systems.
+        if (SystemData::sSystemVector.size() == 2 && mNextSystem)
+           offsetX -= Renderer::getScreenWidth();
+        else
+            offsetX += Renderer::getScreenWidth();
         currentPosition.x() = offsetX;
         mCurrentView->setPosition(currentPosition);
         mCamera.translation().x() -= offsetX;
@@ -363,7 +370,10 @@ void ViewController::goToGameList(SystemData* system)
         Vector3f currentPosition = mCurrentView->getPosition();
         mWrapPreviousPositionX = currentPosition.x();
         float offsetX = getGameListView(system)->getPosition().x();
-        offsetX -= Renderer::getScreenWidth();
+        if (SystemData::sSystemVector.size() == 2 && !mNextSystem)
+            offsetX += Renderer::getScreenWidth();
+        else
+            offsetX -= Renderer::getScreenWidth();
         currentPosition.x() = offsetX;
         mCurrentView->setPosition(currentPosition);
         mCamera.translation().x() = -offsetX;
