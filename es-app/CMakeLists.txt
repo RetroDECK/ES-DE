@@ -211,7 +211,7 @@ include(InstallRequiredSystemLibraries)
 #---------------------------------------------------------------------------------------------------
 # General CPack settings.
 set(CPACK_PACKAGE_NAME "emulationstation-de")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "EmulationStation Desktop Edition is a front-end for browsing and launching games from your multi-platform game collection.")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "EmulationStation Desktop Edition is a front-end for browsing and launching games from your multi-platform game collection")
 set(CPACK_PACKAGE_DESCRIPTION "ES-DE is a feature-rich gaming front-end that is intended to be used in conjunction with emulators such as the RetroArch cores.")
 if(APPLE)
     # Shorter line length license file to be able to fit inside the drag-and-drop installer window without introducing extra line breaks.
