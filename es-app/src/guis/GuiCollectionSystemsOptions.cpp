@@ -14,6 +14,7 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiSettings.h"
 #include "guis/GuiTextEditPopup.h"
+#include "utils/StringUtil.h"
 #include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
 
@@ -49,7 +50,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
         collection_systems_auto->add(it->second.decl.longName, it->second.decl.name,
                 it->second.isEnabled);
     addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
-    addSaveFunc([this] {
+    addSaveFunc([this, autoSystems] {
         std::string autoSystemsSelected =
             Utils::String::vectorToCommaString(collection_systems_auto->getSelectedObjects(), true);
         std::string autoSystemsConfig = Settings::getInstance()->getString("CollectionSystemsAuto");
@@ -57,6 +58,29 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             if (CollectionSystemsManager::get()->isEditing())
                 CollectionSystemsManager::get()->exitEditMode();
             Settings::getInstance()->setString("CollectionSystemsAuto", autoSystemsSelected);
+            // Check if any systems have been enabled, and if so repopulate them, which results in
+            // a complete initialization of their content. This is necessary as collections aren't
+            // updated while they are disabled.
+            std::vector<std::string> addedAutoSystems;
+            if (autoSystemsConfig == "") {
+                addedAutoSystems = Utils::String::delimitedStringToVector(autoSystemsSelected, ",");
+            }
+            else if (autoSystemsSelected != "") {
+                std::vector<std::string> selectedVector =
+                        Utils::String::delimitedStringToVector(autoSystemsSelected, ",");
+                std::vector<std::string> configuredVector =
+                        Utils::String::delimitedStringToVector(autoSystemsConfig, ",");
+                for (std::string system : selectedVector) {
+                    if (std::find(configuredVector.begin(), configuredVector.end(), system) ==
+                            configuredVector.end())
+                        addedAutoSystems.push_back(system);
+                }
+            }
+            if (!addedAutoSystems.empty()) {
+                for (std::string system : addedAutoSystems)
+                    CollectionSystemsManager::get()->
+                            repopulateCollection(autoSystems.find(system)->second.system);
+            }
             setNeedsSaving();
             setNeedsReloading();
             setNeedsCollectionsUpdate();
@@ -76,7 +100,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
         collection_systems_custom->add(it->second.decl.longName, it->second.decl.name,
                 it->second.isEnabled);
     addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
-    addSaveFunc([this] {
+    addSaveFunc([this, customSystems] {
         if (!mDeletedCustomCollection) {
             std::string customSystemsSelected = Utils::String::vectorToCommaString(
                     collection_systems_custom->getSelectedObjects(), true);
@@ -87,6 +111,30 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                     CollectionSystemsManager::get()->exitEditMode();
                 Settings::getInstance()->setString("CollectionSystemsCustom",
                         customSystemsSelected);
+                // Check if any systems have been enabled, and if so repopulate them, which
+                // results in a complete initialization of their content. This is necessary as
+                // collections aren't updated while they are disabled.
+                std::vector<std::string> addedCustomSystems;
+                if (customSystemsConfig == "") {
+                    addedCustomSystems =
+                            Utils::String::delimitedStringToVector(customSystemsSelected, ",");
+                }
+                else if (customSystemsSelected != "") {
+                    std::vector<std::string> selectedVector =
+                            Utils::String::delimitedStringToVector(customSystemsSelected, ",");
+                    std::vector<std::string> configuredVector =
+                            Utils::String::delimitedStringToVector(customSystemsConfig, ",");
+                    for (std::string system : selectedVector) {
+                        if (std::find(configuredVector.begin(), configuredVector.end(), system) ==
+                                configuredVector.end())
+                            addedCustomSystems.push_back(system);
+                    }
+                }
+                if (!addedCustomSystems.empty()) {
+                    for (std::string system : addedCustomSystems)
+                        CollectionSystemsManager::get()->
+                                repopulateCollection(customSystems.find(system)->second.system);
+                }
                 setNeedsSaving();
                 setNeedsReloading();
                 setNeedsCollectionsUpdate();

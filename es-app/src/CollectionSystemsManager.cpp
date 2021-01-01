@@ -935,6 +935,74 @@ void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
     }
 }
 
+void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
+{
+    for (auto it = mAutoCollectionSystemsData.cbegin();
+            it != mAutoCollectionSystemsData.cend(); it++) {
+        if ((*it).second.system == sysData) {
+            LOG(LogDebug) << "CollectionSystemsManager::repopulateCollection(): "
+                    "Repopulating auto collection '" << it->first << "'.";
+
+            CollectionSystemData* autoSystem = &mAutoCollectionSystemsData[it->first];
+            std::vector<FileData*> systemEntries =
+                    autoSystem->system->getRootFolder()->getFilesRecursive(true, true, false);
+
+            if (systemEntries.empty())
+                return;
+
+            // Delete all children from the system and remove them from the index too.
+            for (FileData* entry : systemEntries) {
+                autoSystem->system->getIndex()->removeFromIndex(entry);
+                autoSystem->system->getRootFolder()->removeChild(entry);
+                delete entry;
+            }
+
+            // Flag the collection as not populated so it gets repopulated.
+            autoSystem->isPopulated = false;
+            populateAutoCollection(autoSystem);
+
+            // The cursor value is now pointing to some random memory address so we need to set
+            // it to something valid, as done here by selecting the first child. This does however
+            // not mean it's the first row of the gamelist, so we follow up with selecting the
+            // first entry after that. If doing this second step without the first step we would
+            // crash the application as it would try to access the old (now invalid) pointer.
+            auto autoView = ViewController::get()->getGameListView(autoSystem->system).get();
+            autoView->setCursor(autoSystem->system->getRootFolder()->
+                    getChildrenRecursive().front());
+            autoView->setCursor(autoView->getFirstEntry());
+        }
+    }
+
+    for (auto it = mCustomCollectionSystemsData.cbegin();
+            it != mCustomCollectionSystemsData.cend(); it++) {
+        if ((*it).second.system == sysData) {
+            LOG(LogDebug) << "CollectionSystemsManager::repopulateCollection(): "
+                    "Repopulating custom collection '" << it->first << "'.";
+
+            CollectionSystemData* customSystem = &mCustomCollectionSystemsData[it->first];
+            std::vector<FileData*> systemEntries =
+                    customSystem->system->getRootFolder()->getFilesRecursive(true, true, false);
+
+            if (systemEntries.empty())
+                return;
+
+            for (FileData* entry : systemEntries) {
+                customSystem->system->getIndex()->removeFromIndex(entry);
+                customSystem->system->getRootFolder()->removeChild(entry);
+                delete entry;
+            }
+
+            customSystem->isPopulated = false;
+            populateCustomCollection(customSystem);
+
+            auto autoView = ViewController::get()->getGameListView(customSystem->system).get();
+            autoView->setCursor(customSystem->system->getRootFolder()->
+                    getChildrenRecursive().front());
+            autoView->setCursor(autoView->getFirstEntry());
+        }
+    }
+}
+
 void CollectionSystemsManager::initAutoCollectionSystems()
 {
     for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator
@@ -1038,6 +1106,13 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
     // collection was trimmed down to 50 items. If we don't do this, the game count will
     // not be correct as it would include all the games prior to trimming.
     if (rootFolder->getName() == "recent") {
+        // The following is needed to avoid a crash when repopulating the system as the previous
+        // cursor pointer may point to a random memory address.
+        auto recentGamelist = ViewController::get()->getGameListView(rootFolder->getSystem()).get();
+        recentGamelist->setCursor(rootFolder->getSystem()->getRootFolder()->
+                getChildrenRecursive().front());
+        recentGamelist->setCursor(recentGamelist->getFirstEntry());
+
         ViewController::get()->getGameListView(rootFolder->getSystem()).get()->
                 onFileChanged(rootFolder->getChildren().front(), false);
     }

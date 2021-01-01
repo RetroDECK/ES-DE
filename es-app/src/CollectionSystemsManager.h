@@ -112,6 +112,9 @@ public:
     // Reactivate a game in all custom collections where it has an entry in the configuration file.
     void reactivateCustomCollectionEntry(FileData* game);
 
+    // Repopulate the collection, which is basically a forced update of its complete content.
+    void repopulateCollection(SystemData* sysData);
+
     inline std::map<std::string, CollectionSystemData, stringComparator>
             getAutoCollectionSystems() { return mAutoCollectionSystemsData; };
     inline std::map<std::string, CollectionSystemData, stringComparator>
