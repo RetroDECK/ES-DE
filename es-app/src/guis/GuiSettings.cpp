@@ -30,7 +30,7 @@ GuiSettings::GuiSettings(
         mNeedsSortingCollections(false),
         mGoToSystem(nullptr),
         mNeedsGoToStart(false),
-        mNeedsGoToSystemView(false)
+        mNeedsGoToSystem(false)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -79,11 +79,11 @@ void GuiSettings::save()
     if (mNeedsGoToStart)
         ViewController::get()->goToStart();
 
-    if (mNeedsGoToSystemView)
-        ViewController::get()->goToSystemView(mGoToSystem, false);
+    if (mNeedsGoToSystem)
+        ViewController::get()->goToSystem(mGoToSystem, false);
 
     if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
-            mNeedsGoToStart || mNeedsGoToSystemView)
+            mNeedsGoToStart || mNeedsGoToSystem)
         mWindow->invalidateCachedBackground();
 }
 

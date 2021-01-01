@@ -261,6 +261,11 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         playViewTransition(true);
 }
 
+void ViewController::goToSystem(SystemData* system, bool animate)
+{
+    mSystemListView->goToSystem(system, animate);
+}
+
 void ViewController::goToNextGameList()
 {
     assert(mState.viewing == GAME_LIST);

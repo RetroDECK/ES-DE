@@ -85,7 +85,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             setNeedsReloading();
             setNeedsCollectionsUpdate();
             if (!mAddedCustomCollection)
-                setNeedsGoToSystemView(SystemData::sSystemVector.front());
+                setNeedsGoToSystem(SystemData::sSystemVector.front());
         }
     });
 
@@ -139,7 +139,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                 setNeedsReloading();
                 setNeedsCollectionsUpdate();
                 if (!mAddedCustomCollection)
-                    setNeedsGoToSystemView(SystemData::sSystemVector.front());
+                    setNeedsGoToSystem(SystemData::sSystemVector.front());
             }
         }
     });
@@ -259,7 +259,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                                 Settings::getInstance()->setString("CollectionSystemsCustom",
                                         collectionsConfigEntry);
                                 setNeedsSaving();
-                                setNeedsGoToSystemView(SystemData::sSystemVector.front());
+                                setNeedsGoToSystem(SystemData::sSystemVector.front());
                             }
                             CollectionSystemsManager::get()->deleteCustomCollection(name);
                             return true;
@@ -322,7 +322,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             setNeedsSaving();
             setNeedsCollectionsUpdate();
             setNeedsReloading();
-            setNeedsGoToSystemView(SystemData::sSystemVector.front());
+            setNeedsGoToSystem(SystemData::sSystemVector.front());
         }
     });
 
@@ -356,7 +356,7 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
     collection_systems_custom->add(collectionName, collectionName, true);
 
     mAddedCustomCollection = true;
-    setNeedsGoToSystemView(newCollection);
+    setNeedsGoToSystem(newCollection);
 
     Window* window = mWindow;
     while (window->peekGui() && window->peekGui() != ViewController::get())

@@ -50,6 +50,7 @@ public:
     void goToPrevGameList();
     void goToGameList(SystemData* system);
     void goToSystemView(SystemData* system, bool playTransition);
+    void goToSystem(SystemData* system, bool animate);
     void goToStart();
     void ReloadAndGoToStart();
 
