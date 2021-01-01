@@ -1105,7 +1105,7 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
     // For the 'recent' collection we need to populate the gamelist once more as the
     // collection was trimmed down to 50 items. If we don't do this, the game count will
     // not be correct as it would include all the games prior to trimming.
-    if (rootFolder->getName() == "recent") {
+    if (rootFolder->getName() == "recent" && !rootFolder->getChildrenRecursive().empty()) {
         // The following is needed to avoid a crash when repopulating the system as the previous
         // cursor pointer may point to a random memory address.
         auto recentGamelist = ViewController::get()->getGameListView(rootFolder->getSystem()).get();
