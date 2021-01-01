@@ -75,7 +75,8 @@ void Log::flush()
 
 void Log::close()
 {
-    file.close();
+    if (file.is_open())
+        file.close();
 }
 
 Log::~Log()

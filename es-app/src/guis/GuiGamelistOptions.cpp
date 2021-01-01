@@ -298,13 +298,6 @@ void GuiGamelistOptions::startEditMode()
 void GuiGamelistOptions::exitEditMode()
 {
     CollectionSystemsManager::get()->exitEditMode();
-
-    for (auto it = SystemData::sSystemVector.begin();
-            it != SystemData::sSystemVector.end(); it++) {
-        ViewController::get()->getGameListView((*it))->onFileChanged(
-                ViewController::get()->getGameListView((*it))->getCursor(), false);
-    }
-
     delete this;
 }
 

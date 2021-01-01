@@ -610,6 +610,13 @@ void CollectionSystemsManager::exitEditMode(bool showPopup)
     mIsEditingCustom = false;
     mEditingCollection = "Favorites";
 
+    // Remove all tick marks from the games that are part of the collection.
+    for (auto it = SystemData::sSystemVector.begin();
+            it != SystemData::sSystemVector.end(); it++) {
+        ViewController::get()->getGameListView((*it))->onFileChanged(
+                ViewController::get()->getGameListView((*it))->getCursor(), false);
+    }
+
     mEditingCollectionSystemData->system->onMetaDataSavePoint();
 }
 
@@ -902,7 +909,11 @@ void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
             it != mCustomCollectionSystemsData.cend(); it++) {
         std::string path = getCustomCollectionConfigPath(it->first);
         if (Utils::FileSystem::exists(path)) {
+            #if defined(_WIN64)
+            std::ifstream input(Utils::String::stringToWideString(path).c_str());
+            #else
             std::ifstream input(path);
+            #endif
             for (std::string gameKey; getline(input, gameKey);) {
                 if (gameKey == gamePath) {
                     setEditMode(it->first, false);
@@ -1043,7 +1054,7 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
     FileFilterIndex* index = newSys->getIndex();
 
     // Get configuration for this custom collection.
-    #if _WIN64
+    #if defined (_WIN64)
     std::ifstream input(Utils::String::stringToWideString(path).c_str());
     #else
     std::ifstream input(path);
