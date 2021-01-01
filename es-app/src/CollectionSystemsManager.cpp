@@ -364,12 +364,20 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             }
             else if (curSys->isCollection() && !file->getCountAsGame()) {
                 // If the countasgame flag has been set to false, then remove the game.
-                if (curSys->isGroupedCustomCollection())
+                if (curSys->isGroupedCustomCollection()) {
                     ViewController::get()->getGameListView(curSys->getRootFolder()->getParent()->
                             getSystem()).get()->remove(collectionEntry, false);
-                else
+                    FileData* parentRootFolder =
+                            rootFolder->getParent()->getSystem()->getRootFolder();
+                    parentRootFolder->sort(parentRootFolder->getSortTypeFromString(
+                            parentRootFolder->getSortTypeString()), mFavoritesSorting);
+                }
+                else {
                     ViewController::get()->
                             getGameListView(curSys).get()->remove(collectionEntry, false);
+                }
+                rootFolder->sort(rootFolder->getSortTypeFromString(
+                        rootFolder->getSortTypeString()), mFavoritesSorting);
             }
 
             else {
