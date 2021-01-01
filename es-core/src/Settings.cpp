@@ -27,18 +27,19 @@ Settings* Settings::sInstance = nullptr;
 // functions.
 std::vector<std::string> settings_dont_save {
     // These options can be set using command-line arguments:
-    "Debug",                // --debug
-    "ForceFull",            // --force-full
-    "ForceKid",             // --force-kid
-    "ForceKiosk",           // --force-kiosk
+    "WindowWidth",          // Set via --resolution [width] [height]
+    "WindowHeight",         // set via --resolution [width] [height]
+    "ParseGamelistOnly"     // --gamelist-only
     "IgnoreGamelist",       // --ignore-gamelist
     "SplashScreen",         // --no-splash
-    "VSync",                // --vsync [1/on or 0/off]
+    "Debug",                // --debug
     #if !defined(_WIN64)
     "Windowed",             // --windowed
     #endif
-    "WindowWidth",          // Set via --resolution [width] [height]
-    "WindowHeight",         // set via --resolution [width] [height]
+    "VSync",                // --vsync [1/on or 0/off]
+    "ForceFull",            // --force-full
+    "ForceKiosk",           // --force-kiosk
+    "ForceKid",             // --force-kid
 
     // These options are not shown in the --help text and are intended
     // for debugging and testing purposes:
