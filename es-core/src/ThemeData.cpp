@@ -490,11 +490,9 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             if (!ResourceManager::getInstance()->fileExists(path)) {
                 std::stringstream ss;
                 // "From theme yadda yadda, included file yadda yadda.
-                ss << "  Warning " << error.msg;
-                ss << "could not find file \"" << node.text().get() << "\" ";
-                if (node.text().get() != path)
-                    ss << "(which resolved to \"" << path << "\") ";
-                LOG(LogWarning) << ss.str();
+                LOG(LogWarning) << error.msg << ":";
+                LOG(LogWarning) << "Could not find file \"" << node.text().get() << "\" " <<
+                ((node.text().get() != path) ? "which resolves to \"" + path + "\"" : "");
             }
             element.properties[node.name()] = path;
             break;

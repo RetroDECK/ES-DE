@@ -50,7 +50,7 @@ FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType
                 return treeNode;
 
             if (type == FOLDER) {
-                LOG(LogWarning) << "Gamelist: folder doesn't exist, won't create it";
+                LOG(LogWarning) << "A folder defined in the gamelist file does not exist:";
                 return nullptr;
             }
 
@@ -66,7 +66,7 @@ FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType
             // Don't create folders unless they're including any games.
             // If the type is FOLDER it's going to be empty, so don't bother.
             if (type == FOLDER) {
-                LOG(LogWarning) << "Gamelist: folder doesn't exist, won't create it";
+                LOG(LogWarning) << "A folder defined in the gamelist file does not exist:";
                 return nullptr;
             }
 
@@ -144,8 +144,7 @@ void parseGamelist(SystemData* system)
 
             FileData* file = findOrCreateFile(system, path, type);
             if (!file) {
-                LOG(LogError) << "Error finding/creating FileData for \"" <<
-                        path << "\", skipping entry";
+                LOG(LogError) << "Could not find or create \"" << path << "\", skipping entry";
                 continue;
             }
             else if (!file->isArcadeAsset()) {
