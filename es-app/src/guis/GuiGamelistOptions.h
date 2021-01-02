@@ -54,11 +54,12 @@ private:
     bool mFoldersOnTop;
     bool mFavoritesSorting;
     bool mOnlyHasFolders;
-    bool fromPlaceholder;
+    bool mFromPlaceholder;
     bool mFiltersChanged;
     bool mCancelled;
-    bool isCustomCollection;
-    bool isCustomCollectionGroup;
+    bool mIsCustomCollection;
+    bool mIsCustomCollectionGroup;
+    SystemData* mCustomCollectionSystem;
     std::vector<std::string> mFirstLetterIndex;
     std::string mCurrentFirstCharacter;
 };
