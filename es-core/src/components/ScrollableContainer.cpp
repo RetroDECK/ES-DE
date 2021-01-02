@@ -9,14 +9,15 @@
 
 #include "components/ScrollableContainer.h"
 
+#include "animations/LambdaAnimation.h"
 #include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 #include "Window.h"
 
-#define AUTO_SCROLL_RESET_DELAY 6200 // Time before resetting to top after we reach the bottom.
-#define AUTO_SCROLL_DELAY 2600 // Time to wait before we start to scroll.
+#define AUTO_SCROLL_RESET_DELAY 4000.0f // Time before resetting to top after we reach the bottom.
+#define AUTO_SCROLL_DELAY 2600.0f // Time to wait before we start to scroll.
 #define AUTO_SCROLL_SPEED 42 // Relative scrolling speed (lower is faster).
-#define AUTO_WIDTH_MOD 350 // Line width modifier to use to calculate scrolling speed.
+#define AUTO_WIDTH_MOD 350.0f // Line width modifier to use to calculate scrolling speed.
 
 ScrollableContainer::ScrollableContainer(
         Window* window)
@@ -28,6 +29,9 @@ ScrollableContainer::ScrollableContainer(
         mScrollDir(0, 0),
         mAutoScrollResetAccumulator(0)
 {
+    // Set the modifier to get equivalent scrolling speed regardless of screen resolution.
+    // 1920p is the reference.
+    mResolutionModifier = static_cast<float>(Renderer::getScreenWidth()) / 1920.0f;
 }
 
 void ScrollableContainer::render(const Transform4x4f& parentTrans)
@@ -57,7 +61,7 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
 {
     if (autoScroll) {
         mScrollDir = Vector2f(0, 1);
-        mAutoScrollDelay = AUTO_SCROLL_DELAY;
+        mAutoScrollDelay = static_cast<int>(AUTO_SCROLL_DELAY * mResolutionModifier);
         mAutoScrollSpeed = AUTO_SCROLL_SPEED;
         reset();
     }
@@ -89,11 +93,16 @@ void ScrollableContainer::update(int deltaTime)
     }
 
     const Vector2f contentSize = getContentSize();
+
     // Scale speed by the text width, more text per line leads to slower scrolling.
-    const float widthMod = contentSize.x() / AUTO_WIDTH_MOD;
+    const float widthMod = contentSize.x() / AUTO_WIDTH_MOD / mResolutionModifier;
+
+    // Adjust delta time by text width and screen resolution.
+    int adjustedDeltaTime =
+            static_cast<int>(static_cast<float>(deltaTime) * mResolutionModifier / widthMod);
 
     if (mAutoScrollSpeed != 0) {
-        mAutoScrollAccumulator += deltaTime / static_cast<int>(widthMod);
+        mAutoScrollAccumulator += adjustedDeltaTime;
 
         while (mAutoScrollAccumulator >= mAutoScrollSpeed) {
             mScrollPos += mScrollDir;
@@ -122,14 +131,22 @@ void ScrollableContainer::update(int deltaTime)
 
     if (mAtEnd) {
         mAutoScrollResetAccumulator += deltaTime;
-        if (mAutoScrollResetAccumulator >= AUTO_SCROLL_RESET_DELAY)
-            reset();
+        if (mAutoScrollResetAccumulator >= static_cast<int>(AUTO_SCROLL_RESET_DELAY * widthMod)) {
+            // Fade in the text as it resets to the start position.
+            auto func = [this](float t) {
+                this->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
+                mScrollPos = Vector2f(0, 0);
+                mAutoScrollResetAccumulator = 0;
+                mAutoScrollAccumulator = -mAutoScrollDelay + mAutoScrollSpeed;
+                mAtEnd = false;
+            };
+            this->setAnimation(new LambdaAnimation(func, 300), 0, nullptr, false);
+        }
     }
 
     GuiComponent::update(deltaTime);
 }
 
-// This should probably return a box to allow for when controls don't start at 0,0.
 Vector2f ScrollableContainer::getContentSize()
 {
     Vector2f max(0, 0);

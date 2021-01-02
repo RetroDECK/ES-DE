@@ -30,11 +30,12 @@ private:
 
     Vector2f mScrollPos;
     Vector2f mScrollDir;
-    int mAutoScrollDelay; // ms to wait before starting to autoscroll.
-    int mAutoScrollSpeed; // ms to wait before scrolling down by mScrollDir.
+    float mResolutionModifier;
+    int mAutoScrollDelay;
+    int mAutoScrollSpeed;
     int mAutoScrollAccumulator;
-    bool mAtEnd;
     int mAutoScrollResetAccumulator;
+    bool mAtEnd;
 };
 
 #endif // ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H
