@@ -30,7 +30,8 @@ GuiSettings::GuiSettings(
         mNeedsSortingCollections(false),
         mGoToSystem(nullptr),
         mNeedsGoToStart(false),
-        mNeedsGoToSystem(false)
+        mNeedsGoToSystem(false),
+        mNeedsGoToGroupedCollections(false)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -81,6 +82,38 @@ void GuiSettings::save()
 
     if (mNeedsGoToSystem)
         ViewController::get()->goToSystem(mGoToSystem, false);
+
+    if (mNeedsGoToGroupedCollections) {
+        for (SystemData* system : SystemData::sSystemVector) {
+            if (system->getThemeFolder() == "custom-collections") {
+                ViewController::get()->goToSystem(system, false);
+                continue;
+            }
+        }
+    }
+
+    if (mNeedsCollectionsUpdate) {
+        auto state = ViewController::get()->getState();
+        // If we're in any view other than the grouped custom collections, always jump to the
+        // system view in case of any collection updates. This is overkill in some instances but
+        // these views can behave a bit strange during collection changes so it's better to be on
+        // the safe side.
+        if (state.getSystem()->isCollection() &&
+                state.getSystem()->getThemeFolder() != "custom-collections") {
+            ViewController::get()->goToStart();
+            ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
+            // We don't want to invalidate the cached background when there has been a collection
+            // systen change as that may show a black screen in some circumstances.
+            return;
+        }
+        // If the last displayed custom collection was just disabled, then go to start (to the
+        // system view).
+        if (std::find(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(),
+                state.getSystem()) == SystemData::sSystemVector.end()) {
+            ViewController::get()->goToStart();
+            return;
+        }
+    }
 
     if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
             mNeedsGoToStart || mNeedsGoToSystem)

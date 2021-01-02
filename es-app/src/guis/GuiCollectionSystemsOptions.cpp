@@ -84,8 +84,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             setNeedsSaving();
             setNeedsReloading();
             setNeedsCollectionsUpdate();
-            if (!mAddedCustomCollection)
-                setNeedsGoToSystem(SystemData::sSystemVector.front());
         }
     });
 
@@ -130,7 +128,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                             addedCustomSystems.push_back(system);
                     }
                 }
-                if (!addedCustomSystems.empty()) {
+                if (!mAddedCustomCollection && !addedCustomSystems.empty()) {
                     for (std::string system : addedCustomSystems)
                         CollectionSystemsManager::get()->
                                 repopulateCollection(customSystems.find(system)->second.system);
@@ -138,8 +136,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                 setNeedsSaving();
                 setNeedsReloading();
                 setNeedsCollectionsUpdate();
-                if (!mAddedCustomCollection)
-                    setNeedsGoToSystem(SystemData::sSystemVector.front());
+                setNeedsGoToGroupedCollections();
             }
         }
     });
@@ -259,6 +256,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                                 Settings::getInstance()->setString("CollectionSystemsCustom",
                                         collectionsConfigEntry);
                                 setNeedsSaving();
+                                setNeedsGoToStart();
                                 setNeedsGoToSystem(SystemData::sSystemVector.front());
                             }
                             CollectionSystemsManager::get()->deleteCustomCollection(name);
@@ -356,7 +354,12 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
     collection_systems_custom->add(collectionName, collectionName, true);
 
     mAddedCustomCollection = true;
-    setNeedsGoToSystem(newCollection);
+    setNeedsGoToStart();
+
+    if (Settings::getInstance()->getBool("UseCustomCollectionsSystem"))
+        setNeedsGoToGroupedCollections();
+    else
+        setNeedsGoToSystem(newCollection);
 
     Window* window = mWindow;
     while (window->peekGui() && window->peekGui() != ViewController::get())

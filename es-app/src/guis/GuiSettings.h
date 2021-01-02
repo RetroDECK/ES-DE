@@ -41,6 +41,7 @@ public:
     void setNeedsGoToStart() { mNeedsGoToStart = true; };
     void setNeedsGoToSystem(SystemData* goToSystem)
             { mNeedsGoToSystem = true; mGoToSystem = goToSystem; };
+    void setNeedsGoToGroupedCollections() { mNeedsGoToGroupedCollections = true; };
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -56,6 +57,7 @@ private:
     bool mNeedsSortingCollections;
     bool mNeedsGoToStart;
     bool mNeedsGoToSystem;
+    bool mNeedsGoToGroupedCollections;
 
     SystemData* mGoToSystem;
 };
