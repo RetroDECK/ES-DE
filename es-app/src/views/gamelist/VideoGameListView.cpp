@@ -355,12 +355,12 @@ void VideoGameListView::updateInfoPanel()
         // the first of these so that we can display its game media.
         if (file->getSystem()->isCustomCollection() &&
                 file->getPath() == file->getSystem()->getName()) {
-            FileData* randomGame = CollectionSystemsManager::get()->
+            mRandomGame = CollectionSystemsManager::get()->
                     updateCollectionFolderMetadata(file->getSystem());
-            if (randomGame) {
-                mThumbnail.setImage(randomGame->getThumbnailPath());
-                mMarquee.setImage(randomGame->getMarqueePath());
-                mVideo->setImage(randomGame->getImagePath());
+            if (mRandomGame) {
+                mThumbnail.setImage(mRandomGame->getThumbnailPath());
+                mMarquee.setImage(mRandomGame->getMarqueePath());
+                mVideo->setImage(mRandomGame->getImagePath());
                 // Always stop the video before setting a new video as it will otherwise continue
                 // to play if it has the same path (i.e. it is the same physical video file) as
                 // the previously set video.
@@ -368,7 +368,7 @@ void VideoGameListView::updateInfoPanel()
                 // file inside, or as in this case, when entering a custom collection.
                 mVideo->onHide();
 
-                if (!mVideo->setVideo(randomGame->getVideoPath()))
+                if (!mVideo->setVideo(mRandomGame->getVideoPath()))
                     mVideo->setDefaultVideo();
             }
             else {

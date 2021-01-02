@@ -329,12 +329,12 @@ void DetailedGameListView::updateInfoPanel()
         // the first of these so that we can display its game media.
         if (file->getSystem()->isCustomCollection() &&
                 file->getPath() == file->getSystem()->getName()) {
-            FileData* randomGame = CollectionSystemsManager::get()->
+            mRandomGame = CollectionSystemsManager::get()->
                     updateCollectionFolderMetadata(file->getSystem());
-            if (randomGame) {
-                mThumbnail.setImage(randomGame->getThumbnailPath());
-                mMarquee.setImage(randomGame->getMarqueePath());
-                mImage.setImage(randomGame->getImagePath());
+            if (mRandomGame) {
+                mThumbnail.setImage(mRandomGame->getThumbnailPath());
+                mMarquee.setImage(mRandomGame->getMarqueePath());
+                mImage.setImage(mRandomGame->getImagePath());
             }
             else {
                 mThumbnail.setImage("");

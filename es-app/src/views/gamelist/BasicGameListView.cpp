@@ -266,7 +266,14 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("select", "options"));
     if (mRoot->getSystem()->isGameSystem())
         prompts.push_back(HelpPrompt("x", "random"));
-    if (mRoot->getSystem()->isGameSystem() && !UIModeController::getInstance()->isUIModeKid() &&
+
+    if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+            !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
+            ViewController::get()->getState().viewing == ViewController::GAME_LIST) {
+        prompts.push_back(HelpPrompt("y", "JUMP TO GAME"));
+    }
+    else if (mRoot->getSystem()->isGameSystem() &&
+                !UIModeController::getInstance()->isUIModeKid() &&
                 !UIModeController::getInstance()->isUIModeKiosk() &&
                 (Settings::getInstance()->getBool("FavoritesAddButton") ||
                 CollectionSystemsManager::get()->isEditing())) {

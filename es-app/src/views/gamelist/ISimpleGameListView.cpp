@@ -26,7 +26,8 @@ ISimpleGameListView::ISimpleGameListView(
         : IGameListView(window, root),
         mHeaderText(window),
         mHeaderImage(window),
-        mBackground(window)
+        mBackground(window),
+        mRandomGame(nullptr)
 {
     mHeaderText.setText("Logo Text");
     mHeaderText.setSize(mSize.x(), 0);
@@ -137,6 +138,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     if (!newCursor)
                         newCursor = getCursor();
                     setCursor(newCursor);
+                    if (mRoot->getSystem()->getThemeFolder() == "custom-collections")
+                        updateHelpPrompts();
                 }
             }
 
@@ -153,6 +156,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 setCursor(mCursorStack.top());
                 if (mCursorStack.size() > 0)
                     mCursorStack.pop();
+                if (mRoot->getSystem()->getThemeFolder() == "custom-collections")
+                    updateHelpPrompts();
             }
             else {
                 NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
@@ -200,6 +205,17 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedTo("y", input) &&
+                mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+                !CollectionSystemsManager::get()->isEditing() &&
+                mCursorStack.empty() && ViewController::get()->getState().viewing ==
+                ViewController::GAME_LIST) {
+            // Jump to the randomly selected game.
+            if (mRandomGame) {
+                setCursor(mRandomGame);
+                updateHelpPrompts();
+            }
+        }
+        else if (config->isMappedTo("y", input) &&
                 !Settings::getInstance()->getBool("FavoritesAddButton") &&
                 !CollectionSystemsManager::get()->isEditing()) {
             return true;
@@ -226,7 +242,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 if (getCursor()->getType() == FOLDER && foldersOnTop == true)
                     foldersOnTop = !getCursor()->getParent()->getOnlyFoldersFlag();
 
-                if (mRoot->getSystem()->isCustomCollection())
+                if (mRoot->getSystem()->isCustomCollection() ||
+                        mRoot->getSystem()->getThemeFolder() == "custom-collections")
                     favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
                 else
                     favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");

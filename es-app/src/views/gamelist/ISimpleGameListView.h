@@ -57,6 +57,8 @@ protected:
     std::vector<GuiComponent*> mThemeExtras;
     std::stack<FileData*> mCursorStack;
     std::vector<FileData*> mCursorStackHistory;
+    // This game is randomly selected in the grouped custom collections view.
+    FileData* mRandomGame;
 
     std::vector<std::string> mFirstLetterIndex;
 
