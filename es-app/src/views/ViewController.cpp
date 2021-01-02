@@ -838,7 +838,6 @@ void ViewController::reloadAll()
     }
     else if (mState.viewing == SYSTEM_SELECT) {
         SystemData* system = mState.getSystem();
-        goToSystemView(SystemData::sSystemVector.front(), false);
         mSystemListView->goToSystem(system, false);
         mCurrentView = mSystemListView;
         mCamera.r3().x() = 0;
