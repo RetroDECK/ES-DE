@@ -84,12 +84,17 @@ void GuiSettings::save()
         ViewController::get()->goToSystem(mGoToSystem, false);
 
     if (mNeedsGoToGroupedCollections) {
+        bool groupedSystemExists = false;
         for (SystemData* system : SystemData::sSystemVector) {
             if (system->getThemeFolder() == "custom-collections") {
                 ViewController::get()->goToSystem(system, false);
+                groupedSystemExists = true;
                 continue;
             }
         }
+        if (!groupedSystemExists)
+            // No grouped custom collection system exists, so go to the first system instead.
+            ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
     }
 
     if (mNeedsCollectionsUpdate) {

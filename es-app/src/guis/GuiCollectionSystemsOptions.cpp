@@ -257,7 +257,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                                         collectionsConfigEntry);
                                 setNeedsSaving();
                                 setNeedsGoToStart();
-                                setNeedsGoToSystem(SystemData::sSystemVector.front());
                             }
                             CollectionSystemsManager::get()->deleteCustomCollection(name);
                             return true;
