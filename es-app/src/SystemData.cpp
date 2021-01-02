@@ -571,8 +571,7 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
     // otherwise get a list of all the folder and file entries in the view.
     if (currentGame && currentGame->getType() == FOLDER && currentGame->
             getSystem()->isGroupedCustomCollection()) {
-        gameList = ViewController::get()->getGameListView(mRootFolder->getSystem()).get()->
-                getCursor()->getParent()->getParent()->getChildrenListToDisplay();
+        gameList = mRootFolder->getParent()->getChildrenListToDisplay();
     }
     else {
         gameList = ViewController::get()->getGameListView(mRootFolder->
