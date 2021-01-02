@@ -270,7 +270,7 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
             !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
             ViewController::get()->getState().viewing == ViewController::GAME_LIST) {
-        prompts.push_back(HelpPrompt("y", "JUMP TO GAME"));
+        prompts.push_back(HelpPrompt("y", "jump to game"));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
                 !UIModeController::getInstance()->isUIModeKid() &&

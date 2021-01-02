@@ -616,6 +616,9 @@ bool GuiScraperMenu::input(InputConfig* config, Input input)
     if (GuiComponent::input(config, input))
         return true;
 
+    if (config->isMappedTo("y", input) && input.value != 0)
+        pressedStart();
+
     if (config->isMappedTo("b", input) && input.value != 0) {
         delete this;
         return true;
@@ -628,6 +631,7 @@ std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
     prompts.push_back(HelpPrompt("b", "back"));
+    prompts.push_back(HelpPrompt("y", "start"));
     return prompts;
 }
 
