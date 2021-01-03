@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - Releases
+# EmulationStation Desktop Edition (ES-DE) - Changelog
 
 ## Version 1.0.0 (in development)
 
