@@ -836,6 +836,7 @@ void GuiMenu::openOtherSettings()
         if (rom_dir_game_media->getState() != Settings::getInstance()->getBool("ROMDirGameMedia")) {
             Settings::getInstance()->setBool("ROMDirGameMedia", rom_dir_game_media->getState());
             s->setNeedsSaving();
+            s->setNeedsReloading();
         }
     });
 
