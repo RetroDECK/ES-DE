@@ -1,3 +1,5 @@
+# EmulationStation Desktop Edition (ES-DE) - Missing rbsimple-DE theme set data
+
 # Missing systems
 
 None at the moment.
