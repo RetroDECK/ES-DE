@@ -1,3 +1,5 @@
+# EmulationStation Desktop Edition (ES-DE) - Credits
+
 # Programming
 
 Alec "Aloshi" Lofquist (original version) \

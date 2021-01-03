@@ -1,4 +1,4 @@
-# Themes
+# EmulationStation Desktop Edition (ES-DE) - Themes
 
 EmulationStation allows each system to have its own "theme." A theme is a collection **views** that define some **elements**, each with their own **properties**.
 
