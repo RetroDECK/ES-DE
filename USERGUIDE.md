@@ -966,6 +966,14 @@ This setting defines the directory for the game media, i.e. game images and vide
 
 This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be included in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is only used on Unix. For macOS and Windows the %COREPATH% variable is not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for these operating systems, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores if compiled from source code but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL.md](INSTALL.md#es_systemscfg) for more information about this.
 
+**Hide taskbar (requires restart)** _(Windows only)_
+
+With this setting enabled, the taskbar will be hidden when launching ES-DE, and it will be restored when the application exits. This can make for a more seamless experience as the taskbar could otherwise flash by briefly when launching games and when returning from games. It could potentially cause some issues on some Windows installations though, so the option is disabled by default.
+
+**Run in background (while game is launched)** _(Windows only)_
+
+This is really a last-resort setting if ES-DE freezes when launching games. This issue seems to only occur on Windows 8.1 and older but that's not fully confirmed. ES-DE will behave a bit strange with this option enabled so keep it disabled unless you absolutely need it.
+
 **Per game launch command override**
 
 If enabled, you can override the launch command defined in es_systems.cfg on a per-game basis. It's only recommended to disable this option for testing purposes, such as when a game won't start and you're unsure if it's your custom launch command that causes the problem.

@@ -122,3 +122,10 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Non-transparent favorite icons were not rendered correctly
 * The SliderComponent knob position was set incorrectly if the minimum value was not zero
 * Lots and lots of additional small bugs and inconsistencies fixed
+
+### Known issues
+
+* The input configuration can be a bit glitchy on some devices, most notably the setup of trigger buttons for Xbox and PlayStation controllers. Once configured everything should work fine though. This configuration issue will hopefully be resolved in ES-DE v1.1 with the move to the SDL2 GameController API.
+* Some artifacts can be present with the gaussian blur shader, and screen tearing can be seen when using the slide transitions with certain graphics drivers and resolutions. Both of these issues only affect the upper part of the screen. The second issue is apparently more prevalent when running ES-DE at a lower resolution on 4K displays by using the --resolution command line option. These problems will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
+* The launching of games can freeze ES-DE on some Windows installations. It probably only occurs on Windows 8.1 and older but that's not confirmed. The setting 'Run in background (while game is launched)' can be enabled to get around this problem, but this causes some other issues so it should only be used as a last resort. It's unclear if this problem can or will be resolved. If it's confirmed to only affect older Windows versions, then it's probably not worthwhile fixing it.
+* Scraping using ScreenScraper could lead to errors when exceeding the allowed requests per minute. This will cause a popup window to be displayed in ES-DE with the option available to retry the scraping for the current game (you should first wait a minute or so though or the error will immediately reoccur). This is not really a fault in the application per-se but rather a restriction of ScreenScraper. A request per minute limiter is planned for ES-DE v1.4, which should help with avoiding this problem.

@@ -39,6 +39,8 @@ A comprehensive theme set, **rbsimple-DE** (which is based on Recalbox Multi fro
 | macOS DMG installer | macOS 10.11 "El Capitan" to 11 "Big Sur" | x64 (x86)    | 1.0.0-beta1 | Available soon |
 | Windows installer   | Windows 10 and 8.1                       | x64 (x86)    | 1.0.0-beta1 | Available soon |
 
+Please refer to [RELEASES.md](RELEASES.md) for more information about this release, including known issues.
+
 For some of the rarer operating systems listed at the top you need to build ES-DE from source. The plan is to have ES-DE available in the software repositories of all supported operating systems (where this is applicable), so in the long term building from source should not be required.
 
 **Note:** The software is currently in beta status which means it's also beta quality and may contain bugs. The application should still hopefully be good enough for every day use and bugs will be fixed continuously.
