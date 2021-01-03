@@ -577,7 +577,6 @@ int main(int argc, char* argv[])
     SDL_JoystickEventState(SDL_ENABLE);
 
     int lastTime = SDL_GetTicks();
-    int ps_time = SDL_GetTicks();
     const auto applicationEndTime = std::chrono::system_clock::now();
 
     LOG(LogInfo) << "Application startup time: " <<
@@ -597,9 +596,6 @@ int main(int argc, char* argv[])
                     running = false;
             }
             while (SDL_PollEvent(&event));
-
-            // Reset counter.
-            ps_time = SDL_GetTicks();
         }
 
         if (window.isSleeping()) {
