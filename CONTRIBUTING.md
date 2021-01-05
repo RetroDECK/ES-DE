@@ -14,6 +14,10 @@ In general, a thorough review of [es_systems.cfg_unix](resources/templates/es_sy
 
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details of what needs to be added or updated.
 
+The ES-DE development is tracked using a Kanban board which is publicly visible at the GitLab project site:
+
+[https://gitlab.com/leonstyhre/emulationstation-de/-/boards](https://gitlab.com/leonstyhre/emulationstation-de/-/boards)
+
 ### High level release plan
 
 This plan is under constant review so expect it to change from time to time. Still it should give some feeling for which direction to move and what to work on first. These are only the larger topics, there are of course many smaller changes and improvements in addition to these.
@@ -40,6 +44,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.3
 
+* Localization/multi-language support.
 * Internationalization/multi-language support
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
