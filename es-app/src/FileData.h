@@ -38,6 +38,7 @@ public:
     virtual const std::string& getName();
     const std::string& getSortName();
     const bool getFavorite();
+    const bool getKidgame();
     const bool getHidden();
     const bool getCountAsGame();
     const std::pair<unsigned int, unsigned int> getGameCount() { return mGameCount; };

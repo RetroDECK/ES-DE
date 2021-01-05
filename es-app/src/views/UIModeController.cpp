@@ -11,7 +11,9 @@
 
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
+#include "FileFilterIndex.h"
 #include "Log.h"
+#include "SystemData.h"
 #include "Window.h"
 
 UIModeController* UIModeController::sInstance = nullptr;
@@ -34,8 +36,19 @@ void UIModeController::monitorUIMode()
 {
     std::string uimode = Settings::getInstance()->getString("UIMode");
     // UI mode was changed.
-    if (uimode != mCurrentUIMode) {
+    if (uimode != mCurrentUIMode && !ViewController::get()->isCameraMoving()) {
         mCurrentUIMode = uimode;
+        // Reset filters and sort gamelists (which will update the game counter).
+        for (auto it = SystemData::sSystemVector.cbegin(); it !=
+                SystemData::sSystemVector.cend(); it++) {
+            (*it)->sortSystem(true);
+            (*it)->getIndex()->resetFilters();
+            if ((*it)->getThemeFolder() == "custom-collections") {
+                for (FileData* customSystem :
+                        (*it)->getRootFolder()->getChildrenListToDisplay())
+                    customSystem->getSystem()->getIndex()->resetFilters();
+            }
+        }
         ViewController::get()->ReloadAndGoToStart();
     }
 }

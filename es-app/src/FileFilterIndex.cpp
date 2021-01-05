@@ -85,11 +85,11 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
             sizeof(indexStructDecls) / sizeof(indexStructDecls[0]));
 
     for (std::vector<IndexImportStructure>::const_iterator indexesIt =
-            indexImportDecl.cbegin(); indexesIt != indexImportDecl.cend(); ++indexesIt )
+            indexImportDecl.cbegin(); indexesIt != indexImportDecl.cend(); indexesIt++)
     {
         for (std::map<std::string, int>::const_iterator sourceIt =
                 (*indexesIt).sourceIndex->cbegin(); sourceIt !=
-                (*indexesIt).sourceIndex->cend(); ++sourceIt ) {
+                (*indexesIt).sourceIndex->cend(); sourceIt++) {
             if ((*indexesIt).destinationIndex->find((*sourceIt).first) ==
                     (*indexesIt).destinationIndex->cend())
                 // Entry doesn't exist.
@@ -254,13 +254,13 @@ void FileFilterIndex::setFilter(FilterIndexType type, std::vector<std::string>* 
     }
     else {
         for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
-                it != filterDataDecl.cend(); ++it ) {
+                it != filterDataDecl.cend(); it++) {
             if ((*it).type == type) {
                 FilterDataDecl filterData = (*it);
                 *(filterData.filteredByRef) = values->size() > 0;
                 filterData.currentFilteredKeys->clear();
                 for (std::vector<std::string>::const_iterator vit =
-                        values->cbegin(); vit != values->cend(); ++vit ) {
+                        values->cbegin(); vit != values->cend(); vit++) {
                     // Check if it exists.
                     if (filterData.allIndexKeys->find(*vit) != filterData.allIndexKeys->cend()) {
                         filterData.currentFilteredKeys->push_back(std::string(*vit));
@@ -285,33 +285,27 @@ void FileFilterIndex::setFilter(FilterIndexType type, std::vector<std::string>* 
 void FileFilterIndex::clearAllFilters()
 {
     for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
-            it != filterDataDecl.cend(); ++it ) {
+            it != filterDataDecl.cend(); it++) {
         FilterDataDecl filterData = (*it);
         *(filterData.filteredByRef) = false;
         filterData.currentFilteredKeys->clear();
     }
+    setTextFilter("");
     return;
 }
 
 void FileFilterIndex::resetFilters()
 {
     clearAllFilters();
-    setUIModeFilters();
+    setKidModeFilters();
 }
 
-void FileFilterIndex::setUIModeFilters()
+void FileFilterIndex::setKidModeFilters()
 {
-    if (Settings::getInstance()->getBool("GamelistFilters")){
-        if (UIModeController::getInstance()->isUIModeKiosk()) {
-            mFilterByHidden = true;
-            std::vector<std::string> val = { "FALSE" };
-            setFilter(HIDDEN_FILTER, &val);
-        }
-        if (UIModeController::getInstance()->isUIModeKid()) {
-            mFilterByKidGame = true;
-            std::vector<std::string> val = { "TRUE" };
-            setFilter(KIDGAME_FILTER, &val);
-        }
+    if (UIModeController::getInstance()->isUIModeKid()) {
+        mFilterByKidGame = true;
+        std::vector<std::string> val = { "TRUE" };
+        setFilter(KIDGAME_FILTER, &val);
     }
 }
 
@@ -349,17 +343,13 @@ void FileFilterIndex::debugPrintIndexes()
 
 bool FileFilterIndex::showFile(FileData* game)
 {
-    // This shouldn't happen, but just in case let's get it out of the way.
-    if (!isFiltered())
-        return true;
-
     // If folder, needs further inspection - i.e. see if folder contains at least one element
     // that should be shown.
     if (game->getType() == FOLDER) {
         std::vector<FileData*> children = game->getChildren();
         // Iterate through all of the children, until there's a match.
         for (std::vector<FileData*>::const_iterator it = children.cbegin();
-                it != children.cend(); ++it ) {
+                it != children.cend(); it++) {
             if (showFile(*it))
                 return true;
         }
@@ -380,9 +370,12 @@ bool FileFilterIndex::showFile(FileData* game)
     }
 
     for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
-            it != filterDataDecl.cend(); ++it ) {
+            it != filterDataDecl.cend(); it++) {
         FilterDataDecl filterData = (*it);
-        if (*(filterData.filteredByRef)) {
+        if (filterData.primaryKey == "kidgame" && UIModeController::getInstance()->isUIModeKid()) {
+            return (getIndexableKey(game, filterData.type, false) != "FALSE");
+        }
+        else if (*(filterData.filteredByRef)) {
             // Try to find a match.
             std::string key = getIndexableKey(game, filterData.type, false);
             keepGoing = isKeyBeingFilteredBy(key, filterData.type);
@@ -410,6 +403,20 @@ bool FileFilterIndex::showFile(FileData* game)
         return keepGoing;
 }
 
+bool FileFilterIndex::isFiltered()
+{
+    if (UIModeController::getInstance()->isUIModeKid()) {
+        return (mFilterByText || mFilterByFavorites || mFilterByGenre || mFilterByPlayers ||
+                mFilterByPubDev || mFilterByRatings || mFilterByCompleted || mFilterByBroken ||
+                mFilterByHidden);
+    }
+    else {
+        return (mFilterByText || mFilterByFavorites || mFilterByGenre || mFilterByPlayers ||
+                mFilterByPubDev || mFilterByRatings || mFilterByKidGame || mFilterByCompleted ||
+                mFilterByBroken || mFilterByHidden);
+    }
+}
+
 bool FileFilterIndex::isKeyBeingFilteredBy(std::string key, FilterIndexType type)
 {
     const FilterIndexType filterTypes[9] = { FAVORITES_FILTER, GENRE_FILTER,
@@ -423,7 +430,7 @@ bool FileFilterIndex::isKeyBeingFilteredBy(std::string key, FilterIndexType type
     for (int i = 0; i < 9; i++) {
         if (filterTypes[i] == type) {
             for (std::vector<std::string>::const_iterator it = filterKeysList[i].cbegin();
-                    it != filterKeysList[i].cend(); ++it ) {
+                    it != filterKeysList[i].cend(); it++) {
                 if (key == (*it))
                     return true;
             }

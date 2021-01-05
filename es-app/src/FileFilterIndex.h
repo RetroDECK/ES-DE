@@ -56,16 +56,14 @@ public:
     void clearAllFilters();
     void debugPrintIndexes();
     bool showFile(FileData* game);
-    bool isFiltered() { return (mFilterByText || mFilterByFavorites || mFilterByGenre ||
-            mFilterByPlayers || mFilterByPubDev || mFilterByRatings || mFilterByKidGame ||
-            mFilterByCompleted || mFilterByBroken || mFilterByHidden ); };
+    bool isFiltered();
     bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
     std::vector<FilterDataDecl>& getFilterDataDecls();
 
     void importIndex(FileFilterIndex* indexToImport);
     void resetIndex();
     void resetFilters();
-    void setUIModeFilters();
+    void setKidModeFilters();
 
 private:
     std::vector<FilterDataDecl> filterDataDecl;

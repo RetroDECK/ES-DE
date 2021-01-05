@@ -38,6 +38,8 @@ public:
     bool isUIModeKid();
     bool isUIModeKiosk();
 
+    void setCurrentUIMode(const std::string& mode) { mCurrentUIMode = mode; };
+
 private:
     UIModeController();
     bool inputIsMatch(InputConfig * config, Input input);

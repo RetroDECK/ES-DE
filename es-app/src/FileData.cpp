@@ -14,6 +14,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
+#include "views/UIModeController.h"
 #include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
@@ -105,6 +106,14 @@ const std::string& FileData::getSortName()
 const bool FileData::getFavorite()
 {
     if (metadata.get("favorite") == "true")
+        return true;
+    else
+        return false;
+}
+
+const bool FileData::getKidgame()
+{
+    if (metadata.get("kidgame") == "true")
         return true;
     else
         return false;
@@ -301,7 +310,7 @@ const std::string FileData::getVideoPath() const
 const std::vector<FileData*>& FileData::getChildrenListToDisplay()
 {
     FileFilterIndex* idx = mSystem->getIndex();
-    if (idx->isFiltered()) {
+    if (idx->isFiltered() || UIModeController::getInstance()->isUIModeKid()) {
         mFilteredChildren.clear();
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             if (idx->showFile((*it))) {
@@ -441,6 +450,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     mHasFolders = false;
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
+    bool isKidMode = UIModeController::getInstance()->isUIModeKid();
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
@@ -526,9 +536,11 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
         // Game count, which will be displayed in the system view.
         if ((*it)->getType() == GAME && (*it)->getCountAsGame()) {
-            gameCount.first++;
-            if ((*it)->getFavorite())
-                gameCount.second++;
+            if (!isKidMode || (isKidMode && (*it)->getKidgame())) {
+                gameCount.first++;
+                if ((*it)->getFavorite())
+                    gameCount.second++;
+            }
         }
 
         if ((*it)->getType() != FOLDER)
@@ -552,6 +564,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     mHasFolders = false;
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
     bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
+    bool isKidMode = UIModeController::getInstance()->isUIModeKid();
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
@@ -589,9 +602,11 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
 
         // Game count, which will be displayed in the system view.
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
-            gameCount.first++;
-            if (mChildren[i]->getFavorite())
-                gameCount.second++;
+            if (!isKidMode || (isKidMode && mChildren[i]->getKidgame())) {
+                gameCount.first++;
+                if (mChildren[i]->getFavorite())
+                    gameCount.second++;
+            }
         }
 
         if (foldersOnTop && mChildren[i]->getType() == FOLDER) {
@@ -707,11 +722,19 @@ void FileData::sort(const SortType& type, bool mFavoritesOnTop)
 
 void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
 {
+    bool isKidMode = (Settings::getInstance()->getString("UIMode") == "kid" ||
+            Settings::getInstance()->getBool("ForceKid"));
+
+    (Settings::getInstance()->getString("UIMode") == "kid" ||
+            Settings::getInstance()->getBool("ForceKid"));
+
     for (unsigned int i = 0; i < mChildren.size(); i++) {
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
-            gameCount.first++;
-            if (mChildren[i]->getFavorite())
-                gameCount.second++;
+            if (!isKidMode || (isKidMode && mChildren[i]->getKidgame())) {
+                gameCount.first++;
+                if (mChildren[i]->getFavorite())
+                    gameCount.second++;
+            }
         }
         // Iterate through any folders.
         else if (mChildren[i]->getType() == FOLDER)

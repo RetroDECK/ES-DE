@@ -4,8 +4,8 @@
 //  GuiSettings.cpp
 //
 //  User interface template for a settings GUI.
-//  The saving of es_settings.cfg and the reload of the gamelists are triggered from here
-//  based on the flags set by the actual menu entries' lambda functions.
+//  The saving of es_settings.cfg, the reload of gamelists and some other actions are
+//  also triggered to be executed here via flags set by the menu entries' lambda functions.
 //
 
 #include "guis/GuiSettings.h"
@@ -14,6 +14,7 @@
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
+#include "FileFilterIndex.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "Window.h"
@@ -25,13 +26,14 @@ GuiSettings::GuiSettings(
         mMenu(window, title),
         mNeedsSaving(false),
         mNeedsCollectionsUpdate(false),
-        mNeedsReloading(false),
         mNeedsSorting(false),
         mNeedsSortingCollections(false),
-        mGoToSystem(nullptr),
+        mNeedsResetFilters(false),
+        mNeedsReloading(false),
         mNeedsGoToStart(false),
         mNeedsGoToSystem(false),
-        mNeedsGoToGroupedCollections(false)
+        mNeedsGoToGroupedCollections(false),
+        mGoToSystem(nullptr)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -62,9 +64,6 @@ void GuiSettings::save()
         CollectionSystemsManager::get()->updateSystemsList();
     }
 
-    if (mNeedsReloading)
-        ViewController::get()->reloadAll();
-
     if (mNeedsSorting) {
         for (auto it = SystemData::sSystemVector.cbegin(); it !=
                 SystemData::sSystemVector.cend(); it++) {
@@ -76,6 +75,21 @@ void GuiSettings::save()
             gameList->setCursor(gameList->getFirstEntry());
         }
     }
+
+    if (mNeedsResetFilters) {
+        for (auto it = SystemData::sSystemVector.cbegin();
+                it != SystemData::sSystemVector.cend(); it++) {
+            if ((*it)->getThemeFolder() == "custom-collections") {
+                for (FileData* customSystem :
+                        (*it)->getRootFolder()->getChildrenListToDisplay())
+                    customSystem->getSystem()->getIndex()->resetFilters();
+            }
+            (*it)->getIndex()->resetFilters();
+        }
+    }
+
+    if (mNeedsReloading)
+        ViewController::get()->reloadAll();
 
     if (mNeedsGoToStart)
         ViewController::get()->goToStart();

@@ -24,6 +24,7 @@
 #include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
 #include "EmulationStation.h"
+#include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "Platform.h"
 #include "Scripting.h"
@@ -191,12 +192,15 @@ void GuiMenu::openUISettings()
         ui_mode->add(*it, *it, setMode == *it);
     s->addWithLabel("UI MODE", ui_mode);
     s->addSaveFunc([ui_mode, this, s] {
-        // Always save settings if mode was forced to 'full'.
-        if (Settings::getInstance()->getBool("ForceFull"))
-            s->setNeedsSaving();
         std::string selectedMode = ui_mode->getSelected();
-        if (selectedMode != Settings::getInstance()->getString("UIMode") &&
-                selectedMode != "full") {
+        // If any of the force flags are set, then always apply and save the setting.
+        if (selectedMode == Settings::getInstance()->getString("UIMode") &&
+                !Settings::getInstance()->getBool("ForceFull") &&
+                !Settings::getInstance()->getBool("ForceKiosk") &&
+                !Settings::getInstance()->getBool("ForceKid")) {
+            return;
+        }
+        else if (selectedMode != "full") {
             std::string msg = "YOU ARE CHANGING THE UI TO A RESTRICTED MODE:\n'" +
                     Utils::String::toUpper(selectedMode) + "'\n";
             msg += "THIS WILL HIDE MOST MENU OPTIONS TO PREVENT CHANGES TO THE SYSTEM.\n";
@@ -204,7 +208,7 @@ void GuiMenu::openUISettings()
             msg += "\"" + UIModeController::getInstance()->getFormattedPassKeyStr() + "\"\n\n";
             msg += "DO YOU WANT TO PROCEED?";
             mWindow->pushGui(new GuiMsgBox(mWindow, this->getHelpStyle(), msg,
-                    "YES", [selectedMode, s] {
+                    "YES", [this, selectedMode] {
                 LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '"
                     << selectedMode << "'.";
                 Settings::getInstance()->setString("UIMode", selectedMode);
@@ -212,17 +216,36 @@ void GuiMenu::openUISettings()
                 Settings::getInstance()->setBool("ForceKiosk", false);
                 Settings::getInstance()->setBool("ForceKid", false);
                 Settings::getInstance()->saveFile();
+                UIModeController::getInstance()->setCurrentUIMode(selectedMode);
+                for (auto it = SystemData::sSystemVector.cbegin();
+                        it != SystemData::sSystemVector.cend(); it++) {
+                    if ((*it)->getThemeFolder() == "custom-collections") {
+                        for (FileData* customSystem :
+                                (*it)->getRootFolder()->getChildrenListToDisplay())
+                            customSystem->getSystem()->getIndex()->resetFilters();
+                    }
+                    (*it)->sortSystem();
+                    (*it)->getIndex()->resetFilters();
+                }
+                ViewController::get()->reloadAll();
+                ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
+                mWindow->invalidateCachedBackground();
             }, "NO", nullptr));
         }
-        else if (ui_mode->getSelected() != Settings::getInstance()->getString("UIMode") &&
-                selectedMode == "full") {
+        else {
             LOG(LogDebug) << "GuiMenu::openUISettings(): Setting UI mode to '" <<
                     selectedMode << "'.";
             Settings::getInstance()->setString("UIMode", ui_mode->getSelected());
             Settings::getInstance()->setBool("ForceFull", false);
             Settings::getInstance()->setBool("ForceKiosk", false);
             Settings::getInstance()->setBool("ForceKid", false);
+            UIModeController::getInstance()->setCurrentUIMode("full");
             s->setNeedsSaving();
+            s->setNeedsSorting();
+            s->setNeedsSortingCollections();
+            s->setNeedsResetFilters();
+            s->setNeedsReloading();
+            s->setNeedsGoToSystem(SystemData::sSystemVector.front());
         }
     });
 

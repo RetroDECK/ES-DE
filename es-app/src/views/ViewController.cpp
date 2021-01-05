@@ -133,8 +133,14 @@ void ViewController::goToStart()
 void ViewController::ReloadAndGoToStart()
 {
     mWindow->renderLoadingScreen("Loading...");
-    ViewController::get()->reloadAll();
-    ViewController::get()->goToStart();
+    reloadAll();
+    if (mState.viewing == GAME_LIST) {
+        goToSystemView(SystemData::sSystemVector.front(), false);
+        goToSystem(SystemData::sSystemVector.front(), false);
+    }
+    else {
+        goToSystem(SystemData::sSystemVector.front(), false);
+    }
 }
 
 bool ViewController::isCameraMoving()
@@ -554,7 +560,7 @@ std::shared_ptr<IGameListView> ViewController::getGameListView(SystemData* syste
     if (exists != mGameListViews.cend())
         return exists->second;
 
-    system->getIndex()->setUIModeFilters();
+    system->getIndex()->setKidModeFilters();
     // If there's no entry, then create it and return it.
     std::shared_ptr<IGameListView> view;
 
@@ -781,7 +787,7 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
 
             if (reloadTheme)
                 system->loadTheme();
-            system->getIndex()->setUIModeFilters();
+            system->getIndex()->setKidModeFilters();
             std::shared_ptr<IGameListView> newView = getGameListView(system);
 
             // To counter having come from a placeholder.

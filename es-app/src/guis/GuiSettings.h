@@ -4,8 +4,8 @@
 //  GuiSettings.h
 //
 //  User interface template for a settings GUI.
-//  The saving of es_settings.cfg and the reload of the gamelists are triggered from here
-//  based on the flags set by the actual menu entries' lambda functions.
+//  The saving of es_settings.cfg, the reload of gamelists and some other actions are
+//  also triggered to be executed here via flags set by the menu entries' lambda functions.
 //
 
 #ifndef ES_APP_GUIS_GUI_SETTINGS_H
@@ -35,9 +35,10 @@ public:
 
     void setNeedsSaving() { mNeedsSaving = true; };
     void setNeedsCollectionsUpdate() { mNeedsCollectionsUpdate = true; };
-    void setNeedsReloading() { mNeedsReloading = true; };
     void setNeedsSorting() { mNeedsSorting = true; };
     void setNeedsSortingCollections() { mNeedsSortingCollections = true; };
+    void setNeedsResetFilters() { mNeedsResetFilters = true; }
+    void setNeedsReloading() { mNeedsReloading = true; };
     void setNeedsGoToStart() { mNeedsGoToStart = true; };
     void setNeedsGoToSystem(SystemData* goToSystem)
             { mNeedsGoToSystem = true; mGoToSystem = goToSystem; };
@@ -52,9 +53,10 @@ private:
     std::vector<std::function<void()>> mSaveFuncs;
     bool mNeedsSaving;
     bool mNeedsCollectionsUpdate;
-    bool mNeedsReloading;
     bool mNeedsSorting;
     bool mNeedsSortingCollections;
+    bool mNeedsResetFilters;
+    bool mNeedsReloading;
     bool mNeedsGoToStart;
     bool mNeedsGoToSystem;
     bool mNeedsGoToGroupedCollections;
