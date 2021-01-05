@@ -65,6 +65,7 @@ GuiScraperSearch::GuiScraperSearch(
 
     // Selected result description and container.
     mDescContainer = std::make_shared<ScrollableContainer>(mWindow);
+    mDescContainer->setScrollParameters(1500, 1000, 11, AUTO_WIDTH_MOD);
     mResultDesc = std::make_shared<TextComponent>(mWindow, "Result desc",
             Font::get(FONT_SIZE_SMALL), 0x777777FF);
     mDescContainer->addChild(mResultDesc.get());
