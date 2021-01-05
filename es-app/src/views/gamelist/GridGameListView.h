@@ -41,6 +41,13 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
     virtual void launch(FileData* game) override;
 
+    virtual bool isListScrolling() override { return mGrid.isScrolling(); };
+    virtual void stopListScrolling() override
+    {
+        mGrid.stopAllAnimations();
+        mGrid.stopScrolling();
+    };
+
     virtual const std::vector<std::string>& getFirstLetterIndex() override
             { return mFirstLetterIndex; };
 
