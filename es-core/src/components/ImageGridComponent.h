@@ -101,7 +101,7 @@ private:
     Vector2f mTileSize;
     Vector2i mGridDimension;
     std::shared_ptr<ThemeData> mTheme;
-    std::vector< std::shared_ptr<GridTileComponent> > mTiles;
+    std::vector<std::shared_ptr<GridTileComponent>> mTiles;
 
     int mStartPosition;
 

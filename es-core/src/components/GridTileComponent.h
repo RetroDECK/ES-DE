@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  GridTileComponent.h
 //
-//  X*Y grid.
+//  X*Y tile grid, used indirectly by GridGameListView via ImageGridComponent.
 //
 
 #ifndef ES_CORE_COMPONENTS_GRID_TILE_COMPONENT_H

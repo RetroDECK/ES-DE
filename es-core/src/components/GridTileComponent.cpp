@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  GridTileComponent.cpp
 //
-//  X*Y grid.
+//  X*Y tile grid, used indirectly by GridGameListView via ImageGridComponent.
 //
 
 #include "GridTileComponent.h"
@@ -12,13 +12,14 @@
 #include "resources/TextureResource.h"
 #include "ThemeData.h"
 
-GridTileComponent::GridTileComponent(Window* window) : GuiComponent(window), mBackground(window)
+GridTileComponent::GridTileComponent(Window* window) :
+        GuiComponent(window), mBackground(window, ":/graphics/frame.png")
 {
     mDefaultProperties.mSize = getDefaultTileSize();
     mDefaultProperties.mPadding = Vector2f(16.0f, 16.0f);
     mDefaultProperties.mImageColor = 0xAAAAAABB;
     mDefaultProperties.mBackgroundImage = ":/graphics/frame.png";
-    mDefaultProperties.mBackgroundCornerSize = Vector2f(16 ,16);
+    mDefaultProperties.mBackgroundCornerSize = Vector2f(16.0f, 16.0f);
     mDefaultProperties.mBackgroundCenterColor = 0xAAAAEEFF;
     mDefaultProperties.mBackgroundEdgeColor = 0xAAAAEEFF;
 
