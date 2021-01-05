@@ -33,7 +33,8 @@ public:
             Alignment align = ALIGN_LEFT,
             Vector3f pos = Vector3f::Zero(),
             Vector2f size = Vector2f::Zero(),
-            unsigned int bgcolor = 0x00000000);
+            unsigned int bgcolor = 0x00000000,
+            float margin = 0.0f);
 
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);
@@ -80,6 +81,7 @@ private:
     unsigned int mBgColor;
     unsigned char mColorOpacity;
     unsigned char mBgColorOpacity;
+    float mMargin;
     bool mRenderBackground;
 
     bool mUppercase;

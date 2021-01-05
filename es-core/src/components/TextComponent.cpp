@@ -23,6 +23,7 @@ TextComponent::TextComponent(
         mVerticalAlignment(ALIGN_CENTER),
         mLineSpacing(1.5f),
         mBgColor(0),
+        mMargin(0.0f),
         mRenderBackground(false)
 {
 }
@@ -35,7 +36,8 @@ TextComponent::TextComponent(
         Alignment align,
         Vector3f pos,
         Vector2f size,
-        unsigned int bgcolor)
+        unsigned int bgcolor,
+        float margin)
         : GuiComponent(window),
         mFont(nullptr),
         mUppercase(false),
@@ -45,6 +47,7 @@ TextComponent::TextComponent(
         mVerticalAlignment(ALIGN_CENTER),
         mLineSpacing(1.5f),
         mBgColor(0),
+        mMargin(margin),
         mRenderBackground(false)
 {
     setFont(font);
@@ -230,8 +233,10 @@ void TextComponent::onTextChanged()
         // Abbreviate text.
         const std::string abbrev = "...";
         Vector2f abbrevSize = f->sizeText(abbrev);
+        // mMargin adds a margin around the text if it's abbreviated.
+        float marginAdjustedSize = mSize.x() - (mSize.x() * mMargin);
 
-        while (text.size() && size.x() + abbrevSize.x() > mSize.x()) {
+        while (text.size() && size.x() + abbrevSize.x() > marginAdjustedSize) {
             size_t newSize = Utils::String::prevCursor(text, text.size());
             text.erase(newSize, text.size() - newSize);
             size = f->sizeText(text);
