@@ -335,7 +335,7 @@ bool InputManager::loadInputConfig(InputConfig* config)
     std::string path = getConfigPath();
     if (!Utils::FileSystem::exists(path)) {
         if (config->getDeviceName() == "Keyboard") {
-            LOG(LogDebug) << "InputManager::loadInputConfig(): Assigning default keyboard "
+            LOG(LogDebug) << "InputManager::loadInputConfig(): Will assign default keyboard "
                     "mappings as there is no es_input.cfg configuration file";
             loadDefaultKBConfig();
             config->setDefaultConfigFlag();
