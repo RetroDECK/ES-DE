@@ -769,7 +769,8 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
     prompts.push_back(HelpPrompt("y", "refine search"));
     if (mScrapeCount > 1)
         prompts.push_back(HelpPrompt("x", "skip"));
-    if (mFoundGame)
+    if (mFoundGame && (mRefinedSearch || mSearchType != ACCEPT_SINGLE_MATCHES ||
+            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)))
         prompts.push_back(HelpPrompt("a", "accept result"));
 
     return prompts;
