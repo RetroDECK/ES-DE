@@ -245,6 +245,8 @@ Assuming the default installation prefix /usr/local has been used, this is the d
 /usr/local/share/pixmaps/emulationstation.svg
 ```
 
+Be aware that if using the GNOME desktop environment, /usr/local/share/pixmaps/emulationstation.svg must exist in order for any ES-DE icon to be shown in the Dash and task switcher. In for instance KDE this is not required and there will be an application icon shown even if just running from the emulationstation-de source tree.
+
 ES-DE will look in the following locations for the resources, in the listed order:
 
 * \<home\>/.emulationstation/resources/
