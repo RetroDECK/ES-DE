@@ -18,6 +18,7 @@
 #include "guis/GuiScraperSearch.h"
 #include "views/ViewController.h"
 #include "Gamelist.h"
+#include "MameNames.h"
 #include "SystemData.h"
 #include "Window.h"
 
@@ -130,10 +131,24 @@ void GuiScraperMulti::doNextSearch()
     std::stringstream ss;
     mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()));
 
+    std::string scrapeName;
+
+    if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
+        scrapeName = mSearchQueue.front().game->getName();
+    }
+    else {
+        if (mSearchQueue.front().game->isArcadeGame() &&
+                Settings::getInstance()->getString("Scraper") == "thegamesdb")
+            scrapeName = Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath()) +
+                    " (" + MameNames::getInstance()->getCleanName(mSearchQueue.front().game->
+                    getCleanName()) + ")";
+        else
+            scrapeName = Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath());
+    }
+
     // Update subtitle.
     ss.str("");
-    ss << "GAME " << (mCurrentGame + 1) << " OF " << mTotalGames << " - " <<
-            Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath()) <<
+    ss << "GAME " << (mCurrentGame + 1) << " OF " << mTotalGames << " - " << scrapeName <<
             ((mSearchQueue.front().game->getType() == FOLDER) ? "  " +
             ViewController::FOLDER_CHAR : "");
     mSubtitle->setText(ss.str());

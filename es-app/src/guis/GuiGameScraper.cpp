@@ -15,6 +15,7 @@
 #include "components/TextComponent.h"
 #include "views/ViewController.h"
 #include "FileData.h"
+#include "MameNames.h"
 #include "SystemData.h"
 
 GuiGameScraper::GuiGameScraper(
@@ -32,8 +33,22 @@ GuiGameScraper::GuiGameScraper(
 
     // Row 0 is a spacer.
 
-    mGameName = std::make_shared<TextComponent>(mWindow,
-            Utils::FileSystem::getFileName(mSearchParams.game->getPath()) +
+    std::string scrapeName;
+
+    if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
+        scrapeName = mSearchParams.game->getName();
+    }
+    else {
+        if (params.game->isArcadeGame() &&
+                Settings::getInstance()->getString("Scraper") == "thegamesdb")
+            scrapeName = Utils::FileSystem::getFileName(mSearchParams.game->getPath()) + " (" +
+                    MameNames::getInstance()->getCleanName(mSearchParams.game->getCleanName()) +
+                    ")";
+        else
+            scrapeName = Utils::FileSystem::getFileName(mSearchParams.game->getPath());
+    }
+
+    mGameName = std::make_shared<TextComponent>(mWindow, scrapeName +
             ((mSearchParams.game->getType() == FOLDER) ? "  " + ViewController::FOLDER_CHAR : ""),
             Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
     mGrid.setEntry(mGameName, Vector2i(0, 1), false, true);
