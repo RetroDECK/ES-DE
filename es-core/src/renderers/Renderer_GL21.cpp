@@ -377,21 +377,20 @@ namespace Renderer
 
     void setSwapInterval()
     {
-        // vsync.
         if (Settings::getInstance()->getBool("VSync")) {
-            // SDL_GL_SetSwapInterval(0) for immediate updates (no vsync, default),
-            // 1 for updates synchronized with the vertical retrace,
-            // or -1 for late swap tearing.
-            // SDL_GL_SetSwapInterval returns 0 on success, -1 on error.
-            // if vsync is requested, try normal vsync; if that doesn't work, try late swap tearing
-            // if that doesn't work, report an error.
-            if (SDL_GL_SetSwapInterval(1) != 0 && SDL_GL_SetSwapInterval(-1) != 0) {
-                LOG(LogWarning) << "Tried to enable vsync, but it failed. (" <<
-                        SDL_GetError() << ")";
+            // Adaptive VSync seems to be nonfunctional or having issues on some hardware
+            // and drivers, so only attempt to apply regular VSync.
+            if (SDL_GL_SetSwapInterval(1) == 0) {
+                LOG(LogInfo) << "Enabling VSync...";
+            }
+            else {
+                LOG(LogWarning) << "Could not enable VSync: " << SDL_GetError();
             }
         }
-        else
+        else {
             SDL_GL_SetSwapInterval(0);
+            LOG(LogInfo) << "Disabling VSync...";
+        }
     }
 
     void swapBuffers()
