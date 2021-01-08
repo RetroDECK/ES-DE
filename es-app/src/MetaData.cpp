@@ -16,14 +16,14 @@
 
 MetaDataDecl gameDecls[] = {
 // key,           type,                default,           statistic, name in GuiMetaDataEd,        prompt in GuiMetaDataEd,            shouldScrape
-{"name",          MD_STRING,           "",                false,     "name",                       "enter game name",                  true},
-{"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter game sort name",             false},
+{"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
+{"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter sort name",                  false},
 {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
 {"rating",        MD_RATING,           "0",               false,     "rating",                     "enter rating",                     true},
 {"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",               "enter release date",               true},
-{"developer",     MD_STRING,           "unknown",         false,     "developer",                  "enter game developer",             true},
-{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                  "enter game publisher",             true},
-{"genre",         MD_STRING,           "unknown",         false,     "genre",                      "enter game genre",                 true},
+{"developer",     MD_STRING,           "unknown",         false,     "developer",                  "enter developer",                  true},
+{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                  "enter publisher",                  true},
+{"genre",         MD_STRING,           "unknown",         false,     "genre",                      "enter genre",                      true},
 {"players",       MD_STRING,           "unknown",         false,     "players",                    "enter number of players",          true},
 {"favorite",      MD_BOOL,             "false",           false,     "favorite",                   "enter favorite off/on",            false},
 {"completed",     MD_BOOL,             "false",           false,     "completed",                  "enter completed off/on",           false},
@@ -35,7 +35,7 @@ MetaDataDecl gameDecls[] = {
 {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",       "enter hide metadata off/on",       false},
 {"launchcommand", MD_LAUNCHCOMMAND,    "",                false,     "launch command",             "enter game launch command "
                                                                                                    "(emulator override)",              false},
-{"playcount",     MD_INT,              "0",               false,     "play count",                 "enter number of times played",     false},
+{"playcount",     MD_INT,              "0",               false,     "times played",               "enter number of times played",     false},
 {"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
 };
 
@@ -43,13 +43,13 @@ const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls +
         sizeof(gameDecls) / sizeof(gameDecls[0]));
 
 MetaDataDecl folderDecls[] = {
-{"name",          MD_STRING,           "",                false,     "name",                       "enter game name",                  true},
+{"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
 {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
 {"rating",        MD_RATING,           "0",               false,     "rating",                     "enter rating",                     true},
 {"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",               "enter release date",               true},
-{"developer",     MD_STRING,           "unknown",         false,     "developer",                  "enter game developer",             true},
-{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                  "enter game publisher",             true},
-{"genre",         MD_STRING,           "unknown",         false,     "genre",                      "enter game genre",                 true},
+{"developer",     MD_STRING,           "unknown",         false,     "developer",                  "enter developer",                  true},
+{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                  "enter publisher",                  true},
+{"genre",         MD_STRING,           "unknown",         false,     "genre",                      "enter genre",                      true},
 {"players",       MD_STRING,           "unknown",         false,     "players",                    "enter number of players",          true},
 {"favorite",      MD_BOOL,             "false",           false,     "favorite",                   "enter favorite off/on",            false},
 {"completed",     MD_BOOL,             "false",           false,     "completed",                  "enter completed off/on",           false},

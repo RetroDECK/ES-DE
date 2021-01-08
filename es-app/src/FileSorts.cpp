@@ -38,11 +38,11 @@ namespace FileSorts
         FileData::SortType(&compareNumPlayers, "players, ascending"),
         FileData::SortType(&compareNumPlayersDescending, "players, descending"),
 
-        FileData::SortType(&compareTimesPlayed, "times played, ascending"),
-        FileData::SortType(&compareTimesPlayedDescending, "times played, descending"),
-
         FileData::SortType(&compareLastPlayed, "last played, ascending"),
         FileData::SortType(&compareLastPlayedDescending, "last played, descending"),
+
+        FileData::SortType(&compareTimesPlayed, "times played, ascending"),
+        FileData::SortType(&compareTimesPlayedDescending, "times played, descending"),
 
         FileData::SortType(&compareSystem, "system, ascending"),
         FileData::SortType(&compareSystemDescending, "system, descending")
@@ -185,6 +185,18 @@ namespace FileSorts
         return file1Int > file2Int;
     }
 
+    bool compareLastPlayed(const FileData* file1, const FileData* file2)
+    {
+        // Since it's stored as an ISO string (YYYYMMDDTHHMMSS), we can compare as a string
+        // which is a lot faster than the time casts and the time comparisons.
+        return (file1)->metadata.get("lastplayed") > (file2)->metadata.get("lastplayed");
+    }
+
+    bool compareLastPlayedDescending(const FileData* file1, const FileData* file2)
+    {
+        return (file1)->metadata.get("lastplayed") < (file2)->metadata.get("lastplayed");
+    }
+
     bool compareTimesPlayed(const FileData* file1, const FileData* file2)
     {
         // Only games have playcount metadata.
@@ -200,18 +212,6 @@ namespace FileSorts
                 file2->metadata.getType() == GAME_METADATA)
             return (file1)->metadata.getInt("playcount") > (file2)->metadata.getInt("playcount");
         return false;
-    }
-
-    bool compareLastPlayed(const FileData* file1, const FileData* file2)
-    {
-        // Since it's stored as an ISO string (YYYYMMDDTHHMMSS), we can compare as a string
-        // which is a lot faster than the time casts and the time comparisons.
-        return (file1)->metadata.get("lastplayed") > (file2)->metadata.get("lastplayed");
-    }
-
-    bool compareLastPlayedDescending(const FileData* file1, const FileData* file2)
-    {
-        return (file1)->metadata.get("lastplayed") < (file2)->metadata.get("lastplayed");
     }
 
     bool compareSystem(const FileData* file1, const FileData* file2)

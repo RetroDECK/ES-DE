@@ -1059,8 +1059,8 @@ Sorting can be applied using the following metadata, in either ascending or desc
 * Publisher
 * Genre
 * Players
-* Times played
 * Last played
+* Times played
 * System _(Only for collections)_
 
 The secondary sorting is always in ascending filename order.

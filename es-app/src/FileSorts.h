@@ -30,10 +30,10 @@ namespace FileSorts
     bool compareGenreDescending(const FileData* file1, const FileData* file2);
     bool compareNumPlayers(const FileData* file1, const FileData* file2);
     bool compareNumPlayersDescending(const FileData* file1, const FileData* file2);
-    bool compareTimesPlayed(const FileData* file1, const FileData* fil2);
-    bool compareTimesPlayedDescending(const FileData* file1, const FileData* fil2);
     bool compareLastPlayed(const FileData* file1, const FileData* file2);
     bool compareLastPlayedDescending(const FileData* file1, const FileData* file2);
+    bool compareTimesPlayed(const FileData* file1, const FileData* fil2);
+    bool compareTimesPlayedDescending(const FileData* file1, const FileData* fil2);
     bool compareSystem(const FileData* file1, const FileData* file2);
     bool compareSystemDescending(const FileData* file1, const FileData* file2);
 
