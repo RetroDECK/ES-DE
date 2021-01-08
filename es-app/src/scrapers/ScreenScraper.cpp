@@ -525,14 +525,15 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
 {
     std::string screenScraperURL;
 
-    // If the game is a arcade game, then search using the individual ROM name rather than
-    // running a wider text matching search. Also run this search mode if the game name is
-    // shorter than four characters, as screenscraper.fr will otherwise throw an error that
-    // the necessary search parameters were not provided with the search.
-    // Possibly this is because a search using less than four characters would return too
-    // many results. But there are some games with really short names, so it's annoying that
-    // they can't be searched using this method.
-    if (isArcadeSystem || gameName.size() < 4) {
+    // If the game is an arcade game and we're not searching using the metadata name, then
+    // search using the individual ROM name rather than running a wider text matching search.
+    // Also run this search mode if the game name is shorter than four characters, as
+    // screenscraper.fr will otherwise throw an error that the necessary search parameters
+    // were not provided with the search. Possibly this is because a search using less than
+    // four characters would return too many results. But there are some games with really
+    // short names, so it's annoying that they can't be searched using this method.
+    if ((isArcadeSystem && !Settings::getInstance()->getBool("ScraperSearchMetadataName")) ||
+            gameName.size() < 4) {
         screenScraperURL = API_URL_BASE
                 + "/jeuInfos.php?devid=" + Utils::String::scramble(API_DEV_U, API_DEV_KEY)
                 + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
