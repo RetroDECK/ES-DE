@@ -443,7 +443,7 @@ void FileData::removeChild(FileData* file)
     assert(false);
 }
 
-void FileData::sort(ComparisonFunction& comparator, bool ascending,
+void FileData::sort(ComparisonFunction& comparator,
         std::pair<unsigned int, unsigned int>& gameCount)
 {
     mOnlyFolders = true;
@@ -480,7 +480,7 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
         std::pair<unsigned int, unsigned int> tempGameCount = {};
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             if ((*it)->getChildren().size() > 0)
-                (*it)->sort(comparator, ascending, gameCount);
+                (*it)->sort(comparator, gameCount);
             tempGameCount.first += gameCount.first;
             tempGameCount.second += gameCount.second;
             gameCount = {};
@@ -500,23 +500,20 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
             }
         }
 
-        // If descending sorting is requested, always perform a ascending sort by filename first.
-        // This adds a slight (probably negligible) overhead but it will avoid strange sorting
-        // issues where the secondary sorting is reversed for some sort types.
-        if (!ascending)
+        // If the requested sorting is not by filename, then sort in ascending filename order
+        // as a first step, in order to get a correct secondary sorting.
+        if (getSortTypeFromString("filename, ascending").comparisonFunction != comparator &&
+                getSortTypeFromString("filename, descending").comparisonFunction != comparator) {
+            std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(),
+                    getSortTypeFromString("filename, ascending").comparisonFunction);
             std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(),
                     getSortTypeFromString("filename, ascending").comparisonFunction);
+        }
 
         if (foldersOnTop && mOnlyFolders)
             std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
 
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
-
-        if (!ascending) {
-            if (foldersOnTop && mOnlyFolders)
-                std::reverse(mChildrenFolders.begin(), mChildrenFolders.end());
-            std::reverse(mChildrenOthers.begin(), mChildrenOthers.end());
-        }
 
         mChildren.erase(mChildren.begin(), mChildren.end());
         mChildren.reserve(mChildrenFolders.size() + mChildrenOthers.size());
@@ -524,13 +521,14 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
         mChildren.insert(mChildren.end(), mChildrenOthers.begin(), mChildrenOthers.end());
     }
     else {
-        if (!ascending)
+        // If the requested sorting is not by filename, then sort in ascending filename order
+        // as a first step, in order to get a correct secondary sorting.
+        if (getSortTypeFromString("filename, ascending").comparisonFunction != comparator &&
+                getSortTypeFromString("filename, descending").comparisonFunction != comparator)
             std::stable_sort(mChildren.begin(), mChildren.end(),
                     getSortTypeFromString("filename, ascending").comparisonFunction);
 
         std::stable_sort(mChildren.begin(), mChildren.end(), comparator);
-        if (!ascending)
-            std::reverse(mChildren.begin(), mChildren.end());
     }
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
@@ -550,14 +548,14 @@ void FileData::sort(ComparisonFunction& comparator, bool ascending,
 
         // Iterate through any child folders.
         if ((*it)->getChildren().size() > 0)
-            (*it)->sort(comparator, ascending, gameCount);
+            (*it)->sort(comparator, gameCount);
     }
 
     if (mSystem->isGroupedCustomCollection())
         mGameCount = gameCount;
 }
 
-void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending,
+void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
         std::pair<unsigned int, unsigned int>& gameCount)
 {
     mOnlyFolders = true;
@@ -579,7 +577,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
         std::pair<unsigned int, unsigned int> tempGameCount = {};
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             if ((*it)->getChildren().size() > 0)
-                (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
+                (*it)->sortFavoritesOnTop(comparator, gameCount);
             tempGameCount.first += gameCount.first;
             tempGameCount.second += gameCount.second;
             gameCount = {};
@@ -644,10 +642,10 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
                 getSortTypeFromString("filename, ascending").comparisonFunction);
     }
 
-    // If descending sorting is requested, always perform a ascending sort by filename first.
-    // This adds a slight (probably negligible) overhead but it will avoid strange sorting
-    // issues where the secondary sorting is reversed for some sort types.
-    if (!ascending) {
+    // If the requested sorting is not by filename, then sort in ascending filename order
+    // as a first step, in order to get a correct secondary sorting.
+    if (getSortTypeFromString("filename, ascending").comparisonFunction != comparator &&
+            getSortTypeFromString("filename, descending").comparisonFunction != comparator) {
         std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(),
                 getSortTypeFromString("filename, ascending").comparisonFunction);
         std::stable_sort(mChildrenFavoritesFolders.begin(), mChildrenFavoritesFolders.end(),
@@ -671,13 +669,13 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     for (auto it = mChildrenFavoritesFolders.cbegin(); it !=
             mChildrenFavoritesFolders.cend(); it++) {
         if ((*it)->getChildren().size() > 0)
-            (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
+            (*it)->sortFavoritesOnTop(comparator, gameCount);
     }
 
     // Iterate through any child folders.
     for (auto it = mChildrenFolders.cbegin(); it != mChildrenFolders.cend(); it++) {
         if ((*it)->getChildren().size() > 0)
-            (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
+            (*it)->sortFavoritesOnTop(comparator, gameCount);
     }
 
     // If folders are not sorted on top, mChildrenFavoritesFolders and mChildrenFolders
@@ -686,17 +684,8 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending
     if (mChildrenFavoritesFolders.size() == 0 && mChildrenFolders.size() == 0) {
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             if ((*it)->getChildren().size() > 0)
-                (*it)->sortFavoritesOnTop(comparator, ascending, gameCount);
+                (*it)->sortFavoritesOnTop(comparator, gameCount);
         }
-    }
-
-    if (!ascending) {
-        if (foldersOnTop && mOnlyFolders) {
-            std::reverse(mChildrenFavoritesFolders.begin(), mChildrenFavoritesFolders.end());
-            std::reverse(mChildrenFolders.begin(), mChildrenFolders.end());
-        }
-        std::reverse(mChildrenFavorites.begin(), mChildrenFavorites.end());
-        std::reverse(mChildrenOthers.begin(), mChildrenOthers.end());
     }
 
     // Combine the individually sorted favorite games and other games vectors.
@@ -715,9 +704,9 @@ void FileData::sort(const SortType& type, bool mFavoritesOnTop)
     mGameCount = std::make_pair(0, 0);
 
     if (mFavoritesOnTop)
-        sortFavoritesOnTop(*type.comparisonFunction, type.ascending, mGameCount);
+        sortFavoritesOnTop(*type.comparisonFunction, mGameCount);
     else
-        sort(*type.comparisonFunction, type.ascending, mGameCount);
+        sort(*type.comparisonFunction, mGameCount);
 }
 
 void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)

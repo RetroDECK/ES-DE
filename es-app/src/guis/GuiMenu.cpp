@@ -254,9 +254,12 @@ void GuiMenu::openUISettings()
     std::string sortOrder;
     auto default_sort_order = std::make_shared<SortList>
             (mWindow, getHelpStyle(), "DEFAULT SORT ORDER", false);
-    for (auto it = FileSorts::SortTypes.cbegin(); it != FileSorts::SortTypes.cend(); it++) {
-        if (it->description == Settings::getInstance()->getString("DefaultSortOrder")) {
-            sortOrder = it->description;
+    // Exclude the System sort options.
+    unsigned int numSortTypes = FileSorts::SortTypes.size() - 2;
+    for (unsigned int i = 0; i < numSortTypes; i++) {
+        if (FileSorts::SortTypes[i].description ==
+                Settings::getInstance()->getString("DefaultSortOrder")) {
+            sortOrder = FileSorts::SortTypes[i].description;
             break;
         }
     }
@@ -264,8 +267,8 @@ void GuiMenu::openUISettings()
     // sort order 'filename, ascending'.
     if (sortOrder == "")
         sortOrder = Settings::getInstance()->getDefaultString("DefaultSortOrder");
-    for (auto it = FileSorts::SortTypes.cbegin(); it != FileSorts::SortTypes.cend(); it++) {
-        const FileData::SortType& sort = *it;
+    for (unsigned int i = 0; i < numSortTypes; i++) {
+        const FileData::SortType& sort = FileSorts::SortTypes[i];
         if (sort.description == sortOrder)
             default_sort_order->add(sort.description, &sort, true);
         else

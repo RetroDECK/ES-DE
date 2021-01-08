@@ -122,8 +122,12 @@ GuiGamelistOptions::GuiGamelistOptions(
                 root = mSystem->getRootFolder();
 
             std::string sortType = root->getSortTypeString();
+            unsigned int numSortTypes = FileSorts::SortTypes.size();
+            // If it's not a collection, then hide the System sort options.
+            if (!root->getSystem()->isCollection())
+                numSortTypes -= 2;
 
-            for (unsigned int i = 0; i <FileSorts::SortTypes.size(); i++) {
+            for (unsigned int i = 0; i < numSortTypes; i++) {
                 const FileData::SortType& sort = FileSorts::SortTypes.at(i);
                 if (sort.description == sortType)
                     mListSort->add(sort.description, &sort, 1);

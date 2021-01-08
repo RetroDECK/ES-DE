@@ -101,21 +101,13 @@ public:
     typedef bool ComparisonFunction(const FileData* a, const FileData* b);
     struct SortType {
         ComparisonFunction* comparisonFunction;
-        bool ascending;
         std::string description;
-
-        SortType(
-                ComparisonFunction* sortFunction,
-                bool sortAscending,
-                const std::string& sortDescription)
-                : comparisonFunction(sortFunction),
-                ascending(sortAscending),
-                description(sortDescription) {}
+        SortType(ComparisonFunction* sortFunction, const std::string& sortDescription)
+                : comparisonFunction(sortFunction), description(sortDescription) {}
     };
 
-    void sort(ComparisonFunction& comparator, bool ascending,
-            std::pair<unsigned int, unsigned int>& gameCount);
-    void sortFavoritesOnTop(ComparisonFunction& comparator, bool ascending,
+    void sort(ComparisonFunction& comparator, std::pair<unsigned int, unsigned int>& gameCount);
+    void sortFavoritesOnTop(ComparisonFunction& comparator,
             std::pair<unsigned int, unsigned int>& gameCount);
     void sort(const SortType& type, bool mFavoritesOnTop = false);
     MetaDataList metadata;
@@ -124,7 +116,6 @@ public:
 
     inline void setSortTypeString(std::string typestring) { mSortTypeString = typestring; }
     inline std::string getSortTypeString() { return mSortTypeString; }
-    // Return sort type based on a string description.
     FileData::SortType getSortTypeFromString(std::string desc);
 
 protected:
@@ -147,7 +138,6 @@ private:
     bool mHasFolders;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
-
 };
 
 class CollectionFileData : public FileData

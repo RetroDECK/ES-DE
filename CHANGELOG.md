@@ -97,6 +97,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Fixed an issue where SVG images would sometimes be cut off slightly on the right side (e.g. logos on the system view carousel)
 * The scraper didn't handle error conditions correctly
 * The metadata editor insisted that changes were made although nothing was updated. Note: The editor will still ask for save confirmations after automatically rounding fractional game ratings to half-star values, but any time such a rounding has taken place, the rating stars will be colored green in the metadata editor to nofity the user
+* Sorting by number of players did not work properly for games with ranges such as 1-2 or 1-8
 * Restart and power-off menu entries not working on any of the tested operating systems
 * Toggling the screensaver didn't work as expected
 * The setting to enable or disable audio for the video screensaver only worked on Raspberry Pi

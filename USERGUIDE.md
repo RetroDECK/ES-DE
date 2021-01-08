@@ -750,7 +750,7 @@ Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See 
 
 **Default sort order**
 
-The order in which to sort your gamelists. This can be overriden per game system using the game options menu, but that override will only be persistent during the application session.
+The order in which to sort your gamelists. This can be overriden per game system using the game options menu, but that override will only be persistent during the application session. The _System_ sorting can not be selected here as it's only applicable to collection systems.
 
 **Menu opening effect** _(OpenGL renderer only)_
 
@@ -956,7 +956,7 @@ This gives you a choice between _Normal_ and _Borderless_ modes. With the border
 
 **When to save game metadata**
 
-The metadata for a game is updated by scraping and by manual editing it using the metadata editor, but also when launching a game, as the play count and last played date is then updated. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to _Never_ will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, or when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files). In theory _On exit_ will give some performance gains, but it's normally recommended to leave the setting at its default value which is _Always_. Note that with the settings set to _Never_, any updates such as the last played date will still be shown on screen, but during the next application startup, any values previously saved to the gamelist.xml files will be read in again. As well, when changing this setting to _Always_ from either of the two other options, any pending changes will be immediately written to the gamelist.xml files.
+The metadata for a game is updated by scraping and by manual editing (using the metadata editor), but also when launching it as this updates the _Times played_ counter and the _Last played_ date. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to _Never_ will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, or when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files). In theory _On exit_ will give some performance gains, but it's normally recommended to leave the setting at its default value which is _Always_. Note that with the settings set to _Never_, any updates such as the _Last played_ date will still be shown on screen, but during the next application startup, any values previously saved to the gamelist.xml files will be read in again. As well, when changing this setting to _Always_ from either of the two other options, any pending changes will be immediately written to the gamelist.xml files.
 
 **Game media directory**
 
@@ -1048,7 +1048,22 @@ This provides the ability to jump to a certain letter using a quick selector. If
 
 ### Sort games by
 
-This is the sort order for the gamelist. The default sorting shown here is taken from the setting **Default sort order** under **UI settings** in the main menu. Any sorting that is applied in the game options menu will be persistent throughout the program session and it can be set individually per game system and custom collection.
+This is the sort order for the gamelist. The default sorting shown here is taken from the setting **Default sort order** under **UI settings** in the main menu. Any sorting that is applied via the game options menu will be persistent throughout the program session, and it can be set individually per game system and per collection.
+
+Sorting can be applied using the following metadata, in either ascending or descending order:
+
+* Filename
+* Rating
+* Release date
+* Developer
+* Publisher
+* Genre
+* Players
+* Times played
+* Last played
+* System _(Only for collections)_
+
+The secondary sorting is always in ascending filename order.
 
 ### Filter gamelist
 
@@ -1181,7 +1196,7 @@ This option will hide most metadata fields in the gamelist view. The intention i
 
 Here you can override the launch command for the game, for example to use a different emulator than the default one for the game system. Very useful for MAME/arcade games.
 
-**Play count** _(files only)_
+**Times played** _(files only)_
 
 A statistics counter that tracks how many times you have played the game. You normally don't need to touch this, but if you want to, the possibility is there.
 
