@@ -255,7 +255,7 @@ void GuiMenu::openUISettings()
     auto default_sort_order = std::make_shared<SortList>
             (mWindow, getHelpStyle(), "DEFAULT SORT ORDER", false);
     // Exclude the System sort options.
-    unsigned int numSortTypes = FileSorts::SortTypes.size() - 2;
+    unsigned int numSortTypes = static_cast<unsigned int>(FileSorts::SortTypes.size() - 2);
     for (unsigned int i = 0; i < numSortTypes; i++) {
         if (FileSorts::SortTypes[i].description ==
                 Settings::getInstance()->getString("DefaultSortOrder")) {
