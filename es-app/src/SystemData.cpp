@@ -231,7 +231,7 @@ bool SystemData::loadConfig()
     const std::string rompath = FileData::getROMDirectory();
 
     if (!Utils::FileSystem::exists(path)) {
-        LOG(LogWarning) << "Systems configuration file does not exist";
+        LOG(LogInfo) << "Systems configuration file does not exist";
         if (copyConfigTemplate(getConfigPath(true)))
             return false;
         path = getConfigPath(false);
