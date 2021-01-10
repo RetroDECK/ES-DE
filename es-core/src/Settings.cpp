@@ -208,7 +208,8 @@ void Settings::setDefaults()
     #endif
     mStringMap["MediaDirectory"] = { "", "" };
     #if defined(__APPLE__)
-    mStringMap["EmulatorCorePath"] = { "", "" };
+    mStringMap["EmulatorCorePath"] =
+            { "%EMUPATH%/../Resources/cores", "%EMUPATH%/../Resources/cores" };
     #elif defined (_WIN64)
     mStringMap["EmulatorCorePath"] = { "%EMUPATH%\\cores", "%EMUPATH%\\cores" };
     #else
