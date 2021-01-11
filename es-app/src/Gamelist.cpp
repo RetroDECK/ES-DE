@@ -302,7 +302,7 @@ void updateGamelist(SystemData* system)
             Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(xmlWritePath));
 
             LOG(LogDebug) << "Gamelist::updateGamelist(): Added/updated " << numUpdated <<
-                    (numUpdated == 1 ? " entity in '" : " entities in \"") << xmlReadPath << "\"";
+                    (numUpdated == 1 ? " entity in \"" : " entities in \"") << xmlReadPath << "\"";
 
             #if defined(_WIN64)
             if (!doc.save_file(Utils::String::stringToWideString(xmlWritePath).c_str())) {
