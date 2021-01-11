@@ -944,49 +944,48 @@ It's possible to easily create a portable installation of ES-DE for Windows, for
 For the sake of this example, let's assume that the removable media has the device name `f:\`.
 
 * Copy the EmulationStation-DE installation directory to f:\
-* Create the directory `ES-Home` directly under f:\
-* Copy your game ROMs into `f:\ES-Home\ROMs`
+* Create the directory `ES-DE_Home` directly under f:\
+* Copy your game ROMs into `f:\ES-DE_Home\ROMs`
 * Copy your emulators to f:\ (such as the RetroArch directory)
 * Create the file `start_es.bat` directly under f:\
 
 Add the following lines to the start_es.bat file:
 ```
 @echo off
-EmulationStation-DE\EmulationStation.exe --home %CD:~0,3%ES-Home
+EmulationStation-DE\EmulationStation.exe --home %CD:~0,3%ES-DE_Home
 ```
 
 The contents of f:\ should now look something like this:
 ```
 EmulationStation-DE
-ES-Home
+ES-DE_Home
 RetroArch
 start_es.bat
-
 ```
 
 Now run the batch script, ES should start and ask you to configure any attached controllers. Following this, check that everything works as expected, i.e. the gamelists are properly populated etc.
 
-You can optionally skip the configuration of the controllers by copying any existing es_input.cfg file to f:\ES-Home\\.emulationstation\\`
+You can optionally skip the configuration of the controllers by copying any existing es_input.cfg file to `f:\ES-DE_Home\.emulationstation\`
 
-Exit ES and modify the file `f:\ES-Home\.emulationstation\es_systems.cfg` to point to the emulators on the portable media.
+Exit ES-DE and modify the file `f:\ES-DE_Home\.emulationstation\es_systems.cfg` to point to the emulators on the portable media.
 
 For example, change from this:
 ```
-<command>retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+<command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
 ```
 
 To this:
 ```
-<command>%ESPATH%\..\RetroArch\retroarch.exe -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
+<command>%ESPATH%\..\RetroArch\retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
 ```
 
 The %ESPATH% variable is explained later in this document.
 
-Following this, optionally copy any existing gamelists and game media files to the removable media. By default these files should be located here:
+Following this, optionally copy any existing gamelist.xml and game media files to the removable media. By default these files should be located here:
 
 ```
-f:\ES-Home\.emulationstation\gamelists\
-f:\ES-Home\.emulationstation\downloaded_media\
+f:\ES-DE_Home\.emulationstation\gamelists\
+f:\ES-DE_Home\.emulationstation\downloaded_media\
 ```
 
 You now have a fully functional portable retro gaming installation!
@@ -1218,8 +1217,8 @@ Below is an overview of the file layout with various examples. For a real system
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
         <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
 
-        <!-- This example for Unix searches the pre-configured core directories for the snes9x_libretro RetroArch core, see more info about this below.
-        Spaces are not allowed in the core file names. -->
+        <!-- This example for Unix searches the pre-configured core directories for the snes9x_libretro RetroArch core, see more
+        info about this below. Spaces are not allowed in the core file names. -->
         <command>retroarch -L %COREPATH%/snes9x_libretro.so %ROM%</command>
 
         <!-- This is an example for macOS. It uses the %EMUPATH% variable to point to the RetroArch cores relative to the emulator binary.
@@ -1228,13 +1227,13 @@ Below is an overview of the file layout with various examples. For a real system
 
         <!-- This is an example for Windows. The .exe extension is optional and both forward slashes and backslashes are allowed as
         directory separators. As there is no standardized installation directory structure for this operating system, the %EMUPATH%
-        variable is used here to find the cores relative to the RetroArch binary. The emulator binary must be in the PATH environmental variable
-        or otherwise the complete path to the retroarch.exe file needs to be defined. Batch scripts (.bat) are also supported. -->
+        variable is used here to find the cores relative to the RetroArch binary. The emulator binary must be in the PATH environmental
+        variable or otherwise the complete path to the retroarch.exe file needs to be defined. Batch scripts (.bat) are also supported. -->
         <command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
 
         <!-- Another example for Windows. As can be seen here, the absolute path to the emulator has been defined, and there are spaces
-        in the directory name, so it needs to be surrounded by quotation marks. As well the quotation marks are needed around the core
-        configuration as the %EMUPATH% will expand to the path of the emulator binary, which will of course also include the spaces. -->
+        in the directory name, so it needs to be surrounded by quotation marks. Quotation marks around the %EMUPATH% entry are optional
+        but in this example they're added. -->
         <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
 
         <!-- An example for use in a portable Windows emulator installation, for instance on a USB memory stick. The %ESPATH% variable is
@@ -1268,11 +1267,11 @@ The following variables are expanded for the `command` tag:
 
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
-`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded either using the PATH environmental variable of the operating system, or if an absolute emulator path is defined, this will be used instead. This variable is mostly useful to define the emulator core path for Windows, as this operating system does not have a standardized program installation directory structure.
+`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded using either the PATH environmental variable of the operating system, or using an absolute emulator path if this has been defined.
 
-`%ESPATH%` - Replaced with the path to the EmulationStation binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
+`%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
-`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.cfg. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for Unix as well as for RetroArch but it can also be used on macOS and Windows and for other emulators that utilizes discrete emulator cores. For macOS and Windows the EmulatorCorePath setting is blank by default, and for Unix it's set to the following value: `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE.md#other-settings-1). Never use quotation marks around the directories for this setting. It's strongly adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command.
+`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.cfg. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for Unix using RetroArch but it can also be used on macOS and Windows and for other emulators that utilize discrete emulator cores. For macOS and Windows the EmulatorCorePath setting is blank by default, and for Unix it's set to the following value: `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE.md#other-settings-1). Never use quotation marks around the directories for this setting. It's strongly adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command. You can also use the %EMUPATH% and %ESPATH% variables within the %COREPATH% definition, which leads to quite flexible configuration options.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
@@ -1311,7 +1310,7 @@ And one for Windows:
     <fullname>Sega Mega Drive 32X</fullname>
     <path>%ROMPATH%\sega32x</path>
     <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L "%EMUPATH%\cores\picodrive_libretro.dll" %ROM%</command>
+    <command>retroarch.exe -L %EMUPATH%\cores\picodrive_libretro.dll %ROM%</command>
     <platform>sega32x</platform>
     <theme>sega32x</theme>
   </system>

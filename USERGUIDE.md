@@ -489,9 +489,11 @@ ES-DE is a game browsing frontend and does not provide any emulation by itself. 
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
-In order to use the default es_systems.cfg file, you need to make sure that the emulator binary directory is in the operating system's path. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and even if compiled from source there is a standardized directory structure which should have you covered. Likewise on macOS, it's assumed that the emulator is installed under the Applications folder so everything should just work. But for Windows you may need to add the emulator directory to your %PATH% variable manually (Tip: open Settings and search for _path_). If on Windows, a simple test is to open a command window and type the name of the emulator and press enter, if the emulator is not found, then EmulationStation won't find it either and you need to update your %PATH% variable.
+In order to use the default es_systems.cfg file, you need to make sure that the emulator binary directory is in the operating system's path. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and even if compiled from source there is a standardized directory structure which should have you covered. Likewise on macOS, it's assumed that the emulator is installed under the Applications folder so everything should just work. But for Windows you may need to add the emulator directory to your %PATH% variable manually (tip: open Settings from the Start menu and search for _path_).
 
 As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL.md](INSTALL.md#es_systemscfg) for details regarding this.
+
+In any instance, ES-DE will display an error notification if attempting to launch a game where the emulator binary is not found. Likewise it will notify if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 
 
 ## Scraping

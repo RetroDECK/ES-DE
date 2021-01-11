@@ -58,6 +58,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
 * The emulator core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful on Windows)
 * Core locations can be searched from a configurable list of directories if defined in the es_systems.cfg file using the %COREPATH% variable (mostly useful on Unix where there are no standardized core directories)
+* Clear notifications and logging have been added for missing emulator binaries and cores when attempting to launch games
 * Overhaul of the screensaver (the game info overlay now works correctly for instance)
 * Added support for jumping to the start and end of gamelists and menus using the controller trigger buttons (or equivalent keyboard mappings)
 * Many additional quality of life improvements and removal of GUI inconsistencies
