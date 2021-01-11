@@ -79,7 +79,7 @@ In the same manner as for FreeBSD, Clang/LLVM and cURL should already be install
 RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the master branch:
 
 ```
-git clone https://github.com/Tencent/rapidjson
+git clone https://github.com/Tencent/rapidjson.git
 cd rapidjson
 cmake .
 make
@@ -89,7 +89,7 @@ make install
 Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
 ```
-git clone git://github.com/zeux/pugixml
+git clone git://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.10
 cmake .
@@ -102,7 +102,7 @@ make install
 To clone the source repository, run the following:
 
 ```
-git clone https://gitlab.com/leonstyhre/emulationstation-de
+git clone https://gitlab.com/leonstyhre/emulationstation-de.git
 ```
 
 Then generate the Makefile and build the software:
@@ -375,7 +375,7 @@ I suppose you should add this to your shell profile file or similar, but I didn'
 To clone the source repository, run the following:
 
 ```
-git clone https://gitlab.com/leonstyhre/emulationstation-de
+git clone https://gitlab.com/leonstyhre/emulationstation-de.git
 ```
 
 Then generate the Makefile and build the software:
@@ -682,7 +682,7 @@ make
 
 [pugixml](https://pugixml.org)
 ```
-git clone git://github.com/zeux/pugixml
+git clone git://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.10
 ```
@@ -705,7 +705,7 @@ make
 For RapidJSON, you don't need to compile it, you just need the include files:
 
 ```
-git clone git://github.com/Tencent/rapidjson
+git clone git://github.com/Tencent/rapidjson.git
 cd rapidjson
 git checkout v1.1.0
 ```
@@ -717,7 +717,7 @@ git checkout v1.1.0
 This works the same as on Unix or macOS, just run the following:
 
 ```
-git clone https://gitlab.com/leonstyhre/emulationstation-de
+git clone https://gitlab.com/leonstyhre/emulationstation-de.git
 ```
 
 **Setup the include directories:**
@@ -1271,7 +1271,7 @@ The following variables are expanded for the `command` tag:
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
-`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.cfg. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for Unix using RetroArch but it can also be used on macOS and Windows and for other emulators that utilize discrete emulator cores. For macOS and Windows the EmulatorCorePath setting is blank by default, and for Unix it's set to the following value: `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE.md#other-settings-1). Never use quotation marks around the directories for this setting. It's strongly adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command. You can also use the %EMUPATH% and %ESPATH% variables within the %COREPATH% definition, which leads to quite flexible configuration options.
+`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.cfg. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for Unix using RetroArch but it can also be used on macOS and Windows and for other emulators that utilize discrete emulator cores. For macOS and Windows the EmulatorCorePath setting is blank by default, and for Unix it's set to the following value: `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE.md#other-settings-1). Never use quotation marks around the directories for this setting. It's strongly adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command. You can also use the %EMUPATH% and %ESPATH% variables within the EmulatorCorePath setting, which leads to quite flexible configuration options.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
