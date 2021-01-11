@@ -506,6 +506,9 @@ void SystemScreensaver::pickRandomImage(std::string& path)
         mPreviousGame = nullptr;
         mCurrentGame = mImageFiles.front();
         path = mImageFiles.front()->getImagePath();
+        mGameName = mImageFiles.front()->getName();
+        mSystemName = mImageFiles.front()->getSystem()->getFullName();
+        mCurrentGame = mImageFiles.front();
         return;
     }
 
@@ -538,6 +541,9 @@ void SystemScreensaver::pickRandomVideo(std::string& path)
         mPreviousGame = nullptr;
         mCurrentGame = mVideoFiles.front();
         path = mVideoFiles.front()->getVideoPath();
+        mGameName = mVideoFiles.front()->getName();
+        mSystemName = mVideoFiles.front()->getSystem()->getFullName();
+        mCurrentGame = mVideoFiles.front();
         return;
     }
 
