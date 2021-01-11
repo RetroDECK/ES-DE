@@ -746,7 +746,7 @@ FileData::SortType FileData::getSortTypeFromString(std::string desc) {
 
 void FileData::launchGame(Window* window)
 {
-    LOG(LogInfo) << "Attempting to launch game...";
+    LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
 
     std::string command = "";
 
@@ -777,27 +777,10 @@ void FileData::launchGame(Window* window)
     // The closing quotation mark will be removed later below.
     command = Utils::String::replace(command, "\"%COREPATH%", "%COREPATH%");
 
-    // Get the emulator path, which will be used to check that this binary actually exists,
-    // and to expand the %EMUPATH% variable.
-    #if defined(_WIN64)
-    std::string commandTemp = Utils::String::replace(command, "/", "\\");
-    std::wstring commandWide = Utils::String::stringToWideString(commandTemp);
-    std::wstring emuPathWide = findEmulatorPath(commandWide);
-    if (!emuPathWide.empty()) {
-        auto stringPos = commandWide.find(L"%EMUPATH%");
-        if (stringPos != std::wstring::npos)
-            commandWide = commandWide.replace(stringPos, 9, emuPathWide);
-    }
-    else {
-    #else
+    // Get the emulator path, which will be used to check that the emulator binary actually
+    // exists, as well as for expanding the %EMUPATH% variable.
     std::string emuPath = findEmulatorPath(command);
-    if (!emuPath.empty()) {
-        auto stringPos = command.find("%EMUPATH%");
-        if (stringPos != std::string::npos)
-            command = command.replace(stringPos, 9, emuPath);
-    }
-    else {
-    #endif
+    if (emuPath.empty()) {
         LOG(LogError) << "Couldn't launch game, emulator binary not found";
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
@@ -808,15 +791,67 @@ void FileData::launchGame(Window* window)
         return;
     }
 
+    // If %EMUPATH% is used in es_systems.cfg for this system, then check that the core file
+    // actually exists.
+    auto emuPathPos = command.find("%EMUPATH%");
+    if (emuPathPos != std::string::npos) {
+        bool hasQuotationMark = false;
+        unsigned int quotationMarkPos = 0;
+        if (command.find("\"%EMUPATH%", emuPathPos - 1) != std::string::npos) {
+            hasQuotationMark = true;
+            quotationMarkPos = static_cast<unsigned int>(
+                    command.find("\"", emuPathPos + 9) - emuPathPos);
+        }
+        auto spacePos = command.find(" ", emuPathPos + quotationMarkPos);
+        std::string coreRaw;
+        std::string coreFile;
+        if (spacePos != std::string::npos) {
+            coreRaw = command.substr(emuPathPos, spacePos - emuPathPos);
+            coreFile = emuPath + command.substr(emuPathPos + 9, spacePos - emuPathPos - 9);
+            if (hasQuotationMark) {
+                coreRaw.pop_back();
+                coreFile.pop_back();
+            }
+            if (!Utils::FileSystem::isRegularFile(coreFile) &&
+                    !Utils::FileSystem::isSymlink(coreFile)) {
+                LOG(LogError) << "Couldn't launch game, emulator core file \"" <<
+                        Utils::FileSystem::getFileName(coreFile) << "\" does not exist";
+                LOG(LogError) << "Raw emulator launch command:";
+                LOG(LogError) << commandRaw;
+
+                GuiInfoPopup* s = new GuiInfoPopup(window,
+                        "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
+                        Utils::String::toUpper(Utils::FileSystem::getFileName(coreFile)) +
+                        "'", 6000);
+                window->setInfoPopup(s);
+                return;
+            }
+            else {
+                if (hasQuotationMark) {
+                    command = command.replace(emuPathPos + quotationMarkPos, 1, "");
+                    emuPathPos--;
+                    command = command.replace(emuPathPos, 1, "");
+                }
+                coreFile = Utils::FileSystem::getEscapedPath(coreFile);
+                command = command.replace(emuPathPos, coreRaw.size(), coreFile);
+            }
+        }
+        else {
+            LOG(LogError) << "Invalid entry in systems configuration file es_systems.cfg";
+            LOG(LogError) << "Raw emulator launch command:";
+            LOG(LogError) << commandRaw;
+
+            GuiInfoPopup* s = new GuiInfoPopup(window, "ERROR: INVALID ENTRY IN SYSTEMS " \
+                    "CONFIGURATION FILE", 6000);
+            window->setInfoPopup(s);
+            return;
+        }
+    }
+
     // If %COREPATH% is used in es_systems.cfg for this system, try to find the emulator
     // core using the core paths defined in the setting EmulatorCorePath.
-    #if defined(_WIN64)
-    auto corePos = commandWide.find(L"%COREPATH%");
-    if (corePos != std::wstring::npos && emulatorCorePath.size() > 0) {
-    #else
     auto corePos = command.find("%COREPATH%");
     if (corePos != std::string::npos && emulatorCorePath.size() > 0) {
-    #endif
         std::string coreName;
         bool foundCoreFile = false;
         #if defined(_WIN64)
@@ -833,27 +868,20 @@ void FileData::launchGame(Window* window)
                 std::string coreFile = Utils::FileSystem::expandHomePath(path + coreName);
                 // Expand %EMUPATH% if it has been used in the %COREPATH% variable.
                 auto stringPos = coreFile.find("%EMUPATH%");
-                if (stringPos != std::string::npos) {
-                #if defined (_WIN64)
-                    coreFile = coreFile.replace(stringPos, 9,
-                            Utils::String::wideStringToString(emuPathWide));
-                #else
+                if (stringPos != std::string::npos)
                     coreFile = coreFile.replace(stringPos, 9, emuPath);
-                #endif
-                }
-                else {
-                    // Expand %ESPATH% if it has been used in the %COREPATH% variable.
-                    stringPos = coreFile.find("%ESPATH%");
-                    if (stringPos != std::string::npos) {
-                        coreFile = coreFile.replace(stringPos, 8, esPath);
-                    #if defined(_WIN64)
-                        coreFile = Utils::String::replace(coreFile, "/", "\\");
 
+                // Expand %ESPATH% if it has been used in the %COREPATH% variable.
+                stringPos = coreFile.find("%ESPATH%");
+                if (stringPos != std::string::npos) {
+                    coreFile = coreFile.replace(stringPos, 8, esPath);
+                    #if defined(_WIN64)
+                    coreFile = Utils::String::replace(coreFile, "/", "\\");
                     #endif
-                    }
                 }
+
                 // Remove any quotation mark as it will make the file functions fail.
-                if (coreFile.find(" ") != std::string::npos)
+                if (coreFile.find("\"") != std::string::npos)
                     coreFile = Utils::String::replace(coreFile, "\"", "");
                 if (Utils::FileSystem::isRegularFile(coreFile) ||
                         Utils::FileSystem::isSymlink(coreFile)) {
@@ -861,12 +889,7 @@ void FileData::launchGame(Window* window)
                     // Escape any blankspaces.
                     if (coreFile.find(" ") != std::string::npos)
                         coreFile = Utils::FileSystem::getEscapedPath(coreFile);
-                    #if defined(_WIN64)
-                        commandWide.replace(corePos, spacePos - corePos,
-                                Utils::String::stringToWideString(coreFile));
-                    #else
-                        command.replace(corePos, spacePos - corePos, coreFile);
-                    #endif
+                    command.replace(corePos, spacePos - corePos, coreFile);
                     break;
                 }
             }
@@ -911,11 +934,10 @@ void FileData::launchGame(Window* window)
     LOG(LogDebug) << commandRaw;
     LOG(LogInfo) << "Expanded emulator launch command:";
 
-    #if defined(_WIN64)
-    LOG(LogInfo) << Utils::String::wideStringToString(commandWide);
-    returnValue = launchEmulatorWindows(commandWide);
-    #else
     LOG(LogInfo) << command;
+    #if defined(_WIN64)
+    returnValue = launchEmulatorWindows(Utils::String::stringToWideString(command));
+    #else
     returnValue = launchEmulatorUnix(command);
     #endif
 
@@ -975,47 +997,6 @@ void FileData::launchGame(Window* window)
     gameToUpdate->mSystem->onMetaDataSavePoint();
 }
 
-#if defined(_WIN64)
-std::wstring FileData::findEmulatorPath(const std::wstring& command)
-{
-    // Extract the emulator executable from the launch command string. This could either be
-    // just the program name, assuming the binary is in the PATH variable of the operating
-    // system, or it could be an absolute path to the emulator. (In the latter case, if
-    // there is a space in the the path, it needs to be enclosed by quotation marks in
-    // es_systems.cfg.)
-    std::wstring emuExecutable;
-    std::wstring exePath;
-
-    // If the first character is a quotation mark, then we need to extract up to the
-    // next quotation mark, otherwise we'll only extract up to the first space character.
-    if (command.front() == '\"') {
-        std::wstring emuTemp = command.substr(1, std::string::npos);
-        emuExecutable = emuTemp.substr(0, emuTemp.find('"'));
-    }
-    else {
-        emuExecutable = command.substr(0, command.find(' '));
-    }
-
-    // Search for the emulator using the PATH environmental variable.
-    DWORD size = SearchPathW(nullptr, emuExecutable.c_str(), L".exe", 0, nullptr, nullptr);
-
-    if (size) {
-        std::vector<wchar_t> pathBuffer(static_cast<size_t>(size) + 1 );
-        wchar_t* fileName = nullptr;
-
-        SearchPathW(nullptr, emuExecutable.c_str(), L".exe", size + 1 ,
-                pathBuffer.data(), &fileName);
-        std::wstring pathString = pathBuffer.data();
-
-        if (pathString.length()) {
-            exePath = pathString.substr(0, pathString.size() -
-                    std::wstring(fileName).size());
-            exePath.pop_back();
-        }
-    }
-    return exePath;
-}
-#else
 std::string FileData::findEmulatorPath(const std::string& command)
 {
     // Extract the emulator executable from the launch command string. This could either be
@@ -1036,14 +1017,35 @@ std::string FileData::findEmulatorPath(const std::string& command)
         emuExecutable = command.substr(0, command.find(' '));
     }
 
+    #if defined(_WIN64)
+    std::wstring emuExecutableWide = Utils::String::stringToWideString(emuExecutable);
+    // Search for the emulator using the PATH environmental variable.
+    DWORD size = SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr);
+
+    if (size) {
+        std::vector<wchar_t> pathBuffer(static_cast<size_t>(size) + 1 );
+        wchar_t* fileName = nullptr;
+
+        SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", size + 1 ,
+                pathBuffer.data(), &fileName);
+        std::wstring pathString = pathBuffer.data();
+
+        if (pathString.length()) {
+            exePath = Utils::String::wideStringToString(pathString.substr(0, pathString.size() -
+                    std::wstring(fileName).size()));
+            exePath.pop_back();
+        }
+    }
+    #else
     if (Utils::FileSystem::isRegularFile(emuExecutable) ||
             Utils::FileSystem::isSymlink(emuExecutable))
         exePath = Utils::FileSystem::getParent(emuExecutable);
     else
         exePath = Utils::FileSystem::getPathToBinary(emuExecutable);
+    #endif
+
     return exePath;
 }
-#endif
 
 CollectionFileData::CollectionFileData(FileData* file, SystemData* system)
     : FileData(file->getSourceFileData()->getType(), file->getSourceFileData()->getPath(),
