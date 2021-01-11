@@ -207,11 +207,8 @@ void Settings::setDefaults()
     mBoolMap["RunInBackground"] = { false, false };
     #endif
     mStringMap["MediaDirectory"] = { "", "" };
-    #if defined(__APPLE__)
-    mStringMap["EmulatorCorePath"] =
-            { "%EMUPATH%/../Resources/cores", "%EMUPATH%/../Resources/cores" };
-    #elif defined (_WIN64)
-    mStringMap["EmulatorCorePath"] = { "%EMUPATH%\\cores", "%EMUPATH%\\cores" };
+    #if defined(__APPLE__) || defined(_WIN64)
+    mStringMap["EmulatorCorePath"] = { "", "" };
     #else
     const std::string emulatorCorePath =
             "~/.config/retroarch/cores:"                        // Compiled from source
