@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  IList.h
 //
-//  List base class, used by both the gamelist views and the menus.
+//  List base class, used by both the gamelist views and the menu.
 //
 
 #ifndef ES_CORE_COMPONENTS_ILIST_H
@@ -113,8 +113,6 @@ public:
 
     void stopScrolling()
     {
-//        if (mScrollTier >= 2)
-//            NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
         mTitleOverlayOpacity = 0;
 
         listInput(0);
