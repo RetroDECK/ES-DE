@@ -127,50 +127,50 @@ void VolumeControl::init()
         snd_mixer_selem_id_set_name(mixerSelemId, mixerName.c_str());
         // Open mixer.
         if (snd_mixer_open(&mixerHandle, 0) >= 0) {
-            LOG(LogDebug) << "VolumeControl::init() - Opened ALSA mixer";
+            LOG(LogDebug) << "VolumeControl::init(): Opened ALSA mixer";
             // Ok, attach to defualt card.
             if (snd_mixer_attach(mixerHandle, mixerCard.c_str()) >= 0) {
-                LOG(LogDebug) << "VolumeControl::init() - Attached to default card";
+                LOG(LogDebug) << "VolumeControl::init(): Attached to default card";
                 // Ok, register simple element class.
                 if (snd_mixer_selem_register(mixerHandle, nullptr, nullptr) >= 0) {
-                    LOG(LogDebug) << "VolumeControl::init() - Registered simple element class";
+                    LOG(LogDebug) << "VolumeControl::init(): Registered simple element class";
                     // Ok, load registered elements.
                     if (snd_mixer_load(mixerHandle) >= 0) {
-                        LOG(LogDebug) << "VolumeControl::init() - Loaded mixer elements";
+                        LOG(LogDebug) << "VolumeControl::init(): Loaded mixer elements";
                         // Ok, find elements now.
                         mixerElem = snd_mixer_find_selem(mixerHandle, mixerSelemId);
                         if (mixerElem != nullptr) {
                             // Wohoo. good to go...
-                            LOG(LogDebug) << "VolumeControl::init() - Mixer initialized";
+                            LOG(LogDebug) << "VolumeControl::init(): Mixer initialized";
                         }
                         else {
                             LOG(LogError) <<
-                                    "VolumeControl::init() - Failed to find mixer elements!";
+                                    "VolumeControl::init(): Failed to find mixer elements!";
                             snd_mixer_close(mixerHandle);
                             mixerHandle = nullptr;
                         }
                     }
                     else {
-                        LOG(LogError) << "VolumeControl::init() - Failed to load mixer elements!";
+                        LOG(LogError) << "VolumeControl::init(): Failed to load mixer elements!";
                         snd_mixer_close(mixerHandle);
                         mixerHandle = nullptr;
                     }
                 }
                 else {
                     LOG(LogError) <<
-                            "VolumeControl::init() - Failed to register simple element class!";
+                            "VolumeControl::init(): Failed to register simple element class!";
                     snd_mixer_close(mixerHandle);
                     mixerHandle = nullptr;
                 }
             }
             else {
-                LOG(LogError) << "VolumeControl::init() - Failed to attach to default card!";
+                LOG(LogError) << "VolumeControl::init(): Failed to attach to default card!";
                 snd_mixer_close(mixerHandle);
                 mixerHandle = nullptr;
             }
         }
         else {
-            LOG(LogError) << "VolumeControl::init() - Failed to open ALSA mixer!";
+            LOG(LogError) << "VolumeControl::init(): Failed to open ALSA mixer!";
         }
     }
     #elif defined(_WIN64)
@@ -202,13 +202,13 @@ void VolumeControl::init()
                         &mixerLineControls, MIXER_GETLINECONTROLSF_ONEBYTYPE) !=
                         MMSYSERR_NOERROR) {
                     LOG(LogError) <<
-                            "VolumeControl::getVolume() - Failed to get mixer volume control!";
+                            "VolumeControl::getVolume(): Failed to get mixer volume control!";
                     mixerClose(mixerHandle);
                     mixerHandle = nullptr;
                 }
             }
             else {
-                LOG(LogError) << "VolumeControl::init() - Failed to open mixer!";
+                LOG(LogError) << "VolumeControl::init(): Failed to open mixer!";
             }
         }
     }
@@ -229,20 +229,20 @@ void VolumeControl::init()
                             CLSCTX_INPROC_SERVER, nullptr,
                             reinterpret_cast<LPVOID *>(&endpointVolume));
                     if (endpointVolume == nullptr)
-                        LOG(LogError) << "VolumeControl::init() - "
+                        LOG(LogError) << "VolumeControl::init(): "
                                 "Failed to get default audio endpoint volume!";
                     // Release default device. we don't need it anymore.
                     defaultDevice->Release();
                 }
                 else {
                     LOG(LogError) <<
-                            "VolumeControl::init() - Failed to get default audio endpoint!";
+                            "VolumeControl::init(): Failed to get default audio endpoint!";
                 }
                 // Release device enumerator. we don't need it anymore.
                 deviceEnumerator->Release();
             }
             else {
-                LOG(LogError) << "VolumeControl::init() - Failed to get audio endpoint enumerator!";
+                LOG(LogError) << "VolumeControl::init(): Failed to get audio endpoint enumerator!";
                 CoUninitialize();
             }
         }
@@ -300,11 +300,11 @@ int VolumeControl::getVolume() const
                 //   volume = 0;
             }
             else {
-                LOG(LogError) << "VolumeControl::getVolume() - Failed to get mixer volume!";
+                LOG(LogError) << "VolumeControl::getVolume(): Failed to get mixer volume!";
             }
         }
         else {
-            LOG(LogError) << "VolumeControl::getVolume() - Failed to get volume range!";
+            LOG(LogError) << "VolumeControl::getVolume(): Failed to get volume range!";
         }
     }
     #elif defined(_WIN64)
@@ -324,7 +324,7 @@ int VolumeControl::getVolume() const
                 MIXER_GETCONTROLDETAILSF_VALUE) == MMSYSERR_NOERROR)
             volume = static_cast<int>(std::round((value.dwValue * 100) / 65535.0f));
         else
-            LOG(LogError) << "VolumeControl::getVolume() - Failed to get mixer volume!";
+            LOG(LogError) << "VolumeControl::getVolume(): Failed to get mixer volume!";
     }
     else if (endpointVolume != nullptr) {
         // Windows Vista or above. use EndpointVolume API.
@@ -334,7 +334,7 @@ int VolumeControl::getVolume() const
             LOG(LogInfo) << "System audio volume is " << volume;
         }
         else {
-            LOG(LogError) << "VolumeControl::getVolume() - Failed to get master volume!";
+            LOG(LogError) << "VolumeControl::getVolume(): Failed to get master volume!";
         }
     }
     #endif
@@ -371,11 +371,11 @@ void VolumeControl::setVolume(int volume)
                     SND_MIXER_SCHN_FRONT_LEFT, rawVolume) < 0 ||
                     snd_mixer_selem_set_playback_volume(mixerElem,
                     SND_MIXER_SCHN_FRONT_RIGHT, rawVolume) < 0) {
-                LOG(LogError) << "VolumeControl::getVolume() - Failed to set mixer volume!";
+                LOG(LogError) << "VolumeControl::getVolume(): Failed to set mixer volume!";
             }
         }
         else {
-            LOG(LogError) << "VolumeControl::getVolume() - Failed to get volume range!";
+            LOG(LogError) << "VolumeControl::getVolume(): Failed to get volume range!";
         }
     }
     #elif defined(_WIN64)
@@ -394,7 +394,7 @@ void VolumeControl::setVolume(int volume)
         mixerControlDetails.cbDetails = sizeof(MIXERCONTROLDETAILS_UNSIGNED);
         if (mixerSetControlDetails(reinterpret_cast<HMIXEROBJ>(mixerHandle), &mixerControlDetails,
                 MIXER_SETCONTROLDETAILSF_VALUE) != MMSYSERR_NOERROR)
-            LOG(LogError) << "VolumeControl::setVolume() - Failed to set mixer volume!";
+            LOG(LogError) << "VolumeControl::setVolume(): Failed to set mixer volume!";
     }
     else if (endpointVolume != nullptr) {
         // Windows Vista or above. use EndpointVolume API.
@@ -402,7 +402,7 @@ void VolumeControl::setVolume(int volume)
         if (volume > 0)
             floatVolume = static_cast<float>(volume) / 100.0f;
         if (endpointVolume->SetMasterVolumeLevelScalar(floatVolume, nullptr) != S_OK)
-            LOG(LogError) << "VolumeControl::setVolume() - Failed to set master volume!";
+            LOG(LogError) << "VolumeControl::setVolume(): Failed to set master volume!";
     }
     #endif
 }
