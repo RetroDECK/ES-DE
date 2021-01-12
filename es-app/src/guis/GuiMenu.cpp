@@ -374,6 +374,18 @@ void GuiMenu::openUISettings()
         }
     });
 
+    // Enable quick list scrolling overlay.
+    auto list_scroll_overlay = std::make_shared<SwitchComponent>(mWindow);
+    list_scroll_overlay->setState(Settings::getInstance()->getBool("ListScrollOverlay"));
+    s->addWithLabel("ENABLE QUICK LIST SCROLLING OVERLAY", list_scroll_overlay);
+    s->addSaveFunc([list_scroll_overlay, s] {
+        if (list_scroll_overlay->getState() !=
+                Settings::getInstance()->getBool("ListScrollOverlay")) {
+            Settings::getInstance()->setBool("ListScrollOverlay", list_scroll_overlay->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Enable the 'Y' button for tagging games as favorites.
     auto favorites_add_button = std::make_shared<SwitchComponent>(mWindow);
     favorites_add_button->setState(Settings::getInstance()->getBool("FavoritesAddButton"));

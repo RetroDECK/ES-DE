@@ -778,6 +778,10 @@ Whether to sort your favorite games above your other games in the gamelists.
 
 With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. It's strongly recommended to keep this setting enabled if the option to sort favorite games above non-favorites has been enabled. If not, favorite games would be sorted on top of the gamelist with no visual indication that they are favorites, which would be very confusing.
 
+**Enable quick list scrolling overlay**
+
+With this option enabled, there will be an overlay displayed when scrolling the gamelists quickly, i.e. when holding down the _Up_, _Down_, _Left shoulder_ or _Right shoulder_ buttons for some time. The overlay will darken the background slightly and display the first two characters of the game name. If the game is a favorite and the setting to sort favorites above non-favorites has been enabled, a star will be shown instead.
+
 **Enable shortcut to toggle favorites**
 
 This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained [elsewhere](USERGUIDE.md#ui-modes) in this guide. Note that this setting does not affect the functionality to use the _Y_ button to add games to custom collections.

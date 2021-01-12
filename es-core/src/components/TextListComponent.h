@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  TextListComponent.h
 //
-//  Used for displaying and navigating the gamelists.
+//  Text list used for displaying and navigating the gamelist views.
 //
 
 #ifndef ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
@@ -11,6 +11,7 @@
 
 #include "components/IList.h"
 #include "math/Misc.h"
+#include "resources/Font.h"
 #include "utils/StringUtil.h"
 #include "Log.h"
 #include "Sound.h"
@@ -93,8 +94,11 @@ public:
     inline void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
 
 protected:
-    virtual void onScroll() override {
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND); }
+    virtual void onScroll() override
+    {
+        if (!NavigationSounds::getInstance()->isPlayingThemeNavigationSound(SCROLLSOUND))
+            NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+    }
     virtual void onCursorChanged(const CursorState& state) override;
 
 private:

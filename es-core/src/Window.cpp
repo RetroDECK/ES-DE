@@ -36,7 +36,8 @@ Window::Window()
         mCachedBackground(false),
         mInvalidatedCachedBackground(false),
         mTopOpacity(0),
-        mTopScale(0.5)
+        mTopScale(0.5),
+        mListScrollOpacity(0)
 {
     mHelp = new HelpComponent(this);
     mBackgroundOverlay = new ImageComponent(this);
@@ -112,6 +113,8 @@ bool Window::init()
     mBackgroundOverlay->setImage(":/graphics/scroll_gradient.png");
     mBackgroundOverlay->setResize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
+
+    mListScrollFont = Font::get(FONT_SIZE_LARGE);
 
     // Update our help because font sizes probably changed.
     if (peekGui())
@@ -399,6 +402,22 @@ void Window::render()
         }
     }
 
+    if (mListScrollOpacity != 0) {
+        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
+                static_cast<float>(Renderer::getScreenHeight()),
+                0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
+
+        Vector2f offset = mListScrollFont->sizeText(mListScrollText);
+        offset[0] = (Renderer::getScreenWidth() - offset.x()) * 0.5f;
+        offset[1] = (Renderer::getScreenHeight() - offset.y()) * 0.5f;
+
+        TextCache* cache = mListScrollFont->buildTextCache(mListScrollText,
+                offset.x(), offset.y(), 0xFFFFFF00 | mListScrollOpacity);
+        mListScrollFont->renderTextCache(cache);
+        delete cache;
+    }
+
     if (!mRenderedHelpPrompts)
         mHelp->render(transform);
 
@@ -479,6 +498,12 @@ void Window::renderLoadingScreen(std::string text)
     delete cache;
 
     Renderer::swapBuffers();
+}
+
+void Window::renderListScrollOverlay(unsigned char opacity, const std::string& text)
+{
+    mListScrollOpacity = static_cast<unsigned char>(opacity * 0.6f);
+    mListScrollText = text;
 }
 
 void Window::renderHelpPromptsEarly()

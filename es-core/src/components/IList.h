@@ -3,14 +3,14 @@
 //  EmulationStation Desktop Edition
 //  IList.h
 //
-//  Gamelist base class.
+//  List base class, used by both the gamelist views and the menus.
 //
 
 #ifndef ES_CORE_COMPONENTS_ILIST_H
 #define ES_CORE_COMPONENTS_ILIST_H
 
 #include "components/ImageComponent.h"
-#include "resources/Font.h"
+#include "utils/StringUtil.h"
 #include "Window.h"
 
 enum CursorState {
@@ -38,11 +38,10 @@ struct ScrollTierList {
 const ScrollTier QUICK_SCROLL_TIERS[] = {
     {500, 500},
     {2000, 114},
-    {4000, 32},
     {0, 16}
 };
 const ScrollTierList LIST_SCROLL_STYLE_QUICK = {
-    4,
+    3,
     QUICK_SCROLL_TIERS
 };
 
@@ -51,7 +50,10 @@ const ScrollTier SLOW_SCROLL_TIERS[] = {
     {0, 200}
 };
 
-const ScrollTierList LIST_SCROLL_STYLE_SLOW = { 2, SLOW_SCROLL_TIERS };
+const ScrollTierList LIST_SCROLL_STYLE_SLOW = {
+    2,
+    SLOW_SCROLL_TIERS
+};
 
 template <typename EntryData, typename UserData>
 class IList : public GuiComponent
@@ -72,8 +74,6 @@ protected:
 
     unsigned char mTitleOverlayOpacity;
     unsigned int mTitleOverlayColor;
-    ImageComponent mGradient;
-    std::shared_ptr<Font> mTitleOverlayFont;
 
     const ScrollTierList& mTierList;
     const ListLoopType mLoopType;
@@ -87,7 +87,6 @@ public:
             const ScrollTierList& tierList = LIST_SCROLL_STYLE_QUICK,
             const ListLoopType& loopType = LIST_PAUSE_AT_END)
             : GuiComponent(window),
-            mGradient(window),
             mTierList(tierList),
             mLoopType(loopType),
             mWindow(window)
@@ -100,10 +99,6 @@ public:
 
         mTitleOverlayOpacity = 0x00;
         mTitleOverlayColor = 0xFFFFFF00;
-        mGradient.setResize(static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()));
-        mGradient.setImage(":/graphics/scroll_gradient.png");
-        mTitleOverlayFont = Font::get(FONT_SIZE_LARGE);
     }
 
     bool isScrolling() const
@@ -118,6 +113,10 @@ public:
 
     void stopScrolling()
     {
+//        if (mScrollTier >= 2)
+//            NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        mTitleOverlayOpacity = 0;
+
         listInput(0);
         if (mScrollVelocity == 0)
             onCursorChanged(CURSOR_STOPPED);
@@ -212,7 +211,10 @@ public:
         return false;
     }
 
-    inline int size() const { return static_cast<int>(mEntries.size()); }
+    inline int size() const
+    {
+        return static_cast<int>(mEntries.size());
+    }
 
 protected:
     void remove(typename std::vector<Entry>::const_iterator& it)
@@ -259,8 +261,8 @@ protected:
         // Update the title overlay opacity.
         // Fade in if scroll tier is >= 1, otherwise fade out.
         const int dir = (mScrollTier >= mTierList.count - 1) ? 1 : -1;
-        // We just do a 1-to-1 time -> opacity, no scaling.
-        int op = mTitleOverlayOpacity + deltaTime*dir;
+        // We simply translate the time directly to opacity, i.e. no scaling is performed.
+        int op = mTitleOverlayOpacity + deltaTime * dir;
         if (op >= 255)
             mTitleOverlayOpacity = 255;
         else if (op <= 0)
@@ -283,7 +285,7 @@ protected:
             scrollCount++;
         }
 
-        // Are we ready to go even FASTER?
+        // Should we go to the next scrolling tier?
         while (mScrollTier < mTierList.count - 1 && mScrollTierAccumulator >=
                 mTierList.tiers[mScrollTier].length) {
             mScrollTierAccumulator -= mTierList.tiers[mScrollTier].length;
@@ -297,28 +299,43 @@ protected:
 
     void listRenderTitleOverlay(const Transform4x4f& /*trans*/)
     {
-        if (size() == 0 || !mTitleOverlayFont || mTitleOverlayOpacity == 0)
+        if (!Settings::getInstance()->getBool("ListScrollOverlay"))
             return;
 
-        // We don't bother caching this because it's only two letters and will change pretty
-        // much every frame if we're scrolling.
-        const std::string text = getSelectedName().size() >= 2 ?
-                getSelectedName().substr(0, 2) : "??";
+        if (size() == 0 || mTitleOverlayOpacity == 0) {
+            mWindow->renderListScrollOverlay(0, "");
+            return;
+        }
 
-        Vector2f off = mTitleOverlayFont->sizeText(text);
-        off[0] = (Renderer::getScreenWidth() - off.x()) * 0.5f;
-        off[1] = (Renderer::getScreenHeight() - off.y()) * 0.5f;
+        std::string titleIndex;
+        bool favoritesSorting;
 
-        Transform4x4f identTrans = Transform4x4f::Identity();
+        if (getSelected()->getSystem()->isCustomCollection())
+            favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
+        else
+            favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
-        mGradient.setOpacity(mTitleOverlayOpacity);
-        mGradient.render(identTrans);
+        if (favoritesSorting && getSelected()->getFavorite()) {
+            #if defined(_MSC_VER) // MSVC compiler.
+            titleIndex = Utils::String::wideStringToString(L"\uF005");
+            #else
+            titleIndex = "\uF005";
+            #endif
+        }
+        else {
+            titleIndex = getSelected()->getName();
+            if (titleIndex.size()) {
+                titleIndex[0] = toupper(titleIndex[0]);
+                if (titleIndex.size() > 1) {
+                    titleIndex = titleIndex.substr(0, 2);
+                    titleIndex[1] = tolower(titleIndex[1]);
+                }
+            }
+        }
 
-        TextCache* cache = mTitleOverlayFont->buildTextCache(text, off.x(), off.y(),
-                0xFFFFFF00 | mTitleOverlayOpacity);
-        // Relies on mGradient's render for Renderer::setMatrix()
-        mTitleOverlayFont->renderTextCache(cache);
-        delete cache;
+        // The actual rendering takes place in Window to make sure that the overlay is placed on
+        // top of all GUI elements but below the info popups and GPU statistics overlay.
+        mWindow->renderListScrollOverlay(mTitleOverlayOpacity, titleIndex);
     }
 
     void scroll(int amt)

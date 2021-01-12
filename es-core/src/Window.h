@@ -81,13 +81,23 @@ public:
     void setAllowSleep(bool sleep);
 
     void renderLoadingScreen(std::string text);
+    // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
+    void renderListScrollOverlay(unsigned char opacity, const std::string& text);
 
     void renderHelpPromptsEarly(); // Used to render HelpPrompts before a fade.
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
 
     void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
-    void setInfoPopup(InfoPopup* infoPopup) { delete mInfoPopup; mInfoPopup = infoPopup; }
-    inline void stopInfoPopup() { if (mInfoPopup) mInfoPopup->stop(); };
+    void setInfoPopup(InfoPopup* infoPopup)
+    {
+        delete mInfoPopup;
+        mInfoPopup = infoPopup;
+    }
+    void stopInfoPopup()
+    {
+        if (mInfoPopup)
+            mInfoPopup->stop();
+    };
 
     bool isScreensaverActive() { return mRenderScreensaver; };
     void startScreensaver();
@@ -97,12 +107,16 @@ public:
 
     void setLaunchedGame();
     void unsetLaunchedGame();
+
     bool getGameLaunchedState() { return mGameLaunchedState; };
     void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; };
     bool getAllowTextScrolling() { return mAllowTextScrolling; };
 
     void invalidateCachedBackground()
-            { mCachedBackground = false; mInvalidatedCachedBackground = true;};
+    {
+        mCachedBackground = false;
+        mInvalidatedCachedBackground = true;
+    };
 
 private:
     void onSleep();
@@ -119,6 +133,10 @@ private:
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;
     std::unique_ptr<TextCache> mFrameDataText;
+
+    std::string mListScrollText;
+    std::shared_ptr<Font> mListScrollFont;
+    unsigned char mListScrollOpacity;
 
     bool mNormalizeNextUpdate;
     int mFrameTimeElapsed;

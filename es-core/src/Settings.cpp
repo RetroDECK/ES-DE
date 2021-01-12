@@ -121,6 +121,7 @@ void Settings::setDefaults()
     mBoolMap["FoldersOnTop"] = { true, true };
     mBoolMap["FavoritesFirst"] = { true, true };
     mBoolMap["FavoritesStar"] = { true, true };
+    mBoolMap["ListScrollOverlay"] = { false, false };
     mBoolMap["FavoritesAddButton"] = { true, true };
     mBoolMap["GamelistFilters"] = { true, true };
     mBoolMap["QuickSystemSelect"] = { true, true };
