@@ -406,7 +406,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
         }
 
         if (name == "recent") {
-            rootFolder->sort(rootFolder->getSortTypeFromString("last played, descending"));
+            rootFolder->sort(rootFolder->getSortTypeFromString("last played, ascending"));
         }
         else if (sysData.decl.isCustom &&
                 !Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
@@ -1094,7 +1094,7 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
         }
     }
     if (rootFolder->getName() == "recent")
-        rootFolder->sort(rootFolder->getSortTypeFromString("last played, descending"));
+        rootFolder->sort(rootFolder->getSortTypeFromString("last played, ascending"));
     else
         rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
             Settings::getInstance()->getBool("FavoritesFirst"));
