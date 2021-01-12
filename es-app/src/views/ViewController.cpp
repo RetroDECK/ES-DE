@@ -75,6 +75,7 @@ ViewController::ViewController(
         mGameToLaunch(nullptr)
 {
     mState.viewing = NOTHING;
+    mState.viewstyle = AUTOMATIC;
 }
 
 ViewController::~ViewController()
@@ -567,7 +568,7 @@ std::shared_ptr<IGameListView> ViewController::getGameListView(SystemData* syste
     bool themeHasVideoView = system->getTheme()->hasView("video");
 
     // Decide which view style to use.
-    GameListViewType selectedViewStyle = AUTOMATIC;
+    GameListViewStyle selectedViewStyle = AUTOMATIC;
 
     std::string viewPreference = Settings::getInstance()->getString("GamelistViewStyle");
     if (viewPreference.compare("basic") == 0)
@@ -599,19 +600,23 @@ std::shared_ptr<IGameListView> ViewController::getGameListView(SystemData* syste
         case VIDEO:
             view = std::shared_ptr<IGameListView>(
                     new VideoGameListView(mWindow, system->getRootFolder()));
+            mState.viewstyle = VIDEO;
             break;
         case DETAILED:
             view = std::shared_ptr<IGameListView>(
                     new DetailedGameListView(mWindow, system->getRootFolder()));
+            mState.viewstyle = DETAILED;
             break;
         case GRID:
             view = std::shared_ptr<IGameListView>(
                     new GridGameListView(mWindow, system->getRootFolder()));
+            mState.viewstyle = GRID;
             break;
         case BASIC:
         default:
             view = std::shared_ptr<IGameListView>(
                     new BasicGameListView(mWindow, system->getRootFolder()));
+            mState.viewstyle = BASIC;
             break;
     }
 

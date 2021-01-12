@@ -20,13 +20,11 @@ class Window;
 class IGameListView : public GuiComponent
 {
 public:
-    IGameListView(
-            Window* window,
-            FileData* root)
-            : GuiComponent(window),
-            mRoot(root)
-            { setSize(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight())); }
+    IGameListView(Window* window, FileData* root) : GuiComponent(window), mRoot(root)
+    {
+        setSize(static_cast<float>(Renderer::getScreenWidth()),
+        static_cast<float>(Renderer::getScreenHeight()));
+    }
 
     virtual ~IGameListView() {}
 
