@@ -110,7 +110,7 @@ bool Window::init()
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
     }
 
-    mBackgroundOverlay->setImage(":/graphics/scroll_gradient.png");
+    mBackgroundOverlay->setImage(":/graphics/screen_gradient.png");
     mBackgroundOverlay->setResize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
 
