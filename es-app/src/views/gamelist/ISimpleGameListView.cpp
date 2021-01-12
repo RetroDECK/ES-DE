@@ -211,6 +211,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 ViewController::GAME_LIST) {
             // Jump to the randomly selected game.
             if (mRandomGame) {
+                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 setCursor(mRandomGame);
                 updateHelpPrompts();
             }
