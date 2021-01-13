@@ -32,6 +32,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added volume sliders for navigation sounds and game videos to the sound settings menu
 * Added support for OpenGL GLSL shaders (OpenGL 2.1 renderer only, no support for OpenGL ES 1.0 renderer)
 * Added multiple animations and shader effects, such as when opening menus, playing videos in the gamelists and via the screensaver etc.
+* Updated the application to work properly on high resolution devices (such as 4K)
 * Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
 * Added user account support when scraping using ScreenScraper
@@ -114,6 +115,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Unknown command line options were silently accepted instead of generating an error and notifying the user
 * Deleting a game from the metadata editor did not delete the game media files or its entry in the gamelist.xml file
 * Hidden files still showed up if they had a gamelist.xml entry
+* Fixed multiple instances of misaligned GUI elements on high-resolution displays due to the use of fixed-pixel constants
 * The VRAM statistics overlay was somewhat broken and incorrectly displayed numbers in megabytes instead of mebibytes
 * Long game names would sometimes not scroll in the gamelist view
 * Game media was not rendered when moving between gamelists using the slide transition style

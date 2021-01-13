@@ -16,12 +16,13 @@ ButtonComponent::ButtonComponent(
     const std::string& helpText,
     const std::function<void()>& func)
     : GuiComponent(window),
-    mBox(window, ":/graphics/button.png"),
+    mBox(window, ":/graphics/button.svg"),
     mFont(Font::get(FONT_SIZE_MEDIUM)),
     mFocused(false),
     mEnabled(true),
     mTextColorFocused(0xFFFFFFFF), mTextColorUnfocused(0x777777FF)
 {
+    mBox.setIsScalable(true);
     setPressedFunc(func);
     setText(text, helpText);
     updateImage();
@@ -83,7 +84,7 @@ void ButtonComponent::setEnabled(bool state)
 void ButtonComponent::updateImage()
 {
     if (!mEnabled || !mPressedFunc) {
-        mBox.setImagePath(":/graphics/button_filled.png");
+        mBox.setImagePath(":/graphics/button_filled.svg");
         mBox.setCenterColor(0x770000FF);
         mBox.setEdgeColor(0x770000FF);
         return;
@@ -91,7 +92,7 @@ void ButtonComponent::updateImage()
 
     mBox.setCenterColor(0xFFFFFFFF);
     mBox.setEdgeColor(0xFFFFFFFF);
-    mBox.setImagePath(mFocused ? ":/graphics/button_filled.png" : ":/graphics/button.png");
+    mBox.setImagePath(mFocused ? ":/graphics/button_filled.svg" : ":/graphics/button.svg");
 }
 
 void ButtonComponent::render(const Transform4x4f& parentTrans)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48" height="48" version="1.1" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <path
+     style="fill:#efefef;fill-opacity:1;stroke:none;stroke-width:1.98800004;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     d="M 8.3579788,0 H 39.642021 C 44.272341,0 48,3.7276586 48,8.3579788 V 39.642021 C 48,44.272341 44.272341,48 39.642021,48 H 8.3579788 C 3.7276586,48 0,44.272341 0,39.642021 V 8.3579788 C 0,3.7276586 3.7276586,0 8.3579788,0 Z"/>
+</svg>

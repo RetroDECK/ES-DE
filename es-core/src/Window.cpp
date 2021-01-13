@@ -402,6 +402,7 @@ void Window::render()
         }
     }
 
+    // Render the quick list scrolling overlay, which is triggered in IList.
     if (mListScrollOpacity != 0) {
         Renderer::setMatrix(Transform4x4f::Identity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),

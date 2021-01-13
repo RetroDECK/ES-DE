@@ -22,7 +22,8 @@ NinePatchComponent::NinePatchComponent(
         mEdgeColor(edgeColor),
         mCenterColor(centerColor),
         mPath(path),
-        mVertices(nullptr)
+        mVertices(nullptr),
+        mIsScalable(false)
 {
     if (!mPath.empty())
         buildVertices();
@@ -39,10 +40,10 @@ void NinePatchComponent::updateColors()
     const unsigned int edgeColor = Renderer::convertRGBAToABGR(mEdgeColor);
     const unsigned int centerColor = Renderer::convertRGBAToABGR(mCenterColor);
 
-    for (int i = 0; i < 6*9; ++i)
+    for (int i = 0; i < 6 * 9; i++)
         mVertices[i].col = edgeColor;
 
-    for (int i = 6*4; i < 6; ++i)
+    for (int i = 6*4; i < 6; i++)
         mVertices[(6*4)+i].col = centerColor;
 }
 
@@ -55,14 +56,29 @@ void NinePatchComponent::buildVertices()
 
     if (mTexture->getSize() == Vector2i::Zero()) {
         mVertices = nullptr;
-        LOG(LogWarning) << "NinePatchComponent missing texture!";
+        LOG(LogWarning) << "NinePatchComponent has no texture";
         return;
     }
 
+    Vector2f texSize;
     mVertices = new Renderer::Vertex[6 * 9];
 
-    const Vector2f texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
-            static_cast<float>(mTexture->getSize().y()));
+    // This is just a partial fix, the plan is to always scale according to the screen
+    // resolution. But unfortunately doing this for the menu frame leads to flickering when
+    // entering a submenu, probably because the texture is unloaded and re-rasterized at the
+    // higher resolution. So for the moment the frame.png texture is still used (which won't be
+    // scaled as that leads to ugly pixelated corners for the menus). Scaling ButtonComponent
+    // works perfect with the below code though.
+    if (mIsScalable) {
+        texSize = Vector2f(static_cast<float>(mTexture->getSize().x()) *
+                Renderer::getScreenWidthModifier(), static_cast<float>(mTexture->getSize().y()) *
+                Renderer::getScreenHeightModifier());
+        mTexture->rasterizeAt(static_cast<size_t>(texSize.x()), static_cast<size_t>(texSize.y()));
+    }
+    else {
+        texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
+                static_cast<float>(mTexture->getSize().y()));
+    }
 
     const float imgSizeX[3] = { mCornerSize.x(), mSize.x() - mCornerSize.x() * 2, mCornerSize.x()};
     const float imgSizeY[3] = { mCornerSize.y(), mSize.y() - mCornerSize.y() * 2, mCornerSize.y()};
@@ -79,8 +95,8 @@ void NinePatchComponent::buildVertices()
     int v = 0;
 
     for (int slice = 0; slice < 9; slice++) {
-        const int sliceX  = slice % 3;
-        const int sliceY  = slice / 3;
+        const int sliceX = slice % 3;
+        const int sliceY = slice / 3;
         const Vector2f imgPos = Vector2f(imgPosX[sliceX], imgPosY[sliceY]);
         const Vector2f imgSize = Vector2f(imgSizeX[sliceX], imgSizeY[sliceY]);
         const Vector2f texPos = Vector2f(texPosX[sliceX], texPosY[sliceY]);
@@ -92,7 +108,7 @@ void NinePatchComponent::buildVertices()
         mVertices[v + 4] = { { imgPos.x() + imgSize.x(), imgPos.y() + imgSize.y() }, { texPos.x() + texSize.x(), texPos.y() + texSize.y() }, 0 };
 
         // Round vertices.
-        for (int i = 1; i < 5; ++i)
+        for (int i = 1; i < 5; i++)
             mVertices[v + i].pos.round();
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.

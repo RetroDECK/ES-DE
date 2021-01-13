@@ -50,6 +50,7 @@ public:
             const std::string& element, unsigned int properties) override;
 
     inline const Vector2f& getCornerSize() const { return mCornerSize; };
+    void setIsScalable(bool scalable) { mIsScalable = scalable; };
     inline void setCornerSize(const Vector2f& size)
     {
         mCornerSize = size;
@@ -67,6 +68,7 @@ private:
     unsigned int mEdgeColor;
     unsigned int mCenterColor;
     std::shared_ptr<TextureResource> mTexture;
+    bool mIsScalable;
 };
 
 #endif // ES_CORE_COMPONENTS_NINE_PATCH_COMPONENT_H
