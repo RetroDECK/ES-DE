@@ -26,7 +26,7 @@ ScrollableContainer::ScrollableContainer(
 {
     // Set the modifier to get equivalent scrolling speed regardless of screen resolution.
     // 1080p is the reference.
-    mResolutionModifier = static_cast<float>(Renderer::getScreenWidth()) / 1920.0f;
+    mResolutionModifier = Renderer::getScreenWidthModifier();
 
     mAutoScrollResetDelayConstant = AUTO_SCROLL_RESET_DELAY;
     mAutoScrollDelayConstant = AUTO_SCROLL_DELAY;

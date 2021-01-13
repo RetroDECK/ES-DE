@@ -8,7 +8,7 @@
 
 #include "components/ComponentList.h"
 
-#define TOTAL_HORIZONTAL_PADDING_PX 20
+#define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
 ComponentList::ComponentList(Window* window) : IList<ComponentListRow,
         void*>(window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP)
@@ -291,7 +291,8 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     // Draw separators.
     float y = 0;
     for (unsigned int i = 0; i < mEntries.size(); i++) {
-        Renderer::drawRect(0.0f, y, mSize.x(), 1.0f, 0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
+        Renderer::drawRect(0.0f, y, mSize.x(), 1.0f * Renderer::getScreenHeightModifier(),
+                0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
         y += getRowHeight(mEntries.at(i).data);
     }
 
@@ -329,7 +330,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
     // Assumes updateElementSize has already been called.
     float rowHeight = getRowHeight(row);
 
-    float x = TOTAL_HORIZONTAL_PADDING_PX / 2;
+    float x = (TOTAL_HORIZONTAL_PADDING_PX * Renderer::getScreenWidthModifier()) / 2;
     for (unsigned int i = 0; i < row.elements.size(); i++) {
         const auto comp = row.elements.at(i).component;
 
@@ -341,7 +342,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
 
 void ComponentList::updateElementSize(const ComponentListRow& row)
 {
-    float width = mSize.x() - TOTAL_HORIZONTAL_PADDING_PX;
+    float width = mSize.x() - (TOTAL_HORIZONTAL_PADDING_PX * Renderer::getScreenWidthModifier());
     std::vector< std::shared_ptr<GuiComponent> > resizeVec;
 
     for (auto it = row.elements.cbegin(); it != row.elements.cend(); it++) {

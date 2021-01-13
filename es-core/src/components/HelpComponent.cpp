@@ -90,7 +90,8 @@ void HelpComponent::updateGrid()
                 Utils::String::toUpper(it->second), font, mStyle.textColor);
         labels.push_back(lbl);
 
-        width += icon->getSize().x() + lbl->getSize().x() + ICON_TEXT_SPACING + ENTRY_SPACING;
+        width += icon->getSize().x() + lbl->getSize().x() +
+                ((ICON_TEXT_SPACING + ENTRY_SPACING) * Renderer::getScreenWidthModifier());
     }
 
     mGrid->setSize(width, height);
@@ -98,7 +99,8 @@ void HelpComponent::updateGrid()
     for (unsigned int i = 0; i < icons.size(); i++) {
         const int col = i*4;
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x() / width);
-        mGrid->setColWidthPerc(col + 1, ICON_TEXT_SPACING / width);
+        mGrid->setColWidthPerc(col + 1, (ICON_TEXT_SPACING *
+                Renderer::getScreenWidthModifier()) / width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x() / width);
 
         mGrid->setEntry(icons.at(i), Vector2i(col, 0), false, false);
