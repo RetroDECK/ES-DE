@@ -229,7 +229,7 @@ void TextComponent::onTextChanged()
     }
 
     Vector2f size = f->sizeText(text);
-    if (!isMultiline && mSize.x() && text.size() && (size.x() > mSize.x() || addAbbrev)) {
+    if (!isMultiline && mSize.x() > 0.0f && text.size() && (size.x() > mSize.x() || addAbbrev)) {
         // Abbreviate text.
         const std::string abbrev = "...";
         Vector2f abbrevSize = f->sizeText(abbrev);
