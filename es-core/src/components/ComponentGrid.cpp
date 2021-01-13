@@ -168,6 +168,7 @@ void ComponentGrid::updateSeparators()
 
     Vector2f pos;
     Vector2f size;
+
     for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
         if (!it->border && !drawAll)
             continue;
@@ -334,7 +335,7 @@ bool ComponentGrid::cursorValid()
 
 void ComponentGrid::update(int deltaTime)
 {
-    // Update ALL THE THINGS.
+    // Update everything.
     const GridEntry* cursorEntry = getCellAt(mCursor);
     for (auto it = mCells.cbegin(); it != mCells.cend(); it++)
     {

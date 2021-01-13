@@ -40,7 +40,7 @@ void Font::initLibrary()
     assert(sLibrary == nullptr);
     if (FT_Init_FreeType(&sLibrary)) {
         sLibrary = nullptr;
-        LOG(LogError) << "Error initializing FreeType!";
+        LOG(LogError) << "Couldn't initialize FreeType";
     }
 }
 
@@ -206,7 +206,7 @@ void Font::getTextureForNewGlyph(const Vector2i& glyphSize,
     bool ok = tex_out->findEmpty(glyphSize, cursor_out);
     if (!ok) {
         LOG(LogError) << "Glyph too big to fit on a new texture (glyph size > " <<
-                tex_out->textureSize.x() << ", " << tex_out->textureSize.y() << ")!";
+                tex_out->textureSize.x() << ", " << tex_out->textureSize.y() << ")";
         tex_out = nullptr;
     }
 }
@@ -284,7 +284,7 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     // Nope, need to make a glyph.
     FT_Face face = getFaceForChar(id);
     if (!face) {
-        LOG(LogError) << "Could not find appropriate font face for character " <<
+        LOG(LogError) << "Couldn't find appropriate font face for character " <<
                 id << " for font " << mPath;
         return nullptr;
     }
@@ -292,8 +292,8 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     FT_GlyphSlot g = face->glyph;
 
     if (FT_Load_Char(face, id, FT_LOAD_RENDER)) {
-        LOG(LogError) << "Could not find glyph for character " <<
-                id << " for font " << mPath << ", size " << mSize << "!";
+        LOG(LogError) << "Couldn't find glyph for character " <<
+                id << " for font " << mPath << ", size " << mSize;
         return nullptr;
     }
 
@@ -306,8 +306,8 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     // getTextureForNewGlyph can fail if the glyph is bigger than the max texture
     // size (absurdly large font size).
     if (tex == nullptr) {
-        LOG(LogError) << "Could not create glyph for character " << id << " for font " <<
-                mPath << ", size " << mSize << " (no suitable texture found)!";
+        LOG(LogError) << "Couldn't create glyph for character " << id << " for font " <<
+                mPath << ", size " << mSize << " (no suitable texture found)";
         return nullptr;
     }
 
@@ -369,7 +369,7 @@ void Font::rebuildTextures()
 void Font::renderTextCache(TextCache* cache)
 {
     if (cache == nullptr) {
-        LOG(LogError) << "Attempted to draw nullptr TextCache!";
+        LOG(LogError) << "Attempted to draw nullptr TextCache";
         return;
     }
 

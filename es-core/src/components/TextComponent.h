@@ -48,7 +48,6 @@ public:
     void setBackgroundColor(unsigned int color);
     void setRenderBackground(bool render);
 
-    unsigned int getColor() const override { return mColor; };
     void render(const Transform4x4f& parentTrans) override;
 
     std::string getValue() const override;
@@ -60,10 +59,11 @@ public:
     unsigned char getOpacity() const override;
     void setOpacity(unsigned char opacity) override;
 
-    inline std::shared_ptr<Font> getFont() const { return mFont; }
-
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
             const std::string& element, unsigned int properties) override;
+
+    unsigned int getColor() const override { return mColor; };
+    inline std::shared_ptr<Font> getFont() const { return mFont; }
 
 protected:
     virtual void onTextChanged();

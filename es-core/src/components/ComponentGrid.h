@@ -30,7 +30,7 @@ namespace GridFlags
     };
 };
 
-// Used to arrange a bunch of components in a spreadsheet-esque grid.
+// Provides basic layout of components in an X*Y grid.
 class ComponentGrid : public GuiComponent
 {
 public:
