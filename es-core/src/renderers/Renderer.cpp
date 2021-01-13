@@ -31,6 +31,9 @@ namespace Renderer
     static int screenOffsetY = 0;
     static int screenRotate = 0;
     static bool initialCursorState = 1;
+    // Screen resolution modifiers relative to the 1920x1080 reference.
+    static float screenHeightModifier;
+    static float screenWidthModifier;
 
     static void setIcon()
     {
@@ -96,6 +99,9 @@ namespace Renderer
                 Settings::getInstance()->getInt("ScreenOffsetY") : 0;
         screenRotate = Settings::getInstance()->getInt("ScreenRotate") ?
                 Settings::getInstance()->getInt("ScreenRotate") : 0;
+
+        screenHeightModifier = static_cast<float>(screenHeight) / 1080.0f;
+        screenWidthModifier = static_cast<float>(screenWidth) / 1920.0f;
 
         // Prevent ES window from minimizing when switching windows (when launching
         // games or when manually switching windows using task switcher).
@@ -427,5 +433,7 @@ namespace Renderer
     int getScreenOffsetX() { return screenOffsetX; }
     int getScreenOffsetY() { return screenOffsetY; }
     int getScreenRotate() { return screenRotate; }
+    float getScreenWidthModifier() { return screenWidthModifier; }
+    float getScreenHeightModifier() { return screenHeightModifier; }
 
 } // Renderer::
