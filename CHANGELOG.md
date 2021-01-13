@@ -32,7 +32,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added volume sliders for navigation sounds and game videos to the sound settings menu
 * Added support for OpenGL GLSL shaders (OpenGL 2.1 renderer only, no support for OpenGL ES 1.0 renderer)
 * Added multiple animations and shader effects, such as when opening menus, playing videos in the gamelists and via the screensaver etc.
-* Updated the application to work properly on high resolution devices (such as 4K)
+* Updated the application to work properly on high resolution devices (such as 4K monitors)
 * Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
 * Added user account support when scraping using ScreenScraper

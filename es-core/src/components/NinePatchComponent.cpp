@@ -72,7 +72,7 @@ void NinePatchComponent::buildVertices()
     if (mIsScalable) {
         texSize = Vector2f(static_cast<float>(mTexture->getSize().x()) *
                 Renderer::getScreenWidthModifier(), static_cast<float>(mTexture->getSize().y()) *
-                Renderer::getScreenHeightModifier());
+                Renderer::getScreenWidthModifier());
         mTexture->rasterizeAt(static_cast<size_t>(texSize.x()), static_cast<size_t>(texSize.y()));
     }
     else {
