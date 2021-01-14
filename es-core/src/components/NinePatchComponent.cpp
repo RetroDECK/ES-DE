@@ -18,7 +18,7 @@ NinePatchComponent::NinePatchComponent(
         unsigned int edgeColor,
         unsigned int centerColor)
         : GuiComponent(window),
-        mCornerSize(16, 16),
+        mCornerSize(16.0f, 16.0f),
         mEdgeColor(edgeColor),
         mCenterColor(centerColor),
         mPath(path),
@@ -52,7 +52,8 @@ void NinePatchComponent::buildVertices()
     if (mVertices != nullptr)
         delete[] mVertices;
 
-    mTexture = TextureResource::get(mPath);
+    // Scale the corner size according to the screen resolution.
+    mTexture = TextureResource::get(mPath, false, false, true, Renderer::getScreenWidthModifier());
 
     if (mTexture->getSize() == Vector2i::Zero()) {
         mVertices = nullptr;
@@ -63,22 +64,8 @@ void NinePatchComponent::buildVertices()
     Vector2f texSize;
     mVertices = new Renderer::Vertex[6 * 9];
 
-    // This is just a partial fix, the plan is to always scale according to the screen
-    // resolution. But unfortunately doing this for the menu frame leads to flickering when
-    // entering a submenu, probably because the texture is unloaded and re-rasterized at the
-    // higher resolution. So for the moment the frame.png texture is still used (which won't be
-    // scaled as that leads to ugly pixelated corners for the menus). Scaling ButtonComponent
-    // works perfect with the below code though.
-    if (mIsScalable) {
-        texSize = Vector2f(static_cast<float>(mTexture->getSize().x()) *
-                Renderer::getScreenWidthModifier(), static_cast<float>(mTexture->getSize().y()) *
-                Renderer::getScreenWidthModifier());
-        mTexture->rasterizeAt(static_cast<size_t>(texSize.x()), static_cast<size_t>(texSize.y()));
-    }
-    else {
-        texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
-                static_cast<float>(mTexture->getSize().y()));
-    }
+    texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
+            static_cast<float>(mTexture->getSize().y()));
 
     const float imgSizeX[3] = { mCornerSize.x(), mSize.x() - mCornerSize.x() * 2, mCornerSize.x()};
     const float imgSizeY[3] = { mCornerSize.y(), mSize.y() - mCornerSize.y() * 2, mCornerSize.y()};
