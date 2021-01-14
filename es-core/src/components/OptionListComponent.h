@@ -40,7 +40,7 @@ public:
             mHelpStyle(helpstyle),
             mMultiSelect(multiSelect),
             mName(name),
-             mText(window),
+            mText(window),
             mLeftArrow(window),
             mRightArrow(window)
     {
@@ -76,7 +76,7 @@ public:
         mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
 
         if (mSize.x() < (mLeftArrow.getSize().x() + mRightArrow.getSize().x())) {
-            LOG(LogWarning) << "OptionListComponent too narrow!";
+            LOG(LogWarning) << "OptionListComponent too narrow";
         }
 
         mText.setSize(mSize.x() - mLeftArrow.getSize().x() -
@@ -240,24 +240,26 @@ private:
     void onSelectedChanged()
     {
         if (mMultiSelect) {
-            // Display # selected.
+            // Display the selected entry.
             std::stringstream ss;
             ss << getSelectedObjects().size() << " SELECTED";
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y());
-            setSize(mText.getSize().x() + mRightArrow.getSize().x() + 24, mText.getSize().y());
-            if (mParent) // Hack since theres no "on child size changed" callback atm...
+            setSize(mText.getSize().x() + mRightArrow.getSize().x() +
+                    24 * Renderer::getScreenWidthModifier(), mText.getSize().y());
+            if (mParent) // Hack since there's no "on child size changed" callback.
                 mParent->onSizeChanged();
         }
         else {
-            // Display currently selected + l/r cursors.
+            // Display the selected entry and left/right option arrows.
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
                 if (it->selected) {
                     mText.setText(Utils::String::toUpper(it->name));
                     mText.setSize(0, mText.getSize().y());
                     setSize(mText.getSize().x() + mLeftArrow.getSize().x() +
-                            mRightArrow.getSize().x() + 24, mText.getSize().y());
-                    if (mParent) // Hack since theres no "on child size changed" callback atm...
+                            mRightArrow.getSize().x() +
+                            24 * Renderer::getScreenWidthModifier(), mText.getSize().y());
+                    if (mParent) // Hack since there's no "on child size changed" callback.
                         mParent->onSizeChanged();
                     break;
                 }
@@ -301,7 +303,7 @@ private:
             auto font = Font::get(FONT_SIZE_MEDIUM);
             ComponentListRow row;
 
-            // For select all/none.
+            // For selecting all/none.
             std::vector<ImageComponent*> checkboxes;
 
             for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); it++) {
@@ -319,14 +321,14 @@ private:
                     row.addElement(checkbox, false);
 
                     // Input handler.
-                    // Update checkbox state & selected value.
+                    // Update checkbox state and selected value.
                     row.makeAcceptInputHandler([this, &e, checkbox] {
                         e.selected = !e.selected;
                         checkbox->setImage(e.selected ? CHECKED_PATH : UNCHECKED_PATH);
                         mParent->onSelectedChanged();
                     });
 
-                    // For select all/none.
+                    // For selecting all/none.
                     checkboxes.push_back(checkbox.get());
                 }
                 else {
