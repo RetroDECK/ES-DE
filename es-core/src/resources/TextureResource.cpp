@@ -19,7 +19,8 @@ std::set<TextureResource*> TextureResource::sAllTextures;
 TextureResource::TextureResource(
         const std::string& path,
         bool tile,
-        bool dynamic)
+        bool dynamic,
+        float scaleSVG)
         : mTextureData(nullptr),
         mForceLoad(false)
 {
@@ -31,6 +32,8 @@ TextureResource::TextureResource(
         if (dynamic) {
             data = sTextureDataManager.add(this, tile);
             data->initFromPath(path);
+            if (scaleSVG != 1.0f)
+                data->setScaleSVGDuringLoad(scaleSVG);
             // Force the texture manager to load it using a blocking load.
             sTextureDataManager.load(data, true);
         }
@@ -38,6 +41,8 @@ TextureResource::TextureResource(
             mTextureData = std::shared_ptr<TextureData>(new TextureData(tile));
             data = mTextureData;
             data->initFromPath(path);
+            if (scaleSVG != 1.0f)
+                data->setScaleSVGDuringLoad(scaleSVG);
             // Load it so we can read the width/height.
             data->load();
         }
@@ -124,14 +129,18 @@ bool TextureResource::bind()
     }
 }
 
-std::shared_ptr<TextureResource> TextureResource::get(const std::string& path, bool tile,
-        bool forceLoad, bool dynamic)
+std::shared_ptr<TextureResource> TextureResource::get(
+        const std::string& path,
+        bool tile,
+        bool forceLoad,
+        bool dynamic,
+        float scaleSVG)
 {
     std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
 
     const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(path);
     if (canonicalPath.empty()) {
-        std::shared_ptr<TextureResource> tex(new TextureResource("", tile, false));
+        std::shared_ptr<TextureResource> tex(new TextureResource("", tile, false, scaleSVG));
         // Make sure we get properly deinitialized even though we do nothing on reinitialization.
         rm->addReloadable(tex);
         return tex;
@@ -147,7 +156,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path, b
 
     // Need to create it.
     std::shared_ptr<TextureResource> tex;
-    tex = std::shared_ptr<TextureResource>(new TextureResource(key.first, tile, dynamic));
+    tex = std::shared_ptr<TextureResource>(new TextureResource(key.first, tile, dynamic, scaleSVG));
     std::shared_ptr<TextureData> data = sTextureDataManager.get(tex.get());
 
     // Is it an SVG?

@@ -26,6 +26,7 @@ TextureData::TextureData(
         : mTile(tile),
         mTextureID(0),
         mDataRGBA({}),
+        mScaleSVG(1.0f),
         mScalable(false),
         mWidth(0),
         mHeight(0),
@@ -59,7 +60,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     NSVGimage* svgImage = nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI);
 
     if (!svgImage) {
-        LOG(LogError) << "Error parsing SVG image.";
+        LOG(LogError) << "Couldn't parse SVG image";
         return false;
     }
 
@@ -69,8 +70,9 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         mSourceWidth = svgImage->width;
         mSourceHeight = svgImage->height;
     }
-    mWidth = static_cast<size_t>(std::round(mSourceWidth));
-    mHeight = static_cast<size_t>(std::round(mSourceHeight));
+
+    mWidth = static_cast<size_t>(std::round(mSourceWidth * mScaleSVG));
+    mHeight = static_cast<size_t>(std::round(mSourceHeight * mScaleSVG));
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.

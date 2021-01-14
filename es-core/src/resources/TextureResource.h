@@ -25,13 +25,20 @@ class TextureData;
 class TextureResource : public IReloadable
 {
 public:
-    static std::shared_ptr<TextureResource> get(const std::string& path, bool tile = false,
-            bool forceLoad = false, bool dynamic = true);
+    static std::shared_ptr<TextureResource> get(
+            const std::string& path,
+            bool tile = false,
+            bool forceLoad = false,
+            bool dynamic = true,
+            float scaleSVG = 1.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
     static void manualUnload(std::string path, bool tile);
 
-    // For scalable source images in textures we want to set the resolution to rasterize at.
+    // For SVG graphics this function effectively rescales the image to the defined size.
+    // It does unload and re-rasterize the texture though which may cause flickering in some
+    // situations. An alternative is to set a scaling factor directly when loading the texture
+    // using get(), by using the scaleSVG parameter.
     void rasterizeAt(size_t width, size_t height);
     Vector2f getSourceImageSize() const;
 
@@ -49,7 +56,7 @@ public:
     static size_t getTotalTextureSize();
 
 protected:
-    TextureResource(const std::string& path, bool tile, bool dynamic);
+    TextureResource(const std::string& path, bool tile, bool dynamic, float scaleSVG);
     virtual void unload(std::shared_ptr<ResourceManager>& rm);
     virtual void reload(std::shared_ptr<ResourceManager>& rm);
 
