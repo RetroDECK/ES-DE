@@ -21,7 +21,7 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
         bool disableBackButton)
         : GuiComponent(window),
         mHelpStyle(helpstyle),
-        mBackground(window, ":/graphics/frame.png"),
+        mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 2)),
         mDisableBackButton(disableBackButton)
 {

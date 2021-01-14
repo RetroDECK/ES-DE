@@ -43,7 +43,7 @@ GuiMetaDataEd::GuiMetaDataEd(
         std::function<void()> deleteGameFunc)
         : GuiComponent(window),
         mScraperParams(scraperParams),
-        mBackground(window, ":/graphics/frame.png"),
+        mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 3)),
         mMetaDataDecl(mdd),
         mMetaData(md),

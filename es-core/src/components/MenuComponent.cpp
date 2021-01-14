@@ -28,7 +28,7 @@ MenuComponent::MenuComponent(
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mBackground.setImagePath(":/graphics/frame.png");
+    mBackground.setImagePath(":/graphics/frame.svg");
 
     // Set up title.
     mTitle = std::make_shared<TextComponent>(mWindow);

@@ -27,7 +27,7 @@ GuiScraperMulti::GuiScraperMulti(
         const std::queue<ScraperSearchParams>& searches,
         bool approveResults)
         : GuiComponent(window),
-        mBackground(window, ":/graphics/frame.png"),
+        mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 5)),
         mSearchQueue(searches)
 {

@@ -64,7 +64,7 @@ GuiInputConfig::GuiInputConfig(
         bool reconfigureAll,
         const std::function<void()>& okCallback)
         : GuiComponent(window),
-        mBackground(window, ":/graphics/frame.png"),
+        mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 7)),
         mTargetConfig(target),
         mHoldingInput(false),

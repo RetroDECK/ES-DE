@@ -25,7 +25,7 @@ GuiDetectDevice::GuiDetectDevice(
         : GuiComponent(window),
         mFirstRun(firstRun),
         mForcedConfig(forcedConfig),
-        mBackground(window, ":/graphics/frame.png"),
+        mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 5))
 {
     mHoldingConfig = nullptr;
