@@ -150,9 +150,6 @@ void VideoVlcComponent::resize()
         }
     }
 
-    mTexture->rasterizeAt(static_cast<size_t>(std::round(mSize.x())),
-            static_cast<size_t>(std::round(mSize.y())));
-
     onSizeChanged();
 }
 
