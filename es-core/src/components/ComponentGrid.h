@@ -119,25 +119,23 @@ private:
         }
     };
 
-    float* mRowHeights;
-    float* mColWidths;
-
-    std::vector<Renderer::Vertex> mLines;
-
-    // Update position & size.
+    // Update position and size.
     void updateCellComponent(const GridEntry& cell);
     void updateSeparators();
 
+    void onCursorMoved(Vector2i from, Vector2i to);
     const GridEntry* getCellAt(int x, int y) const;
+
     inline const GridEntry* getCellAt(const Vector2i& pos) const
             { return getCellAt(pos.x(), pos.y()); }
 
+    std::vector<Renderer::Vertex> mLines;
     Vector2i mGridSize;
-
     std::vector<GridEntry> mCells;
-
-    void onCursorMoved(Vector2i from, Vector2i to);
     Vector2i mCursor;
+
+    float* mRowHeights;
+    float* mColWidths;
 };
 
 #endif // ES_CORE_COMPONENTS_COMPONENT_GRID_H
