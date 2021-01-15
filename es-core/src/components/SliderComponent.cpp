@@ -86,7 +86,7 @@ void SliderComponent::render(const Transform4x4f& parentTrans)
             (mValueCache ? mValueCache->metrics.size.x() + 4 : 0);
 
     // Render line.
-    const float lineWidth = 2;
+    const float lineWidth = 2 * Renderer::getScreenHeightModifier();;
     Renderer::drawRect(mKnob.getSize().x() / 2, mSize.y() / 2 -
             lineWidth / 2, width, lineWidth, 0x777777FF, 0x777777FF);
 
