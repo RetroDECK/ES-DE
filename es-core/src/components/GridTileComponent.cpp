@@ -16,8 +16,10 @@ GridTileComponent::GridTileComponent(Window* window) :
         GuiComponent(window), mBackground(window, ":/graphics/frame.png")
 {
     mDefaultProperties.mSize = getDefaultTileSize();
-    mDefaultProperties.mPadding = Vector2f(16.0f, 16.0f);
+    mDefaultProperties.mPadding = Vector2f(16.0f * Renderer::getScreenWidthModifier(),
+            16.0f * Renderer::getScreenHeightModifier());
     mDefaultProperties.mImageColor = 0xAAAAAABB;
+    // Attempting to use frame.svg instead causes quite severe performance problems.
     mDefaultProperties.mBackgroundImage = ":/graphics/frame.png";
     mDefaultProperties.mBackgroundCornerSize = Vector2f(16.0f, 16.0f);
     mDefaultProperties.mBackgroundCenterColor = 0xAAAAEEFF;
