@@ -54,8 +54,8 @@ public:
     float sourceHeight();
     void setSourceSize(float width, float height);
 
-    // Define a factor for scaling the SVG graphics when loading it (1.0f = no scaling).
-    void setScaleSVGDuringLoad(float scale) { mScaleSVG = scale; }
+    // Define a factor for scaling the file when loading it (1.0f = no scaling).
+    void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }
 
     bool tiled() { return mTile; }
 
@@ -69,7 +69,7 @@ private:
     size_t mHeight;
     float mSourceWidth;
     float mSourceHeight;
-    float mScaleSVG;
+    float mScaleDuringLoad;
     bool mScalable;
     bool mReloadable;
 };

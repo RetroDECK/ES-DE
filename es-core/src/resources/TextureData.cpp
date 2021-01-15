@@ -26,7 +26,7 @@ TextureData::TextureData(
         : mTile(tile),
         mTextureID(0),
         mDataRGBA({}),
-        mScaleSVG(1.0f),
+        mScaleDuringLoad(1.0f),
         mScalable(false),
         mWidth(0),
         mHeight(0),
@@ -71,8 +71,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         mSourceHeight = svgImage->height;
     }
 
-    mWidth = static_cast<size_t>(std::round(mSourceWidth * mScaleSVG));
-    mHeight = static_cast<size_t>(std::round(mSourceHeight * mScaleSVG));
+    mWidth = static_cast<size_t>(std::round(mSourceWidth * mScaleDuringLoad));
+    mHeight = static_cast<size_t>(std::round(mSourceHeight * mScaleDuringLoad));
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.
@@ -107,7 +107,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
 bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t length)
 {
-    size_t width, height;
+    size_t width;
+    size_t height;
 
     // If already initialized then don't process it again.
     {
@@ -141,7 +142,7 @@ bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size
         return true;
 
     mDataRGBA.reserve(width * height * 4);
-    mDataRGBA.insert(mDataRGBA.begin(), dataRGBA, dataRGBA+(width * height * 4));
+    mDataRGBA.insert(mDataRGBA.begin(), dataRGBA, dataRGBA + (width * height * 4));
 
     mWidth = width;
     mHeight = height;
@@ -193,9 +194,9 @@ bool TextureData::uploadAndBind()
             return false;
 
         // Upload texture.
-        mTextureID = Renderer::createTexture(Renderer::Texture::RGBA, true,
-                mTile, static_cast<const unsigned int>(mWidth),
-                static_cast<const unsigned int>(mHeight), mDataRGBA.data());
+        mTextureID = Renderer::createTexture(Renderer::Texture::RGBA, true, mTile,
+                static_cast<const unsigned int>(mWidth), static_cast<const unsigned int>(mHeight),
+                mDataRGBA.data());
     }
     return true;
 }
@@ -223,14 +224,22 @@ size_t TextureData::width()
 {
     if (mWidth == 0)
         load();
-    return mWidth;
+    // If it's an SVG image, the size was correctly set to the scaled-up values during the
+    // rasterization, so only multiply by the scale factor if it's a raster file.
+    if (!mScalable)
+        return mWidth * mScaleDuringLoad;
+    else
+        return mWidth;
 }
 
 size_t TextureData::height()
 {
     if (mHeight == 0)
         load();
-    return mHeight;
+    if (!mScalable)
+        return mHeight * mScaleDuringLoad;
+    else
+        return mHeight;
 }
 
 float TextureData::sourceWidth()

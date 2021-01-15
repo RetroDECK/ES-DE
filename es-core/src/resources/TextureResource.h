@@ -30,7 +30,7 @@ public:
             bool tile = false,
             bool forceLoad = false,
             bool dynamic = true,
-            float scaleSVG = 1.0f);
+            float scaleDuringLoad = 1.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
     static void manualUnload(std::string path, bool tile);
@@ -38,7 +38,7 @@ public:
     // For SVG graphics this function effectively rescales the image to the defined size.
     // It does unload and re-rasterize the texture though which may cause flickering in some
     // situations. An alternative is to set a scaling factor directly when loading the texture
-    // using get(), by using the scaleSVG parameter.
+    // using get(), by using the scaleDuringLoad parameter (which also works for raster graphics).
     void rasterizeAt(size_t width, size_t height);
     Vector2f getSourceImageSize() const;
 
@@ -56,7 +56,7 @@ public:
     static size_t getTotalTextureSize();
 
 protected:
-    TextureResource(const std::string& path, bool tile, bool dynamic, float scaleSVG);
+    TextureResource(const std::string& path, bool tile, bool dynamic, float scaleDuringLoad);
     virtual void unload(std::shared_ptr<ResourceManager>& rm);
     virtual void reload(std::shared_ptr<ResourceManager>& rm);
 
