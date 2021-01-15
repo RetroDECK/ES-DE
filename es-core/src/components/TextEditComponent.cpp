@@ -20,7 +20,7 @@
 TextEditComponent::TextEditComponent(
         Window* window)
         : GuiComponent(window),
-        mBox(window, ":/graphics/textinput_ninepatch.png"),
+        mBox(window, ":/graphics/textinput.svg"),
         mFocused(false),
         mScrollOffset(0.0f, 0.0f),
         mCursor(0), mEditing(false),
@@ -29,24 +29,26 @@ TextEditComponent::TextEditComponent(
 {
     addChild(&mBox);
     onFocusLost();
-    setSize(4096, mFont->getHeight() + TEXT_PADDING_VERT);
+    mResolutionAdjustment = -(34 * Renderer::getScreenWidthModifier() - 34);
+    setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()));
 }
 
 void TextEditComponent::onFocusGained()
 {
     mFocused = true;
-    mBox.setImagePath(":/graphics/textinput_ninepatch_active.png");
+    mBox.setImagePath(":/graphics/textinput_focused.svg");
 }
 
 void TextEditComponent::onFocusLost()
 {
     mFocused = false;
-    mBox.setImagePath(":/graphics/textinput_ninepatch.png");
+    mBox.setImagePath(":/graphics/textinput.svg");
 }
 
 void TextEditComponent::onSizeChanged()
 {
-    mBox.fitTo(mSize, Vector3f::Zero(), Vector2f(-34, -32 - TEXT_PADDING_VERT));
+    mBox.fitTo(mSize, Vector3f::Zero(), Vector2f(-34 + mResolutionAdjustment, -32 -
+            (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())));
     onTextChanged(); // Wrap point probably changed.
 }
 
@@ -308,8 +310,8 @@ void TextEditComponent::render(const Transform4x4f& parentTrans)
         }
 
         float cursorHeight = mFont->getHeight() * 0.8f;
-        Renderer::drawRect(cursorPos.x(), cursorPos.y() + (mFont->getHeight() -
-                cursorHeight) / 2, 2.0f, cursorHeight, 0x000000FF, 0x000000FF);
+        Renderer::drawRect(cursorPos.x(), cursorPos.y() + (mFont->getHeight() - cursorHeight) / 2,
+                2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x000000FF, 0x000000FF);
     }
 }
 
@@ -320,12 +322,16 @@ bool TextEditComponent::isMultiline()
 
 Vector2f TextEditComponent::getTextAreaPos() const
 {
-    return Vector2f(TEXT_PADDING_HORIZ / 2.0f, TEXT_PADDING_VERT / 2.0f);
+    return Vector2f((-mResolutionAdjustment +
+            (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier())) / 2.0f,
+            (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f);
 }
 
 Vector2f TextEditComponent::getTextAreaSize() const
 {
-    return Vector2f(mSize.x() - TEXT_PADDING_HORIZ, mSize.y() - TEXT_PADDING_VERT);
+    return Vector2f(mSize.x() + mResolutionAdjustment -
+            (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()), mSize.y() -
+            (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()));
 }
 
 std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()

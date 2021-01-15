@@ -67,6 +67,7 @@ private:
     Vector2f mScrollOffset;
 
     NinePatchComponent mBox;
+    float mResolutionAdjustment;
 
     std::shared_ptr<Font> mFont;
     std::unique_ptr<TextCache> mTextCache;
