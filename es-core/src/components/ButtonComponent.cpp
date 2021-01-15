@@ -22,7 +22,6 @@ ButtonComponent::ButtonComponent(
     mEnabled(true),
     mTextColorFocused(0xFFFFFFFF), mTextColorUnfocused(0x777777FF)
 {
-    mBox.setIsScalable(true);
     setPressedFunc(func);
     setText(text, helpText);
     updateImage();

@@ -22,8 +22,7 @@ NinePatchComponent::NinePatchComponent(
         mEdgeColor(edgeColor),
         mCenterColor(centerColor),
         mPath(path),
-        mVertices(nullptr),
-        mIsScalable(false)
+        mVertices(nullptr)
 {
     if (!mPath.empty())
         buildVertices();
