@@ -296,7 +296,8 @@ void ComponentList::render(const Transform4x4f& parentTrans)
         y += getRowHeight(mEntries.at(i).data);
     }
 
-    Renderer::drawRect(0.0f, y, mSize.x(), 1.0f, 0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
+    Renderer::drawRect(0.0f, y, mSize.x(), 1.0f * Renderer::getScreenHeightModifier(),
+            0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
     Renderer::popClipRect();
 }
 

@@ -186,20 +186,20 @@ void ComponentGrid::updateSeparators()
             size[1] += getRowHeight(y);
 
         if (it->border & BORDER_TOP || drawAll) {
-    mLines.push_back( { { pos.x(),               pos.y()               }, { 0.0f, 0.0f }, color } );
-    mLines.push_back( { { pos.x() + size.x(),    pos.y()               }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { pos.x(),               pos.y()               }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { pos.x() + size.x(),    pos.y()               }, { 0.0f, 0.0f }, color } );
         }
         if (it->border & BORDER_BOTTOM || drawAll) {
-    mLines.push_back( { { pos.x(),               pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
-    mLines.push_back( { { pos.x() + size.x(),    mLines.back().pos.y() }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { pos.x(),               pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { pos.x() + size.x(),    mLines.back().pos.y() }, { 0.0f, 0.0f }, color } );
         }
         if (it->border & BORDER_LEFT || drawAll) {
-    mLines.push_back( { { pos.x(),               pos.y()               }, { 0.0f, 0.0f }, color } );
-    mLines.push_back( { { pos.x(),               pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { pos.x(),               pos.y()               }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { pos.x(),               pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
         }
         if (it->border & BORDER_RIGHT || drawAll) {
-    mLines.push_back( { { pos.x() + size.x(),    pos.y()               }, { 0.0f, 0.0f }, color } );
-    mLines.push_back( { { mLines.back().pos.x(), pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { pos.x() + size.x(),    pos.y()               }, { 0.0f, 0.0f }, color } );
+            mLines.push_back( { { mLines.back().pos.x(), pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
         }
     }
 }
@@ -352,10 +352,10 @@ void ComponentGrid::render(const Transform4x4f& parentTrans)
     renderChildren(trans);
 
     // Draw cell separators.
-    if (mLines.size()) {
+    for (unsigned int i = 0; i < mLines.size(); i += 2) {
         Renderer::setMatrix(trans);
-        Renderer::bindTexture(0);
-        Renderer::drawLines(&mLines[0], static_cast<const unsigned int>(mLines.size()));
+        Renderer::drawRect(mLines[i].pos.x(), mLines[i].pos.y(), mLines[i + 1].pos.x(),
+                1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF, 0xC6C7C6FF);
     }
 }
 
@@ -390,7 +390,7 @@ void ComponentGrid::setCursorTo(const std::shared_ptr<GuiComponent>& comp)
         }
     }
 
-    // Component not found!!
+    // Component not found!
     assert(false);
 }
 
