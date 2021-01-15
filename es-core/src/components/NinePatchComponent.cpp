@@ -52,7 +52,7 @@ void NinePatchComponent::buildVertices()
     if (mVertices != nullptr)
         delete[] mVertices;
 
-    // Scale the corner size according to the screen resolution.
+    // Scale the corner size relative to the screen resolution.
     mTexture = TextureResource::get(mPath, false, false, true, Renderer::getScreenWidthModifier());
 
     if (mTexture->getSize() == Vector2i::Zero()) {

@@ -335,7 +335,7 @@ namespace Renderer
     void popClipRect()
     {
         if (clipStack.empty()) {
-            LOG(LogError) << "Tried to popClipRect while the stack was empty!";
+            LOG(LogError) << "Tried to popClipRect while the stack was empty";
             return;
         }
 

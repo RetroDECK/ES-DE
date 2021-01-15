@@ -14,25 +14,25 @@
 #include <string.h>
 
 std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* data,
-        const size_t size, size_t & width, size_t & height)
+        const size_t size, size_t& width, size_t& height)
 {
     std::vector<unsigned char> rawData;
     width = 0;
     height = 0;
-    FIMEMORY * fiMemory = FreeImage_OpenMemory((BYTE *)data, (DWORD)size);
+    FIMEMORY* fiMemory = FreeImage_OpenMemory(const_cast<BYTE*>(data), static_cast<DWORD>(size));
 
     if (fiMemory != nullptr) {
         // Detect the filetype from data.
         FREE_IMAGE_FORMAT format = FreeImage_GetFileTypeFromMemory(fiMemory);
         if (format != FIF_UNKNOWN && FreeImage_FIFSupportsReading(format)) {
-            // File type is supported. load image,
-            FIBITMAP * fiBitmap = FreeImage_LoadFromMemory(format, fiMemory);
+            // File type is supported, load image.
+            FIBITMAP* fiBitmap = FreeImage_LoadFromMemory(format, fiMemory);
             if (fiBitmap != nullptr) {
-                // Loaded. convert to 32bit if necessary.
+                // Loaded. convert to 32-bit if necessary.
                 if (FreeImage_GetBPP(fiBitmap) != 32) {
-                    FIBITMAP * fiConverted = FreeImage_ConvertTo32Bits(fiBitmap);
+                    FIBITMAP* fiConverted = FreeImage_ConvertTo32Bits(fiBitmap);
                     if (fiConverted != nullptr) {
-                        //free original bitmap data
+                        // Free original bitmap data.
                         FreeImage_Unload(fiBitmap);
                         fiBitmap = fiConverted;
                     }
@@ -42,14 +42,14 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
                     height = FreeImage_GetHeight(fiBitmap);
                     // Loop through scanlines and add all pixel data to the return vector.
                     // This is necessary, because width*height*bpp might not be == pitch.
-                    unsigned char * tempData = new unsigned char[width * height * 4];
+                    unsigned char* tempData = new unsigned char[width * height * 4];
                     for (size_t i = 0; i < height; i++) {
-                        const BYTE * scanLine = FreeImage_GetScanLine(fiBitmap,
-                                static_cast<int>(i));
+                        const BYTE* scanLine =
+                                FreeImage_GetScanLine(fiBitmap, static_cast<int>(i));
                         memcpy(tempData + (i * width * 4), scanLine, width * 4);
                     }
                     // Convert from BGRA to RGBA.
-                    for (size_t i = 0; i < width*height; i++) {
+                    for (size_t i = 0; i < width * height; i++) {
                         RGBQUAD bgra = reinterpret_cast<RGBQUAD*>(tempData)[i];
                         RGBQUAD rgba;
                         rgba.rgbBlue = bgra.rgbRed;
@@ -65,15 +65,14 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
                 }
             }
             else {
-                LOG(LogError) << "Failed to load image from memory!";
+                LOG(LogError) << "Failed to load image from memory";
             }
         }
         else {
             LOG(LogError) << "Couldn't load image, file is missing or the file type is " <<
-//            it's not existing or the file type " <<
-                    (format == FIF_UNKNOWN ? "unknown" : "unsupported") << "!";
+                    (format == FIF_UNKNOWN ? "unknown" : "unsupported");
         }
-        // Free fiMemory again
+        // Free fiMemory again.
         FreeImage_CloseMemory(fiMemory);
     }
     return rawData;
