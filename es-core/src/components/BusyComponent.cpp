@@ -48,7 +48,7 @@ void BusyComponent::onSizeChanged()
     const float middleSpacerWidth = 0.01f * Renderer::getScreenWidth();
     const float textHeight = mText->getFont()->getLetterHeight();
     mText->setSize(0, textHeight);
-    const float textWidth = mText->getSize().x() + 4;
+    const float textWidth = mText->getSize().x() + (4 * Renderer::getScreenWidthModifier());
 
     mGrid.setColWidthPerc(1, textHeight / mSize.x()); // Animation is square.
     mGrid.setColWidthPerc(2, middleSpacerWidth / mSize.x());
@@ -56,8 +56,10 @@ void BusyComponent::onSizeChanged()
 
     mGrid.setRowHeightPerc(1, textHeight / mSize.y());
 
-    mBackground.fitTo(Vector2f(mGrid.getColWidth(1) +
-            mGrid.getColWidth(2) + mGrid.getColWidth(3), textHeight + 2),
+    mBackground.setCornerSize({ 16.0f * Renderer::getScreenWidthModifier(),
+            16.0f * Renderer::getScreenHeightModifier() });
+    mBackground.fitTo(Vector2f(mGrid.getColWidth(1) + mGrid.getColWidth(2) +
+        mGrid.getColWidth(3), textHeight + (2 * Renderer::getScreenHeightModifier())),
         mAnimation->getPosition(), Vector2f(0, 0));
 }
 
