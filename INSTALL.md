@@ -128,7 +128,7 @@ make
 
 You can then profile the code with Valgrind:
 ```
-valgrind --tool=callgrind ./emulationstation
+valgrind --tool=callgrind --log-file=../valgrind_run_01 ./emulationstation
 ```
 
 The output file can be loaded into a tool such as KCachegrind for data analysis.
@@ -136,7 +136,7 @@ The output file can be loaded into a tool such as KCachegrind for data analysis.
 To check for memory leaks, the following command is useful:
 
 ```
-valgrind --tool=memcheck --leak-check=full ./emulationstation
+valgrind --tool=memcheck --leak-check=full --log-file=../valgrind_run_01 ./emulationstation
 ```
 
 Note that you can also profile either a normal build or a debug build, but it's normally recommended to use the profiling build as it's compiled with optimizations while retaining the debug symbols. But if you need to alternate between Valgrind and the normal debugger the optimizations can be very annoying and therefore a normal debug build could be recommended in that instance.
