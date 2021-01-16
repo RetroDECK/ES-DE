@@ -489,7 +489,7 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
             mCarousel.color, mCarousel.colorEnd, mCarousel.colorGradientHorizontal);
 
     // Draw logos.
-    // NB: logoSpacing will also include the size of the logo itself!
+    // Note: logoSpacing will also include the size of the logo itself.
     Vector2f logoSpacing(0.0, 0.0);
     float xOff = 0.0;
     float yOff = 0.0;
@@ -664,9 +664,10 @@ void  SystemView::getDefaultElements(void)
     mCarousel.maxLogoCount = 3;
     mCarousel.zIndex = 40;
 
-    // System Info Bar.
-    mSystemInfo.setSize(mSize.x(), mSystemInfo.getFont()->getLetterHeight()*2.2f);
-    mSystemInfo.setPosition(0, (mCarousel.pos.y() + mCarousel.size.y() - 0.2f));
+    // System info bar.
+    mSystemInfo.setSize(mSize.x(), mSystemInfo.getFont()->getLetterHeight() * 2.2f);
+    mSystemInfo.setPosition(0, (mCarousel.pos.y() + mCarousel.size.y() -
+            (0.4f * Renderer::getScreenHeightModifier())));
     mSystemInfo.setBackgroundColor(0xDDDDDDD8);
     mSystemInfo.setRenderBackground(true);
     mSystemInfo.setFont(Font::get(static_cast<int>(0.035f * mSize.y()), Font::getDefaultPath()));
