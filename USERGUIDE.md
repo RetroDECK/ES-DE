@@ -1369,7 +1369,9 @@ Please refer to the [INSTALL.md](INSTALL.md#command-line-arguments) document for
 
 ## Supported game systems
 
-**Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. EmulationStation will still work but the game system will not be themed which looks very ugly.
+**Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. ES-DE will still work but the game system will not be themed which looks very ugly.
+
+Note as well that the list and corresponding es_systems.cfg templates may not match what's actually available for all supported operating systems. For example, in some instances you may need to compile the RetroArch cores from source code as they may not come pre-built for your OS, and in some instances they may not work at all. Linux is the reference as most RetroArch cores and other emulators are supported on this class of operating systems. But entries are still retained in all es_systems.cfg templates as more emulators may be supported in the future. The exception is entries that are definitely not going to be available (such as Lutris on non-Unix platforms), and in those instances a placeholder is used in order to maintain the file structure across the template files. Finally, if the preferred emulator or core is not available for a certain OS but there is a feasible alternative, then this is used instead. Such an example is for Nintendo 64, where ParaLLEl N64 is defined on Windows and Mupen64Plus-Next is defined on Unix and macOS.
 
 The column **Game system name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
 
@@ -1379,7 +1381,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 
 The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside brackets.
 
-For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support though.
+For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support.
 
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
@@ -1387,9 +1389,9 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                            |                                   |                                      |
 | ags                   | Adventure Game Studio                          |                                   |                                      |
-| amiga                 | Commodore Amiga                                | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
-| amiga1200             | Commodore Amiga 1200                           | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format, or diskette image in .adf format (with .m3u playlist if multi-disk) |
+| amiga                 | Commodore Amiga                                | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
+| amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
+| amiga1200             | Commodore Amiga 1200                           | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
 | amigacd32             | Commodore Amiga CD32                           |                                   |                                      |
 | amstradcpc            | Amstrad CPC                                    |                                   |                                      |
 | apple2                | Apple II                                       |                                   |                                      |
@@ -1420,8 +1422,8 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | dragon32              | Dragon 32                                      |                                   |                                      |
 | dreamcast             | Sega Dreamcast                                 |                                   |                                      |
 | famicom               | Nintendo Family Computer                       | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
-| fba                   | Final Burn Alpha                               |                                   | Single archive file following MAME name standard |
-| fbneo                 | FinalBurn Neo                                  |                                   | Single archive file following MAME name standard |
+| fba                   | Final Burn Alpha                               |                                   | Single archive file following MAME name standard in root folder |
+| fbneo                 | FinalBurn Neo                                  |                                   | Single archive file following MAME name standard in root folder |
 | fds                   | Nintendo Famicom Disk System                   | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | gameandwatch          | Nintendo Game and Watch                        |                                   |                                      |
 | gamegear              | Sega Game Gear                                 |                                   |                                      |
@@ -1434,7 +1436,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | intellivision         | Mattel Electronics Intellivision               |                                   |                                      |
 | chailove              | ChaiLove game engine                           |                                   |                                      |
 | kodi                  | Kodi home theatre software                     | N/A                               |                                      |
-| lutris                | Lutris open gaming platform (Unix only)        | N/A                               | Shell script in root folder          |
+| lutris                | Lutris open gaming platform                    | Lutris application (Unix only)    | Shell script in root folder          |
 | lutro                 | Lutro game engine                              |                                   |                                      |
 | macintosh             | Apple Macintosh                                |                                   |                                      |
 | mame                  | Multiple Arcade Machine Emulator               |                                   | Single archive file following MAME name standard in root folder |
@@ -1453,7 +1455,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | naomi                 | Sega NAOMI                                     |                                   |                                      |
 | n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
-| neogeo                | Neo Geo                                        | RetroArch (FinalBurn Neo)         | Single archive file following MAME name standard |
+| neogeo                | Neo Geo                                        | RetroArch (FinalBurn Neo)         | Single archive file following MAME name standard in root folder |
 | neogeocd              | Neo Geo CD                                     |                                   |                                      |
 | nes                   | Nintendo Entertainment System                  | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | ngp                   | Neo Geo Pocket                                 |                                   |                                      |
@@ -1486,7 +1488,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | snesna                | Nintendo SNES (Super Nintendo) (North America) | RetroArch (Snes9x - Current)      | Single archive or ROM file in root folder |
 | solarus               | Solarus game engine                            |                                   |                                      |
 | spectravideo          | Spectravideo                                   |                                   |                                      |
-| steam                 | Valve Steam                                    | N/A                               | Shell/batch script in root folder    |
+| steam                 | Valve Steam                                    | Steam application                 | Shell/batch script in root folder    |
 | stratagus             | Stratagus game engine                          |                                   |                                      |
 | sufami                | Bandai SuFami Turbo                            |                                   |                                      |
 | supergrafx            | NEC SuperGrafx                                 |                                   |                                      |
