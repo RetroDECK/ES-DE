@@ -49,18 +49,13 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
             Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
     mInfoString1 = std::make_shared<TextComponent>(mWindow, infoString1,
             Font::get(FONT_SIZE_SMALL), 0x555555FF,	ALIGN_CENTER);
-
-    if (infoString2.size() > 92)
-        mInfoString2 = std::make_shared<TextComponent>(mWindow, infoString2.substr(0 ,90) + "...",
-                Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
-    else
-        mInfoString2 = std::make_shared<TextComponent>(mWindow, infoString2,
-                Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
+    mInfoString2 = std::make_shared<TextComponent>(mWindow, infoString2,
+            Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
 
     mText = std::make_shared<TextEditComponent>(mWindow);
     mText->setValue(initValue);
 
-    std::vector< std::shared_ptr<ButtonComponent> > buttons;
+    std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
             [this, okCallback] {
                 okCallback(mText->getValue());
@@ -82,7 +77,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 
     mGrid.setEntry(mTitle, Vector2i(0, 0), false, true);
     mGrid.setEntry(mInfoString1, Vector2i(0, 1), false, true);
-    mGrid.setEntry(mInfoString2, Vector2i(0, 2), false, true);
+    mGrid.setEntry(mInfoString2, Vector2i(0, 2), false, false);
     mGrid.setEntry(mText, Vector2i(0, 3), true, false, Vector2i(1, 1),
             GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
     mGrid.setEntry(mButtonGrid, Vector2i(0, 4), true, false);
@@ -92,7 +87,9 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 
     if (multiLine)
         textHeight *= 6;
+
     mText->setSize(0, textHeight);
+    mInfoString2->setSize(Renderer::getScreenWidth() * 0.70f, mInfoString2->getFont()->getHeight());
 
     setSize(Renderer::getScreenWidth() * 0.75f, mTitle->getFont()->getHeight() +
             textHeight + mButtonGrid->getSize().y() + mButtonGrid->getSize().y() * 1.85f);

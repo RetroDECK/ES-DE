@@ -218,7 +218,7 @@ void TextComponent::onTextChanged()
     std::string text = mUppercase ? Utils::String::toUpper(mText) : mText;
 
     std::shared_ptr<Font> f = mFont;
-    const bool isMultiline = (mSize.y() == 0 || mSize.y() > f->getHeight()*1.2f);
+    const bool isMultiline = (mSize.y() == 0 || mSize.y() > f->getHeight() * 1.2f);
 
     bool addAbbrev = false;
     if (!isMultiline) {
