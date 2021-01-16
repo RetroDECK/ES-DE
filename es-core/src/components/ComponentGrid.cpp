@@ -208,7 +208,7 @@ void ComponentGrid::updateSeparators()
             std::vector<float> coordVector;
             coordVector.push_back(pos.x());
             coordVector.push_back(pos.y());
-            coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
+            coordVector.push_back(1.0f * Renderer::getScreenWidthModifier());
             coordVector.push_back(size.y());
             mSeparators.push_back(coordVector);
         }
@@ -216,7 +216,7 @@ void ComponentGrid::updateSeparators()
             std::vector<float> coordVector;
             coordVector.push_back(pos.x() + size.x());
             coordVector.push_back(pos.y());
-            coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
+            coordVector.push_back(1.0f * Renderer::getScreenWidthModifier());
             coordVector.push_back(size.y());
             mSeparators.push_back(coordVector);
         }

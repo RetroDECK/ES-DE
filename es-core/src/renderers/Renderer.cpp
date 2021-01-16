@@ -364,10 +364,20 @@ namespace Renderer
         const unsigned int colorEnd = convertRGBAToABGR(_colorEnd);
         Vertex vertices[4];
 
-        vertices[0] = { { _x     ,_y      }, { 0.0f, 0.0f }, color };
-        vertices[1] = { { _x     ,_y + _h }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
-        vertices[2] = { { _x + _w,_y      }, { 0.0f, 0.0f }, horizontalGradient ? color : colorEnd };
-        vertices[3] = { { _x + _w,_y + _h }, { 0.0f, 0.0f }, colorEnd };
+        float _wL = _w;
+        float _hL = _h;
+
+        // If the width or height was scaled down to less than 1 pixel, then set it to
+        // 1 pixel so that it will still render on lower resolutions.
+        if (_wL > 0 && _wL < 1)
+            _wL = 1;
+        if (_hL > 0 && _hL < 1)
+            _hL = 1;
+
+        vertices[0] = { { _x      , _y       }, { 0.0f, 0.0f }, color };
+        vertices[1] = { { _x      , _y + _hL }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
+        vertices[2] = { { _x + _wL, _y       }, { 0.0f, 0.0f }, horizontalGradient ? color : colorEnd };
+        vertices[3] = { { _x + _wL, _y + _hL }, { 0.0f, 0.0f }, colorEnd };
 
         // Round vertices.
         for (int i = 0; i < 4; ++i)
