@@ -129,7 +129,7 @@ private:
     inline const GridEntry* getCellAt(const Vector2i& pos) const
             { return getCellAt(pos.x(), pos.y()); }
 
-    std::vector<Renderer::Vertex> mLines;
+    std::vector<std::vector<float>> mSeparators;
     Vector2i mGridSize;
     std::vector<GridEntry> mCells;
     Vector2i mCursor;

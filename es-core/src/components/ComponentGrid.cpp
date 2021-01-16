@@ -161,7 +161,7 @@ void ComponentGrid::updateCellComponent(const GridEntry& cell)
 
 void ComponentGrid::updateSeparators()
 {
-    mLines.clear();
+    mSeparators.clear();
 
     const unsigned int color = Renderer::convertRGBAToABGR(0xC6C7C6FF);
     bool drawAll = Settings::getInstance()->getBool("DebugGrid");
@@ -185,21 +185,40 @@ void ComponentGrid::updateSeparators()
         for (int y = it->pos.y(); y < it->pos.y() + it->dim.y(); y++)
             size[1] += getRowHeight(y);
 
+        if (size == 0)
+            return;
+
         if (it->border & BORDER_TOP || drawAll) {
-            mLines.push_back( { { pos.x(),               pos.y()               }, { 0.0f, 0.0f }, color } );
-            mLines.push_back( { { pos.x() + size.x(),    pos.y()               }, { 0.0f, 0.0f }, color } );
+            std::vector<float> coordVector;
+            coordVector.push_back(pos.x());
+            coordVector.push_back(pos.y());
+            coordVector.push_back(size.x());
+            coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
+            mSeparators.push_back(coordVector);
         }
         if (it->border & BORDER_BOTTOM || drawAll) {
-            mLines.push_back( { { pos.x(),               pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
-            mLines.push_back( { { pos.x() + size.x(),    mLines.back().pos.y() }, { 0.0f, 0.0f }, color } );
+            std::vector<float> coordVector;
+            coordVector.push_back(pos.x());
+            coordVector.push_back(pos.y() + size.y());
+            coordVector.push_back(size.x());
+            coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
+            mSeparators.push_back(coordVector);
         }
         if (it->border & BORDER_LEFT || drawAll) {
-            mLines.push_back( { { pos.x(),               pos.y()               }, { 0.0f, 0.0f }, color } );
-            mLines.push_back( { { pos.x(),               pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
+            std::vector<float> coordVector;
+            coordVector.push_back(pos.x());
+            coordVector.push_back(pos.y());
+            coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
+            coordVector.push_back(size.y());
+            mSeparators.push_back(coordVector);
         }
         if (it->border & BORDER_RIGHT || drawAll) {
-            mLines.push_back( { { pos.x() + size.x(),    pos.y()               }, { 0.0f, 0.0f }, color } );
-            mLines.push_back( { { mLines.back().pos.x(), pos.y() + size.y()    }, { 0.0f, 0.0f }, color } );
+            std::vector<float> coordVector;
+            coordVector.push_back(pos.x() + size.x());
+            coordVector.push_back(pos.y());
+            coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
+            coordVector.push_back(size.y());
+            mSeparators.push_back(coordVector);
         }
     }
 }
@@ -352,10 +371,10 @@ void ComponentGrid::render(const Transform4x4f& parentTrans)
     renderChildren(trans);
 
     // Draw cell separators.
-    for (unsigned int i = 0; i < mLines.size(); i += 2) {
+    for (unsigned int i = 0; i < mSeparators.size(); i++) {
         Renderer::setMatrix(trans);
-        Renderer::drawRect(mLines[i].pos.x(), mLines[i].pos.y(), mLines[i + 1].pos.x(),
-                1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF, 0xC6C7C6FF);
+        Renderer::drawRect(mSeparators[i][0], mSeparators[i][1], mSeparators[i][2],
+                mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);
     }
 }
 
