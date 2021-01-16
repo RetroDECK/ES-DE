@@ -489,7 +489,15 @@ void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>&
             hasFavorites = true;
         }
         else {
-            firstChar = toupper((*it)->getSortName().front());
+            unsigned char checkCharType = (*it)->getSortName().front();
+            if (checkCharType <= 0x7F) // Normal ASCII character.
+                firstChar = toupper((*it)->getSortName().front());
+            else if (checkCharType >= 0xF0) // Four-byte Unicode character.
+                firstChar = (*it)->getSortName().substr(0, 4);
+            else if (checkCharType >= 0xE0) // Three-byte Unicode character.
+                firstChar = (*it)->getSortName().substr(0, 3);
+            else if (checkCharType >= 0xC0) // Two-byte Unicode character.
+                firstChar = (*it)->getSortName().substr(0, 2);
             mFirstLetterIndex.push_back(firstChar);
         }
     }

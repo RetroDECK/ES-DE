@@ -92,10 +92,20 @@ GuiGamelistOptions::GuiGamelistOptions(
                     ViewController::FAVORITE_CHAR))
                 isFavorite = true;
 
-            if (mFavoritesSorting && file->getFavorite() && isFavorite)
+            if (mFavoritesSorting && file->getFavorite() && isFavorite) {
                 mCurrentFirstCharacter = ViewController::FAVORITE_CHAR;
-            else
-                mCurrentFirstCharacter = toupper(file->getSortName().front());
+            }
+            else {
+                unsigned char checkCharType = file->getSortName().front();
+                if (checkCharType <= 0x7F) // Normal ASCII character.
+                    mCurrentFirstCharacter = toupper(file->getSortName().front());
+                else if (checkCharType >= 0xF0) // Four-byte Unicode character.
+                    mCurrentFirstCharacter = file->getSortName().substr(0, 4);
+                else if (checkCharType >= 0xE0) // Three-byte Unicode character.
+                    mCurrentFirstCharacter = file->getSortName().substr(0, 3);
+                else if (checkCharType >= 0xC0) // Two-byte Unicode character.
+                    mCurrentFirstCharacter = file->getSortName().substr(0, 2);
+            }
         }
 
         mJumpToLetterList = std::make_shared<LetterList>(mWindow, getHelpStyle(),
