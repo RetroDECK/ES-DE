@@ -227,7 +227,7 @@ size_t TextureData::width()
     // If it's an SVG image, the size was correctly set to the scaled-up values during the
     // rasterization, so only multiply by the scale factor if it's a raster file.
     if (!mScalable)
-        return mWidth * mScaleDuringLoad;
+        return static_cast<size_t>(mWidth * mScaleDuringLoad);
     else
         return mWidth;
 }
@@ -237,7 +237,7 @@ size_t TextureData::height()
     if (mHeight == 0)
         load();
     if (!mScalable)
-        return mHeight * mScaleDuringLoad;
+        return static_cast<size_t>(mHeight * mScaleDuringLoad);
     else
         return mHeight;
 }
