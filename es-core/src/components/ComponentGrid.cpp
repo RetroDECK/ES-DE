@@ -371,7 +371,7 @@ void ComponentGrid::render(const Transform4x4f& parentTrans)
     renderChildren(trans);
 
     // Draw cell separators.
-    for (unsigned int i = 0; i < mSeparators.size(); i++) {
+    for (size_t i = 0; i < mSeparators.size(); i++) {
         Renderer::setMatrix(trans);
         Renderer::drawRect(mSeparators[i][0], mSeparators[i][1], mSeparators[i][2],
                 mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);

@@ -369,10 +369,10 @@ namespace Renderer
 
         // If the width or height was scaled down to less than 1 pixel, then set it to
         // 1 pixel so that it will still render on lower resolutions.
-        if (_wL > 0 && _wL < 1)
-            _wL = 1;
-        if (_hL > 0 && _hL < 1)
-            _hL = 1;
+        if (_wL > 0.0f && _wL < 1.0f)
+            _wL = 1.0f;
+        if (_hL > 0.0f && _hL < 1.0f)
+            _hL = 1.0f;
 
         vertices[0] = { { _x      , _y       }, { 0.0f, 0.0f }, color };
         vertices[1] = { { _x      , _y + _hL }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
