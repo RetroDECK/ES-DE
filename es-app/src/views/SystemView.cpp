@@ -89,11 +89,11 @@ void SystemView::populate()
             if (!e.data.logo) {
                 // No logo in theme; use text.
                 TextComponent* text = new TextComponent(
-                    mWindow,
-                    (*it)->getName(),
-                    Font::get(FONT_SIZE_LARGE),
-                    0x000000FF,
-                    ALIGN_CENTER);
+                        mWindow,
+                        (*it)->getName(),
+                        Font::get(FONT_SIZE_LARGE),
+                        0x000000FF,
+                        ALIGN_CENTER);
                 text->setSize(mCarousel.logoSize * mCarousel.logoScale);
                 text->applyTheme((*it)->getTheme(), "system", "logoText",
                         ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |

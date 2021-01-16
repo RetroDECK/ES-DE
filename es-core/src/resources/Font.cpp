@@ -128,10 +128,12 @@ void Font::unloadTextures()
         it->deinitTexture();
 }
 
-Font::FontTexture::FontTexture()
+Font::FontTexture::FontTexture(const int mSize)
 {
     textureId = 0;
-    textureSize = Vector2i(2048, 512);
+    // I'm not entirely sure if the 16 and 4 constants are correct, but they seem to provide
+    // a texture buffer large enough to hold the fonts. (Otherwise the application would crash.)
+    textureSize = Vector2i(mSize * 16, mSize * 4);
     writePos = Vector2i::Zero();
     rowHeight = 0;
 }
@@ -197,9 +199,8 @@ void Font::getTextureForNewGlyph(const Vector2i& glyphSize,
             return; // Yes.
     }
 
-    // Current textures are full,
-    // make a new one.
-    mTextures.push_back(FontTexture());
+    // Current textures are full, make a new one.
+    mTextures.push_back(FontTexture(mSize));
     tex_out = &mTextures.back();
     tex_out->initTexture();
 
@@ -607,7 +608,7 @@ TextCache* Font::buildTextCache(
                 convertedColor };
 
         // Round vertices.
-        for (int i = 1; i < 5; ++i)
+        for (int i = 1; i < 5; i++)
             vertices[i].pos.round();
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.

@@ -95,6 +95,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * If the user tried to enter a blank game name in the metadata editor, the application would crash upon saving
 * Switching to the Grid view style with a placeholder shown in the gamelist crashed the application
 * FileSystemUtil::getDirContent crashed when searching through directories recursively
+* Large text sizes at higher resolutions (such as 4K) would crash the application as fixed-size texture buffers were used which weren't big enough to hold the larger font textures
 * Fixed a massive memory leak related to SVG images
 * Fixed an issue where SVG images would sometimes be cut off slightly on the right side (e.g. logos on the system view carousel)
 * The scraper didn't handle error conditions correctly

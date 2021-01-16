@@ -106,7 +106,7 @@ private:
         Vector2i writePos;
         int rowHeight;
 
-        FontTexture();
+        FontTexture(const int mSize);
         ~FontTexture();
         bool findEmpty(const Vector2i& size, Vector2i& cursor_out);
 
