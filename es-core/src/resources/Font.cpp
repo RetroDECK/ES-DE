@@ -131,9 +131,10 @@ void Font::unloadTextures()
 Font::FontTexture::FontTexture(const int mSize)
 {
     textureId = 0;
-    // I'm not entirely sure if the 16 and 4 constants are correct, but they seem to provide
-    // a texture buffer large enough to hold the fonts. (Otherwise the application would crash.)
-    textureSize = Vector2i(mSize * 16, mSize * 4);
+    // I'm not entirely sure if the 16 and 6 constants are correct, but they seem to provide
+    // a texture buffer large enough to hold the fonts (otherwise the application would crash).
+    // This logic is obviously a hack though and needs to be properly reviewed and improved.
+    textureSize = Vector2i(mSize * 16, mSize * 6);
     writePos = Vector2i::Zero();
     rowHeight = 0;
 }
