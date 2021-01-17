@@ -36,7 +36,7 @@ public:
     void save();
     void onSizeChanged() override;
 
-    void setNeedsSaving() { mNeedsSaving = true; };
+    void setNeedsSaving() { mNeedsSaving = true; }
 
     inline void addRow(const ComponentListRow& row, bool setCursorHere = false)
             { mList->addRow(row, setCursorHere); updateSize(); }
@@ -51,13 +51,14 @@ public:
         addRow(row, setCursorHere);
     }
 
-    inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
+    inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); }
 
     void addButton(const std::string& label, const std::string& helpText,
             const std::function<void()>& callback);
 
     void setTitle(std::string title, const std::shared_ptr<Font>& font);
 
+    void setCursorToFirstListEntry() { mList->moveCursor(-mList->getCursorId()); }
     inline void setCursorToList() { mGrid.setCursorTo(mList); }
     inline void setCursorToButtons() { assert(mButtonGrid); mGrid.setCursorTo(mButtonGrid); }
 

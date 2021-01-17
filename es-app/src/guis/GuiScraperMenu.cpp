@@ -621,7 +621,8 @@ void GuiScraperMenu::start()
         GuiScraperMulti* gsm = new GuiScraperMulti(mWindow, searches,
                 Settings::getInstance()->getBool("ScraperInteractive"));
         mWindow->pushGui(gsm);
-        delete this;
+        mMenu.setCursorToList();
+        mMenu.setCursorToFirstListEntry();
     }
 }
 
