@@ -60,8 +60,9 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
     }
 }
 
-void ScrollableContainer::setScrollParameters(float autoScrollResetDelayConstant,
-        float autoScrollDelayConstant, int autoScrollSpeedConstant, float autoWidthModConstant)
+void ScrollableContainer::setScrollParameters(float autoScrollDelayConstant,
+        float autoScrollResetDelayConstant, int autoScrollSpeedConstant,
+        float autoWidthModConstant)
 {
     mAutoScrollResetDelayConstant = autoScrollResetDelayConstant;
     mAutoScrollDelayConstant = autoScrollDelayConstant;
