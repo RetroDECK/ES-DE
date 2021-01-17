@@ -954,7 +954,7 @@ These are mostly technical settings.
 
 **VRAM limit**
 
-The amount of video RAM to use for the application. Defaults to 128 MiB which seems to work fine most of the time. The allowed range is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or edit the es_settings.cfg file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
+The amount of video RAM to use for the application. Defaults to 256 MiB which seems to work fine most of the time. The allowed range is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or edit the es_settings.cfg file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
 **Fullscreen mode (requires restart)** _(Unix only)_
 
