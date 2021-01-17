@@ -201,11 +201,18 @@ void GuiMenu::openUISettings()
             return;
         }
         else if (selectedMode != "full") {
-            std::string msg = "YOU ARE CHANGING THE UI TO A RESTRICTED MODE:\n'" +
+            std::string msg = "YOU ARE CHANGING THE UI TO THE RESTRICTED MODE\n'" +
                     Utils::String::toUpper(selectedMode) + "'\n";
-            msg += "THIS WILL HIDE MOST MENU OPTIONS TO PREVENT CHANGES TO THE SYSTEM.\n";
+            if (selectedMode == "kiosk") {
+                msg += "THIS WILL HIDE MOST MENU OPTIONS TO PREVENT\n";
+                msg += "CHANGES TO THE SYSTEM\n";
+            }
+            else {
+                msg += "THIS WILL LIMIT THE AVAILABLE GAMES TO THE ONES\n";
+                msg += "FLAGGED SUITABLE FOR CHILDREN\n";
+            }
             msg += "TO UNLOCK AND RETURN TO THE FULL UI, ENTER THIS CODE: \n";
-            msg += "\"" + UIModeController::getInstance()->getFormattedPassKeyStr() + "\"\n\n";
+            msg += UIModeController::getInstance()->getFormattedPassKeyStr() + "\n\n";
             msg += "DO YOU WANT TO PROCEED?";
             mWindow->pushGui(new GuiMsgBox(mWindow, this->getHelpStyle(), msg,
                     "YES", [this, selectedMode] {

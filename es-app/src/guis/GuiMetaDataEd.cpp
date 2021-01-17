@@ -280,8 +280,8 @@ GuiMetaDataEd::GuiMetaDataEd(
                         "THIS WILL DELETE ANY MEDIA FILES AND\n"
                         "THE GAMELIST.XML ENTRY FOR THIS FOLDER,\n"
                         "BUT NEITHER THE FOLDER ITSELF OR ANY\n"
-                        "DATA FOR THE FILES INSIDE THE FOLDER\n"
-                        "WILL BE DELETED. ARE YOU SURE?",
+                        "CONTENT INSIDE IT WILL BE REMOVED\n"
+                        "ARE YOU SURE?",
                         "YES", clearSelf, "NO", nullptr)); };
             buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR",
                     "clear folder", clearSelfBtnFunc));
@@ -294,8 +294,8 @@ GuiMetaDataEd::GuiMetaDataEd(
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
                         "THIS WILL DELETE ANY MEDIA FILES\n"
                         "AND THE GAMELIST.XML ENTRY FOR\n"
-                        "THIS GAME FILE, BUT THE FILE ITSELF\n"
-                        "WILL NOT BE REMOVED.\n"
+                        "THIS GAME, BUT THE GAME FILE\n"
+                        "ITSELF WILL NOT BE REMOVED\n"
                         "ARE YOU SURE?",
                         "YES", clearSelf, "NO", nullptr)); };
             buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR",
@@ -308,7 +308,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
                         "THIS WILL DELETE THE GAME\n"
                         "FILE, ANY MEDIA FILES AND\n"
-                        "THE GAMELIST.XML ENTRY.\n"
+                        "THE GAMELIST.XML ENTRY\n"
                         "ARE YOU SURE?",
                         "YES", deleteFilesAndSelf, "NO", nullptr)); };
             buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",

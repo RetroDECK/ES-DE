@@ -50,7 +50,7 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
             if (screensaver_type->getSelected() == "video") {
                 // If before it wasn't risky but now there's a risk of problems, show warning.
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                        "THE 'VIDEO' SCREENSAVER SHOWS\nVIDEOS FROM YOUR GAMELISTS.\n\n"
+                        "THE 'VIDEO' SCREENSAVER SHOWS\nVIDEOS FROM YOUR GAMELISTS\n\n"
                         "IF YOU DO NOT HAVE ANY VIDEOS, THE\n"
                         "SCREENSAVER WILL DEFAULT TO 'BLACK'",
                         "OK", [] { return; }, "", nullptr, "", nullptr));
