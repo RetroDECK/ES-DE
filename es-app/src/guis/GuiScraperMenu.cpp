@@ -556,12 +556,66 @@ void GuiScraperMenu::pressedStart()
 
 void GuiScraperMenu::start()
 {
+    if (mSystems->getSelectedObjects().empty()) {
+        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+            "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"));
+        return;
+    }
+
+    bool contentToScrape = false;
+    std::string scraperService = Settings::getInstance()->getString("Scraper");
+
+    // Check if there is actually any type of content selected for scraping.
+    do {
+        if (Settings::getInstance()->getBool("ScrapeGameNames")) {
+            contentToScrape = true;
+            break;
+        }
+        if (scraperService == "screenscraper" &&
+                Settings::getInstance()->getBool("ScrapeRatings")) {
+            contentToScrape = true;
+            break;
+        }
+        if (Settings::getInstance()->getBool("ScrapeMetadata")) {
+            contentToScrape = true;
+            break;
+        }
+        if (scraperService == "screenscraper" &&
+                Settings::getInstance()->getBool("ScrapeVideos")) {
+            contentToScrape = true;
+            break;
+        }
+        if (Settings::getInstance()->getBool("ScrapeScreenshots")) {
+            contentToScrape = true;
+            break;
+        }
+        if (Settings::getInstance()->getBool("ScrapeCovers")) {
+            contentToScrape = true;
+            break;
+        }
+        if (Settings::getInstance()->getBool("ScrapeMarquees")) {
+            contentToScrape = true;
+            break;
+        }
+        if (scraperService == "screenscraper" &&
+                Settings::getInstance()->getBool("Scrape3DBoxes")) {
+            contentToScrape = true;
+            break;
+        }
+    } while (0);
+
+    if (!contentToScrape) {
+        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+            "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"));
+        return;
+    }
+
     std::queue<ScraperSearchParams> searches =
             getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
 
     if (searches.empty()) {
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-            "NO GAMES TO SCRAPE"));
+            "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"));
     }
     else {
         GuiScraperMulti* gsm = new GuiScraperMulti(mWindow, searches,
