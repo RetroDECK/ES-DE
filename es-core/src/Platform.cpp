@@ -81,7 +81,7 @@ int launchEmulatorUnix(const std::string& cmd_utf8)
     std::string commandOutput;
     int returnValue;
 
-    if (!(commandPipe = (FILE*)popen(command.c_str(), "r"))) {
+    if (!(commandPipe = reinterpret_cast<FILE*>(popen(command.c_str(), "r")))) {
         LOG(LogError) << "Couldn't open pipe to command.";
         return -1;
     }
