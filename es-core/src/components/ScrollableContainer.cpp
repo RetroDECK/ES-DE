@@ -12,6 +12,7 @@
 #include "animations/LambdaAnimation.h"
 #include "math/Vector2i.h"
 #include "renderers/Renderer.h"
+#include "resources/Font.h"
 #include "Window.h"
 
 ScrollableContainer::ScrollableContainer(
@@ -31,7 +32,6 @@ ScrollableContainer::ScrollableContainer(
     mAutoScrollResetDelayConstant = AUTO_SCROLL_RESET_DELAY;
     mAutoScrollDelayConstant = AUTO_SCROLL_DELAY;
     mAutoScrollSpeedConstant = AUTO_SCROLL_SPEED;
-    mAutoWidthModConstant = AUTO_WIDTH_MOD;
 }
 
 Vector2f ScrollableContainer::getScrollPos() const
@@ -61,13 +61,27 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
 }
 
 void ScrollableContainer::setScrollParameters(float autoScrollDelayConstant,
-        float autoScrollResetDelayConstant, int autoScrollSpeedConstant,
-        float autoWidthModConstant)
+        float autoScrollResetDelayConstant, int autoScrollSpeedConstant)
 {
     mAutoScrollResetDelayConstant = autoScrollResetDelayConstant;
     mAutoScrollDelayConstant = autoScrollDelayConstant;
     mAutoScrollSpeedConstant = autoScrollSpeedConstant;
-    mAutoWidthModConstant = autoWidthModConstant;
+}
+
+void ScrollableContainer::setFontSizeSpeedAdjustments(int size)
+{
+    // Adjust scrolling speed relative to the font size, i.e. a larger size makes it faster.
+    float fontSizeModifier =
+            static_cast<float>(Font::get(FONT_SIZE_SMALL)->getSize()) / (static_cast<float>(size));
+    fontSizeModifier = fontSizeModifier * fontSizeModifier * fontSizeModifier;
+    mAutoScrollSpeed =
+            static_cast<int>((static_cast<float>(mAutoScrollSpeed) * fontSizeModifier) / 2.0f);
+
+    // Also adjust the speed relative to the width of the text container. This is not perfect
+    // but at least increases the speed for narrower fields to a reasonable level.
+    float widthSpeedModifier = getContentSize().x() / Renderer::getScreenWidth();
+    mAutoScrollSpeed =
+            static_cast<int>(static_cast<float>(mAutoScrollSpeed) * widthSpeedModifier);
 }
 
 void ScrollableContainer::reset()
@@ -89,12 +103,8 @@ void ScrollableContainer::update(int deltaTime)
 
     const Vector2f contentSize = getContentSize();
 
-    // Scale speed by the text width, more text per line leads to slower scrolling.
-    const float widthMod = contentSize.x() / mAutoWidthModConstant / mResolutionModifier;
-
-    // Adjust delta time by text width and screen resolution.
-    int adjustedDeltaTime =
-            static_cast<int>(static_cast<float>(deltaTime) * mResolutionModifier / widthMod);
+    // Adjust delta time by screen resolution.
+    int adjustedDeltaTime = static_cast<int>(static_cast<float>(deltaTime) * mResolutionModifier);
 
     if (mAutoScrollSpeed != 0) {
         mAutoScrollAccumulator += adjustedDeltaTime;
@@ -126,8 +136,7 @@ void ScrollableContainer::update(int deltaTime)
 
     if (mAtEnd) {
         mAutoScrollResetAccumulator += deltaTime;
-        if (mAutoScrollResetAccumulator >=
-                static_cast<int>(mAutoScrollResetDelayConstant * widthMod)) {
+        if (mAutoScrollResetAccumulator >= static_cast<int>(mAutoScrollResetDelayConstant)) {
             // Fade in the text as it resets to the start position.
             auto func = [this](float t) {
                 this->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));

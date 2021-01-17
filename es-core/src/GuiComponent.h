@@ -169,7 +169,7 @@ public:
     virtual void setHiddenValue(const std::string& value);
 
     // Used to set the parameters for ScrollableContainer.
-    virtual void setScrollParameters(float, float, int, float) {};
+    virtual void setScrollParameters(float, float, int) {};
 
     virtual void onFocusGained() {};
     virtual void onFocusLost() {};

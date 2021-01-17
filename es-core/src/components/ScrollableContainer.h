@@ -10,10 +10,12 @@
 #ifndef ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H
 #define ES_CORE_COMPONENTS_SCROLLABLE_CONTAINER_H
 
-#define AUTO_SCROLL_DELAY 2400.0f // Time to wait before we start to scroll.
-#define AUTO_SCROLL_RESET_DELAY 4000.0f // Time before resetting to top after we reach the bottom.
-#define AUTO_SCROLL_SPEED 48 // Relative scrolling speed (lower is faster).
-#define AUTO_WIDTH_MOD 350.0f // Line width modifier to use to calculate scrolling speed.
+// Time in ms to wait before scrolling starts.
+#define AUTO_SCROLL_DELAY 4500.0f
+// Time in ms before resetting to the top after we reach the bottom.
+#define AUTO_SCROLL_RESET_DELAY 7000.0f
+// Relative scrolling speed (lower is faster).
+#define AUTO_SCROLL_SPEED 420
 
 #include "GuiComponent.h"
 
@@ -26,7 +28,9 @@ public:
     void setScrollPos(const Vector2f& pos);
     void setAutoScroll(bool autoScroll);
     void setScrollParameters(float autoScrollDelayConstant, float autoScrollResetDelayConstant,
-            int autoScrollSpeedConstant, float autoWidthModConstant) override;
+            int autoScrollSpeedConstant) override;
+    // Adjust scrolling speed based on the font size (and text container width).
+    void setFontSizeSpeedAdjustments(int size);
     void reset();
 
     void update(int deltaTime) override;
@@ -41,7 +45,6 @@ private:
     float mAutoScrollResetDelayConstant;
     float mAutoScrollDelayConstant;
     int mAutoScrollSpeedConstant;
-    float mAutoWidthModConstant;
 
     float mResolutionModifier;
     int mAutoScrollDelay;
