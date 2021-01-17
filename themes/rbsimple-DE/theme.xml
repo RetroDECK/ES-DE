@@ -223,8 +223,8 @@ based on: 'recalbox-multi' by the Recalbox community
         </rating>
         <text name="md_description">
             <lineSpacing>1.2</lineSpacing>
-            <pos>0.454 0.67</pos>
-            <size>0.346 0.24</size>
+            <pos>0.454 0.675</pos>
+            <size>0.346 0.235</size>
             <fontSize>0.02</fontSize>
         </text>
         <textlist name="gamelist">
