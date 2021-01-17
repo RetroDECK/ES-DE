@@ -252,7 +252,7 @@ void ThemeData::loadFile(std::map<std::string, std::string> sysDataMap, const st
     error.setFiles(mPaths);
 
     if (!Utils::FileSystem::exists(path))
-        throw error << "File does not exist!";
+        throw error << "File does not exist";
 
     mVersion = 0;
     mViews.clear();
@@ -299,8 +299,8 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         std::string relPath = resolvePlaceholders(node.text().as_string());
         std::string path = Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true);
         if (!ResourceManager::getInstance()->fileExists(path))
-            throw error << "Included file \"" << relPath <<
-                    "\" not found! (resolved to \"" << path << "\")";
+            throw error << ": Included file \"" << relPath <<
+                    "\" not found (resolved to \"" << path << "\")";
 
         error << "    from included file \"" << relPath << "\":\n    ";
 
@@ -318,7 +318,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
 
         pugi::xml_node theme = includeDoc.child("theme");
         if (!theme)
-            throw error << "Missing <theme> tag!";
+            throw error << "Missing <theme> tag";
 
         parseVariables(theme);
         parseIncludes(theme);
