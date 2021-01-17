@@ -192,17 +192,16 @@ void GuiScraperSearch::onSizeChanged()
     resizeMetadata();
 
     if (mSearchType != ALWAYS_ACCEPT_FIRST_RESULT)
-        mDescContainer->setSize(mGrid.getColWidth(1)*boxartCellScale +
+        mDescContainer->setSize(mGrid.getColWidth(1) * boxartCellScale +
             mGrid.getColWidth(2), mResultDesc->getFont()->getHeight() * 3);
     else
-        mDescContainer->setSize(mGrid.getColWidth(3)*boxartCellScale,
-                mResultDesc->getFont()->getHeight() * 7);
+        mDescContainer->setSize(mGrid.getColWidth(3) * boxartCellScale,
+                mResultDesc->getFont()->getHeight() * 6);
 
     // Make description text wrap at edge of container.
     mResultDesc->setSize(mDescContainer->getSize().x(), 0);
 
     mGrid.onSizeChanged();
-
     mBusyAnim.setSize(mSize);
 }
 
