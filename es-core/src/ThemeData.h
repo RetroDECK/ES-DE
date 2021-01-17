@@ -70,7 +70,7 @@ public:
     {
         *this << "From theme \"" << deque.front() << "\"";
         for (auto it = deque.cbegin() + 1; it != deque.cend(); it++)
-            *this << "  (from included file \"" << (*it) << "\")\n";
+            *this << " -> \"" << (*it) << "\"";
     }
 };
 

@@ -440,8 +440,8 @@ void ThemeData::parseElement(const pugi::xml_node& root,
     for (pugi::xml_node node = root.first_child(); node; node = node.next_sibling()) {
         auto typeIt = typeMap.find(node.name());
         if (typeIt == typeMap.cend())
-            throw error << "Unknown property type \"" << node.name() <<
-                    "\" (for element of type " << root.name() << ").";
+            throw error << ": Unknown property type \"" << node.name() <<
+                    "\" (for element of type " << root.name() << ")";
 
         std::string str = resolvePlaceholders(node.text().as_string());
 
