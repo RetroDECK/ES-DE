@@ -160,6 +160,8 @@ public:
     virtual bool getEnabled() { return mEnabled; };
     virtual void setEnabled(bool state) { mEnabled = state; };
 
+    virtual std::shared_ptr<Font> getFont() const { return nullptr; };
+
     const Transform4x4f& getTransform();
 
     virtual std::string getValue() const;

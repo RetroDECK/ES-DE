@@ -23,11 +23,19 @@ ScrollableContainer::ScrollableContainer(
         mAutoScrollAccumulator(0),
         mScrollPos(0, 0),
         mScrollDir(0, 0),
-        mAutoScrollResetAccumulator(0)
+        mAutoScrollResetAccumulator(0),
+        mFontSize(0.0f)
 {
     // Set the modifier to get equivalent scrolling speed regardless of screen resolution.
-    // 1080p is the reference.
-    mResolutionModifier = Renderer::getScreenWidthModifier();
+    mResolutionModifier = Renderer::getScreenHeightModifier();
+    mSmallFontSize = static_cast<float>(Font::get(FONT_SIZE_SMALL)->getSize());
+
+    // For narrower aspect ratios than 16:9 there is a need to set an additional compensation
+    // to get somehow consistent scrolling speeds.
+    float aspectCompensation = static_cast<float>(Renderer::getScreenHeight()) /
+            static_cast<float>(Renderer::getScreenWidth()) - 0.5625f;
+    if (aspectCompensation > 0)
+        mResolutionModifier += aspectCompensation * 4.0f;
 
     mAutoScrollResetDelayConstant = AUTO_SCROLL_RESET_DELAY;
     mAutoScrollDelayConstant = AUTO_SCROLL_DELAY;
@@ -48,8 +56,10 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
 {
     if (autoScroll) {
         mScrollDir = Vector2f(0, 1);
-        mAutoScrollDelay = static_cast<int>(mAutoScrollDelayConstant * mResolutionModifier);
+        mAutoScrollDelay = static_cast<int>(mAutoScrollDelayConstant);
         mAutoScrollSpeed = mAutoScrollSpeedConstant;
+        mAutoScrollSpeed = static_cast<int>(static_cast<float>(mAutoScrollSpeedConstant) /
+                mResolutionModifier);
         reset();
     }
     else {
@@ -66,22 +76,6 @@ void ScrollableContainer::setScrollParameters(float autoScrollDelayConstant,
     mAutoScrollResetDelayConstant = autoScrollResetDelayConstant;
     mAutoScrollDelayConstant = autoScrollDelayConstant;
     mAutoScrollSpeedConstant = autoScrollSpeedConstant;
-}
-
-void ScrollableContainer::setFontSizeSpeedAdjustments(int size)
-{
-    // Adjust scrolling speed relative to the font size, i.e. a larger size makes it faster.
-    float fontSizeModifier =
-            static_cast<float>(Font::get(FONT_SIZE_SMALL)->getSize()) / (static_cast<float>(size));
-    fontSizeModifier = fontSizeModifier * fontSizeModifier * fontSizeModifier;
-    mAutoScrollSpeed =
-            static_cast<int>((static_cast<float>(mAutoScrollSpeed) * fontSizeModifier) / 2.0f);
-
-    // Also adjust the speed relative to the width of the text container. This is not perfect
-    // but at least increases the speed for narrower fields to a reasonable level.
-    float widthSpeedModifier = getContentSize().x() / Renderer::getScreenWidth();
-    mAutoScrollSpeed =
-            static_cast<int>(static_cast<float>(mAutoScrollSpeed) * widthSpeedModifier);
 }
 
 void ScrollableContainer::reset()
@@ -102,16 +96,24 @@ void ScrollableContainer::update(int deltaTime)
     }
 
     const Vector2f contentSize = getContentSize();
+    int adjustedAutoScrollSpeed = mAutoScrollSpeed;
 
-    // Adjust delta time by screen resolution.
-    int adjustedDeltaTime = static_cast<int>(static_cast<float>(deltaTime) * mResolutionModifier);
+    // Adjust the scrolling speed based on the width of the container.
+    float widthModifier = contentSize.x() / static_cast<float>(Renderer::getScreenWidth());
+    adjustedAutoScrollSpeed *= widthModifier;
 
-    if (mAutoScrollSpeed != 0) {
-        mAutoScrollAccumulator += adjustedDeltaTime;
+    // Also adjust the scrolling speed based on the size of the font.
+    float fontSizeModifier = mSmallFontSize / mFontSize;
+    adjustedAutoScrollSpeed *= fontSizeModifier * fontSizeModifier;
 
-        while (mAutoScrollAccumulator >= mAutoScrollSpeed) {
+    if (adjustedAutoScrollSpeed < 0)
+        adjustedAutoScrollSpeed = 1;
+
+    if (adjustedAutoScrollSpeed != 0) {
+        mAutoScrollAccumulator += deltaTime;
+        while (mAutoScrollAccumulator >= adjustedAutoScrollSpeed) {
             mScrollPos += mScrollDir;
-            mAutoScrollAccumulator -= mAutoScrollSpeed;
+            mAutoScrollAccumulator -= adjustedAutoScrollSpeed;
         }
     }
 
@@ -185,6 +187,8 @@ Vector2f ScrollableContainer::getContentSize()
             max.x() = bottomRight.x();
         if (bottomRight.y() > max.y())
             max.y() = bottomRight.y();
+        if (!mFontSize)
+            mFontSize = static_cast<float>(mChildren.at(i)->getFont()->getSize());
     }
 
     return max;

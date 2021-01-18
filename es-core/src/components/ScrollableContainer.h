@@ -15,7 +15,7 @@
 // Time in ms before resetting to the top after we reach the bottom.
 #define AUTO_SCROLL_RESET_DELAY 7000.0f
 // Relative scrolling speed (lower is faster).
-#define AUTO_SCROLL_SPEED 420
+#define AUTO_SCROLL_SPEED 90
 
 #include "GuiComponent.h"
 
@@ -29,8 +29,6 @@ public:
     void setAutoScroll(bool autoScroll);
     void setScrollParameters(float autoScrollDelayConstant, float autoScrollResetDelayConstant,
             int autoScrollSpeedConstant) override;
-    // Adjust scrolling speed based on the font size (and text container width).
-    void setFontSizeSpeedAdjustments(int size);
     void reset();
 
     void update(int deltaTime) override;
@@ -41,6 +39,9 @@ private:
 
     Vector2f mScrollPos;
     Vector2f mScrollDir;
+
+    float mFontSize;
+    float mSmallFontSize;
 
     float mAutoScrollResetDelayConstant;
     float mAutoScrollDelayConstant;

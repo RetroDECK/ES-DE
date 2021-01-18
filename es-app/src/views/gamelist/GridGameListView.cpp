@@ -117,7 +117,6 @@ GridGameListView::GridGameListView(
     mDescription.setFont(Font::get(FONT_SIZE_SMALL));
     mDescription.setSize(mDescContainer.getSize().x(), 0);
     mDescContainer.addChild(&mDescription);
-    mDescContainer.setFontSizeSpeedAdjustments(Font::get(FONT_SIZE_SMALL)->getSize());
 
     mMarquee.setOrigin(0.5f, 0.5f);
     mMarquee.setPosition(mSize.x() * 0.25f, mSize.y() * 0.10f);
@@ -306,7 +305,6 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mDescription.setSize(mDescContainer.getSize().x(), 0);
     mDescription.applyTheme(theme, getName(), "md_description",
             ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
-    mDescContainer.setFontSizeSpeedAdjustments(mDescription.getFont()->getSize());
 
     // Repopulate list in case a new theme is displaying a different image.
     // Preserve selection.

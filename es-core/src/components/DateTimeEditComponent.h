@@ -61,7 +61,7 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    std::shared_ptr<Font> getFont() const;
+    std::shared_ptr<Font> getFont() const override;
 
     std::string getDisplayString(DisplayMode mode) const;
     DisplayMode getCurrentDisplayMode() const;

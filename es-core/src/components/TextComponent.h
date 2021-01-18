@@ -63,7 +63,7 @@ public:
             const std::string& element, unsigned int properties) override;
 
     unsigned int getColor() const override { return mColor; };
-    inline std::shared_ptr<Font> getFont() const { return mFont; }
+    inline std::shared_ptr<Font> getFont() const override { return mFont; }
 
 protected:
     virtual void onTextChanged();

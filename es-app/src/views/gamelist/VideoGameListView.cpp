@@ -141,7 +141,6 @@ VideoGameListView::VideoGameListView(
     mDescription.setFont(Font::get(FONT_SIZE_SMALL));
     mDescription.setSize(mDescContainer.getSize().x(), 0);
     mDescContainer.addChild(&mDescription);
-    mDescContainer.setFontSizeSpeedAdjustments(Font::get(FONT_SIZE_SMALL)->getSize());
 
     mGamelistInfo.setOrigin(0.5f, 0.5f);
     mGamelistInfo.setFont(Font::get(FONT_SIZE_SMALL));
@@ -200,7 +199,6 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mDescription.setSize(mDescContainer.getSize().x(), 0);
     mDescription.applyTheme(theme, getName(), "md_description",
             ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
-    mDescContainer.setFontSizeSpeedAdjustments(mDescription.getFont()->getSize());
 
     mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
 

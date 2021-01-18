@@ -38,7 +38,7 @@ public:
     void stopEditing();
 
     inline bool isEditing() const { return mEditing; };
-    inline const std::shared_ptr<Font>& getFont() const { return mFont; }
+    inline std::shared_ptr<Font> getFont() const override{ return mFont; }
 
     void setCursor(size_t pos);
 
