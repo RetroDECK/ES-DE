@@ -100,11 +100,12 @@ void ScrollableContainer::update(int deltaTime)
 
     // Adjust the scrolling speed based on the width of the container.
     float widthModifier = contentSize.x() / static_cast<float>(Renderer::getScreenWidth());
-    adjustedAutoScrollSpeed *= widthModifier;
+    adjustedAutoScrollSpeed = static_cast<int>(adjustedAutoScrollSpeed * widthModifier);
 
     // Also adjust the scrolling speed based on the size of the font.
     float fontSizeModifier = mSmallFontSize / mFontSize;
-    adjustedAutoScrollSpeed *= fontSizeModifier * fontSizeModifier;
+    adjustedAutoScrollSpeed = static_cast<int>(adjustedAutoScrollSpeed *
+            fontSizeModifier * fontSizeModifier);
 
     if (adjustedAutoScrollSpeed < 0)
         adjustedAutoScrollSpeed = 1;
