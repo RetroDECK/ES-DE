@@ -232,7 +232,7 @@ std::string getDeveloperString(const Value& v)
 
     std::string out = "";
     bool first = true;
-    for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
+    for (int i = 0; i < static_cast<int>(v.Size()); i++) {
         auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
 
         if (mapIt == resources.gamesdb_new_developers_map.cend())
@@ -254,7 +254,7 @@ std::string getPublisherString(const Value& v)
 
     std::string out = "";
     bool first = true;
-    for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
+    for (int i = 0; i < static_cast<int>(v.Size()); i++) {
         auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
 
         if (mapIt == resources.gamesdb_new_publishers_map.cend())
@@ -276,7 +276,7 @@ std::string getGenreString(const Value& v)
 
     std::string out = "";
     bool first = true;
-    for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
+    for (int i = 0; i < static_cast<int>(v.Size()); i++) {
         auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
 
         if (mapIt == resources.gamesdb_new_genres_map.cend())
@@ -448,7 +448,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     const Value& games = doc["data"]["games"];
     resources.ensureResources();
 
-    for (int i = 0; i < static_cast<int>(games.Size()); ++i) {
+    for (int i = 0; i < static_cast<int>(games.Size()); i++) {
         auto& v = games[i];
         try {
             processGame(v, results);

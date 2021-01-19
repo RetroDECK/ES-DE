@@ -108,7 +108,7 @@ GridGameListView::GridGameListView(
     addChild(&mName);
 
     mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
-    mDescContainer.setSize(mSize.x() * (0.50f - 2*padding), mSize.y() -
+    mDescContainer.setSize(mSize.x() * (0.50f - 2 * padding), mSize.y() -
             mDescContainer.getPosition().y());
     mDescContainer.setAutoScroll(true);
     mDescContainer.setDefaultZIndex(40);
@@ -120,21 +120,21 @@ GridGameListView::GridGameListView(
 
     mMarquee.setOrigin(0.5f, 0.5f);
     mMarquee.setPosition(mSize.x() * 0.25f, mSize.y() * 0.10f);
-    mMarquee.setMaxSize(mSize.x() * (0.5f - 2*padding), mSize.y() * 0.18f);
+    mMarquee.setMaxSize(mSize.x() * (0.5f - 2 * padding), mSize.y() * 0.18f);
     mMarquee.setDefaultZIndex(35);
     mMarquee.setVisible(false);
     addChild(&mMarquee);
 
     mImage.setOrigin(0.5f, 0.5f);
     mImage.setPosition(2.0f, 2.0f);
-    mImage.setMaxSize(mSize.x() * (0.50f - 2*padding), mSize.y() * 0.4f);
+    mImage.setMaxSize(mSize.x() * (0.50f - 2 * padding), mSize.y() * 0.4f);
     mImage.setDefaultZIndex(10);
     mImage.setVisible(false);
     addChild(&mImage);
 
     mVideo->setOrigin(0.5f, 0.5f);
     mVideo->setPosition(mSize.x() * 0.25f, mSize.y() * 0.4f);
-    mVideo->setSize(mSize.x() * (0.5f - 2*padding), mSize.y() * 0.4f);
+    mVideo->setSize(mSize.x() * (0.5f - 2 * padding), mSize.y() * 0.4f);
     mVideo->setDefaultZIndex(15);
     mVideo->setVisible(false);
     addChild(mVideo);
@@ -538,7 +538,7 @@ void GridGameListView::launch(FileData* game)
     ViewController::get()->triggerGameLaunch(game);
 }
 
-void GridGameListView::remove(FileData *game, bool deleteFile)
+void GridGameListView::remove(FileData* game, bool deleteFile)
 {
     // Delete the game file on the filesystem.
     if (deleteFile)
@@ -572,7 +572,7 @@ void GridGameListView::remove(FileData *game, bool deleteFile)
     onFileChanged(parent, false);
 }
 
-void GridGameListView::removeMedia(FileData *game)
+void GridGameListView::removeMedia(FileData* game)
 {
     // Remove all game media files on the filesystem.
     if (Utils::FileSystem::exists(game->getVideoPath()))

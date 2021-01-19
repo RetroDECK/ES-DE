@@ -138,7 +138,7 @@ bool SystemData::populateFolder(FileData* folder)
         return false;
 
     for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
-            it != dirContent.cend(); ++it) {
+            it != dirContent.cend(); it++) {
         filePath = *it;
 
         // Skip hidden files and folders.
@@ -190,7 +190,7 @@ void SystemData::indexAllGameFilters(const FileData* folder)
     const std::vector<FileData*>& children = folder->getChildren();
 
     for (std::vector<FileData*>::const_iterator it = children.cbegin();
-            it != children.cend(); ++it) {
+            it != children.cend(); it++) {
         switch ((*it)->getType()) {
             case GAME: {
                 mFilterIndex->addToIndex(*it);

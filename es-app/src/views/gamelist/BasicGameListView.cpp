@@ -189,7 +189,7 @@ void BasicGameListView::launch(FileData* game)
     ViewController::get()->triggerGameLaunch(game);
 }
 
-void BasicGameListView::remove(FileData *game, bool deleteFile)
+void BasicGameListView::remove(FileData* game, bool deleteFile)
 {
     // Delete the game file on the filesystem.
     if (deleteFile)
@@ -228,7 +228,7 @@ void BasicGameListView::remove(FileData *game, bool deleteFile)
     }
 }
 
-void BasicGameListView::removeMedia(FileData *game)
+void BasicGameListView::removeMedia(FileData* game)
 {
     // Remove all game media files on the filesystem.
     if (Utils::FileSystem::exists(game->getVideoPath()))

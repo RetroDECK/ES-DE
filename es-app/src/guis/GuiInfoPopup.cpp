@@ -51,7 +51,7 @@ GuiInfoPopup::GuiInfoPopup(
     mSize[0] = mSize.x() + paddingX;
     mSize[1] = mSize.y() + paddingY;
 
-    float posX = Renderer::getScreenWidth()*0.5f - mSize.x()*0.5f;
+    float posX = Renderer::getScreenWidth()* 0.5f - mSize.x() * 0.5f;
     float posY = Renderer::getScreenHeight() * 0.02f;
 
     setPosition(posX, posY, 0);
@@ -106,13 +106,13 @@ bool GuiInfoPopup::updateState()
         return false;
     }
     else if (curTime - mStartTime <= 500) {
-        alpha = ((curTime - mStartTime)*255/500);
+        alpha = ((curTime - mStartTime) * 255 / 500);
     }
     else if (curTime - mStartTime < mDuration - 500) {
         alpha = 255;
     }
     else {
-        alpha = ((-(curTime - mStartTime - mDuration)*255)/500);
+        alpha = ((-(curTime - mStartTime - mDuration) * 255) / 500);
     }
     mGrid->setOpacity(static_cast<unsigned char>(alpha));
 

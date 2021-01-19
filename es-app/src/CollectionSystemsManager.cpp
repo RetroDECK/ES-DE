@@ -61,7 +61,7 @@ CollectionSystemsManager::CollectionSystemsManager(Window* window) : mWindow(win
             (systemDecls, systemDecls + sizeof(systemDecls) / sizeof(systemDecls[0]));
 
     for (std::vector<CollectionSystemDecl>::const_iterator it = tempSystemDecl.cbegin();
-            it != tempSystemDecl.cend(); ++it )
+            it != tempSystemDecl.cend(); it++)
         mCollectionSystemDeclsIndex[(*it).name] = (*it);
 
     // Setup the standard environment.
@@ -171,8 +171,8 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
         configFileIn.close();
 
         for (std::unordered_map<std::string, FileData*>::const_iterator
-                iter = games.cbegin(); iter != games.cend(); ++iter) {
-            std::string path = iter->first;
+                it = games.cbegin(); it != games.cend(); it++) {
+            std::string path = it->first;
             // If the ROM path of the game begins with the path from the setting
             // ROMDirectory (or the default ROM directory), then replace it with %ROMPATH%.
             if (path.find(rompath) == 0)
@@ -1303,7 +1303,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromTheme()
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(themePath);
 
         for (Utils::FileSystem::stringList::const_iterator
-                it = dirContent.cbegin(); it != dirContent.cend(); ++it) {
+                it = dirContent.cbegin(); it != dirContent.cend(); it++) {
             if (Utils::FileSystem::isDirectory(*it)) {
                 // ... here you have a directory.
                 std::string folder = *it;
@@ -1328,7 +1328,7 @@ std::vector<std::string> CollectionSystemsManager::getCollectionsFromConfigFolde
         Utils::FileSystem::stringList dirContent =
                 Utils::FileSystem::getDirContent(configPath);
         for (Utils::FileSystem::stringList::const_iterator
-                it = dirContent.cbegin(); it != dirContent.cend(); ++it) {
+                it = dirContent.cbegin(); it != dirContent.cend(); it++) {
             if (Utils::FileSystem::isRegularFile(*it)) {
                 // It's a file.
                 std::string filename = Utils::FileSystem::getFileName(*it);

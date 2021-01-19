@@ -173,7 +173,7 @@ bool parseArgs(int argc, char* argv[])
 
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
-            i += 2; // skip the argument value
+            i += 2; // Skip the argument value.
             Settings::getInstance()->setInt("WindowWidth", width);
             Settings::getInstance()->setInt("WindowHeight", height);
         }
@@ -185,7 +185,7 @@ bool parseArgs(int argc, char* argv[])
 
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
-            i += 2; // skip the argument value
+            i += 2; // Skip the argument value.
             Settings::getInstance()->setInt("ScreenWidth", width);
             Settings::getInstance()->setInt("ScreenHeight", height);
         }
@@ -197,7 +197,7 @@ bool parseArgs(int argc, char* argv[])
 
             int x = atoi(argv[i + 1]);
             int y = atoi(argv[i + 2]);
-            i += 2; // skip the argument value
+            i += 2; // Skip the argument value.
             Settings::getInstance()->setInt("ScreenOffsetX", x);
             Settings::getInstance()->setInt("ScreenOffsetY", y);
         }
@@ -208,7 +208,7 @@ bool parseArgs(int argc, char* argv[])
             }
 
             int rotate = atoi(argv[i + 1]);
-            ++i; // skip the argument value
+            i++; // Skip the argument value.
             Settings::getInstance()->setInt("ScreenRotate", rotate);
         }
         else if (strcmp(argv[i], "--max-vram") == 0) {
@@ -218,7 +218,7 @@ bool parseArgs(int argc, char* argv[])
             }
             int maxVRAM = atoi(argv[i + 1]);
             Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
-            ++i; // skip the argument value
+            i++; // Skip the argument value.
         }
         else if (strcmp(argv[i], "--gamelist-only") == 0) {
             Settings::getInstance()->setBool("ParseGamelistOnly", true);

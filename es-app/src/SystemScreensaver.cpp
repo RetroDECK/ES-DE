@@ -441,7 +441,7 @@ void SystemScreensaver::update(int deltaTime)
 void SystemScreensaver::generateImageList()
 {
     for (auto it = SystemData::sSystemVector.cbegin();
-            it != SystemData::sSystemVector.cend(); ++it) {
+            it != SystemData::sSystemVector.cend(); it++) {
         // We only want nodes from game systems that are not collections.
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
@@ -458,7 +458,7 @@ void SystemScreensaver::generateImageList()
 void SystemScreensaver::generateVideoList()
 {
     for (auto it = SystemData::sSystemVector.cbegin();
-            it != SystemData::sSystemVector.cend(); ++it) {
+            it != SystemData::sSystemVector.cend(); it++) {
         // We only want nodes from game systems that are not collections.
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;

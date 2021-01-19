@@ -88,7 +88,7 @@ void TheGamesDBJSONRequestResources::ensureResources()
     if (checkLoaded())
         return;
 
-    for (int i = 0; i < MAX_WAIT_ITER; ++i) {
+    for (int i = 0; i < MAX_WAIT_ITER; i++) {
 
         if (gamesdb_developers_resource_request &&
                 saveResource(gamesdb_developers_resource_request.get(),
@@ -187,7 +187,7 @@ int TheGamesDBJSONRequestResources::loadResource(
     }
     auto& data = doc["data"][resource_name.c_str()];
 
-    for (Value::ConstMemberIterator itr = data.MemberBegin(); itr != data.MemberEnd(); ++itr) {
+    for (Value::ConstMemberIterator itr = data.MemberBegin(); itr != data.MemberEnd(); itr++) {
         auto& entry = itr->value;
         if (!entry.IsObject() || !entry.HasMember("id") || !entry["id"].IsInt() ||
                 !entry.HasMember("name") || !entry["name"].IsString())

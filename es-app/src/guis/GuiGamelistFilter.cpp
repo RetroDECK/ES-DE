@@ -55,7 +55,7 @@ void GuiGamelistFilter::resetAllFilters()
 {
     mFilterIndex->resetFilters();
     for (std::map<FilterIndexType, std::shared_ptr< OptionListComponent<std::string>>>::
-            const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); ++it ) {
+            const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); it++) {
         std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         optionList->selectNone();
     }
@@ -138,7 +138,7 @@ void GuiGamelistFilter::applyFilters()
 {
     std::vector<FilterDataDecl> decls = mFilterIndex->getFilterDataDecls();
     for (std::map<FilterIndexType, std::shared_ptr<OptionListComponent<std::string>>>::
-            const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); ++it ) {
+            const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); it++) {
         std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         std::vector<std::string> filters = optionList->getSelectedObjects();
         mFilterIndex->setFilter(it->first, &filters);
