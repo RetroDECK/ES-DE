@@ -382,7 +382,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         // Instant.
         updateGameCount();
         anim = new LambdaAnimation(
-                [this, startPos, endPos, posMax ](float t) {
+                [this, startPos, endPos, posMax](float t) {
             t -= 1;
             float f = Math::lerp(startPos, endPos, t*t*t + 1);
             if (f < 0)
@@ -647,9 +647,9 @@ void  SystemView::getDefaultElements(void)
     mCarousel.type = HORIZONTAL;
     mCarousel.logoAlignment = ALIGN_CENTER;
     mCarousel.size.x() = mSize.x();
-    mCarousel.size.y() = 0.2325f * mSize.y();
+    mCarousel.size.y() = floorf(0.2325f * mSize.y());
     mCarousel.pos.x() = 0.0f;
-    mCarousel.pos.y() = 0.5f * (mSize.y() - mCarousel.size.y());
+    mCarousel.pos.y() = floorf(0.5f * (mSize.y() - mCarousel.size.y()));
     mCarousel.origin.x() = 0.0f;
     mCarousel.origin.y() = 0.0f;
     mCarousel.color = 0xFFFFFFD8;
@@ -666,8 +666,7 @@ void  SystemView::getDefaultElements(void)
 
     // System info bar.
     mSystemInfo.setSize(mSize.x(), mSystemInfo.getFont()->getLetterHeight() * 2.2f);
-    mSystemInfo.setPosition(0, (mCarousel.pos.y() + mCarousel.size.y() -
-            (0.4f * Renderer::getScreenHeightModifier())));
+    mSystemInfo.setPosition(0, mCarousel.pos.y() + mCarousel.size.y());
     mSystemInfo.setBackgroundColor(0xDDDDDDD8);
     mSystemInfo.setRenderBackground(true);
     mSystemInfo.setFont(Font::get(static_cast<int>(0.035f * mSize.y()), Font::getDefaultPath()));
