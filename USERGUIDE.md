@@ -110,7 +110,7 @@ It's probably also a good idea to rename or move `es_settings.cfg` elsewhere as 
 
 ES-DE fully supports 4K displays (as well as 1440p and other higher resolutions) but some emulators such as RetroArch will always run using the active screen resolution, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. Although it's possible to start ES-DE with the `--resolution` option (which also applies to any launched emulators), this is not really recommended. Full screen mode only works on Unix with this option and even then it's highly dependent on well-written graphics drivers for proper behavior. ES-DE uses the SDL library which insists on setting xrandr to panning mode when doing resolution changes, which is incredibly annoying especially when using Nvidia drivers.
 
-A better approach is to use the custom event scripts functionality in ES-DE to set a temporary resolution upon launching a game that will be reverted when returning from the emulator. This is detailed as an example for Unix in [INSTALL.md](USERGUIDEmd#custom-event-scripts) but should be possible to implement similarly on other operating systems such as macOS and Windows.
+A better approach is to use the custom event scripts functionality in ES-DE to set a temporary resolution upon launching a game that will be reverted when returning from the emulator. This is detailed as an example for Unix in [INSTALL.md](INSTALL.md#custom-event-scripts) but should be possible to implement similarly on other operating systems such as macOS and Windows.
 
 
 ## Input device configuration
