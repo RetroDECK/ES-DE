@@ -455,6 +455,9 @@ int main(int argc, char* argv[])
     if (event.type == SDL_QUIT)
         return 1;
 
+    // This hides the mouse cursor during startup, i.e. before we have begun to capture SDL events.
+    SDL_SetRelativeMouseMode(SDL_TRUE);
+
     AudioManager::getInstance();
     MameNames::init();
 
@@ -584,10 +587,11 @@ int main(int argc, char* argv[])
             (applicationEndTime - applicationStartTime).count() << " ms";
 
     bool running = true;
+    // Now that we've finished loading, disable the relative mouse mode or otherwise mouse
+    // input wouldn't work in any games that are launched.
+    SDL_SetRelativeMouseMode(SDL_FALSE);
 
     while (running) {
-        SDL_Event event;
-
         if (SDL_PollEvent(&event)) {
             do {
                 InputManager::getInstance()->parseEvent(event, &window);
