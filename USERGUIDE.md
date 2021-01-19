@@ -108,17 +108,9 @@ It's probably also a good idea to rename or move `es_settings.cfg` elsewhere as 
 
 ## Running on 4K displays
 
-ES-DE fully supports 4K displays, but some emulators such as RetroArch will start with the same resolution as the calling program, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. A workaround for this is to start ES-DE with the `--resolution` option. For example, to set the resolution to 1920x1080 run the following:
+ES-DE fully supports 4K displays (as well as 1440p and other higher resolutions) but some emulators such as RetroArch will always run using the active screen resolution, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. Although it's possible to start ES-DE with the `--resolution` option (which also applies to any launched emulators), this is not really recommended. Full screen mode only works on Unix with this option and even then it's highly dependent on well-written graphics drivers for proper behavior. ES-DE uses the SDL library which insists on setting xrandr to panning mode when doing resolution changes, which is incredibly annoying especially when using Nvidia drivers.
 
-```
-emulationstation --resolution 1920 1080
-```
-
-This can of course be set in the ES-DE launcher entry for the desktop environment so that the normal menu entry can be used.
-
-A drawback with this approach is that the complete system resolution will be switced temporarily, meaning alt-tab switching between application will display them also in this lower resolution. Upon exiting ES-DE the previous 4K resolution should however be restored. This seems to be somehow driver-dependent though as for example the proprietary Nvidia Linux drivers (as always) do not seem to behave properly but the AMD open source drivers apparently work fine. So testing is required to see if this approach of running the application at a lower resolution than the screen resolution is possible.
-
-This only works well for Unix/Linux at the moment as Windows and macOS will run in windowed mode due to technical limitations in these operating systems. There may be workarounds for the actual emulator as well that I'm not aware of, making it possible to force a specific resolution while still running ES-DE in 4K.
+A better approach is to use the custom event scripts functionality in ES-DE to set a temporary resolution upon launching a game that will be reverted when returning from the emulator. This is detailed as an example for Unix in [INSTALL.md](USERGUIDEmd#custom-event-scripts) but should be possible to implement similarly on other operating systems such as macOS and Windows.
 
 
 ## Input device configuration
@@ -602,7 +594,7 @@ It's possible to change the game media directory from within ES-DE, for this see
 
 ## Main menu
 
-This menu can be accessed from both the system view and gamelist views. It contains the scraper, the input configuration tool and the application settings. Settings are saved when navigating back from any settings screen, assuming at least one setting was changed. Pressing F4 to quit the application will mean any settings changed on the current screen will NOT be saved to the configuration file.
+This menu can be accessed from both the system view and gamelist views. It contains the scraper, the input configuration tool and the application settings. Settings are saved when navigating back from any menu screen, assuming at least one setting was changed. Pressing F4 to quit the application will also save any pending changes.
 
 ![alt text](images/current/es-de_main_menu.png "ES-DE Main Menu")
 _The ES-DE main menu._

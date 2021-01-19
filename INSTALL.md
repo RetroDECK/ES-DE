@@ -1441,15 +1441,19 @@ For folders, most of the fields are identical although some are removed. In the 
 
 There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under `Other settings`. By default it's deactivated so be sure to enable it to use this feature.
 
-The approach is quite straightforward, ES-DE will look for any files inside a script directory that correspond to the event that is triggered and execute all files located there.
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files.
 
-As an example, let's create a log that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming.
+We'll go through two examples:
+* Create a log file that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming
+* Change the system resolution when launching and returning from a game in order to run the emulator at a lower resolution than ES-DE
 
-**Note:** The following example is for Unix systems, but it works the same way in macOS (which is also Unix after all), and on Windows (although .bat batch files are then used instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix).
+**Note:** The following examples are for Unix systems, but it works the same way in macOS (which is also Unix after all), and on Windows (although .bat batch files are then used instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix).
 
-The events when the game starts and ends are called `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+The events executed when a game starts and ends are called `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
 
-So let's create the folders for these events in the scripts directory. The location of this directory is `~/.emulationstation/scripts`.
+So let's create the folders for these events in the scripts directory. The location is `~/.emulationstation/scripts`
+
+**Game log:**
 
 After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist view.
 
@@ -1500,3 +1504,34 @@ Ending game   "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") a
 Starting game "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:15:24
 Ending game   "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:17:11
 ```
+
+**Resolution changes:**
+
+The same directories are used as for the above example with the game log.
+
+First create the game start script, let's name it `set_resolution_1080p.sh` with the following contents:
+
+```
+#!/bin/sh
+xrandr -s 1920x1080
+```
+
+Then create the end script, which we'll name `set_resolution_4K.sh`:
+
+```
+#!/bin/sh
+xrandr -s 3840x2160
+xdotool search --class emulationstation windowactivate
+xdotool search --class emulationstation windowactivate
+```
+
+The last two lines are optional, they're used to set the focus back to ES-DE in case you're running attention-seeking applications such as Kodi which seems to love to steal focus after resolution changes. Not sure why you need to run the command twice though, probably it's due to some kind of timing or race condition issue.
+
+After creating the two scripts, you should have something like this on the filesystem:
+
+```
+~/.emulationstation/scripts/game-start/set_resolution_1080p.sh
+~/.emulationstation/scripts/game-end/set_resolution_4K.sh
+```
+
+Don't forget to make the scripts executable (e.g. 'chmod 755 ./set_resolution_1080p.sh').
