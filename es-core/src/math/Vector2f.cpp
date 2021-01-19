@@ -8,10 +8,12 @@
 
 #include "math/Vector2f.h"
 
+#include <cmath>
+
 Vector2f& Vector2f::round()
 {
-    mX = static_cast<float>(static_cast<int>(mX + 0.5f));
-    mY = static_cast<float>(static_cast<int>(mY + 0.5f));
+    mX = std::round(mX);
+    mY = std::round(mY);
 
     return *this;
 }

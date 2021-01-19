@@ -8,11 +8,13 @@
 
 #include "math/Vector3f.h"
 
+#include <cmath>
+
 Vector3f& Vector3f::round()
 {
-    mX = static_cast<float>(static_cast<int>(mX + 0.5f));
-    mY = static_cast<float>(static_cast<int>(mY + 0.5f));
-    mZ = static_cast<float>(static_cast<int>(mZ + 0.5f));
+    mX = std::round(mX);
+    mY = std::round(mY);
+    mZ = std::round(mZ);
 
     return *this;
 }

@@ -117,6 +117,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Deleting a game from the metadata editor did not delete the game media files or its entry in the gamelist.xml file
 * Hidden files still showed up if they had a gamelist.xml entry
 * Fixed multiple instances of misaligned GUI elements on high-resolution displays due to the use of fixed-pixel constants
+* Fixed a rounding issue which caused one pixel wide lines to sometimes be shown along the upper and left screen edges
 * The VRAM statistics overlay was somewhat broken and incorrectly displayed numbers in megabytes instead of mebibytes
 * Long game names would sometimes not scroll in the gamelist view
 * Game media was not rendered when moving between gamelists using the slide transition style

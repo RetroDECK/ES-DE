@@ -8,12 +8,14 @@
 
 #include "math/Vector4f.h"
 
+#include <cmath>
+
 Vector4f& Vector4f::round()
 {
-    mX = static_cast<float>(static_cast<int>(mX + 0.5f));
-    mY = static_cast<float>(static_cast<int>(mY + 0.5f));
-    mZ = static_cast<float>(static_cast<int>(mZ + 0.5f));
-    mW = static_cast<float>(static_cast<int>(mW + 0.5f));
+    mX = std::round(mX);
+    mY = std::round(mY);
+    mZ = std::round(mZ);
+    mW = std::round(mW);
 
     return *this;
 }
