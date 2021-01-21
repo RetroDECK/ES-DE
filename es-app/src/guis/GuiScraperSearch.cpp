@@ -68,9 +68,9 @@ GuiScraperSearch::GuiScraperSearch(
 
     // Adjust the game description text scrolling parameters depending on the search type.
     if (mSearchType == NEVER_AUTO_ACCEPT)
-        mDescContainer->setScrollParameters(2500, 3000, 80);
+        mDescContainer->setScrollParameters(3000, 3000, 85);
     else
-        mDescContainer->setScrollParameters(6000, 3000, 80);
+        mDescContainer->setScrollParameters(6000, 3000, 85);
 
     mResultDesc = std::make_shared<TextComponent>(mWindow, "Result desc",
             Font::get(FONT_SIZE_SMALL), 0x777777FF);
