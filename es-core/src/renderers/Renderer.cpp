@@ -19,6 +19,10 @@
 #include <SDL2/SDL.h>
 #include <stack>
 
+#if defined (_WIN64)
+#include <windows.h>
+#endif
+
 namespace Renderer
 {
     static std::stack<Rect> clipStack;
@@ -85,6 +89,21 @@ namespace Renderer
 
         SDL_DisplayMode displayMode;
         SDL_GetDesktopDisplayMode(0, &displayMode);
+
+        #if defined (_WIN64)
+        // Tell Windows that we're DPI aware so that we can set a physical resolution and
+        // avoid any automatic DPI scaling.
+        if (SetProcessDPIAware()) {
+            HDC screen = GetDC(nullptr);
+            auto screenWidth = GetDeviceCaps(screen, HORZRES);
+            auto screenHeight = GetDeviceCaps(screen, VERTRES);
+            if (screenWidth != 0 && screenHeight != 0) {
+                displayMode.w = screenWidth;
+                displayMode.h = screenHeight;
+            }
+        }
+        #endif
+
         windowWidth = Settings::getInstance()->getInt("WindowWidth") ?
                 Settings::getInstance()->getInt("WindowWidth") : displayMode.w;
         windowHeight = Settings::getInstance()->getInt("WindowHeight") ?
