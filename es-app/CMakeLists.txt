@@ -13,7 +13,7 @@ set(ES_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
 
-        # Guis
+        # GUIs
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.h
@@ -61,7 +61,7 @@ set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.cpp
 
-        # Guis
+        # GUIs
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.cpp
@@ -93,11 +93,12 @@ set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.cpp
 )
 
-#---------------------------------------------------------------------------------------------------
-# Define OS specific sources and headers.
 if(WIN32)
     LIST(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation.rc)
 endif()
+
+#---------------------------------------------------------------------------------------------------
+# OS-specific installation and package generation setup.
 
 # Define target.
 if(APPLE OR WIN32)
@@ -210,6 +211,7 @@ include(InstallRequiredSystemLibraries)
 
 #---------------------------------------------------------------------------------------------------
 # General CPack settings.
+
 set(CPACK_PACKAGE_NAME "emulationstation-de")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "EmulationStation Desktop Edition is a front-end for browsing and launching games from your multi-platform game collection")
 set(CPACK_PACKAGE_DESCRIPTION "ES-DE is a feature-rich gaming front-end that is intended to be used in conjunction with emulators such as the RetroArch cores.")

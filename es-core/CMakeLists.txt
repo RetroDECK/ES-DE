@@ -23,7 +23,7 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/AnimationController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/LambdaAnimation.h
 
-        # GuiComponents
+        # GUI components
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.h
@@ -50,7 +50,7 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoOmxComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.h
 
-        # Guis
+        # GUIs
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
@@ -103,7 +103,7 @@ set(CORE_SOURCES
         # Animations
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/AnimationController.cpp
 
-        # GuiComponents
+        # GUI components
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.cpp
@@ -126,7 +126,7 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoOmxComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.cpp
 
-        # Guis
+        # GUIs
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp

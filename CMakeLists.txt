@@ -4,21 +4,22 @@ project(emulationstation-de)
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
 
-# Add local find modules to CMAKE path.
+# Add local find modules to the CMake path.
 list(APPEND CMAKE_MODULE_PATH
         ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
         ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages)
 
-# Options.
+# Define the options.
 option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
-option(RPI "Set to ON to enable the Raspberry PI video player (omxplayer)" ${RPI})
+option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
-option(APPLE_SKIP_INSTALL_LIBS "Set to ON to skip installation of shared libraries (macOS only)."
+option(APPLE_SKIP_INSTALL_LIBS "Set to ON to skip installation of shared libraries (macOS only)"
         ${APPLE_SKIP_INSTALL_LIBS})
 
 #---------------------------------------------------------------------------------------------------
-# Set up OpenGL system variable.
+# OpenGL setup.
+
 if(GLES)
     set(GLSystem "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
 elseif(GL)
@@ -52,6 +53,7 @@ set_property(CACHE GLSystem PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 
 #---------------------------------------------------------------------------------------------------
 # Package dependencies.
+
 if(${GLSystem} MATCHES "Desktop OpenGL")
     set(OpenGL_GL_PREFERENCE "GLVND")
     find_package(OpenGL REQUIRED)
@@ -80,32 +82,20 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_package(ALSA REQUIRED)
 endif()
 
-# Set up compiler flags.
-if(DEFINED BCMHOST OR RPI)
-    add_definitions(-D_RPI_)
-endif()
-
-if(DEFINED VERO4K)
-    add_definitions(-D_VERO4K_)
-endif()
-
-if(DEFINED libCEC_FOUND)
-    add_definitions(-DHAVE_LIBCEC)
-endif()
-
 #---------------------------------------------------------------------------------------------------
-# Check for compiler type and version and apply specific compiler settings.
+# Compiler and linker settings.
+
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     message("-- Compiler is Clang/LLVM")
     execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE CLANG_VERSION)
     if(CLANG_VERSION VERSION_LESS 4.2.1)
-        message(SEND_ERROR "You need at least Clang 4.2.1 to compile EmulationStation-DE!")
+        message(SEND_ERROR "You need at least Clang 4.2.1 to compile EmulationStation-DE")
     endif()
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     message("-- Compiler is GNU/GCC")
     execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpfullversion OUTPUT_VARIABLE G++_VERSION)
     if(G++_VERSION VERSION_LESS 4.8)
-        message(SEND_ERROR "You need at least GCC 4.8 to compile EmulationStation-DE!")
+        message(SEND_ERROR "You need at least GCC 4.8 to compile EmulationStation-DE")
     endif()
     if(WIN32)
         set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
@@ -131,7 +121,7 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     endif()
     # If using Clang, then add additional debug data needed by GDB.
     # Comment this out if you're using LLDB for debugging as this flag makes the binary
-    # much larger and the application much slower. On macoOS this setting is never enabled
+    # much larger and the application much slower. On macOS this setting is never enabled
     # as LLDB is the default debugger on this OS.
     if(NOT APPLE AND "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_DEBUG")
@@ -166,29 +156,41 @@ if(APPLE)
     SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
 endif()
 
+#---------------------------------------------------------------------------------------------------
+# Preprocessor directives.
+
 if(${GLSystem} MATCHES "Desktop OpenGL")
     add_definitions(-DUSE_OPENGL_21)
 else()
     add_definitions(-DUSE_OPENGLES_10)
 endif()
 
-# For Unix systems (except for macOS), assign the installation prefix to the local
-# $ES_INSTALL_PREFIX variable.
+if(DEFINED BCMHOST OR RPI)
+    add_definitions(-D_RPI_)
+endif()
+
+if(DEFINED VERO4K)
+    add_definitions(-D_VERO4K_)
+endif()
+
+if(DEFINED libCEC_FOUND)
+    add_definitions(-DHAVE_LIBCEC)
+endif()
+
+# For Unix systems, assign the installation prefix.
 if(NOT WIN32 AND NOT APPLE)
     add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 endif()
 
-# Handle additional (required) include files for dependency packages on Windows.
+# For Windows, set the minimum OS version to Windows 7.
 if(WIN32)
-    set(WIN32_INCLUDE_DIR "NOT_DEFINED" CACHE FILEPATH "")
-    if(NOT EXISTS ${WIN32_INCLUDE_DIR})
-        message(SEND_ERROR "Can't find WIN32 include directory: ${WIN32_INCLUDE_DIR}")
-    endif()
-    #include_directories(${WIN32_INCLUDE_DIR})
+    add_compile_definitions(_WIN32_WINNT=0x0601)
+    add_compile_definitions(WINVER=0x0601)
 endif()
 
 #---------------------------------------------------------------------------------------------------
-# Add include directories.
+# Include files.
+
 set(COMMON_INCLUDE_DIRS
         ${CURL_INCLUDE_DIR}
         ${FreeImage_INCLUDE_DIRS}
@@ -200,10 +202,18 @@ set(COMMON_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/external
         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
 
+# For Windows we need to add local include files for the dependency packages.
+if(WIN32)
+    set(WIN32_INCLUDE_DIR "NOT_DEFINED" CACHE FILEPATH "")
+    if(NOT EXISTS ${WIN32_INCLUDE_DIR})
+        message(SEND_ERROR "Can't find WIN32 include directory: ${WIN32_INCLUDE_DIR}")
+    endif()
+    #include_directories(${WIN32_INCLUDE_DIR})
+endif()
+
 # Temporary solution until the VLC find module has been updated to work properly on macOS.
 if(APPLE)
-    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
-            "/Applications/VLC.app/Contents/MacOS/include")
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} "/Applications/VLC.app/Contents/MacOS/include")
 endif()
 
 if(WIN32)
@@ -215,7 +225,7 @@ if(DEFINED libCEC_FOUND)
     list(APPEND COMMON_INCLUDE_DIRS ${libCEC_INCLUDE_DIR})
 endif()
 
-# Add ALSA for Linux include directory.
+# For Linux, add the ALSA include directory.
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     list(APPEND COMMON_INCLUDE_DIRS ${ALSA_INCLUDE_DIRS})
 endif()
@@ -239,12 +249,8 @@ else()
     endif()
 endif()
 
-# Define libraries and directories.
-if(DEFINED BCMHOST)
-    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
-elseif(DEFINED VERO4K)
-    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib")
-endif()
+#---------------------------------------------------------------------------------------------------
+# Dependency libraries.
 
 if(NOT WIN32)
     set(COMMON_LIBRARIES
@@ -316,8 +322,10 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif()
 
 if(DEFINED BCMHOST)
+    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
     list(APPEND COMMON_LIBRARIES bcm_host brcmEGL ${OPENGLES_LIBRARIES})
 elseif(DEFINED VERO4K)
+    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib")
     list(APPEND COMMON_LIBRARIES EGL ${OPENGLES_LIBRARIES})
 else()
     if(${GLSystem} MATCHES "Desktop OpenGL")
@@ -328,7 +336,8 @@ else()
 endif()
 
 #---------------------------------------------------------------------------------------------------
-# Set up build directories.
+# Build directories.
+
 set(dir ${CMAKE_CURRENT_SOURCE_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
