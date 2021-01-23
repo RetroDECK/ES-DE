@@ -1521,11 +1521,11 @@ Then create the end script, which we'll name `set_resolution_4K.sh`:
 ```
 #!/bin/sh
 xrandr -s 3840x2160
-xdotool search --class emulationstation windowactivate
+sleep 0.3
 xdotool search --class emulationstation windowactivate
 ```
 
-The last two lines are optional, they're used to set the focus back to ES-DE in case you're running attention-seeking applications such as Kodi which seems to love to steal focus after resolution changes. Not sure why you need to run the command twice though, probably it's due to some kind of timing or race condition issue.
+The last two lines are optional, they're used to set the focus back to ES-DE in case you're running attention-seeking applications such as Kodi which may steal focus after resolution changes. You may need to adjust the sleep time to get this to work reliably though, as the timing may differ between different computers and graphics drivers.
 
 After creating the two scripts, you should have something like this on the filesystem:
 
