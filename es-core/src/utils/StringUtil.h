@@ -19,6 +19,8 @@ namespace Utils
     {
         unsigned int chars2Unicode(const std::string& _string, size_t& _cursor);
         std::string unicode2Chars(const unsigned int _unicode);
+        // Return the first character, which could be normal ASCII or 2, 3 or 4 byte Unicode.
+        std::string getFirstCharacter(const std::string& _string, bool _toUpper = true);
         size_t nextCursor(const std::string& _string, const size_t _cursor);
         size_t prevCursor(const std::string& _string, const size_t _cursor);
         size_t moveCursor(const std::string& _string, const size_t _cursor, const int _amount);

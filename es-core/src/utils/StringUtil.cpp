@@ -91,6 +91,23 @@ namespace Utils
             return result;
         }
 
+        std::string getFirstCharacter(const std::string& _string, bool _toUpper)
+        {
+            std::string firstChar;
+            unsigned char checkCharType = _string.front();
+
+            if (checkCharType <= 0x7F) // Normal UTF-8 ASCII character.
+                (_toUpper) ? firstChar = toupper(_string.front()) : firstChar = _string.front();
+            else if (checkCharType >= 0xF0) // Four-byte Unicode character.
+                firstChar = _string.substr(0, 4);
+            else if (checkCharType >= 0xE0) // Three-byte Unicode character.
+                firstChar = _string.substr(0, 3);
+            else if (checkCharType >= 0xC0) // Two-byte Unicode character.
+                firstChar = _string.substr(0, 2);
+
+            return firstChar;
+        }
+
         size_t nextCursor(const std::string& _string, const size_t _cursor)
         {
             size_t result = _cursor;
