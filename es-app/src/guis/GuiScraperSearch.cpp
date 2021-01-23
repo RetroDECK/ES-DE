@@ -201,6 +201,10 @@ void GuiScraperSearch::onSizeChanged()
     // Make description text wrap at edge of container.
     mResultDesc->setSize(mDescContainer->getSize().x(), 0);
 
+    // Set the width of mResultName to the cell width so that text abbreviation will work correctly.
+    Vector2f resultNameSize = mResultName->getSize();
+    mResultName->setSize(mGrid.getColWidth(3), resultNameSize.y());
+
     mGrid.onSizeChanged();
     mBusyAnim.setSize(mSize);
 }
@@ -256,7 +260,7 @@ void GuiScraperSearch::updateViewStyle()
     // Add them back depending on search type.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
         // Show name.
-        mGrid.setEntry(mResultName, Vector2i(1, 0), false, true, Vector2i(2, 1),
+        mGrid.setEntry(mResultName, Vector2i(1, 0), false, false, Vector2i(2, 1),
                 GridFlags::BORDER_TOP);
 
         // Need a border on the bottom left.
@@ -410,20 +414,8 @@ void GuiScraperSearch::updateInfoPane()
 
     if (i != -1 && static_cast<int>(mScraperResults.size() > i)) {
         ScraperSearchResult& res = mScraperResults.at(i);
-        std::string formattedName;
 
-        // Hack to make the game name align better with the image when using automatic mode.
-        mSearchType == ALWAYS_ACCEPT_FIRST_RESULT ?
-                formattedName = "  " + Utils::String::toUpper(res.mdl.get("name")) :
-                formattedName = Utils::String::toUpper(res.mdl.get("name"));
-
-        // If the game name is too long, cut it down. This does not affect the value that
-        // is actually scraped.
-        if (formattedName.size() > 40)
-            formattedName = formattedName.erase(40, formattedName.size()-40) + "...";
-
-        mResultName->setText(formattedName);
-
+        mResultName->setText(Utils::String::toUpper(res.mdl.get("name")));
         mResultDesc->setText(Utils::String::toUpper(res.mdl.get("desc")));
         mDescContainer->reset();
 
