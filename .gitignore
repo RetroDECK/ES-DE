@@ -28,6 +28,9 @@ emulationstation
 EmulationStation
 EmulationStation.exe
 
+# Core dump
+emulationstation.core
+
 # Profiling data
 gmon.out
 
