@@ -411,7 +411,6 @@ void VideoVlcComponent::startVideo()
                                 !mScreensaverMode) ||
                                 (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
                                 mScreensaverMode)) {
-                            LOG(LogError) << "startVideo 6A";
                             libvlc_audio_set_volume(mMediaPlayer, 0);
                         }
                         else {
