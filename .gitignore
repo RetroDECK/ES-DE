@@ -1,40 +1,34 @@
-# Compiled Object files
-*.slo
-*.lo
+# Object files
 *.o
+*.lo
+*.slo
 
-# Compiled Dynamic libraries
+# Shared libraries
 *.so
 *.dylib
-
-# Windows Dynamic-link libraries
 *.[dD][lL][lL]
 
-# Compiled Static libraries
-*.lai
-*.la
+# Static libraries
 *.a
+*.la
+*.lai
+*.lib
 
 # Dependency makefiles
 *.d
-
-# MSVC-specific
-*.lib
-EmulationStation.ilk
-EmulationStation.pdb
 
 # Compiled executable
 emulationstation
 EmulationStation
 EmulationStation.exe
 
-# Core dump
+# Core dumps
 emulationstation.core
 
 # Profiling data
 gmon.out
 
-# build directory
+# Build directories
 build
 Debug
 Release
@@ -62,12 +56,16 @@ TODO.md
 # macOS
 .DS_Store
 
+# MSVC
+EmulationStation.ilk
+EmulationStation.pdb
+
 # Eclipse
 .cproject
 .project
 .settings/
 
-# Clion
+# CLion
 .idea/
 CPackConfig.cmake
 CPackSourceConfig.cmake
