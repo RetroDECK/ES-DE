@@ -40,21 +40,26 @@ SliderComponent::SliderComponent(
 
 bool SliderComponent::input(InputConfig* config, Input input)
 {
-    if (config->isMappedLike("left", input)) {
-        if (input.value)
-            setValue(mValue - mSingleIncrement);
+    if (input.value != 0) {
+        if (config->isMappedLike("left", input)) {
+            if (input.value)
+                setValue(mValue - mSingleIncrement);
 
-        mMoveRate = input.value ? -mSingleIncrement : 0;
-        mMoveAccumulator = -MOVE_REPEAT_DELAY;
-        return true;
+            mMoveRate = input.value ? -mSingleIncrement : 0;
+            mMoveAccumulator = -MOVE_REPEAT_DELAY;
+            return true;
+        }
+        if (config->isMappedLike("right", input)) {
+            if (input.value)
+                setValue(mValue + mSingleIncrement);
+
+            mMoveRate = input.value ? mSingleIncrement : 0;
+            mMoveAccumulator = -MOVE_REPEAT_DELAY;
+            return true;
+        }
     }
-    if (config->isMappedLike("right", input)) {
-        if (input.value)
-            setValue(mValue + mSingleIncrement);
-
-        mMoveRate = input.value ? mSingleIncrement : 0;
-        mMoveAccumulator = -MOVE_REPEAT_DELAY;
-        return true;
+    else {
+        mMoveRate = 0;
     }
 
     return GuiComponent::input(config, input);
