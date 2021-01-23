@@ -381,24 +381,49 @@ void VideoVlcComponent::startVideo()
 
                     libvlc_media_player_play(mMediaPlayer);
 
-                    if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
-                            !mScreensaverMode) ||
-                            (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
-                            mScreensaverMode)) {
-                        libvlc_audio_set_volume(mMediaPlayer, 0);
-                    }
-                    else {
-                        libvlc_audio_set_mute(mMediaPlayer, 0);
-                        libvlc_audio_set_volume(mMediaPlayer,
-                                Settings::getInstance()->getInt("SoundVolumeVideos"));
+                    // Calculate pillarbox/letterbox sizes.
+                    calculateBlackRectangle();
+
+                    libvlc_state_t state;
+                    state = libvlc_media_player_get_state(mMediaPlayer);
+                    if (state != libvlc_Playing) {
+                        // Wait for a maximum of 100 ms for the status of the video to change
+                        // to libvlc_Playing as there would otherwise be a brief flicker before
+                        // the video starts to play. This is also required to prevent the
+                        // application from crashing under some circumstances as changing the
+                        // video player audio volume is apparently not properly handled by libVLC.
+                        // This maximum time is quite excessive as this step should normally
+                        // be completed in 4 - 16 ms or so even on slower machines.
+                        for (int i = 0; i < 50; i++) {
+                            state = libvlc_media_player_get_state(mMediaPlayer);
+                            if (state == libvlc_Playing) {
+                                // This additional delay is needed to prevent some kind of race
+                                // condition in libVLC which would otherwise crash the application.
+                                SDL_Delay(2);
+                                break;
+                            }
+                            SDL_Delay(2);
+                        };
                     }
 
+                    if (state == libvlc_Playing) {
+                        if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
+                                !mScreensaverMode) ||
+                                (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
+                                mScreensaverMode)) {
+                            LOG(LogError) << "startVideo 6A";
+                            libvlc_audio_set_volume(mMediaPlayer, 0);
+                        }
+                        else {
+                            if (libvlc_audio_get_mute(mMediaPlayer) == 1)
+                                libvlc_audio_set_mute(mMediaPlayer, 0);
+                            libvlc_audio_set_volume(mMediaPlayer,
+                                    Settings::getInstance()->getInt("SoundVolumeVideos"));
+                        }
+                    }
                     // Update the playing state.
                     mIsPlaying = true;
                     mFadeIn = 0.0f;
-                }
-                if (mIsPlaying) {
-                    calculateBlackRectangle();
                 }
             }
         }
