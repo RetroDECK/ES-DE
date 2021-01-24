@@ -165,7 +165,17 @@ bool parseArgs(int argc, char* argv[])
             i++; // Skip the argument value.
             continue;
         }
-        if (strcmp(argv[i], "--resolution") == 0) {
+        if (strcmp(argv[i], "--display") == 0) {
+            if (i >= argc - 1 || atoi(argv[i + 1]) < 1 || atoi(argv[i + 1]) > 4) {
+                std::cerr << "Error: Invalid display index supplied.\n";
+                return false;
+            }
+            int DisplayIndex = atoi(argv[i + 1]);
+            i++;
+            Settings::getInstance()->setInt("DisplayIndex", DisplayIndex);
+            Settings::getInstance()->saveFile();
+        }
+        else if (strcmp(argv[i], "--resolution") == 0) {
             if (i >= argc - 2) {
                 std::cerr << "Error: Invalid resolution values supplied.\n";
                 return false;
@@ -280,6 +290,7 @@ bool parseArgs(int argc, char* argv[])
 "Usage: emulationstation [options]\n"
 "EmulationStation Desktop Edition, Emulator Front-end\n\n"
 "Options:\n"
+"  --display [index]               Display/monitor to use (1, 2, 3 or 4)\n"
 "  --resolution [width] [height]   Application resolution\n"
 #if defined(__unix__)
 "  --windowed                      Windowed mode, should be combined with --resolution\n"

@@ -1098,16 +1098,17 @@ Here is such an example:
 
 You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User guide](USERGUIDE.md#input-device-configuration).
 
-If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the `--force-input-config` command line argument.
+If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the `--force-input-config` command line option.
 
 
-## Command line arguments
+## Command line options
 
 You can use **--help** or **-h** to view the list of command line options, as shown here.
 
 ### Unix
 
 ```
+--display [index]               Display/monitor to use (1, 2, 3 or 4)
 --resolution [width] [height]   Application resolution
 --windowed                      Windowed mode, should be combined with --resolution
 --fullscreen-normal             Normal fullscreen mode
@@ -1133,6 +1134,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 ### macOS and Windows
 
 ```
+--display [index]               Display/monitor to use (1, 2, 3 or 4)
 --resolution [width] [height]   Application resolution
 --vsync [1/on or 0/off]         Turn VSync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping

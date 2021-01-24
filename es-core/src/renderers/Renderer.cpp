@@ -87,16 +87,24 @@ namespace Renderer
 
         initialCursorState = (SDL_ShowCursor(0) != 0);
 
-        int displayIndex = 0;
-        int availableDisplays = SDL_GetNumVideoDisplays();
-
-        if (displayIndex > availableDisplays - 1) {
-            LOG(LogWarning) << "Requested display index " << std::to_string(displayIndex + 1) <<
-                    " does not exist, changing to index 1";
+        int displayIndex = Settings::getInstance()->getInt("DisplayIndex");
+        // Check that an invalid value has not been manually entered in the es_settings.cfg file.
+        if (displayIndex != 1 && displayIndex != 2 && displayIndex != 3 && displayIndex != 4) {
+            Settings::getInstance()->setInt("DisplayIndex", 1);
             displayIndex = 0;
         }
         else {
-            LOG(LogInfo) << "Using display index: " << std::to_string(displayIndex + 1);
+            displayIndex--;
+        }
+
+        int availableDisplays = SDL_GetNumVideoDisplays();
+        if (displayIndex > availableDisplays - 1) {
+            LOG(LogWarning) << "Requested display " << std::to_string(displayIndex + 1) <<
+                    " does not exist, changing to display 1";
+            displayIndex = 0;
+        }
+        else {
+            LOG(LogInfo) << "Using display: " << std::to_string(displayIndex + 1);
         }
 
         SDL_DisplayMode displayMode;
@@ -154,8 +162,8 @@ namespace Renderer
         // For Windows, always set the mode to windowed, as full screen mode seems to
         // behave quite erratic. There may be a proper fix for this, but for now windowed
         // mode seems to behave well and it's almost completely seamless, especially with
-        // a hidden taskbar. As well, setting SDL_WINDOW_BORDERLESS introduces issues as
-        // well so unfortunately this needs to be avoided.
+        // a hidden taskbar. As well, setting SDL_WINDOW_BORDERLESS introduces issues too
+        // so unfortunately this needs to be avoided.
         windowFlags = getWindowFlags();
         #elif defined(__APPLE__)
         // This seems to be the only full window mode that somehow works on macOS as a real

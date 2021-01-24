@@ -191,6 +191,7 @@ void Settings::setDefaults()
     #else
     mIntMap["MaxVRAM"] = { 256, 256 };
     #endif
+    mIntMap["DisplayIndex"] = { 1, 1 };
     #if defined (__unix__)
     mStringMap["FullscreenMode"] = { "normal", "normal" };
     #endif

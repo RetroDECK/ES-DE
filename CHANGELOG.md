@@ -22,7 +22,8 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added support for Windows, macOS, FreeBSD, NetBSD and OpenBSD
 * New default theme rbsimple-DE bundled with the software (this theme is largely based on recalbox-multi by the Recalbox community)
 * Added extensive es_systems.cfg templates for Unix, macOS and Windows that are automatically installed on first application startup
-* Full navigation sound support, configurable per theme with a fallback to the built-in sounds if there is no theme support
+* Added full navigation sound support, configurable per theme with a fallback to the built-in sounds if there is no theme support
+* Added multi-monitor support by giving the option to define on which display to run ES-DE
 * Improved input device configuration and default keyboard mappings are now applied if the keyboard has not been configured by the user
 * Reorganization and general overhaul of the menu system, hopefully making it more intuitive to navigate and easier to understand the menu entries
 * New game media file logic using a media directory with files matching the ROM names instead of explicitly pointing to the media files from the gamelist.xml files
