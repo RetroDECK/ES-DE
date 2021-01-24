@@ -87,21 +87,32 @@ namespace Renderer
 
         initialCursorState = (SDL_ShowCursor(0) != 0);
 
+        int displayIndex = 0;
+        int availableDisplays = SDL_GetNumVideoDisplays();
+
+        if (displayIndex > availableDisplays - 1) {
+            LOG(LogWarning) << "Requested display index " << std::to_string(displayIndex + 1) <<
+                    " does not exist, changing to index 1";
+            displayIndex = 0;
+        }
+        else {
+            LOG(LogInfo) << "Using display index: " << std::to_string(displayIndex + 1);
+        }
+
         SDL_DisplayMode displayMode;
-        SDL_GetDesktopDisplayMode(0, &displayMode);
+        SDL_GetDesktopDisplayMode(displayIndex, &displayMode);
 
         #if defined (_WIN64)
         // Tell Windows that we're DPI aware so that we can set a physical resolution and
         // avoid any automatic DPI scaling.
-        if (SetProcessDPIAware()) {
-            HDC screen = GetDC(nullptr);
-            auto screenWidth = GetDeviceCaps(screen, HORZRES);
-            auto screenHeight = GetDeviceCaps(screen, VERTRES);
-            if (screenWidth != 0 && screenHeight != 0) {
-                displayMode.w = screenWidth;
-                displayMode.h = screenHeight;
-            }
-        }
+        SetProcessDPIAware();
+        // We need to set the resolution based on the actual display bounds as the numbers
+        // returned by SDL_GetDesktopDisplayMode are calculated based on DPI scaling and
+        // therefore do not necessarily reflect the physical display resolution.
+        SDL_Rect displayBounds;
+        SDL_GetDisplayBounds(displayIndex, &displayBounds);
+        displayMode.w = displayBounds.w;
+        displayMode.h = displayBounds.h;
         #endif
 
         windowWidth = Settings::getInstance()->getInt("WindowWidth") ?
@@ -122,8 +133,8 @@ namespace Renderer
         screenHeightModifier = static_cast<float>(screenHeight) / 1080.0f;
         screenWidthModifier = static_cast<float>(screenWidth) / 1920.0f;
 
-        // Prevent ES window from minimizing when switching windows (when launching
-        // games or when manually switching windows using task switcher).
+        // Prevent the application window from minimizing when switching windows (when launching
+        // games or when manually switching windows using the task switcher).
         SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
         #if defined(__APPLE__) || defined(__unix__)
@@ -143,8 +154,11 @@ namespace Renderer
         // For Windows, always set the mode to windowed, as full screen mode seems to
         // behave quite erratic. There may be a proper fix for this, but for now windowed
         // mode seems to behave well and it's almost completely seamless, especially with
-        // a hidden taskbar.
-        windowFlags = getWindowFlags();
+        // a hidden taskbar. If filling the whole screen, then remove the window border.
+        if (windowWidth < displayMode.w || windowHeight < displayMode.h)
+            windowFlags = getWindowFlags();
+        else
+            windowFlags = SDL_WINDOW_BORDERLESS | getWindowFlags();
         #elif defined(__APPLE__)
         // This seems to be the only full window mode that somehow works on macOS as a real
         // fullscreen mode will do lots of weird stuff like preventing window switching
@@ -179,8 +193,15 @@ namespace Renderer
         }
         #endif
 
-        if ((sdlWindow = SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED,
-                SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, windowFlags)) == nullptr) {
+        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x" <<
+                std::to_string(displayMode.h);
+        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x" <<
+                std::to_string(windowHeight);
+
+        if ((sdlWindow = SDL_CreateWindow("EmulationStation",
+                SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
+                SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
+                windowWidth, windowHeight, windowFlags)) == nullptr) {
             LOG(LogError) << "Couldn't create SDL window. " << SDL_GetError();
             return false;
         }
