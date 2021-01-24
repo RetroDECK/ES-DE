@@ -664,7 +664,7 @@ void GuiMenu::openOtherSettings()
 
     // Display/monitor.
     auto display_index = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "DISPLAY/MONITOR", false);
+            (mWindow, getHelpStyle(), "DISPLAY/MONITOR INDEX", false);
     std::vector<std::string> displayIndex;
     displayIndex.push_back("1");
     displayIndex.push_back("2");
@@ -673,7 +673,7 @@ void GuiMenu::openOtherSettings()
     for (auto it = displayIndex.cbegin(); it != displayIndex.cend(); it++)
         display_index->add(*it, *it,
                 Settings::getInstance()->getInt("DisplayIndex") == atoi((*it).c_str()));
-    s->addWithLabel("DISPLAY/MONITOR (REQUIRES RESTART)", display_index);
+    s->addWithLabel("DISPLAY/MONITOR INDEX (REQUIRES RESTART)", display_index);
     s->addSaveFunc([display_index, s] {
         if (atoi(display_index->getSelected().c_str()) !=
                 Settings::getInstance()->getInt("DisplayIndex")) {

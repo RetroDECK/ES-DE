@@ -948,9 +948,9 @@ These are mostly technical settings.
 
 The amount of video RAM to use for the application. Defaults to 256 MiB which seems to work fine most of the time. The allowed range is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or edit the es_settings.cfg file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
-**Display/monitor (requires restart)**
+**Display/monitor index (requires restart)**
 
-This option sets the display to use for ES-DE for multi-monitor setups. The possible values are the monitor index numbers 1, 2, 3 or 4. If a value is set here for a display that does not actually exist, then ES-DE will set it to 1 upon startup. Index 1 is the primary display of the computer. It's also possible to override the setting by passing the --display command line argument. Doing so will also overwrite the display setting in es_settings.cfg. Be aware that the Display/monitor option only changes the display used by ES-DE; the emulators need to be configured separately (which can easily be done globally if using RetroArch).
+This option sets the display to use for ES-DE for multi-monitor setups. The possible values are the monitor index numbers 1, 2, 3 or 4. If a value is set here for a display that does not actually exist, then ES-DE will set it to 1 upon startup. Index 1 is the primary display of the computer. It's also possible to override the setting by passing the --display command line argument. Doing so will also overwrite the display index setting in es_settings.cfg. Be aware that the Display/monitor index option only changes the display used by ES-DE; the emulators need to be configured separately (which can easily be done globally if using RetroArch).
 
 **Fullscreen mode (requires restart)** _(Unix only)_
 
