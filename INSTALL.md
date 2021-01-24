@@ -1108,69 +1108,47 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 ### Unix
 
 ```
---resolution [width] [height]   Try to force a particular resolution
---gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
---show-hidden-files             Show hidden files and folders
---show-hidden-games             Show hidden games
---no-splash                     Don't show the splash screen
---debug                         Print debug information
+--resolution [width] [height]   Application resolution
 --windowed                      Windowed mode, should be combined with --resolution
 --fullscreen-normal             Normal fullscreen mode
 --fullscreen-borderless         Borderless fullscreen mode (always on top)
---vsync [1/on or 0/off]         Turn vsync on or off (default is on)
+--vsync [1/on or 0/off]         Turn VSync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
 --gpu-statistics                Display framerate and VRAM usage overlay
---force-full                    Force the UI mode to Full
---force-kiosk                   Force the UI mode to Kiosk
---force-kid                     Force the UI mode to Kid
---force-input-config            Force configuration of input device
---home [path]                   Directory to use as home path
---version, -v                   Displays version information
---help, -h                      Summon a sentient, angry tuba
-```
-
-### macOS
-
-```
---resolution [width] [height]   Try to force a particular resolution
+--no-splash                     Don't show the splash screen during startup
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---no-splash                     Don't show the splash screen
---debug                         Print debug information
---vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kiosk                   Force the UI mode to Kiosk
 --force-kid                     Force the UI mode to Kid
 --force-input-config            Force configuration of input device
 --home [path]                   Directory to use as home path
---version, -v                   Displays version information
+--debug                         Print debug information
+--version, -v                   Display version information
 --help, -h                      Summon a sentient, angry tuba
 ```
 
-### Windows
+### macOS and Windows
 
 ```
---resolution [width] [height]   Try to force a particular resolution
+--resolution [width] [height]   Application resolution
+--vsync [1/on or 0/off]         Turn VSync on or off (default is on)
+--max-vram [size]               Max VRAM to use (in mebibytes) before swapping
+--gpu-statistics                Display framerate and VRAM usage overlay
+--no-splash                     Don't show the splash screen during startup
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
---no-splash                     Don't show the splash screen
---debug                         Print debug information
---vsync [1/on or 0/off]         Turn vsync on or off (default is on)
---max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Display framerate and VRAM usage overlay
 --force-full                    Force the UI mode to Full
 --force-kiosk                   Force the UI mode to Kiosk
 --force-kid                     Force the UI mode to Kid
 --force-input-config            Force configuration of input device
 --home [path]                   Directory to use as home path
---version, -v                   Displays version information
+--debug                         Print debug information
+--version, -v                   Display version information
 --help, -h                      Summon a sentient, angry tuba
 ```
 

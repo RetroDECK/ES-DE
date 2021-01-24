@@ -162,7 +162,7 @@ bool parseArgs(int argc, char* argv[])
     for (int i = 1; i < argc; i++) {
         // Skip past --home flag as we already processed it.
         if (strcmp(argv[i], "--home") == 0) {
-            i++;
+            i++; // Skip the argument value.
             continue;
         }
         if (strcmp(argv[i], "--resolution") == 0) {
@@ -170,10 +170,9 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid resolution values supplied.\n";
                 return false;
             }
-
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
-            i += 2; // Skip the argument value.
+            i += 2;
             Settings::getInstance()->setInt("WindowWidth", width);
             Settings::getInstance()->setInt("WindowHeight", height);
         }
@@ -182,10 +181,9 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid screensize values supplied.\n";
                 return false;
             }
-
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
-            i += 2; // Skip the argument value.
+            i += 2;
             Settings::getInstance()->setInt("ScreenWidth", width);
             Settings::getInstance()->setInt("ScreenHeight", height);
         }
@@ -194,10 +192,9 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid screenoffset values supplied.\n";
                 return false;
             }
-
             int x = atoi(argv[i + 1]);
             int y = atoi(argv[i + 2]);
-            i += 2; // Skip the argument value.
+            i += 2;
             Settings::getInstance()->setInt("ScreenOffsetX", x);
             Settings::getInstance()->setInt("ScreenOffsetY", y);
         }
@@ -206,10 +203,28 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid screenrotate value supplied.\n";
                 return false;
             }
-
             int rotate = atoi(argv[i + 1]);
-            i++; // Skip the argument value.
+            i++;
             Settings::getInstance()->setInt("ScreenRotate", rotate);
+        }
+        // On Unix, enable settings for the fullscreen mode.
+        // On macOS and Windows only windowed mode is supported.
+        #if defined(__unix__)
+        else if (strcmp(argv[i], "--windowed") == 0) {
+            Settings::getInstance()->setBool("Windowed", true);
+        }
+        else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
+            Settings::getInstance()->setString("FullscreenMode", "normal");
+        }
+        else if (strcmp(argv[i], "--fullscreen-borderless") == 0) {
+            Settings::getInstance()->setString("FullscreenMode", "borderless");
+        }
+        #endif
+        else if (strcmp(argv[i], "--vsync") == 0) {
+            bool vsync = (strcmp(argv[i + 1], "on") == 0 ||
+                    strcmp(argv[i + 1], "1") == 0) ? true : false;
+            Settings::getInstance()->setBool("VSync", vsync);
+            i++;
         }
         else if (strcmp(argv[i], "--max-vram") == 0) {
             if (i >= argc - 1) {
@@ -218,7 +233,13 @@ bool parseArgs(int argc, char* argv[])
             }
             int maxVRAM = atoi(argv[i + 1]);
             Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
-            i++; // Skip the argument value.
+            i++;
+        }
+        else if (strcmp(argv[i], "--gpu-statistics") == 0) {
+            Settings::getInstance()->setBool("DisplayGPUStatistics", "true");
+        }
+        else if (strcmp(argv[i], "--no-splash") == 0) {
+            Settings::getInstance()->setBool("SplashScreen", false);
         }
         else if (strcmp(argv[i], "--gamelist-only") == 0) {
             Settings::getInstance()->setBool("ParseGamelistOnly", true);
@@ -231,35 +252,6 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--show-hidden-games") == 0) {
             Settings::getInstance()->setBool("ShowHiddenGames", true);
-        }
-        else if (strcmp(argv[i], "--no-splash") == 0) {
-            Settings::getInstance()->setBool("SplashScreen", false);
-        }
-        else if (strcmp(argv[i], "--debug") == 0) {
-            Settings::getInstance()->setBool("Debug", true);
-            Log::setReportingLevel(LogDebug);
-        }
-        // On Unix, enable settings for the fullscreen mode.
-        // On macOS and Windows only windowed mode is supported.
-        #if defined(__unix__)
-        else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
-            Settings::getInstance()->setString("FullscreenMode", "normal");
-        }
-        else if (strcmp(argv[i], "--fullscreen-borderless") == 0) {
-            Settings::getInstance()->setString("FullscreenMode", "borderless");
-        }
-        else if (strcmp(argv[i], "--windowed") == 0) {
-            Settings::getInstance()->setBool("Windowed", true);
-        }
-        #endif
-        else if (strcmp(argv[i], "--vsync") == 0) {
-            bool vsync = (strcmp(argv[i + 1], "on") == 0 ||
-                    strcmp(argv[i + 1], "1") == 0) ? true : false;
-            Settings::getInstance()->setBool("VSync", vsync);
-            i++; // Skip vsync value.
-        }
-        else if (strcmp(argv[i], "--gpu-statistics") == 0) {
-            Settings::getInstance()->setBool("DisplayGPUStatistics", "true");
         }
         else if (strcmp(argv[i], "--force-full") == 0) {
             Settings::getInstance()->setString("UIMode", "full");
@@ -274,6 +266,10 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--force-input-config") == 0) {
             forceInputConfig = true;
         }
+        else if (strcmp(argv[i], "--debug") == 0) {
+            Settings::getInstance()->setBool("Debug", true);
+            Log::setReportingLevel(LogDebug);
+        }
         else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0) {
             std::cout <<
             "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << "\n";
@@ -284,26 +280,26 @@ bool parseArgs(int argc, char* argv[])
 "Usage: emulationstation [options]\n"
 "EmulationStation Desktop Edition, Emulator Front-end\n\n"
 "Options:\n"
-"  --resolution [width] [height]   Try to force a particular resolution\n"
-"  --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
-"  --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
-"  --show-hidden-files             Show hidden files and folders\n"
-"  --show-hidden-games             Show hidden games\n"
-"  --no-splash                     Don't show the splash screen\n"
-"  --debug                         Print debug information\n"
+"  --resolution [width] [height]   Application resolution\n"
 #if defined(__unix__)
 "  --windowed                      Windowed mode, should be combined with --resolution\n"
 "  --fullscreen-normal             Normal fullscreen mode\n"
 "  --fullscreen-borderless         Borderless fullscreen mode (always on top)\n"
 #endif
-"  --vsync [1/on or 0/off]         Turn vsync on or off (default is on)\n"
+"  --vsync [1/on or 0/off]         Turn VSync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
 "  --gpu-statistics                Display framerate and VRAM usage overlay\n"
+"  --no-splash                     Don't show the splash screen during startup\n"
+"  --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
+"  --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
+"  --show-hidden-files             Show hidden files and folders\n"
+"  --show-hidden-games             Show hidden games\n"
 "  --force-full                    Force the UI mode to Full\n"
 "  --force-kiosk                   Force the UI mode to Kiosk\n"
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-input-config            Force configuration of input device\n"
 "  --home [path]                   Directory to use as home path\n"
+"  --debug                         Print debug information\n"
 "  --version, -v                   Display version information\n"
 "  --help, -h                      Summon a sentient, angry tuba\n";
             return false; // Exit after printing help.
