@@ -154,11 +154,9 @@ namespace Renderer
         // For Windows, always set the mode to windowed, as full screen mode seems to
         // behave quite erratic. There may be a proper fix for this, but for now windowed
         // mode seems to behave well and it's almost completely seamless, especially with
-        // a hidden taskbar. If filling the whole screen, then remove the window border.
-        if (windowWidth < displayMode.w || windowHeight < displayMode.h)
-            windowFlags = getWindowFlags();
-        else
-            windowFlags = SDL_WINDOW_BORDERLESS | getWindowFlags();
+        // a hidden taskbar. As well, setting SDL_WINDOW_BORDERLESS introduces issues as
+        // well so unfortunately this needs to be avoided.
+        windowFlags = getWindowFlags();
         #elif defined(__APPLE__)
         // This seems to be the only full window mode that somehow works on macOS as a real
         // fullscreen mode will do lots of weird stuff like preventing window switching
