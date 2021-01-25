@@ -113,7 +113,7 @@ namespace Utils
             size_t result = _cursor;
 
             while (result < _string.length()) {
-                ++result;
+                result++;
 
                 // Break if current character is not 10xxxxxx
                 if ((_string[result] & 0xC0) != 0x80)
@@ -143,11 +143,11 @@ namespace Utils
             size_t result = _cursor;
 
             if (_amount > 0) {
-                for (int i = 0; i < _amount; ++i)
+                for (int i = 0; i < _amount; i++)
                     result = nextCursor(_string, result);
             }
             else if (_amount < 0) {
-                for (int i = _amount; i < 0; ++i)
+                for (int i = _amount; i < 0; i++)
                     result = prevCursor(_string, result);
             }
 
@@ -158,7 +158,7 @@ namespace Utils
         {
             std::string string;
 
-            for (size_t i = 0; i < _string.length(); ++i)
+            for (size_t i = 0; i < _string.length(); i++)
                 string += static_cast<char>(tolower(_string[i]));
 
             return string;
@@ -168,7 +168,7 @@ namespace Utils
         {
             std::string string;
 
-            for (size_t i = 0; i < _string.length(); ++i)
+            for (size_t i = 0; i < _string.length(); i++)
                 string += static_cast<char>(toupper(_string[i]));
 
             return string;
@@ -292,7 +292,7 @@ namespace Utils
                 std::sort(_vector.begin(), _vector.end());
 
             for (std::vector<std::string>::const_iterator it = _vector.cbegin();
-                    it != _vector.cend(); ++it)
+                    it != _vector.cend(); it++)
                 string += (string.length() ? "," : "") + (*it);
 
             return string;
@@ -326,7 +326,7 @@ namespace Utils
         {
             std::string buffer = _input;
 
-            for (size_t i = 0; i < _input.size(); ++i)
+            for (size_t i = 0; i < _input.size(); i++)
                 buffer[i] = _input[i] ^ _key[i];
 
             return buffer;

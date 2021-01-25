@@ -256,7 +256,7 @@ void updateGamelist(SystemData* system)
         std::vector<FileData*> files = rootFolder->getFilesRecursive(GAME | FOLDER);
         // Iterate through all files, checking if they're already in the XML file.
         for (std::vector<FileData*>::const_iterator fit = files.cbegin();
-                fit != files.cend(); ++fit) {
+                fit != files.cend(); fit++) {
             const std::string tag = ((*fit)->getType() == GAME) ? "game" : "folder";
 
             // Do not touch if it wasn't changed and is not flagged for deletion.
@@ -282,7 +282,7 @@ void updateGamelist(SystemData* system)
                     // Found it
                     root.remove_child(fileNode);
                     if ((*fit)->getDeletionFlag())
-                        ++numUpdated;
+                        numUpdated++;
                     break;
                 }
             }
@@ -291,7 +291,7 @@ void updateGamelist(SystemData* system)
             if (!(*fit)->getDeletionFlag()) {
                 addFileDataNode(root, *fit, tag, system);
                 (*fit)->metadata.resetChangedFlag();
-                ++numUpdated;
+                numUpdated++;
             }
         }
 

@@ -38,10 +38,10 @@ namespace Scripting
             scriptDirList.push_back(scriptDir);
 
         for (std::list<std::string>::const_iterator dirIt = scriptDirList.cbegin();
-                dirIt != scriptDirList.cend(); ++dirIt) {
+                dirIt != scriptDirList.cend(); dirIt++) {
             std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
             for (std::list<std::string>::const_iterator it = scripts.cbegin();
-                    it != scripts.cend(); ++it) {
+                    it != scripts.cend(); it++) {
                 std::string arg1Quotation;
                 std::string arg2Quotation;
                 // Add quotation marks around the arguments as long as these are not already

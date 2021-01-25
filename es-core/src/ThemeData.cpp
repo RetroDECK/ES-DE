@@ -356,7 +356,7 @@ void ThemeData::parseVariables(const pugi::xml_node& root)
     if (!variables)
         return;
 
-    for (pugi::xml_node_iterator it = variables.begin(); it != variables.end(); ++it) {
+    for (pugi::xml_node_iterator it = variables.begin(); it != variables.end(); it++) {
         std::string key = it->name();
         std::string val = it->text().as_string();
 
@@ -632,7 +632,7 @@ std::map<std::string, ThemeSet> ThemeData::getThemeSets()
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(paths[i]);
 
         for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
-                it != dirContent.cend(); ++it) {
+                it != dirContent.cend(); it++) {
             if (Utils::FileSystem::isDirectory(*it)) {
                 ThemeSet set = {*it};
                 sets[set.getName()] = set;

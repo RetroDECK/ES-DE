@@ -136,7 +136,7 @@ void RatingComponent::updateVertices()
 //    Disabled this code as it caused subtle but strange rendering errors
 //    where the icons changed size slightly when changing rating scores.
 //    // Round vertices.
-//    for (int i = 0; i < 8; ++i)
+//    for (int i = 0; i < 8; i++)
 //        mVertices[i].pos.round();
 }
 
@@ -144,7 +144,7 @@ void RatingComponent::updateColors()
 {
     const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
 
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < 8; i++)
         mVertices[i].col = color;
 }
 
@@ -166,7 +166,7 @@ void RatingComponent::render(const Transform4x4f& parentTrans)
         if (mUnfilledTexture->bind()) {
             if (mUnfilledColor != mColorShift) {
                 const unsigned int color = Renderer::convertRGBAToABGR(mUnfilledColor);
-                for (int i = 0; i < 8; ++i)
+                for (int i = 0; i < 8; i++)
                     mVertices[i].col = color;
             }
 

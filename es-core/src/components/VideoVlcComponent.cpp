@@ -194,7 +194,7 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
         vertices[3] = { { mSize.x(), mSize.y() }, { 1.0f, 1.0f }, color };
 
         // Round vertices.
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; i++)
             vertices[i].pos.round();
 
         // Build a texture for the video frame.
@@ -316,7 +316,7 @@ void VideoVlcComponent::startVideo()
 
                 libvlc_media_track_t** tracks;
                 track_count = libvlc_media_tracks_get(mMedia, &tracks);
-                for (unsigned track = 0; track < track_count; ++track) {
+                for (unsigned track = 0; track < track_count; track++) {
                     if (tracks[track]->i_type == libvlc_track_video) {
                         mVideoWidth = tracks[track]->video->i_width;
                         mVideoHeight = tracks[track]->video->i_height;

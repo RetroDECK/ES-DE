@@ -321,16 +321,16 @@ void ImageComponent::updateVertices()
     updateColors();
 
     // Round vertices.
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 4; i++)
         mVertices[i].pos.round();
 
     if (mFlipX) {
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; i++)
             mVertices[i].tex[0] = px - mVertices[i].tex[0];
     }
 
     if (mFlipY) {
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; i++)
             mVertices[i].tex[1] = py - mVertices[i].tex[1];
     }
 }

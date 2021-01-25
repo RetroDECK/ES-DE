@@ -308,10 +308,10 @@ namespace Utils
 
                     if ((offset == 0) || (path[offset - 1] != '\\')) {
                         path.insert(offset, 1, '\\');
-                        ++start;
+                        start++;
                     }
                 }
-                ++invalidChar;
+                invalidChar++;
             }
             return path;
             #endif
@@ -334,7 +334,7 @@ namespace Utils
                 scan = false;
 
                 for (stringList::const_iterator it = pathList.cbegin();
-                        it != pathList.cend(); ++it) {
+                        it != pathList.cend(); it++) {
                     // Ignore empty.
                     if ((*it).empty())
                         continue;
@@ -369,7 +369,7 @@ namespace Utils
                         else
                             path = getParent(path) + "/" + resolved;
 
-                        for (++it; it != pathList.cend(); ++it)
+                        for (++it; it != pathList.cend(); it++)
                             path += (path.size() == 0) ? (*it) : ("/" + (*it));
 
                         scan = true;

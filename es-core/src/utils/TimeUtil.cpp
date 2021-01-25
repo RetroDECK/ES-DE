@@ -94,7 +94,7 @@ namespace Utils
 
             while (*f && (parsedChars < _string.length())) {
                 if (*f == '%') {
-                    ++f;
+                    f++;
 
                     switch (*f++) {
                     // The year [1970,xxxx]
@@ -165,8 +165,8 @@ namespace Utils
                     }
                 }
                 else {
-                    ++s;
-                    ++f;
+                    s++;
+                    f++;
                 }
             }
             return mktime(&timeStruct);
@@ -186,7 +186,7 @@ namespace Utils
 
             while (*f) {
                 if (*f == '%') {
-                    ++f;
+                    f++;
 
                     switch (*f++) {
                     // The year, including the century (1900)
