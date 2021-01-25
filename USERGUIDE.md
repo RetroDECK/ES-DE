@@ -706,7 +706,7 @@ Currently only English or World are supported, not really significant at the mom
 
 **Overwrite files and data**
 
-Affects both overwriting of metadata as well as actual game media files on the filesystem.
+Affects both overwriting of metadata as well as actual game media files on the filesystem. Even with this option disabled, metadata entries which are set to their default values will of course be populated by the scraper. In other words, this option only affects overwriting of previously scraped data. The only exception is game names for newly added games (which are based on the physical filenames of the game files) which will not be overwritten unless this option is enabled.
 
 **Halt on invalid media files**
 
