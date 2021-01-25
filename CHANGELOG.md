@@ -65,6 +65,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added support for jumping to the start and end of gamelists and menus using the controller trigger buttons (or equivalent keyboard mappings)
 * Many additional quality of life improvements and removal of GUI inconsistencies
 * Replaced the on and off button icons with new graphics
+* Replaced the checked checkmark icon with new graphics
 * Made ScrollableContainer (used for the gamelist game descriptions) fade in as the text position is reset
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
 * Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
