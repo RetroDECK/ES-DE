@@ -85,10 +85,14 @@ GuiScraperSearch::GuiScraperSearch(
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>(mWindow);
     mMD_ReleaseDate->setColor(mdColor);
     mMD_ReleaseDate->setUppercase(true);
-    mMD_Developer = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
-    mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
-    mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
-    mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
+    mMD_Developer = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
+            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
+            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
+            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
+            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
     mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
     if (Settings::getInstance()->getString("Scraper") != "thegamesdb")
@@ -96,17 +100,17 @@ GuiScraperSearch::GuiScraperSearch(
 
     if (mScrapeRatings)
         mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-                (mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
+                (mWindow, "RATING: ", font, mdLblColor), mMD_Rating, false));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "RELEASED:", font, mdLblColor), mMD_ReleaseDate));
+            (mWindow, "RELEASED: ", font, mdLblColor), mMD_ReleaseDate));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "DEVELOPER:", font, mdLblColor), mMD_Developer));
+            (mWindow, "DEVELOPER: ", font, mdLblColor), mMD_Developer));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "PUBLISHER:", font, mdLblColor), mMD_Publisher));
+            (mWindow, "PUBLISHER: ", font, mdLblColor), mMD_Publisher));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "GENRE:", font, mdLblColor), mMD_Genre));
+            (mWindow, "GENRE: ", font, mdLblColor), mMD_Genre));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "PLAYERS:", font, mdLblColor), mMD_Players));
+            (mWindow, "PLAYERS: ", font, mdLblColor), mMD_Players));
     // If no rating is being scraped, add a filler to make sure the fonts keep the same
     // size and the GUI looks consistent.
     if (!mScrapeRatings)
