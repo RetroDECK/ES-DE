@@ -18,6 +18,8 @@ If you just want to get started as quickly as possible, simply follow these step
 6) Start ES-DE and follow the on-screen instructions to configure your controller
 7) Scrape game media for your collection and play some games!
 
+As long as ES-DE hasn't frozen, you can always press F4 to close the application.
+
 For additional details, read on below.
 
 ## Getting started
@@ -481,7 +483,25 @@ ES-DE is a game browsing frontend and does not provide any emulation by itself. 
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
-In order to use the default es_systems.cfg file, you need to make sure that the emulator binary directory is in the operating system's path. On Unix systems this is normally not an issue as a package manager has typically been used to install the emulator, and even if compiled from source there is a standardized directory structure which should have you covered. Likewise on macOS, it's assumed that the emulator is installed under the Applications folder so everything should just work. But for Windows you may need to add the emulator directory to your %PATH% variable manually (tip: open Settings from the Start menu and search for _path_).
+A general recommendation regarding installation on Linux though is to try to avoid the versions included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap or Flatpak distributions or build from source.
+
+In order to use the default es_systems.cfg file, you need to make sure that the emulator binary is in the operating system's path. On Unix systems this is normally not an issue (unless Flatpak is used) as a package manager has typically been used to install the emulator, and even if compiled from source there is a standardized directory structure which should have you covered. Likewise on macOS, it's assumed that the emulator is installed under the Applications folder so everything should just work. But for Windows you may need to add the emulator directory to your %PATH% variable manually (tip: open Settings from the Start menu and search for _path_).
+
+If installing RetroArch as Flatpak on Linux you have to work around an incredibly annoying deficiency of this type of software distribution which is that there will be no RetroArch executable directly available to run. To run RetroArch you would instead need to execute `flatpak run org.libretro.RetroArch` and to get ES-DE to work properly with this you either need to use a customized es_systems.cfg file, or create a shell script somewhere in your path that executes the Flatpak command.
+Here's an example of such a script:
+```
+#!/bin/sh
+flatpak run org.libretro.RetroArch "$@"
+```
+
+For instance on Fedora you could place the shell script in `~/bin` and name it `retroarch` and then everything will work fine.
+
+There is also a Flatpak-specific es_systems.cfg template shipped with ES-DE, but you need to manually install it if you would like to use it:
+```
+cp /usr/local/share/emulationstation/resources/templates/es_systems.cfg_unix_flatpak ~/.emulationstation/es_systems.cfg
+```
+
+The source path may differ from this example depending on which prefix was used when building ES-DE.
 
 As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL.md](INSTALL.md#es_systemscfg) for details regarding this.
 
