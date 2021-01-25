@@ -1108,14 +1108,13 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 ### Unix
 
 ```
---display [index]               Display/monitor to use (1, 2, 3 or 4)
+--display [index, 1-4]          Display/monitor to use
 --resolution [width] [height]   Application resolution
 --windowed                      Windowed mode, should be combined with --resolution
 --fullscreen-normal             Normal fullscreen mode
 --fullscreen-borderless         Borderless fullscreen mode (always on top)
 --vsync [1/on or 0/off]         Turn VSync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Display framerate and VRAM usage overlay
 --no-splash                     Don't show the splash screen during startup
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
@@ -1134,11 +1133,10 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 ### macOS and Windows
 
 ```
---display [index]               Display/monitor to use (1, 2, 3 or 4)
+--display [index, 1-4]          Display/monitor to use
 --resolution [width] [height]   Application resolution
 --vsync [1/on or 0/off]         Turn VSync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---gpu-statistics                Display framerate and VRAM usage overlay
 --no-splash                     Don't show the splash screen during startup
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
@@ -1154,9 +1152,17 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --help, -h                      Summon a sentient, angry tuba
 ```
 
-As long as ES-DE hasn't frozen, you can always press F4 to close the application.
+As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its base directory.
 
-As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES will use `~/games/emulation/.emulationstation` as its base directory.
+For the following options, the es_settings.cfg file is immediately updated/saved when passing the parameter:
+```
+--display
+--fullscreen-normal
+--fullscreen-borderless
+--max-vram
+--show-hidden-files
+--show-hidden-games
+```
 
 
 ## es_systems.cfg

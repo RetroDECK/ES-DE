@@ -49,6 +49,7 @@
 #include <time.h>
 
 bool forceInputConfig = false;
+bool settingsNeedSaving = false;
 
 enum returnCode {
     NO_LOADING_ERROR,
@@ -171,9 +172,9 @@ bool parseArgs(int argc, char* argv[])
                 return false;
             }
             int DisplayIndex = atoi(argv[i + 1]);
-            i++;
             Settings::getInstance()->setInt("DisplayIndex", DisplayIndex);
-            Settings::getInstance()->saveFile();
+            settingsNeedSaving = true;
+            i++;
         }
         else if (strcmp(argv[i], "--resolution") == 0) {
             if (i >= argc - 2) {
@@ -182,9 +183,9 @@ bool parseArgs(int argc, char* argv[])
             }
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
-            i += 2;
             Settings::getInstance()->setInt("WindowWidth", width);
             Settings::getInstance()->setInt("WindowHeight", height);
+            i += 2;
         }
         else if (strcmp(argv[i], "--screensize") == 0) {
             if (i >= argc - 2) {
@@ -193,9 +194,9 @@ bool parseArgs(int argc, char* argv[])
             }
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
-            i += 2;
             Settings::getInstance()->setInt("ScreenWidth", width);
             Settings::getInstance()->setInt("ScreenHeight", height);
+            i += 2;
         }
         else if (strcmp(argv[i], "--screenoffset") == 0) {
             if (i >= argc - 2) {
@@ -204,9 +205,9 @@ bool parseArgs(int argc, char* argv[])
             }
             int x = atoi(argv[i + 1]);
             int y = atoi(argv[i + 2]);
-            i += 2;
             Settings::getInstance()->setInt("ScreenOffsetX", x);
             Settings::getInstance()->setInt("ScreenOffsetY", y);
+            i += 2;
         }
         else if (strcmp(argv[i], "--screenrotate") == 0) {
             if (i >= argc - 1) {
@@ -214,8 +215,8 @@ bool parseArgs(int argc, char* argv[])
                 return false;
             }
             int rotate = atoi(argv[i + 1]);
-            i++;
             Settings::getInstance()->setInt("ScreenRotate", rotate);
+            i++;
         }
         // On Unix, enable settings for the fullscreen mode.
         // On macOS and Windows only windowed mode is supported.
@@ -225,9 +226,11 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
             Settings::getInstance()->setString("FullscreenMode", "normal");
+            settingsNeedSaving = true;
         }
         else if (strcmp(argv[i], "--fullscreen-borderless") == 0) {
             Settings::getInstance()->setString("FullscreenMode", "borderless");
+            settingsNeedSaving = true;
         }
         #endif
         else if (strcmp(argv[i], "--vsync") == 0) {
@@ -243,10 +246,8 @@ bool parseArgs(int argc, char* argv[])
             }
             int maxVRAM = atoi(argv[i + 1]);
             Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
+            settingsNeedSaving = true;
             i++;
-        }
-        else if (strcmp(argv[i], "--gpu-statistics") == 0) {
-            Settings::getInstance()->setBool("DisplayGPUStatistics", "true");
         }
         else if (strcmp(argv[i], "--no-splash") == 0) {
             Settings::getInstance()->setBool("SplashScreen", false);
@@ -259,9 +260,11 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--show-hidden-files") == 0) {
             Settings::getInstance()->setBool("ShowHiddenFiles", true);
+            settingsNeedSaving = true;
         }
         else if (strcmp(argv[i], "--show-hidden-games") == 0) {
             Settings::getInstance()->setBool("ShowHiddenGames", true);
+            settingsNeedSaving = true;
         }
         else if (strcmp(argv[i], "--force-full") == 0) {
             Settings::getInstance()->setString("UIMode", "full");
@@ -290,7 +293,7 @@ bool parseArgs(int argc, char* argv[])
 "Usage: emulationstation [options]\n"
 "EmulationStation Desktop Edition, Emulator Front-end\n\n"
 "Options:\n"
-"  --display [index]               Display/monitor to use (1, 2, 3 or 4)\n"
+"  --display [index, 1-4]          Display/monitor to use\n"
 "  --resolution [width] [height]   Application resolution\n"
 #if defined(__unix__)
 "  --windowed                      Windowed mode, should be combined with --resolution\n"
@@ -299,7 +302,6 @@ bool parseArgs(int argc, char* argv[])
 #endif
 "  --vsync [1/on or 0/off]         Turn VSync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
-"  --gpu-statistics                Display framerate and VRAM usage overlay\n"
 "  --no-splash                     Don't show the splash screen during startup\n"
 "  --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
 "  --ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)\n"
@@ -442,6 +444,10 @@ int main(int argc, char* argv[])
         LOG(LogInfo) << "Settings file es_settings.cfg does not exist, creating it...";
         Settings::getInstance()->saveFile();
     }
+    else if (settingsNeedSaving) {
+        LOG(LogInfo) << "Saving settings that were modified by the passed command line options...";
+        Settings::getInstance()->saveFile();
+    }
 
     Window window;
     SystemScreensaver screensaver(&window);
@@ -553,7 +559,7 @@ int main(int argc, char* argv[])
     ViewController::get()->preload();
 
     if (splashScreen && splashScreenProgress)
-        window.renderLoadingScreen("Done.");
+        window.renderLoadingScreen("Done");
 
     // Choose which GUI to open depending on if an input configuration already exists and
     // whether the flag to force the input configuration was passed from the command line.
