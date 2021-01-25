@@ -117,13 +117,13 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
 
     if (settingVRAM < 80) {
         LOG(LogWarning) << "MaxVRAM is too low at " << settingVRAM <<
-                " MiB, setting it to the minimum allowed value of 80 MiB.";
+                " MiB, setting it to the minimum allowed value of 80 MiB";
         Settings::getInstance()->setInt("MaxVRAM", 80);
         settingVRAM = 80;
     }
     else if (settingVRAM > 1024) {
         LOG(LogWarning) << "MaxVRAM is too high at " << settingVRAM <<
-                " MiB, setting it to the maximum allowed value of 1024 MiB.";
+                " MiB, setting it to the maximum allowed value of 1024 MiB";
         Settings::getInstance()->setInt("MaxVRAM", 1024);
         settingVRAM = 1024;
     }

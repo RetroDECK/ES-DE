@@ -303,7 +303,7 @@ void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& ty
 
 void Settings::saveFile()
 {
-    LOG(LogDebug) << "Settings::saveFile(): Saving Settings to file.";
+    LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.cfg";
     const std::string path = Utils::FileSystem::getHomePath() +
             "/.emulationstation/es_settings.cfg";
 
@@ -344,7 +344,7 @@ void Settings::loadFile()
     pugi::xml_parse_result result = doc.load_file(path.c_str());
     #endif
     if (!result) {
-        LOG(LogError) << "Could not parse Settings file.\n   " << result.description();
+        LOG(LogError) << "Could not parse the es_settings.cfg file\n   " << result.description();
         return;
     }
 
@@ -364,14 +364,14 @@ void Settings::loadFile()
 type Settings::getFunction(const std::string& name) \
 { \
     if (mapName.find(name) == mapName.cend()) { \
-        LOG(LogError) << "Tried to use unset setting " << name << "!"; \
+        LOG(LogError) << "Tried to use unset setting " << name; \
     } \
     return mapName[name].second; \
 } \
 type Settings::getDefaultFunction(const std::string& name) \
 { \
     if (mapName.find(name) == mapName.cend()) { \
-        LOG(LogError) << "Tried to use unset setting " << name << "!"; \
+        LOG(LogError) << "Tried to use unset setting " << name; \
     } \
     return mapName[name].first; \
 } \
