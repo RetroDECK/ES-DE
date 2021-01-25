@@ -212,6 +212,12 @@ namespace Renderer
             return false;
         }
 
+        // Create a black surface which will avoid the white screen that would otherwise flash
+        // by briefly before the splash screen is rendered when using some graphics drivers.
+        SDL_Surface* blackSurface = SDL_GetWindowSurface(sdlWindow);
+        SDL_FillRect(blackSurface, nullptr, SDL_MapRGB(blackSurface->format, 0x00, 0x00, 0x00));
+        SDL_UpdateWindowSurface(sdlWindow);
+
         LOG(LogInfo) << "Setting up OpenGL...";
 
         if (!createContext())
@@ -324,7 +330,6 @@ namespace Renderer
 
         setViewport(viewport);
         setProjection(projection);
-        swapBuffers();
 
         return true;
     }
@@ -426,7 +431,7 @@ namespace Renderer
         vertices[3] = { { _x + _wL, _y + _hL }, { 0.0f, 0.0f }, colorEnd };
 
         // Round vertices.
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; i++)
             vertices[i].pos.round();
 
         if (_opacity < 1.0) {
