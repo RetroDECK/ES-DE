@@ -521,7 +521,7 @@ Here is an overview of what's supported by ES-DE and these scrapers:
 | Media type or option     | ScreenScraper | TheGamesDB |
 | :----------------------- | :-----------: | :--------: |
 | Region (EU/JP/US/WOR)    | Yes           | No         |
-| Language                 | Yes           | No         |
+| Multi-language           | Yes           | No         |
 | Game names               | Yes           | Yes        |
 | Ratings                  | Yes           | No         |
 | Other game metadata      | Yes           | Yes        |
@@ -634,11 +634,11 @@ _Some of the scraper settings._
 
 Scraper service selection, currently ScreenScraper.fr and TheGamesDB.net are supported.
 
-**Filter**
+**Scrape these games**
 
 Criteria for what games to include in the scraping. It can be set to _All games, Favorite games, No metadata, No game image, No game video_ or _Folders only_.
 
-**Systems**
+**Scrape these systems**
 
 A selection of which systems to scrape for. It's possible to automatically scrape several or all systems in one go.
 
@@ -714,7 +714,7 @@ Affects both overwriting of metadata as well as actual game media files on the f
 
 With this setting enabled, if any media files returned by the scraper seem to be invalid, the scraping is halted and an error message is presented where it's possible to retry or cancel the scraping of the specific game. In the case of multi-scraping it's also possible to skip the game and proceed to the next one in the queue. With this setting disabled, all media files will always be accepted and saved to disk. As of ES-DE v1.0 the file verification is crude as it's just checking if the file is less than 350 bytes in size which should indicate a server error response rather than a real media file. In some exceedingly rare situations, proper media files may be smaller than 350 bytes, and for those rare instances, simply disabling this setting temporarily allows these files to be scraped. Future versions of ES-DE will implement proper CRC/checksum verifications for ScreenScraper and possibly media file integrity checks for TheGamesDB (as this scraper service does not provide file checksums).
 
-**Search using metadata name**
+**Search using metadata names**
 
 By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical name regardless of such data being available, then turn off this option.
 

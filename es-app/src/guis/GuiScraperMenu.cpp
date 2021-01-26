@@ -52,7 +52,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
         return g->getType() == FOLDER; }, false);
 
     mFilters->selectEntry(Settings::getInstance()->getInt("ScraperFilter"));
-    mMenu.addWithLabel("Filter", mFilters);
+    mMenu.addWithLabel("SCRAPE THESE GAMES", mFilters);
 
     mMenu.addSaveFunc([this] {
         if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper")) {
@@ -77,7 +77,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
                     mSystems->selectEntry(i) : mSystems->unselectEntry(i);
         }
     }
-    mMenu.addWithLabel("Systems", mSystems);
+    mMenu.addWithLabel("SCRAPE THESE SYSTEMS", mSystems);
 
     addEntry("ACCOUNT SETTINGS", 0x777777FF, true, [this] {
         openAccountSettings();
@@ -387,11 +387,11 @@ void GuiScraperMenu::openOtherSettings()
         }
     });
 
-    // Search using metadata name.
+    // Search using metadata names.
     auto scraper_search_metadata_name = std::make_shared<SwitchComponent>(mWindow);
     scraper_search_metadata_name->
             setState(Settings::getInstance()->getBool("ScraperSearchMetadataName"));
-    s->addWithLabel("SEARCH USING METADATA NAME", scraper_search_metadata_name);
+    s->addWithLabel("SEARCH USING METADATA NAMES", scraper_search_metadata_name);
     s->addSaveFunc([scraper_search_metadata_name, s] {
         if (scraper_search_metadata_name->getState() !=
                 Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
