@@ -520,8 +520,8 @@ Here is an overview of what's supported by ES-DE and these scrapers:
 
 | Media type or option     | ScreenScraper | TheGamesDB |
 | :----------------------- | :-----------: | :--------: |
-| Region (EU/JP/US/SS/WOR) | Yes           | No         |
-| Language (EN/WOR)        | Yes           | No         |
+| Region (EU/JP/US/WOR)    | Yes           | No         |
+| Language                 | Yes           | No         |
 | Game names               | Yes           | Yes        |
 | Ratings                  | Yes           | No         |
 | Other game metadata      | Yes           | Yes        |
@@ -700,11 +700,11 @@ Various scraping settings. Most users will probably not need to adjust so many o
 
 **Region** _(ScreenScraper only)_
 
-The region to scrape for, affects game names.
+The region to scrape for. This affects game names, game media and release dates. Possible options are Europe, Japan, USA and World.
 
-**Language** _(ScreenScraper only)_
+**Preferred language** _(ScreenScraper only)_
 
-Currently only English or World are supported, not really significant at the moment.
+Currently only English and World are supported, not really significant at the moment.
 
 **Overwrite files and data**
 
