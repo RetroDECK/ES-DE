@@ -156,6 +156,8 @@ If the theme supports it, there's a gamelist information field displayed in the 
 ![alt text](images/current/es-de_gamelist_view.png "ES-DE Gamelist View")
 _The **Gamelist view** is where you browse the games for a specific system._
 
+![alt text](images/current/es-de_basic_view_style.png "ES-DE Basic View Style")
+_Here's an example of what the Basic view style looks like. Needless to say, ES-DE is not intended to be used like this. After scraping some game media for the system, the view style will automatically change to Detailed or Video (assuming the Automatic view style has been selected)._
 
 ## UI modes
 
