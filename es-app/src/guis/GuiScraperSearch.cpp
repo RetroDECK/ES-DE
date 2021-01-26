@@ -527,6 +527,7 @@ void GuiScraperSearch::returnResult(ScraperSearchResult result)
 
     mScrapeCount -= 1;
     mAcceptCallback(result);
+    mRefinedSearch = false;
 }
 
 void GuiScraperSearch::update(int deltaTime)
@@ -700,10 +701,23 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 }
 
 bool GuiScraperSearch::saveMetadata(
-        const ScraperSearchResult& result, MetaDataList& metadata)
+        const ScraperSearchResult& result, MetaDataList& metadata, FileData* scrapedGame)
 {
-    bool mMetadataUpdated = false;
+    bool metadataUpdated = false;
+    bool hasDefaultName = false;
     std::vector<MetaDataDecl> mMetaDataDecl = metadata.getMDD();
+    std::string defaultName;
+
+    // Get the default name, which is either the MAME name or the name of the physical file
+    // or directory.
+    if (scrapedGame->isArcadeGame())
+        defaultName = MameNames::getInstance()->getCleanName(scrapedGame->getCleanName());
+    else
+        defaultName = Utils::FileSystem::getStem(scrapedGame->getFileName());
+
+    // We want the comparison to be case sensitive.
+    if (defaultName == metadata.get("name"))
+        hasDefaultName = true;
 
     for (unsigned int i = 0; i < mMetaDataDecl.size(); i++) {
 
@@ -746,21 +760,26 @@ bool GuiScraperSearch::saveMetadata(
         // Overwrite all the other values if the flag to overwrite data has been set.
         if (Settings::getInstance()->getBool("ScraperOverwriteData")) {
             metadata.set(key, result.mdl.get(key));
-            mMetadataUpdated = true;
+            metadataUpdated = true;
+        }
+        // If the key is the game name and it's set to its default value, then update.
+        else if (key == "name" && hasDefaultName) {
+            metadata.set(key, result.mdl.get(key));
+            metadataUpdated = true;
         }
         // Else only update the value if it is set to the default metadata value.
         else if (metadata.get(key) == mMetaDataDecl.at(i).defaultValue) {
             metadata.set(key, result.mdl.get(key));
-            mMetadataUpdated = true;
+            metadataUpdated = true;
         }
 
         // For the description, expand any escaped HTML quotation marks to literal
         // quotation marks.
-        if (key == "desc" && mMetadataUpdated)
+        if (key == "desc" && metadataUpdated)
             metadata.set(key, Utils::String::replace(metadata.get(key), "&quot;", "\""));
     }
 
-    return mMetadataUpdated;
+    return metadataUpdated;
 }
 
 std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()

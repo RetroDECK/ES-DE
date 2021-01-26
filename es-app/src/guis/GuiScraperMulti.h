@@ -42,13 +42,13 @@ private:
     void doNextSearch();
 
     void finish();
-
     unsigned int mTotalGames;
     unsigned int mCurrentGame;
     unsigned int mTotalSuccessful;
     unsigned int mTotalSkipped;
     std::queue<ScraperSearchParams> mSearchQueue;
     std::vector<MetaDataDecl> mMetaDataDecl;
+    bool mApproveResults;
 
     NinePatchComponent mBackground;
     ComponentGrid mGrid;

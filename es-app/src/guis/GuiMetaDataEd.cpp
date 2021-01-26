@@ -444,7 +444,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
             metadata->set(key, mEditors[i]->getValue());
     }
 
-    GuiScraperSearch::saveMetadata(result, *metadata);
+    GuiScraperSearch::saveMetadata(result, *metadata, mScraperParams.game);
 
     // Update the list with the scraped metadata values.
     for (unsigned int i = 0; i < mEditors.size(); i++) {

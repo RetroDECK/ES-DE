@@ -29,7 +29,8 @@ GuiScraperMulti::GuiScraperMulti(
         : GuiComponent(window),
         mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 5)),
-        mSearchQueue(searches)
+        mSearchQueue(searches),
+        mApproveResults(approveResults)
 {
     assert(mSearchQueue.size());
 
@@ -56,13 +57,13 @@ GuiScraperMulti::GuiScraperMulti(
             Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
     mGrid.setEntry(mSubtitle, Vector2i(0, 2), false, true);
 
-    if (approveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
+    if (mApproveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
                 GuiScraperSearch::NEVER_AUTO_ACCEPT, mTotalGames);
-    else if (approveResults && Settings::getInstance()->getBool("ScraperSemiautomatic"))
+    else if (mApproveResults && Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
                 GuiScraperSearch::ACCEPT_SINGLE_MATCHES, mTotalGames);
-    else if (!approveResults)
+    else if (!mApproveResults)
         mSearchComp = std::make_shared<GuiScraperSearch>(mWindow,
                 GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, mTotalGames);
     mSearchComp->setAcceptCallback(std::bind(&GuiScraperMulti::acceptResult,
@@ -74,7 +75,7 @@ GuiScraperMulti::GuiScraperMulti(
 
     std::vector< std::shared_ptr<ButtonComponent> > buttons;
 
-    if (approveResults) {
+    if (mApproveResults) {
         buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH",
                 "refine search", [&] {
             mSearchComp->openInputScreen(mSearchQueue.front());
@@ -160,7 +161,7 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
 {
     ScraperSearchParams& search = mSearchQueue.front();
 
-    GuiScraperSearch::saveMetadata(result, search.game->metadata);
+    GuiScraperSearch::saveMetadata(result, search.game->metadata, search.game);
 
     updateGamelist(search.system);
 
@@ -175,6 +176,7 @@ void GuiScraperMulti::skip()
     mSearchQueue.pop();
     mCurrentGame++;
     mTotalSkipped++;
+    mSearchComp->unsetRefinedSearch();
     doNextSearch();
 }
 
@@ -201,7 +203,11 @@ void GuiScraperMulti::finish()
 
 std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()
 {
-    return mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    // Remove the 'Choose' entry if in fully automatic mode.
+    if (!mApproveResults)
+        prompts.pop_back();
+    return prompts;
 }
 
 HelpStyle GuiScraperMulti::getHelpStyle()

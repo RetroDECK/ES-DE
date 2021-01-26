@@ -662,7 +662,7 @@ Describes the content types to include in the scraping. Most users will probably
 
 **Scrape game names**
 
-Whether to scrape the names of the games. This does not affect the actual files on the filesystem and is only used for viewing and sorting purposes. The downloaded media files are also matched against the physical game files on the filesystem, and not against this name.
+Whether to scrape the names of the games. This does not affect the actual files on the filesystem and is only used for viewing and sorting purposes. The downloaded media files are also matched against the physical game files on the filesystem, and not against this metadata. See the comments under _Overwrite files and data_ below to understand some additional implications regarding the game names.
 
 **Scrape ratings** _(ScreenScraper only)_
 
@@ -706,7 +706,7 @@ Currently only English or World are supported, not really significant at the mom
 
 **Overwrite files and data**
 
-Affects both overwriting of metadata as well as actual game media files on the filesystem. Even with this option disabled, metadata entries which are set to their default values will of course be populated by the scraper. In other words, this option only affects overwriting of previously scraped data. The only exception is game names for newly added games (which are based on the physical filenames of the game files) which will not be overwritten unless this option is enabled.
+Affects both overwriting of metadata as well as actual game media files on the filesystem. Even with this option disabled, metadata entries which are set to their default values will of course be populated by the scraper. In other words, this option only affects overwriting of previously scraped data. Game names are considered as set to their default vaules if either corresponding to the physical game file on disk minus the extension (e.g. the entry _Commando_ if the file is named _Commando.zip_), or for arcade games if corresponding to the MAME names as defined in the bundled mamenames.xml.
 
 **Halt on invalid media files**
 

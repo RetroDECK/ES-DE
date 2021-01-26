@@ -44,7 +44,8 @@ public:
     void openInputScreen(ScraperSearchParams& from);
     void stop();
     inline SearchType getSearchType() const { return mSearchType; }
-    static bool saveMetadata(const ScraperSearchResult& result, MetaDataList& metadata);
+    static bool saveMetadata(const ScraperSearchResult& result,
+            MetaDataList& metadata, FileData* scrapedGame);
 
     // Metadata assets will be resolved before calling the accept callback
     // (e.g. result.mdl's "image" is automatically downloaded and properly set).
@@ -63,6 +64,8 @@ public:
     void onSizeChanged() override;
     void onFocusGained() override;
     void onFocusLost() override;
+
+    void unsetRefinedSearch() { mRefinedSearch = false; }
 
 private:
     void updateViewStyle();
