@@ -248,7 +248,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
         std::string gameName = Utils::String::toUpper((*it).mdl.get("name"));
         if (gameName.substr(0, 12) == "ZZZ(NOTGAME)") {
             LOG(LogWarning) << "ScreenScraperRequest - Received \"ZZZ(notgame)\" as game name, "
-                    "ignoring response.";
+                    "ignoring response";
             results.pop_back();
             return;
         }
@@ -270,7 +270,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         std::string userID = data.child("ssuser").child("id").text().get();
         if (userID != "") {
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account '" <<
-                    userID << "'.";
+                    userID << "'";
         }
         else {
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): The configured account '" <<
@@ -291,11 +291,11 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
     if (maxRequestsPerDay > 0) {
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: " <<
                 requestsToday << "/" << maxRequestsPerDay << " (" <<
-                scraperRequestAllowance << " remaining).";
+                scraperRequestAllowance << " remaining)";
     }
     else {
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Daily scraping allowance: "
-                "No statistics were provided with the response.";
+                "No statistics were provided with the response";
     }
 
     if (data.child("jeux"))
@@ -425,7 +425,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
     } // Game.
 
     if (out_results.size() == 0) {
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): No games found.";
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): No games found";
     }
 }
 
@@ -481,7 +481,7 @@ void ScreenScraperRequest::processMedia(
         }
         else {
             LOG(LogDebug) << "ScreenScraperRequest::processMedia(): "
-                    "Failed to find media XML node with name '" << mediaType << "'.";
+                    "Failed to find media XML node with name '" << mediaType << "'";
         }
 }
 
@@ -491,13 +491,13 @@ void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
 {
     assert(mRequestQueue != nullptr);
 
-    LOG(LogDebug) << "ScreenScraperRequest::processList(): Processing a list of results.";
+    LOG(LogDebug) << "ScreenScraperRequest::processList(): Processing a list of results";
 
     pugi::xml_node data = xmldoc.child("Data");
     pugi::xml_node game = data.child("jeu");
 
     if (!game) {
-        LOG(LogDebug) << "ScreenScraperRequest::processList(): Found nothing.";
+        LOG(LogDebug) << "ScreenScraperRequest::processList(): Found nothing";
     }
 
     ScreenScraperRequest::ScreenScraperConfig ssConfig;

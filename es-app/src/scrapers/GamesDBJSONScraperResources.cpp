@@ -19,7 +19,6 @@
 
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
-
 #include <chrono>
 #include <fstream>
 #include <memory>
@@ -127,7 +126,7 @@ bool TheGamesDBJSONRequestResources::saveResource(
 {
 
     if (req == nullptr) {
-        LOG(LogError) << "HTTP request pointer was null.\n";
+        LOG(LogError) << "HTTP request pointer was null\n";
         return true;
     }
     if (req->status() == HttpReq::REQ_IN_PROGRESS) {
@@ -181,7 +180,7 @@ int TheGamesDBJSONRequestResources::loadResource(
 
     if (!doc.HasMember("data") || !doc["data"].HasMember(resource_name.c_str()) ||
         !doc["data"][resource_name.c_str()].IsObject()) {
-        std::string err = "TheGamesDBJSONRequest - Response had no resource data.\n";
+        std::string err = "TheGamesDBJSONRequest - Response had no resource data\n";
         LOG(LogError) << err;
         return 1;
     }

@@ -393,7 +393,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
 
     if (doc.HasParseError()) {
         std::string err =
-            std::string("TheGamesDBJSONRequest - Error parsing JSON. \n\t") +
+            std::string("TheGamesDBJSONRequest - Error parsing JSON \n\t") +
                     GetParseError_En(doc.GetParseError());
         setError(err);
         LOG(LogError) << err;
@@ -412,7 +412,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
             baseImageUrlLarge = base_url["large"].GetString();
         }
         else {
-            LOG(LogWarning) << "TheGamesDBJSONRequest - No URL path for large images.\n";
+            LOG(LogWarning) << "TheGamesDBJSONRequest - No URL path for large images\n";
             return;
         }
 
@@ -441,7 +441,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     // These process steps are for the initial scraping response.
     if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
             !doc["data"]["games"].IsArray()) {
-        LOG(LogWarning) << "TheGamesDBJSONRequest - Response had no game data.\n";
+        LOG(LogWarning) << "TheGamesDBJSONRequest - Response had no game data\n";
         return;
     }
 
@@ -459,6 +459,6 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     }
 
     if (results.size() == 0) {
-        LOG(LogDebug) << "TheGamesDBJSONRequest::process(): No games found.";
+        LOG(LogDebug) << "TheGamesDBJSONRequest::process(): No games found";
     }
 }
