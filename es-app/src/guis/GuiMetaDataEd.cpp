@@ -322,7 +322,7 @@ GuiMetaDataEd::GuiMetaDataEd(
     // Resize + center.
     float width = static_cast<float>(std::min(Renderer::getScreenHeight(),
             static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
-    setSize(width, Renderer::getScreenHeight() * 0.82f);
+    setSize(width, Renderer::getScreenHeight() * 0.801f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
 }
