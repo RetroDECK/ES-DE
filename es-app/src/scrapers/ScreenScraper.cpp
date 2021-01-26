@@ -316,8 +316,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         // Name fallback: US, WOR(LD). (Xpath: Data/jeu[0]/noms/nom[*]).
         result.mdl.set("name", find_child_by_attribute_list(game.child("noms"),
                 "nom", "region", { region, "wor", "us" , "ss", "eu", "jp" }).text().get());
-        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " <<
-                result.mdl.get("name");
+        LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " << result.mdl.get("name");
 
         // Validate rating.
         // Process the rating even if the setting to scrape ratings has been disabled.

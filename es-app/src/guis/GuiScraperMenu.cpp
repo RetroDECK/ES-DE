@@ -308,20 +308,15 @@ void GuiScraperMenu::openOtherSettings()
     // Scraper region.
     auto scraper_region = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "REGION", false);
-    std::vector<std::string> transitions_rg;
-    transitions_rg.push_back("eu");
-    transitions_rg.push_back("jp");
-    transitions_rg.push_back("us");
-    transitions_rg.push_back("ss");
-    transitions_rg.push_back("wor");
-    if (Settings::getInstance()->getString("ScraperRegion") != "") {
-        if (std::find(transitions_rg.begin(), transitions_rg.end(),
-                Settings::getInstance()->getString("ScraperRegion")) == transitions_rg.end()) {
-            transitions_rg.push_back(Settings::getInstance()->getString("ScraperRegion"));
-        }
-    }
-    for (auto it = transitions_rg.cbegin(); it != transitions_rg.cend(); it++)
-        scraper_region->add(*it, *it, Settings::getInstance()->getString("ScraperRegion") == *it);
+    std::string selectedScraperRegion = Settings::getInstance()->getString("ScraperRegion");
+    scraper_region->add("Europe", "eu",  selectedScraperRegion == "eu");
+    scraper_region->add("Japan",  "jp",  selectedScraperRegion == "jp");
+    scraper_region->add("USA",    "us",  selectedScraperRegion == "us");
+    scraper_region->add("World",  "wor", selectedScraperRegion == "wor");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the region to Europe in this case.
+    if (scraper_region->getSelectedObjects().size() == 0)
+        scraper_region->selectEntry(0);
     s->addWithLabel("REGION", scraper_region);
     s->addSaveFunc([scraper_region, s] {
         if (scraper_region->getSelected() != Settings::getInstance()->getString("ScraperRegion")) {
@@ -340,20 +335,15 @@ void GuiScraperMenu::openOtherSettings()
 
     // Scraper language.
     auto scraper_language = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "LANGUAGE", false);
-    std::vector<std::string> transitions_lg;
-    transitions_lg.push_back("en");
-    transitions_lg.push_back("wor");
-    if (Settings::getInstance()->getString("ScraperLanguage") != "") {
-        if (std::find(transitions_lg.begin(), transitions_lg.end(),
-                Settings::getInstance()->getString("ScraperLanguage")) == transitions_lg.end()) {
-            transitions_lg.push_back(Settings::getInstance()->getString("ScraperLanguage"));
-        }
-    }
-    for (auto it = transitions_lg.cbegin(); it != transitions_lg.cend(); it++)
-        scraper_language->add(*it, *it,
-                Settings::getInstance()->getString("ScraperLanguage") == *it);
-    s->addWithLabel("LANGUAGE", scraper_language);
+            (mWindow, getHelpStyle(), "PREFERRED LANGUAGE", false);
+    std::string selectedScraperLanguage = Settings::getInstance()->getString("ScraperLanguage");
+    scraper_language->add("English", "en",  selectedScraperLanguage == "en");
+    scraper_language->add("World",   "wor", selectedScraperLanguage == "wor");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the language to English in this case.
+    if (scraper_language->getSelectedObjects().size() == 0)
+        scraper_language->selectEntry(0);
+    s->addWithLabel("PREFERRED LANGUAGE", scraper_language);
     s->addSaveFunc([scraper_language, s] {
         if (scraper_language->getSelected() !=
                 Settings::getInstance()->getString("ScraperLanguage")) {
