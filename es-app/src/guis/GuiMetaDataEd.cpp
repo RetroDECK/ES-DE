@@ -501,6 +501,7 @@ void GuiMetaDataEd::close()
                 TextureResource::manualUnload(mScraperParams.game->getImagePath(), false);
                 TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
                 ViewController::get()->reloadGameListView(mScraperParams.system);
+                mWindow->invalidateCachedBackground();
             }
             ViewController::get()->onPauseVideo();
             delete this;
