@@ -1108,7 +1108,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 ### Unix
 
 ```
---display [index, 1-4]          Display/monitor to use
+--display [index 1-4]           Display/monitor to use
 --resolution [width] [height]   Application resolution
 --windowed                      Windowed mode, should be combined with --resolution
 --fullscreen-normal             Normal fullscreen mode
@@ -1133,7 +1133,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 ### macOS and Windows
 
 ```
---display [index, 1-4]          Display/monitor to use
+--display [index 1-4]           Display/monitor to use
 --resolution [width] [height]   Application resolution
 --vsync [1/on or 0/off]         Turn VSync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping

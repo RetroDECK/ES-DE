@@ -293,7 +293,7 @@ bool parseArgs(int argc, char* argv[])
 "Usage: emulationstation [options]\n"
 "EmulationStation Desktop Edition, Emulator Front-end\n\n"
 "Options:\n"
-"  --display [index, 1-4]          Display/monitor to use\n"
+"  --display [index 1-4]           Display/monitor to use\n"
 "  --resolution [width] [height]   Application resolution\n"
 #if defined(__unix__)
 "  --windowed                      Windowed mode, should be combined with --resolution\n"
