@@ -264,8 +264,8 @@ based on: 'recalbox-multi' by the Recalbox community
             <path>./core/images/back_alpha.png</path>
         </image>
         <textlist name="gamelist">
-            <pos>0.04 0.21</pos>
-            <size>0.92 0.695</size>
+            <pos>0.04 0.201</pos>
+            <size>0.92 0.71</size>
             <alignment>center</alignment>
             <horizontalMargin>0.01</horizontalMargin>
         </textlist>
