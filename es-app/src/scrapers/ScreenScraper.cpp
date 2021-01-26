@@ -524,6 +524,7 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
         const std::string gameName) const
 {
     std::string screenScraperURL;
+    bool singleSearch = false;
 
     // If the game is an arcade game and we're not searching using the metadata name, then
     // search using the individual ROM name rather than running a wider text matching search.
@@ -532,8 +533,28 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
     // were not provided with the search. Possibly this is because a search using less than
     // four characters would return too many results. But there are some games with really
     // short names, so it's annoying that they can't be searched using this method.
-    if ((isArcadeSystem && !Settings::getInstance()->getBool("ScraperSearchMetadataName")) ||
-            gameName.size() < 4) {
+    if (isArcadeSystem && !Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
+        singleSearch = true;
+    }
+    else if (gameName.size() < 4) {
+        singleSearch = true;
+    }
+    else if (gameName.back() == '+') {
+        // Special case where ScreenScraper will apparently strip trailing plus characters
+        // from the search strings, and if we don't handle this we could end up with less
+        // than four characters which would break the wide search.
+        std::string trimTrailingPluses = gameName;
+        for (int i = 0; i < gameName.size(); i++) {
+            if (trimTrailingPluses.back() == '+')
+                trimTrailingPluses.pop_back();
+            else
+                break;
+        }
+        if (trimTrailingPluses.size() < 4)
+            singleSearch = true;
+    }
+
+    if (singleSearch) {
         screenScraperURL = API_URL_BASE
                 + "/jeuInfos.php?devid=" + Utils::String::scramble(API_DEV_U, API_DEV_KEY)
                 + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
