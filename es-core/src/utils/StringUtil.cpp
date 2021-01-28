@@ -348,7 +348,7 @@ namespace Utils
                     // Try to find an entry for the character in the Unicode uppercase table.
                     wchar_t* charIndex = std::wcschr(unicodeUppercase, unicodeChar);
 
-                    if (charIndex > 0) {
+                    if (charIndex != nullptr) {
                         wchar_t lowerChar = *(unicodeLowercase + (charIndex - unicodeUppercase));
                         // Convert back to string format.
                         typedef std::codecvt_utf8<wchar_t> convert_type;
@@ -401,7 +401,7 @@ namespace Utils
                     // Try to find an entry for the character in the Unicode lowercase table.
                     wchar_t* charIndex = std::wcschr(unicodeLowercase, unicodeChar);
 
-                    if (charIndex > 0) {
+                    if (charIndex != nullptr) {
                         wchar_t upperChar = *(unicodeUppercase + (charIndex - unicodeLowercase));
                         // Convert back to string format.
                         typedef std::codecvt_utf8<wchar_t> convert_type;
