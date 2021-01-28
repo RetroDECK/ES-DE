@@ -533,6 +533,8 @@ Here is an overview of what's supported by ES-DE and these scrapers:
 
 The category **Other game metadata** includes Description, Release date, Developer, Publisher, Genre and Players.
 
+The **Multi-language** support includes translated game genre names and game descriptions for a number of languages.
+
 There are two approaches to scraping, either for a single game from the metadata editor, or for many games and systems using the multi-scraper.
 
 ![alt text](images/current/es-de_scraper_running.png "ES-DE Scraper Running")
@@ -704,7 +706,7 @@ The region to scrape for. This affects game names, game media and release dates.
 
 **Preferred language** _(ScreenScraper only)_
 
-Currently only English and World are supported, not really significant at the moment.
+Multiple languages are supported, and this affects game genre names and game descriptions. As the option name implies this is the preferred language only, as not all games on ScreenScraper have had their metadata translated to all supported languages. If the preferred language is not available for a game, ES-DE will fall back to scraping the English metadata.
 
 **Overwrite files and data**
 

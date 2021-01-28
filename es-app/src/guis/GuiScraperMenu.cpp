@@ -337,8 +337,26 @@ void GuiScraperMenu::openOtherSettings()
     auto scraper_language = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "PREFERRED LANGUAGE", false);
     std::string selectedScraperLanguage = Settings::getInstance()->getString("ScraperLanguage");
-    scraper_language->add("English", "en",  selectedScraperLanguage == "en");
-    scraper_language->add("World",   "wor", selectedScraperLanguage == "wor");
+    scraper_language->add("English",    "en", selectedScraperLanguage == "en");
+    scraper_language->add("Español",    "es", selectedScraperLanguage == "es");
+    scraper_language->add("Português",  "pt", selectedScraperLanguage == "pt");
+    scraper_language->add("Français",   "fr", selectedScraperLanguage == "fr");
+    scraper_language->add("Deutsch",    "de", selectedScraperLanguage == "de");
+    scraper_language->add("Italiano",   "it", selectedScraperLanguage == "it");
+    scraper_language->add("Nederlands", "nl", selectedScraperLanguage == "nl");
+    scraper_language->add("日本語",      "ja", selectedScraperLanguage == "ja");
+    scraper_language->add("简体中文",    "zh", selectedScraperLanguage == "zh");
+    scraper_language->add("한국어",      "ko", selectedScraperLanguage == "ko");
+    scraper_language->add("Русский",    "ru", selectedScraperLanguage == "ru");
+    scraper_language->add("Dansk",      "da", selectedScraperLanguage == "da");
+    scraper_language->add("Suomi",      "fi", selectedScraperLanguage == "fi");
+    scraper_language->add("Svenska",    "sv", selectedScraperLanguage == "sv");
+    scraper_language->add("Magyar",     "hu", selectedScraperLanguage == "hu");
+    scraper_language->add("Norsk",      "no", selectedScraperLanguage == "no");
+    scraper_language->add("Polski",     "pl", selectedScraperLanguage == "pl");
+    scraper_language->add("Čeština",    "cz", selectedScraperLanguage == "cz");
+    scraper_language->add("Slovenčina", "sk", selectedScraperLanguage == "sk");
+    scraper_language->add("Türkçe",     "tr", selectedScraperLanguage == "tr");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the language to English in this case.
     if (scraper_language->getSelectedObjects().size() == 0)

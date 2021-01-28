@@ -37,6 +37,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Seamless (almost) launch of games without showing the desktop when starting and returning from RetroArch and other emulators
 * Updated scraper to support additional media files, detailed configuration of what to scrape, semi-automatic mode etc.
 * Added user account support when scraping using ScreenScraper
+* Added support for scraping game genres and game descriptions in multiple languages when using ScreenScraper
 * Files or folders can now be flagged for exclusion when scraping with the multi-scraper, and for folders it can be set to apply recursively
 * Overhaul of the game collection functionality including many bug fixes and optimizations
 * Added ability to delete custom collections from the GUI menu
