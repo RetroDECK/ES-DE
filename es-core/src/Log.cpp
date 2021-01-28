@@ -105,5 +105,9 @@ Log::~Log()
     // If it's an error, also print to console.
     // Print all messages if using --debug.
     if (messageLevel == LogError || reportingLevel >= LogDebug)
+        #if defined(_WIN64)
+        std::cerr << formattedString;
+        #else
         std::cerr << os.str();
+        #endif
 }
