@@ -469,7 +469,10 @@ int main(int argc, char* argv[])
         return 1;
 
     // This hides the mouse cursor during startup, i.e. before we have begun to capture SDL events.
+    // On macOS this causes the mouse cursor to jump back to the Dock so don't do it on this OS.
+    #if !defined(__APPLE__)
     SDL_SetRelativeMouseMode(SDL_TRUE);
+    #endif
 
     AudioManager::getInstance();
     MameNames::init();
@@ -602,7 +605,9 @@ int main(int argc, char* argv[])
     bool running = true;
     // Now that we've finished loading, disable the relative mouse mode or otherwise mouse
     // input wouldn't work in any games that are launched.
+    #if !defined(__APPLE__)
     SDL_SetRelativeMouseMode(SDL_FALSE);
+    #endif
 
     while (running) {
         if (SDL_PollEvent(&event)) {
