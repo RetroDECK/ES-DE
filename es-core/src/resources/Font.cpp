@@ -219,24 +219,22 @@ std::vector<std::string> getFallbackFontPaths()
 
     // Standard fonts, let's include them here for exception handling purposes even though that's
     // not really the correct location. (The application will crash if they are missing.)
-    ResourceManager::getInstance()->
-            getResourcePath(":/fonts/opensans_hebrew_condensed_light.ttf");
-    ResourceManager::getInstance()->
-            getResourcePath(":/fonts/opensans_hebrew_condensed_regular.ttf");
+    ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-Regular.ttf");
+    ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
 
-    // Vera sans Unicode:
+    // Vera sans Unicode.
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/DejaVuSans.ttf"));
-    // Freefont monospaced:
+    // GNU FreeFont monospaced.
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/FreeMono.ttf"));
-    // Various languages, such as Japanese and Chinese:
+    // Various languages, such as Japanese and Chinese.
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
-    // Korean:
+    // Korean.
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/NanumMyeongjo.ttf"));
-    // Font Awesome icon glyphs, used for star-flagging favorites in the gamelists:
+    // Font Awesome icon glyphs, used for star-flagging favorites in the gamelists.
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/fontawesome-webfont.ttf"));
 

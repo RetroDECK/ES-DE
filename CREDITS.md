@@ -56,6 +56,9 @@ http://www.libsdl.org
 
 # Resources
 
+Akrobat font \
+https://www.fontfabric.com/fonts/akrobat
+
 DejaVu font \
 https://dejavu-fonts.github.io
 
@@ -65,14 +68,11 @@ https://android.googlesource.com/platform/frameworks/base
 Font Awesome \
 https://fontawesome.com
 
-GNU FreeFont \
+GNU FreeFont (FreeMono) \
 https://www.gnu.org/software/freefont
 
 Nanum font \
 https://hangeul.naver.com
-
-Open Sans font \
-https://fonts.google.com/specimen/Open+Sans
 
 MAME ROM information \
 https://www.mamedev.org

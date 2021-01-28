@@ -65,6 +65,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Overhaul of the screensaver (the game info overlay now works correctly for instance)
 * Added support for jumping to the start and end of gamelists and menus using the controller trigger buttons (or equivalent keyboard mappings)
 * Many additional quality of life improvements and removal of GUI inconsistencies
+* Replaced the main application font with Fontfabric Akrobat
 * Replaced the on and off button icons with new graphics
 * Replaced the checked checkmark icon with new graphics
 * Made ScrollableContainer (used for the gamelist game descriptions) fade in as the text position is reset
