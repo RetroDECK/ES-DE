@@ -52,6 +52,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added a gamelist info text field displaying the game count, any applied filters as well as an icon if a folder has been entered (requires theme support)
 * Properly implemented the option to show or hide hidden files and folders
 * Properly implemented the option to show or hide games flagged as hidden in the metadata editor
+* Added support for converting two-byte Unicode characters to uppercase and lowercase
 * Added the ability to display pillarboxing and letterboxing for videos with non-standard aspect ratios
 * Custom event scripts can now be enabled or disabled with a menu option
 * Gamelist sorting is now working as expected and is persistent throughout the application session
