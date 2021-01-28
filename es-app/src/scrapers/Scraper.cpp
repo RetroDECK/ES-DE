@@ -250,9 +250,9 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             // will not be saved to disk.
             if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
                     mResult.thumbnailImageData.size() < 350) {
-                setError("The file '" + Utils::FileSystem::getFileName(filePath) +
-                        "' returned by the scraper seems to be invalid as it's less than " +
-                        "350 bytes in size.");
+                setError("The file \"" + Utils::FileSystem::getFileName(filePath) +
+                        "\" returned by the scraper seems to be invalid as it's less than " +
+                        "350 bytes in size");
                 return;
             }
 
@@ -396,8 +396,8 @@ void MediaDownloadHandle::update()
     // will not be saved to disk.
     if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
             mReq->getContent().size() < 350) {
-        setError("The file '" + Utils::FileSystem::getFileName(mSavePath) + "' returned by the " +
-                "scraper seems to be invalid as it's less than 350 bytes in size.");
+        setError("The file \"" + Utils::FileSystem::getFileName(mSavePath) + "\" returned by the " +
+                "scraper seems to be invalid as it's less than 350 bytes in size");
         return;
     }
 
