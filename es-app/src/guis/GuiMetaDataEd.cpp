@@ -322,15 +322,13 @@ GuiMetaDataEd::GuiMetaDataEd(
     // Resize + center.
     float width = static_cast<float>(std::min(Renderer::getScreenHeight(),
             static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
-    setSize(width, Renderer::getScreenHeight() * 0.801f);
+    setSize(width, Renderer::getScreenHeight() * 0.83f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
 }
 
 void GuiMetaDataEd::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
-
     mGrid.setSize(mSize);
 
     const float titleHeight = mTitle->getFont()->getLetterHeight();
@@ -340,6 +338,32 @@ void GuiMetaDataEd::onSizeChanged()
     mGrid.setRowHeightPerc(0, (titleHeight + titleSubtitleSpacing + subtitleHeight +
             TITLE_VERT_PADDING) / mSize.y());
     mGrid.setRowHeightPerc(2, mButtons->getSize().y() / mSize.y());
+
+    // Clamp list size to the row height to prevent a fraction of a row from being displayed.
+    float listHeight = 0;
+    float listSize = mList->getSize().y();
+    int i = 0;
+    while (i < mList->size()) {
+        // Add the separator height to the row height so that it also gets properly rendered.
+        float rowHeight = mList->getRowHeight(i) + (1 * Renderer::getScreenHeightModifier());
+        if (listHeight + rowHeight < listSize)
+            listHeight += rowHeight;
+        else
+            break;
+        i++;
+    }
+
+    // Adjust the size of the list and window.
+    float heightAdjustment = listSize - listHeight;
+    mList->setSize(mList->getSize().x(), listHeight);
+    Vector2f newWindowSize = mSize;
+    newWindowSize.y() -= heightAdjustment;
+    mBackground.fitTo(newWindowSize, Vector3f::Zero(), Vector2f(-32, -32));
+
+    // Move the buttons up as well to make the layout align correctly after the resize.
+    Vector3f newButtonPos = mButtons->getPosition();
+    newButtonPos.y() -= heightAdjustment;
+    mButtons->setPosition(newButtonPos);
 
     mHeaderGrid->setRowHeightPerc(1, titleHeight / mHeaderGrid->getSize().y());
     mHeaderGrid->setRowHeightPerc(2, titleSubtitleSpacing / mHeaderGrid->getSize().y());
