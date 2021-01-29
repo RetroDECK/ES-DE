@@ -94,6 +94,7 @@ void VideoVlcComponent::setupContext()
         mContext.mutex = SDL_CreateMutex();
         mContext.valid = true;
         resize();
+        mHasSetAudioVolume = false;
     }
 }
 
@@ -155,6 +156,14 @@ void VideoVlcComponent::resize()
 
 void VideoVlcComponent::render(const Transform4x4f& parentTrans)
 {
+    // Set the audio volume. As libVLC is very unreliable we need to make an additional
+    // attempt here in the render loop in addition to the initialization in startVideo().
+    // This is required under some circumstances such as when running on a slow computer
+    // or sometimes even on a faster machine when changing to the video view style or
+    // when starting the application directly into a gamelist.
+    if (!mHasSetAudioVolume && mMediaPlayer)
+        setAudioVolume();
+
     VideoComponent::render(parentTrans);
     Transform4x4f trans = parentTrans * getTransform();
     GuiComponent::renderChildren(trans);
@@ -273,6 +282,27 @@ void VideoVlcComponent::calculateBlackRectangle()
             mVideoRectangleCoords.push_back(std::round(mSize.x()));
             mVideoRectangleCoords.push_back(std::round(mSize.y()));
         }
+    }
+}
+
+void VideoVlcComponent::setAudioVolume()
+{
+    if (mMediaPlayer && libvlc_media_player_get_state(mMediaPlayer) == libvlc_Playing) {
+        // This small delay may avoid a race condition in libVLC that could crash the application.
+        SDL_Delay(2);
+        if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
+                !mScreensaverMode) ||
+                (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
+                mScreensaverMode)) {
+            libvlc_audio_set_volume(mMediaPlayer, 0);
+        }
+        else {
+            if (libvlc_audio_get_mute(mMediaPlayer) == 1)
+                libvlc_audio_set_mute(mMediaPlayer, 0);
+            libvlc_audio_set_volume(mMediaPlayer,
+                    Settings::getInstance()->getInt("SoundVolumeVideos"));
+        }
+        mHasSetAudioVolume = true;
     }
 }
 
@@ -406,20 +436,11 @@ void VideoVlcComponent::startVideo()
                         };
                     }
 
-                    if (state == libvlc_Playing) {
-                        if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
-                                !mScreensaverMode) ||
-                                (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
-                                mScreensaverMode)) {
-                            libvlc_audio_set_volume(mMediaPlayer, 0);
-                        }
-                        else {
-                            if (libvlc_audio_get_mute(mMediaPlayer) == 1)
-                                libvlc_audio_set_mute(mMediaPlayer, 0);
-                            libvlc_audio_set_volume(mMediaPlayer,
-                                    Settings::getInstance()->getInt("SoundVolumeVideos"));
-                        }
-                    }
+                    // Attempt to set the audio volume. Under some circumstances it could fail
+                    // as libVLC may not be correctly initialized. Therefore there is an
+                    // additional call to this function in the render() loop.
+                    setAudioVolume();
+
                     // Update the playing state.
                     mIsPlaying = true;
                     mFadeIn = 0.0f;

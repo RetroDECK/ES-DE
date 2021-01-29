@@ -53,6 +53,7 @@ private:
 
     void render(const Transform4x4f& parentTrans) override;
     void calculateBlackRectangle();
+    void setAudioVolume();
 
     // Start the video immediately.
     virtual void startVideo() override;
@@ -70,6 +71,7 @@ private:
     libvlc_media_t* mMedia;
     libvlc_media_player_t* mMediaPlayer;
     VideoContext mContext;
+    bool mHasSetAudioVolume;
     std::shared_ptr<TextureResource> mTexture;
     std::vector<float> mVideoRectangleCoords;
 };
