@@ -82,12 +82,14 @@ float MenuComponent::getButtonGridHeight() const
 void MenuComponent::updateSize()
 {
     const float maxHeight = Renderer::getScreenHeight() * 0.75f;
-    float height = TITLE_HEIGHT + mList->getTotalRowHeight() + getButtonGridHeight() + 2;
+    float height = TITLE_HEIGHT + mList->getTotalRowHeight() + getButtonGridHeight() +
+            (2 * Renderer::getScreenHeightModifier());
     if (height > maxHeight) {
         height = TITLE_HEIGHT + getButtonGridHeight();
         int i = 0;
         while (i < mList->size()) {
-            float rowHeight = mList->getRowHeight(i);
+            // Add the separator height to the row height so that it also gets properly rendered.
+            float rowHeight = mList->getRowHeight(i) + (1 * Renderer::getScreenHeightModifier());
             if (height + rowHeight < maxHeight)
                 height += rowHeight;
             else

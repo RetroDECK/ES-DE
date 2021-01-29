@@ -150,21 +150,21 @@ void ComponentList::updateCameraOffset()
     // Move the camera to scroll.
     const float totalHeight = getTotalRowHeight();
     if (totalHeight > mSize.y()) {
-        float target = mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data)/2 -
-                (mSize.y() / 2);
+        float target = mSelectorBarOffset +
+                getRowHeight(mEntries.at(mCursor).data) / 2.0f - (mSize.y() / 2.0f);
 
-        // Clamp it.
-        mCameraOffset = 0;
+        // Clamp the camera to prevent a fraction of a row from being displayed.
+        mCameraOffset = 0.0f;
         unsigned int i = 0;
         while (mCameraOffset < target && i < mEntries.size()) {
             mCameraOffset += getRowHeight(mEntries.at(i).data);
+            if (mCameraOffset > totalHeight - mSize.y())
+                break;
             i++;
         }
 
         if (mCameraOffset < 0)
             mCameraOffset = 0;
-        else if (mCameraOffset + mSize.y() > totalHeight)
-            mCameraOffset = totalHeight - mSize.y();
     }
     else {
         mCameraOffset = 0;
