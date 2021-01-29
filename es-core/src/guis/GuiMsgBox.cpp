@@ -71,7 +71,8 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
     mMsg->setSize(width, 0); // mMsg->getSize.y() now returns the proper length.
     const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
             mMsg->getSize().y()*1.225f);
-    setSize(width + HORIZONTAL_PADDING_PX*2, msgHeight + mButtonGrid->getSize().y());
+    setSize(width + HORIZONTAL_PADDING_PX * 2 * Renderer::getScreenWidthModifier(),
+            msgHeight + mButtonGrid->getSize().y());
 
     // Center for good measure.
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
@@ -107,7 +108,8 @@ void GuiMsgBox::onSizeChanged()
     mGrid.setRowHeightPerc(1, mButtonGrid->getSize().y() / mSize.y());
 
     // Update messagebox size.
-    mMsg->setSize(mSize.x() - HORIZONTAL_PADDING_PX*2, mGrid.getRowHeight(0));
+    mMsg->setSize(mSize.x() - HORIZONTAL_PADDING_PX * 2 * Renderer::getScreenWidthModifier(),
+            mGrid.getRowHeight(0));
     mGrid.onSizeChanged();
 
     mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
