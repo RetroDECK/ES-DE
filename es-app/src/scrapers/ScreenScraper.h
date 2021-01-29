@@ -40,11 +40,11 @@ public:
 
         // Access to the API.
         const std::string API_DEV_U =
-        { 91, 32, 7, 17 };
+        { 15, 21, 39, 22, 42, 40 };
         const std::string API_DEV_P =
-        { 108, 28, 54, 55, 83, 43, 91, 44, 30, 22, 41, 12, 0, 108, 38, 29 };
+        { 32, 70, 46, 54, 12, 5, 13, 120, 50, 66, 25 };
         const std::string API_DEV_KEY =
-        { 54, 73, 115, 100, 101, 67, 111, 107, 79, 66, 68, 66, 67, 56, 118, 77, 54, 88, 101, 54 };
+        { 67, 112, 72, 120, 121, 77, 119, 74, 84, 56, 75, 122, 78, 98, 69, 86, 56, 120, 120, 49 };
         const std::string API_URL_BASE = "https://www.screenscraper.fr/api2";
         const std::string API_SOFT_NAME = "EmulationStation-DE " +
                 static_cast<std::string>(PROGRAM_VERSION_STRING);
