@@ -100,19 +100,19 @@ GuiScraperSearch::GuiScraperSearch(
 
     if (mScrapeRatings)
         mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-                (mWindow, "RATING: ", font, mdLblColor), mMD_Rating, false));
+                (mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "RELEASED: ", font, mdLblColor), mMD_ReleaseDate));
+            (mWindow, "RELEASED:", font, mdLblColor), mMD_ReleaseDate));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "DEVELOPER: ", font, mdLblColor), mMD_Developer));
+            (mWindow, "DEVELOPER:", font, mdLblColor), mMD_Developer));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "PUBLISHER: ", font, mdLblColor), mMD_Publisher));
+            (mWindow, "PUBLISHER:", font, mdLblColor), mMD_Publisher));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "GENRE: ", font, mdLblColor), mMD_Genre));
+            (mWindow, "GENRE:", font, mdLblColor), mMD_Genre));
     mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "PLAYERS: ", font, mdLblColor), mMD_Players));
-    // If no rating is being scraped, add a filler to make sure the fonts keep the same
-    // size and the GUI looks consistent.
+            (mWindow, "PLAYERS:", font, mdLblColor), mMD_Players));
+    // If no rating is being scraped, add a filler to make sure that the fonts keep the same
+    // size so the GUI looks consistent.
     if (!mScrapeRatings)
         mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
             (mWindow, "", font, mdLblColor), mMD_Filler));
@@ -171,7 +171,11 @@ void GuiScraperSearch::onSizeChanged()
         mGrid.setColWidthPerc(0, 0.01f);
 
     mGrid.setColWidthPerc(1, 0.25f);
-    mGrid.setColWidthPerc(2, 0.25f);
+
+    if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
+        mGrid.setColWidthPerc(2, 0.25f);
+    else
+        mGrid.setColWidthPerc(2, 0.28f);
 
     // Row heights.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) // Show name.
@@ -227,12 +231,12 @@ void GuiScraperSearch::resizeMetadata()
             it->first->setFont(fontLbl);
             it->first->setSize(0, 0);
             if (it->first->getSize().x() > maxLblWidth)
-                maxLblWidth = it->first->getSize().x() + 6;
+                maxLblWidth = it->first->getSize().x() + (16 * Renderer::getScreenWidthModifier());
         }
 
         for (unsigned int i = 0; i < mMD_Pairs.size(); i++)
-            mMD_Grid->setRowHeightPerc(i*2, (fontLbl->getLetterHeight() + 2) /
-                    mMD_Grid->getSize().y());
+            mMD_Grid->setRowHeightPerc(i * 2, (fontLbl->getLetterHeight() +
+                    (2 * Renderer::getScreenHeightModifier())) / mMD_Grid->getSize().y());
 
         // Update component fonts.
         mMD_ReleaseDate->setFont(fontComp);
