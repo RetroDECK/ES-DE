@@ -55,6 +55,8 @@ public:
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     Vector2f sizeText(std::string text, float lineSpacing = 1.5f);
+    // Returns the portion of a string that fits within the passed argument maxWidth.
+    std::string getTextMaxWidth(std::string text, float maxWidth);
     TextCache* buildTextCache(const std::string& text, float offsetX,
             float offsetY, unsigned int color, float lineSpacing = 1.5f);
     TextCache* buildTextCache(

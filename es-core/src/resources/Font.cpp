@@ -416,6 +416,16 @@ Vector2f Font::sizeText(std::string text, float lineSpacing)
     return Vector2f(highestWidth, y);
 }
 
+std::string Font::getTextMaxWidth(std::string text, float maxWidth)
+{
+    float width = sizeText(text).x();
+    while (width > maxWidth) {
+        text.pop_back();
+        width = sizeText(text).x();
+    }
+    return text;
+}
+
 float Font::getHeight(float lineSpacing) const
 {
     return mMaxGlyphHeight * lineSpacing;

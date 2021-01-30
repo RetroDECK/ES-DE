@@ -93,14 +93,33 @@ void GuiMenu::openUISettings()
     auto startup_system = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "GAMELIST ON STARTUP", false);
     startup_system->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
+    float dotsSize = Font::get(FONT_SIZE_MEDIUM)->sizeText("...").x();
     for (auto it = SystemData::sSystemVector.cbegin();
             it != SystemData::sSystemVector.cend(); it++) {
-        if ("retropie" != (*it)->getName()) {
-            startup_system->add((*it)->getName(), (*it)->getName(),
+        if ((*it)->getName() != "retropie") {
+            // If required, abbreviate the system name so it doesn't overlap the setting name.
+            std::string abbreviatedString = Font::get(FONT_SIZE_MEDIUM)->
+                    getTextMaxWidth((*it)->getFullName(), Renderer::getScreenWidth() * 0.25f);
+            float sizeDifference = Font::get(FONT_SIZE_MEDIUM)->sizeText((*it)->getFullName()).x() -
+                     Font::get(FONT_SIZE_MEDIUM)->sizeText(abbreviatedString).x();
+            if (sizeDifference > 0) {
+                // It doesn't make sense to abbreviate if the number of pixels removed by
+                // the abbreviation is less or equal to the size of the three dots that
+                // would be appended to the string.
+                if (sizeDifference <= dotsSize) {
+                    abbreviatedString = (*it)->getFullName();
+                }
+                else {
+                    if (abbreviatedString.back() == ' ')
+                        abbreviatedString.pop_back();
+                    abbreviatedString += "...";
+                }
+            }
+            startup_system->add(abbreviatedString, (*it)->getName(),
                     Settings::getInstance()->getString("StartupSystem") == (*it)->getName());
         }
     }
-    s->addWithLabel("GAMELIST TO SHOW ON STARTUP", startup_system);
+    s->addWithLabel("GAMELIST ON STARTUP", startup_system);
     s->addSaveFunc([startup_system, s] {
         if (startup_system->getSelected() != Settings::getInstance()->getString("StartupSystem")) {
             Settings::getInstance()->setString("StartupSystem", startup_system->getSelected());
