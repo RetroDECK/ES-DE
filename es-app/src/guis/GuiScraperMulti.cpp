@@ -147,10 +147,25 @@ void GuiScraperMulti::doNextSearch()
             scrapeName = Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath());
     }
 
+    // Extract possible subfolders from the path.
+    std::string folderPath = Utils::String::replace(
+            Utils::FileSystem::getParent(mSearchQueue.front().game->getPath()),
+            mSearchQueue.front().system->getSystemEnvData()->mStartPath, "");
+
+    if (folderPath.size() >= 2) {
+        folderPath.erase(0, 1);
+        #if defined(_WIN64)
+        folderPath.push_back('\\');
+        folderPath = Utils::String::replace(folderPath, "/", "\\");
+        #else
+        folderPath.push_back('/');
+        #endif
+    }
+
     // Update subtitle.
     ss.str("");
-    ss << "GAME " << (mCurrentGame + 1) << " OF " << mTotalGames << " - " << scrapeName <<
-            ((mSearchQueue.front().game->getType() == FOLDER) ? "  " +
+    ss << "GAME " << (mCurrentGame + 1) << " OF " << mTotalGames << " - " << folderPath <<
+            scrapeName << ((mSearchQueue.front().game->getType() == FOLDER) ? "  " +
             ViewController::FOLDER_CHAR : "");
     mSubtitle->setText(ss.str());
 
