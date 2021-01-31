@@ -99,7 +99,7 @@ void GuiMenu::openUISettings()
         if ((*it)->getName() != "retropie") {
             // If required, abbreviate the system name so it doesn't overlap the setting name.
             std::string abbreviatedString = Font::get(FONT_SIZE_MEDIUM)->
-                    getTextMaxWidth((*it)->getFullName(), Renderer::getScreenWidth() * 0.25f);
+                    getTextMaxWidth((*it)->getFullName(), mSize.x() * 0.47f);
             float sizeDifference = Font::get(FONT_SIZE_MEDIUM)->sizeText((*it)->getFullName()).x() -
                      Font::get(FONT_SIZE_MEDIUM)->sizeText(abbreviatedString).x();
             if (sizeDifference > 0) {
