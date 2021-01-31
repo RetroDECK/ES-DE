@@ -88,7 +88,8 @@ void SliderComponent::render(const Transform4x4f& parentTrans)
         mFont->renderTextCache(mValueCache.get());
 
     float width = mSize.x() - mKnob.getSize().x() -
-            (mValueCache ? mValueCache->metrics.size.x() + 4 : 0);
+            (mValueCache ? mValueCache->metrics.size.x() +
+            (4 * Renderer::getScreenWidthModifier()) : 0);
 
     // Render line.
     const float lineWidth = 2 * Renderer::getScreenHeightModifier();;
@@ -153,9 +154,10 @@ void SliderComponent::onValueChanged()
     // Update knob position/size.
     mKnob.setResize(0, mSize.y() * 0.7f);
     float lineLength = mSize.x() - mKnob.getSize().x() -
-            (mValueCache ? mValueCache->metrics.size.x() + 4 : 0);
-    mKnob.setPosition((mValue / mMax) * lineLength +
-            mKnob.getSize().x()/2, mSize.y() / 2);
+            (mValueCache ? mValueCache->metrics.size.x() +
+            (4 * Renderer::getScreenWidthModifier()) : 0);
+    mKnob.setPosition(((mValue - mMin / 2) / mMax) * lineLength +
+            mKnob.getSize().x() / 2, mSize.y() / 2);
 }
 
 std::vector<HelpPrompt> SliderComponent::getHelpPrompts()
