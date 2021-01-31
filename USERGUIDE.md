@@ -42,7 +42,7 @@ The following operating systems have been tested (all for the x86 architecture):
 * Windows 10
 * Windows 8.1
 
-***)** For Ubuntu 20.10, the included VLC version 3.0.11.1-2 is broken so ES-DE will crash when attempting to play videos. This can be fixed by manually replacing the file /lib/x86_64-linux-gnu/libvlccore.so.9.0.0 with the corresponding file from version 3.0.9.2-1 from Ubuntu 20.04. Make sure that the /lib/x86_64-linux-gnu/libvlccore.so.9 symlink points to this file as well. Hopefully this issue will soon be patched so that this manual workaround is not required.
+***)** On Ubuntu 20.10, attempting to play videos crashes ES-DE due to a libVLC bug, refer to the Known issues section in [CHANGELOG.md](CHANGELOG.md#known-issues) for a workaround.
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 
@@ -371,6 +371,8 @@ Apart from this, DOS games should work the same as any other system. The game fo
 
 #### Ports
 
+**Note: On Unix/Linux, if you get a white screen in ES-DE after returning from a game that switches screen resolution then refer to the Known issues section in [CHANGELOG.md](CHANGELOG.md#known-issues) for a workaround.**
+
 Ports are not really executed using emulators, but are rather applications running natively in the operating system. The easiest way to handle these is to add a simple shell script or batch file where you can customize the exact launch parameters for the game.
 
 It's of course possible to add these as single files to the root folder, but normally it's recommended to setup a separate folder per game as there may be more than a single file available per game. You very often want to have easy access to the game setup utility for instance.
@@ -421,6 +423,8 @@ You don't need to set execution permissions for these scripts, ES-DE will run th
 
 #### Lutris
 
+**Note: If you get a white screen in ES-DE after returning from a game that switches screen resolution then refer to the Known issues section in [CHANGELOG.md](CHANGELOG.md#known-issues) for a workaround.**
+
 Lutris runs only on Unix so it's only present as a placeholder in the es_systems.cfg templates for macOS and Windows.
 
 These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game using the syntax `lutris lutris:rungame/<game name>`
@@ -454,6 +458,8 @@ You don't need to set execution permissions for these scripts, ES-DE will run th
 As an alternative, you can add the Lutris games to the Ports game system, if you prefer to not separate them. The instructions above are identical in this case except that the shell scripts should be located inside the `ports` directory rather than inside the `lutris` directory.
 
 #### Steam
+
+**Note: As of ES-DE v1.0, launching Steam games doesn't work reliably so it's recommended to avoid it for the time being. Future versions will hopefully improve Steam support.**
 
 For steam, it's recommended to put shell scripts/batch files directly in the root folder, where the file names of these scripts correspond to the game names.
 
@@ -533,7 +539,7 @@ Here is an overview of what's supported by ES-DE and these scrapers:
 
 The category **Other game metadata** includes Description, Release date, Developer, Publisher, Genre and Players.
 
-The **Multi-language** support includes translated game genre names and game descriptions for a number of languages.
+The **Multi-language** support includes translated game genres and game descriptions for a number of languages.
 
 There are two approaches to scraping, either for a single game from the metadata editor, or for many games and systems using the multi-scraper.
 
@@ -706,7 +712,7 @@ The region to scrape for. This affects game names, game media and release dates.
 
 **Preferred language** _(ScreenScraper only)_
 
-Multiple languages are supported, and this affects game genre names and game descriptions. As the option name implies this is the preferred language only, as not all games on ScreenScraper have had their metadata translated to all supported languages. If the preferred language is not available for a game, ES-DE will fall back to scraping the English metadata.
+Multiple languages are supported by ScreenScraper, and this affects translations of game genres and game descriptions. As the option name implies this is the preferred language only as not all games have had their metadata translated. Unfortunately some less used languages have quite few games translated to them but hopefully this will improve over time as there's an ongoing community effort to make more translations. If the preferred language is not available for a game, ES-DE will fall back to scraping the English metadata.
 
 **Overwrite files and data**
 
@@ -746,7 +752,7 @@ Enabling this option causes folders themselves to be included by the scraper. Th
 
 Various settings that affects the user interface.
 
-**Gamelist to show on startup**
+**Gamelist on startup**
 
 If set to _None_, the system view will be showed. Any other value will jump to that game system automatically on startup.
 
