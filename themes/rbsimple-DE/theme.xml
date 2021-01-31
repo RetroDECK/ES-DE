@@ -16,7 +16,6 @@ based on: 'recalbox-multi' by the Recalbox community
             <text name="systemInfo">
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.035</fontSize>
-                <backgroundColor>DDDDDDD8</backgroundColor>
             </text>
         </view>
     </feature>

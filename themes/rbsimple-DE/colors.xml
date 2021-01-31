@@ -1,6 +1,15 @@
 <theme>
     <formatVersion>6</formatVersion>
 
+    <feature supported="carousel">
+        <view name="system">
+            <text name="systemInfo">
+                <color>202020</color>
+                <backgroundColor>DDDDDDD8</backgroundColor>
+            </text>
+        </view>
+    </feature>
+
     <view name="system">
         <text name="info1, info2, info3, info4, info5, info6, info7,
                     info8, info9, info10, info11, info12" extra="true">
@@ -13,8 +22,8 @@
             <color>262626</color>
         </text>
         <helpsystem name="help">
-            <textColor>a6a6a6</textColor>
-            <iconColor>a6a6a6</iconColor>
+            <textColor>A6A6A6</textColor>
+            <iconColor>A6A6A6</iconColor>
         </helpsystem>
     </view>
 
@@ -33,9 +42,9 @@
         </image>
         <textlist name="gamelist">
             <selectorColor>262626</selectorColor>
-            <selectedColor>9f9f9f</selectedColor>
+            <selectedColor>9F9F9F</selectedColor>
             <primaryColor>262626</primaryColor>
-            <secondaryColor>4d4d4d</secondaryColor>
+            <secondaryColor>4D4D4D</secondaryColor>
         </textlist>
         <text name="gamelistInfo">
             <color>505050</color>
