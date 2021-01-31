@@ -53,6 +53,7 @@ namespace Utils
         bool renameFile(const std::string& _source_path,
                 const std::string& _destination_path, bool _overwrite);
         bool removeFile(const std::string& _path);
+        bool removeDirectory(const std::string& path);
 
         bool createDirectory(const std::string& _path);
         bool exists(const std::string& _path);

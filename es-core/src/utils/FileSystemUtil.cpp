@@ -505,7 +505,7 @@ namespace Utils
         std::string removeCommonPath(const std::string& _path,
                 const std::string& _common, bool& _contains)
         {
-            std::string path   = getGenericPath(_path);
+            std::string path = getGenericPath(_path);
             std::string common = isDirectory(_common) ?
                     getGenericPath(_common) : getParent(_common);
 
@@ -674,6 +674,25 @@ namespace Utils
             }
             return (unlink(path.c_str()) == 0);
             #endif
+        }
+
+        bool removeDirectory(const std::string& path)
+        {
+            if (getDirContent(path).size() != 0) {
+                LOG(LogError) << "Couldn't delete directory as it's not empty";
+                LOG(LogError) << path;
+                return false;
+            }
+            #if defined(_WIN64)
+            if (_wrmdir(Utils::String::stringToWideString(path).c_str()) == 0) {
+            #else
+            if (rmdir(path.c_str()) != 0) {
+            #endif
+                LOG(LogError) << "Couldn't delete directory, permission problems?";
+                LOG(LogError) << path;
+                return false;
+            }
+            return true;
         }
 
         bool createDirectory(const std::string& _path)
