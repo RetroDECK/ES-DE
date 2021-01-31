@@ -337,8 +337,8 @@ GuiMetaDataEd::GuiMetaDataEd(
     mGrid.setEntry(mButtons, Vector2i(0, 2), true, false);
 
     // Resize + center.
-    float width = static_cast<float>(std::min(Renderer::getScreenHeight(),
-            static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
+    float width = static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() *
+            1.05f), static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
     setSize(width, Renderer::getScreenHeight() * 0.83f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
