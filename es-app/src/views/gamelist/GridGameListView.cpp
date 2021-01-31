@@ -574,27 +574,75 @@ void GridGameListView::remove(FileData* game, bool deleteFile)
 
 void GridGameListView::removeMedia(FileData* game)
 {
+    std::string systemMediaDir = FileData::getMediaDirectory() + game->getSystem()->getName();
+    std::string mediaType;
+    std::string path;
+
+    // If there are no media files left in the directory after the deletion, then remove
+    // the directory too. Remove any empty parent directories as well.
+    auto removeEmptyDirFunc = []
+            (std::string systemMediaDir, std::string mediaType, std::string path) {
+        std::string parentPath = Utils::FileSystem::getParent(path);
+        while (parentPath != systemMediaDir + "/" + mediaType) {
+            if (Utils::FileSystem::getDirContent(parentPath).size() == 0) {
+                Utils::FileSystem::removeDirectory(parentPath);
+                parentPath = Utils::FileSystem::getParent(parentPath);
+            }
+            else {
+                break;
+            }
+        }
+    };
+
     // Remove all game media files on the filesystem.
-    if (Utils::FileSystem::exists(game->getVideoPath()))
-        Utils::FileSystem::removeFile(game->getVideoPath());
+    if (Utils::FileSystem::exists(game->getVideoPath())) {
+        mediaType = "videos";
+        path = game->getVideoPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
 
-    if (Utils::FileSystem::exists(game->getMiximagePath()))
-        Utils::FileSystem::removeFile(game->getMiximagePath());
+    if (Utils::FileSystem::exists(game->getMiximagePath())) {
+        mediaType = "miximages";
+        path = game->getMiximagePath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
 
-    if (Utils::FileSystem::exists(game->getScreenshotPath()))
-        Utils::FileSystem::removeFile(game->getScreenshotPath());
+    if (Utils::FileSystem::exists(game->getScreenshotPath())) {
+        mediaType = "screenshots";
+        path = game->getScreenshotPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
 
-    if (Utils::FileSystem::exists(game->getCoverPath()))
-        Utils::FileSystem::removeFile(game->getCoverPath());
+    if (Utils::FileSystem::exists(game->getCoverPath())) {
+        mediaType = "covers";
+        path = game->getCoverPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
 
-    if (Utils::FileSystem::exists(game->getMarqueePath()))
-        Utils::FileSystem::removeFile(game->getMarqueePath());
+    if (Utils::FileSystem::exists(game->getMarqueePath())) {
+        mediaType = "marquees";
+        path = game->getMarqueePath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
 
-    if (Utils::FileSystem::exists(game->get3DBoxPath()))
-        Utils::FileSystem::removeFile(game->get3DBoxPath());
+    if (Utils::FileSystem::exists(game->get3DBoxPath())) {
+        mediaType = "3dboxes";
+        path = game->get3DBoxPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
 
-    if (Utils::FileSystem::exists(game->getThumbnailPath()))
-        Utils::FileSystem::removeFile(game->getThumbnailPath());
+    if (Utils::FileSystem::exists(game->getThumbnailPath())) {
+        mediaType = "thumbnails";
+        path = game->getThumbnailPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
 }
 
 std::vector<TextComponent*> GridGameListView::getMDLabels()
