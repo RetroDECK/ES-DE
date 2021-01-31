@@ -684,7 +684,7 @@ namespace Utils
                 return false;
             }
             #if defined(_WIN64)
-            if (_wrmdir(Utils::String::stringToWideString(path).c_str()) == 0) {
+            if (_wrmdir(Utils::String::stringToWideString(path).c_str()) != 0) {
             #else
             if (rmdir(path.c_str()) != 0) {
             #endif
