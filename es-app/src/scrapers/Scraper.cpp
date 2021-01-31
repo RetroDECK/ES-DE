@@ -512,13 +512,19 @@ std::string getSaveAsPath(const ScraperSearchParams& params,
 {
     const std::string systemsubdirectory = params.system->getName();
     const std::string name = Utils::FileSystem::getStem(params.game->getPath());
+    std::string subFolders;
+
+    // Extract possible subfolders from the path.
+    if (params.system->getSystemEnvData()->mStartPath != "")
+        subFolders = Utils::String::replace(Utils::FileSystem::getParent(params.game->getPath()),
+                params.system->getSystemEnvData()->mStartPath, "");
 
     std::string path = FileData::getMediaDirectory();
 
     if (!Utils::FileSystem::exists(path))
         Utils::FileSystem::createDirectory(path);
 
-    path += systemsubdirectory + "/" + filetypeSubdirectory + "/";
+    path += systemsubdirectory + "/" + filetypeSubdirectory + subFolders + "/";
 
     if (!Utils::FileSystem::exists(path))
         Utils::FileSystem::createDirectory(path);

@@ -314,7 +314,7 @@ The platform name for the Commodore 64 is `c64`, so the following structure woul
 ~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
-It's highly recommended to create `.m3u` playlist files for multi-disk images as this automates (well it should) disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
+It's highly recommended to create `.m3u` playlist files for multi-disk images as this normally automates disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
 The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
@@ -322,8 +322,6 @@ The .m3u file simply contains a list of the game files, for example in the case 
 LNINJA2A.D64
 LNINJA2B.D64
 ```
-
-It's recommended to have the exact same filename for the .m3u file as for the directory as the game media files will then be shared between the two. This saves some unnecessary scraping as well as some disk space.
 
 It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist files. ES-DE is flexible so do whatever makes most sense for the situation.
 
@@ -606,11 +604,11 @@ The media files must correspond exactly to the game files. For example the follo
 ~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
 ```
 
-Must have a corresponding filename for its media files in this fashion:
+Must have corresponding filenames for its media files in this fashion:
 
 ```
-~/.emulationstation/downloaded_media/c64/screenshots/Last Ninja 2.jpg
-~/.emulationstation/downloaded_media/c64/videos/Last Ninja 2.mp4
+~/.emulationstation/downloaded_media/c64/screenshots/Multidisk/Last Ninja 2/Last Ninja 2.jpg
+~/.emulationstation/downloaded_media/c64/videos/Multidisk/Last Ninja 2/Last Ninja 2.mp4
 ```
 
 JPG and PNG file formats and file extensions are supported for images, and AVI, MKV, MOV, MP4 and WMV are supported for videos.

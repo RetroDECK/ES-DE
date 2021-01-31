@@ -209,11 +209,18 @@ const std::string FileData::getMediaDirectory()
 
 const std::string FileData::getMediafilePath(std::string subdirectory, std::string mediatype) const
 {
-    std::vector<std::string> extList = { ".png", ".jpg" };
+    const std::vector<std::string> extList = { ".png", ".jpg" };
+    std::string subFolders;
+
+    // Extract possible subfolders from the path.
+    if (mEnvData->mStartPath != "")
+         subFolders = Utils::String::replace(
+                Utils::FileSystem::getParent(mPath), mEnvData->mStartPath, "");
+
+    const std::string tempPath = getMediaDirectory() + mSystemName + "/" + subdirectory +
+            subFolders + "/" + getDisplayName();
 
     // Look for an image file in the media directory.
-    std::string tempPath = getMediaDirectory() + mSystemName + "/" +
-            subdirectory + "/" + getDisplayName();
     for (int i = 0; i < extList.size(); i++) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
@@ -282,8 +289,16 @@ const std::string FileData::getThumbnailPath() const
 
 const std::string FileData::getVideoPath() const
 {
-    std::vector<std::string> extList = { ".avi", ".mkv", ".mov", ".mp4", ".wmv" };
-    std::string tempPath = getMediaDirectory() + mSystemName + "/videos/" + getDisplayName();
+    const std::vector<std::string> extList = { ".avi", ".mkv", ".mov", ".mp4", ".wmv" };
+    std::string subFolders;
+
+    // Extract possible subfolders from the path.
+    if (mEnvData->mStartPath != "")
+         subFolders = Utils::String::replace(
+                Utils::FileSystem::getParent(mPath), mEnvData->mStartPath, "");
+
+    const std::string tempPath =
+            getMediaDirectory() + mSystemName + "/videos" + subFolders + "/" + getDisplayName();
 
     // Look for media in the media directory.
     for (int i = 0; i < extList.size(); i++) {
