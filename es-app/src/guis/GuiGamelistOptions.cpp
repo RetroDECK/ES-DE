@@ -378,10 +378,11 @@ void GuiGamelistOptions::openMetaDataEd()
         LOG(LogInfo) << "Deleting the game file \"" << file->getFullPath() <<
                 "\", all its media files and its gamelist.xml entry.";
         CollectionSystemsManager::get()->deleteCollectionFiles(file);
-        ViewController::get()->getGameListView(
-            file->getSystem()).get()->removeMedia(file);
-        ViewController::get()->getGameListView(
-                file->getSystem()).get()->remove(file, true);
+        ViewController::get()->getGameListView(file->getSystem()).get()->removeMedia(file);
+        ViewController::get()->getGameListView(file->getSystem()).get()->remove(file, true);
+        mSystem->getRootFolder()->sort(*mListSort->getSelected(), mFavoritesSorting);
+        ViewController::get()->reloadGameListView(mSystem);
+
         mWindow->invalidateCachedBackground();
     };
 
