@@ -59,9 +59,26 @@ GuiMetaDataEd::GuiMetaDataEd(
 
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA",
             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
-    mSubtitle = std::make_shared<TextComponent>(mWindow,
-            Utils::FileSystem::getFileName(scraperParams.game->
-            getPath()) + " [" + Utils::String::toUpper(scraperParams.system->getName()) + "]",
+
+    // Extract possible subfolders from the path.
+    std::string folderPath = Utils::String::replace(
+            Utils::FileSystem::getParent(scraperParams.game->getPath()),
+            scraperParams.system->getSystemEnvData()->mStartPath, "");
+
+    if (folderPath.size() >= 2) {
+        folderPath.erase(0, 1);
+        #if defined(_WIN64)
+        folderPath.push_back('\');
+        folderPath = Utils::String::replace(folderPath, "/", "\\");
+        #else
+        folderPath.push_back('/');
+        #endif
+    }
+
+    mSubtitle = std::make_shared<TextComponent>(mWindow, folderPath +
+            Utils::FileSystem::getFileName(scraperParams.game->getPath()) +
+            " [" + Utils::String::toUpper(scraperParams.system->getName()) + "]" +
+            (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
             Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, Vector3f(0.0f, 0.0f, 0.0f),
             Vector2f(0.0f, 0.0f), 0x00000000, 0.05f);
     mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
