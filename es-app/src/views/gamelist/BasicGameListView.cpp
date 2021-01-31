@@ -234,6 +234,9 @@ void BasicGameListView::removeMedia(FileData* game)
     std::string mediaType;
     std::string path;
 
+    // Stop the video player, especially important on Windows as the file would otherwise be locked.
+    onStopVideo();
+
     // If there are no media files left in the directory after the deletion, then remove
     // the directory too. Remove any empty parent directories as well.
     auto removeEmptyDirFunc = []

@@ -43,6 +43,7 @@ public:
 
     virtual void onShow() override;
     virtual void onHide() override;
+    virtual void onStopVideo() override;
     virtual void onPauseVideo() override;
     virtual void onUnpauseVideo() override;
     virtual bool isVideoPaused() override { return mPause; }

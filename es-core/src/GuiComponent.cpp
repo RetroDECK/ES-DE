@@ -543,6 +543,12 @@ void GuiComponent::onHide()
         getChild(i)->onHide();
 }
 
+void GuiComponent::onStopVideo()
+{
+    for (unsigned int i = 0; i < getChildCount(); i++)
+        getChild(i)->onStopVideo();
+}
+
 void GuiComponent::onPauseVideo()
 {
     for (unsigned int i = 0; i < getChildCount(); i++)

@@ -178,6 +178,7 @@ public:
 
     virtual void onShow();
     virtual void onHide();
+    virtual void onStopVideo();
     virtual void onPauseVideo();
     virtual void onUnpauseVideo();
     virtual bool isVideoPaused() { return false; };

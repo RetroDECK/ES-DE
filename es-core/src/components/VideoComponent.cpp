@@ -116,6 +116,12 @@ void VideoComponent::onHide()
     manageState();
 }
 
+void VideoComponent::onStopVideo()
+{
+    stopVideo();
+    manageState();
+}
+
 void VideoComponent::onPauseVideo()
 {
     mBlockPlayer = true;
