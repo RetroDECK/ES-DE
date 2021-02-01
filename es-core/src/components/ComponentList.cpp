@@ -181,9 +181,9 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     // Clip everything to be inside our bounds.
     Vector3f dim(mSize.x(), mSize.y(), 0);
     dim = trans * dim - trans.translation();
-    Renderer::pushClipRect(Vector2i(static_cast<int>(trans.translation().x()),
-            static_cast<int>(trans.translation().y())), Vector2i(static_cast<int>(
-            std::round(dim.x())), static_cast<int>(std::round(dim.y() + 1))));
+    Renderer::pushClipRect(Vector2i(static_cast<int>(std::round(trans.translation().x())),
+            static_cast<int>(std::round(trans.translation().y()))), Vector2i(static_cast<int>(
+            std::round(dim.x())), static_cast<int>(std::round(dim.y()))));
 
     // Scroll the camera.
     trans.translate(Vector3f(0, -std::round(mCameraOffset), 0));
@@ -216,18 +216,6 @@ void ComponentList::render(const Transform4x4f& parentTrans)
                         it->component->render(trans);
                     }
                     else {
-                        // Note: I've disabled this code as it's overly complicated,
-                        // instead we're now using simple constants which should be
-                        // good enough. Let's keep the code though if needed in the
-                        // future for some reason.
-//                        // If there is a hue, average the brightness values to make
-//                        // an equivalent gray value before inverting.
-//                        // This is not the proper way to do a BW conversion as the RGB values
-//                        // should not be evenly distributed, but it's definitely good enough
-//                        // for this situation.
-//                        unsigned char byteAverage = (byteRed + byteGreen + byteBlue) / 3;
-//                        unsigned int averageColor = byteAverage << 24 | byteAverage << 16 |
-//                                byteAverage << 8 | 0xFF;
                         if (isTextComponent)
                             it->component->setColor(DEFAULT_INVERTED_TEXTCOLOR);
                         else
@@ -266,18 +254,13 @@ void ComponentList::render(const Transform4x4f& parentTrans)
         const float selectedRowHeight = getRowHeight(mEntries.at(mCursor).data);
 
         if (opacity == 1) {
-            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(), selectedRowHeight,
-                    0xFFFFFFFF, 0xFFFFFFFF, false, opacity, trans,
+            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(),
+                    selectedRowHeight, 0xFFFFFFFF, 0xFFFFFFFF, false, opacity, trans,
                     Renderer::Blend::ONE_MINUS_DST_COLOR, Renderer::Blend::ZERO);
 
-            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(), selectedRowHeight,
-                    0x777777FF, 0x777777FF, false, opacity, trans,
+            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(),
+                    selectedRowHeight, 0x777777FF, 0x777777FF, false, opacity, trans,
                     Renderer::Blend::ONE, Renderer::Blend::ONE);
-            // Hack to draw 2px dark on left/right of the bar.
-            Renderer::drawRect(0.0f, mSelectorBarOffset, 2.0f, selectedRowHeight,
-                    0x878787FF, 0x878787FF, false, opacity, trans);
-            Renderer::drawRect(mSize.x() - 2.0f, mSelectorBarOffset, 2.0f, selectedRowHeight,
-                    0x878787FF, 0x878787FF, false, opacity, trans);
         }
 
         for (auto it = drawAfterCursor.cbegin(); it != drawAfterCursor.cend(); it++)
