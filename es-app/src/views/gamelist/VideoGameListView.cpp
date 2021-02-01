@@ -201,6 +201,11 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
 
     mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
+    // If there is no position defined in the theme for gamelistInfo, then hide it.
+    if (mGamelistInfo.getPosition() == 0)
+        mGamelistInfo.setVisible(false);
+    else
+        mGamelistInfo.setVisible(true);
 
     sortChildren();
 }
