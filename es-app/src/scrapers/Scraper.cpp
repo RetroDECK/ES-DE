@@ -276,6 +276,8 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             if (!Utils::FileSystem::isDirectory(Utils::FileSystem::getParent(filePath))) {
                 setError("Media directory does not exist and can't be created. "
                         "Permission problems?");
+                LOG(LogError) << "Couldn't create media directory: \"" <<
+                        Utils::FileSystem::getParent(filePath) << "\"";
             return;
             }
 
@@ -420,6 +422,8 @@ void MediaDownloadHandle::update()
     // problems or the MediaDirectory setting points to a file instead of a directory.
     if (!Utils::FileSystem::isDirectory(Utils::FileSystem::getParent(mSavePath))) {
         setError("Media directory does not exist and can't be created. Permission problems?");
+        LOG(LogError) << "Couldn't create media directory: \"" <<
+                Utils::FileSystem::getParent(mSavePath) << "\"";
         return;
     }
 

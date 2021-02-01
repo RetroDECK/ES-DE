@@ -683,6 +683,11 @@ namespace Utils
                 LOG(LogError) << path;
                 return false;
             }
+            if (isSymlink(path)) {
+                LOG(LogError) << "Couldn't delete directory as it's actually a symlink";
+                LOG(LogError) << path;
+                return false;
+            }
             #if defined(_WIN64)
             if (_wrmdir(Utils::String::stringToWideString(path).c_str()) != 0) {
             #else
