@@ -44,6 +44,8 @@ public:
     void openInputScreen(ScraperSearchParams& from);
     void stop();
     inline SearchType getSearchType() const { return mSearchType; }
+    bool getSavedNewMedia()
+                { return (mMDResolveHandle ? mMDResolveHandle->getSavedNewMedia() : false); };
     static bool saveMetadata(const ScraperSearchResult& result,
             MetaDataList& metadata, FileData* scrapedGame);
 

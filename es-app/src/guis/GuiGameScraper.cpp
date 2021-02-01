@@ -76,7 +76,17 @@ GuiGameScraper::GuiGameScraper(
         mGrid.resetCursor();
     }));
     buttons.push_back(std::make_shared<ButtonComponent>(
-            mWindow, "CANCEL", "cancel", [&] { delete this; }));
+            mWindow, "CANCEL", "cancel", [&] {
+                if (mSearch->getSavedNewMedia()) {
+                    // If the user aborted the scraping but there was still some media downloaded,
+                    // then force an unload of the textures for the game image and marquee, and make
+                    // an update of the game entry. Otherwise the images would not get updated until
+                    // the user scrolls up and down the gamelist.
+                    TextureResource::manualUnload(mSearchParams.game->getImagePath(), false);
+                    TextureResource::manualUnload(mSearchParams.game->getMarqueePath(), false);
+                    ViewController::get()->onFileChanged(mSearchParams.game, true);
+                }
+                delete this; }));
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
     mGrid.setEntry(mButtonGrid, Vector2i(0, 6), true, false);
@@ -134,6 +144,15 @@ void GuiGameScraper::onSizeChanged()
 bool GuiGameScraper::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("b", input) && input.value) {
+        if (mSearch->getSavedNewMedia()) {
+            // If the user aborted the scraping but there was still some media downloaded,
+            // then force an unload of the textures for the game image and marquee, and make
+            // an update of the game entry. Otherwise the images would not get updated until
+            // the user scrolls up and down the gamelist.
+            TextureResource::manualUnload(mSearchParams.game->getImagePath(), false);
+            TextureResource::manualUnload(mSearchParams.game->getMarqueePath(), false);
+            ViewController::get()->onFileChanged(mSearchParams.game, true);
+        }
         delete this;
         return true;
     }

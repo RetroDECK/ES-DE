@@ -179,6 +179,7 @@ public:
     void update() override;
     inline const ScraperSearchResult& getResult() const
             { assert(mStatus == ASYNC_DONE); return mResult; }
+    bool getSavedNewMedia() { return mResult.savedNewMedia; }
 
 private:
     ScraperSearchResult mResult;
