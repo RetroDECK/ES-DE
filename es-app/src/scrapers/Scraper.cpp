@@ -18,6 +18,10 @@
 #include "Settings.h"
 #include "SystemData.h"
 
+#if defined(_WIN64)
+#include "views/ViewController.h"
+#endif
+
 #include <FreeImage.h>
 #include <fstream>
 
@@ -211,6 +215,10 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.existingMediaFile = search.game->getVideoPath();
         mediaFileInfo.resizeFile = false;
         scrapeFiles.push_back(mediaFileInfo);
+        #if defined(_WIN64)
+        // Required due to the idiotic file locking that exists on this operating system.
+        ViewController::get()->onStopVideo();
+        #endif
     }
 
     for (auto it = scrapeFiles.cbegin(); it != scrapeFiles.cend(); it++) {
