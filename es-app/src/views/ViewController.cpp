@@ -506,7 +506,7 @@ void ViewController::onFileChanged(FileData* file, bool reloadGameList)
 void ViewController::launch(FileData* game)
 {
     if (game->getType() != GAME) {
-        LOG(LogError) << "tried to launch something that isn't a game.";
+        LOG(LogError) << "Tried to launch something that isn't a game";
         return;
     }
 
