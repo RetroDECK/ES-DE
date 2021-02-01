@@ -269,8 +269,8 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             Settings::getInstance()->getString("ScraperPasswordScreenScraper") != "") {
         std::string userID = data.child("ssuser").child("id").text().get();
         if (userID != "") {
-            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account '" <<
-                    userID << "'";
+            LOG(LogDebug) << "ScreenScraperRequest::processGame(): Scraping using account \"" <<
+                    userID << "\"";
         }
         else {
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): The configured account '" <<
@@ -523,7 +523,23 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
         const std::string gameName) const
 {
     std::string screenScraperURL;
+    std::string searchName = gameName;
     bool singleSearch = false;
+
+    // Trim leading and trailing whitespaces.
+    searchName.erase(searchName.begin(),
+            std::find_if(searchName.begin(), searchName.end(), [](char c) {
+        return !std::isspace(static_cast<unsigned char>(c));
+    }));
+    searchName.erase(std::find_if(searchName.rbegin(), searchName.rend(), [](char c) {
+        return !std::isspace(static_cast<unsigned char>(c));
+    }).base(), searchName.end());
+
+    // If only whitespaces were entered as the search string, then search using a random string
+    // that will not return any results. This is a quick and dirty way to avoid french error
+    // messages about malformed URLs that would surely confuse the user.
+    if (searchName == "")
+        searchName = "zzzzzz";
 
     // If the game is an arcade game and we're not searching using the metadata name, then
     // search using the individual ROM name rather than running a wider text matching search.
@@ -535,21 +551,38 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
     if (isArcadeSystem && !Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
         singleSearch = true;
     }
-    else if (gameName.size() < 4) {
+    else if (searchName.size() < 4) {
         singleSearch = true;
     }
-    else if (gameName.back() == '+') {
+    else if (searchName.back() == '+') {
         // Special case where ScreenScraper will apparently strip trailing plus characters
         // from the search strings, and if we don't handle this we could end up with less
         // than four characters which would break the wide search.
-        std::string trimTrailingPluses = gameName;
-        for (int i = 0; i < gameName.size(); i++) {
-            if (trimTrailingPluses.back() == '+')
-                trimTrailingPluses.pop_back();
-            else
-                break;
-        }
+        std::string trimTrailingPluses = searchName;
+        trimTrailingPluses.erase(std::find_if(trimTrailingPluses.rbegin(),
+                trimTrailingPluses.rend(), [](char c) {
+            return c != '+';
+        }).base(), trimTrailingPluses.end());
+
         if (trimTrailingPluses.size() < 4)
+            singleSearch = true;
+    }
+    // Another issue is that ScreenScraper removes the word "the" from the search string, which
+    // could also lead to an error for short game names.
+    if (!singleSearch) {
+        std::string removeThe =
+                Utils::String::replace(Utils::String::toUpper(searchName), "THE ", "");
+        // Any additional spaces must also be removed.
+        removeThe.erase(removeThe.begin(),
+                std::find_if(removeThe.begin(), removeThe.end(), [](char c) {
+            return !std::isspace(static_cast<unsigned char>(c));
+        }));
+        // If "the" is placed at the end of the search string, ScreenScraper also removes it.
+        if (removeThe.size() > 4) {
+            if (removeThe.substr(removeThe.size() - 4, 4) == " THE")
+                removeThe = removeThe.substr(0, removeThe.size() - 4);
+        }
+        if (removeThe.size() < 4)
             singleSearch = true;
     }
 
@@ -559,7 +592,7 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
                 + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
                 + "&softname=" + HttpReq::urlEncode(API_SOFT_NAME)
                 + "&output=xml"
-                + "&romnom=" + HttpReq::urlEncode(gameName);
+                + "&romnom=" + HttpReq::urlEncode(searchName);
     }
     else {
         screenScraperURL = API_URL_BASE
@@ -567,7 +600,7 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
                 + "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY)
                 + "&softname=" + HttpReq::urlEncode(API_SOFT_NAME)
                 + "&output=xml"
-                + "&recherche=" + HttpReq::urlEncode(gameName);
+                + "&recherche=" + HttpReq::urlEncode(searchName);
     }
 
     // Username / password, if this has been setup and activated.
