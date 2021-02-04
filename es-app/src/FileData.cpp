@@ -481,8 +481,10 @@ void FileData::sort(ComparisonFunction& comparator,
         // should be filtered already at that earlier point.
             if ((*it)->getHidden())
                 it = mChildren.erase(it);
-            // Also hide folders where all its entries have been hidden.
-            else if ((*it)->getType() == FOLDER && (*it)->getChildren().size() == 0)
+            // Also hide folders where all its entries have been hidden, unless it's a
+            // grouped custom collection.
+            else if ((*it)->getType() == FOLDER && (*it)->getChildren().size() == 0 &&
+                    !(*it)->getSystem()->isGroupedCustomCollection())
                 it = mChildren.erase(it);
             else
                 it++;
