@@ -50,6 +50,7 @@ public:
 
     virtual const std::vector<std::string>& getFirstLetterIndex() override
             { return mFirstLetterIndex; };
+    virtual void addPlaceholder(FileData* firstEntry = nullptr) override;
 
 protected:
     virtual void update(int deltaTime) override;
@@ -58,7 +59,6 @@ protected:
     virtual void populateList(const std::vector<FileData*>& files, FileData* firstEntry) override;
     virtual void remove(FileData* game, bool deleteFile) override;
     virtual void removeMedia(FileData* game) override;
-    virtual void addPlaceholder(FileData* firstEntry = nullptr);
 
     ImageGridComponent<FileData*> mGrid;
     // Points to the first game in the list, i.e. the first entry which is of the type 'GAME'.

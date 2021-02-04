@@ -29,6 +29,7 @@ public:
 
     virtual FileData* getCursor() override = 0;
     virtual void setCursor(FileData*) override = 0;
+    virtual void addPlaceholder(FileData*) override = 0;
 
     virtual bool input(InputConfig* config, Input input) override;
     virtual void launch(FileData* game) override = 0;

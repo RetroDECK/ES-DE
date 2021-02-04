@@ -83,7 +83,7 @@ public:
 
     // Functions to manage collection files related to a source FileData:
     // Update all collection files related to the source file.
-    void refreshCollectionSystems(FileData* file);
+    void refreshCollectionSystems(FileData* file, bool refreshDisabledAutoCollections = false);
     // Update the collections, such as when marking or unmarking a game as favorite.
     void updateCollectionSystem(FileData* file, CollectionSystemData sysData);
     // Delete all collection files from all collection systems related to the source file.

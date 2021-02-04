@@ -289,7 +289,8 @@ void CollectionSystemsManager::updateSystemsList()
     }
 }
 
-void CollectionSystemsManager::refreshCollectionSystems(FileData* file)
+void CollectionSystemsManager::refreshCollectionSystems(FileData* file,
+        bool refreshDisabledAutoCollections)
 {
     if (!file->getSystem()->isGameSystem() || file->getType() != GAME)
         return;
@@ -315,7 +316,8 @@ void CollectionSystemsManager::refreshCollectionSystems(FileData* file)
 
     for (auto sysDataIt = allCollections.cbegin();
             sysDataIt != allCollections.cend(); sysDataIt++) {
-        if (sysDataIt->second.isEnabled)
+        if (sysDataIt->second.isEnabled || (refreshDisabledAutoCollections &&
+                !sysDataIt->second.system->isGroupedCustomCollection()))
             updateCollectionSystem(file, sysDataIt->second);
     }
 }
@@ -674,9 +676,7 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 systemViewToUpdate->getRootFolder()->sort(rootFolder->getSortTypeFromString(
                         rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
-                if (rootFolder->getChildren().size() == 0) {
-                    ViewController::get()->reloadGameListView(systemViewToUpdate);
-                }
+                ViewController::get()->reloadGameListView(systemViewToUpdate);
 
                 updateCollectionFolderMetadata(systemViewToUpdate);
             }
@@ -712,6 +712,10 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
             file->getSourceFileData()->getSystem()->getIndex()->addToIndex(file);
             file->getSourceFileData()->getSystem()->onMetaDataSavePoint();
             refreshCollectionSystems(file->getSourceFileData());
+            if (mAutoCollectionSystemsData["favorites"].isEnabled)
+                ViewController::get()->
+                        reloadGameListView(mAutoCollectionSystemsData["favorites"].system);
+
         }
         if (adding)
             s = new GuiInfoPopup(mWindow, "ADDED '" +
@@ -947,6 +951,10 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
             std::vector<FileData*> systemEntries =
                     autoSystem->system->getRootFolder()->getFilesRecursive(true, true, false);
 
+            // Flag the collection as not populated so it gets repopulated.
+            autoSystem->isPopulated = false;
+            populateAutoCollection(autoSystem);
+
             if (systemEntries.empty())
                 return;
 
@@ -957,19 +965,23 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
                 delete entry;
             }
 
-            // Flag the collection as not populated so it gets repopulated.
             autoSystem->isPopulated = false;
             populateAutoCollection(autoSystem);
 
             // The cursor value is now pointing to some random memory address so we need to set
-            // it to something valid, as done here by selecting the first child. This does however
-            // not mean it's the first row of the gamelist, so we follow up with selecting the
-            // first entry after that. If doing this second step without the first step we would
-            // crash the application as it would try to access the old (now invalid) pointer.
+            // it to something valid. For empty collections we need to first create a placeholder
+            // and then point to this, and for collections with games in them we select the first
+            // entry.
             auto autoView = ViewController::get()->getGameListView(autoSystem->system).get();
-            autoView->setCursor(autoSystem->system->getRootFolder()->
-                    getChildrenRecursive().front());
-            autoView->setCursor(autoView->getFirstEntry());
+            if (autoSystem->system->getRootFolder()->getChildren().size() == 0) {
+                autoView->addPlaceholder(autoSystem->system->getRootFolder());
+                autoView->setCursor(autoView->getLastEntry());
+            }
+            else {
+                autoView->setCursor(autoSystem->system->getRootFolder()->
+                        getChildrenRecursive().front());
+                autoView->setCursor(autoView->getFirstEntry());
+            }
         }
     }
 

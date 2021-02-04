@@ -45,6 +45,7 @@ public:
     virtual FileData* getLastEntry() = 0;
     virtual FileData* getFirstGameEntry() = 0;
     virtual const std::vector<std::string>& getFirstLetterIndex() = 0;
+    virtual void addPlaceholder(FileData*) = 0;
 
     virtual void copyCursorHistory(std::vector<FileData*>& cursorHistory) = 0;
     virtual void populateCursorHistory(std::vector<FileData*>& cursorHistory) = 0;

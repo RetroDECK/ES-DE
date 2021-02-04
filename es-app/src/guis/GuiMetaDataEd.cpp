@@ -436,8 +436,15 @@ void GuiMetaDataEd::save()
         mSavedCallback();
 
     // Update all collections where the game is present.
-    if (mScraperParams.game->getType() == GAME)
-        CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+    if (mScraperParams.game->getType() == GAME) {
+        // Update disabled auto collections as well when hiding a game, as otherwise these
+        // collections could get invalid gamelist cursor positions. A cursor pointing to a
+        // removed game would crash the application upon enabling the collections.
+        if (hideGameWhileHidden)
+            CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game, true);
+        else
+            CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+    }
 
     // If game counting was re-enabled for the game, then reactivate it in any custom collections
     // where it may exist.
