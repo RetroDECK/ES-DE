@@ -446,6 +446,12 @@ void GuiMetaDataEd::save()
             CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
     }
 
+    // If hiding a game, remove it from the indices of all systems.
+    if (hideGameWhileHidden) {
+        for (SystemData* sys : SystemData::sSystemVector)
+            sys->getIndex()->removeFromIndex(mScraperParams.game);
+    }
+
     // If game counting was re-enabled for the game, then reactivate it in any custom collections
     // where it may exist.
     if (setGameAsCounted)
