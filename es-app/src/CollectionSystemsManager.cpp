@@ -957,7 +957,7 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
             it != mAutoCollectionSystemsData.cend(); it++) {
         if ((*it).second.system == sysData) {
             LOG(LogDebug) << "CollectionSystemsManager::repopulateCollection(): "
-                    "Repopulating auto collection '" << it->first << "'.";
+                    "Repopulating auto collection \"" << it->first << "\"";
 
             CollectionSystemData* autoSystem = &mAutoCollectionSystemsData[it->first];
             std::vector<FileData*> systemEntries =
@@ -970,12 +970,14 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
             if (systemEntries.empty())
                 return;
 
-            // Delete all children from the system and remove them from the index too.
+            // Delete all children from the system.
             for (FileData* entry : systemEntries) {
-                autoSystem->system->getIndex()->removeFromIndex(entry);
                 autoSystem->system->getRootFolder()->removeChild(entry);
                 delete entry;
             }
+
+            // Reset the filters so that they get rebuilt correctly when populating the collection.
+            autoSystem->system->getIndex()->resetIndex();
 
             autoSystem->isPopulated = false;
             populateAutoCollection(autoSystem);
@@ -1097,8 +1099,8 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
                         include = include && (*gameIt)->metadata.get("playcount") > "0";
                         break;
                     case AUTO_FAVORITES:
-                        // We may still want to add files we don't
-                        // want in auto collections in "favorites"
+                        // We may still want to add files we don't want in auto collections
+                        // to "favorites".
                         include = (*gameIt)->metadata.get("favorite") == "true";
                         break;
                     default:
