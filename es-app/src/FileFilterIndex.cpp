@@ -618,7 +618,7 @@ void FileFilterIndex::manageIndexEntry(std::map<std::string, int>* index,
     }
 }
 
-void FileFilterIndex::clearIndex(std::map<std::string, int> indexMap)
+void FileFilterIndex::clearIndex(std::map<std::string, int>& indexMap)
 {
     indexMap.clear();
 }

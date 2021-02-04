@@ -81,7 +81,7 @@ private:
 
     void manageIndexEntry(std::map<std::string, int>* index, std::string key, bool remove);
 
-    void clearIndex(std::map<std::string, int> indexMap);
+    void clearIndex(std::map<std::string, int>& indexMap);
 
     std::string mTextFilter;
     bool mFilterByText;
