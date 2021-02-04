@@ -26,6 +26,7 @@
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "views/gamelist/IGameListView.h"
+#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "FileData.h"
 #include "FileFilterIndex.h"
@@ -752,8 +753,19 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
 {
     FileData* rootFolder = sys->getRootFolder();
     std::string desc = "This collection is empty.";
-    std::vector<FileData*> gamesList = rootFolder->getChildren();
+    std::vector<FileData*> gamesList;
     std::vector<FileData*> gamesListRandom;
+
+    if (UIModeController::getInstance()->isUIModeKid()) {
+        for (FileData* game : rootFolder->getChildren()) {
+            if (game->getKidgame())
+                gamesList.push_back(game);
+        }
+    }
+    else {
+        gamesList = rootFolder->getChildren();
+    }
+
     unsigned int gameCount = static_cast<unsigned int>(gamesList.size());
 
     // If there is more than 1 game in the collection, then randomize the example game names.
