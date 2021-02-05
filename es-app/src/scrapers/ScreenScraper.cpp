@@ -115,7 +115,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
     { TRS80_COLOR_COMPUTER, 144 },
     { TANDY, 144 },
     { SEGA_NAOMI, 56 },
-    { THOMSON_TO_MO, 141 },
+    { THOMSON_MOTO, 141 },
     { UZEBOX, 216 },
     { SPECTRAVIDEO, 218 },
     { PALM_OS, 219 }

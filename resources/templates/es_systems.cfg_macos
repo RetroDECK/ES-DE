@@ -560,6 +560,15 @@
     <theme>moonlight</theme>
   </system>
   <system>
+    <name>moto</name>
+    <fullname>Thomson MO/TO series</fullname>
+    <path>%ROMPATH%/moto</path>
+    <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/theodore_libretro.dylib %ROM%</command>
+    <platform>moto</platform>
+    <theme>moto</theme>
+  </system>
+  <system>
     <name>msx</name>
     <fullname>MSX</fullname>
     <path>%ROMPATH%/msx</path>
@@ -945,15 +954,6 @@
     <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/mednafen_supergrafx_libretro.dylib %ROM%</command>
     <platform>supergrafx</platform>
     <theme>supergrafx</theme>
-  </system>
-  <system>
-    <name>thomson</name>
-    <fullname>Thomson TO/MO series</fullname>
-    <path>%ROMPATH%/thomson</path>
-    <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
-    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/theodore_libretro.dylib %ROM%</command>
-    <platform>thomson</platform>
-    <theme>thomson</theme>
   </system>
   <system>
     <name>tg16</name>

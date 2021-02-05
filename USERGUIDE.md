@@ -1034,7 +1034,7 @@ Displays the framerate and VRAM statistics as an overlay. You normally never nee
 
 **Enable menu in kid mode**
 
-Enabling or disabling the menu when the UI mode is set to Kid.
+Enabling or disabling the menu when the UI mode is set to Kid. Mostly intended for testing purposes as it's normally not recommended to enable the menu in this restricted mode.
 
 **Show quit menu (reboot and power off entries)** _(Unix and Windows only)_
 
@@ -1473,6 +1473,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | megadrive             | Sega Mega Drive                                | RetroArch (Genesis Plus GX)       | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    |                                   |                                      |
 | moonlight             | Moonlight game streaming                       |                                   |                                      |
+| moto                  | Thomson MO/TO series                           |                                   |                                      |
 | msx                   | MSX                                            |                                   |                                      |
 | msx1                  | MSX1                                           |                                   |                                      |
 | msx2                  | MSX2                                           |                                   |                                      |
@@ -1516,7 +1517,6 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | stratagus             | Stratagus game engine                          |                                   |                                      |
 | sufami                | Bandai SuFami Turbo                            |                                   |                                      |
 | supergrafx            | NEC SuperGrafx                                 |                                   |                                      |
-| thomson               | Thomson TO/MO series                           |                                   |                                      |
 | tg16                  | NEC TurboGrafx-16                              |                                   |                                      |
 | tg-cd                 | NEC TurboGrafx-CD                              |                                   |                                      |
 | ti99                  | Texas Instruments TI-99                        |                                   |                                      |
