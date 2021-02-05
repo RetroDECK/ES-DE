@@ -1481,8 +1481,8 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
 | neogeo                | Neo Geo                                        | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
-| neogeocd              | Neo Geo CD                                     | RetroArch (NeoCD)*                | Single ZIP archive per game which includes the CD image and ripped audio |
-| neogeocdjp            | Neo Geo CD (Japan)                             | RetroArch (NeoCD)*                | Single ZIP archive per game which includes the CD image and ripped audio |
+| neogeocd              | Neo Geo CD                                     | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
+| neogeocdjp            | Neo Geo CD (Japan)                             | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
 | nes                   | Nintendo Entertainment System                  | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | ngp                   | Neo Geo Pocket                                 |                                   |                                      |
 | ngpc                  | Neo Geo Pocket Color                           |                                   |                                      |
@@ -1530,6 +1530,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | wiiu                  | Nintendo Wii U                                 |                                   |                                      |
 | wonderswan            | Bandai WonderSwan                              |                                   |                                      |
 | wonderswancolor       | Bandai WonderSwan Color                        |                                   |                                      |
+| x1                    | Sharp X1                                       | RetroArch (x1)                    | Single archive or ROM file in root folder |
 | x68000                | Sharp X68000                                   |                                   |                                      |
 | xbox                  | Microsoft Xbox                                 |                                   |                                      |
 | xbox360               | Microsoft Xbox 360                             |                                   |                                      |

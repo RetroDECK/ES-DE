@@ -83,6 +83,7 @@ namespace PlatformIds
         PLAYSTATION_PORTABLE,
         SUPER_NINTENDO,
         SCUMMVM,
+        SHARP_X1,
         SHARP_X68000,
         SOLARUS,
         TURBOGRAFX_16,  // (Aka PC Engine) HuCards only.

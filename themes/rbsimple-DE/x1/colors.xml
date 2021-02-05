@@ -1,0 +1,18 @@
+<theme>
+    <formatVersion>6</formatVersion>
+
+    <view name="system, basic, detailed, grid, video">
+        <image name="band1" extra="true">
+            <color>752421</color>
+        </image>
+        <image name="band2" extra="true">
+            <color>4A90CB</color>
+        </image>
+        <image name="band3" extra="true">
+            <color>C1C3D1</color>
+        </image>
+        <image name="band4" extra="true">
+            <color>28333D</color>
+        </image>
+    </view>
+</theme>

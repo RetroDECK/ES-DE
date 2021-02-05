@@ -83,6 +83,7 @@ namespace PlatformIds
         "psp", // PlayStation Portable
         "snes", // Super Nintendo Entertainment System
         "scummvm",
+        "x1",
         "x68000",
         "solarus",
         "pcengine",  // (Aka turbografx-16), HuCards only

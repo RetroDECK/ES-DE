@@ -98,6 +98,8 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { PLAYSTATION_VITA, "39" },
     { PLAYSTATION_PORTABLE, "13" },
     { SUPER_NINTENDO, "6" },
+	{ SHARP_X1, "4977" },
+	{ SHARP_X68000, "4931"},
     { SUPERGRAFX, "34" },       // Combined with TurboGrafx-16
     { TURBOGRAFX_16, "34" },    // HuCards only.
     { TURBOGRAFX_CD, "4955" },  // CD-ROMs only.
