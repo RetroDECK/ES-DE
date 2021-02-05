@@ -403,7 +403,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 CollectionFileData* newGame = new CollectionFileData(file, curSys);
                 rootFolder->addChild(newGame);
                 fileIndex->addToIndex(newGame);
-                ViewController::get()->getGameListView(curSys)->onFileChanged(newGame, false);
+                ViewController::get()->getGameListView(curSys)->onFileChanged(newGame, true);
             }
         }
 
