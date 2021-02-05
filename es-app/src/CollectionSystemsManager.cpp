@@ -403,8 +403,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 CollectionFileData* newGame = new CollectionFileData(file, curSys);
                 rootFolder->addChild(newGame);
                 fileIndex->addToIndex(newGame);
-                ViewController::get()->
-                        getGameListView(curSys)->onFileChanged(newGame, false);
+                ViewController::get()->getGameListView(curSys)->onFileChanged(newGame, false);
             }
         }
 
@@ -699,7 +698,8 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
             saveCustomCollection(sysData);
         }
         else {
-            file->getSourceFileData()->getSystem()->getIndex()->removeFromIndex(file);
+            file->getSourceFileData()->getSystem()->getIndex()->removeFromIndex(
+                    file->getSourceFileData());
             MetaDataList* md = &file->getSourceFileData()->metadata;
             std::string value = md->get("favorite");
             if (value == "false") {
@@ -710,13 +710,13 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 md->set("favorite", "false");
             }
 
-            file->getSourceFileData()->getSystem()->getIndex()->addToIndex(file);
+            file->getSourceFileData()->getSystem()->getIndex()->addToIndex(
+                    file->getSourceFileData());
             file->getSourceFileData()->getSystem()->onMetaDataSavePoint();
             refreshCollectionSystems(file->getSourceFileData());
             if (mAutoCollectionSystemsData["favorites"].isEnabled)
                 ViewController::get()->
                         reloadGameListView(mAutoCollectionSystemsData["favorites"].system);
-
         }
         if (adding)
             s = new GuiInfoPopup(mWindow, "ADDED '" +

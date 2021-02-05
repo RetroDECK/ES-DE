@@ -69,9 +69,6 @@ FileData::FileData(
 
 FileData::~FileData()
 {
-    if (mType == GAME)
-        mSystem->getIndex()->removeFromIndex(this);
-
     while (mChildren.size() > 0)
         delete (mChildren.front());
 
