@@ -1138,9 +1138,9 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
         recentGamelist->setCursor(rootFolder->getSystem()->getRootFolder()->
                 getChildrenRecursive().front());
         recentGamelist->setCursor(recentGamelist->getFirstEntry());
-
-        ViewController::get()->getGameListView(rootFolder->getSystem()).get()->
-                onFileChanged(rootFolder->getChildren().front(), false);
+        if (rootFolder->getChildren().size() > 0)
+            ViewController::get()->getGameListView(rootFolder->getSystem()).get()->
+                    onFileChanged(rootFolder->getChildren().front(), false);
     }
 
     sysData->isPopulated = true;
