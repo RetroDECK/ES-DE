@@ -1403,7 +1403,7 @@ Regional differences are handled by simply using the game system name correspond
 
 Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For instance `na` for North America has been added to `snes` (Super Nintendo) giving the system name `snesna`. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
 
-The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside brackets.
+The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside brackets. Any system marked with an asterisk (*) in this column requires additional system/BIOS ROMs to run, as should be explained in the emulator documentation.
 
 For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support.
 
@@ -1413,14 +1413,14 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                            |                                   |                                      |
 | ags                   | Adventure Game Studio                          |                                   |                                      |
-| amiga                 | Commodore Amiga                                | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
-| amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
-| amiga1200             | Commodore Amiga 1200                           | RetroArch (P-UAE)                 | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
+| amiga                 | Commodore Amiga                                | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
+| amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
+| amiga1200             | Commodore Amiga 1200                           | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
 | amigacd32             | Commodore Amiga CD32                           |                                   |                                      |
 | amstradcpc            | Amstrad CPC                                    |                                   |                                      |
 | apple2                | Apple II                                       |                                   |                                      |
 | apple2gs              | Apple IIGS                                     |                                   |                                      |
-| arcade                | Arcade                                         | RetroArch (MAME 2016 on Unix & Windows, MAME 2010 on macOS) | Single archive file following MAME name standard in root folder |
+| arcade                | Arcade                                         | RetroArch (MAME 2016 on Unix & Windows, MAME 2010 on macOS)* | Single archive file following MAME name standard in root folder |
 | astrocade             | Bally Astrocade                                |                                   |                                      |
 | atari2600             | Atari 2600                                     |                                   |                                      |
 | atari5200             | Atari 5200                                     |                                   |                                      |
@@ -1480,8 +1480,9 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | naomi                 | Sega NAOMI                                     |                                   |                                      |
 | n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
-| neogeo                | Neo Geo                                        | RetroArch (FinalBurn Neo)         | Single archive file following MAME name standard in root folder |
-| neogeocd              | Neo Geo CD                                     |                                   |                                      |
+| neogeo                | Neo Geo                                        | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
+| neogeocd              | Neo Geo CD                                     | RetroArch (NeoCD)*                | Single ZIP archive per game which includes the CD image and ripped audio |
+| neogeocdjp            | Neo Geo CD (Japan)                             | RetroArch (NeoCD)*                | Single ZIP archive per game which includes the CD image and ripped audio |
 | nes                   | Nintendo Entertainment System                  | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | ngp                   | Neo Geo Pocket                                 |                                   |                                      |
 | ngpc                  | Neo Geo Pocket Color                           |                                   |                                      |

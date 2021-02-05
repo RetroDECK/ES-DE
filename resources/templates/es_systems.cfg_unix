@@ -641,6 +641,15 @@
     <theme>neogeocd</theme>
   </system>
   <system>
+    <name>neogeocdjp</name>
+    <fullname>Neo Geo CD</fullname>
+    <path>%ROMPATH%/neogeocdjp</path>
+    <extension>.chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L %COREPATH%/neocd_libretro.so %ROM%</command>
+    <platform>neogeocd</platform>
+    <theme>neogeocdjp</theme>
+  </system>
+  <system>
     <name>nes</name>
     <fullname>Nintendo Entertainment System</fullname>
     <path>%ROMPATH%/nes</path>
