@@ -97,7 +97,7 @@ namespace PlatformIds
         TANDY,
         ADVENTUREGAMESTUDIO,
         ASTROCADE,
-        BBCMICRO,
+        BBC_MICRO,
         CAVESTORY,
         DAPHNE,
         DRAGON32,

@@ -52,6 +52,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { CAVESTORY, "1" },
     { COLECOVISION, "31" },
     { COMMODORE_64, "40" },
+    { DAPHNE, "23" },
     { INTELLIVISION, "32" },
     { MAC_OS, "37" },
     { XBOX, "14" },
