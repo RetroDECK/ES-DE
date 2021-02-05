@@ -41,8 +41,6 @@ None at the moment.
 * mess: MESS (Multi Emulator Super System) - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * moto: Thomson MO/TO series - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * naomi: Sega NAOMI - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
-* neogeocd: Neo Geo CD - system info, customized colors
-* neogeocdjp: Neo Geo CD (Japan) - system info, customized colors
 * openbor: Open Beats of Rage (OpenBOR) game engine - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * oric: Tangerine Computer Systems Oric - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * palm: Palm OS - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
