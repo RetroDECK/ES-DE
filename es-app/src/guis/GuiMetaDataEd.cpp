@@ -435,21 +435,42 @@ void GuiMetaDataEd::save()
     if (mSavedCallback)
         mSavedCallback();
 
-    // Update all collections where the game is present.
-    if (mScraperParams.game->getType() == GAME) {
-        // Update disabled auto collections as well when hiding a game, as otherwise these
-        // collections could get invalid gamelist cursor positions. A cursor pointing to a
-        // removed game would crash the application upon enabling the collections.
-        if (hideGameWhileHidden)
-            CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game, true);
-        else
-            CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
-    }
-
-    // If hiding a game, remove it from the indices of all systems.
     if (hideGameWhileHidden) {
-        for (SystemData* sys : SystemData::sSystemVector)
-            sys->getIndex()->removeFromIndex(mScraperParams.game);
+        std::vector<FileData*> hideGames;
+        // If a folder was hidden there may be children inside that we also need to hide.
+        if (mScraperParams.game->getType() == FOLDER) {
+            for (FileData* child : mScraperParams.game->getChildrenRecursive()) {
+                if (!child->getHidden())
+                    child->metadata.set("hidden", "true");
+                    hideGames.push_back(child);
+            }
+        }
+        else {
+            hideGames.push_back(mScraperParams.game);
+        }
+        for (FileData* hideGame : hideGames) {
+            if (hideGame->getType() == GAME) {
+                // Update disabled auto collections when hiding a game, as otherwise these could
+                // get invalid gamelist cursor positions. A cursor pointing to a removed game
+                // would crash the application upon enabling the collections.
+                CollectionSystemsManager::get()->refreshCollectionSystems(hideGame, true);
+                // Remove the game from the index of all systems.
+                for (SystemData* sys : SystemData::sSystemVector) {
+                    std::vector<FileData*> children;
+                    for (FileData* child : sys->getRootFolder()->getChildrenRecursive())
+                        children.push_back(child->getSourceFileData());
+                    if (std::find(children.begin(), children.end(), hideGame) != children.end()) {
+                        sys->getIndex()->removeFromIndex(hideGame);
+                        // Reload the gamelist as well as the view style may need to change.
+                        ViewController::get()->reloadGameListView(sys);
+                    }
+                }
+            }
+        }
+    }
+    else {
+        // Update all collections where the game is present.
+        CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
     }
 
     // If game counting was re-enabled for the game, then reactivate it in any custom collections
