@@ -159,7 +159,7 @@ NSVGrasterizer* nsvgCreateRasterizer()
 
 	return r;
 
-	error:
+error:
 	nsvgDeleteRasterizer(r);
 	return NULL;
 }
@@ -776,7 +776,7 @@ static void nsvg__flattenShapeStroke(NSVGrasterizer* r, NSVGshape* shape, float 
 			nsvg__duplicatePoints(r);
 
 			r->npoints = 0;
-			cur = r->points2[0];
+ 			cur = r->points2[0];
 			nsvg__appendPathPoint(r, cur);
 
 			// Figure out dash offset.
@@ -854,7 +854,7 @@ static int nsvg__cmpEdge(const void *p, const void *q)
 
 static NSVGactiveEdge* nsvg__addActive(NSVGrasterizer* r, NSVGedge* e, float startPoint)
 {
-	NSVGactiveEdge* z;
+	 NSVGactiveEdge* z;
 
 	if (r->freelist != NULL) {
 		// Restore from freelist.
@@ -981,7 +981,7 @@ static unsigned int nsvg__applyOpacity(unsigned int c, float u)
 
 static inline int nsvg__div255(int x)
 {
-	return ((x+1) * 257) >> 16;
+    return ((x+1) * 257) >> 16;
 }
 
 static void nsvg__scanlineSolid(unsigned char* dst, int count, unsigned char* cover, int x, int y,
