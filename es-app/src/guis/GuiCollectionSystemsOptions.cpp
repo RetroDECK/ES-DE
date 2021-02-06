@@ -51,8 +51,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                 it->second.isEnabled);
     addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
     addSaveFunc([this, autoSystems] {
-        std::string autoSystemsSelected =
-            Utils::String::vectorToCommaString(collection_systems_auto->getSelectedObjects(), true);
+        std::string autoSystemsSelected = Utils::String::vectorToDelimitedString(
+                collection_systems_auto->getSelectedObjects(), ",", true);
         std::string autoSystemsConfig = Settings::getInstance()->getString("CollectionSystemsAuto");
         if (autoSystemsSelected != autoSystemsConfig) {
             if (CollectionSystemsManager::get()->isEditing())
@@ -100,8 +100,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
     addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
     addSaveFunc([this, customSystems] {
         if (!mDeletedCustomCollection) {
-            std::string customSystemsSelected = Utils::String::vectorToCommaString(
-                    collection_systems_custom->getSelectedObjects(), true);
+            std::string customSystemsSelected = Utils::String::vectorToDelimitedString(
+                    collection_systems_custom->getSelectedObjects(), ",", true);
             std::string customSystemsConfig = Settings::getInstance()->
                     getString("CollectionSystemsCustom");
             if (customSystemsSelected != customSystemsConfig) {

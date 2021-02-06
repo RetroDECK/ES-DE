@@ -36,10 +36,8 @@ namespace Utils
         std::string removeParenthesis(const std::string& _string);
         std::vector<std::string> delimitedStringToVector(const std::string& _string,
                 const std::string& _delimiter, bool sort = false, bool caseInsensitive = false);
-        std::vector<std::string> commaStringToVector(const std::string& _string,
-                bool sort = false, bool caseInsensitive = false);
-        std::string vectorToCommaString(std::vector<std::string> _vector,
-                bool caseInsensitive = false);
+        std::string vectorToDelimitedString(std::vector<std::string> _vector,
+                const std::string& _delimiter, bool caseInsensitive = false);
         std::string format(const char* _string, ...);
         std::string scramble(const std::string& _input, const std::string& key);
     }

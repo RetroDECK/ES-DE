@@ -226,8 +226,8 @@ void CollectionSystemsManager::loadCollectionSystems()
 void CollectionSystemsManager::loadEnabledListFromSettings()
 {
     // We parse the auto collection settings list.
-    std::vector<std::string> autoSelected = Utils::String::commaStringToVector(
-            Settings::getInstance()->getString("CollectionSystemsAuto"), true);
+    std::vector<std::string> autoSelected = Utils::String::delimitedStringToVector(
+            Settings::getInstance()->getString("CollectionSystemsAuto"), ",", true);
 
     // Iterate the map.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator
@@ -241,8 +241,8 @@ void CollectionSystemsManager::loadEnabledListFromSettings()
     mHasEnabledCustomCollection = false;
 
     // Parse the custom collection settings list.
-    std::vector<std::string> customSelected = Utils::String::commaStringToVector(
-            Settings::getInstance()->getString("CollectionSystemsCustom"), true);
+    std::vector<std::string> customSelected = Utils::String::delimitedStringToVector(
+            Settings::getInstance()->getString("CollectionSystemsCustom"), ",", true);
 
     // Iterate the map.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator

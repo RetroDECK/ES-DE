@@ -522,13 +522,8 @@ namespace Utils
             return vector;
         }
 
-        std::vector<std::string> commaStringToVector(const std::string& _string,
-                bool sort, bool caseInsensitive)
-        {
-            return delimitedStringToVector(_string, ",", sort, caseInsensitive);
-        }
-
-        std::string vectorToCommaString(std::vector<std::string> _vector, bool caseInsensitive)
+        std::string vectorToDelimitedString(std::vector<std::string> _vector,
+                const std::string& _delimiter, bool caseInsensitive)
         {
             std::string string;
 
@@ -541,7 +536,7 @@ namespace Utils
 
             for (std::vector<std::string>::const_iterator it = _vector.cbegin();
                     it != _vector.cend(); it++)
-                string += (string.length() ? "," : "") + (*it);
+                string += (string.length() ? _delimiter : "") + (*it);
 
             return string;
         }
