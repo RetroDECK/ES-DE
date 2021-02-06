@@ -1403,6 +1403,8 @@ Regional differences are handled by simply using the game system name correspond
 
 Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For instance `na` for North America has been added to `snes` (Super Nintendo) giving the system name `snesna`. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
 
+For the **Full name** column, text inside square brackets [] are comments and not part of the actual game system name.
+
 The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside brackets. Any system marked with an asterisk (*) in this column requires additional system/BIOS ROMs to run, as should be explained in the emulator documentation.
 
 For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support.
@@ -1429,7 +1431,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | atarijaguar           | Atari Jaguar                                   |                                   |                                      |
 | atarijaguarcd         | Atari Jaguar CD                                |                                   |                                      |
 | atarilynx             | Atari Lynx                                     |                                   |                                      |
-| atarist               | Atari ST                                       |                                   |                                      |
+| atarist               | Atari ST [also STE and Falcon]                 |                                   |                                      |
 | atarixe               | Atari XE                                       |                                   |                                      |
 | atomiswave            | Atomiswave                                     |                                   |                                      |
 | bbcmicro              | BBC Micro                                      |                                   |                                      |
@@ -1438,7 +1440,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | cdtv                  | Commodore CDTV                                 |                                   |                                      |
 | channelf              | Fairchild Channel F                            |                                   |                                      |
 | coco                  | Tandy Color Computer                           |                                   |                                      |
-| coleco                | ColecoVision                                   |                                   |                                      |
+| colecovision          | ColecoVision                                   |                                   |                                      |
 | daphne                | Daphne Arcade Laserdisc Emulator               |                                   |                                      |
 | desktop               | Desktop applications                           | N/A                               |                                      |
 | doom                  | Doom                                           |                                   |                                      |
@@ -1450,8 +1452,8 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | fbneo                 | FinalBurn Neo                                  |                                   | Single archive file following MAME name standard in root folder |
 | fds                   | Nintendo Famicom Disk System                   | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | gameandwatch          | Nintendo Game and Watch                        |                                   |                                      |
-| gamegear              | Sega Game Gear                                 |                                   |                                      |
 | gamecube              | Nintendo GameCube                              |                                   |                                      |
+| gamegear              | Sega Game Gear                                 |                                   |                                      |
 | gb                    | Nintendo Game Boy                              |                                   |                                      |
 | gba                   | Nintendo Game Boy Advance                      |                                   |                                      |
 | gbc                   | Nintendo Game Boy Color                        |                                   |                                      |
@@ -1469,7 +1471,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | mame-mame4all         | MAME4ALL                                       |                                   | Single archive file following MAME name standard in root folder |
 | mastersystem          | Sega Master System                             |                                   |                                      |
 | megacd                | Sega Mega-CD                                   |                                   |                                      |
-| megacdjp              | Sega Mega-CD (Japan)                           |                                   |                                      |
+| megacdjp              | Sega Mega-CD [Japan]                           |                                   |                                      |
 | megadrive             | Sega Mega Drive                                | RetroArch (Genesis Plus GX)       | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    |                                   |                                      |
 | moonlight             | Moonlight game streaming                       |                                   |                                      |
@@ -1480,12 +1482,12 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | naomi                 | Sega NAOMI                                     |                                   |                                      |
 | n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
-| neogeo                | Neo Geo                                        | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
-| neogeocd              | Neo Geo CD                                     | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
-| neogeocdjp            | Neo Geo CD (Japan)                             | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
+| neogeo                | SNK Neo Geo                                    | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
+| neogeocd              | SNK Neo Geo CD                                 | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
+| neogeocdjp            | SNK Neo Geo CD [Japan]                         | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
 | nes                   | Nintendo Entertainment System                  | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
-| ngp                   | Neo Geo Pocket                                 |                                   |                                      |
-| ngpc                  | Neo Geo Pocket Color                           |                                   |                                      |
+| ngp                   | SNK Neo Geo Pocket                             |                                   |                                      |
+| ngpc                  | SNK Neo Geo Pocket Color                       |                                   |                                      |
 | odyssey2              | Magnavox Odyssey2                              |                                   |                                      |
 | openbor               | OpenBOR game engine                            |                                   |                                      |
 | oric                  | Tangerine Computer Systems Oric                |                                   |                                      |
@@ -1497,21 +1499,21 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | pokemini              | Nintendo Pokémon Mini                          |                                   |                                      |
 | ports                 | Ports                                          | N/A                               | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             |                                   |                                      |
-| psp                   | PlayStation Portable                           |                                   |                                      |
-| psvita                | PlayStation Vita                               |                                   |                                      |
-| psx                   | Sony PlayStation 1                             |                                   |                                      |
+| psp                   | Sony PlayStation Portable                      |                                   |                                      |
+| psvita                | Sony PlayStation Vita                          |                                   |                                      |
+| psx                   | Sony PlayStation                               |                                   |                                      |
 | residualvm            | ResidualVM game engine                         |                                   |                                      |
 | samcoupe              | SAM Coupé                                      |                                   |                                      |
 | satellaview           | Nintendo Satellaview                           |                                   |                                      |
 | saturn                | Sega Saturn                                    |                                   |                                      |
 | scummvm               | ScummVM game engine                            | RetroArch (ScummVM)               | In separate folder (one folder per game, with complete file structure retained) |
 | sega32x               | Sega Mega Drive 32X                            | RetroArch (PicoDrive)             | Single archive or ROM file in root folder |
-| sega32xjp             | Sega Super 32X (Japan)                         | RetroArch (PicoDrive)             | Single archive or ROM file in root folder |
-| sega32xna             | Sega Genesis 32X (North America)               | RetroArch (PicoDrive)             | Single archive or ROM file in root folder |
+| sega32xjp             | Sega Super 32X [Japan]                         | RetroArch (PicoDrive)             | Single archive or ROM file in root folder |
+| sega32xna             | Sega Genesis 32X [North America]               | RetroArch (PicoDrive)             | Single archive or ROM file in root folder |
 | segacd                | Sega CD                                        |                                   |                                      |
 | sg-1000               | Sega SG-1000                                   |                                   |                                      |
 | snes                  | Nintendo SNES (Super Nintendo)                 | RetroArch (Snes9x - Current)      | Single archive or ROM file in root folder |
-| snesna                | Nintendo SNES (Super Nintendo) (North America) | RetroArch (Snes9x - Current)      | Single archive or ROM file in root folder |
+| snesna                | Nintendo SNES (Super Nintendo) [North America] | RetroArch (Snes9x - Current)      | Single archive or ROM file in root folder |
 | solarus               | Solarus game engine                            |                                   |                                      |
 | spectravideo          | Spectravideo                                   |                                   |                                      |
 | steam                 | Valve Steam                                    | Steam application                 | Shell/batch script in root folder    |

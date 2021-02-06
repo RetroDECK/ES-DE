@@ -254,7 +254,7 @@
     <theme>coco</theme>
   </system>
   <system>
-    <name>coleco</name>
+    <name>colecovision</name>
     <fullname>ColecoVision</fullname>
     <path>%ROMPATH%\coleco</path>
     <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
@@ -362,15 +362,6 @@
     <theme>gameandwatch</theme>
   </system>
   <system>
-    <name>gamegear</name>
-    <fullname>Sega Game Gear</fullname>
-    <path>%ROMPATH%\gamegear</path>
-    <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L %EMUPATH%\cores\genesis_plus_gx_libretro.dll %ROM%</command>
-    <platform>gamegear</platform>
-    <theme>gamegear</theme>
-  </system>
-  <system>
     <name>gamecube</name>
     <fullname>Nintendo GameCube</fullname>
     <path>%ROMPATH%\gamecube</path>
@@ -378,6 +369,15 @@
     <command>retroarch.exe -L %EMUPATH%\cores\dolphin_libretro.dll %ROM%</command>
     <platform>gamecube</platform>
     <theme>gc</theme>
+  </system>
+  <system>
+    <name>gamegear</name>
+    <fullname>Sega Game Gear</fullname>
+    <path>%ROMPATH%\gamegear</path>
+    <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
+    <command>retroarch.exe -L %EMUPATH%\cores\genesis_plus_gx_libretro.dll %ROM%</command>
+    <platform>gamegear</platform>
+    <theme>gamegear</theme>
   </system>
   <system>
     <name>gb</name>
@@ -624,7 +624,7 @@
   </system>
   <system>
     <name>neogeo</name>
-    <fullname>Neo Geo</fullname>
+    <fullname>SNK Neo Geo</fullname>
     <path>%ROMPATH%\neogeo</path>
     <extension>.chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\fbneo_libretro.dll %ROM%</command>
@@ -633,7 +633,7 @@
   </system>
   <system>
     <name>neogeocd</name>
-    <fullname>Neo Geo CD</fullname>
+    <fullname>SNK Neo Geo CD</fullname>
     <path>%ROMPATH%\neogeocd</path>
     <extension>.chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\neocd_libretro.dll %ROM%</command>
@@ -642,7 +642,7 @@
   </system>
   <system>
     <name>neogeocdjp</name>
-    <fullname>Neo Geo CD</fullname>
+    <fullname>SNK Neo Geo CD</fullname>
     <path>%ROMPATH%\neogeocdjp</path>
     <extension>.chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\neocd_libretro.dll %ROM%</command>
@@ -660,7 +660,7 @@
   </system>
   <system>
     <name>ngp</name>
-    <fullname>Neo Geo Pocket</fullname>
+    <fullname>SNK Neo Geo Pocket</fullname>
     <path>%ROMPATH%\ngp</path>
     <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\mednafen_ngp_libretro.dll %ROM%</command>
@@ -669,7 +669,7 @@
   </system>
   <system>
     <name>ngpc</name>
-    <fullname>Neo Geo Pocket Color</fullname>
+    <fullname>SNK Neo Geo Pocket Color</fullname>
     <path>%ROMPATH%\ngpc</path>
     <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\mednafen_ngp_libretro.dll %ROM%</command>
@@ -777,7 +777,7 @@
   </system>
   <system>
     <name>psp</name>
-    <fullname>PlayStation Portable</fullname>
+    <fullname>Sony PlayStation Portable</fullname>
     <path>%ROMPATH%\psp</path>
     <extension>.elf .ELF .iso .ISO .cso .CSO .prx .PRX .pbp .PBP .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\ppsspp_libretro.dll %ROM%</command>
@@ -786,7 +786,7 @@
   </system>
   <system>
     <name>psvita</name>
-    <fullname>PlayStation Vita</fullname>
+    <fullname>Sony PlayStation Vita</fullname>
     <path>%ROMPATH%\psp</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
@@ -795,7 +795,7 @@
   </system>
   <system>
     <name>psx</name>
-    <fullname>Sony PlayStation 1</fullname>
+    <fullname>Sony PlayStation</fullname>
     <path>%ROMPATH%\psx</path>
     <extension>.cue .CUE .toc .TOC .m3u .M3U .ccd .CCD .exe .EXE .pbp .PBP .chd .CHD .cbn .CBN .img .IMG .iso .ISO .mdf .MDF .z .Z .znx .ZNX .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\mednafen_psx_libretro.dll %ROM%</command>
