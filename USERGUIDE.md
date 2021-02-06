@@ -1480,6 +1480,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | msx1                  | MSX1                                           |                                   |                                      |
 | msx2                  | MSX2                                           |                                   |                                      |
 | naomi                 | Sega NAOMI                                     |                                   |                                      |
+| n3ds                  | Nintendo 3DS                                   | RetroArch (Citra)                 |                                      |
 | n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
 | neogeo                | SNK Neo Geo                                    | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
