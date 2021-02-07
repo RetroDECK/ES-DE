@@ -13,7 +13,7 @@
 
 namespace PlatformIds
 {
-    std::vector<std::string> PlatformNames = {
+    std::vector<std::string> platformNames = {
         "unknown", // Nothing set.
 
         "3do",                  // 3DO
@@ -49,11 +49,11 @@ namespace PlatformIds
         "famicom",              // Nintendo Family Computer
         "fds",                  // Nintendo Famicom Disk System
         "gameandwatch",         // Nintendo Game and Watch
-        "gamecube",             // Nintendo GameCube
         "gamegear",             // Sega Game Gear
         "gb",                   // Nintendo Game Boy
         "gba",                  // Nintendo Game Boy Advance
         "gbc",                  // Nintendo Game Boy Color
+        "gc",                   // Nintendo GameCube
         "genesis",              // Sega Genesis
         "gx4000",               // Amstrad GX4000
         "intellivision",        // Mattel Electronics Intellivision
@@ -132,7 +132,7 @@ namespace PlatformIds
             return PLATFORM_UNKNOWN;
 
         for (unsigned int i = 1; i < PLATFORM_COUNT; i++) {
-            if (PlatformNames[i] == str)
+            if (platformNames[i] == str)
                 return (PlatformId)i;
         }
 
@@ -141,6 +141,6 @@ namespace PlatformIds
 
     const std::string getPlatformName(PlatformId id)
     {
-        return PlatformNames[id];
+        return platformNames[id];
     }
 }

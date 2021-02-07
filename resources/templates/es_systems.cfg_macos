@@ -362,15 +362,6 @@
     <theme>gameandwatch</theme>
   </system>
   <system>
-    <name>gamecube</name>
-    <fullname>Nintendo GameCube</fullname>
-    <path>%ROMPATH%/gamecube</path>
-    <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .tgc .TGC .wad .WAD .7z .7Z .zip .ZIP</extension>
-    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/dolphin_libretro.dylib %ROM%</command>
-    <platform>gamecube</platform>
-    <theme>gc</theme>
-  </system>
-  <system>
     <name>gamegear</name>
     <fullname>Sega Game Gear</fullname>
     <path>%ROMPATH%/gamegear</path>
@@ -405,6 +396,15 @@
     <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/bsnes_libretro.dylib %ROM%</command>
     <platform>gbc</platform>
     <theme>gbc</theme>
+  </system>
+  <system>
+    <name>gc</name>
+    <fullname>Nintendo GameCube</fullname>
+    <path>%ROMPATH%/gc</path>
+    <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .tgc .TGC .wad .WAD .7z .7Z .zip .ZIP</extension>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/dolphin_libretro.dylib %ROM%</command>
+    <platform>gc</platform>
+    <theme>gc</theme>
   </system>
   <system>
     <name>genesis</name>
