@@ -234,9 +234,12 @@ std::vector<std::string> getFallbackFontPaths()
     // Korean.
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/NanumMyeongjo.ttf"));
-    // Font Awesome icon glyphs, used for star-flagging favorites in the gamelists.
+    // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
     fontPaths.push_back(ResourceManager::getInstance()->
             getResourcePath(":/fonts/fontawesome-webfont.ttf"));
+    // This is only needed for some really rare special characters.
+    fontPaths.push_back(ResourceManager::getInstance()->
+            getResourcePath(":/fonts/Ubuntu-C.ttf"));
 
     fontPaths.shrink_to_fit();
     return fontPaths;

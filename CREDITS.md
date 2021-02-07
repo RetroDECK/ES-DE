@@ -74,6 +74,9 @@ https://www.gnu.org/software/freefont
 Nanum font \
 https://hangeul.naver.com
 
+Ubuntu font \
+https://design.ubuntu.com/font
+
 MAME ROM information \
 https://www.mamedev.org
 
