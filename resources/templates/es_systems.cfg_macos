@@ -21,7 +21,7 @@
   </system>
   <system>
     <name>ags</name>
-    <fullname>Adventure Game Studio</fullname>
+    <fullname>Adventure Game Studio game engine</fullname>
     <path>%ROMPATH%/ags</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>

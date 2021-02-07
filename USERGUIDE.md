@@ -1417,7 +1417,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                            |                                   |                                      |
 | 64dd                  | Nintendo 64DD                                  | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | |
-| ags                   | Adventure Game Studio                          |                                   |                                      |
+| ags                   | Adventure Game Studio game engine              |                                   |                                      |
 | amiga                 | Commodore Amiga                                | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
 | amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
 | amiga1200             | Commodore Amiga 1200                           | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
