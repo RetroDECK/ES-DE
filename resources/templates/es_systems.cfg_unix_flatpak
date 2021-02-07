@@ -601,8 +601,17 @@
     <path>%ROMPATH%/msx2</path>
     <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
     <command>flatpak run org.libretro.RetroArch -L %COREPATH%/bluemsx_libretro.so %ROM%</command>
-    <platform>msx</platform>
+    <platform>msx2</platform>
     <theme>msx2</theme>
+  </system>
+  <system>
+    <name>msxturbor</name>
+    <fullname>MSX Turbo R</fullname>
+    <path>%ROMPATH%/msxturbor</path>
+    <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+    <command>flatpak run org.libretro.RetroArch -L %COREPATH%/bluemsx_libretro.so %ROM%</command>
+    <platform>msxturbor</platform>
+    <theme>msxturbor</theme>
   </system>
   <system>
     <name>n3ds</name>

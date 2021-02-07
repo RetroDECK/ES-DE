@@ -66,6 +66,8 @@ namespace PlatformIds
         MOONLIGHT,
         THOMSON_MOTO,
         MSX,
+        MSX2,
+        MSX_TURBO_R,
         NINTENDO_3DS,
         NINTENDO_64,
         SEGA_NAOMI,

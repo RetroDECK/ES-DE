@@ -66,6 +66,8 @@ namespace PlatformIds
         "moonlight",            // Moonlight game streaming
         "moto",                 // Thomson MO/TO series
         "msx",                  // MSX
+        "msx2",                 // MSX2
+        "msxturbor",            // MSX Turbo R
         "n3ds",                 // Nintendo 3DS
         "n64",                  // Nintendo 64
         "naomi",                // Sega NAOMI

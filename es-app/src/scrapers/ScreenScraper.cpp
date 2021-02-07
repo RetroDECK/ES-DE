@@ -58,6 +58,8 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
     { MICROSOFT_XBOX_360, 33 },
     { MOONLIGHT, 138 },
     { MSX, 113 },
+    { MSX2, 116 },
+    { MSX_TURBO_R, 118 },
     { SNK_NEO_GEO, 142 },
     { SNK_NEO_GEO_CD, 142 },
     { SNK_NEO_GEO_POCKET, 25},

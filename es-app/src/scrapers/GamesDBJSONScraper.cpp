@@ -59,6 +59,8 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { MICROSOFT_XBOX_360, "15" },
     { MOONLIGHT, "1" },
     { MSX, "4929" },
+    { MSX2, "4929" },
+    { MSX_TURBO_R, "4929" },
     { SNK_NEO_GEO, "24" },
     { SNK_NEO_GEO_CD, "24" },
     { SNK_NEO_GEO_POCKET, "4922" },
