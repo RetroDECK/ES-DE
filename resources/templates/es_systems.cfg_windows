@@ -650,6 +650,15 @@
     <theme>naomi</theme>
   </system>
   <system>
+    <name>naomigd</name>
+    <fullname>Sega NAOMI GD-ROM</fullname>
+    <path>%ROMPATH%\naomigd</path>
+    <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
+    <command>retroarch.exe -L %EMUPATH%\cores\flycast_libretro.dll %ROM%</command>
+    <platform>naomi</platform>
+    <theme>naomigd</theme>
+  </system>
+  <system>
     <name>nds</name>
     <fullname>Nintendo DS</fullname>
     <path>%ROMPATH%\nds</path>
