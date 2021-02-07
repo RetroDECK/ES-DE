@@ -258,9 +258,8 @@ bool SystemData::loadConfig()
         path = Utils::String::replace(path, "%ROMPATH%", rompath);
         #if defined(_WIN64)
         path = Utils::String::replace(path, "\\", "/");
-        #else
-        path = Utils::String::replace(path, "//", "/");
         #endif
+        path = Utils::String::replace(path, "//", "/");
 
         // Check that the ROM directory for the system is valid or otherwise abort the processing.
         if (!Utils::FileSystem::exists(path)) {
