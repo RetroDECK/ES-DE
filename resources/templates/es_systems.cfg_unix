@@ -917,7 +917,7 @@
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>retroarch -L %COREPATH%/genesis_plus_gx_libretro.so %ROM%</command>
     <platform>sg-1000</platform>
-    <theme>sg1000</theme>
+    <theme>sg-1000</theme>
   </system>
   <system>
     <name>snes</name>
