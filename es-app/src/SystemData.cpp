@@ -105,27 +105,6 @@ void SystemData::setIsGameSystemStatus()
 bool SystemData::populateFolder(FileData* folder)
 {
     const std::string& folderPath = folder->getPath();
-    if (!Utils::FileSystem::exists(folderPath)) {
-    LOG(LogDebug) << "SystemData::populateFolder(): Folder with path \"" <<
-                folderPath << "\" does not exist";
-        return false;
-    }
-    if (!Utils::FileSystem::isDirectory(folderPath)) {
-        LOG(LogWarning) << "Folder with path \"" <<
-                folderPath << "\" is not a directory";
-        return false;
-    }
-
-    // Make sure that this isn't a symlink to an object we already have.
-    if (Utils::FileSystem::isSymlink(folderPath)) {
-        // If this symlink resolves to somewhere that's at the beginning of our
-        // path, it's going to create a recursive loop. Make sure to avoid this.
-        if (folderPath.find(Utils::FileSystem::getCanonicalPath(folderPath)) == 0) {
-            LOG(LogWarning) << "Skipping infinitely recursive symlink \"" <<
-                    folderPath << "\"";
-            return false;
-        }
-    }
 
     std::string filePath;
     std::string extension;
@@ -279,6 +258,30 @@ bool SystemData::loadConfig()
         path = Utils::String::replace(path, "%ROMPATH%", rompath);
         path = Utils::String::replace(path, "//", "/");
 
+        // Check that the ROM directory for the system is valid or otherwise abort the processing.
+        if (!Utils::FileSystem::exists(path)) {
+        LOG(LogDebug) << "SystemData::loadConfig(): Skipping game system \"" <<
+                name << "\" as the defined ROM directory \"" << path << "\" does not exist";
+            continue;
+        }
+        if (!Utils::FileSystem::isDirectory(path)) {
+        LOG(LogDebug) << "SystemData::loadConfig(): Skipping game system \"" <<
+                name << "\" as the defined ROM directory \"" << path <<
+                "\" is not actually a directory";
+            continue;
+        }
+        if (Utils::FileSystem::isSymlink(path)) {
+            // Make sure that the symlink is not pointing to somewhere higher in the hiearchy
+            // as that would lead to an infite loop, meaning the application would never start.
+            std::string resolvedRompath = Utils::FileSystem::getCanonicalPath(rompath);
+            if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
+                LOG(LogWarning) << "Skipping game system \"" << name <<
+                        "\" as the defined ROM directory \"" << path <<
+                        "\" is an infinitely recursive symlink";
+                continue;
+            }
+        }
+
         // Convert extensions list from a string into a vector of strings.
         std::vector<std::string> extensions = readList(system.child("extension").text().get());
 
@@ -316,12 +319,12 @@ bool SystemData::loadConfig()
 
         if (name.empty()) {
             LOG(LogError) <<
-                    "A system in the es_systems.cfg file has no name defined, skipping entry.";
+                    "A system in the es_systems.cfg file has no name defined, skipping entry";
             continue;
         }
         else if (fullname.empty() || path.empty() || extensions.empty() || cmd.empty()) {
             LOG(LogError) << "System \"" << name << "\" is missing the fullname, path, "
-                    "extension, or command tag, skipping entry.";
+                    "extension, or command tag, skipping entry";
             continue;
         }
 
@@ -331,7 +334,7 @@ bool SystemData::loadConfig()
         #if defined(_WIN64)
         if (!Settings::getInstance()->getBool("ShowHiddenFiles") &&
                 Utils::FileSystem::isHidden(path)) {
-            LOG(LogWarning) << "Skipping hidden ROM folder " << path;
+            LOG(LogWarning) << "Skipping hidden ROM folder \"" << path << "\"";
             continue;
         }
         #endif
@@ -362,8 +365,9 @@ bool SystemData::loadConfig()
         }
 
         if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
-            LOG(LogDebug) << "SystemData::loadConfig(): System \"" << name <<
-                    "\" has no games, ignoring it";
+            LOG(LogWarning) << "No games were found for the system \"" << name <<
+                    "\" matching any of the defined file extensions \"" <<
+                    Utils::String::vectorToDelimitedString(extensions, " ") << "\"";
             delete newSys;
             delete envData;
         }
