@@ -306,11 +306,11 @@ bool SystemData::loadConfig()
                 break;
             }
 
-            // If there appears to be an actual platform ID supplied
-            // but it didn't match the list, generate a warning.
+            // If there's a platform entry defined but it does not match the list of supported
+            // platforms, then generate a warning.
             if (str != "" && platformId == PlatformIds::PLATFORM_UNKNOWN)
-                LOG(LogWarning) << "Unknown platform for system \"" << name <<
-                        "\" (platform \"" << str << "\" from list \"" << platformList << "\")";
+                LOG(LogWarning) << "Unknown platform \"" << str << "\" defined for system \"" <<
+                        name << "\"";
             else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
                 platformIds.push_back(platformId);
         }
