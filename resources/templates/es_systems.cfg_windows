@@ -785,6 +785,15 @@
     <theme>ps2</theme>
   </system>
   <system>
+    <name>ps3</name>
+    <fullname>Sony PlayStation 3</fullname>
+    <path>%ROMPATH%\ps3</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>ps3</platform>
+    <theme>ps3</theme>
+  </system>
+  <system>
     <name>psp</name>
     <fullname>Sony PlayStation Portable</fullname>
     <path>%ROMPATH%\psp</path>

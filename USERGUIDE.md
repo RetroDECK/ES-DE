@@ -1409,6 +1409,8 @@ The **Default emulator** column shows the emulator configured in es_systems.cfg,
 
 For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support.
 
+For some entries in the es_systems.cfg template files, there is no emulator defined but instead only a `PLACEHOLDER` value. For these game systems you need to manually update the file, assuming an emulator is available for your operating system. Over time as work with ES-DE progresses most of these placeholders will hopefully be replaced by real emulator configuration entries. But in some instances this will not happen as some emulators and applications are not available for all operating systems. Lutris is such as example as this software only runs on Unix. The placeholder entries are retained in the template files for the other operating systems in these situations as it's easier to maintain the files if they have the same structure.
+
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
 | Game system name      | Full name                                      | Default emulator                  | Recommended game setup               |
@@ -1500,6 +1502,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | pokemini              | Nintendo Pokémon Mini                          |                                   |                                      |
 | ports                 | Ports                                          | N/A                               | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             |                                   |                                      |
+| ps3                   | Sony PlayStation 3                             |                                   |                                      |
 | psp                   | Sony PlayStation Portable                      |                                   |                                      |
 | psvita                | Sony PlayStation Vita                          |                                   |                                      |
 | psx                   | Sony PlayStation                               |                                   |                                      |
