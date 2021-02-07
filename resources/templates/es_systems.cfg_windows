@@ -11,6 +11,15 @@
     <theme>3do</theme>
   </system>
   <system>
+    <name>64dd</name>
+    <fullname>Nintendo 64DD</fullname>
+    <path>%ROMPATH%/64dd</path>
+    <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
+    <command>retroarch.exe -L %EMUPATH%\cores\parallel_n64_libretro.dll %ROM%</command>
+    <platform>n64</platform>
+    <theme>64dd</theme>
+  </system>
+  <system>
     <name>ags</name>
     <fullname>Adventure Game Studio</fullname>
     <path>%ROMPATH%\ags</path>
