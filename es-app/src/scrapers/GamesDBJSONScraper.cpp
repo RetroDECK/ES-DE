@@ -305,7 +305,7 @@ void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
     LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Name: " << result.mdl.get("name");
 
     if (game.HasMember("overview") && game["overview"].IsString())
-        result.mdl.set("desc", game["overview"].GetString());
+        result.mdl.set("desc", Utils::String::replace(game["overview"].GetString(), "\r", ""));
 
     if (game.HasMember("release_date") && game["release_date"].IsString()) {
         result.mdl.set("releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(
