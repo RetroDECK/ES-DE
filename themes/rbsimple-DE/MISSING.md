@@ -60,6 +60,7 @@ None at the moment.
 * stratagus: Stratagus game engine - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * sufami: Bandai SuFami Turbo - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * x68000: Sharp X68000 - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
+* tic-80: TIC-80 game engine - logo.svg (needs improvement)
 * trs-80: Tandy TRS 80 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * uzebox: Uzebox - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version

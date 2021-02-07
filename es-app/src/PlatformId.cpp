@@ -109,6 +109,7 @@ namespace PlatformIds
         "sufami",               // Bandai SuFami Turbo
         "supergrafx",           // NEC SuperGrafx
         "ti99",                 // Texas Instruments TI-99
+        "tic80",                // TIC-80 game engine
         "trs-80",               // Tandy TRS-80
         "uzebox",               // Uzebox
         "vectrex",              // Vectrex

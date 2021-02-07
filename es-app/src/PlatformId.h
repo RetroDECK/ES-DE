@@ -109,6 +109,7 @@ namespace PlatformIds
         BANDAI_SUFAMI_TURBO,
         NEC_SUPERGRAFX,
         TEXAS_INSTRUMENTS_TI99,
+        TIC80,
         TANDY_TRS80,
         UZEBOX,
         VECTREX,

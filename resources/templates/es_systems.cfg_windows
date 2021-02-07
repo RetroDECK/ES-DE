@@ -1064,6 +1064,15 @@
     <theme>ti99</theme>
   </system>
   <system>
+    <name>tic80</name>
+    <fullname>TIC-80 game engine</fullname>
+    <path>%ROMPATH%\tic80</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>tic80</platform>
+    <theme>tic80</theme>
+  </system>
+  <system>
     <name>to8</name>
     <fullname>Thomson TO8</fullname>
     <path>%ROMPATH%\to8</path>

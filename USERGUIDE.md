@@ -1533,6 +1533,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | tg16                  | NEC TurboGrafx-16                              |                                   |                                      |
 | tg-cd                 | NEC TurboGrafx-CD                              |                                   |                                      |
 | ti99                  | Texas Instruments TI-99                        |                                   |                                      |
+| tic80                 | TIC-80 game engine                             |                                   |                                      |
 | to8                   | Thomson TO8                                    | RetroArch (Theodore)              |                                      |
 | trs-80                | Tandy TRS-80                                   |                                   |                                      |
 | uzebox                | Uzebox                                         |                                   |                                      |
