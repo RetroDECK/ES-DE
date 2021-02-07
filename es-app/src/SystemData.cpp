@@ -368,8 +368,8 @@ bool SystemData::loadConfig()
         }
 
         if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
-            LOG(LogWarning) << "No games were found for the system \"" << name <<
-                    "\" matching any of the defined file extensions \"" <<
+            LOG(LogWarning) << "No files were found for game system \"" << name <<
+                    "\" which matched any of the defined file extensions \"" <<
                     Utils::String::vectorToDelimitedString(extensions, " ") << "\"";
             delete newSys;
             delete envData;
