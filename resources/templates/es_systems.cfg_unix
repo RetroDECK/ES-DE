@@ -731,6 +731,24 @@
     <theme>pc</theme>
   </system>
   <system>
+    <name>pc88</name>
+    <fullname>NEC PC-8800 series</fullname>
+    <path>%ROMPATH%/pc88</path>
+    <extension>.d88 .D88 .u88 .U88 .m3u .M3U .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L %COREPATH%/quasi88_libretro.so %ROM%</command>
+    <platform>pc88</platform>
+    <theme>pc88</theme>
+  </system>
+  <system>
+    <name>pc98</name>
+    <fullname>NEC PC-9800 series</fullname>
+    <path>%ROMPATH%/pc98</path>
+    <extension>.2hd .2HD .88d .88D .98d .98D .d88 .D88 .d98 .D98 .cmd .CMD .dup .DUP .fdd .FDD .fdi .FDI .hdd .HDD .hdi .HDI .hdm .HDM .hdn .HDN .nhd .NHD .tfd .TFD .thd .THD . xdf .XDF .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L %COREPATH%/np2kai_libretro.so %ROM%</command>
+    <platform>pc98</platform>
+    <theme>pc98</theme>
+  </system>
+  <system>
     <name>pcengine</name>
     <fullname>NEC PC Engine</fullname>
     <path>%ROMPATH%/pcengine</path>

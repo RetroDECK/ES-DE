@@ -101,6 +101,8 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { SHARP_X1, "4977" },
     { SHARP_X68000, "4931"},
     { NEC_SUPERGRAFX, "34" },
+    { NEC_PC_8800, "4933"},
+    { NEC_PC_9800, "4934"},
     { NEC_PC_ENGINE, "34" },
     { NEC_PC_ENGINE_CD, "4955" },
     { BANDAI_WONDERSWAN, "4925" },

@@ -105,6 +105,8 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
     { SAMCOUPE, 213 },
     { SUPER_NINTENDO, 4 },
     { NEC_SUPERGRAFX, 105 },
+    { NEC_PC_8800, 221},
+    { NEC_PC_9800, 208},
     { NEC_PC_ENGINE, 31 },
     { NEC_PC_ENGINE_CD, 114 },
     { BANDAI_WONDERSWAN, 45 },

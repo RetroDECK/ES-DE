@@ -80,6 +80,8 @@ namespace PlatformIds
         "oric",                 // Tangerine Computer Systems Oric
         "palm",                 // Palm OS
         "pc",                   // IBM PC
+        "pc88",                 // NEC PC-8800 series
+        "pc98",                 // NEC PC-9800 series
         "pcengine",             // NEC PC Engine
         "pcenginecd",           // NEC PC Engine CD
         "pcfx",                 // NEC PC-FX

@@ -1454,11 +1454,11 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | fbneo                 | FinalBurn Neo                                  |                                   | Single archive file following MAME name standard in root folder |
 | fds                   | Nintendo Famicom Disk System                   | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
 | gameandwatch          | Nintendo Game and Watch                        |                                   |                                      |
-| gamecube              | Nintendo GameCube                              |                                   |                                      |
 | gamegear              | Sega Game Gear                                 |                                   |                                      |
 | gb                    | Nintendo Game Boy                              |                                   |                                      |
 | gba                   | Nintendo Game Boy Advance                      |                                   |                                      |
 | gbc                   | Nintendo Game Boy Color                        |                                   |                                      |
+| gc                    | Nintendo GameCube                              |                                   |                                      |
 | genesis               | Sega Genesis                                   | RetroArch (Genesis Plus GX)       | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 |                                   |                                      |
 | intellivision         | Mattel Electronics Intellivision               |                                   |                                      |
@@ -1496,6 +1496,8 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | oric                  | Tangerine Computer Systems Oric                |                                   |                                      |
 | palm                  | Palm OS                                        |                                   |                                      |
 | pc                    | IBM PC                                         | RetroArch (DOSBox-core)           | In separate folder (one folder per game, with complete file structure retained) |
+| pc88                  | NEC PC-8800 series                             | RetroArch (QUASI88)               |                                      |
+| pc98                  | NEC PC-9800 series                             | RetroArch (Neko Project II Kai)   |                                      |
 | pcengine              | NEC PC Engine                                  | RetroArch (Beetle PCE FAST)       | Single archive or ROM file in root folder |
 | pcenginecd            | NEC PC Engine CD                               |                                   |                                      |
 | pcfx                  | NEC PC-FX                                      |                                   |                                      |

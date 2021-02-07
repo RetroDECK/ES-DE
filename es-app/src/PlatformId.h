@@ -80,6 +80,8 @@ namespace PlatformIds
         TANGERINE_ORIC,
         PALM_OS,
         PC,
+        NEC_PC_8800,
+        NEC_PC_9800,
         NEC_PC_ENGINE,
         NEC_PC_ENGINE_CD,
         NEC_PCFX,
