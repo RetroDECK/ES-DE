@@ -151,6 +151,20 @@ bool SystemData::populateFolder(FileData* folder)
 
         // Add directories that also do not match an extension as folders.
         if (!isGame && Utils::FileSystem::isDirectory(filePath)) {
+            // Make sure that it's not a recursive symlink pointing to a location higher in the
+            // hierarchy as the application would run forever trying to resolve the link.
+            if (Utils::FileSystem::isSymlink(filePath)) {
+                const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(filePath);
+                const std::string canonicalStartPath =
+                        Utils::FileSystem::getCanonicalPath(mEnvData->mStartPath);
+                const std::string combinedPath = mEnvData->mStartPath +
+                        canonicalPath.substr(canonicalStartPath.size(),
+                        canonicalStartPath.size() - canonicalPath.size());
+                if (filePath.find(combinedPath) == 0) {
+                    LOG(LogWarning) << "Skipped \"" << filePath << "\" as it's a recursive symlink";
+                    continue;
+                }
+            }
             FileData* newFolder = new FileData(FOLDER, filePath, mEnvData, this);
             populateFolder(newFolder);
 
@@ -274,7 +288,7 @@ bool SystemData::loadConfig()
             continue;
         }
         if (Utils::FileSystem::isSymlink(path)) {
-            // Make sure that the symlink is not pointing to somewhere higher in the hiearchy
+            // Make sure that the symlink is not pointing to somewhere higher in the hierarchy
             // as that would lead to an infite loop, meaning the application would never start.
             std::string resolvedRompath = Utils::FileSystem::getCanonicalPath(rompath);
             if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
