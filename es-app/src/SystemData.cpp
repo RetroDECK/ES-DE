@@ -256,7 +256,11 @@ bool SystemData::loadConfig()
         // the ROM path configured as ROMDirectory in es_settings.cfg. If it's set to ""
         // in this configuration file, the default hardcoded path $HOME/ROMs/ will be used.
         path = Utils::String::replace(path, "%ROMPATH%", rompath);
+        #if defined(_WIN64)
+        path = Utils::String::replace(path, "\\", "/");
+        #else
         path = Utils::String::replace(path, "//", "/");
+        #endif
 
         // Check that the ROM directory for the system is valid or otherwise abort the processing.
         if (!Utils::FileSystem::exists(path)) {
