@@ -1503,6 +1503,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | ports                 | Ports                                          | N/A                               | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             |                                   |                                      |
 | ps3                   | Sony PlayStation 3                             |                                   |                                      |
+| ps4                   | Sony PlayStation 4                             |                                   |                                      |
 | psp                   | Sony PlayStation Portable                      |                                   |                                      |
 | psvita                | Sony PlayStation Vita                          |                                   |                                      |
 | psx                   | Sony PlayStation                               |                                   |                                      |

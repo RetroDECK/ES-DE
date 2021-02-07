@@ -8,7 +8,7 @@ None at the moment.
 
 * 3do: 3DO - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * ags: Adventure Game Studio - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
-* amiga: Amiga (general) - system info (improve it)
+* amiga: Amiga (general) - system info (needs improvement)
 * amiga600: Amiga 600 - system info
 * amiga1200: Amiga 1200 - system info
 * amigacd32: Amiga CD32 - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
@@ -48,6 +48,7 @@ None at the moment.
 * pokemini: Nintendo Pokémon Mini - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * ports: Source ports - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * ps2: Sony PlayStation 2 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* ps4: Sony PlayStation 4 - system info, customized colors, logo.svg (needs improvement), consolegame.svg, console.svg, controller.svg, game.svg
 * psvita: Sony PlayStation Vita - system info, customized colors, logo.svg, consolegame.svg, console.svg, controller.svg, game.svg
 * residualvm: ResidualVM - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * samcoupe: SAM Coupé - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
