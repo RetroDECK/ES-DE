@@ -13,7 +13,7 @@
   <system>
     <name>64dd</name>
     <fullname>Nintendo 64DD</fullname>
-    <path>%ROMPATH%/64dd</path>
+    <path>%ROMPATH%\64dd</path>
     <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\parallel_n64_libretro.dll %ROM%</command>
     <platform>n64</platform>
@@ -1062,6 +1062,15 @@
     <command>PLACEHOLDER %ROM%</command>
     <platform>ti99</platform>
     <theme>ti99</theme>
+  </system>
+  <system>
+    <name>to8</name>
+    <fullname>Thomson TO8</fullname>
+    <path>%ROMPATH%\to8</path>
+    <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
+    <command>retroarch.exe -L %EMUPATH%\cores\theodore_libretro.dll %ROM%</command>
+    <platform>moto</platform>
+    <theme>to8</theme>
   </system>
   <system>
     <name>trs-80</name>

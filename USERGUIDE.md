@@ -1478,7 +1478,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | megadrive             | Sega Mega Drive                                | RetroArch (Genesis Plus GX)       | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    |                                   |                                      |
 | moonlight             | Moonlight game streaming                       |                                   |                                      |
-| moto                  | Thomson MO/TO series                           |                                   |                                      |
+| moto                  | Thomson MO/TO series                           | RetroArch (Theodore)              |                                      |
 | msx                   | MSX                                            | RetroArch (blueMSX)               |                                      |
 | msx1                  | MSX1                                           | RetroArch (blueMSX)               |                                      |
 | msx2                  | MSX2                                           | RetroArch (blueMSX)               |                                      |
@@ -1533,6 +1533,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | tg16                  | NEC TurboGrafx-16                              |                                   |                                      |
 | tg-cd                 | NEC TurboGrafx-CD                              |                                   |                                      |
 | ti99                  | Texas Instruments TI-99                        |                                   |                                      |
+| to8                   | Thomson TO8                                    | RetroArch (Theodore)              |                                      |
 | trs-80                | Tandy TRS-80                                   |                                   |                                      |
 | uzebox                | Uzebox                                         |                                   |                                      |
 | vectrex               | Vectrex                                        |                                   |                                      |

@@ -1064,6 +1064,15 @@
     <theme>ti99</theme>
   </system>
   <system>
+    <name>to8</name>
+    <fullname>Thomson TO8</fullname>
+    <path>%ROMPATH%/to8</path>
+    <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/theodore_libretro.dylib %ROM%</command>
+    <platform>moto</platform>
+    <theme>to8</theme>
+  </system>
+  <system>
     <name>trs-80</name>
     <fullname>Tandy TRS-80</fullname>
     <path>%ROMPATH%/trs-80</path>
