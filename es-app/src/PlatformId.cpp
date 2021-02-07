@@ -17,7 +17,7 @@ namespace PlatformIds
         "unknown", // Nothing set.
 
         "3do",                  // 3DO
-        "ags",                  // Adventure Game Studio
+        "ags",                  // Adventure Game Studio game engine
         "amiga",                // Commodore Amiga
         "amigacd32",            // Commodore Amiga CD32
         "amstradcpc",           // Amstrad CPC
