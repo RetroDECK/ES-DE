@@ -3,28 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Developers : Nicola Salmoria and the MAME Team</text>
+            <text>An arcade game or coin-op game is a coin-operated entertainment</text>
         </text>
         <text name="info2" extra="true">
-            <text>Initial release : February 5, 1997</text>
+            <text>machine. Most arcade games are video games, pinball machines,</text>
         </text>
         <text name="info3" extra="true">
-            <text>Website : http://mamedev.org/</text>
+            <text>electro-mechanical games, redemption games or merchandisers. While</text>
         </text>
         <text name="info4" extra="true">
-            <text>Written in : C++</text>
+            <text>exact dates are debated, the golden age of arcade video games is</text>
         </text>
         <text name="info5" extra="true">
-            <text>M.A.M.E is an emulator application designed to recreate</text>
+            <text>usually defined as a period beginning sometime in the late 1970s and</text>
         </text>
         <text name="info6" extra="true">
-            <text>the hardware of arcade game systems in software</text>
+            <text>ending sometime in the mid-1980s. Excluding a brief resurgence in the</text>
         </text>
         <text name="info7" extra="true">
-            <text>on modern personal computers and other platforms.</text>
+            <text>early 1990s, the arcade industry subsequently declined in the</text>
         </text>
         <text name="info8" extra="true">
-            <text>The intention is to preserve gaming history by preventing vintage games from being lost or forgotten.</text>
+            <text>Western hemisphere as competing home video game consoles increased</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>in their graphics and game-play capability and decreased in cost.</text>
         </text>
     </view>
 </theme>

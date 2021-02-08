@@ -3,7 +3,7 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Commodore</text>
+            <text>Manufacturer : Commodore Business Machines</text>
         </text>
         <text name="info2" extra="true">
             <text>Year of Release : 1982</text>
