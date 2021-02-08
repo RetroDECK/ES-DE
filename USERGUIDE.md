@@ -1516,7 +1516,8 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | residualvm            | ResidualVM game engine                         |                                   |                                      |
 | samcoupe              | SAM Coupé                                      |                                   |                                      |
 | satellaview           | Nintendo Satellaview                           |                                   |                                      |
-| saturn                | Sega Saturn                                    |                                   |                                      |
+| saturn                | Sega Saturn                                    | RetroArch (Beetle Saturn)         |                                      |
+| saturnjp              | Sega Saturn [Japan]                            | RetroArch (Beetle Saturn)         |                                      |
 | scummvm               | ScummVM game engine                            | RetroArch (ScummVM)               | In separate folder (one folder per game, with complete file structure retained) |
 | sega32x               | Sega Mega Drive 32X                            | RetroArch (PicoDrive)             | Single archive or ROM file in root folder |
 | sega32xjp             | Sega Super 32X [Japan]                         | RetroArch (PicoDrive)             | Single archive or ROM file in root folder |

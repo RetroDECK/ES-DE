@@ -868,7 +868,7 @@
   <system>
     <name>psvita</name>
     <fullname>Sony PlayStation Vita</fullname>
-    <path>%ROMPATH%/psp</path>
+    <path>%ROMPATH%/psvita</path>
     <extension>.7z .7Z .zip .ZIP</extension>
     <command>PLACEHOLDER %ROM%</command>
     <platform>psvita</platform>
@@ -918,6 +918,15 @@
     <command>retroarch -L %COREPATH%/mednafen_saturn_libretro.so %ROM%</command>
     <platform>saturn</platform>
     <theme>saturn</theme>
+  </system>
+  <system>
+    <name>saturnjp</name>
+    <fullname>Sega Saturn</fullname>
+    <path>%ROMPATH%/saturnjp</path>
+    <extension>.ccd .CCD .chd .CHD .cue .CUE .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+    <command>retroarch -L %COREPATH%/mednafen_saturn_libretro.so %ROM%</command>
+    <platform>saturn</platform>
+    <theme>saturnjp</theme>
   </system>
   <system>
     <name>scummvm</name>
