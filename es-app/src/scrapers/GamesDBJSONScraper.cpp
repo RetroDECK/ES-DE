@@ -176,11 +176,14 @@ void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params
                     first = false;
                 }
                 else {
-                    LOG(LogWarning) << "TheGamesDB scraper - no support for platform " <<
-                            getPlatformName(*platformIt);
+                    LOG(LogWarning) << "TheGamesDB scraper: No support for platform \"" <<
+                            getPlatformName(*platformIt) << "\", search will be inaccurate";
                 }
             }
             path += platformQueryParam;
+        }
+        else {
+            LOG(LogWarning) << "TheGamesDB scraper: No platform defined, search will be inaccurate";
         }
 
         requests.push(std::unique_ptr<ScraperRequest>

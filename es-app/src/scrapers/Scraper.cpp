@@ -36,10 +36,15 @@ std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParam
     std::unique_ptr<ScraperSearchHandle> handle(new ScraperSearchHandle());
 
     // Check if the scraper in the settings still exists as a registered scraping source.
-    if (scraper_request_funcs.find(name) == scraper_request_funcs.end())
-        LOG(LogWarning) << "Configured scraper (" << name << ") unavailable, scraping aborted";
-    else
+    if (scraper_request_funcs.find(name) == scraper_request_funcs.end()) {
+        LOG(LogError) << "Configured scraper (" << name << ") unavailable, scraping aborted";
+    }
+    else {
+        LOG(LogDebug) << "Scraper::startScraperSearch(): Scraping system \""  <<
+                params.system->getName() << "\", game file \"" <<
+                params.game->getFileName() << "\"";
         scraper_request_funcs.at(name)(params, handle->mRequestQueue, handle->mResults);
+    }
 
     return handle;
 }

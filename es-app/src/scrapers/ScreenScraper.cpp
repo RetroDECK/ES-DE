@@ -193,12 +193,19 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
             p_ids.push_back(mapIt->second);
         }
         else {
-            LOG(LogWarning) << "ScreenScraper: no support for platform " <<
-                    getPlatformName(*platformIt);
+            LOG(LogWarning) << "ScreenScraper: No support for platform \"" <<
+                    getPlatformName(*platformIt) << "\", search will be inaccurate";
             // Add the scrape request without a platform/system ID.
             requests.push(std::unique_ptr<ScraperRequest>
                     (new ScreenScraperRequest(requests, results, path)));
         }
+    }
+
+    if (p_ids.size() == 0) {
+        LOG(LogWarning) << "ScreenScraper: No platform defined, search will be inaccurate";
+        // Add the scrape request without a platform/system ID.
+        requests.push(std::unique_ptr<ScraperRequest>
+                (new ScreenScraperRequest(requests, results, path)));
     }
 
     // Sort the platform IDs and remove duplicates.

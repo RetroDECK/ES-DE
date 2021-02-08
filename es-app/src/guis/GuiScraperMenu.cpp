@@ -550,12 +550,22 @@ void GuiScraperMenu::pressedStart()
     std::vector<SystemData*> sys = mSystems->getSelectedObjects();
     for (auto it = sys.cbegin(); it != sys.cend(); it++) {
         if ((*it)->getPlatformIds().empty()) {
+            std::string warningString;
+            if (sys.size() == 1) {
+                warningString = "The selected system does not have a\n"
+                        "platform set, results may be inaccurate\n"
+                        "Continue anyway?";
+            }
+            else {
+                warningString = "At least one of your selected\n"
+                        "systems does not have a platform\n"
+                        "set, results may be inaccurate\n"
+                        "Continue anyway?";
+            }
             mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                Utils::String::toUpper("Warning: some of your selected systems do not "
-                "have a platform set. Results may be even more inaccurate than "
-                "usual!\nContinue anyway?"),
-                "YES", std::bind(&GuiScraperMenu::start, this),
-                "NO", nullptr));
+                    Utils::String::toUpper(warningString),
+                    "YES", std::bind(&GuiScraperMenu::start, this),
+                    "NO", nullptr));
             return;
         }
     }
