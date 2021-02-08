@@ -299,10 +299,9 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         std::string relPath = resolvePlaceholders(node.text().as_string());
         std::string path = Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true);
         if (!ResourceManager::getInstance()->fileExists(path))
-            throw error << ": Included file \"" << relPath <<
+            throw error << " -> \"" << relPath <<
                     "\" not found (resolved to \"" << path << "\")";
-
-        error << "    from included file \"" << relPath << "\":\n    ";
+        error << " -> \"" << relPath << "\"";
 
         mPaths.push_back(path);
 
@@ -314,11 +313,11 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         pugi::xml_parse_result result = includeDoc.load_file(path.c_str());
         #endif
         if (!result)
-            throw error << "Error parsing file: \n    " << result.description();
+            throw error << ": Error parsing file: " << result.description();
 
         pugi::xml_node theme = includeDoc.child("theme");
         if (!theme)
-            throw error << "Missing <theme> tag";
+            throw error << "Missing <theme> tag ";
 
         parseVariables(theme);
         parseIncludes(theme);
