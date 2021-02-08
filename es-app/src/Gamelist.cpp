@@ -88,8 +88,11 @@ void parseGamelist(SystemData* system)
     bool trustGamelist = Settings::getInstance()->getBool("ParseGamelistOnly");
     std::string xmlpath = system->getGamelistPath(false);
 
-    if (!Utils::FileSystem::exists(xmlpath))
+    if (!Utils::FileSystem::exists(xmlpath)) {
+        LOG(LogInfo) << "Loading system \"" << system->getName() <<
+                "\" which does not have a gamelist.xml file...";
         return;
+    }
 
     LOG(LogInfo) << "Parsing gamelist file \"" << xmlpath << "\"...";
 
