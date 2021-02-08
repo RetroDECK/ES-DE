@@ -77,7 +77,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { NINTENDO_WII, "9" },
     { NINTENDO_WII_U, "38" },
     { NINTENDO_VIRTUAL_BOY, "4918" },
-    { NINTENDO_GAME_AND_WATCH, "-1" },
+    { NINTENDO_GAME_AND_WATCH, "4950" },
     { NINTENDO_POKEMON_MINI, "4957" },
     { NINTENDO_SATELLAVIEW, "6" },
     { BANDAI_SUFAMI_TURBO, "6" },
