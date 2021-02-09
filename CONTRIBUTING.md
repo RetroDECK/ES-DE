@@ -12,7 +12,7 @@ Regarding testing, it's impossible for me to test every game system as rbsimple-
 
 In general, a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great!
 
-As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details of what needs to be added or updated.
+As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details on what needs to be added or updated. Note that although rbsimple-DE is based on Recalbox Multi, it's only possible to use assets from this theme set created before their change to a more restrictive license, which happened in 2018. As such it's unfortunately necessary to recreate all the system graphics from scratch that have since been released by the Recalbox community.
 
 The ES-DE development is tracked using a Kanban board which is publicly visible at the GitLab project site:
 
@@ -24,7 +24,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.1
 
-* Support for Raspberry Pi 4 (Ubuntu and Raspberry Pi OS)
+* Support for Raspberry Pi 4 with OpenGL ES 2.0 (Ubuntu and Raspberry Pi OS)
 * Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
 * Improve full-screen support, remove the temporary full screen hacks
 * Proper game launching screen
@@ -39,7 +39,9 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)
 * Web proxy support for the scraper
 * Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
+* Bulk metadata editor
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
+* Shader support for the OpenGL ES renderer
 * Add to Linux repositories, BSD ports collections etc.
 
 #### v1.3

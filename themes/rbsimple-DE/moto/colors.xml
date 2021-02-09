@@ -3,16 +3,16 @@
 
     <view name="system, basic, detailed, grid, video">
         <image name="band1" extra="true">
-            <color>F6DD08</color>
+            <color>E6F0EF</color>
         </image>
         <image name="band2" extra="true">
-            <color>800000</color>
+            <color>F0C73B</color>
         </image>
         <image name="band3" extra="true">
-            <color>FF0000</color>
+            <color>4F8E5C</color>
         </image>
         <image name="band4" extra="true">
-            <color>4C504E</color>
+            <color>2C2D2C</color>
         </image>
     </view>
 </theme>

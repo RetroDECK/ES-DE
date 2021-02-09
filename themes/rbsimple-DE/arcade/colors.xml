@@ -9,10 +9,10 @@
             <color>FCCD0A</color>
         </image>
         <image name="band3" extra="true">
-            <color>1229B8</color>
+            <color>032EC0</color>
         </image>
         <image name="band4" extra="true">
-            <color>5D9EED</color>
+            <color>459FD0</color>
         </image>
     </view>
 </theme>

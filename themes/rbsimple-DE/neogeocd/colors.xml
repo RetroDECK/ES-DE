@@ -3,7 +3,7 @@
 
     <view name="system, basic, detailed, grid, video">
         <image name="band1" extra="true">
-            <color>74756E</color>
+            <color>878880</color>
         </image>
         <image name="band2" extra="true">
             <color>FFD400</color>

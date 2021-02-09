@@ -26,7 +26,7 @@ At the moment Raspberry Pi is not supported, but this is planned for future rele
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
-A comprehensive theme set, **rbsimple-DE** (which is based on Recalbox Multi from the [Recalbox](https://www.recalbox.com) community) is bundled with the application.
+A comprehensive theme set, **rbsimple-DE** which is based on Recalbox Multi from the [Recalbox](https://www.recalbox.com) community is bundled with the application. (Only assets created by them prior to their change to a more restrictive license in 2018 are included).
 
 ### Download
 
