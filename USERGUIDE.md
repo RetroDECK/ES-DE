@@ -1532,6 +1532,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | stratagus             | Stratagus game engine                          |                                   |                                      |
 | sufami                | Bandai SuFami Turbo                            |                                   |                                      |
 | supergrafx            | NEC SuperGrafx                                 |                                   |                                      |
+| tanodragon            | Tano Dragon                                    |                                   |                                      |
 | tg16                  | NEC TurboGrafx-16                              |                                   |                                      |
 | tg-cd                 | NEC TurboGrafx-CD                              |                                   |                                      |
 | ti99                  | Texas Instruments TI-99                        |                                   |                                      |

@@ -1055,6 +1055,15 @@
     <theme>supergrafx</theme>
   </system>
   <system>
+    <name>tanodragon</name>
+    <fullname>Tano Dragon</fullname>
+    <path>%ROMPATH%\tanodragon</path>
+    <extension>.7z .7Z .zip .ZIP</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>dragon32</platform>
+    <theme>tanodragon</theme>
+  </system>
+  <system>
     <name>tg16</name>
     <fullname>NEC TurboGrafx-16</fullname>
     <path>%ROMPATH%\tg16</path>
