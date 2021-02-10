@@ -26,12 +26,6 @@
         </image>
     </view>
 
-    <view name="basic, detailed">
-        <image name="console" extra="true">
-            <path>./images/console.svg</path>
-        </image>
-    </view>
-
     <view name="grid">
         <image name="logo">
             <path>./images/logo.svg</path>

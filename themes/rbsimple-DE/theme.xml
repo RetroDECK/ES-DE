@@ -117,11 +117,6 @@ based on: 'recalbox-multi' by the Recalbox community
             <maxSize>0.34 0.15</maxSize>
             <origin>1 1</origin>
         </image>
-        <image name="console" extra="false">
-            <pos>1 1</pos>
-            <maxSize>0.01 0.01</maxSize>
-            <origin>0 0</origin>
-        </image>
         <text name="md_lbl_playcount, md_playcount">
                 <pos>1 1</pos>
         </text>
