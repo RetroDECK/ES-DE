@@ -974,7 +974,7 @@ These are mostly technical settings.
 
 **VRAM limit**
 
-The amount of video RAM to use for the application. Defaults to 256 MiB which seems to work fine most of the time. The allowed range is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or edit the es_settings.cfg file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
+The amount of video RAM to use for the application. Defaults to 256 MiB which works fine most of the time when running at 1080p resolution and with a moderate amount of game systems. If running at 4K resolution and with lots of game systems enabled, it's recommended to increase this number to 512 MiB or so to avoid stuttering transition animations caused by unloading and loading of textures from the cache. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used by ES-DE, which is helpful to determine a reasonable value for this option. The allowed range for the settings is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.cfg file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
 **Display/monitor index (requires restart)**
 
