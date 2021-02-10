@@ -1441,6 +1441,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | c64                   | Commodore 64                                   | RetroArch (VICE x64, fast)        | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
 | cavestory             | Cave Story (NXEngine)                          |                                   |                                      |
 | cdtv                  | Commodore CDTV                                 |                                   |                                      |
+| chailove              | ChaiLove game engine                           |                                   |                                      |
 | channelf              | Fairchild Channel F                            |                                   |                                      |
 | coco                  | Tandy Color Computer                           |                                   |                                      |
 | colecovision          | ColecoVision                                   |                                   |                                      |
@@ -1463,7 +1464,6 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | genesis               | Sega Genesis                                   | RetroArch (Genesis Plus GX)       | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 |                                   |                                      |
 | intellivision         | Mattel Electronics Intellivision               |                                   |                                      |
-| chailove              | ChaiLove game engine                           |                                   |                                      |
 | kodi                  | Kodi home theatre software                     | N/A                               |                                      |
 | lutris                | Lutris open gaming platform                    | Lutris application (Unix only)    | Shell script in root folder          |
 | lutro                 | Lutro game engine                              |                                   |                                      |

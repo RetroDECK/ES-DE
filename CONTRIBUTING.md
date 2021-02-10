@@ -8,11 +8,11 @@ A review of the CMake configuration files would also be helpful. Although the bu
 
 Work is also needed to get ES-DE into the repositories of the various supported operating systems. For example Debian, Fedora, FreeBSD, NetBSD and OpenBSD. This is an area where I have no experience so help with this would be fantastic.
 
-Regarding testing, it's impossible for me to test every game system as rbsimple-DE has support for more than a 100 different systems. There could be issues with the configuration template files, or within ES-DE itself. So more testing is needed!
+Regarding testing, it's impossible for me to test every game system as rbsimple-DE has support for well over a 100 different systems. There could be issues with the configuration template files, or within ES-DE itself. So more testing is needed!
 
 In general, a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great!
 
-As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details on what needs to be added or updated. Note that although rbsimple-DE is based on Recalbox Multi, it's only possible to use assets from this theme set created before their change to a more restrictive license, which happened in 2018. As such it's unfortunately necessary to recreate all the system graphics from scratch that have since been released by the Recalbox community.
+As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details on what needs to be added or updated. Note that although rbsimple-DE is based on Recalbox Multi, it's only possible to use assets from this theme set created before its change to a more restrictive license, which happened in 2018. As such it's unfortunately necessary to recreate all the system graphics from scratch that have since been released by the Recalbox community.
 
 The ES-DE development is tracked using a Kanban board which is publicly visible at the GitLab project site:
 
