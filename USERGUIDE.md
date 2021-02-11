@@ -1427,7 +1427,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | apple2gs              | Apple IIGS                                     |                                   |                                      |
 | arcade                | Arcade                                         | RetroArch (MAME 2016 on Unix & Windows, MAME 2010 on macOS)* | Single archive file following MAME name standard in root folder |
 | astrocade             | Bally Astrocade                                |                                   |                                      |
-| atari2600             | Atari 2600                                     |                                   |                                      |
+| atari2600             | Atari 2600                                     | RetroArch(Stella 2014)            | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     |                                   |                                      |
 | atari7800             | Atari 7800 ProSystem                           |                                   |                                      |
 | atari800              | Atari 800                                      |                                   |                                      |
@@ -1452,9 +1452,9 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | dragon32              | Dragon 32                                      |                                   |                                      |
 | dreamcast             | Sega Dreamcast                                 |                                   |                                      |
 | famicom               | Nintendo Family Computer                       | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
-| fba                   | Final Burn Alpha                               |                                   | Single archive file following MAME name standard in root folder |
-| fbneo                 | FinalBurn Neo                                  |                                   | Single archive file following MAME name standard in root folder |
-| fds                   | Nintendo Famicom Disk System                   | RetroArch (Nestopia UE)           | Single archive or ROM file in root folder |
+| fba                   | Final Burn Alpha                               | RetroArch (FB Alpha 2012)*        | Single archive file following MAME name standard in root folder |
+| fbneo                 | FinalBurn Neo                                  | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
+| fds                   | Nintendo Famicom Disk System                   | RetroArch (Nestopia UE)*          | Single archive or ROM file in root folder |
 | gameandwatch          | Nintendo Game and Watch                        |                                   |                                      |
 | gamegear              | Sega Game Gear                                 |                                   |                                      |
 | gb                    | Nintendo Game Boy                              |                                   |                                      |
@@ -1468,11 +1468,11 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | lutris                | Lutris open gaming platform                    | Lutris application (Unix only)    | Shell script in root folder          |
 | lutro                 | Lutro game engine                              |                                   |                                      |
 | macintosh             | Apple Macintosh                                |                                   |                                      |
-| mame                  | Multiple Arcade Machine Emulator               |                                   | Single archive file following MAME name standard in root folder |
+| mame                  | Multiple Arcade Machine Emulator               | RetroArch (MAME 2016 on Unix & Windows, MAME 2010 on macOS)* | Single archive file following MAME name standard in root folder |
 | mame-advmame          | AdvanceMAME                                    |                                   | Single archive file following MAME name standard in root folder |
-| mame-libretro         | Multiple Arcade Machine Emulator               |                                   | Single archive file following MAME name standard in root folder |
+| mame-libretro         | Multiple Arcade Machine Emulator               | RetroArch(MAME - Current)*        | Single archive file following MAME name standard in root folder |
 | mame-mame4all         | MAME4ALL                                       |                                   | Single archive file following MAME name standard in root folder |
-| mastersystem          | Sega Master System                             |                                   |                                      |
+| mastersystem          | Sega Master System                             | RetroArch (Genesis Plus GX)       | Single archive or ROM file in root folder |
 | megacd                | Sega Mega-CD                                   |                                   |                                      |
 | megacdjp              | Sega Mega-CD [Japan]                           |                                   |                                      |
 | megadrive             | Sega Mega Drive                                | RetroArch (Genesis Plus GX)       | Single archive or ROM file in root folder |
@@ -1533,7 +1533,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | sufami                | Bandai SuFami Turbo                            |                                   |                                      |
 | supergrafx            | NEC SuperGrafx                                 |                                   |                                      |
 | tanodragon            | Tano Dragon                                    |                                   |                                      |
-| tg16                  | NEC TurboGrafx-16                              |                                   |                                      |
+| tg16                  | NEC TurboGrafx-16                              | RetroArch (Beetle PCE FAST)       | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              |                                   |                                      |
 | ti99                  | Texas Instruments TI-99                        |                                   |                                      |
 | tic80                 | TIC-80 game engine                             |                                   |                                      |

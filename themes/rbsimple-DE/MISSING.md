@@ -74,12 +74,12 @@ None at the moment.
 * to8: Thomson TO8 - consolegame.svg, console.svg, controller.svg, game.svg
 * trs-80: Tandy TRS 80 - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * uzebox: Uzebox - consolegame.svg, console.svg, game.svg
-* vectrex: Vectrex - consolegame.svg (needs simplification as it takes a long time to rasterize)
+* vectrex: Vectrex - consolegame.svg, console.svg (needs simplification as it takes a long time to rasterize)
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
-* virtualboy: Nintendo Virtual Boy - consolegame.svg (needs simplification as it takes a long time to rasterize)
+* virtualboy: Nintendo Virtual Boy - consolegame.svg, console.svg (needs simplification as it takes a long time to rasterize)
 * wiiu: Nintendo Wii U - consolegame.svg, console.svg, controller.svg, game.svg
 * x1:  Sharp X1 - consolegame.svg, console.svg, game.svg
-* x68000: Sharp X68000 - consolegame.svg (image of actual console)
+* x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
 * xbox: Microsoft Xbox - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * xbox360: Microsoft Xbox - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
 * zmachine: Infocom Z-machine - system info, customized colors, consolegame.svg, console.svg, controller.svg
