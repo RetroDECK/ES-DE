@@ -3,33 +3,30 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>FB Alpha or FBA as it is commonly known is an emulator of arcade games,</text>
+            <text>FB Alpha or FBA as it is commonly known is an emulator</text>
         </text>
         <text name="info2" extra="true">
-            <text>that is, it takes the program code, graphic data, ...</text>
+            <text>of arcade games, that is, it takes the program code, graphic data, ...</text>
         </text>
         <text name="info3" extra="true">
-            <text>from an orginal arcade game and emulate the hardware to make the game</text>
+            <text>from an orginal arcade game and emulate the hardware to make</text>
         </text>
         <text name="info4" extra="true">
-            <text>run in it's original form.</text>
+            <text>the game run in it's original form.As far as the game is concerned</text>
         </text>
         <text name="info5" extra="true">
-            <text>As far as the game is concerned it is running in it's original cabinet.</text>
+            <text>it is running in it's original cabinet. FBA is an open-source project</text>
         </text>
         <text name="info6" extra="true">
-            <text>FBA is an open-source project and it is programmed by a group of people</text>
+            <text>and it is programmed by a group of people known as the FBA team.</text>
         </text>
         <text name="info7" extra="true">
-            <text>known as the FBA team.</text>
-        </text>
-        <text name="info8" extra="true">
             <text>Over the years this has comprised Jan_Klaassen,</text>
         </text>
-        <text name="info9" extra="true">
+        <text name="info8" extra="true">
             <text>KEV, LoopMaster, Mike Haggar, Hyper Yagami, Ayeye.</text>
         </text>
-        <text name="info10" extra="true">
+        <text name="info9" extra="true">
             <text>FBA is based on the original FinalBurn by Dave.</text>
         </text>
     </view>

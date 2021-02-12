@@ -32,6 +32,8 @@ None at the moment.
 * desktop: Desktop applications - system info, customized colors, consolegame.svg, console.svg, controller.svg
 * dos: DOS - system info
 * dragon32: Dragon 32 - consolegame.svg, console.svg, controller.svg, game.svg
+* fba: FinalBurn Alpha - system info (needs improvement), logo.svg (needs improvement)
+* fbneo: FinalBurn Neo - system info (needs improvement), logo.svg (needs improvement)
 * gx4000: Amstrad GX4000 - consolegame.svg, console.svg, controller.svg, game.svg
 * intellivision: Intellivision - consolegame.svg, console.svg, controller.svg, game.svg
 * kodi: Kodi home theatre software - consolegame.svg, console.svg, controller.svg
