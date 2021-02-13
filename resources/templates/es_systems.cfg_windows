@@ -95,7 +95,7 @@
     <name>arcade</name>
     <fullname>Arcade</fullname>
     <path>%ROMPATH%\arcade</path>
-    <extension>.chd .CHD .cmd .CMD .7z .7Z .zip .ZIP</extension>
+    <extension>.cmd .CMD .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\mame_libretro.dll %ROM%</command>
     <platform>arcade</platform>
     <theme>arcade</theme>

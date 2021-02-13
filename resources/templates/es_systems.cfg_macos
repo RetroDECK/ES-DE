@@ -95,7 +95,7 @@
     <name>arcade</name>
     <fullname>Arcade</fullname>
     <path>%ROMPATH%/arcade</path>
-    <extension>.chd .CHD .cmd .CMD .7z .7Z .zip .ZIP</extension>
+    <extension>.cmd .CMD .7z .7Z .zip .ZIP</extension>
     <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/mame_libretro.dylib %ROM%</command>
     <platform>arcade</platform>
     <theme>arcade</theme>
