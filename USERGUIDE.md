@@ -1409,7 +1409,7 @@ The **Default emulator** column shows the emulator configured in es_systems.cfg,
 
 For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support.
 
-Note that MAME emulation is a bit special as the choice of emulator or core depends on which ROM set you're using. It's recommended to go for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore the default _arcade_ system is preconfigured to use the RetroArch core _MAME - Current_ which as the name implies will be the latest available MAME version. For really slow computers though, the 0.78 ROM set is a popular choice. To use this you either need to modify the es_systems.cfg file, or you can use the _mame_ system which comes preconfigured for the RetroArch core _MAME 2003-Plus_. There are other alternatives as well such as _MAME 2010_ that uses the 0.139 ROM set but this would require a manual change of the es_systems.cfg file and is generally not recommended.
+MAME emulation is a bit special as the choice of emulator or core depends on which ROM set you're using. It's recommended to go for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore the default `arcade` system is preconfigured to use the RetroArch core _MAME - Current_ which as the name implies will be the latest available MAME version. For really slow computers though, the 0.78 ROM set is a popular choice. To use this you either need to modify the es_systems.cfg file, or you can use the `mame` system which comes preconfigured for the RetroArch core _MAME 2003-Plus_. There are other alternatives as well such as _MAME 2010_ that uses the 0.139 ROM set but this would require a manual change of the es_systems.cfg file and is generally not recommended.
 
 There are other MAME versions and derivates available as well such as MAME4ALL, AdvanceMAME, FinalBurn Alpha and FinalBurn Neo but it's beyond the scope of this document to describe those in detail. For more information, refer to the [RetroPie arcade documentation](https://retropie.org.uk/docs/Arcade) which has a good overview of the various MAME alternatives.
 
@@ -1429,7 +1429,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | apple2gs              | Apple IIGS                                     |                                   |                                      |
 | arcade                | Arcade                                         | RetroArch (MAME - Current)*       | Single archive file following MAME name standard in root folder |
 | astrocade             | Bally Astrocade                                |                                   |                                      |
-| atari2600             | Atari 2600                                     | RetroArch(Stella 2014)            | Single archive or ROM file in root folder |
+| atari2600             | Atari 2600                                     | RetroArch(Stella)                 | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     |                                   |                                      |
 | atari7800             | Atari 7800 ProSystem                           |                                   |                                      |
 | atari800              | Atari 800                                      |                                   |                                      |
@@ -1440,7 +1440,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | atarixe               | Atari XE                                       |                                   |                                      |
 | atomiswave            | Atomiswave                                     |                                   |                                      |
 | bbcmicro              | BBC Micro                                      |                                   |                                      |
-| c64                   | Commodore 64                                   | RetroArch (VICE x64, fast)        | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
+| c64                   | Commodore 64                                   | RetroArch (VICE x64sc, accurate)  | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
 | cavestory             | Cave Story (NXEngine)                          |                                   |                                      |
 | cdtv                  | Commodore CDTV                                 |                                   |                                      |
 | chailove              | ChaiLove game engine                           |                                   |                                      |
@@ -1503,8 +1503,8 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | pc                    | IBM PC                                         | RetroArch (DOSBox-core)           | In separate folder (one folder per game, with complete file structure retained) |
 | pc88                  | NEC PC-8800 series                             | RetroArch (QUASI88)               |                                      |
 | pc98                  | NEC PC-9800 series                             | RetroArch (Neko Project II Kai)   |                                      |
-| pcengine              | NEC PC Engine                                  | RetroArch (Beetle PCE FAST)       | Single archive or ROM file in root folder |
-| pcenginecd            | NEC PC Engine CD                               |                                   |                                      |
+| pcengine              | NEC PC Engine                                  | RetroArch (Beetle PCE)            | Single archive or ROM file in root folder |
+| pcenginecd            | NEC PC Engine CD                               | RetroArch (Beetle PCE)            |                                      |
 | pcfx                  | NEC PC-FX                                      |                                   |                                      |
 | pokemini              | Nintendo Pokémon Mini                          |                                   |                                      |
 | ports                 | Ports                                          | N/A                               | Shell/batch script in separate folder (possibly combined with game data) |
@@ -1534,8 +1534,8 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | sufami                | Bandai SuFami Turbo                            |                                   |                                      |
 | supergrafx            | NEC SuperGrafx                                 |                                   |                                      |
 | tanodragon            | Tano Dragon                                    |                                   |                                      |
-| tg16                  | NEC TurboGrafx-16                              | RetroArch (Beetle PCE FAST)       | Single archive or ROM file in root folder |
-| tg-cd                 | NEC TurboGrafx-CD                              |                                   |                                      |
+| tg16                  | NEC TurboGrafx-16                              | RetroArch (Beetle PCE)            | Single archive or ROM file in root folder |
+| tg-cd                 | NEC TurboGrafx-CD                              | RetroArch (Beetle PCE)            |                                      |
 | ti99                  | Texas Instruments TI-99                        |                                   |                                      |
 | tic80                 | TIC-80 game engine                             |                                   |                                      |
 | to8                   | Thomson TO8                                    | RetroArch (Theodore)              |                                      |
