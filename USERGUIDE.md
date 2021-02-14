@@ -1395,7 +1395,7 @@ Please refer to the [INSTALL.md](INSTALL.md#command-line-arguments) document for
 
 **Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. ES-DE will still work but the game system will not be themed which looks very ugly.
 
-Note as well that the list and corresponding es_systems.cfg templates may not match what's actually available for all supported operating systems. For example, in some instances you may need to compile the RetroArch cores from source code as they may not come pre-built for your OS, and in some instances they may not work at all. Linux is the reference as most RetroArch cores and other emulators are supported on this operating system. But entries are still retained in all es_systems.cfg templates as more emulators may be supported in the future. Finally, if the preferred emulator or core is not available for a certain OS but there is a feasible alternative, then this is used instead. Such an example is for Nintendo 64, where ParaLLEl N64 is defined on Windows and Mupen64Plus-Next is defined on Unix and macOS.
+Note as well that the list and corresponding es_systems.cfg templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
 
 The column **Game system name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
 
@@ -1418,7 +1418,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | Game system name      | Full name                                      | Default emulator                  | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                            |                                   |                                      |
-| 64dd                  | Nintendo 64DD                                  | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | |
+| 64dd                  | Nintendo 64DD                                  | RetroArch (Mupen64Plus-Next)      |                                      |
 | ags                   | Adventure Game Studio game engine              |                                   |                                      |
 | amiga                 | Commodore Amiga                                | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
 | amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
@@ -1429,7 +1429,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | apple2gs              | Apple IIGS                                     |                                   |                                      |
 | arcade                | Arcade                                         | RetroArch (MAME - Current)*       | Single archive file following MAME name standard in root folder |
 | astrocade             | Bally Astrocade                                |                                   |                                      |
-| atari2600             | Atari 2600                                     | RetroArch(Stella)                 | Single archive or ROM file in root folder |
+| atari2600             | Atari 2600                                     | RetroArch (Stella)                | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     |                                   |                                      |
 | atari7800             | Atari 7800 ProSystem                           |                                   |                                      |
 | atari800              | Atari 800                                      |                                   |                                      |
@@ -1488,7 +1488,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | naomi                 | Sega NAOMI                                     | RetroArch (Flycast)               |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | RetroArch (Flycast)               |                                      |
 | n3ds                  | Nintendo 3DS                                   | RetroArch (Citra)                 |                                      |
-| n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next on Unix & macOS, ParaLLEl N64 on Windows) | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next)      | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
 | neogeo                | SNK Neo Geo                                    | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
 | neogeocd              | SNK Neo Geo CD                                 | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
