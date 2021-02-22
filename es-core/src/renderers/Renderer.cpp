@@ -145,6 +145,16 @@ namespace Renderer
         // games or when manually switching windows using the task switcher).
         SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
+        #if defined(__unix__)
+        // Disabling desktop composition can lead to better framerates and a more fluid user
+        // interface, but with some drivers it can cause strange behaviours when returning to
+        // the desktop.
+        if (Settings::getInstance()->getBool("DisableComposition"))
+            SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "1");
+        else
+            SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
+        #endif
+
         #if defined(__APPLE__) || defined(__unix__)
         bool userResolution = false;
         // Check if the user has changed the resolution from the command line.

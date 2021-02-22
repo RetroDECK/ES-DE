@@ -925,6 +925,21 @@ void GuiMenu::openOtherSettings()
         }
     });
 
+    #if defined(__unix__)
+    // Whether to disable desktop composition.
+    auto disable_composition = std::make_shared<SwitchComponent>(mWindow);
+    disable_composition->setState(Settings::getInstance()->getBool("DisableComposition"));
+    s->addWithLabel("DISABLE DESKTOP COMPOSITION (REQUIRES RESTART)", disable_composition);
+    s->addSaveFunc([disable_composition, s] {
+        if (disable_composition->getState() !=
+                Settings::getInstance()->getBool("DisableComposition")) {
+            Settings::getInstance()->setBool("DisableComposition",
+                    disable_composition->getState());
+            s->setNeedsSaving();
+        }
+    });
+    #endif
+
     // GPU statistics overlay.
     auto display_gpu_statistics = std::make_shared<SwitchComponent>(mWindow);
     display_gpu_statistics->setState(Settings::getInstance()->getBool("DisplayGPUStatistics"));

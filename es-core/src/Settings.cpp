@@ -230,6 +230,9 @@ void Settings::setDefaults()
     mBoolMap["CustomEventScripts"] = { false, false };
     mBoolMap["ParseGamelistOnly"] = { false, false };
     mBoolMap["ROMDirGameMedia"] = { false, false };
+    #if defined(__unix__)
+    mBoolMap["DisableComposition"] = { true, true };
+    #endif
     mBoolMap["DisplayGPUStatistics"] = { false, false };
     // macOS requires root privileges to reboot and power off so it doesn't make much
     // sense to enable these settings and menu entries for this operating system.

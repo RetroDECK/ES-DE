@@ -1028,6 +1028,10 @@ If enabled, only ROMs that have metadata saved to the gamelist.xml files will be
 
 Using this option, you can place game images and videos in the ROM directory tree. The media files are searched inside the directory _\<ROM directory\>/\<system name\>/images/_ and _\<ROM directory\>/\<system name\>/videos/_ and the filenames must match the ROM names, followed by a dash and the media type. For example _~/ROMs/nes/images/Contra-screenshot.jpg, ~/ROMs/nes/images/Contra-marquee.jpg_ and _~/ROMs/nes/videos/Contra-video.jpg_. This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES-DE. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
 
+**Disable desktop composition (requires restart)** _(Unix only)_
+
+The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphic cards and when running in 4K resolution. As such the desktop compositor is disabled by default, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that this setting can cause problems with some graphic drivers (notably the Nvidia proprietary drivers) so if you see strange flickering and similar after quitting ES-DE, then disable the setting. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option).
+
 **Display GPU statistics overlay**
 
 Displays the framerate and VRAM statistics as an overlay. You normally never need to use this unless you're debugging a performance problem or similar. **Note:** As of ES-DE version 1.0 the VRAM usage statistics is not accurate. This will be addressed in a future version.
@@ -1413,12 +1417,14 @@ MAME emulation is a bit special as the choice of emulator or core depends on whi
 
 There are other MAME versions and derivates available as well such as MAME4ALL, AdvanceMAME, FinalBurn Alpha and FinalBurn Neo but it's beyond the scope of this document to describe those in detail. For more information, refer to the [RetroPie arcade documentation](https://retropie.org.uk/docs/Arcade) which has a good overview of the various MAME alternatives.
 
+Running RetroArch on macOS is a bit problematic as some cores (e.g. the Nintendo 64 emulators) don't exist at all, and some cores are unusable on older macOS versions as the compilation was done without the necessary backwards compatibility support. On macOS you may therefore need to compile some cores yourself.
+
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
 | Game system name      | Full name                                      | Default emulator                  | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                            |                                   |                                      |
-| 64dd                  | Nintendo 64DD                                  | RetroArch (Mupen64Plus-Next)      |                                      |
+| 64dd                  | Nintendo 64DD                                  | RetroArch (Mupen64Plus-Next) [no n64 emulator available on macOS?] |                                      |
 | ags                   | Adventure Game Studio game engine              |                                   |                                      |
 | amiga                 | Commodore Amiga                                | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
 | amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
@@ -1488,7 +1494,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | naomi                 | Sega NAOMI                                     | RetroArch (Flycast)               |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | RetroArch (Flycast)               |                                      |
 | n3ds                  | Nintendo 3DS                                   | RetroArch (Citra)                 |                                      |
-| n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next)      | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next) [no n64 emulator available on macOS?] | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
 | neogeo                | SNK Neo Geo                                    | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
 | neogeocd              | SNK Neo Geo CD                                 | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
