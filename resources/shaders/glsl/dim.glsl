@@ -28,7 +28,9 @@ varying vec2 vTexCoord;
 void main()
 {
     vec4 dimColor = vec4(dimValue, dimValue, dimValue, 1.0);
-    vec4 color = texture2D(myTexture, vTexCoord) * dimColor;
+    vec4 color = texture2D(myTexture, vTexCoord);
+    // Alpha is handled differently depending on the graphics drivers, so set it explicitly to 1.0.
+    color = vec4(color.rgb, 1.0) * dimColor;
 
     gl_FragColor = color;
 }

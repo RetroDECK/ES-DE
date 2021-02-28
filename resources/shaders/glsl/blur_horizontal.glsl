@@ -105,7 +105,9 @@ void main()
     float sampleWeights4 = 0.024067905;
     float sampleWeights5 = 0.0021112196;
 
-    vec4 color = COMPAT_TEXTURE(Source, texcoord) * sampleWeights1;
+    // Alpha is handled differently depending on the graphics drivers, so set it explicitly to 1.0.
+    vec4 color = COMPAT_TEXTURE(Source, texcoord);
+    color = vec4(color.rgb, 1.0) * sampleWeights1;
 
 // unroll the loop
         color += COMPAT_TEXTURE(Source, texcoord + vec2(sampleOffsets2* HW * PIXEL_SIZE.x, 0.0)) * sampleWeights2;
