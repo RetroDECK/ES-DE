@@ -234,9 +234,18 @@ bool parseArgs(int argc, char* argv[])
         }
         #endif
         else if (strcmp(argv[i], "--vsync") == 0) {
-            bool vsync = (strcmp(argv[i + 1], "on") == 0 ||
-                    strcmp(argv[i + 1], "1") == 0) ? true : false;
-            Settings::getInstance()->setBool("VSync", vsync);
+            if (i >= argc - 1) {
+                std::cerr << "Error: No VSync value supplied.\n";
+                return false;
+            }
+            std::string vSyncValue = argv[i + 1];
+            if (vSyncValue != "on" && vSyncValue != "off" && vSyncValue != "1" &&
+                    vSyncValue != "0") {
+                std::cerr << "Error: Invalid VSync value supplied.\n";
+                return false;
+            }
+            bool vSync = (vSyncValue == "on" || vSyncValue == "1") ? true : false;
+            Settings::getInstance()->setBool("VSync", vSync);
             i++;
         }
         else if (strcmp(argv[i], "--max-vram") == 0) {
