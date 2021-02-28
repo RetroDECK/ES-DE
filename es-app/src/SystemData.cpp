@@ -147,6 +147,9 @@ bool SystemData::populateFolder(FileData* folder)
                 folder->addChild(newGame);
                 isGame = true;
             }
+            else {
+                delete newGame;
+            }
         }
 
         // Add directories that also do not match an extension as folders.
