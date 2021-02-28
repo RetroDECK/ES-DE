@@ -217,7 +217,7 @@ void SystemScreensaver::stopScreensaver()
     mSaturationAmount = 1.0;
 
     if (mGameOverlay)
-        mGameOverlay.release();
+        mGameOverlay.reset();
 }
 
 void SystemScreensaver::nextGame() {
