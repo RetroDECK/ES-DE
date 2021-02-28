@@ -90,6 +90,8 @@ SystemData::~SystemData()
             writeMetaData();
     }
 
+    if (!mEnvData->mStartPath.empty())
+        delete mEnvData;
     delete mRootFolder;
     delete mFilterIndex;
 }
