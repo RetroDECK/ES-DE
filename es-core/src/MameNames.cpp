@@ -175,6 +175,8 @@ const bool MameNames::find(std::vector<std::string> devices, const std::string& 
     size_t end = devices.size();
 
     while (start < end) {
+        if (!strcmp(devices[start].c_str(), name.c_str()))
+            return true;
         const size_t index = (start + end) / 2;
         const int compare = strcmp(devices[index].c_str(), name.c_str());
 
