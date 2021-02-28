@@ -106,7 +106,7 @@ void main()
     float sampleWeights4 = 0.024067905;
     float sampleWeights5 = 0.0021112196;
 
-    // Alpha is handled differently depending on the graphics drivers, so set it explicitly to 1.0.
+    // Alpha is handled differently depending on the graphics driver, so set it explicitly to 1.0.
     vec4 color = COMPAT_TEXTURE(Source, texcoord);
     color = vec4(color.rgb, 1.0) * sampleWeights1;
 
