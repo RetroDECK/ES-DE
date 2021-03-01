@@ -790,6 +790,9 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
 
             mGameListViews.erase(it);
 
+            if (isCurrent)
+                mCurrentView = nullptr;
+
             if (reloadTheme)
                 system->loadTheme();
             system->getIndex()->setKidModeFilters();
@@ -831,6 +834,7 @@ void ViewController::reloadAll()
         cursorMap[it->first] = it->second->getCursor();
 
     mGameListViews.clear();
+    mCurrentView = nullptr;
 
     // Load themes, create GameListViews and reset filters.
     for (auto it = cursorMap.cbegin(); it != cursorMap.cend(); it++) {
