@@ -30,8 +30,12 @@
 
 libvlc_instance_t* VideoVlcComponent::mVLC = nullptr;
 
-VideoVlcComponent::VideoVlcComponent(Window* window)
-        : VideoComponent(window), mMediaPlayer(nullptr), mContext({})
+VideoVlcComponent::VideoVlcComponent(
+        Window* window)
+        : VideoComponent(window),
+        mMediaPlayer(nullptr),
+        mContext({}),
+        mHasSetAudioVolume(false)
 {
     // Get an empty texture for rendering the video.
     mTexture = TextureResource::get("");
