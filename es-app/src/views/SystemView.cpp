@@ -299,8 +299,6 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     }
 
     std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
-    bool goFast = transition_style == "instant";
-    const float infoStartOpacity = mSystemInfo.getOpacity() / 255.f;
 
     // To prevent ugly jumps with two systems when quickly repeating the same direction.
     if (mPreviousScrollVelocity != 0 && posMax == 2 &&

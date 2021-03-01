@@ -603,7 +603,7 @@ void SystemScreensaver::generateOverlayInfo()
     float posY = static_cast<float>(Renderer::getWindowHeight()) * 0.02f;
 
     std::string favoriteChar;
-    if (mCurrentGame->getFavorite())
+    if (mCurrentGame && mCurrentGame->getFavorite())
         favoriteChar = "  " + ViewController::FAVORITE_CHAR;
 
     const std::string gameName = Utils::String::toUpper(mGameName) + favoriteChar;
