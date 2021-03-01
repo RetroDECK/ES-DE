@@ -126,20 +126,29 @@ cmake -DCMAKE_BUILD_TYPE=Profiling .
 make
 ```
 
-You can then profile the code with Valgrind:
-```
-valgrind --tool=callgrind --log-file=../valgrind_run_01 ./emulationstation
-```
+As for more advanced debugging, Valgrind is a very powerful and useful tool which can analyze many aspects of the application. Be aware that some of the Valgrind tools should be run with an optimized build, and some with optimizations turned off. Refer to the Valgrind documentation for more information.
 
-The output file can be loaded into a tool such as KCachegrind for data analysis.
-
-To check for memory leaks, the following command is useful:
+The most common tool is Memcheck to check for memory leaks, which you run like this:
 
 ```
 valgrind --tool=memcheck --leak-check=full --log-file=../valgrind_run_01 ./emulationstation
 ```
 
-Note that you can also profile either a normal build or a debug build, but it's normally recommended to use the profiling build as it's compiled with optimizations while retaining the debug symbols. But if you need to alternate between Valgrind and the normal debugger the optimizations can be very annoying and therefore a normal debug build could be recommended in that instance.
+Another helpful tool is the Callgrind call-graph analyzer:
+```
+valgrind --tool=callgrind --log-file=../valgrind_run_01 ./emulationstation
+```
+
+The output file can be loaded into an application such as KCachegrind for data analysis.
+
+
+
+Yet another very useful Valgrind tool is the Massif heap profiler, which can be run like this:
+```
+valgrind --tool=massif --massif-out-file=../massif.out.01 ./emulationstation
+```
+
+The output file can be loaded into an application such as Massif-Visualizer for analysis.
 
 Another useful tool is `scan-build`, assuming you use Clang/LLVM. This is a static analyzer that runs during compilation to provide a very helpful HTML report of potential bugs (well it should be actual bugs but some false positives could be included). You need to run it for both the cmake and make steps, here's an example:
 
