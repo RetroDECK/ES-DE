@@ -55,19 +55,19 @@ GuiDetectDevice::GuiDetectDevice(
     // Message.
     if (numDevices > 0) {
         mMsg1 = std::make_shared<TextComponent>(mWindow,
-                "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT.",
+                "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT",
                 Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     }
     else {
         mMsg1 = std::make_shared<TextComponent>(mWindow,
-                "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT.",
+                "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT",
                 Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     }
 
     mGrid.setEntry(mMsg1, Vector2i(0, 2), false, true);
 
     const std::string msg2str = firstRun ?
-            "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)." : "PRESS ESC TO CANCEL.";
+            "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" : "PRESS ESC TO CANCEL";
     mMsg2 = std::make_shared<TextComponent>(mWindow, msg2str,
             Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     mGrid.setEntry(mMsg2, Vector2i(0, 3), false, true);
