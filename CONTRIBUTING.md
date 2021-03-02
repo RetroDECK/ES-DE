@@ -29,7 +29,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Improve full-screen support, remove the temporary full screen hacks
 * Proper game launching screen
 * Ability to show game media in full screen from the gamelist view
-* Checksum support for the scraper to verify each file before accepting/saving it
+* Replace libVLC with FFmpeg
 * Move to the SDL2 GameController API
 
 #### v1.2
@@ -37,9 +37,8 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
 * On-screen keyboard
 * Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)
+* Checksum support for the scraper to verify each file before accepting/saving it
 * Web proxy support for the scraper
-* Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
-* Bulk metadata editor
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
 * Shader support for the OpenGL ES renderer
 * Add to Linux repositories, BSD ports collections etc.
@@ -57,6 +56,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.4
 
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
+* Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
 * Simple file browsing component
 * Requests per minute limitation setting for the scraper
 * Add 'time played' counter per game, similar to how it works in Steam
@@ -65,10 +65,10 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.5
 
+* Bulk metadata editor
 * Overhaul of the GUI element scaling and placement logic to make ES-DE look more consistent across different resolutions
 * Scrollbars for menus and gamelists
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
-* Possibly replace libVLC with FFmpeg
 * Support for additional scraper services (if feasible?)
 
 #### v2.0
