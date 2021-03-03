@@ -8,6 +8,8 @@ A review of the CMake configuration files would also be helpful. Although the bu
 
 Work is also needed to get ES-DE into the repositories of the various supported operating systems. For example Debian, Fedora, FreeBSD, NetBSD and OpenBSD. This is an area where I have no experience so help with this would be fantastic.
 
+Additional documentation is needed as well, primarily in the form of instruction videos to show how the software is installed and configured on the various supported operating systems. The primary user feedback so far is that although it's quite easy to setup ES-DE itself, the confusion starts with RetroArch and its emulator cores. The scope is clear that ES-DE is only a front-end application, but the instruction videos should cover the entire setup process including the emulators to make them one-stop tutorials for the users.
+
 Regarding testing, it's impossible for me to test every game system as rbsimple-DE has support for well over a 100 different systems. There could be issues with the configuration template files, or within ES-DE itself. So more testing is needed!
 
 In general, a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great!
