@@ -20,9 +20,9 @@ The current version 1.0 has been tested on the following operating systems (all 
 * Windows 10
 * Windows 8.1
 
-***)** On Ubuntu 20.10, attempting to play videos crashes ES-DE due to a libVLC bug, refer to the Known issues section in [CHANGELOG.md](CHANGELOG.md#known-issues) for a workaround.
+***)** On Ubuntu 20.10, attempting to play videos crashes ES-DE due to a libVLC bug, refer to the _Known issues_ section in [CHANGELOG.md](CHANGELOG.md#known-issues) for a workaround.
 
-At the moment Raspberry Pi is not supported, but this is planned for future releases. It may still be possible to compile and run ES-DE on this device, but as of v1.0 it's not actively used during development and therefore not tested.
+At the moment Raspberry Pi is not supported, but this is planned for future releases. It may still be possible to compile and run ES-DE on this type of device, but as of v1.0 it's not actively used during development and therefore not tested.
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
@@ -30,20 +30,20 @@ A comprehensive theme set, **rbsimple-DE** which is based on Recalbox Multi from
 
 ### Download
 
-**_The ES-DE repository was just opened for public access and there are no binary distributions available yet. But the plan is to have Beta 1 available in the near future when most of the known bugs have been fixed. Stay tuned._**
+The latest available release is v1.0.0-beta1.
 
-| Package             | Operating systems                        | Architecture | Version     | Download link  |
-| :------------------ | :--------------------------------------- | :----------- | :---------- | :------------- |
-| Debian DEB package  | Ubuntu, Linux Mint and similar           | x64 (x86)    | 1.0.0-beta1 | Available soon |
-| Fedora RPM package  | Fedora Workstation, possibly others      | x64 (x86)    | 1.0.0-beta1 | Available soon |
-| macOS DMG installer | macOS 10.11 "El Capitan" to 11 "Big Sur" | x64 (x86)    | 1.0.0-beta1 | Available soon |
-| Windows installer   | Windows 10 and 8.1                       | x64 (x86)    | 1.0.0-beta1 | Available soon |
+| Package             | Operating systems                                       | Architecture | Download link  |
+| :------------------ | :------------------------------------------------------ | :----------- | :------------- |
+| Debian DEB package  | Ubuntu 20.04 and 20.10, Linux Mint 20, possibly others  | x64 (x86)    | [emulationstation-de-1.0.0-beta1.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-beta1.deb)|
+| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.0-beta1.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-beta1.rpm)|
+| macOS DMG installer | macOS 10.11 "El Capitan" to 11 "Big Sur"                | x64 (x86)    | [EmulationStation-DE-1.0.0-beta1.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-beta1.dmg)|
+| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-beta1.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.0.0-beta1.exe)|
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about this release, including known issues.
 
 For some of the rarer operating systems listed at the top you need to build ES-DE from source. The plan is to have ES-DE available in the software repositories of all supported operating systems (where this is applicable), so in the long term building from source should not be required.
 
-**Note:** The software is currently in beta status which means it's also beta quality and may contain bugs. The application should still hopefully be good enough for every day use and bugs will be fixed continuously.
+**Note:** The software is currently in beta status which means it's also beta quality and may contain bugs. The application should still hopefully be good enough for everyday use and bugs are fixed continuously. Speaking of bugs, please report these on the project [Kanban board](https://gitlab.com/leonstyhre/emulationstation-de/-/boards), where you can also track the overall ES-DE development.
 
 
 ### Contributing
