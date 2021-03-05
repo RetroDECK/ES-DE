@@ -12,7 +12,7 @@ Full navigation sound support has been implemented, and the metadata editor has 
 
 OpenGL GLSL shader support has been added (not for the OpenGL ES renderer though) and there are multiple effects implemented such as scanlines for videos, blurred background when opening menus etc.
 
-A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. However themes created for other EmulationStation forks should still work correctly.
+A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. Themes created for the RetroPie EmulationStation fork will still work correctly.
 
 Many bugs have been fixed, and numerous features that were only partially implemented or broken have been updated to a fully working state. The application runs much faster as well due to lots of optimizations.
 
@@ -20,7 +20,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 * Initial version, fork from RetroPie EmulationStation 2.10.0rp-dev (master)
 * Added support for Windows, macOS, FreeBSD, NetBSD and OpenBSD
-* New default theme rbsimple-DE bundled with the software (this theme is largely based on recalbox-multi by the Recalbox community)
+* New default theme rbsimple-DE bundled with the software (this theme is largely based on Recalbox Multi by the Recalbox community)
 * Added extensive es_systems.cfg templates for Unix, macOS and Windows that are automatically installed on first application startup
 * Added full navigation sound support, configurable per theme with a fallback to the built-in sounds if there is no theme support
 * Added multi-monitor support by giving the option to define on which display to run ES-DE
@@ -43,7 +43,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added ability to delete custom collections from the GUI menu
 * Help system updated and expanded to the complete application (previously it was only partially implemented)
 * Game systems are now sorted by full names which makes much more sense from a user perspective
-* In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using a different font color
+* In the metadata editor, any values updated by the single-game scraper or by the user are now highlighted using different font colors
 * Expanded the metadata for folders and made it possible to mark them as favorites
 * Added metadata entry to mark games as broken/not working (e.g. useful for MAME games)
 * Added metadata entry to indicate whether the file should be counted as a game (e.g. useful to exclude setup files and similar for DOS games)
@@ -57,10 +57,10 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added the ability to display pillarboxing and letterboxing for videos with non-standard aspect ratios
 * Custom event scripts can now be enabled or disabled with a menu option
 * Gamelist sorting is now working as expected and is persistent throughout the application session
-* Expanded the gamelist filter functionality to include completed and broken games as well as the ability to filter on game names (via a free text entry)
+* Expanded the gamelist filter functionality to include completed and broken games and added the ability to filter game names via a free text entry
 * Added functionality to remember cursor positions inside folders and grouped custom collections
 * Per-game launch command override, so that different cores or emulators can be used on a per-game basis (saved to gamelist.xml)
-* The emulator core location can be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (mostly useful on Windows)
+* The emulator core location can now be defined relative to the emulator binary using the %EMUPATH% variable in es_systems.cfg (used extensively on macOS and Windows)
 * Core locations can be searched from a configurable list of directories if defined in the es_systems.cfg file using the %COREPATH% variable (mostly useful on Unix where there are no standardized core directories)
 * Clear notifications and logging have been added for missing emulator binaries and cores when attempting to launch games
 * Overhaul of the screensaver (the game info overlay now works correctly for instance)
@@ -70,9 +70,10 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Replaced the on and off button icons with new graphics
 * Replaced the checked checkmark icon with new graphics
 * Made ScrollableContainer (used for the gamelist game descriptions) fade in as the text position is reset
+* Made the ScrollableContainer scroll speed adaptive depending on the font size and width of the text container
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
 * Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
-* No more attempts to open files directly under /etc, instead only the install prefix directory and the home directory are used
+* No more attempts to open files directly under /etc, instead only the install prefix directory, the ES-DE executable directory and the home directory are used
 * Added proper error handling for missing resource files and improved overall logging
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
 * Speed improvements and optimizations, the application now starts faster and feels more responsive
@@ -90,7 +91,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Updated the CMake/CPack install and package configuration files to work as expected (can now generate DEB, RPM, DMG and NSIS installation packages with correct dependencies)
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix and macOS only)
 * Added support for both MSVC and MinGW (GCC) on Windows
-* License files included for all the libraries and resources that are bundled with the application
+* License files are now included for all the libraries and resources that are bundled with the application
 * Updated the MAME ROM index files to include ROMs up to MAME version 0.226 and created scripts to easily generate these index files in the future
 * Greatly expanded the application documentation (which is hosted in the ES-DE repository on GitLab)
 

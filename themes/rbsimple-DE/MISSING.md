@@ -8,7 +8,7 @@ None at the moment.
 
 * 64dd : Nintendo 64DD - consolegame.svg, console.svg, game.svg
 * ags: Adventure Game Studio - system info, customized colors, consolegame.svg, console.svg, controller.svg
-* amiga: Amiga (general) - system info (needs improvement)
+* amiga: Amiga (general) - system info (needs improvement), consolegame.svg/console.svg (picture of an Amiga 500 instead of the 1200 model)
 * amigacd32: Amiga CD32 - consolegame.svg, console.svg, controller.svg, game.svg
 * apple2gs: Apple IIGS - consolegame.svg, console.svg, controller.svg, game.svg
 * astrocade: Bally Astrocade - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
