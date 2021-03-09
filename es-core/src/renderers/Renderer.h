@@ -158,6 +158,7 @@ namespace Renderer
     int getScreenRotate();
     float getScreenWidthModifier();
     float getScreenHeightModifier();
+    float getScreenAspectRatio();
 
     unsigned int convertRGBAToABGR(unsigned int color);
     unsigned int convertABGRToRGBA(unsigned int color);

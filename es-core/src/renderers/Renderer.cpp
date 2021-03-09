@@ -38,6 +38,7 @@ namespace Renderer
     // Screen resolution modifiers relative to the 1920x1080 reference.
     static float screenHeightModifier;
     static float screenWidthModifier;
+    static float screenAspectRatio;
 
     static void setIcon()
     {
@@ -140,6 +141,7 @@ namespace Renderer
 
         screenHeightModifier = static_cast<float>(screenHeight) / 1080.0f;
         screenWidthModifier = static_cast<float>(screenWidth) / 1920.0f;
+        screenAspectRatio = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
 
         // Prevent the application window from minimizing when switching windows (when launching
         // games or when manually switching windows using the task switcher).
@@ -506,5 +508,6 @@ namespace Renderer
     int getScreenRotate() { return screenRotate; }
     float getScreenWidthModifier() { return screenWidthModifier; }
     float getScreenHeightModifier() { return screenHeightModifier; }
+    float getScreenAspectRatio() { return screenAspectRatio; }
 
 } // Renderer::

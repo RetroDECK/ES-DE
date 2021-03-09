@@ -77,7 +77,12 @@ GuiDetectDevice::GuiDetectDevice(
             Font::get(FONT_SIZE_MEDIUM), 0xFFFFFFFF, ALIGN_CENTER);
     mGrid.setEntry(mDeviceHeld, Vector2i(0, 4), false, true);
 
-    setSize(Renderer::getScreenWidth() * 0.6f, Renderer::getScreenHeight() * 0.5f);
+    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 80% of the screen
+    // width rather than the 60% allowed for wider displays.
+    float width = Renderer::getScreenWidth() *
+            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.8f : 0.6f);
+
+    setSize(width, Renderer::getScreenHeight() * 0.5f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
 }
