@@ -447,10 +447,12 @@ std::string Font::wrapText(std::string text, float xLen)
     std::string out;
     std::string line;
     std::string word;
+    std::string abbreviatedWord;
     std::string temp;
 
     size_t space;
     Vector2f textSize;
+    float dotsSize = sizeText("...").x();
 
     // While there's text or we still have text to render.
     while (text.length() > 0)  {
@@ -472,7 +474,20 @@ std::string Font::wrapText(std::string text, float xLen)
         }
         else {
             // The next word won't fit, so break here.
-            out += line + '\n';
+
+            // If the word is too long to fit within xLen, then abbreviate it.
+            if (xLen > 0 && sizeText(word).x() > xLen) {
+                float length = xLen - dotsSize;
+                if (length < 0)
+                    length = 0;
+                abbreviatedWord = getTextMaxWidth(word, length);
+                abbreviatedWord += "...";
+                word = abbreviatedWord;
+                out += line;
+            }
+            else {
+                out += line + '\n';
+            }
             line = word;
         }
     }
