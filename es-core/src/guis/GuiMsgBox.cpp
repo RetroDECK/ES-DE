@@ -18,15 +18,20 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
         const std::string& name1, const std::function<void()>& func1,
         const std::string& name2, const std::function<void()>& func2,
         const std::string& name3, const std::function<void()>& func3,
-        bool disableBackButton)
+        bool disableBackButton,
+        bool deleteOnButtonPress)
         : GuiComponent(window),
         mHelpStyle(helpstyle),
         mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 2)),
-        mDisableBackButton(disableBackButton)
+        mDisableBackButton(disableBackButton),
+        mDeleteOnButtonPress(deleteOnButtonPress)
 {
-    float width = Renderer::getScreenWidth() * 0.6f;  // Max width.
-    float minWidth = Renderer::getScreenWidth() * 0.3f; // Minimum width.
+    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 80% of the screen
+    // width rather than the 60% allowed for wider displays.
+    float width = Renderer::getScreenWidth() *
+            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.8f : 0.6f);
+    float minWidth = Renderer::getScreenWidth() * 0.3f;
 
     mMsg = std::make_shared<TextComponent>(mWindow, text, Font::get(FONT_SIZE_MEDIUM),
             0x777777FF, ALIGN_CENTER);
@@ -66,11 +71,14 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
         width = std::max(mButtonGrid->getSize().x(), mMsg->getSize().x());
         width = std::max(width, minWidth);
     }
+    else if (mButtonGrid->getSize().x() > width) {
+        width = mButtonGrid->getSize().x();
+    }
 
     // Now that we know width, we can find height.
     mMsg->setSize(width, 0); // mMsg->getSize.y() now returns the proper length.
     const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
-            mMsg->getSize().y()*1.225f);
+            mMsg->getSize().y() * 1.225f);
     setSize(width + HORIZONTAL_PADDING_PX * 2 * Renderer::getScreenWidthModifier(),
             msgHeight + mButtonGrid->getSize().y());
 
@@ -80,6 +88,36 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
 
     addChild(&mBackground);
     addChild(&mGrid);
+}
+
+void GuiMsgBox::changeText(const std::string& newText)
+{
+    mMsg->setText(newText);
+    mMsg->setSize(mMsg->getFont()->sizeText(newText));
+
+    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 80% of the screen
+    // width rather than the 60% allowed for wider displays.
+    float width = Renderer::getScreenWidth() *
+            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.8f : 0.6f);
+
+    float minWidth = Renderer::getScreenWidth() * 0.3f;
+
+    // Decide final width.
+    if (mMsg->getSize().x() < width && mButtonGrid->getSize().x() < width) {
+        // mMsg and buttons are narrower than width.
+        width = std::max(mButtonGrid->getSize().x(), mMsg->getSize().x());
+        width = std::max(width, minWidth);
+    }
+    else if (mButtonGrid->getSize().x() > mSize.x()) {
+        width = mButtonGrid->getSize().x();
+    }
+
+    // Now that we know width, we can find height.
+    mMsg->setSize(width, 0); // mMsg->getSize.y() now returns the proper length.
+    const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
+            mMsg->getSize().y() * 1.225f);
+    setSize(width + HORIZONTAL_PADDING_PX * 2 * Renderer::getScreenWidthModifier(),
+            msgHeight + mButtonGrid->getSize().y());
 }
 
 bool GuiMsgBox::input(InputConfig* config, Input input)
@@ -118,7 +156,9 @@ void GuiMsgBox::onSizeChanged()
 void GuiMsgBox::deleteMeAndCall(const std::function<void()>& func)
 {
     auto funcCopy = func;
-    delete this;
+
+    if (mDeleteOnButtonPress)
+        delete this;
 
     if (funcCopy)
         funcCopy();

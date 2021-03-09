@@ -20,11 +20,20 @@ class TextComponent;
 class GuiMsgBox : public GuiComponent
 {
 public:
-    GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::string& text,
-        const std::string& name1 = "OK", const std::function<void()>& func1 = nullptr,
-        const std::string& name2 = "", const std::function<void()>& func2 = nullptr,
-        const std::string& name3 = "", const std::function<void()>& func3 = nullptr,
-        bool disableBackButton = false);
+    GuiMsgBox(
+            Window* window,
+            const HelpStyle& helpstyle,
+            const std::string& text,
+            const std::string& name1 = "OK",
+            const std::function<void()>& func1 = nullptr,
+            const std::string& name2 = "",
+            const std::function<void()>& func2 = nullptr,
+            const std::string& name3 = "",
+            const std::function<void()>& func3 = nullptr,
+            bool disableBackButton = false,
+            bool deleteOnButtonPress = true);
+
+    void changeText(const std::string& newText);
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
@@ -44,6 +53,7 @@ private:
     std::shared_ptr<ComponentGrid> mButtonGrid;
     std::function<void()> mAcceleratorFunc;
     bool mDisableBackButton;
+    bool mDeleteOnButtonPress;
 };
 
 #endif // ES_CORE_GUIS_GUI_MSG_BOX_H
