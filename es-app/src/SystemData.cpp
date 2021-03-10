@@ -573,7 +573,7 @@ bool SystemData::createSystemDirectories()
 
         #if defined(_WIN64)
         systemInfoFile.open(Utils::String::stringToWideString(rompath +
-                systemDir + systemInfoFileName);
+                systemDir + systemInfoFileName));
         #else
         systemInfoFile.open(rompath + systemDir + systemInfoFileName);
         #endif
