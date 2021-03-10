@@ -171,8 +171,13 @@ const std::string FileData::getROMDirectory()
         // Expand home path if ~ is used.
         romDirPath = Utils::FileSystem::expandHomePath(romDirPath);
 
+        #if defined(_WIN64)
+        if (romDirPath.back() !=  '\\')
+            romDirPath = romDirPath + "\\";
+        #else
         if (romDirPath.back() !=  '/')
             romDirPath = romDirPath + "/";
+        #endif
     }
 
     // If %ESPATH% is used for the ROM path configuration, then expand it to the executable
