@@ -14,10 +14,10 @@ If you just want to get started as quickly as possible, simply follow these step
 2) Start the application and press the _Create directories_ button to generate the ROMs directory structure
 3) Put your game ROMs in the directories created by the previous step, or see [here](USERGUIDE.md#supported-game-systems) for additional details
 4) Install and configure [RetroArch](https://www.retroarch.com)
-3) _Windows only: add the RetroArch directory to your system path environmental variable_
-4) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE.md#supported-game-systems)
-6) Start ES-DE and follow the on-screen instructions to configure your controller
-7) Scrape game media for your collection and play some games!
+5) _Windows only: add the RetroArch directory to your system path environmental variable_
+6) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE.md#supported-game-systems)
+7) Start ES-DE and follow the on-screen instructions to configure your controller
+8) Scrape game media for your collection and play some games!
 
 As long as ES-DE hasn't frozen, you can always press F4 to close the application.
 
@@ -82,7 +82,7 @@ On first startup the configuration file `es_settings.cfg` will be generated in t
 
 There's a log file in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
-After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROM directory, and you will also be given a choice to change that ROM directory if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information from es_systems.cfg.
+After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROM directory, and you will also be given a choice to change that ROM directory if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.cfg.
 
 When generating the directory structure, a file named systeminfo.txt will be created in each game system folder which will provide you with some information about the system such as the supported file extensions. Here's an example for the _gc_ system as seen on macOS:
 ```
