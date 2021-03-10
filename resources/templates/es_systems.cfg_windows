@@ -161,7 +161,7 @@
     <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
     <command>retroarch.exe -L %EMUPATH%\cores\virtualjaguar_libretro.dll %ROM%</command>
     <platform>atarijaguarcd</platform>
-    <theme>atarijaguar</theme>
+    <theme>atarijaguarcd</theme>
   </system>
   <system>
     <name>atarilynx</name>
