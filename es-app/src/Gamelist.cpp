@@ -89,8 +89,8 @@ void parseGamelist(SystemData* system)
     std::string xmlpath = system->getGamelistPath(false);
 
     if (!Utils::FileSystem::exists(xmlpath)) {
-        LOG(LogInfo) << "Loading system \"" << system->getName() <<
-                "\" which does not have a gamelist.xml file...";
+        LOG(LogDebug) << "Gamelist::parseGamelist(): System \"" << system->getName() <<
+                "\" does not have a gamelist.xml file";
         return;
     }
 
