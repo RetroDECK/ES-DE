@@ -11,10 +11,11 @@ Table of contents:
 If you just want to get started as quickly as possible, simply follow these steps:
 
 1) Install ES-DE
-2) Install and configure [RetroArch](https://www.retroarch.com)
+2) Start the application and press the _Create directories_ button to generate the ROMs directory structure
+3) Put your game ROMs in the directories created by the previous step, or see [here](USERGUIDE.md#supported-game-systems) for additional details
+4) Install and configure [RetroArch](https://www.retroarch.com)
 3) _Windows only: add the RetroArch directory to your system path environmental variable_
-4) Start RetroArch and install the emulator cores you want to use, see the [end](USERGUIDE.md#supported-game-systems) of this guide which ones are used by default by ES-DE
-5) Put your game ROMs in separate directories per game system under ~/ROMs, again see the end of this guide which directory names should be used
+4) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE.md#supported-game-systems)
 6) Start ES-DE and follow the on-screen instructions to configure your controller
 7) Scrape game media for your collection and play some games!
 
@@ -79,13 +80,35 @@ On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<user
 
 On first startup the configuration file `es_settings.cfg` will be generated in the ES-DE home directory, containing all the default settings. A file named `es_systems.cfg` will also be copied from the program resource folder. This file contains the game ROM paths and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md#es_systemscfg) document.
 
-
 There's a log file in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
-After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, an error messsage will be shown, explaining that you need to install your game files into your ROM directory. You will also be given a choice to change the ROM directory if you don't want to use the default one.
+After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROM directory, and you will also be given a choice to change that ROM directory if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information from es_systems.cfg.
+
+When generating the directory structure, a file named systeminfo.txt will be created in each game system folder which will provide you with some information about the system such as the supported file extensions. Here's an example for the _gc_ system as seen on macOS:
+```
+System name:
+gc
+
+Full system name:
+Nintendo GameCube
+
+Supported file extensions:
+.gcm .GCM .iso .ISO .wbfs .WBFS .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .tgc .TGC .wad .WAD .7z .7Z .zip .ZIP
+
+Launch command:
+/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %EMUPATH%/../Resources/cores/dolphin_libretro.dylib %ROM%
+
+Platform (for scraping):
+gc
+
+Theme folder:
+gc
+```
+
+Be aware that there will be a lot of directories created if using the template es_systems.cfg files bundled with the installation, so it may be a good idea to delete the ones you don't need. Deleting the unnecessary directories also leads to a slightly faster application startup.
 
 ![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
-_This is the error dialog shown if no game files were found. It also lets you configure the ROM directory if you don't want to use the default one. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
+_This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
 ## Migrating from other EmulationStation forks

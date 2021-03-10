@@ -22,6 +22,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added support for Windows, macOS, FreeBSD, NetBSD and OpenBSD
 * New default theme rbsimple-DE bundled with the software (this theme is largely based on Recalbox Multi by the Recalbox community)
 * Added extensive es_systems.cfg templates for Unix, macOS and Windows that are automatically installed on first application startup
+* Added support for generating the ROM directory structure from within the application based on information in es_systems.cfg
 * Added full navigation sound support, configurable per theme with a fallback to the built-in sounds if there is no theme support
 * Added multi-monitor support by giving the option to define on which display to run ES-DE
 * Improved input device configuration and default keyboard mappings are now applied if the keyboard has not been configured by the user
@@ -69,6 +70,8 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Replaced the main application font with Fontfabric Akrobat
 * Replaced the on and off button icons with new graphics
 * Replaced the checked checkmark icon with new graphics
+* Changed the application icons and splash screen color theme from blue to red
+* Improved the menu interface on 4:3 aspect ratio displays
 * Made ScrollableContainer (used for the gamelist game descriptions) fade in as the text position is reset
 * Made the ScrollableContainer scroll speed adaptive depending on the font size and width of the text container
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
@@ -117,6 +120,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The controller D-PAD could not be used for entering the UI mode change passkey
 * Filters were not applied when leaving folders using the back button
 * Editing long text entries made the cursor jump outside the editing field
+* Long words would sometimes render partly outside the designated text area instead of being abbreviated
 * Fixed an annoying gamelist issue that caused the game images and data to be updated and rendered up to six times every time the list was scrolled
 * Not all input events were logged when running with debug logging activated
 * Unknown command line options were silently accepted instead of generating an error and notifying the user
