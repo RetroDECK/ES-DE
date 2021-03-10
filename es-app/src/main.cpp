@@ -51,7 +51,7 @@
 bool forceInputConfig = false;
 bool settingsNeedSaving = false;
 
-enum returnCode {
+enum loadSystemsReturnCode {
     NO_LOADING_ERROR,
     NO_SYSTEMS_FILE,
     NO_ROMS
@@ -354,37 +354,16 @@ bool verifyHomeFolderExists()
     return true;
 }
 
-// Returns NO_LOADING_ERROR if everything is OK.
-// Otherwise returns either NO_SYSTEMS_FILE or NO_ROMS.
-returnCode loadSystemConfigFile(std::string& errorMsg)
+loadSystemsReturnCode loadSystemConfigFile()
 {
-    if (!SystemData::loadConfig()) {
-        LOG(LogError) << "Could not parse systems configuration file";
-        errorMsg = "COULDN'T FIND THE SYSTEMS CONFIGURATION FILE.\n"
-                "ATTEMPTED TO COPY A TEMPLATE ES_SYSTEMS.CFG FILE\n"
-                "FROM THE EMULATIONSTATION RESOURCES DIRECTORY,\n"
-                "BUT THIS FAILED. HAS EMULATIONSTATION BEEN PROPERLY\n"
-                "INSTALLED AND DO YOU HAVE WRITE PERMISSIONS TO \n"
-                "YOUR HOME DIRECTORY?";
+    if (SystemData::loadConfig()) {
+        LOG(LogError) << "Could not parse systems configuration file (es_systems.cfg)";
         return NO_SYSTEMS_FILE;
     }
 
     if (SystemData::sSystemVector.size() == 0) {
-        LOG(LogError) << "No systems found, does at least one system have a game present? "
-                "(Check that the file extensions are supported)";
-        errorMsg = "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
-                "GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES\n"
-                "IN THE CURRENTLY CONFIGURED ROM DIRECTORY OR\n"
-                "CHANGE IT USING THE BUTTON BELOW. MAKE SURE\n"
-                "THAT YOUR FILE EXTENSIONS AND SYSTEMS DIRECTORY\n"
-                "NAMES ARE SUPPORTED BY EMULATIONSTATION-DE.\n"
-                "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
-        #if defined(_WIN64)
-        errorMsg += Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-        #else
-        errorMsg += FileData::getROMDirectory();
-        #endif
-
+        LOG(LogError) << "No game files were found, make sure that the system directories are "
+                "setup correctly and that the file extensions are supported";
         return NO_ROMS;
     }
 
@@ -493,72 +472,19 @@ int main(int argc, char* argv[])
         window.renderLoadingScreen(progressText);
     }
 
-    std::string errorMsg;
-    returnCode returnCodeValue = loadSystemConfigFile(errorMsg);
+    loadSystemsReturnCode loadSystemsStatus = loadSystemConfigFile();
 
-    if (returnCodeValue) {
-        // Something went terribly wrong.
-        if (errorMsg == "") {
-            LOG(LogError) << "Unknown error occured while parsing systems configuration file";
-            Renderer::deinit();
-            return 1;
-        }
-
+    if (loadSystemsStatus) {
         // If there was an issue with installing the es_systems.cfg file from the
         // template directory, then display an error message and let the user quit.
         // If there are no game files found, give the option to the user to quit or
-        // to configure a different ROM directory. The application will need to be
-        // restarted though, to activate any new ROM directory setting.
-        if (returnCodeValue == NO_SYSTEMS_FILE) {
-            window.pushGui(new GuiMsgBox(&window, HelpStyle(),
-                errorMsg.c_str(),
-                "QUIT", [] {
-                    SDL_Event quit;
-                    quit.type = SDL_QUIT;
-                    SDL_PushEvent(&quit);
-                }, "", nullptr, "", nullptr, true));
+        // to configure a different ROM directory as well as to generate the systems
+        // directory structure.
+        if (loadSystemsStatus == NO_SYSTEMS_FILE) {
+            ViewController::get()->noSystemsFileDialog();
         }
-        else if (returnCodeValue == NO_ROMS) {
-            auto updateVal = [](const std::string& newROMDirectory) {
-                Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
-                Settings::getInstance()->saveFile();
-                SDL_Event quit;
-                quit.type = SDL_QUIT;
-                SDL_PushEvent(&quit);
-            };
-
-            window.pushGui(new GuiMsgBox(&window, HelpStyle(), errorMsg.c_str(),
-                    "CHANGE ROM DIRECTORY", [&window, updateVal] {
-                std::string currentROMDirectory;
-                #if defined(_WIN64)
-                currentROMDirectory =
-                        Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-                #else
-                currentROMDirectory = FileData::getROMDirectory();
-                #endif
-
-                window.pushGui(new GuiComplexTextEditPopup(
-                        &window,
-                        HelpStyle(),
-                        "ENTER ROM DIRECTORY",
-                        "Currently configured directory:",
-                        currentROMDirectory,
-                        currentROMDirectory,
-                        updateVal,
-                        false,
-                        "SAVE AND QUIT",
-                        "SAVE CHANGES?",
-                        "LOAD CURRENT",
-                        "LOAD CURRENTLY CONFIGURED VALUE",
-                        "CLEAR",
-                        "CLEAR (LEAVE BLANK TO RESET TO DEFAULT DIRECTORY)",
-                        true));
-            },
-            "QUIT", [] {
-                SDL_Event quit;
-                quit.type = SDL_QUIT;
-                SDL_PushEvent(&quit);
-            }, "", nullptr, true));
+        else if (loadSystemsStatus == NO_ROMS) {
+            ViewController::get()->noGamesDialog();
         }
     }
 
@@ -575,7 +501,7 @@ int main(int argc, char* argv[])
 
     // Choose which GUI to open depending on if an input configuration already exists and
     // whether the flag to force the input configuration was passed from the command line.
-    if (errorMsg == "") {
+    if (!loadSystemsStatus) {
         if (!forceInputConfig && Utils::FileSystem::exists(InputManager::getConfigPath()) &&
                 InputManager::getInstance()->getNumConfiguredDevices() > 0) {
             ViewController::get()->goToStart();

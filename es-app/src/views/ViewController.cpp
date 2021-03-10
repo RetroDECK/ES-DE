@@ -4,9 +4,10 @@
 //  ViewController.cpp
 //
 //  Handles overall system navigation including animations and transitions.
-//  Also creates the gamelist views and handles refresh and reloads of these when needed
+//  Creates the gamelist views and handles refresh and reloads of these when needed
 //  (for example when metadata has been changed or when a list sorting has taken place).
 //  Initiates the launching of games, calling FileData to do the actual launch.
+//  Displays a dialog when there are no games found on startup.
 //
 
 #include "views/ViewController.h"
@@ -16,7 +17,6 @@
 #include "animations/MoveCameraAnimation.h"
 #include "guis/GuiInfoPopup.h"
 #include "guis/GuiMenu.h"
-#include "guis/GuiMsgBox.h"
 #include "views/gamelist/DetailedGameListView.h"
 #include "views/gamelist/GridGameListView.h"
 #include "views/gamelist/IGameListView.h"
@@ -72,7 +72,8 @@ ViewController::ViewController(
         mCancelledTransition(false),
         mLockInput(false),
         mNextSystem(false),
-        mGameToLaunch(nullptr)
+        mGameToLaunch(nullptr),
+        mNoGamesMessageBox(nullptr)
 {
     mState.viewing = NOTHING;
     mState.viewstyle = AUTOMATIC;
@@ -82,6 +83,113 @@ ViewController::~ViewController()
 {
     assert(sInstance == this);
     sInstance = nullptr;
+}
+
+void ViewController::noSystemsFileDialog()
+{
+    std::string errorMessage =
+            "COULDN'T FIND THE SYSTEMS CONFIGURATION FILE.\n"
+            "ATTEMPTED TO COPY A TEMPLATE es_systems.cfg FILE\n"
+            "FROM THE EMULATIONSTATION RESOURCES DIRECTORY,\n"
+            "BUT THIS FAILED. HAS EMULATIONSTATION BEEN PROPERLY\n"
+            "INSTALLED AND DO YOU HAVE WRITE PERMISSIONS TO \n"
+            "YOUR HOME DIRECTORY?";
+
+    mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+            errorMessage.c_str(),
+            "QUIT", [] {
+                SDL_Event quit;
+                quit.type = SDL_QUIT;
+                SDL_PushEvent(&quit);
+            }, "", nullptr, "", nullptr, true));
+}
+
+void ViewController::noGamesDialog()
+{
+    mNoGamesErrorMessage =
+            "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
+            "GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES\n"
+            "IN THE CURRENTLY CONFIGURED ROM DIRECTORY OR\n"
+            "CHANGE IT USING THE BUTTON BELOW. OPTIONALLY THE\n"
+            "ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH\n"
+            "WILL CREATE A TEXT FILE IN EACH FOLDER PROVIDING\n"
+            "SOME INFO SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+
+    #if defined(_WIN64)
+    mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+    #else
+    mRomDirectory = FileData::getROMDirectory();
+    #endif
+
+    mNoGamesMessageBox = new GuiMsgBox(mWindow, HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
+            "CHANGE ROM DIRECTORY", [this] {
+        std::string currentROMDirectory;
+        #if defined(_WIN64)
+        currentROMDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+        #else
+        currentROMDirectory = FileData::getROMDirectory();
+        #endif
+
+        mWindow->pushGui(new GuiComplexTextEditPopup(
+                mWindow,
+                HelpStyle(),
+                "ENTER ROM DIRECTORY",
+                "Currently configured directory:",
+                currentROMDirectory,
+                currentROMDirectory,
+                [this](const std::string& newROMDirectory) {
+                    Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                    Settings::getInstance()->saveFile();
+                    #if defined(_WIN64)
+                    mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+                    #else
+                    mRomDirectory = FileData::getROMDirectory();
+                    #endif
+                    mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                    mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                            "ROM DIRECTORY SAVED, RESTART THE\n"
+                            "APPLICATION TO RESCAN THE SYSTEMS",
+                            "OK", nullptr, "", nullptr, "", nullptr, true));
+                },
+                false,
+                "SAVE",
+                "SAVE CHANGES?",
+                "LOAD CURRENT",
+                "LOAD CURRENTLY CONFIGURED VALUE",
+                "CLEAR",
+                "CLEAR (LEAVE BLANK TO RESET TO DEFAULT DIRECTORY)",
+                false));
+    },
+    "CREATE DIRECTORIES", [this] {
+        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                "THIS WILL CREATE DIRECTORIES FOR ALL THE\n"
+                "GAME SYSTEMS DEFINED IN es_systems.cfg\n\n"
+                "THIS MAY CREATE A LOT OF FOLDERS SO IT'S\n"
+                "ADVICED TO DELETE THE ONES YOU DON'T NEED\n\n"
+                "PROCEED?",
+                "YES", [this] {
+            if (!SystemData::createSystemDirectories()) {
+                mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                        "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED ", "OK", nullptr,
+                        "", nullptr, "", nullptr, true));
+            }
+            else {
+                mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                        "ERROR CREATING THE SYSTEM DIRECTORIES,\n"
+                        "PERMISSION PROBLEMS OR DISK FULL?\n\n"
+                        "SEE THE LOG FILE FOR MORE DETAILS", "OK", nullptr,
+                        "", nullptr, "", nullptr, true));
+            }
+        }, "NO", nullptr, "", nullptr, true));
+    },
+    "QUIT", [] {
+        SDL_Event quit;
+        quit.type = SDL_QUIT;
+        SDL_PushEvent(&quit);
+    }, true, false);
+
+    mWindow->pushGui(mNoGamesMessageBox);
 }
 
 void ViewController::goToStart()

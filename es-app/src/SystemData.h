@@ -68,12 +68,14 @@ public:
     void setScrapeFlag(bool scrapeflag) { mScrapeFlag = scrapeflag; }
 
     static void deleteSystems();
-    // Load the system config file at getConfigPath().
-    // Returns true if no errors were encountered.
-    // An example will be written if the file doesn't exist.
+    // Loads the systems configuration file at getConfigPath() and creates the systems.
     static bool loadConfig();
+
     static bool copyConfigTemplate(const std::string& path);
     static std::string getConfigPath(bool forWrite);
+
+    // Generates the game system directories and information files based on es_systems.cfg.
+    static bool createSystemDirectories();
 
     static std::vector<SystemData*> sSystemVector;
 

@@ -4,14 +4,17 @@
 //  ViewController.h
 //
 //  Handles overall system navigation including animations and transitions.
-//  Also creates the gamelist views and handles refresh and reloads of these when needed
+//  Creates the gamelist views and handles refresh and reloads of these when needed
 //  (for example when metadata has been changed or when a list sorting has taken place).
 //  Initiates the launching of games, calling FileData to do the actual launch.
+//  Displays a dialog when there are no games found on startup.
 //
 
 #ifndef ES_APP_VIEWS_VIEW_CONTROLLER_H
 #define ES_APP_VIEWS_VIEW_CONTROLLER_H
 
+#include "guis/GuiComplexTextEditPopup.h"
+#include "guis/GuiMsgBox.h"
 #include "renderers/Renderer.h"
 #include "FileData.h"
 #include "GuiComponent.h"
@@ -31,6 +34,10 @@ public:
     static ViewController* get();
 
     virtual ~ViewController();
+
+    // These functions are called from main().
+    void noSystemsFileDialog();
+    void noGamesDialog();
 
     // Try to completely populate the GameListView map.
     // Caches things so there's no pauses during transitions.
@@ -117,6 +124,10 @@ private:
     static ViewController* sInstance;
 
     void launch(FileData* game);
+
+    std::string mNoGamesErrorMessage;
+    std::string mRomDirectory;
+    GuiMsgBox* mNoGamesMessageBox;
 
     void playViewTransition(bool instant = false);
     int getSystemId(SystemData* system);

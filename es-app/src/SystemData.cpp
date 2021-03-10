@@ -220,7 +220,6 @@ std::vector<std::string> readList(const std::string& str, const std::string& del
     return ret;
 }
 
-// Creates systems from information located in a config file.
 bool SystemData::loadConfig()
 {
     deleteSystems();
@@ -231,7 +230,7 @@ bool SystemData::loadConfig()
     if (!Utils::FileSystem::exists(path)) {
         LOG(LogInfo) << "Systems configuration file does not exist";
         if (copyConfigTemplate(getConfigPath(true)))
-            return false;
+            return true;
         path = getConfigPath(false);
     }
 
@@ -245,9 +244,9 @@ bool SystemData::loadConfig()
     #endif
 
     if (!res) {
-        LOG(LogError) << "Could not parse es_systems.cfg";
+        LOG(LogError) << "Couldn't parse es_systems.cfg";
         LOG(LogError) << res.description();
-        return false;
+        return true;
     }
 
     // Actually read the file.
@@ -255,7 +254,7 @@ bool SystemData::loadConfig()
 
     if (!systemList) {
         LOG(LogError) << "es_systems.cfg is missing the <systemList> tag";
-        return false;
+        return true;
     }
 
     for (pugi::xml_node system = systemList.child("system"); system;
@@ -282,12 +281,12 @@ bool SystemData::loadConfig()
 
         // Check that the ROM directory for the system is valid or otherwise abort the processing.
         if (!Utils::FileSystem::exists(path)) {
-        LOG(LogDebug) << "SystemData::loadConfig(): Skipping game system \"" <<
+        LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" <<
                 name << "\" as the defined ROM directory \"" << path << "\" does not exist";
             continue;
         }
         if (!Utils::FileSystem::isDirectory(path)) {
-        LOG(LogDebug) << "SystemData::loadConfig(): Skipping game system \"" <<
+        LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" <<
                 name << "\" as the defined ROM directory \"" << path <<
                 "\" is not actually a directory";
             continue;
@@ -297,7 +296,7 @@ bool SystemData::loadConfig()
             // as that would lead to an infite loop, meaning the application would never start.
             std::string resolvedRompath = Utils::FileSystem::getCanonicalPath(rompath);
             if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
-                LOG(LogWarning) << "Skipping game system \"" << name <<
+                LOG(LogWarning) << "Skipping system \"" << name <<
                         "\" as the defined ROM directory \"" << path <<
                         "\" is an infinitely recursive symlink";
                 continue;
@@ -387,11 +386,9 @@ bool SystemData::loadConfig()
         }
 
         if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
-            LOG(LogWarning) << "No files were found for game system \"" << name <<
-                    "\" which matched any of the defined file extensions \"" <<
-                    Utils::String::vectorToDelimitedString(extensions, " ") << "\"";
+            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" <<
+                    name << "\" as no files matched any of the defined file extensions";
             delete newSys;
-            delete envData;
         }
         else {
             sSystemVector.push_back(newSys);
@@ -407,7 +404,7 @@ bool SystemData::loadConfig()
     if (sSystemVector.size() > 0)
         CollectionSystemsManager::get()->loadCollectionSystems();
 
-    return true;
+    return false;
 }
 
 bool SystemData::copyConfigTemplate(const std::string& path)
@@ -459,9 +456,166 @@ std::string SystemData::getConfigPath(bool forWrite)
     return "";
 }
 
+bool SystemData::createSystemDirectories()
+{
+    std::string path = getConfigPath(false);
+    const std::string rompath = FileData::getROMDirectory();
+
+   if (!Utils::FileSystem::exists(path)) {
+        LOG(LogInfo) << "Systems configuration file does not exist, aborting";
+        return true;
+   }
+
+    LOG(LogInfo) << "Generating ROM directory structure...";
+
+    if (Utils::FileSystem::exists(rompath) && Utils::FileSystem::isRegularFile(rompath)) {
+        LOG(LogError) <<
+                "Requested ROM directory \"" << rompath << "\" is actually a file, aborting";
+        return true;
+    }
+
+    if (!Utils::FileSystem::exists(rompath)) {
+        LOG(LogInfo) << "Creating base ROM directory \"" << rompath << "\"...";
+        if (!Utils::FileSystem::createDirectory(rompath)) {
+            LOG(LogError) << "Couldn't create directory, permission problems or disk full?";
+            return true;
+        }
+    }
+    else {
+        LOG(LogInfo) << "Base ROM directory \"" << rompath << "\" already exists";
+    }
+
+    LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
+
+    pugi::xml_document doc;
+    #if defined(_WIN64)
+    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    #else
+    pugi::xml_parse_result res = doc.load_file(path.c_str());
+    #endif
+
+    if (!res) {
+        LOG(LogError) << "Couldn't parse es_systems.cfg";
+        LOG(LogError) << res.description();
+        return true;
+    }
+
+    // Actually read the file.
+    pugi::xml_node systemList = doc.child("systemList");
+
+    if (!systemList) {
+        LOG(LogError) << "es_systems.cfg is missing the <systemList> tag";
+        return true;
+    }
+
+    for (pugi::xml_node system = systemList.child("system"); system;
+            system = system.next_sibling("system")) {
+        std::string systemDir;
+        std::string name;
+        std::string fullname;
+        std::string path;
+        std::string extensions;
+        std::string command;
+        std::string platform;
+        std::string themeFolder;
+        const std::string systemInfoFileName = "/systeminfo.txt";
+        bool replaceInfoFile = false;
+        std::ofstream systemInfoFile;
+
+        name = system.child("name").text().get();
+        fullname = system.child("fullname").text().get();
+        path = system.child("path").text().get();
+        extensions = system.child("extension").text().get();
+        command = system.child("command").text().get();
+        platform = Utils::String::toLower(system.child("platform").text().get());
+        themeFolder = system.child("theme").text().as_string(name.c_str());
+
+        // Check that the %ROMPATH% variable is actually used for the path element.
+        // If not, skip the system.
+        if (path.find("%ROMPATH%") != 0) {
+            LOG(LogWarning) << "The path element for system \"" << name << "\" does not "
+                    "utilize the %ROMPATH% variable, skipping entry";
+            continue;
+        }
+        else {
+            systemDir = path.substr(9, path.size() - 9);
+        }
+
+        // Trim any leading directory separator characters.
+        systemDir.erase(systemDir.begin(),
+                std::find_if(systemDir.begin(), systemDir.end(), [](char c) {
+            return c != '/' && c != '\\';
+        }));
+
+        if (!Utils::FileSystem::exists(rompath + systemDir)) {
+            if (!Utils::FileSystem::createDirectory(rompath + systemDir)) {
+                LOG(LogError) << "Couldn't create system directory \"" << systemDir <<
+                        "\", permission problems or disk full?";
+                return true;
+            }
+            else {
+                LOG(LogInfo) << "Created system directory \"" << systemDir << "\"";
+            }
+        }
+        else {
+            LOG(LogInfo) << "System directory \"" << systemDir << "\" already exists";
+        }
+
+        if (Utils::FileSystem::exists(rompath + systemDir + systemInfoFileName))
+            replaceInfoFile = true;
+        else
+            replaceInfoFile = false;
+
+        if (replaceInfoFile) {
+            if (Utils::FileSystem::removeFile(rompath + systemDir + systemInfoFileName))
+                return true;
+        }
+
+        #if defined(_WIN64)
+        systemInfoFile.open(Utils::String::stringToWideString(rompath +
+                systemDir + systemInfoFileName);
+        #else
+        systemInfoFile.open(rompath + systemDir + systemInfoFileName);
+        #endif
+
+        if (systemInfoFile.fail()) {
+            LOG(LogError) << "Couldn't create system information file \"" << rompath +
+                    systemDir + systemInfoFileName << "\", permission problems or disk full?";
+            systemInfoFile.close();
+            return true;
+        }
+
+        systemInfoFile << "System name:" << std::endl;
+        systemInfoFile << name << std::endl << std::endl;
+        systemInfoFile << "Full system name:" << std::endl;
+        systemInfoFile << fullname << std::endl << std::endl;
+        systemInfoFile << "Supported file extensions:" << std::endl;
+        systemInfoFile << extensions << std::endl << std::endl;
+        systemInfoFile << "Launch command:" << std::endl;
+        systemInfoFile << command << std::endl << std::endl;
+        systemInfoFile << "Platform (for scraping):" << std::endl;
+        systemInfoFile << platform << std::endl << std::endl;
+        systemInfoFile << "Theme folder:" << std::endl;
+        systemInfoFile << themeFolder << std::endl;
+        systemInfoFile.close();
+
+        if (replaceInfoFile) {
+            LOG(LogInfo) << "Replaced existing system information file \"" <<
+                    rompath + systemDir + systemInfoFileName << "\"";
+        }
+        else {
+            LOG(LogInfo) << "Created system information file \"" <<
+                    rompath + systemDir + systemInfoFileName << "\"";
+        }
+    }
+
+    LOG(LogInfo) << "System directories successfully created";
+    return false;
+}
+
 bool SystemData::isVisible()
 {
-    // This function doesn't make much sense at the moment; if a game system does not have any
+    // This function doesn't make much sense at the moment; if a system does not have any
     // games available, it will not be processed during startup and will as such not exist.
     // In the future this function may be used for an option to hide specific systems, but
     // for the time being all systems will always be visible.
