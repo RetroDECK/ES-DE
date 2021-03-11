@@ -382,6 +382,30 @@ int main(int argc, char* argv[])
 
     std::locale::global(std::locale("C"));
 
+    #if defined(__APPLE__)
+    // This is a workaround to disable the incredibly annoying save state functionality in
+    // macOS which forces a restore of the previous window state. The problem is that this
+    // removes the splash screen on startup and it may have other adverse effects as well.
+    std::string saveStateDir = Utils::FileSystem::expandHomePath(
+                "~/Library/Saved Application State/org.es-de.EmulationStation.savedState");
+    // Deletion of the state files should normally not be required as there shouldn't be any
+    // files to begin with. But maybe the files can still be created for unknown reasons
+    // as macOS really really loves to restore windows. Let's therefore include this deletion
+    // step as an extra precaution.
+    if (Utils::FileSystem::exists(saveStateDir)) {
+        for (std::string stateFile : Utils::FileSystem::getDirContent(saveStateDir)) {
+            Utils::FileSystem::removeFile(stateFile);
+        }
+    }
+    else {
+        Utils::FileSystem::createDirectory(saveStateDir);
+    }
+    // Removing the write permission from the save state directory effectively disables
+    // the functionality.
+    std::string chmodCommand = "chmod 500 \"" + saveStateDir + "\"";
+    system(chmodCommand.c_str());
+    #endif
+
     if (!parseArgs(argc, argv)) {
         #if defined(_WIN64)
         FreeConsole();
