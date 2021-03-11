@@ -105,7 +105,7 @@ Theme folder:
 gc
 ```
 
-Be aware that there will be a lot of directories created if using the template es_systems.cfg files bundled with the installation, so it may be a good idea to delete the ones you don't need. Deleting the unnecessary directories also leads to a slightly faster application startup.
+Be aware that there will be a lot of directories created if using the template es_systems.cfg files bundled with the installation, so it may be a good idea to delete the ones you don't need. Deleting unnecessary directories also reduces the application startup time significantly as ES-DE would otherwise need to scan for game files for all these systems.
 
 ![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
