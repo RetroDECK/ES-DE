@@ -112,7 +112,7 @@ void ViewController::noGamesDialog()
             "IN THE CURRENTLY CONFIGURED ROM DIRECTORY OR\n"
             "CHANGE IT USING THE BUTTON BELOW. OPTIONALLY THE\n"
             "ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH\n"
-            "WILL CREATE A TEXT FILE IN EACH FOLDER PROVIDING\n"
+            "WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING\n"
             "SOME INFO SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
             "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
 
@@ -148,8 +148,8 @@ void ViewController::noGamesDialog()
                     #endif
                     mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
                     mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-                            "ROM DIRECTORY SAVED, RESTART THE\n"
-                            "APPLICATION TO RESCAN THE SYSTEMS",
+                            "ROM DIRECTORY SETTING SAVED, RESTART\n"
+                            "THE APPLICATION TO RESCAN THE SYSTEMS",
                             "OK", nullptr, "", nullptr, "", nullptr, true));
                 },
                 false,
