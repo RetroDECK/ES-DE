@@ -468,7 +468,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 if (rootFolder->getSystem()->isGroupedCustomCollection())
                     ViewController::get()->onFileChanged(rootFolder->getParent(), true);
                 else
-                    ViewController::get()->onFileChanged(rootFolder, false);
+                    ViewController::get()->onFileChanged(rootFolder, true);
             }
         }
     }
