@@ -365,6 +365,13 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 ViewController::get()->
                         getGameListView(curSys).get()->remove(collectionEntry, false);
             }
+            else if (name == "recent" && file->metadata.get("lastplayed") == "0") {
+                // If lastplayed is set to 0 it means the entry has been cleared, and the
+                // game should therefore be removed.
+                ViewController::get()->
+                        getGameListView(curSys).get()->remove(collectionEntry, false);
+                ViewController::get()->onFileChanged(rootFolder, true);
+            }
             else if (curSys->isCollection() && !file->getCountAsGame()) {
                 // If the countasgame flag has been set to false, then remove the game.
                 if (curSys->isGroupedCustomCollection()) {
@@ -382,11 +389,10 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 rootFolder->sort(rootFolder->getSortTypeFromString(
                         rootFolder->getSortTypeString()), mFavoritesSorting);
             }
-
             else {
                 // Re-index with new metadata.
                 fileIndex->addToIndex(collectionEntry);
-                ViewController::get()->onFileChanged(collectionEntry, false);
+                ViewController::get()->onFileChanged(collectionEntry, true);
             }
         }
         else {
@@ -455,12 +461,12 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             }
         }
         else {
-            ViewController::get()->onFileChanged(rootFolder, false);
+            ViewController::get()->onFileChanged(rootFolder, true);
             // For custom collections, update either the actual system or its parent depending
             // on whether the collection is grouped or not.
             if (sysData.decl.isCustom) {
                 if (rootFolder->getSystem()->isGroupedCustomCollection())
-                    ViewController::get()->onFileChanged(rootFolder->getParent(), false);
+                    ViewController::get()->onFileChanged(rootFolder->getParent(), true);
                 else
                     ViewController::get()->onFileChanged(rootFolder, false);
             }
