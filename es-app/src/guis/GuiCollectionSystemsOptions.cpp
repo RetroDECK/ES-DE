@@ -316,6 +316,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                 Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
             Settings::getInstance()->setBool("UseCustomCollectionsSystem",
                     use_custom_collections_system->getState());
+            if (CollectionSystemsManager::get()->isEditing())
+                CollectionSystemsManager::get()->exitEditMode();
             setNeedsSaving();
             setNeedsCollectionsUpdate();
             setNeedsReloading();
