@@ -103,10 +103,13 @@ GuiScraperMulti::GuiScraperMulti(
 
 GuiScraperMulti::~GuiScraperMulti()
 {
-    // View type probably changed (basic -> detailed).
-    for (auto it = SystemData::sSystemVector.cbegin();
-            it !=SystemData::sSystemVector.cend(); it++)
-        (*it)->sortSystem();
+    if (mTotalSuccessful > 0) {
+        // Sort all systems to possibly update their view style from Basic to Detailed or Video.
+        for (auto it = SystemData::sSystemVector.cbegin();
+                it !=SystemData::sSystemVector.cend(); it++) {
+            (*it)->sortSystem();
+        }
+    }
     ViewController::get()->onPauseVideo();
 }
 
