@@ -33,6 +33,7 @@ GuiSettings::GuiSettings(
         mNeedsGoToStart(false),
         mNeedsGoToSystem(false),
         mNeedsGoToGroupedCollections(false),
+        mDoNotInvalidateCachedBackground(false),
         mGoToSystem(nullptr)
 {
     addChild(&mMenu);
@@ -134,9 +135,11 @@ void GuiSettings::save()
         }
     }
 
-    if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
-            mNeedsGoToStart || mNeedsGoToSystem)
-        mWindow->invalidateCachedBackground();
+    if (!mDoNotInvalidateCachedBackground) {
+        if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
+                mNeedsGoToStart || mNeedsGoToSystem)
+            mWindow->invalidateCachedBackground();
+    }
 }
 
 void GuiSettings::addEditableTextComponent(

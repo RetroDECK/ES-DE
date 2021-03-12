@@ -84,6 +84,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             setNeedsSaving();
             setNeedsReloading();
             setNeedsCollectionsUpdate();
+            setDoNotInvalidateCachedBackground();
         }
     });
 
@@ -137,6 +138,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                 setNeedsReloading();
                 setNeedsCollectionsUpdate();
                 setNeedsGoToGroupedCollections();
+                setDoNotInvalidateCachedBackground();
             }
         }
     });

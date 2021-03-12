@@ -43,6 +43,7 @@ public:
     void setNeedsGoToSystem(SystemData* goToSystem)
             { mNeedsGoToSystem = true; mGoToSystem = goToSystem; };
     void setNeedsGoToGroupedCollections() { mNeedsGoToGroupedCollections = true; };
+    void setDoNotInvalidateCachedBackground() { mDoNotInvalidateCachedBackground = true; };
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -60,6 +61,7 @@ private:
     bool mNeedsGoToStart;
     bool mNeedsGoToSystem;
     bool mNeedsGoToGroupedCollections;
+    bool mDoNotInvalidateCachedBackground;
 
     SystemData* mGoToSystem;
 };
