@@ -366,6 +366,10 @@ void GuiGamelistOptions::openMetaDataEd()
             CollectionSystemsManager::get()->refreshCollectionSystems(file, true);
 
         file->getSystem()->sortSystem();
+        // This small delay keeps the theme extras from sometimes not being rendered while
+        // the background cache is invalidated. Very strange, it must be some kind of race
+        // condition or similar.
+        SDL_Delay(10);
         mWindow->invalidateCachedBackground();
 
         // Remove the folder entry from the gamelist.xml file.
