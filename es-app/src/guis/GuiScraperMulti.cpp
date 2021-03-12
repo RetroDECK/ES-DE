@@ -17,6 +17,7 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperSearch.h"
 #include "views/ViewController.h"
+#include "CollectionSystemsManager.h"
 #include "Gamelist.h"
 #include "MameNames.h"
 #include "SystemData.h"
@@ -186,6 +187,7 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
     mSearchQueue.pop();
     mCurrentGame++;
     mTotalSuccessful++;
+    CollectionSystemsManager::get()->refreshCollectionSystems(search.game);
     doNextSearch();
 }
 
