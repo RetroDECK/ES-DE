@@ -574,13 +574,23 @@ TextCache* Font::buildTextCache(
         unsigned int color,
         float xLen,
         Alignment alignment,
-        float lineSpacing)
+        float lineSpacing,
+        bool noTopMargin)
 {
     float x = offset[0] + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0);
+    float yTop = 0;
+    float yBot = 0;
 
-    float yTop = getGlyph('S')->bearing.y();
-    float yBot = getHeight(lineSpacing);
-    float y = offset[1] + (yBot + yTop)/2.0f;
+    if (noTopMargin) {
+        yTop = 0;
+        yBot = getHeight(1.5);
+    }
+    else {
+        yTop = getGlyph('S')->bearing.y();
+        yBot = getHeight(lineSpacing);
+    }
+
+    float y = offset[1] + (yBot + yTop) / 2.0f;
 
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
@@ -670,9 +680,11 @@ TextCache* Font::buildTextCache(
         float offsetX,
         float offsetY,
         unsigned int color,
-        float lineSpacing)
+        float lineSpacing,
+        bool noTopMargin)
 {
-    return buildTextCache(text, Vector2f(offsetX, offsetY), color, 0.0f, ALIGN_LEFT, lineSpacing);
+    return buildTextCache(text, Vector2f(offsetX, offsetY), color, 0.0f, ALIGN_LEFT,
+            lineSpacing, noTopMargin);
 }
 
 void TextCache::setColor(unsigned int color)

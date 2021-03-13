@@ -57,15 +57,21 @@ public:
     Vector2f sizeText(std::string text, float lineSpacing = 1.5f);
     // Returns the portion of a string that fits within the passed argument maxWidth.
     std::string getTextMaxWidth(std::string text, float maxWidth);
-    TextCache* buildTextCache(const std::string& text, float offsetX,
-            float offsetY, unsigned int color, float lineSpacing = 1.5f);
+    TextCache* buildTextCache(
+            const std::string& text,
+            float offsetX,
+            float offsetY,
+            unsigned int color,
+            float lineSpacing = 1.5f,
+            bool noTopMargin = false);
     TextCache* buildTextCache(
             const std::string& text,
             Vector2f offset,
             unsigned int color,
             float xLen,
             Alignment alignment = ALIGN_LEFT,
-            float lineSpacing = 1.5f);
+            float lineSpacing = 1.5f,
+            bool noTopMargin = false);
     void renderTextCache(TextCache* cache);
 
     // Inserts newlines into text to make it wrap properly.

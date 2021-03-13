@@ -45,6 +45,7 @@ public:
     void setHorizontalAlignment(Alignment align);
     void setVerticalAlignment(Alignment align);
     void setLineSpacing(float spacing);
+    void setNoTopMargin(bool margin);
     void setBackgroundColor(unsigned int color);
     void setRenderBackground(bool render);
 
@@ -90,6 +91,7 @@ private:
     Alignment mHorizontalAlignment;
     Alignment mVerticalAlignment;
     float mLineSpacing;
+    bool mNoTopMargin;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H

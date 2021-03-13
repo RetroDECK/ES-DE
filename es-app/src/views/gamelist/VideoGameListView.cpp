@@ -140,6 +140,7 @@ VideoGameListView::VideoGameListView(
 
     mDescription.setFont(Font::get(FONT_SIZE_SMALL));
     mDescription.setSize(mDescContainer.getSize().x(), 0);
+    mDescription.setNoTopMargin(true);
     mDescContainer.addChild(&mDescription);
 
     mGamelistInfo.setOrigin(0.5f, 0.5f);

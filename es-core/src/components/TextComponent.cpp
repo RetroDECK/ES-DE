@@ -22,6 +22,7 @@ TextComponent::TextComponent(
         mHorizontalAlignment(ALIGN_LEFT),
         mVerticalAlignment(ALIGN_CENTER),
         mLineSpacing(1.5f),
+        mNoTopMargin(false),
         mBgColor(0),
         mMargin(0.0f),
         mRenderBackground(false)
@@ -46,6 +47,7 @@ TextComponent::TextComponent(
         mHorizontalAlignment(align),
         mVerticalAlignment(ALIGN_CENTER),
         mLineSpacing(1.5f),
+        mNoTopMargin(false),
         mBgColor(0),
         mMargin(margin),
         mRenderBackground(false)
@@ -245,12 +247,13 @@ void TextComponent::onTextChanged()
         text.append(abbrev);
 
         mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(text, Vector2f(0, 0),
-                (mColor >> 8 << 8) | mOpacity, mSize.x(), mHorizontalAlignment, mLineSpacing));
+                (mColor >> 8 << 8) | mOpacity, mSize.x(), mHorizontalAlignment,
+                mLineSpacing, mNoTopMargin));
     }
     else {
         mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(f->wrapText(
                 text, mSize.x()), Vector2f(0, 0), (mColor >> 8 << 8) | mOpacity, mSize.x(),
-                        mHorizontalAlignment, mLineSpacing));
+                        mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
 }
 
@@ -274,6 +277,12 @@ void TextComponent::setVerticalAlignment(Alignment align)
 void TextComponent::setLineSpacing(float spacing)
 {
     mLineSpacing = spacing;
+    onTextChanged();
+}
+
+void TextComponent::setNoTopMargin(bool margin)
+{
+    mNoTopMargin = margin;
     onTextChanged();
 }
 
