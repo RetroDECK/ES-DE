@@ -23,7 +23,7 @@ public:
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
 
     virtual FileData* getCursor() override;
-    virtual void setCursor(FileData* file) override;
+    virtual void setCursor(FileData* cursor) override;
     virtual FileData* getNextEntry() override;
     virtual FileData* getPreviousEntry() override;
     virtual FileData* getFirstEntry() override;

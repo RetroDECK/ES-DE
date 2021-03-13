@@ -171,11 +171,29 @@ FileData* GridGameListView::getCursor()
     return mGrid.getSelected();
 }
 
-void GridGameListView::setCursor(FileData* file)
+void GridGameListView::setCursor(FileData* cursor)
 {
-    if (!mGrid.setCursor(file) && (!file->isPlaceHolder())) {
-        populateList(file->getParent()->getChildrenListToDisplay(), file->getParent());
-        mGrid.setCursor(file);
+    if (!mGrid.setCursor(cursor) && (!cursor->isPlaceHolder())) {
+        populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
+        mGrid.setCursor(cursor);
+
+        // Update our cursor stack in case our cursor just got set to some folder
+        // we weren't in before.
+        if (mCursorStack.empty() || mCursorStack.top() != cursor->getParent()) {
+            std::stack<FileData*> tmp;
+            FileData* ptr = cursor->getParent();
+            while (ptr && ptr != mRoot) {
+                tmp.push(ptr);
+                ptr = ptr->getParent();
+            }
+
+            // Flip the stack and put it in mCursorStack.
+            mCursorStack = std::stack<FileData*>();
+            while (!tmp.empty()) {
+                mCursorStack.push(tmp.top());
+                tmp.pop();
+            }
+        }
     }
 }
 

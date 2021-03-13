@@ -115,8 +115,8 @@ void BasicGameListView::setCursor(FileData* cursor)
         populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
         mList.setCursor(cursor);
 
-        // Update our cursor stack in case our cursor just
-        // got set to some folder we weren't in before.
+        // Update our cursor stack in case our cursor just got set to some folder
+        // we weren't in before.
         if (mCursorStack.empty() || mCursorStack.top() != cursor->getParent()) {
             std::stack<FileData*> tmp;
             FileData* ptr = cursor->getParent();
