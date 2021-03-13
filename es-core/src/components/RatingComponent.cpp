@@ -210,7 +210,6 @@ bool RatingComponent::input(InputConfig* config, Input input)
 void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const std::string& view, const std::string& element, unsigned int properties)
 {
-    GuiComponent::applyTheme(theme, view, element, properties);
     using namespace ThemeFlags;
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "rating");
@@ -236,6 +235,8 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else
             mUnfilledColor = mColorShift;
     }
+
+    GuiComponent::applyTheme(theme, view, element, properties);
 
     if (imgChanged)
         onSizeChanged();
