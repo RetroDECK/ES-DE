@@ -22,6 +22,9 @@ public:
     GridGameListView(Window* window, FileData* root);
     virtual ~GridGameListView();
 
+    // Called when a FileData* is added, has its metadata changed, or is removed.
+    virtual void onFileChanged(FileData* file, bool reloadGameList) override;
+
     virtual void onShow() override;
 
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;

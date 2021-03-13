@@ -155,6 +155,17 @@ GridGameListView::~GridGameListView()
     delete mVideo;
 }
 
+void GridGameListView::onFileChanged(FileData* file, bool reloadGameList)
+{
+    if (reloadGameList) {
+        // Might switch to a detailed view.
+        ViewController::get()->reloadGameListView(this);
+        return;
+    }
+
+    ISimpleGameListView::onFileChanged(file, reloadGameList);
+}
+
 FileData* GridGameListView::getCursor()
 {
     return mGrid.getSelected();
