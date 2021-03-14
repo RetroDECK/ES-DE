@@ -35,7 +35,7 @@ EmulationStation Desktop Edition is a front-end for browsing and launching games
 It's intended to be used in conjunction with emulators such as the RetroArch cores.
 
 [AUTHOR]
-Leon Styhre (Desktop Edition fork) <https://es-de.org>
+Leon Styhre (Desktop Edition fork) <https://es-de.org/>
 
 RetroPie community (RetroPie fork)
 
@@ -56,6 +56,8 @@ sed s/"Set to at least"/".br\nSet to at least"/ > $TARGET_FILENAME
 
 gzip $TARGET_FILENAME
 mv ${TARGET_FILENAME}.gz ../es-app/assets/
+
+echo "The man page was generated and saved to ../es-app/assets/emulationstation.6.gz"
 
 rm $TEMPFILE_INPUT
 rm $TEMPFILE_OUTPUT
