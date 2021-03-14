@@ -356,7 +356,7 @@ void GuiMetaDataEd::onSizeChanged()
             TITLE_VERT_PADDING) / mSize.y());
     mGrid.setRowHeightPerc(2, mButtons->getSize().y() / mSize.y());
 
-    // Clamp list size to the row height to prevent a fraction of a row from being displayed.
+    // Snap list size to the row height to prevent a fraction of a row from being displayed.
     float listHeight = 0;
     float listSize = mList->getSize().y();
     int i = 0;

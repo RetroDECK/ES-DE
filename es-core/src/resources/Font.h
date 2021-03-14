@@ -143,7 +143,7 @@ private:
     void getTextureForNewGlyph(const Vector2i& glyphSize, FontTexture*& tex_out,
             Vector2i& cursor_out);
 
-    std::map< unsigned int, std::unique_ptr<FontFace> > mFaceCache;
+    std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
     FT_Face getFaceForChar(unsigned int id);
     void clearFaceCache();
 
