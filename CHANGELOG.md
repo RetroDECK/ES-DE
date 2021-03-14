@@ -119,11 +119,13 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The random game selection traversed folders, i.e. a game could be selected inside a subdirectory and vice versa
 * The controller D-PAD could not be used for entering the UI mode change passkey
 * Filters were not applied when leaving folders using the back button
+* The cursor stack logic was not completely implemented for the Grid view style, making it largely broken
 * Editing long text entries made the cursor jump outside the editing field
 * Long words would sometimes render partly outside the designated text area instead of being abbreviated
 * Fixed an annoying gamelist issue that caused the game images and data to be updated and rendered up to six times every time the list was scrolled
 * Not all input events were logged when running with debug logging activated
 * Unknown command line options were silently accepted instead of generating an error and notifying the user
+* Added a sanity check to the --resolution flag to keep the resolution within reason (and to avoid crashes when making a typo for this parameter)
 * Deleting a game from the metadata editor did not delete the game media files or its entry in the gamelist.xml file
 * Hidden files still showed up if they had a gamelist.xml entry
 * Fixed multiple instances of misaligned GUI elements on high-resolution displays due to the use of fixed-pixel constants
@@ -135,6 +137,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * SystemView didn't properly loop the systems if only two systems were available
 * When changing to the video view style from inside a gamelist, the view was not completely initialized
 * Game images were sometimes scaled incorrectly
+* The rating component would sometimes not render immediately if using SVG graphics
 * Non-transparent favorite icons were not rendered correctly
 * The SliderComponent knob position was set incorrectly if the minimum value was not zero
 * Lots and lots of additional small bugs and inconsistencies fixed
