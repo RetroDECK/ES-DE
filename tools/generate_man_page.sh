@@ -37,7 +37,7 @@ It's intended to be used in conjunction with emulators such as the RetroArch cor
 [AUTHOR]
 Leon Styhre (Desktop Edition fork) <https://es-de.org>
 
-RetroPie Community (RetroPie fork)
+RetroPie community (RetroPie fork)
 
 Alec \"Aloshi\" Lofquist (original version)
 
