@@ -37,7 +37,7 @@ struct ScrollTierList {
 // Default scroll tiers.
 const ScrollTier QUICK_SCROLL_TIERS[] = {
     {500, 500},
-    {1400, 114},
+    {1200, 114},
     {0, 16}
 };
 const ScrollTierList LIST_SCROLL_STYLE_QUICK = {
