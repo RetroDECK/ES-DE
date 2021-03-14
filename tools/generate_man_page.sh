@@ -35,11 +35,11 @@ EmulationStation Desktop Edition is a front-end for browsing and launching games
 It's intended to be used in conjunction with emulators such as the RetroArch cores.
 
 [AUTHOR]
-Alec \"Aloshi\" Lofquist (original version)
+Leon Styhre (Desktop Edition fork)
 
 RetroPie Community (RetroPie fork)
 
-Leon Styhre (Desktop Edition fork)
+Alec \"Aloshi\" Lofquist (original version)
 
 [SEE ALSO]
 Full documentation is available at: <https://gitlab.com/leonstyhre/emulationstation-de/>
