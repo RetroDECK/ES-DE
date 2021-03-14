@@ -176,7 +176,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             return true;
         }
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
-            if (Settings::getInstance()->getBool("QuickSystemSelect")) {
+            if (Settings::getInstance()->getBool("QuickSystemSelect") &&
+                    SystemData::sSystemVector.size() > 1) {
                 onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
@@ -185,7 +186,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
-            if (Settings::getInstance()->getBool("QuickSystemSelect")) {
+            if (Settings::getInstance()->getBool("QuickSystemSelect") &&
+                    SystemData::sSystemVector.size() > 1) {
                 onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
