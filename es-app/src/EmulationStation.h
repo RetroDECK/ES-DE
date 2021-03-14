@@ -13,7 +13,7 @@
 #define PROGRAM_VERSION_MAJOR        1
 #define PROGRAM_VERSION_MINOR        0
 #define PROGRAM_VERSION_MAINTENANCE  0
-#define PROGRAM_VERSION_STRING "1.0.0-beta2-dev"
+#define PROGRAM_VERSION_STRING "1.0.0-beta2"
 
 #define PROGRAM_BUILT_STRING __DATE__ " - " __TIME__
 
