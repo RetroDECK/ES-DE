@@ -113,7 +113,8 @@ void ScrollableContainer::update(int deltaTime)
     if (adjustedAutoScrollSpeed != 0) {
         mAutoScrollAccumulator += deltaTime;
         while (mAutoScrollAccumulator >= adjustedAutoScrollSpeed) {
-            mScrollPos += mScrollDir;
+            if (contentSize.y() > mSize.y())
+                mScrollPos += mScrollDir;
             mAutoScrollAccumulator -= adjustedAutoScrollSpeed;
         }
     }
