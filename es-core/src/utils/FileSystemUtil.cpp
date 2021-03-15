@@ -526,22 +526,20 @@ namespace Utils
             std::string resolved;
 
             #if defined(_WIN64)
+            std::wstring resolvedW;
             HANDLE hFile = CreateFileW(Utils::String::stringToWideString(path).c_str(),
-                    FILE_READ_ATTRIBUTES, FILE_SHARE_READ,
-                    0, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
-//            TEMPORARY, will need to fix this later.
-//            if (hFile != INVALID_HANDLE_VALUE) {
-//                resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
-//                resolved.resize(GetFinalPathNameByHandle(hFile, nullptr, 0,
-//                        FILE_NAME_NORMALIZED) + 1);
-//                if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
-//               if (GetFinalPathNameByHandle(hFile, (LPSTR)resolved.data(),
-//                        (DWORD)resolved.size(), FILE_NAME_NORMALIZED) > 0) {
-//                    resolved.resize(resolved.size() - 1);
-//                    resolved = getGenericPath(resolved);
-//                }
-//                CloseHandle(hFile);
-//            }
+                    FILE_READ_ATTRIBUTES, FILE_SHARE_READ, 0,
+                    OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
+            if (hFile != INVALID_HANDLE_VALUE) {
+                resolvedW.resize(GetFinalPathNameByHandleW(hFile, nullptr, 0,
+                        FILE_NAME_NORMALIZED) + 1);
+               if (GetFinalPathNameByHandleW(hFile, const_cast<LPWSTR>(resolvedW.data()),
+                        static_cast<DWORD>(resolvedW.size()), FILE_NAME_NORMALIZED) > 0) {
+                    resolvedW.resize(resolvedW.size() - 1);
+                    resolved = getGenericPath(Utils::String::wideStringToString(resolvedW));
+                }
+                CloseHandle(hFile);
+            }
             #else
             struct stat info;
 
