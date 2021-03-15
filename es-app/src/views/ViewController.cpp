@@ -171,7 +171,9 @@ void ViewController::noGamesDialog()
                 "YES", [this] {
             if (!SystemData::createSystemDirectories()) {
                 mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-                        "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY CREATED ", "OK", nullptr,
+                        "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY\n"
+                        "GENERATED, EXIT THE APPLICATION AND PLACE\n"
+                        "YOUR GAMES IN THE NEWLY CREATED FOLDERS", "OK", nullptr,
                         "", nullptr, "", nullptr, true));
             }
             else {
