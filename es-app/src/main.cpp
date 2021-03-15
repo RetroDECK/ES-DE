@@ -493,7 +493,6 @@ int main(int argc, char* argv[])
     #endif
 
     AudioManager::getInstance();
-    MameNames::init();
 
     if (splashScreen) {
         std::string progressText = "Loading...";
@@ -502,6 +501,7 @@ int main(int argc, char* argv[])
         window.renderLoadingScreen(progressText);
     }
 
+    MameNames::init();
     loadSystemsReturnCode loadSystemsStatus = loadSystemConfigFile();
 
     if (loadSystemsStatus) {
