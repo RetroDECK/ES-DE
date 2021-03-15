@@ -80,6 +80,7 @@ CollectionSystemsManager::CollectionSystemsManager(Window* window) : mWindow(win
         Utils::FileSystem::createDirectory(path);
 
     mIsEditingCustom = false;
+    mHasEnabledCustomCollection = false;
     mEditingCollection = "Favorites";
     mEditingCollectionSystemData = nullptr;
     mCustomCollectionsBundle = nullptr;
