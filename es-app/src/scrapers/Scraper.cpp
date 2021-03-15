@@ -498,8 +498,10 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
 
     // If the image is smaller than maxWidth or maxHeight, then don't do any
     // scaling. It doesn't make sense to upscale the image and waste disk space.
-    if (maxWidth > width || maxHeight > height)
+    if (maxWidth > width || maxHeight > height) {
+        FreeImage_Unload(image);
         return true;
+    }
 
     if (maxWidth == 0)
         maxWidth = static_cast<int>((maxHeight / height) * width);
