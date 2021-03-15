@@ -147,17 +147,21 @@ namespace Utils
             #if defined(_WIN64)
             // On Windows we need to check HOMEDRIVE and HOMEPATH.
             if (!homePath.length()) {
-                #if defined(_WIN64)
-                std::string envHomeDrive =
-                        Utils::String::wideStringToString(_wgetenv(L"HOMEDRIVE"));
-                std::string envHomePath  =
-                        Utils::String::wideStringToString(_wgetenv(L"HOMEPATH"));
+                std::wstring envHomeDrive;
+                std::wstring envHomePath;
+                #if defined(_MSC_VER) // MSVC compiler.
+                wchar_t* buffer;
+                if (!_wdupenv_s(&buffer, nullptr, L"HOMEDRIVE"))
+                    envHomeDrive = buffer;
+                if (!_wdupenv_s(&buffer, nullptr, L"HOMEPATH"))
+                    envHomePath = buffer;
                 #else
-                std::string envHomeDrive = getenv("HOMEDRIVE");
-                std::string envHomePath  = getenv("HOMEPATH");
+                envHomeDrive = _wgetenv(L"HOMEDRIVE");
+                envHomePath = _wgetenv(L"HOMEPATH");
                 #endif
                 if (envHomeDrive.length() && envHomePath.length())
-                    homePath = getGenericPath(envHomeDrive + "/" + envHomePath);
+                    homePath = getGenericPath(Utils::String::wideStringToString(envHomeDrive) +
+                            "/" + Utils::String::wideStringToString(envHomePath));
             }
             #else
             // Check for HOME environment variable.

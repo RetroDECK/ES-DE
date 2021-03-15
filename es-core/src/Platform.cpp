@@ -247,7 +247,8 @@ void emergencyShutdown()
 void touch(const std::string& filename)
 {
 #if defined(_WIN64)
-    FILE* fp = fopen(filename.c_str(), "ab+");
+    FILE* fp;
+    fopen_s(&fp, filename.c_str(), "ab+");
     if (fp != nullptr)
         fclose(fp);
 #else
