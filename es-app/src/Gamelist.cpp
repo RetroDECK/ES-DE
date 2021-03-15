@@ -112,7 +112,7 @@ void parseGamelist(SystemData* system)
 
     pugi::xml_node root = doc.child("gameList");
     if (!root) {
-        LOG(LogError) << "Could not find <gameList> node in gamelist \"" << xmlpath << "\"";
+        LOG(LogError) << "Couldn't find <gameList> node in gamelist \"" << xmlpath << "\"";
         return;
     }
 
@@ -147,7 +147,7 @@ void parseGamelist(SystemData* system)
 
             FileData* file = findOrCreateFile(system, path, type);
             if (!file) {
-                LOG(LogError) << "Could not find or create \"" << path << "\", skipping entry";
+                LOG(LogError) << "Couldn't find or create \"" << path << "\", skipping entry";
                 continue;
             }
             else if (!file->isArcadeAsset()) {
@@ -159,6 +159,14 @@ void parseGamelist(SystemData* system)
                     file->metadata.set("name", defaultName);
 
                 file->metadata.resetChangedFlag();
+            }
+            else {
+                // Skip arcade asset entries as these will not be used in any way inside
+                // the application.
+                LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping arcade asset \"" <<
+                        file->getName() << "\"";
+                delete file;
+                continue;
             }
             // If the game is flagged as hidden and the option has not been set to show hidden
             // games, then delete the entry. This leaves no trace of the entry at all in ES
@@ -239,7 +247,7 @@ void updateGamelist(SystemData* system)
 
         root = doc.child("gameList");
         if (!root) {
-            LOG(LogError) << "Could not find <gameList> node in gamelist \"" <<
+            LOG(LogError) << "Couldn't find <gameList> node in gamelist \"" <<
                     xmlReadPath << "\"";
             return;
         }
