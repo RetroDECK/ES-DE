@@ -16,6 +16,9 @@
 #include "Sound.h"
 #include "SystemData.h"
 
+#define FADE_IN_START_OPACITY 0.5f
+#define FADE_IN_TIME 650
+
 GridGameListView::GridGameListView(
         Window* window,
         FileData* root)
@@ -472,6 +475,13 @@ void GridGameListView::updateInfoPanel()
 
         mGamelistInfo.setValue(gamelistInfoString);
 
+        // Fade in the game image.
+        auto func = [this](float t) {
+            mImage.setOpacity(static_cast<unsigned char>(Math::lerp(
+                    static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+            };
+        mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
+
         mDescription.setText(file->metadata.get("desc"));
         mDescContainer.reset();
 
@@ -515,7 +525,8 @@ void GridGameListView::updateInfoPanel()
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {
-                comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
+            // TEMPORARY - This does not seem to work, needs to be reviewed later.
+            //    comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
             };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
