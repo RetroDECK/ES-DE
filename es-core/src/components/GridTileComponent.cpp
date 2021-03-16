@@ -42,6 +42,8 @@ GridTileComponent::GridTileComponent(Window* window) :
     addChild(&(*mImage));
 
     mSelectedZoomPercent = 0;
+    mSelected = false;
+    mVisible = false;
 
     setSelected(false, false);
     setVisible(true);
