@@ -158,6 +158,12 @@ void ImageComponent::setDefaultImage(std::string path)
 
 void ImageComponent::setImage(std::string path, bool tile)
 {
+    // Always load bundled graphic resources statically, unless mForceLoad has been set.
+    // This eliminates annoying texture pop-in problems that would otherwise occur.
+    if (!mForceLoad && (path[0] == ':') && (path[1] == '/')) {
+        mDynamic = false;
+    }
+
     if (path.empty() || !ResourceManager::getInstance()->fileExists(path)) {
         if (mDefaultPath.empty() || !ResourceManager::getInstance()->fileExists(mDefaultPath))
             mTexture.reset();
