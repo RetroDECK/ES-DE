@@ -490,9 +490,9 @@ void GuiMenu::openSoundSettings()
 {
     auto s = new GuiSettings(mWindow, "SOUND SETTINGS");
 
-    // TEMPORARY - Hide the volume slider on macOS until the volume control logic
-    // has been implemented for this operating system.
-    #if !defined(__APPLE__)
+    // TEMPORARY - Hide the volume slider on macOS and BSD Unix until the volume control logic
+    // has been implemented for these operating systems.
+    #if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
     // System volume.
     auto system_volume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
     system_volume->setValue(static_cast<float>(VolumeControl::getInstance()->getVolume()));
