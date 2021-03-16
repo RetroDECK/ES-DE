@@ -15,10 +15,6 @@
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
-#if defined(_RPI_)
-#include "components/VideoOmxComponent.h"
-#endif
-#include "components/VideoVlcComponent.h"
 
 GridGameListView::GridGameListView(
         Window* window,
@@ -28,8 +24,6 @@ GridGameListView::GridGameListView(
         mGrid(window),
         mMarquee(window),
         mImage(window),
-        mVideo(nullptr),
-        mVideoPlaying(false),
 
         mDescContainer(window),
         mDescription(window),
@@ -55,16 +49,6 @@ GridGameListView::GridGameListView(
         mName(window)
 {
     const float padding = 0.01f;
-
-    // Create the correct type of video window.
-    #if defined(_RPI_)
-    if (Settings::getInstance()->getBool("VideoOmxPlayer"))
-        mVideo = new VideoOmxComponent(window);
-    else
-        mVideo = new VideoVlcComponent(window);
-    #else
-    mVideo = new VideoVlcComponent(window);
-    #endif
 
     mGrid.setPosition(mSize.x() * 0.1f, mSize.y() * 0.1f);
     mGrid.setDefaultZIndex(20);
@@ -132,13 +116,6 @@ GridGameListView::GridGameListView(
     mImage.setVisible(false);
     addChild(&mImage);
 
-    mVideo->setOrigin(0.5f, 0.5f);
-    mVideo->setPosition(mSize.x() * 0.25f, mSize.y() * 0.4f);
-    mVideo->setSize(mSize.x() * (0.5f - 2 * padding), mSize.y() * 0.4f);
-    mVideo->setDefaultZIndex(15);
-    mVideo->setVisible(false);
-    addChild(mVideo);
-
     mGamelistInfo.setOrigin(0.5f, 0.5f);
     mGamelistInfo.setFont(Font::get(FONT_SIZE_SMALL));
     mGamelistInfo.setDefaultZIndex(50);
@@ -152,7 +129,6 @@ GridGameListView::GridGameListView(
 
 GridGameListView::~GridGameListView()
 {
-    delete mVideo;
 }
 
 void GridGameListView::onFileChanged(FileData* file, bool reloadGameList)
@@ -304,8 +280,6 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mImage.applyTheme(theme, getName(), "md_image",
             POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
-    mVideo->applyTheme(theme, getName(), "md_video",
-            POSITION | ThemeFlags::SIZE | ThemeFlags::DELAY | Z_INDEX | ROTATION | VISIBLE);
 
     initMDLabels();
     std::vector<TextComponent*> labels = getMDLabels();
@@ -463,10 +437,6 @@ void GridGameListView::updateInfoPanel()
 
     bool fadingOut;
     if (file == nullptr) {
-        mVideo->setVideo("");
-        mVideo->setImage("");
-        mVideoPlaying = false;
-
         fadingOut = true;
     }
     else {
@@ -534,7 +504,6 @@ void GridGameListView::updateInfoPanel()
     comps.push_back(&mDescription);
     comps.push_back(&mName);
     comps.push_back(&mMarquee);
-    comps.push_back(mVideo);
     comps.push_back(&mImage);
     std::vector<TextComponent*> labels = getMDLabels();
     comps.insert(comps.cend(), labels.cbegin(), labels.cend());
@@ -732,7 +701,6 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
 void GridGameListView::update(int deltaTime)
 {
     ISimpleGameListView::update(deltaTime);
-    mVideo->update(deltaTime);
 }
 
 void GridGameListView::onShow()

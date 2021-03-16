@@ -84,8 +84,6 @@ private:
     TextComponent mLblPlayCount;
 
     ImageComponent mMarquee;
-    VideoComponent* mVideo;
-    bool mVideoPlaying;
     ImageComponent mImage;
     RatingComponent mRating;
     DateTimeComponent mReleaseDate;
