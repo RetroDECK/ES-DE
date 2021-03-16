@@ -220,6 +220,7 @@ void VolumeControl::deinit()
         snd_mixer_detach(mixerHandle, mixerCard.c_str());
         snd_mixer_free(mixerHandle);
         snd_mixer_close(mixerHandle);
+        snd_config_update_free_global();
         mixerHandle = nullptr;
         mixerElem = nullptr;
     }
