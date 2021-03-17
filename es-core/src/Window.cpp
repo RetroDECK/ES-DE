@@ -323,30 +323,39 @@ void Window::render()
                 // Generate a cache texture of the shaded background when opening the menu, which
                 // will remain valid until the menu is closed. This is way faster than having to
                 // render the shaders for every frame.
+//                const auto backgroundStartTime = std::chrono::system_clock::now();
+
                 std::shared_ptr<TextureResource> mPostprocessedBackground;
                 mPostprocessedBackground = TextureResource::get("");
                 unsigned char* processedTexture = new unsigned char[Renderer::getScreenWidth() *
                         Renderer::getScreenHeight() * 4];
 
-                // Defocus the background using three passes of gaussian blur.
-                Renderer::shaderParameters blurParameters;
-                blurParameters.shaderPasses = 3;
+                // Defocus the background using multiple passes of gaussian blur, with the number
+                // of iterations relative to the screen resolution.
+                Renderer::shaderParameters backgroundParameters;
+                float heightModifier = Renderer::getScreenHeightModifier();
+
+                if (heightModifier < 1)
+                    backgroundParameters.blurPasses = 2;        // Below 1080
+                else if (heightModifier >= 4)
+                    backgroundParameters.blurPasses = 12;       // 8K
+                else if (heightModifier >= 2.9)
+                    backgroundParameters.blurPasses = 10;       // 6K
+                else if (heightModifier >= 2.6)
+                    backgroundParameters.blurPasses = 8;        // 5K
+                 else if (heightModifier >= 2)
+                    backgroundParameters.blurPasses = 5;        // 4K
+                else if (heightModifier >= 1.3)
+                    backgroundParameters.blurPasses = 3;        // 1440
+                else if (heightModifier >= 1)
+                    backgroundParameters.blurPasses = 2;        // 1080
+
+                // Also dim the background slightly.
+                backgroundParameters.fragmentDimValue = 0.60f;
+
                 Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
-                        Renderer::SHADER_BLUR_VERTICAL, blurParameters, processedTexture);
-
-                mPostprocessedBackground->initFromPixels(processedTexture,
-                        Renderer::getScreenWidth(), Renderer::getScreenHeight());
-
-                mBackgroundOverlay->setImage(mPostprocessedBackground);
-                mBackgroundOverlay->render(transform);
-
-                // Dim the background. We need to do this as a separate step as combining
-                // it with the blurring leads to very strange and severe artifacts.
-                // This is for sure a bug that needs to be resolved at some later date.
-                Renderer::shaderParameters blackParameters;
-                blackParameters.fragmentDimValue = 0.6f;
-                Renderer::shaderPostprocessing(Renderer::SHADER_DIM,
-                        blackParameters, processedTexture);
+                        Renderer::SHADER_BLUR_VERTICAL | Renderer::SHADER_DIM,
+                        backgroundParameters, processedTexture);
 
                 mPostprocessedBackground->initFromPixels(processedTexture,
                         Renderer::getScreenWidth(), Renderer::getScreenHeight());
@@ -365,11 +374,18 @@ void Window::render()
 
                 delete[] processedTexture;
                 mCachedBackground = true;
+
+//                const auto backgroundEndTime = std::chrono::system_clock::now();
+//                LOG(LogDebug) << "Window::render(): Time to create cached background: " <<
+//                        std::chrono::duration_cast<std::chrono::milliseconds>
+//                        (backgroundEndTime - backgroundStartTime).count() << " ms";
             }
-            // Fade in the cached background.
-            mBackgroundOverlay->setOpacity(mBackgroundOverlayOpacity);
-            if (mBackgroundOverlayOpacity < 255)
-                mBackgroundOverlayOpacity = Math::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
+            // Fade in the cached background, unless the menu is set to open without any animation.
+            if (Settings::getInstance()->getString("MenuOpeningEffect") != "none") {
+                mBackgroundOverlay->setOpacity(mBackgroundOverlayOpacity);
+                if (mBackgroundOverlayOpacity < 255)
+                    mBackgroundOverlayOpacity = Math::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
+            }
             #endif
 
             mBackgroundOverlay->render(transform);

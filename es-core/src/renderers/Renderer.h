@@ -36,7 +36,7 @@ namespace Renderer
         float fragmentSaturation;
         float fragmentDimValue;
         float fragmentOpacity;
-        unsigned int shaderPasses;
+        unsigned int blurPasses;
 
         shaderParameters()
                 : textureSize({0.0f, 0.0f}),
@@ -44,7 +44,7 @@ namespace Renderer
                 fragmentSaturation(1.0f),
                 fragmentDimValue(0.4f),
                 fragmentOpacity(1.0f),
-                shaderPasses(1)
+                blurPasses(1)
                 {};
     };
 
