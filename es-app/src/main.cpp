@@ -492,8 +492,6 @@ int main(int argc, char* argv[])
     SDL_SetRelativeMouseMode(SDL_TRUE);
     #endif
 
-    AudioManager::getInstance();
-
     if (splashScreen) {
         std::string progressText = "Loading...";
         if (splashScreenProgress)
@@ -501,6 +499,7 @@ int main(int argc, char* argv[])
         window.renderLoadingScreen(progressText);
     }
 
+    AudioManager::getInstance();
     MameNames::init();
     loadSystemsReturnCode loadSystemsStatus = loadSystemConfigFile();
 
