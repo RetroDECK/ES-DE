@@ -325,10 +325,29 @@ void SystemScreensaver::renderScreensaver()
         if (Settings::getInstance()->getString("ScreensaverType") == "video") {
             if (mHasMediaFiles) {
                 #if defined(USE_OPENGL_21)
-                if (Settings::getInstance()->getBool("ScreensaverVideoBlur"))
-                    Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL);
+                Renderer::shaderParameters videoParameters;
+                unsigned int shaders = 0;
                 if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
-                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+                    shaders = Renderer::SHADER_SCANLINES;
+                if (Settings::getInstance()->getBool("ScreensaverVideoBlur")) {
+                    shaders |= Renderer::SHADER_BLUR_HORIZONTAL;
+                    float heightModifier = Renderer::getScreenHeightModifier();
+                    if (heightModifier < 1)
+                        videoParameters.blurPasses = 2;        // Below 1080
+                    else if (heightModifier >= 4)
+                        videoParameters.blurPasses = 12;       // 8K
+                    else if (heightModifier >= 2.9)
+                        videoParameters.blurPasses = 10;       // 6K
+                    else if (heightModifier >= 2.6)
+                        videoParameters.blurPasses = 8;        // 5K
+                    else if (heightModifier >= 2)
+                        videoParameters.blurPasses = 5;        // 4K
+                    else if (heightModifier >= 1.3)
+                        videoParameters.blurPasses = 3;        // 1440
+                    else if (heightModifier >= 1)
+                        videoParameters.blurPasses = 2;        // 1080
+                }
+                Renderer::shaderPostprocessing(shaders, videoParameters);
                 #endif
                 if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
