@@ -108,7 +108,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Fixed a massive memory leak related to SVG images
 * Fixed an issue where SVG images would sometimes be cut off slightly on the right side (e.g. logos on the system view carousel)
 * The scraper didn't handle error conditions correctly
-* The metadata editor insisted that changes were made although nothing was updated. Note: The editor will still ask for save confirmations after automatically rounding fractional game ratings to half-star values, but any time such a rounding has taken place, the rating stars will be colored green in the metadata editor to nofity the user
+* The metadata editor insisted that changes were made although nothing was updated
 * Sorting by number of players did not work properly for games with ranges such as 1-2 or 1-8
 * Restart and power-off menu entries not working on any of the tested operating systems
 * Toggling the screensaver didn't work as expected
@@ -134,6 +134,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Long game names would sometimes not scroll in the gamelist view
 * Game media was not rendered when moving between gamelists using the slide transition style
 * Wrapping around the first and last game systems generated strange camera movements when using the slide transition style
+* Some bundled graphics (resource files) displayed excessive texture pop-in under some circumstances
 * SystemView didn't properly loop the systems if only two systems were available
 * When changing to the video view style from inside a gamelist, the view was not completely initialized
 * Game images were sometimes scaled incorrectly
@@ -146,14 +147,13 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 **The issues below are relevant for ES-DE v1.0.0.**
 
-* On Linux, running games or emulators that switch the screen resolution may cause problems if ES-DE is run in Normal fullscreen mode, most likely due to driver bugs or possibly issues in SDL. Only a white screen will be shown when returning from the game and although the application is still running, attempting to navigate blindly will lead to a crash. Using the Borderless mode resolves the issue but removes the ability to switch windows using Alt-tab. Running ES-DE with the --window flag is another workaround, but that leaves the window border intact around the application window. Hopefully this issue will be worked around in ES-DE v1.1 as improving the fullscreen mode is planned for that release.
-
 * On Ubuntu 20.10, the included VLC version 3.0.11.1-2 is broken so ES-DE will crash when attempting to play videos. This can be fixed by manually replacing the file /lib/x86_64-linux-gnu/libvlccore.so.9.0.0 with the corresponding file from version 3.0.9.2-1 from Ubuntu 20.04. Make sure that the /lib/x86_64-linux-gnu/libvlccore.so.9 symlink points to this file as well. Hopefully this issue will soon be patched in libVLC so that this manual workaround will not be required.
 
 * On Linux, libVLC does not properly release memory when stopping the video player, leading to large memory usage for ES-DE. The memory utilization does not grow indefinitely though so it shouldn't make the system run out of memory and it shouldn't make ES-DE crash. As this issue is not present on BSD, macOS or Windows the assumption is that VLC is somewhat broken on Linux. The plan is to move from libVLC to FFmpeg for ES-DE v1.1 which will avoid this issue altogether.
 
 * The input configuration can be a bit glitchy on some devices, most notably the setup of trigger buttons for Xbox and PlayStation controllers. Once configured everything should work fine though. This configuration issue will hopefully be resolved in ES-DE v1.1 with the move to the SDL2 GameController API.
-* Some artifacts can be present with the gaussian blur shader, and screen tearing can be seen when using the slide transitions with certain graphics drivers and resolutions. Both of these issues mostly affect the upper part of the screen. The second issue is apparently more prevalent when running ES-DE at a lower resolution on 4K displays by using the --resolution command line option (which is only available on Unix). These problems will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
+
+* Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. The issue is apparently more prevalent when running ES-DE at a lower resolution on 4K displays by using the --resolution command line option (which is only available on Unix). This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
 
 * The launching of games can freeze ES-DE on some Windows installations. It probably only occurs on Windows 8.1 but that's not confirmed. The setting 'Run in background (while game is launched)' can be enabled to get around this problem, but this causes some other issues so it should only be used as a last resort. It's unclear if this problem can or will be resolved. If it's confirmed to only affect older Windows versions, then it's probably not worthwhile fixing it.
 

@@ -47,12 +47,13 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Internationalization/multi-language support
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
-* Better shader support (more adaptive to screen resolution, higher performance, cleaner code)
+* Improve the performance of the GLSL shader code
 * Improved text and font functions, e.g. faster and cleaner line wrapping
 * Flatpak and Snap support on Linux
 
 #### v1.4
 
+* Support for ChromeOS
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
 * Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
 * Simple file browsing component

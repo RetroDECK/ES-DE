@@ -919,14 +919,14 @@ Whether to use a shader to render scanlines for the videos.
 
 **Render blur** _(OpenGL renderer only)_
 
-Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor.
+Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor. Be aware that this is quite demanding for the GPU.
 
 
 ### Sound settings
 
 General sound settings.
 
-**System volume** _(Unix and Windows only)_
+**System volume** _(Linux and Windows only)_
 
 As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. Be aware that the volume change is applied only after leaving the sound settings menu.
 
