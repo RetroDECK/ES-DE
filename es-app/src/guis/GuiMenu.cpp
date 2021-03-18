@@ -331,6 +331,19 @@ void GuiMenu::openUISettings()
             s->setNeedsSaving();
         }
     });
+
+    // Blur background when the menu is open.
+    auto menu_blur_background = std::make_shared<SwitchComponent>(mWindow);
+    menu_blur_background->setState(Settings::getInstance()->getBool("MenuBlurBackground"));
+    s->addWithLabel("BLUR BACKGROUND WHEN MENU IS OPEN", menu_blur_background);
+    s->addSaveFunc([menu_blur_background, s] {
+        if (menu_blur_background->getState() !=
+                Settings::getInstance()->getBool("MenuBlurBackground")) {
+            Settings::getInstance()->setBool("MenuBlurBackground",
+                    menu_blur_background->getState());
+            s->setNeedsSaving();
+        }
+    });
     #endif
 
     // Display pillarboxes (and letterboxes) for videos in the gamelists.

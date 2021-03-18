@@ -333,29 +333,38 @@ void Window::render()
                 // Defocus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
                 Renderer::shaderParameters backgroundParameters;
-                float heightModifier = Renderer::getScreenHeightModifier();
 
-                if (heightModifier < 1)
-                    backgroundParameters.blurPasses = 2;        // Below 1080
-                else if (heightModifier >= 4)
-                    backgroundParameters.blurPasses = 12;       // 8K
-                else if (heightModifier >= 2.9)
-                    backgroundParameters.blurPasses = 10;       // 6K
-                else if (heightModifier >= 2.6)
-                    backgroundParameters.blurPasses = 8;        // 5K
-                 else if (heightModifier >= 2)
-                    backgroundParameters.blurPasses = 5;        // 4K
-                else if (heightModifier >= 1.3)
-                    backgroundParameters.blurPasses = 3;        // 1440
-                else if (heightModifier >= 1)
-                    backgroundParameters.blurPasses = 2;        // 1080
+                if (Settings::getInstance()->getBool("MenuBlurBackground")) {
+                    float heightModifier = Renderer::getScreenHeightModifier();
 
-                // Also dim the background slightly.
-                backgroundParameters.fragmentDimValue = 0.60f;
+                    if (heightModifier < 1)
+                        backgroundParameters.blurPasses = 2;        // Below 1080
+                    else if (heightModifier >= 4)
+                        backgroundParameters.blurPasses = 12;       // 8K
+                    else if (heightModifier >= 2.9)
+                        backgroundParameters.blurPasses = 10;       // 6K
+                    else if (heightModifier >= 2.6)
+                        backgroundParameters.blurPasses = 8;        // 5K
+                    else if (heightModifier >= 2)
+                        backgroundParameters.blurPasses = 5;        // 4K
+                    else if (heightModifier >= 1.3)
+                        backgroundParameters.blurPasses = 3;        // 1440
+                    else if (heightModifier >= 1)
+                        backgroundParameters.blurPasses = 2;        // 1080
 
-                Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
-                        Renderer::SHADER_BLUR_VERTICAL | Renderer::SHADER_DIM,
-                        backgroundParameters, processedTexture);
+                    // Also dim the background slightly.
+                    backgroundParameters.fragmentDimValue = 0.60f;
+
+                    Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
+                            Renderer::SHADER_BLUR_VERTICAL | Renderer::SHADER_DIM,
+                            backgroundParameters, processedTexture);
+                }
+                else {
+                    // Dim the background slightly.
+                    backgroundParameters.fragmentDimValue = 0.60f;
+                    Renderer::shaderPostprocessing(
+                            Renderer::SHADER_DIM, backgroundParameters, processedTexture);
+                }
 
                 mPostprocessedBackground->initFromPixels(processedTexture,
                         Renderer::getScreenWidth(), Renderer::getScreenHeight());
