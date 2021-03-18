@@ -24,6 +24,7 @@ public:
 
     virtual bool allowSleep();
     virtual bool isScreensaverActive();
+    virtual bool isFallbackScreensaver();
 
     virtual void startScreensaver(bool generateMediaList);
     virtual void stopScreensaver();
@@ -72,6 +73,7 @@ private:
     int mMediaSwapTime;
     bool mTriggerNextGame;
     bool mHasMediaFiles;
+    bool mFallbackScreensaver;
     float mOpacity;
     float mDimValue;
     unsigned char mRectangleFadeIn;

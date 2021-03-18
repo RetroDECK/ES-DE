@@ -35,6 +35,7 @@ public:
     public:
         virtual bool allowSleep() = 0;
         virtual bool isScreensaverActive() = 0;
+        virtual bool isFallbackScreensaver() = 0;
 
         virtual void startScreensaver(bool generateMediaList) = 0;
         virtual void stopScreensaver() = 0;

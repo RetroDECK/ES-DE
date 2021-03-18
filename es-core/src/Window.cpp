@@ -312,9 +312,10 @@ void Window::render()
         }
 
         // Don't render the system view or gamelist view if the video or slideshow screensaver
-        // is running.
-        if (!(mRenderScreensaver && (Settings::getInstance()->getString("ScreensaverType") ==
-                "video" || Settings::getInstance()->getString("ScreensaverType") == "slideshow")))
+        // is running, unless the fallback screensaver is active due to lack of images or videos.
+        if ((mRenderScreensaver && mScreensaver->isFallbackScreensaver()) ||
+                (!(mRenderScreensaver && (Settings::getInstance()->getString("ScreensaverType") ==
+                "video" || Settings::getInstance()->getString("ScreensaverType") == "slideshow"))))
             bottom->render(transform);
 
         if (bottom != top) {

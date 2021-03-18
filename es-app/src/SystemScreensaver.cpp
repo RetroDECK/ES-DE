@@ -44,6 +44,7 @@ SystemScreensaver::SystemScreensaver(
         mMediaSwapTime(0),
         mTriggerNextGame(false),
         mHasMediaFiles(false),
+        mFallbackScreensaver(false),
         mOpacity(0.0f),
         mDimValue(1.0),
         mRectangleFadeIn(50),
@@ -70,11 +71,17 @@ bool SystemScreensaver::isScreensaverActive()
     return (mState != STATE_INACTIVE);
 }
 
+bool SystemScreensaver::isFallbackScreensaver()
+{
+    return mFallbackScreensaver;
+}
+
 void SystemScreensaver::startScreensaver(bool generateMediaList)
 {
     std::string path = "";
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
     mHasMediaFiles = false;
+    mFallbackScreensaver = false;
     mOpacity = 0.0f;
 
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
@@ -253,6 +260,7 @@ void SystemScreensaver::goToGame()
 void SystemScreensaver::renderScreensaver()
 {
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
+
     if (mVideoScreensaver && screensaverType == "video") {
         // Render a black background below the video.
         Renderer::setMatrix(Transform4x4f::Identity());
@@ -309,20 +317,10 @@ void SystemScreensaver::renderScreensaver()
                 }
             }
             else {
-                // If there are no images, fade in a black screen.
-                #if defined(USE_OPENGL_21)
-                Renderer::shaderParameters blackParameters;
-                blackParameters.fragmentDimValue = mDimValue;
-                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
-                #else
-                Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                        Renderer::getScreenHeight(), 0x000000FF, 0x000000FF, mDimValue);
-                #endif
-                if (mDimValue > 0.0)
-                    mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
+                mFallbackScreensaver = true;
             }
         }
-        if (Settings::getInstance()->getString("ScreensaverType") == "video") {
+        else if (Settings::getInstance()->getString("ScreensaverType") == "video") {
             if (mHasMediaFiles) {
                 #if defined(USE_OPENGL_21)
                 Renderer::shaderParameters videoParameters;
@@ -370,20 +368,23 @@ void SystemScreensaver::renderScreensaver()
                 }
             }
             else {
-                // If there are no videos, fade in a black screen.
-                #if defined(USE_OPENGL_21)
-                Renderer::shaderParameters blackParameters;
-                blackParameters.fragmentDimValue = mDimValue;
-                Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
-                #else
-                Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                        Renderer::getScreenHeight(), 0x000000FF, 0x000000FF, mDimValue);
-                #endif
-                if (mDimValue > 0.0)
-                    mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
+                mFallbackScreensaver = true;
             }
         }
 
+        if (mFallbackScreensaver ||
+                Settings::getInstance()->getString("ScreensaverType") == "black") {
+            #if defined(USE_OPENGL_21)
+            Renderer::shaderParameters blackParameters;
+            blackParameters.fragmentDimValue = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+            if (mDimValue > 0.0)
+                mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
+            #else
+            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
+                    Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
+            #endif
+        }
         else if (Settings::getInstance()->getString("ScreensaverType") == "dim") {
             #if defined(USE_OPENGL_21)
             Renderer::shaderParameters dimParameters;
@@ -398,18 +399,6 @@ void SystemScreensaver::renderScreensaver()
             #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                     Renderer::getScreenHeight(), 0x000000A0, 0x000000A0);
-            #endif
-        }
-        else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
-            #if defined(USE_OPENGL_21)
-            Renderer::shaderParameters blackParameters;
-            blackParameters.fragmentDimValue = mDimValue;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
-            if (mDimValue > 0.0)
-                mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
-            #else
-            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                    Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
             #endif
         }
     }
