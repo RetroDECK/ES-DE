@@ -277,12 +277,16 @@ GuiGamelistOptions::~GuiGamelistOptions()
 void GuiGamelistOptions::openGamelistFilter()
 {
     GuiGamelistFilter* ggf;
-    mFiltersChanged = true;
+
+    auto filtersChangedFunc = [this](bool filtersChanged) {
+        mFiltersChanged = filtersChanged;
+    };
 
     if (mIsCustomCollection)
-        ggf = new GuiGamelistFilter(mWindow, getGamelist()->getCursor()->getSystem());
+        ggf = new GuiGamelistFilter(mWindow, getGamelist()->getCursor()->getSystem(),
+                filtersChangedFunc);
     else
-        ggf = new GuiGamelistFilter(mWindow, mSystem);
+        ggf = new GuiGamelistFilter(mWindow, mSystem, filtersChangedFunc);
 
     mWindow->pushGui(ggf);
 }

@@ -18,10 +18,13 @@
 
 GuiGamelistFilter::GuiGamelistFilter(
         Window* window,
-        SystemData* system)
+        SystemData* system,
+        std::function<void(bool)> filterChangedCallback)
         : GuiComponent(window),
         mMenu(window, "FILTER GAMELIST BY"),
-        mSystem(system)
+        mSystem(system),
+        mFiltersChangedCallback(filterChangedCallback),
+        mFiltersChanged(false)
 {
     initializeMenu();
 }
@@ -49,6 +52,16 @@ void GuiGamelistFilter::initializeMenu()
 
     mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2,
             Renderer::getScreenHeight() * 0.15f);
+
+    // Save the initial filter values to be able to check later if any changes were made.
+    mInitialTextFilter = mTextFilterField->getValue();
+
+    for (std::map<FilterIndexType, std::shared_ptr<OptionListComponent<std::string>>>::
+            const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); it++) {
+        std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
+        std::vector<std::string> filters = optionList->getSelectedObjects();
+        mInitialFilters.push_back(filters);
+    }
 }
 
 void GuiGamelistFilter::resetAllFilters()
@@ -62,6 +75,7 @@ void GuiGamelistFilter::resetAllFilters()
 
     mFilterIndex->setTextFilter("");
     mTextFilterField->setValue("");
+    mFiltersChanged = true;
 }
 
 GuiGamelistFilter::~GuiGamelistFilter()
@@ -80,19 +94,22 @@ void GuiGamelistFilter::addFiltersToMenu()
     mTextFilterField = std::make_shared<TextComponent>(mWindow, "",
             Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
 
-    row.addElement(lbl, true);
-    row.addElement(mTextFilterField, true);
+    // Don't show the free text filter entry unless there are any games in the system.
+    if (mSystem->getRootFolder()->getChildren().size() > 0) {
+        row.addElement(lbl, true);
+        row.addElement(mTextFilterField, true);
 
-    auto spacer = std::make_shared<GuiComponent>(mWindow);
-    spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
-    row.addElement(spacer, false);
+        auto spacer = std::make_shared<GuiComponent>(mWindow);
+        spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
+        row.addElement(spacer, false);
 
-    auto bracket = std::make_shared<ImageComponent>(mWindow);
-    bracket->setImage(":/graphics/arrow.svg");
-    bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
-    row.addElement(bracket, false);
+        auto bracket = std::make_shared<ImageComponent>(mWindow);
+        bracket->setImage(":/graphics/arrow.svg");
+        bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
+        row.addElement(bracket, false);
 
-    mTextFilterField->setValue(mFilterIndex->getTextFilter());
+        mTextFilterField->setValue(mFilterIndex->getTextFilter());
+    }
 
     // Callback function.
     auto updateVal = [this](const std::string& newVal) {
@@ -136,14 +153,21 @@ void GuiGamelistFilter::addFiltersToMenu()
 
 void GuiGamelistFilter::applyFilters()
 {
+    if (mInitialTextFilter != mTextFilterField->getValue())
+        mFiltersChanged = true;
+
     std::vector<FilterDataDecl> decls = mFilterIndex->getFilterDataDecls();
     for (std::map<FilterIndexType, std::shared_ptr<OptionListComponent<std::string>>>::
             const_iterator it = mFilterOptions.cbegin(); it != mFilterOptions.cend(); it++) {
         std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         std::vector<std::string> filters = optionList->getSelectedObjects();
+        auto iteratorDistance = std::distance(mFilterOptions.cbegin(), it);
+        if (mInitialFilters[iteratorDistance] != filters)
+            mFiltersChanged = true;
         mFilterIndex->setFilter(it->first, &filters);
     }
 
+    mFiltersChangedCallback(mFiltersChanged);
     delete this;
 }
 

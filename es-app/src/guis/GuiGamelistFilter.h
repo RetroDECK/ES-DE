@@ -22,7 +22,8 @@ class SystemData;
 class GuiGamelistFilter : public GuiComponent
 {
 public:
-    GuiGamelistFilter(Window* window, SystemData* system);
+    GuiGamelistFilter(Window* window,
+            SystemData* system, std::function<void(bool)> filtersChangedCallback);
 
     ~GuiGamelistFilter();
     bool input(InputConfig* config, Input input) override;
@@ -37,11 +38,15 @@ private:
     void addFiltersToMenu();
 
     std::map<FilterIndexType, std::shared_ptr<OptionListComponent<std::string>>> mFilterOptions;
+    std::vector<std::vector<std::string>> mInitialFilters;
+    std::string mInitialTextFilter;
 
     MenuComponent mMenu;
     SystemData* mSystem;
     FileFilterIndex* mFilterIndex;
     std::shared_ptr<TextComponent> mTextFilterField;
+    std::function<void(bool)> mFiltersChangedCallback;
+    bool mFiltersChanged;
 };
 
 #endif // ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
