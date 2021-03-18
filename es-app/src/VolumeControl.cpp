@@ -21,9 +21,7 @@
 
 // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
 // As PulseAudio controls the sound devices for the desktop environment, it doesn't
-// make much sense to be able to select ALSA devices directly. Normally (always?)
-// the selection doesn't make any difference at all. But maybe some PulseAudio
-// settings could be added later on, if needed.
+// make much sense to be able to select ALSA devices directly.
 // The code is still active for Raspberry Pi though as I'm not sure if this is
 // useful for that device.
 // Keeping mixerName and mixerCard at their default values should make sure that
@@ -37,82 +35,51 @@ std::string VolumeControl::mixerName = "Master";
 std::string VolumeControl::mixerCard = "default";
 #endif
 
-std::weak_ptr<VolumeControl> VolumeControl::sInstance;
+VolumeControl* VolumeControl::sInstance = nullptr;
 
 VolumeControl::VolumeControl()
-        : originalVolume(0),
-        internalVolume(0)
-        #if defined(__APPLE__)
-//        #error TODO: Not implemented for MacOS yet!!!
-        #elif defined(__linux__)
-        , mixerIndex(0),
+        #if defined(__linux__)
+        : mixerIndex(0),
         mixerHandle(nullptr),
         mixerElem(nullptr),
         mixerSelemId(nullptr)
         #elif defined(_WIN64)
-        , mixerHandle(nullptr),
+        : mixerHandle(nullptr),
         endpointVolume(nullptr)
         #endif
 {
     init();
-
-    // Get original volume levels for system.
-    originalVolume = getVolume();
-}
-
-VolumeControl::VolumeControl(
-        const VolumeControl& right):
-        originalVolume(0),
-        internalVolume(0)
-        #if defined(__APPLE__)
-//        #error TODO: Not implemented for MacOS yet!!!
-        #elif defined(__linux__)
-        , mixerIndex(0),
-        mixerHandle(nullptr),
-        mixerElem(nullptr),
-        mixerSelemId(nullptr)
-        #elif defined(_WIN64)
-        , mixerHandle(nullptr),
-        endpointVolume(nullptr)
-        #endif
-{
-    static_cast<void>(right);
-    sInstance = right.sInstance;
-}
-
-VolumeControl& VolumeControl::operator=(const VolumeControl& right)
-{
-    if (this != &right)
-        sInstance = right.sInstance;
-
-    return *this;
 }
 
 VolumeControl::~VolumeControl()
 {
-    // Set original volume levels for system.
-    //setVolume(originalVolume);
-
     deinit();
+    #if defined(__linux__)
+    snd_config_update_free_global();
+    #endif
 }
 
-std::shared_ptr<VolumeControl>& VolumeControl::getInstance()
+VolumeControl* VolumeControl::getInstance()
 {
-    // Check if an VolumeControl instance is already created, if not then create it.
-    static std::shared_ptr<VolumeControl> sharedInstance = sInstance.lock();
-    if (sharedInstance == nullptr) {
-        sharedInstance.reset(new VolumeControl);
-        sInstance = sharedInstance;
+    // Check if a VolumeControl instance is already created, and if not then create it.
+    if (!sInstance)
+        sInstance = new VolumeControl();
+
+    return sInstance;
+}
+
+void VolumeControl::deleteInstance()
+{
+    if (sInstance) {
+        delete sInstance;
+        sInstance = nullptr;
     }
-    return sharedInstance;
 }
 
 void VolumeControl::init()
 {
     // Initialize audio mixer interface.
-    #if defined(__APPLE__)
-//    #error TODO: Not implemented for MacOS yet!!!
-    #elif defined(__linux__)
+    #if defined(__linux__)
     // Try to open mixer device.
     if (mixerHandle == nullptr) {
         // Allow user to override the AudioCard and AudioDevice in es_settings.cfg.
@@ -125,22 +92,17 @@ void VolumeControl::init()
         // Sets simple-mixer index and name.
         snd_mixer_selem_id_set_index(mixerSelemId, mixerIndex);
         snd_mixer_selem_id_set_name(mixerSelemId, mixerName.c_str());
-        // Open mixer.
         if (snd_mixer_open(&mixerHandle, 0) >= 0) {
             LOG(LogDebug) << "VolumeControl::init(): Opened ALSA mixer";
-            // Ok, attach to defualt card.
             if (snd_mixer_attach(mixerHandle, mixerCard.c_str()) >= 0) {
                 LOG(LogDebug) << "VolumeControl::init(): Attached to default card";
-                // Ok, register simple element class.
                 if (snd_mixer_selem_register(mixerHandle, nullptr, nullptr) >= 0) {
                     LOG(LogDebug) << "VolumeControl::init(): Registered simple element class";
-                    // Ok, load registered elements.
                     if (snd_mixer_load(mixerHandle) >= 0) {
                         LOG(LogDebug) << "VolumeControl::init(): Loaded mixer elements";
-                        // Ok, find elements now.
+                        // Find elements.
                         mixerElem = snd_mixer_find_selem(mixerHandle, mixerSelemId);
                         if (mixerElem != nullptr) {
-                            // Wohoo. good to go...
                             LOG(LogDebug) << "VolumeControl::init(): Mixer initialized";
                         }
                         else {
@@ -213,14 +175,11 @@ void VolumeControl::init()
 void VolumeControl::deinit()
 {
     // Deinitialize audio mixer interface.
-    #if defined(__APPLE__)
-//    #error TODO: Not implemented for MacOS yet!!!
-    #elif defined(__linux__)
+    #if defined(__linux__)
     if (mixerHandle != nullptr) {
         snd_mixer_detach(mixerHandle, mixerCard.c_str());
         snd_mixer_free(mixerHandle);
         snd_mixer_close(mixerHandle);
-        snd_config_update_free_global();
         mixerHandle = nullptr;
         mixerElem = nullptr;
     }
@@ -237,36 +196,31 @@ int VolumeControl::getVolume() const
 {
     int volume = 0;
 
-    #if defined(__APPLE__)
-//    #error TODO: Not implemented for MacOS yet!!!
-    #elif defined(__linux__)
+    #if defined(__linux__)
     if (mixerElem != nullptr) {
         // Get volume range.
         long minVolume;
         long maxVolume;
         if (snd_mixer_selem_get_playback_volume_range(mixerElem, &minVolume, &maxVolume) == 0) {
-            // Ok, now get volume.
             long rawVolume;
             if (snd_mixer_selem_get_playback_volume(mixerElem,
                     SND_MIXER_SCHN_MONO, &rawVolume) == 0) {
-                // Worked. bring into range 0-100.
+                // Bring into range 0-100.
                 rawVolume -= minVolume;
                 if (rawVolume > 0)
                     volume = (rawVolume * 100.0) / (maxVolume - minVolume) + 0.5;
-                //else
-                //   volume = 0;
             }
             else {
-                LOG(LogError) << "VolumeControl::getVolume(): Failed to get mixer volume!";
+                LOG(LogError) << "VolumeControl::getVolume(): Failed to get mixer volume";
             }
         }
         else {
-            LOG(LogError) << "VolumeControl::getVolume(): Failed to get volume range!";
+            LOG(LogError) << "VolumeControl::getVolume(): Failed to get volume range";
         }
     }
     #elif defined(_WIN64)
     if (endpointVolume != nullptr) {
-        // Windows Vista or above. uses EndpointVolume API.
+        // Windows Vista or above, uses EndpointVolume API.
         float floatVolume = 0.0f; // 0-1
         if (endpointVolume->GetMasterVolumeLevelScalar(&floatVolume) == S_OK) {
             volume = static_cast<int>(std::round(floatVolume * 100.0f));
@@ -278,38 +232,31 @@ int VolumeControl::getVolume() const
     }
     #endif
 
-    // Clamp to 0-100 range.
     volume = Math::clamp(volume, 0, 100);
-
     return volume;
 }
 
 void VolumeControl::setVolume(int volume)
 {
-    // Clamp to 0-100 range.
     volume = Math::clamp(volume, 0, 100);
 
-    // Store values in internal variables.
-    internalVolume = volume;
-    #if defined(__APPLE__)
-//    #error TODO: Not implemented for MacOS yet!!!
-    #elif defined(__linux__)
+    #if defined(__linux__)
     if (mixerElem != nullptr) {
         // Get volume range.
         long minVolume;
         long maxVolume;
         if (snd_mixer_selem_get_playback_volume_range(mixerElem, &minVolume, &maxVolume) == 0) {
-            // Ok, bring into minVolume-maxVolume range and set.
+            // Bring into minVolume-maxVolume range and set.
             long rawVolume = (volume * (maxVolume - minVolume) / 100) + minVolume;
             if (snd_mixer_selem_set_playback_volume(mixerElem,
                     SND_MIXER_SCHN_FRONT_LEFT, rawVolume) < 0 ||
                     snd_mixer_selem_set_playback_volume(mixerElem,
                     SND_MIXER_SCHN_FRONT_RIGHT, rawVolume) < 0) {
-                LOG(LogError) << "VolumeControl::getVolume(): Failed to set mixer volume!";
+                LOG(LogError) << "VolumeControl::getVolume(): Failed to set mixer volume";
             }
         }
         else {
-            LOG(LogError) << "VolumeControl::getVolume(): Failed to get volume range!";
+            LOG(LogError) << "VolumeControl::getVolume(): Failed to get volume range";
         }
     }
     #elif defined(_WIN64)
@@ -319,7 +266,7 @@ void VolumeControl::setVolume(int volume)
         if (volume > 0)
             floatVolume = static_cast<float>(volume) / 100.0f;
         if (endpointVolume->SetMasterVolumeLevelScalar(floatVolume, nullptr) != S_OK)
-            LOG(LogError) << "VolumeControl::setVolume(): Failed to set master volume!";
+            LOG(LogError) << "VolumeControl::setVolume(): Failed to set master volume";
     }
     #endif
 }

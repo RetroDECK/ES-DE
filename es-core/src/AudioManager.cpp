@@ -33,7 +33,7 @@ AudioManager::~AudioManager()
 
 std::shared_ptr<AudioManager>& AudioManager::getInstance()
 {
-    // Check if an AudioManager instance is already created, if not, create it.
+    // Check if an AudioManager instance is already created, and if not then create it.
     if (sInstance == nullptr)
         sInstance = std::shared_ptr<AudioManager>(new AudioManager);
 

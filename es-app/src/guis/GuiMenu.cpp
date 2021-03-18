@@ -513,6 +513,10 @@ void GuiMenu::openSoundSettings()
     s->addSaveFunc([system_volume] {
         VolumeControl::getInstance()->
                 setVolume(static_cast<int>(std::round(system_volume->getValue())));
+        // Explicitly delete the VolumeControl instance so that it will reinitialize the
+        // next time the menu is entered. This is the easiest way to detect new default
+        // audio devices or changes in audio volume done by the operating system.
+        VolumeControl::getInstance()->deleteInstance();
     });
     #endif
 

@@ -24,7 +24,6 @@
 #include "Platform.h"
 #include "Scripting.h"
 #include "SystemData.h"
-#include "VolumeControl.h"
 #include "Window.h"
 
 #include <assert.h>
