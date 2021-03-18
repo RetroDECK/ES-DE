@@ -323,9 +323,25 @@ namespace Renderer
             if (_vertices->shaders & SHADER_SCANLINES) {
                 Shader* runShader = getShaderProgram(SHADER_SCANLINES);
                 float shaderWidth = width * 1.2f;
-                // Workaround to get the scanlines to render somehow proportional to the
-                // resolution. A better solution is for sure needed.
-                float shaderHeight = height + height / (static_cast<int>(height) >> 7) * 2.0f;
+                // Scale the scanlines relative to screen resolution.
+                float screenHeightModifier = getScreenHeightModifier();
+                float relativeHeight = height / getScreenHeight();
+                float shaderHeight = 0.0f;
+                if (relativeHeight == 1.0f) {
+                    // Full screen.
+                    float modifier = 1.30f - (0.1f * screenHeightModifier);
+                    shaderHeight = height * modifier;
+                }
+                else {
+                    // Portion of screen, e.g. gamelist view.
+                    // Average the relative width and height to avoid applying exaggerated
+                    // scanlines to videos with non-standard aspect ratios.
+                    float relativeWidth = width / getScreenWidth();
+                    float relativeAdjustment = (relativeWidth + relativeHeight) / 2.0f;
+                    float modifier = 1.41f + relativeAdjustment / 7.0f -
+                            (0.14f * screenHeightModifier);
+                    shaderHeight = height * modifier;
+                }
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
