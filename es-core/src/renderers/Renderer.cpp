@@ -224,18 +224,6 @@ namespace Renderer
             return false;
         }
 
-        // TEMPORARY: This was an attempt to get rid of the annoying white screen flashing seen
-        // on some systems when starting the application. However it caused other adverse
-        // effects on Linux such as crashes if attempting to start the application with the
-        // --resolution flag in full screen mode and when attempting to launch games that changes
-        // the screen resolution. It may still be usable on other operating systems so I'm
-        // keeping the code for now.
-//        // Create a black surface which will avoid the white screen that would otherwise flash
-//        // by briefly before the splash screen is rendered when using some graphics drivers.
-//        SDL_Surface* blackSurface = SDL_GetWindowSurface(sdlWindow);
-//        SDL_FillRect(blackSurface, nullptr, SDL_MapRGB(blackSurface->format, 0x00, 0x00, 0x00));
-//        SDL_UpdateWindowSurface(sdlWindow);
-
         LOG(LogInfo) << "Setting up OpenGL...";
 
         if (!createContext())
@@ -243,6 +231,7 @@ namespace Renderer
 
         setIcon();
         setSwapInterval();
+        swapBuffers();
 
         #if defined(USE_OPENGL_21)
         LOG(LogInfo) << "Loading shaders...";
@@ -348,6 +337,11 @@ namespace Renderer
 
         setViewport(viewport);
         setProjection(projection);
+
+        // This is required to avoid a brief white screen flash seen on some systems.
+        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
+                static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+        swapBuffers();
 
         return true;
     }
