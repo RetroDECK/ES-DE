@@ -60,7 +60,6 @@ Sound::Sound(
 
 Sound::~Sound()
 {
-    deinit();
 }
 
 void Sound::loadFile(const std::string& path)
@@ -137,6 +136,7 @@ void Sound::deinit()
         mSampleLength = 0;
         mSamplePos = 0;
         SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
+        sMap.erase(mPath);
     }
 }
 
@@ -214,21 +214,27 @@ NavigationSounds* NavigationSounds::getInstance()
 
 void NavigationSounds::deinit()
 {
-    if (sInstance)
+    if (sInstance) {
+        for (auto sound : navigationSounds) {
+            AudioManager::getInstance()->unregisterSound(sound);
+            sound->deinit();
+        }
+        navigationSounds.clear();
         delete sInstance;
+    }
 
     sInstance = nullptr;
 }
 
 void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
 {
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowse"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselect"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "select"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "back"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scroll"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favorite"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launch"));
+    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "systembrowse")));
+    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "quicksysselect")));
+    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "select")));
+    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "back")));
+    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "scroll")));
+    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "favorite")));
+    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "launch")));
 }
 
 void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)

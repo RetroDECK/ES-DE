@@ -32,6 +32,7 @@
 #include "MameNames.h"
 #include "Platform.h"
 #include "Settings.h"
+#include "Sound.h"
 #include "SystemData.h"
 #include "SystemScreensaver.h"
 
@@ -614,6 +615,7 @@ int main(int argc, char* argv[])
     MameNames::deinit();
     CollectionSystemsManager::deinit();
     SystemData::deleteSystems();
+    NavigationSounds::getInstance()->deinit();
 
     // Call this ONLY when linking with FreeImage as a static library.
     #if defined(FREEIMAGE_LIB)

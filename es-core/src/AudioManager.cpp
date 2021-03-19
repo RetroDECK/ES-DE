@@ -235,7 +235,7 @@ void AudioManager::unregisterSound(std::shared_ptr<Sound>& sound)
             return;
         }
     }
-    LOG(LogError) << "AudioManager - tried to unregister a sound that wasn't registered!";
+    LOG(LogError) << "AudioManager - tried to unregister a sound that wasn't registered";
 }
 
 void AudioManager::play()
