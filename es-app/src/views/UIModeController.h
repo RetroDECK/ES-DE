@@ -23,6 +23,7 @@ class UIModeController
 {
 public:
     static UIModeController* getInstance();
+    static void deinit();
 
     // Monitor input for UI mode change, returns true (consumes input) when a UI mode
     // change is triggered.

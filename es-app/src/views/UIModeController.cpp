@@ -26,6 +26,14 @@ UIModeController* UIModeController::getInstance()
     return sInstance;
 }
 
+void UIModeController::deinit()
+{
+    if (sInstance) {
+        delete sInstance;
+        sInstance = nullptr;
+    }
+}
+
 UIModeController::UIModeController() : mPassKeyCounter(0)
 {
     mPassKeySequence = Settings::getInstance()->getString("UIMode_passkey");

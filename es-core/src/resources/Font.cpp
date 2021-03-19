@@ -93,6 +93,17 @@ Font::Font(int size, const std::string& path) : mSize(size), mPath(path)
 Font::~Font()
 {
     unload(ResourceManager::getInstance());
+
+    auto fontEntry = sFontMap.find(std::pair<std::string, int>(mPath, mSize));
+
+    if (fontEntry != sFontMap.cend()) {
+        sFontMap.erase(fontEntry);
+    }
+
+    if (sFontMap.empty() && sLibrary) {
+        FT_Done_FreeType(sLibrary);
+        sLibrary = nullptr;
+    }
 }
 
 void Font::reload(std::shared_ptr<ResourceManager>& /*rm*/)

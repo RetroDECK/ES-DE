@@ -83,6 +83,7 @@ ViewController::~ViewController()
 {
     assert(sInstance == this);
     sInstance = nullptr;
+    UIModeController::deinit();
 }
 
 void ViewController::noSystemsFileDialog()
