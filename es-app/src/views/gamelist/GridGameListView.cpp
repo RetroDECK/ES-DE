@@ -535,15 +535,14 @@ void GridGameListView::updateInfoPanel()
 
 void GridGameListView::addPlaceholder(FileData* firstEntry)
 {
-    // Empty list - add a placeholder.
-    SystemData* system;
-    if (firstEntry && firstEntry->getSystem()->isGroupedCustomCollection())
-        system = firstEntry->getSystem();
-    else
-        system = this->mRoot->getSystem();
+    // Empty list, add a placeholder.
+    FileData* placeholder;
 
-    FileData* placeholder = new FileData(PLACEHOLDER, "<No Entries Found>",
-            this->mRoot->getSystem()->getSystemEnvData(), system);
+    if (firstEntry && firstEntry->getSystem()->isGroupedCustomCollection())
+        placeholder = firstEntry->getSystem()->getPlaceholder();
+    else
+        placeholder = this->mRoot->getSystem()->getPlaceholder();
+
     mGrid.add(placeholder->getName(), "", placeholder);
 }
 

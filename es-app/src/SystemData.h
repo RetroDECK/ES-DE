@@ -96,6 +96,7 @@ public:
     SystemData* getPrev() const;
     static SystemData* getRandomSystem(const SystemData* currentSystem);
     FileData* getRandomGame(const FileData* currentGame = nullptr);
+    FileData* getPlaceholder() { return mPlaceholder; };
 
     void sortSystem(bool reloadGamelist = true, bool jumpToFirstRow = false);
 
@@ -127,6 +128,7 @@ private:
     FileFilterIndex* mFilterIndex;
 
     FileData* mRootFolder;
+    FileData* mPlaceholder;
 };
 
 #endif // ES_APP_SYSTEM_DATA_H

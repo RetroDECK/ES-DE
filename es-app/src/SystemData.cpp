@@ -47,7 +47,8 @@ SystemData::SystemData(
         mIsCustomCollectionSystem(CustomCollectionSystem),
         mIsGroupedCustomCollectionSystem(false),
         mIsGameSystem(true),
-        mScrapeFlag(false)
+        mScrapeFlag(false),
+        mPlaceholder(nullptr)
 {
     mFilterIndex = new FileFilterIndex();
 
@@ -79,6 +80,10 @@ SystemData::SystemData(
         mRootFolder = new FileData(FOLDER, "" + name, mEnvData, this);
         setupSystemSortType(mRootFolder);
     }
+
+    // This placeholder can be used later in the gamelist view.
+    mPlaceholder = new FileData(PLACEHOLDER, "<No Entries Found>", getSystemEnvData(), this);
+
     setIsGameSystemStatus();
     loadTheme();
 }
@@ -93,6 +98,7 @@ SystemData::~SystemData()
     if (!mEnvData->mStartPath.empty())
         delete mEnvData;
     delete mRootFolder;
+    delete mPlaceholder;
     delete mFilterIndex;
 }
 
