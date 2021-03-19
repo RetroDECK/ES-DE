@@ -279,7 +279,8 @@ void GuiGamelistOptions::openGamelistFilter()
     GuiGamelistFilter* ggf;
 
     auto filtersChangedFunc = [this](bool filtersChanged) {
-        mFiltersChanged = filtersChanged;
+        if (!mFiltersChanged)
+            mFiltersChanged = filtersChanged;
     };
 
     if (mIsCustomCollection)
