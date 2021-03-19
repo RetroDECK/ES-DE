@@ -43,7 +43,7 @@
 int SDL_USER_CECBUTTONDOWN = -1;
 int SDL_USER_CECBUTTONUP   = -1;
 
-InputManager* InputManager::mInstance = nullptr;
+InputManager* InputManager::sInstance = nullptr;
 
 InputManager::InputManager() : mKeyboardInputConfig(nullptr)
 {
@@ -56,10 +56,10 @@ InputManager::~InputManager()
 
 InputManager* InputManager::getInstance()
 {
-    if (!mInstance)
-        mInstance = new InputManager();
+    if (!sInstance)
+        sInstance = new InputManager();
 
-    return mInstance;
+    return sInstance;
 }
 
 void InputManager::init()

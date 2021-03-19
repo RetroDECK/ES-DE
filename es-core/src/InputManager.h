@@ -54,7 +54,7 @@ public:
 private:
     InputManager();
 
-    static InputManager* mInstance;
+    static InputManager* sInstance;
 
     static const int DEADZONE = 23000;
 

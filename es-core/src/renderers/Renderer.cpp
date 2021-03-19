@@ -82,7 +82,7 @@ namespace Renderer
         LOG(LogInfo) << "Creating window...";
 
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-            LOG(LogError) << "Couldn't initialize SDL: " << SDL_GetError() << ".";
+            LOG(LogError) << "Couldn't initialize SDL: " << SDL_GetError();
             return false;
         }
 
