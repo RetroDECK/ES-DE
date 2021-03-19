@@ -72,10 +72,19 @@ Settings* Settings::getInstance()
     return sInstance;
 }
 
+void Settings::deinit()
+{
+    if (sInstance) {
+        delete sInstance;
+        sInstance = nullptr;
+    }
+}
+
 void Settings::setDefaults()
 {
     mBoolMap.clear();
     mIntMap.clear();
+    mStringMap.clear();
 
     // All settings are in pairs of default values and current values.
     // As such, in this function we set these pairs identically.

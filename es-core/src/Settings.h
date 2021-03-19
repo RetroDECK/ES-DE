@@ -18,6 +18,7 @@ class Settings
 {
 public:
     static Settings* getInstance();
+    static void deinit();
 
     void loadFile();
     void saveFile();
