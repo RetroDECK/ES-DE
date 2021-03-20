@@ -24,7 +24,8 @@ public:
         DISP_RELATIVE_TO_NOW
     };
 
-    DateTimeEditComponent(Window* window, DisplayMode dispMode = DISP_DATE);
+    DateTimeEditComponent(Window* window, bool alignRight = false,
+            DisplayMode dispMode = DISP_DATE);
 
     void setValue(const std::string& val) override;
     std::string getValue() const override;
@@ -86,6 +87,7 @@ private:
     unsigned int mColorChangedValue;
 
     std::shared_ptr<Font> mFont;
+    bool mAlignRight;
     bool mUppercase;
     bool mAutoSize;
 };

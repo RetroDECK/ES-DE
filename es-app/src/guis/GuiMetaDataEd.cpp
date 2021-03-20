@@ -158,7 +158,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                 spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
                 row.addElement(spacer, false);
 
-                ed = std::make_shared<DateTimeEditComponent>(window);
+                ed = std::make_shared<DateTimeEditComponent>(window, true);
                 ed->setOriginalColor(DEFAULT_TEXTCOLOR);
                 ed->setChangedColor(TEXTCOLOR_USERMARKED);
                 row.addElement(ed, false);

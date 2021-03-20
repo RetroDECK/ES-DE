@@ -13,6 +13,7 @@
 
 DateTimeEditComponent::DateTimeEditComponent(
         Window* window,
+        bool alignRight,
         DisplayMode dispMode)
         : GuiComponent(window),
         mEditing(false),
@@ -22,7 +23,8 @@ DateTimeEditComponent::DateTimeEditComponent(
         mColor(0x777777FF),
         mFont(Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT)),
         mUppercase(false),
-        mAutoSize(true)
+        mAutoSize(true),
+        mAlignRight(alignRight)
 {
     updateTextCache();
 }
@@ -170,8 +172,8 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
 
         // Vertically center.
         Vector3f off(0, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
-        // Right align.
-        off.x() += referenceSize - mTextCache->metrics.size.x();
+        if (mAlignRight)
+            off.x() += referenceSize - mTextCache->metrics.size.x();
         trans.translate(off);
 
         Renderer::setMatrix(trans);
