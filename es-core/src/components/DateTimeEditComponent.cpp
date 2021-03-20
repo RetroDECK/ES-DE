@@ -165,10 +165,12 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
         std::shared_ptr<Font> font = getFont();
         float referenceSize;
 
-        if (mTime != 0)
-            referenceSize = font->sizeText("ABCDEFG").x();
-        else
-            referenceSize = font->sizeText("ABCDEIJ").x();
+        if (mAlignRight) {
+            if (mTime != 0)
+                referenceSize = font->sizeText("ABCDEFG").x();
+            else
+                referenceSize = font->sizeText("ABCDEIJ").x();
+        }
 
         // Vertically center.
         Vector3f off(0, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
