@@ -231,7 +231,13 @@ namespace Renderer
 
         setIcon();
         setSwapInterval();
+
+        // It seems as if Windows needs this to avoid a brief white screen flash on startup.
+        // Possibly this is driver-specific rather than OS-specific. There is additional code
+        // in init() to work around the white screen flash issue on all operating systems.
+        #if defined(_WIN64)
         swapBuffers();
+        #endif
 
         #if defined(USE_OPENGL_21)
         LOG(LogInfo) << "Loading shaders...";
@@ -338,7 +344,7 @@ namespace Renderer
         setViewport(viewport);
         setProjection(projection);
 
-        // This is required to avoid a brief white screen flash seen on some systems.
+        // This is required to avoid a brief white screen flash during startup on some systems.
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                 static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
         swapBuffers();
