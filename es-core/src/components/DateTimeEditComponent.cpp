@@ -160,13 +160,21 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
     Transform4x4f trans = parentTrans * getTransform();
 
     if (mTextCache) {
+        std::shared_ptr<Font> font = getFont();
+        float referenceSize;
+
+        if (mTime != 0)
+            referenceSize = font->sizeText("ABCDEFG").x();
+        else
+            referenceSize = font->sizeText("ABCDEIJ").x();
+
         // Vertically center.
-        Vector3f off(0, (mSize.y() - mTextCache->metrics.size.y()) / 2, 0);
+        Vector3f off(0, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
+        // Right align.
+        off.x() += referenceSize - mTextCache->metrics.size.x();
         trans.translate(off);
 
         Renderer::setMatrix(trans);
-
-        std::shared_ptr<Font> font = getFont();
 
         mTextCache->setColor((mColor & 0xFFFFFF00) | getOpacity());
         font->renderTextCache(mTextCache.get());
@@ -211,15 +219,13 @@ std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
     switch (mode) {
     case DISP_DATE: {
         if (mTime.getTime() == 0)
-            // The extra blankspaces are for visual alignment.
-            return "unknown   ";
+            return "unknown";
         fmt = "%Y-%m-%d";
         break;
     }
     case DISP_DATE_TIME: {
         if (mTime.getTime() == 0)
-            // The extra blankspaces are for visual alignment.
-            return "unknown   ";
+            return "unknown";
         fmt = "%Y-%m-%d %H:%M:%S";
         break;
     }
