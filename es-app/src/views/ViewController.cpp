@@ -258,8 +258,8 @@ void ViewController::ReloadAndGoToStart()
 bool ViewController::isCameraMoving()
 {
     if (mCurrentView) {
-        if (mCamera.r3().x() != -mCurrentView->getPosition().x() ||
-                mCamera.r3().y() != -mCurrentView->getPosition().y())
+        if (mCamera.r3().x() - -mCurrentView->getPosition().x() != 0 ||
+                mCamera.r3().y() - -mCurrentView->getPosition().y() != 0)
             return true;
     }
     return false;
