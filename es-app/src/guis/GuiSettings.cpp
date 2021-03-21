@@ -136,6 +136,12 @@ void GuiSettings::save()
     }
 
     if (!mDoNotInvalidateCachedBackground) {
+        // This delay reduces the likelyhood that the SVG rasterizer which is running in a
+        // separate thread is not done until the cached background is invalidated. Without
+        // this delay there's a high chance that some theme elements are not rendered in
+        // time and thus not getting included in the regenerated cached background.
+        // This is just a hack though and a better mechanism is needed to handle this.
+        SDL_Delay(100);
         if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
                 mNeedsGoToStart || mNeedsGoToSystem)
             mWindow->invalidateCachedBackground();

@@ -371,10 +371,12 @@ void GuiGamelistOptions::openMetaDataEd()
             CollectionSystemsManager::get()->refreshCollectionSystems(file, true);
 
         file->getSystem()->sortSystem();
-        // This small delay keeps the theme extras from sometimes not being rendered while
-        // the background cache is invalidated. Very strange, it must be some kind of race
-        // condition or similar.
-        SDL_Delay(10);
+        // This delay reduces the likelyhood that the SVG rasterizer which is running in a
+        // separate thread is not done until the cached background is invalidated. Without
+        // this delay there's a high chance that some theme elements are not rendered in
+        // time and thus not getting included in the regenerated cached background.
+        // This is just a hack though and a better mechanism is needed to handle this.
+        SDL_Delay(100);
         mWindow->invalidateCachedBackground();
 
         // Remove the folder entry from the gamelist.xml file.
