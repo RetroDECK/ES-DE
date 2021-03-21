@@ -65,6 +65,8 @@ public:
 
     unsigned int getColor() const override { return mColor; };
     inline std::shared_ptr<Font> getFont() const override { return mFont; }
+    Alignment getHorizontalAlignment() { return mHorizontalAlignment; }
+    Alignment getVerticalAlignment() { return mVerticalAlignment; }
 
 protected:
     virtual void onTextChanged();
