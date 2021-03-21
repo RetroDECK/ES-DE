@@ -31,7 +31,7 @@
         <image name="background" extra="true">
             <color>707070</color>
         </image>
-        <!-- This block is only to force drawing of color bands BEFORE text background.-->
+        <!-- This block is only here to force the drawing of color bands before frames. -->
         <image name="band1" extra="true">
         </image>
         <image name="band2" extra="true">
@@ -51,17 +51,20 @@
         </text>
     </view>
 
-    <view name="detailed, video">
-        <image name="backtext2" extra="true">
+    <view name="basic">
+        <image name="backframe1" extra="true">
             <color>9F9F9F</color>
         </image>
-        <image name="backtext3" extra="true">
+    </view>
+
+    <view name="detailed, video, grid">
+        <image name="backframe2" extra="true">
             <color>9F9F9F</color>
         </image>
-        <image name="backtext4" extra="true">
+        <image name="backframe3" extra="true">
             <color>9F9F9F</color>
         </image>
-        <image name="backtext5" extra="true">
+        <image name="backframe4" extra="true">
             <color>9F9F9F</color>
         </image>
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
@@ -74,20 +77,41 @@
         <datetime name="md_releasedate, md_lastplayed">
             <color>262626</color>
         </datetime>
-        <text name="control" extra="true">
-            <color>262626</color>
-        </text>
-        <text name="no_image" extra="true">
-            <color>262626</color>
-        </text>
-        <image name="controls" extra="true">
-            <color>262626</color>
-        </image>
     </view>
 
-    <view name="basic">
-        <image name="backtext1" extra="true">
+    <view name="grid">
+        <image name="backframe5" extra="true">
             <color>9F9F9F</color>
         </image>
+        <image name="backframe6" extra="true">
+            <color>9F9F9F</color>
+        </image>
+        <image name="releasedFrame" extra="true">
+            <color>8F8F8F</color>
+        </image>
+        <image name="developerFrame" extra="true">
+            <color>8F8F8F</color>
+        </image>
+        <image name="publisherFrame" extra="true">
+            <color>8F8F8F</color>
+        </image>
+        <image name="genreFrame" extra="true">
+            <color>8F8F8F</color>
+        </image>
+        <image name="playersFrame" extra="true">
+            <color>8F8F8F</color>
+        </image>
+        <image name="lastplayedFrame" extra="true">
+            <color>8F8F8F</color>
+        </image>
+        <text name="md_name">
+            <color>363636</color>
+        </text>
+        <gridtile name="default">
+            <backgroundColor>42424244</backgroundColor>
+        </gridtile>
+        <gridtile name="selected">
+            <backgroundColor>28424244</backgroundColor>
+        </gridtile>
     </view>
 </theme>
