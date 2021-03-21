@@ -464,20 +464,20 @@ based on: 'recalbox-multi' by the Recalbox community
         <text name="infotext1" extra="true">
             <forceUppercase>1</forceUppercase>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.05</fontSize>
+            <fontSize>0.045</fontSize>
             <size>0.3 0.02</size>
             <alignment>left</alignment>
-            <pos>0.8086 0.04</pos>
+            <pos>0.809 0.045</pos>
             <text>Alpha/</text>
             <color>CC0000</color>
         </text>
         <text name="infotext2" extra="true">
             <forceUppercase>1</forceUppercase>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.05</fontSize>
+            <fontSize>0.045</fontSize>
             <size>0.3 0.02</size>
             <alignment>left</alignment>
-            <pos>0.8081 0.10</pos>
+            <pos>0.8085 0.095</pos>
             <text>preview</text>
             <color>CC0000</color>
         </text>
