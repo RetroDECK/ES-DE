@@ -30,7 +30,7 @@ bool IGameListView::input(InputConfig* config, Input input)
             config->getDeviceId() == DEVICE_KEYBOARD &&
             (SDL_GetModState() & (KMOD_LCTRL | KMOD_RCTRL)) &&
             input.id == SDLK_r && input.value != 0) {
-        LOG(LogDebug) << "reloading view";
+        LOG(LogDebug) << "IGameListView::input(): Reloading view";
         ViewController::get()->reloadGameListView(this, true);
         return true;
     }

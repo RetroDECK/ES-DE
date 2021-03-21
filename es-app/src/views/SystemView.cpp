@@ -191,7 +191,7 @@ bool SystemView::input(InputConfig* config, Input input)
     if (input.value != 0) {
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
                 SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
-            LOG(LogInfo) << "Reloading all";
+            LOG(LogDebug) << "SystemView::input(): Reloading all";
             ViewController::get()->reloadAll();
             return true;
         }
