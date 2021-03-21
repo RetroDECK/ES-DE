@@ -148,6 +148,7 @@ void GuiMenu::openUISettings()
                     gamelist_view_style->getSelected());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
         }
     });
 
@@ -190,6 +191,7 @@ void GuiMenu::openUISettings()
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
                 s->setNeedsSaving();
                 s->setNeedsReloading();
+                s->setInvalidateCachedBackground();
             }
         });
     }
@@ -273,6 +275,7 @@ void GuiMenu::openUISettings()
             s->setNeedsResetFilters();
             s->setNeedsReloading();
             s->setNeedsGoToSystem(SystemData::sSystemVector.front());
+            s->setInvalidateCachedBackground();
         }
     });
 
@@ -309,6 +312,7 @@ void GuiMenu::openUISettings()
             s->setNeedsSaving();
             s->setNeedsSorting();
             s->setNeedsSortingCollections();
+            s->setInvalidateCachedBackground();
         }
     });
 
@@ -343,6 +347,7 @@ void GuiMenu::openUISettings()
             Settings::getInstance()->setBool("MenuBlurBackground",
                     menu_blur_background->getState());
             s->setNeedsSaving();
+            s->setInvalidateCachedBackground();
         }
     });
     #endif
@@ -385,6 +390,7 @@ void GuiMenu::openUISettings()
             Settings::getInstance()->setBool("FoldersOnTop", folders_on_top->getState());
             s->setNeedsSaving();
             s->setNeedsSorting();
+            s->setInvalidateCachedBackground();
         }
     });
 
@@ -399,6 +405,7 @@ void GuiMenu::openUISettings()
             s->setNeedsSaving();
             s->setNeedsSorting();
             s->setNeedsSortingCollections();
+            s->setInvalidateCachedBackground();
         }
     });
 
@@ -411,6 +418,7 @@ void GuiMenu::openUISettings()
             Settings::getInstance()->setBool("FavoritesStar", favorites_star->getState());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
         }
     });
 
@@ -940,6 +948,7 @@ void GuiMenu::openOtherSettings()
             Settings::getInstance()->setBool("ROMDirGameMedia", rom_dir_game_media->getState());
             s->setNeedsSaving();
             s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
         }
     });
 

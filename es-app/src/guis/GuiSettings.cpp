@@ -33,7 +33,7 @@ GuiSettings::GuiSettings(
         mNeedsGoToStart(false),
         mNeedsGoToSystem(false),
         mNeedsGoToGroupedCollections(false),
-        mDoNotInvalidateCachedBackground(false),
+        mInvalidateCachedBackground(false),
         mGoToSystem(nullptr)
 {
     addChild(&mMenu);
@@ -135,7 +135,7 @@ void GuiSettings::save()
         }
     }
 
-    if (!mDoNotInvalidateCachedBackground) {
+    if (mInvalidateCachedBackground) {
         // This delay reduces the likelyhood that the SVG rasterizer which is running in a
         // separate thread is not done until the cached background is invalidated. Without
         // this delay there's a high chance that some theme elements are not rendered in

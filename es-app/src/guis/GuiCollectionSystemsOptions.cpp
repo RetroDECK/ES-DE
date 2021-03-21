@@ -84,7 +84,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             setNeedsSaving();
             setNeedsReloading();
             setNeedsCollectionsUpdate();
-            setDoNotInvalidateCachedBackground();
         }
     });
 
@@ -138,7 +137,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                 setNeedsReloading();
                 setNeedsCollectionsUpdate();
                 setNeedsGoToGroupedCollections();
-                setDoNotInvalidateCachedBackground();
             }
         }
     });
@@ -293,6 +291,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             setNeedsReloading();
             setNeedsSorting();
             setNeedsSortingCollections();
+            setInvalidateCachedBackground();
         }
     });
 
@@ -305,6 +304,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             Settings::getInstance()->setBool("FavStarCustom", fav_star_custom->getState());
             setNeedsSaving();
             setNeedsReloading();
+            setInvalidateCachedBackground();
         }
     });
 
@@ -324,6 +324,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             setNeedsCollectionsUpdate();
             setNeedsReloading();
             setNeedsGoToSystem(SystemData::sSystemVector.front());
+            setInvalidateCachedBackground();
         }
     });
 
@@ -339,6 +340,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                     collection_show_system_info->getState());
             setNeedsSaving();
             setNeedsReloading();
+            setInvalidateCachedBackground();
         }
     });
 }
