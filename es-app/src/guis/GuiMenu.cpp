@@ -130,15 +130,16 @@ void GuiMenu::openUISettings()
     // GameList view style.
     auto gamelist_view_style = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "GAMELIST VIEW STYLE", false);
-    std::vector<std::string> styles;
-    styles.push_back("automatic");
-    styles.push_back("basic");
-    styles.push_back("detailed");
-    styles.push_back("video");
-    styles.push_back("grid");
-    for (auto it = styles.cbegin(); it != styles.cend(); it++)
-        gamelist_view_style->add(*it, *it, Settings::getInstance()->
-                getString("GamelistViewStyle") == *it);
+    std::string selectedViewStyle = Settings::getInstance()->getString("GamelistViewStyle");
+    gamelist_view_style->add("automatic", "automatic", selectedViewStyle == "automatic");
+    gamelist_view_style->add("basic", "basic", selectedViewStyle == "basic");
+    gamelist_view_style->add("detailed", "detailed", selectedViewStyle == "detailed");
+    gamelist_view_style->add("video", "video", selectedViewStyle == "video");
+    gamelist_view_style->add("grid (experimental)", "grid", selectedViewStyle == "grid");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the view style to Automatic in this case.
+    if (gamelist_view_style->getSelectedObjects().size() == 0)
+        gamelist_view_style->selectEntry(0);
     s->addWithLabel("GAMELIST VIEW STYLE", gamelist_view_style);
     s->addSaveFunc([gamelist_view_style, s] {
         if (gamelist_view_style->getSelected() !=
