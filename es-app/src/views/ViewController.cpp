@@ -881,10 +881,19 @@ void ViewController::preload()
         (*it)->getIndex()->resetFilters();
         getGameListView(*it);
     }
-    // Load navigation sounds, but only if at least one system exists.
-    if (systemCount > 0)
-        NavigationSounds::getInstance()->loadThemeNavigationSounds(
-                SystemData::sSystemVector.front()->getTheme());
+
+    // Load navigation sounds, either from the theme if it supports it, or otherwise from
+    // the bundled fallback sound files.
+    bool themeSoundSupport = false;
+    for (SystemData* system : SystemData::sSystemVector) {
+        if (system->getTheme()->hasView("all")) {
+            NavigationSounds::getInstance()->loadThemeNavigationSounds(system->getTheme());
+            themeSoundSupport = true;
+            break;
+        }
+    }
+    if (!SystemData::sSystemVector.empty() && !themeSoundSupport)
+        NavigationSounds::getInstance()->loadThemeNavigationSounds(nullptr);
 }
 
 void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
@@ -972,10 +981,19 @@ void ViewController::reloadAll()
         goToSystemView(SystemData::sSystemVector.front(), false);
     }
 
-    // Load navigation sounds.
+    // Load navigation sounds, either from the theme if it supports it, or otherwise from
+    // the bundled fallback sound files.
     NavigationSounds::getInstance()->deinit();
-    NavigationSounds::getInstance()->loadThemeNavigationSounds(
-            SystemData::sSystemVector.front()->getTheme());
+    bool themeSoundSupport = false;
+    for (SystemData* system : SystemData::sSystemVector) {
+        if (system->getTheme()->hasView("all")) {
+            NavigationSounds::getInstance()->loadThemeNavigationSounds(system->getTheme());
+            themeSoundSupport = true;
+            break;
+        }
+    }
+    if (!SystemData::sSystemVector.empty() && !themeSoundSupport)
+        NavigationSounds::getInstance()->loadThemeNavigationSounds(nullptr);
 
     mCurrentView->onShow();
     updateHelpPrompts();

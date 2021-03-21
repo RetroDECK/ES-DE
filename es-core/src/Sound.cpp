@@ -34,14 +34,18 @@ std::shared_ptr<Sound> Sound::get(const std::string& path)
 std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& theme,
         const std::string& view, const std::string& element)
 {
-    LOG(LogDebug) << "Sound::getFromTheme(): Looking for navigation sound tag <sound name=\"" <<
-            element << "\">";
+    if (!theme) {
+        LOG(LogDebug) << "Sound::getFromTheme(): Using fallback sound file for \""
+                << element << "\"";
+        return get(ResourceManager::getInstance()->getResourcePath(":/sounds/" + element + ".wav"));
+    }
+
+    LOG(LogDebug) << "Sound::getFromTheme(): Looking for tag <sound name=\"" << element << "\">";
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
     if (!elem || !elem->has("path")) {
         LOG(LogDebug) << "Sound::getFromTheme(): " << "Tag not found, using fallback sound file";
-        return get(ResourceManager::getInstance()->
-                getResourcePath(":/sounds/" + element + ".wav"));
+        return get(ResourceManager::getInstance()->getResourcePath(":/sounds/" + element + ".wav"));
     }
 
     LOG(LogDebug) << "Sound::getFromTheme(): Tag found, ready to load theme sound file";
@@ -228,6 +232,15 @@ void NavigationSounds::deinit()
 
 void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
 {
+    if (theme) {
+        LOG(LogDebug) << "NavigationSounds::loadThemeNavigationSounds(): "
+                "Theme set includes navigation sound support, loading custom sounds";
+    }
+    else {
+        LOG(LogDebug) << "NavigationSounds::loadThemeNavigationSounds(): "
+                "Theme set does not include navigation sound support, using fallback sounds";
+    }
+
     navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "systembrowse")));
     navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "quicksysselect")));
     navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "select")));
