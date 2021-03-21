@@ -241,8 +241,16 @@ const std::string GridGameListView::getImagePath(FileData* file)
 
     if (src == ImageSource::IMAGE)
         return file->getImagePath();
+    else if (src == ImageSource::MIXIMAGE)
+        return file->getMiximagePath();
+    else if (src == ImageSource::SCREENSHOT)
+        return file->getScreenshotPath();
+    else if (src == ImageSource::COVER)
+        return file->getCoverPath();
     else if (src == ImageSource::MARQUEE)
         return file->getMarqueePath();
+    else if (src == ImageSource::BOX3D)
+        return file->get3DBoxPath();
 
     // If no thumbnail was found, then use the image media type.
     if (file->getThumbnailPath() == "")

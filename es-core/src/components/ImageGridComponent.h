@@ -25,7 +25,11 @@ enum ScrollDirection {
 enum ImageSource {
     THUMBNAIL,
     IMAGE,
-    MARQUEE
+    MIXIMAGE,
+    SCREENSHOT,
+    COVER,
+    MARQUEE,
+    BOX3D
 };
 
 struct ImageGridData {
@@ -287,8 +291,16 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             auto direction = elem->get<std::string>("imageSource");
             if (direction == "image")
                 mImageSource = IMAGE;
+            else if (direction == "miximage")
+                mImageSource = MIXIMAGE;
+            else if (direction == "screenshot")
+                mImageSource = SCREENSHOT;
+            else if (direction == "cover")
+                mImageSource = COVER;
             else if (direction == "marquee")
                 mImageSource = MARQUEE;
+            else if (direction == "3dbox")
+                mImageSource = BOX3D;
             else
                 mImageSource = THUMBNAIL;
         }
