@@ -142,9 +142,7 @@ void GuiSettings::save()
         // time and thus not getting included in the regenerated cached background.
         // This is just a hack though and a better mechanism is needed to handle this.
         SDL_Delay(100);
-        if (mNeedsSaving || mNeedsCollectionsUpdate || mNeedsReloading || mNeedsSorting ||
-                mNeedsGoToStart || mNeedsGoToSystem)
-            mWindow->invalidateCachedBackground();
+        mWindow->invalidateCachedBackground();
     }
 }
 
