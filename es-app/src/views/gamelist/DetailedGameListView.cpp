@@ -358,8 +358,9 @@ void DetailedGameListView::updateInfoPanel()
         // If a filter has been applied, then the number of filtered and total games replaces
         // the game counter.
         std::string gamelistInfoString;
+        Alignment infoAlign = mGamelistInfo.getHorizontalAlignment();
 
-        if (mIsFolder)
+        if (mIsFolder && infoAlign == ALIGN_RIGHT)
             gamelistInfoString = ViewController::FOLDER_CHAR + "  ";
 
         if (mIsFiltered) {
@@ -381,6 +382,9 @@ void DetailedGameListView::updateInfoPanel()
                 gamelistInfoString += "  " + ViewController::FAVORITE_CHAR + " "
                         + std::to_string(mFavoritesGameCount);
         }
+
+        if (mIsFolder && infoAlign != ALIGN_RIGHT)
+            gamelistInfoString += "  " + ViewController::FOLDER_CHAR;
 
         mGamelistInfo.setValue(gamelistInfoString);
 

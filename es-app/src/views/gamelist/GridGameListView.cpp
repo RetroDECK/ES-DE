@@ -458,6 +458,10 @@ void GridGameListView::updateInfoPanel()
         // If a filter has been applied, then the number of filtered and total games replaces
         // the game counter.
         std::string gamelistInfoString;
+        Alignment infoAlign = mGamelistInfo.getHorizontalAlignment();
+
+        if (mIsFolder && infoAlign == ALIGN_RIGHT)
+            gamelistInfoString = ViewController::FOLDER_CHAR + "  ";
 
         if (mIsFiltered) {
             if (mFilteredGameCountAll == mFilteredGameCount)
@@ -478,7 +482,7 @@ void GridGameListView::updateInfoPanel()
                         std::to_string(mFavoritesGameCount);
         }
 
-        if (mIsFolder)
+        if (mIsFolder && infoAlign != ALIGN_RIGHT)
             gamelistInfoString += "  " + ViewController::FOLDER_CHAR;
 
         mGamelistInfo.setValue(gamelistInfoString);
