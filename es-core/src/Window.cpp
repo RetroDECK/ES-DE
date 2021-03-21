@@ -607,6 +607,18 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
     mHelp->setPrompts(addPrompts);
 }
 
+void Window::setInfoPopup(InfoPopup* infoPopup)
+{
+    delete mInfoPopup;
+    mInfoPopup = infoPopup;
+}
+
+void Window::stopInfoPopup()
+{
+    if (mInfoPopup)
+        mInfoPopup->stop();
+}
+
 void Window::onSleep()
 {
     Scripting::fireEvent("sleep");
@@ -639,6 +651,12 @@ void Window::unsetLaunchedGame()
         (*it)->onGameLaunchedDeactivate();
 
     mGameLaunchedState = false;
+}
+
+void Window::invalidateCachedBackground()
+{
+    mCachedBackground = false;
+    mInvalidatedCachedBackground = true;
 }
 
 void Window::startScreensaver()

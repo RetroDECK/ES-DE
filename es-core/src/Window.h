@@ -89,16 +89,8 @@ public:
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
 
     void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
-    void setInfoPopup(InfoPopup* infoPopup)
-    {
-        delete mInfoPopup;
-        mInfoPopup = infoPopup;
-    }
-    void stopInfoPopup()
-    {
-        if (mInfoPopup)
-            mInfoPopup->stop();
-    };
+    void setInfoPopup(InfoPopup* infoPopup);
+    void stopInfoPopup();
 
     bool isScreensaverActive() { return mRenderScreensaver; };
     void startScreensaver();
@@ -108,16 +100,11 @@ public:
 
     void setLaunchedGame();
     void unsetLaunchedGame();
+    void invalidateCachedBackground();
 
     bool getGameLaunchedState() { return mGameLaunchedState; };
     void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; };
     bool getAllowTextScrolling() { return mAllowTextScrolling; };
-
-    void invalidateCachedBackground()
-    {
-        mCachedBackground = false;
-        mInvalidatedCachedBackground = true;
-    };
 
 private:
     void onSleep();
