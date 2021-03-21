@@ -182,6 +182,13 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid resolution values supplied.\n";
                 return false;
             }
+            std::string widthArg = argv[i + 1];
+            std::string heightArg = argv[i + 2];
+            if (widthArg.find_first_not_of("0123456789") != std::string::npos ||
+                    heightArg.find_first_not_of("0123456789") != std::string::npos) {
+                std::cerr << "Error: Invalid resolution values supplied.\n";
+                return false;
+            }
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
             if (width < 640 || height < 480 || width > 7680 || height > 4320 ||
