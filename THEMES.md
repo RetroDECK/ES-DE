@@ -274,14 +274,13 @@ There are seven different navigation sounds that can be configured. The names as
 on the example below.
 Starting EmulationStation with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sound is provided by the theme, ES will use the bundled navigation sound file as a fallback. This is done per sound, so the theme could provide for example one or two custom sound files while using the bundled ES sounds for the other samples.
 
-
 Example debug output:
 ```
-Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for navigation sound tag <sound name="quicksysselect">.
-Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag found, ready to load theme sound file.
-Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for navigation sound tag <sound name="select">.
-Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag not found, using fallback sound file.
-
+Jul 12 11:28:58 Debug:  NavigationSounds::loadThemeNavigationSounds(): Theme set includes navigation sound support, loading custom sounds
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for tag <sound name="systembrowse">
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag found, ready to load theme sound file
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Looking for tag <sound name="quicksysselect">
+Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag not found, using fallback sound file
 ```
 
 Example `navigationsounds.xml`, to be included from the main theme file:
@@ -425,7 +424,7 @@ or to specify only a portion of the value of a theme property:
 * `textlist name="gamelist"` - ALL
     - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders.  Left aligned by default.
 * `text name="gamelistInfo"` - ALL
-    - Displays the game count (all games as well as favorites), any applied filters, and an folder icon if a folder has been entered.
+    - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
 * Metadata
     * Labels
@@ -476,7 +475,7 @@ or to specify only a portion of the value of a theme property:
 * `textlist name="gamelist"` - ALL
     - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders.  Left aligned by default.
 * `text name="gamelistInfo"` - ALL
-    - Displays the game count (all games as well as favorites), any applied filters, and an folder icon if a folder has been entered.
+    - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
 * Metadata
     * Labels
@@ -537,7 +536,7 @@ or to specify only a portion of the value of a theme property:
 * `gridtile name="selected"` - ALL
     - See default gridtile description right above.
 * `text name="gamelistInfo"` - ALL
-    - Displays the game count (all games as well as favorites), any applied filters, and an folder icon if a folder has been entered.
+    - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
 * Metadata
     * Labels
@@ -654,7 +653,7 @@ Can be created as an extra.
 * `folderImage` - type: PATH.
     - The default image used for folders which doesn't have an image.
 * `imageSource` - type: STRING.
-    - Selects the image to display. `thumbnail` by default, can also be set to `image` or `marquee`.
+    - Selects the image to display. `thumbnail` by default, can also be set to `image`, `miximage`, `screenshot`, `cover`, `marquee` or `3dbox`. If selecting `image`, the media type `miximage` will be tried first, with fallback to `screenshot` and then `cover`.
 * `scrollDirection` - type: STRING.
     - `vertical` by default, can also be set to `horizontal`. Not that in `horizontal` mod, the tiles are ordered from top to bottom, then from left to right.
 * `centerSelection` - type: BOOLEAN.

@@ -134,6 +134,11 @@ The most common tool is Memcheck to check for memory leaks, which you run like t
 valgrind --tool=memcheck --leak-check=full --log-file=../valgrind_run_01 ./emulationstation
 ```
 
+There are numerous flags that can be used, for example this will also track reachable memory which could indicate further leaks:
+```
+valgrind --tool=memcheck --leak-check=full --track-origins=yes --show-reachable=yes --log-file=../valgrind_run_01 ./emulationstation
+```
+
 Another helpful tool is the Callgrind call-graph analyzer:
 ```
 valgrind --tool=callgrind --log-file=../valgrind_run_01 ./emulationstation

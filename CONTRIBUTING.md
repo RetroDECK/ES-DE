@@ -22,7 +22,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.1
 
-* Support for Raspberry Pi 4 with OpenGL ES 2.0 (Ubuntu and Raspberry Pi OS)
+* Support for Raspberry Pi 4 with OpenGL 2.1 (Ubuntu and Raspberry Pi OS)
 * Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
 * Improve full-screen support, remove the temporary full screen hacks
 * Proper game launching screen
@@ -38,7 +38,6 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Checksum support for the scraper to verify each file before accepting/saving it
 * Web proxy support for the scraper
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
-* Shader support for the OpenGL ES renderer
 * Add to Linux repositories, BSD ports collections etc.
 
 #### v1.3

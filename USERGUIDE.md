@@ -105,7 +105,7 @@ Theme folder:
 gc
 ```
 
-Be aware that there will be a lot of directories created if using the template es_systems.cfg files bundled with the installation, so it may be a good idea to delete the ones you don't need. Deleting unnecessary directories also reduces the application startup time significantly as ES-DE would otherwise need to scan for game files for all these systems.
+Be aware that there will be a lot of directories created if using the template es_systems.cfg file bundled with the installation, so it may be a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them later if more systems should be added. For example a directory called DISABLED could be created inside the ROMs folder (i.e. ~/ROMs/DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the application startup time significantly as ES-DE would otherwise need to scan for game files for all these systems.
 
 ![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
@@ -172,7 +172,7 @@ Also note that the Video view style requires that the theme supports it. If not,
 
 It's possible to manually set a specific gamelist view style in the UI settings entry of the main menu, but this is applied globally regardless of what media files are available per game system. The manual setting also overrides the theme-supported view styles which has the potential of making ES-DE very ugly indeed.
 
-In addition to the styles just described, there is a **Grid** view style as well, but as of ES-DE version 1.0 this is very limited and not recommended. Future versions may update this style to a more useful state.
+In addition to the styles just described, there is a **Grid** view style as well, but as of ES-DE version 1.0 this is highly experimental and its use is not recommended. Future versions will update this style to a more useful state.
 
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated as 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
@@ -801,6 +801,10 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 Animation to play when opening the main menu or the game options menu. Can be set to _Scale-up, _Fade-in_ or _None_.
 
+**Blur background when menu is open** _(OpenGL renderer only)_
+
+This option will blur the background behind the menu slightly. Normally this can be left enabled, but if you have a really slow GPU, disabling this option may make the application feel a bit more responsive.
+
 **Display pillarboxes for gamelist videos**
 
 With this option enabled, there are black pillarboxes (and to a lesser extent letterboxes) displayed around videos with non-standard aspect ratios. This will probably be most commonly used for vertical arcade shooters, or for game systems that has a screen in portrait orientation. For wider than normal videos, letterboxes are added, but this is quite rare compared to videos in portrait orientation. This option looks good with some theme sets such as rbsimple-DE, but on others it may be more visually pleasing to disable it. On less wide displays such as those in 4:3 aspect ratio this option should probably be disabled as it may otherwise add quite excessive letterboxing.
@@ -915,7 +919,7 @@ This will display an overlay in the upper left corner, showing the game name and
 
 **Render scanlines** _(OpenGL renderer only)_
 
-Whether to use a shader to render scanlines for the videos.
+Whether to use a shader to render scanlines for the videos. Be aware that this is quite demanding for the GPU.
 
 **Render blur** _(OpenGL renderer only)_
 
@@ -928,7 +932,7 @@ General sound settings.
 
 **System volume** _(Linux and Windows only)_
 
-As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. Be aware that the volume change is applied only after leaving the sound settings menu.
+As the name implies, this sets the overall system volume and not the volume specifically for ES-DE. Note that the volume change is applied only after leaving the sound settings menu.
 
 **Navigation sounds volume**
 

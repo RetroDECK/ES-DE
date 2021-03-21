@@ -107,6 +107,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Large text sizes at higher resolutions (such as 4K) would crash the application as fixed-size texture buffers were used which weren't big enough to hold the larger font textures
 * Fixed a massive memory leak related to SVG images
 * Fixed an issue where SVG images would sometimes be cut off slightly on the right side (e.g. logos on the system view carousel)
+* The audio volume control did not detect if there was a new default audio device or if the audio volume had been changed outside ES-DE
 * The scraper didn't handle error conditions correctly
 * The metadata editor insisted that changes were made although nothing was updated
 * Sorting by number of players did not work properly for games with ranges such as 1-2 or 1-8
