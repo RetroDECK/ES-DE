@@ -10,6 +10,7 @@
 
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
+#include "Settings.h"
 
 DateTimeEditComponent::DateTimeEditComponent(
         Window* window,
@@ -174,11 +175,22 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
 
         // Vertically center.
         Vector3f off(0, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
+
         if (mAlignRight)
             off.x() += referenceSize - mTextCache->metrics.size.x();
         trans.translate(off);
 
         Renderer::setMatrix(trans);
+
+        if (Settings::getInstance()->getBool("DebugText")) {
+            Renderer::setMatrix(trans);
+            if (mTextCache->metrics.size.x() > 0) {
+                Renderer::drawRect(0.0f, 0.0f - off.y(),
+                        mSize.x() - off.x(), mSize.y(), 0x0000FF33, 0x0000FF33);
+            }
+            Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x(),
+                    mTextCache->metrics.size.y(), 0x00000033, 0x00000033);
+        }
 
         mTextCache->setColor((mColor & 0xFFFFFF00) | getOpacity());
         font->renderTextCache(mTextCache.get());

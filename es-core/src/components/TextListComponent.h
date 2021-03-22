@@ -203,12 +203,19 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
         }
     }
 
+    if (Settings::getInstance()->getBool("DebugText")) {
+        Renderer::drawRect(mHorizontalMargin, 0.0f, mSize.x() - mHorizontalMargin * 2.0f,
+                mSize.y(), 0x00000033, 0x00000033);
+        Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x0000FF33, 0x0000FF33);
+    }
+
     // Clip to inside margins.
     Vector3f dim(mSize.x(), mSize.y(), 0);
     dim = trans * dim - trans.translation();
     Renderer::pushClipRect(Vector2i(static_cast<int>(trans.translation().x() +
             mHorizontalMargin), static_cast<int>(trans.translation().y())),
-            Vector2i(static_cast<int>(dim.x() - mHorizontalMargin*2), static_cast<int>(dim.y())));
+            Vector2i(static_cast<int>(dim.x() - mHorizontalMargin * 2.0f),
+            static_cast<int>(dim.y())));
 
     for (int i = startEntry; i < listCutoff; i++) {
         typename IList<TextListData, T>::Entry& entry = mEntries.at(static_cast<unsigned int>(i));

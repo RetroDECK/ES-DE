@@ -10,6 +10,7 @@
 
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
+#include "Settings.h"
 
 ButtonComponent::ButtonComponent(
     Window* window, const std::string& text,
@@ -101,11 +102,19 @@ void ButtonComponent::render(const Transform4x4f& parentTrans)
     mBox.render(trans);
 
     if (mTextCache) {
-        Vector3f centerOffset((mSize.x() - mTextCache->metrics.size.x()) / 2,
-                (mSize.y() - mTextCache->metrics.size.y()) / 2, 0);
+        Vector3f centerOffset((mSize.x() - mTextCache->metrics.size.x()) / 2.0f,
+                (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0);
         trans = trans.translate(centerOffset);
 
+        if (Settings::getInstance()->getBool("DebugText")) {
+            Renderer::drawRect(centerOffset.x(), 0.0f, mTextCache->metrics.size.x(),
+                    mSize.y(), 0x00000033, 0x00000033);
+            Renderer::drawRect(mBox.getPosition().x(), 0.0f, mBox.getSize().x(),
+                    mSize.y(), 0x0000FF33, 0x0000FF33);
+        }
+
         Renderer::setMatrix(trans);
+
         mTextCache->setColor(getCurTextColor());
         mFont->renderTextCache(mTextCache.get());
         trans = trans.translate(-centerOffset);
