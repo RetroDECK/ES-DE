@@ -646,8 +646,8 @@ void GuiScraperSearch::updateThumbnail()
         }
     }
     else {
-        LOG(LogWarning) << "Thumbnail download failed: " << it->second->getErrorMsg();
         mResultThumbnail->setImage("");
+        onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg());
     }
 
     mThumbnailReqMap.erase(it);
