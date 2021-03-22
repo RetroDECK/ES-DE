@@ -31,6 +31,8 @@ public:
     VideoVlcComponent(Window* window);
     virtual ~VideoVlcComponent();
 
+    static void deinit();
+
     // Resize the video to fit this size. If one axis is zero, scale that axis to maintain
     // aspect ratio. If both are non-zero, potentially break the aspect ratio. If both are
     // zero, no resizing. This can be set before or after a video is loaded.

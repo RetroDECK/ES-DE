@@ -34,6 +34,7 @@ VideoVlcComponent::VideoVlcComponent(
         Window* window)
         : VideoComponent(window),
         mMediaPlayer(nullptr),
+        mMedia(nullptr),
         mContext({}),
         mHasSetAudioVolume(false)
 {
@@ -48,6 +49,14 @@ VideoVlcComponent::~VideoVlcComponent()
 {
     stopVideo();
     mTexture.reset();
+}
+
+void VideoVlcComponent::deinit()
+{
+    if (mVLC) {
+        libvlc_release(mVLC);
+        mVLC = nullptr;
+    }
 }
 
 void VideoVlcComponent::setResize(float width, float height)
@@ -358,6 +367,9 @@ void VideoVlcComponent::startVideo()
                     }
                 }
                 libvlc_media_tracks_release(tracks, track_count);
+                libvlc_media_parse_stop(mMedia);
+                libvlc_event_detach(libvlc_media_event_manager(mMedia),
+                        libvlc_MediaParsedChanged, VlcMediaParseCallback, 0);
 
                 // Make sure we found a valid video track.
                 if ((mVideoWidth > 0) && (mVideoHeight > 0)) {
@@ -466,6 +478,7 @@ void VideoVlcComponent::stopVideo()
         libvlc_media_player_release(mMediaPlayer);
         libvlc_media_release(mMedia);
         mMediaPlayer = nullptr;
+        mMedia = nullptr;
         freeContext();
     }
 }
