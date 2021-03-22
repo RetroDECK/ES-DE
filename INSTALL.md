@@ -1437,6 +1437,28 @@ For folders, most of the fields are identical although some are removed. In the 
 * The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application (mostly useful for debugging purposes)
 
 
+## Debug mode
+
+By passing the --debug command line option, ES-DE will increase the logging to include a lot of additional debug output which is useful both for development and in order to pinpoint issues as a user.
+In addition to this extra logging, a few key combinations are enabled when in debug mode. These are useful both for working on ES-DE itself as well as for theme developers.
+
+**Ctrl + g**
+
+This will render a grid on the user interface, most notably in the menus, showing the layout of all the GUI elements. Note that any open screen needs to be closed and reopened again after using the key combination in order for it to have any effect.
+
+**Ctrl + i**
+
+This will draw a semi-transparent red frame behind all image elements.
+
+**Ctrl + t**
+
+This will draw a semi-transparent blue frame around all text elements.
+
+**Ctrl + r**
+
+This will reload either a single gamelist or all gamelists depending on where you're located when entering the key combination (go to the system view to make a complete reload). Very useful for theme development as any changes to the theme files will be activated without requiring an application restart. Note that the menu needs to be closed for this key combination to have any effect.
+
+
 ## Custom event scripts
 
 There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under `Other settings`. By default it's deactivated so be sure to enable it to use this feature.

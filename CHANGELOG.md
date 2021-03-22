@@ -142,6 +142,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The rating component would sometimes not render immediately if using SVG graphics
 * Non-transparent favorite icons were not rendered correctly
 * The SliderComponent knob position was set incorrectly if the minimum value was not zero
+* The debug overlays didn't work for all image and text components
 * Lots and lots of additional small bugs and inconsistencies fixed
 
 ### Known issues
@@ -149,8 +150,6 @@ Many bugs have been fixed, and numerous features that were only partially implem
 **The issues below are relevant for ES-DE v1.0.0.**
 
 * On Ubuntu 20.10, the included VLC version 3.0.11.1-2 is broken so ES-DE will crash when attempting to play videos. This can be fixed by manually replacing the file /lib/x86_64-linux-gnu/libvlccore.so.9.0.0 with the corresponding file from version 3.0.9.2-1 from Ubuntu 20.04. Make sure that the /lib/x86_64-linux-gnu/libvlccore.so.9 symlink points to this file as well. Hopefully this issue will soon be patched in libVLC so that this manual workaround will not be required.
-
-* On Linux, libVLC does not properly release memory when stopping the video player, leading to large memory usage for ES-DE. The memory utilization does not grow indefinitely though so it shouldn't make the system run out of memory and it shouldn't make ES-DE crash. As this issue is not present on BSD, macOS or Windows the assumption is that VLC is somewhat broken on Linux. The plan is to move from libVLC to FFmpeg for ES-DE v1.1 which will avoid this issue altogether.
 
 * The input configuration can be a bit glitchy on some devices, most notably the setup of trigger buttons for Xbox and PlayStation controllers. Once configured everything should work fine though. This configuration issue will hopefully be resolved in ES-DE v1.1 with the move to the SDL2 GameController API.
 

@@ -111,6 +111,7 @@ https://google.github.io/styleguide/cppguide.html
 * Name local variables with the first word in small letters and the proceeding words starting with capital letters, e.g. `myExampleVariable`
 * Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables with an `s` such as `sMyStaticVariable`
 * Use the same naming convention for functions as for local variables, e.g. `someFunction()`
+* Single-line function definitions are fine to put in the header files, but if it's more than one line, place it in the corresponding .cpp file
 * Inline functions makes perfect sense to use, but don't overdo it by using them for functions that won't be called very frequently
 * Don't put more than one statement on a single line (there are some exceptions though like lambda expressions and possibly switch statements)
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
