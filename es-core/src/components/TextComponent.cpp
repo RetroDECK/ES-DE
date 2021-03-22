@@ -165,7 +165,7 @@ void TextComponent::render(const Transform4x4f& parentTrans)
         if (Settings::getInstance()->getBool("DebugText")) {
             // Draw the "textbox" area, what we are aligned within.
             Renderer::setMatrix(trans);
-            Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0xFF000033, 0xFF000033);
+            Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x0000FF33, 0x0000FF33);
         }
 
         trans.translate(off);
