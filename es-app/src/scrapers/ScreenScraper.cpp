@@ -353,8 +353,11 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         std::string description = find_child_by_attribute_list(game.child("synopsis"),
                 "synopsis", "langue", { language, "en", "wor" }).text().get();
 
-        if (!description.empty())
+        // Translate some HTML character codes to UTF-8 characters.
+        if (!description.empty()) {
             result.mdl.set("desc", Utils::String::replace(description, "&nbsp;", " "));
+            result.mdl.set("desc", Utils::String::replace(description, "&copy;", "©"));
+        }
 
         // Get the date proper. The API returns multiple 'date' children nodes to the 'dates'
         // main child of 'jeu'.
