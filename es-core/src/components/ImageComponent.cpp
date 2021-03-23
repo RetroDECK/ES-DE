@@ -72,8 +72,8 @@ void ImageComponent::resize()
         // ratios), it can cause cutoff when the aspect ratio breaks.
         // So we always make sure the resultant height is an integer to make sure cutoff doesn't
         // happen, and scale width from that (you'll see this scattered throughout the function).
-        // It's important to use the floorf rather than round for this, as we never want to round
-        // up since that can lead to the cutoff just described.
+        // It's important to use floorf rather than round for this, as we never want to round up
+        // since that can lead to the cutoff just described.
         if (mTargetIsMax) {
             mSize = textureSize;
 

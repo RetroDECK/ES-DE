@@ -118,7 +118,7 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     // Apply theme to the selected gridtile. Note that some of the default gridtile
     // properties have influence on the selected gridtile properties.
-    // See THEMES.md for more informations.
+    // See THEMES.md for more information.
     elem = theme->getElement(view, "selected", "gridtile");
 
     mSelectedProperties.mSize = getSelectedTileSize();
@@ -130,8 +130,6 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         applyThemeToProperties(elem, &mSelectedProperties);
 }
 
-// Made this a static function because the ImageGridComponent needs to know the default tile
-// max size to calculate the grid dimension before it instantiates the GridTileComponents.
 Vector2f GridTileComponent::getDefaultTileSize()
 {
     Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
@@ -171,8 +169,8 @@ void GridTileComponent::setImage(const std::shared_ptr<TextureResource>& texture
     resize();
 }
 
-void GridTileComponent::setSelected(bool selected, bool allowAnimation,
-        Vector3f* pPosition, bool force)
+void GridTileComponent::setSelected(
+        bool selected, bool allowAnimation, Vector3f* pPosition, bool force)
 {
     if (mSelected == selected && !force)
         return;
@@ -204,7 +202,6 @@ void GridTileComponent::setSelected(bool selected, bool allowAnimation,
             }, false, 3);
         }
     }
-    // If (!selected).
     else {
         if (!allowAnimation) {
             cancelAnimation(3);
@@ -247,9 +244,9 @@ void GridTileComponent::resize()
 {
     calcCurrentProperties();
 
-    mImage->setMaxSize(mCurrentProperties.mSize - mCurrentProperties.mPadding * 2);
+    mImage->setMaxSize(mCurrentProperties.mSize - mCurrentProperties.mPadding * 2.0f);
     mBackground.setCornerSize(mCurrentProperties.mBackgroundCornerSize);
-    mBackground.fitTo(mCurrentProperties.mSize - mBackground.getCornerSize() * 2);
+    mBackground.fitTo(mCurrentProperties.mSize - mBackground.getCornerSize() * 2.0f);
 }
 
 unsigned int mixColors(unsigned int first, unsigned int second, float percent)

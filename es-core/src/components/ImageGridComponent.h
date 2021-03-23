@@ -9,11 +9,11 @@
 #ifndef ES_CORE_COMPONENTS_IMAGE_GRID_COMPONENT_H
 #define ES_CORE_COMPONENTS_IMAGE_GRID_COMPONENT_H
 
-#include "Log.h"
 #include "animations/LambdaAnimation.h"
 #include "components/IList.h"
 #include "resources/TextureResource.h"
 #include "GridTileComponent.h"
+#include "Log.h"
 
 #define EXTRAITEMS 2
 
@@ -334,8 +334,8 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 std::string oldDefaultGameTexture = mDefaultGameTexture;
                 mDefaultGameTexture = path;
 
-                // mEntries are already loaded at this point, so we need to
-                // update them with the new game image texture.
+                // mEntries are already loaded at this point, so we need to update them with
+                // the new game image texture.
                 for (auto it = mEntries.begin(); it != mEntries.end(); it++) {
                     if ((*it).data.texturePath == oldDefaultGameTexture)
                         (*it).data.texturePath = mDefaultGameTexture;
@@ -353,8 +353,8 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 std::string oldDefaultFolderTexture = mDefaultFolderTexture;
                 mDefaultFolderTexture = path;
 
-                // mEntries are already loaded at this point, so we need to
-                // update them with new folder image texture.
+                // mEntries are already loaded at this point, so we need to update them with
+                // the new folder image texture.
                 for (auto it = mEntries.begin(); it != mEntries.end(); it++) {
                     if ((*it).data.texturePath == oldDefaultFolderTexture)
                         (*it).data.texturePath = mDefaultFolderTexture;
@@ -363,8 +363,8 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    // We still need to manually get the grid tile size here, so we can recalculate
-    // the new grid dimension, and THEN (re)build the tiles.
+    // We still need to manually get the grid tile size here, so we can recalculate the new
+    // grid dimension, and then (re)build the tiles.
     elem = theme->getElement(view, "default", "gridtile");
 
     mTileSize = elem && elem->has("size") ?
@@ -374,7 +374,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Apply size property which will trigger a call to onSizeChanged() which will build the tiles.
     GuiComponent::applyTheme(theme, view, element, ThemeFlags::SIZE);
 
-    // Trigger the call manually if the theme have no "imagegrid" element.
+    // Trigger the call manually if the theme has no "imagegrid" element.
     if (!elem)
         buildTiles();
 }
@@ -405,7 +405,7 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
     int dimScrollable = (isVertical() ? mGridDimension.y() : mGridDimension.x()) - 2 * EXTRAITEMS;
     int dimOpposite = isVertical() ? mGridDimension.x() : mGridDimension.y();
 
-    int centralCol = static_cast<int>((dimScrollable - 0.5) / 2);
+    int centralCol = static_cast<int>((static_cast<float>(dimScrollable) - 0.5f) / 2.0f);
     int maxCentralCol = dimScrollable / 2;
 
     int oldCol = (mLastCursor / dimOpposite);
@@ -418,9 +418,9 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
     float startPos = 0;
     float endPos = 1;
 
-    if (((GuiComponent*)this)->isAnimationPlaying(2)) {
+    if (reinterpret_cast<GuiComponent*>(this)->isAnimationPlaying(2)) {
         startPos = 0;
-        ((GuiComponent*)this)->cancelAnimation(2);
+        reinterpret_cast<GuiComponent*>(this)->cancelAnimation(2);
         updateTiles(direction, false, false);
     }
 
@@ -507,13 +507,14 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
         if (!moveCamera)
             return;
 
-        t -= 1; // cubic ease out
+        t -= 1; // Cubic ease out.
         float pct = Math::lerp(0, 1, t*t*t + 1);
         t = startPos * (1.0f - pct) + endPos * pct;
         mCamera = t;
     };
 
-    ((GuiComponent*)this)->setAnimation(new LambdaAnimation(func, 250), 0, [this, direction] {
+    reinterpret_cast<GuiComponent*>(this)->setAnimation(
+            new LambdaAnimation(func, 250), 0, [this, direction] {
         mCamera = 0;
         updateTiles(direction, false);
     }, false, 2);
@@ -537,10 +538,10 @@ void ImageGridComponent<T>::buildTiles()
 
     Vector2f tileDistance = mTileSize + mMargin;
 
-    if (mAutoLayout.x() != 0 && mAutoLayout.y() != 0) {
-        auto x = (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1)) - mPadding.x() -
+    if (mAutoLayout.x() != 0.0f && mAutoLayout.y() != 0.0f) {
+        auto x = (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1.0f)) - mPadding.x() -
                 mPadding.z()) / static_cast<int>(mAutoLayout.x());
-        auto y = (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1)) - mPadding.y() -
+        auto y = (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1.0f)) - mPadding.y() -
                 mPadding.w()) / static_cast<int>(mAutoLayout.y());
 
         mTileSize = Vector2f(x, y);
@@ -548,7 +549,7 @@ void ImageGridComponent<T>::buildTiles()
     }
 
     bool vert = isVertical();
-    Vector2f startPosition = mTileSize / 2;
+    Vector2f startPosition = mTileSize / 2.0f;
     startPosition += mPadding.v2();
 
     int X;
@@ -560,8 +561,8 @@ void ImageGridComponent<T>::buildTiles()
             // Create tiles.
             auto tile = std::make_shared<GridTileComponent>(mWindow);
 
-            // In Vertical mod, tiles are ordered from left to right, then from top to bottom.
-            // In Horizontal mod, tiles are ordered from top to bottom, then from left to right.
+            // In Vertical mode, tiles are ordered from left to right, then from top to bottom.
+            // In Horizontal mode, tiles are ordered from top to bottom, then from left to right.
             X = vert ? x : y - EXTRAITEMS;
             Y = vert ? y - EXTRAITEMS : x;
 
@@ -600,7 +601,7 @@ void ImageGridComponent<T>::updateTiles(bool ascending, bool allowAnimation,
         return;
     }
 
-    // Temporary store previous texture so they can't be unloaded.
+    // Temporarily store the previous textures so that they can't be unloaded.
     std::vector<std::shared_ptr<TextureResource>> previousTextures;
     for (int ti = 0; ti < static_cast<int>(mTiles.size()); ti++) {
         std::shared_ptr<GridTileComponent> tile = mTiles.at(ti);
@@ -643,7 +644,7 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos, int imgPos,
             imgPos -= static_cast<int>(mEntries.size());
     }
 
-    // If we have more tiles than we have to display images on screen, hide them.
+    // If we have more tiles than we can display on screen, hide them.
     // Same for tiles out of the buffer.
     if (imgPos < 0 || imgPos >= size() || tilePos < 0 ||
             tilePos >= static_cast<int>(mTiles.size())) {
@@ -683,8 +684,8 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos, int imgPos,
     }
 }
 
-// Calculate how much tiles of size mTileSize we can fit in a grid of size mSize using
-// a margin of size mMargin.
+// Calculate how many tiles of size mTileSize we can fit in a grid of size mSize using
+// a margin size of mMargin.
 template<typename T>
 void ImageGridComponent<T>::calcGridDimension()
 {
@@ -709,7 +710,7 @@ void ImageGridComponent<T>::calcGridDimension()
         LOG(LogError) << "Theme defined grid Y dimension below 1";
     }
 
-    // Add extra tiles to both sides: Add EXTRAITEMS before, EXTRAITEMS after.
+    // Add extra tiles to both sides.
     if (isVertical())
         mGridDimension.y() += 2 * EXTRAITEMS;
     else

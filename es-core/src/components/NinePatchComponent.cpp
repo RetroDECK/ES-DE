@@ -127,10 +127,10 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
             // We have reached full opacity, so disable the opacity shader and set
             // the vertex opacity to 1.0.
             mVertices[0].shaders ^= Renderer::SHADER_OPACITY;
-            mVertices[0].opacity = 1.0;
+            mVertices[0].opacity = 1.0f;
         }
         mTexture->bind();
-        Renderer::drawTriangleStrips(&mVertices[0], 6*9, trans);
+        Renderer::drawTriangleStrips(&mVertices[0], 6 * 9, trans);
     }
 
     renderChildren(trans);
@@ -144,10 +144,10 @@ void NinePatchComponent::onSizeChanged()
 void NinePatchComponent::fitTo(Vector2f size, Vector3f position, Vector2f padding)
 {
     size += padding;
-    position[0] -= padding.x() / 2;
-    position[1] -= padding.y() / 2;
+    position[0] -= padding.x() / 2.0f;
+    position[1] -= padding.y() / 2.0f;
 
-    setSize(size + mCornerSize * 2);
+    setSize(size + mCornerSize * 2.0f);
     setPosition(position.x() + Math::lerp(-mCornerSize.x(), mCornerSize.x(), mOrigin.x()),
                 position.y() + Math::lerp(-mCornerSize.y(), mCornerSize.y(), mOrigin.y()));
 }
