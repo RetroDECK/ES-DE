@@ -165,8 +165,8 @@ based on: 'recalbox-multi' by the Recalbox community
             <path>./core/images/frame.png</path>
         </image>
         <image name="md_marquee">
-            <origin>1 1</origin>
-            <pos>0.9130 0.165</pos>
+            <origin>0.5 0.5</origin>
+            <pos>0.8584 0.11</pos>
             <maxSize>0.11 0.11</maxSize>
         </image>
         <text name="md_players, md_genre, md_developer, md_publisher">
