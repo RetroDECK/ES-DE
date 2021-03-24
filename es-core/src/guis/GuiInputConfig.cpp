@@ -22,7 +22,7 @@ struct InputConfigStructure {
     std::string icon;
 };
 
-static const int inputCount = 22;
+static const int inputCount = 24;
 
 static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
 {
@@ -40,16 +40,16 @@ static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
     { "RightShoulder",    true,  "RIGHT SHOULDER",     ":/help/button_r.svg" },
     { "LeftTrigger",      true,  "LEFT TRIGGER",       ":/help/button_lt.svg" },
     { "RightTrigger",     true,  "RIGHT TRIGGER",      ":/help/button_rt.svg" },
-//	{ "LeftThumb",        true,  "LEFT THUMB",         ":/help/analog_thumb.svg" },
-//	{ "RightThumb",       true,  "RIGHT THUMB",        ":/help/analog_thumb.svg" },
     { "LeftAnalogUp",     true,  "LEFT ANALOG UP",     ":/help/analog_up.svg" },
     { "LeftAnalogDown",   true,  "LEFT ANALOG DOWN",   ":/help/analog_down.svg" },
     { "LeftAnalogLeft",   true,  "LEFT ANALOG LEFT",   ":/help/analog_left.svg" },
     { "LeftAnalogRight",  true,  "LEFT ANALOG RIGHT",  ":/help/analog_right.svg" },
+	{ "LeftAnalogClick",  true,  "LEFT ANALOG CLICK",  ":/help/analog_click.svg" },
     { "RightAnalogUp",    true,  "RIGHT ANALOG UP",    ":/help/analog_up.svg" },
     { "RightAnalogDown",  true,  "RIGHT ANALOG DOWN",  ":/help/analog_down.svg" },
     { "RightAnalogLeft",  true,  "RIGHT ANALOG LEFT",  ":/help/analog_left.svg" },
     { "RightAnalogRight", true,  "RIGHT ANALOG RIGHT", ":/help/analog_right.svg" },
+    { "RightAnalogClick", true,  "RIGHT ANALOG CLICK", ":/help/analog_click.svg" },
 //	{ "HotKeyEnable",     true,  "HOTKEY ENABLE",      ":/help/button_hotkey.svg" }
 };
 

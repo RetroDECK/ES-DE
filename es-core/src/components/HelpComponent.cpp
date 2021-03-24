@@ -26,6 +26,7 @@ static const std::map<std::string, std::string> ICON_PATH_MAP {
     { "up/down", ":/help/dpad_updown.svg" },
     { "left/right", ":/help/dpad_leftright.svg" },
     { "up/down/left/right", ":/help/dpad_all.svg" },
+    { "analogclick", ":/help/analog_click.svg" },
     { "a", ":/help/button_a.svg" },
     { "b", ":/help/button_b.svg" },
     { "x", ":/help/button_x.svg" },

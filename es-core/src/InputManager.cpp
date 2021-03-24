@@ -413,6 +413,9 @@ void InputManager::loadDefaultKBConfig()
     cfg->mapInput("rightshoulder", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PAGEDOWN, 1, true));
     cfg->mapInput("lefttrigger", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_HOME, 1, true));
     cfg->mapInput("righttrigger", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_END, 1, true));
+
+    cfg->mapInput("leftanalogclick", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F2, 1, true));
+    cfg->mapInput("rightanalogclick", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F3, 1, true));
 }
 
 void InputManager::writeDeviceConfig(InputConfig* config)
