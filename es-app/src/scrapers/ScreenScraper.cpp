@@ -83,6 +83,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
     { BANDAI_SUFAMI_TURBO, 108 },
     { DOS, 135 },
     { PC, 135 },
+    { VALVE_STEAM, 135 },
     { NEC_PCFX, 72 },
     { GAMEENGINE_OPENBOR, 214 },
     { TANGERINE_ORIC, 131 },

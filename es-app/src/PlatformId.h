@@ -105,6 +105,7 @@ namespace PlatformIds
         SUPER_NINTENDO,
         GAMEENGINE_SOLARUS,
         SPECTRAVIDEO,
+        VALVE_STEAM,
         GAMEENGINE_STRATAGUS,
         BANDAI_SUFAMI_TURBO,
         NEC_SUPERGRAFX,

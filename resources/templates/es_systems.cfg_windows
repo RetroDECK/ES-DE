@@ -1015,7 +1015,7 @@
     <path>%ROMPATH%\steam</path>
     <extension>.bat .ps1</extension>
     <command>%ROM%</command>
-    <platform>pc</platform>
+    <platform>steam</platform>
     <theme>steam</theme>
   </system>
   <system>

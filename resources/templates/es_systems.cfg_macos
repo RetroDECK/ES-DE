@@ -1015,7 +1015,7 @@
     <path>%ROMPATH%/steam</path>
     <extension>.sh .csh</extension>
     <command>bash %ROM%</command>
-    <platform>pc</platform>
+    <platform>steam</platform>
     <theme>steam</theme>
   </system>
   <system>

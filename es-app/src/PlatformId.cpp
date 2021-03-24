@@ -105,6 +105,7 @@ namespace PlatformIds
         "snes",                 // Nintendo SNES (Super Nintendo)
         "solarus",              // Solarus game engine
         "spectravideo",         // Spectravideo
+        "steam",                // Valve Steam
         "stratagus",            // Stratagus game engine
         "sufami",               // Bandai SuFami Turbo
         "supergrafx",           // NEC SuperGrafx
