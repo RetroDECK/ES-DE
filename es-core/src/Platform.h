@@ -26,8 +26,8 @@ int runSystemCommand(const std::string& cmd_utf8);
 // Windows specific UTF-16/wstring function. (FOR FUTURE USE)
 int runSystemCommand(const std::wstring& cmd_utf16);
 
-int launchEmulatorUnix(const std::string& cmd_utf8);
-int launchEmulatorWindows(const std::wstring& cmd_utf16);
+int launchGameUnix(const std::string& cmd_utf8, bool runInBackground);
+int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground);
 
 unsigned int getTaskbarState();
 void hideTaskbar();

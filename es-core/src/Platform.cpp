@@ -71,10 +71,19 @@ int runSystemCommand(const std::wstring& cmd_utf16)
     #endif
 }
 
-int launchEmulatorUnix(const std::string& cmd_utf8)
+int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
 {
     #if defined(__unix__) || defined (__APPLE__)
-    std::string command = std::string(cmd_utf8) + " 2>&1";
+    std::string command = std::string(cmd_utf8) + " 2>&1 &";
+
+    // Launching games while keeping ES-DE running in the background is very crude as for
+    // instance no output from the command is captured and no real error handling is
+    // implemented. It should therefore only be used when absolutely necessary.
+    if (runInBackground) {
+        LOG(LogDebug) << "Platform::launchGameUnix(): Launching game while keeping ES-DE "
+                "running in the background, no command output will be written to the log file";
+        return system(command.c_str());
+    }
 
     FILE* commandPipe;
     std::array<char, 128> buffer;
@@ -101,15 +110,15 @@ int launchEmulatorUnix(const std::string& cmd_utf8)
     }
 
     if (returnValue) {
-        LOG(LogError) << "launchEmulatorUnix - return value " <<
+        LOG(LogError) << "launchGameUnix - return value " <<
                 std::to_string(returnValue) + ":";
         if (commandOutput.size())
             LOG(LogError) << commandOutput;
         else
-            LOG(LogError) << "No error output provided by emulator.";
+            LOG(LogError) << "No error output provided by game or emulator";
     }
     else if (commandOutput.size()) {
-        LOG(LogDebug) << "Platform::launchEmulatorUnix():";
+        LOG(LogDebug) << "Platform::launchGameUnix():";
         LOG(LogDebug) << "Output from launched game:\n" << commandOutput;
     }
 
@@ -120,7 +129,7 @@ int launchEmulatorUnix(const std::string& cmd_utf8)
     #endif
 }
 
-int launchEmulatorWindows(const std::wstring& cmd_utf16)
+int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
 {
     #if defined(_WIN64)
     STARTUPINFOW si {};
@@ -142,12 +151,14 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
             &si,                                // Pointer to the STARTUPINFOW structure.
             &pi);                               // Pointer to the PROCESS_INFORMATION structure.
 
-    // Unfortunately suspending ES and resuming when the emulator process has exited
-    // doesn't work reliably on Windows, so we may need to keep ES running in the
-    // background while the game is launched. I'm not sure if there is a workaround
-    // for this, but on some Windows installations it seems to work fine so we'll let
-    // the user choose via a menu option.
-    if (!Settings::getInstance()->getBool("RunInBackground")) {
+    // Unfortunately suspending ES-DE and resuming when the game/emulator process has exited
+    // doesn't work reliably on Windows, so we may need to keep ES-DE running in the background
+    // while the game is launched. I'm not sure if there is a workaround for this, but on most
+    // Windows installations it seems to work fine so we'll let the user choose via a menu option.
+    // Possibly the issue is specific to Windows 8.
+    // Running in the background is also required for Steam games as ES-DE would otherwise
+    // wait forever for Steam to exit unless it was already running when the game was launched.
+    if (!runInBackground) {
         // Wait for the child process to exit.
         WaitForSingleObject(pi.hThread, INFINITE);
         WaitForSingleObject(pi.hProcess, INFINITE);
@@ -174,7 +185,7 @@ int launchEmulatorWindows(const std::wstring& cmd_utf16)
             }
         }
 
-        LOG(LogError) << "launchEmulatorWindows - system error code " <<
+        LOG(LogError) << "launchGameWindows - system error code " <<
                 errorCode << ": " << errorMessage;
     }
 

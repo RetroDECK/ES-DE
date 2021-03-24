@@ -954,9 +954,16 @@ void FileData::launchGame(Window* window)
 
     LOG(LogInfo) << command;
     #if defined(_WIN64)
-    returnValue = launchEmulatorWindows(Utils::String::stringToWideString(command));
+    if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM) ||
+            Settings::getInstance()->getBool("RunInBackground"))
+        returnValue = launchGameWindows(Utils::String::stringToWideString(command), true);
+    else
+        returnValue = launchGameWindows(Utils::String::stringToWideString(command), false);
     #else
-    returnValue = launchEmulatorUnix(command);
+    if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM))
+        returnValue = launchGameUnix(command, true);
+    else
+        returnValue = launchGameUnix(command, false);
     #endif
 
     // Notify the user in case of a failed game launch using a popup window.
@@ -972,16 +979,21 @@ void FileData::launchGame(Window* window)
         // Stop showing the game launch notification.
         window->stopInfoPopup();
         #if  defined(_WIN64)
-        // This code is only needed for Windows, where we may need to keep ES running while
-        // the game/emulator is in use. It's basically used to pause any playing game video
-        // and to keep the screensaver from activating.
-        if (Settings::getInstance()->getBool("RunInBackground"))
+        // If starting a Steam game or if the "RunInBackground" setting has been enabled,
+        // then keep ES-DE running while the game is launched. This pauses any video and keeps
+        // the screensaver from getting activated.
+        if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM) ||
+                Settings::getInstance()->getBool("RunInBackground"))
             window->setLaunchedGame();
         else
             // Normalize deltaTime so that the screensaver does not start immediately
             // when returning from the game.
             window->normalizeNextUpdate();
         #else
+        // If starting a Steam game, then keep ES-DE running while the game is launched.
+        // This pauses any video and keeps the screensaver from getting activated.
+        if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM))
+            window->setLaunchedGame();
         // Normalize deltaTime so that the screensaver does not start immediately
         // when returning from the game.
         window->normalizeNextUpdate();

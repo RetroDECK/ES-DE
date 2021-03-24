@@ -648,7 +648,7 @@ void Window::setLaunchedGame()
 
 void Window::unsetLaunchedGame()
 {
-    // Tell the GUI components that the user is back in ES again.
+    // Tell the GUI components that the user is back in ES-DE again.
     for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
         (*it)->onGameLaunchedDeactivate();
 
