@@ -230,15 +230,20 @@ _(F1)_
 
 Opens and closes the game options menu in the gamelist view, or toggles the screensaver in the system view (if the _Enable screensaver controls_ setting is activated).
 
-**Shoulder buttons left and right**\
+**Left and right shoulder buttons**\
 _(Page up / Page down)_
 
 Provides quick jumping in gamelists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Also jumps forward in text edit dialogs.
 
-**Trigger buttons left and right**\
+**Left and right trigger buttons**\
 _(Home / End)_
 
 Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
+
+**Left and right thumbstick click**\
+_(F2 / F3)_
+
+Reserved for future use.
 
 **A button**\
 _(Enter)_
@@ -259,6 +264,10 @@ Selects random games and systems. Used by some other minor functions as explaine
 _(Insert on Unix and Windows, F13 on macOS)_
 
 Marks games as favorites in the gamelist views. Used by some other minor functions as explained by the help system and/or this guide.
+
+**F4 (keyboard only)**
+
+Quits the application.
 
 
 ## Getting your games into ES-DE
@@ -480,21 +489,34 @@ As an alternative, you can add the Lutris games to the Ports game system, if you
 
 #### Steam
 
-**Note: As of ES-DE v1.0, launching Steam games doesn't work reliably so it's recommended to avoid it for the time being. Future versions will hopefully improve Steam support.**
+**Note:** Launching Steam games currently has some limitations such as missing error messages when a game fails to start as well as missing game output logging. ES-DE also needs to keep running in the background when launching Steam games, which is not working as well as the application suspend which takes place for all other game systems. In general it's probably not a very good idea to run Steam games through ES-DE, as in addition to the issues just explained the scraper services have very limited game media available for Steam games and you run into other issues such as Steam wanting to update games on launch.
 
-For steam, it's recommended to put shell scripts/batch files directly in the root folder, where the file names of these scripts correspond to the game names.
+As for the setup, it's recommended to place shell scripts/batch files directly in the root folder, with the filenames of these scripts corresponding to the game names.
 
-Add the game information to each file using the syntax `steam steam://rungameid/<game ID>`
+Add the game information to each file using the syntax `steam://rungameid/<game ID>`
 
-Here's an example for the game Broforce:
+Here's an example for the game Broforce, first on Unix with the filename `Broforce.sh`:
 
-```steam steam://rungameid/274190```
+```
+steam steam://rungameid/274190
+```
+
+And on macOS with the filename `Broforce.sh`:
+```
+/Applications/Steam.app/Contents/MacOS/steam_osx steam://rungameid/274190
+```
+
+And finally on Windows with the filename `Broforce.bat`:
+```
+@echo off
+"c:\Program Files (x86)\Steam\steam.exe" steam://rungameid/26800
+```
 
 The game ID can be found by going to [https://store.steampowered.com](https://store.steampowered.com) and searching for a game. The Broforce example would have an URL such as this:
 
 https://store.steampowered.com/app/274190/Broforce
 
-On Linux it's very easy to find all your game ID's be looking in the desktop entries.
+On Linux it's very easy to find all your game ID's by looking in the desktop entries.
 
 ```
 grep steam ~/.local/share/applications/*desktop | grep rungameid
@@ -503,7 +525,7 @@ grep steam ~/.local/share/applications/*desktop | grep rungameid
 /home/myusername/.local/share/applications/Subnautica.desktop:Exec=steam steam://rungameid/264710
 ```
 
-This of course assumes that you have menu entries setup for the games in question.
+This of course assumes that you have menu entries setup for your Steam games.
 
 
 ## Emulator setup
@@ -1562,7 +1584,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | RetroArch (Snes9x - Current)      | Single archive or ROM file in root folder |
 | solarus               | Solarus game engine                            |                                   |                                      |
 | spectravideo          | Spectravideo                                   |                                   |                                      |
-| steam                 | Valve Steam                                    | Steam application                 | Shell/batch script in root folder    |
+| steam                 | Valve Steam                                    | Steam application                 | Shell script/batch file in root folder |
 | stratagus             | Stratagus game engine                          |                                   |                                      |
 | sufami                | Bandai SuFami Turbo                            |                                   |                                      |
 | supergrafx            | NEC SuperGrafx                                 |                                   |                                      |
