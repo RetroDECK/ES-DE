@@ -321,7 +321,7 @@ void VideoVlcComponent::setAudioVolume()
 
 void VideoVlcComponent::startVideo()
 {
-    if (!mIsPlaying) {
+    if (!mIsPlaying && !mGameLaunched) {
         mVideoWidth = 0;
         mVideoHeight = 0;
 

@@ -330,7 +330,7 @@ void VideoComponent::startVideoWithDelay()
 
 void VideoComponent::handleStartDelay()
 {
-    if (mBlockPlayer)
+    if (mBlockPlayer || mGameLaunched)
         return;
 
     // Only play if any delay has timed out.
