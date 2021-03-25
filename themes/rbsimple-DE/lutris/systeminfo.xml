@@ -3,7 +3,25 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Lutris open gaming platform</text>
+            <text>Lutris Open Gaming Platform is a free and</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>open source game manager for Linux which</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>makes it possible to easily install and play</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>Windows games, both new and old.</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>Lutris utilizes various versions of Wine together</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>with custom installer scripts to accomplish this</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>in a user-friendly fashion.</text>
         </text>
     </view>
 </theme>

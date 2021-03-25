@@ -30,14 +30,13 @@ None at the moment.
 * custom-collections - customized colors, consolegame.svg, (uses temporary art)
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, console.svg, controller.svg, game.svg
 * desktop: Desktop applications - system info, customized colors, consolegame.svg, console.svg, controller.svg
-* dos: DOS - system info
 * dragon32: Dragon 32 - consolegame.svg, console.svg, controller.svg, game.svg
 * fba: FinalBurn Alpha - system info (needs improvement), logo.svg (needs improvement)
 * fbneo: FinalBurn Neo - system info (needs improvement), logo.svg (needs improvement)
 * gx4000: Amstrad GX4000 - consolegame.svg, console.svg, controller.svg, game.svg
 * intellivision: Intellivision - consolegame.svg, console.svg, controller.svg, game.svg
 * kodi: Kodi home theatre software - consolegame.svg, console.svg, controller.svg
-* lutris: Lutris open gaming platform - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* lutris: Lutris open gaming platform - consolegame.svg, console.svg, controller.svg, game.svg
 * macintosh: Apple Macintosh - consolegame.svg, console.svg, controller.svg, game.svg
 * mess: MESS (Multi Emulator Super System) - system info, customized colors, consolegame.svg, console.svg, controller.svg
 * moto: Thomson MO/TO series - consolegame.svg, console.svg, controller.svg, game.svg
@@ -55,7 +54,7 @@ None at the moment.
 * pc98 : NEC PC-9800 series - consolegame.svg, console.svg, game.svg
 * pcfx: NEC PC-FX - consolegame.svg, console.svg, controller.svg, game.svg
 * pokemini: Nintendo Pokémon Mini - consolegame.svg, console.svg, controller.svg, game.svg
-* ports: Source ports - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* ports: Source ports - consolegame.svg, console.svg, controller.svg, game.svg
 * ps2: Sony PlayStation 2 - consolegame.svg, console.svg, controller.svg, game.svg
 * ps3: Sony PlayStation 3 - consolegame.svg, console.svg, controller.svg, game.svg
 * ps4: Sony PlayStation 4 - system info, customized colors, logo.svg (needs improvement), consolegame.svg, console.svg, controller.svg, game.svg
@@ -67,7 +66,7 @@ None at the moment.
 * saturnjp: Sega Saturn - consolegame.svg, console.svg, controller.svg, game.svg
 * solarus: Solarus game engine - consolegame.svg, console.svg, controller.svg
 * spectravideo: Spectravideo - consolegame.svg, console.svg, controller.svg, game.svg
-* steam: Steam game distribution service - system info, customized colors, consolegame.svg, console.svg, controller.svg, game.svg
+* steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg
 * stratagus: Stratagus game engine - system info, customized colors, consolegame.svg, console.svg, controller.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg, console.svg, game.svg
 * tanodragon: Tano Dragon - consolegame.svg, console.svg, controller.svg, game.svg

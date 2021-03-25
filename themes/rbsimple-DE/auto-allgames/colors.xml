@@ -12,7 +12,7 @@
             <color>FF0000</color>
         </image>
         <image name="band4" extra="true">
-            <color>4C504E</color>
+            <color>303030</color>
         </image>
     </view>
 </theme>

@@ -3,7 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Source ports</text>
+            <text>Ports, or Source Ports are game engines for</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>classic games that have been updated or</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>rewritten to support additional features or</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>to simply be able to run on modern hardware.</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>Some ports try to recreate the original feel of the</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>game and others aim for a complete overhaul such</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>as adding 3D accelerated graphics, network gaming</text>
+        </text>
+        <text name="info8" extra="true">
+            <text>support and other features that were never a part</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>of the original game.</text>
         </text>
     </view>
 </theme>

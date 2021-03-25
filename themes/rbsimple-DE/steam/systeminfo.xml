@@ -3,7 +3,25 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Steam game distribution service</text>
+            <text>Steam is a digital game distribution service launched</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>by Valve in 2003.</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>It's by far the largest distribution service for PC</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>gaming with tens of thousands of games in its library.</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>A lot of classic games are also distributed via Steam,</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>some updated to work on modern hardware, and some</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>running in a bundled emulator.</text>
         </text>
     </view>
 </theme>

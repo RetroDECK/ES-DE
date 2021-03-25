@@ -3,10 +3,28 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Developers: Microsoft, IBM</text>
+            <text>DOS, or Disk Operating System was the dominant</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1981</text>
+            <text>operating system for IBM PC compatible machines</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>in the 1980s and early to mid 1990s.</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>Several companies created their own variant of</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>DOS, with Microsoft's MS-DOS being the most</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>popular, followed by IBM's PC DOS.</text>
+        </text>
+        <text name="info8" extra="true">
+            <text>FreeDOS is a current open source implementation</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>of DOS that is still getting updated.</text>
         </text>
     </view>
 </theme>
