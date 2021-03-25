@@ -489,7 +489,7 @@ As an alternative, you can add the Lutris games to the Ports game system, if you
 
 #### Steam
 
-**Note:** Launching Steam games currently has some limitations such as missing error messages when a game fails to start as well as missing game output logging. ES-DE also needs to keep running in the background when launching Steam games, which is not working as well as the application suspend which takes place for all other game systems. In general it's probably not a very good idea to run Steam games through ES-DE, as in addition to the issues just explained the scraper services have very limited game media available for Steam games and you run into other issues such as Steam wanting to update games on launch.
+**Note:** Launching Steam games currently has some limitations such as missing error messages when a game fails to start as well as missing game output logging. ES-DE also needs to keep running in the background when launching Steam games, which has some minor side effects.
 
 As for the setup, it's recommended to place shell scripts/batch files directly in the root folder, with the filenames of these scripts corresponding to the game names.
 
