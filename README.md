@@ -34,14 +34,14 @@ A comprehensive theme set, **rbsimple-DE** which is based on Recalbox Multi from
 
 ### Download
 
-The latest available release is v1.0.0-beta2 from 2021-03-14.
+The latest available release is v1.0.0-beta3 from 2021-03-26.
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 and 20.10, Linux Mint 20, possibly others  | x64 (x86)    | [emulationstation-de-1.0.0-beta2.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-beta2.deb)|
-| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.0-beta2.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-beta2.rpm)|
-| macOS DMG installer | macOS 10.11 "El Capitan" to 11 "Big Sur"                | x64 (x86)    | [EmulationStation-DE-1.0.0-beta2.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-beta2.dmg)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-beta2.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.0.0-beta2.exe)|
+| Debian DEB package  | Ubuntu 20.04 and 20.10, Linux Mint 20, possibly others  | x64 (x86)    | [emulationstation-de-1.0.0-beta3.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-beta3.deb)|
+| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.0-beta3.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-beta3.rpm)|
+| macOS DMG installer | macOS 10.11 "El Capitan" to 11 "Big Sur"                | x64 (x86)    | [EmulationStation-DE-1.0.0-beta3.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-beta3.dmg)|
+| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-beta3.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.0.0-beta3.exe)|
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about this release, including known issues.
 
