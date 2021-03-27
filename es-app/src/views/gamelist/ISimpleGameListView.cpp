@@ -214,6 +214,18 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             // Jump to the randomly selected game.
             if (mRandomGame) {
                 NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                // If there is already an mCursorStackHistory entry for the collection, then
+                // remove it so we don't get multiple entries.
+                std::vector<FileData*> listEntries =
+                        mRandomGame->getSystem()->getRootFolder()->getChildrenListToDisplay();
+                for (auto it = mCursorStackHistory.begin();
+                        it != mCursorStackHistory.end(); it++) {
+                    if (std::find(listEntries.begin(), listEntries.end(), *it) !=
+                            listEntries.end()) {
+                        mCursorStackHistory.erase(it);
+                        break;
+                    }
+                }
                 setCursor(mRandomGame);
                 updateHelpPrompts();
             }
