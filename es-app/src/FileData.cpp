@@ -946,6 +946,12 @@ void FileData::launchGame(Window* window)
         return;
     }
 
+    // swapBuffers() is called here to turn the screen black to eliminate some potential
+    // flickering and to avoid showing the game launch message briefly when returning
+    // from the game.
+    if (!ViewController::get()->runInBackground(mSystem))
+        Renderer::swapBuffers();
+
     Scripting::fireEvent("game-start", romPath, getSourceFileData()->metadata.get("name"));
     int returnValue = 0;
 
