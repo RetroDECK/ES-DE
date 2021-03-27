@@ -327,7 +327,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
 void ComponentList::updateElementSize(const ComponentListRow& row)
 {
     float width = mSize.x() - (TOTAL_HORIZONTAL_PADDING_PX * Renderer::getScreenWidthModifier());
-    std::vector< std::shared_ptr<GuiComponent> > resizeVec;
+    std::vector<std::shared_ptr<GuiComponent>> resizeVec;
 
     for (auto it = row.elements.cbegin(); it != row.elements.cend(); it++) {
         if (it->resize_width)

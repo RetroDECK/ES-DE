@@ -50,7 +50,7 @@ private:
     ResourceManager();
 
     static std::shared_ptr<ResourceManager> sInstance;
-    std::list< std::weak_ptr<IReloadable> > mReloadables;
+    std::list<std::weak_ptr<IReloadable>> mReloadables;
 
     ResourceData loadFile(const std::string& path) const;
 };

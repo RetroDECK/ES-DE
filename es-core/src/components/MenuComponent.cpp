@@ -142,7 +142,7 @@ std::vector<HelpPrompt> MenuComponent::getHelpPrompts()
 }
 
 std::shared_ptr<ComponentGrid> makeButtonGrid(Window* window,
-        const std::vector< std::shared_ptr<ButtonComponent> >& buttons)
+        const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
 {
     std::shared_ptr<ComponentGrid> buttonGrid = std::make_shared<ComponentGrid>
             (window, Vector2i(static_cast<int>(buttons.size()), 2));

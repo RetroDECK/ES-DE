@@ -68,7 +68,7 @@ GuiGameScraper::GuiGameScraper(
     mGrid.setEntry(mSearch, Vector2i(0, 5), true);
 
     // Buttons
-    std::vector< std::shared_ptr<ButtonComponent> > buttons;
+    std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH",
             "refine search", [&] {

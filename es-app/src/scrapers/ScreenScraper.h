@@ -17,14 +17,14 @@ namespace pugi { class xml_document; }
 
 void screenscraper_generate_scraper_requests(
         const ScraperSearchParams& params,
-        std::queue< std::unique_ptr<ScraperRequest> >& requests,
+        std::queue<std::unique_ptr<ScraperRequest>>& requests,
         std::vector<ScraperSearchResult>& results);
 
 class ScreenScraperRequest : public ScraperHttpRequest
 {
 public:
     // ctor for a GetGameList request.
-    ScreenScraperRequest(std::queue< std::unique_ptr<ScraperRequest> >& requestsWrite,
+    ScreenScraperRequest(std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
             std::vector<ScraperSearchResult>& resultsWrite,
             const std::string& url) : ScraperHttpRequest(resultsWrite, url),
             mRequestQueue(&requestsWrite) {}

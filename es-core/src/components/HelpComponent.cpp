@@ -74,8 +74,8 @@ void HelpComponent::updateGrid()
 
     // [icon] [spacer1] [text] [spacer2]
 
-    std::vector< std::shared_ptr<ImageComponent> > icons;
-    std::vector< std::shared_ptr<TextComponent> > labels;
+    std::vector<std::shared_ptr<ImageComponent>> icons;
+    std::vector<std::shared_ptr<TextComponent>> labels;
 
     float width = 0;
     const float height = std::round(font->getLetterHeight() * 1.25f);

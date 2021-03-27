@@ -200,7 +200,7 @@ GuiInputConfig::GuiInputConfig(
         setPress(mMappings.front());
 
     // Buttons.
-    std::vector< std::shared_ptr<ButtonComponent> > buttons;
+    std::vector<std::shared_ptr<ButtonComponent>> buttons;
     std::function<void()> okFunction = [this, okCallback] {
         // If we have just configured the keyboard, then unset the flag to indicate that
         // we are using the default keyboard mappings.

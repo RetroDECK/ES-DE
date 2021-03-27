@@ -134,7 +134,7 @@ void GuiGamelistFilter::addFiltersToMenu()
          // All possible filters for this type.
         std::map<std::string, int>* allKeys = (*it).allIndexKeys;
         std::string menuLabel = (*it).menuLabel; // Text to show in menu.
-        std::shared_ptr< OptionListComponent<std::string> > optionList;
+        std::shared_ptr<OptionListComponent<std::string>> optionList;
 
         // Add filters (with first one selected).
         ComponentListRow row;

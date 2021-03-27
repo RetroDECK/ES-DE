@@ -102,17 +102,17 @@ public:
         std::string type;
 
         struct Property {
-            void operator= (const Vector4f& value)
+            void operator=(const Vector4f& value)
             {
                 r = value;
                 const Vector4f initVector = value;
                 v = Vector2f(initVector.x(), initVector.y());
             }
-            void operator= (const Vector2f& value) { v = value; }
-            void operator= (const std::string& value) { s = value; }
-            void operator= (const unsigned int& value) { i = value; }
-            void operator= (const float& value) { f = value; }
-            void operator= (const bool& value) { b = value; }
+            void operator=(const Vector2f& value) { v = value; }
+            void operator=(const std::string& value) { s = value; }
+            void operator=(const unsigned int& value) { i = value; }
+            void operator=(const float& value) { f = value; }
+            void operator=(const bool& value) { b = value; }
 
             Vector4f r;
             Vector2f v;
@@ -122,7 +122,7 @@ public:
             bool b;
         };
 
-        std::map< std::string, Property > properties;
+        std::map<std::string, Property> properties;
 
         template<typename T>
         const T get(const std::string& prop) const
@@ -185,7 +185,7 @@ public:
     static std::string getThemeFromCurrentSet(const std::string& system);
 
 private:
-    static std::map< std::string, std::map<std::string, ElementPropertyType> > sElementMap;
+    static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
     static std::vector<std::string> sSupportedFeatures;
     static std::vector<std::string> sSupportedViews;
 

@@ -41,7 +41,7 @@ GuiTextEditPopup::GuiTextEditPopup(
     mText = std::make_shared<TextEditComponent>(mWindow);
     mText->setValue(initValue);
 
-    std::vector< std::shared_ptr<ButtonComponent> > buttons;
+    std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
             [this, okCallback] { okCallback(mText->getValue()); delete this; }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear",

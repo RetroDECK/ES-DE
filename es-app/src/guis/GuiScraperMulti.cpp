@@ -74,7 +74,7 @@ GuiScraperMulti::GuiScraperMulti(
     mGrid.setEntry(mSearchComp, Vector2i(0, 3), mSearchComp->getSearchType() !=
             GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, true);
 
-    std::vector< std::shared_ptr<ButtonComponent> > buttons;
+    std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
     if (mApproveResults) {
         buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH",
