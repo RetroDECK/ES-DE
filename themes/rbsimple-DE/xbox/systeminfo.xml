@@ -3,7 +3,28 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Microsoft Xbox</text>
+            <text>Manufacturer : Microsoft</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>Year of Release : 2001</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>Units sold : 24 million</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>CPU : 32-bit custom Intel Pentium III @ 733 MHz</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>RAM : 64 MB of DDR SDRAM @ 200 MHz</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>Video : Nvidia GeForce 3-based NV2A GPU @ 233 MHz</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>Resolution : 480i to 1080i</text>
+        </text>
+        <text name="info8" extra="true">
+            <text>Sound : Nvidia MCPX, a.k.a. SoundStorm</text>
         </text>
     </view>
 </theme>

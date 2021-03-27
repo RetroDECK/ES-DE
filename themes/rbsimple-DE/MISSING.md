@@ -81,6 +81,6 @@ None at the moment.
 * wiiu: Nintendo Wii U - consolegame.svg, console.svg, controller.svg, game.svg
 * x1:  Sharp X1 - consolegame.svg, console.svg, game.svg
 * x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
-* xbox: Microsoft Xbox - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* xbox: Microsoft Xbox - system info, controller.svg
 * xbox360: Microsoft Xbox - system info, consolegame.svg, console.svg, controller.svg, game.svg
 * zmachine: Infocom Z-machine - system info, consolegame.svg, console.svg, controller.svg
