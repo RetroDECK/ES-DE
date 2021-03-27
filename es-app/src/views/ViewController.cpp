@@ -614,6 +614,22 @@ void ViewController::onFileChanged(FileData* file, bool reloadGameList)
         it->second->onFileChanged(file, reloadGameList);
 }
 
+bool ViewController::runInBackground(SystemData* system)
+{
+    #if defined(_WIN64)
+    if (system->hasPlatformId(PlatformIds::VALVE_STEAM) ||
+            Settings::getInstance()->getBool("RunInBackground"))
+        return true;
+    else
+        return false;
+    #else
+    if (system->hasPlatformId(PlatformIds::VALVE_STEAM))
+        return true;
+    else
+        return false;
+    #endif
+}
+
 void ViewController::launch(FileData* game)
 {
     if (game->getType() != GAME) {

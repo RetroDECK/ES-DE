@@ -15,6 +15,7 @@
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "views/UIModeController.h"
+#include "views/ViewController.h"
 #include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
@@ -953,19 +954,13 @@ void FileData::launchGame(Window* window)
     LOG(LogInfo) << "Expanded emulator launch command:";
 
     LOG(LogInfo) << command;
+    // Possibly keep ES-DE running in the background while the game is launched.
     #if defined(_WIN64)
-    if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM) ||
-            Settings::getInstance()->getBool("RunInBackground"))
-        returnValue = launchGameWindows(Utils::String::stringToWideString(command), true);
-    else
-        returnValue = launchGameWindows(Utils::String::stringToWideString(command), false);
+    returnValue = launchGameWindows(Utils::String::stringToWideString(command),
+            ViewController::get()->runInBackground(mSystem));
     #else
-    if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM))
-        returnValue = launchGameUnix(command, true);
-    else
-        returnValue = launchGameUnix(command, false);
+    returnValue = launchGameUnix(command, ViewController::get()->runInBackground(mSystem));
     #endif
-
     // Notify the user in case of a failed game launch using a popup window.
     if (returnValue != 0) {
         LOG(LogWarning) << "...launch terminated with nonzero return value " << returnValue;
@@ -978,21 +973,20 @@ void FileData::launchGame(Window* window)
     else {
         // Stop showing the game launch notification.
         window->stopInfoPopup();
-        #if  defined(_WIN64)
-        // If starting a Steam game or if the "RunInBackground" setting has been enabled,
-        // then keep ES-DE running while the game is launched. This pauses any video and keeps
-        // the screensaver from getting activated.
-        if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM) ||
-                Settings::getInstance()->getBool("RunInBackground"))
+        #if defined(_WIN64)
+        // For some game systems or if the "RunInBackground" setting has been enabled, keep
+        // ES-DE running while the game is launched. This pauses any video and keeps the
+        // screensaver from getting activated.
+        if (ViewController::get()->runInBackground(mSystem))
             window->setLaunchedGame();
         else
             // Normalize deltaTime so that the screensaver does not start immediately
             // when returning from the game.
             window->normalizeNextUpdate();
         #else
-        // If starting a Steam game, then keep ES-DE running while the game is launched.
+        // For some game systems we need to keep ES-DE running while the game is launched.
         // This pauses any video and keeps the screensaver from getting activated.
-        if (mSystem->hasPlatformId(PlatformIds::VALVE_STEAM))
+        if (ViewController::get()->runInBackground(mSystem))
             window->setLaunchedGame();
         // Normalize deltaTime so that the screensaver does not start immediately
         // when returning from the game.

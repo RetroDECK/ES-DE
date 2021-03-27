@@ -113,6 +113,9 @@ public:
     std::shared_ptr<SystemView> getSystemListView();
     void removeGameListView(SystemData* system);
 
+    // Whether to run in the background while a game is launched.
+    bool runInBackground(SystemData* system);
+
     static const std::string FAVORITE_CHAR;
     static const std::string FOLDER_CHAR;
     static const std::string TICKMARK_CHAR;
