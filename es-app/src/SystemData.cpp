@@ -514,6 +514,8 @@ bool SystemData::createSystemDirectories()
         return true;
     }
 
+    std::vector<std::string> systemsVector;
+
     for (pugi::xml_node system = systemList.child("system"); system;
             system = system.next_sibling("system")) {
         std::string systemDir;
@@ -605,6 +607,8 @@ bool SystemData::createSystemDirectories()
         systemInfoFile << themeFolder << std::endl;
         systemInfoFile.close();
 
+        systemsVector.push_back(systemDir + ": " + fullname);
+
         if (replaceInfoFile) {
             LOG(LogInfo) << "Replaced existing system information file \"" <<
                     rompath + systemDir + systemInfoFileName << "\"";
@@ -612,6 +616,43 @@ bool SystemData::createSystemDirectories()
         else {
             LOG(LogInfo) << "Created system information file \"" <<
                     rompath + systemDir + systemInfoFileName << "\"";
+        }
+    }
+
+    // Also generate a systems.txt file directly in the ROM directory root that contains the
+    // mappings between the system directory names and the full system names. This makes it
+    // easier for the users to identify the correct directories for their games.
+    if (!systemsVector.empty()) {
+        const std::string systemsFileName = "/systems.txt";
+        bool systemsFileSuccess = true;
+
+        if (Utils::FileSystem::exists(rompath + systemsFileName)) {
+            if (Utils::FileSystem::removeFile(rompath + systemsFileName))
+                systemsFileSuccess = false;
+        }
+
+        if (systemsFileSuccess) {
+            std::ofstream systemsFile;
+            #if defined(_WIN64)
+            systemsFile.open(Utils::String::stringToWideString(rompath + systemsFileName).c_str());
+            #else
+            systemsFile.open(rompath + systemsFileName);
+            #endif
+            if (systemsFile.fail()) {
+                systemsFileSuccess = false;
+            }
+            else {
+                for (std::string systemEntry : systemsVector) {
+                    systemsFile << systemEntry << std::endl;
+                }
+                systemsFile.close();
+            }
+        }
+
+        if (!systemsFileSuccess) {
+            LOG(LogWarning) << "System directories successfully created but couldn't create "
+                    "the systems.txt file in the ROM directory root";
+            return false;
         }
     }
 
