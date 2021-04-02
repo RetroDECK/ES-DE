@@ -54,7 +54,7 @@ help2man --section 6 --no-info --include $TEMPFILE_INPUT $ESBINARY > $TEMPFILE_O
 cat $TEMPFILE_OUTPUT | sed s/"EmulationStation Desktop Edition, Emulator Front\\\-end"/""/g | \
 sed s/"Set to at least"/".br\nSet to at least"/ > $TARGET_FILENAME
 
-gzip $TARGET_FILENAME
+gzip -9 $TARGET_FILENAME
 mv ${TARGET_FILENAME}.gz ../es-app/assets/
 
 echo "The man page was generated and saved to ../es-app/assets/emulationstation.6.gz"
