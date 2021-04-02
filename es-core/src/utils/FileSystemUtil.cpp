@@ -36,14 +36,21 @@
 #include <unistd.h>
 #endif
 
-// For Unix systems, try to get the install prefix as defined when CMake was run.
-// The installPrefix directory is the value set for CMAKE_INSTALL_PREFIX during build.
-// If not defined, the default prefix path '/usr/local' will be used.
+// For Unix systems, set the install prefix as defined via CMAKE_INSTALL_PREFIX when CMake was run.
+// If not defined, the default prefix '/usr' will be used on Linux, '/usr/pkg' on NetBSD and
+// '/usr/local' on FreeBSD and OpenBSD. This fallback should not be required though unless the
+// build environment is broken.
 #if defined(__unix__)
 #if defined(ES_INSTALL_PREFIX)
 std::string installPrefix = ES_INSTALL_PREFIX;
 #else
+#if defined(__linux__)
+std::string installPrefix = "/usr";
+#elif defined(__NetBSD__)
+std::string installPrefix = "/usr/pkg";
+#else
 std::string installPrefix = "/usr/local";
+#endif
 #endif
 #endif
 
@@ -240,15 +247,7 @@ namespace Utils
 
         std::string getProgramDataPath()
         {
-            // For Unix systems, installPrefix should be populated by CMAKE from
-            // $CMAKE_INSTALL_PREFIX. But just as a precaution, let's check if this
-            // variable is blank, and if so set it to '/usr/local'.
-            // Just in case some build environments won't handle this correctly.
-            // For Windows it doesn't really work like that and the application could have
-            // been install to an arbitrary location, so this function won't be used on that OS.
             #if defined(__unix__)
-            if (!installPrefix.length())
-                installPrefix = "/usr/local";
             return installPrefix + "/share/emulationstation";
             #else
             return "";

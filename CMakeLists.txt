@@ -177,8 +177,19 @@ if(DEFINED libCEC_FOUND)
     add_definitions(-DHAVE_LIBCEC)
 endif()
 
-# For Unix systems, assign the installation prefix.
+# For Unix systems, assign the installation prefix. If it's not explicitly set,
+# we use /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD.
 if(NOT WIN32 AND NOT APPLE)
+    if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+        if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+            set(CMAKE_INSTALL_PREFIX "/usr")
+        elseif(${CMAKE_SYSTEM_NAME} MATCHES "NetBSD")
+            set(CMAKE_INSTALL_PREFIX "/usr/pkg")
+        else()
+            set(CMAKE_INSTALL_PREFIX "/usr/local")
+        endif()
+    endif()
+    message("-- Installation prefix is set to " ${CMAKE_INSTALL_PREFIX})
     add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 endif()
 
