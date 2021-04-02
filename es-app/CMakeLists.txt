@@ -192,7 +192,7 @@ else()
     install(TARGETS emulationstation RUNTIME
             DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/man/man6)
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.desktop
