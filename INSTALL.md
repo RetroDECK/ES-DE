@@ -185,7 +185,8 @@ Running multiple compile jobs in parallel is a good thing as it speeds up the bu
 make -j6
 ```
 
-By default ES-DE will install under /usr/local but this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.\
+By default ES-DE will install under /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD although this can be changed by setting the `CMAKE_INSTALL_PREFIX` variable.
+
 The following example will build the application for installtion under /opt:
 
 ```
@@ -193,6 +194,8 @@ cmake -DCMAKE_INSTALL_PREFIX=/opt .
 ```
 
 It's important to know that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code inside ES-DE used to locate the required program resources. So it's necessary that the install prefix corresponds to the location where the application will actually be installed.
+
+On Linux, if you're not building a package and instead intend to install using `make install` it's recommended to set the installation prefix to /usr/local instead of /usr.
 
 **Compilers**
 
@@ -246,20 +249,22 @@ Installing the software requires root permissions, the following command will in
 sudo make install
 ```
 
-Assuming the default installation prefix /usr/local has been used, this is the directory structure for the installation:
+Assuming the default installation prefix /usr has been used, this is the directory structure for the installation:
 
 ```
-/usr/local/bin/emulationstation
-/usr/local/man/man6/emulationstation.6.gz
-/usr/local/share/applications/emulationstation.desktop
-/usr/local/share/emulationstation/LICENSE
-/usr/local/share/emulationstation/licenses/*
-/usr/local/share/emulationstation/resources/*
-/usr/local/share/emulationstation/themes/*
-/usr/local/share/pixmaps/emulationstation.svg
+/usr/bin/emulationstation
+/usr/share/man/man6/emulationstation.6.gz
+/usr/share/applications/emulationstation.desktop
+/usr/share/emulationstation/LICENSE
+/usr/share/emulationstation/licenses/*
+/usr/share/emulationstation/resources/*
+/usr/share/emulationstation/themes/*
+/usr/share/pixmaps/emulationstation.svg
 ```
 
-Be aware that if using the GNOME desktop environment, /usr/local/share/pixmaps/emulationstation.svg must exist in order for the ES-DE icon to be shown in the Dash and task switcher.
+However, when installing manually instead of building a package, it's recommended to change the install prefix to /usr/local instead of /usr.
+
+Be aware that if using the GNOME desktop environment, /usr/share/pixmaps/emulationstation.svg must exist in order for the ES-DE icon to be shown in the Dash and task switcher.
 
 ES-DE will look in the following locations for the resources, in the listed order:
 
@@ -1067,7 +1072,7 @@ The reason to not simply replace the BIOS and devices files with the new version
 
 ES-DE ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
 
-Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This directory is located in the installation path of the application, for instance `/usr/local/share/emulationstation/resources/templates` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/templates` on macOS and `C:\Program Files\EmulationStation-DE\resources\templates`on Windows.
+Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This is located in the installation path of the application, for instance `/usr/share/emulationstation/resources/templates` or `/usr/local/share/emulationstation/resources/templates` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/templates` on macOS and `C:\Program Files\EmulationStation-DE\resources\templates`on Windows.
 
 The template file will be copied to `~/.emulationstation/es_systems.cfg`.
 

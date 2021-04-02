@@ -75,7 +75,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Made ScrollableContainer (used for the gamelist game descriptions) fade in as the text position is reset
 * Made the ScrollableContainer scroll speed adaptive depending on the font size and width of the text container
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
-* Changed theme directory to the install prefix (e.g. /usr/local/share/emulationstation/themes) with themes in the home directory taking precedence
+* Changed theme directory to the install prefix (e.g. /usr/share/emulationstation/themes) with themes in the home directory taking precedence
 * No more attempts to open files directly under /etc, instead only the install prefix directory, the ES-DE executable directory and the home directory are used
 * Added proper error handling for missing resource files and improved overall logging
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.

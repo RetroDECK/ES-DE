@@ -36,7 +36,7 @@ There are two places ES can load theme sets from:
 * `[INSTALLATION PATH]/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 
 An example installation path would be: \
-`/usr/local/share/emulationstation/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
+`/usr/share/emulationstation/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 
 `[SYSTEM_THEME]` is the `<theme>` tag for the system, as defined in `es_systems.cfg`.  If the `<theme>` tag is not set, ES will use the system's `<name>`.
 

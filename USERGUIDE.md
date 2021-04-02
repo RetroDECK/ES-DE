@@ -105,7 +105,19 @@ Theme folder:
 gc
 ```
 
-Be aware that there will be a lot of directories created if using the template es_systems.cfg file bundled with the installation, so it may be a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them later if more systems should be added. For example a directory called DISABLED could be created inside the ROMs folder (i.e. ~/ROMs/DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the application startup time significantly as ES-DE would otherwise need to scan for game files for all these systems.
+In addition to this, a file named systems.txt will be created in the root ROM directory which shows the mapping between the directory names and the full system names.
+
+For example:
+
+```
+gc: Nintendo GameCube
+genesis: Sega Genesis
+gx4000: Amstrad GX4000
+```
+
+Note that neither the systeminfo.txt files or the systems.txt file are needed to run ES-DE, they're only generated as a convenience.
+
+Be aware that there will be a lot of directories created if using the template es_systems.cfg file bundled with the installation, so it may be a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them later if more systems should be added. For example a directory named _DISABLED could be created inside the ROMs folder (i.e. ~/ROMs/_DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the application startup time significantly as ES-DE would otherwise need to scan for game files for all these systems.
 
 ![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
@@ -549,7 +561,7 @@ For instance on Fedora you could place the shell script in `~/bin` and name it `
 
 There is also a Flatpak-specific es_systems.cfg template shipped with ES-DE, but you need to manually install it if you would like to use it:
 ```
-cp /usr/local/share/emulationstation/resources/templates/es_systems.cfg_unix_flatpak ~/.emulationstation/es_systems.cfg
+cp /usr/share/emulationstation/resources/templates/es_systems.cfg_unix_flatpak ~/.emulationstation/es_systems.cfg
 ```
 
 The source path may differ from this example depending on which prefix was used when building ES-DE.
@@ -1399,7 +1411,7 @@ Note that this Desktop Edition fork adds additional features to the themes and m
 
 Themes are most easily installed in your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you can then choose between them via UI Settings on the main menu.
 
-Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
+Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
 
 If you would like to customize the rbsimple-DE theme, simply make a copy of the complete rbsimple-DE directory to ~/.emulationstation/themes and then that copy of the theme will take precedence over the one in the application installation directory.
 
