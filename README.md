@@ -3,7 +3,10 @@
 EmulationStation Desktop Edition is a front-end for browsing and launching games from your multi-platform game collection.
 
 Web site:\
- [https://es-de.org](https://es-de.org)
+[https://es-de.org](https://es-de.org)
+
+YouTube channel:\
+[https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
 
 
 Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.

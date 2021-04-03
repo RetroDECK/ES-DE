@@ -23,6 +23,10 @@ As long as ES-DE hasn't frozen, you can always press F4 to close the application
 
 For additional details, read on below.
 
+There are also installation videos available at the ES-DE YouTube channel:
+
+[https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
+
 ## Getting started
 
 Getting started with ES-DE is easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows and macOS you'll use the installer instead of a package.
