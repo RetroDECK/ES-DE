@@ -23,8 +23,7 @@ As long as ES-DE hasn't frozen, you can always press F4 to close the application
 
 For additional details, read on below.
 
-There are also installation videos available at the ES-DE YouTube channel:
-
+There are also installation videos available at the ES-DE YouTube channel:\
 [https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
 
 ## Getting started
