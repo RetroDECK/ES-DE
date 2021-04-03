@@ -2,11 +2,11 @@
 
 ### Help needed
 
-Contributions to ES-DE are very much appreciated as there are many things that need to be implemented and improved. Code commits is only one part of it, as work is also needed on the rbsimple-DE theme set as well as thorough application testing.
+Contributions are very much appreciated as there are many things that need to be implemented and improved.
 
-It's impossible for me to test every game system as rbsimple-DE has support for well over a 100 different platforms. There could be issues with the configuration template files, or within ES-DE itself.
+Code commits is only one part of it, as work is also needed on the rbsimple-DE theme set as well as thorough application testing. It's impossible for me to test every game system as ES-DE has support for well over a 100 different platforms.
 
-In general, a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great!
+And a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great as these templates are not fully populated yet. For some of the game systems there are only placeholder entries, mostly for platforms that RetroArch does not support and where discrete emulators are required.
 
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details on what needs to be added or updated. Note that although rbsimple-DE is based on Recalbox Multi, it's only possible to use assets from this theme set created before its change to a more restrictive license, which happened in 2018. As such it's unfortunately necessary to recreate all the system graphics from scratch that have since been released by the Recalbox community.
 
@@ -27,6 +27,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Ability to show game media in full screen from the gamelist view
 * Replace libVLC with FFmpeg
 * Move to the SDL2 GameController API
+* Add to Linux repositories, BSD ports collections etc.
 
 #### v1.2
 
@@ -36,7 +37,6 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Checksum support for the scraper to verify each file before accepting/saving it
 * Web proxy support for the scraper
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
-* Add to Linux repositories, BSD ports collections etc.
 
 #### v1.3
 
