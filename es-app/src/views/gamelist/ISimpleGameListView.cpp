@@ -247,6 +247,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                         "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS", 4000);
                 mWindow->setInfoPopup(s);
             }
+            // Notify the user if attempting to add a placeholder to a custom collection.
+            if (CollectionSystemsManager::get()->isEditing() &&
+                    mRoot->getSystem()->isGameSystem() && getCursor()->getType() == PLACEHOLDER) {
+                GuiInfoPopup* s;
+                s = new GuiInfoPopup(mWindow,
+                        "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS", 4000);
+                mWindow->setInfoPopup(s);
+            }
             else if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                     getCursor()->getParent()->getPath() != "collections") {
                 if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
