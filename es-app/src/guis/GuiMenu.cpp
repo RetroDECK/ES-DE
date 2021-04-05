@@ -190,6 +190,12 @@ void GuiMenu::openUISettings()
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
                 CollectionSystemsManager::get()->updateSystemsList();
                 mWindow->setChangedThemeSet();
+                // This is required so that the custom collection system does not disappear
+                // if the user is editing a custom collection when switching theme sets.
+                if (CollectionSystemsManager::get()->isEditing()) {
+                    CollectionSystemsManager::get()->exitEditMode();
+                    s->setNeedsCollectionsUpdate();
+                }
                 s->setNeedsSaving();
                 s->setNeedsReloading();
                 s->setNeedsGoToStart();
