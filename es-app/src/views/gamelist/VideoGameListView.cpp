@@ -349,7 +349,7 @@ void VideoGameListView::updateInfoPanel()
         mPlayCount.setVisible(true);
     }
 
-    bool fadingOut;
+    bool fadingOut = false;
     if (file == nullptr) {
         mVideoPlaying = false;
         fadingOut = true;

@@ -446,7 +446,7 @@ void GridGameListView::updateInfoPanel()
         mPlayCount.setVisible(true);
     }
 
-    bool fadingOut;
+    bool fadingOut = false;
     if (file == nullptr) {
         fadingOut = true;
     }
