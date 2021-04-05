@@ -141,8 +141,9 @@ GuiGamelistOptions::GuiGamelistOptions(
         }
     }
 
-    // Add the filters entry, unless this is the grouped custom collections list.
-    if (!mIsCustomCollectionGroup) {
+    // Add the filters entry, unless this is the grouped custom collections system or if there
+    // are no games (which should only happen for ungrouped custom collections).
+    if (!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() > 0) {
         if (system->getName() != "recent" && Settings::getInstance()->getBool("GamelistFilters")) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>
@@ -212,8 +213,8 @@ GuiGamelistOptions::GuiGamelistOptions(
     // Center the menu.
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
-    mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2, (mSize.y() -
-            mMenu.getSize().y()) / 2);
+    mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2.0f, (mSize.y() -
+            mMenu.getSize().y()) / 2.0f);
 }
 
 GuiGamelistOptions::~GuiGamelistOptions()
