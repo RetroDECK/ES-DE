@@ -106,6 +106,8 @@ public:
     void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; };
     bool getAllowTextScrolling() { return mAllowTextScrolling; };
 
+    void setChangedThemeSet() { mChangedThemeSet = true; };
+
 private:
     void onSleep();
     void onWake();
@@ -143,6 +145,7 @@ private:
     unsigned char mTopOpacity;
     float mTopScale;
     bool mRenderedHelpPrompts;
+    bool mChangedThemeSet;
 };
 
 #endif // ES_CORE_WINDOW_H

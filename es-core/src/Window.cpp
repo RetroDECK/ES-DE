@@ -38,7 +38,8 @@ Window::Window()
         mInvalidatedCachedBackground(false),
         mTopOpacity(0),
         mTopScale(0.5),
-        mListScrollOpacity(0)
+        mListScrollOpacity(0),
+        mChangedThemeSet(false)
 {
     mHelp = new HelpComponent(this);
     mBackgroundOverlay = new ImageComponent(this);
@@ -291,6 +292,15 @@ void Window::update(int deltaTime)
 
     if (peekGui())
         peekGui()->update(deltaTime);
+
+    // If the theme set changed, we need to update the background once so that the camera
+    // will be moved. This is required as theme set changes always makes a transition to
+    // the system view. If we wouldn't make this update, the camera movement would only
+    // take place once the menu has been closed.
+    if (mChangedThemeSet && mGuiStack.size() > 1) {
+        mGuiStack.front()->update(deltaTime);
+        mChangedThemeSet = false;
+    }
 
     // Update the screensaver.
     if (mScreensaver)

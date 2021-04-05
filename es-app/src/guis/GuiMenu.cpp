@@ -183,14 +183,16 @@ void GuiMenu::openUISettings()
         for (auto it = themeSets.cbegin(); it != themeSets.cend(); it++)
             theme_set->add(it->first, it->first, it == selectedSet);
         s->addWithLabel("THEME SET", theme_set);
-        s->addSaveFunc([theme_set, s] {
+        s->addSaveFunc([this, theme_set, s] {
             if (theme_set->getSelected() != Settings::getInstance()->getString("ThemeSet")) {
                 Scripting::fireEvent("theme-changed", theme_set->getSelected(),
                         Settings::getInstance()->getString("ThemeSet"));
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
                 CollectionSystemsManager::get()->updateSystemsList();
+                mWindow->setChangedThemeSet();
                 s->setNeedsSaving();
                 s->setNeedsReloading();
+                s->setNeedsGoToStart();
                 s->setInvalidateCachedBackground();
             }
         });
