@@ -56,7 +56,7 @@ The .deb package is used for Linux distributions based on Debian, such as Ubuntu
 Running the following should install ES-DE and resolve any dependencies:
 
 ```
-sudo apt install ./emulationstation-de-1.0.0.deb
+sudo apt install ./emulationstation-de-1.0.0-x64.deb
 ```
 
 **Installing a Linux .rpm package**
@@ -64,7 +64,7 @@ sudo apt install ./emulationstation-de-1.0.0.deb
 On Fedora you run this command to install ES-DE, which should automatically resolve all dependencies:
 
 ```
-sudo dnf install ./emulationstation-de-1.0.0.rpm
+sudo dnf install ./emulationstation-de-1.0.0-x64.rpm
 ```
 
 Note that this requires the RPM Fusion repository as there's a dependency on VLC, which is not part of the standard operating system repo. See [INSTALL.md](INSTALL.md#building-on-unix) for details on how to add this.
