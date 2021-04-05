@@ -232,7 +232,7 @@ endif()
 set(CPACK_PACKAGE_VENDOR "Leon Styhre")
 
 # Update this when there has been a new release.
-set(CPACK_PACKAGE_VERSION "1.0.0-rc-dev")
+set(CPACK_PACKAGE_VERSION "1.0.0-rc")
 
 # Use the shorter x64 descriptor if on the x86_64/AMD64 architecture.
 if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL x86_64 OR CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL AMD64)
