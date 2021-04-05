@@ -187,8 +187,8 @@ void GuiMenu::openUISettings()
             if (theme_set->getSelected() != Settings::getInstance()->getString("ThemeSet")) {
                 Scripting::fireEvent("theme-changed", theme_set->getSelected(),
                         Settings::getInstance()->getString("ThemeSet"));
-                CollectionSystemsManager::get()->updateSystemsList();
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
+                CollectionSystemsManager::get()->updateSystemsList();
                 s->setNeedsSaving();
                 s->setNeedsReloading();
                 s->setInvalidateCachedBackground();
