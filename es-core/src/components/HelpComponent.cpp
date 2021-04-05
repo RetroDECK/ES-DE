@@ -121,16 +121,17 @@ std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
 
     auto pathLookup = ICON_PATH_MAP.find(name);
     if (pathLookup == ICON_PATH_MAP.cend()) {
-        LOG(LogError) << "Unknown help icon \"" << name << "\"!";
+        LOG(LogError) << "Unknown help icon \"" << name << "\"";
         return nullptr;
     }
     if (!ResourceManager::getInstance()->fileExists(pathLookup->second)) {
-        LOG(LogError) << "Help icon \"" << name <<
-                "\" - corresponding image file \"" << pathLookup->second << "\" misisng!";
+        LOG(LogError) << "Couldn't load help icon \"" << name <<
+                "\" as the file \"" << pathLookup->second << "\" is missing";
         return nullptr;
     }
 
-    std::shared_ptr<TextureResource> tex = TextureResource::get(pathLookup->second);
+    std::shared_ptr<TextureResource> tex =
+            TextureResource::get(pathLookup->second, false, false, false);
     mIconCache[std::string(name)] = tex;
     return tex;
 }
