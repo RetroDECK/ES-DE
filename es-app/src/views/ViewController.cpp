@@ -523,6 +523,19 @@ void ViewController::goToGameList(SystemData* system)
     mState.viewing = GAME_LIST;
     mState.system = system;
 
+    auto it = mGameListViews.find(system);
+    if (it != mGameListViews.cend()) {
+        std::string viewStyle = it->second->getName();
+        if (viewStyle == "basic")
+            mState.viewstyle = BASIC;
+        else if (viewStyle == "detailed")
+            mState.viewstyle = DETAILED;
+        else if (viewStyle == "video")
+            mState.viewstyle = VIDEO;
+        else if (viewStyle == "grid")
+            mState.viewstyle = GRID;
+    }
+
     if (mCurrentView)
         mCurrentView->onShow();
 
