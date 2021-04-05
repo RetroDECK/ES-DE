@@ -238,7 +238,16 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedTo("y", input) &&
                 !UIModeController::getInstance()->isUIModeKid() &&
                 !UIModeController::getInstance()->isUIModeKiosk()) {
-            if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
+            // Notify the user if attempting to add a custom collection to a custom collection.
+            if (CollectionSystemsManager::get()->isEditing() &&
+                    mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
+                    getCursor()->getParent()->getPath() == "collections") {
+                GuiInfoPopup* s;
+                s = new GuiInfoPopup(mWindow,
+                        "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS", 4000);
+                mWindow->setInfoPopup(s);
+            }
+            else if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                     getCursor()->getParent()->getPath() != "collections") {
                 if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
                     NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);

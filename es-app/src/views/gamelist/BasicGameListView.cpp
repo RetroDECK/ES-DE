@@ -333,5 +333,11 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
+    else if (mRoot->getSystem()->isGameSystem() &&
+            mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+            CollectionSystemsManager::get()->isEditing()) {
+        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+        prompts.push_back(HelpPrompt("y", prompt));
+    }
     return prompts;
 }
