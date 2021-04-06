@@ -11,6 +11,12 @@
 
 include(FindPkgMacros)
 
+# On some macOS versions there could be a shared Pugixml library available, but as this
+# is a rare exception, this hack is good enough to handle that scenario.
+if(APPLE)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES .a .dylib)
+endif()
+
 if(NOT WIN32)
     find_package(PkgConfig)
     pkg_check_modules(PUGIXML REQUIRED pugixml>=1.09)
@@ -42,3 +48,8 @@ endif()
 include(FindPackageHandleStandardArgs)
 
 find_package_handle_standard_args(Pugixml DEFAULT_MSG PUGIXML_LIBRARY)
+
+# Change back to the previous search order, which is required for the libraries following this one.
+if(APPLE)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES .dylib .a)
+endif()
