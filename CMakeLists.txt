@@ -156,6 +156,12 @@ if(APPLE)
     SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
 endif()
 
+if(APPLE)
+    if(${CMAKE_OSX_DEPLOYMENT_TARGET} VERSION_GREATER 10.13)
+        message("-- macOS version 10.14 or higher detected so if code signing is enabled, Hardened Runtime will be used")
+    endif()
+endif()
+
 #---------------------------------------------------------------------------------------------------
 # Preprocessor directives.
 
