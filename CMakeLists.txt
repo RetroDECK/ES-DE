@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
+if(APPLE)
+    # Set this to the operating system version you're building on, and also update
+    # es-app/assets/EmulationStation-DE_Info.plist accordingly.
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14" CACHE STRING "macOS deployment target")
+endif()
 project(emulationstation-de)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
@@ -157,8 +162,8 @@ if(APPLE)
 endif()
 
 if(APPLE)
-    if(${CMAKE_OSX_DEPLOYMENT_TARGET} VERSION_GREATER 10.13)
-        message("-- macOS version 10.14 or higher detected so if code signing is enabled, Hardened Runtime will be used")
+    if(${CMAKE_OSX_DEPLOYMENT_TARGET} VERSION_LESS 10.14)
+        message("-- macOS version 10.13 or lower has been set, so if code signing is enabled, Hardened Runtime will not be used")
     endif()
 endif()
 
