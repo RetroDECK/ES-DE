@@ -371,7 +371,7 @@ Curl could optionally be installed too, but normally the version shipped with ma
 
 Install VLC/libVLC as well:
 ```
-brew cask install vlc
+brew install --cask vlc
 ```
 
 **Some additional/optional steps:**
@@ -422,19 +422,43 @@ export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
 
 **Note:** According to the SDL documentation, there could be issues with attempting to run ES-DE from the build directory when using a High DPI display as the required NSHighResolutionCapable key is not set as there is no Info.plist file available. In this case, doing a 'make install' and running from the installation folder would solve the problem. I've been unable to verify if this is really required though.
 
+Be aware that the approach taken for macOS has the limitation that you can't build for previous operating system versions. You can certainly set CMAKE_OSX_DEPLOYMENT_TARGET to whatever version you like, but the problem is that the Homebrew libraries will most likely not work on earlier macOS versions. In theory this can be worked around by building all these libraries yourself with a lower deployment target, but it's hardly worth the effort. It's better to build on the lowest OS version that should be supported and rely on forward compatibility.
+
+**Code signing:**
+
+Due to the Apple notarization requirement implemented as of macOS 10.14.5 a build with simple code signing is needed for versions up to 10.13 and another build with both code signing and notarization will be required for versions 10.14 and higher.
+
+macOS code signing is beyond the scope of this document but a short summary is that signing works as intended and can be enabled by uncommenting the following lines in the es-app/CMakeLists.txt file:
+```
+# Uncomment the following lines and change to your certificate identity to enable code signing.
+#set(CPACK_BUNDLE_APPLE_CERT_APP "Developer ID Application: <identity>")
+#if(${CMAKE_OSX_DEPLOYMENT_TARGET} VERSION_GREATER 10.13)
+#    set(CPACK_BUNDLE_APPLE_CODESIGN_PARAMETER "--deep --force --options runtime")
+#endif()
+```
+
+**Legacy build:**
+
+Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy build for earlier operating system versions can be enabled. This has been tested with a minimum version of 10.11 and it's unclear if it works with even older macOS versions.
+
+To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add 'legacy' to the DMG installer file name when running CPack.
+
+You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for.
+
 **Installing:**
 
 As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. Copy the following .dylib files from their respective installation directories to the emulationstation-de build directory:
 
 ```
 libSDL2-2.0.0.dylib
-libcurl.4.dylib
 libfreeimage.dylib
 libfreetype.6.dylib
 libpng16.16.dylib
 libvlc.dylib
 libvlccore.dylib
 ```
+
+The first four would normally be installed by Homebrew under /usr/local/lib and the VLC libraries should be installed under /Applications/VLC.app/Contents/MacOS/lib/
 
 Note that the filenames could be slightly different depending on what versions you have installed on your system.
 
@@ -446,7 +470,7 @@ install_name_tool -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/lib
 install_name_tool -add_rpath @executable_path libfreetype.6.dylib
 ```
 
-Verify that it worked as expected by running `otool -L libfreetype.6.dylib`. You should see something like the following:
+Verify that it worked as expected by running `otool -L libfreetype.6.dylib` - you should see something like the following:
 
 ```
 libfreetype.6.dylib:

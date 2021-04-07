@@ -5,7 +5,7 @@ EmulationStation Desktop Edition is a front-end for browsing and launching games
 Web site:\
 [https://es-de.org](https://es-de.org)
 
-YouTube channel:\
+YouTube channel with installation instruction videos:\
 [https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
 
 
@@ -23,6 +23,7 @@ The current version 1.0 has been tested on the following operating systems (all 
 * OpenBSD 6.8 (limited testing only)
 * macOS 11 "Big Sur" (limited testing only)
 * macOS 10.15 "Catalina" (limited testing only)
+* macOS 10.14 "Mojave" (limited testing only)
 * macOS 10.11 "El Capitan"
 * Windows 10
 * Windows 8.1
@@ -43,7 +44,8 @@ The latest available release is v1.0.0-rc (release candidate) from 2021-04-05.
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
 | Debian DEB package  | Ubuntu 20.04 and 20.10, Linux Mint 20, possibly others  | x64 (x86)    | [emulationstation-de-1.0.0-rc-x64.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-rc-x64.deb)|
 | Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.0-rc-x64.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-rc-x64.rpm)|
-| macOS DMG installer | macOS 10.11 "El Capitan" to 11 "Big Sur"                | x64 (x86)    | [EmulationStation-DE-1.0.0-rc-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-rc-x64.dmg)|
+| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.0.0-rc-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-rc-x64.dmg)|
+| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.0-rc-x64_legacy.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-rc-x64_legacy.dmg)|
 | Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-rc-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.0.0-rc-x64.exe)|
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about this release, including known issues.

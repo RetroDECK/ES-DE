@@ -10,9 +10,13 @@ And a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cf
 
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details on what needs to be added or updated. Note that although rbsimple-DE is based on Recalbox Multi, it's only possible to use assets from this theme set created before its change to a more restrictive license, which happened in 2018. As such it's unfortunately necessary to recreate all the system graphics from scratch that have since been released by the Recalbox community.
 
+Another area where help is really needed is for creation of installation instruction videos and similar. There are some rudimentary videos available at the ES-DE [YouTube channel](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ), but proper videos with voice-over and similar are needed to help especially new ES-DE users. However the videos don't need to be located at this YouTube channel. I have zero interest in creating videos or maintaining a channel of my own, there's simply a need to have video instructions available somewhere. So if you can create good videos and prefer to use your own YouTube channel, I will link to them from this repository and from https://es-de.org.
+
 The ES-DE development is tracked using a Kanban board which is publicly visible at the GitLab project site:
 
 [https://gitlab.com/leonstyhre/emulationstation-de/-/boards](https://gitlab.com/leonstyhre/emulationstation-de/-/boards)
+
+You can contact me (Leon) via email, either at info@es-de.org or alternatively using the address I use for my code commits.
 
 ### High level release plan
 
