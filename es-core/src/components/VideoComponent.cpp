@@ -222,11 +222,15 @@ void VideoComponent::render(const Transform4x4f& parentTrans)
 
 void VideoComponent::renderSnapshot(const Transform4x4f& parentTrans)
 {
-    // This is the case where the video is not currently being displayed. Work out
-    // if we need to display a static image.
-    if ((mConfig.showSnapshotNoVideo && mVideoPath.empty()) ||
+    // This function is called when the video is not currently being played. We need to
+    // work out if we should display a static image. If the menu is open, then always render
+    // the static image as the metadata may have been changed. In that case the gamelist
+    // was reloaded and there would just be a blank space unless we render the image here.
+    // The side effect of this is that a static image is displayed even for themes that are
+    // set to start playing the video immediately. Although this may seem a bit inconsistent it
+    // simply looks better than leaving an empty space where the video would have been located.
+    if (mWindow->getGuiStackSize() > 1 || (mConfig.showSnapshotNoVideo && mVideoPath.empty()) ||
             (mStartDelayed && mConfig.showSnapshotDelay)) {
-        // Display the static image instead.
         mStaticImage.setOpacity(mOpacity);
         mStaticImage.render(parentTrans);
     }
