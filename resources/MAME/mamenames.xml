@@ -1,4 +1,4 @@
-<!-- Generated from MAME driver file mame0226.xml -->
+<!-- Generated from MAME driver file mame0230.xml -->
 <game>
 	<mamename>005</mamename>
 	<realname>005</realname>
@@ -145,7 +145,7 @@
 </game>
 <game>
 	<mamename>1944</mamename>
-	<realname>1944: The Loop Master (USA 000620)</realname>
+	<realname>1944: The Loop Master (Euro 000620)</realname>
 </game>
 <game>
 	<mamename>1944d</mamename>
@@ -154,6 +154,10 @@
 <game>
 	<mamename>1944j</mamename>
 	<realname>1944: The Loop Master (Japan 000620)</realname>
+</game>
+<game>
+	<mamename>1944u</mamename>
+	<realname>1944: The Loop Master (USA 000620)</realname>
 </game>
 <game>
 	<mamename>1945kiii</mamename>
@@ -254,6 +258,10 @@
 <game>
 	<mamename>20pacgalr4</mamename>
 	<realname>Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.04)</realname>
+</game>
+<game>
+	<mamename>240in1ar</mamename>
+	<realname>Mini Arcade Machine (Thumbs Up, 240IN1ARC)</realname>
 </game>
 <game>
 	<mamename>24_130</mamename>
@@ -2737,7 +2745,11 @@
 </game>
 <game>
 	<mamename>adults</mamename>
-	<realname>Adults Only (Russia) (Extrema)</realname>
+	<realname>Adults Only (Ukraine, V. 43.23)</realname>
+</game>
+<game>
+	<mamename>adultsa</mamename>
+	<realname>Adults Only (Ukraine, V. 43.17)</realname>
 </game>
 <game>
 	<mamename>aduskcm</mamename>
@@ -2781,7 +2793,7 @@
 </game>
 <game>
 	<mamename>aes</mamename>
-	<realname>Neo-Geo AES</realname>
+	<realname>Neo-Geo AES (NTSC)</realname>
 </game>
 <game>
 	<mamename>afbm7800</mamename>
@@ -2957,11 +2969,15 @@
 </game>
 <game>
 	<mamename>agsoccer</mamename>
-	<realname>A.G. Soccer Ball (R18u)</realname>
+	<realname>A.G. Soccer Ball (R18u, 2.5L sound)</realname>
 </game>
 <game>
 	<mamename>agsoccer07</mamename>
 	<realname>A.G. Soccer Ball (R07u)</realname>
+</game>
+<game>
+	<mamename>agsoccera</mamename>
+	<realname>A.G. Soccer Ball (R18u, 2.1 sound)</realname>
 </game>
 <game>
 	<mamename>ai1000</mamename>
@@ -3454,6 +3470,10 @@
 <game>
 	<mamename>alphaonea</mamename>
 	<realname>Alpha One (prototype, 5 lives)</realname>
+</game>
+<game>
+	<mamename>alphatan</mamename>
+	<realname>AlphaTantel</realname>
 </game>
 <game>
 	<mamename>alphatp1</mamename>
@@ -4484,6 +4504,14 @@
 	<realname>Aquarius (NTSC)</realname>
 </game>
 <game>
+	<mamename>aquarius2</mamename>
+	<realname>Aquarius II</realname>
+</game>
+<game>
+	<mamename>aquariusp</mamename>
+	<realname>Aquarius (PAL)</realname>
+</game>
+<game>
 	<mamename>aquarush</mamename>
 	<realname>Aqua Rush (Japan, AQ1/VER.A1)</realname>
 </game>
@@ -4642,6 +4670,10 @@
 <game>
 	<mamename>arbv2</mamename>
 	<realname>ARB V2 Sargon 4.0</realname>
+</game>
+<game>
+	<mamename>arcade10</mamename>
+	<realname>Mini Arcade Console (Arcade 10-in-1)</realname>
 </game>
 <game>
 	<mamename>arcadecl</mamename>
@@ -5688,6 +5720,10 @@
 	<realname>AlphaSmart 2000</realname>
 </game>
 <game>
+	<mamename>asma3k</mamename>
+	<realname>AlphaSmart 3000</realname>
+</game>
+<game>
 	<mamename>asmapro</mamename>
 	<realname>AlphaSmart Pro</realname>
 </game>
@@ -5796,8 +5832,12 @@
 	<realname>Asteroids (rev 2)</realname>
 </game>
 <game>
-	<mamename>asteroidb</mamename>
-	<realname>Asteroids (bootleg on Lunar Lander hardware)</realname>
+	<mamename>asteroidb1</mamename>
+	<realname>Asteroids (bootleg on Lunar Lander hardware, set 1)</realname>
+</game>
+<game>
+	<mamename>asteroidb2</mamename>
+	<realname>Asteroids (bootleg on Lunar Lander hardware, set 2)</realname>
 </game>
 <game>
 	<mamename>astinvad</mamename>
@@ -5854,6 +5894,10 @@
 <game>
 	<mamename>astro</mamename>
 	<realname>Astro</realname>
+</game>
+<game>
+	<mamename>astroamb</mamename>
+	<realname>Astro Ambush (Scramble bootleg on Galaxian hardware)</realname>
 </game>
 <game>
 	<mamename>astrob</mamename>
@@ -6193,7 +6237,11 @@
 </game>
 <game>
 	<mamename>ator</mamename>
-	<realname>Ator</realname>
+	<realname>Ator (set 1, 2 bumpers)</realname>
+</game>
+<game>
+	<mamename>ator3bmp</mamename>
+	<realname>Ator (set 2, 3 bumpers)</realname>
 </game>
 <game>
 	<mamename>atrbonpk</mamename>
@@ -6318,6 +6366,10 @@
 <game>
 	<mamename>ausfache</mamename>
 	<realname>Akatsuki Blitzkampf Ausf. Achse (Japan)</realname>
+</game>
+<game>
+	<mamename>auslalom</mamename>
+	<realname>Autoslalom</realname>
 </game>
 <game>
 	<mamename>aussieby</mamename>
@@ -6510,6 +6562,10 @@
 <game>
 	<mamename>avigo_it</mamename>
 	<realname>TI Avigo 10 PDA (Italian)</realname>
+</game>
+<game>
+	<mamename>aviion_4600</mamename>
+	<realname>AViiON 4600</realname>
 </game>
 <game>
 	<mamename>avrmax</mamename>
@@ -7044,6 +7100,10 @@
 	<realname>Bank Shot - Electronic Pool</realname>
 </game>
 <game>
+	<mamename>baracuda</mamename>
+	<realname>Barracuda</realname>
+</game>
+<game>
 	<mamename>baraduke</mamename>
 	<realname>Baraduke</realname>
 </game>
@@ -7108,10 +7168,6 @@
 	<realname>Basis 108</realname>
 </game>
 <game>
-	<mamename>bass</mamename>
-	<realname>Sega Bass Fishing</realname>
-</game>
-<game>
 	<mamename>bassang2</mamename>
 	<realname>Bass Angler 2 (GE865 VER. JAA)</realname>
 </game>
@@ -7129,7 +7185,7 @@
 </game>
 <game>
 	<mamename>bassdx</mamename>
-	<realname>Sega Bass Fishing Deluxe</realname>
+	<realname>Sega Bass Fishing Deluxe (USA)</realname>
 </game>
 <game>
 	<mamename>bassmate</mamename>
@@ -7560,6 +7616,10 @@
 	<realname>Big Buck Hunter - Shooter's Challenge (v1.50.07)</realname>
 </game>
 <game>
+	<mamename>bbl338</mamename>
+	<realname>Portable Game Player BBL-338 (BaoBaoLong, 48-in-1)</realname>
+</game>
+<game>
 	<mamename>bbl380</mamename>
 	<realname>BBL380 - 180 in 1</realname>
 </game>
@@ -7626,6 +7686,10 @@
 <game>
 	<mamename>bbustersua</mamename>
 	<realname>Beast Busters (US, Version 2)</realname>
+</game>
+<game>
+	<mamename>bcats_g4</mamename>
+	<realname>Bad Cats (LG-4)</realname>
 </game>
 <game>
 	<mamename>bcats_l2</mamename>
@@ -7876,6 +7940,10 @@
 	<realname>Beezer (unknown earlier version)</realname>
 </game>
 <game>
+	<mamename>beezerk</mamename>
+	<realname>Bee-Zerk</realname>
+</game>
+<game>
 	<mamename>begas</mamename>
 	<realname>Bega's Battle (Revision 3)</realname>
 </game>
@@ -7885,7 +7953,7 @@
 </game>
 <game>
 	<mamename>beijuehh</mamename>
-	<realname>Beijue 16 Bit Handheld Games (Game Boy style case)</realname>
+	<realname>Beijue 16 Bit Handheld Games 220-in-1 (Game Boy style case)</realname>
 </game>
 <game>
 	<mamename>bejpoker</mamename>
@@ -8030,6 +8098,14 @@
 <game>
 	<mamename>betzoo</mamename>
 	<realname>Betting Zoo - Mr. Cashman (0251064, US)</realname>
+</game>
+<game>
+	<mamename>bfmpac</mamename>
+	<realname>Ms. Pac-Man (mini arcade)</realname>
+</game>
+<game>
+	<mamename>bfpacman</mamename>
+	<realname>Pac-Man (mini arcade)</realname>
 </game>
 <game>
 	<mamename>bfriskyt</mamename>
@@ -8188,6 +8264,10 @@
 	<realname>Big Fight - Big Trouble In The Atlantic Ocean</realname>
 </game>
 <game>
+	<mamename>bigfightj</mamename>
+	<realname>Big Fight - Big Trouble In The Atlantic Ocean (Japan, rev F)</realname>
+</game>
+<game>
 	<mamename>biggame</mamename>
 	<realname>Big Game</realname>
 </game>
@@ -8340,6 +8420,10 @@
 	<realname>Bingo Circus (Rev. A 891001)</realname>
 </game>
 <game>
+	<mamename>bingoct</mamename>
+	<realname>Bingo Circus (terminal)</realname>
+</game>
+<game>
 	<mamename>bingogal</mamename>
 	<realname>Bingo Galaxy (main)</realname>
 </game>
@@ -8446,6 +8530,10 @@
 <game>
 	<mamename>bioship</mamename>
 	<realname>Bio-ship Paladin</realname>
+</game>
+<game>
+	<mamename>biplane</mamename>
+	<realname>Biplane [TTL]</realname>
 </game>
 <game>
 	<mamename>biplane4</mamename>
@@ -8784,12 +8872,12 @@
 	<realname>Bloody Roar 2 (USA)</realname>
 </game>
 <game>
-	<mamename>blitz</mamename>
-	<realname>NFL Blitz (boot ROM 1.2)</realname>
+	<mamename>blit</mamename>
+	<realname>Blit</realname>
 </game>
 <game>
-	<mamename>blitz11</mamename>
-	<realname>NFL Blitz (boot ROM 1.1)</realname>
+	<mamename>blitz</mamename>
+	<realname>NFL Blitz (ver 1.21, Dec 5 1987)</realname>
 </game>
 <game>
 	<mamename>blitz2k</mamename>
@@ -8872,6 +8960,10 @@
 	<realname>Black Sheep Squadron</realname>
 </game>
 <game>
+	<mamename>blktch2</mamename>
+	<realname>Black Touch II (Korea)</realname>
+</game>
+<game>
 	<mamename>blktiger</mamename>
 	<realname>Black Tiger</realname>
 </game>
@@ -8930,6 +9022,10 @@
 <game>
 	<mamename>blockcarb</mamename>
 	<realname>Block Carnival / Thunder &amp; Lightning 2 (bootleg)</realname>
+</game>
+<game>
+	<mamename>blockch</mamename>
+	<realname>G.T. Block Challenger</realname>
 </game>
 <game>
 	<mamename>blocken</mamename>
@@ -9033,7 +9129,11 @@
 </game>
 <game>
 	<mamename>bloto</mamename>
-	<realname>Blits Loto (Russia) (Extrema)</realname>
+	<realname>Blits Loto (Ukraine, V. 30.16)</realname>
+</game>
+<game>
+	<mamename>blotoa</mamename>
+	<realname>Blits Loto (Ukraine, V. 30.08)</realname>
 </game>
 <game>
 	<mamename>bloxeed</mamename>
@@ -9053,7 +9153,23 @@
 </game>
 <game>
 	<mamename>blpearl</mamename>
-	<realname>Black Pearl (Russia) (Extrema)</realname>
+	<realname>Black Pearl (Ukraine, V. 45.02)</realname>
+</game>
+<game>
+	<mamename>blpearla</mamename>
+	<realname>Black Pearl (Ukraine, V. 43.07)</realname>
+</game>
+<game>
+	<mamename>blpearlb</mamename>
+	<realname>Black Pearl (Ukraine, V. 43.04)</realname>
+</game>
+<game>
+	<mamename>blpearlc</mamename>
+	<realname>Black Pearl (Ukraine, V. 42.03)</realname>
+</game>
+<game>
+	<mamename>blpearld</mamename>
+	<realname>Black Pearl (Ukraine, V. 42.01)</realname>
 </game>
 <game>
 	<mamename>blstroid</mamename>
@@ -9142,6 +9258,10 @@
 <game>
 	<mamename>bm2ndmxa</mamename>
 	<realname>beatmania 2nd MIX (ver JA-A)</realname>
+</game>
+<game>
+	<mamename>bm3</mamename>
+	<realname>Beatmania III</realname>
 </game>
 <game>
 	<mamename>bm36th</mamename>
@@ -9300,6 +9420,10 @@
 	<realname>beatmania IIDX 3rd style (GC992 JAA)</realname>
 </game>
 <game>
+	<mamename>bmiidx3b</mamename>
+	<realname>beatmania IIDX 3rd style (GC992 JAB)</realname>
+</game>
+<game>
 	<mamename>bmiidx4</mamename>
 	<realname>beatmania IIDX 4th style (GCA03 JAA)</realname>
 </game>
@@ -9317,6 +9441,10 @@
 </game>
 <game>
 	<mamename>bmiidx7</mamename>
+	<realname>beatmania IIDX 7th style (GCB44 JAB)</realname>
+</game>
+<game>
+	<mamename>bmiidx7a</mamename>
 	<realname>beatmania IIDX 7th style (GCB44 JAA)</realname>
 </game>
 <game>
@@ -9342,6 +9470,10 @@
 <game>
 	<mamename>bmiidxs</mamename>
 	<realname>beatmania IIDX Substream (983 JAA)</realname>
+</game>
+<game>
+	<mamename>bmiidxsa</mamename>
+	<realname>beatmania IIDX Substream (983-AA JAA)</realname>
 </game>
 <game>
 	<mamename>bmjr</mamename>
@@ -9680,6 +9812,10 @@
 	<realname>Born To Fight</realname>
 </game>
 <game>
+	<mamename>borntofiv</mamename>
+	<realname>Born To Fight (Vifico license)</realname>
+</game>
+<game>
 	<mamename>bosco</mamename>
 	<realname>Bosconian - Star Destroyer (new version)</realname>
 </game>
@@ -9874,6 +10010,10 @@
 <game>
 	<mamename>brain</mamename>
 	<realname>Brain</realname>
+</game>
+<game>
+	<mamename>brainbaf</mamename>
+	<realname>Brain Baffler</realname>
 </game>
 <game>
 	<mamename>braiplus</mamename>
@@ -10082,6 +10222,10 @@
 <game>
 	<mamename>brvteam</mamename>
 	<realname>Brave Team</realname>
+</game>
+<game>
+	<mamename>bs4thmix</mamename>
+	<realname>beatstage 4th MIX (ver KA-A)</realname>
 </game>
 <game>
 	<mamename>bs9009cx</mamename>
@@ -10325,23 +10469,23 @@
 </game>
 <game>
 	<mamename>btmn_101</mamename>
-	<realname>Batman (1.01)</realname>
+	<realname>Batman (USA 1.01, display A1.02)</realname>
 </game>
 <game>
 	<mamename>btmn_103</mamename>
-	<realname>Batman (1.03)</realname>
+	<realname>Batman (USA 1.03, display A1.02)</realname>
+</game>
+<game>
+	<mamename>btmn_103f</mamename>
+	<realname>Batman (France 1.03, display F1.03)</realname>
+</game>
+<game>
+	<mamename>btmn_103g</mamename>
+	<realname>Batman (Germany 1.03, display G1.04)</realname>
 </game>
 <game>
 	<mamename>btmn_106</mamename>
-	<realname>Batman (1.06)</realname>
-</game>
-<game>
-	<mamename>btmn_f13</mamename>
-	<realname>Batman (1.03 France)</realname>
-</game>
-<game>
-	<mamename>btmn_g13</mamename>
-	<realname>Batman (1.03 Germany)</realname>
+	<realname>Batman (USA 1.06, display A1.02)</realname>
 </game>
 <game>
 	<mamename>btoads</mamename>
@@ -11140,6 +11284,10 @@
 	<realname>Cadash (US, version 2)</realname>
 </game>
 <game>
+	<mamename>cadashu1</mamename>
+	<realname>Cadash (US, version 1?)</realname>
+</game>
+<game>
 	<mamename>cadd810</mamename>
 	<realname>810</realname>
 </game>
@@ -11693,11 +11841,11 @@
 </game>
 <game>
 	<mamename>catnmous</mamename>
-	<realname>Cat and Mouse (set 1)</realname>
+	<realname>Cat and Mouse (type 02 program)</realname>
 </game>
 <game>
 	<mamename>catnmousa</mamename>
-	<realname>Cat and Mouse (set 2)</realname>
+	<realname>Cat and Mouse (type 01 program)</realname>
 </game>
 <game>
 	<mamename>catt</mamename>
@@ -11984,6 +12132,10 @@
 	<realname>Chess Challenger (model UCC10, 10 levels)</realname>
 </game>
 <game>
+	<mamename>cc2150</mamename>
+	<realname>Chess Champion 2150</realname>
+</game>
+<game>
 	<mamename>cc3</mamename>
 	<realname>Chess Challenger (upgraded version, 3 levels)</realname>
 </game>
@@ -11993,11 +12145,11 @@
 </game>
 <game>
 	<mamename>cc7</mamename>
-	<realname>Chess Challenger "7" (model BCC, rev. B)</realname>
+	<realname>Chess Challenger "7" (set 1)</realname>
 </game>
 <game>
-	<mamename>cc7o</mamename>
-	<realname>Chess Challenger "7" (model CC7)</realname>
+	<mamename>cc7a</mamename>
+	<realname>Chess Challenger "7" (set 2)</realname>
 </game>
 <game>
 	<mamename>cc_10</mamename>
@@ -12144,6 +12296,10 @@
 	<realname>Chess Companion</realname>
 </game>
 <game>
+	<mamename>ccorsario</mamename>
+	<realname>Corsario (Cirsa slot machine)</realname>
+</game>
+<game>
 	<mamename>ccruise</mamename>
 	<realname>Caribbean Cruise</realname>
 </game>
@@ -12206,6 +12362,10 @@
 <game>
 	<mamename>cdkong</mamename>
 	<realname>Donkey Kong (Coleco)</realname>
+</game>
+<game>
+	<mamename>cdlyoko</mamename>
+	<realname>Code Lyoko (25-in-1 handheld)</realname>
 </game>
 <game>
 	<mamename>cdracula</mamename>
@@ -12972,6 +13132,10 @@
 	<realname>Champion Number (V0.67)</realname>
 </game>
 <game>
+	<mamename>chmppool</mamename>
+	<realname>Champion Pool (v1.0)</realname>
+</game>
+<game>
 	<mamename>chn333sc</mamename>
 	<realname>333SC</realname>
 </game>
@@ -13120,10 +13284,6 @@
 	<realname>Circus / Acrobat TV</realname>
 </game>
 <game>
-	<mamename>circusb</mamename>
-	<realname>Circus (bootleg)</realname>
-</game>
-<game>
 	<mamename>circusc</mamename>
 	<realname>Circus Charlie (level select, set 1)</realname>
 </game>
@@ -13146,6 +13306,10 @@
 <game>
 	<mamename>circusce</mamename>
 	<realname>Circus Charlie (Centuri, earlier)</realname>
+</game>
+<game>
+	<mamename>circuso</mamename>
+	<realname>Circus / Acrobat TV (older)</realname>
 </game>
 <game>
 	<mamename>circusp</mamename>
@@ -13226,6 +13390,10 @@
 <game>
 	<mamename>cjffruit</mamename>
 	<realname>Funny Fruit (Ver. 1.13)</realname>
+</game>
+<game>
+	<mamename>cjplus</mamename>
+	<realname>New! Cherry Plus (Ver. 3.10)</realname>
 </game>
 <game>
 	<mamename>ckidzo</mamename>
@@ -13510,6 +13678,10 @@
 <game>
 	<mamename>club90sa</mamename>
 	<realname>Mahjong CLUB 90's (set 2) (Japan 900919)</realname>
+</game>
+<game>
+	<mamename>clubcard</mamename>
+	<realname>Club Card (ver. 1.1 English)</realname>
 </game>
 <game>
 	<mamename>clubk2k3</mamename>
@@ -14572,6 +14744,10 @@
 	<realname>Cookie &amp; Bibi 2 (set 2)</realname>
 </game>
 <game>
+	<mamename>cookbib2b</mamename>
+	<realname>Cookie &amp; Bibi 2 (set 3)</realname>
+</game>
+<game>
 	<mamename>cookbib3</mamename>
 	<realname>Cookie &amp; Bibi 3</realname>
 </game>
@@ -15252,6 +15428,10 @@
 	<realname>Crime Patrol v1.51</realname>
 </game>
 <game>
+	<mamename>crimepat_10</mamename>
+	<realname>Crime Patrol v1.0</realname>
+</game>
+<game>
 	<mamename>crimepat_12</mamename>
 	<realname>Crime Patrol v1.2</realname>
 </game>
@@ -15305,6 +15485,10 @@
 </game>
 <game>
 	<mamename>croquis</mamename>
+	<realname>Croquis (Korea)</realname>
+</game>
+<game>
+	<mamename>croquisg</mamename>
 	<realname>Croquis (Germany)</realname>
 </game>
 <game>
@@ -16065,7 +16249,31 @@
 </game>
 <game>
 	<mamename>cuoreuno</mamename>
-	<realname>Cuore 1 (Italian)</realname>
+	<realname>Cuore 1 (Italian, set 1)</realname>
+</game>
+<game>
+	<mamename>cuoreunoa</mamename>
+	<realname>Cuore 1 (Italian, set 2)</realname>
+</game>
+<game>
+	<mamename>cuoreunob</mamename>
+	<realname>Cuore 1 (Italian, set 3)</realname>
+</game>
+<game>
+	<mamename>cuoreunoc</mamename>
+	<realname>Cuore 1 (Italian, set 4)</realname>
+</game>
+<game>
+	<mamename>cuoreunod</mamename>
+	<realname>Cuore 1 (Italian, set 5)</realname>
+</game>
+<game>
+	<mamename>cuoreunoe</mamename>
+	<realname>Cuore 1 (Italian, set 6)</realname>
+</game>
+<game>
+	<mamename>cuoreunof</mamename>
+	<realname>Cuore 1 (Italian, set 7)</realname>
 </game>
 <game>
 	<mamename>cupfinal</mamename>
@@ -16656,6 +16864,10 @@
 	<realname>Danchi de Quiz: Okusan Yontaku Desuyo! (J 001128 V1.200)</realname>
 </game>
 <game>
+	<mamename>dancmix3</mamename>
+	<realname>TV Dance Mat 4 Games in 1 (Mix Party 3 / Dance Mix 3)</realname>
+</game>
+<game>
 	<mamename>dangar</mamename>
 	<realname>Ufo Robo Dangar (4/07/1987)</realname>
 </game>
@@ -16824,6 +17036,10 @@
 	<realname>Desert Assault (US 4 Players)</realname>
 </game>
 <game>
+	<mamename>datacast</mamename>
+	<realname>Datacast Controller (The Stock Exchange)</realname>
+</game>
+<game>
 	<mamename>dataman</mamename>
 	<realname>DataMan</realname>
 </game>
@@ -16841,19 +17057,19 @@
 </game>
 <game>
 	<mamename>dayto2pe</mamename>
-	<realname>Daytona USA 2 Power Edition</realname>
+	<realname>Daytona USA 2 Power Edition (Japan)</realname>
 </game>
 <game>
 	<mamename>daytona</mamename>
-	<realname>Daytona USA (Japan, Revision A)</realname>
+	<realname>Daytona USA (Revision A)</realname>
 </game>
 <game>
 	<mamename>daytona2</mamename>
-	<realname>Daytona USA 2 (Revision A)</realname>
+	<realname>Daytona USA 2 (Japan, Revision A)</realname>
 </game>
 <game>
 	<mamename>daytona93</mamename>
-	<realname>Daytona USA (Japan)</realname>
+	<realname>Daytona USA</realname>
 </game>
 <game>
 	<mamename>daytonagtx</mamename>
@@ -16869,7 +17085,7 @@
 </game>
 <game>
 	<mamename>daytonase</mamename>
-	<realname>Daytona USA Special Edition (Japan, Revision A)</realname>
+	<realname>Daytona USA Special Edition (Revision A)</realname>
 </game>
 <game>
 	<mamename>daytonat</mamename>
@@ -16994,6 +17210,10 @@
 <game>
 	<mamename>dbz2</mamename>
 	<realname>Dragon Ball Z 2 - Super Battle</realname>
+</game>
+<game>
+	<mamename>dbz2bl</mamename>
+	<realname>Dragon Ball Z 2 - Super Battle (bootleg)</realname>
 </game>
 <game>
 	<mamename>dbza</mamename>
@@ -17549,7 +17769,7 @@
 </game>
 <game>
 	<mamename>ddsoma</mamename>
-	<realname>Dungeons &amp; Dragons: Shadow over Mystara (Asia 96061)</realname>
+	<realname>Dungeons &amp; Dragons: Shadow over Mystara (Asia 960619)</realname>
 </game>
 <game>
 	<mamename>ddsomar1</mamename>
@@ -17573,7 +17793,7 @@
 </game>
 <game>
 	<mamename>ddsomjr2</mamename>
-	<realname>Dungeons &amp; Dragons: Shadow over Mystara (Japan 96022)</realname>
+	<realname>Dungeons &amp; Dragons: Shadow over Mystara (Japan 960223)</realname>
 </game>
 <game>
 	<mamename>ddsomr1</mamename>
@@ -17721,11 +17941,15 @@
 </game>
 <game>
 	<mamename>deathcox</mamename>
-	<realname>Death Crimson OX (Rev A)</realname>
+	<realname>Death Crimson OX (USA)</realname>
+</game>
+<game>
+	<mamename>deathcoxj</mamename>
+	<realname>Death Crimson OX (Japan, Rev A)</realname>
 </game>
 <game>
 	<mamename>deathcoxo</mamename>
-	<realname>Death Crimson OX</realname>
+	<realname>Death Crimson OX (Japan)</realname>
 </game>
 <game>
 	<mamename>deathrac</mamename>
@@ -17834,6 +18058,10 @@
 <game>
 	<mamename>defense</mamename>
 	<realname>Defense (System 16B, FD1089A 317-0028)</realname>
+</game>
+<game>
+	<mamename>defenseb</mamename>
+	<realname>Defense (Defender bootleg)</realname>
 </game>
 <game>
 	<mamename>defndjeu</mamename>
@@ -18020,6 +18248,14 @@
 	<realname>Desert War / Wangan Sensou (ver 1.0)</realname>
 </game>
 <game>
+	<mamename>design6</mamename>
+	<realname>Design D6</realname>
+</game>
+<game>
+	<mamename>designe</mamename>
+	<realname>Design (Euro)</realname>
+</game>
+<game>
 	<mamename>destdrby</mamename>
 	<realname>Destruction Derby [TTL]</realname>
 </game>
@@ -18098,6 +18334,10 @@
 <game>
 	<mamename>df_djpkr</mamename>
 	<realname>Double Joker Poker (45%-75% payout)</realname>
+</game>
+<game>
+	<mamename>dfeverg</mamename>
+	<realname>Dancing Fever Gold (J 000821 V2.001)</realname>
 </game>
 <game>
 	<mamename>dfeveron</mamename>
@@ -18180,16 +18420,44 @@
 	<realname>My Arcade Gamer V Portable Gaming System (DGUN-2573) (set 2, older)</realname>
 </game>
 <game>
+	<mamename>dgun2577</mamename>
+	<realname>My Arcade Retro Machine 200-in-1 (DGUN-2577)</realname>
+</game>
+<game>
 	<mamename>dgun2593</mamename>
 	<realname>My Arcade Retro Arcade Machine - 300 Handheld Video Games (DGUN-2593)</realname>
+</game>
+<game>
+	<mamename>dgun2869</mamename>
+	<realname>My Arcade Retro Micro Controller - 220 Built-In Video Games (DGUN-2869)</realname>
 </game>
 <game>
 	<mamename>dgun2953</mamename>
 	<realname>My Arcade Gamer Mini 160-in-1 (DGUN-2953)</realname>
 </game>
 <game>
+	<mamename>dgun806</mamename>
+	<realname>Plug 'N' Play 25-in-1 (DGUN-806)</realname>
+</game>
+<game>
 	<mamename>dgun851</mamename>
 	<realname>Plug 'N' Play 30-in-1 (DGUN-851)</realname>
+</game>
+<game>
+	<mamename>dgun853</mamename>
+	<realname>Plug 'N' Play 50-in-1 (DGUN-853)</realname>
+</game>
+<game>
+	<mamename>dgunl3201</mamename>
+	<realname>My Arcade Data East Classics - Pixel Classic (308-in-1) (DGUNL-3201)</realname>
+</game>
+<game>
+	<mamename>dgunl3202</mamename>
+	<realname>My Arcade Data East Classics - Pixel Player (308-in-1) (DGUNL-3202)</realname>
+</game>
+<game>
+	<mamename>dgunl3227</mamename>
+	<realname>My Arcade Pac-Man Pocket Player (DGUNL-3227)</realname>
 </game>
 <game>
 	<mamename>dh_lf2</mamename>
@@ -18250,6 +18518,10 @@
 <game>
 	<mamename>diamond</mamename>
 	<realname>Diamond Run</realname>
+</game>
+<game>
+	<mamename>diamondking</mamename>
+	<realname>Diamond King</realname>
 </game>
 <game>
 	<mamename>diamondp</mamename>
@@ -18445,7 +18717,7 @@
 </game>
 <game>
 	<mamename>dinodino</mamename>
-	<realname>Dino Dino</realname>
+	<realname>Dino Dino (Ver. A1.1)</realname>
 </game>
 <game>
 	<mamename>dinoeggs</mamename>
@@ -18512,8 +18784,12 @@
 	<realname>Cadillacs and Dinosaurs (USA 930201)</realname>
 </game>
 <game>
+	<mamename>diola827</mamename>
+	<realname>Diana Olakoa (v8.27)</realname>
+</game>
+<game>
 	<mamename>diolakoa</mamename>
-	<realname>Diana Olakoa</realname>
+	<realname>Diana Olakoa (v8.38)</realname>
 </game>
 <game>
 	<mamename>dirtdash</mamename>
@@ -18528,16 +18804,20 @@
 	<realname>Dirt Devils (Export, Revision A)</realname>
 </game>
 <game>
-	<mamename>dirtdvlsa</mamename>
+	<mamename>dirtdvlsau</mamename>
 	<realname>Dirt Devils (Australia, Revision A)</realname>
 </game>
 <game>
 	<mamename>dirtdvlsg</mamename>
-	<realname>Dirt Devils (Germany?)</realname>
+	<realname>Dirt Devils (Export, Ver. G?)</realname>
 </game>
 <game>
 	<mamename>dirtdvlsj</mamename>
 	<realname>Dirt Devils (Japan, Revision A)</realname>
+</game>
+<game>
+	<mamename>dirtdvlsu</mamename>
+	<realname>Dirt Devils (USA, Revision A)</realname>
 </game>
 <game>
 	<mamename>dirtfoxj</mamename>
@@ -19168,6 +19448,10 @@
 	<realname>Dog Patch</realname>
 </game>
 <game>
+	<mamename>dogstdx</mamename>
+	<realname>dogstation Deluxe</realname>
+</game>
+<game>
 	<mamename>dogyuun</mamename>
 	<realname>Dogyuun</realname>
 </game>
@@ -19356,8 +19640,16 @@
 	<realname>Doraemon no Eawase Montage (prototype)</realname>
 </game>
 <game>
+	<mamename>doraglob</mamename>
+	<realname>Dora the Explorer - Dora TV Adventure Globe</realname>
+</game>
+<game>
 	<mamename>dorapdc</mamename>
 	<realname>Dora l'exploratrice - Pocket Dream Console (VideoJet, France)</realname>
+</game>
+<game>
+	<mamename>doraphon</mamename>
+	<realname>Dora the Explorer - Dora TV Explorer Phone / Boots's Special Day</realname>
 </game>
 <game>
 	<mamename>dorodon</mamename>
@@ -19397,11 +19689,11 @@
 </game>
 <game>
 	<mamename>dotron</mamename>
-	<realname>Discs of Tron (Upright)</realname>
+	<realname>Discs of Tron (Upright, 10/4/83)</realname>
 </game>
 <game>
 	<mamename>dotrona</mamename>
-	<realname>Discs of Tron (Upright alternate)</realname>
+	<realname>Discs of Tron (Upright, 9/22/83)</realname>
 </game>
 <game>
 	<mamename>dotrone</mamename>
@@ -19472,8 +19764,12 @@
 	<realname>DECpc AXP 150</realname>
 </game>
 <game>
+	<mamename>dphh8213</mamename>
+	<realname>Digital Pocket Hand Held System 20-in-1 - Model 8213</realname>
+</game>
+<game>
 	<mamename>dphh8630</mamename>
-	<realname>PCP 8630 - 230-in-1 - Digital Pocket Hand Held System</realname>
+	<realname>Digital Pocket Hand Held System 230-in-1 - Model 8630 / Model 8633</realname>
 </game>
 <game>
 	<mamename>dphl</mamename>
@@ -19642,6 +19938,10 @@
 <game>
 	<mamename>drdmania</mamename>
 	<realname>Dardomania (v2.1)</realname>
+</game>
+<game>
+	<mamename>drdunk</mamename>
+	<realname>Dr. Dunk</realname>
 </game>
 <game>
 	<mamename>dreambal</mamename>
@@ -19830,6 +20130,10 @@
 <game>
 	<mamename>driftout</mamename>
 	<realname>Drift Out (Europe)</realname>
+</game>
+<game>
+	<mamename>driftoutct</mamename>
+	<realname>Drift Out (Europe, Cameltry conversion)</realname>
 </game>
 <game>
 	<mamename>driftoutj</mamename>
@@ -20164,6 +20468,10 @@
 	<realname>DT486</realname>
 </game>
 <game>
+	<mamename>dtc</mamename>
+	<realname>DTC</realname>
+</game>
+<game>
 	<mamename>dtfamily</mamename>
 	<realname>Diet Family</realname>
 </game>
@@ -20246,6 +20554,10 @@
 <game>
 	<mamename>dunkshoto</mamename>
 	<realname>Dunk Shot (FD1089A 317-0022)</realname>
+</game>
+<game>
+	<mamename>dunksunk</mamename>
+	<realname>Dunk 'n Sunk</realname>
 </game>
 <game>
 	<mamename>dvbslan</mamename>
@@ -20572,6 +20884,10 @@
 	<realname>Easter Island - Cash Express (0151117, US)</realname>
 </game>
 <game>
+	<mamename>easykara</mamename>
+	<realname>Easy Karaoke Groove Station</realname>
+</game>
+<game>
 	<mamename>eatpm_4g</mamename>
 	<realname>Elvira and the Party Monsters (LG-4)</realname>
 </game>
@@ -20650,6 +20966,10 @@
 <game>
 	<mamename>ebball3</mamename>
 	<realname>Electronic Baseball 3 (Entex)</realname>
+</game>
+<game>
+	<mamename>ebknight</mamename>
+	<realname>Black Knight Pinball (Entex)</realname>
 </game>
 <game>
 	<mamename>ec1840</mamename>
@@ -22756,6 +23076,10 @@
 	<realname>Galaxian 2 (Entex)</realname>
 </game>
 <game>
+	<mamename>egame150</mamename>
+	<realname>E-Game! 150-in-1</realname>
+</game>
+<game>
 	<mamename>egghunt</mamename>
 	<realname>Egg Hunt</realname>
 </game>
@@ -23257,6 +23581,10 @@
 </game>
 <game>
 	<mamename>endrichs</mamename>
+	<realname>Endless Riches (Ver 1.21)</realname>
+</game>
+<game>
+	<mamename>endrichsa</mamename>
 	<realname>Endless Riches (Ver 1.20)</realname>
 </game>
 <game>
@@ -26940,6 +27268,10 @@
 	<realname>Ericsson WS286</realname>
 </game>
 <game>
+	<mamename>ews4800_310</mamename>
+	<realname>EWS4800/310</realname>
+</game>
+<game>
 	<mamename>ex8000</mamename>
 	<realname>EX-8000 Programmable Polyphonic Synthe Module</realname>
 </game>
@@ -27153,7 +27485,19 @@
 </game>
 <game>
 	<mamename>exsafar</mamename>
-	<realname>Safari (Russia) (Extrema)</realname>
+	<realname>Safari (Extrema, Ukraine, V. 43.14)</realname>
+</game>
+<game>
+	<mamename>exsafara</mamename>
+	<realname>Safari (Extrema, Ukraine, V. 43.08)</realname>
+</game>
+<game>
+	<mamename>exsafarb</mamename>
+	<realname>Safari (Extrema, Ukraine, V. 42.07)</realname>
+</game>
+<game>
+	<mamename>exsafarc</mamename>
+	<realname>Safari (Extrema, Ukraine, V. 42.04)</realname>
 </game>
 <game>
 	<mamename>exsprt48</mamename>
@@ -27185,11 +27529,15 @@
 </game>
 <game>
 	<mamename>extrmth</mamename>
-	<realname>Treasure Hunt (Russia) (Extrema)</realname>
+	<realname>Treasure Hunt (Extrema, Ukraine, V. 34.03)</realname>
+</game>
+<game>
+	<mamename>extrmtha</mamename>
+	<realname>Treasure Hunt (Extrema, Ukraine, V. 34.02)</realname>
 </game>
 <game>
 	<mamename>extrmti</mamename>
-	<realname>Treasure Island (Russia) (Extrema)</realname>
+	<realname>Treasure Island (Extrema, Ukraine, V. 32.49)</realname>
 </game>
 <game>
 	<mamename>exvania</mamename>
@@ -27301,11 +27649,15 @@
 </game>
 <game>
 	<mamename>f1gp</mamename>
-	<realname>F-1 Grand Prix</realname>
+	<realname>F-1 Grand Prix (set 1)</realname>
 </game>
 <game>
 	<mamename>f1gp2</mamename>
 	<realname>F-1 Grand Prix Part II</realname>
+</game>
+<game>
+	<mamename>f1gpa</mamename>
+	<realname>F-1 Grand Prix (set 2)</realname>
 </game>
 <game>
 	<mamename>f1gpb</mamename>
@@ -27674,6 +28026,10 @@
 <game>
 	<mamename>fatfurspa</mamename>
 	<realname>Fatal Fury Special / Garou Densetsu Special (NGM-058 ~ NGH-058, set 2)</realname>
+</game>
+<game>
+	<mamename>fatfurspb</mamename>
+	<realname>Fatal Fury Special (SNES bootleg)</realname>
 </game>
 <game>
 	<mamename>fatfurwa</mamename>
@@ -28265,7 +28621,11 @@
 </game>
 <game>
 	<mamename>feasbu</mamename>
-	<realname>Elite A/S Challenger (Budapest program)</realname>
+	<realname>Elite A/S Challenger (Budapest program, model EAS)</realname>
+</game>
+<game>
+	<mamename>feasbua</mamename>
+	<realname>Elite A/S Challenger (Budapest program, model EWC)</realname>
 </game>
 <game>
 	<mamename>feasgla</mamename>
@@ -28465,11 +28825,11 @@
 </game>
 <game>
 	<mamename>ffreveng</mamename>
-	<realname>Final Fight Revenge (JUET 990930 V1.100)</realname>
+	<realname>Final Fight Revenge / Final Revenge (JUET 990930 V1.100)</realname>
 </game>
 <game>
 	<mamename>ffrevng10</mamename>
-	<realname>Final Fight Revenge (JUET 990714 V1.000)</realname>
+	<realname>Final Fight Revenge / Final Revenge (JUET 990714 V1.000)</realname>
 </game>
 <game>
 	<mamename>ffruits</mamename>
@@ -28800,12 +29160,16 @@
 	<realname>Final Lap R (Rev. B)</realname>
 </game>
 <game>
+	<mamename>finalapr1</mamename>
+	<realname>Final Lap R</realname>
+</game>
+<game>
 	<mamename>finalaprj</mamename>
 	<realname>Final Lap R (Japan Rev. C)</realname>
 </game>
 <game>
-	<mamename>finalapro</mamename>
-	<realname>Final Lap R</realname>
+	<mamename>finalaprj1</mamename>
+	<realname>Final Lap R (Japan Rev. B)</realname>
 </game>
 <game>
 	<mamename>finalb</mamename>
@@ -29094,6 +29458,10 @@
 <game>
 	<mamename>fixeightut</mamename>
 	<realname>FixEight (USA, Taito license)</realname>
+</game>
+<game>
+	<mamename>fixitflx</mamename>
+	<realname>Fix It Felix Jr. (mini arcade)</realname>
 </game>
 <game>
 	<mamename>fjbuster</mamename>
@@ -29480,6 +29848,10 @@
 	<realname>Forgotten Worlds (World)</realname>
 </game>
 <game>
+	<mamename>forgottnj</mamename>
+	<realname>Forgotten Worlds (Japan)</realname>
+</game>
+<game>
 	<mamename>forgottnu</mamename>
 	<realname>Forgotten Worlds (USA, B-Board 88621B-2, Rev. C)</realname>
 </game>
@@ -29520,12 +29892,12 @@
 	<realname>Fortune of Athena (10248611, NSW/ACT)</realname>
 </game>
 <game>
-	<mamename>fortecar</mamename>
-	<realname>Forte Card (Ver 103, English)</realname>
-</game>
-<game>
 	<mamename>fortecrd</mamename>
 	<realname>Forte Card (Ver 110, Spanish)</realname>
+</game>
+<game>
+	<mamename>fortecrde</mamename>
+	<realname>Forte Card (Ver 103, English)</realname>
 </game>
 <game>
 	<mamename>fortellr</mamename>
@@ -29956,6 +30328,10 @@
 	<realname>FS-5500F2 (Japan) (MSX2)</realname>
 </game>
 <game>
+	<mamename>fs_la5</mamename>
+	<realname>The Flintstones (LA-5)</realname>
+</game>
+<game>
 	<mamename>fs_lx2</mamename>
 	<realname>The Flintstones (LX-2)</realname>
 </game>
@@ -30052,6 +30428,10 @@
 	<realname>Flying Shark (World)</realname>
 </game>
 <game>
+	<mamename>fsharkb</mamename>
+	<realname>Flying Shark (World, bootleg)</realname>
+</game>
+<game>
 	<mamename>fsharkbt</mamename>
 	<realname>Flying Shark (bootleg with 8741)</realname>
 </game>
@@ -30146,6 +30526,10 @@
 <game>
 	<mamename>ftimpcta</mamename>
 	<realname>Fighters' Impact A (Ver 2.00J)</realname>
+</game>
+<game>
+	<mamename>ftri1</mamename>
+	<realname>Tri-1 (Fonas)</realname>
 </game>
 <game>
 	<mamename>fts2in1</mamename>
@@ -30288,6 +30672,10 @@
 	<realname>Funtronics: Red Light Green Light</realname>
 </game>
 <game>
+	<mamename>funtag</mamename>
+	<realname>Funtronics: Tag</realname>
+</game>
+<game>
 	<mamename>funybubl</mamename>
 	<realname>Funny Bubble</realname>
 </game>
@@ -30353,11 +30741,11 @@
 </game>
 <game>
 	<mamename>fvipers2</mamename>
-	<realname>Fighting Vipers 2 (Revision A)</realname>
+	<realname>Fighting Vipers 2 (Japan, Revision A)</realname>
 </game>
 <game>
 	<mamename>fvipers2o</mamename>
-	<realname>Fighting Vipers 2</realname>
+	<realname>Fighting Vipers 2 (Japan)</realname>
 </game>
 <game>
 	<mamename>fvipersb</mamename>
@@ -30644,6 +31032,10 @@
 	<realname>Galaxian (Spanish bootleg)</realname>
 </game>
 <game>
+	<mamename>galaxianem</mamename>
+	<realname>Galaxian (Electromar Spanish bootleg)</realname>
+</game>
+<game>
 	<mamename>galaxiani</mamename>
 	<realname>Galaxian (Irem)</realname>
 </game>
@@ -30774,6 +31166,10 @@
 <game>
 	<mamename>galkaika</mamename>
 	<realname>Mahjong Gal no Kaika (Japan)</realname>
+</game>
+<game>
+	<mamename>galkamika</mamename>
+	<realname>Kamikaze (Electrogame, Spanish bootleg of Galaxian)</realname>
 </game>
 <game>
 	<mamename>galkoku</mamename>
@@ -31968,6 +32364,10 @@
 	<realname>Grand Cross v1.02F</realname>
 </game>
 <game>
+	<mamename>gcs2mgp</mamename>
+	<realname>Mini Game Player 48-in-1</realname>
+</game>
+<game>
 	<mamename>gcslottv</mamename>
 	<realname>Gachinko Contest! Slot machine TV (Japan)</realname>
 </game>
@@ -31977,14 +32377,18 @@
 </game>
 <game>
 	<mamename>gdarius</mamename>
-	<realname>G-Darius (Ver 2.01J)</realname>
+	<realname>G-Darius (Ver 2.02O)</realname>
 </game>
 <game>
 	<mamename>gdarius2</mamename>
 	<realname>G-Darius Ver.2 (Ver 2.03J)</realname>
 </game>
 <game>
-	<mamename>gdariusb</mamename>
+	<mamename>gdariusj</mamename>
+	<realname>G-Darius (Ver 2.01J)</realname>
+</game>
+<game>
+	<mamename>gdariusu</mamename>
 	<realname>G-Darius (Ver 2.02A)</realname>
 </game>
 <game>
@@ -32148,6 +32552,10 @@
 	<realname>Genius 6 (V110F)</realname>
 </game>
 <game>
+	<mamename>genius6a</mamename>
+	<realname>Genius 6 (V133F)</realname>
+</game>
+<game>
 	<mamename>genix</mamename>
 	<realname>Genix Family</realname>
 </game>
@@ -32192,8 +32600,20 @@
 	<realname>GES 9051N-386C VER -0.01</realname>
 </game>
 <game>
+	<mamename>getaway</mamename>
+	<realname>Get A Way</realname>
+</game>
+<game>
 	<mamename>getbass</mamename>
-	<realname>Get Bass</realname>
+	<realname>Get Bass: Sega Bass Fishing (Japan)</realname>
+</game>
+<game>
+	<mamename>getbassdx</mamename>
+	<realname>Get Bass: Sega Bass Fishing Deluxe (Japan)</realname>
+</game>
+<game>
+	<mamename>getbassur</mamename>
+	<realname>Get Bass: Sega Bass Fishing Upright (Japan)</realname>
 </game>
 <game>
 	<mamename>gete486vl</mamename>
@@ -32924,12 +33344,20 @@
 	<realname>Galaxy Play 2</realname>
 </game>
 <game>
+	<mamename>gm235upc</mamename>
+	<realname>Ultimate Pocket Console GM-235</realname>
+</game>
+<game>
 	<mamename>gmahou</mamename>
 	<realname>Great Mahou Daisakusen (Japan 000121)</realname>
 </game>
 <game>
 	<mamename>gmaster</mamename>
 	<realname>Game Master</realname>
+</game>
+<game>
+	<mamename>gmfamily</mamename>
+	<realname>Games Family</realname>
 </game>
 <game>
 	<mamename>gmgalax</mamename>
@@ -33081,19 +33509,19 @@
 </game>
 <game>
 	<mamename>gnr_200</mamename>
-	<realname>Guns N Roses (2.00)</realname>
+	<realname>Guns N Roses (USA 2.00, display A3.00)</realname>
 </game>
 <game>
 	<mamename>gnr_300</mamename>
-	<realname>Guns N Roses (3.00)</realname>
+	<realname>Guns N Roses (USA 3.00, display A3.00)</realname>
 </game>
 <game>
 	<mamename>gnr_300d</mamename>
-	<realname>Guns N Roses (3.00 Dutch)</realname>
+	<realname>Guns N Roses (Dutch 3.00, display A3.00)</realname>
 </game>
 <game>
 	<mamename>gnr_300f</mamename>
-	<realname>Guns N Roses (3.00 French)</realname>
+	<realname>Guns N Roses (French 3.00, display F3.00)</realname>
 </game>
 <game>
 	<mamename>gnw_ball</mamename>
@@ -33458,6 +33886,10 @@
 <game>
 	<mamename>goldfish</mamename>
 	<realname>Gold Fish (020903, prototype)</realname>
+</game>
+<game>
+	<mamename>goldfrts</mamename>
+	<realname>Golden Fruits</realname>
 </game>
 <game>
 	<mamename>goldfrui</mamename>
@@ -33973,11 +34405,27 @@
 </game>
 <game>
 	<mamename>grancan</mamename>
-	<realname>Grand Canyon (Russia) (Extrema)</realname>
+	<realname>Grand Canyon (Ukraine, V. 43.09)</realname>
+</game>
+<game>
+	<mamename>grancana</mamename>
+	<realname>Grand Canyon (Ukraine, V. 43.05)</realname>
+</game>
+<game>
+	<mamename>grancanb</mamename>
+	<realname>Grand Canyon (Ukraine, V. 42.13)</realname>
+</game>
+<game>
+	<mamename>grancanc</mamename>
+	<realname>Grand Canyon (Ukraine, V. 42.06)</realname>
 </game>
 <game>
 	<mamename>grancapi</mamename>
 	<realname>Gran Capitan (Version 3)</realname>
+</game>
+<game>
+	<mamename>grand8</mamename>
+	<realname>Le Grand 8</realname>
 </game>
 <game>
 	<mamename>grand_l3</mamename>
@@ -34518,6 +34966,10 @@
 <game>
 	<mamename>gtclasscs</mamename>
 	<realname>Golden Tee Classic (v1.00S)</realname>
+</game>
+<game>
+	<mamename>gtct885</mamename>
+	<realname>Gaming Tech CT-885</realname>
 </game>
 <game>
 	<mamename>gtdiamond</mamename>
@@ -36640,6 +37092,14 @@
 	<realname>Heiankyo Alien</realname>
 </game>
 <game>
+	<mamename>hektor</mamename>
+	<realname>Hektor</realname>
+</game>
+<game>
+	<mamename>hektor2</mamename>
+	<realname>Hektor II</realname>
+</game>
+<game>
 	<mamename>hektor3</mamename>
 	<realname>Hektor III</realname>
 </game>
@@ -36694,6 +37154,10 @@
 <game>
 	<mamename>herodku</mamename>
 	<realname>Hero in the Castle of Doom (DK conversion not encrypted)</realname>
+</game>
+<game>
+	<mamename>heromem</mamename>
+	<realname>Heroine's Memory</realname>
 </game>
 <game>
 	<mamename>heuksun</mamename>
@@ -36774,6 +37238,10 @@
 <game>
 	<mamename>hharryu</mamename>
 	<realname>Hammerin' Harry (US, M84 hardware)</realname>
+</game>
+<game>
+	<mamename>hhhippos</mamename>
+	<realname>Hungry Hungry Hippos (redemption game)</realname>
 </game>
 <game>
 	<mamename>hhotel</mamename>
@@ -36857,7 +37325,7 @@
 </game>
 <game>
 	<mamename>hiimpactp</mamename>
-	<realname>High Impact Football (prototype, rev 8.6 12/09/90)</realname>
+	<realname>High Impact Football (prototype, revision0 proto 8.6 12/09/90)</realname>
 </game>
 <game>
 	<mamename>hikcheck</mamename>
@@ -36928,6 +37396,10 @@
 	<realname>Hishou Zame (Japan)</realname>
 </game>
 <game>
+	<mamename>hishouzab</mamename>
+	<realname>Hishou Zame (Japan, bootleg)</realname>
+</game>
+<game>
 	<mamename>histryma</mamename>
 	<realname>The History of Martial Arts (set 1)</realname>
 </game>
@@ -36982,6 +37454,14 @@
 <game>
 	<mamename>hkagerou</mamename>
 	<realname>Hana Kagerou [BET] (Japan)</realname>
+</game>
+<game>
+	<mamename>hkb502</mamename>
+	<realname>HKB-502 268-in-1 (set 1)</realname>
+</game>
+<game>
+	<mamename>hkb502a</mamename>
+	<realname>HKB-502 268-in-1 (set 2)</realname>
 </game>
 <game>
 	<mamename>hkc8800a</mamename>
@@ -37193,19 +37673,19 @@
 </game>
 <game>
 	<mamename>hook_401</mamename>
-	<realname>Hook (4.01)</realname>
+	<realname>Hook (USA 4.01, display A4.01)</realname>
 </game>
 <game>
-	<mamename>hook_401p</mamename>
-	<realname>Hook (4.01 with prototype sound)</realname>
+	<mamename>hook_401_p</mamename>
+	<realname>Hook (USA 4.01 with prototype sound, display A4.01)</realname>
 </game>
 <game>
 	<mamename>hook_404</mamename>
-	<realname>Hook (4.04)</realname>
+	<realname>Hook (USA 4.04, display A4.01)</realname>
 </game>
 <game>
 	<mamename>hook_408</mamename>
-	<realname>Hook (4.08)</realname>
+	<realname>Hook (USA 4.08, display A4.01)</realname>
 </game>
 <game>
 	<mamename>hookj</mamename>
@@ -37258,6 +37738,10 @@
 <game>
 	<mamename>horizon</mamename>
 	<realname>Horizon (Irem)</realname>
+</game>
+<game>
+	<mamename>horocomp</mamename>
+	<realname>Horoscope Computer</realname>
 </game>
 <game>
 	<mamename>horseran</mamename>
@@ -37436,6 +37920,10 @@
 	<realname>Hot Mind (Fit of Fighting hardware)</realname>
 </game>
 <game>
+	<mamename>hotnight</mamename>
+	<realname>Hot Night</realname>
+</game>
+<game>
 	<mamename>hotpinbl</mamename>
 	<realname>Hot Pinball</realname>
 </game>
@@ -37550,6 +38038,10 @@
 <game>
 	<mamename>hp2622a</mamename>
 	<realname>HP-2622A</realname>
+</game>
+<game>
+	<mamename>hp2641</mamename>
+	<realname>HP 2641A</realname>
 </game>
 <game>
 	<mamename>hp2645</mamename>
@@ -37728,6 +38220,10 @@
 	<realname>Super Hana Paradise (Japan)</realname>
 </game>
 <game>
+	<mamename>hpierrot</mamename>
+	<realname>Happy Pierrot</realname>
+</game>
+<game>
 	<mamename>hpolym84</mamename>
 	<realname>Hyper Olympic '84</realname>
 </game>
@@ -37770,6 +38266,18 @@
 <game>
 	<mamename>hrdtimesa</mamename>
 	<realname>Hard Times (set 2)</realname>
+</game>
+<game>
+	<mamename>hs36blk</mamename>
+	<realname>HengSheng 36-in-1 (Black pad)</realname>
+</game>
+<game>
+	<mamename>hs36red</mamename>
+	<realname>HengSheng 36-in-1 (Red pad)</realname>
+</game>
+<game>
+	<mamename>hs80</mamename>
+	<realname>HS-80 Programmable Polyphonic Synthesizer</realname>
 </game>
 <game>
 	<mamename>hs_l3</mamename>
@@ -37914,6 +38422,10 @@
 <game>
 	<mamename>hunchbaka</mamename>
 	<realname>Hunchback (set 2)</realname>
+</game>
+<game>
+	<mamename>hunchbgb</mamename>
+	<realname>Hunchback (FAR S.A. bootleg on Galaxian hardware)</realname>
 </game>
 <game>
 	<mamename>hunchbkd</mamename>
@@ -38528,6 +39040,10 @@
 	<realname>Iemoto [BET] (Japan 871118)</realname>
 </game>
 <game>
+	<mamename>iez80</mamename>
+	<realname>Z80 SBC (prototype?)</realname>
+</game>
+<game>
 	<mamename>if800</mamename>
 	<realname>if800 model 60</realname>
 </game>
@@ -39072,6 +39588,10 @@
 	<realname>Initial D4 (Rev C)</realname>
 </game>
 <game>
+	<mamename>innotab2</mamename>
+	<realname>InnoTAB 2 (UK)</realname>
+</game>
+<game>
 	<mamename>inquiztr</mamename>
 	<realname>Inquizitor</realname>
 </game>
@@ -39476,6 +39996,10 @@
 	<realname>IQ-151</realname>
 </game>
 <game>
+	<mamename>iq7000</mamename>
+	<realname>IQ-7000</realname>
+</game>
+<game>
 	<mamename>iqblock</mamename>
 	<realname>IQ-Block (V100U)</realname>
 </game>
@@ -39494,6 +40018,10 @@
 <game>
 	<mamename>iqtv512</mamename>
 	<realname>Genius IQ TV 512 (Germany)</realname>
+</game>
+<game>
+	<mamename>iquest</mamename>
+	<realname>IQuest 4.0 (US)</realname>
 </game>
 <game>
 	<mamename>iqunlim</mamename>
@@ -39746,6 +40274,10 @@
 <game>
 	<mamename>itvg49</mamename>
 	<realname>Interactive TV Games 49-in-1 (PAL)</realname>
+</game>
+<game>
+	<mamename>itvphone</mamename>
+	<realname>Teléfono interactivo de TV (Spain)</realname>
 </game>
 <game>
 	<mamename>ivelultr</mamename>
@@ -41181,11 +41713,11 @@
 </game>
 <game>
 	<mamename>j6aceclb</mamename>
-	<realname>Ace Of Clubs (Crystal) (IMPACT, set 1)</realname>
+	<realname>Ace Of Clubs (Crystal) (IMPACT, GND D 4)</realname>
 </game>
 <game>
 	<mamename>j6aceclba</mamename>
-	<realname>Ace Of Clubs (Crystal) (IMPACT, set 2)</realname>
+	<realname>Ace Of Clubs (Crystal) (IMPACT, GND D 4 P, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6acehi</mamename>
@@ -41209,39 +41741,35 @@
 </game>
 <game>
 	<mamename>j6arcadec</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V9, set 4)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V9, set 4, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6arcaded</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V9, set 5)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V9, set 5, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6arcadee</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V10, set 1)</realname>
-</game>
-<game>
-	<mamename>j6arcadef</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V10, set 2)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V10, set 1, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6arcadeg</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V10, set 3)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V10, set 2, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6arcadeh</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V10, set 4)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V10, set 3, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6arcadei</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V10, set 5)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V10, set 4, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6arcadej</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V10, set 6)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V10, set 5, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6arcadek</mamename>
-	<realname>Arcadia (JPM) (IMPACT) (V10, set 7)</realname>
+	<realname>Arcadia (JPM) (IMPACT) (V10, set 6, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bags</mamename>
@@ -41249,27 +41777,27 @@
 </game>
 <game>
 	<mamename>j6bbankr</mamename>
-	<realname>Big Banker (Crystal) (IMPACT) (BB 2 T 2)</realname>
+	<realname>Big Banker (JPM) (IMPACT) (BB 2 T 2)</realname>
 </game>
 <game>
 	<mamename>j6big50</mamename>
-	<realname>Big 50 (JPM) (IMPACT) (set 1)</realname>
+	<realname>Big 50 (JPM) (IMPACT) (BF12 L12)</realname>
 </game>
 <game>
 	<mamename>j6big50a</mamename>
-	<realname>Big 50 (JPM) (IMPACT) (set 2)</realname>
+	<realname>Big 50 (JPM) (IMPACT) (BF12P F12, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6big50b</mamename>
-	<realname>Big 50 (JPM) (IMPACT) (set 3)</realname>
+	<realname>Big 50 (JPM) (IMPACT) (BF12 AH12)</realname>
 </game>
 <game>
 	<mamename>j6big50c</mamename>
-	<realname>Big 50 (JPM) (IMPACT) (set 4)</realname>
+	<realname>Big 50 (JPM) (IMPACT) (BF12 L12, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6big50d</mamename>
-	<realname>Big 50 (JPM) (IMPACT) (set 5)</realname>
+	<realname>Big 50 (JPM) (IMPACT) (BF L8)</realname>
 </game>
 <game>
 	<mamename>j6bigbnk</mamename>
@@ -41277,7 +41805,7 @@
 </game>
 <game>
 	<mamename>j6bigbnka</mamename>
-	<realname>Big Banker (JPM) (IMPACT) (BB10C 20) (set 2)</realname>
+	<realname>Big Banker (JPM) (IMPACT) (BB10C 20) (set 2, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bigbnkb</mamename>
@@ -41293,7 +41821,7 @@
 </game>
 <game>
 	<mamename>j6bigbnke</mamename>
-	<realname>Big Banker (JPM) (IMPACT) (BB8 P H18)</realname>
+	<realname>Big Banker (JPM) (IMPACT) (BB8 P H18) (Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bigbnkf</mamename>
@@ -41301,7 +41829,7 @@
 </game>
 <game>
 	<mamename>j6bigbnkg</mamename>
-	<realname>Big Banker (JPM) (IMPACT) (BB6 C 16) (set 1)</realname>
+	<realname>Big Banker (JPM) (IMPACT) (BB6 C 16) (set 1, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bigbnkh</mamename>
@@ -41313,7 +41841,7 @@
 </game>
 <game>
 	<mamename>j6bigbnkj</mamename>
-	<realname>Big Banker (JPM) (IMPACT) (BB2BP H11)</realname>
+	<realname>Big Banker (JPM) (IMPACT) (BB2BP H11) (Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bigbnkk</mamename>
@@ -41393,7 +41921,7 @@
 </game>
 <game>
 	<mamename>j6bigpcta</mamename>
-	<realname>Big Picture (Ace) (IMPACT) (set 2)</realname>
+	<realname>Big Picture (Ace) (IMPACT) (set 2, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bigpctb</mamename>
@@ -41401,19 +41929,19 @@
 </game>
 <game>
 	<mamename>j6bigtop</mamename>
-	<realname>Big Top Club (JPM) (IMPACT) (set 1)</realname>
+	<realname>Big Top Club (JPM) (IMPACT) (BT3 BT6) set 1)</realname>
 </game>
 <game>
 	<mamename>j6bigtopa</mamename>
-	<realname>Big Top Club (JPM) (IMPACT) (set 2)</realname>
+	<realname>Big Top Club (JPM) (IMPACT) (BT4 BT8) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6bigtopb</mamename>
-	<realname>Big Top Club (JPM) (IMPACT) (set 3)</realname>
+	<realname>Big Top Club (JPM) (IMPACT) (BT4 BT8P) (set 3, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bigtopc</mamename>
-	<realname>Big Top Club (JPM) (IMPACT) (set 4)</realname>
+	<realname>Big Top Club (JPM) (IMPACT) (BT4 BT8F) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6bigwhl</mamename>
@@ -41421,7 +41949,7 @@
 </game>
 <game>
 	<mamename>j6bigwhla</mamename>
-	<realname>Big Wheel (JPM) (IMPACT) (set 2)</realname>
+	<realname>Big Wheel (JPM) (IMPACT) (set 2, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bigwhlb</mamename>
@@ -41485,7 +42013,7 @@
 </game>
 <game>
 	<mamename>j6bnzaa</mamename>
-	<realname>Bonanza (JPM) (IMPACT) (BO1 P H06)</realname>
+	<realname>Bonanza (JPM) (IMPACT) (BO1 P H06) (Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bnzab</mamename>
@@ -41501,7 +42029,7 @@
 </game>
 <game>
 	<mamename>j6bnzae</mamename>
-	<realname>Bonanza (JPM) (IMPACT) (BO 9P 14)</realname>
+	<realname>Bonanza (JPM) (IMPACT) (BO 9P 14) (Protocol)</realname>
 </game>
 <game>
 	<mamename>j6bnzaf</mamename>
@@ -41561,23 +42089,23 @@
 </game>
 <game>
 	<mamename>j6camelt</mamename>
-	<realname>Camelot (JPM) (IMPACT) (set 1)</realname>
+	<realname>Camelot (JPM) (IMPACT) (CA8 C10)</realname>
 </game>
 <game>
 	<mamename>j6camelta</mamename>
-	<realname>Camelot (JPM) (IMPACT) (set 2)</realname>
+	<realname>Camelot (JPM) (IMPACT) (CA8P C10, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6cameltb</mamename>
-	<realname>Camelot (JPM) (IMPACT) (set 3)</realname>
+	<realname>Camelot (JPM) (IMPACT) (CA8 AC10)</realname>
 </game>
 <game>
 	<mamename>j6cameltc</mamename>
-	<realname>Camelot (JPM) (IMPACT) (set 4)</realname>
+	<realname>Camelot (JPM) (IMPACT) (CA8 C10, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6cameltd</mamename>
-	<realname>Camelot (JPM) (IMPACT) (set 5)</realname>
+	<realname>Camelot (JPM) (IMPACT) (CA6 C8)</realname>
 </game>
 <game>
 	<mamename>j6cas5</mamename>
@@ -41609,7 +42137,7 @@
 </game>
 <game>
 	<mamename>j6cas5g</mamename>
-	<realname>Casino 5ive Liner (JPM) (IMPACT) (set 8)</realname>
+	<realname>Casino 5ive Liner (JPM) (IMPACT) (set 8, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6cas5h</mamename>
@@ -41625,7 +42153,7 @@
 </game>
 <game>
 	<mamename>j6cas5k</mamename>
-	<realname>Casino 5ive Liner (JPM) (IMPACT) (set 12)</realname>
+	<realname>Casino 5ive Liner (JPM) (IMPACT) (set 12, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6cas5l</mamename>
@@ -41725,11 +42253,11 @@
 </game>
 <game>
 	<mamename>j6cascz</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 1)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC07C L12) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6cascza</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 2)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC07C L12) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6casczb</mamename>
@@ -41737,7 +42265,7 @@
 </game>
 <game>
 	<mamename>j6casczc</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 4)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC11C L16) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6casczd</mamename>
@@ -41745,23 +42273,23 @@
 </game>
 <game>
 	<mamename>j6cascze</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 6)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC16C L23) (set 6)</realname>
 </game>
 <game>
 	<mamename>j6casczf</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 7)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC16C L23) (set 7)</realname>
 </game>
 <game>
 	<mamename>j6casczg</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 8)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC16C AL23) (set 8)</realname>
 </game>
 <game>
 	<mamename>j6casczh</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 9)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC16C L23) (set 9)</realname>
 </game>
 <game>
 	<mamename>j6casczi</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 10)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC15C L22) (set 10)</realname>
 </game>
 <game>
 	<mamename>j6casczj</mamename>
@@ -41769,7 +42297,7 @@
 </game>
 <game>
 	<mamename>j6casczk</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 12)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC12C L17) (set 12)</realname>
 </game>
 <game>
 	<mamename>j6casczl</mamename>
@@ -41777,7 +42305,7 @@
 </game>
 <game>
 	<mamename>j6casczm</mamename>
-	<realname>Casino Crazy (JPM) (IMPACT) (set 14)</realname>
+	<realname>Casino Crazy (JPM) (IMPACT) (CC02C L08) (set 14)</realname>
 </game>
 <game>
 	<mamename>j6caslas</mamename>
@@ -41793,7 +42321,7 @@
 </game>
 <game>
 	<mamename>j6caslasc</mamename>
-	<realname>Casino Las Vegas (JPM) (IMPACT) (set 4)</realname>
+	<realname>Casino Las Vegas (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6ccc</mamename>
@@ -41929,11 +42457,11 @@
 </game>
 <game>
 	<mamename>j6colb</mamename>
-	<realname>Coliseum (Mdm) (IMPACT) (set 3)</realname>
+	<realname>Coliseum Cash (JPM) (IMPACT) (set 6)</realname>
 </game>
 <game>
 	<mamename>j6colc</mamename>
-	<realname>Coliseum (Mdm) (IMPACT) (set 4)</realname>
+	<realname>Coliseum Cash (JPM) (IMPACT) (set 7)</realname>
 </game>
 <game>
 	<mamename>j6colcsh</mamename>
@@ -41957,15 +42485,15 @@
 </game>
 <game>
 	<mamename>j6cold</mamename>
-	<realname>Coliseum (Mdm) (IMPACT) (set 5)</realname>
+	<realname>Coliseum Cash (JPM) (IMPACT) (set 8)</realname>
 </game>
 <game>
 	<mamename>j6cole</mamename>
-	<realname>Coliseum (Mdm) (IMPACT) (set 6)</realname>
+	<realname>Coliseum Cash (JPM) (IMPACT) (set 9)</realname>
 </game>
 <game>
 	<mamename>j6colf</mamename>
-	<realname>Coliseum (Mdm) (IMPACT) (set 7)</realname>
+	<realname>Coliseum Cash (JPM) (IMPACT) (set 10)</realname>
 </game>
 <game>
 	<mamename>j6colic</mamename>
@@ -41989,7 +42517,7 @@
 </game>
 <game>
 	<mamename>j6colmon</mamename>
-	<realname>Colour Of Money (JPM) (IMPACT) (set 1)</realname>
+	<realname>Colour Of Money (JPM) (IMPACT) (set 1, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6colmona</mamename>
@@ -42009,7 +42537,7 @@
 </game>
 <game>
 	<mamename>j6colmone</mamename>
-	<realname>Colour Of Money (JPM) (IMPACT) (set 6)</realname>
+	<realname>Colour Of Money (JPM) (IMPACT) (set 6, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6colmonf</mamename>
@@ -42057,35 +42585,35 @@
 </game>
 <game>
 	<mamename>j6cpal</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 1)</realname>
+	<realname>Caesars Palace (Ace) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6cpala</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 2)</realname>
+	<realname>Caesars Palace (Ace) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6cpalb</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 3)</realname>
+	<realname>Caesars Palace (Ace) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6cpalc</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 4)</realname>
+	<realname>Caesars Palace (Ace) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6cpald</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 5)</realname>
+	<realname>Caesars Palace (Crystal) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6cpale</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 6)</realname>
+	<realname>Caesars Palace (Crystal) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6cpalf</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 7)</realname>
+	<realname>Caesars Palace (Crystal) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6cpalg</mamename>
-	<realname>Caesars Palace (Whitbread / Crystal) (IMPACT) (set 8)</realname>
+	<realname>Caesars Palace (Ace) (IMPACT) (set 5)</realname>
 </game>
 <game>
 	<mamename>j6cpclb</mamename>
@@ -42097,7 +42625,7 @@
 </game>
 <game>
 	<mamename>j6cpclbb</mamename>
-	<realname>Caesar's Palace Club (JPM) (IMPACT) (set 3)</realname>
+	<realname>Caesar's Palace Club (JPM) (IMPACT) (set 3, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6crack</mamename>
@@ -42121,7 +42649,7 @@
 </game>
 <game>
 	<mamename>j6cracke</mamename>
-	<realname>Cracker (JPM) (IMPACT) (set 6)</realname>
+	<realname>Cracker (JPM) (IMPACT) (set 6, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6crackf</mamename>
@@ -42209,7 +42737,7 @@
 </game>
 <game>
 	<mamename>j6cshbstc</mamename>
-	<realname>Cash Buster (JPM) (IMPACT) (set 4)</realname>
+	<realname>Cash Buster (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6cshbstd</mamename>
@@ -42237,7 +42765,7 @@
 </game>
 <game>
 	<mamename>j6cshrdc</mamename>
-	<realname>Cash Raider (Ace) (IMPACT) (set 4)</realname>
+	<realname>Cash Raider (Ace) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6cshrdd</mamename>
@@ -42405,7 +42933,7 @@
 </game>
 <game>
 	<mamename>j6dyfle</mamename>
-	<realname>Do You Feel Lucky (JPM) (IMPACT) (set 6)</realname>
+	<realname>Do You Feel Lucky (JPM) (IMPACT) (set 6, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6dyflf</mamename>
@@ -42473,19 +43001,19 @@
 </game>
 <game>
 	<mamename>j6ewn</mamename>
-	<realname>Each Way Nudger (JPM) (IMPACT)</realname>
+	<realname>Each Way Nudger Mark 3 (Crystal) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6ewndg</mamename>
-	<realname>Each Way Nudger (Crystal) (IMPACT) (set 1)</realname>
+	<realname>Each Way Nudger Mark 3 (Crystal) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6ewndga</mamename>
-	<realname>Each Way Nudger (Crystal) (IMPACT) (set 2)</realname>
+	<realname>Each Way Nudger Mark 3 (Crystal) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6ewndgb</mamename>
-	<realname>Each Way Nudger (Crystal) (IMPACT) (set 3)</realname>
+	<realname>Each Way Nudger Mark 3 (Crystal) (IMPACT) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6fastfr</mamename>
@@ -42497,19 +43025,19 @@
 </game>
 <game>
 	<mamename>j6fasttk</mamename>
-	<realname>Fast Trak (JPM) (IMPACT) (set 1)</realname>
+	<realname>Fast?Trak (JPM) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6fasttka</mamename>
-	<realname>Fast Trak (JPM) (IMPACT) (set 2)</realname>
+	<realname>Fast?Trak (JPM) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6fasttkb</mamename>
-	<realname>Fast Trak (JPM) (IMPACT) (set 3)</realname>
+	<realname>Fast?Trak (JPM) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6fasttkc</mamename>
-	<realname>Fast Trak (JPM) (IMPACT) (set 4)</realname>
+	<realname>Fast?Trak (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6fbcrz</mamename>
@@ -42561,23 +43089,23 @@
 </game>
 <game>
 	<mamename>j6firbl</mamename>
-	<realname>Fireball (JPM) (IMPACT) (set 1)</realname>
+	<realname>Fireball (Ace) (IMPACT) (set 1, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6firbla</mamename>
-	<realname>Fireball (JPM) (IMPACT) (set 2)</realname>
+	<realname>Fireball (Ace) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6firblb</mamename>
-	<realname>Fireball (JPM) (IMPACT) (set 3)</realname>
+	<realname>Fireball (Ace) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6firblc</mamename>
-	<realname>Fireball (JPM) (IMPACT) (set 4)</realname>
+	<realname>Fireball (Ace) (IMPACT) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6firbld</mamename>
-	<realname>Fireball (JPM) (IMPACT) (set 5)</realname>
+	<realname>Fireball (Ace) (IMPACT) (set 5, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6firclb</mamename>
@@ -42645,7 +43173,7 @@
 </game>
 <game>
 	<mamename>j6fivelnc</mamename>
-	<realname>Five Liner (JPM) (IMPACT) (set 4)</realname>
+	<realname>Five Liner (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6footy</mamename>
@@ -42677,7 +43205,7 @@
 </game>
 <game>
 	<mamename>j6frc10c</mamename>
-	<realname>Force 10 (JPM) (IMPACT) (set 4)</realname>
+	<realname>Force 10 (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6frc10d</mamename>
@@ -42705,23 +43233,23 @@
 </game>
 <game>
 	<mamename>j6gforce</mamename>
-	<realname>G Force (JPM) (IMPACT) (set 1)</realname>
+	<realname>G Force Roller Coaster (JPM) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6gforcea</mamename>
-	<realname>G Force (JPM) (IMPACT) (set 2)</realname>
+	<realname>G Force Roller Coaster (JPM) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6gforceb</mamename>
-	<realname>G Force (JPM) (IMPACT) (set 3)</realname>
+	<realname>G Force Roller Coaster (JPM) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6gforcec</mamename>
-	<realname>G Force (JPM) (IMPACT) (set 4)</realname>
+	<realname>G Force Roller Coaster (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6gforced</mamename>
-	<realname>G Force (JPM) (IMPACT) (15GBP Jackpot)</realname>
+	<realname>G Force Roller Coaster (JPM) (IMPACT) (set 5)</realname>
 </game>
 <game>
 	<mamename>j6gidogh</mamename>
@@ -42737,7 +43265,7 @@
 </game>
 <game>
 	<mamename>j6gldclbb</mamename>
-	<realname>Gladiator Club (JPM) (IMPACT) (set 3)</realname>
+	<realname>Gladiator Club (JPM) (IMPACT) (set 3, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6gldday</mamename>
@@ -42757,7 +43285,7 @@
 </game>
 <game>
 	<mamename>j6gogolda</mamename>
-	<realname>Go For Gold (JPM) (IMPACT) (set 2)</realname>
+	<realname>Go For Gold (JPM) (IMPACT) (set 2, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6gogoldb</mamename>
@@ -42765,7 +43293,7 @@
 </game>
 <game>
 	<mamename>j6gogoldc</mamename>
-	<realname>Go For Gold (JPM) (IMPACT) (set 4)</realname>
+	<realname>Go For Gold (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6golddm</mamename>
@@ -42837,19 +43365,19 @@
 </game>
 <game>
 	<mamename>j6guab</mamename>
-	<realname>Give Us A Break (JPM) (IMPACT) (set 1)</realname>
+	<realname>Give Us A Break (JPM) (IMPACT) (GB 5 C 8) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6guaba</mamename>
-	<realname>Give Us A Break (JPM) (IMPACT) (set 2)</realname>
+	<realname>Give Us A Break (JPM) (IMPACT) (GB 5P C 8) (set 2, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6guabb</mamename>
-	<realname>Give Us A Break (JPM) (IMPACT) (set 3)</realname>
+	<realname>Give Us A Break (JPM) (IMPACT) (GB 5 C 8) (set 3, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6guabc</mamename>
-	<realname>Give Us A Break (JPM) (IMPACT) (set 4)</realname>
+	<realname>Give Us A Break (JPM) (IMPACT) (GB 6 C 9) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6guabcl</mamename>
@@ -42861,15 +43389,15 @@
 </game>
 <game>
 	<mamename>j6guabd</mamename>
-	<realname>Give Us A Break (JPM) (IMPACT) (set 5)</realname>
+	<realname>Give Us A Break (JPM) (IMPACT) (GB 6P C 9) (set 5, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6guabe</mamename>
-	<realname>Give Us A Break (JPM) (IMPACT) (set 6)</realname>
+	<realname>Give Us A Break (JPM) (IMPACT) (GB 6 C 9) (set 6)</realname>
 </game>
 <game>
 	<mamename>j6guabf</mamename>
-	<realname>Give Us A Break (JPM) (IMPACT) (set 7)</realname>
+	<realname>Give Us A Break (JPM) (IMPACT) (GB 6 C 9) (set 7, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6h5clb</mamename>
@@ -42881,15 +43409,15 @@
 </game>
 <game>
 	<mamename>j6hapyhr</mamename>
-	<realname>Happy Hour (JPM) (IMPACT) (set 1)</realname>
+	<realname>Happy Hour (JPM) (IMPACT) (HH2 C5) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6hapyhra</mamename>
-	<realname>Happy Hour (JPM) (IMPACT) (set 2)</realname>
+	<realname>Happy Hour (JPM) (IMPACT) (HH2 C5) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6hapyhrb</mamename>
-	<realname>Happy Hour (JPM) (IMPACT) (set 3)</realname>
+	<realname>Happy Hour (JPM) (IMPACT) (HH2 C5) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6hdc</mamename>
@@ -42925,7 +43453,7 @@
 </game>
 <game>
 	<mamename>j6hifly</mamename>
-	<realname>Hi Flyer (Crystal) (IMPACT)</realname>
+	<realname>Hi Flyer (Ace) (IMPACT)</realname>
 </game>
 <game>
 	<mamename>j6hikar</mamename>
@@ -42953,7 +43481,7 @@
 </game>
 <game>
 	<mamename>j6hilosvc</mamename>
-	<realname>Hi Lo Silver (JPM) (IMPACT) (set 4)</realname>
+	<realname>Hi Lo Silver (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6hilosvd</mamename>
@@ -42997,7 +43525,7 @@
 </game>
 <game>
 	<mamename>j6hirlclc</mamename>
-	<realname>Hi Roller Club (JPM) (IMPACT) (set 4)</realname>
+	<realname>Hi Roller Club (JPM) (IMPACT) (set 4, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6hirol</mamename>
@@ -43013,11 +43541,11 @@
 </game>
 <game>
 	<mamename>j6hirolc</mamename>
-	<realname>Hi Roller (JPM) (IMPACT) (set 4)</realname>
+	<realname>Hi Roller (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6hirold</mamename>
-	<realname>Hi Roller (JPM) (IMPACT) (set 5)</realname>
+	<realname>Hi Roller (JPM) (IMPACT) (set 5, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6hisprt</mamename>
@@ -43045,7 +43573,7 @@
 </game>
 <game>
 	<mamename>j6hotshtc</mamename>
-	<realname>Hot Shot (Ace) (IMPACT) (set 4)</realname>
+	<realname>Hot Shot (Ace) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6hotshtd</mamename>
@@ -43129,7 +43657,7 @@
 </game>
 <game>
 	<mamename>j6impulsf</mamename>
-	<realname>Impulse (JPM) (IMPACT) (set 7)</realname>
+	<realname>Impulse (JPM) (IMPACT) (set 7, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6indy</mamename>
@@ -43313,19 +43841,19 @@
 </game>
 <game>
 	<mamename>j6kungfud</mamename>
-	<realname>Kung Fu (Ace) (IMPACT) (set 5)</realname>
+	<realname>Kung Fu (Ace) (IMPACT) (set 5, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6luckla</mamename>
-	<realname>Lucky Las Vegas (JPM) (IMPACT) (set 1)</realname>
+	<realname>Lucky Las Vegas (Crystal) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6lucklaa</mamename>
-	<realname>Lucky Las Vegas (JPM) (IMPACT) (set 2)</realname>
+	<realname>Lucky Las Vegas (Crystal) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6lucklab</mamename>
-	<realname>Lucky Las Vegas (JPM) (IMPACT) (set 3)</realname>
+	<realname>Lucky Las Vegas (Crystal) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6lucklo</mamename>
@@ -43369,7 +43897,7 @@
 </game>
 <game>
 	<mamename>j6mavrkc</mamename>
-	<realname>Maverick (JPM) (IMPACT) (set 4)</realname>
+	<realname>Maverick (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6mavrkd</mamename>
@@ -43393,7 +43921,7 @@
 </game>
 <game>
 	<mamename>j6maxodc</mamename>
-	<realname>Maximum Overdrive (JPM) (IMPACT) (set 4)</realname>
+	<realname>Maximum Overdrive (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6medal</mamename>
@@ -43433,7 +43961,7 @@
 </game>
 <game>
 	<mamename>j6megbckd</mamename>
-	<realname>Mega Bucks (JPM) (IMPACT) (set 5)</realname>
+	<realname>Mega Bucks (JPM) (IMPACT) (set 5, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6milln</mamename>
@@ -43461,7 +43989,7 @@
 </game>
 <game>
 	<mamename>j6mono60c</mamename>
-	<realname>Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 4)</realname>
+	<realname>Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6mono60d</mamename>
@@ -43477,7 +44005,7 @@
 </game>
 <game>
 	<mamename>j6mono60g</mamename>
-	<realname>Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 8)</realname>
+	<realname>Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 8, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6mono60h</mamename>
@@ -43725,7 +44253,7 @@
 </game>
 <game>
 	<mamename>j6pinwzdc</mamename>
-	<realname>Pinball Wizard (JPM) (IMPACT) (set 4)</realname>
+	<realname>Pinball Wizard (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6pinwzdd</mamename>
@@ -43781,15 +44309,15 @@
 </game>
 <game>
 	<mamename>j6pogcls</mamename>
-	<realname>Pot Of Gold Classic (JPM) (IMPACT) (set 1)</realname>
+	<realname>Pot Of Gold Classic (Ace) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6pogclsa</mamename>
-	<realname>Pot Of Gold Classic (JPM) (IMPACT) (set 2)</realname>
+	<realname>Pot Of Gold Classic (Ace) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6pogclsb</mamename>
-	<realname>Pot Of Gold Classic (JPM) (IMPACT) (set 3)</realname>
+	<realname>Pot Of Gold Classic (Ace) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6pogd</mamename>
@@ -43809,7 +44337,7 @@
 </game>
 <game>
 	<mamename>j6pompayc</mamename>
-	<realname>Up Pompay (Ace) (IMPACT) (set 4)</realname>
+	<realname>Up Pompay (Ace) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6popoli</mamename>
@@ -43853,7 +44381,7 @@
 </game>
 <game>
 	<mamename>j6pwrspnc</mamename>
-	<realname>Powerspin (JPM) (IMPACT) (set 4)</realname>
+	<realname>Powerspin (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6pwrspnd</mamename>
@@ -43877,7 +44405,7 @@
 </game>
 <game>
 	<mamename>j6quantmc</mamename>
-	<realname>Quantum Leap (JPM) (IMPACT) (set 4)</realname>
+	<realname>Quantum Leap (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6quick</mamename>
@@ -43921,7 +44449,7 @@
 </game>
 <game>
 	<mamename>j6rac</mamename>
-	<realname>Red Alert (JPM) (IMPACT) (set 4)</realname>
+	<realname>Red Alert (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6raclb</mamename>
@@ -44033,7 +44561,7 @@
 </game>
 <game>
 	<mamename>j6redarwe</mamename>
-	<realname>Red Arrow (JPM) (IMPACT) (set 6)</realname>
+	<realname>Red Arrow (JPM) (IMPACT) (set 6, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6redarwf</mamename>
@@ -44057,7 +44585,7 @@
 </game>
 <game>
 	<mamename>j6redarww</mamename>
-	<realname>Red Arrow (Whitbread / JPM) (IMPACT)</realname>
+	<realname>Red Arrow (JPM) (IMPACT) (set 12, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6reddmn</mamename>
@@ -44073,15 +44601,15 @@
 </game>
 <game>
 	<mamename>j6reelmn</mamename>
-	<realname>Reel Money (JPM) (IMPACT) (set 1)</realname>
+	<realname>Reel Money (JPM) (IMPACT) (RE 9) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6reelmna</mamename>
-	<realname>Reel Money (JPM) (IMPACT) (set 2)</realname>
+	<realname>Reel Money (JPM) (IMPACT) (RE 9) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6reelmnb</mamename>
-	<realname>Reel Money (JPM) (IMPACT) (set 3)</realname>
+	<realname>Reel Money (JPM) (IMPACT) (RE 9) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6reelmnc</mamename>
@@ -44089,7 +44617,7 @@
 </game>
 <game>
 	<mamename>j6reelmnd</mamename>
-	<realname>Reel Money (JPM) (IMPACT) (set 5)</realname>
+	<realname>Reel Money (JPM) (IMPACT) (RE 7) (set 5)</realname>
 </game>
 <game>
 	<mamename>j6reelth</mamename>
@@ -44097,11 +44625,11 @@
 </game>
 <game>
 	<mamename>j6reeltha</mamename>
-	<realname>Reel Thing (Ace) (IMPACT) set 2)</realname>
+	<realname>Reel Thing (Crystal) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6reelthb</mamename>
-	<realname>Reel Thing (Ace) (IMPACT) set 3)</realname>
+	<realname>Reel Thing (Crystal) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6rh6</mamename>
@@ -44213,71 +44741,71 @@
 </game>
 <game>
 	<mamename>j6roller</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 1)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC11 C30, 30p Stake, £15 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollera</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 2)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC11P C30, 30p Stake, £15 Jackpot, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6rollerb</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 3)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC11 AC30, 30p Stake, £15 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollerc</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 4)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC11 C30, 30p Stake, £15 Jackpot, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6rollerd</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 5)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC11 C29, 30p Stake, £15 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollere</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 6)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC10 C20, 20p Stake, £10 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollerf</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 7)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC9 L26, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollerg</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 8)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC9P L26, 20p Stake, £8 Jackpot, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6rollerh</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 9)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC9 AL26, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rolleri</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 10)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC9 L26, 20p Stake, £10 Jackpot, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6rollerj</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 11)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC5 L14, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollerk</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 12)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC4 L15, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollerl</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 13)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC4P L15, 20p Stake, £8 Jackpot, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6rollerm</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 14)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC4 AL15, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollern</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 15)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC4 I L15, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollero</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 16)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC2 L07, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6rollerp</mamename>
-	<realname>Roller Coaster (JPM) (IMPACT) (set 17)</realname>
+	<realname>Roller Coaster (JPM) (IMPACT) (RC2 I L07, 20p Stake, £8 Jackpot)</realname>
 </game>
 <game>
 	<mamename>j6roof</mamename>
@@ -44337,7 +44865,7 @@
 </game>
 <game>
 	<mamename>j6shoot</mamename>
-	<realname>ShootOut (JPM / Whitbread) (IMPACT)</realname>
+	<realname>ShootOut (JPM) (IMPACT) (Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6showtm</mamename>
@@ -44405,7 +44933,7 @@
 </game>
 <game>
 	<mamename>j6sidewdc</mamename>
-	<realname>Sidewinder (JPM) (IMPACT) (set 4)</realname>
+	<realname>Sidewinder (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6sidewdd</mamename>
@@ -44425,31 +44953,31 @@
 </game>
 <game>
 	<mamename>j6slagnb</mamename>
-	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 3)</realname>
+	<realname>Snakes &amp; Ladders (JPM) (IMPACT) (set 9)</realname>
 </game>
 <game>
 	<mamename>j6slagnc</mamename>
-	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 4)</realname>
+	<realname>Snakes &amp; Ladders (JPM) (IMPACT) (set 10)</realname>
 </game>
 <game>
 	<mamename>j6slagnd</mamename>
-	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 5)</realname>
+	<realname>Snakes &amp; Ladders (JPM) (IMPACT) (set 11)</realname>
 </game>
 <game>
 	<mamename>j6slagne</mamename>
-	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 6)</realname>
+	<realname>Snakes &amp; Ladders (JPM) (IMPACT) (set 12)</realname>
 </game>
 <game>
 	<mamename>j6slagnf</mamename>
-	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 7)</realname>
+	<realname>Snakes &amp; Ladders (JPM) (IMPACT) (set 13)</realname>
 </game>
 <game>
 	<mamename>j6slagng</mamename>
-	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 8)</realname>
+	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6slagnh</mamename>
-	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 9)</realname>
+	<realname>Snakes &amp; Ladders Slides Again (Crystal) (IMPACT) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6slvgst</mamename>
@@ -44497,7 +45025,7 @@
 </game>
 <game>
 	<mamename>j6snakesc</mamename>
-	<realname>Snakes &amp; Ladders (JPM) (IMPACT) (set 4)</realname>
+	<realname>Snakes &amp; Ladders (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6snakesd</mamename>
@@ -44517,35 +45045,35 @@
 </game>
 <game>
 	<mamename>j6sonic</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 1)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO10 C13)</realname>
 </game>
 <game>
 	<mamename>j6sonica</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 2)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO10P C13, Protocol)</realname>
 </game>
 <game>
 	<mamename>j6sonicb</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 3)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO10 AC13)</realname>
 </game>
 <game>
 	<mamename>j6sonicc</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 4)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO10 C13, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6sonicd</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 5)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO9 C12)</realname>
 </game>
 <game>
 	<mamename>j6sonice</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 6)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO7 C10)</realname>
 </game>
 <game>
 	<mamename>j6sonicf</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 7)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO7 AC10)</realname>
 </game>
 <game>
 	<mamename>j6sonicg</mamename>
-	<realname>Sonic The Hedgehog (JPM) (IMPACT) (set 8)</realname>
+	<realname>Sonic The Hedgehog (JPM) (IMPACT) (SO1 AC2)</realname>
 </game>
 <game>
 	<mamename>j6sonich</mamename>
@@ -44569,15 +45097,15 @@
 </game>
 <game>
 	<mamename>j6stardsc</mamename>
-	<realname>Stardust (JPM) (IMPACT) (set 4)</realname>
+	<realname>Stardust (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6start</mamename>
-	<realname>Starturn (JPM) (IMPACT) (set 1)</realname>
+	<realname>Starturn (JPM / Showcase) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6starta</mamename>
-	<realname>Starturn (JPM) (IMPACT) (set 2)</realname>
+	<realname>Starturn (JPM / Showcase) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6strk10</mamename>
@@ -44649,7 +45177,7 @@
 </game>
 <game>
 	<mamename>j6supbrke</mamename>
-	<realname>Super Breakout (JPM) (IMPACT) (set 6)</realname>
+	<realname>Super Breakout (JPM) (IMPACT) (set 6, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6supbrkf</mamename>
@@ -44701,7 +45229,7 @@
 </game>
 <game>
 	<mamename>j6tbirdse</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 6)</realname>
+	<realname>Thunderbirds (JPM) (IMPACT) (set 6, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6tbirdsf</mamename>
@@ -44725,35 +45253,35 @@
 </game>
 <game>
 	<mamename>j6tbirdsk</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 12)</realname>
+	<realname>Thunderbirds (Crystal) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6tbirdsl</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 13)</realname>
+	<realname>Thunderbirds (Crystal) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6tbirdsm</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 14)</realname>
+	<realname>Thunderbirds (Crystal) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6tbirdsn</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 15)</realname>
+	<realname>Thunderbirds (Crystal) (IMPACT) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6tbirdso</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 16)</realname>
+	<realname>Thunderbirds (Crystal) (IMPACT) (set 5)</realname>
 </game>
 <game>
 	<mamename>j6tbirdsp</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 17)</realname>
+	<realname>Thunderbirds (Crystal) (IMPACT) (set 6)</realname>
 </game>
 <game>
 	<mamename>j6tbirdsq</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 18)</realname>
+	<realname>Thunderbirds (Crystal) (IMPACT) (set 7)</realname>
 </game>
 <game>
 	<mamename>j6tbirdsr</mamename>
-	<realname>Thunderbirds (JPM) (IMPACT) (set 19)</realname>
+	<realname>Thunderbirds (JPM / Predator) (IMPACT)</realname>
 </game>
 <game>
 	<mamename>j6tbrdcl</mamename>
@@ -44921,11 +45449,11 @@
 </game>
 <game>
 	<mamename>j6untch</mamename>
-	<realname>Untouchables (JPM) (IMPACT) (set 1)</realname>
+	<realname>Untouchable (JPM) (IMPACT) (UN3B LO6)</realname>
 </game>
 <game>
 	<mamename>j6untcha</mamename>
-	<realname>Untouchables (JPM) (IMPACT) (set 2)</realname>
+	<realname>Untouchable (JPM) (IMPACT) (UN3BI LO6)</realname>
 </game>
 <game>
 	<mamename>j6vindal</mamename>
@@ -44933,63 +45461,63 @@
 </game>
 <game>
 	<mamename>j6vivark</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 1)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6vivarka</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 2)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6vivarkb</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 3)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6vivarkc</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 4)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 4)</realname>
 </game>
 <game>
 	<mamename>j6vivarkd</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 5)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 5, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6vivarke</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 6)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 6)</realname>
 </game>
 <game>
 	<mamename>j6vivarkf</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 7)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 7)</realname>
 </game>
 <game>
 	<mamename>j6vivarkg</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 8)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 8)</realname>
 </game>
 <game>
 	<mamename>j6vivarkh</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 9)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 9)</realname>
 </game>
 <game>
 	<mamename>j6vivarki</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 10)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 10)</realname>
 </game>
 <game>
 	<mamename>j6vivarkj</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 11)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 11)</realname>
 </game>
 <game>
 	<mamename>j6vivarkk</mamename>
-	<realname>Viva Rock Vegas (JPM) (IMPACT) (set 12)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (JPM) (IMPACT) (set 12)</realname>
 </game>
 <game>
 	<mamename>j6vivrkc</mamename>
-	<realname>Viva Rock Vegas Club (JPM) (IMPACT) (set 1)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (Club) (JPM) (IMPACT) (set 1)</realname>
 </game>
 <game>
 	<mamename>j6vivrkca</mamename>
-	<realname>Viva Rock Vegas Club (JPM) (IMPACT) (set 2)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (Club) (JPM) (IMPACT) (set 2)</realname>
 </game>
 <game>
 	<mamename>j6vivrkcb</mamename>
-	<realname>Viva Rock Vegas Club (JPM) (IMPACT) (set 3)</realname>
+	<realname>The Flintstones in Viva Rock Vegas (Club) (JPM) (IMPACT) (set 3)</realname>
 </game>
 <game>
 	<mamename>j6wildw</mamename>
@@ -45001,7 +45529,7 @@
 </game>
 <game>
 	<mamename>j6wildwb</mamename>
-	<realname>Wild West (Ace) (IMPACT) (set 3)</realname>
+	<realname>Wild West (Ace) (IMPACT) (set 3, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6wildwc</mamename>
@@ -45021,7 +45549,7 @@
 </game>
 <game>
 	<mamename>j6wildwg</mamename>
-	<realname>Wild West (Ace) (IMPACT) (set 8)</realname>
+	<realname>Wild West (Ace) (IMPACT) (set 8, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6wizard</mamename>
@@ -45037,7 +45565,7 @@
 </game>
 <game>
 	<mamename>j6wizardc</mamename>
-	<realname>Wizard Of Odds (JPM) (IMPACT) (set 4)</realname>
+	<realname>Wizard Of Odds (JPM) (IMPACT) (set 4, Whitbread)</realname>
 </game>
 <game>
 	<mamename>j6wizardd</mamename>
@@ -45908,6 +46436,10 @@
 	<realname>Joker Master (V512)</realname>
 </game>
 <game>
+	<mamename>jl2050</mamename>
+	<realname>Cyber Console Center 200-in-1 (JL2050)</realname>
+</game>
+<game>
 	<mamename>jleague</mamename>
 	<realname>The J.League 1994 (Japan, Rev A)</realname>
 </game>
@@ -46152,6 +46684,10 @@
 	<realname>Jolly Card (German, Fun World, bootleg)</realname>
 </game>
 <game>
+	<mamename>jolycdcy</mamename>
+	<realname>Zabavni Karti (Bulgarian, encrypted)</realname>
+</game>
+<game>
 	<mamename>jolycdev</mamename>
 	<realname>Jolly Card (Evona Electronic)</realname>
 </game>
@@ -46264,6 +46800,10 @@
 	<realname>Jopac JO7400 (France)</realname>
 </game>
 <game>
+	<mamename>jorn720</mamename>
+	<realname>Jornada 720</realname>
+</game>
+<game>
 	<mamename>josvolly</mamename>
 	<realname>Joshi Volleyball</realname>
 </game>
@@ -46308,8 +46848,16 @@
 	<realname>Joyman</realname>
 </game>
 <game>
+	<mamename>joypad65</mamename>
+	<realname>Joypad 65</realname>
+</game>
+<game>
 	<mamename>joystand</mamename>
 	<realname>Joy Stand Private</realname>
+</game>
+<game>
+	<mamename>joysti30</mamename>
+	<realname>Joystick 30</realname>
 </game>
 <game>
 	<mamename>jpark</mamename>
@@ -46354,10 +46902,6 @@
 <game>
 	<mamename>jplstw22</mamename>
 	<realname>The Lost World: Jurassic Park (2.02)</realname>
-</game>
-<game>
-	<mamename>jpmreno</mamename>
-	<realname>Reno Reels (JPM)</realname>
 </game>
 <game>
 	<mamename>jpopira</mamename>
@@ -46408,8 +46952,28 @@
 	<realname>Jr. Pac-Man (Pengo hardware)</realname>
 </game>
 <game>
+	<mamename>jsc_dora</mamename>
+	<realname>Dora the Explorer - Dora Saves the Mermaids (Sharp Cookie) (PAL, UK)</realname>
+</game>
+<game>
+	<mamename>jsc_gdg</mamename>
+	<realname>Go Diego Go! - Aztec ABC Adventure (Sharp Cookie) (PAL, UK)</realname>
+</game>
+<game>
+	<mamename>jsc_sdoo</mamename>
+	<realname>Scooby-Doo! and The Pirate's Puzzles (Sharp Cookie) (PAL, UK)</realname>
+</game>
+<game>
+	<mamename>jsc_spid</mamename>
+	<realname>The Amazing Spider-Man - Great Math Caper (Sharp Cookie) (NTSC, US)</realname>
+</game>
+<game>
 	<mamename>jsc_thom</mamename>
 	<realname>Thomas &amp; Friends - Learning Circus Express (Sharp Cookie) (PAL, UK)</realname>
+</game>
+<game>
+	<mamename>jsc_thomu</mamename>
+	<realname>Thomas &amp; Friends - Learning Circus Express (Sharp Cookie) (NTSC, US)</realname>
 </game>
 <game>
 	<mamename>jsk</mamename>
@@ -46605,7 +47169,7 @@
 </game>
 <game>
 	<mamename>jungleyo</mamename>
-	<realname>Jungle (VI3.02)</realname>
+	<realname>Jungle (Italy VI3.02)</realname>
 </game>
 <game>
 	<mamename>jungsub</mamename>
@@ -46644,16 +47208,20 @@
 	<realname>Jupiter III</realname>
 </game>
 <game>
+	<mamename>jupk_305</mamename>
+	<realname>Jurassic Park (USA 3.05, display A5.10)</realname>
+</game>
+<game>
 	<mamename>jupk_501</mamename>
-	<realname>Jurassic Park (5.01)</realname>
+	<realname>Jurassic Park (USA 5.01, display A5.01)</realname>
+</game>
+<game>
+	<mamename>jupk_501g</mamename>
+	<realname>Jurassic Park (USA 5.01 Germany, display G5.01)</realname>
 </game>
 <game>
 	<mamename>jupk_513</mamename>
-	<realname>Jurassic Park (5.13)</realname>
-</game>
-<game>
-	<mamename>jupk_g51</mamename>
-	<realname>Jurassic Park (5.01 Germany)</realname>
+	<realname>Jurassic Park (USA 5.13, display A5.10)</realname>
 </game>
 <game>
 	<mamename>jurassic99</mamename>
@@ -46773,7 +47341,11 @@
 </game>
 <game>
 	<mamename>k7_olym</mamename>
-	<realname>Olympic Darts (K7)</realname>
+	<realname>Olympic Darts K7 (v3.11)</realname>
+</game>
+<game>
+	<mamename>k7_olym30</mamename>
+	<realname>Olympic Darts K7 (v3.00)</realname>
 </game>
 <game>
 	<mamename>k8915</mamename>
@@ -46941,7 +47513,7 @@
 </game>
 <game>
 	<mamename>karatourj</mamename>
-	<realname>Chatan Yarakuu Shanku - The Karate Tournament (Japan)</realname>
+	<realname>Chatan Yara Kuushanku - The Karate Tournament (Japan)</realname>
 </game>
 <game>
 	<mamename>karianx</mamename>
@@ -47066,6 +47638,10 @@
 <game>
 	<mamename>kbashk</mamename>
 	<realname>Knuckle Bash (Korean PCB)</realname>
+</game>
+<game>
+	<mamename>kbh</mamename>
+	<realname>Keyboardheaven (Korea)</realname>
 </game>
 <game>
 	<mamename>kbilly</mamename>
@@ -48508,6 +49084,10 @@
 	<realname>Kozure Ookami (Japan)</realname>
 </game>
 <game>
+	<mamename>kpontoon</mamename>
+	<realname>Pontoon (Konami)</realname>
+</game>
+<game>
 	<mamename>kpv106</mamename>
 	<realname>Kingpin (Pinball)</realname>
 </game>
@@ -48844,36 +49424,40 @@
 	<realname>Laguna Racer</realname>
 </game>
 <game>
+	<mamename>lah_104f</mamename>
+	<realname>Last Action Hero (USA 1.04, display F1.01)</realname>
+</game>
+<game>
+	<mamename>lah_104s</mamename>
+	<realname>Last Action Hero (USA 1.04, display L1.02)</realname>
+</game>
+<game>
 	<mamename>lah_106c</mamename>
-	<realname>Last Action Hero (1.06 Canada)</realname>
+	<realname>Last Action Hero (Canada 1.06, display A1.04)</realname>
 </game>
 <game>
 	<mamename>lah_107</mamename>
-	<realname>Last Action Hero (1.07)</realname>
+	<realname>Last Action Hero (USA 1.07, display A1.06)</realname>
+</game>
+<game>
+	<mamename>lah_108s</mamename>
+	<realname>Last Action Hero (USA 1.08, display L1.04)</realname>
 </game>
 <game>
 	<mamename>lah_110</mamename>
-	<realname>Last Action Hero (1.10)</realname>
+	<realname>Last Action Hero (USA 1.10, display A1.06)</realname>
 </game>
 <game>
 	<mamename>lah_112</mamename>
-	<realname>Last Action Hero (1.12)</realname>
+	<realname>Last Action Hero (USA 1.12, display A1.06)</realname>
 </game>
 <game>
-	<mamename>lah_f104</mamename>
-	<realname>Last Action Hero (1.04 France)</realname>
-</game>
-<game>
-	<mamename>lah_l104</mamename>
-	<realname>Last Action Hero (1.04 Spain)</realname>
-</game>
-<game>
-	<mamename>lah_l108</mamename>
-	<realname>Last Action Hero (1.08 Spain)</realname>
+	<mamename>lah_xxx_s105</mamename>
+	<realname>Last Action Hero (unknown CPU, display L1.05)</realname>
 </game>
 <game>
 	<mamename>lamachin</mamename>
-	<realname>L.A. Machineguns</realname>
+	<realname>L.A. Machineguns (Japan)</realname>
 </game>
 <game>
 	<mamename>lambda</mamename>
@@ -49021,11 +49605,11 @@
 </game>
 <game>
 	<mamename>laseract</mamename>
-	<realname>LaserActive (USA, NTSC)</realname>
+	<realname>LaserActive with Genesis Pack PAC-S10 (USA, NTSC)</realname>
 </game>
 <game>
 	<mamename>laseractj</mamename>
-	<realname>LaserActive (Japan, NTSC)</realname>
+	<realname>LaserActive with Mega Drive Pack PAC-S1 (Japan, NTSC)</realname>
 </game>
 <game>
 	<mamename>laserbas</mamename>
@@ -49269,7 +49853,11 @@
 </game>
 <game>
 	<mamename>lckydraw</mamename>
-	<realname>Lucky Draw (Pinball)</realname>
+	<realname>Lucky Draw (pinball, set 1)</realname>
+</game>
+<game>
+	<mamename>lckydrawa</mamename>
+	<realname>Lucky Draw (pinball, set 2)</realname>
 </game>
 <game>
 	<mamename>lcmate2</mamename>
@@ -49473,7 +50061,7 @@
 </game>
 <game>
 	<mamename>lemans24</mamename>
-	<realname>Le Mans 24 (Revision B)</realname>
+	<realname>Le Mans 24 (Japan, Revision B)</realname>
 </game>
 <game>
 	<mamename>lemmings</mamename>
@@ -50161,7 +50749,7 @@
 </game>
 <game>
 	<mamename>lostwsga</mamename>
-	<realname>The Lost World (Revision A)</realname>
+	<realname>The Lost World (Japan, Revision A)</realname>
 </game>
 <game>
 	<mamename>lostwsgp</mamename>
@@ -50505,7 +51093,11 @@
 </game>
 <game>
 	<mamename>luckshel</mamename>
-	<realname>Lucky Shell (Russia) (Extrema)</realname>
+	<realname>Lucky Shell (Ukraine, V. 42.25)</realname>
+</game>
+<game>
+	<mamename>luckshela</mamename>
+	<realname>Lucky Shell (Ukraine, V. 42.10)</realname>
 </game>
 <game>
 	<mamename>lucky21</mamename>
@@ -50761,31 +51353,31 @@
 </game>
 <game>
 	<mamename>lw3_200</mamename>
-	<realname>Lethal Weapon 3 (2.00)</realname>
+	<realname>Lethal Weapon 3 (USA 2.00, display A2.04)</realname>
 </game>
 <game>
 	<mamename>lw3_203</mamename>
-	<realname>Lethal Weapon 3 (2.03)</realname>
+	<realname>Lethal Weapon 3 (USA 2.03, display A2.04)</realname>
 </game>
 <game>
-	<mamename>lw3_204</mamename>
-	<realname>Lethal Weapon 3 (2.04, display A2.02)</realname>
+	<mamename>lw3_204e</mamename>
+	<realname>Lethal Weapon 3 (England 2.04, display A2.02)</realname>
 </game>
 <game>
 	<mamename>lw3_205</mamename>
-	<realname>Lethal Weapon 3 (2.05)</realname>
+	<realname>Lethal Weapon 3 (USA 2.05, display A2.05)</realname>
 </game>
 <game>
 	<mamename>lw3_207</mamename>
-	<realname>Lethal Weapon 3 (2.07)</realname>
+	<realname>Lethal Weapon 3 (USA 2.07, display A2.06)</realname>
 </game>
 <game>
 	<mamename>lw3_207c</mamename>
-	<realname>Lethal Weapon 3 (2.07 Canada)</realname>
+	<realname>Lethal Weapon 3 (Canada 2.07, display A2.06)</realname>
 </game>
 <game>
 	<mamename>lw3_208</mamename>
-	<realname>Lethal Weapon 3 (2.08)</realname>
+	<realname>Lethal Weapon 3 (USA 2.08, display A2.06)</realname>
 </game>
 <game>
 	<mamename>lwar_a81</mamename>
@@ -50828,12 +51420,20 @@
 	<realname>Marvel Avengers TV Game Console (32-bit) (Lexibook)</realname>
 </game>
 <game>
+	<mamename>lx_jg7410</mamename>
+	<realname>Lexibook JG7410 100-in-1</realname>
+</game>
+<game>
 	<mamename>lx_jg7415</mamename>
 	<realname>Lexibook JG7415 120-in-1</realname>
 </game>
 <game>
 	<mamename>lx_jg7425</mamename>
 	<realname>Lexibook JG7425 221-in-1</realname>
+</game>
+<game>
+	<mamename>lxcap</mamename>
+	<realname>Cyber Arcade Pocket (JL1895)</realname>
 </game>
 <game>
 	<mamename>lxccminn</mamename>
@@ -50864,6 +51464,10 @@
 	<realname>Lexibook Compact Cyber Arcade - Frozen</realname>
 </game>
 <game>
+	<mamename>lxcmcypj</mamename>
+	<realname>Lexibook Compact Cyber Arcade - PJ Masks</realname>
+</game>
+<game>
 	<mamename>lxcmcypp</mamename>
 	<realname>Lexibook Compact Cyber Arcade - Paw Patrol</realname>
 </game>
@@ -50874,6 +51478,10 @@
 <game>
 	<mamename>lxcmcysw</mamename>
 	<realname>Lexibook Compact Cyber Arcade - Star Wars Rebels</realname>
+</game>
+<game>
+	<mamename>lxcyber</mamename>
+	<realname>Cyber Arcade 200-in-1</realname>
 </game>
 <game>
 	<mamename>lxspidaj</mamename>
@@ -51990,6 +52598,10 @@
 <game>
 	<mamename>m1dkonga</mamename>
 	<realname>Donkey Kong (Maygay) v9.2 (Alternate) (M1A/B)</realname>
+</game>
+<game>
+	<mamename>m1dkonga2</mamename>
+	<realname>Donkey Kong (Maygay) v?.? (M1A/B)</realname>
 </game>
 <game>
 	<mamename>m1dkongp</mamename>
@@ -54656,6 +55268,10 @@
 	<realname>The Simpsons (Maygay) (M1A/B) (set 8)</realname>
 </game>
 <game>
+	<mamename>m1simpsh</mamename>
+	<realname>The Simpsons (Maygay) (M1A/B) (set 9)</realname>
+</game>
+<game>
 	<mamename>m1sirich</mamename>
 	<realname>Strike It Rich (Maygay) (M1A/B) (set 1)</realname>
 </game>
@@ -54686,6 +55302,10 @@
 <game>
 	<mamename>m1spidb</mamename>
 	<realname>Spiderman (Maygay) (M1A/B) (set 3)</realname>
+</game>
+<game>
+	<mamename>m1sprint</mamename>
+	<realname>SPRINT (Maygay) (M1A/B)</realname>
 </game>
 <game>
 	<mamename>m1sprnov</mamename>
@@ -55313,7 +55933,7 @@
 </game>
 <game>
 	<mamename>m3</mamename>
-	<realname>M3</realname>
+	<realname>M-THREE</realname>
 </game>
 <game>
 	<mamename>m3acech</mamename>
@@ -80729,7 +81349,11 @@
 </game>
 <game>
 	<mamename>mach2</mamename>
-	<realname>Mach 2</realname>
+	<realname>Mach 2 (set 1)</realname>
+</game>
+<game>
+	<mamename>mach2a</mamename>
+	<realname>Mach 2 (set 2)</realname>
 </game>
 <game>
 	<mamename>mach3</mamename>
@@ -81004,6 +81628,10 @@
 	<realname>Mad Zoo (version U450C)</realname>
 </game>
 <game>
+	<mamename>mag10</mamename>
+	<realname>Magic 10 Nevada (bootleg of Pool 10)</realname>
+</game>
+<game>
 	<mamename>mag_burn</mamename>
 	<realname>The Burning Cavern (31/03/87)</realname>
 </game>
@@ -81098,6 +81726,10 @@
 <game>
 	<mamename>magic102</mamename>
 	<realname>Magic's 10 2 (ver. 1.1)</realname>
+</game>
+<game>
+	<mamename>magic102a</mamename>
+	<realname>Magic's 10 2 (ver. BETA3)</realname>
 </game>
 <game>
 	<mamename>magic10a</mamename>
@@ -81684,6 +82316,10 @@
 	<realname>Mars</realname>
 </game>
 <game>
+	<mamename>marsarf</mamename>
+	<realname>Mars (bootleg)</realname>
+</game>
+<game>
 	<mamename>marsp</mamename>
 	<realname>Mars - God of War</realname>
 </game>
@@ -81729,11 +82365,15 @@
 </game>
 <game>
 	<mamename>marukodq</mamename>
-	<realname>Chibi Marukochan Deluxe Quiz</realname>
+	<realname>Chibi Maruko-chan: Maruko Deluxe Quiz</realname>
 </game>
 <game>
 	<mamename>marvice</mamename>
 	<realname>Marbella Vice</realname>
+</game>
+<game>
+	<mamename>marvice100hz</mamename>
+	<realname>Marbella Vice (100Hz display)</realname>
 </game>
 <game>
 	<mamename>marvins</mamename>
@@ -81757,7 +82397,19 @@
 </game>
 <game>
 	<mamename>maski</mamename>
-	<realname>Maski Show (Russia) (Extrema)</realname>
+	<realname>Maski Show (Ukraine V. 43.10)</realname>
+</game>
+<game>
+	<mamename>maskia</mamename>
+	<realname>Maski Show (Ukraine V. 43.07)</realname>
+</game>
+<game>
+	<mamename>maskib</mamename>
+	<realname>Maski Show (Ukraine V. 42.11)</realname>
+</game>
+<game>
+	<mamename>maskic</mamename>
+	<realname>Maski Show (Ukraine V. 42.05)</realname>
 </game>
 <game>
 	<mamename>masmario</mamename>
@@ -81826,6 +82478,10 @@
 <game>
 	<mamename>mastkin</mamename>
 	<realname>The Masters of Kin</realname>
+</game>
+<game>
+	<mamename>mastmind</mamename>
+	<realname>Electronic Master Mind (Invicta)</realname>
 </game>
 <game>
 	<mamename>mastninj</mamename>
@@ -82020,12 +82676,20 @@
 	<realname>Mazan: Flash of the Blade (World, MAZ2 Ver.A)</realname>
 </game>
 <game>
+	<mamename>mazanj</mamename>
+	<realname>Mazan: Flash of the Blade (Japan, MAZ1 Ver.A)</realname>
+</game>
+<game>
 	<mamename>mazanu</mamename>
 	<realname>Mazan: Flash of the Blade (US, MAZ3 Ver.A)</realname>
 </game>
 <game>
 	<mamename>maze</mamename>
 	<realname>Amazing Maze</realname>
+</game>
+<game>
+	<mamename>mazebl</mamename>
+	<realname>Maze (Trog bootleg)</realname>
 </game>
 <game>
 	<mamename>mazeinv</mamename>
@@ -82094,6 +82758,14 @@
 <game>
 	<mamename>mbaao</mamename>
 	<realname>Melty Blood Actress Again (Japan)</realname>
+</game>
+<game>
+	<mamename>mbaskb</mamename>
+	<realname>Basketball (Mattel)</realname>
+</game>
+<game>
+	<mamename>mbc020</mamename>
+	<realname>MBC020-65 CPU/Video Board (Torque Systems OEM)</realname>
 </game>
 <game>
 	<mamename>mbc16</mamename>
@@ -82937,7 +83609,11 @@
 </game>
 <game>
 	<mamename>meijinsn</mamename>
-	<realname>Meijinsen</realname>
+	<realname>Meijinsen (set 1)</realname>
+</game>
+<game>
+	<mamename>meijinsna</mamename>
+	<realname>Meijinsen (set 2)</realname>
 </game>
 <game>
 	<mamename>meikyuh</mamename>
@@ -82992,6 +83668,10 @@
 	<realname>Memory Lane</realname>
 </game>
 <game>
+	<mamename>memoquiz</mamename>
+	<realname>Memoquiz</realname>
+</game>
+<game>
 	<mamename>menghong</mamename>
 	<realname>Meng Hong Lou</realname>
 </game>
@@ -83021,11 +83701,19 @@
 </game>
 <game>
 	<mamename>mephisto3</mamename>
-	<realname>Mephisto III (ver. A)</realname>
+	<realname>Mephisto III (set 1)</realname>
+</game>
+<game>
+	<mamename>mephisto3a</mamename>
+	<realname>Mephisto III (set 2)</realname>
 </game>
 <game>
 	<mamename>mephisto3b</mamename>
-	<realname>Mephisto III (ver. B)</realname>
+	<realname>Mephisto III (set 3)</realname>
+</game>
+<game>
+	<mamename>mephisto3c</mamename>
+	<realname>Mephisto III (set 4)</realname>
 </game>
 <game>
 	<mamename>mephistoj</mamename>
@@ -83236,10 +83924,6 @@
 	<realname>Mexico 86 (bootleg of Kick and Run) (set 2)</realname>
 </game>
 <game>
-	<mamename>mexlindo</mamename>
-	<realname>Mexico Lindo</realname>
-</game>
-<game>
 	<mamename>mf_achas</mamename>
 	<realname>Astro Chase (Max-A-Flex)</realname>
 </game>
@@ -83314,6 +83998,10 @@
 <game>
 	<mamename>mfleappadus</mamename>
 	<realname>My First LeapPad (US)</realname>
+</game>
+<game>
+	<mamename>mfootb2</mamename>
+	<realname>Football 2 (Mattel)</realname>
 </game>
 <game>
 	<mamename>mfunclub</mamename>
@@ -83474,6 +84162,10 @@
 <game>
 	<mamename>mhhonban</mamename>
 	<realname>Mahjong Housoukyoku Honbanchuu (Japan)</realname>
+</game>
+<game>
+	<mamename>mhockey</mamename>
+	<realname>Hockey (Mattel)</realname>
 </game>
 <game>
 	<mamename>mia</mamename>
@@ -83808,8 +84500,16 @@
 	<realname>Mini Golf (10/8/85)</realname>
 </game>
 <game>
+	<mamename>miniguay</mamename>
+	<realname>Mini Guay</realname>
+</game>
+<game>
 	<mamename>minijook</mamename>
 	<realname>MiniJook</realname>
+</game>
+<game>
+	<mamename>minimony</mamename>
+	<realname>Mini Money</realname>
 </game>
 <game>
 	<mamename>miniscc</mamename>
@@ -83944,6 +84644,10 @@
 	<realname>Altair 680b</realname>
 </game>
 <game>
+	<mamename>miuchiz</mamename>
+	<realname>MIUCHIZ Virtual Companions</realname>
+</game>
+<game>
 	<mamename>miwi2_16</mamename>
 	<realname>MiWi2 16-in-1 + Drum Master</realname>
 </game>
@@ -84001,7 +84705,7 @@
 </game>
 <game>
 	<mamename>mj_130</mamename>
-	<realname>Michael Jordan (1.30)</realname>
+	<realname>Michael Jordan (1.30, display A1.03)</realname>
 </game>
 <game>
 	<mamename>mjanbari</mamename>
@@ -84336,6 +85040,10 @@
 	<realname>MK-14</realname>
 </game>
 <game>
+	<mamename>mk1forth</mamename>
+	<realname>Mark 1 FORTH Computer</realname>
+</game>
+<game>
 	<mamename>mk2</mamename>
 	<realname>Mortal Kombat II (rev L3.1)</realname>
 </game>
@@ -84365,11 +85073,11 @@
 </game>
 <game>
 	<mamename>mk2r31e</mamename>
-	<realname>Mortal Kombat II (rev L3.1 (European))</realname>
+	<realname>Mortal Kombat II (rev L3.1, European)</realname>
 </game>
 <game>
 	<mamename>mk2r32e</mamename>
-	<realname>Mortal Kombat II (rev L3.2 (European))</realname>
+	<realname>Mortal Kombat II (rev L3.2, European)</realname>
 </game>
 <game>
 	<mamename>mk2r42</mamename>
@@ -84726,6 +85434,10 @@
 <game>
 	<mamename>mmancp2ur1</mamename>
 	<realname>Mega Man: The Power Battle (CPS2, USA 950926, SAMPLE Version)</realname>
+</game>
+<game>
+	<mamename>mmancp2ur2</mamename>
+	<realname>Mega Man: The Power Battle (CPS2, USA 950925, SAMPLE Version)</realname>
 </game>
 <game>
 	<mamename>mmatrix</mamename>
@@ -85452,6 +86164,10 @@
 	<realname>Motogonki</realname>
 </game>
 <game>
+	<mamename>motogp</mamename>
+	<realname>Moto GP (MGP1004-NA-B)</realname>
+</game>
+<game>
 	<mamename>motorace</mamename>
 	<realname>MotoRace USA</realname>
 </game>
@@ -85510,6 +86226,10 @@
 <game>
 	<mamename>mouja</mamename>
 	<realname>Mouja (Japan)</realname>
+</game>
+<game>
+	<mamename>mouncrst</mamename>
+	<realname>Moune Creste (Jeutel French Moon Cresta bootleg)</realname>
 </game>
 <game>
 	<mamename>mountmon</mamename>
@@ -85706,6 +86426,10 @@
 <game>
 	<mamename>mpc3000</mamename>
 	<realname>MPC-3000</realname>
+</game>
+<game>
+	<mamename>mpc60</mamename>
+	<realname>MPC60 MIDI Production Center</realname>
 </game>
 <game>
 	<mamename>mpc64</mamename>
@@ -86156,6 +86880,10 @@
 	<realname>Marvel Super Heroes Vs. Street Fighter (USA 970625 Phoenix Edition) (bootleg)</realname>
 </game>
 <game>
+	<mamename>msi_sf2</mamename>
+	<realname>Street Fighter II: Special Champion Edition (MSI Plug &amp; Play) (Europe)</realname>
+</game>
+<game>
 	<mamename>msidd</mamename>
 	<realname>Double Dragon - 30 Years Anniversary (Plug &amp; Play)</realname>
 </game>
@@ -86170,6 +86898,10 @@
 <game>
 	<mamename>msimpac</mamename>
 	<realname>Ms. Pac-Man (MSI Plug &amp; Play)</realname>
+</game>
+<game>
+	<mamename>msinamco</mamename>
+	<realname>Namco Classics Vol.1 (3-in-1) (MSI Plug &amp; Play)</realname>
 </game>
 <game>
 	<mamename>msisaac</mamename>
@@ -86256,6 +86988,10 @@
 	<realname>Metal Slug X - Super Vehicle-001 (NGM-2500 ~ NGH-2500)</realname>
 </game>
 <game>
+	<mamename>msoccer</mamename>
+	<realname>Soccer (Mattel)</realname>
+</game>
+<game>
 	<mamename>mspacii</mamename>
 	<realname>Ms. Pac-Man II (Orca bootleg set 1)</realname>
 </game>
@@ -86274,6 +87010,10 @@
 <game>
 	<mamename>mspacmab3</mamename>
 	<realname>Ms. Pac-Man (bootleg, set 3)</realname>
+</game>
+<game>
+	<mamename>mspacmab4</mamename>
+	<realname>Ms. Pac-Man (bootleg, set 4)</realname>
 </game>
 <game>
 	<mamename>mspacman</mamename>
@@ -86309,7 +87049,11 @@
 </game>
 <game>
 	<mamename>mspacmanblt</mamename>
-	<realname>Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg)</realname>
+	<realname>Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg, set 1)</realname>
+</game>
+<game>
+	<mamename>mspacmanblt2</mamename>
+	<realname>Come-Cocos (Ms. Pac-Man) ('Made in Greece' Triunvi bootleg, set 2)</realname>
 </game>
 <game>
 	<mamename>mspacmancr</mamename>
@@ -86338,6 +87082,10 @@
 <game>
 	<mamename>mspacpls</mamename>
 	<realname>Ms. Pac-Man Plus</realname>
+</game>
+<game>
+	<mamename>mspactwin</mamename>
+	<realname>Ms PacMan Twin (Argentina)</realname>
 </game>
 <game>
 	<mamename>mspuzzle</mamename>
@@ -86752,6 +87500,10 @@
 	<realname>MU100 Rackable version</realname>
 </game>
 <game>
+	<mamename>mu5</mamename>
+	<realname>MU-5</realname>
+</game>
+<game>
 	<mamename>mu50</mamename>
 	<realname>MU50</realname>
 </game>
@@ -86868,6 +87620,10 @@
 	<realname>Mushiking The King Of Beetles 2005 First (Japan)</realname>
 </game>
 <game>
+	<mamename>mushi2k61</mamename>
+	<realname>Mushiking The King Of Beetles 2006 First (Japan)</realname>
+</game>
+<game>
 	<mamename>mushi2k62</mamename>
 	<realname>Mushiking The King Of Beetles 2006 Second (Japan)</realname>
 </game>
@@ -86941,11 +87697,15 @@
 </game>
 <game>
 	<mamename>mustangb</mamename>
-	<realname>US AAF Mustang (bootleg)</realname>
+	<realname>US AAF Mustang (bootleg, set 1)</realname>
 </game>
 <game>
 	<mamename>mustangb2</mamename>
 	<realname>US AAF Mustang (TAB Austria bootleg)</realname>
+</game>
+<game>
+	<mamename>mustangb3</mamename>
+	<realname>US AAF Mustang (Lettering bootleg)</realname>
 </game>
 <game>
 	<mamename>mustangs</mamename>
@@ -87152,6 +87912,10 @@
 	<realname>World Championship Baseball</realname>
 </game>
 <game>
+	<mamename>mwcfootb</mamename>
+	<realname>World Championship Football</realname>
+</game>
+<game>
 	<mamename>mwskins</mamename>
 	<realname>Skins Game (1.06)</realname>
 </game>
@@ -87218,6 +87982,10 @@
 <game>
 	<mamename>myangel3</mamename>
 	<realname>Kosodate Quiz My Angel 3 (Japan, KQT1/VER.A)</realname>
+</game>
+<game>
+	<mamename>myarccn</mamename>
+	<realname>My Arcade Caveman Ninja</realname>
 </game>
 <game>
 	<mamename>myb3k</mamename>
@@ -87468,6 +88236,10 @@
 	<realname>Name Club (J 960315 V1.000)</realname>
 </game>
 <game>
+	<mamename>namenayo</mamename>
+	<realname>Namennayo (Japan)</realname>
+</game>
+<game>
 	<mamename>nametune</mamename>
 	<realname>Name That Tune (Bally, set 1)</realname>
 </game>
@@ -87492,12 +88264,20 @@
 	<realname>Narc (rev 7.00)</realname>
 </game>
 <game>
+	<mamename>narc1</mamename>
+	<realname>Narc (rev 1.80)</realname>
+</game>
+<game>
 	<mamename>narc2</mamename>
 	<realname>Narc (rev 2.00)</realname>
 </game>
 <game>
 	<mamename>narc3</mamename>
 	<realname>Narc (rev 3.20)</realname>
+</game>
+<game>
+	<mamename>narc4</mamename>
+	<realname>Narc (rev 4.00)</realname>
 </game>
 <game>
 	<mamename>nascar</mamename>
@@ -87717,11 +88497,11 @@
 </game>
 <game>
 	<mamename>nbamht</mamename>
-	<realname>NBA Maximum Hangtime (rev 1.03 06/09/97)</realname>
+	<realname>NBA Maximum Hangtime (rev L1.03 06/09/97)</realname>
 </game>
 <game>
 	<mamename>nbamht1</mamename>
-	<realname>NBA Maximum Hangtime (rev 1.0 11/08/96)</realname>
+	<realname>NBA Maximum Hangtime (rev L1.0 11/08/96)</realname>
 </game>
 <game>
 	<mamename>nbanfl</mamename>
@@ -87837,7 +88617,11 @@
 </game>
 <game>
 	<mamename>ncd19c</mamename>
-	<realname>NCD19c</realname>
+	<realname>19c</realname>
+</game>
+<game>
+	<mamename>ncdmcx</mamename>
+	<realname>MCX</realname>
 </game>
 <game>
 	<mamename>ncentury</mamename>
@@ -87902,6 +88686,10 @@
 <game>
 	<mamename>nd80z</mamename>
 	<realname>ND-80Z</realname>
+</game>
+<game>
+	<mamename>nd8lines</mamename>
+	<realname>New Draw 8 Lines (Version 2.1)</realname>
 </game>
 <game>
 	<mamename>ndcfboxa</mamename>
@@ -87981,7 +88769,7 @@
 </game>
 <game>
 	<mamename>neocd</mamename>
-	<realname>Neo-Geo CD</realname>
+	<realname>Neo-Geo CD (NTSC?)</realname>
 </game>
 <game>
 	<mamename>neocdz</mamename>
@@ -88157,15 +88945,19 @@
 </game>
 <game>
 	<mamename>next</mamename>
-	<realname>NeXT Cube</realname>
+	<realname>NeXT Computer</realname>
+</game>
+<game>
+	<mamename>nextc</mamename>
+	<realname>NeXTcube</realname>
 </game>
 <game>
 	<mamename>nextct</mamename>
-	<realname>NeXT Cube turbo</realname>
+	<realname>NeXTcube Turbo</realname>
 </game>
 <game>
 	<mamename>nextctc</mamename>
-	<realname>NeXT Cube turbo color</realname>
+	<realname>NeXTcube Turbo Color</realname>
 </game>
 <game>
 	<mamename>nextfase</mamename>
@@ -88181,19 +88973,23 @@
 </game>
 <game>
 	<mamename>nextsc</mamename>
-	<realname>NeXTstation color</realname>
+	<realname>NeXTstation Color</realname>
 </game>
 <game>
 	<mamename>nextst</mamename>
-	<realname>NeXTstation turbo</realname>
+	<realname>NeXTstation Turbo</realname>
 </game>
 <game>
 	<mamename>nextstc</mamename>
-	<realname>NeXTstation turbo color</realname>
+	<realname>NeXTstation Turbo Color</realname>
 </game>
 <game>
 	<mamename>nf500a</mamename>
 	<realname>NF500A</realname>
+</game>
+<game>
+	<mamename>nf_08x</mamename>
+	<realname>No Fear: Dangerous Sports (0.8X)</realname>
 </game>
 <game>
 	<mamename>nf_10</mamename>
@@ -89044,6 +89840,10 @@
 	<realname>NSM Poker (TMS9995)</realname>
 </game>
 <game>
+	<mamename>nsnova</mamename>
+	<realname>Super Nova (Novag, v1.05)</realname>
+</game>
+<game>
 	<mamename>nspirit</mamename>
 	<realname>Ninja Spirit (World)</realname>
 </game>
@@ -89086,6 +89886,10 @@
 <game>
 	<mamename>nss_skin</mamename>
 	<realname>Skins Game (Nintendo Super System)</realname>
+</game>
+<game>
+	<mamename>nss_smas</mamename>
+	<realname>Super Mario All-Stars (Nintendo Super System)</realname>
 </game>
 <game>
 	<mamename>nss_smw</mamename>
@@ -89252,6 +90056,10 @@
 	<realname>New York! New York! (Gottlieb)</realname>
 </game>
 <game>
+	<mamename>nytsudo</mamename>
+	<realname>The New York Times Sudoku</realname>
+</game>
+<game>
 	<mamename>nzeroteam</mamename>
 	<realname>New Zero Team (V33 SYSTEM TYPE_B hardware)</realname>
 </game>
@@ -89285,7 +90093,7 @@
 </game>
 <game>
 	<mamename>oceanhun</mamename>
-	<realname>The Ocean Hunter</realname>
+	<realname>The Ocean Hunter (Japan)</realname>
 </game>
 <game>
 	<mamename>ochaken</mamename>
@@ -89365,7 +90173,11 @@
 </game>
 <game>
 	<mamename>oedfight</mamename>
-	<realname>Oedo Fight (Japan Bloodshed Ver.)</realname>
+	<realname>Oedo Fight (Japan, Bloodshed version)</realname>
+</game>
+<game>
+	<mamename>oedfighta</mamename>
+	<realname>Oedo Fight (Japan, Bloodless version)</realname>
 </game>
 <game>
 	<mamename>offensiv</mamename>
@@ -89520,6 +90332,10 @@
 	<realname>Oli-Boo-Chu</realname>
 </game>
 <game>
+	<mamename>olibug</mamename>
+	<realname>Oli Bug (Jump Bug bootleg)</realname>
+</game>
+<game>
 	<mamename>oligam</mamename>
 	<realname>Olympian Games (Russia)</realname>
 </game>
@@ -89560,12 +90376,16 @@
 	<realname>Olympia BOSS D</realname>
 </game>
 <game>
+	<mamename>olymp</mamename>
+	<realname>Olympus (Z Games, version 10)</realname>
+</game>
+<game>
 	<mamename>olympic</mamename>
 	<realname>Olympic Games</realname>
 </game>
 <game>
 	<mamename>olympus</mamename>
-	<realname>Olympus</realname>
+	<realname>Olympus (Juegos Populares)</realname>
 </game>
 <game>
 	<mamename>olypeopl</mamename>
@@ -90912,6 +91732,10 @@
 	<realname>Paranoia</realname>
 </game>
 <game>
+	<mamename>parcade</mamename>
+	<realname>Palace Arcade</realname>
+</game>
+<game>
 	<mamename>parentj</mamename>
 	<realname>Parent Jack (Japan)</realname>
 </game>
@@ -91130,6 +91954,10 @@
 <game>
 	<mamename>pbchmp95</mamename>
 	<realname>Pinball Champ '95</realname>
+</game>
+<game>
+	<mamename>pbem2017</mamename>
+	<realname>Pense Bem (2017)</realname>
 </game>
 <game>
 	<mamename>pbillian</mamename>
@@ -92050,6 +92878,10 @@
 <game>
 	<mamename>pcnfrk4m</mamename>
 	<realname>Percussion Freaks 4th Mix (G*A25 VER. AAA)</realname>
+</game>
+<game>
+	<mamename>pcnfrk4mk</mamename>
+	<realname>Percussion Freaks 4th Mix (G*A25 VER. KAA)</realname>
 </game>
 <game>
 	<mamename>pcnfrk5m</mamename>
@@ -93009,7 +93841,11 @@
 </game>
 <game>
 	<mamename>pepp0104</mamename>
-	<realname>Player's Edge Plus (PP0104) Standard Draw Poker</realname>
+	<realname>Player's Edge Plus (PP0104) Standard Draw Poker (set 1)</realname>
+</game>
+<game>
+	<mamename>pepp0104a</mamename>
+	<realname>Player's Edge Plus (PP0104) Standard Draw Poker (set 2, Fitzgeralds)</realname>
 </game>
 <game>
 	<mamename>pepp0116</mamename>
@@ -93329,7 +94165,15 @@
 </game>
 <game>
 	<mamename>pepp0419</mamename>
-	<realname>Player's Edge Plus (PP0419) Standard Draw Poker</realname>
+	<realname>Player's Edge Plus (PP0419) Standard Draw Poker (set 1)</realname>
+</game>
+<game>
+	<mamename>pepp0419a</mamename>
+	<realname>Player's Edge Plus (PP0419) Standard Draw Poker (Old Chicago Casino)</realname>
+</game>
+<game>
+	<mamename>pepp0419b</mamename>
+	<realname>Player's Edge Plus (PP0419) Standard Draw Poker (set 2)</realname>
 </game>
 <game>
 	<mamename>pepp0420</mamename>
@@ -93858,6 +94702,10 @@
 <game>
 	<mamename>peset117</mamename>
 	<realname>Player's Edge Plus (SET117) Set Chip</realname>
+</game>
+<game>
+	<mamename>pesta</mamename>
+	<realname>Pro Evolution Soccer The Arcade (ver EAA)</realname>
 </game>
 <game>
 	<mamename>pestplce</mamename>
@@ -94836,6 +95684,10 @@
 	<realname>Pleasure Goal / Futsal - 5 on 5 Mini Soccer (NGM-219)</realname>
 </game>
 <game>
+	<mamename>pgs268</mamename>
+	<realname>Portable Game Station 268-in-1</realname>
+</game>
+<game>
 	<mamename>phantasm</mamename>
 	<realname>Phantasm (Japan)</realname>
 </game>
@@ -95034,6 +95886,10 @@
 <game>
 	<mamename>photoply2k1it</mamename>
 	<realname>Photo Play 2001 (Italian)</realname>
+</game>
+<game>
+	<mamename>photoply2k1sp</mamename>
+	<realname>Photo Play 2001 (Spanish)</realname>
 </game>
 <game>
 	<mamename>photoply2k4</mamename>
@@ -96112,6 +96968,10 @@
 	<realname>Plus Alpha</realname>
 </game>
 <game>
+	<mamename>plycntrchtr</mamename>
+	<realname>PlayCenter Champions Tournament (v9.3)</realname>
+</game>
+<game>
 	<mamename>plygonet</mamename>
 	<realname>Polygonet Commanders (ver UAA)</realname>
 </game>
@@ -96608,6 +97468,10 @@
 	<realname>Pool 10 (Italian, set 9)</realname>
 </game>
 <game>
+	<mamename>pool10k</mamename>
+	<realname>Pool 10 (Italian, set 10)</realname>
+</game>
+<game>
 	<mamename>pool_l5</mamename>
 	<realname>Pool Sharks (LA-5)</realname>
 </game>
@@ -96788,8 +97652,20 @@
 	<realname>Pop'n Music 9 (ver JAB)</realname>
 </game>
 <game>
+	<mamename>popnanm</mamename>
+	<realname>Pop'n Music Animelo</realname>
+</game>
+<game>
 	<mamename>popnanm2</mamename>
 	<realname>Pop'n Music Animelo 2</realname>
+</game>
+<game>
+	<mamename>popnmt</mamename>
+	<realname>Pop'n Music Mickey Tunes</realname>
+</game>
+<game>
+	<mamename>popnmt2</mamename>
+	<realname>Pop'n Music Mickey Tunes!</realname>
 </game>
 <game>
 	<mamename>popnpop</mamename>
@@ -97080,6 +97956,10 @@
 	<realname>Power 3000</realname>
 </game>
 <game>
+	<mamename>powa</mamename>
+	<realname>P.O.W. - Prisoners of War (US version 1, mask ROM sprites)</realname>
+</game>
+<game>
 	<mamename>powb</mamename>
 	<realname>P.O.W. - Prisoners of War (bootleg of US version 1)</realname>
 </game>
@@ -97172,6 +98052,10 @@
 	<realname>PP-01</realname>
 </game>
 <game>
+	<mamename>pp100</mamename>
+	<realname>Pool Player (1.0)</realname>
+</game>
+<game>
 	<mamename>ppan</mamename>
 	<realname>Peter Pan (bootleg of Hook)</realname>
 </game>
@@ -97233,7 +98117,11 @@
 </game>
 <game>
 	<mamename>ppp2nd</mamename>
-	<realname>ParaParaParadise 2nd Mix</realname>
+	<realname>ParaParaParadise 2nd Mix (JAA)</realname>
+</game>
+<game>
+	<mamename>ppp2nda</mamename>
+	<realname>ParaParaParadise 2nd Mix (AAA)</realname>
 </game>
 <game>
 	<mamename>pprobe</mamename>
@@ -98044,6 +98932,10 @@
 	<realname>Prop Cycle (Rev. PR2 Ver.A, World)</realname>
 </game>
 <game>
+	<mamename>propcyclj</mamename>
+	<realname>Prop Cycle (Rev. PR1 Ver.A, Japan)</realname>
+</game>
+<game>
 	<mamename>prophecy</mamename>
 	<realname>Prophecy (20173411, NSW/ACT)</realname>
 </game>
@@ -98248,6 +99140,10 @@
 	<realname>Power Spikes (US)</realname>
 </game>
 <game>
+	<mamename>psr340</mamename>
+	<realname>PSR-340 PortaSound</realname>
+</game>
+<game>
 	<mamename>pss61</mamename>
 	<realname>Super Mario Kart / Super Mario Collection / Star Fox (Super Famicom Box)</realname>
 </game>
@@ -98408,6 +99304,10 @@
 	<realname>Parallel Turn</realname>
 </game>
 <game>
+	<mamename>pubball</mamename>
+	<realname>Power Up Baseball (prototype)</realname>
+</game>
+<game>
 	<mamename>pubtimed</mamename>
 	<realname>Pub Time Darts</realname>
 </game>
@@ -98418,6 +99318,10 @@
 <game>
 	<mamename>puchicarj</mamename>
 	<realname>Puchi Carat (Ver 2.02J 1997/10/29)</realname>
+</game>
+<game>
+	<mamename>puchicaru</mamename>
+	<realname>Puchi Carat (Ver 2.04A 1997/11/08)</realname>
 </game>
 <game>
 	<mamename>puckman</mamename>
@@ -99048,6 +99952,14 @@
 	<realname>QuizKid Racer (COP420 version)</realname>
 </game>
 <game>
+	<mamename>qkracerm</mamename>
+	<realname>QuizKid Racer (MM5799 version)</realname>
+</game>
+<game>
+	<mamename>qkspeller</mamename>
+	<realname>QuizKid Speller</realname>
+</game>
+<game>
 	<mamename>ql</mamename>
 	<realname>QL (UK)</realname>
 </game>
@@ -99676,6 +100588,10 @@
 	<realname>ROLM 9751 Model 10</realname>
 </game>
 <game>
+	<mamename>ra145</mamename>
+	<realname>Retro Arcade 16 Bits Classic Edition Mini TV Game Console - 145 Classic Games - TV Arcade Plug and Play (Mega Drive bootlegs)</realname>
+</game>
+<game>
 	<mamename>ra30</mamename>
 	<realname>RA-30 Realtime Arranger</realname>
 </game>
@@ -99684,24 +100600,32 @@
 	<realname>Spectrum I+</realname>
 </game>
 <game>
-	<mamename>rab_103</mamename>
-	<realname>Adventures of Rocky and Bullwinkle and Friends (1.03 Spain)</realname>
+	<mamename>rab_103s</mamename>
+	<realname>Adventures of Rocky and Bullwinkle and Friends (USA 1.03, display S1.03)</realname>
 </game>
 <game>
 	<mamename>rab_130</mamename>
-	<realname>Adventures of Rocky and Bullwinkle and Friends (1.30)</realname>
+	<realname>Adventures of Rocky and Bullwinkle and Friends (USA 1.30, display A1.30)</realname>
 </game>
 <game>
 	<mamename>rab_320</mamename>
-	<realname>Adventures of Rocky and Bullwinkle and Friends (3.20)</realname>
+	<realname>Adventures of Rocky and Bullwinkle and Friends (USA 3.20, display A3.00)</realname>
 </game>
 <game>
 	<mamename>rabbit</mamename>
 	<realname>Rabbit (Asia 3/6)</realname>
 </game>
 <game>
+	<mamename>rabbita</mamename>
+	<realname>Rabbit (Asia 1-28?)</realname>
+</game>
+<game>
+	<mamename>rabbitj</mamename>
+	<realname>Rabbit (Japan 3/6?)</realname>
+</game>
+<game>
 	<mamename>rabbitjt</mamename>
-	<realname>Rabbit (Japan, location test)</realname>
+	<realname>Rabbit (Japan 1/28, location test)</realname>
 </game>
 <game>
 	<mamename>rabbitpk</mamename>
@@ -99964,6 +100888,10 @@
 	<realname>Mega Drive Collection Volume 1 (Radica, Arcade Legends) (Europe)</realname>
 </game>
 <game>
+	<mamename>rad_md2</mamename>
+	<realname>Mega Drive Collection Volume 2 (Radica, Arcade Legends) (UK)</realname>
+</game>
+<game>
 	<mamename>rad_mtrk</mamename>
 	<realname>Play TV Monster Truck (NTSC)</realname>
 </game>
@@ -99977,7 +100905,7 @@
 </game>
 <game>
 	<mamename>rad_orun</mamename>
-	<realname>Out Run 2019 (Radica Plug &amp; Play, Europe)</realname>
+	<realname>Out Run 2019 (Radica Plug &amp; Play, UK)</realname>
 </game>
 <game>
 	<mamename>rad_ping</mamename>
@@ -100009,7 +100937,7 @@
 </game>
 <game>
 	<mamename>rad_sf2p</mamename>
-	<realname>Street Fighter II: Special Champion Edition [Ghouls'n Ghosts] (Radica, Arcade Legends) (Europe)</realname>
+	<realname>Street Fighter II: Special Champion Edition [Ghouls'n Ghosts] (Radica, Arcade Legends) (UK)</realname>
 </game>
 <game>
 	<mamename>rad_sinv</mamename>
@@ -100044,8 +100972,12 @@
 	<realname>Super Sonic Gold (Radica Plug &amp; Play) (USA)</realname>
 </game>
 <game>
+	<mamename>rad_sonicp</mamename>
+	<realname>Super Sonic Gold (Radica Plug &amp; Play) (UK)</realname>
+</game>
+<game>
 	<mamename>rad_ssoc</mamename>
-	<realname>Sensible Soccer plus [Cannon Fodder, Mega lo Mania] (Radica, Arcade Legends) (Europe)</realname>
+	<realname>Sensible Soccer plus [Cannon Fodder, Mega lo Mania] (Radica, Arcade Legends) (UK)</realname>
 </game>
 <game>
 	<mamename>rad_ssx</mamename>
@@ -100061,11 +100993,15 @@
 </game>
 <game>
 	<mamename>radarscp</mamename>
-	<realname>Radar Scope</realname>
+	<realname>Radar Scope (TRS02, rev. D)</realname>
 </game>
 <game>
 	<mamename>radarscp1</mamename>
 	<realname>Radar Scope (TRS01)</realname>
+</game>
+<game>
+	<mamename>radarscpc</mamename>
+	<realname>Radar Scope (TRS02?, rev. C)</realname>
 </game>
 <game>
 	<mamename>radarzon</mamename>
@@ -100361,7 +101297,11 @@
 </game>
 <game>
 	<mamename>raiders5t</mamename>
-	<realname>Raiders5 (Japan)</realname>
+	<realname>Raiders5 (Japan, set 1)</realname>
+</game>
+<game>
+	<mamename>raiders5ta</mamename>
+	<realname>Raiders5 (Japan, set 2, bootleg?)</realname>
 </game>
 <game>
 	<mamename>raidersr3</mamename>
@@ -100405,7 +101345,7 @@
 </game>
 <game>
 	<mamename>raisedvl</mamename>
-	<realname>Raise The Devil</realname>
+	<realname>Raise The Devil Pinball</realname>
 </game>
 <game>
 	<mamename>raizpin</mamename>
@@ -100928,6 +101868,10 @@
 	<realname>RD100</realname>
 </game>
 <game>
+	<mamename>rd5_240</mamename>
+	<realname>Mini Arcade Machine 240-in-1 (Red5)</realname>
+</game>
+<game>
 	<mamename>rdaction</mamename>
 	<realname>Rad Action / NinjaKun Ashura no Shou</realname>
 </game>
@@ -101060,6 +102004,10 @@
 	<realname>Road Kings (L-4)</realname>
 </game>
 <game>
+	<mamename>rdqa</mamename>
+	<realname>Reader's Digest Q&amp;A - Computer Question &amp; Answer Game</realname>
+</game>
+<game>
 	<mamename>re800ea</mamename>
 	<realname>Ruleta RE-800 (earlier, no attract)</realname>
 </game>
@@ -101153,7 +102101,7 @@
 </game>
 <game>
 	<mamename>red5mam</mamename>
-	<realname>Mini Arcade Machine (Red5)</realname>
+	<realname>Mini Arcade Machine (Red5, 'Xtra Game')</realname>
 </game>
 <game>
 	<mamename>redalert</mamename>
@@ -101238,6 +102186,10 @@
 <game>
 	<mamename>redhawkk</mamename>
 	<realname>Red Hawk (Korea)</realname>
+</game>
+<game>
+	<mamename>redhawks</mamename>
+	<realname>Red Hawk (horizontal, Spain)</realname>
 </game>
 <game>
 	<mamename>redlin2p</mamename>
@@ -101464,6 +102416,10 @@
 	<realname>Return of the Invaders (bootleg no MCU set 3)</realname>
 </game>
 <game>
+	<mamename>retro400</mamename>
+	<realname>Retro FC 400-in-1</realname>
+</game>
+<game>
 	<mamename>retrsam</mamename>
 	<realname>Return of the Samurai (0400549V, NSW/ACT)</realname>
 </game>
@@ -101522,6 +102478,10 @@
 <game>
 	<mamename>rf2</mamename>
 	<realname>Konami RF2 - Red Fighter</realname>
+</game>
+<game>
+	<mamename>rf51w14cg</mamename>
+	<realname>unknown Recreativos Franco slot machine (model RF51W14-CG)</realname>
 </game>
 <game>
 	<mamename>rfcp168</mamename>
@@ -101774,6 +102734,10 @@
 <game>
 	<mamename>riotcity</mamename>
 	<realname>Riot City (Japan)</realname>
+</game>
+<game>
+	<mamename>riotw</mamename>
+	<realname>Riot (Woong Bi license)</realname>
 </game>
 <game>
 	<mamename>rip300</mamename>
@@ -102408,6 +103372,10 @@
 	<realname>Rock 'n' Roll</realname>
 </game>
 <game>
+	<mamename>rockstar</mamename>
+	<realname>Plug 'N' Play Rockstar Guitar / Guitar Rock (PAL)</realname>
+</game>
+<game>
 	<mamename>rocktris</mamename>
 	<realname>Rock Tris</realname>
 </game>
@@ -102494,6 +103462,10 @@
 <game>
 	<mamename>roldisco</mamename>
 	<realname>Roller Disco</realname>
+</game>
+<game>
+	<mamename>rolla</mamename>
+	<realname>unknown 'Rolla' slot machine</realname>
 </game>
 <game>
 	<mamename>rollace</mamename>
@@ -102988,6 +103960,26 @@
 	<realname>Rolling Thunder (rev 3, hack)</realname>
 </game>
 <game>
+	<mamename>rtpc010</mamename>
+	<realname>IBM RT PC Model 010</realname>
+</game>
+<game>
+	<mamename>rtpc015</mamename>
+	<realname>IBM RT PC Model 015</realname>
+</game>
+<game>
+	<mamename>rtpc020</mamename>
+	<realname>IBM RT PC Model 020</realname>
+</game>
+<game>
+	<mamename>rtpc025</mamename>
+	<realname>IBM RT PC Model 025</realname>
+</game>
+<game>
+	<mamename>rtpca25</mamename>
+	<realname>IBM RT PC Model A25</realname>
+</game>
+<game>
 	<mamename>rtriv</mamename>
 	<realname>Romar Triv</realname>
 </game>
@@ -103144,6 +104136,10 @@
 	<realname>Run and Gun (ver UAB 1993 10.12, dedicated twin cabinet)</realname>
 </game>
 <game>
+	<mamename>runpuppy</mamename>
+	<realname>Run Run Puppy</realname>
+</game>
+<game>
 	<mamename>ruprup</mamename>
 	<realname>Roll Up! Roll Up!! (10115911, NSW/ACT)</realname>
 </game>
@@ -103225,7 +104221,11 @@
 </game>
 <game>
 	<mamename>ryujin</mamename>
-	<realname>Ryu Jin (Japan)</realname>
+	<realname>Ryu Jin (Japan, ET910000B PCB)</realname>
+</game>
+<game>
+	<mamename>ryujina</mamename>
+	<realname>Ryu Jin (Japan, ET910000A PCB)</realname>
 </game>
 <game>
 	<mamename>ryukendn</mamename>
@@ -103721,11 +104721,11 @@
 </game>
 <game>
 	<mamename>sarc110</mamename>
-	<realname>Super Arcade 110 (set 1)</realname>
+	<realname>Super Arcade 101-in-1 (set 1)</realname>
 </game>
 <game>
 	<mamename>sarc110a</mamename>
-	<realname>Super Arcade 110 (set 2)</realname>
+	<realname>Super Arcade 101-in-1 (set 2)</realname>
 </game>
 <game>
 	<mamename>sarcpc</mamename>
@@ -103797,7 +104797,11 @@
 </game>
 <game>
 	<mamename>sauro</mamename>
-	<realname>Sauro</realname>
+	<realname>Sauro (set 1)</realname>
+</game>
+<game>
+	<mamename>sauroa</mamename>
+	<realname>Sauro (set 2)</realname>
 </game>
 <game>
 	<mamename>saurob</mamename>
@@ -103938,6 +104942,10 @@
 <game>
 	<mamename>sbmj</mamename>
 	<realname>Sonic Blast Man (Japan)</realname>
+</game>
+<game>
+	<mamename>sbmjb</mamename>
+	<realname>Sonic Blast Man's Janken Battle</realname>
 </game>
 <game>
 	<mamename>sboblbobl</mamename>
@@ -105598,6 +106606,14 @@
 <game>
 	<mamename>sc2dels1</mamename>
 	<realname>Del's Millions (Bellfruit) (set 10, UK, 10GBP Jackpot) (Scorpion 2/3)</realname>
+</game>
+<game>
+	<mamename>sc2dels10</mamename>
+	<realname>Del's Millions (Bellfruit) (set 11, UK, ??GBP Jackpot) (Scorpion 2/3)</realname>
+</game>
+<game>
+	<mamename>sc2dels11</mamename>
+	<realname>Del's Millions (Bellfruit) (set 12, UK, ??GBP Jackpot) (Scorpion 2/3)</realname>
 </game>
 <game>
 	<mamename>sc2dels1p</mamename>
@@ -113198,6 +114214,10 @@
 <game>
 	<mamename>sc4hotwde</mamename>
 	<realname>Hot Wad (Bellfruit) (Scorpion 4) (set 6)</realname>
+</game>
+<game>
+	<mamename>sc4hrolr</mamename>
+	<realname>High Roller (Bellfruit) (Scorpion 4)</realname>
 </game>
 <game>
 	<mamename>sc4hyde</mamename>
@@ -126029,11 +127049,15 @@
 </game>
 <game>
 	<mamename>scfinals</mamename>
-	<realname>Super Cup Finals (Ver 2.2O 1994/01/13)</realname>
+	<realname>Super Cup Finals (Ver 2.2O 1994/01/13, single PCB)</realname>
 </game>
 <game>
 	<mamename>scfinalso</mamename>
-	<realname>Super Cup Finals (Ver 2.1O 1993/11/19)</realname>
+	<realname>Super Cup Finals (Ver 2.1O 1993/11/19, single PCB)</realname>
+</game>
+<game>
+	<mamename>scfinalsoc</mamename>
+	<realname>Super Cup Finals (Ver 2.1O 1993/11/19, F3 Cartridge)</realname>
 </game>
 <game>
 	<mamename>scg05nt</mamename>
@@ -126132,6 +127156,10 @@
 	<realname>Super Cherry Master (v1.0)</realname>
 </game>
 <game>
+	<mamename>scmder</mamename>
+	<realname>Sphinx Commander (v2.00)</realname>
+</game>
+<game>
 	<mamename>scobra</mamename>
 	<realname>Super Cobra</realname>
 </game>
@@ -126174,6 +127202,10 @@
 <game>
 	<mamename>scontraj</mamename>
 	<realname>Super Contra - Alien no Gyakushuu (Japan)</realname>
+</game>
+<game>
+	<mamename>score5</mamename>
+	<realname>Score 5</realname>
 </game>
 <game>
 	<mamename>scorpio</mamename>
@@ -126224,6 +127256,10 @@
 	<realname>Scrabble (rev. F) (Protocol)</realname>
 </game>
 <game>
+	<mamename>scrabsen</mamename>
+	<realname>Scrabble Sensor - Electronic Word Game</realname>
+</game>
+<game>
 	<mamename>scram_tp</mamename>
 	<realname>Scramble (Pinball)</realname>
 </game>
@@ -126250,6 +127286,10 @@
 <game>
 	<mamename>scramblebf</mamename>
 	<realname>Scramble (Karateco, French bootleg)</realname>
+</game>
+<game>
+	<mamename>scramblebun</mamename>
+	<realname>Scramble (unknown bootleg)</realname>
 </game>
 <game>
 	<mamename>scrambleo</mamename>
@@ -126348,6 +127388,10 @@
 	<realname>Scorpion (Oct 01, 1997)</realname>
 </game>
 <game>
+	<mamename>scrpiondb</mamename>
+	<realname>Scorpion (Dec 24, 1993)</realname>
+</game>
+<game>
 	<mamename>scrpn_l1</mamename>
 	<realname>Scorpion (L-1)</realname>
 </game>
@@ -126369,27 +127413,27 @@
 </game>
 <game>
 	<mamename>scud</mamename>
-	<realname>Scud Race Twin (Australia)</realname>
+	<realname>Scud Race Twin/DX (Export)</realname>
 </game>
 <game>
-	<mamename>scuda</mamename>
-	<realname>Scud Race Twin (Export)</realname>
+	<mamename>scudau</mamename>
+	<realname>Scud Race Twin/DX (Australia)</realname>
+</game>
+<game>
+	<mamename>scuddx</mamename>
+	<realname>Scud Race Deluxe (Revision A)</realname>
 </game>
 <game>
 	<mamename>scudhamm</mamename>
 	<realname>Scud Hammer</realname>
 </game>
 <game>
-	<mamename>scudj</mamename>
-	<realname>Scud Race Deluxe (Japan)</realname>
-</game>
-<game>
 	<mamename>scudplus</mamename>
-	<realname>Scud Race Plus (Revision A)</realname>
+	<realname>Scud Race Plus Twin/DX (Revision A)</realname>
 </game>
 <game>
 	<mamename>scudplusa</mamename>
-	<realname>Scud Race Plus</realname>
+	<realname>Scud Race Plus Twin/DX</realname>
 </game>
 <game>
 	<mamename>scv</mamename>
@@ -126542,6 +127586,10 @@
 <game>
 	<mamename>sealdeal</mamename>
 	<realname>Seal The Deal - Jackpot Carnival (0251029, US)</realname>
+</game>
+<game>
+	<mamename>sealvt</mamename>
+	<realname>Seal 30-in-1 (VT based, Model FN098134)</realname>
 </game>
 <game>
 	<mamename>searchar</mamename>
@@ -126873,11 +127921,11 @@
 </game>
 <game>
 	<mamename>sexpertc</mamename>
-	<realname>Super Expert (version C, V3.6)</realname>
+	<realname>Super Expert (version C, v3.6)</realname>
 </game>
 <game>
 	<mamename>sexpertc1</mamename>
-	<realname>Super Expert (version C, V3.0)</realname>
+	<realname>Super Expert (version C, v3.0)</realname>
 </game>
 <game>
 	<mamename>sextriv</mamename>
@@ -126986,6 +128034,10 @@
 <game>
 	<mamename>sf2ceb4</mamename>
 	<realname>Street Fighter II': Champion Edition (Playmark bootleg, set 2)</realname>
+</game>
+<game>
+	<mamename>sf2ceb5</mamename>
+	<realname>Street Fighter II': Champion Edition (Playmark bootleg, set 3)</realname>
 </game>
 <game>
 	<mamename>sf2ceblp</mamename>
@@ -127194,6 +128246,10 @@
 <game>
 	<mamename>sf2mdtb</mamename>
 	<realname>Street Fighter II': Magic Delta Turbo (bootleg, set 3)</realname>
+</game>
+<game>
+	<mamename>sf2mkot</mamename>
+	<realname>Street Fighter II': Magic KO Turbo!! - Nightmare Crack</realname>
 </game>
 <game>
 	<mamename>sf2qp1</mamename>
@@ -127645,11 +128701,11 @@
 </game>
 <game>
 	<mamename>sfortec</mamename>
-	<realname>Super Forte (version C, V3.6)</realname>
+	<realname>Super Forte (version C, v3.6)</realname>
 </game>
 <game>
 	<mamename>sfortec1</mamename>
-	<realname>Super Forte (version C, V1.2)</realname>
+	<realname>Super Forte (version C, v1.2)</realname>
 </game>
 <game>
 	<mamename>sfp</mamename>
@@ -128245,15 +129301,15 @@
 </game>
 <game>
 	<mamename>shimpactp4</mamename>
-	<realname>Super High Impact (prototype, rev 4.0 09/10/91)</realname>
+	<realname>Super High Impact (prototype, proto 4.0 09/10/91)</realname>
 </game>
 <game>
 	<mamename>shimpactp5</mamename>
-	<realname>Super High Impact (prototype, rev 5.0 09/15/91)</realname>
+	<realname>Super High Impact (prototype, proto 5.0 09/15/91)</realname>
 </game>
 <game>
 	<mamename>shimpactp6</mamename>
-	<realname>Super High Impact (prototype, rev 6.0 09/23/91)</realname>
+	<realname>Super High Impact (prototype, proto 6.0 09/23/91)</realname>
 </game>
 <game>
 	<mamename>shine</mamename>
@@ -128601,11 +129657,7 @@
 </game>
 <game>
 	<mamename>shtngmst</mamename>
-	<realname>Shooting Master (8751 315-5159)</realname>
-</game>
-<game>
-	<mamename>shtngmste</mamename>
-	<realname>Shooting Master (EVG, 8751 315-5159a)</realname>
+	<realname>Shooting Master (8751 315-5159a)</realname>
 </game>
 <game>
 	<mamename>shtrider</mamename>
@@ -128980,6 +130032,10 @@
 	<realname>Kasparov Simultano (ver. C)</realname>
 </game>
 <game>
+	<mamename>simultanoa</mamename>
+	<realname>Kasparov Simultano (ver. B)</realname>
+</game>
+<game>
 	<mamename>sinbad</mamename>
 	<realname>Sinbad</realname>
 </game>
@@ -129145,7 +130201,7 @@
 </game>
 <game>
 	<mamename>skichamp</mamename>
-	<realname>Ski Champ</realname>
+	<realname>Ski Champ (Japan)</realname>
 </game>
 <game>
 	<mamename>skijump</mamename>
@@ -129460,6 +130516,10 @@
 	<realname>Slick Shot (V1.7)</realname>
 </game>
 <game>
+	<mamename>slimekun</mamename>
+	<realname>Slime Kun</realname>
+</game>
+<game>
 	<mamename>slipstrm</mamename>
 	<realname>Slip Stream (Brazil 950515)</realname>
 </game>
@@ -129560,6 +130620,26 @@
 	<realname>Pro Stepper Tele Cardioline (Salter Fitness Stepper V.1.0, Checksum F208)</realname>
 </game>
 <game>
+	<mamename>slvrball632</mamename>
+	<realname>Silverball (6.32)</realname>
+</game>
+<game>
+	<mamename>slvrball720</mamename>
+	<realname>Silverball (7.20)</realname>
+</game>
+<game>
+	<mamename>slvrball806</mamename>
+	<realname>Silverball (8.01)</realname>
+</game>
+<game>
+	<mamename>slvrballbu409</mamename>
+	<realname>Silverball Bulova (4.09, set 1)</realname>
+</game>
+<game>
+	<mamename>slvrballbu409b</mamename>
+	<realname>Silverball Bulova (4.09, set 2)</realname>
+</game>
+<game>
 	<mamename>slvrwolf</mamename>
 	<realname>Silver Wolf (0100673V, NSW/ACT)</realname>
 </game>
@@ -129578,6 +130658,10 @@
 <game>
 	<mamename>sm1800</mamename>
 	<realname>SM1800</realname>
+</game>
+<game>
+	<mamename>sm1810</mamename>
+	<realname>SM1810</realname>
 </game>
 <game>
 	<mamename>sm38640f</mamename>
@@ -129810,6 +130894,10 @@
 <game>
 	<mamename>smashtv6</mamename>
 	<realname>Smash T.V. (rev 6.00)</realname>
+</game>
+<game>
+	<mamename>smastmind</mamename>
+	<realname>Super-Sonic Electronic Master Mind</realname>
 </game>
 <game>
 	<mamename>smb</mamename>
@@ -133204,6 +134292,10 @@
 	<realname>Space Panther</realname>
 </game>
 <game>
+	<mamename>spcpokan</mamename>
+	<realname>Space Pokan</realname>
+</game>
+<game>
 	<mamename>spcpostn</mamename>
 	<realname>Space Position (Japan)</realname>
 </game>
@@ -133577,11 +134669,11 @@
 </game>
 <game>
 	<mamename>spikeofe</mamename>
-	<realname>Spikeout Final Edition</realname>
+	<realname>Spikeout Final Edition (Export)</realname>
 </game>
 <game>
 	<mamename>spikeout</mamename>
-	<realname>Spikeout (Revision C)</realname>
+	<realname>Spikeout (Export, Revision C)</realname>
 </game>
 <game>
 	<mamename>spiker</mamename>
@@ -134081,7 +135173,11 @@
 </game>
 <game>
 	<mamename>srally2</mamename>
-	<realname>Sega Rally 2</realname>
+	<realname>Sega Rally 2 (Export)</realname>
+</game>
+<game>
+	<mamename>srally2dx</mamename>
+	<realname>Sega Rally 2 Deluxe (Export)</realname>
 </game>
 <game>
 	<mamename>srally2p</mamename>
@@ -134090,10 +135186,6 @@
 <game>
 	<mamename>srally2pa</mamename>
 	<realname>Sega Rally 2 (prototype, 8 Dec 1997)</realname>
-</game>
-<game>
-	<mamename>srally2x</mamename>
-	<realname>Sega Rally 2 DX</realname>
 </game>
 <game>
 	<mamename>srallyc</mamename>
@@ -134429,7 +135521,7 @@
 </game>
 <game>
 	<mamename>sshootep</mamename>
-	<realname>Sharpshooter</realname>
+	<realname>Sharpshooter (Game Plan)</realname>
 </game>
 <game>
 	<mamename>sshooter</mamename>
@@ -135464,8 +136556,16 @@
 	<realname>Storio (NL, Dutch, 2011-10-17)</realname>
 </game>
 <game>
+	<mamename>storm</mamename>
+	<realname>Storm</realname>
+</game>
+<game>
 	<mamename>storming</mamename>
-	<realname>Storming Party / Riku Kai Kuu Saizensen</realname>
+	<realname>Storming Party / Riku Kai Kuu Saizensen (set 1)</realname>
+</game>
+<game>
+	<mamename>storminga</mamename>
+	<realname>Storming Party / Riku Kai Kuu Saizensen (set 2)</realname>
 </game>
 <game>
 	<mamename>strahl</mamename>
@@ -135685,7 +136785,11 @@
 </game>
 <game>
 	<mamename>strlink</mamename>
-	<realname>Strong Link (Russia) (Extrema)</realname>
+	<realname>Strong Link (Ukraine, V. 43.48)</realname>
+</game>
+<game>
+	<mamename>strlinka</mamename>
+	<realname>Strong Link (Ukraine, V. 43.45)</realname>
 </game>
 <game>
 	<mamename>strlt_l1</mamename>
@@ -135865,43 +136969,43 @@
 </game>
 <game>
 	<mamename>stwr_101</mamename>
-	<realname>Star Wars (1.01)</realname>
+	<realname>Star Wars (USA 1.01, display A1.02)</realname>
+</game>
+<game>
+	<mamename>stwr_101g</mamename>
+	<realname>Star Wars (German 1.01, display G1.02)</realname>
 </game>
 <game>
 	<mamename>stwr_102</mamename>
-	<realname>Star Wars (1.02)</realname>
+	<realname>Star Wars (USA 1.02, display A1.05)</realname>
+</game>
+<game>
+	<mamename>stwr_102e</mamename>
+	<realname>Star Wars (England 1.02, display A1.05)</realname>
 </game>
 <game>
 	<mamename>stwr_103</mamename>
-	<realname>Star Wars (1.03)</realname>
+	<realname>Star Wars (USA 1.03, display A1.05)</realname>
+</game>
+<game>
+	<mamename>stwr_103_a104</mamename>
+	<realname>Star Wars (USA 1.03, display A1.04)</realname>
 </game>
 <game>
 	<mamename>stwr_104</mamename>
-	<realname>Star Wars (1.04)</realname>
+	<realname>Star Wars (USA 1.04, display A1.05)</realname>
 </game>
 <game>
 	<mamename>stwr_106</mamename>
-	<realname>Star Wars (1.06)</realname>
+	<realname>Star Wars (Unofficial 1.06, display A1.05)</realname>
 </game>
 <game>
-	<mamename>stwr_106s</mamename>
-	<realname>Star Wars (1.06, Display S1.05)</realname>
+	<mamename>stwr_106_a046</mamename>
+	<realname>Star Wars (Unofficial 1.06, display A0.46)</realname>
 </game>
 <game>
-	<mamename>stwr_a046</mamename>
-	<realname>Star Wars (1.06, Display A0.46)</realname>
-</game>
-<game>
-	<mamename>stwr_a14</mamename>
-	<realname>Star Wars (Display Rev.1.04)</realname>
-</game>
-<game>
-	<mamename>stwr_e12</mamename>
-	<realname>Star Wars (1.02 England)</realname>
-</game>
-<game>
-	<mamename>stwr_g11</mamename>
-	<realname>Star Wars (1.01 Germany)</realname>
+	<mamename>stwr_106_s105</mamename>
+	<realname>Star Wars (Unofficial 1.06, display S1.05)</realname>
 </game>
 <game>
 	<mamename>styphp</mamename>
@@ -135932,6 +137036,10 @@
 	<realname>Subs</realname>
 </game>
 <game>
+	<mamename>subwars</mamename>
+	<realname>Sub Wars (LED version)</realname>
+</game>
+<game>
 	<mamename>sucasino</mamename>
 	<realname>Super Casino</realname>
 </game>
@@ -135958,6 +137066,10 @@
 <game>
 	<mamename>sudelan3</mamename>
 	<realname>Ultimate Sudoku TV Edition 3-in-1 (All in 1 / Senario)</realname>
+</game>
+<game>
+	<mamename>sudo6in1</mamename>
+	<realname>6-in-1 Sudoku Plug &amp; Play</realname>
 </game>
 <game>
 	<mamename>sudopptv</mamename>
@@ -136204,6 +137316,10 @@
 	<realname>Super ABC (Pac-Man multigame kit, Mar. 08 1999)</realname>
 </game>
 <game>
+	<mamename>superb2k</mamename>
+	<realname>Super Butterfly 2000</realname>
+</game>
+<game>
 	<mamename>superbar</mamename>
 	<realname>Super Bar</realname>
 </game>
@@ -136404,8 +137520,12 @@
 	<realname>Super Bowl</realname>
 </game>
 <game>
+	<mamename>supreme</mamename>
+	<realname>Arcade Classics Mini Handheld Arcade (Supreme 150)</realname>
+</game>
+<game>
 	<mamename>supremo</mamename>
-	<realname>Supremo - Limited Edition</realname>
+	<realname>Supremo</realname>
 </game>
 <game>
 	<mamename>suprglob</mamename>
@@ -136465,7 +137585,7 @@
 </game>
 <game>
 	<mamename>suprnova</mamename>
-	<realname>Super Nova</realname>
+	<realname>Super Nova (Game Plan)</realname>
 </game>
 <game>
 	<mamename>suprpctv</mamename>
@@ -136544,8 +137664,16 @@
 	<realname>Surf Planet (Version 4.1)</realname>
 </game>
 <game>
+	<mamename>surfplnt30</mamename>
+	<realname>Surf Planet (Version 3.0)</realname>
+</game>
+<game>
 	<mamename>surfplnt40</mamename>
 	<realname>Surf Planet (Version 4.0)</realname>
+</game>
+<game>
+	<mamename>surpr5</mamename>
+	<realname>Surprise 5 (Ver. 1.19)</realname>
 </game>
 <game>
 	<mamename>survarts</mamename>
@@ -136973,11 +138101,11 @@
 </game>
 <game>
 	<mamename>swtrilgy</mamename>
-	<realname>Star Wars Trilogy Arcade (Revision A)</realname>
+	<realname>Star Wars Trilogy Arcade (Export, Revision A)</realname>
 </game>
 <game>
 	<mamename>swtrilgya</mamename>
-	<realname>Star Wars Trilogy Arcade</realname>
+	<realname>Star Wars Trilogy Arcade (Export)</realname>
 </game>
 <game>
 	<mamename>swtrilgyp</mamename>
@@ -137176,6 +138304,10 @@
 	<realname>T9000</realname>
 </game>
 <game>
+	<mamename>tabe22</mamename>
+	<realname>E-22 Display Terminal</realname>
+</game>
+<game>
 	<mamename>tabpkr</mamename>
 	<realname>Royal Poker V 1.85</realname>
 </game>
@@ -137285,7 +138417,7 @@
 </game>
 <game>
 	<mamename>taikeegr</mamename>
-	<realname>Rockstar Guitar / Guitar Rock (PAL)</realname>
+	<realname>Guitar Rock (PAL)</realname>
 </game>
 <game>
 	<mamename>taiko10</mamename>
@@ -137668,10 +138800,6 @@
 	<realname>Taikyoku Base Ball</realname>
 </game>
 <game>
-	<mamename>tbaskb</mamename>
-	<realname>Electronic Basketball (Tandy)</realname>
-</game>
-<game>
 	<mamename>tbatfor</mamename>
 	<realname>Batman Forever - Double Dose of Doom (handheld)</realname>
 </game>
@@ -137800,6 +138928,10 @@
 	<realname>Top Dawg (Shuffle) (L-1)</realname>
 </game>
 <game>
+	<mamename>tdbingo</mamename>
+	<realname>Trio de Bingo</realname>
+</game>
+<game>
 	<mamename>tddragon</mamename>
 	<realname>Double Dragon (handheld)</realname>
 </game>
@@ -137857,7 +138989,11 @@
 </game>
 <game>
 	<mamename>tdragonb</mamename>
-	<realname>Thunder Dragon (bootleg)</realname>
+	<realname>Thunder Dragon (bootleg, set 1)</realname>
+</game>
+<game>
+	<mamename>tdragonb2</mamename>
+	<realname>Thunder Dragon (bootleg, set 2)</realname>
 </game>
 <game>
 	<mamename>tdummies</mamename>
@@ -137905,7 +139041,7 @@
 </game>
 <game>
 	<mamename>technodr</mamename>
-	<realname>Techno Drive (Japan, TD2/VER.B)</realname>
+	<realname>Techno Drive (Japan, TH1/VER.B)</realname>
 </game>
 <game>
 	<mamename>techromn</mamename>
@@ -138297,7 +139433,7 @@
 </game>
 <game>
 	<mamename>term2lg1</mamename>
-	<realname>Terminator 2 - Judgment Day (rev LG1 11/04/91)</realname>
+	<realname>Terminator 2 - Judgment Day (German, rev LG1 11/04/91)</realname>
 </game>
 <game>
 	<mamename>term2pa2</mamename>
@@ -138572,24 +139708,24 @@
 	<realname>WPC Test Fixture: Security (1.2)</realname>
 </game>
 <game>
-	<mamename>tftc_104</mamename>
-	<realname>Tales From the Crypt (1.04 Spain)</realname>
+	<mamename>tftc_104s</mamename>
+	<realname>Tales From the Crypt (USA 1.04, display L1.03)</realname>
 </game>
 <game>
 	<mamename>tftc_200</mamename>
-	<realname>Tales From the Crypt (2.00)</realname>
+	<realname>Tales From the Crypt (USA 2.00, display A2.00)</realname>
 </game>
 <game>
 	<mamename>tftc_300</mamename>
-	<realname>Tales From the Crypt (3.00)</realname>
+	<realname>Tales From the Crypt (USA 3.00, display A3.00)</realname>
 </game>
 <game>
 	<mamename>tftc_302</mamename>
-	<realname>Tales From the Crypt (3.02 Dutch)</realname>
+	<realname>Tales From the Crypt (Dutch 3.02, display A3.01)</realname>
 </game>
 <game>
 	<mamename>tftc_303</mamename>
-	<realname>Tales From the Crypt (3.03)</realname>
+	<realname>Tales From the Crypt (USA 3.03, display A3.01)</realname>
 </game>
 <game>
 	<mamename>tfupdate</mamename>
@@ -138662,6 +139798,10 @@
 <game>
 	<mamename>tharrier</mamename>
 	<realname>Task Force Harrier</realname>
+</game>
+<game>
+	<mamename>tharrierb</mamename>
+	<realname>Task Force Harrier (Lettering bootleg)</realname>
 </game>
 <game>
 	<mamename>tharrieru</mamename>
@@ -138764,6 +139904,10 @@
 	<realname>The Hand</realname>
 </game>
 <game>
+	<mamename>thehole</mamename>
+	<realname>The Hole (bootleg of The Pit)</realname>
+</game>
+<game>
 	<mamename>thehustl</mamename>
 	<realname>The Hustler (Japan, program code M)</realname>
 </game>
@@ -138802,6 +139946,10 @@
 <game>
 	<mamename>thepitu2</mamename>
 	<realname>The Pit (US set 2)</realname>
+</game>
+<game>
+	<mamename>theportr</mamename>
+	<realname>The Porter (bootleg of Port Man)</realname>
 </game>
 <game>
 	<mamename>theraid</mamename>
@@ -139270,6 +140418,10 @@
 <game>
 	<mamename>tictacv</mamename>
 	<realname>Tic Tac Trivia (6221-22, U5-0 Vertical)</realname>
+</game>
+<game>
+	<mamename>tierras100hz</mamename>
+	<realname>Tierras Salvajes (100Hz display)</realname>
 </game>
 <game>
 	<mamename>tigarden</mamename>
@@ -139969,11 +141121,11 @@
 </game>
 <game>
 	<mamename>tmnt_104</mamename>
-	<realname>Teenage Mutant Ninja Turtles (1.04)</realname>
+	<realname>Teenage Mutant Ninja Turtles (USA 1.04, display A1.04)</realname>
 </game>
 <game>
 	<mamename>tmnt_104g</mamename>
-	<realname>Teenage Mutant Ninja Turtles (1.04) Germany</realname>
+	<realname>Teenage Mutant Ninja Turtles (Germany 1.04, display A1.04)</realname>
 </game>
 <game>
 	<mamename>tmnta</mamename>
@@ -140300,6 +141452,10 @@
 	<realname>Theatre Of Magic (1.2X)</realname>
 </game>
 <game>
+	<mamename>tom_12a</mamename>
+	<realname>Theatre Of Magic (1.2A)</realname>
+</game>
+<game>
 	<mamename>tom_13</mamename>
 	<realname>Theatre Of Magic (1.3X)</realname>
 </game>
@@ -140337,15 +141493,15 @@
 </game>
 <game>
 	<mamename>tomy_102</mamename>
-	<realname>The Who's Tommy Pinball Wizard (1.02)</realname>
+	<realname>The Who's Tommy Pinball Wizard (USA 1.02, display A3.00)</realname>
+</game>
+<game>
+	<mamename>tomy_300h</mamename>
+	<realname>The Who's Tommy Pinball Wizard (Dutch 3.00, display A3.00)</realname>
 </game>
 <game>
 	<mamename>tomy_400</mamename>
-	<realname>The Who's Tommy Pinball Wizard (4.00)</realname>
-</game>
-<game>
-	<mamename>tomy_h30</mamename>
-	<realname>The Who's Tommy Pinball Wizard (3.00, The Netherlands)</realname>
+	<realname>The Who's Tommy Pinball Wizard (USA 4.00, display A4.00)</realname>
 </game>
 <game>
 	<mamename>tondemo</mamename>
@@ -140661,7 +141817,7 @@
 </game>
 <game>
 	<mamename>totcarnp</mamename>
-	<realname>Total Carnage (prototype, rev 1.0 01/25/92)</realname>
+	<realname>Total Carnage (prototype, proto v1.0 01/25/92)</realname>
 </game>
 <game>
 	<mamename>totd</mamename>
@@ -140884,6 +142040,10 @@
 	<realname>Treasure Quest</realname>
 </game>
 <game>
+	<mamename>tqstp</mamename>
+	<realname>Treasure Quest (Protocol)</realname>
+</game>
+<game>
 	<mamename>tr175</mamename>
 	<realname>TR-175 II</realname>
 </game>
@@ -140997,27 +142157,27 @@
 </game>
 <game>
 	<mamename>trek_110</mamename>
-	<realname>Star Trek 25th Anniversary (1.10)</realname>
+	<realname>Star Trek 25th Anniversary (USA 1.10, display A1.06)</realname>
+</game>
+<game>
+	<mamename>trek_110_a027</mamename>
+	<realname>Star Trek 25th Anniversary (USA 1.10, display A0.27)</realname>
 </game>
 <game>
 	<mamename>trek_117</mamename>
-	<realname>Star Trek 25th Anniversary (1.17)</realname>
-</game>
-<game>
-	<mamename>trek_11a</mamename>
-	<realname>Star Trek 25th Anniversary (1.10 Alpha Display)</realname>
+	<realname>Star Trek 25th Anniversary (USA 1.17, display A1.09)</realname>
 </game>
 <game>
 	<mamename>trek_120</mamename>
-	<realname>Star Trek 25th Anniversary (1.20)</realname>
+	<realname>Star Trek 25th Anniversary (USA 1.20, display A1.06)</realname>
 </game>
 <game>
 	<mamename>trek_200</mamename>
-	<realname>Star Trek 25th Anniversary (2.00)</realname>
+	<realname>Star Trek 25th Anniversary (USA 2.00, display A1.09)</realname>
 </game>
 <game>
 	<mamename>trek_201</mamename>
-	<realname>Star Trek 25th Anniversary (2.01)</realname>
+	<realname>Star Trek 25th Anniversary (USA 2.01, display A1.09)</realname>
 </game>
 <game>
 	<mamename>trgheart</mamename>
@@ -141740,6 +142900,10 @@
 	<realname>Tsukande Toru Chicchi</realname>
 </game>
 <game>
+	<mamename>tsupenta</mamename>
+	<realname>Tsurikko Penta</realname>
+</game>
+<game>
 	<mamename>tsurugi</mamename>
 	<realname>Tsurugi (ver EAB)</realname>
 </game>
@@ -141750,6 +142914,10 @@
 <game>
 	<mamename>tsurugij</mamename>
 	<realname>Tsurugi (ver JAC)</realname>
+</game>
+<game>
+	<mamename>tsururin</mamename>
+	<realname>Tsururin Kun</realname>
 </game>
 <game>
 	<mamename>tsuwaku</mamename>
@@ -141856,6 +143024,26 @@
 	<realname>Star Wars Saga Edition - Lightsaber Battle Game</realname>
 </game>
 <game>
+	<mamename>ttwistbq</mamename>
+	<realname>Turbo Twist Brain Quest (US)</realname>
+</game>
+<game>
+	<mamename>ttwistfb</mamename>
+	<realname>Turbo Twist Fact Blaster (US)</realname>
+</game>
+<game>
+	<mamename>ttwistm</mamename>
+	<realname>Turbo Twist Math (US)</realname>
+</game>
+<game>
+	<mamename>ttwistsp</mamename>
+	<realname>Turbo Twist Spelling (US)</realname>
+</game>
+<game>
+	<mamename>ttwistvc</mamename>
+	<realname>Turbo Twist Vocabulator (US)</realname>
+</game>
+<game>
 	<mamename>tubeit</mamename>
 	<realname>Tube-It</realname>
 </game>
@@ -141908,6 +143096,10 @@
 	<realname>Gaelco Championship Tuning Race</realname>
 </game>
 <game>
+	<mamename>tup240</mamename>
+	<realname>Thumbs Up 240-in-1 Mini Arcade Machine</realname>
+</game>
+<game>
 	<mamename>turbo</mamename>
 	<realname>Turbo (program 1513-1515)</realname>
 </game>
@@ -141934,6 +143126,10 @@
 <game>
 	<mamename>turboe</mamename>
 	<realname>Turbo (encrypted, program 1363-1365)</realname>
+</game>
+<game>
+	<mamename>turboex</mamename>
+	<realname>Turbo Extreme (US)</realname>
 </game>
 <game>
 	<mamename>turbofrc</mamename>
@@ -142072,6 +143268,26 @@
 	<realname>TeleVideo 995-65</realname>
 </game>
 <game>
+	<mamename>tvbg3a</mamename>
+	<realname>TV Board Games 3-in-1: Silly 6 Pins, Hungry Hungry Hippos, Match 'em</realname>
+</game>
+<game>
+	<mamename>tvbg3b</mamename>
+	<realname>TV Board Games 3-in-1: Simon, Battleship, Checkers</realname>
+</game>
+<game>
+	<mamename>tvbg3c</mamename>
+	<realname>TV Board Games 3-in-1: Boggle, Connect 4, Roll Over</realname>
+</game>
+<game>
+	<mamename>tvbg6a</mamename>
+	<realname>TV Board Games 6-in-1: Silly 6 Pins, Candy Land, Hungry Hungry Hippos, Match 'em, Mixin' Pics, Checkers</realname>
+</game>
+<game>
+	<mamename>tvbg6b</mamename>
+	<realname>TV Board Games 6-in-1: Simon, Battleship, Mouse Trap, Checkers, Link-a-Line, Roll Over</realname>
+</game>
+<game>
 	<mamename>tvboyii</mamename>
 	<realname>TV Boy II (PAL)</realname>
 </game>
@@ -142208,6 +143424,10 @@
 	<realname>Twin Brats (set 3)</realname>
 </game>
 <game>
+	<mamename>twinbskt</mamename>
+	<realname>Twin Basket</realname>
+</game>
+<game>
 	<mamename>twincobr</mamename>
 	<realname>Twin Cobra (World)</realname>
 </game>
@@ -142237,7 +143457,11 @@
 </game>
 <game>
 	<mamename>twinkle</mamename>
-	<realname>Twinkle</realname>
+	<realname>Twinkle (set 1)</realname>
+</game>
+<game>
+	<mamename>twinklea</mamename>
+	<realname>Twinkle (set 2)</realname>
 </game>
 <game>
 	<mamename>twinktmb</mamename>
@@ -142728,6 +143952,14 @@
 	<realname>unknown VT1682-based 101-in-1 handheld (PAL)</realname>
 </game>
 <game>
+	<mamename>unk820501</mamename>
+	<realname>unknown Cirsa slot machine on 820501 A PCB</realname>
+</game>
+<game>
+	<mamename>unk960606</mamename>
+	<realname>unknown 960606-5 based machine</realname>
+</game>
+<game>
 	<mamename>unkch1</mamename>
 	<realname>New Cherry Gold '99 (bootleg of Super Cherry Master) (set 1)</realname>
 </game>
@@ -142742,6 +143974,10 @@
 <game>
 	<mamename>unkch4</mamename>
 	<realname>Grand Cherry Master (bootleg of Super Cherry Master)</realname>
+</game>
+<game>
+	<mamename>unkct</mamename>
+	<realname>unknown Cointek game</realname>
 </game>
 <game>
 	<mamename>unkeinv</mamename>
@@ -142766,6 +144002,10 @@
 <game>
 	<mamename>unkitpkr</mamename>
 	<realname>unknown Italian poker game</realname>
+</game>
+<game>
+	<mamename>unkkonmd</mamename>
+	<realname>unknown Konami medal game (game code GS662)</realname>
 </game>
 <game>
 	<mamename>unkm1</mamename>
@@ -145816,6 +147056,10 @@
 	<realname>Volcano</realname>
 </game>
 <game>
+	<mamename>vlcunk</mamename>
+	<realname>unknown VLC multigame</realname>
+</game>
+<game>
 	<mamename>vliner</mamename>
 	<realname>V-Liner (v0.7a)</realname>
 </game>
@@ -145905,7 +147149,7 @@
 </game>
 <game>
 	<mamename>von</mamename>
-	<realname>Cyber Troopers Virtual-On (USA, Revision B)</realname>
+	<realname>Cyber Troopers Virtual-On - Twin (Export)</realname>
 </game>
 <game>
 	<mamename>von2</mamename>
@@ -145925,7 +147169,7 @@
 </game>
 <game>
 	<mamename>vonj</mamename>
-	<realname>Cyber Troopers Virtual-On (Japan, Revision B)</realname>
+	<realname>Cyber Troopers Virtual-On - Twin (Japan, Revision B)</realname>
 </game>
 <game>
 	<mamename>vonot</mamename>
@@ -145933,7 +147177,11 @@
 </game>
 <game>
 	<mamename>vonr</mamename>
-	<realname>Cyber Troopers Virtual-On Relay (Japan)</realname>
+	<realname>Cyber Troopers Virtual-On - Relay (Japan)</realname>
+</game>
+<game>
+	<mamename>vonu</mamename>
+	<realname>Cyber Troopers Virtual-On - Twin (USA, Revision B)</realname>
 </game>
 <game>
 	<mamename>vortex</mamename>
@@ -146069,15 +147317,23 @@
 </game>
 <game>
 	<mamename>vs29915</mamename>
+	<realname>Virtua Striker 2 '99.1 (Step 1.5, Export, USA, Revision B)</realname>
+</game>
+<game>
+	<mamename>vs29915a</mamename>
 	<realname>Virtua Striker 2 '99 (Step 1.5, Export, USA)</realname>
+</game>
+<game>
+	<mamename>vs29915j</mamename>
+	<realname>Virtua Striker 2 '99.1 (Step 1.5, Japan, Revision B)</realname>
 </game>
 <game>
 	<mamename>vs299a</mamename>
 	<realname>Virtua Striker 2 '99 (Export, USA, Revision A)</realname>
 </game>
 <game>
-	<mamename>vs299b</mamename>
-	<realname>Virtua Striker 2 '99 (Japan, Revision B)</realname>
+	<mamename>vs299j</mamename>
+	<realname>Virtua Striker 2 '99.1 (Japan, Revision B)</realname>
 </game>
 <game>
 	<mamename>vs2_2k</mamename>
@@ -146216,6 +147472,10 @@
 	<realname>Vs. Mahjong (Japan)</realname>
 </game>
 <game>
+	<mamename>vsmax25v</mamename>
+	<realname>Vs Maxx 25-in-1 (VT03 hardware)</realname>
+</game>
+<game>
 	<mamename>vsmaxtx2</mamename>
 	<realname>Vs Maxx TX-2 50-in-1</realname>
 </game>
@@ -146229,7 +147489,7 @@
 </game>
 <game>
 	<mamename>vsmaxx25</mamename>
-	<realname>Vs Maxx 25-in-1</realname>
+	<realname>Vs Maxx 25-in-1 (SH6578 hardware)</realname>
 </game>
 <game>
 	<mamename>vsmaxx77</mamename>
@@ -146472,6 +147732,10 @@
 	<realname>Virtual TV Ping Pong</realname>
 </game>
 <game>
+	<mamename>vtvsocr</mamename>
+	<realname>Virtual TV Soccer</realname>
+</game>
+<game>
 	<mamename>vulcan</mamename>
 	<realname>Vulcan Venture (New)</realname>
 </game>
@@ -146494,6 +147758,10 @@
 <game>
 	<mamename>vulgusj</mamename>
 	<realname>Vulgus (Japan?)</realname>
+</game>
+<game>
+	<mamename>vx600</mamename>
+	<realname>VX600 Programmable Matrix Synthesizer</realname>
 </game>
 <game>
 	<mamename>vz200</mamename>
@@ -146644,8 +147912,16 @@
 	<realname>Wardner (World)</realname>
 </game>
 <game>
+	<mamename>wardnerb</mamename>
+	<realname>Wardner (World, bootleg)</realname>
+</game>
+<game>
 	<mamename>wardnerj</mamename>
 	<realname>Wardner no Mori (Japan)</realname>
+</game>
+<game>
+	<mamename>wardnerjb</mamename>
+	<realname>Wardner no Mori (Japan, bootleg)</realname>
 </game>
 <game>
 	<mamename>warfa</mamename>
@@ -146752,6 +148028,10 @@
 	<realname>Wave Shark (UAB, USA v1.04)</realname>
 </game>
 <game>
+	<mamename>wavesynth</mamename>
+	<realname>Waveblaster-based expander</realname>
+</game>
+<game>
 	<mamename>waveterm</mamename>
 	<realname>Waveterm A</realname>
 </game>
@@ -146817,7 +148097,7 @@
 </game>
 <game>
 	<mamename>wbeachvl</mamename>
-	<realname>World Beach Volley (set 1)</realname>
+	<realname>World Beach Volley (set 1, PIC16C57 audio CPU)</realname>
 </game>
 <game>
 	<mamename>wbeachvl2</mamename>
@@ -146826,6 +148106,14 @@
 <game>
 	<mamename>wbeachvl3</mamename>
 	<realname>World Beach Volley (set 3)</realname>
+</game>
+<game>
+	<mamename>wbeachvla</mamename>
+	<realname>World Beach Volley (set 1, S87C751 audio CPU)</realname>
+</game>
+<game>
+	<mamename>wbingo06</mamename>
+	<realname>Win Bingo 2006</realname>
 </game>
 <game>
 	<mamename>wbml</mamename>
@@ -147240,6 +148528,10 @@
 	<realname>Wayne Gretzky's 3D Hockey (ver 1.3)</realname>
 </game>
 <game>
+	<mamename>wg3dhfe</mamename>
+	<realname>Wayne Gretzky's 3D Hockey Fatality Edition (prototype)</realname>
+</game>
+<game>
 	<mamename>wgorilla</mamename>
 	<realname>Wild Gorilla - Power Pay (20279811, NSW/ACT)</realname>
 </game>
@@ -147584,56 +148876,56 @@
 	<realname>Witch (with ranking)</realname>
 </game>
 <game>
-	<mamename>witchcda</mamename>
-	<realname>Witch Card (Spanish, witch game, set 1)</realname>
-</game>
-<game>
-	<mamename>witchcdb</mamename>
-	<realname>Witch Card (Spanish, witch game, set 2)</realname>
-</game>
-<game>
-	<mamename>witchcdc</mamename>
-	<realname>Witch Card (English, no witch game)</realname>
-</game>
-<game>
-	<mamename>witchcdd</mamename>
-	<realname>Witch Card (German, WC3050, set 1 )</realname>
-</game>
-<game>
-	<mamename>witchcde</mamename>
-	<realname>Witch Card (Video Klein CPU box, set 2)</realname>
-</game>
-<game>
-	<mamename>witchcdf</mamename>
-	<realname>Witch Card (English, witch game, lamps)</realname>
-</game>
-<game>
-	<mamename>witchcdg</mamename>
-	<realname>Witch Card (Falcon, enhanced sound)</realname>
-</game>
-<game>
-	<mamename>witchcdh</mamename>
-	<realname>Witch Card (German, WC3050, set 2 )</realname>
-</game>
-<game>
-	<mamename>witchcdi</mamename>
-	<realname>Witch Card (German, WC3050, 27-4-94)</realname>
-</game>
-<game>
-	<mamename>witchcdj</mamename>
-	<realname>Witch Card (ICP-1, encrypted)</realname>
-</game>
-<game>
-	<mamename>witchcdk</mamename>
-	<realname>Witch Game (Video Klein, set 2)</realname>
-</game>
-<game>
 	<mamename>witchcrd</mamename>
 	<realname>Witch Card (Video Klein CPU box, set 1)</realname>
 </game>
 <game>
+	<mamename>witchcrda</mamename>
+	<realname>Witch Card (Spanish, witch game, set 1)</realname>
+</game>
+<game>
+	<mamename>witchcrdb</mamename>
+	<realname>Witch Card (Spanish, witch game, set 2)</realname>
+</game>
+<game>
+	<mamename>witchcrdc</mamename>
+	<realname>Witch Card (English, no witch game)</realname>
+</game>
+<game>
+	<mamename>witchcrdd</mamename>
+	<realname>Witch Card (German, WC3050, set 1 )</realname>
+</game>
+<game>
+	<mamename>witchcrde</mamename>
+	<realname>Witch Card (Video Klein CPU box, set 2)</realname>
+</game>
+<game>
+	<mamename>witchcrdf</mamename>
+	<realname>Witch Card (English, witch game, lamps)</realname>
+</game>
+<game>
+	<mamename>witchcrdg</mamename>
+	<realname>Witch Card (Falcon, enhanced sound)</realname>
+</game>
+<game>
+	<mamename>witchcrdh</mamename>
+	<realname>Witch Card (German, WC3050, set 2 )</realname>
+</game>
+<game>
+	<mamename>witchcrdi</mamename>
+	<realname>Witch Card (German, WC3050, 27-4-94)</realname>
+</game>
+<game>
+	<mamename>witchcrdj</mamename>
+	<realname>Witch Card (ICP-1, encrypted)</realname>
+</game>
+<game>
 	<mamename>witchgme</mamename>
 	<realname>Witch Game (Video Klein, set 1)</realname>
+</game>
+<game>
+	<mamename>witchgmea</mamename>
+	<realname>Witch Game (Video Klein, set 2)</realname>
 </game>
 <game>
 	<mamename>witchjol</mamename>
@@ -147658,6 +148950,10 @@
 <game>
 	<mamename>wivernwg</mamename>
 	<realname>Wivern Wings</realname>
+</game>
+<game>
+	<mamename>wiwcs</mamename>
+	<realname>Where in the World is Carmen Sandiego? (handheld)</realname>
 </game>
 <game>
 	<mamename>wiwi18</mamename>
@@ -148701,15 +149997,15 @@
 </game>
 <game>
 	<mamename>wwfr_103</mamename>
-	<realname>WWF Royal Rumble (1.03)</realname>
+	<realname>WWF Royal Rumble (USA 1.03, display A1.01)</realname>
 </game>
 <game>
 	<mamename>wwfr_103f</mamename>
-	<realname>WWF Royal Rumble (1.03 French)</realname>
+	<realname>WWF Royal Rumble (French 1.03, display F1.01)</realname>
 </game>
 <game>
 	<mamename>wwfr_106</mamename>
-	<realname>WWF Royal Rumble (1.06)</realname>
+	<realname>WWF Royal Rumble (USA 1.06, display A1.02)</realname>
 </game>
 <game>
 	<mamename>wwfroyal</mamename>
@@ -149952,6 +151248,10 @@
 	<realname>Zippity (US)</realname>
 </game>
 <game>
+	<mamename>zippityuk</mamename>
+	<realname>Zippity (UK)</realname>
+</game>
+<game>
 	<mamename>zipzap</mamename>
 	<realname>Zip &amp; Zap (Explicit)</realname>
 </game>
@@ -150064,10 +151364,6 @@
 	<realname>Zone Mini</realname>
 </game>
 <game>
-	<mamename>zoo</mamename>
-	<realname>Zoo (Ver. ZO.02.D)</realname>
-</game>
-<game>
 	<mamename>zoofari</mamename>
 	<realname>Zoofari</realname>
 </game>
@@ -150158,6 +151454,10 @@
 <game>
 	<mamename>zudugo</mamename>
 	<realname>Zudu-go / 2udu-go</realname>
+</game>
+<game>
+	<mamename>zulu</mamename>
+	<realname>Zulu (Ver. ZO.02.D)</realname>
 </game>
 <game>
 	<mamename>zunkyou</mamename>

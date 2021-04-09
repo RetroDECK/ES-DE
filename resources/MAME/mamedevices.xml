@@ -1,6 +1,7 @@
-<!-- Last updated with information from MAME driver file mame0226.xml -->
+<!-- Last updated with information from MAME driver file mame0230.xml -->
 <device>22vp931</device>
 <device>3c505</device>
+<device>3xtwin</device>
 <device>a1000kbd_de</device>
 <device>a1000kbd_dk</device>
 <device>a1000kbd_fr</device>
@@ -42,12 +43,14 @@
 <device>a2iwm_flop</device>
 <device>a2memexp</device>
 <device>a2mouse</device>
+<device>a2parprn</device>
 <device>a2pic</device>
 <device>a2ramfac</device>
 <device>a2scsi</device>
 <device>a2sider1</device>
 <device>a2sider2</device>
 <device>a2ssc</device>
+<device>a2suprterm</device>
 <device>a2surance</device>
 <device>a2swyft</device>
 <device>a2thunpl</device>
@@ -55,6 +58,7 @@
 <device>a2twarp</device>
 <device>a2ultrme</device>
 <device>a2ulttrm</device>
+<device>a2uniprint</device>
 <device>a2vidtrm</device>
 <device>a2vtc1</device>
 <device>a2vtc2</device>
@@ -96,7 +100,10 @@
 <device>abc838</device>
 <device>abc850flop</device>
 <device>abc99</device>
+<device>abc_db4106</device>
+<device>abc_db4107</device>
 <device>abc_db411223</device>
+<device>abc_db4112</device>
 <device>abc_fd2</device>
 <device>abc_hdc</device>
 <device>abc_memcard</device>
@@ -136,7 +143,10 @@
 <device>amigakbd</device>
 <device>ampex230_kbd</device>
 <device>ap2000</device>
+<device>aplcd150</device>
 <device>aprikb</device>
+<device>aprissi</device>
+<device>archimedes_keyboard</device>
 <device>asc88</device>
 <device>ascsasi</device>
 <device>atari1050</device>
@@ -185,17 +195,21 @@
 <device>bbc_stlswr16</device>
 <device>bbc_stlswr32</device>
 <device>bbc_stlswr64</device>
+<device>bbc_tube_16032</device>
 <device>bbc_tube_32016</device>
 <device>bbc_tube_32016l</device>
 <device>bbc_tube_6502</device>
 <device>bbc_tube_65c102</device>
 <device>bbc_tube_80186</device>
 <device>bbc_tube_80286</device>
+<device>bbc_tube_a500</device>
 <device>bbc_tube_arm</device>
 <device>bbc_tube_casper</device>
+<device>bbc_tube_cms6809</device>
 <device>bbc_tube_pcplus</device>
 <device>bbc_tube_rc6502</device>
 <device>bbc_tube_rc65816</device>
+<device>bbc_tube_x25</device>
 <device>bbc_tube_z80</device>
 <device>bbc_tube_z80w</device>
 <device>bbc_tube_zep100</device>
@@ -262,6 +276,7 @@
 <device>cbm_interpod</device>
 <device>cbm_serbox</device>
 <device>cchip</device>
+<device>ccs7710</device>
 <device>cd6809_fdc</device>
 <device>cdd2000</device>
 <device>cdr4210</device>
@@ -502,6 +517,7 @@
 <device>ks0066_f05</device>
 <device>laserfdc</device>
 <device>lba_enhancer</device>
+<device>lc7985</device>
 <device>ldp1000</device>
 <device>ldp1450</device>
 <device>ldv1000</device>
@@ -540,6 +556,7 @@
 <device>mbc55x_kbd</device>
 <device>mc1502_rom</device>
 <device>md_kbd</device>
+<device>md_rom_svp</device>
 <device>microdisc</device>
 <device>microtouch</device>
 <device>midcsd</device>
@@ -684,6 +701,7 @@
 <device>qx10_keyboard</device>
 <device>rolm_pdc</device>
 <device>rolm_smioc</device>
+<device>rtpc_kbd</device>
 <device>rx01</device>
 <device>s100_am310</device>
 <device>s100_djdma</device>
@@ -705,6 +723,9 @@
 <device>saa5055</device>
 <device>saa5056</device>
 <device>saa5057</device>
+<device>saa5240a</device>
+<device>saa5240b</device>
+<device>saa5243e</device>
 <device>sad8852</device>
 <device>satcdb</device>
 <device>sb16</device>
@@ -860,6 +881,7 @@
 <device>wyse700</device>
 <device>x68k_cz6bs1</device>
 <device>x820kb</device>
+<device>xt446</device>
 <device>xtide</device>
 <device>ym2608</device>
 <device>z8671</device>
