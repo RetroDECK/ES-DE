@@ -216,10 +216,15 @@ GuiGamelistOptions::GuiGamelistOptions(
         }
     }
 
-    // Buttons. Logic to apply or cancel settings are handled by the destructor.
-    if (!(!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() == 0))
+    // Buttons. The logic to apply or cancel settings are handled by the destructor.
+    if ((!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() == 0) ||
+            system->getName() == "recent") {
+        mMenu.addButton("CLOSE", "close", [&] { mCancelled = true; delete this; });
+    }
+    else {
         mMenu.addButton("APPLY", "apply", [&] { delete this; });
-    mMenu.addButton("CANCEL", "cancel", [&] { mCancelled = true; delete this; });
+        mMenu.addButton("CANCEL", "cancel", [&] { mCancelled = true; delete this; });
+    }
 
     // Center the menu.
     setSize(static_cast<float>(Renderer::getScreenWidth()),
@@ -283,7 +288,7 @@ GuiGamelistOptions::~GuiGamelistOptions()
         }
     }
 
-    if (mSystem->getRootFolder()->getChildren().size() != 0)
+    if (mSystem->getRootFolder()->getChildren().size() != 0 && mSystem->getName() != "recent")
         NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 }
 
@@ -516,12 +521,18 @@ HelpStyle GuiGamelistOptions::getHelpStyle()
 std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
 {
     auto prompts = mMenu.getHelpPrompts();
-    prompts.push_back(HelpPrompt("a", "select"));
-    if (mSystem->getRootFolder()->getChildren().size() != 0)
+    if (mSystem->getRootFolder()->getChildren().size() > 0 ||
+            mIsCustomCollectionGroup || mIsCustomCollection ||
+            CollectionSystemsManager::get()->isEditing())
+        prompts.push_back(HelpPrompt("a", "select"));
+    if (mSystem->getRootFolder()->getChildren().size() > 0 && mSystem->getName() != "recent") {
         prompts.push_back(HelpPrompt("b", "close (apply)"));
-    else
-        prompts.push_back(HelpPrompt("b", "close (cancel)"));
-    prompts.push_back(HelpPrompt("select", "close (cancel)"));
+        prompts.push_back(HelpPrompt("select", "close (cancel)"));
+    }
+    else {
+        prompts.push_back(HelpPrompt("b", "close"));
+        prompts.push_back(HelpPrompt("select", "close"));
+    }
     return prompts;
 }
 
