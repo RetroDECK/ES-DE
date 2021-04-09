@@ -1087,7 +1087,13 @@ diff mamebioses.xml mamebioses.xml_OLD
 < <bios>kpython</bios>
 ```
 
-The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions will have missing information. This is so as the MAME project sometimes remove older entries when they're reorganizing the ROM sets. By merging the files we retain backwards compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
+You can also use git for this comparison of course, which may actually provide a clearer visualization of the changes:
+```
+git diff mamebioses
+git diff mamedevices
+```
+
+The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions would have missing information. This is so as the MAME project sometimes removes older entries when they're reorganizing the ROM sets. By merging the files we retain backwards compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
 
 
 ## Configuration

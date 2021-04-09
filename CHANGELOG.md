@@ -12,7 +12,7 @@ Full navigation sound support has been implemented, and the metadata editor has 
 
 OpenGL GLSL shader support has been added (not for the OpenGL ES renderer though) and there are multiple effects implemented such as scanlines for videos, blurred background when opening menus etc.
 
-A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. Themes created for the RetroPie EmulationStation fork will still work correctly.
+A new default theme rbsimple-DE (based on Recalbox Multi) is bundled with the application and is part of the installation package/installer. Theme sets created for the RetroPie EmulationStation fork will still work.
 
 Many bugs have been fixed, and numerous features that were only partially implemented or broken have been updated to a fully working state. The application runs much faster as well due to lots of optimizations.
 
@@ -23,7 +23,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * New default theme rbsimple-DE bundled with the software (this theme is largely based on Recalbox Multi by the Recalbox community)
 * Added extensive es_systems.cfg templates for Unix, macOS and Windows that are automatically installed on first application startup
 * Added support for generating the ROM directory structure from within the application based on information in es_systems.cfg
-* Added full navigation sound support, configurable per theme with a fallback to the built-in sounds if there is no theme support
+* Added full navigation sound support, configurable per theme set with a fallback to the built-in sounds if there is no theme support
 * Added multi-monitor support by giving the option to define on which display to run ES-DE
 * Improved input device configuration and default keyboard mappings are now applied if the keyboard has not been configured by the user
 * Reorganization and general overhaul of the menu system, hopefully making it more intuitive to navigate and easier to understand the menu entries
@@ -49,7 +49,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added metadata entry to mark games as broken/not working (e.g. useful for MAME games)
 * Added metadata entry to indicate whether the file should be counted as a game (e.g. useful to exclude setup files and similar for DOS games)
 * Added metadata entry to hide the metadata values from the gamelist views (useful for general folders, DOS game configuration utilities etc.)
-* Added a button to the metadata editor to delete the media files for a game or folder while still retaining the game file and gamelist.xml entry
+* Added a button to the metadata editor to clear the media files and gamelist.xml entry for a game or folder while still retaining the game file
 * Added a system view counter for favorite games in addition to the total number of games
 * Added a gamelist info text field displaying the game count, any applied filters as well as an icon if a folder has been entered (requires theme support)
 * Properly implemented the option to show or hide hidden files and folders
@@ -75,7 +75,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Made ScrollableContainer (used for the gamelist game descriptions) fade in as the text position is reset
 * Made the ScrollableContainer scroll speed adaptive depending on the font size and width of the text container
 * Moved all resources to a subdirectory structure and enabled the CMake install prefix variable to generate the resources search path
-* Changed theme directory to the install prefix (e.g. /usr/share/emulationstation/themes) with themes in the home directory taking precedence
+* Changed the theme set directory to the install prefix (e.g. /usr/share/emulationstation/themes) with themes in the home directory taking precedence
 * No more attempts to open files directly under /etc, instead only the install prefix directory, the ES-DE executable directory and the home directory are used
 * Added proper error handling for missing resource files and improved overall logging
 * Refactoring, cleanup and documentation of the source code, removal of deprecated files etc.
@@ -87,7 +87,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * All required fonts bundled with the application, no dependencies on the OS to provide them any longer
 * Made pugixml an external dependency instead of bundling it
 * Replaced the custom math functions with standard C++ functions whenever possible
-* Implemented proper random functions using Mersenne Twister pseudorandom number generators (believe me, it makes a practical difference)
+* Implemented proper random functions using Mersenne Twister pseudorandom number generators (it actually makes a practical difference)
 * Modernized the audio code, for example using SDL_AudioStream instead of the older SDL_AudioCVT
 * Overhaul of application settings, now the configuration file is only updated when there have been actual configuration changes
 * Decreased CPU usage dramatically by only rendering the currently visible view (previously all views were always rendered)
@@ -95,7 +95,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix and macOS only)
 * Added support for both MSVC and MinGW (GCC) on Windows
 * License files are now included for all the libraries and resources that are bundled with the application
-* Updated the MAME ROM index files to include ROMs up to MAME version 0.226 and created scripts to easily generate these index files in the future
+* Updated the MAME ROM index files to include ROMs up to MAME version 0.230 and created scripts to easily generate these index files in the future
 * Greatly expanded the application documentation (which is hosted in the ES-DE repository on GitLab)
 
 ### Bug fixes
@@ -109,7 +109,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Fixed an issue where SVG images would sometimes be cut off slightly on the right side (e.g. logos on the system view carousel)
 * The audio volume control did not detect if there was a new default audio device or if the audio volume had been changed outside ES-DE
 * The scraper didn't handle error conditions correctly
-* The metadata editor insisted that changes were made although nothing was updated
+* The metadata editor insisted that changes had been made although nothing was updated
 * Sorting by number of players did not work properly for games with ranges such as 1-2 or 1-8
 * Restart and power-off menu entries not working on any of the tested operating systems
 * Toggling the screensaver didn't work as expected
@@ -125,12 +125,12 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Long words would sometimes render partly outside the designated text area instead of being abbreviated
 * Fixed an annoying gamelist issue that caused the game images and data to be updated and rendered up to six times every time the list was scrolled
 * Not all input events were logged when running with debug logging activated
-* Unknown command line options were silently accepted instead of generating an error and notifying the user
+* Unknown command line options were silently accepted instead of halting the application startup and logging an error
 * Added a sanity check to the --resolution flag to keep the resolution within reason (and to avoid crashes when making a typo for this parameter)
 * Deleting a game from the metadata editor did not delete the game media files or its entry in the gamelist.xml file
 * Hidden files still showed up if they had a gamelist.xml entry
 * Fixed multiple instances of misaligned GUI elements on high-resolution displays due to the use of fixed-pixel constants
-* Fixed a rounding issue which caused one pixel wide lines to sometimes be shown along the upper and left screen edges
+* Fixed a rounding issue which caused single-pixel lines to sometimes be shown along the upper and left screen edges
 * The VRAM statistics overlay was somewhat broken and incorrectly displayed numbers in megabytes instead of mebibytes
 * Long game names would sometimes not scroll in the gamelist view
 * Game media was not rendered when moving between gamelists using the slide transition style
