@@ -49,7 +49,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added metadata entry to mark games as broken/not working (e.g. useful for MAME games)
 * Added metadata entry to indicate whether the file should be counted as a game (e.g. useful to exclude setup files and similar for DOS games)
 * Added metadata entry to hide the metadata values from the gamelist views (useful for general folders, DOS game configuration utilities etc.)
-* Added a button to the metadata editor to clear the media files and gamelist.xml entry for a game or folder while still retaining the game file
+* Added a 'clear' button to the metadata editor to delete the media files and gamelist.xml entry for a game or folder while still retaining the game file
 * Added a system view counter for favorite games in addition to the total number of games
 * Added a gamelist info text field displaying the game count, any applied filters as well as an icon if a folder has been entered (requires theme support)
 * Properly implemented the option to show or hide hidden files and folders
