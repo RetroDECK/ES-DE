@@ -142,7 +142,7 @@ GuiGamelistOptions::GuiGamelistOptions(
     }
 
     // Add the filters entry, unless this is the grouped custom collections system or if there
-    // are no games (which should only happen for ungrouped custom collections).
+    // are no games for the system.
     if (!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() > 0) {
         if (system->getName() != "recent" && Settings::getInstance()->getBool("GamelistFilters")) {
             row.elements.clear();
@@ -152,6 +152,16 @@ GuiGamelistOptions::GuiGamelistOptions(
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openGamelistFilter, this));
             mMenu.addRow(row);
         }
+    }
+    // Add a dummy entry when applicable as the menu looks quite ugly if it's just blank.
+    else if (!CollectionSystemsManager::get()->isEditing() &&
+            mSystem->getRootFolder()->getChildren().size() == 0 &&
+            !mIsCustomCollectionGroup && !mIsCustomCollection) {
+        row.elements.clear();
+        row.addElement(std::make_shared<TextComponent>
+                (mWindow, "THIS SYSTEM HAS NO GAMES",
+                Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+        mMenu.addRow(row);
     }
 
     std::string customSystem;
@@ -207,7 +217,8 @@ GuiGamelistOptions::GuiGamelistOptions(
     }
 
     // Buttons. Logic to apply or cancel settings are handled by the destructor.
-    mMenu.addButton("APPLY", "apply", [&] { delete this; });
+    if (!(!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() == 0))
+        mMenu.addButton("APPLY", "apply", [&] { delete this; });
     mMenu.addButton("CANCEL", "cancel", [&] { mCancelled = true; delete this; });
 
     // Center the menu.
@@ -272,7 +283,8 @@ GuiGamelistOptions::~GuiGamelistOptions()
         }
     }
 
-    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+    if (mSystem->getRootFolder()->getChildren().size() != 0)
+        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 }
 
 void GuiGamelistOptions::openGamelistFilter()
@@ -318,12 +330,16 @@ void GuiGamelistOptions::startEditMode()
                 ViewController::get()->getGameListView((*it))->getCursor(), false);
     }
 
+    if (mSystem->getRootFolder()->getChildren().size() == 0)
+        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
     delete this;
 }
 
 void GuiGamelistOptions::exitEditMode()
 {
     CollectionSystemsManager::get()->exitEditMode();
+    if (mSystem->getRootFolder()->getChildren().size() == 0)
+        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
     delete this;
 }
 
@@ -501,7 +517,10 @@ std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
 {
     auto prompts = mMenu.getHelpPrompts();
     prompts.push_back(HelpPrompt("a", "select"));
-    prompts.push_back(HelpPrompt("b", "close (apply)"));
+    if (mSystem->getRootFolder()->getChildren().size() != 0)
+        prompts.push_back(HelpPrompt("b", "close (apply)"));
+    else
+        prompts.push_back(HelpPrompt("b", "close (cancel)"));
     prompts.push_back(HelpPrompt("select", "close (cancel)"));
     return prompts;
 }
