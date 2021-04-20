@@ -38,15 +38,15 @@ A comprehensive theme set, **rbsimple-DE** which is based on Recalbox Multi from
 
 ### Download
 
-The latest available release is v1.0.0-rc (release candidate) from 2021-04-05.
+The latest available release is v1.0.0 from 2021-04-20.
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 and 20.10, Linux Mint 20, possibly others  | x64 (x86)    | [emulationstation-de-1.0.0-rc-x64.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-rc-x64.deb)|
-| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.0-rc-x64.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.0.0-rc-x64.rpm)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.0.0-rc-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-rc-x64.dmg)|
-| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.0-rc-x64_legacy.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.0.0-rc-x64_legacy.dmg)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-rc-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.0.0-rc-x64.exe)|
+| Debian DEB package  | Ubuntu 20.04 and 20.10, Linux Mint 20, possibly others  | x64 (x86)    | [emulationstation-de-1.0.0-x64.deb](https://es-de.org/releases/stable/Linux/emulationstation-de-1.0.0-x64.deb)|
+| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.0-x64.rpm](https://es-de.org/releases/stable/Linux/emulationstation-de-1.0.0-x64.rpm)|
+| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.0.0-x64.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.0-x64.dmg)|
+| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.0-x64_legacy.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.0-x64_legacy.dmg)|
+| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.0.0-x64.exe)|
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about this release, including known issues.
 
