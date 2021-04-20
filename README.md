@@ -46,7 +46,7 @@ The latest available release is v1.0.0 from 2021-04-20.
 | Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.0-x64.rpm](https://es-de.org/releases/stable/Linux/emulationstation-de-1.0.0-x64.rpm)|
 | macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.0.0-x64.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.0-x64.dmg)|
 | macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.0-x64_legacy.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.0-x64_legacy.dmg)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.0.0-x64.exe)|
+| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.0-x64.exe](https://es-de.org/releases/stable/Windows/EmulationStation-DE-1.0.0-x64.exe)|
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about this release, including known issues.
 
