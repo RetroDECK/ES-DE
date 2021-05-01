@@ -139,10 +139,6 @@ namespace Renderer
         screenRotate = Settings::getInstance()->getInt("ScreenRotate") ?
                 Settings::getInstance()->getInt("ScreenRotate") : 0;
 
-        screenHeightModifier = static_cast<float>(screenHeight) / 1080.0f;
-        screenWidthModifier = static_cast<float>(screenWidth) / 1920.0f;
-        screenAspectRatio = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
-
         // Prevent the application window from minimizing when switching windows (when launching
         // games or when manually switching windows using the task switcher).
         SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
@@ -211,11 +207,6 @@ namespace Renderer
         }
         #endif
 
-        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x" <<
-                std::to_string(displayMode.h);
-        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x" <<
-                std::to_string(windowHeight);
-
         if ((sdlWindow = SDL_CreateWindow("EmulationStation",
                 SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
                 SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
@@ -223,6 +214,46 @@ namespace Renderer
             LOG(LogError) << "Couldn't create SDL window. " << SDL_GetError();
             return false;
         }
+
+        #if defined(__APPLE__)
+        // The code below is required as the high DPI scaling on macOS is very bizarre and is
+        // measured in "points" rather than pixels (even though the naming convention sure looks
+        // like pixels). For example there could be a 1920x1080 entry in the OS display settings
+        // that actually corresponds to something like 3840x2160 pixels while at the same time
+        // there is a separate 1080p entry which corresponds to a "real" 1920x1080 resolution.
+        // Therefore the --resolution flag results in different things depending on whether a high
+        // DPI screen is used. E.g. 1280x720 on a 4K display would actually end up as 2560x1440
+        // which is incredibly strange. No point in struggling with this strangeness though,
+        // instead we simply indicate the physical pixel dimensions in parenthesis in the log
+        // file and make sure to double the window and screen sizes in case of a high DPI
+        // display so that the full application window is used for rendering.
+        int width = 0;
+        SDL_GL_GetDrawableSize(sdlWindow, &width, nullptr);
+        int scaleFactor = static_cast<int>(width / windowWidth);
+
+        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x" <<
+                std::to_string(displayMode.h) << " (physical resolution " <<
+                std::to_string(displayMode.w * scaleFactor) << "x" <<
+                std::to_string(displayMode.h * scaleFactor) << ")";
+        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x" <<
+                std::to_string(windowHeight) << " (physical resolution " <<
+                std::to_string(windowWidth * scaleFactor) << "x" <<
+                std::to_string(windowHeight * scaleFactor) << ")";
+
+        windowWidth *= scaleFactor;
+        windowHeight *= scaleFactor;
+        screenWidth *= scaleFactor;
+        screenHeight *= scaleFactor;
+        #else
+        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x" <<
+                std::to_string(displayMode.h);
+        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x" <<
+                std::to_string(windowHeight);
+        #endif
+
+        screenHeightModifier = static_cast<float>(screenHeight) / 1080.0f;
+        screenWidthModifier = static_cast<float>(screenWidth) / 1920.0f;
+        screenAspectRatio = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
 
         LOG(LogInfo) << "Setting up OpenGL...";
 
