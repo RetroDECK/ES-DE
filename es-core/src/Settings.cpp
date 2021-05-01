@@ -219,8 +219,13 @@ void Settings::setDefaults()
     mBoolMap["RunInBackground"] = { false, false };
     #endif
     mStringMap["MediaDirectory"] = { "", "" };
-    #if defined(__APPLE__) || defined(_WIN64)
+    #if defined(_WIN64)
     mStringMap["EmulatorCorePath"] = { "", "" };
+    #elif defined(__APPLE__)
+    const std::string emulatorCorePath =
+            "~/Library/Application Support/RetroArch/cores:"            // RetroArch >= v1.9.2
+            "/Applications/RetroArch.app/Contents/Resources/cores";     // RetroArch < v1.9.2
+    mStringMap["EmulatorCorePath"] = { emulatorCorePath, emulatorCorePath };
     #else
     const std::string emulatorCorePath =
             "~/.config/retroarch/cores:"                                // Compiled from source
