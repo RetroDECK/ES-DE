@@ -1,5 +1,33 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
+[[_TOC_]]
+
+## Version 1.1.0 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+### Bug fixes
+
+## Version 1.0.1
+
+**Release date:** 2021-05-01
+
+### Release overview
+
+v1.0 maintenance release.
+
+### Detailed list of changes
+
+* Added support for the new RetroArch v1.9.2 default core directory location on macOS
+
+### Bug fixes
+
+* Fixed high DPI display support on macOS
+
 ## Version 1.0.0
 
 **Release date:** 2021-04-20
@@ -145,9 +173,9 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The debug overlays didn't work for all image and text components
 * Lots and lots of additional small bugs and inconsistencies fixed
 
-### Known issues
+## Known issues
 
-**The issues below are relevant for ES-DE v1.0.0.**
+**The issues below are relevant for ES-DE v1.0.1**
 
 * On Ubuntu 20.10, the included VLC version 3.0.11.1-2 is broken so ES-DE will crash when attempting to play videos. This can be fixed by manually replacing the file /lib/x86_64-linux-gnu/libvlccore.so.9.0.0 with the corresponding file from version 3.0.9.2-1 from Ubuntu 20.04. Make sure that the /lib/x86_64-linux-gnu/libvlccore.so.9 symlink points to this file as well. Hopefully this issue will soon be patched in libVLC so that this manual workaround will not be required.
 
