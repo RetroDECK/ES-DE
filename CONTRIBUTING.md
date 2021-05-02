@@ -16,6 +16,10 @@ The ES-DE development is tracked using a Kanban board which is publicly visible 
 
 [https://gitlab.com/leonstyhre/emulationstation-de/-/boards](https://gitlab.com/leonstyhre/emulationstation-de/-/boards)
 
+Development takes place in the `master` branch, and bug fixes/point releases are handled in the `stable` branch.
+
+Only the latest stable version is maintained.
+
 You can contact me (Leon) via email, either at info@es-de.org or alternatively using the address I use for my code commits.
 
 ### High level release plan

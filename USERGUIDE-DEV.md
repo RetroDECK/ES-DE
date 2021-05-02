@@ -1,8 +1,8 @@
-# EmulationStation Desktop Edition (ES-DE) - User guide
+# EmulationStation Desktop Edition (ES-DE) - User guide (development version)
 
-**Note:** This document is intended as a quick start guide as well as a reference for the user interface settings and functionality. For more in-depth information and details on how to compile ES-DE and perform more advanced configuration, please refer to [INSTALL.md](INSTALL.md).
+**Note:** This document is intended as a quick start guide as well as a reference for the user interface settings and functionality. For more in-depth information and details on how to compile ES-DE and perform more advanced configuration, please refer to [INSTALL-DEV.md](INSTALL-DEV.md).
 
-Also note that this document is only relevant for the latest stable ES-DE release, if you would like to see the user guide for the current development version, refer to [USERGUIDE-DEV.md](USERGUIDE-DEV.md) instead.
+Also note that this document is only relevant for the current ES-DE development version, if you would like to see the user guide for the latest stable release, refer to [USERGUIDE.md](USERGUIDE.md) instead.
 
 Table of contents:
 
@@ -14,10 +14,10 @@ If you just want to get started as quickly as possible, simply follow these step
 
 1) Install ES-DE
 2) Start the application and press the _Create directories_ button to generate the ROMs directory structure
-3) Put your game ROMs in the directories created by the previous step, or see [here](USERGUIDE.md#supported-game-systems) for additional details
+3) Put your game ROMs in the directories created by the previous step, or see [here](USERGUIDE-DEV.md#supported-game-systems) for additional details
 4) Install and configure [RetroArch](https://www.retroarch.com)
 5) _Windows only: add the RetroArch directory to your system path environmental variable_
-6) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE.md#supported-game-systems)
+6) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE-DEV.md#supported-game-systems)
 7) Start ES-DE and follow the on-screen instructions to configure your controller
 8) Scrape game media for your collection and play some games!
 
@@ -69,7 +69,7 @@ On Fedora you run this command to install ES-DE, which should automatically reso
 sudo dnf install ./emulationstation-de-1.0.0-x64.rpm
 ```
 
-Note that this requires the RPM Fusion repository as there's a dependency on VLC, which is not part of the standard operating system repo. See [INSTALL.md](INSTALL.md#building-on-unix) for details on how to add this.
+Note that this requires the RPM Fusion repository as there's a dependency on VLC, which is not part of the standard operating system repo. See [INSTALL-DEV.md](INSTALL-DEV.md#building-on-unix) for details on how to add this.
 
 **Installing on macOS and Windows**
 
@@ -83,7 +83,7 @@ On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<user
 
 **Note:** As of ES-DE v1.0 there is no internationalization support, so you would always need to supply the English directory name for your home directory, which is by the way always the real physical name on the file system. For instance in macOS, /Users/leon will be required instead of /Användare/leon which is what's shown inside the operating system for a Swedish localized installation. But using the tilde home symbol '~' is a workaround for this, and it's recommended to always use it for any ES-DE configuration settings that require a path to your home directory as it removes any confusion regarding localized home directory paths.
 
-On first startup the configuration file `es_settings.cfg` will be generated in the ES-DE home directory, containing all the default settings. A file named `es_systems.cfg` will also be copied from the program resource folder. This file contains the game ROM paths and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL.md](INSTALL.md#es_systemscfg) document.
+On first startup the configuration file `es_settings.cfg` will be generated in the ES-DE home directory, containing all the default settings. A file named `es_systems.cfg` will also be copied from the program resource folder. This file contains the game ROM paths and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemscfg) document.
 
 There's a log file in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
@@ -152,7 +152,7 @@ It's probably also a good idea to rename or move `es_settings.cfg` elsewhere as 
 
 ES-DE fully supports 4K displays (as well as 1440p and other higher resolutions) but some emulators such as RetroArch will always run using the active screen resolution, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. Although it's possible to start ES-DE with the `--resolution` option (which also applies to any launched emulators), this is not really recommended. Full screen mode only works on Unix with this option and even then it's highly dependent on well-written graphics drivers for proper behavior. ES-DE uses the SDL library which insists on setting xrandr to panning mode when doing resolution changes, which is incredibly annoying especially when using Nvidia drivers.
 
-A better approach is to use the custom event scripts functionality in ES-DE to set a temporary resolution upon launching a game that will be reverted when returning from the emulator. This is detailed as an example for Unix in [INSTALL.md](INSTALL.md#custom-event-scripts) but should be possible to implement similarly on other operating systems such as macOS and Windows.
+A better approach is to use the custom event scripts functionality in ES-DE to set a temporary resolution upon launching a game that will be reverted when returning from the emulator. This is detailed as an example for Unix in [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) but should be possible to implement similarly on other operating systems such as macOS and Windows.
 
 
 ## Input device configuration
@@ -289,7 +289,7 @@ Quits the application.
 
 ## Getting your games into ES-DE
 
-For most systems, this is very straightforward, just put your game files into the folder corresponding to the platform name (these names can be found at the [end](USERGUIDE.md#supported-game-systems) of this guide.)
+For most systems, this is very straightforward, just put your game files into the folder corresponding to the platform name (these names can be found at the [end](USERGUIDE-DEV.md#supported-game-systems) of this guide.)
 
 For some systems though, a more elaborate setup is required, and we will attempt to cover such situations in this guide as well.
 
@@ -543,7 +543,7 @@ This of course assumes that you have menu entries setup for your Steam games.
 
 ## Emulator setup
 
-ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.cfg` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL.md](INSTALL.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
+ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.cfg` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
@@ -567,7 +567,7 @@ cp /usr/share/emulationstation/resources/templates/es_systems.cfg_unix_flatpak ~
 
 The source path may differ from this example depending on which prefix was used when building ES-DE.
 
-As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL.md](INSTALL.md#es_systemscfg) for details regarding this.
+As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL-DEV.md](INSTALL-DEV.md#es_systemscfg) for details regarding this.
 
 In any instance, ES-DE will display an error notification if attempting to launch a game where the emulator binary is not found. Likewise it will notify if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 
@@ -814,7 +814,7 @@ If set to _None_, the system view will be showed. Any other value will jump to t
 
 **Gamelist view style**
 
-Sets the view style to _Automatic, Basic, Detailed, Video_ or _Grid_. See the description [above](USERGUIDE.md#gamelist-view) in this document for more information regarding view styles.
+Sets the view style to _Automatic, Basic, Detailed, Video_ or _Grid_. See the description [above](USERGUIDE-DEV.md#gamelist-view) in this document for more information regarding view styles.
 
 **Transition style**
 
@@ -826,7 +826,7 @@ The theme to use. Defaults to rbsimple-DE, the theme shipped with ES-DE.
 
 **UI mode**
 
-Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [above](USERGUIDE.md#ui-modes) in this document for additional information.
+Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [above](USERGUIDE-DEV.md#ui-modes) in this document for additional information.
 
 **Default sort order**
 
@@ -866,7 +866,7 @@ With this option enabled, there will be an overlay displayed when scrolling the 
 
 **Enable shortcut to toggle favorites**
 
-This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained [elsewhere](USERGUIDE.md#ui-modes) in this guide. Note that this setting does not affect the functionality to use the _Y_ button to add games to custom collections.
+This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained [elsewhere](USERGUIDE-DEV.md#ui-modes) in this guide. Note that this setting does not affect the functionality to use the _Y_ button to add games to custom collections.
 
 **Enable gamelist filters**
 
@@ -988,7 +988,7 @@ Enable or disable navigation sounds throughout the application. Sounds are playe
 
 ### Game collection settings
 
-Handles collections, which are built using the games already present in your game systems. See the [collections](USERGUIDE.md#game-collections) section below in this document for more information.
+Handles collections, which are built using the games already present in your game systems. See the [collections](USERGUIDE-DEV.md#game-collections) section below in this document for more information.
 
 **Finish editing _'COLLECTION NAME'_ collection** _(Entry only displayed when editing a custom collection)_
 
@@ -1004,7 +1004,7 @@ This lets you enable or disable your own custom game collections.
 
 **Create new custom collection from theme** _(Entry only displayed if the ability is provided by the theme set)_
 
-If the theme set in use provides themes for custom collections, then this entry can be selected here. For example, there could be themes for _"Fighting games"_ or _"Driving games"_ etc. The default rbsimple-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE.md#custom-collections) in this guide.
+If the theme set in use provides themes for custom collections, then this entry can be selected here. For example, there could be themes for _"Fighting games"_ or _"Driving games"_ etc. The default rbsimple-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE-DEV.md#custom-collections) in this guide.
 
 **Create new custom collection**
 
@@ -1056,7 +1056,7 @@ This setting defines the directory for the game media, i.e. game images and vide
 
 **Emulator core path**
 
-This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be included in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is used on all operating systems except Windows. For Windows the %COREPATH% variable is not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for this operating system, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores if compiled from source code but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL.md](INSTALL.md#es_systemscfg) for more information about this.
+This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be included in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is used on all operating systems except Windows. For Windows the %COREPATH% variable is not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for this operating system, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores if compiled from source code but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL-DEV.md](INSTALL.md-DEV#es_systemscfg) for more information about this.
 
 **Hide taskbar (requires restart)** _(Windows only)_
 
@@ -1076,11 +1076,11 @@ If this option is disabled, hidden files and folders within the ROM directory tr
 
 **Show hidden games (requires restart)**
 
-You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disk games where you may only want to show the .m3u playlists and not the individual game files, as is discussed [here](USERGUIDE.md#multiple-gamefiles-installation). By disabling this option these files will not be processed at all when ES-dE starts up. If you enable the setting you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden.
+You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disk games where you may only want to show the .m3u playlists and not the individual game files, as is discussed [here](USERGUIDE-DEV.md#multiple-gamefiles-installation). By disabling this option these files will not be processed at all when ES-dE starts up. If you enable the setting you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden.
 
 **Enable custom event scripts**
 
-It's possible to trigger custom scripts for a number of actions in ES-DE, as is discussed [below](USERGUIDE.md#custom-event-scripts), and this setting decides whether this functionality is enabled. It's recommended to leave it at its default off value unless you need it as it generates unnecessary debug logging.
+It's possible to trigger custom scripts for a number of actions in ES-DE, as is discussed [below](USERGUIDE-DEV.md#custom-event-scripts), and this setting decides whether this functionality is enabled. It's recommended to leave it at its default off value unless you need it as it generates unnecessary debug logging.
 
 **Only show ROMs from gamelist.xml files**
 
@@ -1109,7 +1109,7 @@ With this setting enabled, there is a Quit menu shown as the last entry on the m
 
 ### Configure input
 
-This tool allows the configuration of button mappings for known or new input devices, as is explained [here](USERGUIDE.md#input-device-configuration).
+This tool allows the configuration of button mappings for known or new input devices, as is explained [here](USERGUIDE-DEV.md#input-device-configuration).
 
 ### Quit
 The menu where you quit ES-DE, or reboot or power off your computer. This menu can be disabled using an option, and in this case it's replaced with a _Quit EmulationStation_ entry.
@@ -1198,7 +1198,7 @@ The filters are always applied for the complete game system, including all folde
 
 ### Add/remove games to this collection
 
-This entry is only shown if the system is a custom collection. The way this works is described in more detail [below](USERGUIDE.md#custom-collections).
+This entry is only shown if the system is a custom collection. The way this works is described in more detail [below](USERGUIDE-DEV.md#custom-collections).
 
 ### Finish editing _'COLLECTION NAME'_ collection
 
@@ -1302,7 +1302,7 @@ For game files, there will be five buttons displayed on the bottom of the metada
 
 **Scrape**
 
-Opens the single-game scraper, which is explained [above](USERGUIDE.md#single-game-scraper) in this guide. The _Y_ button can also be used as a shortcut to start the scraper without having to navigate to this button.
+Opens the single-game scraper, which is explained [above](USERGUIDE-DEV.md#single-game-scraper) in this guide. The _Y_ button can also be used as a shortcut to start the scraper without having to navigate to this button.
 
 **Save**
 
@@ -1325,7 +1325,7 @@ This will remove the actual game file, its gamelist.xml entry, its entry in any 
 
 There are four types of screensavers built into ES-DE: **Dim**, **Black**, **Slideshow** and **Video**.
 
-Numerous options can be set for these screensavers, as detailed [here](USERGUIDE.md#screensaver-settings).
+Numerous options can be set for these screensavers, as detailed [here](USERGUIDE-DEV.md#screensaver-settings).
 
 The Dim screensaver simply dims and desaturates the current view and Black will show a black screen. The Slideshow and Video screensavers are more interesting as they can display images and videos from your game collection. In addition to this, the Slideshow screensaver can be configured to only show images from a specified directory.
 
@@ -1338,7 +1338,7 @@ _An example of what the video screensaver looks like._
 
 ES-DE provides two types of collections, **Automatic collections** and **Custom collections**, the latter being defined by the user. Collections are as the name implies only collections of games already present in your actual game systems, so they're basically grouping your games together into convenient views. As such the use of collections is entirely optional, but it is a very nice feature and it's worth some effort to setup.
 
-The numerous collection settings available are covered [here](USERGUIDE.md#game-collection-settings).
+The numerous collection settings available are covered [here](USERGUIDE-DEV.md#game-collection-settings).
 
 ### Automatic collections
 
@@ -1444,17 +1444,17 @@ _An example of a modified version of the [Fundamental](https://github.com/G-rila
 
 There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. By default it's deactivated so be sure to enable it to use this feature.
 
-The setup for event scripts is a bit technical, so please refer to the [INSTALL.md](INSTALL.md#custom-event-scripts) document to see how it's configured.
+The setup for event scripts is a bit technical, so please refer to the [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) document to see how it's configured.
 
 
 ## Portable installation (Windows only)
 
-On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, please refer to the [INSTALL.md](INSTALL.md#building-on-windows) document to see how it's done.
+On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md#building-on-windows) document to see how it's done.
 
 
 ## Command line arguments
 
-Please refer to the [INSTALL.md](INSTALL.md#command-line-arguments) document for a list of the command line arguments per operating system.
+Please refer to the [INSTALL-DEV.md](INSTALL-DEV.md#command-line-arguments) document for a list of the command line arguments per operating system.
 
 
 ## Supported game systems
