@@ -9,6 +9,9 @@ project(emulationstation-de)
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
 
+# Package type to use for CPack on Linux.
+set(LINUX_CPACK_GENERATOR "DEB" CACHE STRING "CPack generator, DEB or RPM")
+
 # Add local find modules to the CMake path.
 list(APPEND CMAKE_MODULE_PATH
         ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
