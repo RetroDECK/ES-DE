@@ -218,8 +218,10 @@ include(InstallRequiredSystemLibraries)
 # General CPack settings.
 
 set(CPACK_PACKAGE_NAME "emulationstation-de")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "EmulationStation Desktop Edition is a front-end for browsing and launching games from your multi-platform game collection")
-set(CPACK_PACKAGE_DESCRIPTION "ES-DE is a feature-rich gaming front-end that is intended to be used in conjunction with emulators such as the RetroArch cores.")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emulator front-end")
+set(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition (ES-DE) is a front-end for browsing and launching games from your multi-platform game collection.
+
+It's intended to be used in conjunction with emulators such as the RetroArch cores.")
 if(APPLE)
     # Shorter line length license file to be able to fit inside the drag-and-drop installer window without introducing extra line breaks.
     set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_LICENSE_macOS")
@@ -284,7 +286,7 @@ else()
     set(CPACK_DEBIAN_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.deb")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Leon Styhre <leon@leonstyhre.com>")
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://es-de.org")
-    set(CPACK_DEBIAN_PACKAGE_SECTION "misc")
+    set(CPACK_DEBIAN_PACKAGE_SECTION "games")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "vlc")
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
