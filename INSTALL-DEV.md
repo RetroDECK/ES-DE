@@ -115,6 +115,15 @@ cmake .
 make
 ```
 
+By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+
+```
+cd emulationstation-de
+git checkout stable
+cmake .
+make
+```
+
 To create a debug build, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
@@ -313,17 +322,24 @@ The package can now be installed using a package manager, for example apt:
 sudo apt install ./emulationstation-de-1.0.0-x64.deb
 ```
 
-For RPM packages, remove the comment in es-app/CMakeLists.txt accordingly, from:
+To build an RPM package instead, set the flag LINUX_CPACK_GENERATOR to RPM when running cmake, for example:
 
 ```
-#SET(CPACK_GENERATOR "RPM")
-```
-to:
-```
-SET(CPACK_GENERATOR "RPM")
+cmake -DLINUX_CPACK_GENERATOR=RPM .
 ```
 
-Then simply run cpack.
+Then simply run `cpack`:
+
+```
+myusername@computer:~/emulationstation-de$ cpack
+CPack: Create package using RPM
+CPack: Install projects
+CPack: - Run preinstall target for: emulationstation-de
+CPack: - Install project: emulationstation-de []
+CPack: Create package
+CPackRPM: Will use GENERATED spec file: /home/myusername/emulationstation-de/_CPack_Packages/Linux/RPM/SPECS/emulationstation-de.spec
+CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-1.0.0-x64.rpm generated.
+```
 
 On Fedora, you need to install rpmbuild before this command can be run though:
 ```
@@ -403,6 +419,15 @@ Then generate the Makefile and build the software:
 
 ```
 cd emulationstation-de
+cmake .
+make
+```
+
+By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+
+```
+cd emulationstation-de
+git checkout stable
 cmake .
 make
 ```
@@ -763,6 +788,13 @@ This works the same as on Unix or macOS, just run the following:
 
 ```
 git clone https://gitlab.com/leonstyhre/emulationstation-de.git
+```
+
+By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+
+```
+cd emulationstation-de
+git checkout stable
 ```
 
 **Setup the include directories:**

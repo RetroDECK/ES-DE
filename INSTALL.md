@@ -115,6 +115,15 @@ cmake .
 make
 ```
 
+By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+
+```
+cd emulationstation-de
+git checkout stable
+cmake .
+make
+```
+
 To create a debug build, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
@@ -403,6 +412,15 @@ Then generate the Makefile and build the software:
 
 ```
 cd emulationstation-de
+cmake .
+make
+```
+
+By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+
+```
+cd emulationstation-de
+git checkout stable
 cmake .
 make
 ```
@@ -763,6 +781,13 @@ This works the same as on Unix or macOS, just run the following:
 
 ```
 git clone https://gitlab.com/leonstyhre/emulationstation-de.git
+```
+
+By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+
+```
+cd emulationstation-de
+git checkout stable
 ```
 
 **Setup the include directories:**
