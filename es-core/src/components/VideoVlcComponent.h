@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  VideoVlcComponent.h
 //
-//  Video playing using libVLC.
+//  Video player based on libVLC.
 //
 
 #ifndef ES_CORE_COMPONENTS_VIDEO_VLC_COMPONENT_H

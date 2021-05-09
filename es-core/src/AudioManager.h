@@ -31,7 +31,9 @@ public:
     void stop();
 
     // Used for streaming audio from videos.
-    void processStream(const void *samples, unsigned count);
+    void setupAudioStream(int sampleRate);
+    void processStream(const void* samples, unsigned count);
+    void clearStream();
 
     bool getHasAudioDevice() { return sHasAudioDevice; };
 

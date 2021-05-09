@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  VideoVlcComponent.cpp
 //
-//  Video playing using libVLC.
+//  Video player based on libVLC.
 //
 
 #include "components/VideoVlcComponent.h"
@@ -380,12 +380,11 @@ void VideoVlcComponent::startVideo()
 
                     // The code below enables the libVLC audio output to be processed inside ES-DE.
                     // Unfortunately this causes excessive stuttering for some reason that I still
-                    // don't understand, so at the moment this code is disabled. A proper mixer
-                    // such as SDL_mixer would be needed anyway to fully support this.
+                    // don't understand, so at the moment this code is disabled.
 //                    auto audioFormatCallback = [](void **data, char *format,
 //                            unsigned *rate, unsigned *channels) -> int {
-//                        format = const_cast<char*>("S16N");
-//                        *rate = 44100;
+//                        format = const_cast<char*>("F32L");
+//                        *rate = 48000;
 //                        *channels = 2;
 //                        return 0;
 //                    };

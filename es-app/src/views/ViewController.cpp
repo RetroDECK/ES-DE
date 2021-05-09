@@ -23,6 +23,7 @@
 #include "views/gamelist/VideoGameListView.h"
 #include "views/SystemView.h"
 #include "views/UIModeController.h"
+#include "AudioManager.h"
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
@@ -319,6 +320,7 @@ void ViewController::restoreViewPosition()
 
 void ViewController::goToSystemView(SystemData* system, bool playTransition)
 {
+    AudioManager::getInstance()->clearStream();
     bool applicationStartup = false;
 
     if (mState.viewing == NOTHING)

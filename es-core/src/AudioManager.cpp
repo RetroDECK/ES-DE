@@ -115,13 +115,9 @@ void AudioManager::init()
     if (Settings::getInstance()->getInt("SoundVolumeVideos") < 0)
         Settings::getInstance()->setInt("SoundVolumeVideos", 0);
 
-    // Used for streaming audio from videos.
-    sConversionStream = SDL_NewAudioStream(AUDIO_S16, 2, 44100, sAudioFormat.format,
-            sAudioFormat.channels, sAudioFormat.freq);
-    if (sConversionStream == nullptr) {
-        LOG(LogError) << "Failed to create audio conversion stream:";
-        LOG(LogError) << SDL_GetError();
-    }
+    // Use the default sample rate initially, this will possibly be changed by the
+    // video player when a video is started.
+    setupAudioStream(sRequestedAudioFormat.freq);
 }
 
 void AudioManager::deinit()
@@ -136,6 +132,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
 {
     // Process navigation sounds.
     bool stillPlaying = false;
+    bool playedSample = false;
 
     // Initialize the buffer to "silence".
     SDL_memset(stream, 0, len);
@@ -145,6 +142,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
     while (soundIt != sSoundVector.cend()) {
         std::shared_ptr<Sound> sound = *soundIt;
         if (sound->isPlaying()) {
+            playedSample = true;
             // Calculate rest length of current sample.
             Uint32 restLength = (sound->getLength() - sound->getPosition());
             if (restLength > static_cast<Uint32>(len)) {
@@ -167,58 +165,49 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
         soundIt++;
     }
 
+    if (playedSample) {
+        // We have processed all samples. check if some will continue playing.
+        if (!stillPlaying) {
+            // Nothing is playing, pause the audio until Sound::play() wakes us up.
+            SDL_PauseAudioDevice(sAudioDevice, 1);
+        }
+        return;
+    }
+
     // Process video stream audio.
-    // The calling function in VideoVlcComponent is currently disabled as the internal
-    // handling of audio streaming from videos does not work correctly.
+    // Currently only used by VideoFFmpegComponent as the audio streaming seems to
+    // be broken for libVLC.
     int chunkLength = SDL_AudioStreamAvailable(sConversionStream);
 
-    if (chunkLength != 0) {
-        // Initialize the buffer to "silence".
-        SDL_memset(stream, 0, len);
+    if (chunkLength == 0)
+        return;
 
-        Uint8* converted;
-        converted = new Uint8[chunkLength];
-        int chunkSegment;
+    // Cap the chunk length to the buffer size.
+    if (chunkLength > len)
+        chunkLength = len;
 
-        // Break down the chunk into segments that do not exceed the buffer size.
-        while (chunkLength > 0) {
-            if (chunkLength > len) {
-                chunkSegment = len;
-                chunkLength -= len;
-            }
-            else {
-                chunkSegment = chunkLength;
-                chunkLength = 0;
-            }
+    std::vector<Uint8> converted(chunkLength);
 
-            int processedLength = SDL_AudioStreamGet(sConversionStream, converted, chunkSegment);
-            if (processedLength == -1) {
-                LOG(LogError) << "Failed to convert sound chunk:";
-                LOG(LogError) << SDL_GetError();
-                delete[] converted;
-                return;
-            }
+    int processedLength = SDL_AudioStreamGet(sConversionStream,
+            static_cast<void*>(&converted.at(0)), chunkLength);
 
-            // Enable only when needed, as it generates a lot of debug output.
-//            LOG(LogDebug) << "AudioManager::mixAudio(): chunkLength / chunkSegment "
-//                    "/ processedLength: " << chunkLength << " / " << chunkSegment <<
-//                    " / " << processedLength;
-
-            if (processedLength > 0)
-                SDL_MixAudioFormat(stream, converted, sAudioFormat.format, processedLength,
-                        static_cast<int>(Settings::getInstance()->
-                        getInt("SoundVolumeVideos") * 1.28f));
-        }
-
-        delete[] converted;
-        SDL_PauseAudioDevice(sAudioDevice, 1);
+    if (processedLength == -1) {
+        LOG(LogError) << "AudioManager::mixAudio(): Failed to convert sound chunk:";
+        LOG(LogError) << SDL_GetError();
+        return;
     }
 
-    // We have processed all samples. check if some will still be playing.
-    if (!stillPlaying) {
-        // Nothing is playing, pause the audio until Sound::play() wakes us up.
+    // Enable only when needed, as this generates a lot of debug output.
+//    LOG(LogDebug) << "AudioManager::mixAudio(): chunkLength"
+//            "/ processedLength: " << chunkLength << " / " <<
+//            " / " << processedLength;
+
+    SDL_MixAudioFormat(stream, &converted.at(0), sAudioFormat.format, processedLength,
+            static_cast<int>(Settings::getInstance()->
+            getInt("SoundVolumeVideos") * 1.28f));
+
+    if (SDL_AudioStreamAvailable(sConversionStream) == 0)
         SDL_PauseAudioDevice(sAudioDevice, 1);
-    }
 }
 
 void AudioManager::registerSound(std::shared_ptr<Sound>& sound)
@@ -255,7 +244,20 @@ void AudioManager::stop()
     SDL_PauseAudioDevice(sAudioDevice, 1);
 }
 
-void AudioManager::processStream(const void *samples, unsigned count)
+void AudioManager::setupAudioStream(int sampleRate)
+{
+    SDL_FreeAudioStream(sConversionStream);
+
+    // Used for streaming audio from videos.
+    sConversionStream = SDL_NewAudioStream(AUDIO_F32, 2, sampleRate, sAudioFormat.format,
+            sAudioFormat.channels, sAudioFormat.freq);
+    if (sConversionStream == nullptr) {
+        LOG(LogError) << "Failed to create audio conversion stream:";
+        LOG(LogError) << SDL_GetError();
+    }
+}
+
+void AudioManager::processStream(const void* samples, unsigned count)
 {
     if (SDL_AudioStreamPut(sConversionStream, samples, count * sizeof(Uint8)) == -1) {
         LOG(LogError) << "Failed to put samples in the conversion stream:";
@@ -263,5 +265,11 @@ void AudioManager::processStream(const void *samples, unsigned count)
         return;
     }
 
-    SDL_PauseAudioDevice(sAudioDevice, 0);
+    if (count > 0)
+        SDL_PauseAudioDevice(sAudioDevice, 0);
+}
+
+void AudioManager::clearStream()
+{
+    SDL_AudioStreamClear(sConversionStream);
 }
