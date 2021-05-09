@@ -755,6 +755,25 @@ void GuiMenu::openOtherSettings()
     });
     #endif
 
+    // Video player.
+    auto video_player = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
+    std::string selectedPlayer = Settings::getInstance()->getString("VideoPlayer");
+    video_player->add("VLC", "vlc", selectedPlayer == "vlc");
+    video_player->add("FFmpeg (experimental)", "ffmpeg", selectedPlayer == "ffmpeg");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the video player to VLC in this case.
+    if (video_player->getSelectedObjects().size() == 0)
+        video_player->selectEntry(0);
+    s->addWithLabel("VIDEO PLAYER", video_player);
+    s->addSaveFunc([video_player, s] {
+        if (video_player->getSelected() != Settings::getInstance()->getString("VideoPlayer")) {
+            Settings::getInstance()->setString("VideoPlayer", video_player->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+        }
+    });
+
     // When to save game metadata.
     auto save_gamelist_mode = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "WHEN TO SAVE METADATA", false);
