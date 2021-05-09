@@ -72,6 +72,7 @@ endif()
 # Skip package dependency checks if we're on Windows.
 if(NOT WIN32)
     find_package(CURL REQUIRED)
+    find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
     find_package(Pugixml REQUIRED)
@@ -218,6 +219,7 @@ endif()
 
 set(COMMON_INCLUDE_DIRS
         ${CURL_INCLUDE_DIR}
+        ${FFMPEG_INCLUDE_DIRS}
         ${FreeImage_INCLUDE_DIRS}
         ${FREETYPE_INCLUDE_DIRS}
         ${PUGIXML_INCLUDE_DIRS}
@@ -280,6 +282,7 @@ endif()
 if(NOT WIN32)
     set(COMMON_LIBRARIES
             ${CURL_LIBRARIES}
+            ${FFmpeg_LIBRARIES}
             ${FreeImage_LIBRARIES}
             ${FREETYPE_LIBRARIES}
             ${PUGIXML_LIBRARIES}
