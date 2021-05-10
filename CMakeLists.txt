@@ -282,7 +282,7 @@ endif()
 if(NOT WIN32)
     set(COMMON_LIBRARIES
             ${CURL_LIBRARIES}
-            ${FFmpeg_LIBRARIES}
+            ${FFMPEG_LIBRARIES}
             ${FreeImage_LIBRARIES}
             ${FREETYPE_LIBRARIES}
             ${PUGIXML_LIBRARIES}
