@@ -200,17 +200,14 @@ void VideoFFmpegComponent::readFrames()
                         int allocatedSize = 0;
 
                         // The pts value is the presentation time, i.e. the time stamp when
-                        // the frame (picture) should be displayed.
-                        double pts = 0.0l;
-                        // This is needed to avoid a potential divide by zero.
-                        if (mVideoFrame->pkt_duration)
-                            pts = static_cast<double>(mVideoFrame->pts) * mVideoTimeBase /
-                                    static_cast<double>(mVideoFrame->pkt_duration);
-                        else
-                            pts = static_cast<double>(mVideoFrame->pts) * mVideoTimeBase;
+                        // the frame (picture) should be displayed. The packet dts value is
+                        // used for the basis of the calculation as per the recommendation
+                        // in the FFmpeg documentation for the av_read_frame function.
+                        double pts = static_cast<double>(mPacket->dts) *
+                                av_q2d(mVideoStream->time_base);
 
                         // Conversion using libswscale. Bicubic interpolation gives a good
-                        // balance between speed and image quality.
+                        // balance between speed and quality.
                         struct SwsContext* conversionContext = sws_getContext(
                                 mVideoCodecContext->coded_width,
                                 mVideoCodecContext->coded_height,
