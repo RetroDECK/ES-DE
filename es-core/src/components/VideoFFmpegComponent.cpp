@@ -181,7 +181,7 @@ void VideoFFmpegComponent::update(int deltaTime)
     if (!mEndOfVideo && mIsActuallyPlaying && mVideoFrameQueue.empty() && mAudioFrameQueue.empty())
         mEndOfVideo = true;
 
-    processFrames();
+    outputFrames();
 }
 
 void VideoFFmpegComponent::readFrames()
@@ -195,8 +195,9 @@ void VideoFFmpegComponent::readFrames()
                             !avcodec_receive_frame(mVideoCodecContext, mVideoFrame)) {
 
                         // We have a video frame that needs conversion to RGBA format.
-                        int dst_linesize[4];
-                        uint8_t* frameRGB[4];
+                        uint8_t* frameRGBA[4];
+                        int lineSizes[4];
+                        int allocatedSize = 0;
 
                         // The pts value is the presentation time, i.e. the time stamp when
                         // the frame (picture) should be displayed.
@@ -210,21 +211,21 @@ void VideoFFmpegComponent::readFrames()
 
                         // Conversion using libswscale. Bicubic interpolation gives a good
                         // balance between speed and image quality.
-                        struct SwsContext* conversionContext =
-                                sws_getContext(mVideoCodecContext->width,
-                                mVideoCodecContext->height,
+                        struct SwsContext* conversionContext = sws_getContext(
+                                mVideoCodecContext->coded_width,
+                                mVideoCodecContext->coded_height,
                                 mVideoCodecContext->pix_fmt,
-                                mVideoCodecContext->width,
-                                mVideoCodecContext->height,
+                                mVideoFrame->width,
+                                mVideoFrame->height,
                                 AV_PIX_FMT_RGBA,
                                 SWS_BICUBIC,
                                 nullptr,
                                 nullptr,
                                 nullptr);
 
-                        av_image_alloc(
-                                frameRGB,
-                                dst_linesize,
+                        allocatedSize = av_image_alloc(
+                                frameRGBA,
+                                lineSizes,
                                 mVideoFrame->width,
                                 mVideoFrame->height,
                                 AV_PIX_FMT_RGB32,
@@ -235,22 +236,23 @@ void VideoFFmpegComponent::readFrames()
                                 const_cast<uint8_t const* const*>(mVideoFrame->data),
                                 mVideoFrame->linesize,
                                 0,
-                                mVideoCodecContext->height,
-                                frameRGB,
-                                dst_linesize);
+                                mVideoCodecContext->coded_height,
+                                frameRGBA,
+                                lineSizes);
 
                         VideoFrame currFrame;
 
                         // Save the frame into the queue for later processing.
                         currFrame.width = mVideoFrame->width;
                         currFrame.height = mVideoFrame->height;
-                        currFrame.frameRGBA.insert(currFrame.frameRGBA.begin(), &frameRGB[0][0],
-                                &frameRGB[0][currFrame.width * currFrame.height * 4]);
+
+                        currFrame.frameRGBA.insert(currFrame.frameRGBA.begin(),
+                                &frameRGBA[0][0], &frameRGBA[0][allocatedSize - 1]);
                         currFrame.pts = pts;
 
                         mVideoFrameQueue.push(currFrame);
 
-                        av_freep(&frameRGB[0]);
+                        av_freep(&frameRGBA[0]);
                         sws_freeContext(conversionContext);
                         av_packet_unref(mPacket);
                         break;
@@ -406,7 +408,7 @@ void VideoFFmpegComponent::readFrames()
     }
 }
 
-void VideoFFmpegComponent::processFrames()
+void VideoFFmpegComponent::outputFrames()
 {
     // Check if we should start counting the time (i.e. start playing the video).
     // The audio stream controls when the playback and time counting starts, assuming

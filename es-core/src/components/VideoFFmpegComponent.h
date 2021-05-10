@@ -51,8 +51,10 @@ private:
     void render(const Transform4x4f& parentTrans) override;
     void update(int deltaTime) override;
 
+    // Read frames from the video file and perform format conversion.
     void readFrames();
-    void processFrames();
+    // Output frames to AudioManager and to the video surface.
+    void outputFrames();
 
     void calculateBlackRectangle();
 
