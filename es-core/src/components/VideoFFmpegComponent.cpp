@@ -267,7 +267,7 @@ void VideoFFmpegComponent::readFrames()
                         currFrame.height = mVideoFrame->height;
 
                         currFrame.frameRGBA.insert(currFrame.frameRGBA.begin(),
-                                &frameRGBA[0][0], &frameRGBA[0][allocatedSize - 1]);
+                                &frameRGBA[0][0], &frameRGBA[0][allocatedSize]);
                         currFrame.pts = pts;
 
                         mVideoFrameQueue.push(currFrame);
@@ -485,7 +485,7 @@ void VideoFFmpegComponent::outputFrames()
             mOutputPicture.pictureRGBA.insert(mOutputPicture.pictureRGBA.begin(),
                     mVideoFrameQueue.front().frameRGBA.begin(),
                     mVideoFrameQueue.front().frameRGBA.begin() +
-                    mVideoFrameQueue.front().frameRGBA.size() - 1);
+                    mVideoFrameQueue.front().frameRGBA.size());
 
             mOutputPicture.width = mVideoFrameQueue.front().width;
             mOutputPicture.height = mVideoFrameQueue.front().height;
