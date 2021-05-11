@@ -19,6 +19,7 @@
 #include "utils/StringUtil.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
+#include "AudioManager.h"
 #include "FileData.h"
 #include "Log.h"
 #include "SystemData.h"
@@ -234,6 +235,8 @@ void SystemScreensaver::stopScreensaver()
 
     if (mGameOverlay)
         mGameOverlay.reset();
+
+    AudioManager::getInstance()->clearStream();
 }
 
 void SystemScreensaver::nextGame() {
