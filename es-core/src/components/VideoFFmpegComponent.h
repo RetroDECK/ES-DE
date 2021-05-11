@@ -24,7 +24,9 @@ extern "C"
 }
 
 #include <chrono>
+#include <mutex>
 #include <queue>
+#include <thread>
 
 class VideoFFmpegComponent : public VideoComponent
 {
@@ -51,6 +53,8 @@ private:
     void render(const Transform4x4f& parentTrans) override;
     void update(int deltaTime) override;
 
+    // This will run the frame processing in a separate thread.
+    void frameProcessing();
     // Read frames from the video file and perform format conversion.
     void readFrames();
     // Output frames to AudioManager and to the video surface.
@@ -69,6 +73,9 @@ private:
 
     std::shared_ptr<TextureResource> mTexture;
     std::vector<float> mVideoRectangleCoords;
+
+    std::thread* mFrameProcessingThread;
+    std::mutex mPictureMutex;
 
     AVFormatContext* mFormatContext;
     AVStream* mVideoStream;
@@ -97,8 +104,15 @@ private:
         double pts;
     };
 
+    struct OutputPicture {
+        std::vector<uint8_t> pictureRGBA;
+        int width = 0;
+        int height = 0;
+    };
+
     std::queue<VideoFrame> mVideoFrameQueue;
     std::queue<AudioFrame> mAudioFrameQueue;
+    OutputPicture mOutputPicture;
 
     int mVideoMinQueueSize;
     int mAudioMinQueueSize;

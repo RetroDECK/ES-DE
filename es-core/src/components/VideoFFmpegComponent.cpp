@@ -16,6 +16,7 @@
 VideoFFmpegComponent::VideoFFmpegComponent(
         Window* window)
         : VideoComponent(window),
+        mFrameProcessingThread(nullptr),
         mFormatContext(nullptr),
         mVideoStream(nullptr),
         mAudioStream(nullptr),
@@ -140,8 +141,19 @@ void VideoFFmpegComponent::render(const Transform4x4f& parentTrans)
         for (int i = 0; i < 4; i++)
             vertices[i].pos.round();
 
+        // This is needed to avoid a slight gap before the video starts playing.
         if (!mDecodedFrame)
             return;
+
+        // The video picture is populated by the frame processing thread.
+        mPictureMutex.lock();
+
+        if (!mOutputPicture.pictureRGBA.empty())
+            // Build a texture for the video frame.
+            mTexture->initFromPixels(&mOutputPicture.pictureRGBA.at(0), mOutputPicture.width,
+                    mOutputPicture.height);
+
+        mPictureMutex.unlock();
 
         mTexture->bind();
 
@@ -176,12 +188,24 @@ void VideoFFmpegComponent::update(int deltaTime)
 
     mTimeReference = std::chrono::high_resolution_clock::now();
 
-    readFrames();
+    if (!mFrameProcessingThread)
+        mFrameProcessingThread = new std::thread(&VideoFFmpegComponent::frameProcessing, this);
+}
 
-    if (!mEndOfVideo && mIsActuallyPlaying && mVideoFrameQueue.empty() && mAudioFrameQueue.empty())
-        mEndOfVideo = true;
+void VideoFFmpegComponent::frameProcessing()
+{
+    while (mIsPlaying) {
+        readFrames();
 
-    outputFrames();
+        if (!mEndOfVideo && mIsActuallyPlaying &&
+                mVideoFrameQueue.empty() && mAudioFrameQueue.empty())
+            mEndOfVideo = true;
+
+        outputFrames();
+
+        // This 1 ms wait makes sure that the thread does not consume all available CPU cycles.
+        SDL_Delay(1);
+    }
 }
 
 void VideoFFmpegComponent::readFrames()
@@ -206,8 +230,7 @@ void VideoFFmpegComponent::readFrames()
                         double pts = static_cast<double>(mPacket->dts) *
                                 av_q2d(mVideoStream->time_base);
 
-                        // Conversion using libswscale. Bicubic interpolation gives a good
-                        // balance between speed and quality.
+                        // Conversion using libswscale.
                         struct SwsContext* conversionContext = sws_getContext(
                                 mVideoCodecContext->coded_width,
                                 mVideoCodecContext->coded_height,
@@ -215,7 +238,7 @@ void VideoFFmpegComponent::readFrames()
                                 mVideoFrame->width,
                                 mVideoFrame->height,
                                 AV_PIX_FMT_RGBA,
-                                SWS_BICUBIC,
+                                SWS_BILINEAR,
                                 nullptr,
                                 nullptr,
                                 nullptr);
@@ -358,8 +381,11 @@ void VideoFFmpegComponent::readFrames()
 
                         // Perform the actual conversion.
                         if (resampleContext) {
-                            numConvertedSamples = swr_convert(resampleContext, convertedData,
-                                    outNumSamples, const_cast<const uint8_t**>(mAudioFrame->data),
+                            numConvertedSamples = swr_convert(
+                                    resampleContext,
+                                    convertedData,
+                                    outNumSamples,
+                                    const_cast<const uint8_t**>(mAudioFrame->data),
                                     mAudioFrame->nb_samples);
                             if (numConvertedSamples < 0) {
                                 LOG(LogError) << "VideoFFmpegComponent::readFrames() Audio "
@@ -421,7 +447,6 @@ void VideoFFmpegComponent::outputFrames()
     // Process all available audio frames that have a pts value below mAccumulatedTime.
     while (!mAudioFrameQueue.empty()) {
         if (mAudioFrameQueue.front().pts < mAccumulatedTime) {
-
             // Enable only when needed, as this generates a lot of debug output.
 //            LOG(LogDebug) << "Processing audio frame with PTS: " <<
 //            mAudioFrameQueue.front().pts;
@@ -444,20 +469,29 @@ void VideoFFmpegComponent::outputFrames()
     }
 
     // Process all available video frames that have a pts value below mAccumulatedTime.
-    // But if more than one frame is processed here, it means that the computer can't keep
-    // up for some reason.
+    // But if more than one frame is processed here, it means that the computer can't
+    // keep up for some reason.
     while (mIsActuallyPlaying && !mVideoFrameQueue.empty()) {
         if (mVideoFrameQueue.front().pts < mAccumulatedTime) {
-
             // Enable only when needed, as this generates a lot of debug output.
 //            LOG(LogDebug) << "Processing video frame with PTS: " <<
 //                    mVideoFrameQueue.front().pts;
 //            LOG(LogDebug) << "Total video frames processed / video frame queue size: " <<
 //                    mVideoFrameCount << " / " << std::to_string(mVideoFrameQueue.size());
 
-            // Build a texture for the video frame.
-            mTexture->initFromPixels(&mVideoFrameQueue.front().frameRGBA.at(0),
-                    mVideoFrameQueue.front().width, mVideoFrameQueue.front().height);
+            mPictureMutex.lock();
+
+            mOutputPicture.pictureRGBA.clear();
+            mOutputPicture.pictureRGBA.insert(mOutputPicture.pictureRGBA.begin(),
+                    mVideoFrameQueue.front().frameRGBA.begin(),
+                    mVideoFrameQueue.front().frameRGBA.begin() +
+                    mVideoFrameQueue.front().frameRGBA.size() - 1);
+
+            mOutputPicture.width = mVideoFrameQueue.front().width;
+            mOutputPicture.height = mVideoFrameQueue.front().height;
+
+            mPictureMutex.unlock();
+
             mVideoFrameQueue.pop();
             mVideoFrameCount++;
             mDecodedFrame = true;
@@ -528,6 +562,7 @@ void VideoFFmpegComponent::calculateBlackRectangle()
 void VideoFFmpegComponent::startVideo()
 {
     if (!mFormatContext) {
+        mFrameProcessingThread = nullptr;
         mVideoWidth = 0;
         mVideoHeight = 0;
         mAccumulatedTime = 0;
@@ -690,6 +725,13 @@ void VideoFFmpegComponent::stopVideo()
     mStartDelayed = false;
     mPause = false;
     mEndOfVideo = false;
+
+    if (mFrameProcessingThread) {
+        // Wait for the thread execution to complete.
+        mFrameProcessingThread->join();
+        delete mFrameProcessingThread;
+        mFrameProcessingThread = nullptr;
+    }
 
     // Clear the video and audio frame queues.
     std::queue<VideoFrame>().swap(mVideoFrameQueue);
