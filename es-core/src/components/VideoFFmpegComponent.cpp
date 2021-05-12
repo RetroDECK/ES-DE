@@ -189,7 +189,8 @@ void VideoFFmpegComponent::update(int deltaTime)
     mTimeReference = std::chrono::high_resolution_clock::now();
 
     if (!mFrameProcessingThread)
-        mFrameProcessingThread = new std::thread(&VideoFFmpegComponent::frameProcessing, this);
+        mFrameProcessingThread =
+                std::make_unique<std::thread>(&VideoFFmpegComponent::frameProcessing, this);
 }
 
 void VideoFFmpegComponent::frameProcessing()
@@ -729,8 +730,7 @@ void VideoFFmpegComponent::stopVideo()
     if (mFrameProcessingThread) {
         // Wait for the thread execution to complete.
         mFrameProcessingThread->join();
-        delete mFrameProcessingThread;
-        mFrameProcessingThread = nullptr;
+        mFrameProcessingThread.reset();
     }
 
     // Clear the video and audio frame queues.

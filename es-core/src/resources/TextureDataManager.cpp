@@ -149,7 +149,7 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
 
 TextureLoader::TextureLoader() : mExit(false)
 {
-    mThread = new std::thread(&TextureLoader::threadProc, this);
+    mThread = std::make_unique<std::thread>(&TextureLoader::threadProc, this);
 }
 
 TextureLoader::~TextureLoader()
@@ -162,7 +162,7 @@ TextureLoader::~TextureLoader()
     mExit = true;
     mEvent.notify_one();
     mThread->join();
-    delete mThread;
+    mThread.reset();
 }
 
 void TextureLoader::threadProc()

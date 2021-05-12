@@ -38,7 +38,7 @@ private:
     std::map<TextureData*,
             std::list<std::shared_ptr<TextureData>>::const_iterator> mTextureDataLookup;
 
-    std::thread* mThread;
+    std::unique_ptr<std::thread> mThread;
     std::mutex mMutex;
     std::condition_variable mEvent;
     bool mExit;

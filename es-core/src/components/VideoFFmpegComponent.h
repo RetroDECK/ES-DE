@@ -74,7 +74,7 @@ private:
     std::shared_ptr<TextureResource> mTexture;
     std::vector<float> mVideoRectangleCoords;
 
-    std::thread* mFrameProcessingThread;
+    std::unique_ptr<std::thread> mFrameProcessingThread;
     std::mutex mPictureMutex;
 
     AVFormatContext* mFormatContext;
