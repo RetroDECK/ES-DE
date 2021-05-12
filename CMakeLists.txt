@@ -121,11 +121,11 @@ endif()
 
 # Set up compiler and linker flags for debug, profiling or release builds.
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    # Enable the C++11 standard and disable optimizations as it's a debug build.
+    # Enable the C++14 standard and disable optimizations as it's a debug build.
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c11 /Od /DEBUG:FULL")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c14 /Od /DEBUG:FULL")
     else()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O0")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O0")
     endif()
     # If using Clang, then add additional debug data needed by GDB.
@@ -138,18 +138,18 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
 elseif(CMAKE_BUILD_TYPE MATCHES Profiling)
     # For the profiling build, we enable optimizations and supply the required profiler flags.
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c11 /O2 /DEBUG:FULL")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c14 /O2 /DEBUG:FULL")
     else()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -pg -g")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O2 -pg -g")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -pg")
     endif()
 else()
-    # Enable the C++11 standard and enable optimizations as it's a release build.
+    # Enable the C++14 standard and enable optimizations as it's a release build.
     # This will also disable all assert() macros. Strip the binary too.
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG /std:c11 /O2 /DEBUG:NONE")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG /std:c14 /O2 /DEBUG:NONE")
     else()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -DNDEBUG")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O2 -DNDEBUG")
         if(APPLE)
             set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2")
         else()
