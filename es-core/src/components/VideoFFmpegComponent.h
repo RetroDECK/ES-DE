@@ -9,7 +9,8 @@
 #ifndef ES_CORE_COMPONENTS_VIDEO_FFMPEG_COMPONENT_H
 #define ES_CORE_COMPONENTS_VIDEO_FFMPEG_COMPONENT_H
 
-#define VIDEO_FRAME_QUEUE_SIZE 3
+// Audio buffer in seconds.
+#define AUDIO_BUFFER 0.2l
 
 #include "VideoComponent.h"
 

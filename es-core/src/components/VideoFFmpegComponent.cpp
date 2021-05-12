@@ -445,9 +445,10 @@ void VideoFFmpegComponent::outputFrames()
         }
     }
 
-    // Process all available audio frames that have a pts value below mAccumulatedTime.
+    // Process the audio frames that have a pts value below mAccumulatedTime (plus a small
+    // buffer to avoid underflows).
     while (!mAudioFrameQueue.empty()) {
-        if (mAudioFrameQueue.front().pts < mAccumulatedTime) {
+        if (mAudioFrameQueue.front().pts < mAccumulatedTime + AUDIO_BUFFER) {
             // Enable only when needed, as this generates a lot of debug output.
 //            LOG(LogDebug) << "Processing audio frame with PTS: " <<
 //            mAudioFrameQueue.front().pts;
