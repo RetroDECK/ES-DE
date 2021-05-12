@@ -11,6 +11,7 @@
 #include "guis/GuiGamelistOptions.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
+#include "AudioManager.h"
 #include "Sound.h"
 #include "Window.h"
 
@@ -21,6 +22,7 @@ bool IGameListView::input(InputConfig* config, Input input)
             config->isMappedTo("select", input) && input.value) {
         ViewController::get()->cancelViewTransitions();
         stopListScrolling();
+        AudioManager::getInstance()->clearStream();
         mWindow->pushGui(new GuiGamelistOptions(mWindow, this->mRoot->getSystem()));
         return true;
     }

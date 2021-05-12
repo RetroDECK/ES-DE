@@ -652,6 +652,6 @@ void SystemScreensaver::generateOverlayInfo()
     mGameOverlayRectangleCoords.clear();
     mGameOverlayRectangleCoords.push_back(posX - marginX);
     mGameOverlayRectangleCoords.push_back(posY);
-    mGameOverlayRectangleCoords.push_back(textSizeX + marginX * 2);
+    mGameOverlayRectangleCoords.push_back(textSizeX + marginX * 2.0f);
     mGameOverlayRectangleCoords.push_back(textSizeY);
 }

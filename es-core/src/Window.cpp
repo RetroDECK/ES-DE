@@ -13,10 +13,11 @@
 #include "components/ImageComponent.h"
 #include "components/VideoVlcComponent.h"
 #include "resources/Font.h"
-#include "Sound.h"
+#include "AudioManager.h"
 #include "InputManager.h"
 #include "Log.h"
 #include "Scripting.h"
+#include "Sound.h"
 
 #include <algorithm>
 #include <iomanip>
@@ -679,6 +680,7 @@ void Window::startScreensaver()
             (*it)->onScreensaverActivate();
 
         stopInfoPopup();
+        AudioManager::getInstance()->clearStream();
         mScreensaver->startScreensaver(true);
         mRenderScreensaver = true;
     }

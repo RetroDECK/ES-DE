@@ -818,6 +818,7 @@ bool ViewController::input(InputConfig* config, Input input)
         mCurrentView->stopListScrolling();
         // Finally, if the camera is currently moving, reset its position.
         cancelViewTransitions();
+        AudioManager::getInstance()->clearStream();
 
         mWindow->pushGui(new GuiMenu(mWindow));
         return true;
@@ -841,6 +842,7 @@ void ViewController::update(int deltaTime)
     updateSelf(deltaTime);
 
     if (mGameToLaunch) {
+        AudioManager::getInstance()->clearStream();
         launch(mGameToLaunch);
         mGameToLaunch = nullptr;
     }
