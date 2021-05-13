@@ -3,6 +3,8 @@ if(APPLE)
     # Set this to the operating system version you're building on, and also update
     # es-app/assets/EmulationStation-DE_Info.plist accordingly.
     set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14" CACHE STRING "macOS deployment target")
+    # This optional variable is used for code signing the DMG installer.
+    set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS code signing certificate identity")
 endif()
 project(emulationstation-de)
 
@@ -166,6 +168,9 @@ if(APPLE)
 endif()
 
 if(APPLE)
+    if(MACOS_CODESIGN_IDENTITY)
+        message("-- Code signing certificate identity: " ${MACOS_CODESIGN_IDENTITY})
+    endif()
     if(${CMAKE_OSX_DEPLOYMENT_TARGET} VERSION_LESS 10.14)
         message("-- macOS version 10.13 or lower has been set, so if code signing is enabled, Hardened Runtime will not be used")
     endif()
