@@ -292,6 +292,11 @@ if(NOT WIN32)
 elseif(WIN32)
     if(DEFINED MSVC)
         set(COMMON_LIBRARIES
+                "${PROJECT_SOURCE_DIR}/avcodec.lib"
+                "${PROJECT_SOURCE_DIR}/avformat.lib"
+                "${PROJECT_SOURCE_DIR}/avutil.lib"
+                "${PROJECT_SOURCE_DIR}/swresample.lib"
+                "${PROJECT_SOURCE_DIR}/swscale.lib"
                 "${PROJECT_SOURCE_DIR}/FreeImage.lib"
                 "${PROJECT_SOURCE_DIR}/glew32.lib"
                 "${PROJECT_SOURCE_DIR}/libcurl-x64.lib"
@@ -304,6 +309,11 @@ elseif(WIN32)
                 "Winmm.dll")
     else()
         set(COMMON_LIBRARIES
+                "${PROJECT_SOURCE_DIR}/avcodec-59.dll"
+                "${PROJECT_SOURCE_DIR}/avformat-59.dll"
+                "${PROJECT_SOURCE_DIR}/avutil-57.dll"
+                "${PROJECT_SOURCE_DIR}/swresample-4.dll"
+                "${PROJECT_SOURCE_DIR}/swscale-6.dll"
                 "${PROJECT_SOURCE_DIR}/FreeImage.dll"
                 "${PROJECT_SOURCE_DIR}/glew32.dll"
                 "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
