@@ -9,6 +9,7 @@
 #
 # Created by Robert Osfield.
 # Modified by Lukas Lalinsky.
+# Modified by Leon Styhre.
 
 # In ffmpeg code, old version use "#include <header.h>" and newer use "#include <libname/header.h>"
 # In OSG ffmpeg plugin, we use "#include <header.h>" for compatibility with old version of ffmpeg
@@ -48,7 +49,7 @@ MACRO(FFMPEG_FIND varname shortname headername)
         DOC "Location of FFMPEG Headers"
     )
 
-    pkg_check_modules(FFMPEG_${varname} lib${shortname})
+    pkg_check_modules(FFMPEG_${varname} lib${shortname} REQUIRED)
 
     IF (FFMPEG_${varname}_LIBRARIES AND FFMPEG_${varname}_INCLUDE_DIRS)
         SET(FFMPEG_${varname}_FOUND 1)
