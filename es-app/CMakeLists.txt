@@ -155,6 +155,11 @@ elseif(APPLE)
     # on your system (e.g. if using libSDL2-2.1.0.dylib instead of libSDL2-2.0.0.dylib).
     # This problem definitely needs to be resolved properly at a later date.
     add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
+            -change /usr/local/opt/ffmpeg/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib
+            -change /usr/local/opt/ffmpeg/lib/libavformat.58.dylib @rpath/libavformat.58.dylib
+            -change /usr/local/opt/ffmpeg/lib/libavutil.56.dylib @rpath/libavutil.56.dylib
+            -change /usr/local/opt/ffmpeg/lib/libswresample.3.dylib @rpath/libswresample.3.dylib
+            -change /usr/local/opt/ffmpeg/lib/libswscale.5.dylib @rpath/libswscale.5.dylib
             -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
             -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
             -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
@@ -167,6 +172,16 @@ elseif(APPLE)
             WORLD_READ WORLD_EXECUTE)
 
     if(NOT APPLE_SKIP_INSTALL_LIBS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.58.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libavformat.58.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libavutil.56.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libswresample.3.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libswscale.5.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
