@@ -311,8 +311,8 @@ void VideoFFmpegComponent::readFrames()
                         // want to resample twice. And for some files there may not be any
                         // resampling needed at all if the format is the same as the output
                         // format for the application.
-                        int outNumSamples = av_rescale_rnd(mAudioFrame->nb_samples,
-                                outSampleRate, mAudioCodecContext->sample_rate, AV_ROUND_UP);
+                        int outNumSamples = static_cast<int>(av_rescale_rnd(mAudioFrame->nb_samples,
+                                outSampleRate, mAudioCodecContext->sample_rate, AV_ROUND_UP));
 
                         resampleContext = swr_alloc();
                         if (!resampleContext) {
@@ -351,8 +351,9 @@ void VideoFFmpegComponent::readFrames()
                                     "initialize the resampling context";
                         }
 
-                        outMaxNumSamples = outNumSamples = av_rescale_rnd(inNumSamples,
-                                outSampleRate, mAudioCodecContext->sample_rate, AV_ROUND_UP);
+                        outMaxNumSamples = outNumSamples =
+                                static_cast<int>(av_rescale_rnd(inNumSamples, outSampleRate,
+                                mAudioCodecContext->sample_rate, AV_ROUND_UP));
 
                         outNumChannels = av_get_channel_layout_nb_channels(outChannelLayout);
 
@@ -364,9 +365,9 @@ void VideoFFmpegComponent::readFrames()
                                 outSampleFormat,
                                 1);
 
-                        outNumSamples = av_rescale_rnd(swr_get_delay(resampleContext,
-                                mAudioCodecContext->sample_rate) + inNumSamples,
-                                outSampleRate, mAudioCodecContext->sample_rate, AV_ROUND_UP);
+                        outNumSamples = static_cast<int>(av_rescale_rnd(swr_get_delay(
+                                resampleContext, mAudioCodecContext->sample_rate) + inNumSamples,
+                                outSampleRate, mAudioCodecContext->sample_rate, AV_ROUND_UP));
 
                         if (outNumSamples > outMaxNumSamples) {
                             av_freep(&convertedData[0]);
@@ -581,10 +582,6 @@ void VideoFFmpegComponent::startVideo()
         std::queue<VideoFrame>().swap(mVideoFrameQueue);
         std::queue<AudioFrame>().swap(mAudioFrameQueue);
 
-        #if defined(_WIN64)
-        mVideoPath = path(Utils::String::replace(mVideoPath, "/", "\\"));
-        #endif
-
         std::string filePath = "file:" + mVideoPath;
 
         // This will disable the FFmpeg logging, so comment this out if debug info is needed.
@@ -622,7 +619,7 @@ void VideoFFmpegComponent::startVideo()
         mVideoWidth = mFormatContext->streams[mVideoStreamIndex]->codecpar->width;
         mVideoHeight = mFormatContext->streams[mVideoStreamIndex]->codecpar->height;
 
-        mVideoCodec = avcodec_find_decoder(mVideoStream->codecpar->codec_id);
+        mVideoCodec = const_cast<AVCodec*>(avcodec_find_decoder(mVideoStream->codecpar->codec_id));
 
         if (!mVideoCodec) {
             LOG(LogError) << "VideoFFmpegComponent::startVideo(): Couldn't find a suitable video "
@@ -665,7 +662,8 @@ void VideoFFmpegComponent::startVideo()
 
         if (mAudioStreamIndex >= 0) {
             mAudioStream = mFormatContext->streams[mAudioStreamIndex];
-            mAudioCodec = avcodec_find_decoder(mAudioStream->codecpar->codec_id);
+            mAudioCodec = const_cast<AVCodec*>(
+                    avcodec_find_decoder(mAudioStream->codecpar->codec_id));
 
             if (!mAudioCodec) {
                 LOG(LogError) << "Couldn't find a suitable audio codec for file \"" <<
