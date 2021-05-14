@@ -1,24 +1,22 @@
 #!/usr/bin/bash
+#  SPDX-License-Identifier: MIT
 #
-# mame_create_index_files.sh
-# EmulationStation MAME index files creation.
+#  EmulationStation Desktop Edition
+#  mame_create_index_files.sh
 #
-# As input, this script takes the MAME driver information XML file from the official
-# MAME release and generates the files mamebioses.xml, mamedevices.xml and mamenames.xml.
+#  As input, this script takes the MAME driver information XML file from the official
+#  MAME release and generates the files mamebioses.xml, mamedevices.xml and mamenames.xml.
 #
-# There is not much error checking going on here, this script is not intended to be
-# used by the end user.
+#  There is not much error checking going on here, this script is not intended to be run
+#  by the end user.
 #
-# xmlstarlet must be installed or this script will fail.
+#  xmlstarlet must be installed or this script will fail.
 #
-# Download the driver file from here:
-# https://www.mamedev.org/release.php
-# It's enough to download the driver information, not the complete emulator.
+#  Download the driver file from here:
+#  https://www.mamedev.org/release.php
+#  It's enough to download the driver information, not the complete emulator.
 #
-# This script is intended to only be used on Linux systems.
-#
-# Leon Styhre
-# 2020-06-16
+#  This script is only intended to be used on Linux systems.
 #
 
 if [ $# -ne 1 ]; then

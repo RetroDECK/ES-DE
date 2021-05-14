@@ -1,14 +1,13 @@
 #!/bin/sh
+#  SPDX-License-Identifier: MIT
 #
-# macOS_change_dylib_rpaths.sh
-# Update the dylib paths to use rpaths instead of absolute paths.
+#  EmulationStation Desktop Edition
+#  macOS_change_dylib_rpaths.sh
 #
-# This script does not do much error checking so the results should be verified manually
-# afterwards using the "otool -L" command.
-# Changes are needed to this script when moving to a new version for any of the libraries.
-#
-# Leon Styhre
-# 2021-05-13
+#  Updates the dylib paths to use rpaths instead of absolute paths.
+#  This script does not do much error checking so the results should be verified manually
+#  afterwards using the "otool -L" command.
+#  Changes are needed to this script when moving to a new version for any of the libraries.
 #
 
 export FREETYPE_FILENAME=libfreetype.6.dylib

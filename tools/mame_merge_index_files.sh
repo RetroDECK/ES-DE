@@ -1,20 +1,18 @@
 #!/usr/bin/bash
+#  SPDX-License-Identifier: MIT
 #
-# mame_merge_index_files.sh
-# EmulationStation MAME ROM index files merging.
+#  EmulationStation Desktop Edition
+#  mame_merge_index_files.sh
 #
-# This script merges older ROM index files with newly generated ones.
-# As the MAME project drops and renames ROM files from time to time, we need to
-# include the old ROM names as well even if not supported by the newest MAME version.
-# The user may very well run an older MAME version and may therefore have an old ROM set.
+#  This script merges older ROM index files with newly generated ones.
+#  As the MAME project drops and renames ROM files from time to time, we need to
+#  include the old ROM names as well even if not supported by the newest MAME version.
+#  The user may very well run an older MAME version and may therefore have an old ROM set.
 #
-# There is not much error checking going on here, this script is not intended to be
-# used by the end user.
+#  There is not much error checking going on here, this script is not intended to be run
+#  by the end user.
 #
-# This script is intended to only be used on Linux systems.
-#
-# Leon Styhre
-# 2020-06-16
+#  This script is only intended to be used on Linux systems.
 #
 
 if [ $# -ne 3 ]; then

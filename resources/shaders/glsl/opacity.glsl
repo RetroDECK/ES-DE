@@ -1,9 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
-// opacity.glsl
+//  EmulationStation Desktop Edition
+//  opacity.glsl
 //
-// Changes the opacity of textures.
-// The uniform variable 'opacity' sets the opacity.
-// Setting this to the value 0 results in an invisible texture.
+//  Changes the opacity of textures.
+//  The uniform variable 'opacity' sets the opacity.
+//  Setting this to the value 0 results in an invisible texture.
 //
 
 #if defined(VERTEX)

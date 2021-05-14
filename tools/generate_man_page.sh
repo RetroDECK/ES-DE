@@ -1,17 +1,16 @@
 #!/usr/bin/bash
+#  SPDX-License-Identifier: MIT
 #
-# generate_man_page.sh
-# Generate a Unix manual page for EmulationStation Desktop Edition.
+#  EmulationStation Desktop Edition
+#  generate_man_page.sh
 #
-# The script takes no arguments and replaces the man page file es-app/assets/emulationstation.6.gz
-# It has to be run from within the tools directory.
+#  Generates the Unix manual page.
+#  The script takes no arguments and replaces the man page file es-app/assets/emulationstation.6.gz
+#  It has to be run from within the tools directory.
 #
-# The command help2man must be installed, or the script will fail.
+#  The command help2man must be installed, or the script will fail.
 #
-# This script is intended to only be used on Linux systems.
-#
-# Leon Styhre
-# 2020-07-16
+#  This script is only intended to be used on Linux systems.
 #
 
 if [ ! -f ../es-app/CMakeLists.txt ]; then

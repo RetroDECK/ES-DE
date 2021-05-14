@@ -1,25 +1,25 @@
 #!/usr/bin/bash
+#  SPDX-License-Identifier: MIT
 #
-# update_version_string.sh
-# Updates the version string for EmulationStation Desktop Edition.
+#  EmulationStation Desktop Edition
+#  update_version_string.sh
 #
-# This script takes as arguments the major, minor and patch numbers as well as an optional
-# alphanumeric suffix and updates all the necessary files to indicate a new software version.
-# The script has to be run from within the tools directory.
+#  Updates the version string for EmulationStation Desktop Edition.
+#  This script takes as arguments the major, minor and patch numbers as well as an optional
+#  alphanumeric suffix and updates all the necessary files to indicate a new software version.
+#  The script has to be run from within the tools directory.
 #
-# Example use:
-# ./update_version_string.sh 1 0 0 beta1
+#  Example use:
+#  ./update_version_string.sh 1 0 0 beta1
 #
-# The following files are updated by this script:
-# es-app/CMakeLists.txt
-# es-app/src/EmulationStation.h
-# es-app/assets/EmulationStation-DE_Info.plist
-# es-app/assets/emulationstation.desktop
+#  The following files are updated by this script:
+#  es-app/CMakeLists.txt
+#  es-app/src/EmulationStation.h
+#  es-app/assets/EmulationStation-DE_Info.plist
+#  es-app/assets/emulationstation.desktop
 #
-# This script is intended to only be used on Linux systems.
+#  This script is only intended to be used on Linux systems.
 #
-# Leon Styhre
-# 2020-12-30
 #
 
 if [ ! -f ../es-app/CMakeLists.txt ]; then

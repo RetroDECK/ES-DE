@@ -1,10 +1,10 @@
 //
-// Implementation based on the article "Efficient Gaussian blur with linear sampling"
-// http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/
-// A version for MasterEffect Reborn, a standalone version, and a custom shader version for SweetFX
-// can be found at http://reshade.me/forum/shader-presentation/27-gaussian-blur-bloom-unsharpmask
+//  Implementation based on the article "Efficient Gaussian blur with linear sampling"
+//  http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/
+//  A version for MasterEffect Reborn, a standalone version, and a custom shader version for SweetFX
+//  can be found at http://reshade.me/forum/shader-presentation/27-gaussian-blur-bloom-unsharpmask
 //
-// Borrowed from the RetroArch project and modified for ES-DE by Leon Styhre.
+//  Taken from the RetroArch project and modified for ES-DE.
 //
 
 #define VW 1.00

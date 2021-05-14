@@ -1,9 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
-// desaturate.glsl
+//  EmulationStation Desktop Edition
+//  desaturate.glsl
 //
-// Desaturates textures.
-// The uniform variable 'saturation' sets the saturation intensity.
-// Setting this to the value 0 results in complete desaturation (grayscale).
+//  Desaturates textures.
+//  The uniform variable 'saturation' sets the saturation intensity.
+//  Setting this to the value 0 results in complete desaturation (grayscale).
 //
 
 #if defined(VERTEX)

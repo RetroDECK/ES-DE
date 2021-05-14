@@ -1,12 +1,12 @@
 #!/usr/bin/bash
+#  SPDX-License-Identifier: MIT
 #
-# update_theme_formatversion.sh
-# Update the format version of all the XML files in a theme set.
+#  EmulationStation Desktop Edition
+#  update_theme_formatversion.sh
 #
-# This script is intended to only be used on Linux systems.
+#  Updates the format version of all the XML files in a theme set.
 #
-# Leon Styhre
-# 2020-06-22
+#  This script is only intended to be used on Linux systems.
 #
 
 if [ $# -ne 2 ]; then

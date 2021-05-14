@@ -1,9 +1,11 @@
+//  SPDX-License-Identifier: MIT
 //
-// dim.glsl
+//  EmulationStation Desktop Edition
+//  dim.glsl
 //
-// Dims textures.
-// The uniform variable 'dimValue' sets the amount of dimming.
-// Setting this to the value 0 results in a completely black screen.
+//  Dims textures.
+//  The uniform variable 'dimValue' sets the amount of dimming.
+//  Setting this to the value 0 results in a completely black screen.
 //
 
 #if defined(VERTEX)
