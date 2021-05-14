@@ -1,34 +1,24 @@
-/*
-    Phosphor shader - Copyright (C) 2011 caligari.
-
-    Ported by Hyllian.
-
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License
-   as published by the Free Software Foundation; either version 2
-   of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-*/
-
-// Parameter lines go here:
-// 0.5 = the spot stays inside the original pixel
-// 1.0 = the spot bleeds up to the center of next pixel
-// #pragma parameter SPOT_WIDTH "CRTCaligari Spot Width" 0.9 0.1 1.5 0.05
-// #pragma parameter SPOT_HEIGHT "CRTCaligari Spot Height" 0.75 0.1 1.5 0.05
-// Used to counteract the desaturation effect of weighting.
-// #pragma parameter COLOR_BOOST "CRTCaligari Color Boost" 1.45 1.0 2.0 0.05
-// Constants used with gamma correction.
-// #pragma parameter InputGamma "CRTCaligari Input Gamma" 2.4 0.0 5.0 0.1
-// #pragma parameter OutputGamma "CRTCaligari Output Gamma" 2.2 0.0 5.0 0.1
+//
+//  Phosphor shader - Copyright (C) 2011 caligari.
+//
+//  Ported by Hyllian.
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+//
+// Borrowed from the RetroArch project and modified for ES-DE by Leon Styhre.
+//
 
 #if defined(VERTEX)
 
@@ -64,17 +54,15 @@ uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
 
-#define SourceSize vec4(TextureSize, 1.0 / TextureSize) //either TextureSize or InputSize
+#define SourceSize vec4(TextureSize, 1.0 / TextureSize) // Either TextureSize or InputSize.
 
 void main()
 {
-   gl_Position = MVPMatrix * gl_Vertex;
-//   gl_Position = MVPMatrix * VertexCoord;
-   COL0 = COLOR;
-   TEX0.xy = gl_MultiTexCoord0.xy;
-//   TEX0.xy = TexCoord.xy;
-   onex = vec2(SourceSize.z, 0.0);
-   oney = vec2(0.0, SourceSize.w);
+    gl_Position = MVPMatrix * gl_Vertex;
+    COL0 = COLOR;
+    TEX0.xy = gl_MultiTexCoord0.xy;
+    onex = vec2(SourceSize.z, 0.0);
+    oney = vec2(0.0, SourceSize.w);
 }
 
 #elif defined(FRAGMENT)
@@ -110,15 +98,15 @@ COMPAT_VARYING vec4 TEX0;
 COMPAT_VARYING vec2 onex;
 COMPAT_VARYING vec2 oney;
 
-// compatibility #defines
+// Compatibility #defines
 #define Source Texture
 #define vTexCoord TEX0.xy
 
-#define SourceSize vec4(TextureSize, 1.0 / TextureSize) //either TextureSize or InputSize
+#define SourceSize vec4(TextureSize, 1.0 / TextureSize) // Either TextureSize or InputSize.
 #define OutputSize vec4(OutputSize, 1.0 / OutputSize)
 
 #ifdef PARAMETER_UNIFORM
-// All parameter floats need to have COMPAT_PRECISION in front of them
+// All parameter floats need to have COMPAT_PRECISION in front of them.
 uniform COMPAT_PRECISION float SPOT_WIDTH;
 uniform COMPAT_PRECISION float SPOT_HEIGHT;
 uniform COMPAT_PRECISION float COLOR_BOOST;
@@ -132,77 +120,77 @@ uniform COMPAT_PRECISION float OutputGamma;
 #define OutputGamma 2.2
 #endif
 
-#define GAMMA_IN(color)     pow(color,vec4(InputGamma))
-#define GAMMA_OUT(color)    pow(color, vec4(1.0 / OutputGamma))
+#define GAMMA_IN(color) pow(color, vec4(InputGamma))
+#define GAMMA_OUT(color) pow(color, vec4(1.0 / OutputGamma))
 
-#define TEX2D(coords)	GAMMA_IN( COMPAT_TEXTURE(Source, coords) )
+#define TEX2D(coords) GAMMA_IN(COMPAT_TEXTURE(Source, coords))
 
-// Macro for weights computing
+// Macro for weights computing.
 #define WEIGHT(w) \
-   if(w>1.0) w=1.0; \
+if (w > 1.0) w = 1.0; \
 w = 1.0 - w * w; \
 w = w * w;
 
 void main()
 {
-   vec2 coords = ( vTexCoord * SourceSize.xy );
-   vec2 pixel_center = floor( coords ) + vec2(0.5, 0.5);
-   vec2 texture_coords = pixel_center * SourceSize.zw;
+    vec2 coords = (vTexCoord * SourceSize.xy);
+    vec2 pixel_center = floor(coords) + vec2(0.5, 0.5);
+    vec2 texture_coords = pixel_center * SourceSize.zw;
 
-   vec4 color = TEX2D( texture_coords );
+    vec4 color = TEX2D(texture_coords);
 
-   float dx = coords.x - pixel_center.x;
+    float dx = coords.x - pixel_center.x;
 
-   float h_weight_00 = dx / SPOT_WIDTH;
-   WEIGHT( h_weight_00 );
+    float h_weight_00 = dx / SPOT_WIDTH;
+    WEIGHT(h_weight_00);
 
-   color *= vec4( h_weight_00, h_weight_00, h_weight_00, h_weight_00  );
+    color *= vec4( h_weight_00, h_weight_00, h_weight_00, h_weight_00  );
 
-   // get closest horizontal neighbour to blend
-   vec2 coords01;
-   if (dx>0.0) {
-      coords01 = onex;
-      dx = 1.0 - dx;
-   } else {
-      coords01 = -onex;
-      dx = 1.0 + dx;
-   }
-   vec4 colorNB = TEX2D( texture_coords + coords01 );
+    // Get closest horizontal neighbour to blend.
+    vec2 coords01;
+    if (dx > 0.0) {
+       coords01 = onex;
+       dx = 1.0 - dx;
+    }
+    else {
+       coords01 = -onex;
+       dx = 1.0 + dx;
+    }
+    vec4 colorNB = TEX2D(texture_coords + coords01);
 
-   float h_weight_01 = dx / SPOT_WIDTH;
-   WEIGHT( h_weight_01 );
+    float h_weight_01 = dx / SPOT_WIDTH;
+    WEIGHT(h_weight_01);
 
-   color = color + colorNB * vec4( h_weight_01 );
+    color = color + colorNB * vec4(h_weight_01);
 
-   //////////////////////////////////////////////////////
-   // Vertical Blending
-   float dy = coords.y - pixel_center.y;
-   float v_weight_00 = dy / SPOT_HEIGHT;
-   WEIGHT( v_weight_00 );
-   color *= vec4( v_weight_00 );
+    // Vertical blending.
+    float dy = coords.y - pixel_center.y;
+    float v_weight_00 = dy / SPOT_HEIGHT;
+    WEIGHT(v_weight_00);
+    color *= vec4(v_weight_00);
 
-   // get closest vertical neighbour to blend
-   vec2 coords10;
-   if (dy>0.0) {
-      coords10 = oney;
-      dy = 1.0 - dy;
-   } else {
-      coords10 = -oney;
-      dy = 1.0 + dy;
-   }
-   colorNB = TEX2D( texture_coords + coords10 );
+    // get closest vertical neighbour to blend
+    vec2 coords10;
+    if (dy > 0.0) {
+       coords10 = oney;
+       dy = 1.0 - dy;
+    }
+    else {
+       coords10 = -oney;
+       dy = 1.0 + dy;
+    }
+    colorNB = TEX2D(texture_coords + coords10);
 
-   float v_weight_10 = dy / SPOT_HEIGHT;
-   WEIGHT( v_weight_10 );
+    float v_weight_10 = dy / SPOT_HEIGHT;
+    WEIGHT(v_weight_10);
 
-   color = color + colorNB * vec4( v_weight_10 * h_weight_00, v_weight_10 * h_weight_00, v_weight_10 * h_weight_00, v_weight_10 * h_weight_00 );
+    color = color + colorNB * vec4(v_weight_10 * h_weight_00, v_weight_10 * h_weight_00,
+         v_weight_10 * h_weight_00, v_weight_10 * h_weight_00);
+    colorNB = TEX2D(texture_coords + coords01 + coords10);
+    color = color + colorNB * vec4(v_weight_10 * h_weight_01, v_weight_10 * h_weight_01,
+         v_weight_10 * h_weight_01, v_weight_10 * h_weight_01);
+    color *= vec4(COLOR_BOOST);
 
-   colorNB = TEX2D(  texture_coords + coords01 + coords10 );
-
-   color = color + colorNB * vec4( v_weight_10 * h_weight_01, v_weight_10 * h_weight_01, v_weight_10 * h_weight_01, v_weight_10 * h_weight_01 );
-
-   color *= vec4( COLOR_BOOST );
-
-   FragColor = clamp( GAMMA_OUT(color), 0.0, 1.0 );
+    FragColor = clamp(GAMMA_OUT(color), 0.0, 1.0);
 }
 #endif
