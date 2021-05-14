@@ -1,11 +1,13 @@
 # EmulationStation Desktop Edition (ES-DE) - Themes
 
-EmulationStation allows each system to have its own "theme." A theme is a collection **views** that define some **elements**, each with their own **properties**.
+**Note:** If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
 
-The first place ES will check for a theme is in the system's `<path>` folder, for a theme.xml file:
+ES-DE allows each system to have its own "theme." A theme is a collection **views** that define some **elements**, each with their own **properties**.
+
+The first place ES-DE will check for a theme is in the system's `<path>` folder, for a theme.xml file:
 * `[SYSTEM_PATH]/theme.xml`
 
-If that file doesn't exist, ES will try to find the theme in the current **theme set**.  Theme sets are just a collection of individual system themes arranged in the "themes" folder under some name.  A theme set can provide a default theme that will be used if there is no matching system theme.  Here's an example:
+If that file doesn't exist, ES-DE will try to find the theme in the current **theme set**.  Theme sets are just a collection of individual system themes arranged in the "themes" folder under some name.  A theme set can provide a default theme that will be used if there is no matching system theme.  Here's an example:
 
 ```
 ...
@@ -31,16 +33,16 @@ If that file doesn't exist, ES will try to find the theme in the current **theme
 
 The theme set system makes it easy for users to try different themes and allows distributions to include multiple theme options.  Users can change the currently active theme set in the "UI Settings" menu.  The option is only visible if at least one theme set exists.
 
-There are two places ES can load theme sets from:
+There are two places ES-DE can load theme sets from:
 * `[HOME]/.emulationstation/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 * `[INSTALLATION PATH]/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 
 An example installation path would be: \
 `/usr/share/emulationstation/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 
-`[SYSTEM_THEME]` is the `<theme>` tag for the system, as defined in `es_systems.cfg`.  If the `<theme>` tag is not set, ES will use the system's `<name>`.
+`[SYSTEM_THEME]` is the `<theme>` tag for the system, as defined in `es_systems.cfg`.  If the `<theme>` tag is not set, ES-DE will use the system's `<name>`.
 
-If both files happen to exist, ES will pick the first one (the one located in the home directory).
+If both files happen to exist, ES-DE will pick the first one (the one located in the home directory).
 
 Again, the `[CURRENT_THEME_SET]` value is set in the "UI Settings" menu.  If it has not been set yet or the previously selected theme set is missing, the first available theme set will be used as the default.
 
@@ -272,7 +274,7 @@ The navigation sounds are configured globally per theme set, so it needs to be d
 It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`).
 There are seven different navigation sounds that can be configured. The names as well as the element structure should be self-explanatory based
 on the example below.
-Starting EmulationStation with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sound is provided by the theme, ES will use the bundled navigation sound file as a fallback. This is done per sound, so the theme could provide for example one or two custom sound files while using the bundled ES sounds for the other samples.
+Starting EmulationStation with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sound is provided by the theme, ES-DE will use the bundled navigation sound file as a fallback. This is done per sound, so the theme could provide for example one or two custom sound files while using the bundled ES-DE sounds for the other samples.
 
 Example debug output:
 ```

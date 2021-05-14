@@ -89,7 +89,7 @@ https://wiki.mozilla.org/CA
 
 # rbsimple-DE theme
 
-Recalbox Multi (rbsimple-DE is based on this theme) \
+Recalbox Multi (rbsimple-DE is based on this theme, using assets from before their change to a more restrictive license in 2018) \
 https://gitlab.com/recalbox/recalbox-themes
 
 Carbon (some graphics taken from this theme) \
