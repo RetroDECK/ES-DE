@@ -149,12 +149,12 @@ void main()
     // Get closest horizontal neighbour to blend.
     vec2 coords01;
     if (dx > 0.0) {
-       coords01 = onex;
-       dx = 1.0 - dx;
+        coords01 = onex;
+        dx = 1.0 - dx;
     }
     else {
-       coords01 = -onex;
-       dx = 1.0 + dx;
+        coords01 = -onex;
+        dx = 1.0 + dx;
     }
     vec4 colorNB = TEX2D(texture_coords + coords01);
 
@@ -172,12 +172,12 @@ void main()
     // get closest vertical neighbour to blend
     vec2 coords10;
     if (dy > 0.0) {
-       coords10 = oney;
-       dy = 1.0 - dy;
+        coords10 = oney;
+        dy = 1.0 - dy;
     }
     else {
-       coords10 = -oney;
-       dy = 1.0 + dy;
+        coords10 = -oney;
+        dy = 1.0 + dy;
     }
     colorNB = TEX2D(texture_coords + coords10);
 
@@ -185,10 +185,10 @@ void main()
     WEIGHT(v_weight_10);
 
     color = color + colorNB * vec4(v_weight_10 * h_weight_00, v_weight_10 * h_weight_00,
-         v_weight_10 * h_weight_00, v_weight_10 * h_weight_00);
+            v_weight_10 * h_weight_00, v_weight_10 * h_weight_00);
     colorNB = TEX2D(texture_coords + coords01 + coords10);
     color = color + colorNB * vec4(v_weight_10 * h_weight_01, v_weight_10 * h_weight_01,
-         v_weight_10 * h_weight_01, v_weight_10 * h_weight_01);
+            v_weight_10 * h_weight_01, v_weight_10 * h_weight_01);
     color *= vec4(COLOR_BOOST);
 
     FragColor = clamp(GAMMA_OUT(color), 0.0, 1.0);
