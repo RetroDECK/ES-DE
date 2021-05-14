@@ -15,7 +15,7 @@
     <fullname>Nintendo 64DD</fullname>
     <path>%ROMPATH%/64dd</path>
     <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
-    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %COREPATH%/mupen64plus_next_libretro.dylib %ROM%</command>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %COREPATH%/parallel_n64_libretro.dylib %ROM%</command>
     <platform>n64</platform>
     <theme>64dd</theme>
   </system>
@@ -627,7 +627,7 @@
     <fullname>Nintendo 64</fullname>
     <path>%ROMPATH%/n64</path>
     <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
-    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %COREPATH%/mupen64plus_next_libretro.dylib %ROM%</command>
+    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %COREPATH%/parallel_n64_libretro.dylib %ROM%</command>
     <platform>n64</platform>
     <theme>n64</theme>
   </system>
