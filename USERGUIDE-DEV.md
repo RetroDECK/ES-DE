@@ -34,8 +34,9 @@ Getting started with ES-DE is easy, just make sure to install the software prope
 
 The following operating systems have been tested (all for the x86 architecture):
 
-* Ubuntu 20.04
-* Ubuntu 20.10 *
+* Ubuntu 20.04 LTS
+* Ubuntu 20.10
+* Ubuntu 21.04
 * Linux Mint 20
 * Manjaro
 * Fedora 33 Workstation
@@ -48,8 +49,6 @@ The following operating systems have been tested (all for the x86 architecture):
 * macOS 10.11 "El Capitan"
 * Windows 10
 * Windows 8.1
-
-***)** On Ubuntu 20.10, attempting to play videos crashes ES-DE due to a libVLC bug, refer to the Known issues section in [CHANGELOG.md](CHANGELOG.md#known-issues) for a workaround.
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 

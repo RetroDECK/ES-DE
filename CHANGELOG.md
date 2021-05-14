@@ -180,8 +180,6 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 **The issues below are relevant for ES-DE v1.0.1**
 
-* On Ubuntu 20.10, the included VLC version 3.0.11.1-2 is broken so ES-DE will crash when attempting to play videos. This can be fixed by manually replacing the file /lib/x86_64-linux-gnu/libvlccore.so.9.0.0 with the corresponding file from version 3.0.9.2-1 from Ubuntu 20.04. Make sure that the /lib/x86_64-linux-gnu/libvlccore.so.9 symlink points to this file as well. Hopefully this issue will soon be patched in libVLC so that this manual workaround will not be required.
-
 * The input configuration can be a bit glitchy on some devices, most notably the setup of trigger buttons for Xbox and PlayStation controllers. Once configured everything should work fine though. This configuration issue will hopefully be resolved in ES-DE v1.1 with the move to the SDL2 GameController API.
 
 * Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. The issue is apparently more prevalent when running ES-DE at a lower resolution on 4K displays by using the --resolution command line option (which is only available on Unix). This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
