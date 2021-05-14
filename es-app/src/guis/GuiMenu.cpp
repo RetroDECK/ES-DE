@@ -759,8 +759,8 @@ void GuiMenu::openOtherSettings()
     auto video_player = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
     std::string selectedPlayer = Settings::getInstance()->getString("VideoPlayer");
+    video_player->add("FFmpeg", "ffmpeg", selectedPlayer == "ffmpeg");
     video_player->add("VLC", "vlc", selectedPlayer == "vlc");
-    video_player->add("FFmpeg (experimental)", "ffmpeg", selectedPlayer == "ffmpeg");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the video player to VLC in this case.
     if (video_player->getSelectedObjects().size() == 0)

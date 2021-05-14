@@ -205,7 +205,7 @@ void Settings::setDefaults()
     #if defined (__unix__)
     mStringMap["FullscreenMode"] = { "normal", "normal" };
     #endif
-    mStringMap["VideoPlayer"] = { "vlc", "vlc" };
+    mStringMap["VideoPlayer"] = { "ffmpeg", "ffmpeg" };
     #if defined(_RPI_)
     mBoolMap["VideoOmxPlayer"] = { false, false };
     // We're defaulting to OMX Player for full screen video on the Pi.
