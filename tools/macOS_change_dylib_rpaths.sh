@@ -18,14 +18,14 @@ export SWRESAMPLE_FILENAME=libswresample.3.dylib
 export SWSCALE_FILENAME=libswscale.5.dylib
 
 if [ -f $FREETYPE_FILENAME ]; then
-  echo Found file $FREETYPE_FILENAME - changing rpaths
+  echo Found file $FREETYPE_FILENAME - changing to rpaths
   chmod 755 $FREETYPE_FILENAME
   install_name_tool -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib $FREETYPE_FILENAME
   install_name_tool -add_rpath @executable_path $FREETYPE_FILENAME
 fi
 
 if [ -f $AVCODEC_FILENAME ]; then
-  echo Found file $AVCODEC_FILENAME - changing rpaths
+  echo Found file $AVCODEC_FILENAME - changing to rpaths
   chmod 755 $AVCODEC_FILENAME
   install_name_tool -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib $AVCODEC_FILENAME
   install_name_tool -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib $AVCODEC_FILENAME
@@ -34,7 +34,7 @@ if [ -f $AVCODEC_FILENAME ]; then
 fi
 
 if [ -f $AVFORMAT_FILENAME ]; then
-  echo Found file $AVFORMAT_FILENAME - changing rpaths
+  echo Found file $AVFORMAT_FILENAME - changing to rpaths
   chmod 755 $AVFORMAT_FILENAME
   install_name_tool -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib $AVFORMAT_FILENAME
   install_name_tool -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib $AVFORMAT_FILENAME
@@ -44,14 +44,14 @@ if [ -f $AVFORMAT_FILENAME ]; then
 fi
 
 if [ -f $SWRESAMPLE_FILENAME ]; then
-  echo Found file $SWRESAMPLE_FILENAME - changing rpaths
+  echo Found file $SWRESAMPLE_FILENAME - changing to rpaths
   chmod 755 $SWRESAMPLE_FILENAME
   install_name_tool -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib $SWRESAMPLE_FILENAME
   install_name_tool -add_rpath @executable_path $SWRESAMPLE_FILENAME
 fi
 
 if [ -f $SWSCALE_FILENAME ]; then
-  echo Found file $SWSCALE_FILENAME - changing rpaths
+  echo Found file $SWSCALE_FILENAME - changing to rpaths
   chmod 755 $SWSCALE_FILENAME
   install_name_tool -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib $SWSCALE_FILENAME
   install_name_tool -add_rpath @executable_path $SWSCALE_FILENAME

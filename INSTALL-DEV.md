@@ -507,17 +507,17 @@ Note that the filenames could be slightly different depending on what versions y
 
 There are some secondary internal dependencies between some of these library files, and these are baked into the files as absolut paths. As such we need to rewrite these to rpaths (relative paths) which is done using the install_name_tool command.
 
-A script is available to automate this, `tools/macOS_change_dylib_rpaths.sh`
+A script is available to automate this: `tools/macOS_change_dylib_rpaths.sh`
 
-Simply run this script:
+Simply run the following:
 ```
 cd emulationstation-de
 tools/macOS_change_dylib_rpaths.sh
-Found file libfreetype.6.dylib - changing rpaths
-Found file libavcodec.58.dylib - changing rpaths
-Found file libavformat.58.dylib - changing rpaths
-Found file libswresample.3.dylib - changing rpaths
-Found file libswscale.5.dylib - changing rpaths
+Found file libfreetype.6.dylib - changing to rpaths
+Found file libavcodec.58.dylib - changing to rpaths
+Found file libavformat.58.dylib - changing to rpaths
+Found file libswresample.3.dylib - changing to rpaths
+Found file libswscale.5.dylib - changing to rpaths
 ```
 
 Verify that it worked as expected by running the otool command, for example `otool -L libfreetype.6.dylib` should show something like the following:
@@ -533,7 +533,7 @@ libfreetype.6.dylib:
 
 It's unclear why the first line shows a reference to itself, and this line apparently can't be modified using the install_name_tool command. It doesn't matter though and the application will work fine even if this path does not exist on the system.
 
-You of course only need to change the paths to rpaths once, well at least until you replace the libraries in case of moving to a newer version or so.
+You of course only need to change the absolute paths to rpaths once, well at least until you replace the libraries in case of moving to a newer version or so.
 
 In addition to these libraries, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
 
