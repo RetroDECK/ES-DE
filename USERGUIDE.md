@@ -41,9 +41,10 @@ The following operating systems have been tested (all for the x86 architecture):
 * Fedora 33 Workstation
 * FreeBSD 12.2
 * NetBSD 9.1
-* OpenBSD 6.8 (limited testing only)
+* OpenBSD 6.8
 * macOS 11 "Big Sur"
 * macOS 10.15 "Catalina" (limited testing only)
+* macOS 10.14 "Mojave" (limited testing only)
 * macOS 10.11 "El Capitan"
 * Windows 10
 * Windows 8.1

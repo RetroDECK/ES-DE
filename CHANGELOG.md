@@ -10,6 +10,9 @@
 
 ### Detailed list of changes
 
+* Added a new video player based on FFmpeg
+* Changed the language standard from C++11 to C++14
+
 ### Bug fixes
 
 ## Version 1.0.1

@@ -27,10 +27,13 @@ Please find the individual license files inside the `licenses` directory. There 
 # Libraries
 
 cURL \
-http://curl.haxx.se
+https://curl.haxx.se
+
+FFmpeg \
+https://ffmpeg.org
 
 FreeType \
-http://www.freetype.org
+https://www.freetype.org
 
 FreeImage \
 http://www.freeimage.sourceforge.net
@@ -45,13 +48,13 @@ nanosvg \
 https://github.com/memononen/nanosvg
 
 pugixml \
-http://pugixml.org
+https://pugixml.org
 
 RapdidJSON \
-http://rapidjson.org
+https://rapidjson.org
 
 SDL2 \
-http://www.libsdl.org
+https://www.libsdl.org
 
 
 # Resources

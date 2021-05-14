@@ -41,9 +41,10 @@ The following operating systems have been tested (all for the x86 architecture):
 * Fedora 33 Workstation
 * FreeBSD 12.2
 * NetBSD 9.1
-* OpenBSD 6.8 (limited testing only)
+* OpenBSD 6.8
 * macOS 11 "Big Sur"
 * macOS 10.15 "Catalina" (limited testing only)
+* macOS 10.14 "Mojave" (limited testing only)
 * macOS 10.11 "El Capitan"
 * Windows 10
 * Windows 8.1
@@ -1046,6 +1047,10 @@ This option sets the display to use for ES-DE for multi-monitor setups. The poss
 
 This gives you a choice between _Normal_ and _Borderless_ modes. With the borderless being more seamless as the ES-DE window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES-DE will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES-DE will run in a window. For the borderless mode, any changes to the resolution will make ES-DE run in a window.
 
+**Video player**
+
+This gives the choice between VLC or FFmpeg, which is applied to both the gamelist videos and the video screensaver.
+
 **When to save game metadata**
 
 The metadata for a game is updated by scraping and by manual editing (using the metadata editor), but also when launching it as this updates the _Times played_ counter and the _Last played_ date. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to _Never_ will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, or when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files). In theory _On exit_ will give some performance gains, but it's normally recommended to leave the setting at its default value which is _Always_. Note that with the settings set to _Never_, any updates such as the _Last played_ date will still be shown on screen, but during the next application startup, any values previously saved to the gamelist.xml files will be read in again. As well, when changing this setting to _Always_ from either of the two other options, any pending changes will be immediately written to the gamelist.xml files.
@@ -1486,7 +1491,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | Game system name      | Full name                                      | Default emulator                  | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :----------------------------------- |
 | 3do                   | 3DO                                            |                                   |                                      |
-| 64dd                  | Nintendo 64DD                                  | RetroArch (Mupen64Plus-Next) [no n64 emulator available on macOS?] |                                      |
+| 64dd                  | Nintendo 64DD                                  | RetroArch (Mupen64Plus-Next on Unix and Windows, ParaLLEl N64 on macOS) |                                      |
 | ags                   | Adventure Game Studio game engine              |                                   |                                      |
 | amiga                 | Commodore Amiga                                | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
 | amiga600              | Commodore Amiga 600                            | RetroArch (P-UAE)*                | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
@@ -1556,7 +1561,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | naomi                 | Sega NAOMI                                     | RetroArch (Flycast)               |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | RetroArch (Flycast)               |                                      |
 | n3ds                  | Nintendo 3DS                                   | RetroArch (Citra)                 |                                      |
-| n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next) [no n64 emulator available on macOS?] | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | RetroArch (Mupen64Plus-Next on Unix and Windows, ParaLLEl N64 on macOS) | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    |                                   |                                      |
 | neogeo                | SNK Neo Geo                                    | RetroArch (FinalBurn Neo)*        | Single archive file following MAME name standard in root folder |
 | neogeocd              | SNK Neo Geo CD                                 | RetroArch (NeoCD)*                | Single archive in root folder (which includes the CD image and ripped audio) |
