@@ -31,8 +31,8 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentList.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeEditComponent.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/IList.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageGridComponent.h
@@ -52,11 +52,11 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.h
 
         # GUIs
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.h
 
         # Math
         ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.h
@@ -73,9 +73,9 @@ set(CORE_HEADERS
         # Resources
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/Font.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/ResourceManager.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/TextureResource.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/TextureData.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/TextureDataManager.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/TextureResource.h
 
         # Utils
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.h
@@ -112,8 +112,8 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentList.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeEditComponent.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/MenuComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/NinePatchComponent.cpp
@@ -129,11 +129,11 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.cpp
 
         # GUIs
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.cpp
 
         # Math
         ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.cpp
