@@ -221,7 +221,7 @@ void VideoFFmpegComponent::readFrames()
 
                         // We have a video frame that needs conversion to RGBA format.
                         uint8_t* frameRGBA[4];
-                        int lineSizes[4];
+                        int lineSize[4];
                         int allocatedSize = 0;
 
                         // The pts value is the presentation time, i.e. the time stamp when
@@ -231,10 +231,20 @@ void VideoFFmpegComponent::readFrames()
                         double pts = static_cast<double>(mPacket->dts) *
                                 av_q2d(mVideoStream->time_base);
 
+                        // Due to some unknown reason, attempting to scale frames where
+                        // coded_width is larger than width leads to graphics corruption or
+                        // crashes. The only workaround I've been able to find is to decrease the
+                        // source width by one pixel. Unfortunately this leads to a noticeably
+                        // softer picture, but as few videos have this issue it's an acceptable
+                        // workaround for now. Possibly this problem is caused by an FFmpeg bug.
+                        int sourceWidth = mVideoCodecContext->width;
+                        if (mVideoCodecContext->coded_width > mVideoCodecContext->width)
+                            sourceWidth--;
+
                         // Conversion using libswscale.
                         struct SwsContext* conversionContext = sws_getContext(
-                                mVideoCodecContext->coded_width,
-                                mVideoCodecContext->coded_height,
+                                sourceWidth,
+                                mVideoCodecContext->height,
                                 mVideoCodecContext->pix_fmt,
                                 mVideoFrame->width,
                                 mVideoFrame->height,
@@ -246,7 +256,7 @@ void VideoFFmpegComponent::readFrames()
 
                         allocatedSize = av_image_alloc(
                                 frameRGBA,
-                                lineSizes,
+                                lineSize,
                                 mVideoFrame->width,
                                 mVideoFrame->height,
                                 AV_PIX_FMT_RGB32,
@@ -257,9 +267,9 @@ void VideoFFmpegComponent::readFrames()
                                 const_cast<uint8_t const* const*>(mVideoFrame->data),
                                 mVideoFrame->linesize,
                                 0,
-                                mVideoCodecContext->coded_height,
+                                mVideoCodecContext->height,
                                 frameRGBA,
-                                lineSizes);
+                                lineSize);
 
                         VideoFrame currFrame;
 
