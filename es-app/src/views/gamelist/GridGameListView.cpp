@@ -713,13 +713,7 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
             Settings::getInstance()->getBool("RandomAddButton"))
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
-    if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-            !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
-            ViewController::get()->getState().viewing == ViewController::GAME_LIST &&
-            ViewController::get()->getState().viewstyle != ViewController::BASIC) {
-        prompts.push_back(HelpPrompt("y", "jump to game"));
-    }
-    else if (mRoot->getSystem()->isGameSystem() &&
+    if (mRoot->getSystem()->isGameSystem() &&
             (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||
             !mCursorStack.empty()) &&
             !UIModeController::getInstance()->isUIModeKid() &&
