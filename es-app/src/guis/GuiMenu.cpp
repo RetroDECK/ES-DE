@@ -446,12 +446,25 @@ void GuiMenu::openUISettings()
     // Enable the 'Y' button for tagging games as favorites.
     auto favorites_add_button = std::make_shared<SwitchComponent>(mWindow);
     favorites_add_button->setState(Settings::getInstance()->getBool("FavoritesAddButton"));
-    s->addWithLabel("ENABLE SHORTCUT TO TOGGLE FAVORITES", favorites_add_button);
+    s->addWithLabel("ENABLE TOGGLE FAVORITES BUTTON", favorites_add_button);
     s->addSaveFunc([favorites_add_button, s] {
         if (Settings::getInstance()->getBool("FavoritesAddButton") !=
                 favorites_add_button->getState()) {
             Settings::getInstance()->setBool("FavoritesAddButton",
                     favorites_add_button->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Enable the thumbstick click buttons for jumping to a random system or game.
+    auto random_add_button = std::make_shared<SwitchComponent>(mWindow);
+    random_add_button->setState(Settings::getInstance()->getBool("RandomAddButton"));
+    s->addWithLabel("ENABLE RANDOM SYSTEM OR GAME BUTTON", random_add_button);
+    s->addSaveFunc([random_add_button, s] {
+        if (Settings::getInstance()->getBool("RandomAddButton") !=
+                random_add_button->getState()) {
+            Settings::getInstance()->setBool("RandomAddButton",
+                    random_add_button->getState());
             s->setNeedsSaving();
         }
     });

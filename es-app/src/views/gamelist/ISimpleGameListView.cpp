@@ -195,10 +195,12 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 return true;
             }
         }
-        else if (config->isMappedTo("x", input)) {
+        else if (Settings::getInstance()->getBool("RandomAddButton") &&
+                (config->isMappedTo("leftthumbstickclick", input) ||
+                config->isMappedTo("rightthumbstickclick", input))) {
             if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER) {
                 stopListScrolling();
-                // Go to random system game.
+                // Jump to a random game.
                 NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 FileData* randomGame = getCursor()->getSystem()->getRandomGame(getCursor());
                 if (randomGame)

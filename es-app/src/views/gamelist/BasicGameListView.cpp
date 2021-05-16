@@ -314,8 +314,8 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "back"));
     if (!UIModeController::getInstance()->isUIModeKid())
         prompts.push_back(HelpPrompt("select", "options"));
-    if (mRoot->getSystem()->isGameSystem())
-        prompts.push_back(HelpPrompt("x", "random"));
+    if (mRoot->getSystem()->isGameSystem() && Settings::getInstance()->getBool("RandomAddButton"))
+        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
             !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
