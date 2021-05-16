@@ -170,7 +170,7 @@ void MediaViewer::findMedia()
 
     if (mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
         mImageFiles.push_back(mediaFile);
-        mScreenShotIndex = mImageFiles.size() - 1;
+        mScreenShotIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if ((mediaFile = mGame->get3DBoxPath()) != "")
