@@ -273,6 +273,8 @@ void MediaViewer::showImage(int index)
     if (mImage)
         return;
 
+    mDisplayingImage = true;
+
     if (!mImageFiles.empty() && mImageFiles.size() >= index) {
         mImage = new ImageComponent(mWindow, false, false);
         mImage->setImage(mImageFiles[index]);
