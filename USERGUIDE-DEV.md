@@ -260,7 +260,7 @@ Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
 **Left and right thumbstick click**\
 _(F2 / F3)_
 
-Reserved for future use.
+Jumps to a random game or system depending on whether pressed when in the system view or gamelist view.
 
 **A button**\
 _(Enter)_
@@ -275,7 +275,7 @@ Back button, self explanatory.
 **X button**\
 _(Delete)_
 
-Selects random games and systems. Used by some other minor functions as explained by the help system and/or this guide.
+Starts the game media viewer (which is accessible from the gamelist views). Used by some other minor functions as explained by the help system and/or this guide.
 
 **Y button**\
 _(Insert on Unix and Windows, F13 on macOS)_
@@ -864,9 +864,13 @@ With this setting enabled, there is a star symbol added at the beginning of the 
 
 With this option enabled, there will be an overlay displayed when scrolling the gamelists quickly, i.e. when holding down the _Up_, _Down_, _Left shoulder_ or _Right shoulder_ buttons for some time. The overlay will darken the background slightly and display the first two characters of the game name. If the game is a favorite and the setting to sort favorites above non-favorites has been enabled, a star will be shown instead.
 
-**Enable shortcut to toggle favorites**
+**Enable toggle favorites button**
 
 This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. For additional restrictions, the application can be set to Kid or Kiosk mode as is explained [elsewhere](USERGUIDE-DEV.md#ui-modes) in this guide. Note that this setting does not affect the functionality to use the _Y_ button to add games to custom collections.
+
+**Enable random system or game button**
+
+This enables or disables the functionality to jump to a random system or game. It's mapped to the thumbstick click button, either the left or right thumbstick will work. The help prompts will also visually indicate whether this option is enabled or not.
 
 **Enable gamelist filters**
 
@@ -883,6 +887,30 @@ Activating or deactivating the built-in help system that provides contextual inf
 **Play videos immediately (override theme)**
 
 Some themes (including rbsimple-DE) display the game images briefly before playing the game videos. This setting forces the videos to be played immediately, regardless of the configuration in the theme. Note though that if there is a video available for a game, but no images, the video will always start to play immediately no matter the theme configuration or whether this settings has been enabled or not.
+
+#### Media viewer settings
+
+Settings for the media viewer that is accessible from the gamelist views.
+
+**Keep videos running when viewing images**
+
+With this option enabled, the video will continue to run when viewing the images for the game. If disabling this setting, the video will stop immediately when browsing to the first image, and it will restart when navigating back to the video.
+
+**Stretch videos to screen resolution**
+
+This will fill the entire screen surface but will possibly break the aspect ratio of the video.
+
+**Render scanlines for videos** _(OpenGL renderer only)_
+
+Whether to use a shader to render scanlines for the videos. Be aware that this is quite demanding for the GPU.
+
+**Render blur for videos** _(OpenGL renderer only)_
+
+Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor. Be aware that this is quite demanding for the GPU.
+
+**Render scanlines for screenshots** _(OpenGL renderer only)_
+
+Whether to use a shader to render scanlines for the screenshot images.
 
 #### Screensaver settings
 
@@ -940,10 +968,6 @@ Options specific to the video screensaver.
 
 For how long to play videos before changing to the next game. Allowed range is between 0 and 120 seconds in 2-second increments. If set to 0 (which is the default setting), the next game will be selected after the entire video has finished playing.
 
-**Play audio for screensaver videos**
-
-Muting or playing the audio.
-
 **Stretch videos to screen resolution**
 
 This will fill the entire screen surface but will possibly break the aspect ratio of the video.
@@ -975,11 +999,19 @@ Sets the volume for the navigation sounds.
 
 **Video player volume**
 
-Sets the volume for the video player. This applies to both the gamelist views and the video screensaver.
+Sets the volume for the video player. This applies to the gamelist views, the media viewer and the video screensaver.
 
 **Play audio for videos in the gamelist view**
 
 With this turned off, audio won't play for game videos in the gamelists.
+
+**Play audio for media viewer videos**
+
+With this turned off, audio won't play for videos displayed using the media viewer.
+
+**Play audio for screensaver videos**
+
+With this turned off, audio won't play for videos when using the video screensaver.
 
 **Enable navigation sounds**
 
@@ -1324,6 +1356,15 @@ This will remove any media files for the file or folder and also remove its entr
 
 This will remove the actual game file, its gamelist.xml entry, its entry in any custom collections and its media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be a bit dangerous, instead use the appropriate operating system tools to handle deletion of folders.
 
+## Game media viewer
+
+The game media viewer displays videos and images in fullscreen mode and is launched from the gamelist view by pressing the _X_ button.
+
+If a game video is available, this will be played automatically when launching the viewer. The _left_ and _right_ buttons are used to navigate betweeen the game media files. By default the video will continue to play when browsing the images, but this can be changed with a setting as described earlier in this document.
+
+The other settings for the media viewer are similar to what is available for the screensavers; the audio can be enabled or disabled, the video can be stretched to fill the entire screen and scanlines and blur can be rendered on top of it. For screenshots, scanlines can be rendered. All these options are configurable using the main menu.
+
+Pressing any other button than _left_ or _right_ closes the media viewer.
 
 ## Screensaver
 
