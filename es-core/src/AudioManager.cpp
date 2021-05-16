@@ -242,6 +242,11 @@ void AudioManager::stop()
 
 void AudioManager::setupAudioStream(int sampleRate)
 {
+    SDL_AudioStatus audioStatus = SDL_GetAudioDeviceStatus(sAudioDevice);
+
+    // It's very important to pause the audio device before setting up the stream,
+    // or we may get random crashes if attempting to play samples at the same time.
+    SDL_PauseAudioDevice(sAudioDevice, 1);
     SDL_FreeAudioStream(sConversionStream);
 
     // Used for streaming audio from videos.
@@ -251,6 +256,10 @@ void AudioManager::setupAudioStream(int sampleRate)
         LOG(LogError) << "Failed to create audio conversion stream:";
         LOG(LogError) << SDL_GetError();
     }
+
+    // If the device was previously in a playing state, then restore it.
+    if (audioStatus == SDL_AUDIO_PLAYING)
+        SDL_PauseAudioDevice(sAudioDevice, 0);
 }
 
 void AudioManager::processStream(const void* samples, unsigned count)
