@@ -339,11 +339,22 @@ void Window::render()
             bottom->stopAllAnimations();
         }
 
-        // Don't render the system view or gamelist view if the video or slideshow screensaver
-        // is running, unless the fallback screensaver is active due to lack of images or videos.
-        if ((mRenderScreensaver && mScreensaver->isFallbackScreensaver()) ||
-                (!(mRenderScreensaver && (Settings::getInstance()->getString("ScreensaverType") ==
-                "video" || Settings::getInstance()->getString("ScreensaverType") == "slideshow"))))
+        // Don't render the system view or gamelist view if the media viewer is active or if the
+        // video or slideshow screensaver is running. The exception is if the fallback screensaver
+        // is active due to a lack of videos or images.
+        bool renderBottom = true;
+        if (mRenderMediaViewer)
+            renderBottom = false;
+        else if (mRenderScreensaver && mScreensaver->isFallbackScreensaver())
+            renderBottom = true;
+        else if (mRenderScreensaver &&
+                Settings::getInstance()->getString("ScreensaverType") == "video")
+            renderBottom = false;
+        else if (mRenderScreensaver &&
+                Settings::getInstance()->getString("ScreensaverType") == "slideshow")
+            renderBottom = false;
+
+        if (renderBottom)
             bottom->render(transform);
 
         if (bottom != top) {
