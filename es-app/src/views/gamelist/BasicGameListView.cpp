@@ -307,8 +307,10 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
 
-    if (Settings::getInstance()->getBool("QuickSystemSelect"))
+    if (Settings::getInstance()->getBool("QuickSystemSelect") &&
+            SystemData::sSystemVector.size() > 1)
         prompts.push_back(HelpPrompt("left/right", "system"));
+
     prompts.push_back(HelpPrompt("up/down", "choose"));
     prompts.push_back(HelpPrompt("a", "launch"));
     prompts.push_back(HelpPrompt("b", "back"));
