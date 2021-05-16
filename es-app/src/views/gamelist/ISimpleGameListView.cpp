@@ -141,6 +141,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     if (mRoot->getSystem()->getThemeFolder() == "custom-collections")
                         updateHelpPrompts();
                 }
+                else {
+                    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                }
             }
 
             return true;
@@ -182,6 +185,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
             else if (mRoot->getSystem()->isGameSystem()) {
                 stopListScrolling();
+                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 mWindow->startMediaViewer(getCursor());
                 return true;
             }
@@ -226,7 +230,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 ViewController::GAME_LIST) {
             // Jump to the randomly selected game.
             if (mRandomGame) {
-                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
                 // If there is already an mCursorStackHistory entry for the collection, then
                 // remove it so we don't get multiple entries.
                 std::vector<FileData*> listEntries =
@@ -242,6 +246,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 setCursor(mRandomGame);
                 updateHelpPrompts();
             }
+            else {
+                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+            }
         }
         else if (config->isMappedTo("y", input) &&
                 !Settings::getInstance()->getBool("FavoritesAddButton") &&
@@ -255,6 +262,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             if (CollectionSystemsManager::get()->isEditing() &&
                     mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                     getCursor()->getParent()->getPath() == "collections") {
+                NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
                 GuiInfoPopup* s;
                 s = new GuiInfoPopup(mWindow,
                         "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS", 4000);
@@ -263,6 +271,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             // Notify the user if attempting to add a placeholder to a custom collection.
             if (CollectionSystemsManager::get()->isEditing() &&
                     mRoot->getSystem()->isGameSystem() && getCursor()->getType() == PLACEHOLDER) {
+                NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
                 GuiInfoPopup* s;
                 s = new GuiInfoPopup(mWindow,
                         "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS", 4000);
