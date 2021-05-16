@@ -148,8 +148,8 @@ void Settings::setDefaults()
     mBoolMap["MediaViewerScreenshotScanlines"] = { true, true };
 
     // UI settings -> screensaver settings.
-    mIntMap["ScreensaverTimer"] = { 5*60*1000, 5*60*1000 }; // 5 minutes
-    mStringMap["ScreensaverType"] = { "dim", "dim" };
+    mIntMap["ScreensaverTimer"] = { 5 * 60 * 1000, 5 * 60 * 1000 }; // 5 minutes.
+    mStringMap["ScreensaverType"] = { "video", "video" };
     mBoolMap["ScreensaverControls"] = { true, true };
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.

@@ -383,21 +383,8 @@ void SystemScreensaver::renderScreensaver()
                 mFallbackScreensaver = true;
             }
         }
-
         if (mFallbackScreensaver ||
-                Settings::getInstance()->getString("ScreensaverType") == "black") {
-            #if defined(USE_OPENGL_21)
-            Renderer::shaderParameters blackParameters;
-            blackParameters.fragmentDimValue = mDimValue;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
-            if (mDimValue > 0.0)
-                mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
-            #else
-            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                    Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
-            #endif
-        }
-        else if (Settings::getInstance()->getString("ScreensaverType") == "dim") {
+                Settings::getInstance()->getString("ScreensaverType") == "dim") {
             #if defined(USE_OPENGL_21)
             Renderer::shaderParameters dimParameters;
             dimParameters.fragmentDimValue = mDimValue;
@@ -411,6 +398,18 @@ void SystemScreensaver::renderScreensaver()
             #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
                     Renderer::getScreenHeight(), 0x000000A0, 0x000000A0);
+            #endif
+        }
+        else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
+            #if defined(USE_OPENGL_21)
+            Renderer::shaderParameters blackParameters;
+            blackParameters.fragmentDimValue = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+            if (mDimValue > 0.0)
+                mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
+            #else
+            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
+                    Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
             #endif
         }
     }

@@ -52,7 +52,7 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
                         "THE 'VIDEO' SCREENSAVER SHOWS\nVIDEOS FROM YOUR GAMELISTS\n\n"
                         "IF YOU DO NOT HAVE ANY VIDEOS, THE\n"
-                        "SCREENSAVER WILL DEFAULT TO 'BLACK'",
+                        "SCREENSAVER WILL DEFAULT TO 'DIM'",
                         "OK", [] { return; }, "", nullptr, "", nullptr));
                 }
             Settings::getInstance()->setString("ScreensaverType",
