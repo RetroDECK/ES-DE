@@ -175,6 +175,17 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 
             return true;
         }
+        else if (config->isMappedTo("x", input)) {
+            if (getCursor()->getType() == PLACEHOLDER) {
+                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                return true;
+            }
+            else if (mRoot->getSystem()->isGameSystem()) {
+                stopListScrolling();
+                mWindow->startMediaViewer(getCursor());
+                return true;
+            }
+        }
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect") &&
                     SystemData::sSystemVector.size() > 1) {

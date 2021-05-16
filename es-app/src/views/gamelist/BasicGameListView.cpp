@@ -312,6 +312,15 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
     prompts.push_back(HelpPrompt("up/down", "choose"));
     prompts.push_back(HelpPrompt("a", "launch"));
     prompts.push_back(HelpPrompt("b", "back"));
+
+    if (mRoot->getSystem()->isGameSystem() &&
+            mRoot->getSystem()->getThemeFolder() != "custom-collections")
+        prompts.push_back(HelpPrompt("x", "view media"));
+
+    if (mRoot->getSystem()->isGameSystem() && !mCursorStack.empty() &&
+            mRoot->getSystem()->getThemeFolder() == "custom-collections")
+        prompts.push_back(HelpPrompt("x", "view media"));
+
     if (!UIModeController::getInstance()->isUIModeKid())
         prompts.push_back(HelpPrompt("select", "options"));
     if (mRoot->getSystem()->isGameSystem() && Settings::getInstance()->getBool("RandomAddButton"))
