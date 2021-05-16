@@ -182,7 +182,8 @@ void MediaViewer::findMedia()
 
 void MediaViewer::showNext()
 {
-    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+    if (mHasImages && mCurrentImageIndex != mImageFiles.size() - 1)
+        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 
     bool showedVideo = false;
 
@@ -214,7 +215,8 @@ void MediaViewer::showNext()
 
 void MediaViewer::showPrevious()
 {
-    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+    if ((mHasVideo && mDisplayingImage) || (!mHasVideo && mCurrentImageIndex != 0))
+        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 
     if (mCurrentImageIndex == 0 && !mHasVideo) {
         return;
