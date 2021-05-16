@@ -13,13 +13,17 @@
 * Added a fullscreen game media viewer
 * Added a new video player based on FFmpeg
 * Changed the button for jumping to a random system or game and added a setting for disabling the functionality altogether
+* Added navigation sounds for some actions where it was missing, such as when attempting to add folders, placeholders or systems to custom collections
+* Changed the custom collection "Jump to" navigation sound to the select sound instead of the scroll sound
+* Changed the default screensaver type from "dim" to "video" and made the fallback screensaver "dim" instead of "black"
 * Moved the video screensaver audio setting to the sound settings menu
 * Changed the setting description for the favorites game toggling button
 * Changed the language standard from C++11 to C++14
 
 ### Bug fixes
 
-* The "y" button help prompt wasn't displayed properly when using the Grid view style
+* The Quick System Select help prompt was shown even when there was only a single game system present
+* The "Y" button help prompt wasn't displayed correctly when using the Grid view style
 
 ## Version 1.0.1
 

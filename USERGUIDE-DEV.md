@@ -1080,7 +1080,7 @@ This gives you a choice between _Normal_ and _Borderless_ modes. With the border
 
 **Video player**
 
-This gives the choice between VLC or FFmpeg, which is applied to both the gamelist videos and the video screensaver.
+This gives the choice between FFmpeg and VLC, which is applied to the gamelist videos, the media viewer and the video screensaver.
 
 **When to save game metadata**
 
@@ -1375,6 +1375,8 @@ Numerous options can be set for these screensavers, as detailed [here](USERGUIDE
 The Dim screensaver simply dims and desaturates the current view and Black will show a black screen. The Slideshow and Video screensavers are more interesting as they can display images and videos from your game collection. In addition to this, the Slideshow screensaver can be configured to only show images from a specified directory.
 
 If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the **Select** key. In addition to this, for the Slideshow and Video screensavers, the controls will allow you to jump to a new random image or video using the **Left** and **Right** buttons on your keyboard or controller. It's also possible to launch the game currently displayed using the **A** button, and the **Y** button will jump to the game in its gamelist without starting it.
+
+If the Video screensaver has been selected and there are no videos available, a fallback to the Dim screensaver will take place. The same is true for the Slideshow screensaver if no game images are available.
 
 ![alt text](images/current/es-de_screensaver.png "ES-DE Screensaver")
 _An example of what the video screensaver looks like._
