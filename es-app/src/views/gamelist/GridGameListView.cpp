@@ -709,11 +709,29 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "back"));
     if (!UIModeController::getInstance()->isUIModeKid())
         prompts.push_back(HelpPrompt("select", "options"));
-    if (mRoot->getSystem()->isGameSystem())
-        prompts.push_back(HelpPrompt("x", "random"));
-    if (mRoot->getSystem()->isGameSystem() && !UIModeController::getInstance()->isUIModeKid() &&
+    if (mRoot->getSystem()->isGameSystem() &&
+            Settings::getInstance()->getBool("RandomAddButton"))
+        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
+
+    if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+            !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
+            ViewController::get()->getState().viewing == ViewController::GAME_LIST &&
+            ViewController::get()->getState().viewstyle != ViewController::BASIC) {
+        prompts.push_back(HelpPrompt("y", "jump to game"));
+    }
+    else if (mRoot->getSystem()->isGameSystem() &&
             (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||
-            !mCursorStack.empty())) {
+            !mCursorStack.empty()) &&
+            !UIModeController::getInstance()->isUIModeKid() &&
+            !UIModeController::getInstance()->isUIModeKiosk() &&
+            (Settings::getInstance()->getBool("FavoritesAddButton") ||
+            CollectionSystemsManager::get()->isEditing())) {
+        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+        prompts.push_back(HelpPrompt("y", prompt));
+    }
+    else if (mRoot->getSystem()->isGameSystem() &&
+            mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+            CollectionSystemsManager::get()->isEditing()) {
         std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
