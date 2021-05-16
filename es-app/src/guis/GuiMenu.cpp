@@ -15,9 +15,10 @@
 #include "guis/GuiCollectionSystemsOptions.h"
 #include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
-#include "guis/GuiScreensaverOptions.h"
+#include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperMenu.h"
+#include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiSettings.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
@@ -504,6 +505,15 @@ void GuiMenu::openUISettings()
         }
     });
 
+    // Media viewer.
+    ComponentListRow media_viewer_row;
+    media_viewer_row.elements.clear();
+    media_viewer_row.addElement(std::make_shared<TextComponent>
+            (mWindow, "MEDIA VIEWER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+    media_viewer_row.addElement(makeArrow(mWindow), false);
+    media_viewer_row.makeAcceptInputHandler(std::bind(&GuiMenu::openMediaViewerOptions, this));
+    s->addRow(media_viewer_row);
+
     // Screensaver.
     ComponentListRow screensaver_row;
     screensaver_row.elements.clear();
@@ -668,7 +678,7 @@ void GuiMenu::openSoundSettings()
         });
         #endif
 
-        // Video audio.
+        // Play audio for gamelist videos.
         auto gamelist_video_audio = std::make_shared<SwitchComponent>(mWindow);
         gamelist_video_audio->setState(Settings::getInstance()->getBool("GamelistVideoAudio"));
         s->addWithLabel("PLAY AUDIO FOR VIDEOS IN THE GAMELIST VIEW", gamelist_video_audio);
@@ -677,6 +687,34 @@ void GuiMenu::openSoundSettings()
                     Settings::getInstance()->getBool("GamelistVideoAudio")) {
                 Settings::getInstance()->setBool("GamelistVideoAudio",
                         gamelist_video_audio->getState());
+                s->setNeedsSaving();
+            }
+        });
+
+        // Play audio for media viewer videos.
+        auto media_viewer_video_audio = std::make_shared<SwitchComponent>(mWindow);
+        media_viewer_video_audio->setState(Settings::getInstance()->
+                getBool("MediaViewerVideoAudio"));
+        s->addWithLabel("PLAY AUDIO FOR MEDIA VIEWER VIDEOS", media_viewer_video_audio);
+        s->addSaveFunc([media_viewer_video_audio, s] {
+            if (media_viewer_video_audio->getState() !=
+                    Settings::getInstance()->getBool("MediaViewerVideoAudio")) {
+                Settings::getInstance()->setBool("MediaViewerVideoAudio",
+                        media_viewer_video_audio->getState());
+                s->setNeedsSaving();
+            }
+        });
+
+        // Play audio for screensaver videos.
+        auto screensaver_video_audio = std::make_shared<SwitchComponent>(mWindow);
+        screensaver_video_audio->setState(Settings::getInstance()->
+                getBool("ScreensaverVideoAudio"));
+        s->addWithLabel("PLAY AUDIO FOR SCREENSAVER VIDEOS", screensaver_video_audio);
+        s->addSaveFunc([screensaver_video_audio, s] {
+            if (screensaver_video_audio->getState() !=
+                    Settings::getInstance()->getBool("ScreensaverVideoAudio")) {
+                Settings::getInstance()->setBool("ScreensaverVideoAudio",
+                        screensaver_video_audio->getState());
                 s->setNeedsSaving();
             }
         });
@@ -1128,6 +1166,11 @@ void GuiMenu::addVersionInfo()
     mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
     addChild(&mVersion);
+}
+
+void GuiMenu::openMediaViewerOptions()
+{
+    mWindow->pushGui(new GuiMediaViewerOptions(mWindow, "MEDIA VIEWER SETTINGS"));
 }
 
 void GuiMenu::openScreensaverOptions()

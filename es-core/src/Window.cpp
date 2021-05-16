@@ -24,6 +24,7 @@
 
 Window::Window()
         : mScreensaver(nullptr),
+        mMediaViewer(nullptr),
         mInfoPopup(nullptr),
         mNormalizeNextUpdate(false),
         mFrameTimeElapsed(0),
@@ -33,6 +34,7 @@ Window::Window()
         mSleeping(false),
         mTimeSinceLastInput(0),
         mRenderScreensaver(false),
+        mRenderMediaViewer(false),
         mGameLaunchedState(false),
         mAllowTextScrolling(true),
         mCachedBackground(false),
@@ -150,6 +152,17 @@ void Window::input(InputConfig* config, Input input)
 
     if (Settings::getInstance()->getBool("Debug"))
         logInput(config, input);
+
+    if (mMediaViewer && mRenderMediaViewer) {
+        if (config->isMappedLike("right", input) && input.value != 0)
+            mMediaViewer->showNext();
+        else if (config->isMappedLike("left", input) && input.value != 0)
+            mMediaViewer->showPrevious();
+        else if (input.value != 0)
+            // Any other input than left or right stops the media viewer.
+            stopMediaViewer();
+        return;
+    }
 
     if (mScreensaver) {
         if (mScreensaver->isScreensaverActive() &&
@@ -303,8 +316,10 @@ void Window::update(int deltaTime)
         mChangedThemeSet = false;
     }
 
-    // Update the screensaver.
-    if (mScreensaver)
+    if (mMediaViewer && mRenderMediaViewer)
+        mMediaViewer->update(deltaTime);
+
+    if (mScreensaver && mRenderScreensaver)
         mScreensaver->update(deltaTime);
 }
 
@@ -319,7 +334,7 @@ void Window::render()
         auto& bottom = mGuiStack.front();
         auto& top = mGuiStack.back();
 
-        if (mRenderScreensaver) {
+        if (mRenderMediaViewer || mRenderScreensaver) {
             bottom->cancelAllAnimations();
             bottom->stopAllAnimations();
         }
@@ -464,8 +479,9 @@ void Window::render()
     unsigned int screensaverTimer =
             static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"));
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
-        // If a menu is open, reset the screensaver timer so that the screensaver won't start.
-        if (mGuiStack.front() != mGuiStack.back())
+        // If the media viewer is running or if a menu is open, reset the screensaver timer so
+        // that the screensaver won't start.
+        if (mRenderMediaViewer || mGuiStack.front() != mGuiStack.back())
             mTimeSinceLastInput = 0;
         // If a game has been launched, reset the screensaver timer as we don't want to start
         // the screensaver in the background when running a game.
@@ -491,6 +507,9 @@ void Window::render()
             }
         }
     }
+
+    if (mRenderMediaViewer)
+        mMediaViewer->render();
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         Renderer::setMatrix(Transform4x4f::Identity());
@@ -710,4 +729,20 @@ void Window::renderScreensaver()
 {
     if (mScreensaver)
         mScreensaver->renderScreensaver();
+}
+
+void Window::startMediaViewer(FileData* game)
+{
+    if (mMediaViewer) {
+        if (mMediaViewer->startMediaViewer(game))
+            mRenderMediaViewer = true;
+    }
+}
+
+void Window::stopMediaViewer()
+{
+    if (mMediaViewer)
+        mMediaViewer->stopMediaViewer();
+
+    mRenderMediaViewer = false;
 }

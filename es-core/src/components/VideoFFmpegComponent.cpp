@@ -158,10 +158,11 @@ void VideoFFmpegComponent::render(const Transform4x4f& parentTrans)
         mTexture->bind();
 
         #if defined(USE_OPENGL_21)
-        // Render scanlines if this option is enabled. However, if this is the video
-        // screensaver, then skip this as screensaver scanline rendering is handled in
-        // SystemScreenSaver as a postprocessing step.
-        if (!mScreensaverMode && Settings::getInstance()->getBool("GamelistVideoScanlines"))
+        // Render scanlines if this option is enabled. However, if this is the media viewer
+        // or the video screensaver, then skip this as the scanline rendering is then handled
+        // in those modules as a postprocessing step.
+        if ((!mScreensaverMode && !mMediaViewerMode) &&
+                Settings::getInstance()->getBool("GamelistVideoScanlines"))
             vertices[0].shaders = Renderer::SHADER_SCANLINES;
         #endif
 
@@ -466,9 +467,19 @@ void VideoFFmpegComponent::outputFrames()
 //            LOG(LogDebug) << "Total audio frames processed / audio frame queue size: " <<
 //            mAudioFrameCount << " / " << std::to_string(mAudioFrameQueue.size());
 
-            if ((Settings::getInstance()->getBool("GamelistVideoAudio") &&
-                    !mScreensaverMode) || (Settings::getInstance()->
-                    getBool("ScreensaverVideoAudio") && mScreensaverMode)) {
+            bool outputSound = false;
+
+            if ((!mScreensaverMode && !mMediaViewerMode) &&
+                    Settings::getInstance()->getBool("GamelistVideoAudio"))
+                outputSound = true;
+            else if (mScreensaverMode && Settings::getInstance()->
+                    getBool("ScreensaverVideoAudio"))
+                outputSound = true;
+            else if (mMediaViewerMode && Settings::getInstance()->
+                    getBool("MediaViewerVideoAudio"))
+                outputSound = true;
+
+            if (outputSound) {
                 AudioManager::getInstance()->processStream(
                         &mAudioFrameQueue.front().resampledData.at(0),
                         mAudioFrameQueue.front().resampledDataSize);

@@ -139,6 +139,13 @@ void Settings::setDefaults()
     mBoolMap["PlayVideosImmediately"] = { false, false };
     mBoolMap["EnableMenuKidMode"] = { false, false };
 
+    // UI settings -> media viewer settings.
+    mBoolMap["MediaViewerKeepVideoRunning"] = { true, true };
+    mBoolMap["MediaViewerStretchVideos"] = { false, false };
+    mBoolMap["MediaViewerVideoScanlines"] = { true, true };
+    mBoolMap["MediaViewerVideoBlur"] = { false, false };
+    mBoolMap["MediaViewerScreenshotScanlines"] = { true, true };
+
     // UI settings -> screensaver settings.
     mIntMap["ScreensaverTimer"] = { 5*60*1000, 5*60*1000 }; // 5 minutes
     mStringMap["ScreensaverType"] = { "dim", "dim" };
@@ -157,7 +164,6 @@ void Settings::setDefaults()
 
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreensaverSwapVideoTimeout"] = { 0, 0 };
-    mBoolMap["ScreensaverVideoAudio"] = { false, false };
     mBoolMap["ScreensaverStretchVideos"] = { false, false };
     mBoolMap["ScreensaverVideoGameInfo"] = { true, true };
     mBoolMap["ScreensaverVideoScanlines"] = { true, true };
@@ -185,6 +191,8 @@ void Settings::setDefaults()
     mIntMap["SoundVolumeNavigation"] = { 80, 80 };
     mIntMap["SoundVolumeVideos"] = { 100, 100 };
     mBoolMap["GamelistVideoAudio"] = { true, true };
+    mBoolMap["MediaViewerVideoAudio"] = { true, true };
+    mBoolMap["ScreensaverVideoAudio"] = { false, false };
     mBoolMap["NavigationSounds"] = { true, true };
 
     // Game collection settings.

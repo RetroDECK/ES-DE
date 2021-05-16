@@ -14,6 +14,7 @@
 
 #include <string>
 
+class MediaViewer;
 class TextureResource;
 
 class VideoComponent : public GuiComponent
@@ -36,7 +37,9 @@ public:
     void setDefaultVideo();
     // Loads a static image that is displayed if the video cannot be played.
     void setImage(std::string path);
-    // Sets whether it's going to render in screensaver mode.
+    // Sets whether we're in media viewer mode.
+    void setMediaViewerMode(bool isMediaViewer);
+    // Sets whether we're in screensaver mode.
     void setScreensaverMode(bool isScreensaver);
     // Set the opacity for the embedded static image.
     void setOpacity(unsigned char opacity) override;
@@ -98,6 +101,8 @@ private:
     // Manage the playing state of the component.
     void manageState();
 
+    friend MediaViewer;
+
 protected:
     Window* mWindow;
     unsigned mVideoWidth;
@@ -118,6 +123,7 @@ protected:
     bool mPause;
     bool mShowing;
     bool mDisable;
+    bool mMediaViewerMode;
     bool mScreensaverActive;
     bool mScreensaverMode;
     bool mGameLaunched;

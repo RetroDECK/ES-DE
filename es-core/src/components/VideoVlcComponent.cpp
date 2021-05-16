@@ -225,10 +225,11 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
         mTexture->bind();
 
         #if defined(USE_OPENGL_21)
-        // Render scanlines if this option is enabled. However, if this is the video
-        // screensaver, then skip this as screensaver scanline rendering is handled in
-        // SystemScreenSaver as a postprocessing step.
-        if (!mScreensaverMode && Settings::getInstance()->getBool("GamelistVideoScanlines"))
+        // Render scanlines if this option is enabled. However, if this is the media viewer
+        // or the video screensaver, then skip this as the scanline rendering is then handled
+        // in those modules as a postprocessing step.
+        if ((!mScreensaverMode && !mMediaViewerMode) &&
+                Settings::getInstance()->getBool("GamelistVideoScanlines"))
             vertices[0].shaders = Renderer::SHADER_SCANLINES;
         #endif
 
@@ -303,18 +304,29 @@ void VideoVlcComponent::setAudioVolume()
     if (mMediaPlayer && libvlc_media_player_get_state(mMediaPlayer) == libvlc_Playing) {
         // This small delay may avoid a race condition in libVLC that could crash the application.
         SDL_Delay(2);
-        if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
-                !mScreensaverMode) ||
-                (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
-                mScreensaverMode)) {
-            libvlc_audio_set_volume(mMediaPlayer, 0);
-        }
-        else {
+
+        bool outputSound = false;
+
+        if ((!mScreensaverMode && !mMediaViewerMode) &&
+                Settings::getInstance()->getBool("GamelistVideoAudio"))
+            outputSound = true;
+        else if (mScreensaverMode && Settings::getInstance()->
+                getBool("ScreensaverVideoAudio"))
+            outputSound = true;
+        else if (mMediaViewerMode && Settings::getInstance()->
+                getBool("MediaViewerVideoAudio"))
+            outputSound = true;
+
+        if (outputSound) {
             if (libvlc_audio_get_mute(mMediaPlayer) == 1)
                 libvlc_audio_set_mute(mMediaPlayer, 0);
             libvlc_audio_set_volume(mMediaPlayer,
                     Settings::getInstance()->getInt("SoundVolumeVideos"));
         }
+        else {
+            libvlc_audio_set_volume(mMediaPlayer, 0);
+        }
+
         mHasSetAudioVolume = true;
     }
 }
@@ -510,9 +522,19 @@ void VideoVlcComponent::handleLooping()
                 libvlc_media_player_set_media(mMediaPlayer, mMedia);
                 libvlc_media_player_play(mMediaPlayer);
 
-                if ((!Settings::getInstance()->getBool("GamelistVideoAudio") &&
-                        !mScreensaverMode) || (!Settings::getInstance()->
-                        getBool("ScreensaverVideoAudio") && mScreensaverMode))
+                bool outputSound = false;
+
+                if ((!mScreensaverMode && !mMediaViewerMode) &&
+                        Settings::getInstance()->getBool("GamelistVideoAudio"))
+                    outputSound = true;
+                else if (mScreensaverMode && Settings::getInstance()->
+                        getBool("ScreensaverVideoAudio"))
+                    outputSound = true;
+                else if (mMediaViewerMode && Settings::getInstance()->
+                        getBool("MediaViewerVideoAudio"))
+                    outputSound = true;
+
+                if (!outputSound)
                     libvlc_audio_set_volume(mMediaPlayer, 0);
             }
         }

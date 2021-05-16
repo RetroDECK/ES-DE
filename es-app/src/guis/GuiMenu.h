@@ -32,6 +32,7 @@ private:
 
     void openScraperSettings();
     void openUISettings();
+    void openMediaViewerOptions();
     void openScreensaverOptions();
     void openSoundSettings();
     void openCollectionSystemSettings();

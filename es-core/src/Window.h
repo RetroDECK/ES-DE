@@ -50,6 +50,19 @@ public:
         virtual void triggerNextGame() = 0;
     };
 
+    class MediaViewer
+    {
+    public:
+        virtual bool startMediaViewer(FileData* game) = 0;
+        virtual void stopMediaViewer() = 0;
+
+        virtual void showNext() = 0;
+        virtual void showPrevious() = 0;
+
+        virtual void update(int deltaTime) = 0;
+        virtual void render() = 0;
+    };
+
     class InfoPopup
     {
     public:
@@ -92,11 +105,16 @@ public:
     void setInfoPopup(InfoPopup* infoPopup);
     void stopInfoPopup();
 
-    bool isScreensaverActive() { return mRenderScreensaver; };
     void startScreensaver();
     bool stopScreensaver();
     void renderScreensaver();
     void screensaverTriggerNextGame() { mScreensaver->triggerNextGame(); };
+    bool isScreensaverActive() { return mRenderScreensaver; };
+
+    void startMediaViewer(FileData* game);
+    void stopMediaViewer();
+    void setMediaViewer(MediaViewer* mediaViewer) { mMediaViewer = mediaViewer; }
+    bool isMediaViewerActive() { return mRenderMediaViewer; };
 
     void setLaunchedGame();
     void unsetLaunchedGame();
@@ -123,6 +141,9 @@ private:
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;
     std::unique_ptr<TextCache> mFrameDataText;
+
+    MediaViewer* mMediaViewer;
+    bool mRenderMediaViewer;
 
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;

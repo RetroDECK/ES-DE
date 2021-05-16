@@ -225,19 +225,6 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
         }
     });
 
-    // PLay audio for screensaver videos.
-    auto screensaver_video_audio = std::make_shared<SwitchComponent>(mWindow);
-    screensaver_video_audio->setState(Settings::getInstance()->getBool("ScreensaverVideoAudio"));
-    s->addWithLabel("PLAY AUDIO FOR SCREENSAVER VIDEOS", screensaver_video_audio);
-    s->addSaveFunc([screensaver_video_audio, s] {
-        if (screensaver_video_audio->getState() !=
-                Settings::getInstance()->getBool("ScreensaverVideoAudio")) {
-            Settings::getInstance()->setBool("ScreensaverVideoAudio",
-                    screensaver_video_audio->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // Stretch videos to screen resolution.
     auto screensaver_stretch_videos = std::make_shared<SwitchComponent>(mWindow);
     screensaver_stretch_videos->

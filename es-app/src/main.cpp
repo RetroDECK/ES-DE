@@ -30,6 +30,7 @@
 #include "InputManager.h"
 #include "Log.h"
 #include "MameNames.h"
+#include "MediaViewer.h"
 #include "Platform.h"
 #include "Settings.h"
 #include "Sound.h"
@@ -477,6 +478,7 @@ int main(int argc, char* argv[])
 
     Window window;
     SystemScreensaver screensaver(&window);
+    MediaViewer mediaViewer(&window);
     ViewController::init(&window);
     CollectionSystemsManager::init(&window);
     window.pushGui(ViewController::get());

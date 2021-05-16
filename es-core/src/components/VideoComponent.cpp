@@ -30,6 +30,7 @@ VideoComponent::VideoComponent(
         mPause(false),
         mShowing(false),
         mDisable(false),
+        mMediaViewerMode(false),
         mScreensaverActive(false),
         mScreensaverMode(false),
         mGameLaunched(false),
@@ -95,6 +96,11 @@ void VideoComponent::setImage(std::string path)
 void VideoComponent::setScreensaverMode(bool isScreensaver)
 {
     mScreensaverMode = isScreensaver;
+}
+
+void VideoComponent::setMediaViewerMode(bool isMediaViewer)
+{
+    mMediaViewerMode = isMediaViewer;
 }
 
 void VideoComponent::setOpacity(unsigned char opacity)

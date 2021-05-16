@@ -7,6 +7,7 @@ set(ES_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/MediaViewer.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.h
@@ -19,6 +20,7 @@ set(ES_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMediaViewerOptions.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
@@ -55,6 +57,7 @@ set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/MediaViewer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.cpp
@@ -68,6 +71,7 @@ set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMediaViewerOptions.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp
