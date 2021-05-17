@@ -185,6 +185,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             }
             else if (mRoot->getSystem()->isGameSystem()) {
                 stopListScrolling();
+                ViewController::get()->cancelViewTransitions();
                 NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 mWindow->startMediaViewer(getCursor());
                 return true;
