@@ -145,15 +145,36 @@ void VideoFFmpegComponent::render(const Transform4x4f& parentTrans)
         if (!mDecodedFrame)
             return;
 
-        // The video picture is populated by the frame processing thread.
         mPictureMutex.lock();
 
-        if (!mOutputPicture.pictureRGBA.empty())
-            // Build a texture for the video frame.
-            mTexture->initFromPixels(&mOutputPicture.pictureRGBA.at(0), mOutputPicture.width,
-                    mOutputPicture.height);
+        if (!mOutputPicture.hasBeenRendered) {
+            // Copy the contents of mOutputPicture to a temporary vector in order to call
+            // initFromPixels() only after the mutex unlock. This significantly reduces the
+            // lock waits in outputFrames().
+            size_t pictureSize = mOutputPicture.pictureRGBA.size();
+            std::vector<uint8_t> tempPictureRGBA(pictureSize);
+            int pictureWidth = 0;
+            int pictureHeight = 0;
 
-        mPictureMutex.unlock();
+            if (pictureSize > 0) {
+                tempPictureRGBA.insert(tempPictureRGBA.begin(),
+                        mOutputPicture.pictureRGBA.begin(), mOutputPicture.pictureRGBA.end());
+                pictureWidth = mOutputPicture.width;
+                pictureHeight = mOutputPicture.height;
+
+                mOutputPicture.hasBeenRendered = true;
+            }
+
+            mPictureMutex.unlock();
+
+            if (pictureSize > 0) {
+                // Build a texture for the video frame.
+                mTexture->initFromPixels(&tempPictureRGBA.at(0), pictureWidth, pictureHeight);
+            }
+        }
+        else {
+            mPictureMutex.unlock();
+        }
 
         mTexture->bind();
 
@@ -232,6 +253,9 @@ void VideoFFmpegComponent::readFrames()
                         double pts = static_cast<double>(mPacket->dts) *
                                 av_q2d(mVideoStream->time_base);
 
+                        double frameDuration = static_cast<double>(mPacket->duration) *
+                                av_q2d(mVideoStream->time_base);
+
                         // Due to some unknown reason, attempting to scale frames where
                         // coded_width is larger than width leads to graphics corruption or
                         // crashes. The only workaround I've been able to find is to decrease the
@@ -277,10 +301,11 @@ void VideoFFmpegComponent::readFrames()
                         // Save the frame into the queue for later processing.
                         currFrame.width = mVideoFrame->width;
                         currFrame.height = mVideoFrame->height;
+                        currFrame.pts = pts;
+                        currFrame.frameDuration = frameDuration;
 
                         currFrame.frameRGBA.insert(currFrame.frameRGBA.begin(),
                                 &frameRGBA[0][0], &frameRGBA[0][allocatedSize]);
-                        currFrame.pts = pts;
 
                         mVideoFrameQueue.push(currFrame);
 
@@ -505,19 +530,36 @@ void VideoFFmpegComponent::outputFrames()
 
             mPictureMutex.lock();
 
+            // Give some leeway for frames that have not yet been rendered but that have pts
+            // values with a time difference relative to the frame duration that is under a
+            // certain threshold. In this case, give the renderer an additional chance to output
+            // the frames. If the difference exceeds the threshold though, then skip them as
+            // otherwise videos would just slow down instead of skipping frames when the computer
+            // can't keep up. This approach primarily decreases stuttering for videos with frame
+            // rates close to, or at, the rendering frame rate, for example 59.94 and 60 fps.
+            if (!mOutputPicture.hasBeenRendered) {
+                double timeDifference = mAccumulatedTime - mVideoFrameQueue.front().pts -
+                        mVideoFrameQueue.front().frameDuration * 2.0l;
+                if (timeDifference < mVideoFrameQueue.front().frameDuration) {
+                    mPictureMutex.unlock();
+                    break;
+                }
+            }
+
             mOutputPicture.pictureRGBA.clear();
             mOutputPicture.pictureRGBA.insert(mOutputPicture.pictureRGBA.begin(),
                     mVideoFrameQueue.front().frameRGBA.begin(),
-                    mVideoFrameQueue.front().frameRGBA.begin() +
-                    mVideoFrameQueue.front().frameRGBA.size());
+                    mVideoFrameQueue.front().frameRGBA.end());
 
             mOutputPicture.width = mVideoFrameQueue.front().width;
             mOutputPicture.height = mVideoFrameQueue.front().height;
+            mOutputPicture.hasBeenRendered = false;
 
             mPictureMutex.unlock();
 
             mVideoFrameQueue.pop();
             mVideoFrameCount++;
+
             mDecodedFrame = true;
         }
         else {
@@ -595,6 +637,7 @@ void VideoFFmpegComponent::startVideo()
         mEndOfVideo = false;
         mVideoFrameCount = 0;
         mAudioFrameCount = 0;
+        mOutputPicture = {};
 
         // This is used for the audio and video synchronization.
         mTimeReference = std::chrono::high_resolution_clock::now();

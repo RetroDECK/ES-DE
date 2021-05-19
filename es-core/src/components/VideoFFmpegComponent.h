@@ -97,6 +97,7 @@ private:
         int width;
         int height;
         double pts;
+        double frameDuration;
     };
 
     struct AudioFrame {
@@ -107,8 +108,9 @@ private:
 
     struct OutputPicture {
         std::vector<uint8_t> pictureRGBA;
-        int width = 0;
-        int height = 0;
+        bool hasBeenRendered;
+        int width;
+        int height;
     };
 
     std::queue<VideoFrame> mVideoFrameQueue;
