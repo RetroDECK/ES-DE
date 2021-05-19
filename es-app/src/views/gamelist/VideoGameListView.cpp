@@ -395,7 +395,6 @@ void VideoGameListView::updateInfoPanel()
             mThumbnail.setImage(file->getThumbnailPath());
             mMarquee.setImage(file->getMarqueePath());
             mVideo->setImage(file->getImagePath());
-            AudioManager::getInstance()->clearStream();
             mVideo->onHide();
 
 

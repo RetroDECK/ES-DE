@@ -235,8 +235,6 @@ void SystemScreensaver::stopScreensaver()
 
     if (mGameOverlay)
         mGameOverlay.reset();
-
-    AudioManager::getInstance()->clearStream();
 }
 
 void SystemScreensaver::nextGame() {

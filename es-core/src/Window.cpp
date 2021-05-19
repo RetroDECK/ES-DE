@@ -710,7 +710,6 @@ void Window::startScreensaver()
             (*it)->onScreensaverActivate();
 
         stopInfoPopup();
-        AudioManager::getInstance()->clearStream();
         mScreensaver->startScreensaver(true);
         mRenderScreensaver = true;
     }

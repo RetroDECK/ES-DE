@@ -44,7 +44,6 @@ bool MediaViewer::startMediaViewer(FileData* game)
 
     if (mHasVideo) {
         ViewController::get()->onPauseVideo();
-        AudioManager::getInstance()->clearStream();
     }
 
     if (mHasVideo || mHasImages)
@@ -59,7 +58,6 @@ void MediaViewer::stopMediaViewer()
 
     if (mVideo) {
         ViewController::get()->onStopVideo();
-        AudioManager::getInstance()->clearStream();
         delete mVideo;
         mVideo = nullptr;
     }
@@ -191,7 +189,6 @@ void MediaViewer::showNext()
         return;
     }
     else if (mVideo && !Settings::getInstance()->getBool("MediaViewerKeepVideoRunning")) {
-        AudioManager::getInstance()->clearStream();
         delete mVideo;
         mVideo = nullptr;
         showedVideo = true;

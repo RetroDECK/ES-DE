@@ -217,7 +217,7 @@ void VideoFFmpegComponent::update(int deltaTime)
 
 void VideoFFmpegComponent::frameProcessing()
 {
-    while (mIsPlaying) {
+    while (mIsPlaying && !mPause) {
         readFrames();
 
         if (!mEndOfVideo && mIsActuallyPlaying &&
@@ -229,6 +229,7 @@ void VideoFFmpegComponent::frameProcessing()
         // This 1 ms wait makes sure that the thread does not consume all available CPU cycles.
         SDL_Delay(1);
     }
+    AudioManager::getInstance()->clearStream();
 }
 
 void VideoFFmpegComponent::readFrames()
