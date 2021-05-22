@@ -30,13 +30,13 @@ private:
             bool add_arrow, const std::function<void()>& func);
     void addVersionInfo();
 
-    void openScraperSettings();
-    void openUISettings();
+    void openScraperOptions();
+    void openUIOptions();
     void openMediaViewerOptions();
     void openScreensaverOptions();
-    void openSoundSettings();
-    void openCollectionSystemSettings();
-    void openOtherSettings();
+    void openSoundOptions();
+    void openCollectionSystemOptions();
+    void openOtherOptions();
     void openConfigInput();
     void openQuitMenu();
 

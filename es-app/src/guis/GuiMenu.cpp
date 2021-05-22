@@ -41,19 +41,19 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
     bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 
     if (isFullUI)
-        addEntry("SCRAPER", 0x777777FF, true, [this] { openScraperSettings(); });
+        addEntry("SCRAPER", 0x777777FF, true, [this] { openScraperOptions(); });
 
     if (isFullUI)
-        addEntry("UI SETTINGS", 0x777777FF, true, [this] { openUISettings(); });
+        addEntry("UI SETTINGS", 0x777777FF, true, [this] { openUIOptions(); });
 
-    addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundSettings(); });
+    addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundOptions(); });
 
     if (isFullUI)
         addEntry("GAME COLLECTION SETTINGS", 0x777777FF, true, [this] {
-                openCollectionSystemSettings(); });
+                openCollectionSystemOptions(); });
 
     if (isFullUI)
-        addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherSettings(); });
+        addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
 
     if (isFullUI)
         addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
@@ -81,12 +81,12 @@ GuiMenu::~GuiMenu()
     ViewController::get()->stopScrolling();
 }
 
-void GuiMenu::openScraperSettings()
+void GuiMenu::openScraperOptions()
 {
     mWindow->pushGui(new GuiScraperMenu(mWindow, "SCRAPER"));
 }
 
-void GuiMenu::openUISettings()
+void GuiMenu::openUIOptions()
 {
     auto s = new GuiSettings(mWindow, "UI SETTINGS");
 
@@ -539,7 +539,7 @@ void GuiMenu::openUISettings()
     mWindow->pushGui(s);
 }
 
-void GuiMenu::openSoundSettings()
+void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings(mWindow, "SOUND SETTINGS");
 
@@ -750,7 +750,7 @@ void GuiMenu::openSoundSettings()
     mWindow->pushGui(s);
 }
 
-void GuiMenu::openOtherSettings()
+void GuiMenu::openOtherOptions()
 {
     auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
@@ -1191,7 +1191,7 @@ void GuiMenu::openScreensaverOptions()
     mWindow->pushGui(new GuiScreensaverOptions(mWindow, "SCREENSAVER SETTINGS"));
 }
 
-void GuiMenu::openCollectionSystemSettings()
+void GuiMenu::openCollectionSystemOptions()
 {
     mWindow->pushGui(new GuiCollectionSystemsOptions(mWindow, "GAME COLLECTION SETTINGS"));
 }
