@@ -198,28 +198,6 @@ void ViewController::noGamesDialog()
 
 void ViewController::goToStart()
 {
-    // Check if the keyboard config is set as application default, meaning no user
-    // configuration has been performed.
-    if (InputManager::getInstance()->
-            getInputConfigByDevice(DEVICE_KEYBOARD)->getDefaultConfigFlag()) {
-        LOG(LogInfo) << "Applying default keyboard mappings...";
-
-        if (Settings::getInstance()->getBool("ShowDefaultKeyboardWarning")) {
-            std::string message = "NO KEYBOARD CONFIGURATION COULD BE\n"
-                    "FOUND IN ES_INPUT.CFG, SO APPLYING THE\n"
-                    "DEFAULT KEYBOARD MAPPINGS. IT'S HOWEVER\n"
-                    "RECOMMENDED TO SETUP YOUR OWN KEYBOARD\n"
-                    "CONFIGURATION. TO DO SO, CHOOSE THE ENTRY\n"
-                    "'CONFIGURE INPUT' ON THE MAIN MENU.";
-
-        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(), message.c_str(),
-            "OK", nullptr, "DON'T SHOW AGAIN", [] {
-                Settings::getInstance()->setBool("ShowDefaultKeyboardWarning", false);
-                Settings::getInstance()->saveFile();
-            }));
-        }
-    }
-
     // If the system view does not exist, then create it. We do this here as it would
     // otherwise not be done if jumping directly into a specific game system on startup.
     if (!mSystemListView)

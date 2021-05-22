@@ -12,33 +12,38 @@
 
 #include <pugixml.hpp>
 
-// Some utility functions.
-std::string inputTypeToString(InputType type)
+InputConfig::InputConfig(
+        int deviceId,
+        const std::string& deviceName,
+        const std::string& deviceGUID)
+        : mDeviceId(deviceId),
+        mDeviceName(deviceName),
+        mDeviceGUID(deviceGUID)
+{
+}
+
+std::string InputConfig::inputTypeToString(InputType type)
 {
     switch (type) {
-    case TYPE_AXIS:
-        return "axis";
-    case TYPE_BUTTON:
-        return "button";
-    case TYPE_HAT:
-        return "hat";
-    case TYPE_KEY:
-        return "key";
-    case TYPE_CEC_BUTTON:
-        return "cec-button";
-    default:
-        return "error";
+        case TYPE_AXIS:
+            return "axis";
+        case TYPE_BUTTON:
+            return "button";
+        case TYPE_KEY:
+            return "key";
+        case TYPE_CEC_BUTTON:
+            return "cec-button";
+        default:
+            return "error";
     }
 }
 
-InputType stringToInputType(const std::string& type)
+InputType InputConfig::stringToInputType(const std::string& type)
 {
     if (type == "axis")
         return TYPE_AXIS;
     if (type == "button")
         return TYPE_BUTTON;
-    if (type == "hat")
-        return TYPE_HAT;
     if (type == "key")
         return TYPE_KEY;
     if (type == "cec-button")
@@ -46,24 +51,12 @@ InputType stringToInputType(const std::string& type)
     return TYPE_COUNT;
 }
 
-std::string toLower(std::string str)
+std::string InputConfig::toLower(std::string str)
 {
     for (unsigned int i = 0; i < str.length(); i++)
         str[i] = static_cast<char>(tolower(str[i]));
 
     return str;
-}
-// End of utility functions.
-
-InputConfig::InputConfig(
-        int deviceId,
-        const std::string& deviceName,
-        const std::string& deviceGUID)
-        : mDeviceId(deviceId),
-        mDeviceName(deviceName),
-        mDeviceGUID(deviceGUID),
-        mDefaultConfigFlag(false)
-{
 }
 
 void InputConfig::clear()
@@ -88,25 +81,6 @@ void InputConfig::unmapInput(const std::string& name)
         mNameMap.erase(it);
 }
 
-bool InputConfig::getInputByName(const std::string& name, Input* result)
-{
-    auto it = mNameMap.find(toLower(name));
-    if (it != mNameMap.cend()) {
-        *result = it->second;
-        return true;
-    }
-    return false;
-}
-
-int InputConfig::getInputIDByName(const std::string& name)
-{
-    auto it = mNameMap.find(toLower(name));
-    if (it != mNameMap.cend()) {
-        return it->second.id;
-    }
-    return -1;
-}
-
 bool InputConfig::isMappedTo(const std::string& name, Input input)
 {
     Input comp;
@@ -114,9 +88,6 @@ bool InputConfig::isMappedTo(const std::string& name, Input input)
         return false;
 
     if (comp.configured && comp.type == input.type && comp.id == input.id) {
-        if (comp.type == TYPE_HAT)
-            return (input.value == 0 || input.value & comp.value);
-
         if (comp.type == TYPE_AXIS)
             return input.value == 0 || comp.value == input.value;
         else
@@ -170,12 +141,6 @@ std::vector<std::string> InputConfig::getMappedTo(Input input)
             continue;
 
         if (chk.device == input.device && chk.type == input.type && chk.id == input.id) {
-            if (chk.type == TYPE_HAT) {
-                if (input.value == 0 || input.value & chk.value)
-                    maps.push_back(iterator->first);
-                continue;
-            }
-
             if (input.type == TYPE_AXIS) {
                 if (input.value == 0 || chk.value == input.value)
                     maps.push_back(iterator->first);
@@ -186,6 +151,25 @@ std::vector<std::string> InputConfig::getMappedTo(Input input)
         }
     }
     return maps;
+}
+
+bool InputConfig::getInputByName(const std::string& name, Input* result)
+{
+    auto it = mNameMap.find(toLower(name));
+    if (it != mNameMap.cend()) {
+        *result = it->second;
+        return true;
+    }
+    return false;
+}
+
+int InputConfig::getInputIDByName(const std::string& name)
+{
+    auto it = mNameMap.find(toLower(name));
+    if (it != mNameMap.cend()) {
+        return it->second.id;
+    }
+    return -1;
 }
 
 void InputConfig::loadFromXML(pugi::xml_node& node)
@@ -228,7 +212,7 @@ void InputConfig::writeToXML(pugi::xml_node& parent)
         cfg.append_attribute("deviceName") = "CEC";
     }
     else {
-        cfg.append_attribute("type") = "joystick";
+        cfg.append_attribute("type") = "controller";
         cfg.append_attribute("deviceName") = mDeviceName.c_str();
     }
 

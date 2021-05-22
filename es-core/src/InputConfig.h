@@ -22,7 +22,6 @@
 enum InputType {
     TYPE_AXIS,
     TYPE_BUTTON,
-    TYPE_HAT,
     TYPE_KEY,
     TYPE_CEC_BUTTON,
     TYPE_COUNT
@@ -64,19 +63,6 @@ public:
     {
     }
 
-    std::string getHatDir(int val)
-    {
-        if (val & SDL_HAT_UP)
-            return "up";
-        else if (val & SDL_HAT_DOWN)
-            return "down";
-        else if (val & SDL_HAT_LEFT)
-            return "left";
-        else if (val & SDL_HAT_RIGHT)
-            return "right";
-        return "neutral?";
-    }
-
     std::string getCECButtonName(int keycode)
     {
         return CECInput::getKeyCodeString(keycode);
@@ -86,14 +72,11 @@ public:
     {
         std::stringstream stream;
         switch (type) {
-            case TYPE_BUTTON:
-                stream << "Button " << id;
-                break;
             case TYPE_AXIS:
                 stream << "Axis " << id << (value > 0 ? "+" : "-");
                 break;
-            case TYPE_HAT:
-                stream << "Hat " << id << " " << getHatDir(value);
+            case TYPE_BUTTON:
+                stream << "Button " << id;
                 break;
             case TYPE_KEY:
                 stream << "Key " << SDL_GetKeyName((SDL_Keycode)id);
@@ -115,17 +98,16 @@ class InputConfig
 public:
     InputConfig(int deviceId, const std::string& deviceName, const std::string& deviceGUID);
 
+    // Utility functions.
+    std::string inputTypeToString(InputType type);
+    InputType stringToInputType(const std::string& type);
+    std::string toLower(std::string str);
+
     void clear();
+    bool isConfigured();
+
     void mapInput(const std::string& name, Input input);
     void unmapInput(const std::string& name); // Unmap all Inputs mapped to this name.
-
-    inline int getDeviceId() const { return mDeviceId; };
-    inline const std::string& getDeviceName() { return mDeviceName; }
-    inline const std::string& getDeviceGUIDString() { return mDeviceGUID; }
-
-    void setDefaultConfigFlag() { mDefaultConfigFlag = true; };
-    void unsetDefaultConfigFlag() { mDefaultConfigFlag = false; };
-    bool getDefaultConfigFlag() { return mDefaultConfigFlag; };
 
     // Returns true if Input is mapped to this name, false otherwise.
     bool isMappedTo(const std::string& name, Input input);
@@ -142,14 +124,15 @@ public:
     void loadFromXML(pugi::xml_node& root);
     void writeToXML(pugi::xml_node& parent);
 
-    bool isConfigured();
+    inline int getDeviceId() const { return mDeviceId; };
+    inline const std::string& getDeviceName() { return mDeviceName; }
+    inline const std::string& getDeviceGUIDString() { return mDeviceGUID; }
 
 private:
     std::map<std::string, Input> mNameMap;
     const int mDeviceId;
     const std::string mDeviceName;
     const std::string mDeviceGUID;
-    bool mDefaultConfigFlag;
 };
 
 #endif // ES_CORE_INPUT_CONFIG_H

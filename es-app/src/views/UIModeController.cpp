@@ -161,15 +161,6 @@ bool UIModeController::isValidInput(InputConfig* config, Input input)
     if ((config->getMappedTo(input).size() == 0)  || // Not a mapped input, so ignore it.
             (!input.value))	// Not a key-down event.
         return false;
-    else if (input.type == TYPE_HAT) {
-        // When the hat goes back to neutral, getMappedTo() will return entries for all
-        // four directions as the neutral cancels any of them out. So a neutral is
-        // equivalent to a key-up event and should therefore be ignored.
-        if (config->getMappedTo(input).size() == 4)
-            return false;
-        else
-            return true;
-    }
     else
         return true;
 }

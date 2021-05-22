@@ -527,9 +527,8 @@ int main(int argc, char* argv[])
         }
     }
 
-    // Dont generate joystick events while we're loading.
-    // (Hopefully fixes "automatically started emulator" bug.)
-    SDL_JoystickEventState(SDL_DISABLE);
+    // Don't generate controller events while we're loading.
+    SDL_GameControllerEventState(SDL_DISABLE);
 
     // Preload what we can right away instead of waiting for the user to select it.
     // This makes for no delays when accessing content, but a longer startup time.
@@ -538,23 +537,14 @@ int main(int argc, char* argv[])
     if (splashScreen && splashScreenProgress)
         window.renderLoadingScreen("Done");
 
-    // Choose which GUI to open depending on if an input configuration already exists and
-    // whether the flag to force the input configuration was passed from the command line.
+    // Open the input configuration GUI if the flag to force this was passed from the command line.
     if (!loadSystemsStatus) {
-        if (!forceInputConfig && Utils::FileSystem::exists(InputManager::getConfigPath()) &&
-                InputManager::getInstance()->getNumConfiguredDevices() > 0) {
-            ViewController::get()->goToStart();
-        }
-        else if (forceInputConfig) {
+        if (forceInputConfig) {
             window.pushGui(new GuiDetectDevice(&window, true, true, [] {
-                    ViewController::get()->goToStart(); }));
+                ViewController::get()->goToStart(); }));
         }
         else {
-            if (InputManager::getInstance()->getNumJoysticks() > 0)
-                window.pushGui(new GuiDetectDevice(&window, true, false, [] {
-                        ViewController::get()->goToStart(); }));
-            else
-                ViewController::get()->goToStart();
+            ViewController::get()->goToStart();
         }
     }
 
@@ -566,8 +556,8 @@ int main(int argc, char* argv[])
         LOG(LogInfo) << FileData::getMediaDirectory();
     }
 
-    // Generate joystick events since we're done loading.
-    SDL_JoystickEventState(SDL_ENABLE);
+    // Generate controller events since we're done loading.
+    SDL_GameControllerEventState(SDL_ENABLE);
 
     int lastTime = SDL_GetTicks();
     const auto applicationEndTime = std::chrono::system_clock::now();

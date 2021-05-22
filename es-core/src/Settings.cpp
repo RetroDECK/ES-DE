@@ -297,7 +297,6 @@ void Settings::setDefaults()
     // but that are not configurable via the GUI.
     //
 
-    mBoolMap["ShowDefaultKeyboardWarning"] = { true, true };
     mStringMap["ROMDirectory"] = { "", "" };
     mIntMap["ScraperResizeMaxWidth"] = { 600, 600 };
     mIntMap["ScraperResizeMaxHeight"] = { 0, 0 };
@@ -306,7 +305,6 @@ void Settings::setDefaults()
     // Hardcoded or program-internal settings.
     //
 
-    mBoolMap["BackgroundJoystickInput"] = { false, false };
     mBoolMap["DebugGrid"] = { false, false };
     mBoolMap["DebugText"] = { false, false };
     mBoolMap["DebugImage"] = { false, false };
