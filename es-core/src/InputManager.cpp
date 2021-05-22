@@ -12,6 +12,7 @@
 
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 #include "CECInput.h"
 #include "Log.h"
 #include "Platform.h"
@@ -627,7 +628,7 @@ void InputManager::removeJoystickByJoystickID(SDL_JoystickID deviceIndex)
     assert(deviceIndex != -1);
 
     // Delete mPrevAxisValues for the device.
-    int axisEntries = mPrevAxisValues.size();
+    int axisEntries = static_cast<int>(mPrevAxisValues.size());
     for (int i = 0; i < axisEntries; i++) {
         auto entry = mPrevAxisValues.find(std::make_pair(deviceIndex, i));
         if (entry != mPrevAxisValues.end()) {
@@ -636,7 +637,7 @@ void InputManager::removeJoystickByJoystickID(SDL_JoystickID deviceIndex)
     }
 
     // Delete mPrevButtonValues for the device.
-    int buttonEntries = mPrevButtonValues.size();
+    int buttonEntries = static_cast<int>(mPrevButtonValues.size());
     for (int i = 0; i < buttonEntries; i++) {
         auto entry = mPrevButtonValues.find(std::make_pair(deviceIndex, i));
         if (entry != mPrevButtonValues.end()) {
