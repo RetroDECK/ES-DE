@@ -9,7 +9,6 @@
 #ifndef ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 #define ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 
-#include "components/BusyComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
 #include "GuiComponent.h"
@@ -27,6 +26,10 @@ public:
     void onSizeChanged() override;
 
 private:
+    // Move cursor to the next row if we're configuring all, or come out
+    // of "configure mode" if we were only configuring one row.
+    void rowDone();
+
     // Set text to "msg" + not greyed out.
     void error(const std::shared_ptr<TextComponent>& text, const std::string& msg);
 
@@ -39,9 +42,6 @@ private:
 
     bool assign(Input input, int inputId);
     void clearAssignment(int inputId);
-    bool filterTrigger(Input input, InputConfig* config, int inputId);
-
-    void rowDone();
 
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
@@ -65,8 +65,6 @@ private:
     int mHeldTime;
     int mHeldInputId;
     bool mSkipAxis;
-
-    BusyComponent mBusyAnim;
 };
 
 #endif // ES_CORE_GUIS_GUI_INPUT_CONFIG_H

@@ -15,9 +15,11 @@
 #include "Log.h"
 #include "Window.h"
 
+#define HOLD_TO_SKIP_MS 1000
+
 struct InputConfigStructure {
     std::string name;
-    const bool  skippable;
+    const bool skippable;
     std::string dispName;
     std::string icon;
 };
@@ -30,12 +32,12 @@ static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
     { "Down",                 false, "D-PAD DOWN",             ":/help/dpad_down.svg" },
     { "Left",                 false, "D-PAD LEFT",             ":/help/dpad_left.svg" },
     { "Right",                false, "D-PAD RIGHT",            ":/help/dpad_right.svg" },
-    { "Start",                true,  "START",                  ":/help/button_start.svg" },
-    { "Select",               true,  "SELECT",                 ":/help/button_select.svg" },
-    { "A",                    false, "BUTTON A / SOUTH",       ":/help/buttons_south_XBOX.svg" },
-    { "B",                    true,  "BUTTON B / EAST",        ":/help/buttons_east_XBOX.svg" },
-    { "X",                    true,  "BUTTON X / WEST",        ":/help/buttons_west_XBOX.svg" },
-    { "Y",                    true,  "BUTTON Y / NORTH",       ":/help/buttons_north_XBOX.svg" },
+    { "Start",                false, "START",                  ":/help/button_start.svg" },
+    { "Select",               false, "SELECT",                 ":/help/button_select.svg" },
+    { "A",                    false, "BUTTON A",               ":/help/buttons_south_XBOX.svg" },
+    { "B",                    false, "BUTTON B",               ":/help/buttons_east_XBOX.svg" },
+    { "X",                    true,  "BUTTON X",               ":/help/buttons_west_XBOX.svg" },
+    { "Y",                    true,  "BUTTON Y",               ":/help/buttons_north_XBOX.svg" },
     { "LeftShoulder",         true,  "LEFT SHOULDER",          ":/help/button_l.svg" },
     { "RightShoulder",        true,  "RIGHT SHOULDER",         ":/help/button_r.svg" },
     { "LeftTrigger",          true,  "LEFT TRIGGER",           ":/help/button_lt.svg" },
@@ -53,11 +55,6 @@ static const InputConfigStructure GUI_INPUT_CONFIG_LIST[inputCount] =
 //    { "HotKeyEnable",         true,  "HOTKEY ENABLE",          ":/help/button_hotkey.svg" }
 };
 
-// MasterVolUp and MasterVolDown are also hooked up, but do not appear on this screen.
-// If you want, you can manually add them to es_input.cfg.
-
-#define HOLD_TO_SKIP_MS 1000
-
 GuiInputConfig::GuiInputConfig(
         Window* window,
         InputConfig* target,
@@ -67,8 +64,7 @@ GuiInputConfig::GuiInputConfig(
         mBackground(window, ":/graphics/frame.svg"),
         mGrid(window, Vector2i(1, 7)),
         mTargetConfig(target),
-        mHoldingInput(false),
-        mBusyAnim(window)
+        mHoldingInput(false)
 {
     LOG(LogInfo) << "Configuring device " << target->getDeviceId() << " (" <<
             target->getDeviceName() << ").";
@@ -100,13 +96,17 @@ GuiInputConfig::GuiInputConfig(
             Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mSubtitle1, Vector2i(0, 2), false, true);
 
-    mSubtitle2 = std::make_shared<TextComponent>(mWindow, "HOLD ANY BUTTON TO SKIP",
+    mSubtitle2 = std::make_shared<TextComponent>(mWindow, "HOLD ANY BUTTON 1 SECOND TO SKIP",
             Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+    // The opacity will be set to visible for any row that is skippable.
+    mSubtitle2->setOpacity(0);
+
     mGrid.setEntry(mSubtitle2, Vector2i(0, 3), false, true);
 
     // 4 is a spacer row.
     mList = std::make_shared<ComponentList>(mWindow);
     mGrid.setEntry(mList, Vector2i(0, 5), true, true);
+
     for (int i = 0; i < inputCount; i++) {
         ComponentListRow row;
 
@@ -145,18 +145,13 @@ GuiInputConfig::GuiInputConfig(
                     setPress(mapping);
                     return true;
                 }
-                // We're not configuring and they didn't press A to start, so ignore this.
+                // We're not configuring and A wasn't pressed to start, so ignore this input.
                 return false;
             }
 
-            // Apply filtering for quirks related to trigger mapping.
-            if (filterTrigger(input, config, i))
-                return false;
-
             // We are configuring.
             if (input.value != 0) {
-                // Input down.
-                // If we're already holding something, ignore this,
+                // Button pressed. If we're already holding something, ignore this,
                 // otherwise plan to map this input.
                 if (mHoldingInput)
                     return true;
@@ -169,9 +164,8 @@ GuiInputConfig::GuiInputConfig(
                 return true;
             }
             else {
-                // Input up.
-                // Make sure we were holding something and we let go of what we
-                // were previously holding.
+                // Button released. Make sure we were holding something and we let go of
+                // what we were previously holding.
                 if (!mHoldingInput || mHeldInput.device != input.device || mHeldInput.id !=
                         input.id || mHeldInput.type != input.type)
                     return true;
@@ -179,8 +173,7 @@ GuiInputConfig::GuiInputConfig(
                 mHoldingInput = false;
 
                 if (assign(mHeldInput, i))
-                    // If successful, move cursor/stop configuring - if not,
-                    // we'll just try again.
+                    // If successful, move cursor/stop configuring - if not, we'll just try again.
                     rowDone();
 
                 return true;
@@ -190,7 +183,7 @@ GuiInputConfig::GuiInputConfig(
     }
 
     // Only show "HOLD TO SKIP" if this input is skippable.
-    mList->setCursorChangedCallback([this](CursorState /*state*/) {
+    mList->setCursorChangedCallback([this](CursorState) {
         bool skippable = GUI_INPUT_CONFIG_LIST[mList->getCursorId()].skippable;
         mSubtitle2->setOpacity(skippable * 255);
     });
@@ -199,15 +192,9 @@ GuiInputConfig::GuiInputConfig(
     if (mConfiguringAll)
         setPress(mMappings.front());
 
-    // Buttons.
+    // GUI buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     std::function<void()> okFunction = [this, okCallback] {
-        // If we have just configured the keyboard, then unset the flag to indicate that
-        // we are using the default keyboard mappings.
-        if (mTargetConfig->getDeviceId() == DEVICE_KEYBOARD) {
-            InputManager::getInstance()->
-                    getInputConfigByDevice(DEVICE_KEYBOARD)->unsetDefaultConfigFlag();
-        }
         InputManager::getInstance()->writeDeviceConfig(mTargetConfig); // Save.
         if (okCallback)
             okCallback();
@@ -218,7 +205,7 @@ GuiInputConfig::GuiInputConfig(
             (mWindow, "OK", "ok", [this, okFunction] { okFunction(); }));
 
 //    This code is disabled as there is no intention to provide emulator configuration or
-//    control via ES Desktop Edition. Let's keep the code for reference though.
+//    similar control via ES-DE. Let's keep the code for reference though.
 //    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [this, okFunction] {
 //        // Check if the hotkey enable button is set. if not prompt the
 //        // user to use select or nothing.
@@ -257,26 +244,8 @@ GuiInputConfig::GuiInputConfig(
             ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.8f : 0.6f);
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
-            (Renderer::getScreenHeight() - mSize.y()) / 2);
-}
-
-void GuiInputConfig::onSizeChanged()
-{
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
-
-    // Update grid.
-    mGrid.setSize(mSize);
-
-    //mGrid.setRowHeightPerc(0, 0.025f);
-    mGrid.setRowHeightPerc(1, mTitle->getFont()->getHeight()*0.75f / mSize.y());
-    mGrid.setRowHeightPerc(2, mSubtitle1->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(3, mSubtitle2->getFont()->getHeight() / mSize.y());
-    //mGrid.setRowHeightPerc(4, 0.03f);
-    mGrid.setRowHeightPerc(5, (mList->getRowHeight(0) * 5 + 2) / mSize.y());
-    mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y() / mSize.y());
-
-    mBusyAnim.setSize(mSize);
+    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
+            (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
 }
 
 void GuiInputConfig::update(int deltaTime)
@@ -297,7 +266,7 @@ void GuiInputConfig::update(int deltaTime)
                 // Crossed the second boundary, update text.
                 const auto& text = mMappings.at(mHeldInputId);
                 std::stringstream ss;
-                ss << "HOLD FOR " << HOLD_TO_SKIP_MS/1000 - curSec << "S TO SKIP";
+                ss << "HOLD FOR " << HOLD_TO_SKIP_MS / 1000 - curSec << "S TO SKIP";
                 text->setText(ss.str());
                 text->setColor(0x777777FF);
             }
@@ -305,12 +274,24 @@ void GuiInputConfig::update(int deltaTime)
     }
 }
 
-// Move cursor to the next thing if we're configuring all,
-// or come out of "configure mode" if we were only configuring one row.
+void GuiInputConfig::onSizeChanged()
+{
+    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
+
+    // Update grid.
+    mGrid.setSize(mSize);
+
+    mGrid.setRowHeightPerc(1, mTitle->getFont()->getHeight() * 0.75f / mSize.y());
+    mGrid.setRowHeightPerc(2, mSubtitle1->getFont()->getHeight() / mSize.y());
+    mGrid.setRowHeightPerc(3, mSubtitle2->getFont()->getHeight() / mSize.y());
+    mGrid.setRowHeightPerc(5, (mList->getRowHeight(0) * 5 + 2) / mSize.y());
+    mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y() / mSize.y());
+}
+
 void GuiInputConfig::rowDone()
 {
     if (mConfiguringAll) {
-        // Try to move to the next one.
+        // Try to move to the next row.
         if (!mList->moveCursor(1)) {
             // At bottom of list, we're done.
             mConfiguringAll = false;
@@ -318,7 +299,7 @@ void GuiInputConfig::rowDone()
             mGrid.moveCursor(Vector2i(0, 1));
         }
         else {
-            // On another one.
+            // On another row.
             setPress(mMappings.at(mList->getCursorId()));
         }
     }
@@ -326,6 +307,12 @@ void GuiInputConfig::rowDone()
         // Only configuring one row, so stop.
         mConfiguringRow = false;
     }
+}
+
+void GuiInputConfig::error(const std::shared_ptr<TextComponent>& text, const std::string& /*msg*/)
+{
+    text->setText("ALREADY TAKEN");
+    text->setColor(0x656565FF);
 }
 
 void GuiInputConfig::setPress(const std::shared_ptr<TextComponent>& text)
@@ -344,12 +331,6 @@ void GuiInputConfig::setAssignedTo(const std::shared_ptr<TextComponent>& text, I
 {
     text->setText(Utils::String::toUpper(input.string()));
     text->setColor(0x777777FF);
-}
-
-void GuiInputConfig::error(const std::shared_ptr<TextComponent>& text, const std::string& /*msg*/)
-{
-    text->setText("ALREADY TAKEN");
-    text->setColor(0x656565FF);
 }
 
 bool GuiInputConfig::assign(Input input, int inputId)
@@ -379,61 +360,4 @@ bool GuiInputConfig::assign(Input input, int inputId)
 void GuiInputConfig::clearAssignment(int inputId)
 {
     mTargetConfig->unmapInput(GUI_INPUT_CONFIG_LIST[inputId].name);
-}
-
-bool GuiInputConfig::filterTrigger(Input input, InputConfig* config, int inputId)
-{
-    #if defined(__linux__) || defined(__APPLE__)
-    // On Linux and macOS, some gamepads return both an analog axis and a digital button for
-    // the trigger; we want the analog axis only, so this function removes the button press event.
-    // This is relevant mostly for Sony Dual Shock controllers.
-    if (InputManager::getInstance()->getAxisCountByDevice(config->getDeviceId()) == 6) {
-        if (config->getDeviceName().find("PLAYSTATION") != std::string::npos ||
-                config->getDeviceName().find("PS3 Ga") != std::string::npos ||
-                config->getDeviceName().find("PS(R) Ga") != std::string::npos ||
-                config->getDeviceName().find("PS4 Controller") != std::string::npos ||
-                config->getDeviceName().find("Sony Interactive") != std::string::npos ||
-                // BigBen kid's PS3 gamepad 146b:0902, matched on SDL GUID because its name
-                // "Bigben Interactive Bigben Game Pad" may be too generic.
-                config->getDeviceGUIDString().find("030000006b1400000209000011010000")
-                        != std::string::npos ) {
-            // Remove digital trigger events.
-            if (input.type == TYPE_BUTTON && (input.id == 6 || input.id == 7)) {
-                mHoldingInput = false;
-                return true;
-            }
-        }
-    }
-    #endif
-
-    // Ignore negative poles when triggers are being configured.
-    // This is not a good solution as it's hardcoded to input 2 and 5 (Xbox controllers) and
-    // input 4 and 5 (Playstation Dual Shock controllers) instead of using a general detection
-    // for which type of axis input is used. This is also hardcoded to only work when configuring
-    // the trigger buttons, so it will not be possible to map trigger buttons to the shoulder
-    // button functions in ES for instance. It's probably necessary to update ES to use the SDL
-    // GameController API to fix this properly.
-    if (input.type == TYPE_AXIS && (input.id == 2 || input.id == 4 || input.id == 5)) {
-        if (!(std::string(GUI_INPUT_CONFIG_LIST[inputId].name).find("Trigger") !=
-                std::string::npos)) {
-            return false;
-        }
-        else if (std::string(GUI_INPUT_CONFIG_LIST[inputId].name).find("Trigger") !=
-                std::string::npos) {
-            if (input.value == 1)
-                mSkipAxis = true;
-            else if (input.value == -1)
-                return true;
-        }
-        else if (mSkipAxis) {
-            mSkipAxis = false;
-            return true;
-        }
-    }
-
-//    (void)input;
-//    (void)config;
-//    (void)inputId;
-
-    return false;
 }
