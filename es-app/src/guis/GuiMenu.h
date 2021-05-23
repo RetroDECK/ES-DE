@@ -35,9 +35,10 @@ private:
     void openMediaViewerOptions();
     void openScreensaverOptions();
     void openSoundOptions();
+    void openInputDeviceOptions();
+    void openConfigInput();
     void openCollectionSystemOptions();
     void openOtherOptions();
-    void openConfigInput();
     void openQuitMenu();
 
     MenuComponent mMenu;

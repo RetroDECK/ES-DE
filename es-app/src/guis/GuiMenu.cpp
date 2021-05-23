@@ -49,14 +49,15 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
     addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundOptions(); });
 
     if (isFullUI)
+        addEntry("INPUT DEVICE SETTINGS", 0x777777FF, true, [this] {
+                openInputDeviceOptions(); });
+
+    if (isFullUI)
         addEntry("GAME COLLECTION SETTINGS", 0x777777FF, true, [this] {
                 openCollectionSystemOptions(); });
 
     if (isFullUI)
         addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
-
-    if (isFullUI)
-        addEntry("CONFIGURE INPUT", 0x777777FF, true, [this] { openConfigInput(); });
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
             Settings::getInstance()->getString("UIMode") != "kiosk") {
@@ -750,6 +751,40 @@ void GuiMenu::openSoundOptions()
     mWindow->pushGui(s);
 }
 
+void GuiMenu::openInputDeviceOptions()
+{
+    auto s = new GuiSettings(mWindow, "INPUT DEVICE SETTINGS");
+
+    // Configure keyboard and controllers.
+    ComponentListRow configure_input_row;
+    configure_input_row.elements.clear();
+    configure_input_row.addElement(std::make_shared<TextComponent>
+            (mWindow, "CONFIGURE KEYBOARD AND CONTROLLERS",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+    configure_input_row.addElement(makeArrow(mWindow), false);
+    configure_input_row.makeAcceptInputHandler(std::bind(&GuiMenu::openConfigInput, this));
+    s->addRow(configure_input_row);
+
+    mWindow->pushGui(s);
+}
+
+void GuiMenu::openConfigInput()
+{
+    std::string message =
+            "THE KEYBOARD AND ANY CONNECTED CONTROLLERS\n"
+            "ARE AUTOMATICALLY CONFIGURED ON STARTUP, BUT\n"
+            "USING THIS CONFIGURATION TOOL YOU ARE ABLE TO\n"
+            "OVERRIDE THE DEFAULT BUTTON MAPPINGS (NOTE\n"
+            "THAT THIS WILL NOT AFFECT THE HELP PROMPTS)\n"
+            "CONTINUE?";
+
+    Window* window = mWindow;
+    window->pushGui(new GuiMsgBox(window, getHelpStyle(),
+            message, "YES", [window] {
+        window->pushGui(new GuiDetectDevice(window, false, false, nullptr));
+    }, "NO", nullptr));
+}
+
 void GuiMenu::openOtherOptions()
 {
     auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
@@ -1088,16 +1123,6 @@ void GuiMenu::openOtherOptions()
     #endif
 
     mWindow->pushGui(s);
-}
-
-void GuiMenu::openConfigInput()
-{
-    Window* window = mWindow;
-    window->pushGui(new GuiMsgBox(window, getHelpStyle(),
-            "ARE YOU SURE YOU WANT TO CONFIGURE INPUT?", "YES", [window] {
-        window->pushGui(new GuiDetectDevice(window, false, false, nullptr));
-    }, "NO", nullptr)
-    );
 }
 
 void GuiMenu::openQuitMenu()
