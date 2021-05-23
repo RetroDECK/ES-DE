@@ -764,9 +764,9 @@ void GuiMenu::openInputDeviceOptions()
             (mWindow, getHelpStyle(), "CONTROLLER TYPE", false);
     std::string selectedPlayer = Settings::getInstance()->getString("InputControllerType");
     input_controller_type->add("XBOX", "xbox", selectedPlayer == "xbox");
-    input_controller_type->add("XBOX360", "xbox360", selectedPlayer == "xbox360");
-    input_controller_type->add("PLAYSTATION4", "ps4", selectedPlayer == "ps4");
-    input_controller_type->add("PLAYSTATION5", "ps5", selectedPlayer == "ps5");
+    input_controller_type->add("XBOX 360", "xbox360", selectedPlayer == "xbox360");
+    input_controller_type->add("PLAYSTATION 4", "ps4", selectedPlayer == "ps4");
+    input_controller_type->add("PLAYSTATION 5", "ps5", selectedPlayer == "ps5");
     input_controller_type->add("SNES", "snes", selectedPlayer == "snes");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the controller type to "xbox" in this case.
