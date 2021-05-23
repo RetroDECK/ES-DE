@@ -357,6 +357,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
 
     switch (event.type) {
         case SDL_CONTROLLERAXISMOTION: {
+        // Whether to only accept input from the first controller.
+        if (Settings::getInstance()->getBool("InputOnlyFirstController"))
+            if (mInputConfigs.begin()->first != event.cdevice.which)
+                return false;
+
             // This is needed for a situation which sometimes occur when a game is launched,
             // some axis input is generated and then the controller is disconnected before
             // leaving the game. In this case, events for the old device index could be received
@@ -395,6 +400,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
         case SDL_CONTROLLERBUTTONDOWN: {
         }
         case SDL_CONTROLLERBUTTONUP: {
+        // Whether to only accept input from the first controller.
+        if (Settings::getInstance()->getBool("InputOnlyFirstController"))
+            if (mInputConfigs.begin()->first != event.cdevice.which)
+                return false;
+
             // The event filtering below is required as some controllers send button presses
             // starting with the state 0 when using the D-pad. I consider this invalid behaviour
             // and the more popular controllers such as those from Microsoft and Sony do not show

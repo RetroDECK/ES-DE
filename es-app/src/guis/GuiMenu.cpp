@@ -759,6 +759,20 @@ void GuiMenu::openInputDeviceOptions()
 {
     auto s = new GuiSettings(mWindow, "INPUT DEVICE SETTINGS");
 
+    // Whether to only accept input from the first controller.
+    auto input_only_first_controller = std::make_shared<SwitchComponent>(mWindow);
+    input_only_first_controller->setState(Settings::getInstance()->
+            getBool("InputOnlyFirstController"));
+    s->addWithLabel("ONLY ACCEPT INPUT FROM FIRST CONTROLLER", input_only_first_controller);
+    s->addSaveFunc([input_only_first_controller, s] {
+        if (Settings::getInstance()->getBool("InputOnlyFirstController") !=
+                input_only_first_controller->getState()) {
+            Settings::getInstance()->setBool("InputOnlyFirstController",
+                    input_only_first_controller->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Configure keyboard and controllers.
     ComponentListRow configure_input_row;
     configure_input_row.elements.clear();

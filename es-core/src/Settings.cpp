@@ -196,6 +196,9 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverVideoAudio"] = { false, false };
     mBoolMap["NavigationSounds"] = { true, true };
 
+    // Input device settings.
+    mBoolMap["InputOnlyFirstController"] = { false, false };
+
     // Game collection settings.
     mStringMap["CollectionSystemsAuto"] = { "", "" };
     mStringMap["CollectionSystemsCustom"] = { "", "" };
