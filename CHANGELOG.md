@@ -12,18 +12,33 @@
 
 * Added a fullscreen game media viewer
 * Added a new video player based on FFmpeg
+* Moved to the SDL GameController API which gives numerous improvements to the controller handling
+* Default controller configuration is now applied, input configuration should rarely if ever be required any longer except for deliberate button customization
+* Added support for selecting the controller type (Xbox, Xbox 360, PS4, PS5 and SNES), which changes the help icons, help text and the input configuration tool icons and text
+* Added an option to limit the input in ES-DE to only the first controller (does not affect the emulators)
+* Removed the startup notification regarding default keyboard mappings being in use, instead default mappings are now considered the recommended input configuration
+* The controller input configuration is not automatically started any longer if there is no es_input.cfg file or if there are no applicable configuration entries in the file
 * Changed the button for jumping to a random system or game and added a setting for disabling the functionality altogether
 * Added navigation sounds for some actions where it was missing, such as when attempting to add folders, placeholders or systems to custom collections
 * Changed the custom collection "Jump to" navigation sound to the select sound instead of the scroll sound
 * Changed the default screensaver type from "dim" to "video" and made the fallback screensaver "dim" instead of "black"
 * Moved the video screensaver audio setting to the sound settings menu
+* Created a new main menu entry for input device settings
+* Moved the input device configuration tool to the input device settings menu
+* Added a utilities menu entry to the main menu
+* Adjusted the size and position of the various menus to accomodate one additional entry on the screen
+* The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
 * Changed the setting description for the favorites game toggling button
 * Changed the language standard from C++11 to C++14
 
 ### Bug fixes
 
+* The glitches when configuring trigger buttons in GuiInputConfig have been fixed
+* GuiDetectDevice wouldn't detect controller input that was of the 'axis' type (i.e. analog inputs)
+* GuiInputConfig didn't correctly inform which buttons could be skipped for some rows
 * The Quick System Select help prompt was shown even when there was only a single game system present
 * The "Y" button help prompt wasn't displayed correctly when using the Grid view style
+* The debug logging for the analog controller inputs had some inconsistent signs
 
 ## Version 1.0.1
 

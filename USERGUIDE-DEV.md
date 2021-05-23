@@ -18,8 +18,7 @@ If you just want to get started as quickly as possible, simply follow these step
 4) Install and configure [RetroArch](https://www.retroarch.com)
 5) _Windows only: add the RetroArch directory to your system path environmental variable_
 6) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE-DEV.md#supported-game-systems)
-7) Start ES-DE and follow the on-screen instructions to configure your controller
-8) Scrape game media for your collection and play some games!
+7) Start ES-DE, scrape game media for your collection and play some games!
 
 As long as ES-DE hasn't frozen, you can always press F4 to close the application.
 
@@ -157,16 +156,17 @@ A better approach is to use the custom event scripts functionality in ES-DE to s
 
 ## Input device configuration
 
-When first starting ES-DE, the application will look for any attached controllers (joysticks and gamepads). If no devices are found, it will be assumed that only keyboard navigation is to be used and the default keyboard mappings will be applied. It's recommended to change these default values, and a message will be displayed describing just this. It's however possible to hide this notification permanently and continue to use the default keyboard mappings if you're happy with them.
+Upon startup of ES-DE, any connected controllers will be automatically detected and default button mappings will be applied. The same is true for the keyboard. Normally no additional configuration is required, but if you would like to apply custom button mappings for the devices, you can run the `Configure keyboard and controllers` tool from the `Input device settings` entry on the main menu.
 
-If a controller is attached when starting ES-DE and no `es_input.cfg` input configuration file exists, you will be presented with the input configuration dialog. Just follow the steps as described to map the inputs.
-
-If an es_input.cfg configuration file exists, you will not be presented with the input device configuration screen as that would normally just be annoying. If you need to configure a device to control the application (i.e. you've replaced your controller), you can do so by starting ES-DE with the command line argument `--force-input-config` or you can manually delete the es_input.cfg file prior to starting the application. Alternatively you can navigate to the menu using your keyboard and select **Configure input** to configure your new device.
+You can also force a run of this tool directly on startup via the command line argument `--force-input-config`.
 
 The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions.
 
-Both new and old devices can be (re)configured at any time via the `Configure input` menu entry. New devices will be appended to the existing input configuration file, so your old devices will retain their configuration.
+Be aware that any custom configuration is applied per unique device ID (GUID). So if two identical controllers are used with ES-DE, both will have the same configuration applied. But if connecting controllers of the same type but of different revisions, the GUID may differ and therefore the custom configuration would need to be applied to each device individually.
 
+Note that custom button mappings will not change the help prompts.
+
+If you have issues with your input configuration, as a last resort you can reset all the mappings by deleting or renaming the file ~/.emulationstation/es_input.cfg.
 
 ## System view (main screen)
 
@@ -1018,6 +1018,23 @@ With this turned off, audio won't play for videos when using the video screensav
 Enable or disable navigation sounds throughout the application. Sounds are played when browsing systems and lists, starting games, adding and removing games as favorites etc. The sounds can be customized per theme, but if the theme does not support navigation sounds, ES-DE will fall back to its built-in sounds.
 
 
+### Input device settings
+
+Settings related to the input devices, i.e. the keyboard and controllers.
+
+**Controller type**
+
+This setting gives the ability to choose between the controller types Xbox, Xbox 360, PlayStation 4, PlayStation 5 and SNES (Super Nintendo). Doing so changes the help icons and help text as well as the icons and text for the input device configuration tool. The setting is only cosmetic and does not change the controller behavior or the controller button mappings.
+
+**Only accept input from first controller**
+
+If enabling this option, only the first controller detected during startup will send its input to ES-DE. This is a good way to limit potential chaos with mutliple users fighting over which games to start. Note though that disconnecting and reconnecting controllers while ES-DE is running may change what is considered the first controller. This setting does not affect the emulators in any way, it's only applied to ES-DE itself.
+
+**Configure keyboard and controllers**
+
+This tool allows the configuration of button mappings for the keyboard and any connected controllers, as explained [here](USERGUIDE.md#input-device-configuration). Normally this is not required as ES-DE automatically configures the input devices, but this tool allows overriding the default button mappings which may be useful in some instances, primarily for the keyboard configuration. Be aware that custom button mappings will not change the help icons or text.
+
+
 ### Game collection settings
 
 Handles collections, which are built using the games already present in your game systems. See the [collections](USERGUIDE-DEV.md#game-collections) section below in this document for more information.
@@ -1143,12 +1160,8 @@ Enabling or disabling the menu when the UI mode is set to Kid. Mostly intended f
 With this setting enabled, there is a Quit menu shown as the last entry on the main menu which provides options to quit ES-DE, to reboot the computer or to power off the computer. With this setting disabled, there will simply be an entry shown to quit the application instead of the complete quit menu.
 
 
-### Configure input
-
-This tool allows the configuration of button mappings for known or new input devices, as is explained [here](USERGUIDE-DEV.md#input-device-configuration).
-
 ### Quit
-The menu where you quit ES-DE, or reboot or power off your computer. This menu can be disabled using an option, and in this case it's replaced with a _Quit EmulationStation_ entry.
+The menu where you quit ES-DE, or reboot or power off your system. This menu is disabled by default, but can be enabled using a setting under _Other settings_. If disabled, the menu is replaced with a _Quit EmulationStation_ entry.
 
 **Quit EmulationStation**
 
