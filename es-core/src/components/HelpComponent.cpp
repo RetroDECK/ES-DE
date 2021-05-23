@@ -51,7 +51,7 @@ void HelpComponent::assignIcons()
         sIconPathMap["x"] = ":/help/button_x_SNES.svg";
         sIconPathMap["y"] = ":/help/button_y_SNES.svg";
         sIconPathMap["start"] = ":/help/button_start_SNES.svg";
-        sIconPathMap["select"] = ":/help/button_back_SNES.svg";
+        sIconPathMap["back"] = ":/help/button_back_SNES.svg";
     }
     else if (controllerType == "ps4") {
         sIconPathMap["a"] = ":/help/button_a_PS.svg";
@@ -59,7 +59,7 @@ void HelpComponent::assignIcons()
         sIconPathMap["x"] = ":/help/button_x_PS.svg";
         sIconPathMap["y"] = ":/help/button_y_PS.svg";
         sIconPathMap["start"] = ":/help/button_start_PS4.svg";
-        sIconPathMap["select"] = ":/help/button_back_PS4.svg";
+        sIconPathMap["back"] = ":/help/button_back_PS4.svg";
     }
     else if (controllerType == "ps5") {
         sIconPathMap["a"] = ":/help/button_a_PS.svg";
@@ -67,7 +67,7 @@ void HelpComponent::assignIcons()
         sIconPathMap["x"] = ":/help/button_x_PS.svg";
         sIconPathMap["y"] = ":/help/button_y_PS.svg";
         sIconPathMap["start"] = ":/help/button_start_PS5.svg";
-        sIconPathMap["select"] = ":/help/button_back_PS5.svg";
+        sIconPathMap["back"] = ":/help/button_back_PS5.svg";
     }
     else if (controllerType == "xbox360") {
         sIconPathMap["a"] = ":/help/button_a_XBOX.svg";
@@ -75,7 +75,7 @@ void HelpComponent::assignIcons()
         sIconPathMap["x"] = ":/help/button_x_XBOX.svg";
         sIconPathMap["y"] = ":/help/button_y_XBOX.svg";
         sIconPathMap["start"] = ":/help/button_start_XBOX360.svg";
-        sIconPathMap["select"] = ":/help/button_back_XBOX360.svg";
+        sIconPathMap["back"] = ":/help/button_back_XBOX360.svg";
     }
     else {
         // Xbox One and later.
@@ -84,7 +84,7 @@ void HelpComponent::assignIcons()
         sIconPathMap["x"] = ":/help/button_x_XBOX.svg";
         sIconPathMap["y"] = ":/help/button_y_XBOX.svg";
         sIconPathMap["start"] = ":/help/button_start_XBOX.svg";
-        sIconPathMap["select"] = ":/help/button_back_XBOX.svg";
+        sIconPathMap["back"] = ":/help/button_back_XBOX.svg";
     }
 }
 

@@ -621,7 +621,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
         }
     }
 
-    // Sort prompts so it goes [dpad_all] [dpad_u/d] [dpad_l/r] [a/b/x/y/l/r] [start/select].
+    // Sort prompts so it goes [dpad_all] [dpad_u/d] [dpad_l/r] [a/b/x/y/l/r] [start/back].
     std::sort(addPrompts.begin(), addPrompts.end(),
             [](const HelpPrompt& a, const HelpPrompt& b) -> bool {
 
@@ -630,7 +630,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
                 "up/down",
                 "left/right",
                 "a", "b", "x", "y", "l", "r",
-                "start", "select"
+                "start", "back"
         };
 
         int i = 0;

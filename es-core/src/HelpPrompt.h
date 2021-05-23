@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  HelpPrompt.h
 //
-//  Definition of the pair used by help prompts to display a button and its mapped function.
+//  Definition of the pair used by help prompts to display an icon and its mapped function.
 //
 
 #ifndef ES_CORE_HELP_PROMPT_H

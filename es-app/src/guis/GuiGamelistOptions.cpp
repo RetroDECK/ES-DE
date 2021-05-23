@@ -499,11 +499,11 @@ void GuiGamelistOptions::jumpToFirstRow()
 
 bool GuiGamelistOptions::input(InputConfig* config, Input input)
 {
-    if (input.value != 0 && config->isMappedTo("select", input))
+    if (input.value != 0 && config->isMappedTo("back", input))
         mCancelled = true;
 
     if (input.value != 0 && (config->isMappedTo("b", input) ||
-            config->isMappedTo("select", input))) {
+            config->isMappedTo("back", input))) {
         delete this;
         return true;
     }
@@ -527,11 +527,11 @@ std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
         prompts.push_back(HelpPrompt("a", "select"));
     if (mSystem->getRootFolder()->getChildren().size() > 0 && mSystem->getName() != "recent") {
         prompts.push_back(HelpPrompt("b", "close (apply)"));
-        prompts.push_back(HelpPrompt("select", "close (cancel)"));
+        prompts.push_back(HelpPrompt("back", "close (cancel)"));
     }
     else {
         prompts.push_back(HelpPrompt("b", "close"));
-        prompts.push_back(HelpPrompt("select", "close"));
+        prompts.push_back(HelpPrompt("back", "close"));
     }
     return prompts;
 }

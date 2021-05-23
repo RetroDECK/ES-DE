@@ -194,7 +194,7 @@ GuiInputConfig::GuiInputConfig(
 //                    "PLEASE ANSWER YES TO USE SELECT OR NO TO NOT SET A HOTKEY ENABLE BUTTON.",
 //                    "YES", [this, okFunction] {
 //                Input input;
-//                mTargetConfig->getInputByName("Select", &input);
+//                mTargetConfig->getInputByName("Back", &input);
 //                mTargetConfig->mapInput("HotKeyEnable", input);
 //                okFunction();
 //            },
@@ -241,7 +241,7 @@ void GuiInputConfig::populateConfigList()
         sGuiInputConfigList[4] =
         { "Start",                false, "START",                  ":/help/button_start_SNES.svg" };
         sGuiInputConfigList[5] =
-        { "Select",               false, "SELECT",                 ":/help/button_back_SNES.svg" };
+        { "Back",                 false, "SELECT",                 ":/help/button_back_SNES.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "B",                      ":/help/mbuttons_a_SNES.svg" };
         sGuiInputConfigList[7] =
@@ -255,7 +255,7 @@ void GuiInputConfig::populateConfigList()
         sGuiInputConfigList[4] =
         { "Start",                false, "OPTIONS",                ":/help/button_start_PS4.svg" };
         sGuiInputConfigList[5] =
-        { "Select",               false, "SHARE",                  ":/help/button_back_PS4.svg" };
+        { "Back",                 false, "SHARE",                  ":/help/button_back_PS4.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "CROSS",                  ":/help/mbuttons_a_PS.svg" };
         sGuiInputConfigList[7] =
@@ -269,7 +269,7 @@ void GuiInputConfig::populateConfigList()
         sGuiInputConfigList[4] =
         { "Start",                false, "OPTIONS",                ":/help/button_start_PS5.svg" };
         sGuiInputConfigList[5] =
-        { "Select",               false, "CREATE",                 ":/help/button_back_PS5.svg" };
+        { "Back",                 false, "CREATE",                 ":/help/button_back_PS5.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "CROSS",                  ":/help/mbuttons_a_PS.svg" };
         sGuiInputConfigList[7] =
@@ -283,7 +283,7 @@ void GuiInputConfig::populateConfigList()
         sGuiInputConfigList[4] =
         { "Start",                false, "START",                  ":/help/button_start_XBOX360.svg" };
         sGuiInputConfigList[5] =
-        { "Select",               false, "BACK",                   ":/help/button_back_XBOX360.svg" };
+        { "Back",                 false, "BACK",                   ":/help/button_back_XBOX360.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "A",                      ":/help/mbuttons_a_XBOX.svg" };
         sGuiInputConfigList[7] =
@@ -298,7 +298,7 @@ void GuiInputConfig::populateConfigList()
         sGuiInputConfigList[4] =
         { "Start",                false, "MENU",                   ":/help/button_start_XBOX.svg" };
         sGuiInputConfigList[5] =
-        { "Select",               false, "VIEW",                   ":/help/button_back_XBOX.svg" };
+        { "Back",                 false, "VIEW",                   ":/help/button_back_XBOX.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "A",                      ":/help/mbuttons_a_XBOX.svg" };
         sGuiInputConfigList[7] =

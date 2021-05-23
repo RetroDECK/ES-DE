@@ -717,7 +717,7 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("x", "view media"));
 
     if (!UIModeController::getInstance()->isUIModeKid())
-        prompts.push_back(HelpPrompt("select", "options"));
+        prompts.push_back(HelpPrompt("back", "options"));
     if (mRoot->getSystem()->isGameSystem() &&
             Settings::getInstance()->getBool("RandomAddButton"))
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));

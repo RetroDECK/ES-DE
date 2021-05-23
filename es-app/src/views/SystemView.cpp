@@ -242,7 +242,7 @@ bool SystemView::input(InputConfig* config, Input input)
         }
 
         if (!UIModeController::getInstance()->isUIModeKid() &&
-                config->isMappedTo("select", input) &&
+                config->isMappedTo("back", input) &&
                 Settings::getInstance()->getBool("ScreensaverControls")) {
             if (!mWindow->isScreensaverActive()) {
                 ViewController::get()->stopScrolling();
@@ -431,7 +431,7 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 
     if (!UIModeController::getInstance()->isUIModeKid() &&
             Settings::getInstance()->getBool("ScreensaverControls"))
-        prompts.push_back(HelpPrompt("select", "toggle screensaver"));
+        prompts.push_back(HelpPrompt("back", "toggle screensaver"));
 
     return prompts;
 }

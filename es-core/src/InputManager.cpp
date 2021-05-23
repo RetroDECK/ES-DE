@@ -534,29 +534,29 @@ void InputManager::loadDefaultKBConfig()
         return;
 
     cfg->clear();
-    cfg->mapInput("up", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_UP, 1, true));
-    cfg->mapInput("down", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_DOWN, 1, true));
-    cfg->mapInput("left", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_LEFT, 1, true));
-    cfg->mapInput("right", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_RIGHT, 1, true));
+    cfg->mapInput("Up", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_UP, 1, true));
+    cfg->mapInput("Down", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_DOWN, 1, true));
+    cfg->mapInput("Left", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_LEFT, 1, true));
+    cfg->mapInput("Right", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_RIGHT, 1, true));
 
-    cfg->mapInput("a", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_RETURN, 1, true));
-    cfg->mapInput("b", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_BACKSPACE, 1, true));
-    cfg->mapInput("x", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_DELETE, 1, true));
+    cfg->mapInput("A", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_RETURN, 1, true));
+    cfg->mapInput("B", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_BACKSPACE, 1, true));
+    cfg->mapInput("X", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_DELETE, 1, true));
     #if defined(__APPLE__)
-    cfg->mapInput("y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PRINTSCREEN, 1, true));
+    cfg->mapInput("Y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PRINTSCREEN, 1, true));
     #else
-    cfg->mapInput("y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_INSERT, 1, true));
+    cfg->mapInput("Y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_INSERT, 1, true));
     #endif
-    cfg->mapInput("start", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_ESCAPE, 1, true));
-    cfg->mapInput("select", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F1, 1, true));
+    cfg->mapInput("Start", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_ESCAPE, 1, true));
+    cfg->mapInput("Back", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F1, 1, true));
 
-    cfg->mapInput("leftshoulder", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PAGEUP, 1, true));
-    cfg->mapInput("rightshoulder", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PAGEDOWN, 1, true));
-    cfg->mapInput("lefttrigger", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_HOME, 1, true));
-    cfg->mapInput("righttrigger", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_END, 1, true));
+    cfg->mapInput("LeftShoulder", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PAGEUP, 1, true));
+    cfg->mapInput("RightShoulder", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PAGEDOWN, 1, true));
+    cfg->mapInput("LeftTrigger", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_HOME, 1, true));
+    cfg->mapInput("RightTrigger", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_END, 1, true));
 
-    cfg->mapInput("leftthumbstickclick", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F2, 1, true));
-    cfg->mapInput("rightthumbstickclick", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F3, 1, true));
+    cfg->mapInput("LeftThumbstickClick", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F2, 1, true));
+    cfg->mapInput("RightThumbstickClick", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F3, 1, true));
 }
 
 void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
@@ -566,12 +566,12 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
     if (cfg->isConfigured())
         return;
 
-    cfg->mapInput("up", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_UP, 1, true));
-    cfg->mapInput("down", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_DOWN, 1, true));
-    cfg->mapInput("left", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_LEFT, 1, true));
-    cfg->mapInput("right", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_RIGHT, 1, true));
+    cfg->mapInput("Up", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_UP, 1, true));
+    cfg->mapInput("Down", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_DOWN, 1, true));
+    cfg->mapInput("Left", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_LEFT, 1, true));
+    cfg->mapInput("Right", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_RIGHT, 1, true));
     cfg->mapInput("Start", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_START, 1, true));
-    cfg->mapInput("Select", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_BACK, 1, true));
+    cfg->mapInput("Back", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_BACK, 1, true));
     cfg->mapInput("A", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_A, 1, true));
     cfg->mapInput("B", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_B, 1, true));
     cfg->mapInput("X", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_X, 1, true));
