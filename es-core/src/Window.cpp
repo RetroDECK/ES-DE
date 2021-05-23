@@ -254,7 +254,7 @@ void Window::logInput(InputConfig* config, Input input)
     }
 
     LOG(LogDebug) << "Window::logInput(" << config->getDeviceName() << "): " <<
-            input.string() << ", isMappedTo=" << mapname << ", value=" << input.value;
+            input.string() << ", isMappedTo=" << mapname << "value=" << input.value;
 }
 
 void Window::update(int deltaTime)

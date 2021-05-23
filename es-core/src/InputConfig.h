@@ -72,21 +72,31 @@ public:
     {
         std::stringstream stream;
         switch (type) {
-            case TYPE_AXIS:
-                stream << "Axis " << id << (value > 0 ? "+" : "-");
+            case TYPE_AXIS: {
+                char signChar = ' ';
+                if (value > 0)
+                    signChar = '+';
+                else if (value < 0)
+                    signChar = '-';
+                stream << "Axis " << id << signChar;
                 break;
-            case TYPE_BUTTON:
+            }
+            case TYPE_BUTTON: {
                 stream << "Button " << id;
                 break;
-            case TYPE_KEY:
+            }
+            case TYPE_KEY: {
                 stream << "Key " << SDL_GetKeyName((SDL_Keycode)id);
                 break;
-            case TYPE_CEC_BUTTON:
+            }
+            case TYPE_CEC_BUTTON: {
                 stream << "CEC-Button " << getCECButtonName(id);
                 break;
-            default:
+            }
+            default: {
                 stream << "Input to string error";
                 break;
+            }
         }
 
         return stream.str();
