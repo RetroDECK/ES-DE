@@ -31,7 +31,7 @@ class MenuComponent : public GuiComponent
 public:
     MenuComponent(Window* window, std::string title,
             const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
-    virtual ~MenuComponent(); // just calls save();
+    virtual ~MenuComponent();
 
     void save();
     void onSizeChanged() override;

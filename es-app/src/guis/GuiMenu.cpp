@@ -70,8 +70,8 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
     addChild(&mMenu);
     addVersionInfo();
     setSize(mMenu.getSize());
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
-            Renderer::getScreenHeight() * 0.15f);
+    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
+            Renderer::getScreenHeight() * 0.13f);
 }
 
 GuiMenu::~GuiMenu()

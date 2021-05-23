@@ -41,7 +41,8 @@ GuiSettings::GuiSettings(
 
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
-    mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2, Renderer::getScreenHeight() * 0.15f);
+    mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2.0f,
+            Renderer::getScreenHeight() * 0.13f);
 }
 
 GuiSettings::~GuiSettings()

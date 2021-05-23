@@ -81,9 +81,9 @@ float MenuComponent::getButtonGridHeight() const
 
 void MenuComponent::updateSize()
 {
-    const float maxHeight = Renderer::getScreenHeight() * 0.75f;
+    const float maxHeight = Renderer::getScreenHeight() * 0.80f;
     float height = TITLE_HEIGHT + mList->getTotalRowHeight() + getButtonGridHeight() +
-            (2 * Renderer::getScreenHeightModifier());
+            (2.0f * Renderer::getScreenHeightModifier());
     if (height > maxHeight) {
         height = TITLE_HEIGHT + getButtonGridHeight();
         int i = 0;
@@ -107,7 +107,7 @@ void MenuComponent::onSizeChanged()
 {
     mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
 
-    // Update grid row/col sizes.
+    // Update grid row/column sizes.
     mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y());
     mGrid.setRowHeightPerc(2, getButtonGridHeight() / mSize.y());
 

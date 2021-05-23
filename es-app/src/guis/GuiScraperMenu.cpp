@@ -107,7 +107,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     setSize(mMenu.getSize());
 
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
-            Renderer::getScreenHeight() * 0.15f);
+            Renderer::getScreenHeight() * 0.13f);
 }
 
 GuiScraperMenu::~GuiScraperMenu()

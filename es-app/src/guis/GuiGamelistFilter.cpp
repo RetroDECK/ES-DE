@@ -51,7 +51,7 @@ void GuiGamelistFilter::initializeMenu()
     mMenu.addButton("BACK", "back", std::bind(&GuiGamelistFilter::applyFilters, this));
 
     mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2.0f,
-            Renderer::getScreenHeight() * 0.15f);
+            Renderer::getScreenHeight() * 0.13f);
 
     // Save the initial filter values to be able to check later if any changes were made.
     mInitialTextFilter = mTextFilterField->getValue();

@@ -366,8 +366,8 @@ private:
                 });
             }
 
-            mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2,
-                    Renderer::getScreenHeight() * 0.15f);
+            mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2.0f,
+                    Renderer::getScreenHeight() * 0.13f);
             addChild(&mMenu);
         }
 
