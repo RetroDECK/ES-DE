@@ -59,6 +59,10 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
     if (isFullUI)
         addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
 
+    if (isFullUI)
+        addEntry("UTILITIES", 0x777777FF, true, [this] {
+                openUtilitiesMenu(); });
+
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
             Settings::getInstance()->getString("UIMode") != "kiosk") {
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
@@ -1106,7 +1110,7 @@ void GuiMenu::openOtherOptions()
     });
 
     // macOS requires root privileges to reboot and power off so it doesn't make much
-    // sense to show the quit menu for this operating system.
+    // sense to enable this setting and menu entry for that operating system.
     #if !defined(__APPLE__)
     // Whether to show the quit menu with the options to reboot and shutdown the computer.
     auto show_quit_menu = std::make_shared<SwitchComponent>(mWindow);
@@ -1121,6 +1125,13 @@ void GuiMenu::openOtherOptions()
         }
     });
     #endif
+
+    mWindow->pushGui(s);
+}
+
+void GuiMenu::openUtilitiesMenu()
+{
+    auto s = new GuiSettings(mWindow, "UTILITIES");
 
     mWindow->pushGui(s);
 }

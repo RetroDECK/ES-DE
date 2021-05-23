@@ -39,6 +39,7 @@ private:
     void openConfigInput();
     void openCollectionSystemOptions();
     void openOtherOptions();
+    void openUtilitiesMenu();
     void openQuitMenu();
 
     MenuComponent mMenu;
