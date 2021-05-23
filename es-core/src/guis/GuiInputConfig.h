@@ -22,6 +22,8 @@ public:
     GuiInputConfig(Window* window, InputConfig* target, bool reconfigureAll,
             const std::function<void()>& okCallback);
 
+    void populateConfigList();
+
     void update(int deltaTime) override;
     void onSizeChanged() override;
 

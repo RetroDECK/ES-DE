@@ -197,6 +197,7 @@ void Settings::setDefaults()
     mBoolMap["NavigationSounds"] = { true, true };
 
     // Input device settings.
+    mStringMap["InputControllerType"] = { "xbox", "xbox" };
     mBoolMap["InputOnlyFirstController"] = { false, false };
 
     // Game collection settings.

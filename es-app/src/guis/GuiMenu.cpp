@@ -759,6 +759,30 @@ void GuiMenu::openInputDeviceOptions()
 {
     auto s = new GuiSettings(mWindow, "INPUT DEVICE SETTINGS");
 
+    // Controller type.
+    auto input_controller_type = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "CONTROLLER TYPE", false);
+    std::string selectedPlayer = Settings::getInstance()->getString("InputControllerType");
+    input_controller_type->add("XBOX", "xbox", selectedPlayer == "xbox");
+    input_controller_type->add("XBOX360", "xbox360", selectedPlayer == "xbox360");
+    input_controller_type->add("PLAYSTATION4", "ps4", selectedPlayer == "ps4");
+    input_controller_type->add("PLAYSTATION5", "ps5", selectedPlayer == "ps5");
+    input_controller_type->add("SNES", "snes", selectedPlayer == "snes");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the controller type to "xbox" in this case.
+    if (input_controller_type->getSelectedObjects().size() == 0)
+        input_controller_type->selectEntry(0);
+    s->addWithLabel("CONTROLLER TYPE", input_controller_type);
+    s->addSaveFunc([input_controller_type, s] {
+        if (input_controller_type->getSelected() !=
+                Settings::getInstance()->getString("InputControllerType")) {
+            Settings::getInstance()->setString("InputControllerType",
+                    input_controller_type->getSelected());
+            s->setNeedsReloadHelpPrompts();
+            s->setNeedsSaving();
+        }
+    });
+
     // Whether to only accept input from the first controller.
     auto input_only_first_controller = std::make_shared<SwitchComponent>(mWindow);
     input_only_first_controller->setState(Settings::getInstance()->

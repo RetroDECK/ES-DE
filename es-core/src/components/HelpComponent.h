@@ -21,6 +21,8 @@ class HelpComponent : public GuiComponent
 public:
     HelpComponent(Window* window);
 
+    void assignIcons();
+
     void clearPrompts();
     void setPrompts(const std::vector<HelpPrompt>& prompts);
 

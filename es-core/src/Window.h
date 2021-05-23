@@ -100,6 +100,7 @@ public:
 
     void renderHelpPromptsEarly(); // Used to render HelpPrompts before a fade.
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
+    void reloadHelpPrompts();
 
     void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
     void setInfoPopup(InfoPopup* infoPopup);

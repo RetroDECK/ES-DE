@@ -34,6 +34,7 @@ public:
     inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
 
     void setNeedsSaving() { mNeedsSaving = true; };
+    void setNeedsReloadHelpPrompts() { mNeedsReloadHelpPrompts = true; };
     void setNeedsCollectionsUpdate() { mNeedsCollectionsUpdate = true; };
     void setNeedsSorting() { mNeedsSorting = true; };
     void setNeedsSortingCollections() { mNeedsSortingCollections = true; };
@@ -53,6 +54,7 @@ private:
     MenuComponent mMenu;
     std::vector<std::function<void()>> mSaveFuncs;
     bool mNeedsSaving;
+    bool mNeedsReloadHelpPrompts;
     bool mNeedsCollectionsUpdate;
     bool mNeedsSorting;
     bool mNeedsSortingCollections;

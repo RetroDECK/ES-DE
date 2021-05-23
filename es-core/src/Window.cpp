@@ -650,6 +650,14 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
     mHelp->setPrompts(addPrompts);
 }
 
+void Window::reloadHelpPrompts()
+{
+    if (mHelp) {
+        delete mHelp;
+        mHelp = new HelpComponent(this);
+    }
+}
+
 void Window::setInfoPopup(InfoPopup* infoPopup)
 {
     delete mInfoPopup;

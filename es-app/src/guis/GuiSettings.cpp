@@ -10,6 +10,7 @@
 
 #include "guis/GuiSettings.h"
 
+#include "components/HelpComponent.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/ViewController.h"
@@ -25,6 +26,7 @@ GuiSettings::GuiSettings(
         : GuiComponent(window),
         mMenu(window, title),
         mNeedsSaving(false),
+        mNeedsReloadHelpPrompts(false),
         mNeedsCollectionsUpdate(false),
         mNeedsSorting(false),
         mNeedsSortingCollections(false),
@@ -60,6 +62,9 @@ void GuiSettings::save()
 
     if (mNeedsSaving)
         Settings::getInstance()->saveFile();
+
+    if (mNeedsReloadHelpPrompts)
+        mWindow->reloadHelpPrompts();
 
     if (mNeedsCollectionsUpdate) {
         CollectionSystemsManager::get()->loadEnabledListFromSettings();
