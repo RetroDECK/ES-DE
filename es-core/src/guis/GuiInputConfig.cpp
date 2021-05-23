@@ -91,7 +91,7 @@ GuiInputConfig::GuiInputConfig(
     else if (target->getDeviceId() == DEVICE_CEC)
         ss << "CEC";
     else
-        ss << "GAMEPAD " << (target->getDeviceId() + 1);
+         ss << "GAMEPAD " << (target->getDeviceId() + 1) << " (" << target->getDeviceName() << ")";
     mSubtitle1 = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(ss.str()),
             Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mSubtitle1, Vector2i(0, 2), false, true);
