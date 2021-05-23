@@ -36,8 +36,8 @@ GuiDetectDevice::GuiDetectDevice(
     addChild(&mGrid);
 
     // Title.
-    mTitle = std::make_shared<TextComponent>(mWindow, firstRun ? "WELCOME" : "CONFIGURE INPUT",
-        Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(mWindow, firstRun ? "WELCOME" :
+        "CONFIGURE INPUT DEVICE", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, Vector2i(0, 0), false, true, Vector2i(1, 1), GridFlags::BORDER_BOTTOM);
 
     // Device info.

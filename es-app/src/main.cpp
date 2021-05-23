@@ -540,7 +540,7 @@ int main(int argc, char* argv[])
     // Open the input configuration GUI if the flag to force this was passed from the command line.
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
-            window.pushGui(new GuiDetectDevice(&window, true, true, [] {
+            window.pushGui(new GuiDetectDevice(&window, false, true, [] {
                 ViewController::get()->goToStart(); }));
         }
         else {
