@@ -22,6 +22,7 @@
 #include "views/ViewController.h"
 #endif
 
+#include <cmath>
 #include <FreeImage.h>
 #include <fstream>
 
@@ -307,8 +308,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
 
             // Resize it.
             if (it->resizeFile) {
-                if (!resizeImage(filePath, Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
-                        Settings::getInstance()->getInt("ScraperResizeMaxHeight"))) {
+                if (!resizeImage(filePath, it->subDirectory)) {
                     setError("Error saving resized image.\nOut of memory? Disk full?");
                     return;
                 }
@@ -319,7 +319,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         // If it's not cached, then initiate the download.
         else {
             mFuncs.push_back(ResolvePair(downloadMediaAsync(it->fileURL, filePath,
-                    it->existingMediaFile, it->resizeFile, mResult.savedNewMedia),
+                    it->existingMediaFile, it->subDirectory, it->resizeFile, mResult.savedNewMedia),
                     [this, filePath] {}));
         }
     }
@@ -353,6 +353,7 @@ std::unique_ptr<MediaDownloadHandle> downloadMediaAsync(
         const std::string& url,
         const std::string& saveAs,
         const std::string& existingMediaPath,
+        const std::string& mediaType,
         const bool resizeFile,
         bool& savedNewMedia)
 {
@@ -360,25 +361,22 @@ std::unique_ptr<MediaDownloadHandle> downloadMediaAsync(
             url,
             saveAs,
             existingMediaPath,
+            mediaType,
             resizeFile,
-            savedNewMedia,
-            Settings::getInstance()->getInt("ScraperResizeMaxWidth"),
-            Settings::getInstance()->getInt("ScraperResizeMaxHeight")));
+            savedNewMedia));
 }
 
 MediaDownloadHandle::MediaDownloadHandle(
         const std::string& url,
         const std::string& path,
         const std::string& existingMediaPath,
+        const std::string& mediaType,
         const bool resizeFile,
-        bool& savedNewMedia,
-        int maxWidth,
-        int maxHeight)
+        bool& savedNewMedia)
         : mSavePath(path),
         mExistingMediaFile(existingMediaPath),
+        mMediaType(mediaType),
         mResizeFile(resizeFile),
-        mMaxWidth(maxWidth),
-        mMaxHeight(maxHeight),
         mReq(new HttpReq(url))
 {
         mSavedNewMediaPtr = &savedNewMedia;
@@ -453,7 +451,7 @@ void MediaDownloadHandle::update()
 
     // Resize it.
     if (mResizeFile) {
-        if (!resizeImage(mSavePath, mMaxWidth, mMaxHeight)) {
+        if (!resizeImage(mSavePath, mMediaType)) {
             setError("Error saving resized image.\nOut of memory? Disk full?");
             return;
         }
@@ -465,17 +463,25 @@ void MediaDownloadHandle::update()
     setStatus(ASYNC_DONE);
 }
 
-// You can pass 0 for width or height to keep aspect ratio.
-bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
+bool resizeImage(const std::string& path, const std::string& mediaType)
 {
-    // Nothing to do.
-    if (maxWidth == 0 && maxHeight == 0)
-        return true;
+    float maxWidth = 0.0f;
+    float maxHeight = 0.0f;
+
+    if (mediaType == "marquees") {
+        // We don't really need huge marquees.
+        maxWidth = 1000.0f;
+        maxHeight = 600.0f;
+    }
+    else {
+        maxWidth = 2560.0f;
+        maxHeight = 1440.0f;
+    }
 
     FREE_IMAGE_FORMAT format = FIF_UNKNOWN;
     FIBITMAP* image = nullptr;
 
-    // Detect the filetype.
+    // Detect the file format.
     format = FreeImage_GetFileType(path.c_str(), 0);
     if (format == FIF_UNKNOWN)
         format = FreeImage_GetFIFFromFilename(path.c_str());
@@ -484,7 +490,7 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
         return false;
     }
 
-    // Make sure we can read this filetype first, then load it.
+    // Make sure we can read this format, and if so, then load it.
     if (FreeImage_FIFSupportsReading(format)) {
         image = FreeImage_Load(format, path.c_str());
     }
@@ -496,23 +502,37 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
     float width = static_cast<float>(FreeImage_GetWidth(image));
     float height = static_cast<float>(FreeImage_GetHeight(image));
 
-    // If the image is smaller than maxWidth or maxHeight, then don't do any
-    // scaling. It doesn't make sense to upscale the image and waste disk space.
-    if (maxWidth > width || maxHeight > height) {
+    // If the image is smaller than (or the same size as) maxWidth and maxHeight, then don't
+    // do any scaling. It doesn't make sense to upscale the image and waste disk space.
+    if (maxWidth >= width && maxHeight >= height) {
+        LOG(LogDebug) << "Scraper::resizeImage(): Saving image \"" << path <<
+            "\" at its original resolution " << width << "x" << height;
         FreeImage_Unload(image);
         return true;
     }
 
-    if (maxWidth == 0)
-        maxWidth = static_cast<int>((maxHeight / height) * width);
-    else if (maxHeight == 0)
-        maxHeight = static_cast<int>((maxWidth / width) * height);
+    float scaleFactor = 0.0f;
 
-    FIBITMAP* imageRescaled = FreeImage_Rescale(image, maxWidth, maxHeight, FILTER_BILINEAR);
+    // Calculate how much we should scale.
+    if (width > maxWidth) {
+        scaleFactor = maxWidth / width;
+        if (height * scaleFactor > maxHeight)
+            scaleFactor = maxHeight / height;
+    }
+    else {
+        scaleFactor = maxHeight / height;
+    }
+
+    maxWidth = floorf(width * scaleFactor);
+    maxHeight = floorf(height * scaleFactor);
+
+    // We use Lanczos3 which is the highest quality resampling method available in FreeImage.
+    FIBITMAP* imageRescaled = FreeImage_Rescale(image, static_cast<int>(maxWidth),
+            static_cast<int>(maxHeight), FILTER_LANCZOS3);
     FreeImage_Unload(image);
 
     if (imageRescaled == nullptr) {
-        LOG(LogError) << "Could not resize image (not enough memory or invalid bitdepth?)";
+        LOG(LogError) << "Couldn't resize image, not enough memory or invalid bit depth?";
         return false;
     }
 
@@ -521,6 +541,10 @@ bool resizeImage(const std::string& path, int maxWidth, int maxHeight)
 
     if (!saved) {
         LOG(LogError) << "Failed to save resized image";
+    }
+    else {
+        LOG(LogDebug) << "Scraper::resizeImage(): Downscaled image \"" << path << "\" from "
+                << width << "x" << height << " to " << maxWidth << "x" << maxHeight;
     }
 
     return saved;

@@ -195,10 +195,9 @@ public:
             const std::string& url,
             const std::string& path,
             const std::string& existingMediaPath,
+            const std::string& mediaType,
             const bool resizeFile,
-            bool& savedNewMedia,
-            int maxWidth,
-            int maxHeight);
+            bool& savedNewMedia);
 
     void update() override;
 
@@ -206,10 +205,9 @@ private:
     std::unique_ptr<HttpReq> mReq;
     std::string mSavePath;
     std::string mExistingMediaFile;
+    std::string mMediaType;
     bool mResizeFile;
     bool *mSavedNewMediaPtr;
-    int mMaxWidth;
-    int mMaxHeight;
 };
 
 // Downloads to the home directory, using this subdirectory structure:
@@ -218,12 +216,11 @@ private:
 std::string getSaveAsPath(const ScraperSearchParams& params,
         const std::string& filetypeSubdirectory, const std::string& url);
 
-// Will resize according to Settings::getInt("ScraperResizeMaxWidth") and
-// Settings::getInt("ScraperResizeMaxHeight").
 std::unique_ptr<MediaDownloadHandle> downloadMediaAsync(
         const std::string& url,
         const std::string& saveAs,
         const std::string& existingMediaPath,
+        const std::string& mediaType,
         const bool resizeFile,
         bool& savedNewMedia);
 
@@ -231,9 +228,6 @@ std::unique_ptr<MediaDownloadHandle> downloadMediaAsync(
 std::unique_ptr<MDResolveHandle> resolveMetaDataAssets(const ScraperSearchResult& result,
         const ScraperSearchParams& search);
 
-// You can pass 0 for maxWidth or maxHeight to automatically keep the aspect ratio.
-// It will overwrite the image at [path] with the new resized one.
-// Returns true if successful, false otherwise.
-bool resizeImage(const std::string& path, int maxWidth, int maxHeight);
+bool resizeImage(const std::string& path, const std::string& mediaType);
 
 #endif // ES_APP_SCRAPERS_SCRAPER_H

@@ -301,8 +301,7 @@ void Settings::setDefaults()
     //
 
     mStringMap["ROMDirectory"] = { "", "" };
-    mIntMap["ScraperResizeMaxWidth"] = { 600, 600 };
-    mIntMap["ScraperResizeMaxHeight"] = { 0, 0 };
+    mStringMap["UIMode_passkey"] = { "uuddlrlrba", "uuddlrlrba" };
 
     //
     // Hardcoded or program-internal settings.
@@ -313,7 +312,6 @@ void Settings::setDefaults()
     mBoolMap["DebugImage"] = { false, false };
     mBoolMap["SplashScreenProgress"] = { true, true };
     mIntMap["ScraperFilter"] = { 0, 0 };
-    mStringMap["UIMode_passkey"] = { "uuddlrlrba", "uuddlrlrba" };
 }
 
 template <typename K, typename V>
