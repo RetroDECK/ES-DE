@@ -34,7 +34,7 @@
 #include "SystemData.h"
 #include "Window.h"
 
-#define FAILED_VERIFICATION_RETRIES 5
+#define FAILED_VERIFICATION_RETRIES 8
 
 GuiScraperSearch::GuiScraperSearch(
         Window* window,
