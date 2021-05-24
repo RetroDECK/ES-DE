@@ -116,6 +116,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperRespectExclusions"] = { true, true };
     mBoolMap["ScraperExcludeRecursively"] = { true, true };
     mBoolMap["ScraperIncludeFolders"] = { false, false };
+    mBoolMap["ScraperRetryPeerVerification"] = { false, false };
 
     // UI settings.
     mStringMap["StartupSystem"] = { "", "" };

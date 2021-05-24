@@ -76,7 +76,8 @@ private:
 
     void resizeMetadata();
 
-    void onSearchError(const std::string& error);
+    void onSearchError(const std::string& error, HttpReq::Status status =
+            HttpReq::REQ_UNDEFINED_ERROR);
     void onSearchDone(const std::vector<ScraperSearchResult>& results);
 
     int getSelectedIndex();
@@ -128,6 +129,9 @@ private:
     bool mBlockAccept;
     bool mFoundGame;
     bool mScrapeRatings;
+
+    bool mRetrySearch;
+    unsigned int mRetryCount;
 
     std::unique_ptr<ScraperSearchHandle> mSearchHandle;
     std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;

@@ -34,6 +34,8 @@
 #include "SystemData.h"
 #include "Window.h"
 
+#define FAILED_VERIFICATION_RETRIES 5
+
 GuiScraperSearch::GuiScraperSearch(
         Window* window,
         SearchType type,
@@ -50,6 +52,8 @@ GuiScraperSearch::GuiScraperSearch(
     addChild(&mGrid);
 
     mBlockAccept = false;
+    mRetrySearch = false;
+    mRetryCount = 0;
 
     // Left spacer (empty component, needed for borders).
     mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 0),
@@ -387,19 +391,38 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
     }
 }
 
-void GuiScraperSearch::onSearchError(const std::string& error)
+void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status status)
 {
+    // This is a workaround for a somehow frequently recurring issue with screenscraper.fr
+    // where requests to download the thumbnails are randomly met with TLS verification errors.
+    // It's unclear why it only happens to the thumbnail requests, but it usually goes away
+    // after a few days or so. If this issue occurs and the corresponding setting has been
+    // enabled, we'll retry the search automatically up to FAILED_VERIFICATION_RETRIES number
+    // of times. Usually a few retries is enough to get the thumbnail to download. If not,
+    // the error dialog will be presented to the user, and if the "Retry" button is pressed,
+    // a new round of retries will take place.
+    if (status == HttpReq::REQ_FAILED_VERIFICATION && mRetryCount < FAILED_VERIFICATION_RETRIES &&
+            Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
+        LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
+        mRetrySearch = true;
+        mRetryCount++;
+        LOG(LogError) << "GuiScraperSearch: Attempting automatic retry " << mRetryCount <<
+                " of " << FAILED_VERIFICATION_RETRIES;
+        return;
+    }
+    else {
+        mRetryCount = 0;
+    }
+
     if (mScrapeCount > 1) {
-        LOG(LogError) << "GuiScraperSearch search error: " <<
-                Utils::String::replace(error, "\n", "");
+        LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
             "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
             "SKIP", mSkipCallback,
             "CANCEL", mCancelCallback, true));
     }
     else {
-        LOG(LogError) << "GuiScraperSearch search error: " <<
-                Utils::String::replace(error, "\n", "");
+        LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
             "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
             "CANCEL", mCancelCallback, "", nullptr, true));
@@ -532,11 +555,20 @@ void GuiScraperSearch::returnResult(ScraperSearchResult result)
     mScrapeCount -= 1;
     mAcceptCallback(result);
     mRefinedSearch = false;
+    mRetryCount = 0;
 }
 
 void GuiScraperSearch::update(int deltaTime)
 {
     GuiComponent::update(deltaTime);
+
+    // There was a failure and we're attempting an automatic retry.
+    if (mRetrySearch) {
+        mRetrySearch = false;
+        stop();
+        search(mLastSearch);
+        return;
+    }
 
     if (mBlockAccept)
         mBusyAnim.update(deltaTime);
@@ -647,7 +679,8 @@ void GuiScraperSearch::updateThumbnail()
     }
     else {
         mResultThumbnail->setImage("");
-        onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg());
+        onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg(),
+                it->second->status());
     }
 
     mThumbnailReqMap.erase(it);
@@ -676,6 +709,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
     };
 
     stop();
+    mRetryCount = 0;
 
     std::string searchString;
 

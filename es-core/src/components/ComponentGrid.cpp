@@ -355,8 +355,7 @@ void ComponentGrid::update(int deltaTime)
 {
     // Update everything.
     const GridEntry* cursorEntry = getCellAt(mCursor);
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++)
-    {
+    for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
         if (it->updateType == UPDATE_ALWAYS ||
                 (it->updateType == UPDATE_WHEN_SELECTED && cursorEntry == &(*it)))
             it->component->update(deltaTime);

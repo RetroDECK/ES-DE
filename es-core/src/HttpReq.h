@@ -43,11 +43,13 @@ public:
     ~HttpReq();
 
     enum Status {
-        REQ_IN_PROGRESS,		// Request is in progress.
-        REQ_SUCCESS,			// Request completed successfully, get it with getContent().
-        REQ_IO_ERROR,			// Some error happened, get it with getErrorMsg().
-        REQ_BAD_STATUS_CODE,	// Some invalid HTTP response status code happened (non-200).
-        REQ_INVALID_RESPONSE	// The HTTP response was invalid.
+        REQ_IN_PROGRESS,         // Request is in progress.
+        REQ_SUCCESS,             // Request completed successfully, get it with getContent().
+        REQ_IO_ERROR,            // Some error happened, get it with getErrorMsg().
+        REQ_FAILED_VERIFICATION, // Peer's certificate or fingerprint wasn't verified correctly.
+        REQ_BAD_STATUS_CODE,     // Some invalid HTTP response status code happened (non-200).
+        REQ_INVALID_RESPONSE,    // The HTTP response was invalid.
+        REQ_UNDEFINED_ERROR
     };
 
     Status status(); // Process any received data and return the status afterwards.

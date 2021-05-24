@@ -456,7 +456,7 @@ void GuiScraperMenu::openOtherSettings()
     // Respect the per-file multi-scraper exclusion flag.
     auto scraper_respect_exclusions = std::make_shared<SwitchComponent>(mWindow);
     scraper_respect_exclusions->setState(
-                Settings::getInstance()->getBool("ScraperRespectExclusions"));
+            Settings::getInstance()->getBool("ScraperRespectExclusions"));
     s->addWithLabel("RESPECT PER-FILE SCRAPER EXCLUSIONS", scraper_respect_exclusions);
     s->addSaveFunc([scraper_respect_exclusions, s] {
         if (scraper_respect_exclusions->getState() !=
@@ -470,7 +470,7 @@ void GuiScraperMenu::openOtherSettings()
     // Exclude files recursively for excluded folders.
     auto scraper_exclude_recursively = std::make_shared<SwitchComponent>(mWindow);
     scraper_exclude_recursively->setState(
-                Settings::getInstance()->getBool("ScraperExcludeRecursively"));
+            Settings::getInstance()->getBool("ScraperExcludeRecursively"));
     s->addWithLabel("EXCLUDE FOLDERS RECURSIVELY", scraper_exclude_recursively);
     s->addSaveFunc([scraper_exclude_recursively, s] {
         if (scraper_exclude_recursively->getState() !=
@@ -492,13 +492,27 @@ void GuiScraperMenu::openOtherSettings()
     // Include actual folders when scraping.
     auto scraper_include_folders = std::make_shared<SwitchComponent>(mWindow);
     scraper_include_folders->setState(
-                Settings::getInstance()->getBool("ScraperIncludeFolders"));
+            Settings::getInstance()->getBool("ScraperIncludeFolders"));
     s->addWithLabel("SCRAPE ACTUAL FOLDERS", scraper_include_folders);
     s->addSaveFunc([scraper_include_folders, s] {
         if (scraper_include_folders->getState() !=
                 Settings::getInstance()->getBool("ScraperIncludeFolders")) {
             Settings::getInstance()->setBool("ScraperIncludeFolders",
                     scraper_include_folders->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Retry search on peer verification errors (TLS/certificate issues).
+    auto retry_peer_verification = std::make_shared<SwitchComponent>(mWindow);
+    retry_peer_verification->setState(
+            Settings::getInstance()->getBool("ScraperRetryPeerVerification"));
+    s->addWithLabel("RETRY ON PEER VERIFICATION ERRORS", retry_peer_verification);
+    s->addSaveFunc([retry_peer_verification, s] {
+        if (retry_peer_verification->getState() !=
+                Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
+            Settings::getInstance()->setBool("ScraperRetryPeerVerification",
+                    retry_peer_verification->getState());
             s->setNeedsSaving();
         }
     });

@@ -173,6 +173,10 @@ HttpReq::Status HttpReq::status()
                 if (msg->data.result == CURLE_OK) {
                     req->mStatus = REQ_SUCCESS;
                 }
+                else if (msg->data.result == CURLE_PEER_FAILED_VERIFICATION) {
+                    req->mStatus = REQ_FAILED_VERIFICATION;
+                    req->onError(curl_easy_strerror(msg->data.result));
+                }
                 else {
                     req->mStatus = REQ_IO_ERROR;
                     req->onError(curl_easy_strerror(msg->data.result));
