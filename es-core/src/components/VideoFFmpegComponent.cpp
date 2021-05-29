@@ -283,6 +283,7 @@ void VideoFFmpegComponent::frameProcessing()
 bool VideoFFmpegComponent::setupVideoFilters()
 {
     int returnValue = 0;
+    char errorMessage[512];
     const enum AVPixelFormat outPixFormats[] = { AV_PIX_FMT_RGBA, AV_PIX_FMT_NONE };
 
     mVFilterInputs = avfilter_inout_alloc();
@@ -340,7 +341,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
                 "Couldn't create filter instance for buffer source: " <<
-                av_err2str(returnValue);
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -355,7 +356,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
                 "Couldn't create filter instance for buffer sink: " <<
-                av_err2str(returnValue);
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -401,7 +402,8 @@ bool VideoFFmpegComponent::setupVideoFilters()
 
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
-                "Couldn't add graph filter: " << av_err2str(returnValue);
+                "Couldn't add graph filter: " <<
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -409,7 +411,8 @@ bool VideoFFmpegComponent::setupVideoFilters()
 
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
-                "Couldn't configure graph: " << av_err2str(returnValue);
+                "Couldn't configure graph: " <<
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -419,6 +422,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
 bool VideoFFmpegComponent::setupAudioFilters()
 {
     int returnValue = 0;
+    char errorMessage[512];
     const int outSampleRates[] = { AudioManager::getInstance()->sAudioFormat.freq, -1 };
     const enum AVSampleFormat outSampleFormats[] = { AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_NONE };
 
@@ -471,7 +475,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
                 "Couldn't create filter instance for buffer source: " <<
-                av_err2str(returnValue);
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -486,7 +490,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
                 "Couldn't create filter instance for buffer sink: " <<
-                av_err2str(returnValue);
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -512,7 +516,8 @@ bool VideoFFmpegComponent::setupAudioFilters()
 
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
-                "Couldn't add graph filter: " << av_err2str(returnValue);
+                "Couldn't add graph filter: " <<
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -520,7 +525,8 @@ bool VideoFFmpegComponent::setupAudioFilters()
 
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
-                "Couldn't configure graph: " << av_err2str(returnValue);
+                "Couldn't configure graph: " <<
+                av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
         return false;
     }
 
