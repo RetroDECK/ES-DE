@@ -35,7 +35,10 @@ public:
     void processStream(const void* samples, unsigned count);
     void clearStream();
 
-    bool getHasAudioDevice() { return sHasAudioDevice; };
+    void muteStream() { sMuteStream = true; }
+    void unmuteStream() { sMuteStream = false; }
+
+    bool getHasAudioDevice() { return sHasAudioDevice; }
 
     static SDL_AudioDeviceID sAudioDevice;
     static SDL_AudioSpec sAudioFormat;
@@ -48,7 +51,9 @@ private:
     static SDL_AudioStream* sConversionStream;
     static std::vector<std::shared_ptr<Sound>> sSoundVector;
     static std::shared_ptr<AudioManager> sInstance;
+    static bool sMuteStream;
     static bool sHasAudioDevice;
+    static bool mIsClearingStream;
 };
 
 #endif // ES_CORE_AUDIO_MANAGER_H
