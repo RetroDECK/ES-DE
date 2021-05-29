@@ -298,6 +298,7 @@ elseif(WIN32)
     if(DEFINED MSVC)
         set(COMMON_LIBRARIES
                 "${PROJECT_SOURCE_DIR}/avcodec.lib"
+                "${PROJECT_SOURCE_DIR}/avfilter.lib"
                 "${PROJECT_SOURCE_DIR}/avformat.lib"
                 "${PROJECT_SOURCE_DIR}/avutil.lib"
                 "${PROJECT_SOURCE_DIR}/swresample.lib"
@@ -315,6 +316,7 @@ elseif(WIN32)
     else()
         set(COMMON_LIBRARIES
                 "${PROJECT_SOURCE_DIR}/avcodec-59.dll"
+                "${PROJECT_SOURCE_DIR}/avfilter-8.dll"
                 "${PROJECT_SOURCE_DIR}/avformat-59.dll"
                 "${PROJECT_SOURCE_DIR}/avutil-57.dll"
                 "${PROJECT_SOURCE_DIR}/swresample-4.dll"

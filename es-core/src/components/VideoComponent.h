@@ -93,6 +93,7 @@ private:
     virtual void pauseVideo() {};
     // Handle looping of the video. Must be called periodically.
     virtual void handleLooping() {};
+    virtual void updatePlayer() {};
 
     // Start the video after any configured delay.
     void startVideoWithDelay();

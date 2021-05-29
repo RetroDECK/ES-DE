@@ -10,18 +10,18 @@
 #define ES_CORE_COMPONENTS_VIDEO_FFMPEG_COMPONENT_H
 
 // Audio buffer in seconds.
-#define AUDIO_BUFFER 0.2l
+#define AUDIO_BUFFER 0.1l
 
 #include "VideoComponent.h"
 
 extern "C"
 {
 #include <libavcodec/avcodec.h>
+#include <libavfilter/avfilter.h>
+#include <libavfilter/buffersink.h>
+#include <libavfilter/buffersrc.h>
 #include <libavformat/avformat.h>
-#include <libavutil/opt.h>
 #include <libavutil/imgutils.h>
-#include <libswresample/swresample.h>
-#include <libswscale/swscale.h>
 }
 
 #include <chrono>
@@ -52,15 +52,22 @@ private:
     void resize();
 
     void render(const Transform4x4f& parentTrans) override;
-    void update(int deltaTime) override;
+    virtual void updatePlayer() override;
 
     // This will run the frame processing in a separate thread.
     void frameProcessing();
-    // Read frames from the video file and perform format conversion.
+    // Setup libavfilter.
+    bool setupVideoFilters();
+    bool setupAudioFilters();
+
+    // Read frames from the video file and add them to the filter source.
     void readFrames();
-    // Output frames to AudioManager and to the video surface.
+    // Get the frames that have been processed by the filters.
+    void getProcessedFrames();
+    // Output frames to AudioManager and to the video surface (via the main thread).
     void outputFrames();
 
+    // Calculate the black rectangle that is shown behind videos with non-standard aspect ratios.
     void calculateBlackRectangle();
 
     // Start the video immediately.
@@ -77,6 +84,7 @@ private:
 
     std::unique_ptr<std::thread> mFrameProcessingThread;
     std::mutex mPictureMutex;
+    std::mutex mAudioMutex;
 
     AVFormatContext* mFormatContext;
     AVStream* mVideoStream;
@@ -90,7 +98,9 @@ private:
 
     AVPacket* mPacket;
     AVFrame* mVideoFrame;
+    AVFrame* mVideoFrameResampled;
     AVFrame* mAudioFrame;
+    AVFrame* mAudioFrameResampled;
 
     struct VideoFrame {
         std::vector<uint8_t> frameRGBA;
@@ -102,7 +112,6 @@ private:
 
     struct AudioFrame {
         std::vector<uint8_t> resampledData;
-        int resampledDataSize;
         double pts;
     };
 
@@ -116,9 +125,22 @@ private:
     std::queue<VideoFrame> mVideoFrameQueue;
     std::queue<AudioFrame> mAudioFrameQueue;
     OutputPicture mOutputPicture;
+    std::vector<uint8_t> mOutputAudio;
 
-    int mVideoMinQueueSize;
-    int mAudioMinQueueSize;
+    AVFilterContext* mVBufferSrcContext;
+    AVFilterContext* mVBufferSinkContext;
+    AVFilterGraph* mVFilterGraph;
+    AVFilterInOut* mVFilterInputs;
+    AVFilterInOut* mVFilterOutputs;
+
+    AVFilterContext* mABufferSrcContext;
+    AVFilterContext* mABufferSinkContext;
+    AVFilterGraph* mAFilterGraph;
+    AVFilterInOut* mAFilterInputs;
+    AVFilterInOut* mAFilterOutputs;
+
+    int mVideoTargetQueueSize;
+    int mAudioTargetQueueSize;
     double mVideoTimeBase;
 
     // Used for audio and video synchronization.

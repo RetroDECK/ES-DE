@@ -39,6 +39,7 @@ Window::Window()
         mAllowTextScrolling(true),
         mCachedBackground(false),
         mInvalidatedCachedBackground(false),
+        mVideoPlayerCount(0),
         mTopOpacity(0),
         mTopScale(0.5),
         mListScrollOpacity(0),
@@ -764,3 +765,26 @@ void Window::stopMediaViewer()
 
     mRenderMediaViewer = false;
 }
+
+void Window::increaseVideoPlayerCount()
+{
+    mVideoCountMutex.lock();
+    mVideoPlayerCount++;
+    mVideoCountMutex.unlock();
+}
+
+void Window::decreaseVideoPlayerCount()
+{
+    mVideoCountMutex.lock();
+    mVideoPlayerCount--;
+    mVideoCountMutex.unlock();
+}
+
+int Window::getVideoPlayerCount()
+{
+    int videoPlayerCount;
+    mVideoCountMutex.lock();
+    videoPlayerCount = mVideoPlayerCount;
+    mVideoCountMutex.unlock();
+    return videoPlayerCount;
+};

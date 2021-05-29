@@ -15,7 +15,8 @@
 
 #include <SDL2/SDL_timer.h>
 
-#define SCREENSAVER_FADE_IN_TIME 1200
+#define SCREENSAVER_FADE_IN_TIME 1100
+#define MEDIA_VIEWER_FADE_IN_TIME 600
 
 VideoComponent::VideoComponent(
         Window* window)
@@ -304,13 +305,19 @@ void VideoComponent::update(int deltaTime)
 
     manageState();
 
-    // Fade in videos, which is handled a bit differently depending on whether it's the
-    // video screensaver that is running, or if it's the video in the gamelist.
-    if (mScreensaverMode && mFadeIn < 1.0f)
+    // Fade in videos, the time period is a bit different between the screensaver,
+    // media viewer and gamelist view.
+    if (mScreensaverMode && mFadeIn < 1.0f) {
         mFadeIn = Math::clamp(mFadeIn + (deltaTime /
                 static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0f, 1.0f);
-    else if (mFadeIn < 1.0f)
+    }
+    else if (mMediaViewerMode && mFadeIn < 1.0f) {
+        mFadeIn = Math::clamp(mFadeIn + (deltaTime /
+                static_cast<float>(MEDIA_VIEWER_FADE_IN_TIME)), 0.0f, 1.0f);
+    }
+    else if (mFadeIn < 1.0f) {
         mFadeIn = Math::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);
+    }
 
     GuiComponent::update(deltaTime);
 }
@@ -384,6 +391,7 @@ void VideoComponent::manageState()
                 stopVideo();
             }
         }
+        updatePlayer();
     }
     // Need to recheck variable rather than 'else' because it may be modified above.
     if (!mIsPlaying) {

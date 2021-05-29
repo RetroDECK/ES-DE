@@ -16,6 +16,7 @@
 #include "Settings.h"
 
 #include <memory>
+#include <mutex>
 
 class FileData;
 class Font;
@@ -117,6 +118,10 @@ public:
     void setMediaViewer(MediaViewer* mediaViewer) { mMediaViewer = mediaViewer; }
     bool isMediaViewerActive() { return mRenderMediaViewer; };
 
+    void increaseVideoPlayerCount();
+    void decreaseVideoPlayerCount();
+    int getVideoPlayerCount();
+
     void setLaunchedGame();
     void unsetLaunchedGame();
     void invalidateCachedBackground();
@@ -163,6 +168,9 @@ private:
     bool mAllowTextScrolling;
     bool mCachedBackground;
     bool mInvalidatedCachedBackground;
+
+    int mVideoPlayerCount;
+    std::mutex mVideoCountMutex;
 
     unsigned char mTopOpacity;
     float mTopScale;

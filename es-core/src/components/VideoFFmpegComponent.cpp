@@ -24,8 +24,19 @@ VideoFFmpegComponent::VideoFFmpegComponent(
         mAudioCodec(nullptr),
         mVideoCodecContext(nullptr),
         mAudioCodecContext(nullptr),
+        mVBufferSrcContext(nullptr),
+        mVBufferSinkContext(nullptr),
+        mVFilterGraph(nullptr),
+        mVFilterInputs(nullptr),
+        mVFilterOutputs(nullptr),
+        mABufferSrcContext(nullptr),
+        mABufferSinkContext(nullptr),
+        mAFilterGraph(nullptr),
+        mAFilterInputs(nullptr),
+        mAFilterOutputs(nullptr),
         mVideoTimeBase(0.0l),
-        mVideoMinQueueSize(0),
+        mVideoTargetQueueSize(0),
+        mAudioTargetQueueSize(0),
         mAccumulatedTime(0),
         mStartTimeAccumulation(false),
         mDecodedFrame(false),
@@ -115,7 +126,7 @@ void VideoFFmpegComponent::render(const Transform4x4f& parentTrans)
 
     if (mIsPlaying && mFormatContext) {
         unsigned int color;
-        if (mFadeIn < 1) {
+        if (mDecodedFrame && mFadeIn < 1) {
             const unsigned int fadeIn = static_cast<int>(mFadeIn * 255.0f);
             color = Renderer::convertRGBAToABGR((fadeIn << 24) |
                     (fadeIn << 16) | (fadeIn << 8) | 255);
@@ -196,10 +207,18 @@ void VideoFFmpegComponent::render(const Transform4x4f& parentTrans)
     }
 }
 
-void VideoFFmpegComponent::update(int deltaTime)
+void VideoFFmpegComponent::updatePlayer()
 {
     if (mPause || !mFormatContext)
         return;
+
+    // Output any audio that has been added by the processing thread.
+    mAudioMutex.lock();
+    if (mOutputAudio.size()) {
+        AudioManager::getInstance()->processStream(&mOutputAudio.at(0), mOutputAudio.size());
+        mOutputAudio.clear();
+    }
+    mAudioMutex.unlock();
 
     if (mIsActuallyPlaying && mStartTimeAccumulation) {
         mAccumulatedTime += static_cast<double>(
@@ -210,108 +229,331 @@ void VideoFFmpegComponent::update(int deltaTime)
 
     mTimeReference = std::chrono::high_resolution_clock::now();
 
-    if (!mFrameProcessingThread)
+    if (!mFrameProcessingThread) {
+        AudioManager::getInstance()->unmuteStream();
         mFrameProcessingThread =
                 std::make_unique<std::thread>(&VideoFFmpegComponent::frameProcessing, this);
+    }
 }
 
 void VideoFFmpegComponent::frameProcessing()
 {
-    while (mIsPlaying && !mPause) {
+    mWindow->increaseVideoPlayerCount();
+
+    bool videoFilter;
+    bool audioFilter;
+
+    videoFilter = setupVideoFilters();
+
+    if (mAudioCodecContext)
+        audioFilter = setupAudioFilters();
+
+    while (mIsPlaying && !mPause && videoFilter && (!mAudioCodecContext || audioFilter)) {
         readFrames();
-
-        if (!mEndOfVideo && mIsActuallyPlaying &&
-                mVideoFrameQueue.empty() && mAudioFrameQueue.empty())
-            mEndOfVideo = true;
-
+        getProcessedFrames();
         outputFrames();
 
         // This 1 ms wait makes sure that the thread does not consume all available CPU cycles.
         SDL_Delay(1);
     }
-    AudioManager::getInstance()->clearStream();
+
+    if (videoFilter) {
+        avfilter_inout_free(&mVFilterInputs);
+        avfilter_inout_free(&mVFilterOutputs);
+        avfilter_free(mVBufferSrcContext);
+        avfilter_free(mVBufferSinkContext);
+        avfilter_graph_free(&mVFilterGraph);
+        mVBufferSrcContext = nullptr;
+        mVBufferSinkContext = nullptr;
+    }
+
+    if (audioFilter) {
+        avfilter_inout_free(&mAFilterInputs);
+        avfilter_inout_free(&mAFilterOutputs);
+        avfilter_free(mABufferSrcContext);
+        avfilter_free(mABufferSinkContext);
+        avfilter_graph_free(&mAFilterGraph);
+        mABufferSrcContext = nullptr;
+        mABufferSinkContext = nullptr;
+    }
+
+    mWindow->decreaseVideoPlayerCount();
+}
+
+bool VideoFFmpegComponent::setupVideoFilters()
+{
+    int returnValue = 0;
+    const enum AVPixelFormat outPixFormats[] = { AV_PIX_FMT_RGBA, AV_PIX_FMT_NONE };
+
+    mVFilterInputs = avfilter_inout_alloc();
+    mVFilterOutputs = avfilter_inout_alloc();
+
+    if (!(mVFilterGraph = avfilter_graph_alloc())) {
+        LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
+                "Couldn't allocate filter graph";
+        return false;
+    }
+
+    // Limit the libavfilter video processing to two additional threads.
+    // Not sure why the actual thread count is one less than specified.
+    mVFilterGraph->nb_threads = 3;
+
+    const AVFilter* bufferSrc = avfilter_get_by_name("buffer");
+    if (!bufferSrc) {
+        LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
+                "Couldn't find \"buffer\" filter";
+        return false;
+    }
+
+    const AVFilter* bufferSink = avfilter_get_by_name("buffersink");
+    if (!bufferSink) {
+        LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
+                "Couldn't find \"buffersink\" filter";
+        return false;
+    }
+
+    // Some codecs such as H.264 need the width to be in increments of 16 pixels.
+    int width = mVideoCodecContext->width;
+    int height = mVideoCodecContext->height;
+    int modulo = mVideoCodecContext->width % 16;
+
+    if (modulo > 0)
+        width += 16 - modulo;
+
+    std::string filterArguments =
+            "width=" + std::to_string(width) + ":" +
+            "height=" + std::to_string(height) +
+            ":pix_fmt=" + av_get_pix_fmt_name(mVideoCodecContext->pix_fmt) +
+            ":time_base=" + std::to_string(mVideoStream->time_base.num) + "/" +
+            std::to_string(mVideoStream->time_base.den) +
+            ":sar=" + std::to_string(mVideoCodecContext->sample_aspect_ratio.num) + "/" +
+            std::to_string(mVideoCodecContext->sample_aspect_ratio.den);
+
+    returnValue = avfilter_graph_create_filter(
+            &mVBufferSrcContext,
+            bufferSrc,
+            "in",
+            filterArguments.c_str(),
+            nullptr,
+            mVFilterGraph);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
+                "Couldn't create filter instance for buffer source: " <<
+                av_err2str(returnValue);
+        return false;
+    }
+
+    returnValue = avfilter_graph_create_filter(
+            &mVBufferSinkContext,
+            bufferSink,
+            "out",
+            nullptr,
+            nullptr,
+            mVFilterGraph);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
+                "Couldn't create filter instance for buffer sink: " <<
+                av_err2str(returnValue);
+        return false;
+    }
+
+    // Endpoints for the filter graph.
+    mVFilterInputs->name = av_strdup("out");
+    mVFilterInputs->filter_ctx = mVBufferSinkContext;
+    mVFilterInputs->pad_idx = 0;
+    mVFilterInputs->next = nullptr;
+
+    mVFilterOutputs->name = av_strdup("in");
+    mVFilterOutputs->filter_ctx = mVBufferSrcContext;
+    mVFilterOutputs->pad_idx = 0;
+    mVFilterOutputs->next = nullptr;
+
+    std::string filterDescription;
+
+    // Whether to upscale the frame rate to 60 FPS.
+    if (Settings::getInstance()->getBool("VideoUpscaleFrameRate")) {
+        if (modulo > 0)
+            filterDescription =
+                    "scale=width=" + std::to_string(width) +
+                    ":height=" + std::to_string(height) +
+                    ",fps=fps=60,";
+        else
+            filterDescription = "fps=fps=60,";
+
+        // The "framerate" filter is a more advanced way to upscale the frame rate using
+        // interpolation. However I have not been able to get this to work with slice
+        // threading so the performance is poor. As such it's disabled for now.
+//        if (modulo > 0)
+//            filterDescription =
+//                    "scale=width=" + std::to_string(width) +
+//                    ":height=" + std::to_string(height) +
+//                    ",framerate=fps=60,";
+//        else
+//            filterDescription = "framerate=fps=60,";
+    }
+
+    filterDescription += "format=pix_fmts=" + std::string(av_get_pix_fmt_name(outPixFormats[0]));
+
+    returnValue = avfilter_graph_parse_ptr(mVFilterGraph, filterDescription.c_str(),
+            &mVFilterInputs, &mVFilterOutputs, nullptr);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
+                "Couldn't add graph filter: " << av_err2str(returnValue);
+        return false;
+    }
+
+    returnValue = avfilter_graph_config(mVFilterGraph, nullptr);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
+                "Couldn't configure graph: " << av_err2str(returnValue);
+        return false;
+    }
+
+    return true;
+}
+
+bool VideoFFmpegComponent::setupAudioFilters()
+{
+    int returnValue = 0;
+    const int outSampleRates[] = { AudioManager::getInstance()->sAudioFormat.freq, -1 };
+    const enum AVSampleFormat outSampleFormats[] = { AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_NONE };
+
+    mAFilterInputs = avfilter_inout_alloc();
+    mAFilterOutputs = avfilter_inout_alloc();
+
+    if (!(mAFilterGraph = avfilter_graph_alloc())) {
+        LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
+                "Couldn't allocate filter graph";
+        return false;
+    }
+
+    // Limit the libavfilter audio processing to one additional thread.
+    // Not sure why the actual thread count is one less than specified.
+    mAFilterGraph->nb_threads = 2;
+
+    const AVFilter* bufferSrc = avfilter_get_by_name("abuffer");
+    if (!bufferSrc) {
+        LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
+                "Couldn't find \"abuffer\" filter";
+        return false;
+    }
+
+    const AVFilter* bufferSink = avfilter_get_by_name("abuffersink");
+    if (!bufferSink) {
+        LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
+                "Couldn't find \"abuffersink\" filter";
+        return false;
+    }
+
+    char channelLayout[512];
+    av_get_channel_layout_string(channelLayout, sizeof(channelLayout),
+            mAudioCodecContext->channels, mAudioCodecContext->channel_layout);
+
+    std::string filterArguments =
+            "time_base=" + std::to_string(mAudioStream->time_base.num) + "/" +
+            std::to_string(mAudioStream->time_base.den) +
+            ":sample_rate=" + std::to_string(mAudioCodecContext->sample_rate) +
+            ":sample_fmt=" + av_get_sample_fmt_name(mAudioCodecContext->sample_fmt) +
+            ":channel_layout=" + channelLayout;
+
+    returnValue = avfilter_graph_create_filter(
+            &mABufferSrcContext,
+            bufferSrc,
+            "in",
+            filterArguments.c_str(),
+            nullptr,
+            mAFilterGraph);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
+                "Couldn't create filter instance for buffer source: " <<
+                av_err2str(returnValue);
+        return false;
+    }
+
+    returnValue = avfilter_graph_create_filter(
+            &mABufferSinkContext,
+            bufferSink,
+            "out",
+            nullptr,
+            nullptr,
+            mAFilterGraph);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
+                "Couldn't create filter instance for buffer sink: " <<
+                av_err2str(returnValue);
+        return false;
+    }
+
+    // Endpoints for the filter graph.
+    mAFilterInputs->name = av_strdup("out");
+    mAFilterInputs->filter_ctx = mABufferSinkContext;
+    mAFilterInputs->pad_idx = 0;
+    mAFilterInputs->next = nullptr;
+
+    mAFilterOutputs->name = av_strdup("in");
+    mAFilterOutputs->filter_ctx = mABufferSrcContext;
+    mAFilterOutputs->pad_idx = 0;
+    mAFilterOutputs->next = nullptr;
+
+    std::string filterDescription =
+            "aresample=" + std::to_string(outSampleRates[0]) + "," +
+            "aformat=sample_fmts=" + av_get_sample_fmt_name(outSampleFormats[0]) +
+            ":channel_layouts=stereo,"
+            "asetnsamples=n=1024:p=0";
+
+    returnValue = avfilter_graph_parse_ptr(mAFilterGraph, filterDescription.c_str(),
+            &mAFilterInputs, &mAFilterOutputs, nullptr);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
+                "Couldn't add graph filter: " << av_err2str(returnValue);
+        return false;
+    }
+
+    returnValue = avfilter_graph_config(mAFilterGraph, nullptr);
+
+    if (returnValue < 0) {
+        LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
+                "Couldn't configure graph: " << av_err2str(returnValue);
+        return false;
+    }
+
+    return true;
 }
 
 void VideoFFmpegComponent::readFrames()
 {
+    int readFrameReturn = 0;
+
+    // It's not clear if this can actually happen in practise, but in theory we could
+    // continue to load frames indefinitely and run out of memory if invalid PTS values
+    // are presented by FFmpeg.
+    if (mVideoFrameQueue.size() > 300 || mAudioFrameQueue.size() > 600)
+        return;
+
     if (mVideoCodecContext && mFormatContext) {
-        if (mVideoFrameQueue.size() < mVideoMinQueueSize || (mAudioStreamIndex >= 0 &&
-                mAudioFrameQueue.size() < mAudioMinQueueSize)) {
-            while(av_read_frame(mFormatContext, mPacket) >= 0) {
+        if (mVideoFrameQueue.size() < mVideoTargetQueueSize || (mAudioStreamIndex >= 0 &&
+                mAudioFrameQueue.size() < mAudioTargetQueueSize)) {
+            while((readFrameReturn = av_read_frame(mFormatContext, mPacket)) >= 0) {
                 if (mPacket->stream_index == mVideoStreamIndex) {
                     if (!avcodec_send_packet(mVideoCodecContext, mPacket) &&
                             !avcodec_receive_frame(mVideoCodecContext, mVideoFrame)) {
 
                         // We have a video frame that needs conversion to RGBA format.
-                        uint8_t* frameRGBA[4];
-                        int lineSize[4];
-                        int allocatedSize = 0;
+                        int returnValue = av_buffersrc_add_frame_flags(mVBufferSrcContext,
+                                mVideoFrame, AV_BUFFERSRC_FLAG_KEEP_REF);
 
-                        // The pts value is the presentation time, i.e. the time stamp when
-                        // the frame (picture) should be displayed. The packet dts value is
-                        // used for the basis of the calculation as per the recommendation
-                        // in the FFmpeg documentation for the av_read_frame function.
-                        double pts = static_cast<double>(mPacket->dts) *
-                                av_q2d(mVideoStream->time_base);
+                        if (returnValue < 0) {
+                            LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
+                                    "Couldn't add video frame to buffer source";
+                        }
 
-                        double frameDuration = static_cast<double>(mPacket->duration) *
-                                av_q2d(mVideoStream->time_base);
-
-                        // Due to some unknown reason, attempting to scale frames where
-                        // coded_width is larger than width leads to graphics corruption or
-                        // crashes. The only workaround I've been able to find is to decrease the
-                        // source width by one pixel. Unfortunately this leads to a noticeably
-                        // softer picture, but as few videos have this issue it's an acceptable
-                        // workaround for now. Possibly this problem is caused by an FFmpeg bug.
-                        int sourceWidth = mVideoCodecContext->width;
-                        if (mVideoCodecContext->coded_width > mVideoCodecContext->width)
-                            sourceWidth--;
-
-                        // Conversion using libswscale.
-                        struct SwsContext* conversionContext = sws_getContext(
-                                sourceWidth,
-                                mVideoCodecContext->height,
-                                mVideoCodecContext->pix_fmt,
-                                mVideoFrame->width,
-                                mVideoFrame->height,
-                                AV_PIX_FMT_RGBA,
-                                SWS_BILINEAR,
-                                nullptr,
-                                nullptr,
-                                nullptr);
-
-                        allocatedSize = av_image_alloc(
-                                frameRGBA,
-                                lineSize,
-                                mVideoFrame->width,
-                                mVideoFrame->height,
-                                AV_PIX_FMT_RGB32,
-                                1);
-
-                        sws_scale(
-                                conversionContext,
-                                const_cast<uint8_t const* const*>(mVideoFrame->data),
-                                mVideoFrame->linesize,
-                                0,
-                                mVideoCodecContext->height,
-                                frameRGBA,
-                                lineSize);
-
-                        VideoFrame currFrame;
-
-                        // Save the frame into the queue for later processing.
-                        currFrame.width = mVideoFrame->width;
-                        currFrame.height = mVideoFrame->height;
-                        currFrame.pts = pts;
-                        currFrame.frameDuration = frameDuration;
-
-                        currFrame.frameRGBA.insert(currFrame.frameRGBA.begin(),
-                                &frameRGBA[0][0], &frameRGBA[0][allocatedSize]);
-
-                        mVideoFrameQueue.push(currFrame);
-
-                        av_freep(&frameRGBA[0]);
-                        sws_freeContext(conversionContext);
                         av_packet_unref(mPacket);
                         break;
                     }
@@ -320,146 +562,14 @@ void VideoFFmpegComponent::readFrames()
                     if (!avcodec_send_packet(mAudioCodecContext, mPacket) &&
                             !avcodec_receive_frame(mAudioCodecContext, mAudioFrame)) {
 
-                        // We have a audio frame that needs to be converted using libswresample.
-                        SwrContext* resampleContext = nullptr;
-                        uint8_t** convertedData = nullptr;
-                        int numConvertedSamples = 0;
-                        int resampledDataSize = 0;
+                        // We have an audio frame that needs conversion and resampling.
+                        int returnValue = av_buffersrc_add_frame_flags(mABufferSrcContext,
+                                mAudioFrame, AV_BUFFERSRC_FLAG_KEEP_REF);
 
-                        enum AVSampleFormat outSampleFormat = AV_SAMPLE_FMT_FLT;
-                        int outSampleRate = mAudioCodecContext->sample_rate;
-
-                        int64_t inChannelLayout = mAudioCodecContext->channel_layout;
-                        int64_t outChannelLayout = AV_CH_LAYOUT_STEREO;
-                        int outNumChannels = 0;
-                        int outChannels = 2;
-                        int inNumSamples = 0;
-                        int outMaxNumSamples = 0;
-                        int outLineSize = 0;
-
-                        // The pts value is the presentation time, i.e. the time stamp when
-                        // the audio should be played.
-                        double timeBase = av_q2d(mAudioStream->time_base);
-                        double pts = mAudioFrame->pts * av_q2d(mAudioStream->time_base);
-
-                        // Audio resampler setup. We only perform channel rematrixing and
-                        // format conversion here, the sample rate is left untouched.
-                        // There is a sample rate conversion in AudioManager and we don't
-                        // want to resample twice. And for some files there may not be any
-                        // resampling needed at all if the format is the same as the output
-                        // format for the application.
-                        int outNumSamples = static_cast<int>(av_rescale_rnd(mAudioFrame->nb_samples,
-                                outSampleRate, mAudioCodecContext->sample_rate, AV_ROUND_UP));
-
-                        resampleContext = swr_alloc();
-                        if (!resampleContext) {
-                            LOG(LogError) << "VideoFFmpegComponent::readFrames() Couldn't "
-                                    "allocate audio resample context";
+                        if (returnValue < 0) {
+                            LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
+                                    "Couldn't add audio frame to buffer source";
                         }
-
-                        inChannelLayout = (mAudioCodecContext->channels ==
-                                av_get_channel_layout_nb_channels(
-                                mAudioCodecContext->channel_layout)) ?
-                                mAudioCodecContext->channel_layout :
-                                av_get_default_channel_layout(mAudioCodecContext->channels);
-
-                        if (outChannels == 1)
-                            outChannelLayout = AV_CH_LAYOUT_MONO;
-                        else if (outChannels == 2)
-                            outChannelLayout = AV_CH_LAYOUT_STEREO;
-                        else
-                            outChannelLayout = AV_CH_LAYOUT_SURROUND;
-
-                        inNumSamples = mAudioFrame->nb_samples;
-
-                        av_opt_set_int(resampleContext, "in_channel_layout", inChannelLayout, 0);
-                        av_opt_set_int(resampleContext, "in_sample_rate",
-                                mAudioCodecContext->sample_rate, 0);
-                        av_opt_set_sample_fmt(resampleContext, "in_sample_fmt",
-                                mAudioCodecContext->sample_fmt, 0);
-
-                        av_opt_set_int(resampleContext, "out_channel_layout", outChannelLayout, 0);
-                        av_opt_set_int(resampleContext, "out_sample_rate", outSampleRate, 0);
-                        av_opt_set_sample_fmt(resampleContext, "out_sample_fmt",
-                                outSampleFormat, 0);
-
-                        if (swr_init(resampleContext) < 0) {
-                            LOG(LogError) << "VideoFFmpegComponent::readFrames() Couldn't "
-                                    "initialize the resampling context";
-                        }
-
-                        outMaxNumSamples = outNumSamples =
-                                static_cast<int>(av_rescale_rnd(inNumSamples, outSampleRate,
-                                mAudioCodecContext->sample_rate, AV_ROUND_UP));
-
-                        outNumChannels = av_get_channel_layout_nb_channels(outChannelLayout);
-
-                        av_samples_alloc_array_and_samples(
-                                &convertedData,
-                                &outLineSize,
-                                outNumChannels,
-                                outNumSamples,
-                                outSampleFormat,
-                                1);
-
-                        outNumSamples = static_cast<int>(av_rescale_rnd(swr_get_delay(
-                                resampleContext, mAudioCodecContext->sample_rate) + inNumSamples,
-                                outSampleRate, mAudioCodecContext->sample_rate, AV_ROUND_UP));
-
-                        if (outNumSamples > outMaxNumSamples) {
-                            av_freep(&convertedData[0]);
-                            av_samples_alloc(
-                                    convertedData,
-                                    &outLineSize,
-                                    outNumChannels,
-                                    outNumSamples,
-                                    outSampleFormat,
-                                    1);
-                            outMaxNumSamples = outNumSamples;
-                        }
-
-                        // Perform the actual conversion.
-                        if (resampleContext) {
-                            numConvertedSamples = swr_convert(
-                                    resampleContext,
-                                    convertedData,
-                                    outNumSamples,
-                                    const_cast<const uint8_t**>(mAudioFrame->data),
-                                    mAudioFrame->nb_samples);
-                            if (numConvertedSamples < 0) {
-                                LOG(LogError) << "VideoFFmpegComponent::readFrames() Audio "
-                                    "resampling failed";
-                            }
-
-                            resampledDataSize = av_samples_get_buffer_size(
-                                    &outLineSize,
-                                    outNumChannels,
-                                    numConvertedSamples,
-                                    outSampleFormat,
-                                    1);
-                            if (resampledDataSize < 0) {
-                                LOG(LogError) << "VideoFFmpegComponent::readFrames() Audio "
-                                    "resampling did not generated any output";
-                            }
-                        }
-
-                        AudioFrame currFrame;
-
-                        // Save the frame into the queue for later processing.
-                        currFrame.resampledData.insert(currFrame.resampledData.begin(),
-                                &convertedData[0][0], &convertedData[0][resampledDataSize]);
-                        currFrame.resampledDataSize = resampledDataSize;
-                        currFrame.pts = pts;
-
-                        mAudioFrameQueue.push(currFrame);
-
-                        if (convertedData) {
-                            av_freep(&convertedData[0]);
-                            av_freep(&convertedData);
-                        }
-
-                        if (resampleContext)
-                            swr_free(&resampleContext);
 
                         av_packet_unref(mPacket);
                         continue;
@@ -467,6 +577,75 @@ void VideoFFmpegComponent::readFrames()
                 }
             }
         }
+    }
+
+    if (readFrameReturn < 0)
+        mEndOfVideo = true;
+}
+
+void VideoFFmpegComponent::getProcessedFrames()
+{
+    // Video frames.
+    while (av_buffersink_get_frame(mVBufferSinkContext, mVideoFrameResampled) >= 0) {
+
+        // Save the frame into the queue for later processing.
+        VideoFrame currFrame;
+
+        currFrame.width = mVideoFrameResampled->width;
+        currFrame.height = mVideoFrameResampled->height;
+
+        mVideoFrameResampled->best_effort_timestamp = mVideoFrameResampled->pkt_dts;
+
+        // The PTS value is the presentation time, i.e. the time stamp when the frame
+        // (picture) should be displayed. The packet DTS value is used for the basis of
+        // the calculation as per the recommendation in the FFmpeg documentation for
+        // the av_read_frame function.
+        double pts = static_cast<double>(mVideoFrameResampled->pkt_dts) *
+                av_q2d(mVideoStream->time_base);
+
+        // Needs to be adjusted if changing the rate?
+        double frameDuration = static_cast<double>(mVideoFrameResampled->pkt_duration) *
+                av_q2d(mVideoStream->time_base);
+
+        currFrame.pts = pts;
+        currFrame.frameDuration = frameDuration;
+
+        int bufferSize = mVideoFrameResampled->width * mVideoFrameResampled->height * 4;
+
+        currFrame.frameRGBA.insert(currFrame.frameRGBA.begin(),
+                &mVideoFrameResampled->data[0][0],
+                &mVideoFrameResampled->data[0][bufferSize]);
+
+        mVideoFrameQueue.push(currFrame);
+        av_frame_unref(mVideoFrameResampled);
+    }
+
+    // Audio frames.
+    // When resampling, we may not always get a frame returned from the sink as there may not
+    // have been enough data available to the filter.
+    while (mAudioCodecContext && av_buffersink_get_frame(mABufferSinkContext,
+            mAudioFrameResampled) >= 0) {
+
+        AudioFrame currFrame;
+
+        mAudioFrameResampled->best_effort_timestamp = mAudioFrameResampled->pts;
+
+        AVRational timeBase;
+        timeBase.num = 1;
+        timeBase.den = mAudioFrameResampled->sample_rate;
+
+        double pts = mAudioFrameResampled->pts * av_q2d(timeBase);
+        currFrame.pts = pts;
+
+        int bufferSize = mAudioFrameResampled->nb_samples * mAudioFrameResampled->channels *
+                av_get_bytes_per_sample(AV_SAMPLE_FMT_FLT);
+
+        currFrame.resampledData.insert(currFrame.resampledData.begin(),
+                &mAudioFrameResampled->data[0][0],
+                &mAudioFrameResampled->data[0][bufferSize]);
+
+        mAudioFrameQueue.push(currFrame);
+        av_frame_unref(mAudioFrameResampled);
     }
 }
 
@@ -483,7 +662,7 @@ void VideoFFmpegComponent::outputFrames()
         }
     }
 
-    // Process the audio frames that have a pts value below mAccumulatedTime (plus a small
+    // Process the audio frames that have a PTS value below mAccumulatedTime (plus a small
     // buffer to avoid underflows).
     while (!mAudioFrameQueue.empty()) {
         if (mAudioFrameQueue.front().pts < mAccumulatedTime + AUDIO_BUFFER) {
@@ -506,9 +685,14 @@ void VideoFFmpegComponent::outputFrames()
                 outputSound = true;
 
             if (outputSound) {
-                AudioManager::getInstance()->processStream(
-                        &mAudioFrameQueue.front().resampledData.at(0),
-                        mAudioFrameQueue.front().resampledDataSize);
+                // The audio is output to AudioManager from updatePlayer() in the main thread.
+                mAudioMutex.lock();
+
+                mOutputAudio.insert(mOutputAudio.end(),
+                    mAudioFrameQueue.front().resampledData.begin(),
+                    mAudioFrameQueue.front().resampledData.end());
+
+                mAudioMutex.unlock();
             }
             mAudioFrameQueue.pop();
             mAudioFrameCount++;
@@ -518,7 +702,7 @@ void VideoFFmpegComponent::outputFrames()
         }
     }
 
-    // Process all available video frames that have a pts value below mAccumulatedTime.
+    // Process all available video frames that have a PTS value below mAccumulatedTime.
     // But if more than one frame is processed here, it means that the computer can't
     // keep up for some reason.
     while (mIsActuallyPlaying && !mVideoFrameQueue.empty()) {
@@ -537,8 +721,8 @@ void VideoFFmpegComponent::outputFrames()
             // the frames. If the difference exceeds the threshold though, then skip them as
             // otherwise videos would just slow down instead of skipping frames when the computer
             // can't keep up. This approach primarily decreases stuttering for videos with frame
-            // rates close to, or at, the rendering frame rate, for example 59.94 and 60 fps.
-            if (!mOutputPicture.hasBeenRendered) {
+            // rates close to, or at, the rendering frame rate, for example 59.94 and 60 FPS.
+            if (mDecodedFrame && !mOutputPicture.hasBeenRendered) {
                 double timeDifference = mAccumulatedTime - mVideoFrameQueue.front().pts -
                         mVideoFrameQueue.front().frameDuration * 2.0l;
                 if (timeDifference < mVideoFrameQueue.front().frameDuration) {
@@ -756,30 +940,32 @@ void VideoFFmpegComponent::startVideo()
                         "audio codec context for file \"" << mVideoPath << "\"";
                 return;
             }
-
-            AudioManager::getInstance()->setupAudioStream(mAudioCodecContext->sample_rate);
         }
 
         mVideoTimeBase = 1.0l / av_q2d(mVideoStream->avg_frame_rate);
-        // Set some reasonable minimum queue sizes (buffers).
-        mVideoMinQueueSize = static_cast<int>(av_q2d(mVideoStream->avg_frame_rate) / 2.0l);
+
+        // Set some reasonable target queue sizes (buffers).
+        mVideoTargetQueueSize = static_cast<int>(av_q2d(mVideoStream->avg_frame_rate) / 2.0l);
         if (mAudioStreamIndex >=0)
-            mAudioMinQueueSize = mAudioStream->codecpar->channels * 15;
+            mAudioTargetQueueSize = mAudioStream->codecpar->channels * 15;
         else
-            mAudioMinQueueSize = 30;
+            mAudioTargetQueueSize = 30;
 
         mPacket = av_packet_alloc();
         mVideoFrame = av_frame_alloc();
+        mVideoFrameResampled = av_frame_alloc();
         mAudioFrame = av_frame_alloc();
+        mAudioFrameResampled = av_frame_alloc();
 
-        // Resize the video surface, which is needed both for the gamelist view and for the
-        // video screeensaver.
+        // Resize the video surface, which is needed both for the gamelist view and for
+        // the video screeensaver.
         resize();
 
         // Calculate pillarbox/letterbox sizes.
         calculateBlackRectangle();
 
         mIsPlaying = true;
+        mFadeIn = 0.0f;
     }
 }
 
@@ -792,9 +978,13 @@ void VideoFFmpegComponent::stopVideo()
     mEndOfVideo = false;
 
     if (mFrameProcessingThread) {
+        if (mWindow->getVideoPlayerCount() == 0)
+            AudioManager::getInstance()->muteStream();
         // Wait for the thread execution to complete.
         mFrameProcessingThread->join();
         mFrameProcessingThread.reset();
+        mOutputAudio.clear();
+        AudioManager::getInstance()->clearStream();
     }
 
     // Clear the video and audio frame queues.
@@ -803,7 +993,9 @@ void VideoFFmpegComponent::stopVideo()
 
     if (mFormatContext) {
         av_frame_free(&mVideoFrame);
+        av_frame_free(&mVideoFrameResampled);
         av_frame_free(&mAudioFrame);
+        av_frame_free(&mAudioFrameResampled);
         av_packet_unref(mPacket);
         av_packet_free(&mPacket);
 
@@ -819,6 +1011,8 @@ void VideoFFmpegComponent::stopVideo()
 
 void VideoFFmpegComponent::pauseVideo()
 {
+    if (mPause && mWindow->getVideoPlayerCount() == 0)
+        AudioManager::getInstance()->muteStream();
 }
 
 void VideoFFmpegComponent::handleLooping()
