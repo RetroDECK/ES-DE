@@ -507,7 +507,7 @@ void GuiScraperMenu::openOtherSettings()
     auto retry_peer_verification = std::make_shared<SwitchComponent>(mWindow);
     retry_peer_verification->setState(
             Settings::getInstance()->getBool("ScraperRetryPeerVerification"));
-    s->addWithLabel("RETRY ON PEER VERIFICATION ERRORS", retry_peer_verification);
+    s->addWithLabel("AUTO-RETRY ON PEER VERIFICATION ERRORS", retry_peer_verification);
     s->addSaveFunc([retry_peer_verification, s] {
         if (retry_peer_verification->getState() !=
                 Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
