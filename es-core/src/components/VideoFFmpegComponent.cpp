@@ -215,7 +215,8 @@ void VideoFFmpegComponent::updatePlayer()
     // Output any audio that has been added by the processing thread.
     mAudioMutex.lock();
     if (mOutputAudio.size()) {
-        AudioManager::getInstance()->processStream(&mOutputAudio.at(0), mOutputAudio.size());
+        AudioManager::getInstance()->processStream(&mOutputAudio.at(0),
+                static_cast<unsigned int>(mOutputAudio.size()));
         mOutputAudio.clear();
     }
     mAudioMutex.unlock();
