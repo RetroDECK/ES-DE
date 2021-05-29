@@ -1034,6 +1034,19 @@ void GuiMenu::openOtherOptions()
     });
     #endif
 
+    // Whether to upscale the video frame rate to 60 FPS.
+    auto video_upscale_frame_rate = std::make_shared<SwitchComponent>(mWindow);
+    video_upscale_frame_rate->setState(Settings::getInstance()->getBool("VideoUpscaleFrameRate"));
+    s->addWithLabel("UPSCALE VIDEO FRAME RATE TO 60 FPS (FFMPEG)", video_upscale_frame_rate);
+    s->addSaveFunc([video_upscale_frame_rate, s] {
+        if (video_upscale_frame_rate->getState() !=
+                Settings::getInstance()->getBool("VideoUpscaleFrameRate")) {
+            Settings::getInstance()->
+                    setBool("VideoUpscaleFrameRate", video_upscale_frame_rate->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Allow overriding of the launch command per game (the option to disable this is
     // intended primarily for testing purposes).
     auto launchcommand_override = std::make_shared<SwitchComponent>(mWindow);

@@ -254,6 +254,7 @@ void Settings::setDefaults()
             "/usr/pkg/lib/libretro";                                    // NetBSD
     mStringMap["EmulatorCorePath"] = { emulatorCorePath, emulatorCorePath };
     #endif
+    mBoolMap["VideoUpscaleFrameRate"] = { false, false };
     mBoolMap["LaunchCommandOverride"] = { true, true };
     mBoolMap["ShowHiddenFiles"] = { true, true };
     mBoolMap["ShowHiddenGames"] = { true, true };
