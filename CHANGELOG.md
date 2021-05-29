@@ -12,12 +12,16 @@
 
 * Added a fullscreen game media viewer
 * Added a new video player based on FFmpeg
+* Added a 60 FPS frame rate upscaler option to the video player which results in slightly smoother playback for low frame rate videos (e.g. 24 and 30 FPS)
 * Moved to the SDL GameController API which gives numerous improvements to the controller handling
 * Default controller configuration is now applied, input configuration should rarely if ever be required any longer except for deliberate button customization
 * Added support for selecting the controller type (Xbox, Xbox 360, PS4, PS5 and SNES), which changes the help icons, help text and the input configuration tool icons and text
 * Added an option to limit the input in ES-DE to only the first controller (does not affect the emulators)
 * Removed the startup notification regarding default keyboard mappings being in use, instead default mappings are now considered the recommended input configuration
 * The controller input configuration is not automatically started any longer if there is no es_input.cfg file or if there are no applicable configuration entries in the file
+* Increased the max allowed size for images when scraping, which should now only downscale files which really need it (like enormous marquee images when scraping from TheGamesDB)
+* Changed the resampling algorithm for image downscaling for the scraper from bilinear to Lanczos which results in noticeably sharper images
+* Added a configurable option to automatically retry scraping up to five times in case of ScreenScraper TLS errors (error message "SSL peer certificate or SSH remote key was not OK")
 * Changed the button for jumping to a random system or game and added a setting for disabling the functionality altogether
 * Added navigation sounds for some actions where it was missing, such as when attempting to add folders, placeholders or systems to custom collections
 * Changed the custom collection "Jump to" navigation sound to the select sound instead of the scroll sound

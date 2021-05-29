@@ -804,6 +804,10 @@ If this setting is enabled and a folder has its flag set to be excluded from the
 
 Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS games or any multi-disk games where there is a folder for each individual game.
 
+**Auto-retry on peer verification errors**
+
+ScreenScraper sometimes has issues with its TLS certificates which causes searches to randomly fail. It's normally resolved within a few days, but in the meanwhile activating this setting will have the scraper automatically make up to eight additional attempts when this error occurs. That is normally enough to complete the search, but if not, just press 'Retry' in the error dialog and ES-DE will try eight more times. This setting applies to both the single-game scraper and the multi-scraper. The following error notification dialog and corresponding es_log.txt entry is displayed when this error occurs: "Error downloading thumbnail: SSL peer certificate or SSH remote key was not OK".
+
 ### UI settings
 
 Various settings that affects the user interface.
@@ -1118,6 +1122,10 @@ With this setting enabled, the taskbar will be hidden when launching ES-DE, and 
 **Run in background (while game is launched)** _(Windows only)_
 
 This is really a last-resort setting if ES-DE freezes when launching games. This issue seems to only occur on Windows 8.1 and older but that's not fully confirmed. ES-DE will behave a bit strange with this option enabled so keep it disabled unless you absolutely need it.
+
+**Upscale video frame rate to 60 FPS (FFmpeg)**
+
+With this option enabled, videos with lower frame rates than 60 FPS, such as 24 and 30 will get upscaled to 60 FPS. This results in slightly smoother playback for some videos. There is a small performance hit from this option, so on slower machines it may be necessary to disable it for fluent video playback. This setting has no effect when using the VLC video player.
 
 **Per game launch command override**
 

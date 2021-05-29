@@ -27,7 +27,7 @@ The code has some dependencies. For building, you'll need CMake and development 
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install build-essential git cmake libsdl2-dev libavcodec-dev libavformat-dev libavutil-dev libswresample-dev libswscale-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev vlc libvlc-dev libgl1-mesa-dev
+sudo apt-get install build-essential git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev vlc libvlc-dev libgl1-mesa-dev
 ```
 
 **On Fedora**
@@ -488,8 +488,10 @@ As macOS does not have any package manager which would have handled the library 
 
 ```
 libavcodec.58.dylib
+libavfilter.7.dylib
 libavformat.58.dylib
 libavutil.56.dylib
+libpostproc.55.dylib
 libswresample.3.dylib
 libswscale.5.dylib
 libfdk-aac.2.dylib
@@ -515,7 +517,9 @@ cd emulationstation-de
 tools/macOS_change_dylib_rpaths.sh
 Found file libfreetype.6.dylib - changing to rpaths
 Found file libavcodec.58.dylib - changing to rpaths
+Found file libavfilter.7.dylib - changing to rpaths
 Found file libavformat.58.dylib - changing to rpaths
+Found file libpostproc.55.dylib - changing to rpaths
 Found file libswresample.3.dylib - changing to rpaths
 Found file libswscale.5.dylib - changing to rpaths
 ```
@@ -575,12 +579,14 @@ This will be the directory structure for the installation:
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/EmulationStation
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.0.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavcodec.58.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavfilter.7.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavformat.58.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavutil.56.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfdk-aac.2.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreeimage.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreetype.6.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpng16.16.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpostproc.55.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswresample.3.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswscale.5.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlc.dylib
@@ -636,16 +642,20 @@ This is certainly not perfect as the versions of the libraries are hardcoded ins
 Simply run `otool -L EmulationStation` and verify that the result looks something like this:
 
 ```
-EmulationStation:
-	/usr/lib/libcurl.4.dylib (compatibility version 7.0.0, current version 8.0.0)
-	@rpath/libfreeimage.dylib (compatibility version 3.0.0, current version 3.18.0)
-	@rpath/libfreetype.6.dylib (compatibility version 24.0.0, current version 24.2.0)
-	@rpath/libSDL2-2.0.0.dylib (compatibility version 13.0.0, current version 13.0.0)
-	/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa (compatibility version 1.0.0, current version 22.0.0)
-	@rpath/libvlc.dylib (compatibility version 12.0.0, current version 12.0.0)
-	/System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL (compatibility version 1.0.0, current version 1.0.0)
-	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 120.1.0)
-	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1226.10.1)
+./EmulationStation:
+        /usr/lib/libcurl.4.dylib (compatibility version 7.0.0, current version 9.0.0)
+        @rpath/libavcodec.58.dylib (compatibility version 58.0.0, current version 58.134.100)
+        @rpath/libavfilter.7.dylib (compatibility version 7.0.0, current version 7.110.100)
+        @rpath/libavformat.58.dylib (compatibility version 58.0.0, current version 58.76.100)
+        @rpath/libavutil.56.dylib (compatibility version 56.0.0, current version 56.70.100)
+        @rpath/libfreeimage.dylib (compatibility version 3.0.0, current version 3.18.0)
+        @rpath/libfreetype.6.dylib (compatibility version 24.0.0, current version 24.4.0)
+        @rpath/libSDL2-2.0.0.dylib (compatibility version 15.0.0, current version 15.0.0)
+        /System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa (compatibility version 1.0.0, current version 23.0.0)
+        @rpath/libvlc.dylib (compatibility version 12.0.0, current version 12.0.0)
+        /System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL (compatibility version 1.0.0, current version 1.0.0)
+        /usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.4)
+        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.250.1)
 ```
 
 If any of the lines that should start with @rpath instead has an absolute path, then you have a problem and need to modify the install_name_tools parameters in es-app/CMakeLists.txt.
@@ -658,6 +668,12 @@ This is the section in es-app/CMakeLists.txt that would need to be modified:
 
 ```
 add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
+        -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib
+        -change /usr/local/lib/libavfilter.7.dylib @rpath/libavfilter.7.dylib
+        -change /usr/local/lib/libavformat.58.dylib @rpath/libavformat.58.dylib
+        -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib
+        -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib
+        -change /usr/local/lib/libswscale.5.dylib @rpath/libswscale.5.dylib
         -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
         -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
         -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
@@ -841,7 +857,7 @@ Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml, Rap
 
 You may need to create the SDL2 directory manually and copy the header files there.
 
-For FFmpeg, copy the directories libavcodec, libavformat, libavutil, libswresample and libswscale.
+For FFmpeg, copy the directories libavcodec, libavfilter, libavformat and libavutil.
 
 It should then look something like this:
 
@@ -853,10 +869,9 @@ freetype/
 ft2build.h
 GL/
 libavcodec/
+libavfilter/
 libavformat/
 libavutil/
-libswresample/
-libswscale/
 pugiconfig.hpp
 pugixml.hpp
 rapidjson/
@@ -874,10 +889,13 @@ Copy the files to the `emulationstation-de` build directory. Most of them will c
 ```
 avcodec-59.dll
 avcodec.lib
+avfilter.lib
+avfilter-8.dll
 avformat-59.dll
 avformat.lib
 avutil-57.dll
 avutil.lib
+postproc-56.dll
 swresample-4.dll
 swresample.lib
 swscale-6.dll
@@ -928,8 +946,10 @@ lib /def:libvlc.def /out:libvlc.lib /machine:x64
 
 ```
 avcodec-59.dll
+avfilter-8.dll
 avformat-59.dll
 avutil-57.dll
+postproc-56.dll
 swresample-4.dll
 swscale-6.dll
 FreeImage.dll
