@@ -12,7 +12,9 @@
 
 export FREETYPE_FILENAME=libfreetype.6.dylib
 export AVCODEC_FILENAME=libavcodec.58.dylib
+export AVFILTER_FILENAME=libavfilter.7.dylib
 export AVFORMAT_FILENAME=libavformat.58.dylib
+export POSTPROC_FILENAME=libpostproc.55.dylib
 export SWRESAMPLE_FILENAME=libswresample.3.dylib
 export SWSCALE_FILENAME=libswscale.5.dylib
 
@@ -32,6 +34,19 @@ if [ -f $AVCODEC_FILENAME ]; then
   install_name_tool -add_rpath @executable_path $AVCODEC_FILENAME
 fi
 
+if [ -f $AVFILTER_FILENAME ]; then
+  echo Found file $AVFILTER_FILENAME - changing to rpaths
+  chmod 755 $AVFILTER_FILENAME
+  install_name_tool -change /usr/local/lib/libavformat.58.dylib @rpath/libavformat.58.dylib $AVFILTER_FILENAME
+  install_name_tool -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib $AVFILTER_FILENAME
+  install_name_tool -change /usr/local/lib/libpostproc.55.dylib @rpath/libpostproc.55.dylib $AVFILTER_FILENAME
+  install_name_tool -change /usr/local/lib/libswscale.5.dylib @rpath/libswscale.5.dylib $AVFILTER_FILENAME
+  install_name_tool -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib $AVFILTER_FILENAME
+  install_name_tool -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib $AVFILTER_FILENAME
+  install_name_tool -change /usr/local/opt/fdk-aac/lib/libfdk-aac.2.dylib @rpath/libfdk-aac.2.dylib $AVFILTER_FILENAME
+  install_name_tool -add_rpath @executable_path $AVFILTER_FILENAME
+fi
+
 if [ -f $AVFORMAT_FILENAME ]; then
   echo Found file $AVFORMAT_FILENAME - changing to rpaths
   chmod 755 $AVFORMAT_FILENAME
@@ -40,6 +55,13 @@ if [ -f $AVFORMAT_FILENAME ]; then
   install_name_tool -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib $AVFORMAT_FILENAME
   install_name_tool -change /usr/local/opt/fdk-aac/lib/libfdk-aac.2.dylib @rpath/libfdk-aac.2.dylib $AVFORMAT_FILENAME
   install_name_tool -add_rpath @executable_path $AVFORMAT_FILENAME
+fi
+
+if [ -f $POSTPROC_FILENAME ]; then
+  echo Found file $POSTPROC_FILENAME - changing to rpaths
+  chmod 755 $POSTPROC_FILENAME
+  install_name_tool -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib $POSTPROC_FILENAME
+  install_name_tool -add_rpath @executable_path $POSTPROC_FILENAME
 fi
 
 if [ -f $SWRESAMPLE_FILENAME ]; then

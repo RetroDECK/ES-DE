@@ -162,6 +162,7 @@ elseif(APPLE)
     # This problem definitely needs to be resolved properly at a later date.
     add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
             -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib
+            -change /usr/local/lib/libavfilter.7.dylib @rpath/libavfilter.7.dylib
             -change /usr/local/lib/libavformat.58.dylib @rpath/libavformat.58.dylib
             -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib
             -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib
@@ -179,9 +180,13 @@ elseif(APPLE)
     if(NOT APPLE_SKIP_INSTALL_LIBS)
         install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.58.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.7.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libavformat.58.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libavutil.56.dylib
+                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.55.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libswresample.3.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
