@@ -243,6 +243,7 @@ void MediaViewer::playVideo()
         return;
 
     mDisplayingImage = false;
+    ViewController::get()->onStopVideo();
 
     if (Settings::getInstance()->getString("VideoPlayer") == "ffmpeg")
         mVideo = new VideoFFmpegComponent(mWindow);
