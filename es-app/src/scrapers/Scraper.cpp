@@ -259,15 +259,27 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             // This is just a temporary workaround to avoid saving media files to disk that
             // are actually just containing error messages from the scraper service. The
             // proper solution is to implement file checksum checks to determine if the
-            // server response contains valid media. The problem with this temporary
-            // solution is of course that any tiny media files of less than 300 bytes
-            // will not be saved to disk.
+            // server response contains valid media. As for the current approach, if the
+            // file is less than 350 bytes, we check if FreeImage can actually detect a
+            // valid format, and if not, we present an error message. Black/empty images
+            // are sometimes returned from the scraper service and these can actually be
+            // less than 350 bytes in size.
             if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
                     mResult.thumbnailImageData.size() < 350) {
-                setError("The file \"" + Utils::FileSystem::getFileName(filePath) +
-                        "\" returned by the scraper seems to be invalid as it's less than " +
-                        "350 bytes in size");
-                return;
+
+                FIMEMORY* memoryStream = FreeImage_OpenMemory(
+                        reinterpret_cast<BYTE*>(&mResult.thumbnailImageData.at(0)),
+                        mResult.thumbnailImageData.size());
+
+                FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileTypeFromMemory(memoryStream, 0);
+                FreeImage_CloseMemory(memoryStream);
+
+                if (imageFormat == FIF_UNKNOWN) {
+                    setError("The file \"" + Utils::FileSystem::getFileName(filePath) +
+                            "\" returned by the scraper seems to be invalid as it's less than " +
+                            "350 bytes in size");
+                    return;
+                }
             }
 
             // Remove any existing media file before attempting to write a new one.
@@ -401,17 +413,34 @@ void MediaDownloadHandle::update()
 
     // Download is done, save it to disk.
 
-    // This is just a temporary workaround to avoid saving media files to disk that
-    // are actually just containing error messages from the scraper service. The
-    // proper solution is to implement file checksum checks to determine if the
-    // server response contains valid media. The problem with this temporary
-    // solution is of course that any tiny media files of less than 300 bytes
-    // will not be saved to disk.
+    // This is just a temporary workaround to avoid saving media files to disk that are
+    // actually just containing error messages from the scraper service. The proper solution
+    // is to implement file checksum checks to determine if the server response contains valid
+    // media. As for the current approach, if the file is less than 350 bytes, we check if
+    // FreeImage can actually detect a valid format, and if not, we present an error message.
+    // Black/empty images are sometimes returned from the scraper service and these can actually
+    // be less than 350 bytes in size.
     if (Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia") &&
             mReq->getContent().size() < 350) {
-        setError("The file \"" + Utils::FileSystem::getFileName(mSavePath) + "\" returned by the " +
-                "scraper seems to be invalid as it's less than 350 bytes in size");
-        return;
+
+        FREE_IMAGE_FORMAT imageFormat = FIF_UNKNOWN;
+
+        if (mMediaType != "videos") {
+            std::string imageData = mReq->getContent();
+
+            FIMEMORY* memoryStream = FreeImage_OpenMemory(
+                    reinterpret_cast<BYTE*>(&imageData.at(0)), imageData.size());
+
+            imageFormat = FreeImage_GetFileTypeFromMemory(memoryStream, 0);
+            FreeImage_CloseMemory(memoryStream);
+        }
+
+        if (imageFormat == FIF_UNKNOWN) {
+            setError("The file \"" + Utils::FileSystem::getFileName(mSavePath) +
+                    "\" returned by the scraper seems to be invalid as it's less than " +
+                    "350 bytes in size");
+            return;
+        }
     }
 
     // Remove any existing media file before attempting to write a new one.
