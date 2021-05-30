@@ -177,7 +177,7 @@ namespace Utils
             const char* f = format.c_str();
             tm timeStruct;
             #if defined(_WIN64)
-            localtime_s(&timeStruct, &_time);
+            localtime_s(&timeStruct, &time);
             #else
             localtime_r(&time, &timeStruct);
             #endif

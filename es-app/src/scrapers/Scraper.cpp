@@ -269,7 +269,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
 
                 FIMEMORY* memoryStream = FreeImage_OpenMemory(
                         reinterpret_cast<BYTE*>(&mResult.thumbnailImageData.at(0)),
-                        mResult.thumbnailImageData.size());
+                        static_cast<DWORD>(mResult.thumbnailImageData.size()));
 
                 FREE_IMAGE_FORMAT imageFormat = FreeImage_GetFileTypeFromMemory(memoryStream, 0);
                 FreeImage_CloseMemory(memoryStream);
@@ -429,7 +429,8 @@ void MediaDownloadHandle::update()
             std::string imageData = mReq->getContent();
 
             FIMEMORY* memoryStream = FreeImage_OpenMemory(
-                    reinterpret_cast<BYTE*>(&imageData.at(0)), imageData.size());
+                    reinterpret_cast<BYTE*>(&imageData.at(0)),
+                    static_cast<DWORD>(imageData.size()));
 
             imageFormat = FreeImage_GetFileTypeFromMemory(memoryStream, 0);
             FreeImage_CloseMemory(memoryStream);
