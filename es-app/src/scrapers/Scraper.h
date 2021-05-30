@@ -56,14 +56,14 @@ struct ScraperSearchResult {
     std::string thumbnailImageData; // Thumbnail cache, this will contain the entire image.
     std::string thumbnailImageUrl;
 
-    std::string box3dUrl;
+    std::string box3DUrl;
     std::string coverUrl;
     std::string marqueeUrl;
     std::string screenshotUrl;
     std::string videoUrl;
 
     // Needed to pre-set the image type.
-    std::string box3dFormat;
+    std::string box3DFormat;
     std::string coverFormat;
     std::string marqueeFormat;
     std::string screenshotFormat;

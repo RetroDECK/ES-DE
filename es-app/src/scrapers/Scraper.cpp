@@ -182,9 +182,9 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
 
     mResult.savedNewMedia = false;
 
-    if (Settings::getInstance()->getBool("Scrape3DBoxes") && result.box3dUrl != "") {
-        mediaFileInfo.fileURL = result.box3dUrl;
-        mediaFileInfo.fileFormat = result.box3dFormat;
+    if (Settings::getInstance()->getBool("Scrape3DBoxes") && result.box3DUrl != "") {
+        mediaFileInfo.fileURL = result.box3DUrl;
+        mediaFileInfo.fileFormat = result.box3DFormat;
         mediaFileInfo.subDirectory = "3dboxes";
         mediaFileInfo.existingMediaFile = search.game->get3DBoxPath();
         mediaFileInfo.resizeFile = true;

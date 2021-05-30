@@ -235,12 +235,13 @@ void GuiScraperSearch::resizeMetadata()
             it->first->setFont(fontLbl);
             it->first->setSize(0, 0);
             if (it->first->getSize().x() > maxLblWidth)
-                maxLblWidth = it->first->getSize().x() + (16 * Renderer::getScreenWidthModifier());
+                maxLblWidth = it->first->getSize().x() +
+                (16.0f * Renderer::getScreenWidthModifier());
         }
 
         for (unsigned int i = 0; i < mMD_Pairs.size(); i++)
             mMD_Grid->setRowHeightPerc(i * 2, (fontLbl->getLetterHeight() +
-                    (2 * Renderer::getScreenHeightModifier())) / mMD_Grid->getSize().y());
+                    (2.0f * Renderer::getScreenHeightModifier())) / mMD_Grid->getSize().y());
 
         // Update component fonts.
         mMD_ReleaseDate->setFont(fontComp);
@@ -283,7 +284,7 @@ void GuiScraperSearch::updateViewStyle()
         mGrid.setEntry(mDescContainer, Vector2i(3, 0), false, false, Vector2i(1, 3),
                 GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
         // Make description text wrap at edge of container.
-        mResultDesc->setSize(mDescContainer->getSize().x(), 0);
+        mResultDesc->setSize(mDescContainer->getSize().x(), 0.0f);
     }
     else {
         // Fake row where name would be.
@@ -624,7 +625,7 @@ void GuiScraperSearch::update(int deltaTime)
             for (auto it = results_media.cbegin(); it != results_media.cend(); it++) {
                 for (unsigned int i = 0; i < results_scrape.size(); i++) {
                     if (results_scrape[i].gameID == it->gameID) {
-                        results_scrape[i].box3dUrl = it->box3dUrl;
+                        results_scrape[i].box3DUrl = it->box3DUrl;
                         results_scrape[i].coverUrl = it->coverUrl;
                         results_scrape[i].marqueeUrl = it->marqueeUrl;
                         results_scrape[i].screenshotUrl = it->screenshotUrl;

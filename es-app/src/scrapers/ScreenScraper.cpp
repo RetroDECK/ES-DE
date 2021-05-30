@@ -422,7 +422,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         if (media_list) {
             // 3D box
             processMedia(result, media_list, ssConfig.media_3dbox,
-                    result.box3dUrl, result.box3dFormat, region);
+                    result.box3DUrl, result.box3DFormat, region);
             // Cover
             processMedia(result, media_list, ssConfig.media_cover,
                     result.coverUrl, result.coverFormat, region);
