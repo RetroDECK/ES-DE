@@ -17,29 +17,28 @@ namespace Utils
 {
     namespace String
     {
-        unsigned int chars2Unicode(const std::string& _string, size_t& _cursor);
-        std::string unicode2Chars(const unsigned int _unicode);
+        unsigned int chars2Unicode(const std::string& stringArg, size_t& cursor);
+        std::string unicode2Chars(const unsigned int unicodeArg);
         // Return the first character, which could be normal ASCII or 2, 3 or 4 byte Unicode.
-        std::string getFirstCharacter(const std::string& _string, bool _toUpper = true);
-        size_t nextCursor(const std::string& _string, const size_t _cursor);
-        size_t prevCursor(const std::string& _string, const size_t _cursor);
-        size_t moveCursor(const std::string& _string, const size_t _cursor, const int _amount);
-        std::string toLower(const std::string& _string);
-        std::string toUpper(const std::string& _string);
-        std::string trim(const std::string& _string);
-        std::string replace(const std::string& _string, const std::string& _replace,
-                const std::string& _with);
-        std::wstring stringToWideString(const std::string& _string);
-        std::string wideStringToString(const std::wstring& _string);
-        bool startsWith(const std::string& _string, const std::string& _start);
-        bool endsWith(const std::string& _string, const std::string& _end);
-        std::string removeParenthesis(const std::string& _string);
-        std::vector<std::string> delimitedStringToVector(const std::string& _string,
-                const std::string& _delimiter, bool sort = false, bool caseInsensitive = false);
-        std::string vectorToDelimitedString(std::vector<std::string> _vector,
-                const std::string& _delimiter, bool caseInsensitive = false);
-        std::string format(const char* _string, ...);
-        std::string scramble(const std::string& _input, const std::string& key);
+        std::string getFirstCharacter(const std::string& stringArg, bool toUpper = true);
+        size_t nextCursor(const std::string& stringArg, const size_t cursor);
+        size_t prevCursor(const std::string& stringArg, const size_t cursor);
+        size_t moveCursor(const std::string& stringArg, const size_t cursor, const int amount);
+        std::string toLower(const std::string& stringArg);
+        std::string toUpper(const std::string& stringArg);
+        std::string trim(const std::string& stringArg);
+        std::string replace(const std::string& stringArg, const std::string& replace,
+                const std::string& with);
+        std::wstring stringToWideString(const std::string& stringArg);
+        std::string wideStringToString(const std::wstring& stringArg);
+        bool startsWith(const std::string& stringArg, const std::string& start);
+        bool endsWith(const std::string& stringArg, const std::string& end);
+        std::string removeParenthesis(const std::string& stringArg);
+        std::vector<std::string> delimitedStringToVector(const std::string& stringArg,
+                const std::string& delimiter, bool sort = false, bool caseInsensitive = false);
+        std::string vectorToDelimitedString(std::vector<std::string> vectorArg,
+                const std::string& delimiter, bool caseInsensitive = false);
+        std::string scramble(const std::string& input, const std::string& key);
     }
 }
 

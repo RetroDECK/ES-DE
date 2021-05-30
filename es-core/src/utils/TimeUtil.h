@@ -26,24 +26,24 @@ namespace Utils
         {
         public:
             DateTime();
-            DateTime(const time_t& _time);
-            DateTime(const tm& _timeStruct);
-            DateTime(const std::string& _isoString);
+            DateTime(const time_t& time);
+            DateTime(const tm& timeStruct);
+            DateTime(const std::string& isoString);
             ~DateTime();
 
-            const bool operator<(const DateTime& _other) const { return (mTime < _other.mTime); }
-            const bool operator<=(const DateTime& _other) const { return (mTime <= _other.mTime); }
-            const bool operator>(const DateTime& _other) const { return (mTime > _other.mTime); }
-            const bool operator>=(const DateTime& _other) const { return (mTime >= _other.mTime); }
+            const bool operator<(const DateTime& other) const { return (mTime < other.mTime); }
+            const bool operator<=(const DateTime& other) const { return (mTime <= other.mTime); }
+            const bool operator>(const DateTime& other) const { return (mTime > other.mTime); }
+            const bool operator>=(const DateTime& other) const { return (mTime >= other.mTime); }
             operator time_t() const { return mTime; }
             operator tm() const { return mTimeStruct; }
             operator std::string() const { return mIsoString; }
 
-            void setTime(const time_t& _time);
+            void setTime(const time_t& time);
             const time_t& getTime() const { return mTime; }
-            void setTimeStruct(const tm& _timeStruct);
+            void setTimeStruct(const tm& timeStruct);
             const tm& getTimeStruct() const { return mTimeStruct; }
-            void setIsoString (const std::string& _isoString);
+            void setIsoString (const std::string& isoString);
             const std::string& getIsoString () const { return mIsoString; }
 
         private:
@@ -55,7 +55,7 @@ namespace Utils
         class Duration
         {
         public:
-            Duration(const time_t& _time);
+            Duration(const time_t& time);
             ~Duration();
 
             unsigned int getDays() const { return mDays; }
@@ -72,12 +72,10 @@ namespace Utils
         };
 
         time_t now();
-        time_t stringToTime(const std::string& _string,
-                const std::string& _format = "%Y%m%dT%H%M%S");
-        std::string timeToString(const time_t& _time,
-                const std::string& _format = "%Y%m%dT%H%M%S");
-        int daysInMonth(const int _year, const int _month);
-        int daysInYear(const int _year);
+        time_t stringToTime(const std::string& string, const std::string& format = "%Y%m%dT%H%M%S");
+        std::string timeToString(const time_t& time, const std::string& format = "%Y%m%dT%H%M%S");
+        int daysInMonth(const int year, const int month);
+        int daysInYear(const int year);
     }
 } // Utils::
 

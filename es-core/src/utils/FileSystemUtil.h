@@ -20,49 +20,47 @@ namespace Utils
     {
         typedef std::list<std::string> stringList;
 
-        stringList getDirContent(const std::string& _path,
-                const bool _recursive = false);
-        stringList getPathList(const std::string& _path);
-        void setHomePath(const std::string& _path);
+        stringList getDirContent(const std::string& path, const bool recursive = false);
+        stringList getPathList(const std::string& path);
+        void setHomePath(const std::string& path);
         std::string getHomePath();
         std::string getCWDPath();
         std::string getPathToBinary(const std::string& executable);
-        void setExePath(const std::string& _path);
+        void setExePath(const std::string& path);
         std::string getExePath();
         std::string getProgramDataPath();
-        std::string getPreferredPath(const std::string& _path);
-        std::string getGenericPath(const std::string& _path);
-        std::string getEscapedPath(const std::string& _path);
-        std::string getCanonicalPath(const std::string& _path);
-        std::string getAbsolutePath(const std::string& _path,
-                const std::string& _base = getCWDPath());
-        std::string getParent(const std::string& _path);
-        std::string getFileName(const std::string& _path);
-        std::string getStem(const std::string& _path);
-        std::string getExtension(const std::string& _path);
-        std::string expandHomePath(const std::string& _path);
-        std::string resolveRelativePath(const std::string& _path,
-                const std::string& _relativeTo, const bool _allowHome);
-        std::string createRelativePath(const std::string& _path,
-                const std::string& _relativeTo, const bool _allowHome);
-        std::string removeCommonPath(const std::string& _path,
-                const std::string& _common, bool& _contains);
-        std::string resolveSymlink(const std::string& _path);
-        bool copyFile(const std::string& _source_path,
-                const std::string& _destination_path, bool _overwrite);
-        bool renameFile(const std::string& _source_path,
-                const std::string& _destination_path, bool _overwrite);
-        bool removeFile(const std::string& _path);
+        std::string getPreferredPath(const std::string& path);
+        std::string getGenericPath(const std::string& path);
+        std::string getEscapedPath(const std::string& path);
+        std::string getCanonicalPath(const std::string& path);
+        std::string getAbsolutePath(const std::string& path,
+                const std::string& base = getCWDPath());
+        std::string getParent(const std::string& path);
+        std::string getFileName(const std::string& path);
+        std::string getStem(const std::string& path);
+        std::string getExtension(const std::string& path);
+        std::string expandHomePath(const std::string& path);
+        std::string resolveRelativePath(const std::string& path,
+                const std::string& relativeTo, const bool allowHome);
+        std::string createRelativePath(const std::string& path,
+                const std::string& relativeTo, const bool allowHome);
+        std::string removeCommonPath(const std::string& path,
+                const std::string& commonArg, bool& contains);
+        std::string resolveSymlink(const std::string& path);
+        bool copyFile(const std::string& sourcePath,
+                const std::string& destinationPath, bool overwrite);
+        bool renameFile(const std::string& sourcePath,
+                const std::string& destinationPath, bool overwrite);
+        bool removeFile(const std::string& path);
         bool removeDirectory(const std::string& path);
-
-        bool createDirectory(const std::string& _path);
-        bool exists(const std::string& _path);
-        bool driveExists(const std::string& _path);
-        bool isAbsolute(const std::string& _path);
-        bool isRegularFile(const std::string& _path);
-        bool isDirectory(const std::string& _path);
-        bool isSymlink(const std::string& _path);
-        bool isHidden(const std::string& _path);
+        bool createDirectory(const std::string& path);
+        bool exists(const std::string& path);
+        bool driveExists(const std::string& path);
+        bool isAbsolute(const std::string& path);
+        bool isRegularFile(const std::string& path);
+        bool isDirectory(const std::string& path);
+        bool isSymlink(const std::string& path);
+        bool isHidden(const std::string& path);
     }
 }
 
