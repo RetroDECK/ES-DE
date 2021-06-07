@@ -6,6 +6,9 @@
 //  Low-level texture data functions.
 //
 
+#define NANOSVG_IMPLEMENTATION
+#define NANOSVGRAST_IMPLEMENTATION
+
 #include "resources/TextureData.h"
 
 #include "math/Misc.h"
@@ -14,9 +17,8 @@
 #include "ImageIO.h"
 #include "Log.h"
 
-#include <nanosvg/nanosvg.h>
-#include <nanosvg/nanosvgrast.h>
-#include <assert.h>
+#include <nanosvg.h>
+#include <nanosvgrast.h>
 #include <string.h>
 
 #define DPI 96

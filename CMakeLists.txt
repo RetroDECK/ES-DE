@@ -231,7 +231,7 @@ set(COMMON_INCLUDE_DIRS
         ${RAPIDJSON_INCLUDE_DIRS}
         ${SDL2_INCLUDE_DIR}
         ${VLC_INCLUDE_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/external
+        ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
 
 # For Windows we need to add local include files for the dependency packages.
@@ -292,8 +292,7 @@ if(NOT WIN32)
             ${FREETYPE_LIBRARIES}
             ${PUGIXML_LIBRARIES}
             ${SDL2_LIBRARY}
-            ${VLC_LIBRARIES}
-            nanosvg)
+            ${VLC_LIBRARIES})
 elseif(WIN32)
     if(DEFINED MSVC)
         set(COMMON_LIBRARIES
@@ -311,7 +310,6 @@ elseif(WIN32)
                 "${PROJECT_SOURCE_DIR}/SDL2main.lib"
                 "${PROJECT_SOURCE_DIR}/libvlc.lib"
                 "${PROJECT_SOURCE_DIR}/SDL2.lib"
-                "nanosvg"
                 "Winmm.dll")
     else()
         set(COMMON_LIBRARIES
@@ -330,7 +328,6 @@ elseif(WIN32)
                 "${PROJECT_SOURCE_DIR}/libvlc.dll"
                 "${PROJECT_SOURCE_DIR}/SDL2.dll"
                 "mingw32"
-                "nanosvg"
                 "Winmm.dll")
     endif()
 endif()
@@ -388,6 +385,5 @@ set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 
 # Add each component.
-add_subdirectory("external")
 add_subdirectory("es-core")
 add_subdirectory("es-app")
