@@ -512,9 +512,15 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
     FIBITMAP* image = nullptr;
 
     // Detect the file format.
+    #if defined(_WIN64)
+    format = FreeImage_GetFileTypeU(Utils::String::stringToWideString(path).c_str(), 0);
+    if (format == FIF_UNKNOWN)
+        format = FreeImage_GetFIFFromFilenameU(Utils::String::stringToWideString(path).c_str());
+    #else
     format = FreeImage_GetFileType(path.c_str(), 0);
     if (format == FIF_UNKNOWN)
         format = FreeImage_GetFIFFromFilename(path.c_str());
+    #endif
     if (format == FIF_UNKNOWN) {
         LOG(LogError) << "Could not detect filetype for image \"" << path << "\"!";
         return false;
@@ -522,7 +528,11 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
 
     // Make sure we can read this format, and if so, then load it.
     if (FreeImage_FIFSupportsReading(format)) {
+        #if defined(_WIN64)
+        image = FreeImage_LoadU(format, Utils::String::stringToWideString(path).c_str());
+        #else
         image = FreeImage_Load(format, path.c_str());
+        #endif
     }
     else {
         LOG(LogError) << "File format not supported for image \"" << path << "\"";
@@ -566,7 +576,12 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
         return false;
     }
 
+    #if defined(_WIN64)
+    bool saved = (FreeImage_SaveU(format, imageRescaled,
+            Utils::String::stringToWideString(path).c_str()) != 0);
+    #else
     bool saved = (FreeImage_Save(format, imageRescaled, path.c_str()) != 0);
+    #endif
     FreeImage_Unload(imageRescaled);
 
     if (!saved) {
