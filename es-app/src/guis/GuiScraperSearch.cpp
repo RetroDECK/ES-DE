@@ -682,7 +682,7 @@ void GuiScraperSearch::update(int deltaTime)
                     Settings::getInstance()->getBool("MiximageGenerate")) {
                 std::string currentMiximage = mLastSearch.game->getMiximagePath();
                 if (currentMiximage == "" || (currentMiximage != "" &&
-                        Settings::getInstance()->getBool("ScraperOverwriteData"))) {
+                        Settings::getInstance()->getBool("MiximageOverwrite"))) {
 
                     mMiximageGenerator = std::make_unique<MiximageGenerator>(mLastSearch.game,
                             mMiximageResult, mResultMessage);
