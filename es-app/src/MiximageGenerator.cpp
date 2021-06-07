@@ -112,10 +112,19 @@ bool MiximageGenerator::generateImage()
     unsigned int fileHeight = 0;
     unsigned int filePitch = 0;
 
+    #if defined(_WIN64)
+    fileFormat = FreeImage_GetFileTypeU(Utils::String::stringToWideString(mScreenshotPath).c_str());
+    #else
     fileFormat = FreeImage_GetFileType(mScreenshotPath.c_str());
+    #endif
 
     if (fileFormat == FIF_UNKNOWN)
+        #if defined(_WIN64)
+        fileFormat = FreeImage_GetFIFFromFilenameU(
+                Utils::String::stringToWideString(mScreenshotPath).c_str());
+        #else
         fileFormat = FreeImage_GetFIFFromFilename(mScreenshotPath.c_str());
+        #endif
 
     if (fileFormat == FIF_UNKNOWN) {
         LOG(LogError) << "Screenshot image in unknown image format, aborting";
@@ -125,7 +134,12 @@ bool MiximageGenerator::generateImage()
 
     // Make sure that we can actually read this format.
     if (FreeImage_FIFSupportsReading(fileFormat)) {
+    #if defined(_WIN64)
+        screenshotFile = FreeImage_LoadU(fileFormat,
+                Utils::String::stringToWideString(mScreenshotPath).c_str());
+    #else
         screenshotFile = FreeImage_Load(fileFormat, mScreenshotPath.c_str());
+    #endif
     }
     else {
         LOG(LogError) << "Screenshot file format not supported";
@@ -140,10 +154,20 @@ bool MiximageGenerator::generateImage()
     }
 
     if (mMarquee) {
+        #if defined(_WIN64)
+        fileFormat = FreeImage_GetFileTypeU(
+                Utils::String::stringToWideString(mMarqueePath).c_str());
+        #else
         fileFormat = FreeImage_GetFileType(mMarqueePath.c_str());
+        #endif
 
         if (fileFormat == FIF_UNKNOWN)
+            #if defined(_WIN64)
+            fileFormat = FreeImage_GetFIFFromFilenameU(
+                    Utils::String::stringToWideString(mMarqueePath).c_str());
+            #else
             fileFormat = FreeImage_GetFIFFromFilename(mMarqueePath.c_str());
+            #endif
 
         if (fileFormat == FIF_UNKNOWN) {
             LOG(LogDebug) << "Marquee in unknown format, skipping image";
@@ -155,7 +179,12 @@ bool MiximageGenerator::generateImage()
             mMarquee = false;
         }
         else {
+            #if defined(_WIN64)
+            marqueeFile = FreeImage_LoadU(fileFormat,
+                    Utils::String::stringToWideString(mMarqueePath).c_str());
+            #else
             marqueeFile = FreeImage_Load(fileFormat, mMarqueePath.c_str());
+            #endif
             if (!marqueeFile) {
                 LOG(LogError) << "Couldn't load marquee image, corrupt file?";
                 mMessage = "ERROR LOADING MARQUEE IMAGE, CORRUPT FILE?";
@@ -165,10 +194,19 @@ bool MiximageGenerator::generateImage()
     }
 
     if (mBox3D) {
+        #if defined(_WIN64)
+        fileFormat = FreeImage_GetFileTypeU(Utils::String::stringToWideString(mBox3DPath).c_str());
+        #else
         fileFormat = FreeImage_GetFileType(mBox3DPath.c_str());
+        #endif
 
         if (fileFormat == FIF_UNKNOWN)
+            #if defined(_WIN64)
+            fileFormat = FreeImage_GetFIFFromFilenameU(
+                    Utils::String::stringToWideString(mBox3DPath).c_str());
+            #else
             fileFormat = FreeImage_GetFIFFromFilename(mBox3DPath.c_str());
+            #endif
 
         if (fileFormat == FIF_UNKNOWN) {
             LOG(LogDebug) << "3D box in unknown format, skipping image";
@@ -180,7 +218,12 @@ bool MiximageGenerator::generateImage()
             mBox3D = false;
         }
         else {
+            #if defined(_WIN64)
+            boxFile = FreeImage_LoadU(fileFormat,
+                    Utils::String::stringToWideString(mBox3DPath).c_str());
+            #else
             boxFile = FreeImage_Load(fileFormat, mBox3DPath.c_str());
+            #endif
             if (!boxFile) {
                 LOG(LogError) << "Couldn't load 3D box image, corrupt file?";
                 mMessage = "ERROR LOADING 3D BOX IMAGE, CORRUPT FILE?";
@@ -189,10 +232,20 @@ bool MiximageGenerator::generateImage()
         }
     }
     else if (mCover) {
+        #if defined(_WIN64)
+        fileFormat = FreeImage_GetFileTypeU(
+                Utils::String::stringToWideString(mCoverPath).c_str());
+        #else
         fileFormat = FreeImage_GetFileType(mCoverPath.c_str());
+        #endif
 
         if (fileFormat == FIF_UNKNOWN)
+            #if defined(_WIN64)
+            fileFormat = FreeImage_GetFIFFromFilenameU(
+                    Utils::String::stringToWideString(mCoverPath).c_str());
+            #else
             fileFormat = FreeImage_GetFIFFromFilename(mCoverPath.c_str());
+            #endif
 
         if (fileFormat == FIF_UNKNOWN) {
             LOG(LogDebug) << "Box cover in unknown format, skipping image";
@@ -204,7 +257,12 @@ bool MiximageGenerator::generateImage()
             mCover = false;
         }
         else {
+            #if defined(_WIN64)
+            boxFile = FreeImage_LoadU(fileFormat,
+                    Utils::String::stringToWideString(mCoverPath).c_str());
+            #else
             boxFile = FreeImage_Load(fileFormat, mCoverPath.c_str());
+            #endif
             if (!boxFile) {
                 LOG(LogError) << "Couldn't load box cover image, corrupt file?";
                 mMessage = "ERROR LOADING BOX COVER IMAGE, CORRUPT FILE?";
@@ -473,7 +531,12 @@ bool MiximageGenerator::generateImage()
             canvasImage.height(), canvasImage.width() * 4, 32,
             FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE);
 
+    #if defined(_WIN64)
+    bool savedImage = (FreeImage_SaveU(FIF_PNG, mixImage,
+            Utils::String::stringToWideString(getSavePath()).c_str()) != 0);
+    #else
     bool savedImage = (FreeImage_Save(FIF_PNG, mixImage, getSavePath().c_str()) != 0);
+    #endif
 
     if (!savedImage) {
         LOG(LogError) << "Couldn't save miximage, permission problems or disk full?";
