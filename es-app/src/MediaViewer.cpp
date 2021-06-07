@@ -174,6 +174,9 @@ void MediaViewer::findMedia()
     if ((mediaFile = mGame->get3DBoxPath()) != "")
         mImageFiles.push_back(mediaFile);
 
+    if ((mediaFile = mGame->getMiximagePath()) != "")
+        mImageFiles.push_back(mediaFile);
+
     if (!mImageFiles.empty())
         mHasImages = true;
 }
