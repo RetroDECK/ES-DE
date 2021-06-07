@@ -698,6 +698,9 @@ void GuiScraperSearch::update(int deltaTime)
                     mMiximageGeneratorThread = std::thread(&MiximageGenerator::startThread,
                             mMiximageGenerator.get(), &mGeneratorPromise);
                 }
+                else {
+                    returnResult(mScrapeResult);
+                }
             }
             else {
                 returnResult(mScrapeResult);
