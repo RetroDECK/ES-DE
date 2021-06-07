@@ -159,6 +159,18 @@ GuiScraperSearch::~GuiScraperSearch()
         mThumbnailReqMap.clear();
 
     HttpReq::cleanupCurlMulti();
+
+    // This is required to properly refresh the gamelist view if the user aborted the
+    // scraping when the miximage was getting generated.
+    if (Settings::getInstance()->getBool("MiximageGenerate") &&
+            mMiximageGeneratorThread.joinable()) {
+        mScrapeResult.savedNewMedia = true;
+        // We always let the miximage generator thread complete.
+        mMiximageGeneratorThread.join();
+        mMiximageGenerator.reset();
+        TextureResource::manualUnload(mLastSearch.game->getMiximagePath(), false);
+        ViewController::get()->onFileChanged(mLastSearch.game, true);
+    }
 }
 
 void GuiScraperSearch::onSizeChanged()
@@ -306,6 +318,7 @@ void GuiScraperSearch::updateViewStyle()
 void GuiScraperSearch::search(const ScraperSearchParams& params)
 {
     mBlockAccept = true;
+    mScrapeResult = {};
 
     mResultList->clear();
     mScraperResults.clear();
@@ -324,7 +337,9 @@ void GuiScraperSearch::stop()
     mSearchHandle.reset();
     mMDResolveHandle.reset();
     mMDRetrieveURLsHandle.reset();
+    mMiximageGenerator.reset();
     mBlockAccept = false;
+    mScrapeResult = {};
 }
 
 void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& results)
@@ -643,14 +658,50 @@ void GuiScraperSearch::update(int deltaTime)
         }
     }
 
+    // Check if a miximage generator thread was started, and if the processing has been completed.
+    if (mMiximageGenerator && mGeneratorFuture.valid()) {
+        // Only wait one millisecond, this update() function runs very frequently.
+        if (mGeneratorFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
+            mMDResolveHandle.reset();
+            if (!mMiximageResult)
+                mScrapeResult.savedNewMedia = true;
+            returnResult(mScrapeResult);
+            // We always let the miximage generator thread complete.
+            mMiximageGeneratorThread.join();
+            mMiximageGenerator.reset();
+        }
+    }
+
     if (mMDResolveHandle && mMDResolveHandle->status() != ASYNC_IN_PROGRESS) {
         if (mMDResolveHandle->status() == ASYNC_DONE) {
-            ScraperSearchResult result = mMDResolveHandle->getResult();
-            result.mediaFilesDownloadStatus = COMPLETED;
+            mScrapeResult = mMDResolveHandle->getResult();
+            mScrapeResult.mediaFilesDownloadStatus = COMPLETED;
             mMDResolveHandle.reset();
-            // This might end in us being deleted, depending on mAcceptCallback -
-            // so make sure this is the last thing we do in update().
-            returnResult(result);
+
+            if (mScrapeResult.mediaFilesDownloadStatus == COMPLETED &&
+                    Settings::getInstance()->getBool("MiximageGenerate")) {
+                std::string currentMiximage = mLastSearch.game->getMiximagePath();
+                if (currentMiximage == "" || (currentMiximage != "" &&
+                        Settings::getInstance()->getBool("ScraperOverwriteData"))) {
+
+                    mMiximageGenerator = std::make_unique<MiximageGenerator>(mLastSearch.game,
+                            mMiximageResult, mResultMessage);
+
+                    // The promise/future mechanism is used as signaling for the thread to
+                    // indicate that processing has been completed. The reason to run a separate
+                    // thread is that the busy animation will then be played and that the user
+                    // interface does not become completely unresponsive during the miximage
+                    // generation.
+                    std::promise<bool>().swap(mGeneratorPromise);
+                    mGeneratorFuture = mGeneratorPromise.get_future();
+
+                    mMiximageGeneratorThread = std::thread(&MiximageGenerator::startThread,
+                            mMiximageGenerator.get(), &mGeneratorPromise);
+                }
+            }
+            else {
+                returnResult(mScrapeResult);
+            }
         }
         else if (mMDResolveHandle->status() == ASYNC_ERROR) {
             onSearchError(mMDResolveHandle->getStatusString());

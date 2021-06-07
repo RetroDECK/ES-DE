@@ -39,9 +39,10 @@ private:
 
     void addEntry(const std::string&, unsigned int color,
             bool add_arrow, const std::function<void()>& func);
-    void openAccountSettings();
-    void openContentSettings();
-    void openOtherSettings();
+    void openAccountOptions();
+    void openContentOptions();
+    void openMiximageOptions();
+    void openOtherOptions();
 
     std::queue<ScraperSearchParams> getSearches(
             std::vector<SystemData*> systems, GameFilterFunc selector);

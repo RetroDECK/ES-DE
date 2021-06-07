@@ -20,6 +20,10 @@
 #include "components/ComponentGrid.h"
 #include "scrapers/Scraper.h"
 #include "GuiComponent.h"
+#include "MiximageGenerator.h"
+
+#include <future>
+#include <thread>
 
 class ComponentList;
 class DateTimeEditComponent;
@@ -121,6 +125,7 @@ private:
 
     SearchType mSearchType;
     ScraperSearchParams mLastSearch;
+    ScraperSearchResult mScrapeResult;
     std::function<void(const ScraperSearchResult&)> mAcceptCallback;
     std::function<void()> mSkipCallback;
     std::function<void()> mCancelCallback;
@@ -138,6 +143,14 @@ private:
     std::unique_ptr<MDResolveHandle> mMDResolveHandle;
     std::vector<ScraperSearchResult> mScraperResults;
     std::map<std::string, std::unique_ptr<HttpReq>> mThumbnailReqMap;
+
+    std::unique_ptr<MiximageGenerator> mMiximageGenerator;
+    std::thread mMiximageGeneratorThread;
+    std::promise<bool> mGeneratorPromise;
+    std::future<bool> mGeneratorFuture;
+
+    bool mMiximageResult;
+    std::string mResultMessage;
 
     BusyComponent mBusyAnim;
 };

@@ -14,10 +14,11 @@
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperMulti.h"
+#include "guis/GuiSettings.h"
 #include "views/ViewController.h"
 #include "FileData.h"
 #include "SystemData.h"
-#include "guis/GuiSettings.h"
+
 
 GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
         : GuiComponent(window), mMenu(window, title)
@@ -80,7 +81,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     mMenu.addWithLabel("SCRAPE THESE SYSTEMS", mSystems);
 
     addEntry("ACCOUNT SETTINGS", 0x777777FF, true, [this] {
-        openAccountSettings();
+        openAccountOptions();
     });
     addEntry("CONTENT SETTINGS", 0x777777FF, true, [this] {
         // If the scraper service has been changed before entering this menu, then save the
@@ -88,7 +89,10 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
         // can be enabled or disabled.
         if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper"))
             mMenu.save();
-        openContentSettings();
+        openContentOptions();
+    });
+    addEntry("MIXIMAGE SETTINGS", 0x777777FF, true, [this] {
+        openMiximageOptions();
     });
     addEntry("OTHER SETTINGS", 0x777777FF, true, [this] {
         // If the scraper service has been changed before entering this menu, then save the
@@ -96,7 +100,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
         // can be enabled or disabled.
         if (mScraper->getSelected() != Settings::getInstance()->getString("Scraper"))
             mMenu.save();
-        openOtherSettings();
+        openOtherOptions();
     });
 
     addChild(&mMenu);
@@ -125,7 +129,7 @@ GuiScraperMenu::~GuiScraperMenu()
     }
 }
 
-void GuiScraperMenu::openAccountSettings()
+void GuiScraperMenu::openAccountOptions()
 {
     auto s = new GuiSettings(mWindow, "ACCOUNT SETTINGS");
 
@@ -180,9 +184,9 @@ void GuiScraperMenu::openAccountSettings()
     mWindow->pushGui(s);
 }
 
-void GuiScraperMenu::openContentSettings()
+void GuiScraperMenu::openContentOptions()
 {
-    auto s = new GuiSettings(mWindow, "SCRAPER CONTENT SETTINGS");
+    auto s = new GuiSettings(mWindow, "CONTENT SETTINGS");
 
     // Scrape game names.
     auto scrape_game_names = std::make_shared<SwitchComponent>(mWindow);
@@ -301,9 +305,146 @@ void GuiScraperMenu::openContentSettings()
     mWindow->pushGui(s);
 }
 
-void GuiScraperMenu::openOtherSettings()
+void GuiScraperMenu::openMiximageOptions()
 {
-    auto s = new GuiSettings(mWindow, "OTHER SCRAPER SETTINGS");
+    auto s = new GuiSettings(mWindow, "MIXIMAGE SETTINGS");
+
+    // Miximage resolution.
+    auto miximage_resolution = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "MIXIMAGE RESOLUTION", false);
+    std::string selectedResolution = Settings::getInstance()->getString("MiximageResolution");
+    miximage_resolution->add("1280x960",  "1280x960",  selectedResolution == "1280x960");
+    miximage_resolution->add("1920x1440", "1920x1440",  selectedResolution == "1920x1440");
+    miximage_resolution->add("640x480",   "640x480",  selectedResolution == "640x480");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the resolution to "1280x960" in this case.
+    if (miximage_resolution->getSelectedObjects().size() == 0)
+        miximage_resolution->selectEntry(0);
+    s->addWithLabel("MIXIMAGE RESOLUTION", miximage_resolution);
+    s->addSaveFunc([miximage_resolution, s] {
+        if (miximage_resolution->getSelected() !=
+                Settings::getInstance()->getString("MiximageResolution")) {
+            Settings::getInstance()->
+                    setString("MiximageResolution", miximage_resolution->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Screenshot scaling method.
+    auto miximage_scaling = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "SCREENSHOT SCALING", false);
+    std::string selectedScaling = Settings::getInstance()->getString("MiximageScreenshotScaling");
+    miximage_scaling->add("sharp",  "sharp",  selectedScaling == "sharp");
+    miximage_scaling->add("smooth", "smooth",  selectedScaling == "smooth");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the scaling method to "sharp" in this case.
+    if (miximage_scaling->getSelectedObjects().size() == 0)
+        miximage_scaling->selectEntry(0);
+    s->addWithLabel("SCREENSHOT SCALING METHOD", miximage_scaling);
+    s->addSaveFunc([miximage_scaling, s] {
+        if (miximage_scaling->getSelected() !=
+                Settings::getInstance()->getString("MiximageScreenshotScaling")) {
+            Settings::getInstance()->
+                    setString("MiximageScreenshotScaling", miximage_scaling->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to generate miximages when scraping.
+    auto miximage_generate = std::make_shared<SwitchComponent>(mWindow);
+    miximage_generate->setState(Settings::getInstance()->getBool("MiximageGenerate"));
+    s->addWithLabel("GENERATE MIXIMAGES WHEN SCRAPING", miximage_generate);
+    s->addSaveFunc([miximage_generate, s] {
+        if (miximage_generate->getState() !=
+                Settings::getInstance()->getBool("MiximageGenerate")) {
+            Settings::getInstance()->setBool("MiximageGenerate", miximage_generate->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to overwrite miximages (both for the scraper and offline generator).
+    auto miximage_overwrite = std::make_shared<SwitchComponent>(mWindow);
+    miximage_overwrite->setState(Settings::getInstance()->getBool("MiximageOverwrite"));
+    s->addWithLabel("OVERWRITE MIXIMAGES (SCRAPER/OFFLINE GENERATOR)", miximage_overwrite);
+    s->addSaveFunc([miximage_overwrite, s] {
+        if (miximage_overwrite->getState() !=
+                Settings::getInstance()->getBool("MiximageOverwrite")) {
+            Settings::getInstance()->setBool("MiximageOverwrite", miximage_overwrite->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to remove letterboxes from the screenshots.
+    auto remove_letterboxes = std::make_shared<SwitchComponent>(mWindow);
+    remove_letterboxes->setState(Settings::getInstance()->getBool("MiximageRemoveLetterboxes"));
+    s->addWithLabel("REMOVE LETTERBOXES FROM SCREENSHOTS", remove_letterboxes);
+    s->addSaveFunc([remove_letterboxes, s] {
+        if (remove_letterboxes->getState() !=
+                Settings::getInstance()->getBool("MiximageRemoveLetterboxes")) {
+            Settings::getInstance()->setBool("MiximageRemoveLetterboxes",
+                    remove_letterboxes->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to remove pillarboxes from the screenshots.
+    auto remove_pillarboxes = std::make_shared<SwitchComponent>(mWindow);
+    remove_pillarboxes->setState(Settings::getInstance()->getBool("MiximageRemovePillarboxes"));
+    s->addWithLabel("REMOVE PILLARBOXES FROM SCREENSHOTS", remove_pillarboxes);
+    s->addSaveFunc([remove_pillarboxes, s] {
+        if (remove_pillarboxes->getState() !=
+                Settings::getInstance()->getBool("MiximageRemovePillarboxes")) {
+            Settings::getInstance()->setBool("MiximageRemovePillarboxes",
+                    remove_pillarboxes->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to include marquee images.
+    auto miximage_marquee = std::make_shared<SwitchComponent>(mWindow);
+    miximage_marquee->setState(Settings::getInstance()->getBool("MiximageIncludeMarquee"));
+    s->addWithLabel("INCLUDE MARQUEE IMAGE", miximage_marquee);
+    s->addSaveFunc([miximage_marquee, s] {
+        if (miximage_marquee->getState() !=
+                Settings::getInstance()->getBool("MiximageIncludeMarquee")) {
+            Settings::getInstance()->
+                    setBool("MiximageIncludeMarquee", miximage_marquee->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to include box images.
+    auto miximage_box = std::make_shared<SwitchComponent>(mWindow);
+    miximage_box->setState(Settings::getInstance()->getBool("MiximageIncludeBox"));
+    s->addWithLabel("INCLUDE BOX IMAGE", miximage_box);
+    s->addSaveFunc([miximage_box, s] {
+        if (miximage_box->getState() !=
+                Settings::getInstance()->getBool("MiximageIncludeBox")) {
+            Settings::getInstance()->
+                    setBool("MiximageIncludeBox", miximage_box->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to use cover image if there is no 3D box image.
+    auto miximage_cover_fallback = std::make_shared<SwitchComponent>(mWindow);
+    miximage_cover_fallback->setState(Settings::getInstance()->getBool("MiximageCoverFallback"));
+    s->addWithLabel("USE COVER IMAGE IF 3D BOX IS MISSING", miximage_cover_fallback);
+    s->addSaveFunc([miximage_cover_fallback, s] {
+        if (miximage_cover_fallback->getState() !=
+                Settings::getInstance()->getBool("MiximageCoverFallback")) {
+            Settings::getInstance()->
+                    setBool("MiximageCoverFallback", miximage_cover_fallback->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    mWindow->pushGui(s);
+}
+
+void GuiScraperMenu::openOtherOptions()
+{
+    auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
     // Scraper region.
     auto scraper_region = std::make_shared<OptionListComponent<std::string>>
@@ -314,7 +455,7 @@ void GuiScraperMenu::openOtherSettings()
     scraper_region->add("USA",    "us",  selectedScraperRegion == "us");
     scraper_region->add("World",  "wor", selectedScraperRegion == "wor");
     // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the region to Europe in this case.
+    // configuration file. Simply set the region to "Europe" in this case.
     if (scraper_region->getSelectedObjects().size() == 0)
         scraper_region->selectEntry(0);
     s->addWithLabel("REGION", scraper_region);
@@ -358,7 +499,7 @@ void GuiScraperMenu::openOtherSettings()
     scraper_language->add("Slovenčina", "sk", selectedScraperLanguage == "sk");
     scraper_language->add("Türkçe",     "tr", selectedScraperLanguage == "tr");
     // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the language to English in this case.
+    // configuration file. Simply set the language to "English" in this case.
     if (scraper_language->getSelectedObjects().size() == 0)
         scraper_language->selectEntry(0);
     s->addWithLabel("PREFERRED LANGUAGE", scraper_language);

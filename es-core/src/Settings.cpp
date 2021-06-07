@@ -98,6 +98,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperUseAccountScreenScraper"] = { false, false };
     mStringMap["ScraperUsernameScreenScraper"] = { "", "" };
     mStringMap["ScraperPasswordScreenScraper"] = { "", "" };
+
     mBoolMap["ScrapeGameNames"] = { true, true };
     mBoolMap["ScrapeRatings"] = { true, true };
     mBoolMap["ScrapeMetadata"] = { true, true };
@@ -106,6 +107,17 @@ void Settings::setDefaults()
     mBoolMap["ScrapeCovers"] = { true, true };
     mBoolMap["ScrapeMarquees"] = { true, true };
     mBoolMap["Scrape3DBoxes"] = { true, true };
+
+    mStringMap["MiximageResolution"] = { "1280x960", "1280x960" };
+    mStringMap["MiximageScreenshotScaling"] = { "sharp", "sharp" };
+    mBoolMap["MiximageGenerate"] = { true, true };
+    mBoolMap["MiximageOverwrite"] = { true, true };
+    mBoolMap["MiximageRemoveLetterboxes"] = { true, true };
+    mBoolMap["MiximageRemovePillarboxes"] = { true, true };
+    mBoolMap["MiximageIncludeMarquee"] = { true, true };
+    mBoolMap["MiximageIncludeBox"] = { true, true };
+    mBoolMap["MiximageCoverFallback"] = { true, true };
+
     mStringMap["ScraperRegion"] = { "eu", "eu" };
     mStringMap["ScraperLanguage"] = { "en", "en" };
     mBoolMap["ScraperOverwriteData"] = { true, true };
