@@ -37,7 +37,7 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
 {
     mMiximagePromise = miximagePromise;
 
-    LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): Creating image for \""
+    LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): Creating miximage for \""
             << mGame->getFileName() << "\"";
 
     if (mGame->getMiximagePath() != "" && !Settings::getInstance()->getBool("MiximageOverwrite")) {
@@ -639,7 +639,8 @@ void MiximageGenerator::addDropShadow(CImg<unsigned char>& image, unsigned int s
     shadowImage.get_shared_channels(0, 2).fill(0);
     // Lower the transparency and apply the blur.
     shadowImage.get_shared_channel(3) /= 0.6f;
-    shadowImage.blur_box(shadowDistance, shadowDistance, 1, true, 2);
+    shadowImage.blur_box(static_cast<const float>(shadowDistance),
+            static_cast<const float>(shadowDistance), 1, true, 2);
     shadowImage.blur(3, 0);
 
     // Add the mask to the alpha channel of the shadow image.
