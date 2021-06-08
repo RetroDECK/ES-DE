@@ -28,31 +28,30 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.1
 
-* Support for Raspberry Pi 4 with OpenGL 2.1 (Ubuntu and Raspberry Pi OS)
 * Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
-* Improve full-screen support, remove the temporary full screen hacks
-* Proper game launching screen
 * Ability to show game media in full screen from the gamelist view
+* Proper game launching screen
 * Replace libVLC with FFmpeg
 * Move to the SDL2 GameController API
+* Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)
 * Add to Linux repositories, BSD ports collections etc.
 
 #### v1.2
 
+* Support for Raspberry Pi 4 with OpenGL 2.1 (Ubuntu and Raspberry Pi OS)
+* Improve full-screen support, remove the temporary full screen hacks
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
 * On-screen keyboard
-* Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)
-* Checksum support for the scraper to verify each file before accepting/saving it
 * Web proxy support for the scraper
 * Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
 
 #### v1.3
 
-* Localization/multi-language support.
+* Localization/multi-language support
+* Checksum support for the scraper to verify each file before accepting/saving it
 * Internationalization/multi-language support
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
-* Improve the performance of the GLSL shader code
 * Improved text and font functions, e.g. faster and cleaner line wrapping
 * Flatpak and Snap support on Linux
 
@@ -72,6 +71,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Bulk metadata editor
 * Overhaul of the GUI element scaling and placement logic to make ES-DE look more consistent across different resolutions
 * Scrollbars for menus and gamelists
+* Improve the performance of the GLSL shader code
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Support for additional scraper services (if feasible?)
 
