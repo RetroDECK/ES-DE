@@ -667,7 +667,7 @@ void GuiScraperSearch::update(int deltaTime)
             mMDResolveHandle.reset();
             // We always let the miximage generator thread complete.
             mMiximageGeneratorThread.join();
-            if (!mMiximageResult)
+            if (!mGeneratorFuture.get())
                 mScrapeResult.savedNewMedia = true;
             returnResult(mScrapeResult);
             mMiximageGenerator.reset();
@@ -687,7 +687,7 @@ void GuiScraperSearch::update(int deltaTime)
                         Settings::getInstance()->getBool("MiximageOverwrite"))) {
 
                     mMiximageGenerator = std::make_unique<MiximageGenerator>(mLastSearch.game,
-                            mMiximageResult, mResultMessage);
+                            mResultMessage);
 
                     // The promise/future mechanism is used as signaling for the thread to
                     // indicate that processing has been completed. The reason to run a separate

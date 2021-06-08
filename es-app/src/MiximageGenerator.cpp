@@ -4,7 +4,7 @@
 //  MiximageGenerator.cpp
 //
 //  Generates miximages from screenshots, marquees and 3D box/cover images.
-//  Called from GuiScraperSearch.
+//  Called from GuiScraperSearch and GuiOfflineGenerator.
 //
 
 #include "MiximageGenerator.h"
@@ -17,9 +17,8 @@
 
 #include <chrono>
 
-MiximageGenerator::MiximageGenerator(FileData* game, bool& result, std::string& resultMessage)
+MiximageGenerator::MiximageGenerator(FileData* game, std::string& resultMessage)
         : mGame(game),
-        mResult(result),
         mResultMessage(resultMessage),
         mWidth(1280),
         mHeight(960),
@@ -43,7 +42,6 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
     if (mGame->getMiximagePath() != "" && !Settings::getInstance()->getBool("MiximageOverwrite")) {
         LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): File already exists and miximage "
                 "overwriting has not been enabled, aborting";
-        mResult = true;
         mMiximagePromise->set_value(true);
         return;
     }
@@ -52,7 +50,6 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
         LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): "
                 "No screenshot image found, aborting";
             mResultMessage = "No screenshot image found, couldn't generate miximage";
-        mResult = true;
         mMiximagePromise->set_value(true);
         return;
     }
@@ -89,7 +86,9 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
 
     if (generateImage()) {
         LOG(LogError) << "Failed to generate miximage";
-        mResult = true;
+        mMiximagePromise->set_value(true);
+        mResultMessage = mMessage;
+        return;
     }
     else {
         const auto endTime = std::chrono::system_clock::now();
@@ -99,7 +98,6 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
             (endTime - startTime).count() << " ms";
     }
 
-    mResult = false;
     mResultMessage = mMessage;
     mMiximagePromise->set_value(false);
 }

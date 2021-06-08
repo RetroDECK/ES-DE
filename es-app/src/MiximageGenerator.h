@@ -4,7 +4,7 @@
 //  MiximageGenerator.h
 //
 //  Generates miximages from screenshots, marquees and 3D box/cover images.
-//  Called from GuiScraperSearch.
+//  Called from GuiScraperSearch and GuiOfflineGenerator.
 //
 
 #ifndef ES_APP_SCRAPERS_MIXIMAGE_GENERATOR_H
@@ -25,7 +25,7 @@ using namespace cimg_library;
 class MiximageGenerator
 {
 public:
-    MiximageGenerator(FileData* game, bool& result, std::string& resultMessage);
+    MiximageGenerator(FileData* game, std::string& resultMessage);
     ~MiximageGenerator();
 
     void startThread(std::promise<bool>* miximagePromise);
@@ -44,10 +44,8 @@ private:
     std::string getSavePath();
 
     FileData* mGame;
-    bool& mResult;
     std::string& mResultMessage;
     std::string mMessage;
-
     std::promise<bool>* mMiximagePromise;
 
     std::string mScreenshotPath;
