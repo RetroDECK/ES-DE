@@ -90,7 +90,7 @@ GuiScraperMulti::GuiScraperMulti(
     }
 
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "STOP",
-            "stop (progress saved)", std::bind(&GuiScraperMulti::finish, this)));
+            "stop", std::bind(&GuiScraperMulti::finish, this)));
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
     mGrid.setEntry(mButtonGrid, Vector2i(0, 4), true, false);
