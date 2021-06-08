@@ -318,6 +318,7 @@ void GuiScraperSearch::updateViewStyle()
 void GuiScraperSearch::search(const ScraperSearchParams& params)
 {
     mBlockAccept = true;
+    mMiximageResult = false;
     mScrapeResult = {};
 
     mResultList->clear();
@@ -339,6 +340,7 @@ void GuiScraperSearch::stop()
     mMDRetrieveURLsHandle.reset();
     mMiximageGenerator.reset();
     mBlockAccept = false;
+    mMiximageResult = false;
     mScrapeResult = {};
 }
 
@@ -663,11 +665,11 @@ void GuiScraperSearch::update(int deltaTime)
         // Only wait one millisecond, this update() function runs very frequently.
         if (mGeneratorFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
             mMDResolveHandle.reset();
+            // We always let the miximage generator thread complete.
+            mMiximageGeneratorThread.join();
             if (!mMiximageResult)
                 mScrapeResult.savedNewMedia = true;
             returnResult(mScrapeResult);
-            // We always let the miximage generator thread complete.
-            mMiximageGeneratorThread.join();
             mMiximageGenerator.reset();
         }
     }
