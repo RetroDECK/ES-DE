@@ -756,7 +756,51 @@ Logotype for the game.
 
 **Scrape 3D box images** _(ScreenScraper only)_
 
-These images are currently unused, but will be used for future versions of ES-DE so it's recommended to keep this option enabled.
+These images are primarily used for generating miximages, but they can also be viewed directly from the media viewer.
+
+#### Miximage settings
+
+These are the settings for the miximage generator, which can either be run from the scraper (single-game scraper or multi-scraper) or from the offline miximage generator. The miximages combines the screenshot, marquee and box images to make a composite picture that is displayed in the gamelist view. There are various settings for the generator.
+
+**Miximage resolution**
+
+It's possible to select betweeen 1280x960, 1920x1440 and 640x480 resolutions for the generated miximages. It's normally recommended to use the default option 1280x960 which gives good image quality without slowing down ES-DE too much. But for very weak machines, 640x480 may be a better option. However 1920x1440 is normally not recommended as it brings little quality improvements over 1280x960 and makes the gamelist browsing feel less responsive.
+
+**Screenshot scaling method**
+
+The _sharp_ scaling method uses nearest-neighbor interpolation which retains sharp pixels and looks better for most low-resolution retro games. The _smooth_ scaling method uses the Lanczos algorithm and produces smoother pixels. This may look better on some more modern games at higher resolutions. If unsure, use the _sharp_ method.
+
+**Generate miximages when scraping**
+
+Enables or disables the miximage generator when scraping. Applies to both the single-game scraper and the multi-scraper.
+
+**Overwrite miximages (scraper/offline generator)**
+
+Controls whether miximages should be overwritten or not. Note that the scraper setting _Overwrite files and data_ does not affect the miximages.
+
+**Remove letterboxes from screenshots**
+
+With this option enabled, any horizontal pure black areas at the top and bottom of the screenshots are automatically cropped.
+
+**Remove pillarboxes from screenshots**
+
+With this option enabled, any vertical pure black areas at the left and right sides of the screenshots are automatically cropped.
+
+**Incude marquee image**
+
+Whether to include the marquee (wheel) image in the composite miximage.
+
+**Incude box image**
+
+Whether to include the box image in the composite miximage. If a 3D box exists for the game, this will be used.
+
+**Use cover image if 3D box is missing**
+
+Whether to use the 2D box cover as fallback if the 3D box image is missing for the game.
+
+**Offline generator**
+
+This is not a setting, but instead a GUI to generate miximages offline without going via the scraper. This tool uses the same game system selections as the scraper, so you need to select at least one system on the scraper menu before attempting to run it. All the miximage settings are applied in the same way as when generating images via the scraper. The prerequisite is that at least a screenshot exists for each game. If there is no screenshot, or if the screenshot is unreadable for some reason, the generation for that specific game will fail. There is statistics shown in the tool displaying the number of generated, overwritten, skipped and failed images. Any error message is also shown on screen as well as being saved to the es_log.txt file.
 
 #### Other settings
 
@@ -772,7 +816,7 @@ Multiple languages are supported by ScreenScraper, and this affects translations
 
 **Overwrite files and data**
 
-Affects both overwriting of metadata as well as actual game media files on the filesystem. Even with this option disabled, metadata entries which are set to their default values will of course be populated by the scraper. In other words, this option only affects overwriting of previously scraped data. Game names are considered as set to their default vaules if either corresponding to the physical game file on disk minus the extension (e.g. the entry _Commando_ if the file is named _Commando.zip_), or for arcade games if corresponding to the MAME names as defined in the bundled mamenames.xml.
+Affects both overwriting of metadata as well as actual game media files on the filesystem. Even with this option disabled, metadata entries which are set to their default values will of course be populated by the scraper. In other words, this option only affects overwriting of previously scraped data. Game names are considered as set to their default values if either corresponding to the physical game file on disk minus the extension (e.g. the entry _Commando_ if the file is named _Commando.zip_), or for arcade games if corresponding to the MAME names as defined in the bundled mamenames.xml. Note that this setting does not affect generated miximages, that is instead controlled by the setting _Overwrite miximages (scraper/offline generator)_ found in the miximage settings menu.
 
 **Halt on invalid media files**
 

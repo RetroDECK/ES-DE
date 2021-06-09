@@ -10,6 +10,8 @@
 
 ### Detailed list of changes
 
+* Added a miximage generator that can be run automatically from the scraper and which includes comprehensive options, configurable from the menu
+* Added an offline generator GUI for the miximage generator which can be used for bulk miximage generation without going via the scraper
 * Added a fullscreen game media viewer
 * Added a new video player based on FFmpeg
 * Added a 60 FPS frame rate upscaler option to the video player which results in slightly smoother playback for low frame rate videos (e.g. 24 and 30 FPS)
@@ -19,9 +21,9 @@
 * Added an option to limit the input in ES-DE to only the first controller (does not affect the emulators)
 * Removed the startup notification regarding default keyboard mappings being in use, instead default mappings are now considered the recommended input configuration
 * The controller input configuration is not automatically started any longer if there is no es_input.cfg file or if there are no applicable configuration entries in the file
-* Increased the max allowed size for images when scraping, which should now only downscale files which really need it (like enormous marquee images when scraping from TheGamesDB)
+* Increased the max allowed size for images when scraping, which should now only downscale files which really need it
 * Changed the resampling algorithm for image downscaling for the scraper from bilinear to Lanczos which results in noticeably sharper images
-* Added a configurable option to automatically retry scraping up to five times in case of ScreenScraper TLS errors (error message "SSL peer certificate or SSH remote key was not OK")
+* Added a configurable option to automatically retry scraping up to eight times in case of ScreenScraper TLS errors
 * Changed the button for jumping to a random system or game and added a setting for disabling the functionality altogether
 * Added navigation sounds for some actions where it was missing, such as when attempting to add folders, placeholders or systems to custom collections
 * Changed the custom collection "Jump to" navigation sound to the select sound instead of the scroll sound
@@ -33,13 +35,17 @@
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
 * The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
 * Changed the setting description for the favorites game toggling button
+* Added the CImg library as a Git subtree (used by the miximage generator)
+* Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
 
 ### Bug fixes
 
+* On Windows, images with Unicode characters in the game name that were resized when scraping would not be saved with valid filenames
 * The glitches when configuring trigger buttons in GuiInputConfig have been fixed
 * GuiDetectDevice wouldn't detect controller input that was of the 'axis' type (i.e. analog inputs)
 * GuiInputConfig didn't correctly inform which buttons could be skipped for some rows
+* The scraper would sometimes consider very small images to be invalid
 * The Quick System Select help prompt was shown even when there was only a single game system present
 * The "Y" button help prompt wasn't displayed correctly when using the Grid view style
 * The debug logging for the analog controller inputs had some inconsistent signs

@@ -26,6 +26,9 @@ Please find the individual license files inside the `licenses` directory. There 
 
 # Libraries
 
+CImg \
+https://www.cimg.eu
+
 cURL \
 https://curl.haxx.se
 
@@ -53,7 +56,7 @@ https://pugixml.org
 RapdidJSON \
 https://rapidjson.org
 
-SDL2 \
+SDL \
 https://www.libsdl.org
 
 
