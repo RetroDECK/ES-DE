@@ -811,21 +811,20 @@ void MiximageGenerator::convertFromCImgFormat(CImg<unsigned char> image,
 
 std::string MiximageGenerator::getSavePath()
 {
-    const std::string systemsubdirectory = mGame->getSystem()->getName();
     const std::string name = Utils::FileSystem::getStem(mGame->getPath());
     std::string subFolders;
 
     // Extract possible subfolders from the path.
     if (mGame->getSystemEnvData()->mStartPath != "")
         subFolders = Utils::String::replace(Utils::FileSystem::getParent(mGame->getPath()),
-                mGame->getSystem()->getSystemEnvData()->mStartPath, "");
+                mGame->getSystemEnvData()->mStartPath, "");
 
     std::string path = FileData::getMediaDirectory();
 
     if (!Utils::FileSystem::exists(path))
         Utils::FileSystem::createDirectory(path);
 
-    path += systemsubdirectory + "/miximages" + subFolders + "/";
+    path += mGame->getSystemName() + "/miximages" + subFolders + "/";
 
     if (!Utils::FileSystem::exists(path))
         Utils::FileSystem::createDirectory(path);
