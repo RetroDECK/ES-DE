@@ -12,6 +12,7 @@
 #define ES_APP_GUIS_GUI_SCRAPER_MENU_H
 
 #include "components/MenuComponent.h"
+#include "guis/GuiSettings.h"
 #include "scrapers/Scraper.h"
 
 class FileData;
@@ -42,6 +43,7 @@ private:
     void openAccountOptions();
     void openContentOptions();
     void openMiximageOptions();
+    void openOfflineGenerator(GuiSettings* settings);
     void openOtherOptions();
 
     std::queue<ScraperSearchParams> getSearches(

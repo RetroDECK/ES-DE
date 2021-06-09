@@ -33,7 +33,7 @@ public:
             bool isPassword = false);
     inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
 
-    void setNeedsSaving() { mNeedsSaving = true; };
+    void setNeedsSaving(bool state = true) { mNeedsSaving = state; };
     void setNeedsReloadHelpPrompts() { mNeedsReloadHelpPrompts = true; };
     void setNeedsCollectionsUpdate() { mNeedsCollectionsUpdate = true; };
     void setNeedsSorting() { mNeedsSorting = true; };

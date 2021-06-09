@@ -662,7 +662,7 @@ void GuiScraperSearch::update(int deltaTime)
 
     // Check if a miximage generator thread was started, and if the processing has been completed.
     if (mMiximageGenerator && mGeneratorFuture.valid()) {
-        // Only wait one millisecond, this update() function runs very frequently.
+        // Only wait one millisecond as this update() function runs very frequently.
         if (mGeneratorFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
             mMDResolveHandle.reset();
             // We always let the miximage generator thread complete.

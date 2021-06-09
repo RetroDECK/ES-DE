@@ -13,10 +13,11 @@
 #include "components/OptionListComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiOfflineGenerator.h"
 #include "guis/GuiScraperMulti.h"
-#include "guis/GuiSettings.h"
 #include "views/ViewController.h"
 #include "FileData.h"
+#include "FileSorts.h"
 #include "SystemData.h"
 
 
@@ -439,7 +440,51 @@ void GuiScraperMenu::openMiximageOptions()
         }
     });
 
+    // Miximage offline generator.
+    ComponentListRow offline_generator_row;
+    offline_generator_row.elements.clear();
+    offline_generator_row.addElement(std::make_shared<TextComponent>
+            (mWindow, "OFFLINE GENERATOR", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+    offline_generator_row.addElement(makeArrow(mWindow), false);
+    offline_generator_row.makeAcceptInputHandler(
+            std::bind(&GuiScraperMenu::openOfflineGenerator, this, s));
+    s->addRow(offline_generator_row);
+
     mWindow->pushGui(s);
+}
+
+void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
+{
+    if (mSystems->getSelectedObjects().empty()) {
+        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                "THE MIXIMAGE GENERATOR USES THE SAME SYSTEM\n"
+                "SELECTIONS AS THE SCRAPER, SO PLEASE SELECT\n"
+                "AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"));
+        return;
+    }
+
+    // Always save the settings before starting the generator, in case any of the
+    // miximage settings were modified.
+    settings->save();
+    // Also unset the save flag so that a double saving does not take place when closing
+    // the miximage options menu later on.
+    settings->setNeedsSaving(false);
+
+    // Build the queue of games to process.
+    std::queue<FileData*> gameQueue;
+    std::vector<SystemData*> systems = mSystems->getSelectedObjects();
+
+    for (auto sys = systems.cbegin(); sys != systems.cend(); sys++) {
+        std::vector<FileData*> games = (*sys)->getRootFolder()->getChildrenRecursive();
+
+        // Sort the games by "filename, ascending".
+        std::stable_sort(games.begin(), games.end(), FileSorts::SortTypes.at(0).comparisonFunction);
+
+        for (FileData* game : games)
+            gameQueue.push(game);
+    }
+
+    mWindow->pushGui(new GuiOfflineGenerator(mWindow, gameQueue));
 }
 
 void GuiScraperMenu::openOtherOptions()
@@ -731,7 +776,7 @@ void GuiScraperMenu::start()
 {
     if (mSystems->getSelectedObjects().empty()) {
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-            "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"));
+                "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"));
         return;
     }
 
