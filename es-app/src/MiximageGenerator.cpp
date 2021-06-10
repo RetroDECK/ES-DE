@@ -299,7 +299,7 @@ bool MiximageGenerator::generateImage()
     const unsigned int marqueeTargetWidth = 310 * resolutionMultiplier;
     const unsigned int marqueeTargetHeight = 230 * resolutionMultiplier;
     const unsigned int boxTargetWidth = 330 * resolutionMultiplier;
-    const unsigned int boxTargetHeight = 285 * resolutionMultiplier;
+    const unsigned int boxTargetHeight = 300 * resolutionMultiplier;
     const unsigned int coverTargetWidth = 250 * resolutionMultiplier;
 
     const unsigned int marqueeShadowSize = 6 * resolutionMultiplier;
