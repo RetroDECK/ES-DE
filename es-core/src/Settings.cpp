@@ -140,7 +140,7 @@ void Settings::setDefaults()
     mStringMap["MenuOpeningEffect"] = { "scale-up", "scale-up" };
     mBoolMap["MenuBlurBackground"] = { true, true };
     mBoolMap["GamelistVideoPillarbox"] = { true, true };
-    mBoolMap["GamelistVideoScanlines"] = { true, true };
+    mBoolMap["GamelistVideoScanlines"] = { false, false };
     mBoolMap["FoldersOnTop"] = { true, true };
     mBoolMap["FavoritesFirst"] = { true, true };
     mBoolMap["FavoritesStar"] = { true, true };
