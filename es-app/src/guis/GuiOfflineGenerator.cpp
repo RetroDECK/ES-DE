@@ -18,7 +18,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(
         const std::queue<FileData*>& gameQueue)
         : GuiComponent(window),
         mBackground(window, ":/graphics/frame.svg"),
-        mGrid(window, Vector2i(5, 13)),
+        mGrid(window, Vector2i(6, 13)),
         mGameQueue(gameQueue)
 {
     addChild(&mBackground);
@@ -40,21 +40,21 @@ GuiOfflineGenerator::GuiOfflineGenerator(
     // Header.
     mTitle = std::make_shared<TextComponent>(mWindow, "MIXIMAGE OFFLINE GENERATOR",
             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true, Vector2i(5, 1));
+    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true, Vector2i(6, 1));
 
     mStatus = std::make_shared<TextComponent>(mWindow, "NOT STARTED",
             Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
-    mGrid.setEntry(mStatus, Vector2i(0, 1), false, true, Vector2i(5, 1));
+    mGrid.setEntry(mStatus, Vector2i(0, 1), false, true, Vector2i(6, 1));
 
     mGameCounter = std::make_shared<TextComponent>(mWindow,
             std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
             (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED",
             Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
-    mGrid.setEntry(mGameCounter, Vector2i(0, 2), false, true, Vector2i(5, 1));
+    mGrid.setEntry(mGameCounter, Vector2i(0, 2), false, true, Vector2i(6, 1));
 
     // Spacer row with top border.
     mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 3),
-            false, false, Vector2i(5, 1), GridFlags::BORDER_TOP);
+            false, false, Vector2i(6, 1), GridFlags::BORDER_TOP);
 
     // Left spacer.
     mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 4),
@@ -116,7 +116,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(
 
     // Spacer row.
     mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 8),
-            false, false, Vector2i(5, 1));
+            false, false, Vector2i(4, 1));
 
     // Last error message label.
     mLastErrorLbl = std::make_shared<TextComponent>(mWindow, "Last error message:",
@@ -128,9 +128,13 @@ GuiOfflineGenerator::GuiOfflineGenerator(
             Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mLastErrorVal, Vector2i(1, 10), false, true, Vector2i(4, 1));
 
+    // Right spacer.
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(5, 4),
+            false, false, Vector2i(1, 7));
+
     // Spacer row with bottom border.
     mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 11),
-            false, false, Vector2i(5, 1), GridFlags::BORDER_BOTTOM);
+            false, false, Vector2i(6, 1), GridFlags::BORDER_BOTTOM);
 
     // Buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
@@ -176,7 +180,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(
     buttons.push_back(mCloseButton);
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 12), true, false, Vector2i(5, 1));
+    mGrid.setEntry(mButtonGrid, Vector2i(0, 12), true, false, Vector2i(6, 1));
 
     // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 95% of the screen
     // width rather than the 85% allowed for wider displays.
@@ -222,6 +226,7 @@ void GuiOfflineGenerator::onSizeChanged()
     mGrid.setColWidthPerc(0, 0.03f);
     mGrid.setColWidthPerc(1, 0.20f);
     mGrid.setColWidthPerc(2, 0.145f);
+    mGrid.setColWidthPerc(5, 0.03f);
 
     // Adjust the width slightly depending on the aspect ratio of the screen to make sure
     // that the label does not get abbreviated.
