@@ -739,7 +739,8 @@ void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
     scaleFactor = static_cast<float>(adjustedTargetWidth) / static_cast<float>(width);
 
     // For really tall and narrow images, we may have exceeded the target height.
-    if (static_cast<int>(scaleFactor * static_cast<float>(height)) > targetHeight)
+    if (static_cast<int>(scaleFactor * static_cast<float>(height)) >
+            static_cast<float>(targetHeight))
         scaleFactor = static_cast<float>(targetHeight) / static_cast<float>(height);
 
     width = static_cast<int>(static_cast<float>(width) * scaleFactor);
