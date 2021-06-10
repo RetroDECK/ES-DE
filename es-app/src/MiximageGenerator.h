@@ -36,6 +36,8 @@ private:
     void cropPillarboxes(CImg<unsigned char>& image);
     void removeTransparentPadding(CImg<unsigned char>& image);
     void addDropShadow(CImg<unsigned char>& image, unsigned int shadowDistance);
+    void calculateMarqueeSize(const unsigned int& targetWidth, const unsigned int& targetHeight,
+            unsigned int& width, unsigned int& height);
     void sampleFrameColor(CImg<unsigned char>& screenshotImage, unsigned char (&frameColor)[4]);
 
     void convertToCImgFormat(CImg<unsigned char>& image, std::vector<unsigned char> imageVector);

@@ -292,15 +292,18 @@ bool MiximageGenerator::generateImage()
 
     const unsigned int screenshotWidth = 530 * resolutionMultiplier;
     const unsigned int screenshotOffset = 20 * resolutionMultiplier;
-    const unsigned int screenshotFrameWidth = 5 * resolutionMultiplier;
+    const unsigned int screenshotFrameWidth = 6 * resolutionMultiplier;
     const unsigned int screenshotHeight = 400 * resolutionMultiplier;
-    const unsigned int marqueeWidth = 260 * resolutionMultiplier;
-    const unsigned int marqueeMaxHeight = 220 * resolutionMultiplier;
-    const unsigned int boxHeight = 300 * resolutionMultiplier;
-    const unsigned int boxMaxWidth = 340 * resolutionMultiplier;
-    const unsigned int coverMaxWidth = 250 * resolutionMultiplier;
-    const unsigned int marqueeShadow = 10;
-    const unsigned int boxShadow = 14;
+
+    // These sizes are increased slightly when adding the drop shadow.
+    const unsigned int marqueeTargetWidth = 310 * resolutionMultiplier;
+    const unsigned int marqueeTargetHeight = 230 * resolutionMultiplier;
+    const unsigned int boxTargetWidth = 330 * resolutionMultiplier;
+    const unsigned int boxTargetHeight = 285 * resolutionMultiplier;
+    const unsigned int coverTargetWidth = 250 * resolutionMultiplier;
+
+    const unsigned int marqueeShadowSize = 6 * resolutionMultiplier;
+    const unsigned int boxShadowSize = 6 * resolutionMultiplier;
 
     if (FreeImage_GetBPP(screenshotFile) != 32) {
         FIBITMAP* screenshotTemp = FreeImage_ConvertTo32Bits(screenshotFile);
@@ -390,23 +393,16 @@ bool MiximageGenerator::generateImage()
 
         convertToCImgFormat(marqueeImage, marqueeVector);
         removeTransparentPadding(marqueeImage);
-        addDropShadow(marqueeImage, marqueeShadow);
 
-        float scaleFactor = static_cast<float>(marqueeWidth) /
-                static_cast<float>(marqueeImage.width());
-        unsigned int height =
-                static_cast<int>(static_cast<float>(marqueeImage.height()) * scaleFactor);
+        unsigned int marqueeWidth = static_cast<unsigned int>(marqueeImage.width());
+        unsigned int marqueeHeight = static_cast<unsigned int>(marqueeImage.height());
 
-        if (height > marqueeMaxHeight) {
-            scaleFactor = static_cast<float>(marqueeMaxHeight) /
-                    static_cast<float>(marqueeImage.height());
-            int width = static_cast<int>(static_cast<float>(marqueeImage.width()) * scaleFactor);
-            // We use Lanczos3 which is the highest quality resampling method available.
-            marqueeImage.resize(width, marqueeMaxHeight, 1, 4, 6);
-        }
-        else {
-            marqueeImage.resize(marqueeWidth, height, 1, 4, 6);
-        }
+        calculateMarqueeSize(marqueeTargetWidth, marqueeTargetHeight, marqueeWidth, marqueeHeight);
+
+        // We use Lanczos3 which is the highest quality resampling method available.
+        marqueeImage.resize(marqueeWidth, marqueeHeight, 1, 4, 6);
+
+        addDropShadow(marqueeImage, marqueeShadowSize);
 
         xPosMarquee = canvasImage.width() - marqueeImage.width();
         yPosMarquee = 0;
@@ -438,28 +434,30 @@ bool MiximageGenerator::generateImage()
 
         convertToCImgFormat(boxImage, boxVector);
         removeTransparentPadding(boxImage);
-        addDropShadow(boxImage, boxShadow);
 
-        float scaleFactor = static_cast<float>(boxHeight) / static_cast<float>(boxImage.height());
+        float scaleFactor = static_cast<float>(boxTargetHeight) /
+                static_cast<float>(boxImage.height());
         unsigned int width = static_cast<int>(static_cast<float>(boxImage.width()) * scaleFactor);
-        unsigned int maxWidth = 0;
+        unsigned int targetWidth = 0;
 
         // We make this distinction as some cover images are in square format and would cover
         // too much surface otherwise.
         if (mBox3D)
-            maxWidth = boxMaxWidth;
+            targetWidth = boxTargetWidth;
         else
-            maxWidth = coverMaxWidth;
+            targetWidth = coverTargetWidth;
 
-        if (width > maxWidth) {
-            scaleFactor = static_cast<float>(maxWidth) / static_cast<float>(boxImage.width());
+        if (width > targetWidth) {
+            scaleFactor = static_cast<float>(targetWidth) / static_cast<float>(boxImage.width());
             int height = static_cast<int>(static_cast<float>(boxImage.height()) * scaleFactor);
             // We use Lanczos3 which is the highest quality resampling method available.
-            boxImage.resize(maxWidth, height, 1, 4, 6);
+            boxImage.resize(targetWidth, height, 1, 4, 6);
         }
         else {
-            boxImage.resize(width, boxHeight, 1, 4, 6);
+            boxImage.resize(width, boxTargetHeight, 1, 4, 6);
         }
+
+        addDropShadow(boxImage, boxShadowSize);
 
         xPosBox = 0;
         yPosBox = canvasImage.height() - boxImage.height();
@@ -495,7 +493,7 @@ bool MiximageGenerator::generateImage()
             frameColor);
 
     // We draw circles in order to get rounded corners for the frame.
-    const unsigned int circleRadius = 7 * resolutionMultiplier;
+    const unsigned int circleRadius = 8 * resolutionMultiplier;
     const unsigned int circleOffset = 2 * resolutionMultiplier;
 
     // Upper left corner.
@@ -704,8 +702,7 @@ void MiximageGenerator::addDropShadow(CImg<unsigned char>& image, unsigned int s
     // Lower the transparency and apply the blur.
     shadowImage.get_shared_channel(3) /= 0.6f;
     shadowImage.blur_box(static_cast<const float>(shadowDistance),
-            static_cast<const float>(shadowDistance), 1, true, 2);
-    shadowImage.blur(3, 0);
+            static_cast<const float>(shadowDistance), 1, true, 4);
 
     // Add the mask to the alpha channel of the shadow image.
     shadowImage.get_shared_channel(3).draw_image(0, 0, maskImage.get_shared_channels(0, 0),
@@ -717,6 +714,36 @@ void MiximageGenerator::addDropShadow(CImg<unsigned char>& image, unsigned int s
     removeTransparentPadding(shadowImage);
 
     image = shadowImage;
+}
+
+void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
+        const unsigned int& targetHeight, unsigned int& width, unsigned int& height)
+{
+    unsigned int adjustedTargetWidth = 0;
+    float widthModifier = 0.5f;
+    float scaleFactor = 0.0f;
+
+    // The idea is to adjust the size of the marquee based on its surface area, so that
+    // wider but shorter images get a larger width than taller images in order to use
+    // an approximately equivalent amount of space on the miximage.
+    float widthRatio = static_cast<float>(width) / static_cast<float>(height);
+
+    widthModifier = Math::clamp(widthModifier + widthRatio / 6.5f, 0.0f, 1.0f);
+
+    // Hack to increase the size slightly for wider and shorter images.
+    if (widthRatio >= 4)
+        widthModifier += Math::clamp(widthRatio / 40.0f, 0.0f, 0.3f);
+
+    adjustedTargetWidth = static_cast<unsigned int>(
+                static_cast<float>(targetWidth) * widthModifier);
+    scaleFactor = static_cast<float>(adjustedTargetWidth) / static_cast<float>(width);
+
+    // For really tall and narrow images, we may have exceeded the target height.
+    if (static_cast<int>(scaleFactor * static_cast<float>(height)) > targetHeight)
+        scaleFactor = static_cast<float>(targetHeight) / static_cast<float>(height);
+
+    width = static_cast<int>(static_cast<float>(width) * scaleFactor);
+    height = static_cast<int>(static_cast<float>(height) * scaleFactor);
 }
 
 void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
