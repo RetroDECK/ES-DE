@@ -141,12 +141,6 @@ void Window::deinit()
     Renderer::deinit();
 }
 
-void Window::textInput(const std::string& text)
-{
-    if (peekGui())
-        peekGui()->textInput(text);
-}
-
 void Window::input(InputConfig* config, Input input)
 {
     mTimeSinceLastInput = 0;
@@ -242,6 +236,12 @@ void Window::input(InputConfig* config, Input input)
             // This is where the majority of inputs will be consumed: the GuiComponent Stack.
             this->peekGui()->input(config, input);
     }
+}
+
+void Window::textInput(const std::string& text)
+{
+    if (peekGui())
+        peekGui()->textInput(text);
 }
 
 void Window::logInput(InputConfig* config, Input input)
@@ -529,21 +529,6 @@ void Window::render()
     }
 }
 
-void Window::normalizeNextUpdate()
-{
-    mNormalizeNextUpdate = true;
-}
-
-bool Window::getAllowSleep()
-{
-    return mAllowSleep;
-}
-
-void Window::setAllowSleep(bool sleep)
-{
-    mAllowSleep = sleep;
-}
-
 void Window::renderLoadingScreen(std::string text)
 {
     Transform4x4f trans = Transform4x4f::Identity();
@@ -671,46 +656,6 @@ void Window::stopInfoPopup()
         mInfoPopup->stop();
 }
 
-void Window::onSleep()
-{
-    Scripting::fireEvent("sleep");
-}
-
-void Window::onWake()
-{
-    Scripting::fireEvent("wake");
-}
-
-bool Window::isProcessing()
-{
-    return count_if (mGuiStack.cbegin(), mGuiStack.cend(),
-            [](GuiComponent* c) { return c->isProcessing(); }) > 0;
-}
-
-void Window::setLaunchedGame()
-{
-    // Tell the GUI components that a game has been launched.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
-        (*it)->onGameLaunchedActivate();
-
-    mGameLaunchedState = true;
-}
-
-void Window::unsetLaunchedGame()
-{
-    // Tell the GUI components that the user is back in ES-DE again.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
-        (*it)->onGameLaunchedDeactivate();
-
-    mGameLaunchedState = false;
-}
-
-void Window::invalidateCachedBackground()
-{
-    mCachedBackground = false;
-    mInvalidatedCachedBackground = true;
-}
-
 void Window::startScreensaver()
 {
     if (mScreensaver && !mRenderScreensaver) {
@@ -788,3 +733,43 @@ int Window::getVideoPlayerCount()
     mVideoCountMutex.unlock();
     return videoPlayerCount;
 };
+
+void Window::setLaunchedGame()
+{
+    // Tell the GUI components that a game has been launched.
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+        (*it)->onGameLaunchedActivate();
+
+    mGameLaunchedState = true;
+}
+
+void Window::unsetLaunchedGame()
+{
+    // Tell the GUI components that the user is back in ES-DE again.
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+        (*it)->onGameLaunchedDeactivate();
+
+    mGameLaunchedState = false;
+}
+
+void Window::invalidateCachedBackground()
+{
+    mCachedBackground = false;
+    mInvalidatedCachedBackground = true;
+}
+
+void Window::onSleep()
+{
+    Scripting::fireEvent("sleep");
+}
+
+void Window::onWake()
+{
+    Scripting::fireEvent("wake");
+}
+
+bool Window::isProcessing()
+{
+    return count_if (mGuiStack.cbegin(), mGuiStack.cend(), [](GuiComponent* c) {
+        return c->isProcessing(); }) > 0;
+}

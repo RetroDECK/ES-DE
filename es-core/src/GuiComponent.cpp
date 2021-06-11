@@ -407,7 +407,7 @@ bool GuiComponent::finishAnimation(unsigned char slot)
     if (anim) {
         // Skip to animation's end.
         const bool done = anim->update(anim->getAnimation()->getDuration() - anim->getTime());
-        if(done) {
+        if (done) {
             mAnimationMap[slot] = nullptr;
             delete anim; // Will also call finishedCallback.
         }

@@ -80,20 +80,20 @@ public:
     GuiComponent* peekGui();
     inline int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
 
-    void textInput(const std::string& text);
+    bool init();
+    void deinit();
+
     void input(InputConfig* config, Input input);
+    void textInput(const std::string& text);
     void logInput(InputConfig* config, Input input);
     void update(int deltaTime);
     void render();
 
-    bool init();
-    void deinit();
+    void normalizeNextUpdate() { mNormalizeNextUpdate = true; }
 
-    void normalizeNextUpdate();
-
+    bool getAllowSleep() { return mAllowSleep; }
+    void setAllowSleep(bool sleep) { mAllowSleep = sleep; }
     inline bool isSleeping() const { return mSleeping; }
-    bool getAllowSleep();
-    void setAllowSleep(bool sleep);
 
     void renderLoadingScreen(std::string text);
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
@@ -103,20 +103,20 @@ public:
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
     void reloadHelpPrompts();
 
-    void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
     void setInfoPopup(InfoPopup* infoPopup);
     void stopInfoPopup();
 
     void startScreensaver();
     bool stopScreensaver();
     void renderScreensaver();
-    void screensaverTriggerNextGame() { mScreensaver->triggerNextGame(); };
-    bool isScreensaverActive() { return mRenderScreensaver; };
+    void screensaverTriggerNextGame() { mScreensaver->triggerNextGame(); }
+    void setScreensaver(Screensaver* screensaver) { mScreensaver = screensaver; }
+    bool isScreensaverActive() { return mRenderScreensaver; }
 
     void startMediaViewer(FileData* game);
     void stopMediaViewer();
     void setMediaViewer(MediaViewer* mediaViewer) { mMediaViewer = mediaViewer; }
-    bool isMediaViewerActive() { return mRenderMediaViewer; };
+    bool isMediaViewerActive() { return mRenderMediaViewer; }
 
     void increaseVideoPlayerCount();
     void decreaseVideoPlayerCount();
@@ -126,11 +126,11 @@ public:
     void unsetLaunchedGame();
     void invalidateCachedBackground();
 
-    bool getGameLaunchedState() { return mGameLaunchedState; };
-    void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; };
-    bool getAllowTextScrolling() { return mAllowTextScrolling; };
+    bool getGameLaunchedState() { return mGameLaunchedState; }
+    void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; }
+    bool getAllowTextScrolling() { return mAllowTextScrolling; }
 
-    void setChangedThemeSet() { mChangedThemeSet = true; };
+    void setChangedThemeSet() { mChangedThemeSet = true; }
 
 private:
     void onSleep();

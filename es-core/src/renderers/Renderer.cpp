@@ -195,7 +195,7 @@ namespace Renderer
             windowFlags = getWindowFlags();
         }
         else if (Settings::getInstance()->getString("FullscreenMode") == "borderless") {
-            if(!userResolution)
+            if (!userResolution)
                 windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
             else
                 // If the user has changed the resolution from the command line, then add a

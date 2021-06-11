@@ -21,17 +21,17 @@ GuiInfoPopup::GuiInfoPopup(
         : GuiComponent(window),
         mMessage(message),
         mDuration(duration),
-        running(true)
+        mRunning(true)
 {
     mFrame = new NinePatchComponent(window);
     float maxWidth = Renderer::getScreenWidth() * 0.9f;
     float maxHeight = Renderer::getScreenHeight() * 0.2f;
 
     std::shared_ptr<TextComponent> s = std::make_shared<TextComponent>(mWindow, "",
-        Font::get(FONT_SIZE_MINI), 0x444444FF, ALIGN_CENTER);
+            Font::get(FONT_SIZE_MINI), 0x444444FF, ALIGN_CENTER);
 
     // We do this to force the text container to resize and return the actual expected popup size.
-    s->setSize(0,0);
+    s->setSize(0.0f, 0.0f);
     s->setText(message);
     mSize = s->getSize();
 
@@ -79,7 +79,7 @@ void GuiInfoPopup::render(const Transform4x4f& /*parentTrans*/)
 {
     // We use Identity() as we want to render on a specific window position, not on the view.
     Transform4x4f trans = getTransform() * Transform4x4f::Identity();
-    if (running && updateState()) {
+    if (mRunning && updateState()) {
         // If we're still supposed to be rendering it.
         Renderer::setMatrix(trans);
         renderChildren(trans);
@@ -97,27 +97,27 @@ bool GuiInfoPopup::updateState()
     // Compute fade-in effect.
     if (curTime - mStartTime > mDuration) {
         // We're past the popup duration, no need to render.
-        running = false;
+        mRunning = false;
         return false;
     }
     else if (curTime < mStartTime) {
         // If SDL reset.
-        running = false;
+        mRunning = false;
         return false;
     }
     else if (curTime - mStartTime <= 500) {
-        alpha = ((curTime - mStartTime) * 255 / 500);
+        mAlpha = ((curTime - mStartTime) * 255 / 500);
     }
     else if (curTime - mStartTime < mDuration - 500) {
-        alpha = 255;
+        mAlpha = 255;
     }
     else {
-        alpha = ((-(curTime - mStartTime - mDuration) * 255) / 500);
+        mAlpha = ((-(curTime - mStartTime - mDuration) * 255) / 500);
     }
-    mGrid->setOpacity(static_cast<unsigned char>(alpha));
+    mGrid->setOpacity(static_cast<unsigned char>(mAlpha));
 
     // Apply fade-in effect to popup frame.
-    mFrame->setEdgeColor(0xFFFFFF00 | static_cast<unsigned char>(alpha));
-    mFrame->setCenterColor(0xFFFFFF00 | static_cast<unsigned char>(alpha));
+    mFrame->setEdgeColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha));
+    mFrame->setCenterColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha));
     return true;
 }

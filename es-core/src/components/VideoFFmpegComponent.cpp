@@ -547,7 +547,7 @@ void VideoFFmpegComponent::readFrames()
     if (mVideoCodecContext && mFormatContext) {
         if (mVideoFrameQueue.size() < mVideoTargetQueueSize || (mAudioStreamIndex >= 0 &&
                 mAudioFrameQueue.size() < mAudioTargetQueueSize)) {
-            while((readFrameReturn = av_read_frame(mFormatContext, mPacket)) >= 0) {
+            while ((readFrameReturn = av_read_frame(mFormatContext, mPacket)) >= 0) {
                 if (mPacket->stream_index == mVideoStreamIndex) {
                     if (!avcodec_send_packet(mVideoCodecContext, mPacket) &&
                             !avcodec_receive_frame(mVideoCodecContext, mVideoFrame)) {
