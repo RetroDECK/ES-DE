@@ -796,9 +796,11 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
     float lightness = colorHSL(0, 0, 0, 2);
 
     // Decrease saturation slightly and increase lightness a bit, these adjustments
-    // makes the end result look better than the raw average pixel value.
-    colorHSL(0, 0, 0, 1)  = Math::clamp(saturation * 0.9f, 0.0f, 1.0f);
-    colorHSL(0, 0, 0, 2) = Math::clamp(lightness * 1.2f, 0.0f, 1.0f);
+    // makes the end result look better than the raw average pixel value. Also clamp
+    // the lightness to a low value so we don't get a frame that is nearly pitch black
+    // if the screenshot mostly contains blacks or dark colors.
+    colorHSL(0, 0, 0, 1) = Math::clamp(saturation * 0.9f, 0.0f, 1.0f);
+    colorHSL(0, 0, 0, 2) = Math::clamp(lightness * 1.25f, 0.10f, 1.0f);
 
     const CImg<unsigned char> colorRGB = colorHSL.HSLtoRGB();
 
