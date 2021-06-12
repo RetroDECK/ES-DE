@@ -403,7 +403,7 @@ bool MiximageGenerator::generateImage()
         marqueeImage.resize(marqueeWidth, marqueeHeight, 1, 4, 6);
 
         // Add a drop shadow using 4 iterations of box blur.
-        Utils::CImg::addDropShadow(marqueeImage, marqueeShadowSize, 0.6, 4);
+        Utils::CImg::addDropShadow(marqueeImage, marqueeShadowSize, 0.6f, 4);
 
         xPosMarquee = canvasImage.width() - marqueeImage.width();
         yPosMarquee = 0;
@@ -458,7 +458,7 @@ bool MiximageGenerator::generateImage()
             boxImage.resize(width, boxTargetHeight, 1, 4, 6);
         }
 
-        Utils::CImg::addDropShadow(boxImage, boxShadowSize, 0.6, 4);
+        Utils::CImg::addDropShadow(boxImage, boxShadowSize, 0.6f, 4);
 
         xPosBox = 0;
         yPosBox = canvasImage.height() - boxImage.height();
