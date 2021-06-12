@@ -17,6 +17,7 @@
 #include <cmath>
 #include <set>
 #include <string>
+#include <vector>
 
 class TextureData;
 
@@ -34,6 +35,9 @@ public:
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
     static void manualUnload(std::string path, bool tile);
+
+    // Returns the raw pixel values.
+    std::vector<unsigned char> getRawRGBAData();
 
     // For SVG graphics this function effectively rescales the image to the defined size.
     // It does unload and re-rasterize the texture though which may cause flickering in some

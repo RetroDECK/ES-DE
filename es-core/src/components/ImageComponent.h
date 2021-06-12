@@ -61,6 +61,10 @@ public:
     void crop(float left, float top, float right, float bot);
     void uncrop();
 
+    // This crops any entirely transparent areas around the actual image.
+    // The arguments restrict how much the end result is allowed to be scaled.
+    void cropTransparentPadding(float maxSizeX, float maxSizeY);
+
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;
     void setColorShiftEnd(unsigned int color);

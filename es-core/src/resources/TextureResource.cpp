@@ -105,6 +105,16 @@ void TextureResource::manualUnload(std::string path, bool tile)
     }
 }
 
+std::vector<unsigned char> TextureResource::getRawRGBAData()
+{
+    std::shared_ptr<TextureData> data = sTextureDataManager.get(this);
+
+    if (data)
+        return data.get()->getRawRGBAData();
+    else
+        return std::vector<unsigned char>(0);
+}
+
 const Vector2i TextureResource::getSize() const
 {
     return mSize;

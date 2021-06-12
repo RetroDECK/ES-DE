@@ -9,6 +9,7 @@
 #include "components/ImageComponent.h"
 
 #include "resources/TextureResource.h"
+#include "utils/CImgUtil.h"
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
@@ -264,6 +265,55 @@ void ImageComponent::uncrop()
     crop(0, 0, 0, 0);
 }
 
+void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
+{
+    if (mSize == 0)
+        return;
+
+    std::vector<unsigned char> imageRGBA = mTexture.get()->getRawRGBAData();
+
+    if (imageRGBA.size() == 0)
+        return;
+
+    Vector2i imageSize = mTexture.get()->getSize();
+    cimg_library::CImg<unsigned char> imageCImg(imageSize.x(), imageSize.y(), 1, 4, 0);
+
+    int paddingCoords[4] = {};
+
+    // We need to convert our RGBA data to the CImg internal format as CImg does not interleave
+    // the pixels (as in RGBARGBARGBA).
+    Utils::CImg::convertRGBAToCImg(imageRGBA, imageCImg);
+
+    // This will give us the coordinates for the fully transparent areas.
+    Utils::CImg::getTransparentPaddingCoords(imageCImg, paddingCoords);
+
+    Vector2f originalSize = mSize;
+
+    float cropLeft = static_cast<float>(paddingCoords[0]) / static_cast<float>(imageSize.x());
+    float cropTop = static_cast<float>(paddingCoords[1]) / static_cast<float>(imageSize.y());
+    float cropRight = static_cast<float>(paddingCoords[2]) / static_cast<float>(imageSize.x());
+    float cropBottom = static_cast<float>(paddingCoords[3]) / static_cast<float>(imageSize.y());
+
+    crop(cropLeft, cropTop, cropRight, cropBottom);
+
+    // Cropping the image obviously leads to a reduction in size, so we need to determine
+    // how much to scale up after cropping to keep within the max size restrictions that
+    // were passed as arguments.
+    mSize.x() -= mSize.x() * (cropLeft + cropRight);
+    mSize.y() -= mSize.y() * (cropTop + cropBottom);
+
+    float scaleFactor = originalSize.y() / mSize.y();
+
+    if (scaleFactor * mSize.x() > maxSizeX)
+        scaleFactor = maxSizeX / mSize.x();
+
+    if (scaleFactor * mSize.y() > maxSizeY)
+        scaleFactor = maxSizeY / mSize.y();
+
+    setResize(mSize.x() * scaleFactor, mSize.y() * scaleFactor);
+    updateVertices();
+}
+
 void ImageComponent::setFlipX(bool flip)
 {
     mFlipX = flip;
@@ -314,8 +364,8 @@ void ImageComponent::updateVertices()
 
     // We go through this mess to make sure everything is properly rounded.
     // If we just round vertices at the end, edge cases occur near sizes of 0.5.
-    const Vector2f topLeft = { mSize * mTopLeftCrop };
-    const Vector2f bottomRight = { mSize * mBottomRightCrop };
+    const Vector2f topLeft = { 0, 0 };
+    const Vector2f bottomRight = mSize;
     const float px = mTexture->isTiled() ? mSize.x() / getTextureSize().x() : 1.0f;
     const float py = mTexture->isTiled() ? mSize.y() / getTextureSize().y() : 1.0f;
 

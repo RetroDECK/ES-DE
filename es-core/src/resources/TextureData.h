@@ -57,6 +57,7 @@ public:
     // Define a factor for scaling the file when loading it (1.0f = no scaling).
     void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }
 
+    std::vector<unsigned char> getRawRGBAData() { return mDataRGBA; }
     bool tiled() { return mTile; }
 
 private:
