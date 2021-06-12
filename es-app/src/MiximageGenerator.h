@@ -10,13 +10,10 @@
 #ifndef ES_APP_SCRAPERS_MIXIMAGE_GENERATOR_H
 #define ES_APP_SCRAPERS_MIXIMAGE_GENERATOR_H
 
-// Disable the CImg display capabilities.
-#define cimg_display 0
-
+#include "utils/CImgUtil.h"
 #include "FileData.h"
 #include "GuiComponent.h"
 
-#include <CImg.h>
 #include <FreeImage.h>
 #include <future>
 
@@ -32,16 +29,9 @@ public:
 
 private:
     bool generateImage();
-    void cropLetterboxes(CImg<unsigned char>& image);
-    void cropPillarboxes(CImg<unsigned char>& image);
-    void removeTransparentPadding(CImg<unsigned char>& image);
-    void addDropShadow(CImg<unsigned char>& image, unsigned int shadowDistance);
     void calculateMarqueeSize(const unsigned int& targetWidth, const unsigned int& targetHeight,
             unsigned int& width, unsigned int& height);
     void sampleFrameColor(CImg<unsigned char>& screenshotImage, unsigned char (&frameColor)[4]);
-
-    void convertToCImgFormat(CImg<unsigned char>& image, std::vector<unsigned char> imageVector);
-    void convertFromCImgFormat(CImg<unsigned char> image, std::vector<unsigned char>& imageVector);
 
     std::string getSavePath();
 

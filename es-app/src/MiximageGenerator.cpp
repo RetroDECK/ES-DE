@@ -322,14 +322,14 @@ bool MiximageGenerator::generateImage()
 
     CImg<unsigned char> screenshotImage(fileWidth, fileHeight, 1, 4, 0);
 
-    // Convert image to CImg internal format.
-    convertToCImgFormat(screenshotImage, screenshotVector);
+    // Convert the RGBA image to CImg internal format.
+    Utils::CImg::convertRGBAToCImg(screenshotVector, screenshotImage);
     screenshotVector.clear();
 
     if (Settings::getInstance()->getBool("MiximageRemoveLetterboxes"))
-        cropLetterboxes(screenshotImage);
+        Utils::CImg::cropLetterboxes(screenshotImage);
     if (Settings::getInstance()->getBool("MiximageRemovePillarboxes"))
-        cropPillarboxes(screenshotImage);
+        Utils::CImg::cropPillarboxes(screenshotImage);
 
     if (Settings::getInstance()->getString("MiximageScreenshotScaling") == "smooth") {
         // Lanczos scaling is normally not recommended for low resolution graphics as
@@ -391,8 +391,8 @@ bool MiximageGenerator::generateImage()
         marqueeImage = CImg<unsigned char>(FreeImage_GetWidth(marqueeFile),
                 FreeImage_GetHeight(marqueeFile), 1, 4, 0);
 
-        convertToCImgFormat(marqueeImage, marqueeVector);
-        removeTransparentPadding(marqueeImage);
+        Utils::CImg::convertRGBAToCImg(marqueeVector, marqueeImage);
+        Utils::CImg::removeTransparentPadding(marqueeImage);
 
         unsigned int marqueeWidth = static_cast<unsigned int>(marqueeImage.width());
         unsigned int marqueeHeight = static_cast<unsigned int>(marqueeImage.height());
@@ -402,7 +402,8 @@ bool MiximageGenerator::generateImage()
         // We use Lanczos3 which is the highest quality resampling method available.
         marqueeImage.resize(marqueeWidth, marqueeHeight, 1, 4, 6);
 
-        addDropShadow(marqueeImage, marqueeShadowSize);
+        // Add a drop shadow using 4 iterations of box blur.
+        Utils::CImg::addDropShadow(marqueeImage, marqueeShadowSize, 0.6, 4);
 
         xPosMarquee = canvasImage.width() - marqueeImage.width();
         yPosMarquee = 0;
@@ -432,8 +433,8 @@ bool MiximageGenerator::generateImage()
         boxImage = CImg<unsigned char>(FreeImage_GetWidth(boxFile),
                 FreeImage_GetHeight(boxFile), 1, 4);
 
-        convertToCImgFormat(boxImage, boxVector);
-        removeTransparentPadding(boxImage);
+        Utils::CImg::convertRGBAToCImg(boxVector, boxImage);
+        Utils::CImg::removeTransparentPadding(boxImage);
 
         float scaleFactor = static_cast<float>(boxTargetHeight) /
                 static_cast<float>(boxImage.height());
@@ -457,7 +458,7 @@ bool MiximageGenerator::generateImage()
             boxImage.resize(width, boxTargetHeight, 1, 4, 6);
         }
 
-        addDropShadow(boxImage, boxShadowSize);
+        Utils::CImg::addDropShadow(boxImage, boxShadowSize, 0.6, 4);
 
         xPosBox = 0;
         yPosBox = canvasImage.height() - boxImage.height();
@@ -522,8 +523,8 @@ bool MiximageGenerator::generateImage()
 
     std::vector<unsigned char> canvasVector;
 
-    // Convert image from CImg internal format.
-    convertFromCImgFormat(canvasImage, canvasVector);
+    // Convert the image from CImg internal format.
+    Utils::CImg::convertCImgToRGBA(canvasImage, canvasVector);
 
     FIBITMAP* mixImage = nullptr;
     mixImage = FreeImage_ConvertFromRawBits(&canvasVector.at(0), canvasImage.width(),
@@ -551,169 +552,6 @@ bool MiximageGenerator::generateImage()
         return false;
     else
         return true;
-}
-
-void MiximageGenerator::cropLetterboxes(CImg<unsigned char>& image)
-{
-    double pixelValueSum = 0.0l;
-    int rowCounterUpper = 0;
-    int rowCounterLower = 0;
-
-    // Count the number of rows that are pure black.
-    for (int i = image.height() - 1; i > 0; i--) {
-        CImg<unsigned char> imageRow = image.get_rows(i, i);
-        // Ignore the alpha channel.
-        imageRow.channels(0, 2);
-        pixelValueSum = imageRow.sum();
-        if (pixelValueSum == 0.0l)
-            rowCounterUpper++;
-        else
-            break;
-    }
-
-    for (int i = 0; i < image.height(); i++) {
-        CImg<unsigned char> imageRow = image.get_rows(i, i);
-        imageRow.channels(0, 2);
-        pixelValueSum = imageRow.sum();
-        if (pixelValueSum == 0.0l)
-            rowCounterLower++;
-        else
-            break;
-    }
-
-    if (rowCounterUpper > 0)
-        image.crop(0, 0, 0, 3, image.width() - 1, image.height() - 1 - rowCounterUpper, 0, 0);
-
-    if (rowCounterLower > 0)
-        image.crop(0, rowCounterLower, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
-}
-
-void MiximageGenerator::cropPillarboxes(CImg<unsigned char>& image)
-{
-    double pixelValueSum = 0.0l;
-    unsigned int columnCounterLeft = 0;
-    unsigned int columnCounterRight = 0;
-
-    // Count the number of columns that are pure black.
-    for (int i = 0; i < image.width(); i++) {
-        CImg<unsigned char> imageColumn = image.get_columns(i, i);
-        // Ignore the alpha channel.
-        imageColumn.channels(0, 2);
-        pixelValueSum = imageColumn.sum();
-        if (pixelValueSum == 0.0l)
-            columnCounterLeft++;
-        else
-            break;
-    }
-
-    for (int i = image.width() - 1; i > 0; i--) {
-        CImg<unsigned char> imageColumn = image.get_columns(i, i);
-        imageColumn.channels(0, 2);
-        pixelValueSum = imageColumn.sum();
-        if (pixelValueSum == 0.0l)
-            columnCounterRight++;
-        else
-            break;
-    }
-
-    if (columnCounterLeft > 0)
-        image.crop(columnCounterLeft, 0, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
-
-    if (columnCounterRight > 0)
-        image.crop(0, 0, 0, 3, image.width() - columnCounterRight - 1, image.height() - 1, 0, 0);
-}
-
-void MiximageGenerator::removeTransparentPadding(CImg<unsigned char>& image)
-{
-    if (image.spectrum() != 4)
-        return;
-
-    double pixelValueSum = 0.0l;
-    int rowCounterUpper = 0;
-    int rowCounterLower = 0;
-    unsigned int columnCounterLeft = 0;
-    unsigned int columnCounterRight = 0;
-
-    // Count the number of rows and columns that are completely transparent.
-    for (int i = image.height() - 1; i > 0; i--) {
-        CImg<unsigned char> imageRow = image.get_rows(i, i);
-        pixelValueSum = imageRow.get_shared_channel(3).sum();
-        if (pixelValueSum == 0.0l)
-            rowCounterUpper++;
-        else
-            break;
-    }
-
-    for (int i = 0; i < image.height(); i++) {
-        CImg<unsigned char> imageRow = image.get_rows(i, i);
-        pixelValueSum = imageRow.get_shared_channel(3).sum();
-        if (pixelValueSum == 0.0l)
-            rowCounterLower++;
-        else
-            break;
-    }
-
-    for (int i = 0; i < image.width(); i++) {
-        CImg<unsigned char> imageColumn = image.get_columns(i, i);
-        pixelValueSum = imageColumn.get_shared_channel(3).sum();
-        if (pixelValueSum == 0.0l)
-            columnCounterLeft++;
-        else
-            break;
-    }
-
-    for (int i = image.width() - 1; i > 0; i--) {
-        CImg<unsigned char> imageColumn = image.get_columns(i, i);
-        pixelValueSum = imageColumn.get_shared_channel(3).sum();
-        if (pixelValueSum == 0.0l)
-            columnCounterRight++;
-        else
-            break;
-    }
-
-    if (rowCounterUpper > 0)
-        image.crop(0, 0, 0, 3, image.width() - 1, image.height() - 1 - rowCounterUpper, 0, 0);
-
-    if (rowCounterLower > 0)
-        image.crop(0, rowCounterLower, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
-
-    if (columnCounterLeft > 0)
-        image.crop(columnCounterLeft, 0, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
-
-    if (columnCounterRight > 0)
-        image.crop(0, 0, 0, 3, image.width() - columnCounterRight - 1, image.height() - 1, 0, 0);
-}
-
-void MiximageGenerator::addDropShadow(CImg<unsigned char>& image, unsigned int shadowDistance)
-{
-    // Make the shadow image larger than the source image to leave space for the drop shadow.
-    CImg<unsigned char> shadowImage(image.width() + shadowDistance * 3,
-            image.height() + shadowDistance * 3, 1, 4, 0);
-
-    // Create a mask image.
-    CImg<unsigned char> maskImage(image.width(), image.height(), 1, 4, 0);
-    maskImage.draw_image(0, 0, image);
-    // Fill the RGB channels with white so we end up with a simple mask.
-    maskImage.get_shared_channels(0, 2).fill(255);
-
-    // Make a black outline of the source image as a basis for the shadow.
-    shadowImage.draw_image(shadowDistance, shadowDistance, image);
-    shadowImage.get_shared_channels(0, 2).fill(0);
-    // Lower the transparency and apply the blur.
-    shadowImage.get_shared_channel(3) /= 0.6f;
-    shadowImage.blur_box(static_cast<const float>(shadowDistance),
-            static_cast<const float>(shadowDistance), 1, true, 4);
-
-    // Add the mask to the alpha channel of the shadow image.
-    shadowImage.get_shared_channel(3).draw_image(0, 0, maskImage.get_shared_channels(0, 0),
-            maskImage.get_shared_channel(3), 1, 255);
-    // Draw the source image on top of the shadow image.
-    shadowImage.draw_image(0, 0, image.get_shared_channels(0, 2),
-            image.get_shared_channel(3), 1, 255);
-    // Remove the any unused space that we added to leave room for the shadow.
-    removeTransparentPadding(shadowImage);
-
-    image = shadowImage;
 }
 
 void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
@@ -808,35 +646,6 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
     frameColor[1] = colorRGB(0, 0, 0, 1);
     frameColor[2] = colorRGB(0, 0, 0, 2);
     frameColor[3] = 255;
-}
-
-void MiximageGenerator::convertToCImgFormat(CImg<unsigned char>& image,
-        std::vector<unsigned char> imageVector)
-{
-    // CImg does not interleave the pixels as in RGBARGBARGBA so a conversion is required.
-    int counter = 0;
-    for (int r = 0; r < image.height(); r++) {
-        for (int c = 0; c < image.width(); c++) {
-            image(c, r, 0, 0) = imageVector[counter + 2];
-            image(c, r, 0, 1) = imageVector[counter + 1];
-            image(c, r, 0, 2) = imageVector[counter + 0];
-            image(c, r, 0, 3) = imageVector[counter + 3];
-            counter += 4;
-        }
-    }
-}
-
-void MiximageGenerator::convertFromCImgFormat(CImg<unsigned char> image,
-        std::vector<unsigned char>& imageVector)
-{
-    for (int r = image.height() - 1; r >= 0; r--) {
-        for (int c = 0; c < image.width(); c++) {
-            imageVector.push_back((unsigned char)image(c,r,0,2));
-            imageVector.push_back((unsigned char)image(c,r,0,1));
-            imageVector.push_back((unsigned char)image(c,r,0,0));
-            imageVector.push_back((unsigned char)image(c,r,0,3));
-        }
-    }
 }
 
 std::string MiximageGenerator::getSavePath()
