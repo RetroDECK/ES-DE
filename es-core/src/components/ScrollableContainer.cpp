@@ -91,7 +91,7 @@ void ScrollableContainer::update(int deltaTime)
     // Don't scroll if the media viewer or screensaver is active or if text scrolling is disabled;
     if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
             !mWindow->getAllowTextScrolling()) {
-        if (mScrollPos != 0)
+        if (mScrollPos != 0 && !mWindow->isLaunchScreenDisplayed())
             reset();
         return;
     }

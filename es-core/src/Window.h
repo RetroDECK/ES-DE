@@ -64,6 +64,15 @@ public:
         virtual void render() = 0;
     };
 
+    class GuiLaunchScreen
+    {
+    public:
+        virtual void displayLaunchScreen(FileData* game) = 0;
+        virtual void closeLaunchScreen() = 0;
+        virtual void update(int deltaTime) = 0;
+        virtual void render() = 0;
+    };
+
     class InfoPopup
     {
     public:
@@ -118,6 +127,11 @@ public:
     void setMediaViewer(MediaViewer* mediaViewer) { mMediaViewer = mediaViewer; }
     bool isMediaViewerActive() { return mRenderMediaViewer; }
 
+    void displayLaunchScreen(FileData* game);
+    void closeLaunchScreen();
+    void setLaunchScreen(GuiLaunchScreen* launchScreen) { mLaunchScreen = launchScreen; }
+    bool isLaunchScreenDisplayed() { return mRenderLaunchScreen; }
+
     void increaseVideoPlayerCount();
     void decreaseVideoPlayerCount();
     int getVideoPlayerCount();
@@ -150,6 +164,9 @@ private:
 
     MediaViewer* mMediaViewer;
     bool mRenderMediaViewer;
+
+    GuiLaunchScreen* mLaunchScreen;
+    bool mRenderLaunchScreen;
 
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;

@@ -1,0 +1,225 @@
+//  SPDX-License-Identifier: MIT
+//
+//  EmulationStation Desktop Edition
+//  GuiLaunchScreen.cpp
+//
+//  Screen shown when launching a game.
+//
+
+#include "guis/GuiLaunchScreen.h"
+
+#include "components/ComponentGrid.h"
+#include "components/TextComponent.h"
+#include "math/Misc.h"
+#include "utils/StringUtil.h"
+#include "FileData.h"
+#include "SystemData.h"
+
+GuiLaunchScreen::GuiLaunchScreen(
+        Window* window)
+        : GuiComponent(window),
+        mBackground(window, ":/graphics/frame.svg"),
+        mGrid(nullptr),
+        mMarquee(nullptr),
+        mWindow(window)
+{
+    addChild(&mBackground);
+    mWindow->setLaunchScreen(this);
+}
+
+GuiLaunchScreen::~GuiLaunchScreen()
+{
+    closeLaunchScreen();
+}
+
+void GuiLaunchScreen::displayLaunchScreen(FileData* game)
+{
+    mGrid = new ComponentGrid(mWindow, Vector2i(3, 8));
+    addChild(mGrid);
+
+    mImagePath = game->getMarqueePath();
+
+    // We need to unload the image first as it may be cached at a modified resolution
+    // which would lead to the wrong size when using the image here.
+    if (mImagePath != "") {
+        TextureResource::manualUnload(mImagePath, false);
+        mMarquee = new ImageComponent(mWindow);
+    }
+
+    mScaleUp = 0.5f;
+    const float titleFontSize = 0.060f;
+    const float gameNameFontSize = 0.073f;
+
+    // Spacer row.
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 0),
+            false, false, Vector2i(1, 1));
+
+    // Title.
+    mTitle = std::make_shared<TextComponent>(mWindow, "LAUNCHING GAME",
+            Font::get(titleFontSize * std::min(Renderer::getScreenHeight(),
+            Renderer::getScreenWidth())), 0x777777FF, ALIGN_CENTER);
+    mGrid->setEntry(mTitle, Vector2i(1, 1), false, true, Vector2i(1, 1));
+
+    // Spacer row.
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 2),
+            false, false, Vector2i(1, 1));
+
+    // Row for the marquee.
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 3),
+            false, false, Vector2i(1, 1));
+
+    // Spacer row.
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 4),
+            false, false, Vector2i(1, 1));
+
+    // Game name.
+    mGameName = std::make_shared<TextComponent>(mWindow, "GAME NAME",
+            Font::get(gameNameFontSize * std::min(Renderer::getScreenHeight(),
+            Renderer::getScreenWidth())), 0x555555FF, ALIGN_CENTER);
+    mGrid->setEntry(mGameName, Vector2i(1, 5), false, true, Vector2i(1, 1));
+
+    // System name.
+    mSystemName = std::make_shared<TextComponent>(mWindow, "SYSTEM NAME",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+    mGrid->setEntry(mSystemName, Vector2i(1, 6), false, true, Vector2i(1, 1));
+
+    // Spacer row.
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 7),
+            false, false, Vector2i(1, 1));
+
+    // Left spacer.
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 0),
+            false, false, Vector2i(1, 8));
+
+    // Right spacer.
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(2, 0),
+            false, false, Vector2i(1, 8));
+
+    // Adjust the width depending on the aspect ratio of the screen, to make the screen look
+    // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
+    // reference.
+    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+
+    float maxWidthModifier = Math::clamp(0.78f * aspectValue, 0.78f, 0.90f);
+    float minWidthModifier = Math::clamp(0.40f * aspectValue, 0.40f, 0.56f);
+
+    float maxWidth = static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
+    float minWidth = static_cast<float>(Renderer::getScreenWidth()) * minWidthModifier;
+
+    float fontWidth = Font::get(gameNameFontSize * std::min(Renderer::getScreenHeight(),
+            Renderer::getScreenWidth()))->sizeText(Utils::String::toUpper(game->getName())).x();
+
+    // Add a bit of width to compensate for the left and right spacers.
+    fontWidth += static_cast<float>(Renderer::getScreenWidth()) * 0.05f;
+
+    float width = Math::clamp(fontWidth, minWidth, maxWidth);
+
+    if (mImagePath != "")
+        setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.60f);
+    else
+        setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.35f);
+
+    // Set row heights.
+    mGrid->setRowHeightPerc(0, 0.09f, false);
+    mGrid->setRowHeightPerc(1, mTitle->getFont()->getLetterHeight() * 1.70f / mSize.y(), false);
+    mGrid->setRowHeightPerc(2, 0.05f, false);
+    if (mImagePath != "")
+        mGrid->setRowHeightPerc(3, 0.35f, false);
+    else
+        mGrid->setRowHeightPerc(3, 0.08f, false);
+    mGrid->setRowHeightPerc(4, 0.05f, false);
+    mGrid->setRowHeightPerc(5, mGameName->getFont()->getHeight() * 0.80f / mSize.y(), false);
+    mGrid->setRowHeightPerc(6, mSystemName->getFont()->getHeight() * 0.90f / mSize.y(), false);
+
+    // Set left and right spacers column widths.
+    mGrid->setColWidthPerc(0, 0.025f);
+    mGrid->setColWidthPerc(2, 0.025f);
+
+    mGrid->setSize(mSize);
+
+    float totalRowHeight = 0.0f;
+
+    // Hack to adjust the window height to the row boundary.
+    for (int i = 0; i < 7; i++)
+        totalRowHeight += mGrid->getRowHeight(i);
+
+    setSize(mSize.x(), totalRowHeight);
+
+    mGameName->setText(Utils::String::toUpper(game->getName()));
+    mSystemName->setText(Utils::String::toUpper(game->getSystem()->getFullName()));
+
+    // For the marquee we strip away any transparent padding around the actual image.
+    // When doing this, we restrict the scale-up to a certain percentage of the screen
+    // width so that the sizes look somewhat consistent regardless of the aspect ratio
+    // of the images.
+    if (mImagePath != "") {
+        mMarquee->setImage(game->getMarqueePath(), false);
+        mMarquee->cropTransparentPadding(static_cast<float>(Renderer::getScreenWidth()) *
+                (0.25f * (1.778f / Renderer::getScreenAspectRatio())), mGrid->getRowHeight(3));
+
+        mMarquee->setOrigin(0.5f, 0.5f);
+        Vector3f currentPos = mMarquee->getPosition();
+        Vector2f currentSize = mMarquee->getSize();
+
+        // Position the image in the middle of row four.
+        currentPos.x() = mSize.x() / 2.0f;
+        currentPos.y() = mGrid->getRowHeight(0) + mGrid->getRowHeight(1) +
+                mGrid->getRowHeight(2) + mGrid->getRowHeight(3) / 2.0f;
+        mMarquee->setPosition(currentPos);
+    }
+
+    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
+
+    // Center the screen both on the X and Y axes.
+    setPosition((static_cast<float>(Renderer::getScreenWidth()) - mSize.x()) / 2.0f,
+            (static_cast<float>(Renderer::getScreenHeight()) - mSize.y()) / 2.0f);
+}
+
+void GuiLaunchScreen::closeLaunchScreen()
+{
+    if (mGrid) {
+        delete mGrid;
+        mGrid = nullptr;
+    }
+
+    if (mMarquee) {
+        delete mMarquee;
+        mMarquee = nullptr;
+    }
+
+    // An extra precaution.
+    if (mImagePath != "") {
+        TextureResource::manualUnload(mImagePath, false);
+        mImagePath = "";
+    }
+}
+
+void GuiLaunchScreen::onSizeChanged()
+{
+    mGrid->setSize(mSize);
+}
+
+void GuiLaunchScreen::update(int deltaTime)
+{
+    if (mScaleUp < 1.0f)
+        mScaleUp = Math::clamp(mScaleUp + 0.07f, 0.0f, 1.0f);
+}
+
+void GuiLaunchScreen::render()
+{
+    // Scale up animation.
+    if (mScaleUp < 1.0f) {
+        setOrigin({0.5f, 0.5f});
+        setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
+                static_cast<float>(Renderer::getScreenHeight()) / 2.0f);
+        setScale(mScaleUp);
+    }
+
+    Transform4x4f trans = Transform4x4f::Identity() * getTransform();
+    Renderer::setMatrix(trans);
+
+    GuiComponent::renderChildren(trans);
+
+    if (mMarquee)
+        mMarquee->render(trans);
+}

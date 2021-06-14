@@ -21,6 +21,7 @@
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiComplexTextEditPopup.h"
+#include "guis/GuiLaunchScreen.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
@@ -479,6 +480,7 @@ int main(int argc, char* argv[])
     Window window;
     SystemScreensaver screensaver(&window);
     MediaViewer mediaViewer(&window);
+    GuiLaunchScreen guiLaunchScreen(&window);
     ViewController::init(&window);
     CollectionSystemsManager::init(&window);
     window.pushGui(ViewController::get());

@@ -350,7 +350,31 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
         }
     });
+    #endif
 
+    // Launch screen duration.
+    auto launch_screen_duration = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "LAUNCH SCREEN DURATION", false);
+    std::string selectedDuration = Settings::getInstance()->getString("LaunchScreenDuration");
+    launch_screen_duration->add("NORMAL", "normal", selectedDuration == "normal");
+    launch_screen_duration->add("BRIEF", "brief", selectedDuration == "brief");
+    launch_screen_duration->add("LONG", "long", selectedDuration == "long");
+    launch_screen_duration->add("DISABLED", "disabled", selectedDuration == "disabled");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the duration to "normal" in this case.
+    if (launch_screen_duration->getSelectedObjects().size() == 0)
+        launch_screen_duration->selectEntry(0);
+    s->addWithLabel("LAUNCH SCREEN DURATION", launch_screen_duration);
+    s->addSaveFunc([launch_screen_duration, s] {
+        if (launch_screen_duration->getSelected() !=
+                Settings::getInstance()->getString("LaunchScreenDuration")) {
+            Settings::getInstance()->setString("LaunchScreenDuration",
+                    launch_screen_duration->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    #if defined(USE_OPENGL_21)
     // Blur background when the menu is open.
     auto menu_blur_background = std::make_shared<SwitchComponent>(mWindow);
     menu_blur_background->setState(Settings::getInstance()->getBool("MenuBlurBackground"));

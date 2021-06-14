@@ -25,6 +25,7 @@
 Window::Window()
         : mScreensaver(nullptr),
         mMediaViewer(nullptr),
+        mLaunchScreen(nullptr),
         mInfoPopup(nullptr),
         mNormalizeNextUpdate(false),
         mFrameTimeElapsed(0),
@@ -35,6 +36,7 @@ Window::Window()
         mTimeSinceLastInput(0),
         mRenderScreensaver(false),
         mRenderMediaViewer(false),
+        mRenderLaunchScreen(false),
         mGameLaunchedState(false),
         mAllowTextScrolling(true),
         mCachedBackground(false),
@@ -157,6 +159,13 @@ void Window::input(InputConfig* config, Input input)
             // Any other input than left or right stops the media viewer.
             stopMediaViewer();
         return;
+    }
+
+    if (mGameLaunchedState && mLaunchScreen && mRenderLaunchScreen) {
+        if (input.value != 0) {
+            mLaunchScreen->closeLaunchScreen();
+            mRenderLaunchScreen = false;
+        }
     }
 
     if (mScreensaver) {
@@ -310,8 +319,8 @@ void Window::update(int deltaTime)
 
     // If the theme set changed, we need to update the background once so that the camera
     // will be moved. This is required as theme set changes always makes a transition to
-    // the system view. If we wouldn't make this update, the camera movement would only
-    // take place once the menu has been closed.
+    // the system view. If we wouldn't make this update, the camera movement would take
+    // place once the menu has been closed.
     if (mChangedThemeSet && mGuiStack.size() > 1) {
         mGuiStack.front()->update(deltaTime);
         mChangedThemeSet = false;
@@ -319,6 +328,9 @@ void Window::update(int deltaTime)
 
     if (mMediaViewer && mRenderMediaViewer)
         mMediaViewer->update(deltaTime);
+
+    if (mLaunchScreen && mRenderLaunchScreen)
+        mLaunchScreen->update(deltaTime);
 
     if (mScreensaver && mRenderScreensaver)
         mScreensaver->update(deltaTime);
@@ -358,7 +370,7 @@ void Window::render()
         if (renderBottom)
             bottom->render(transform);
 
-        if (bottom != top) {
+        if (bottom != top || mRenderLaunchScreen) {
             #if defined(USE_OPENGL_21)
             if (!mCachedBackground) {
                 // Generate a cache texture of the shaded background when opening the menu, which
@@ -443,23 +455,25 @@ void Window::render()
             #if defined(USE_OPENGL_21)
             // Menu opening effects (scale-up and fade-in).
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
-                if (mTopScale < 1.0)
+                if (mTopScale < 1.0f) {
                     mTopScale = Math::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
-                Vector2f topCenter = top->getCenter();
-                top->setOrigin({0.5, 0.5});
-                top->setPosition({topCenter.x(), topCenter.y(), 0});
-                top->setScale(mTopScale);
+                    Vector2f topCenter = top->getCenter();
+                    top->setOrigin({0.5, 0.5});
+                    top->setPosition({topCenter.x(), topCenter.y(), 0});
+                    top->setScale(mTopScale);
+                }
             }
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "fade-in") {
                 // Fade-in menu.
                 if (mTopOpacity < 255) {
-                    mTopOpacity = Math::clamp(mTopOpacity+15, 0, 255);
+                    mTopOpacity = Math::clamp(mTopOpacity + 15, 0, 255);
                     top->setOpacity(mTopOpacity);
                 }
             }
             #endif
 
-            top->render(transform);
+            if (!mRenderLaunchScreen)
+                top->render(transform);
         }
         else {
             mCachedBackground = false;
@@ -522,6 +536,9 @@ void Window::render()
 
     if (mRenderMediaViewer)
         mMediaViewer->render();
+
+    if (mRenderLaunchScreen)
+        mLaunchScreen->render();
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         Renderer::setMatrix(Transform4x4f::Identity());
@@ -709,6 +726,22 @@ void Window::stopMediaViewer()
         mMediaViewer->stopMediaViewer();
 
     mRenderMediaViewer = false;
+}
+
+void Window::displayLaunchScreen(FileData* game)
+{
+    if (mLaunchScreen) {
+        mLaunchScreen->displayLaunchScreen(game);
+        mRenderLaunchScreen = true;
+    }
+}
+
+void Window::closeLaunchScreen()
+{
+    if (mLaunchScreen)
+        mLaunchScreen->closeLaunchScreen();
+
+    mRenderLaunchScreen = false;
 }
 
 void Window::increaseVideoPlayerCount()

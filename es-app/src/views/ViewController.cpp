@@ -640,24 +640,43 @@ void ViewController::launch(FileData* game)
     stopAnimation(1); // Make sure the fade in isn't still playing.
     mWindow->stopInfoPopup(); // Make sure we disable any existing info popup.
 
-    // Until a proper game launch screen is implemented, at least this will let the
-    // user know that something is actually happening (in addition to the launch sound,
-    // if navigation sounds are enabled).
-    GuiInfoPopup* s = new GuiInfoPopup(mWindow, "LAUNCHING GAME '" +
-            Utils::String::toUpper(game->metadata.get("name") + "'"), 10000);
-    mWindow->setInfoPopup(s);
+    int duration = 0;
+    std::string durationString = Settings::getInstance()->getString("LaunchScreenDuration");
+
+    if (durationString == "disabled") {
+        // If the game launch screen has been set as disabled, show a simple info popup
+        // notification instead.
+        GuiInfoPopup* s = new GuiInfoPopup(mWindow, "LAUNCHING GAME '" +
+                Utils::String::toUpper(game->metadata.get("name") + "'"), 10000);
+        mWindow->setInfoPopup(s);
+        duration = 1700;
+    }
+    else if (durationString == "brief") {
+        duration = 1700;
+    }
+    else if (durationString == "long") {
+        duration = 4500;
+    }
+    else {
+        // Normal duration.
+        duration = 3000;
+    }
+
+    if (durationString != "disabled")
+        mWindow->displayLaunchScreen(game->getSourceFileData());
 
     NavigationSounds::getInstance()->playThemeNavigationSound(LAUNCHSOUND);
 
-    // This is just a dummy animation in order for the launch notification popup to be
-    // displayed briefly, and for the navigation sound playing to be able to complete.
+    // This is just a dummy animation in order for the launch screen or notification popup
+    // to be displayed briefly, and for the navigation sound playing to be able to complete.
     // During this time period, all user input is blocked.
-    setAnimation(new LambdaAnimation([](float t){}, 1700), 0, [this, game] {
-        while (NavigationSounds::getInstance()->isPlayingThemeNavigationSound(LAUNCHSOUND));
+    setAnimation(new LambdaAnimation([](float t){}, duration), 0, [this, game] {
         game->launchGame(mWindow);
+        // If the launch screen is disabled then this will do nothing.
+        mWindow->closeLaunchScreen();
         onFileChanged(game, true);
-        // This is a workaround so that any key or button presses used for exiting the emulator
-        // are not captured upon returning to ES.
+        // This is a workaround so that any keys or button presses used for exiting the emulator
+        // are not captured upon returning.
         setAnimation(new LambdaAnimation([](float t){}, 1), 0, [this] {
             mLockInput = false;
         });

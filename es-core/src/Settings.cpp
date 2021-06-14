@@ -138,6 +138,7 @@ void Settings::setDefaults()
     mStringMap["UIMode"] = { "full", "full" };
     mStringMap["DefaultSortOrder"] = { "filename, ascending", "filename, ascending" };
     mStringMap["MenuOpeningEffect"] = { "scale-up", "scale-up" };
+    mStringMap["LaunchScreenDuration"] = { "normal", "normal" };
     mBoolMap["MenuBlurBackground"] = { true, true };
     mBoolMap["GamelistVideoPillarbox"] = { true, true };
     mBoolMap["GamelistVideoScanlines"] = { false, false };
