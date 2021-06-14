@@ -304,6 +304,12 @@ void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
 
     float scaleFactor = originalSize.y() / mSize.y();
 
+    if (scaleFactor * mSize.x() < maxSizeX)
+        scaleFactor = maxSizeX / mSize.x();
+
+    if (scaleFactor * mSize.y() < maxSizeY)
+        scaleFactor = maxSizeY / mSize.y();
+
     if (scaleFactor * mSize.x() > maxSizeX)
         scaleFactor = maxSizeX / mSize.x();
 
