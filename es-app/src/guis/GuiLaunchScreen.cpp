@@ -118,16 +118,19 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     if (mImagePath != "")
         setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.60f);
     else
-        setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.35f);
+        setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.38f);
 
     // Set row heights.
-    mGrid->setRowHeightPerc(0, 0.09f, false);
+    if (mImagePath != "")
+        mGrid->setRowHeightPerc(0, 0.09f, false);
+    else
+        mGrid->setRowHeightPerc(0, 0.15f, false);
     mGrid->setRowHeightPerc(1, mTitle->getFont()->getLetterHeight() * 1.70f / mSize.y(), false);
     mGrid->setRowHeightPerc(2, 0.05f, false);
     if (mImagePath != "")
         mGrid->setRowHeightPerc(3, 0.35f, false);
     else
-        mGrid->setRowHeightPerc(3, 0.08f, false);
+        mGrid->setRowHeightPerc(3, 0.02f, false);
     mGrid->setRowHeightPerc(4, 0.05f, false);
     mGrid->setRowHeightPerc(5, mGameName->getFont()->getHeight() * 0.80f / mSize.y(), false);
     mGrid->setRowHeightPerc(6, mSystemName->getFont()->getHeight() * 0.90f / mSize.y(), false);
