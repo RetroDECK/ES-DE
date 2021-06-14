@@ -57,7 +57,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // Title.
     mTitle = std::make_shared<TextComponent>(mWindow, "LAUNCHING GAME",
             Font::get(static_cast<int>(titleFontSize * std::min(Renderer::getScreenHeight(),
-            Renderer::getScreenWidth()))), 0x777777FF, ALIGN_CENTER);
+            Renderer::getScreenWidth()))), 0x666666FF, ALIGN_CENTER);
     mGrid->setEntry(mTitle, Vector2i(1, 1), false, true, Vector2i(1, 1));
 
     // Spacer row.
@@ -75,12 +75,12 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // Game name.
     mGameName = std::make_shared<TextComponent>(mWindow, "GAME NAME",
             Font::get(static_cast<int>(gameNameFontSize * std::min(Renderer::getScreenHeight(),
-            Renderer::getScreenWidth()))), 0x555555FF, ALIGN_CENTER);
+            Renderer::getScreenWidth()))), 0x444444FF, ALIGN_CENTER);
     mGrid->setEntry(mGameName, Vector2i(1, 5), false, true, Vector2i(1, 1));
 
     // System name.
     mSystemName = std::make_shared<TextComponent>(mWindow, "SYSTEM NAME",
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+            Font::get(FONT_SIZE_MEDIUM), 0x666666FF, ALIGN_CENTER);
     mGrid->setEntry(mSystemName, Vector2i(1, 6), false, true, Vector2i(1, 1));
 
     // Spacer row.
@@ -170,10 +170,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     }
 
     mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
-
-    // Center the screen both on the X and Y axes.
-    setPosition((static_cast<float>(Renderer::getScreenWidth()) - mSize.x()) / 2.0f,
-            (static_cast<float>(Renderer::getScreenHeight()) - mSize.y()) / 2.0f);
+    mBackground.setEdgeColor(0xEEEEEEFF);
 }
 
 void GuiLaunchScreen::closeLaunchScreen()
@@ -211,8 +208,9 @@ void GuiLaunchScreen::render()
     // Scale up animation.
     if (mScaleUp < 1.0f) {
         setOrigin({0.5f, 0.5f});
+        // Center on the X axis and keep slightly off-center on the Y axis.
         setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
-                static_cast<float>(Renderer::getScreenHeight()) / 2.0f);
+                static_cast<float>(Renderer::getScreenHeight()) / 2.25f);
         setScale(mScaleUp);
     }
 
