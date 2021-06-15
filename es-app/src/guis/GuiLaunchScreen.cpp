@@ -101,7 +101,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
 
     float maxWidthModifier = Math::clamp(0.78f * aspectValue, 0.78f, 0.90f);
-    float minWidthModifier = Math::clamp(0.40f * aspectValue, 0.40f, 0.56f);
+    float minWidthModifier = Math::clamp(0.50f * aspectValue, 0.50f, 0.65f);
 
     float maxWidth = static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
     float minWidth = static_cast<float>(Renderer::getScreenWidth()) * minWidthModifier;
