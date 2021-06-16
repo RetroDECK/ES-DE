@@ -82,7 +82,7 @@ void VolumeControl::init()
     #if defined(__linux__)
     // Try to open mixer device.
     if (mixerHandle == nullptr) {
-        // Allow user to override the AudioCard and AudioDevice in es_settings.cfg.
+        // Allow user to override the AudioCard and AudioDevice in es_settings.xml.
         #if defined(_RPI_)
         mixerCard = Settings::getInstance()->getString("AudioCard");
         mixerName = Settings::getInstance()->getString("AudioDevice");

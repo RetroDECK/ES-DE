@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Settings.cpp
 //
-//  Functions to read from and write to the configuration file es_settings.cfg.
+//  Functions to read from and write to the configuration file es_settings.xml.
 //  The default values for the application settings are defined here as well.
 //
 
@@ -21,7 +21,7 @@
 
 Settings* Settings::sInstance = nullptr;
 
-// These values are NOT saved to es_settings.cfg since they're not set via
+// These values are NOT saved to es_settings.xml since they're not set via
 // the in-program settings menu. Most can be set using command-line arguments,
 // but some are debug flags that are either hardcoded or set by internal debug
 // functions.
@@ -310,7 +310,7 @@ void Settings::setDefaults()
     mIntMap["ScreenRotate"]  = { 0, 0 };
 
     //
-    // Settings that can be changed in es_settings.cfg
+    // Settings that can be changed in es_settings.xml
     // but that are not configurable via the GUI.
     //
 
@@ -345,9 +345,9 @@ void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& ty
 
 void Settings::saveFile()
 {
-    LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.cfg";
+    LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.xml";
     const std::string path = Utils::FileSystem::getHomePath() +
-            "/.emulationstation/es_settings.cfg";
+            "/.emulationstation/es_settings.xml";
 
     pugi::xml_document doc;
 
@@ -373,20 +373,28 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    const std::string path = Utils::FileSystem::getHomePath() +
+    // Prior to ES-DE v1.1, the configuration file had the .cfg suffix instead of .xml
+    const std::string legacyConfigFile = Utils::FileSystem::getHomePath() +
             "/.emulationstation/es_settings.cfg";
 
-    if (!Utils::FileSystem::exists(path))
+    const std::string configFile = Utils::FileSystem::getHomePath() +
+            "/.emulationstation/es_settings.xml";
+
+    if (Utils::FileSystem::exists(legacyConfigFile) && !Utils::FileSystem::exists(configFile))
+        Utils::FileSystem::renameFile(legacyConfigFile, configFile, false);
+
+    if (!Utils::FileSystem::exists(configFile))
         return;
 
     pugi::xml_document doc;
     #if defined(_WIN64)
-    pugi::xml_parse_result result = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    pugi::xml_parse_result result =
+            doc.load_file(Utils::String::stringToWideString(configFile).c_str());
     #else
-    pugi::xml_parse_result result = doc.load_file(path.c_str());
+    pugi::xml_parse_result result = doc.load_file(configFile.c_str());
     #endif
     if (!result) {
-        LOG(LogError) << "Could not parse the es_settings.cfg file\n   " << result.description();
+        LOG(LogError) << "Could not parse the es_settings.xml file\n   " << result.description();
         return;
     }
 

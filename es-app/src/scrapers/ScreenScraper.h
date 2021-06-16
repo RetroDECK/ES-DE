@@ -75,11 +75,11 @@ public:
 
         // Which Region to use when selecting the artwork.
         // Applies to: artwork, name of the game, date of release.
-        // This is read from es_settings.cfg, setting 'ScraperRegion'.
+        // This is read from es_settings.xml, setting 'ScraperRegion'.
 
         // Which Language to use when selecting the textual information.
         // Applies to: description, genre.
-        // This is read from es_settings.cfg, setting 'ScraperLanguage'.
+        // This is read from es_settings.xml, setting 'ScraperLanguage'.
 
         ScreenScraperConfig() {};
     } configuration;

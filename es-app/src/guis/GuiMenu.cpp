@@ -307,7 +307,7 @@ void GuiMenu::openUIOptions()
             break;
         }
     }
-    // If an invalid sort order was defined in es_settings.cfg, then apply the default
+    // If an invalid sort order was defined in es_settings.xml, then apply the default
     // sort order 'filename, ascending'.
     if (sortOrder == "")
         sortOrder = Settings::getInstance()->getDefaultString("DefaultSortOrder");

@@ -249,7 +249,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
                                     collectionsConfigEntry += (*it);
                                 }
                             }
-                            // If the system to be deleted was present in es_settings.cfg, we
+                            // If the system to be deleted was present in es_settings.xml, we
                             // need to re-write it.
                             if (collectionsConfigEntry !=
                                     Settings::getInstance()->getString("CollectionSystemsCustom")) {

@@ -269,7 +269,7 @@ bool SystemData::loadConfig()
 
         // If there is a %ROMPATH% variable set for the system, expand it. By doing this
         // it's possible to use either absolute ROM paths in es_systems.xml or to utilize
-        // the ROM path configured as ROMDirectory in es_settings.cfg. If it's set to ""
+        // the ROM path configured as ROMDirectory in es_settings.xml. If it's set to ""
         // in this configuration file, the default hardcoded path $HOME/ROMs/ will be used.
         path = Utils::String::replace(path, "%ROMPATH%", rompath);
         #if defined(_WIN64)

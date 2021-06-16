@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Settings.h
 //
-//  Functions to read from and write to the configuration file es_settings.cfg.
+//  Functions to read from and write to the configuration file es_settings.xml.
 //  The default values for the application settings are defined here as well.
 //
 

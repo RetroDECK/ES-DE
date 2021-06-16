@@ -62,7 +62,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
             mMenu.setNeedsSaving();
         }
         // The filter setting is only retained during the program session i.e. it's not saved
-        // to es_settings.cfg.
+        // to es_settings.xml.
         if (mFilters->getSelectedId() != Settings::getInstance()->getInt("ScraperFilter"))
             Settings::getInstance()->setInt("ScraperFilter", mFilters->getSelectedId());
     });

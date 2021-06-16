@@ -14,7 +14,7 @@
 //  main.cpp
 //
 //  Main program loop. Interprets command-line arguments, checks for the
-//  home folder and es_settings.cfg configuration file, sets up the application
+//  home folder and es_settings.xml configuration file, sets up the application
 //  environment and starts listening to SDL events.
 //
 
@@ -466,8 +466,8 @@ int main(int argc, char* argv[])
     // Check if the configuration file exists, and if not, create it.
     // This should only happen on first application startup.
     if (!Utils::FileSystem::exists(Utils::FileSystem::getHomePath() +
-            "/.emulationstation/es_settings.cfg")) {
-        LOG(LogInfo) << "Settings file es_settings.cfg does not exist, creating it...";
+            "/.emulationstation/es_settings.xml")) {
+        LOG(LogInfo) << "Settings file es_settings.xml does not exist, creating it...";
         Settings::getInstance()->saveFile();
     }
     else if (settingsNeedSaving) {

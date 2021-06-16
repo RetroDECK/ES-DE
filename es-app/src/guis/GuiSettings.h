@@ -4,7 +4,7 @@
 //  GuiSettings.h
 //
 //  User interface template for a settings GUI.
-//  The saving of es_settings.cfg, the reload of gamelists and some other actions are
+//  The saving of es_settings.xml, the reload of gamelists and some other actions are
 //  also triggered to be executed here via flags set by the menu entries' lambda functions.
 //
 

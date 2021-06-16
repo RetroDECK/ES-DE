@@ -89,7 +89,7 @@ namespace Renderer
         initialCursorState = (SDL_ShowCursor(0) != 0);
 
         int displayIndex = Settings::getInstance()->getInt("DisplayIndex");
-        // Check that an invalid value has not been manually entered in the es_settings.cfg file.
+        // Check that an invalid value has not been manually entered in the es_settings.xml file.
         if (displayIndex != 1 && displayIndex != 2 && displayIndex != 3 && displayIndex != 4) {
             Settings::getInstance()->setInt("DisplayIndex", 1);
             displayIndex = 0;

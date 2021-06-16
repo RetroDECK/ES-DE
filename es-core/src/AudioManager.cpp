@@ -107,7 +107,7 @@ void AudioManager::init()
                 " could not be set, obtained " << std::to_string(sAudioFormat.samples);
     }
 
-    // Just in case someone changed the es_settings.cfg file manually to invalid values.
+    // Just in case someone changed the es_settings.xml file manually to invalid values.
     if (Settings::getInstance()->getInt("SoundVolumeNavigation") > 100)
         Settings::getInstance()->setInt("SoundVolumeNavigation", 100);
     if (Settings::getInstance()->getInt("SoundVolumeNavigation") < 0)

@@ -1180,7 +1180,7 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
     std::unordered_map<std::string,FileData*>
             allFilesMap = getAllGamesCollection()->getRootFolder()->getChildrenByFilename();
 
-    // Get the ROM directory, either as configured in es_settings.cfg, or if no value
+    // Get the ROM directory, either as configured in es_settings.xml, or if no value
     // is set there, then use the default hardcoded path.
     const std::string rompath = FileData::getROMDirectory();
 
