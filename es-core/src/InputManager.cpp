@@ -60,7 +60,7 @@ void InputManager::init()
     SDL_GameControllerEventState(SDL_ENABLE);
 
     if (!Utils::FileSystem::exists(getConfigPath())) {
-        LOG(LogInfo) << "No input configuration file exists";
+        LOG(LogInfo) << "No input configuration file found, default mappings will be applied";
     }
     else {
         mConfigFileExists = true;
