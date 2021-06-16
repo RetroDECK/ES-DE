@@ -5,7 +5,7 @@
 //
 //  Low-level input handling.
 //  Initiates and maps the keyboard and controllers.
-//  Reads and writes the es_input.cfg configuration file.
+//  Reads and writes the es_input.xml configuration file.
 //
 
 #ifndef ES_CORE_INPUT_MANAGER_H

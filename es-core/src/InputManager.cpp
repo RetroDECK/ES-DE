@@ -5,7 +5,7 @@
 //
 //  Low-level input handling.
 //  Initiates and maps the keyboard and controllers.
-//  Reads and writes the es_input.cfg configuration file.
+//  Reads and writes the es_input.xml configuration file.
 //
 
 #include "InputManager.h"
@@ -261,14 +261,14 @@ void InputManager::doOnFinish()
 std::string InputManager::getConfigPath()
 {
     std::string path = Utils::FileSystem::getHomePath();
-    path += "/.emulationstation/es_input.cfg";
+    path += "/.emulationstation/es_input.xml";
     return path;
 }
 
 std::string InputManager::getTemporaryConfigPath()
 {
     std::string path = Utils::FileSystem::getHomePath();
-    path += "/.emulationstation/es_temporaryinput.cfg";
+    path += "/.emulationstation/es_temporaryinput.xml";
     return path;
 }
 
@@ -502,7 +502,7 @@ bool InputManager::loadInputConfig(InputConfig* config)
     pugi::xml_node configNode = root.find_child_by_attribute("inputConfig",
             "deviceGUID", config->getDeviceGUIDString().c_str());
 
-    // Enabling this will match an entry in es_input.cfg based on the device name if there
+    // Enabling this will match an entry in es_input.xml based on the device name if there
     // was no GUID match. This is probably not a good idea as many controllers share the same
     // name even though the GUID differ and potentially the button configuration could be
     // different between them. Keeping the code for now though.
@@ -511,10 +511,10 @@ bool InputManager::loadInputConfig(InputConfig* config)
 //                "deviceName", config->getDeviceName().c_str());
 
     // With the move to the SDL GameController API the button layout changed quite a lot, so
-    // es_input.cfg files generated using the old API will end up with a completely unusable
+    // es_input.xml files generated using the old API will end up with a completely unusable
     // controller configuration. These older files had the configuration entry type set to
     // "joystick", so it's easy to ignore such entries by only accepting entries with the
-    // type set to "controller" (which is now applied when saving the es_input.cfg file).
+    // type set to "controller" (which is now applied when saving the es_input.xml file).
     if (configNode && config->getDeviceName() != "Keyboard")
         if (!root.find_child_by_attribute("inputConfig", "type", "controller"))
             return false;
