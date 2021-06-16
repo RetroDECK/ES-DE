@@ -13,6 +13,7 @@
 * Added a miximage generator that can be run automatically from the scraper and which includes comprehensive options, configurable from the menu
 * Added an offline generator GUI for the miximage generator which can be used for bulk miximage generation without going via the scraper
 * Added a fullscreen game media viewer
+* Added a game launch screen that displays the marquee image, the game name and the system name
 * Added a new video player based on FFmpeg
 * Added a 60 FPS frame rate upscaler option to the video player which results in slightly smoother playback for low frame rate videos (e.g. 24 and 30 FPS)
 * Moved to the SDL GameController API which gives numerous improvements to the controller handling
@@ -34,8 +35,13 @@
 * Added a utilities menu entry to the main menu
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
 * The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
+* Renamed es_systems.cfg, es_settings.cfg and es_input.cfg to es_systems.xml, es_settings.xml and es_input.xml
+* Changed the es_systems.xml logic so it loads from the program resources directory by default (a customized file can be placed in ~/.emulationstation/custom_systems)
+* Removed the marquee image from rbsimple-DE as it's now baked into the miximages
+* Set the gamelist video scanline rendering option as disabled by default
 * Changed the setting description for the favorites game toggling button
-* Added the CImg library as a Git subtree (used by the miximage generator)
+* Added the CImg library as a Git subtree and created some utility functions for it (used primarily by the miximage generator)
+* Added a function to ImageComponent to crop fully transparent areas around an image
 * Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
 
@@ -48,6 +54,7 @@
 * The scraper would sometimes consider very small images to be invalid
 * The Quick System Select help prompt was shown even when there was only a single game system present
 * The "Y" button help prompt wasn't displayed correctly when using the Grid view style
+* Cropping in ImageComponent didn't work correctly
 * The debug logging for the analog controller inputs had some inconsistent signs
 
 ## Version 1.0.1

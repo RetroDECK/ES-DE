@@ -1097,7 +1097,8 @@ It's possible to easily create a portable installation of ES-DE for Windows, for
 For the sake of this example, let's assume that the removable media has the device name `f:\`.
 
 * Copy the EmulationStation-DE installation directory to f:\
-* Create the directory `ES-DE_Home` directly under f:\
+* Create the directory `ES-DE_Home\.emulationstation` directly under f:\
+* Copy `f:\EmulationStation-DE\resources\systems\windows\es_systems.xml` to `f:\ES-DE_Home\.emulationstation\custom_systems\`
 * Copy your game ROMs into `f:\ES-DE_Home\ROMs`
 * Copy your emulators to f:\ (such as the RetroArch directory)
 * Create the file `start_es.bat` directly under f:\
@@ -1116,13 +1117,11 @@ RetroArch
 start_es.bat
 ```
 
-Now run the batch script, ES should start and ask you to configure any attached controllers. Following this, check that everything works as expected, i.e. the gamelists are properly populated etc.
+Now run the batch script to start ES-DE and check that everything works as expected, for example that the gamelists are properly populated.
 
-You can optionally skip the configuration of the controllers by copying any existing es_input.cfg file to `f:\ES-DE_Home\.emulationstation\`
+Exit the application and modify the file `f:\ES-DE_Home\.emulationstation\custom_systems\es_systems.xml` to point to the emulators on the portable media.
 
-Exit ES-DE and modify the file `f:\ES-DE_Home\.emulationstation\es_systems.cfg` to point to the emulators on the portable media.
-
-For example, change from this:
+For instance, change from this:
 ```
 <command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
 ```
@@ -1208,26 +1207,13 @@ The reason to not simply replace the BIOS and devices files with the new version
 
 ## Configuration
 
-**~/.emulationstation/es_systems.cfg:**
+**~/.emulationstation/es_settings.xml:**
 
-ES-DE ships with a comprehensive `es_systems.cfg` configuration file, and as the logic is to use a `%ROMPATH%` variable to locate the ROM files (with a corresponding setting in `es_settings.cfg`), normally you shouldn't need to modify this file to the same extent as previous versions of EmulationStation. Still, see below in this document on how to adjust the es_systems.cfg file if required.
-
-Upon first startup of the application, if there is no es_systems.cfg file present, it will be copied from the template subdirectory inside the resources directory. This is located in the installation path of the application, for instance `/usr/share/emulationstation/resources/templates` or `/usr/local/share/emulationstation/resources/templates` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/templates` on macOS and `C:\Program Files\EmulationStation-DE\resources\templates`on Windows.
-
-The template file will be copied to `~/.emulationstation/es_systems.cfg`.
-
-The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows.
-
-Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.cfg file assumes that your emulator environment is properly configured.
-
-
-**~/.emulationstation/es_settings.cfg:**
-
-When ES-DE is first run, a configuration file will be created as `~/.emulationstation/es_settings.cfg`.
+When ES-DE is first run, a configuration file will be created as `~/.emulationstation/es_settings.xml`.
 
 This file will contain all supported settings at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES-DE to update all the necessary settings.
 
-**Setting the ROM directory in es_settings.cfg:**
+**Setting the ROM directory in es_settings.xml:**
 
 This complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
 
@@ -1240,12 +1226,12 @@ megadrive
 pcengine
 ```
 
-However, if you've saved your ROMs to another directory, you need to configure the ROMDirectory setting in es_settings.cfg.\
+However, if you've saved your ROMs to another directory, you need to configure the ROMDirectory setting in es_settings.xml.\
 Here's an example:
 
 `<string name="ROMDirectory" value="~/games/ROMs" />`
 
-Keep in mind that you still need to group the ROMs into directories corresponding to the `<path>` tags in es_systems.cfg.
+Keep in mind that you still need to group the ROMs into directories corresponding to the `<path>` tags in es_systems.xml.
 
 There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. You would normally not need this, but the option is there, should you require it for some reason.
 
@@ -1253,11 +1239,11 @@ Here is such an example:
 
 `<string name="ROMDirectory" value="%ESPATH%/../ROMs" />`
 
-**~/.emulationstation/es_input.cfg:**
+**~/.emulationstation/es_input.xml:**
 
 You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User guide](USERGUIDE.md#input-device-configuration).
 
-If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.cfg` file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the `--force-input-config` command line option.
+If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.xml` file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the `--force-input-config` command line option.
 
 
 ## Command line options
@@ -1313,7 +1299,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its base directory.
 
-For the following options, the es_settings.cfg file is immediately updated/saved when passing the parameter:
+For the following options, the es_settings.xml file is immediately updated/saved when passing the parameter:
 ```
 --display
 --fullscreen-normal
@@ -1324,19 +1310,25 @@ For the following options, the es_settings.cfg file is immediately updated/saved
 ```
 
 
-## es_systems.cfg
+## es_systems.xml
 
-The es_systems.cfg file contains the system configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
+The es_systems.xml file contains the system configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
 
-ES-DE will only check in your home directory for an es_systems.cfg file, for example `~/.emulationstation/es_systems.cfg`, but if this file is not present, it will attempt to install it from the systems template directory as explained earlier in this document.
+ES-DE ships with a comprehensive `es_systems.xml` configuration file and normally you shouldn't need to modify this. However there may be special circumstances such as wanting to use alternative emulators for some game systems or perhaps you need to add additional systems altogether.
+
+To make a customized version of the systems configuration file, it first needs to be copied to `~/.emulationstation/custom_systems/es_systems.xml`. The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows.
+
+The bundled es_systems.xml file which is used by default is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS and `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
 
 It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
+
+Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
 
 Below is an overview of the file layout with various examples. For a real system entry there can of course not be multiple entries for the same tag such as the multiple \<command\> entries listed here.
 
 ```xml
 <?xml version="1.0"?>
-<!-- This is the EmulationStation-DE game systems configuration file. -->
+<!-- This is the ES-DE game systems configuration file. -->
 <systemList>
     <!-- Any tag not explicitly described as optional in the description is mandatory.
     If omitting a mandatory tag, ES-DE will skip the system entry during startup. -->
@@ -1348,7 +1340,7 @@ Below is an overview of the file layout with various examples. For a real system
         <fullname>Super Nintendo Entertainment System</fullname>
 
         <!-- The path to look for ROMs in. '~' will be expanded to $HOME or %HOMEPATH%, depending on the operating system.
-        The optional %ROMPATH% variable will expand to the path defined in the setting ROMDirectory in es_settings.cfg.
+        The optional %ROMPATH% variable will expand to the path defined in the setting ROMDirectory in es_settings.xml.
         All subdirectories (and non-recursive links) will be included. -->
         <path>%ROMPATH%/snes</path>
 
@@ -1401,7 +1393,7 @@ Below is an overview of the file layout with various examples. For a real system
 
 The following variable is expanded for the `path` tag:
 
-`%ROMPATH%` - Replaced with the path defined in the setting ROMDirectory in es_settings.cfg.
+`%ROMPATH%` - Replaced with the path defined in the setting ROMDirectory in es_settings.xml.
 
 The following variables are expanded for the `command` tag:
 
@@ -1415,7 +1407,7 @@ The following variables are expanded for the `command` tag:
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
-`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.cfg. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more general es_systems.cfg file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for RetroArch on Unix but it's also used on macOS due to the change in the RetroArch directory structure as of v1.9.2. It could also be used for special situations and for other emulators that utilize discrete emulator cores. For Windows the EmulatorCorePath setting is blank by default, for macOS it's set to `~/Library/Application Support/RetroArch/cores:/Applications/RetroArch.app/Contents/Resources/cores` and for Unix it's set to `~/.config/retroarch/cores:~/snap/retroarch/current/.config/retroarch/cores:/usr/lib/x86_64-linux-gnu/libretro:/usr/lib64/libretro:/usr/lib/libretro:/usr/local/lib/libretro:/usr/pkg/lib/libretro`. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE-DEV.md#other-settings-1). Never use quotation marks around the directories for this setting. It's adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command. You can also use the %EMUPATH% and %ESPATH% variables within the EmulatorCorePath setting, which leads to quite flexible configuration options.
+`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.xml. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more generic es_systems.xml file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for RetroArch but it could also be used for other emulators that utilize discrete emulator cores. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE-DEV.md#other-settings-1). Never use quotation marks around the directories for this setting. It's adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command. You can also use the %EMUPATH% and %ESPATH% variables within the EmulatorCorePath setting, which leads to quite flexible configuration options.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
@@ -1466,7 +1458,7 @@ And finally one for Windows:
 
 The gamelist.xml file for a system defines the metadata for its entries, such as the game names, descriptions, release dates and ratings.
 
-As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in `es_settings.cfg` or via the GUI. If configured manually in es_settings.cfg, it looks something like this:
+As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in `es_settings.xml` or via the GUI. If configured manually in es_settings.xml, it looks something like this:
 
 ```
 <string name="MediaDirectory" value="~/games/images/emulationstation" />

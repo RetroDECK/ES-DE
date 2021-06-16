@@ -20,7 +20,7 @@ If you just want to get started as quickly as possible, simply follow these step
 6) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE-DEV.md#supported-game-systems)
 7) Start ES-DE, scrape game media for your collection and play some games!
 
-As long as ES-DE hasn't frozen, you can always press F4 to close the application.
+You can always press F4 to close the application.
 
 For additional details, read on below.
 
@@ -80,13 +80,13 @@ Upon first startup, ES-DE will create its home directory, by default the locatio
 
 On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username\>\\.emulationstation\
 
-**Note:** As of ES-DE v1.0 there is no internationalization support, so you would always need to supply the English directory name for your home directory, which is by the way always the real physical name on the file system. For instance in macOS, /Users/leon will be required instead of /Användare/leon which is what's shown inside the operating system for a Swedish localized installation. But using the tilde home symbol '~' is a workaround for this, and it's recommended to always use it for any ES-DE configuration settings that require a path to your home directory as it removes any confusion regarding localized home directory paths.
+**Note:** As of ES-DE v1.1 there is no internationalization support, so you would always need to supply the English directory name for your home directory, which is by the way always the real physical name on the file system. For instance on macOS, /Users/myusername will be required instead of /Användare/myusername which is what's shown inside the operating system for a Swedish localized installation. But using the tilde home symbol '~' is a workaround for this, and it's recommended to always use it for any ES-DE configuration settings that require a path to your home directory as it removes any confusion regarding localized home directory paths.
 
-On first startup the configuration file `es_settings.cfg` will be generated in the ES-DE home directory, containing all the default settings. A file named `es_systems.cfg` will also be copied from the program resource folder. This file contains the game ROM paths and emulator settings and can be modified if needed. For information on how to do this, refer to the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemscfg) document.
+On first startup the configuration file `es_settings.xml` will be generated in the ES-DE home directory, containing all the default settings. A file named `es_systems.xml` will be loaded from the resources directory (which is part of the ES-DE installation). This file contains the game ROM paths and emulator settings and it can be customized if needed. The customized version needs to be placed in the `custom_systems` folder in the ES-DE home directory, for example `~/.emulationstation/custom_systems/es_systems.xml`. For more information on how to do this, refer to the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) document.
 
 There's a log file in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
-After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROM directory, and you will also be given a choice to change that ROM directory if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.cfg.
+After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROM directory, and you will also be given a choice to change that ROM directory path if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.xml.
 
 When generating the directory structure, a file named systeminfo.txt will be created in each game system folder which will provide you with some information about the system such as the supported file extensions. Here's an example for the _gc_ system as seen on macOS:
 ```
@@ -121,7 +121,7 @@ gx4000: Amstrad GX4000
 
 Note that neither the systeminfo.txt files or the systems.txt file are needed to run ES-DE, they're only generated as a convenience.
 
-Be aware that there will be a lot of directories created if using the template es_systems.cfg file bundled with the installation, so it may be a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them later if more systems should be added. For example a directory named _DISABLED could be created inside the ROMs folder (i.e. ~/ROMs/_DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the application startup time significantly as ES-DE would otherwise need to scan for game files for all these systems.
+Be aware that there will be a lot of directories created if using the template es_systems.xml file bundled with the installation, so it may be a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them later if more systems should be added. For example a directory named _DISABLED could be created inside the ROMs folder (i.e. ~/ROMs/_DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the application startup time significantly as ES-DE would otherwise need to scan for game files for all these systems.
 
 ![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the real physical path, and that your operating system may present this as a localized path if you are using a language other than English._
@@ -133,23 +133,16 @@ _This is the dialog shown if no game files were found. It lets you configure the
 
 ES-DE is designed to be backwards compatible to a certain degree, that is, it should be able to read data from other/previous EmulationStation versions such as the RetroPie fork. But the opposite is not true and it's a one-way ticket for your gamelist.xml files and your custom collection files when migrating to ES-DE as they will be modified in ways that previous ES versions will see as data loss. For instance ES-DE does not use image tags inside the gamelist.xml files to find game media but instead matches the media to the names of the game/ROM files. So it will not save any such tags back to the gamelist files during updates, effectively removing the display of the game media if the files are opened in another ES fork.
 
-Due to this, always make backups of at least the following data:
+Due to this, always make backups of at least the following data before using ES-DE:
 
 ```
 ~/.emulationstation/gameslists/
 ~/.emulationstation/collections/
-~/.emulationstation/es_settings.cfg
-~/.emulationstation/es_systems.cfg
 ```
-
-Actually as for `es_systems.cfg` you should probably rename or move it somewhere else as it's strongly recommended to use the es_systems.cfg template shipped with ES-DE (which will be automatically copied from the resources directory on startup as long as a file with this name does not already exist). It may still work to use an existing customized es_systems.cfg file, as again ES-DE should be backwards compatible, but if you have issues launching games this is the first thing to look at.
-
-It's probably also a good idea to rename or move `es_settings.cfg` elsewhere as a huge amount of things have changed in the configuration files in ES-DE.
-
 
 ## Running on 4K displays
 
-ES-DE fully supports 4K displays (as well as 1440p and other higher resolutions) but some emulators such as RetroArch will always run using the active screen resolution, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. Although it's possible to start ES-DE with the `--resolution` option (which also applies to any launched emulators), this is not really recommended. Full screen mode only works on Unix with this option and even then it's highly dependent on well-written graphics drivers for proper behavior. ES-DE uses the SDL library which insists on setting xrandr to panning mode when doing resolution changes, which is incredibly annoying especially when using Nvidia drivers.
+ES-DE fully supports 4K displays (as well as 1440p and other higher resolutions) but some emulators such as RetroArch will always run using the active screen resolution, meaning the emulation will also run in 4K. On slower computers and when resource intensive shaders are in use, the performance may be quite bad. Although it's possible to start ES-DE with the `--resolution` option (which also applies to any launched emulators), this is not really recommended. Full screen mode only works on Unix with this option and even then it's highly dependent on well-written graphics drivers for proper behavior. ES-DE uses the SDL library which insists on setting xrandr to panning mode when doing resolution changes, which is quite annoying especially when using Nvidia drivers.
 
 A better approach is to use the custom event scripts functionality in ES-DE to set a temporary resolution upon launching a game that will be reverted when returning from the emulator. This is detailed as an example for Unix in [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) but should be possible to implement similarly on other operating systems such as macOS and Windows.
 
@@ -166,7 +159,7 @@ Be aware that any custom configuration is applied per unique device ID (GUID). S
 
 Note that custom button mappings will not change the help prompts.
 
-If you have issues with your input configuration, as a last resort you can reset all the mappings by deleting or renaming the file ~/.emulationstation/es_input.cfg.
+If you have issues with your input configuration, as a last resort you can reset all the mappings by deleting or renaming the file ~/.emulationstation/es_input.xml.
 
 ## System view (main screen)
 
@@ -174,7 +167,7 @@ When starting EmulationStation with the default settings, you will see the main 
 
 Depending on the theme, the system navigation carousel can be either horizontal or vertical. The default theme rbsimple-DE provides horizontal navigation, i.e. you browse your systems be scrolling left or right.
 
-The game systems are sorted by their full names, as defined in es_systems.cfg.
+The game systems are sorted by their full names, as defined in es_systems.xml.
 
 ![alt text](images/current/es-de_system_view.png "ES-DE System View")
 _The **System view** is the default starting point for the application, it's here that you browse through your game systems._
@@ -297,9 +290,9 @@ For some systems though, a more elaborate setup is required, and we will attempt
 
 Let's start with the simple scenario of a single ROM game file per platform, which is the case for the majority of systems. In this example we're setting up ES-DE to play Nintendo Entertainment System games.
 
-The supported file extensions are listed in [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows).
+The supported file extensions are listed in [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml) but if you generated the game system directories on first application startup, there will be a file named systeminfo.txt in each game system directory that includes the supported file extensions.
 
-Here is the snippet from the es_systems.cfg_unix file:
+Here is the snippet from the unix/es_systems.xml file:
 
 ```
 <system>
@@ -321,7 +314,7 @@ The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<us
 
 If ES-DE can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
 
-Assuming the default ROM directory is used, we need to create a directory corresponding to the \<path\> tag in es_systems.cfg, in this example it's `nes`.
+Assuming the default ROM directory is used, we need to create a directory corresponding to the \<path\> tag in es_systems.xml, in this example it's `nes`.
 
 This would look something like the following:
 
@@ -468,7 +461,7 @@ You don't need to set execution permissions for these scripts, ES-DE will run th
 
 #### Lutris
 
-Lutris runs only on Unix so it's only present as a placeholder in the es_systems.cfg templates for macOS and Windows.
+Lutris runs only on Unix so it's only present as a placeholder in the es_systems.xml templates for macOS and Windows.
 
 These games are executed via the Lutris binary (well it's actually a Python script), and you simply create a shell script per game using the syntax `lutris lutris:rungame/<game name>`
 
@@ -543,15 +536,15 @@ This of course assumes that you have menu entries setup for your Steam games.
 
 ## Emulator setup
 
-ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.cfg` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.cfg file, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
+ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
 A general recommendation regarding installation on Linux though is to try to avoid the versions included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap or Flatpak distributions or build from source.
 
-In order to use the default es_systems.cfg file, you need to make sure that the emulator binary is in the operating system's path. On Unix systems this is normally not an issue (unless Flatpak is used) as a package manager has typically been used to install the emulator, and even if compiled from source there is a standardized directory structure which should have you covered. Likewise on macOS, it's assumed that the emulator is installed under the Applications folder so everything should just work. But for Windows you may need to add the emulator directory to your %PATH% variable manually (tip: open Settings from the Start menu and search for _path_).
+In order to use the default es_systems.xml file, you need to make sure that the emulator binary is in the operating system's path. On Unix systems this is normally not an issue (unless Flatpak is used) as a package manager has typically been used to install the emulator, and even if compiled from source there is a standardized directory structure which should have you covered. Likewise on macOS, it's assumed that the emulator is installed under the Applications folder so everything should just work. But for Windows you may need to add the emulator directory to your %PATH% variable manually (tip: open Settings from the Start menu and search for _path_).
 
-If installing RetroArch as Flatpak on Linux you have to work around an incredibly annoying deficiency of this type of software distribution which is that there will be no RetroArch executable directly available to run. To run RetroArch you would instead need to execute `flatpak run org.libretro.RetroArch` and to get ES-DE to work properly with this you either need to use a customized es_systems.cfg file, or create a shell script somewhere in your path that executes the Flatpak command.
+If installing RetroArch as Flatpak on Linux you have to work around an incredibly annoying deficiency of this type of software distribution which is that there will be no RetroArch executable directly available to run. To run RetroArch you would instead need to execute `flatpak run org.libretro.RetroArch` and to get ES-DE to work properly with this you either need to use a customized es_systems.xml file, or create a shell script somewhere in your path that executes the Flatpak command.
 Here's an example of such a script:
 ```
 #!/bin/sh
@@ -560,14 +553,14 @@ flatpak run org.libretro.RetroArch "$@"
 
 For instance on Fedora you could place the shell script in `~/bin` and name it `retroarch` and then everything will work fine.
 
-There is also a Flatpak-specific es_systems.cfg template shipped with ES-DE, but you need to manually install it if you would like to use it:
+There is also a Flatpak-specific es_systems.xml template shipped with ES-DE, but you need to manually install it if you would like to use it:
 ```
-cp /usr/share/emulationstation/resources/templates/es_systems.cfg_unix_flatpak ~/.emulationstation/es_systems.cfg
+cp /usr/share/emulationstation/resources/systems/unix/es_systems.xml_flatpak ~/.emulationstation/custom_systems/es_systems.xml
 ```
 
 The source path may differ from this example depending on which prefix was used when building ES-DE.
 
-As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.cfg or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL-DEV.md](INSTALL-DEV.md#es_systemscfg) for details regarding this.
+As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.xml or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) for details regarding this.
 
 In any instance, ES-DE will display an error notification if attempting to launch a game where the emulator binary is not found. Likewise it will notify if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 
@@ -720,7 +713,7 @@ Username as registered on screenscraper.fr.
 
 **ScreenScraper password**
 
-The password as registered on screenscraper.fr. Note that the password is masked using asterisks on this screen, and the password input field will be blank when attempting to update an existing password. Entering a new password will of course work, and it will be saved accordingly. Be aware though that the es_settings.cfg file contains the password in clear text.
+The password as registered on screenscraper.fr. Note that the password is masked using asterisks on this screen, and the password input field will be blank when attempting to update an existing password. Entering a new password will of course work, and it will be saved accordingly. Be aware though that the es_settings.xml file contains the password in clear text.
 
 #### Content settings
 
@@ -883,6 +876,10 @@ The order in which to sort your gamelists. This can be overriden per game system
 **Menu opening effect** _(OpenGL renderer only)_
 
 Animation to play when opening the main menu or the game options menu. Can be set to _Scale-up, _Fade-in_ or _None_.
+
+**Launch screen duration**
+
+This configures for how long to display the game launch screen when starting a game. The options are _Normal_, _Brief_, _Long_ and _Disabled_. If set to _Disabled_, a simple notification popup will be displayed instead.
 
 **Blur background when menu is open** _(OpenGL renderer only)_
 
@@ -1133,11 +1130,11 @@ These are mostly technical settings.
 
 **VRAM limit**
 
-The amount of video RAM to use for the application. Defaults to 256 MiB which works fine most of the time when running at 1080p resolution and with a moderate amount of game systems. If running at 4K resolution and with lots of game systems enabled, it's recommended to increase this number to 512 MiB or so to avoid stuttering transition animations caused by unloading and loading of textures from the cache. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used by ES-DE, which is helpful to determine a reasonable value for this option. The allowed range for the settings is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.cfg file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
+The amount of video RAM to use for the application. Defaults to 256 MiB which works fine most of the time when running at 1080p resolution and with a moderate amount of game systems. If running at 4K resolution and with lots of game systems enabled, it's recommended to increase this number to 512 MiB or so to avoid stuttering transition animations caused by unloading and loading of textures from the cache. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used by ES-DE, which is helpful to determine a reasonable value for this option. The allowed range for the settings is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.xml file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
 **Display/monitor index (requires restart)**
 
-This option sets the display to use for ES-DE for multi-monitor setups. The possible values are the monitor index numbers 1, 2, 3 or 4. If a value is set here for a display that does not actually exist, then ES-DE will set it to 1 upon startup. Index 1 is the primary display of the computer. It's also possible to override the setting by passing the --display command line argument. Doing so will also overwrite the display index setting in es_settings.cfg. Be aware that the Display/monitor index option only changes the display used by ES-DE; the emulators need to be configured separately (which can easily be done globally if using RetroArch).
+This option sets the display to use for ES-DE for multi-monitor setups. The possible values are the monitor index numbers 1, 2, 3 or 4. If a value is set here for a display that does not actually exist, then ES-DE will set it to 1 upon startup. Index 1 is the primary display of the computer. It's also possible to override the setting by passing the --display command line argument. Doing so will also overwrite the display index setting in es_settings.xml. Be aware that the Display/monitor index option only changes the display used by ES-DE; the emulators need to be configured separately (which can easily be done globally if using RetroArch).
 
 **Fullscreen mode (requires restart)** _(Unix only)_
 
@@ -1157,7 +1154,7 @@ This setting defines the directory for the game media, i.e. game images and vide
 
 **Emulator core path**
 
-This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be included in the systems configuration file es_systems.cfg. By default this variable and corresponding setting is used on all operating systems except Windows. For Windows the %COREPATH% variable is not included in the es_systems.cfg template and the default core path value is therefore set to blank. If required for special setups it can be used for this operating system, but the primary use is on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores if compiled from source code but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL-DEV.md](INSTALL-DEV.md#es_systemscfg) for more information about this.
+This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be included in the systems configuration file es_systems.xml. For example it is used on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores if compiled from source code but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) for more information about this.
 
 **Hide taskbar (requires restart)** _(Windows only)_
 
@@ -1173,7 +1170,7 @@ With this option enabled, videos with lower frame rates than 60 FPS, such as 24 
 
 **Per game launch command override**
 
-If enabled, you can override the launch command defined in es_systems.cfg on a per-game basis. It's only recommended to disable this option for testing purposes, such as when a game won't start and you're unsure if it's your custom launch command that causes the problem.
+If enabled, you can override the launch command defined in es_systems.xml on a per-game basis. It's only recommended to disable this option for testing purposes, such as when a game won't start and you're unsure if it's your custom launch command that causes the problem.
 
 **Show hidden files and folders (requires restart)**
 
@@ -1509,7 +1506,7 @@ The file contents is simply a list of ROM files, such as the following:
 
 Any changes to custom collections (for example adding or removing a game) will be immediately written to the corresponding collection configuration file.
 
-Note that if you copy or migrate a collection from a previous version of EmulationStation or if you're setting up ES-DE on a new computer, even though you copy the files into the collections directory, they will not show up inside the application as you always need to enable the collections from the menu. ES-DE looks inside the es_settings.cfg file during startup to see which collections should be enabled.
+Note that if you copy or migrate a collection from a previous version of EmulationStation or if you're setting up ES-DE on a new computer, even though you copy the files into the collections directory, they will not show up inside the application as you always need to enable the collections from the menu. ES-DE looks inside the es_settings.xml file during startup to see which collections should be enabled.
 
 If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection.
 
@@ -1571,23 +1568,23 @@ Please refer to the [INSTALL-DEV.md](INSTALL-DEV.md#command-line-arguments) docu
 
 ## Supported game systems
 
-**Note:** The following list is what the default es_systems.cfg files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. ES-DE will still work but the game system will not be themed which looks very ugly.
+**Note:** The following list is what the default es_systems.xml files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. ES-DE will still work but the game system will not be themed which looks very ugly.
 
-Note as well that the list and corresponding es_systems.cfg templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
+Note as well that the list and corresponding es_systems.xml templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
 
 The column **Game system name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
 
-Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be modified in the es_systems.cfg file if you wish.
+Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be modified in the es_systems.xml file if you wish.
 
 Sometimes the name of the console is (more or less) the same for multiple regions, and in those circumstances the region has been added as a suffix to the game system name. For instance `na` for North America has been added to `snes` (Super Nintendo) giving the system name `snesna`. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
 
 For the **Full name** column, text inside square brackets [] are comments and not part of the actual game system name.
 
-The **Default emulator** column shows the emulator configured in es_systems.cfg, and for emulators that support multiple cores, the configured core is shown inside brackets. Any system marked with an asterisk (*) in this column requires additional system/BIOS ROMs to run, as should be explained in the emulator documentation.
+The **Default emulator** column shows the emulator configured in es_systems.xml, and for emulators that support multiple cores, the configured core is shown inside brackets. Any system marked with an asterisk (*) in this column requires additional system/BIOS ROMs to run, as should be explained in the emulator documentation.
 
-For additional details regarding which game file extensions are supported per system, refer to the es_systems.cfg templates [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows). Normally the extensions setup in these files should cover everything that the emulators support.
+For additional details regarding which game file extensions are supported per system, refer to the es_systems.xml templates [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml). Normally the extensions setup in these files should cover everything that the emulators support.
 
-MAME emulation is a bit special as the choice of emulator or core depends on which ROM set you're using. It's recommended to go for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore the default `arcade` system is preconfigured to use the RetroArch core _MAME - Current_ which as the name implies will be the latest available MAME version. For really slow computers though, the 0.78 ROM set is a popular choice. To use this you either need to modify the es_systems.cfg file, or you can use the `mame` system which comes preconfigured for the RetroArch core _MAME 2003-Plus_. There are other alternatives as well such as _MAME 2010_ that uses the 0.139 ROM set but this would require a manual change of the es_systems.cfg file and is generally not recommended.
+MAME emulation is a bit special as the choice of emulator or core depends on which ROM set you're using. It's recommended to go for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore the default `arcade` system is preconfigured to use the RetroArch core _MAME - Current_ which as the name implies will be the latest available MAME version. For really slow computers though, the 0.78 ROM set is a popular choice. To use this you either need to modify the es_systems.xml file, or you can use the `mame` system which comes preconfigured for the RetroArch core _MAME 2003-Plus_. There are other alternatives as well such as _MAME 2010_ that uses the 0.139 ROM set but this would require a manual change of the es_systems.xml file and is generally not recommended.
 
 There are other MAME versions and derivates available as well such as MAME4ALL, AdvanceMAME, FinalBurn Alpha and FinalBurn Neo but it's beyond the scope of this document to describe those in detail. For more information, refer to the [RetroPie arcade documentation](https://retropie.org.uk/docs/Arcade) which has a good overview of the various MAME alternatives.
 

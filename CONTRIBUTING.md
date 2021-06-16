@@ -6,7 +6,7 @@ Contributions are very much appreciated as there are many things that need to be
 
 Code commits is only one part of it, as work is also needed on the rbsimple-DE theme set as well as thorough application testing. It's impossible for me to test every game system as ES-DE has support for well over a 100 different platforms.
 
-And a thorough review of [es_systems.cfg_unix](resources/templates/es_systems.cfg_unix), [es_systems.cfg_macos](resources/templates/es_systems.cfg_macos) and [es_systems.cfg_windows](resources/templates/es_systems.cfg_windows) would be great as these templates are not fully populated yet. For some of the game systems there are only placeholder entries, mostly for platforms that RetroArch does not support and where discrete emulators are required.
+And a thorough review of [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml) would be great as these templates are not fully populated yet. For some of the game systems there are only placeholder entries, mostly for platforms that RetroArch does not support and where discrete emulators are required.
 
 As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details on what needs to be added or updated. Note that although rbsimple-DE is based on Recalbox Multi, it's only possible to use assets from this theme set created before its change to a more restrictive license, which happened in 2018. As such it's unfortunately necessary to recreate all the system graphics from scratch that have since been released by the Recalbox community.
 
@@ -49,7 +49,6 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 * Localization/multi-language support
 * Checksum support for the scraper to verify each file before accepting/saving it
-* Internationalization/multi-language support
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
 * Improved text and font functions, e.g. faster and cleaner line wrapping
@@ -57,9 +56,8 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.4
 
-* Support for ChromeOS
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
-* Support for pre-defined alternative emulators and cores (configured in es_systems.cfg)
+* Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
 * Simple file browsing component
 * Requests per minute limitation setting for the scraper
 * Add 'time played' counter per game, similar to how it works in Steam
