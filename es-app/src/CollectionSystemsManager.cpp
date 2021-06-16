@@ -564,7 +564,7 @@ std::string CollectionSystemsManager::getValidNewCollectionName(std::string inNa
         LOG(LogInfo) << "Had to change name, from: " << inName << " to: " << name;
     }
 
-    // Get used systems from es_systems.cfg.
+    // Get used systems from es_systems.xml.
     std::vector<std::string> systemsInUse = getSystemsFromConfig();
     // Get folders assigned to custom collections.
     std::vector<std::string> autoSys = getCollectionThemeFolders(false);
@@ -856,7 +856,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
 
 std::vector<std::string> CollectionSystemsManager::getUnusedSystemsFromTheme()
 {
-    // Get used systems in es_systems.cfg.
+    // Get used systems in es_systems.xml.
     std::vector<std::string> systemsInUse = getSystemsFromConfig();
     // Get available folders in theme.
     std::vector<std::string> themeSys = getSystemsFromTheme();

@@ -87,15 +87,15 @@ ViewController::~ViewController()
     UIModeController::deinit();
 }
 
-void ViewController::noSystemsFileDialog()
+void ViewController::invalidSystemsFileDialog()
 {
     std::string errorMessage =
-            "COULDN'T FIND THE SYSTEMS CONFIGURATION FILE.\n"
-            "ATTEMPTED TO COPY A TEMPLATE es_systems.cfg FILE\n"
-            "FROM THE EMULATIONSTATION RESOURCES DIRECTORY,\n"
-            "BUT THIS FAILED. HAS EMULATIONSTATION BEEN PROPERLY\n"
-            "INSTALLED AND DO YOU HAVE WRITE PERMISSIONS TO \n"
-            "YOUR HOME DIRECTORY?";
+            "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE.\n"
+            "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN\n"
+            "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX.\n"
+            "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE\n"
+            "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE\n"
+            "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO.";
 
     mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
             errorMessage.c_str(),
@@ -109,14 +109,13 @@ void ViewController::noSystemsFileDialog()
 void ViewController::noGamesDialog()
 {
     mNoGamesErrorMessage =
-            "THE SYSTEMS CONFIGURATION FILE EXISTS, BUT NO\n"
-            "GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES\n"
-            "IN THE CURRENTLY CONFIGURED ROM DIRECTORY OR\n"
-            "CHANGE IT USING THE BUTTON BELOW. OPTIONALLY THE\n"
-            "ROM DIRECTORY STRUCTURE CAN BE GENERATED WHICH\n"
-            "WILL CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING\n"
-            "SOME INFO SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+            "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN\n"
+            "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE\n"
+            "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM\n"
+            "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL\n"
+            "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME\n"
+            "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+            "THIS IS THE CURRENTLY CONFIGURED ROM PATH:\n";
 
     #if defined(_WIN64)
     mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
@@ -125,7 +124,7 @@ void ViewController::noGamesDialog()
     #endif
 
     mNoGamesMessageBox = new GuiMsgBox(mWindow, HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
-            "CHANGE ROM DIRECTORY", [this] {
+            "CHANGE ROM PATH", [this] {
         std::string currentROMDirectory;
         #if defined(_WIN64)
         currentROMDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
@@ -136,8 +135,8 @@ void ViewController::noGamesDialog()
         mWindow->pushGui(new GuiComplexTextEditPopup(
                 mWindow,
                 HelpStyle(),
-                "ENTER ROM DIRECTORY",
-                "Currently configured directory:",
+                "ENTER ROM DIRECTORY PATH",
+                "Currently configured path:",
                 currentROMDirectory,
                 currentROMDirectory,
                 [this](const std::string& newROMDirectory) {
@@ -166,7 +165,7 @@ void ViewController::noGamesDialog()
     "CREATE DIRECTORIES", [this] {
         mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
                 "THIS WILL CREATE DIRECTORIES FOR ALL THE\n"
-                "GAME SYSTEMS DEFINED IN es_systems.cfg\n\n"
+                "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
                 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S\n"
                 "ADVICED TO REMOVE THE ONES YOU DON'T NEED\n\n"
                 "PROCEED?",

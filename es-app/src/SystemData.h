@@ -4,7 +4,7 @@
 //  SystemData.h
 //
 //  Provides data structures for the game systems and populates and indexes them based
-//  on the configuration in es_systems.cfg as well as the presence of game ROM files.
+//  on the configuration in es_systems.xml as well as the presence of game ROM files.
 //  Also provides functions to read and write to the gamelist files and to handle theme
 //  loading.
 //
@@ -70,11 +70,9 @@ public:
     static void deleteSystems();
     // Loads the systems configuration file at getConfigPath() and creates the systems.
     static bool loadConfig();
+    static std::string getConfigPath(bool legacyWarning);
 
-    static bool copyConfigTemplate(const std::string& path);
-    static std::string getConfigPath(bool forWrite);
-
-    // Generates the game system directories and information files based on es_systems.cfg.
+    // Generates the game system directories and information files based on es_systems.xml.
     static bool createSystemDirectories();
 
     static std::vector<SystemData*> sSystemVector;

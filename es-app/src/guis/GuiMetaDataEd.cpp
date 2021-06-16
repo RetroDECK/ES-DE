@@ -206,7 +206,7 @@ GuiMetaDataEd::GuiMetaDataEd(
                         ed->setColor(TEXTCOLOR_USERMARKED);
                 };
 
-                std::string staticTextString = "Default value from es_systems.cfg:";
+                std::string staticTextString = "Default value from es_systems.xml:";
                 std::string defaultLaunchCommand = scraperParams.system->
                         getSystemEnvData()->mLaunchCommand;
 

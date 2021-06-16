@@ -55,8 +55,8 @@ bool forceInputConfig = false;
 bool settingsNeedSaving = false;
 
 enum loadSystemsReturnCode {
-    NO_LOADING_ERROR,
-    NO_SYSTEMS_FILE,
+    LOADING_OK,
+    INVALID_FILE,
     NO_ROMS
 };
 
@@ -372,10 +372,8 @@ bool verifyHomeFolderExists()
 
 loadSystemsReturnCode loadSystemConfigFile()
 {
-    if (SystemData::loadConfig()) {
-        LOG(LogError) << "Could not parse systems configuration file (es_systems.cfg)";
-        return NO_SYSTEMS_FILE;
-    }
+    if (SystemData::loadConfig())
+        return INVALID_FILE;
 
     if (SystemData::sSystemVector.size() == 0) {
         LOG(LogError) << "No game files were found, make sure that the system directories are "
@@ -383,7 +381,7 @@ loadSystemsReturnCode loadSystemConfigFile()
         return NO_ROMS;
     }
 
-    return NO_LOADING_ERROR;
+    return LOADING_OK;
 }
 
 // Called on exit, assuming we get far enough to have the log initialized.
@@ -516,13 +514,12 @@ int main(int argc, char* argv[])
     loadSystemsReturnCode loadSystemsStatus = loadSystemConfigFile();
 
     if (loadSystemsStatus) {
-        // If there was an issue with installing the es_systems.cfg file from the
-        // template directory, then display an error message and let the user quit.
-        // If there are no game files found, give the option to the user to quit or
-        // to configure a different ROM directory as well as to generate the systems
+        // If there was an issue parsing the es_systems.xml file, display an error message.
+        // If there were no game files found, give the option to the user to quit or to
+        // configure a different ROM directory as well as to generate the game systems
         // directory structure.
-        if (loadSystemsStatus == NO_SYSTEMS_FILE) {
-            ViewController::get()->noSystemsFileDialog();
+        if (loadSystemsStatus == INVALID_FILE) {
+            ViewController::get()->invalidSystemsFileDialog();
         }
         else if (loadSystemsStatus == NO_ROMS) {
             ViewController::get()->noGamesDialog();

@@ -810,7 +810,7 @@ void FileData::launchGame(Window* window)
         return;
     }
 
-    // If %EMUPATH% is used in es_systems.cfg for this system, then check that the core file
+    // If %EMUPATH% is used in es_systems.xml for this system, then check that the core file
     // actually exists.
     auto emuPathPos = command.find("%EMUPATH%");
     if (emuPathPos != std::string::npos) {
@@ -856,7 +856,7 @@ void FileData::launchGame(Window* window)
             }
         }
         else {
-            LOG(LogError) << "Invalid entry in systems configuration file es_systems.cfg";
+            LOG(LogError) << "Invalid entry in systems configuration file es_systems.xml";
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
@@ -867,7 +867,7 @@ void FileData::launchGame(Window* window)
         }
     }
 
-    // If %COREPATH% is used in es_systems.cfg for this system, try to find the emulator
+    // If %COREPATH% is used in es_systems.xml for this system, try to find the emulator
     // core using the core paths defined in the setting EmulatorCorePath.
     auto corePos = command.find("%COREPATH%");
     if (corePos != std::string::npos && emulatorCorePath.size() > 0) {
@@ -914,7 +914,7 @@ void FileData::launchGame(Window* window)
             }
         }
         else {
-            LOG(LogError) << "Invalid entry in systems configuration file es_systems.cfg";
+            LOG(LogError) << "Invalid entry in systems configuration file es_systems.xml";
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
@@ -938,7 +938,7 @@ void FileData::launchGame(Window* window)
         }
     }
     else if (corePos != std::string::npos) {
-        LOG(LogError) << "The variable %COREPATH% is used in es_systems.cfg but " \
+        LOG(LogError) << "The variable %COREPATH% is used in es_systems.xml but " \
                 "no paths are defined using the setting EmulatorCorePath";
         GuiInfoPopup* s = new GuiInfoPopup(window, "ERROR: NO CORE PATHS CONFIGURED, " \
                 "CAN'T LOCATE EMULATOR CORE", 6000);
@@ -1033,7 +1033,7 @@ std::string FileData::findEmulatorPath(const std::string& command)
     // just the program name, assuming the binary is in the PATH variable of the operating
     // system, or it could be an absolute path to the emulator. (In the latter case, if
     // there is a space in the the path, it needs to be enclosed by quotation marks in
-    // es_systems.cfg.)
+    // es_systems.xml.)
     std::string emuExecutable;
     std::string exePath;
 

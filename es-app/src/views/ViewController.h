@@ -36,7 +36,7 @@ public:
     virtual ~ViewController();
 
     // These functions are called from main().
-    void noSystemsFileDialog();
+    void invalidSystemsFileDialog();
     void noGamesDialog();
 
     // Try to completely populate the GameListView map.

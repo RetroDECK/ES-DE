@@ -4,7 +4,7 @@
 //  SystemData.cpp
 //
 //  Provides data structures for the game systems and populates and indexes them based
-//  on the configuration in es_systems.cfg as well as the presence of game ROM files.
+//  on the configuration in es_systems.xml as well as the presence of game ROM files.
 //  Also provides functions to read and write to the gamelist files and to handle theme
 //  loading.
 //
@@ -106,7 +106,7 @@ void SystemData::setIsGameSystemStatus()
 {
     // We exclude non-game systems from specific operations (i.e. the "RetroPie" system, at least).
     // If/when there are more in the future, maybe this can be a more complex method, with a proper
-    // list but for now a simple string comparison is more performant.
+    // list but for now a simple string comparison is enough.
     mIsGameSystem = (mName != "retropie");
 }
 
@@ -230,15 +230,8 @@ bool SystemData::loadConfig()
 {
     deleteSystems();
 
-    std::string path = getConfigPath(false);
+    std::string path = getConfigPath(true);
     const std::string rompath = FileData::getROMDirectory();
-
-    if (!Utils::FileSystem::exists(path)) {
-        LOG(LogInfo) << "Systems configuration file does not exist";
-        if (copyConfigTemplate(getConfigPath(true)))
-            return true;
-        path = getConfigPath(false);
-    }
 
     LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
 
@@ -250,8 +243,7 @@ bool SystemData::loadConfig()
     #endif
 
     if (!res) {
-        LOG(LogError) << "Couldn't parse es_systems.cfg";
-        LOG(LogError) << res.description();
+        LOG(LogError) << "Couldn't parse es_systems.xml: " << res.description();
         return true;
     }
 
@@ -259,7 +251,7 @@ bool SystemData::loadConfig()
     pugi::xml_node systemList = doc.child("systemList");
 
     if (!systemList) {
-        LOG(LogError) << "es_systems.cfg is missing the <systemList> tag";
+        LOG(LogError) << "es_systems.xml is missing the <systemList> tag";
         return true;
     }
 
@@ -276,7 +268,7 @@ bool SystemData::loadConfig()
         path = system.child("path").text().get();
 
         // If there is a %ROMPATH% variable set for the system, expand it. By doing this
-        // it's possible to use either absolute ROM paths in es_systems.cfg or to utilize
+        // it's possible to use either absolute ROM paths in es_systems.xml or to utilize
         // the ROM path configured as ROMDirectory in es_settings.cfg. If it's set to ""
         // in this configuration file, the default hardcoded path $HOME/ROMs/ will be used.
         path = Utils::String::replace(path, "%ROMPATH%", rompath);
@@ -346,7 +338,7 @@ bool SystemData::loadConfig()
 
         if (name.empty()) {
             LOG(LogError) <<
-                    "A system in the es_systems.cfg file has no name defined, skipping entry";
+                    "A system in the es_systems.xml file has no name defined, skipping entry";
             continue;
         }
         else if (fullname.empty() || path.empty() || extensions.empty() || cmd.empty()) {
@@ -413,38 +405,6 @@ bool SystemData::loadConfig()
     return false;
 }
 
-bool SystemData::copyConfigTemplate(const std::string& path)
-{
-    std::string systemsTemplateFile;;
-
-    LOG(LogInfo) <<
-            "Attempting to copy template es_systems.cfg file from the resources directory...";
-
-    #if defined(_WIN64)
-    systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_windows", false);
-    #elif defined(__APPLE__)
-    systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_macos", false);
-    #else
-    systemsTemplateFile = ResourceManager::getInstance()->
-            getResourcePath(":/templates/es_systems.cfg_unix", false);
-    #endif
-
-    if (systemsTemplateFile == "") {
-        LOG(LogError) << "Can't find the es_systems.cfg template file";
-        return true;
-    }
-    else if (Utils::FileSystem::copyFile(systemsTemplateFile, path, false)) {
-        LOG(LogError) << "Copying of es_systems.cfg template file failed";
-        return true;
-    }
-
-    LOG(LogInfo) << "Template es_systems.cfg file copied successfully";
-
-    return false;
-}
-
 void SystemData::deleteSystems()
 {
     for (unsigned int i = 0; i < sSystemVector.size(); i++)
@@ -453,13 +413,49 @@ void SystemData::deleteSystems()
     sSystemVector.clear();
 }
 
-std::string SystemData::getConfigPath(bool forWrite)
+std::string SystemData::getConfigPath(bool legacyWarning)
 {
-    std::string path = Utils::FileSystem::getHomePath() + "/.emulationstation/es_systems.cfg";
-    if (forWrite || Utils::FileSystem::exists(path))
-        return path;
+    if (legacyWarning) {
+        std::string legacyConfigFile = Utils::FileSystem::getHomePath() +
+                "/.emulationstation/es_systems.cfg";
 
-    return "";
+        if (Utils::FileSystem::exists(legacyConfigFile)) {
+            LOG(LogInfo) << "Found legacy systems configuration file \"" << legacyConfigFile <<
+                    "\", to retain your customizations move it to "
+                    "\"custom_systems/es_systems.xml\" or otherwise delete the file";
+        }
+    }
+
+    std::string customSystemsDirectory =
+            Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems";
+
+    if (!Utils::FileSystem::exists(customSystemsDirectory)) {
+        LOG(LogInfo) << "Creating custom systems directory \"" << customSystemsDirectory << "\"";
+        Utils::FileSystem::createDirectory(customSystemsDirectory);
+        if (!Utils::FileSystem::exists(customSystemsDirectory)) {
+            LOG(LogError) << "Couldn't create directory, permission problems?";
+        }
+    }
+
+    std::string path = customSystemsDirectory + "/es_systems.xml";
+
+    if (Utils::FileSystem::exists(path)) {
+        LOG(LogInfo) << "Found custom systems configuration file";
+        return path;
+    }
+
+    #if defined(_WIN64)
+    path = ResourceManager::getInstance()->
+            getResourcePath(":/systems/windows/es_systems.xml", true);
+    #elif defined(__APPLE__)
+    path = ResourceManager::getInstance()->
+            getResourcePath(":/systems/macos/es_systems.xml", true);
+    #else
+    path = ResourceManager::getInstance()->
+            getResourcePath(":/systems/unix/es_systems.xml", true);
+    #endif
+
+    return path;
 }
 
 bool SystemData::createSystemDirectories()
@@ -501,7 +497,7 @@ bool SystemData::createSystemDirectories()
     #endif
 
     if (!res) {
-        LOG(LogError) << "Couldn't parse es_systems.cfg";
+        LOG(LogError) << "Couldn't parse es_systems.xml";
         LOG(LogError) << res.description();
         return true;
     }
@@ -510,7 +506,7 @@ bool SystemData::createSystemDirectories()
     pugi::xml_node systemList = doc.child("systemList");
 
     if (!systemList) {
-        LOG(LogError) << "es_systems.cfg is missing the <systemList> tag";
+        LOG(LogError) << "es_systems.xml is missing the <systemList> tag";
         return true;
     }
 
