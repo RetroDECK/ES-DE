@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Unix. -->
+<ruleList>
+  <emulator name="RETROARCH">
+    <rule type="systempath">
+      <entry>retroarch</entry>
+    </rule>
+    <rule type="staticpath">
+      <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+    </rule>
+  </emulator>
+  <core name="RETROARCH">
+    <rule type="corepath">
+      <!-- Compiled from source -->
+      <entry>~/.config/retroarch/cores</entry>
+      <!-- Snap package -->
+      <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
+      <!-- Flatpak package -->
+      <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+      <!-- Ubuntu and Linux Mint repository -->
+      <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
+      <!-- Fedora repository -->
+      <entry>/usr/lib64/libretro</entry>
+      <!-- Manjaro repository -->
+      <entry>/usr/lib/libretro</entry>
+      <!-- FreeBSD and OpenBSD repository -->
+      <entry>/usr/local/lib/libretro</entry>
+      <!-- NetBSD repository -->
+      <entry>/usr/pkg/lib/libretro</entry>
+    </rule>
+  </core>
+</ruleList>

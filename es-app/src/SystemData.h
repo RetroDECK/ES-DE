@@ -15,6 +15,7 @@
 #include "PlatformId.h"
 
 #include <algorithm>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -28,6 +29,30 @@ struct SystemEnvironmentData {
     std::vector<std::string> mSearchExtensions;
     std::string mLaunchCommand;
     std::vector<PlatformIds::PlatformId> mPlatformIds;
+};
+
+class FindRules
+{
+public:
+    FindRules();
+    ~FindRules();
+
+    void loadFindRules();
+
+private:
+    struct EmulatorRules {
+        std::vector<std::string> systemPaths;
+        std::vector<std::string> staticPaths;
+    };
+
+    struct CoreRules {
+        std::vector<std::string> corePaths;
+    };
+
+    std::map<std::string, struct EmulatorRules> mEmulators;
+    std::map<std::string, struct CoreRules> mCores;
+
+    friend FileData;
 };
 
 class SystemData
@@ -76,6 +101,7 @@ public:
     static bool createSystemDirectories();
 
     static std::vector<SystemData*> sSystemVector;
+    static std::unique_ptr<FindRules> sFindRules;
 
     inline std::vector<SystemData*>::const_iterator getIterator() const
             { return std::find(sSystemVector.cbegin(), sSystemVector.cend(), this); };

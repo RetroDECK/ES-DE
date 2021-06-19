@@ -97,7 +97,7 @@ public:
     std::string getCleanName() const;
 
     void launchGame(Window* window);
-    std::string findEmulatorPath(const std::string& command);
+    std::string findEmulatorPath(std::string& command);
 
     typedef bool ComparisonFunction(const FileData* a, const FileData* b);
     struct SortType {
