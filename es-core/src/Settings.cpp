@@ -381,7 +381,7 @@ void Settings::loadFile()
             "/.emulationstation/es_settings.xml";
 
     if (Utils::FileSystem::exists(legacyConfigFile) && !Utils::FileSystem::exists(configFile))
-        Utils::FileSystem::renameFile(legacyConfigFile, configFile, false);
+        Utils::FileSystem::copyFile(legacyConfigFile, configFile, false);
 
     if (!Utils::FileSystem::exists(configFile))
         return;
