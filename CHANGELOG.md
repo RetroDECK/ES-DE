@@ -8,6 +8,12 @@
 
 ### Release overview
 
+The 1.1 release brings several large changes including a fullscreen media viewer, a game launch screen, a miximage generator, a new video player, a new controller API featuring automatic controller configuration and controller profiles, and a better mechanism to find emulators and emulator cores.
+
+Refer to the User guide for in-depth explanations of the new functionality.
+
+Apart from this, many small improvements and bug fixes are part of the release, as detailed below.
+
 ### Detailed list of changes
 
 * Added a miximage generator that can be run automatically from the scraper and which includes comprehensive options, configurable from the menu
@@ -16,8 +22,10 @@
 * Added a game launch screen that displays the marquee image, the game name and the system name
 * Added a new video player based on FFmpeg
 * Added a 60 FPS frame rate upscaler option to the video player which results in slightly smoother playback for low frame rate videos (e.g. 24 and 30 FPS)
+* Implemented a new mechanism for locating emulators and cores, with configurable find rules (this eliminates some hacks such as the separate Flatpak es_systems.cfg file)
+* Removed the deprecated %COREPATH% setting and corresponding menu entry
 * Moved to the SDL GameController API which gives numerous improvements to the controller handling
-* Default controller configuration is now applied, input configuration should rarely if ever be required any longer except for deliberate button customization
+* Default controller configuration is now automatically applied, input configuration should rarely if ever be required any longer except for deliberate button customization
 * Added support for selecting the controller type (Xbox, Xbox 360, PS4, PS5 and SNES), which changes the help icons, help text and the input configuration tool icons and text
 * Added an option to limit the input in ES-DE to only the first controller (does not affect the emulators)
 * Removed the startup notification regarding default keyboard mappings being in use, instead default mappings are now considered the recommended input configuration
@@ -32,15 +40,14 @@
 * Moved the video screensaver audio setting to the sound settings menu
 * Created a new main menu entry for input device settings
 * Moved the input device configuration tool to the input device settings menu
-* Added a utilities menu entry to the main menu
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
 * The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
 * Renamed es_systems.cfg, es_settings.cfg and es_input.cfg to es_systems.xml, es_settings.xml and es_input.xml
 * Changed the es_systems.xml logic so it loads from the program resources directory by default (a customized file can be placed in ~/.emulationstation/custom_systems)
 * Removed the marquee image from rbsimple-DE as it's now baked into the miximages
-* Set the gamelist video scanline rendering option as disabled by default
+* Set the gamelist video scanline rendering option to disabled by default
 * Changed the setting description for the favorites game toggling button
-* Added the CImg library as a Git subtree and created some utility functions for it (used primarily by the miximage generator)
+* Added the CImg library as a Git subtree and created some utility functions for it (used by the miximage generator and the game launch screen)
 * Added a function to ImageComponent to crop fully transparent areas around an image
 * Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
@@ -49,7 +56,7 @@
 
 * On Windows, images with Unicode characters in the game name that were resized when scraping would not be saved with valid filenames
 * The glitches when configuring trigger buttons in GuiInputConfig have been fixed
-* GuiDetectDevice wouldn't detect controller input that was of the 'axis' type (i.e. analog inputs)
+* GuiDetectDevice wouldn't detect controller input that was of the "axis" type (i.e. analog inputs)
 * GuiInputConfig didn't correctly inform which buttons could be skipped for some rows
 * The scraper would sometimes consider very small images to be invalid
 * The Quick System Select help prompt was shown even when there was only a single game system present

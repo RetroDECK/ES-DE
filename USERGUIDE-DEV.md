@@ -300,7 +300,7 @@ Here is the snippet from the unix/es_systems.xml file:
   <fullname>Nintendo Entertainment System</fullname>
   <path>%ROMPATH%/nes</path>
   <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-  <command>retroarch -L %COREPATH%/nestopia_libretro.so %ROM%</command>
+  <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
   <platform>nes</platform>
   <theme>nes</theme>
 </system>
@@ -1151,10 +1151,6 @@ The metadata for a game is updated by scraping and by manual editing (using the 
 **Game media directory**
 
 This setting defines the directory for the game media, i.e. game images and videos. The default location is _~/.emulationstation/downloaded_media_
-
-**Emulator core path**
-
-This setting defines the path for which to search for emulator cores. This is used by the variable %COREPATH% which can be included in the systems configuration file es_systems.xml. For example it is used on Unix where the core path may vary depending on the operating system, how the emulator was packaged etc. For example the default RetroArch core directory is ~/.config/retroarch/cores if compiled from source code but if installed as a Snap package or as part of the OS repository the cores could be stored elsewhere. The setting is primarily intended for RetroArch but it can be used for any emulator that utilizes discrete emulator cores. When attempting to launch a game, the core for the game system will be searched in each of the defined directories until the first match occurs. Multiple directories can be defined by separating them using colons on Unix and macOS and by semicolons on Windows. Please see [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) for more information about this.
 
 **Hide taskbar (requires restart)** _(Windows only)_
 

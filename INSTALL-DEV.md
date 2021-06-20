@@ -1316,9 +1316,11 @@ The es_systems.xml file contains the system configuration data for ES-DE, writte
 
 ES-DE ships with a comprehensive `es_systems.xml` configuration file and normally you shouldn't need to modify this. However there may be special circumstances such as wanting to use alternative emulators for some game systems or perhaps you need to add additional systems altogether.
 
-To make a customized version of the systems configuration file, it first needs to be copied to `~/.emulationstation/custom_systems/es_systems.xml`. The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows.
+To make a customized version of the systems configuration file, it first needs to be copied to `~/.emulationstation/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows.)
 
-The bundled es_systems.xml file which is used by default is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS and `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
+The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS and `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
+
+Note that when copying the bundled es_systems.xml file to ~/.emulationstation/custom_systems/, it will completely replace the default file. So when upgrading to future ES-DE versions, any modifications such as additional game systems will not be enabled until the customized configuration file has been manually updated.
 
 It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
 
@@ -1345,21 +1347,25 @@ Below is an overview of the file layout with various examples. For a real system
         <path>%ROMPATH%/snes</path>
 
         <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t").
-        You must include the period at the start of the extension and it's case sensitive. -->
+        You must include the period at the start of the extension and it's also case sensitive. -->
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
         <!-- The command executed when a game is launched. A few special variables are replaced if found for a command tag (see below).
-        This example for Unix would run RetroArch with the the snes9x_libretro core, using an absolute path to the core.
-        If there are spaces in the path or file name, you must enclose them in quotation marks, for example:
+        This example for Unix uses the %EMULATOR_ and %CORE_ variables which utilize the find rules defined in the es_find_rules.xml
+        file. This is the recommended way to configure the launch command. -->
+        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
+
+        <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
+        the snes9x_libretro core, If there are spaces in the path or file name, you must enclose them in quotation marks, such as
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
         <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
 
-        <!-- This example for Unix searches the pre-configured core directories for the snes9x_libretro RetroArch core, see more
-        info about this below. Spaces are not allowed in the core file names. -->
-        <command>retroarch -L %COREPATH%/snes9x_libretro.so %ROM%</command>
+        <!-- This example for Unix combines the two rules above to search for RetroArch in the PATH environment variable but uses
+        the find rules for the emulator cores. -->
+        <command>retroarch -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
 
-        <!-- This is an example for macOS, which is very similar to the Unix example above. -->
-        <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %COREPATH%/snes9x_libretro.dylib %ROM%</command>
+        <!-- This is an example for macOS, which is very similar to the Unix example above except using an absolut path to the emulator. -->
+        <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
 
         <!-- This is an example for Windows. The .exe extension is optional and both forward slashes and backslashes are allowed as
         directory separators. As there is no standardized installation directory structure for this operating system, the %EMUPATH%
@@ -1407,7 +1413,9 @@ The following variables are expanded for the `command` tag:
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
-`%COREPATH%` - The core file defined after this variable will be searched in each of the directories listed in the setting EmulatorCorePath in es_settings.xml. This is done until the first match occurs, or until the directories are exhausted and no core file was found. This makes it possible to create a more generic es_systems.xml file but still support the variation between different operating systems and different types of emulator installations (e.g. installed via the OS repository, via Snap, compiled from source etc.). This is primarily intended for RetroArch but it could also be used for other emulators that utilize discrete emulator cores. Note that colons are used to separate the directories on Unix and macOS and that semicolons are used on Windows. This path setting can be changed from within the GUI, as described in the [User guide](USERGUIDE-DEV.md#other-settings-1). Never use quotation marks around the directories for this setting. It's adviced to not add spaces to directory names, but if still done, ES-DE will handle this automatically by adding the appropriate quotation marks to the launch command. You can also use the %EMUPATH% and %ESPATH% variables within the EmulatorCorePath setting, which leads to quite flexible configuration options.
+`%EMULATOR_` - This utilizes the emulator find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command. The find rules are explained in more detail below.
+
+`%CORE_` - This utilizes the core find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
@@ -1416,12 +1424,11 @@ Here are some additional real world examples of system entries, the first one fo
     <name>dos</name>
     <fullname>DOS (PC)</fullname>
     <path>%ROMPATH%/dos</path>
-    <extension>.bat .BAT .com .COM .exe .EXE .7z .7Z .zip .ZIP</extension>
-    <command>retroarch -L %COREPATH%/dosbox_core_libretro.so %ROM%</command>
+    <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
     <platform>dos</platform>
     <theme>dos</theme>
   </system>
-
 ```
 
 Then one for macOS:
@@ -1432,7 +1439,7 @@ Then one for macOS:
     <fullname>Nintendo Entertainment System</fullname>
     <path>%ROMPATH%/nes</path>
     <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %COREPATH%/nestopia_libretro.dylib %ROM%</command>
+    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.dylib %ROM%</command>
     <platform>nes</platform>
     <theme>nes</theme>
   </system>
@@ -1446,11 +1453,126 @@ And finally one for Windows:
     <fullname>Sega Mega Drive 32X</fullname>
     <path>%ROMPATH%\sega32x</path>
     <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>retroarch.exe -L %EMUPATH%\cores\picodrive_libretro.dll %ROM%</command>
+    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
     <platform>sega32x</platform>
     <theme>sega32x</theme>
   </system>
+```
 
+## es_find_rules.xml
+
+This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.
+
+The file is located in the resources directory at the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
+
+
+Here's an example es_find_rules.xml file for Unix:
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Unix. -->
+<ruleList>
+  <emulator name="RETROARCH">
+    <rule type="systempath">
+      <entry>retroarch</entry>
+    </rule>
+    <rule type="staticpath">
+      <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+    </rule>
+  </emulator>
+  <core name="RETROARCH">
+    <rule type="corepath">
+      <!-- Compiled from source -->
+      <entry>~/.config/retroarch/cores</entry>
+      <!-- Snap package -->
+      <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
+      <!-- Flatpak package -->
+      <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+      <!-- Ubuntu and Linux Mint repository -->
+      <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
+      <!-- Fedora repository -->
+      <entry>/usr/lib64/libretro</entry>
+      <!-- Manjaro repository -->
+      <entry>/usr/lib/libretro</entry>
+      <!-- FreeBSD and OpenBSD repository -->
+      <entry>/usr/local/lib/libretro</entry>
+      <!-- NetBSD repository -->
+      <entry>/usr/pkg/lib/libretro</entry>
+    </rule>
+  </core>
+</ruleList>
+```
+
+It's pretty straightforward, there are currently two rules supported for finding emulators, `systempath` and `staticpath` and there is one rule supported for finding the emulator cores, `corepath`. More advanced find rules may be added in future ES-DE versions.
+
+The `name` attribute must correspond to the command tags in es_systems.xml, take for example this line:
+
+```xml
+<command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+```
+
+Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so nice).
+
+Of course this makes it possible to add any number of emulators to the configuration file if not only using RetroArch.
+
+The rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defining absolute paths to the emulator. For staticpath, the actual emulator binary must also be included in the entry tag.
+
+The `corepath` rule is simply a path to search for the emulator core.
+
+Each rule supports multiple entry tags which are tried in the order that they are defined in the file until there is a match.
+
+The %EMUPATH% and %ESPATH% variables can also be used inside the entry tags, making for quite powerful find rules.
+
+The tilde symbol `~` is supported and will expand to the user home directory.
+
+For reference, here are also example es_find_rules.xml files for macOS and Windows:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for macOS. -->
+<ruleList>
+  <emulator name="RETROARCH">
+    <rule type="staticpath">
+      <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
+    </rule>
+  </emulator>
+  <core name="RETROARCH">
+    <rule type="corepath">
+      <!-- RetroArch >= v1.9.2 -->
+      <entry>~/Library/Application Support/RetroArch/cores</entry>
+      <!-- RetroArch < v1.9.2 -->
+      <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
+    </rule>
+  </core>
+</ruleList>
+```
+
+```xml
+<?xml version="1.0"?>
+<!-- This is the ES-DE find rules configuration file for Windows. -->
+<ruleList>
+  <emulator name="RETROARCH">
+    <rule type="systempath">
+      <!-- This requires that the user has manually updated the Path variable -->
+      <entry>retroarch.exe</entry>
+    </rule>
+    <rule type="staticpath">
+      <!-- Some reasonable installation locations -->
+      <entry>C:\RetroArch-Win64\retroarch.exe</entry>
+      <entry>C:\RetroArch\retroarch.exe</entry>
+      <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
+      <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
+      <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
+      <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
+      <!-- Portable installation -->
+      <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
+    </rule>
+  </emulator>
+  <core name="RETROARCH">
+    <rule type="corepath">
+      <entry>%EMUPATH%\cores</entry>
+    </rule>
+  </core>
+</ruleList>
 ```
 
 

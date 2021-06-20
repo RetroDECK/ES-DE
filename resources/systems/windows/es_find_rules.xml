@@ -3,7 +3,7 @@
 <ruleList>
   <emulator name="RETROARCH">
     <rule type="systempath">
-      <!-- This requires that the user has manually updated the system path variable -->
+      <!-- This requires that the user has manually updated the Path variable -->
       <entry>retroarch.exe</entry>
     </rule>
     <rule type="staticpath">
