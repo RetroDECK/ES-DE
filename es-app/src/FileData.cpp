@@ -805,11 +805,6 @@ void FileData::launchGame(Window* window)
     if (coreEntry != "")
         emulatorCorePaths = SystemData::sFindRules.get()->mCores[coreEntry].corePaths;
 
-    command = Utils::String::replace(command, "%ROM%", romPath);
-    command = Utils::String::replace(command, "%BASENAME%", baseName);
-    command = Utils::String::replace(command, "%ROMRAW%", romRaw);
-    command = Utils::String::replace(command, "%ESPATH%", esPath);
-
     // Expand home path if ~ is used.
     command = Utils::FileSystem::expandHomePath(command);
 
@@ -915,8 +910,12 @@ void FileData::launchGame(Window* window)
     // If a %CORE_ find rule entry is used in es_systems.xml for this system, then try to find
     // the emulator core using the rules defined in es_find_rules.xml.
     for (std::string path : emulatorCorePaths) {
-        if (path.back() != '/')
-            path += "/";
+
+        // The position of the %CORE_ variable could have changed as there may have been an
+        // %EMULATOR_ variable that was substituted for the actual emulator binary.
+        coreEntryPos = command.find("%CORE_");
+        coreFilePos = command.find("%", coreEntryPos + 6);
+
         size_t separatorPos;
         size_t quotePos = command.find("\"", coreFilePos);
         if (quotePos == std::string::npos)
@@ -931,8 +930,14 @@ void FileData::launchGame(Window* window)
 
             // Expand %EMUPATH% if it has been used in the %CORE_ variable.
             size_t stringPos = coreFile.find("%EMUPATH%");
-            if (stringPos != std::string::npos)
+            if (stringPos != std::string::npos) {
+                #if defined (_WIN64)
+                coreFile = Utils::String::replace(coreFile.replace(stringPos, 9,
+                        Utils::FileSystem::getParent(emuPath)), "/", "\\");
+                #else
                 coreFile = coreFile.replace(stringPos, 9, Utils::FileSystem::getParent(emuPath));
+                #endif
+            }
 
             // Expand %ESPATH% if it has been used in the %CORE_ variable.
             stringPos = coreFile.find("%ESPATH%");
@@ -949,7 +954,7 @@ void FileData::launchGame(Window* window)
                 // Escape any blankspaces.
                 if (coreFile.find(" ") != std::string::npos)
                     coreFile = Utils::FileSystem::getEscapedPath(coreFile);
-                command.replace(coreEntryPos - 1, separatorPos - coreEntryPos + 1, coreFile);
+                command.replace(coreEntryPos, separatorPos - coreEntryPos, coreFile);
                 // Remove any quotation marks as it would make the launch function fail.
                 if (command.find("\"") != std::string::npos)
                     command = Utils::String::replace(command, "\"", "");
@@ -981,6 +986,12 @@ void FileData::launchGame(Window* window)
         window->setInfoPopup(s);
         return;
     }
+
+    // Replace the remaining variables with their actual values.
+    command = Utils::String::replace(command, "%ROM%", romPath);
+    command = Utils::String::replace(command, "%BASENAME%", baseName);
+    command = Utils::String::replace(command, "%ROMRAW%", romRaw);
+    command = Utils::String::replace(command, "%ESPATH%", esPath);
 
     // swapBuffers() is called here to turn the screen black to eliminate some potential
     // flickering and to avoid showing the game launch message briefly when returning
@@ -1116,7 +1127,11 @@ std::string FileData::findEmulatorPath(std::string& command)
                 exePath.pop_back();
             }
         }
-        return exePath;
+        if (exePath != "") {
+            exePath += "\\" + path;
+            command.replace(0, endPos + 1, exePath);
+            return exePath;
+        }
         #else
         exePath = Utils::FileSystem::getPathToBinary(path);
         if (exePath != "") {
@@ -1131,7 +1146,7 @@ std::string FileData::findEmulatorPath(std::string& command)
         if (Utils::FileSystem::isRegularFile(path) ||
                 Utils::FileSystem::isSymlink(path)) {
             command.replace(0, endPos + 1, path);
-            return Utils::FileSystem::getParent(path);
+            return path;
         }
     }
 
