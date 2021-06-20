@@ -11,7 +11,7 @@ YouTube channel with installation instruction videos:\
 
 Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
-The current version 1.0 has been tested on the following operating systems (all for the x86 architecture):
+The current version 1.0 has been tested on the following operating systems (all for the x86 architecture unless otherwise stated):
 
 * Ubuntu 20.04 LTS
 * Ubuntu 20.10
@@ -22,12 +22,14 @@ The current version 1.0 has been tested on the following operating systems (all 
 * FreeBSD 12.2
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 11 "Big Sur"
+* macOS 11 "Big Sur" (x86 and ARM via Rosetta 2)
 * macOS 10.15 "Catalina"
-* macOS 10.14 "Mojave" (limited testing only)
+* macOS 10.14 "Mojave"
 * macOS 10.11 "El Capitan"
 * Windows 10
 * Windows 8.1
+
+**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to use the x86 version of RetroArch or otherwise you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE will become available.
 
 At the moment Raspberry Pi is not supported, but this is planned for future releases. It may still be possible to compile and run ES-DE on this type of device, but as of v1.0 it's not actively used during development and therefore not tested.
 

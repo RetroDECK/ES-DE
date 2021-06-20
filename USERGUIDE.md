@@ -32,7 +32,7 @@ There are also installation videos available at the ES-DE YouTube channel:\
 
 Getting started with ES-DE is easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows and macOS you'll use the installer instead of a package.
 
-The following operating systems have been tested (all for the x86 architecture):
+The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
 * Ubuntu 20.04 LTS
 * Ubuntu 20.10
@@ -43,12 +43,14 @@ The following operating systems have been tested (all for the x86 architecture):
 * FreeBSD 12.2
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 11 "Big Sur"
+* macOS 11 "Big Sur" (x86 and ARM via Rosetta 2)
 * macOS 10.15 "Catalina"
-* macOS 10.14 "Mojave" (limited testing only)
+* macOS 10.14 "Mojave"
 * macOS 10.11 "El Capitan"
 * Windows 10
 * Windows 8.1
+
+**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to use the x86 version of RetroArch or otherwise you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE will become available.
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 
