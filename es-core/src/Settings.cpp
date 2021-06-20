@@ -247,26 +247,6 @@ void Settings::setDefaults()
     mBoolMap["RunInBackground"] = { false, false };
     #endif
     mStringMap["MediaDirectory"] = { "", "" };
-    #if defined(_WIN64)
-    mStringMap["EmulatorCorePath"] = { "", "" };
-    #elif defined(__APPLE__)
-    const std::string emulatorCorePath =
-            "~/Library/Application Support/RetroArch/cores:"            // RetroArch >= v1.9.2
-            "/Applications/RetroArch.app/Contents/Resources/cores";     // RetroArch < v1.9.2
-    mStringMap["EmulatorCorePath"] = { emulatorCorePath, emulatorCorePath };
-    #else
-    const std::string emulatorCorePath =
-            "~/.config/retroarch/cores:"                                // Compiled from source
-            "~/snap/retroarch/current/.config/retroarch/cores:"         // Snap package
-            "~/.var/app/org.libretro.RetroArch/config/retroarch/cores:" // Flatpak package
-            // As installed from the OS repositories:
-            "/usr/lib/x86_64-linux-gnu/libretro:"                       // Ubuntu and Linux Mint
-            "/usr/lib64/libretro:"                                      // Fedora
-            "/usr/lib/libretro:"                                        // Manjaro
-            "/usr/local/lib/libretro:"                                  // FreeBSD and OpenBSD
-            "/usr/pkg/lib/libretro";                                    // NetBSD
-    mStringMap["EmulatorCorePath"] = { emulatorCorePath, emulatorCorePath };
-    #endif
     mBoolMap["VideoUpscaleFrameRate"] = { false, false };
     mBoolMap["LaunchCommandOverride"] = { true, true };
     mBoolMap["ShowHiddenFiles"] = { true, true };

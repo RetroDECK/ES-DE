@@ -983,40 +983,6 @@ void GuiMenu::openOtherOptions()
     });
     s->addRow(rowMediaDir);
 
-    // Emulator core path.
-    ComponentListRow rowCorePath;
-    auto emulator_core_path = std::make_shared<TextComponent>(mWindow, "EMULATOR CORE PATH",
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
-    auto bracketCorePath = std::make_shared<ImageComponent>(mWindow);
-    bracketCorePath->setImage(":/graphics/arrow.svg");
-    bracketCorePath->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
-    rowCorePath.addElement(emulator_core_path, true);
-    rowCorePath.addElement(bracketCorePath, false);
-    #if defined(_WIN64)
-    std::string titleCorePath = "ENTER EMULATOR CORE PATH (USE SEMICOLON AS SEPARATOR)";
-    #else
-    std::string titleCorePath = "ENTER EMULATOR CORE PATH (USE COLON AS SEPARATOR)";
-    #endif
-    std::string emulatorCorePathStaticText = "Default path:";
-    std::string defaultEmulatorCorePath = Settings::getInstance()->
-            getDefaultString("EmulatorCorePath");
-    if (defaultEmulatorCorePath == "")
-        defaultEmulatorCorePath = "<No default path defined>";
-    std::string initValueCorePath = Settings::getInstance()->getString("EmulatorCorePath");
-    bool multiLineCorePath = false;
-    auto updateValCorePath = [this](const std::string& newVal) {
-        Settings::getInstance()->setString("EmulatorCorePath", newVal);
-        Settings::getInstance()->saveFile();
-    };
-    rowCorePath.makeAcceptInputHandler([this, titleCorePath, emulatorCorePathStaticText,
-            defaultEmulatorCorePath, initValueCorePath, updateValCorePath, multiLineCorePath] {
-        mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
-                titleCorePath, emulatorCorePathStaticText, defaultEmulatorCorePath,
-                Settings::getInstance()->getString("EmulatorCorePath"),
-                updateValCorePath, multiLineCorePath, "SAVE", "SAVE CHANGES?"));
-    });
-    s->addRow(rowCorePath);
-
     #if defined(_RPI_)
     // Video playing using OMXPlayer.
     auto video_omx_player = std::make_shared<SwitchComponent>(mWindow);
