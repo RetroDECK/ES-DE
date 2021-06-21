@@ -759,18 +759,19 @@ SystemData* CollectionSystemsManager::getSystemToView(SystemData* sys)
 FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* sys)
 {
     FileData* rootFolder = sys->getRootFolder();
-    std::string desc = "This collection is empty.";
+    FileFilterIndex* idx = rootFolder->getSystem()->getIndex();
+    std::string desc = "This collection is empty";
     std::vector<FileData*> gamesList;
     std::vector<FileData*> gamesListRandom;
 
     if (UIModeController::getInstance()->isUIModeKid()) {
-        for (FileData* game : rootFolder->getChildren()) {
+        for (FileData* game : rootFolder->getChildrenListToDisplay()) {
             if (game->getKidgame())
                 gamesList.push_back(game);
         }
     }
     else {
-        gamesList = rootFolder->getChildren();
+        gamesList = rootFolder->getChildrenListToDisplay();
     }
 
     unsigned int gameCount = static_cast<unsigned int>(gamesList.size());
@@ -802,14 +803,14 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                 case 1:
                     desc = "This collection contains 1 game: '" +
                             gamesList[0]->metadata.get("name") + " [" +
-                            gamesList[0]->getSourceFileData()->getSystem()->getName() + "]'.";
+                            gamesList[0]->getSourceFileData()->getSystem()->getName() + "]'";
                 break;
                 case 2:
                     desc = "This collection contains 2 games: '" +
                             gamesList[0]->metadata.get("name") + " [" +
                             gamesList[0]->getSourceFileData()->getSystem()->getName() +
                             "]' and '" + gamesList[1]->metadata.get("name") + " [" +
-                            gamesList[1]->getSourceFileData()->getSystem()->getName() + "]'.";
+                            gamesList[1]->getSourceFileData()->getSystem()->getName() + "]'";
                 break;
                 default:
                     desc = "This collection contains " + std::to_string(gameCount) +
@@ -819,7 +820,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
                             gamesList[1]->getSourceFileData()->getSystem()->getName() + "]' and '" +
                             gamesList[2]->metadata.get("name") + " [" +
                             gamesList[2]->getSourceFileData()->getSystem()->getName() + "]'";
-                    desc += (gameCount == 3 ? "." : ", among others.");
+                    desc += (gameCount == 3 ? "" : ", among others");
                 break;
             }
         }
@@ -827,25 +828,30 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
             switch (gameCount) {
                 case 1:
                     desc = "This collection contains 1 game: '" +
-                            gamesList[0]->metadata.get("name") + " '.";
+                            gamesList[0]->metadata.get("name") + " '";
                 break;
                 case 2:
                     desc = "This collection contains 2 games: '" +
                             gamesList[0]->metadata.get("name") +
-                            "' and '" + gamesList[1]->metadata.get("name") + "'.";
+                            "' and '" + gamesList[1]->metadata.get("name") + "'";
                 break;
                 default:
                     desc = "This collection contains " + std::to_string(gameCount) +
                             " games: '" + gamesList[0]->metadata.get("name") +
                             "', '" + gamesList[1]->metadata.get("name") + "' and '" +
                             gamesList[2]->metadata.get("name") + "'";
-                    desc += (gameCount == 3 ? "." : ", among others.");
+                    desc += (gameCount == 3 ? "" : ", among others");
                 break;
             }
         }
     }
 
+    if (idx->isFiltered())
+        desc += "\n\n'" + rootFolder->getSystem()->getFullName() +
+                "' is filtered so there may be more games available";
+
     rootFolder->metadata.set("desc", desc);
+
     // Return a pointer to the first game so that its
     // game media can be displayed in the gamelist.
     if (gamesList.size() > 0)
