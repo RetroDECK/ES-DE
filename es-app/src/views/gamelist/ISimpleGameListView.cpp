@@ -286,6 +286,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 // it gets after the gamelist sorting. Instead retain the cursor position in the
                 // list using the logic below.
                 FileData* entryToUpdate = getCursor();
+                SystemData* system = getCursor()->getSystem();
                 bool favoritesSorting;
                 bool removedLastFavorite = false;
                 bool selectLastEntry = false;
@@ -376,6 +377,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     }
 
                     setCursor(entryToSelect);
+                    system = entryToUpdate->getSystem();
                 }
 
                 // Marking folders as favorites don't make them part of any collections,
@@ -429,6 +431,10 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     mWindow->setInfoPopup(s);
                 }
                 else if (CollectionSystemsManager::get()->toggleGameInCollection(entryToUpdate)) {
+                    // As the toggling of the game destroyed this object, we need to get the view
+                    // from ViewController instead of using the reference that existed before the
+                    // destruction. Otherwise we get random crashes.
+                    IGameListView* view = ViewController::get()->getGameListView(system).get();
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                             !entryToUpdate->getSystem()->isCustomCollection()) {
@@ -438,10 +444,10 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     }
                     else if (removedLastFavorite &&
                             !entryToUpdate->getSystem()->isCustomCollection()) {
-                        setCursor(getFirstEntry());
+                        view->setCursor(view->getFirstEntry());
                     }
                     else if (selectLastEntry) {
-                        setCursor(getLastEntry());
+                        view->setCursor(view->getLastEntry());
                     }
                     // Display the indication icons which show what games are part of the
                     // custom collection currently being edited. This is done cheaply using
