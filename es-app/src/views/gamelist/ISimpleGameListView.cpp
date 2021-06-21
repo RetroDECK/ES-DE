@@ -476,6 +476,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     return true;
                 }
             }
+            else if (config->isMappedTo("y", input) && getCursor()->isPlaceHolder()) {
+                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+            }
         }
     }
 
