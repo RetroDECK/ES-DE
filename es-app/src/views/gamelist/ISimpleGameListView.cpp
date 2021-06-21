@@ -183,6 +183,19 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
                 return true;
             }
+            else if (config->isMappedTo("x", input) &&
+                    mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+                    mCursorStack.empty() && ViewController::get()->getState().viewing ==
+                    ViewController::GAME_LIST) {
+                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                // Jump to the randomly selected game.
+                if (mRandomGame) {
+                    stopListScrolling();
+                    ViewController::get()->cancelViewTransitions();
+                    mWindow->startMediaViewer(mRandomGame);
+                    return true;
+                }
+            }
             else if (mRoot->getSystem()->isGameSystem()) {
                 stopListScrolling();
                 ViewController::get()->cancelViewTransitions();
