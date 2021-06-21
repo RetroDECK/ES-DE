@@ -42,9 +42,8 @@ bool MediaViewer::startMediaViewer(FileData* game)
 
     initiateViewer();
 
-    if (mHasVideo) {
+    if (mHasVideo)
         ViewController::get()->onPauseVideo();
-    }
 
     if (mHasVideo || mHasImages)
         return true;
@@ -138,10 +137,8 @@ void MediaViewer::initiateViewer()
 
     findMedia();
 
-    if (!mHasVideo && !mHasImages) {
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+    if (!mHasVideo && !mHasImages)
         return;
-    }
 
     if (mHasVideo)
         playVideo();
