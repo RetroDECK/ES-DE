@@ -59,9 +59,10 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window),
     if (isFullUI)
         addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
 
-    if (isFullUI)
-        addEntry("UTILITIES", 0x777777FF, true, [this] {
-                openUtilitiesMenu(); });
+    // TEMPORARY - disabled for now, will be used in the future.
+//    if (isFullUI)
+//        addEntry("UTILITIES", 0x777777FF, true, [this] {
+//                openUtilitiesMenu(); });
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
             Settings::getInstance()->getString("UIMode") != "kiosk") {
