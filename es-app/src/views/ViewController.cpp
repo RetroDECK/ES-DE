@@ -415,8 +415,8 @@ void ViewController::goToGameList(SystemData* system)
 
     // Find if we're wrapping around the first and last systems, which requires the gamelist
     // to be moved in order to avoid weird camera movements. This is only needed for the
-    // slide transition style though.
-    if (mState.viewing == GAME_LIST && slideTransitions) {
+    // slide transition style.
+    if (mState.viewing == GAME_LIST && SystemData::sSystemVector.size() > 1 && slideTransitions) {
         if (SystemData::sSystemVector.front() == mState.getSystem()) {
             if (SystemData::sSystemVector.back() == system)
                 wrapFirstToLast = true;
