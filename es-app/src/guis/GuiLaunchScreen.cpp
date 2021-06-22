@@ -172,6 +172,12 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
         mMarquee->setPosition(currentPos);
     }
 
+    setOrigin({0.5f, 0.5f});
+
+    // Center on the X axis and keep slightly off-center on the Y axis.
+    setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
+            static_cast<float>(Renderer::getScreenHeight()) / 2.25f);
+
     mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
     mBackground.setEdgeColor(0xEEEEEEFF);
 }
@@ -202,20 +208,17 @@ void GuiLaunchScreen::onSizeChanged()
 
 void GuiLaunchScreen::update(int deltaTime)
 {
-    if (mScaleUp < 1.0f)
+    if (Settings::getInstance()->getString("MenuOpeningEffect") == "none")
+        mScaleUp = 1.0f;
+    else if (mScaleUp < 1.0f)
         mScaleUp = Math::clamp(mScaleUp + 0.07f, 0.0f, 1.0f);
 }
 
 void GuiLaunchScreen::render()
 {
     // Scale up animation.
-    if (mScaleUp < 1.0f) {
-        setOrigin({0.5f, 0.5f});
-        // Center on the X axis and keep slightly off-center on the Y axis.
-        setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
-                static_cast<float>(Renderer::getScreenHeight()) / 2.25f);
+    if (mScaleUp < 1.0f)
         setScale(mScaleUp);
-    }
 
     Transform4x4f trans = Transform4x4f::Identity() * getTransform();
     Renderer::setMatrix(trans);
