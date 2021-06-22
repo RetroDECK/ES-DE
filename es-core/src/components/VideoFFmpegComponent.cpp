@@ -42,14 +42,11 @@ VideoFFmpegComponent::VideoFFmpegComponent(
         mDecodedFrame(false),
         mEndOfVideo(false)
 {
-    // Get an empty texture for rendering the video.
-    mTexture = TextureResource::get("");
 }
 
 VideoFFmpegComponent::~VideoFFmpegComponent()
 {
     stopVideo();
-    mTexture.reset();
 }
 
 void VideoFFmpegComponent::setResize(float width, float height)
@@ -831,6 +828,9 @@ void VideoFFmpegComponent::startVideo()
         mAudioFrameCount = 0;
         mOutputPicture = {};
 
+        // Get an empty texture for rendering the video.
+        mTexture = TextureResource::get("");
+
         // This is used for the audio and video synchronization.
         mTimeReference = std::chrono::high_resolution_clock::now();
 
@@ -983,6 +983,7 @@ void VideoFFmpegComponent::stopVideo()
     mStartDelayed = false;
     mPause = false;
     mEndOfVideo = false;
+    mTexture.reset();
 
     if (mFrameProcessingThread) {
         if (mWindow->getVideoPlayerCount() == 0)
