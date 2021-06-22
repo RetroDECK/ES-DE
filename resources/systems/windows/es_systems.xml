@@ -1046,6 +1046,15 @@
     <theme>supergrafx</theme>
   </system>
   <system>
+    <name>switch</name>
+    <fullname>Nintendo SWITCH</fullname>
+    <path>%ROMPATH%/switch</path>
+    <extension>.nsp .NSP .zip .ZIP .7z .nso .NSO .nro .NRO .nca .NCA .xci .XCI</extension>
+    <command>PLACEHOLDER %ROM%</command>
+    <platform>switch</platform>
+    <theme>switch</theme>
+  </system>
+  <system>
     <name>tanodragon</name>
     <fullname>Tano Dragon</fullname>
     <path>%ROMPATH%\tanodragon</path>

@@ -127,6 +127,7 @@ namespace PlatformIds
         GAMEENGINE_Z_MACHINE,
         SINCLAIR_ZX81_SINCLAR,
         SINCLAIR_ZX_SPECTRUM,
+        SWITCH,
 
         PLATFORM_IGNORE, // Do not allow scraping for this system.
         PLATFORM_COUNT
