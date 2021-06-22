@@ -906,6 +906,7 @@ void GuiMenu::openOtherOptions()
     });
     #endif
 
+    #if defined(BUILD_VLC_PLAYER)
     // Video player.
     auto video_player = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
@@ -924,6 +925,7 @@ void GuiMenu::openOtherOptions()
             s->setNeedsReloading();
         }
     });
+    #endif
 
     // When to save game metadata.
     auto save_gamelist_mode = std::make_shared<OptionListComponent<std::string>>
@@ -1026,7 +1028,11 @@ void GuiMenu::openOtherOptions()
     // Whether to upscale the video frame rate to 60 FPS.
     auto video_upscale_frame_rate = std::make_shared<SwitchComponent>(mWindow);
     video_upscale_frame_rate->setState(Settings::getInstance()->getBool("VideoUpscaleFrameRate"));
+    #if defined(BUILD_VLC_PLAYER)
     s->addWithLabel("UPSCALE VIDEO FRAME RATE TO 60 FPS (FFMPEG)", video_upscale_frame_rate);
+    #else
+    s->addWithLabel("UPSCALE VIDEO FRAME RATE TO 60 FPS", video_upscale_frame_rate);
+    #endif
     s->addSaveFunc([video_upscale_frame_rate, s] {
         if (video_upscale_frame_rate->getState() !=
                 Settings::getInstance()->getBool("VideoUpscaleFrameRate")) {

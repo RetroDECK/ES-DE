@@ -14,6 +14,8 @@ set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
 # Package type to use for CPack on Linux.
 set(LINUX_CPACK_GENERATOR "DEB" CACHE STRING "CPack generator, DEB or RPM")
 
+set(VLC_PLAYER OFF CACHE BOOL "Whether to build with the VLC video player")
+
 # Add local find modules to the CMake path.
 list(APPEND CMAKE_MODULE_PATH
         ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
@@ -80,7 +82,9 @@ if(NOT WIN32)
     find_package(Pugixml REQUIRED)
     find_package(RapidJSON REQUIRED)
     find_package(SDL2 REQUIRED)
-    find_package(VLC REQUIRED)
+    if(VLC_PLAYER OR RPI)
+        find_package(VLC REQUIRED)
+    endif()
 endif()
 
 # Add libCEC support.
@@ -185,8 +189,13 @@ else()
     add_definitions(-DUSE_OPENGLES_10)
 endif()
 
+if (VLC_PLAYER)
+    add_definitions(-DBUILD_VLC_PLAYER)
+endif()
+
 if(DEFINED BCMHOST OR RPI)
     add_definitions(-D_RPI_)
+    add_definitions(-DBUILD_VLC_PLAYER)
 endif()
 
 if(DEFINED VERO4K)
@@ -230,10 +239,12 @@ set(COMMON_INCLUDE_DIRS
         ${PUGIXML_INCLUDE_DIRS}
         ${RAPIDJSON_INCLUDE_DIRS}
         ${SDL2_INCLUDE_DIR}
-        ${VLC_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
         ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
+if(VLC_PLAYER OR RPI)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
+endif()
 
 # For Windows we need to add local include files for the dependency packages.
 if(WIN32)
@@ -245,7 +256,7 @@ if(WIN32)
 endif()
 
 # Temporary solution until the VLC find module has been updated to work properly on macOS.
-if(APPLE)
+if(APPLE AND VLC_PLAYER)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} "/Applications/VLC.app/Contents/MacOS/include")
 endif()
 
@@ -292,8 +303,10 @@ if(NOT WIN32)
             ${FreeImage_LIBRARIES}
             ${FREETYPE_LIBRARIES}
             ${PUGIXML_LIBRARIES}
-            ${SDL2_LIBRARY}
-            ${VLC_LIBRARIES})
+            ${SDL2_LIBRARY})
+    if(VLC_PLAYER OR RPI)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${VLC_LIBRARIES})
+    endif()
 elseif(WIN32)
     if(DEFINED MSVC)
         set(COMMON_LIBRARIES
@@ -309,9 +322,11 @@ elseif(WIN32)
                 "${PROJECT_SOURCE_DIR}/freetype.lib"
                 "${PROJECT_SOURCE_DIR}/pugixml.lib"
                 "${PROJECT_SOURCE_DIR}/SDL2main.lib"
-                "${PROJECT_SOURCE_DIR}/libvlc.lib"
                 "${PROJECT_SOURCE_DIR}/SDL2.lib"
                 "Winmm.dll")
+        if(VLC_PLAYER)
+            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} "${PROJECT_SOURCE_DIR}/libvlc.lib")
+        endif()
     else()
         set(COMMON_LIBRARIES
                 "${PROJECT_SOURCE_DIR}/avcodec-59.dll"
@@ -326,10 +341,12 @@ elseif(WIN32)
                 "${PROJECT_SOURCE_DIR}/libfreetype.dll"
                 "${PROJECT_SOURCE_DIR}/libpugixml.dll"
                 "${PROJECT_SOURCE_DIR}/libSDL2main.a"
-                "${PROJECT_SOURCE_DIR}/libvlc.dll"
                 "${PROJECT_SOURCE_DIR}/SDL2.dll"
                 "mingw32"
                 "Winmm.dll")
+        if(VLC_PLAYER)
+            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} "${PROJECT_SOURCE_DIR}/libvlc.dll")
+        endif()
     endif()
 endif()
 
@@ -339,9 +356,11 @@ if(APPLE)
     set(CMAKE_INSTALL_PREFIX
             "/Applications/EmulationStation Desktop Edition.app/Contents/Resources")
 
-    # Temporary solution until the VLC find module has been updated to work properly on macOS.
-    set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
-            "/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib")
+    if(VLC_PLAYER)
+        # Required as the VLC find module doesn't work properly on macOS.
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
+                "/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib")
+    endif()
 
     # Set the same rpath links for the install executable as for the build executable.
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

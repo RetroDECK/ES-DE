@@ -6,6 +6,8 @@
 //  Video player based on libVLC.
 //
 
+#if defined(BUILD_VLC_PLAYER)
+
 #include "components/VideoVlcComponent.h"
 
 #include "renderers/Renderer.h"
@@ -540,3 +542,5 @@ void VideoVlcComponent::handleLooping()
         }
     }
 }
+
+#endif

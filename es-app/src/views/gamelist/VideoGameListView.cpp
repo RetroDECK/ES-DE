@@ -9,16 +9,15 @@
 #include "views/gamelist/VideoGameListView.h"
 
 #include "animations/LambdaAnimation.h"
+#include "components/VideoFFmpegComponent.h"
 #if defined(_RPI_)
 #include "components/VideoOmxComponent.h"
 #endif
-#include "components/VideoFFmpegComponent.h"
+#if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
+#endif
 #include "utils/FileSystemUtil.h"
 #include "views/ViewController.h"
-#if defined(_RPI_)
-#include "Settings.h"
-#endif
 #include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "SystemData.h"
@@ -70,11 +69,13 @@ VideoGameListView::VideoGameListView(
         mVideo = new VideoVlcComponent(window);
     else
         mVideo = new VideoFFmpegComponent(window);
-    #else
+    #elif defined(BUILD_VLC_PLAYER)
     if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
         mVideo = new VideoVlcComponent(window);
     else
         mVideo = new VideoFFmpegComponent(window);
+    #else
+    mVideo = new VideoFFmpegComponent(window);
     #endif
 
     mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y());

@@ -130,17 +130,23 @@ if(WIN32)
         install(FILES ../avcodec-59.dll ../avfilter-8.dll ../avformat-59.dll ../avutil-57.dll
                 ../postproc-56.dll ../swresample-4.dll ../swscale-6.dll ../FreeImage.dll
                 ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll ../freetype.dll
-                ../pugixml.dll ../libssl-1_1-x64.dll ../libvlc.dll ../libvlccore.dll ../SDL2.dll
-                ../MSVCP140.dll ../VCOMP140.DLL ../VCRUNTIME140.dll ../VCRUNTIME140_1.dll
-                DESTINATION .)
+                ../pugixml.dll ../libssl-1_1-x64.dll ../SDL2.dll ../MSVCP140.dll ../VCOMP140.DLL
+                ../VCRUNTIME140.dll ../VCRUNTIME140_1.dll DESTINATION .)
+        if(VLC_PLAYER)
+            install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
+        endif()
     else()
         install(FILES ../avcodec-59.dll ../avfilter-8.dll ../avformat-59.dll ../avutil-57.dll
                 ../postproc-56.dll ../swresample-4.dll ../swscale-6.dll ../FreeImage.dll
                 ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll ../libfreetype.dll
-                ../libpugixml.dll ../libssl-1_1-x64.dll ../libvlc.dll ../libvlccore.dll
-                ../SDL2.dll ../vcomp140.dll DESTINATION .)
+                ../libpugixml.dll ../libssl-1_1-x64.dll ../SDL2.dll ../vcomp140.dll DESTINATION .)
+        if(VLC_PLAYER)
+            install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
+        endif()
     endif()
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
+    if(VLC_PLAYER)
+        install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
+    endif()
     install(FILES ../LICENSE DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION .)
@@ -208,12 +214,14 @@ elseif(APPLE)
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
-                DESTINATION ../MacOS)
+        if(VLC_PLAYER)
+            install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
+                    PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+            install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
+                    PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+            install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
+                    DESTINATION ../MacOS)
+        endif()
     endif()
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
             DESTINATION ../Resources)
@@ -326,7 +334,9 @@ else()
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://es-de.org")
     set(CPACK_DEBIAN_PACKAGE_SECTION "games")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "vlc")
+    if(VLC_PLAYER OR RPI)
+        set(CPACK_DEBIAN_PACKAGE_DEPENDS "vlc")
+    endif()
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
     if("${LINUX_CPACK_GENERATOR}" STREQUAL "RPM")
         set(CPACK_GENERATOR "RPM")
@@ -334,7 +344,9 @@ else()
     set(CPACK_RPM_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.rpm")
     set(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
     set(CPACK_RPM_PACKAGE_LICENSE "MIT")
-    set(CPACK_RPM_PACKAGE_REQUIRES "vlc")
+    if(VLC_PLAYER)
+        set(CPACK_RPM_PACKAGE_REQUIRES "vlc")
+    endif()
     list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CMAKE_INSTALL_PREFIX}")
     list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CMAKE_INSTALL_PREFIX}/bin")
     list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CMAKE_INSTALL_PREFIX}/share")

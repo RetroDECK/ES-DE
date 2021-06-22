@@ -9,11 +9,13 @@
 
 #include "SystemScreensaver.h"
 
+#include "components/VideoFFmpegComponent.h"
 #if defined(_RPI_)
 #include "components/VideoOmxComponent.h"
 #endif
-#include "components/VideoFFmpegComponent.h"
+#if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
+#endif
 #include "resources/Font.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
@@ -182,17 +184,16 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             if (Settings::getInstance()->getBool("ScreensaverOmxPlayer"))
                 mVideoScreensaver = new VideoOmxComponent(mWindow);
             else if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
-                mVideoScreensaver = new VideoVlcComponent(window);
-            else
-                mVideoScreensaver = new VideoFFmpegComponent(window);
-
-            else
                 mVideoScreensaver = new VideoVlcComponent(mWindow);
-            #else
+            else
+                mVideoScreensaver = new VideoFFmpegComponent(mWindow);
+            #elif defined(BUILD_VLC_PLAYER)
             if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
                 mVideoScreensaver = new VideoVlcComponent(mWindow);
             else
                 mVideoScreensaver = new VideoFFmpegComponent(mWindow);
+            #else
+            mVideoScreensaver = new VideoFFmpegComponent(mWindow);
             #endif
 
             mVideoScreensaver->topWindow(true);
@@ -436,7 +437,7 @@ void SystemScreensaver::update(int deltaTime)
     else if (mState == STATE_SCREENSAVER_ACTIVE) {
         // Update the timer that swaps the media, unless the swap time is set to 0 (only
         // applicable for the video screensaver). This means that videos play to the end,
-        // at which point VideoVlcComponent will trigger a skip to the next game.
+        // at which point the video player will trigger a skip to the next game.
         if (mMediaSwapTime != 0) {
             mTimer += deltaTime;
             if (mTimer > mMediaSwapTime)

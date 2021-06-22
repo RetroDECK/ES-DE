@@ -9,7 +9,9 @@
 #include "MediaViewer.h"
 
 #include "components/VideoFFmpegComponent.h"
+#if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
+#endif
 #include "views/ViewController.h"
 #include "AudioManager.h"
 #include "Sound.h"
@@ -242,10 +244,14 @@ void MediaViewer::playVideo()
     mDisplayingImage = false;
     ViewController::get()->onStopVideo();
 
+    #if defined(BUILD_VLC_PLAYER)
     if (Settings::getInstance()->getString("VideoPlayer") == "ffmpeg")
         mVideo = new VideoFFmpegComponent(mWindow);
     else
         mVideo = new VideoVlcComponent(mWindow);
+    #else
+    mVideo = new VideoFFmpegComponent(mWindow);
+    #endif
 
     mVideo->topWindow(true);
     mVideo->setOrigin(0.5f, 0.5f);

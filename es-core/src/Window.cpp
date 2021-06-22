@@ -11,7 +11,9 @@
 
 #include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
+#if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
+#endif
 #include "resources/Font.h"
 #include "AudioManager.h"
 #include "InputManager.h"
@@ -139,7 +141,9 @@ void Window::deinit()
 
     InputManager::getInstance()->deinit();
     ResourceManager::getInstance()->unloadAll();
+    #if defined(BUILD_VLC_PLAYER)
     VideoVlcComponent::deinit();
+    #endif
     Renderer::deinit();
 }
 
