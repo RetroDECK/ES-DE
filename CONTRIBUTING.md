@@ -59,7 +59,6 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
 * Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
 * Simple file browsing component
-* Requests per minute limitation setting for the scraper
 * Add 'time played' counter per game, similar to how it works in Steam
 * Preload all built-in resources and never clear them from the cache
 * Improved multi-threading

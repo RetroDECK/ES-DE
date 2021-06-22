@@ -29,7 +29,7 @@ The current version 1.0 has been tested on the following operating systems (all 
 * Windows 10
 * Windows 8.1
 
-**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to use the x86 version of RetroArch or otherwise you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE will become available.
+**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
 At the moment Raspberry Pi is not supported, but this is planned for future releases. It may still be possible to compile and run ES-DE on this type of device, but as of v1.0 it's not actively used during development and therefore not tested.
 

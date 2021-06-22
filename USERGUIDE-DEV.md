@@ -49,7 +49,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Windows 10
 * Windows 8.1
 
-**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to use the x86 version of RetroArch or otherwise you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE will become available.
+**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 
@@ -870,9 +870,9 @@ Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See 
 
 The order in which to sort your gamelists. This can be overriden per game system using the game options menu, but that override will only be persistent during the application session. The _System_ sorting can not be selected here as it's only applicable to collection systems.
 
-**Menu opening effect** _(OpenGL renderer only)_
+**Menu opening effect**
 
-Animation to play when opening the main menu or the game options menu. Can be set to _Scale-up, _Fade-in_ or _None_.
+Animation to play when opening the main menu or the game options menu. Also sets the animation for the game launch screen. Can be set to _Scale-up_ or _None_.
 
 **Launch screen duration**
 

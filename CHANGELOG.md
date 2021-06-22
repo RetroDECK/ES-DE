@@ -36,17 +36,22 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Changed the button for jumping to a random system or game and added a setting for disabling the functionality altogether
 * Added navigation sounds for some actions where it was missing, such as when attempting to add folders, placeholders or systems to custom collections
 * Changed the custom collection "Jump to" navigation sound to the select sound instead of the scroll sound
+* A notification is now displayed in the grouped custom collections view if a filter is applied to the collection
 * Changed the default screensaver type from "dim" to "video" and made the fallback screensaver "dim" instead of "black"
 * Moved the video screensaver audio setting to the sound settings menu
 * Created a new main menu entry for input device settings
 * Moved the input device configuration tool to the input device settings menu
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
 * The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
+* Removed the menu fade-in effect as it looked terrible
+* Enabled the menu scale-up effect for the OpenGL ES renderer
 * Renamed es_systems.cfg, es_settings.cfg and es_input.cfg to es_systems.xml, es_settings.xml and es_input.xml
 * Changed the es_systems.xml logic so it loads from the program resources directory by default (a customized file can be placed in ~/.emulationstation/custom_systems)
 * Removed the marquee image from rbsimple-DE as it's now baked into the miximages
 * Set the gamelist video scanline rendering option to disabled by default
 * Changed the setting description for the favorites game toggling button
+* The application version is now saved to es_settings.xml, which can be used in the future to notify the user after upgrades to a newer release
+* Added a DebugSkipInputLogging option which is intended primarily for development and needs to be manually set in es_settings.xml
 * Added the CImg library as a Git subtree and created some utility functions for it (used by the miximage generator and the game launch screen)
 * Added a function to ImageComponent to crop fully transparent areas around an image
 * Added the NanoSVG library as a proper Git subtree
@@ -54,6 +59,10 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 
 ### Bug fixes
 
+* Marking all games as favorites for a system or folder or removing all favorite markings would sometimes crash the application
+* Games that were filtered out were included in the random game selection for the grouped custom collections view
+* After switching theme sets with only a single system available, diagonal slide transitions would sometimes play when moving to the system view
+* Ongoing slide transition animations would continue to play after switching theme sets
 * On Windows, images with Unicode characters in the game name that were resized when scraping would not be saved with valid filenames
 * The glitches when configuring trigger buttons in GuiInputConfig have been fixed
 * GuiDetectDevice wouldn't detect controller input that was of the "axis" type (i.e. analog inputs)
@@ -229,12 +238,10 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 **The issues below are relevant for ES-DE v1.0.1**
 
-* The input configuration can be a bit glitchy on some devices, most notably the setup of trigger buttons for Xbox and PlayStation controllers. Once configured everything should work fine though. This configuration issue will hopefully be resolved in ES-DE v1.1 with the move to the SDL2 GameController API.
+* The input configuration can be a bit glitchy on some devices, most notably the setup of trigger buttons for Xbox and PlayStation controllers. Once configured everything should work fine though. This configuration issue will be resolved in ES-DE v1.1 with the move to the SDL2 GameController API.
 
 * Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. The issue is apparently more prevalent when running ES-DE at a lower resolution on 4K displays by using the --resolution command line option (which is only available on Unix). This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
 
 * The launching of games can freeze ES-DE on some Windows installations. It probably only occurs on Windows 8.1 but that's not confirmed. The setting 'Run in background (while game is launched)' can be enabled to get around this problem, but this causes some other issues so it should only be used as a last resort. It's unclear if this problem can or will be resolved. If it's confirmed to only affect older Windows versions, then it's probably not worthwhile fixing it.
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.
-
-* Scraping using ScreenScraper could lead to the scraper halting if exceeding the allowed requests per minute. This will cause a popup window to be displayed in ES-DE with the option available to retry the scraping for the current game (you should first wait a minute or so though or the error will immediately reoccur). This is not really a fault in the application per-se but rather a restriction of ScreenScraper. A request per minute limiter is planned for ES-DE v1.4, which should help with avoiding this problem.
