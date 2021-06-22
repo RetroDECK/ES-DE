@@ -147,7 +147,10 @@ void Window::input(InputConfig* config, Input input)
 {
     mTimeSinceLastInput = 0;
 
-    if (Settings::getInstance()->getBool("Debug"))
+    // The DebugSkipInputLogging option has to be set manually in es_settings.xml as
+    // it does not have any settings menu entry.
+    if (Settings::getInstance()->getBool("Debug") &&
+            !Settings::getInstance()->getBool("DebugSkipInputLogging"))
         logInput(config, input);
 
     if (mMediaViewer && mRenderMediaViewer) {

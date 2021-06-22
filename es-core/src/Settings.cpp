@@ -294,6 +294,7 @@ void Settings::setDefaults()
     // but that are not configurable via the GUI.
     //
 
+    mBoolMap["DebugSkipInputLogging"] = { false, false };
     mStringMap["ROMDirectory"] = { "", "" };
     mStringMap["UIMode_passkey"] = { "uuddlrlrba", "uuddlrlrba" };
 
