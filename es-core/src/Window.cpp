@@ -445,8 +445,8 @@ void Window::render()
 //                        std::chrono::duration_cast<std::chrono::milliseconds>
 //                        (backgroundEndTime - backgroundStartTime).count() << " ms";
             }
-            // Fade in the cached background, unless the menu is set to open without any animation.
-            if (Settings::getInstance()->getString("MenuOpeningEffect") != "none") {
+            // Fade in the cached background if the menu opening effect has been set to scale-up.
+            if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 mBackgroundOverlay->setOpacity(mBackgroundOverlayOpacity);
                 if (mBackgroundOverlayOpacity < 255)
                     mBackgroundOverlayOpacity = Math::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
@@ -455,8 +455,7 @@ void Window::render()
 
             mBackgroundOverlay->render(transform);
 
-            #if defined(USE_OPENGL_21)
-            // Menu opening effects (scale-up and fade-in).
+            // Scale-up menu opening effect.
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 if (mTopScale < 1.0f) {
                     mTopScale = Math::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
@@ -466,14 +465,6 @@ void Window::render()
                     top->setScale(mTopScale);
                 }
             }
-            if (Settings::getInstance()->getString("MenuOpeningEffect") == "fade-in") {
-                // Fade-in menu.
-                if (mTopOpacity < 255) {
-                    mTopOpacity = Math::clamp(mTopOpacity + 15, 0, 255);
-                    top->setOpacity(mTopOpacity);
-                }
-            }
-            #endif
 
             if (!mRenderLaunchScreen)
                 top->render(transform);

@@ -331,17 +331,16 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    #if defined(USE_OPENGL_21)
     // Open menu effect.
     auto menu_opening_effect = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "MENU OPENING EFFECT", false);
-    std::vector<std::string> menu_effects;
-    menu_effects.push_back("scale-up");
-    menu_effects.push_back("fade-in");
-    menu_effects.push_back("none");
-    for (auto it = menu_effects.cbegin(); it != menu_effects.cend(); it++)
-        menu_opening_effect->add(*it, *it, Settings::getInstance()->
-                getString("MenuOpeningEffect") == *it);
+    std::string selectedMenuEffect = Settings::getInstance()->getString("MenuOpeningEffect");
+    menu_opening_effect->add("SCALE-UP", "scale-up", selectedMenuEffect == "scale-up");
+    menu_opening_effect->add("NONE", "none", selectedMenuEffect == "none");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the opening effect to "scale-up" in this case.
+    if (menu_opening_effect->getSelectedObjects().size() == 0)
+        menu_opening_effect->selectEntry(0);
     s->addWithLabel("MENU OPENING EFFECT", menu_opening_effect);
     s->addSaveFunc([menu_opening_effect, s] {
         if (menu_opening_effect->getSelected() !=
@@ -351,7 +350,6 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
         }
     });
-    #endif
 
     // Launch screen duration.
     auto launch_screen_duration = std::make_shared<OptionListComponent<std::string>>
