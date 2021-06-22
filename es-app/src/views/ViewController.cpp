@@ -830,6 +830,9 @@ bool ViewController::input(InputConfig* config, Input input)
 
 void ViewController::update(int deltaTime)
 {
+    if (mWindow->getChangedThemeSet())
+        cancelViewTransitions();
+
     if (mCurrentView)
         mCurrentView->update(deltaTime);
 

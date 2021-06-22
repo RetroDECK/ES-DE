@@ -145,6 +145,7 @@ public:
     bool getAllowTextScrolling() { return mAllowTextScrolling; }
 
     void setChangedThemeSet() { mChangedThemeSet = true; }
+    bool getChangedThemeSet() { return mChangedThemeSet; }
 
 private:
     void onSleep();
