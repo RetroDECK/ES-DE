@@ -475,6 +475,19 @@ int main(int argc, char* argv[])
         Settings::getInstance()->saveFile();
     }
 
+    // Check if the application version has changed, which would normally mean that the
+    // user has upgraded to a newer release.
+    std::string applicationVersion;
+    if ((applicationVersion = Settings::getInstance()->
+            getString("ApplicationVersion")) != PROGRAM_VERSION_STRING) {
+        if (applicationVersion != "") {
+            LOG(LogInfo) << "Application version changed from previous startup, from \"" <<
+                    applicationVersion << "\" to \"" << PROGRAM_VERSION_STRING << "\"";
+        }
+        Settings::getInstance()->setString("ApplicationVersion", PROGRAM_VERSION_STRING);
+        Settings::getInstance()->saveFile();
+    }
+
     Window window;
     SystemScreensaver screensaver(&window);
     MediaViewer mediaViewer(&window);

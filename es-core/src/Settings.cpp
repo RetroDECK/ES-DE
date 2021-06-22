@@ -302,6 +302,7 @@ void Settings::setDefaults()
     // Hardcoded or program-internal settings.
     //
 
+    mStringMap["ApplicationVersion"] = { "", "" };
     mBoolMap["DebugGrid"] = { false, false };
     mBoolMap["DebugText"] = { false, false };
     mBoolMap["DebugImage"] = { false, false };
