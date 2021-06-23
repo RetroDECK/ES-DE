@@ -109,6 +109,7 @@ namespace PlatformIds
         GAMEENGINE_STRATAGUS,
         BANDAI_SUFAMI_TURBO,
         NEC_SUPERGRAFX,
+        NINTENDO_SWITCH,
         TEXAS_INSTRUMENTS_TI99,
         GAMEENGINE_TIC80,
         TANDY_TRS80,
@@ -127,7 +128,6 @@ namespace PlatformIds
         GAMEENGINE_Z_MACHINE,
         SINCLAIR_ZX81_SINCLAR,
         SINCLAIR_ZX_SPECTRUM,
-        SWITCH,
 
         PLATFORM_IGNORE, // Do not allow scraping for this system.
         PLATFORM_COUNT

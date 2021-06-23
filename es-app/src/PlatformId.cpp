@@ -109,7 +109,7 @@ namespace PlatformIds
         "stratagus",            // Stratagus game engine
         "sufami",               // Bandai SuFami Turbo
         "supergrafx",           // NEC SuperGrafx
-        "switch",               // Nintendo SWITCH
+        "switch",               // Nintendo Switch
         "ti99",                 // Texas Instruments TI-99
         "tic80",                // TIC-80 game engine
         "trs-80",               // Tandy TRS-80
