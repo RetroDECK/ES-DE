@@ -19,7 +19,7 @@ Any code editor can be used of course, but I recommend [VSCode](https://code.vis
 
 ## Building on Unix
 
-The code has some dependencies. For building, you'll need CMake and development packages for cURL, FFmpeg, FreeImage, FreeType, libVLC, pugixml, SDL2 and RapidJSON.
+The code has some dependencies. For building, you'll need CMake and development packages for cURL, FFmpeg, FreeImage, FreeType, pugixml, SDL2 and RapidJSON (and optionally VLC).
 
 **Installing dependencies:**
 
@@ -27,20 +27,28 @@ The code has some dependencies. For building, you'll need CMake and development 
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install build-essential git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev vlc libvlc-dev libgl1-mesa-dev
+sudo apt-get install build-essential git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libgl1-mesa-dev
+```
+
+If building with the optional VLC video player, the following packages are also needed:
+```
+sudo apt-get install vlc libvlc-dev
 ```
 
 **On Fedora**
 
-First add the RPM Fusion repository which is required for VLC. Go to [https://rpmfusion.org/Configuration](https://rpmfusion.org/Configuration) and download the .rpm package for the free repository, then install it such as this:
+Use dnf to install all the required packages:
+```
+sudo dnf install gcc-c++ cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel rapidjson-devel alsa-lib-devel mesa-libGL-devel
+```
+
+If building with the VLC video player, add the RPM Fusion repository.
+
+Go to [https://rpmfusion.org/Configuration](https://rpmfusion.org/Configuration) and download the .rpm package for the free repository, then install it as well as VLC:
 
 ```
 sudo dnf install ./rpmfusion-free-release-33.noarch.rpm
-```
-
-Then use dnf to install all the required packages:
-```
-sudo dnf install gcc-c++ cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel rapidjson-devel alsa-lib-devel mesa-libGL-devel vlc vlc-devel
+sudo dnf install vlc vlc-devel
 ```
 
 **On Manjaro**
@@ -48,14 +56,24 @@ sudo dnf install gcc-c++ cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-
 Use pacman to install all the required packages:
 
 ```
-sudo pacman -S gcc make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml rapidjson vlc
+sudo pacman -S gcc make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml rapidjson
+```
+
+If building with the optional VLC video player, the following package is also needed:
+```
+sudo pacman -S vlc
 ```
 
 **On FreeBSD**
 
 Use pkg to install the dependencies:
 ```
-pkg install git pkgconf cmake sdl2 ffmpeg freeimage pugixml rapidjson vlc
+pkg install git pkgconf cmake sdl2 ffmpeg freeimage pugixml rapidjson
+```
+
+If building with the optional VLC video player, the following package is also needed:
+```
+pkg install vlc
 ```
 
 Clang/LLVM and cURL should already be installed in the base OS image.
@@ -64,7 +82,12 @@ Clang/LLVM and cURL should already be installed in the base OS image.
 
 Use pkgin to install the dependencies:
 ```
-pkgin install git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml rapidjson vlc
+pkgin install git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml rapidjson
+```
+
+If building with the optional VLC video player, the following package is also needed:
+```
+pkgin vlc
 ```
 
 NetBSD ships with GCC by default, and although you should be able to install and use Clang/LLVM, it's probably easier to just stick to the default compiler environment.
@@ -73,7 +96,12 @@ NetBSD ships with GCC by default, and although you should be able to install and
 
 Use pkg_add to install the dependencies:
 ```
-pkg_add cmake pkgconf sdl2 ffmpeg freeimage vlc
+pkg_add cmake pkgconf sdl2 ffmpeg freeimage
+```
+
+If building with the optional VLC video player, the following package is also needed:
+```
+pkg_add vlc
 ```
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
@@ -124,7 +152,13 @@ cmake .
 make
 ```
 
-To create a debug build, run this instead:
+To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
+```
+cmake -DVLC_PLAYER=on .
+make
+```
+
+To create a debug build, run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
@@ -175,7 +209,7 @@ scan-build make -j6
 
 You open the report with the `scan-view` command which lets you browse it using your web browser. Note that the compilation time is much higher when using the static analyzer compared to a normal compilation. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
 
-To build ES with CEC support, add the corresponding option, for example:
+To build ES-DE with CEC support, enable the corresponding option, for example:
 
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DCEC=on .
@@ -363,7 +397,7 @@ sudo dnf install ./emulationstation-de-1.1.0-x64.rpm
 
 ## Building on macOS
 
-EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main deficiency is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, [Homebrew](https://brew.sh), is detailed below.
+EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main problem is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, [Homebrew](https://brew.sh), is detailed below.
 
 As for code editing, I use [VSCode](https://code.visualstudio.com). I suppose Xcode could be used instead but I have no experience with this tool and no interest in it as I want to use the same tools for all the operating systems that I develop on.
 
@@ -385,9 +419,8 @@ Install the required tools and dependencies:
 brew install cmake pkg-config nasm fdk-aac libvpx sdl2 freeimage freetype pugixml rapidjson
 ```
 
-Curl could optionally be installed too, but normally the version shipped with macOS is fine to use.
+If building with the optional VLC video player, then run this as well:
 
-Install VLC/libVLC as well:
 ```
 brew install --cask vlc
 ```
@@ -444,6 +477,12 @@ cmake .
 make
 ```
 
+To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
+```
+cmake -DVLC_PLAYER=on .
+make
+```
+
 To generate a debug build, run this instead:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
@@ -453,7 +492,7 @@ Keep in mind though that a debug version will be much slower due to all compiler
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
-After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using 'make install'. It's only needed to be able to run the binary from the build directory. The following will of course only be active during your session, and you need to set the variable for each terminal window that you want to start ES-DE from, unless you add it to your shell profile file:
+After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC is actually enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using 'make install'. It's only needed to be able to run the binary from the build directory. The following will of course only be active during your session, and you need to set the variable for each terminal window that you want to start ES-DE from, unless you add it to your shell profile file:
 
 ```
 export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
@@ -499,8 +538,8 @@ libSDL2-2.0.0.dylib
 libfreeimage.dylib
 libfreetype.6.dylib
 libpng16.16.dylib
-libvlc.dylib
-libvlccore.dylib
+libvlc.dylib            (only if building with the VLC video player)
+libvlccore.dylib        (only if building with the VLC video player)
 ```
 
 All except the VLC libraries should be located in /usr/local/lib. The VLC libraries should be located in /Applications/VLC.app/Contents/MacOS/lib/
@@ -539,7 +578,7 @@ It's unclear why the first line shows a reference to itself, and this line appar
 
 You of course only need to change the absolute paths to rpaths once, well at least until you replace the libraries in case of moving to a newer version or so.
 
-In addition to these libraries, you need to create a `plugins` directory and copy over the following VLC libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
+In addition to these libraries, if building with the optional VLC video player, you need to create a `plugins` directory and copy over the following libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
 
 ```
 libadummy_plugin.dylib
@@ -572,7 +611,7 @@ On macOS you can install the application as a normal user, i.e. no root privileg
 make install
 ```
 
-This will be the directory structure for the installation:
+This will be the directory structure for the installation (the VLC-related files are optional):
 
 ```
 /Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
@@ -754,7 +793,7 @@ cURL (Windows 64 bit binary, the MinGW version even if using MSVC) \
 SDL2 (development libraries, MinGW or VC/MSVC) \
 [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)
 
-libVLC (both win64 binary and source distributions) \
+libVLC (both win64 binary and source distributions)  - optional, if building with the VLC video player\
 [https://ftp.lysator.liu.se/pub/videolan/vlc](https://ftp.lysator.liu.se/pub/videolan/vlc)
 
 Uncompress the files from the above packages to a suitable directory, for example `C:\Programming\Dependencies`
@@ -853,7 +892,7 @@ As there is no standardized include directory structure in Windows, you need to 
 
 Make a directory in your build environment tree, for instance under `C:\Programming\include`
 
-Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml, RapidJSON, SDL2 and VLC to this directory.
+Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml, RapidJSON, SDL2 and optionally VLC to this directory.
 
 You may need to create the SDL2 directory manually and copy the header files there.
 
@@ -876,7 +915,7 @@ pugiconfig.hpp
 pugixml.hpp
 rapidjson/
 SDL2/
-vlc/
+vlc/            (only if building with the VLC video player)
 ```
 
 **Copy the required library files to the ES-DE build directory:**
@@ -909,8 +948,8 @@ glew32.lib
 libcurl-x64.dll
 libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
 libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-libvlc.dll
-libvlccore.dll
+libvlc.dll                (only if building with the VLC video player)
+libvlccore.dll            (only if building with the VLC video player)
 pugixml.dll
 pugixml.lib
 SDL2.dll
@@ -922,7 +961,7 @@ VCRUNTIME140.dll          (from Windows\System32)
 VCRUNTIME140_1.dll        (from Windows\System32)
 ```
 
-In addition to these files, you need libcurl-x64.lib and libvlc.lib, but these are not available for download so you need to generate them yourself from their corresponding DLL files. Do this inside the respective library directory and not within the emulationstation-de folder.
+In addition to these files, you need libcurl-x64.lib and libvlc.lib (if building with the VLC video player), but these are not available for download so you need to generate them yourself from their corresponding DLL files. Do this inside the respective library directory and not within the emulationstation-de folder.
 
 libcurl-x64.lib:
 ```
@@ -960,13 +999,13 @@ libfreetype.dll
 libpugixml.dll
 libSDL2main.a
 libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-libvlc.dll
-libvlccore.dll
+libvlc.dll                (only if building with the VLC video player)
+libvlccore.dll            (only if building with the VLC video player)
 SDL2.dll
 vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
 ```
 
-**Required files for both MSVC and MinGW:**
+**Additional files for both MSVC and MinGW if building with the VLC video player:**
 
 In addition to the files above, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
 
@@ -1015,9 +1054,15 @@ nmake
 
 For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
 
-Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this much. Embrace this as a retro experience as in the 1990s we normally just had a single core available in our computers.
+Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this in depth.
 
 Be aware that MSVC links against different VC++ libraries for debug and release builds (e.g. MSVCP140.dll or MSVCP140d.dll), so any NSIS package made from a debug build will not work on computers without the MSVC development environment installed.
+
+To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
+```
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../include -DVLC_PLAYER=on .
+make
+```
 
 **Building ES-DE using MinGW:**
 
@@ -1038,6 +1083,12 @@ make
 For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 
 The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
+
+To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
+```
+cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DVLC_PLAYER=on .
+make
+```
 
 You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 
@@ -1465,7 +1516,6 @@ This file makes it possible to define rules for where to search for the emulator
 
 The file is located in the resources directory at the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
 
-
 Here's an example es_find_rules.xml file for Unix:
 ```xml
 <?xml version="1.0"?>
@@ -1474,19 +1524,38 @@ Here's an example es_find_rules.xml file for Unix:
   <emulator name="RETROARCH">
     <rule type="systempath">
       <entry>retroarch</entry>
+      <entry>org.libretro.RetroArch</entry>
+      <entry>RetroArch-Linux-x86_64.AppImage</entry>
     </rule>
     <rule type="staticpath">
       <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+      <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
+      <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
+      <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
+    </rule>
+  </emulator>
+  <emulator name="YUZU">
+    <!-- Nintendo Switch emulator Yuzu. -->
+    <rule type="systempath">
+      <entry>yuzu</entry>
+      <entry>org.yuzu_emu.yuzu</entry>
+      <entry>yuzu.AppImage</entry>
+    </rule>
+    <rule type="staticpath">
+      <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+      <entry>~/Applications/yuzu.AppImage</entry>
+      <entry>~/.local/bin/yuzu.AppImage</entry>
+      <entry>~/bin/yuzu.AppImage</entry>
     </rule>
   </emulator>
   <core name="RETROARCH">
     <rule type="corepath">
-      <!-- Compiled from source -->
-      <entry>~/.config/retroarch/cores</entry>
       <!-- Snap package -->
       <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
       <!-- Flatpak package -->
       <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+      <!-- AppImage and compiled from source -->
+      <entry>~/.config/retroarch/cores</entry>
       <!-- Ubuntu and Linux Mint repository -->
       <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
       <!-- Fedora repository -->
@@ -1565,6 +1634,15 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
       <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
       <!-- Portable installation -->
       <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
+    </rule>
+  </emulator>
+  <emulator name="YUZU">
+    <!-- Nintendo Switch emulator Yuzu. -->
+    <rule type="systempath">
+      <entry>yuzu.exe</entry>
+    </rule>
+    <rule type="staticpath">
+      <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
     </rule>
   </emulator>
   <core name="RETROARCH">

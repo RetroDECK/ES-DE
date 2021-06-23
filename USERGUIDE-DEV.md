@@ -70,8 +70,6 @@ On Fedora you run this command to install ES-DE, which should automatically reso
 sudo dnf install ./emulationstation-de-1.0.0-x64.rpm
 ```
 
-Note that this requires the RPM Fusion repository as there's a dependency on VLC, which is not part of the standard operating system repo. See [INSTALL-DEV.md](INSTALL-DEV.md#building-on-unix) for details on how to add this.
-
 **Installing on macOS and Windows**
 
 There's not really much to say about these operating systems, just install ES-DE as you would any other application. On maCOS it's via the .dmg drag-and-drop installer, and on Windows it's just a normal application installer.
@@ -385,6 +383,30 @@ For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is used by the TheGamesDB scraper where the expanded file names are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
+#### Nintendo Switch
+
+The emulator for Nintendo Switch is Yuzu, which is distributed as a Snap package, Flatpak package or AppImage on Linux and as a regular installer on Windows. At the moment there is unfortunately no macOS release of this emulator and it's unclear if it can run on BSD Unix.
+
+If installed as a Snap or Flatpak package or if built from source code, ES-DE should be able to easily locate the emulator binary.
+
+But if using the AppImage it's a bit more complicated as there is no real standardized directory for storing these images.
+
+What ES-DE will do is to look for _yuzu.AppImage_ in the system PATH as well as in the following locations:
+
+```
+~/Applications/yuzu.AppImage
+~/.local/bin/yuzu.AppImage
+~/bin/yuzu.AppImage
+```
+
+When downloading the AppImage from [https://yuzu-emu.org](https://yuzu-emu.org) it will be named something like `yuzu-20210621-45d9504ea.AppImage`, just rename this to yuzu.AppImage and everything should work correctly.
+
+Note that the name is case sensitive, so _yuzu.appimage_ will not be found by ES-DE.
+
+For Windows, ES-DE will look for _yuzu.exe_ in the system Path as well as in the default installation directory `~\AppData\Local\yuzu\yuzu-windows-msvc\`
+
+Apart from the potential difficulty in locating the emulator binary, there are some special configuration steps required for the emulator, refer to the Yuzu website for more information about this.
+
 #### Commodore Amiga
 
 There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf` or `.hdz` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
@@ -536,15 +558,15 @@ grep steam ~/.local/share/applications/*desktop | grep rungameid
 This of course assumes that you have menu entries setup for your Steam games.
 
 
-## Emulator setup
+## RetroArch setup
 
 ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md) document which goes into details on the structure of this file and more advanced configuration topics in general.
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
-A general recommendation regarding installation on Linux though is to try to avoid the versions included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap or Flatpak distributions or build from source.
+A general recommendation regarding installation on Linux though is to try to avoid the RetroArch releases included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap, Flatpak or AppImage distributions or build from source.
 
-The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Unix/Linux this should normally just work, and for macOS it will work as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Windows it's a bit more complicated as there is really no standard location where applications are installed on this operating system, and RetroArch does not add itself to the Path environment variable during installation. In general it's therefore recommended to manually add the RetroArch directory to your Path variable (tip: open Settings from the Start menu and search for _path_).
+The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Unix/Linux this should normally just work (except for AppImage, see below), and for macOS it will work as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Windows it's a bit more complicated as there is really no standard location where applications are installed on this operating system, and RetroArch does not add itself to the Path environment variable during installation. In general it's therefore recommended to manually add the RetroArch directory to your Path variable (tip: open Settings from the Start menu and search for _path_).
 
 However the following directories are defined in es_find_rules.xml for Windows, so if you've installed RetroArch to any of these, ES-DE will be able to find it:
 
@@ -555,6 +577,14 @@ C:\Program Files\RetroArch-Win64\retroarch.exe
 C:\Program Files\RetroArch\retroarch.exe
 C:\Program Files (x86)\RetroArch-Win64\retroarch.exe
 C:\Program Files (x86)\RetroArch\retroarch.exe
+```
+
+There is also a special case on Linux if using the AppImage release of RetroArch as there is no real standardized directory for storing these images. ES-DE will look for the RetroArch AppImage in the following locations in addition to searching the system PATH:
+
+```
+~/Applications/RetroArch-Linux-x86_64.AppImage
+~/.local/bin/RetroArch-Linux-x86_64.AppImage
+~/bin/RetroArch-Linux-x86_64.AppImage
 ```
 
 As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.xml or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) for details regarding this.
@@ -1137,9 +1167,9 @@ This option sets the display to use for ES-DE for multi-monitor setups. The poss
 
 This gives you a choice between _Normal_ and _Borderless_ modes. With the borderless being more seamless as the ES-DE window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES-DE will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES-DE will run in a window. For the borderless mode, any changes to the resolution will make ES-DE run in a window.
 
-**Video player**
+**Video player** _(Only on some builds and operating systems)_
 
-This gives the choice between FFmpeg and VLC, which is applied to the gamelist videos, the media viewer and the video screensaver.
+This gives the choice between FFmpeg and VLC, which is applied to the gamelist videos, the media viewer and the video screensaver. The VLC video player is not included by default and is omitted on some builds. If this option is not available in the menu, it means that the FFmpeg video player is in use.
 
 **When to save game metadata**
 
@@ -1159,7 +1189,7 @@ This is really a last-resort setting if ES-DE freezes when launching games. This
 
 **Upscale video frame rate to 60 FPS (FFmpeg)**
 
-With this option enabled, videos with lower frame rates than 60 FPS, such as 24 and 30 will get upscaled to 60 FPS. This results in slightly smoother playback for some videos. There is a small performance hit from this option, so on slower machines it may be necessary to disable it for fluent video playback. This setting has no effect when using the VLC video player.
+With this option enabled, videos with lower frame rates than 60 FPS, such as 24 and 30 will get upscaled to 60 FPS. This results in slightly smoother playback for some videos. There is a small performance hit from this option, so on slower machines it may be necessary to disable it for fluent video playback. This setting has no effect when using the VLC video player. If the VLC video player is not included in the ES-DE build, the "(FFmpeg)" text is omitted from the setting name.
 
 **Per game launch command override**
 
@@ -1703,6 +1733,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | stratagus             | Stratagus game engine                          |                                   |                                      |
 | sufami                | Bandai SuFami Turbo                            |                                   |                                      |
 | supergrafx            | NEC SuperGrafx                                 |                                   |                                      |
+| switch                | Nintendo Switch                                | Yuzu (Linux and Windows only, not available on macOS) |                                      |
 | tanodragon            | Tano Dragon                                    |                                   |                                      |
 | tg16                  | NEC TurboGrafx-16                              | RetroArch (Beetle PCE)            | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              | RetroArch (Beetle PCE)            |                                      |

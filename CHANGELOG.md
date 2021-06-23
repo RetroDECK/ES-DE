@@ -39,6 +39,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * A notification is now displayed in the grouped custom collections view if a filter is applied to the collection
 * Changed the default screensaver type from "dim" to "video" and made the fallback screensaver "dim" instead of "black"
 * Moved the video screensaver audio setting to the sound settings menu
+* Added support for the Nintendo Switch game system (using the Yuzu emulator)
 * Created a new main menu entry for input device settings
 * Moved the input device configuration tool to the input device settings menu
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
@@ -54,6 +55,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added a DebugSkipInputLogging option which is intended primarily for development and needs to be manually set in es_settings.xml
 * Added the CImg library as a Git subtree and created some utility functions for it (used by the miximage generator and the game launch screen)
 * Added a function to ImageComponent to crop fully transparent areas around an image
+* Added a CMake option to control whether the VLC video player should be built, and set this to off by default
 * Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
 
