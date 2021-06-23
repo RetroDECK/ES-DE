@@ -809,11 +809,11 @@ void FileData::launchGame(Window* window)
     command = Utils::FileSystem::expandHomePath(command);
 
     // Check that the emulator binary actually exists, and if so, get its path.
-    std::string emuPath = findEmulatorPath(command);
+    std::string binaryPath = findEmulatorPath(command);
 
     // Hack to show an error message if there was no emulator entry in es_find_rules.xml.
-    if (emuPath.substr(0, 18) == "NO EMULATOR RULE: ") {
-        std::string emulatorEntry = emuPath.substr(18, emuPath.size() - 18);
+    if (binaryPath.substr(0, 18) == "NO EMULATOR RULE: ") {
+        std::string emulatorEntry = binaryPath.substr(18, binaryPath.size() - 18);
         LOG(LogError) << "Couldn't launch game, either there is no emulator entry for \"" <<
             emulatorEntry << "\" in es_find_rules.xml or there are no systempath or staticpath "
             "rules defined";
@@ -825,7 +825,7 @@ void FileData::launchGame(Window* window)
         window->setInfoPopup(s);
         return;
     }
-    else if (emuPath.empty()) {
+    else if (binaryPath.empty()) {
         LOG(LogError) << "Couldn't launch game, emulator binary not found";
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
@@ -852,7 +852,7 @@ void FileData::launchGame(Window* window)
         std::string coreFile;
         if (spacePos != std::string::npos) {
             coreRaw = command.substr(emuPathPos, spacePos - emuPathPos);
-            coreFile = Utils::FileSystem::getParent(emuPath) +
+            coreFile = Utils::FileSystem::getParent(binaryPath) +
                     command.substr(emuPathPos + 9, spacePos - emuPathPos - 9);
             if (hasQuotationMark) {
                 coreRaw.pop_back();
@@ -933,9 +933,9 @@ void FileData::launchGame(Window* window)
             if (stringPos != std::string::npos) {
                 #if defined (_WIN64)
                 coreFile = Utils::String::replace(coreFile.replace(stringPos, 9,
-                        Utils::FileSystem::getParent(emuPath)), "/", "\\");
+                        Utils::FileSystem::getParent(binaryPath)), "/", "\\");
                 #else
-                coreFile = coreFile.replace(stringPos, 9, Utils::FileSystem::getParent(emuPath));
+                coreFile = coreFile.replace(stringPos, 9, Utils::FileSystem::getParent(binaryPath));
                 #endif
             }
 
