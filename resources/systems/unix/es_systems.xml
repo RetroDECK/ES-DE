@@ -1047,10 +1047,10 @@
   </system>
   <system>
     <name>switch</name>
-    <fullname>Nintendo SWITCH</fullname>
+    <fullname>Nintendo Switch</fullname>
     <path>%ROMPATH%/switch</path>
-    <extension>.nsp .NSP .zip .ZIP .7z .nso .NSO .nro .NRO .nca .NCA .xci .XCI</extension>
-    <command>/opt/yuzu/yuzu.AppImage %ROM%</command>
+    <extension>.nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI .7z .7Z .zip .ZIP</extension>
+    <command>%EMULATOR_YUZU% %ROM%</command>
     <platform>switch</platform>
     <theme>switch</theme>
   </system>
