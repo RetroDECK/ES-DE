@@ -4,19 +4,38 @@
   <emulator name="RETROARCH">
     <rule type="systempath">
       <entry>retroarch</entry>
+      <entry>org.libretro.RetroArch</entry>
+      <entry>RetroArch-Linux-x86_64.AppImage</entry>
     </rule>
     <rule type="staticpath">
       <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+      <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
+      <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
+      <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
+    </rule>
+  </emulator>
+  <emulator name="YUZU">
+    <!-- Nintendo Switch emulator Yuzu. -->
+    <rule type="systempath">
+      <entry>yuzu</entry>
+      <entry>org.yuzu_emu.yuzu</entry>
+      <entry>yuzu.AppImage</entry>
+    </rule>
+    <rule type="staticpath">
+      <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+      <entry>~/Applications/yuzu.AppImage</entry>
+      <entry>~/.local/bin/yuzu.AppImage</entry>
+      <entry>~/bin/yuzu.AppImage</entry>
     </rule>
   </emulator>
   <core name="RETROARCH">
     <rule type="corepath">
-      <!-- Compiled from source -->
-      <entry>~/.config/retroarch/cores</entry>
       <!-- Snap package -->
       <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
       <!-- Flatpak package -->
       <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+      <!-- AppImage and compiled from source -->
+      <entry>~/.config/retroarch/cores</entry>
       <!-- Ubuntu and Linux Mint repository -->
       <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
       <!-- Fedora repository -->
