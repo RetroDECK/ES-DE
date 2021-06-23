@@ -1143,6 +1143,10 @@ std::string FileData::findEmulatorPath(std::string& command)
     }
 
     for (std::string path : emulatorStaticPaths) {
+        path = Utils::FileSystem::expandHomePath(path);
+        #if defined(_WIN64)
+        path = Utils::String::replace(path, "/", "\\");
+        #endif
         if (Utils::FileSystem::isRegularFile(path) ||
                 Utils::FileSystem::isSymlink(path)) {
             command.replace(0, endPos + 1, path);
