@@ -109,6 +109,7 @@ namespace PlatformIds
         GAMEENGINE_STRATAGUS,
         BANDAI_SUFAMI_TURBO,
         NEC_SUPERGRAFX,
+        NINTENDO_SWITCH,
         TEXAS_INSTRUMENTS_TI99,
         GAMEENGINE_TIC80,
         TANDY_TRS80,

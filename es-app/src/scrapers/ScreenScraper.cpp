@@ -80,6 +80,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
     { NINTENDO_GAME_AND_WATCH, 52 },
     { NINTENDO_POKEMON_MINI, 211 },
     { NINTENDO_SATELLAVIEW, 107 },
+    { NINTENDO_SWITCH, 225 },
     { BANDAI_SUFAMI_TURBO, 108 },
     { DOS, 135 },
     { PC, 135 },
