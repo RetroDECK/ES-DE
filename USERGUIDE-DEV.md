@@ -76,9 +76,11 @@ There's not really much to say about these operating systems, just install ES-DE
 
 **On first application startup**
 
-Upon first startup, ES-DE will create its home directory, by default the location is ~/.emulationstation.
+Upon first startup, ES-DE will create its `~/.emulationstation` home directory.
 
 On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username\>\\.emulationstation\
+
+It's also possible to override the home directory path using the --home command line option, but this is normally required only for very special situations so we can safely ignore that option for now.
 
 **Note:** As of ES-DE v1.1 there is no internationalization support, so you would always need to supply the English directory name for your home directory, which is by the way always the real physical name on the file system. For instance on macOS, /Users/myusername will be required instead of /Användare/myusername which is what's shown inside the operating system for a Swedish localized installation. But using the tilde home symbol '~' is a workaround for this, and it's recommended to always use it for any ES-DE configuration settings that require a path to your home directory as it removes any confusion regarding localized home directory paths.
 
@@ -310,7 +312,7 @@ It's required that the ROM files are in one of the supported file extensions, or
 
 It's highly recommended to use filenames that are corresponding to the full name of the game, otherwise you will need to manually feed the scraper the game name when scraping which is very tedious.
 
-The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs, on macOS /Users/\<username\>/ROMs and on Windows C:\Users\\<username\>\ROMs\.
+The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs, on macOS /Users/\<username\>/ROMs and on Windows C:\Users\\<username\>\ROMs\. Be aware that if the --home command line option was used to start ES-DE, the tilde `~` symbol will resolve to whatever directory was passed as an argument to this option.
 
 If ES-DE can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
 
@@ -692,8 +694,6 @@ Must have corresponding filenames for its media files in this fashion:
 JPG and PNG file formats and file extensions are supported for images, and AVI, MKV, MOV, MP4 and WMV are supported for videos.
 
 Remember that on Unix files are case sensitive, and as well the file extensions must be in lower case, such as .png instead of .PNG or .Png or the file won't be found.
-
-As an alternative, you can also locate your game media in the ROM directory. This is explained below when covering the option **Display game media from ROM directories**. This is however not recommended and the built-in scraper will never save any game media to this folder structure.
 
 It's possible to change the game media directory from within ES-DE, for this see the option **Game media directory**.
 
@@ -1211,10 +1211,6 @@ It's possible to trigger custom scripts for a number of actions in ES-DE, as is 
 
 If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES-DE. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
 
-**Display game media from ROM directories**
-
-Using this option, you can place game images and videos in the ROM directory tree. The media files are searched inside the directory _\<ROM directory\>/\<system name\>/images/_ and _\<ROM directory\>/\<system name\>/videos/_ and the filenames must match the ROM names, followed by a dash and the media type. For example _~/ROMs/nes/images/Contra-screenshot.jpg, ~/ROMs/nes/images/Contra-marquee.jpg_ and _~/ROMs/nes/videos/Contra-video.jpg_. This option is mostly intended for legacy purposes, if you have an existing game collection with this media setup that you would like to open in ES-DE. The scraper will never save files to this directory structure and will instead use the standard media directory logic. It's recommended to keep this option disabled unless you really need it since it slows down the application somewhat.
-
 **Disable desktop composition (requires restart)** _(Unix only)_
 
 The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphic cards and when running in 4K resolution. As such the desktop compositor is disabled by default, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that this setting can cause problems with some graphic drivers (notably the Nvidia proprietary drivers) so if you see strange flickering and similar after quitting ES-DE, then disable the setting. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option).
@@ -1542,13 +1538,13 @@ Somewhat confusingly the terms _theme_ and _theme set_ are used to refer to the 
 
 Note that this Desktop Edition fork adds additional features to the themes and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a different theme set. But effort is spent trying to make ES-DE backwards compatible with the available themes used by other EmulationStation versions. The exception to this are some themes made for the Recalbox and Batocera forks of EmulationStation as they have added a lot of additional theme functionality that ES-DE has no intention to replicate.
 
-Themes are most easily installed in your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found by ES-DE during startup and you can then choose between them via UI Settings on the main menu.
+Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the UI Settings menu on the main menu.
 
 Note that although you can put additional themes in your ES-DE home directory, the default rbsimple-DE theme is located in your installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
 
 If you would like to customize the rbsimple-DE theme, simply make a copy of the complete rbsimple-DE directory to ~/.emulationstation/themes and then that copy of the theme will take precedence over the one in the application installation directory.
 
-In this example, we've downloaded the [Carbon](https://github.com/RetroPie/es-theme-carbon) and [Fundamental](https://github.com/G-rila/es-theme-fundamental) themes and uncompressed them to the ES-DE home folder:
+In this example, we've downloaded the [Carbon](https://github.com/RetroPie/es-theme-carbon) and [Fundamental](https://github.com/G-rila/es-theme-fundamental) themes and uncompressed them to the ES-DE home directory:
 
 ```
 ~/.emulationstation/themes/es-theme-carbon

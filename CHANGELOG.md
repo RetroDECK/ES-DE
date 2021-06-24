@@ -44,6 +44,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Moved the input device configuration tool to the input device settings menu
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
 * The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
+* Removed the "Display game media from ROM directories" setting as it doesn't make sense to support this legacy functionality any longer
 * Removed the menu fade-in effect as it looked terrible
 * Enabled the menu scale-up effect for the OpenGL ES renderer
 * Renamed es_systems.cfg, es_settings.cfg and es_input.cfg to es_systems.xml, es_settings.xml and es_input.xml
@@ -51,6 +52,8 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Removed the marquee image from rbsimple-DE as it's now baked into the miximages
 * Set the gamelist video scanline rendering option to disabled by default
 * Changed the setting description for the favorites game toggling button
+* The themes and scripts directories are now automatically created during startup
+* Cleaned up some application startup messages
 * The application version is now saved to es_settings.xml, which can be used in the future to notify the user after upgrades to a newer release
 * Added a DebugSkipInputLogging option which is intended primarily for development and needs to be manually set in es_settings.xml
 * Added the CImg library as a Git subtree and created some utility functions for it (used by the miximage generator and the game launch screen)
