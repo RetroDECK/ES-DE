@@ -353,15 +353,16 @@ bool parseArgs(int argc, char* argv[])
     return true;
 }
 
-bool checkApplicationBaseDirectory()
+bool checkApplicationHomeDirectory()
 {
-    // Check that the application base directory exists, otherwise create it.
+    // Check that the application home directory exists, otherwise create it.
     std::string home = Utils::FileSystem::getHomePath();
-    std::string applicationBase = home + "/.emulationstation";
-    if (!Utils::FileSystem::exists(applicationBase)) {
-        std::cout << "First startup, creating base directory \"" << applicationBase << "\"\n";
-        Utils::FileSystem::createDirectory(applicationBase);
-        if (!Utils::FileSystem::exists(applicationBase)) {
+    std::string applicationHome = home + "/.emulationstation";
+    if (!Utils::FileSystem::exists(applicationHome)) {
+        std::cout << "First startup, creating application home directory \"" <<
+                applicationHome << "\"\n";
+        Utils::FileSystem::createDirectory(applicationHome);
+        if (!Utils::FileSystem::exists(applicationHome)) {
             std::cerr << "Fatal error: Couldn't create directory, permission problems?\n";
             return false;
         }
@@ -451,7 +452,7 @@ int main(int argc, char* argv[])
     #endif
 
     // If ~/.emulationstation doesn't exist and cannot be created, bail.
-    if (!checkApplicationBaseDirectory())
+    if (!checkApplicationHomeDirectory())
         return 1;
 
     // Start the logger.
