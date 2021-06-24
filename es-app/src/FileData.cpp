@@ -229,17 +229,6 @@ const std::string FileData::getMediafilePath(std::string subdirectory, std::stri
             return mediaPath;
     }
 
-    // No media found in the media directory, so look
-    // for local art as well (if configured to do so).
-    if (Settings::getInstance()->getBool("ROMDirGameMedia")) {
-        for (int i = 0; i < extList.size(); i++) {
-            std::string localMediaPath = mEnvData->mStartPath + "/images/" +
-                    getDisplayName() + "-" + mediatype + extList[i];
-            if (Utils::FileSystem::exists(localMediaPath))
-                return localMediaPath;
-        }
-    }
-
     return "";
 }
 
@@ -307,18 +296,6 @@ const std::string FileData::getVideoPath() const
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
-    }
-
-    // No media found in the media directory, so look
-    // for local art as well (if configured to do so).
-    if (Settings::getInstance()->getBool("ROMDirGameMedia"))
-    {
-        for (int i = 0; i < extList.size(); i++) {
-            std::string localMediaPath = mEnvData->mStartPath + "/videos/" +
-                    getDisplayName() + "-video" + extList[i];
-            if (Utils::FileSystem::exists(localMediaPath))
-                return localMediaPath;
-        }
     }
 
     return "";

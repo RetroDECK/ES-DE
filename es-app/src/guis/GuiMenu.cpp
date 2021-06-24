@@ -1102,19 +1102,6 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-    // Display game media from the ROM directories.
-    auto rom_dir_game_media = std::make_shared<SwitchComponent>(mWindow);
-    rom_dir_game_media->setState(Settings::getInstance()->getBool("ROMDirGameMedia"));
-    s->addWithLabel("DISPLAY GAME MEDIA FROM ROM DIRECTORIES", rom_dir_game_media);
-    s->addSaveFunc([rom_dir_game_media, s] {
-        if (rom_dir_game_media->getState() != Settings::getInstance()->getBool("ROMDirGameMedia")) {
-            Settings::getInstance()->setBool("ROMDirGameMedia", rom_dir_game_media->getState());
-            s->setNeedsSaving();
-            s->setNeedsReloading();
-            s->setInvalidateCachedBackground();
-        }
-    });
-
     #if defined(__unix__)
     // Whether to disable desktop composition.
     auto disable_composition = std::make_shared<SwitchComponent>(mWindow);
