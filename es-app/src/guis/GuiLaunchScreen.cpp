@@ -130,7 +130,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     if (mImagePath != "")
         mGrid->setRowHeightPerc(3, 0.35f, false);
     else
-        mGrid->setRowHeightPerc(3, 0.02f, false);
+        mGrid->setRowHeightPerc(3, 0.01f, false);
     mGrid->setRowHeightPerc(4, 0.05f, false);
     mGrid->setRowHeightPerc(5, mGameName->getFont()->getHeight() * 0.80f / mSize.y(), false);
     mGrid->setRowHeightPerc(6, mSystemName->getFont()->getHeight() * 0.90f / mSize.y(), false);
