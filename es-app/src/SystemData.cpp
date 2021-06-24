@@ -573,7 +573,7 @@ std::string SystemData::getConfigPath(bool legacyWarning)
             Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems";
 
     if (!Utils::FileSystem::exists(customSystemsDirectory)) {
-        LOG(LogInfo) << "Creating custom systems directory \"" << customSystemsDirectory << "\"";
+        LOG(LogInfo) << "Creating custom systems directory \"" << customSystemsDirectory << "\"...";
         Utils::FileSystem::createDirectory(customSystemsDirectory);
         if (!Utils::FileSystem::exists(customSystemsDirectory)) {
             LOG(LogError) << "Couldn't create directory, permission problems?";

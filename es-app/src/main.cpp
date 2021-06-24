@@ -141,7 +141,7 @@ bool parseArgs(int argc, char* argv[])
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--home") == 0) {
             if (i >= argc - 1) {
-                std::cerr << "Error: No home path supplied with \'--home'.\n";
+                std::cerr << "Error: No home path supplied with \'--home'\n";
                 return false;
             }
             #if defined(_WIN64)
@@ -150,12 +150,12 @@ bool parseArgs(int argc, char* argv[])
             #else
             if (!Utils::FileSystem::exists(argv[i + 1])) {
             #endif
-                std::cerr << "Error: Home path \'" << argv[i + 1] << "\' does not exist.\n";
+                std::cerr << "Error: Home path \'" << argv[i + 1] << "\' does not exist\n";
                 return false;
             }
             if (Utils::FileSystem::isRegularFile(argv[i + 1])) {
                 std::cerr << "Error: Home path \'" << argv[i + 1] <<
-                        "\' is a file and not a directory.\n";
+                        "\' is a file and not a directory\n";
                 return false;
             }
             Utils::FileSystem::setHomePath(argv[i + 1]);
@@ -353,16 +353,16 @@ bool parseArgs(int argc, char* argv[])
     return true;
 }
 
-bool verifyHomeFolderExists()
+bool checkApplicationBaseDirectory()
 {
-    // Make sure the config directory exists.
+    // Check that the application base directory exists, otherwise create it.
     std::string home = Utils::FileSystem::getHomePath();
-    std::string configDir = home + "/.emulationstation";
-    if (!Utils::FileSystem::exists(configDir)) {
-        std::cout << "Creating config directory \"" << configDir << "\"\n";
-        Utils::FileSystem::createDirectory(configDir);
-        if (!Utils::FileSystem::exists(configDir)) {
-            std::cerr << "Config directory could not be created!\n";
+    std::string applicationBase = home + "/.emulationstation";
+    if (!Utils::FileSystem::exists(applicationBase)) {
+        std::cout << "First startup, creating base directory \"" << applicationBase << "\"\n";
+        Utils::FileSystem::createDirectory(applicationBase);
+        if (!Utils::FileSystem::exists(applicationBase)) {
+            std::cerr << "Fatal error: Couldn't create directory, permission problems?\n";
             return false;
         }
     }
@@ -451,7 +451,7 @@ int main(int argc, char* argv[])
     #endif
 
     // If ~/.emulationstation doesn't exist and cannot be created, bail.
-    if (!verifyHomeFolderExists())
+    if (!checkApplicationBaseDirectory())
         return 1;
 
     // Start the logger.
@@ -484,8 +484,34 @@ int main(int argc, char* argv[])
             LOG(LogInfo) << "Application version changed from previous startup, from \"" <<
                     applicationVersion << "\" to \"" << PROGRAM_VERSION_STRING << "\"";
         }
+        else {
+            LOG(LogInfo) << "Application version setting is blank, changing it to \"" <<
+                    PROGRAM_VERSION_STRING << "\"";
+        }
         Settings::getInstance()->setString("ApplicationVersion", PROGRAM_VERSION_STRING);
         Settings::getInstance()->saveFile();
+    }
+
+    // Create the themes directory in the application home folder. This is not required but
+    // is rather a convenience in case the user wants to add additional themes.
+    std::string themesDir = Utils::FileSystem::getHomePath() + "/.emulationstation/themes";
+    if (!Utils::FileSystem::exists(themesDir)) {
+        LOG(LogInfo) << "Creating themes directory \"" << themesDir << "\"...";
+        Utils::FileSystem::createDirectory(themesDir);
+        if (!Utils::FileSystem::exists(themesDir)) {
+            LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
+        }
+    }
+
+    // Create the scripts directory in the application home folder. This is only required
+    // for custom event scripts so it's also created as a convenience.
+    std::string scriptsDir = Utils::FileSystem::getHomePath() + "/.emulationstation/scripts";
+    if (!Utils::FileSystem::exists(scriptsDir)) {
+        LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
+        Utils::FileSystem::createDirectory(scriptsDir);
+        if (!Utils::FileSystem::exists(scriptsDir)) {
+            LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
+        }
     }
 
     Window window;
@@ -558,14 +584,6 @@ int main(int argc, char* argv[])
         else {
             ViewController::get()->goToStart();
         }
-    }
-
-    // Check if the media directory exists, otherwise log an information entry.
-    if (!Utils::FileSystem::isDirectory(FileData::getMediaDirectory()) ||
-            Utils::FileSystem::isSymlink(FileData::getMediaDirectory())) {
-        LOG(LogInfo) << "Game media directory does not exist "
-                "(or is not a directory or a symlink):";
-        LOG(LogInfo) << FileData::getMediaDirectory();
     }
 
     // Generate controller events since we're done loading.
