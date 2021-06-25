@@ -1145,46 +1145,46 @@ So the home directory will always take precedence, and any resources or themes l
 
 It's possible to easily create a portable installation of ES-DE for Windows, for example on a USB memory stick.
 
-For the sake of this example, let's assume that the removable media has the device name `f:\`.
+For the sake of this example, let's assume that the removable media has the device name `f:\`
+
+These are the steps to perform:
 
 * Copy the EmulationStation-DE installation directory to f:\
-* Create the directory `ES-DE_Home\.emulationstation` directly under f:\
-* Copy `f:\EmulationStation-DE\resources\systems\windows\es_systems.xml` to `f:\ES-DE_Home\.emulationstation\custom_systems\`
+* Copy your emulator directories to f:\
+* Create the directory `ES-DE_Home` directly under f:\
 * Copy your game ROMs into `f:\ES-DE_Home\ROMs`
-* Copy your emulators to f:\ (such as the RetroArch directory)
-* Create the file `start_es.bat` directly under f:\
+* Create the file `Start_ES-DE.bat` directly under f:\
 
-Add the following lines to the start_es.bat file:
+Add the following lines to the Start_ES-DE.bat file:
 ```
 @echo off
 EmulationStation-DE\EmulationStation.exe --home %CD:~0,3%ES-DE_Home
 ```
 
+The emulators that will be automatically searched for by ES-DE are (relative to the EmulationStation-DE directory):
+
+```
+..\RetroArch-Win64\retroarch.exe
+..\RetroArch\retroarch.exe
+..\yuzu\yuzu-windows-msvc\yuzu.exe
+```
+
+The two dots will of course resolve to the root of the device in this example, such as ..\RetroArch-Win64\retroarch.exe being the same as f:\RetroArch-Win64\retroarch.exe
+
+This means that as long has you don't have any non-standard directory names for your emulators, everything should work fine with the default configuration. But if needed, these paths can be easily customized by modifying f:\EmulationStation-DE\resources\systems\windows\es_find_rules.xml
+
 The contents of f:\ should now look something like this:
 ```
-EmulationStation-DE
-ES-DE_Home
-RetroArch
-start_es.bat
+EmulationStation-DE\
+ES-DE_Home\
+RetroArch-Win64\
+yuzu\                (if you're using this Nintendo Switch emulator)
+Start_ES-DE.bat
 ```
 
-Now run the batch script to start ES-DE and check that everything works as expected, for example that the gamelists are properly populated.
+Now run the batch script to start ES-DE and check that everything works as expected.
 
-Exit the application and modify the file `f:\ES-DE_Home\.emulationstation\custom_systems\es_systems.xml` to point to the emulators on the portable media.
-
-For instance, change from this:
-```
-<command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
-```
-
-To this:
-```
-<command>%ESPATH%\..\RetroArch\retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
-```
-
-The %ESPATH% variable is explained later in this document.
-
-Following this, optionally copy any existing gamelist.xml and game media files to the removable media. By default these files should be located here:
+Following this, optionally copy any existing gamelist.xml files and game media files to the removable media. By default these should be located here:
 
 ```
 f:\ES-DE_Home\.emulationstation\gamelists\
