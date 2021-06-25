@@ -15,6 +15,7 @@
       <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
       <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
       <!-- Portable installation -->
+      <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
       <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
     </rule>
   </emulator>
@@ -25,6 +26,8 @@
     </rule>
     <rule type="staticpath">
       <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+      <!-- Portable installation -->
+      <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
     </rule>
   </emulator>
   <core name="RETROARCH">
