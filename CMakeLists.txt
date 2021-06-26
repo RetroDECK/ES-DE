@@ -26,8 +26,6 @@ option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
-option(APPLE_SKIP_INSTALL_LIBS "Set to ON to skip installation of shared libraries (macOS only)"
-        ${APPLE_SKIP_INSTALL_LIBS})
 
 #---------------------------------------------------------------------------------------------------
 # OpenGL setup.
@@ -365,9 +363,7 @@ if(APPLE)
     # Set the same rpath links for the install executable as for the build executable.
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-    if(NOT APPLE_SKIP_INSTALL_LIBS)
-        set(CMAKE_INSTALL_RPATH @executable_path)
-    endif()
+    set(CMAKE_INSTALL_RPATH @executable_path)
 endif()
 
 # Add libCEC libraries.

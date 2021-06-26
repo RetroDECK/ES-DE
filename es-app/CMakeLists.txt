@@ -189,39 +189,37 @@ elseif(APPLE)
             GROUP_READ GROUP_EXECUTE
             WORLD_READ WORLD_EXECUTE)
 
-    if(NOT APPLE_SKIP_INSTALL_LIBS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.58.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.58.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.7.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.58.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.56.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.55.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libswresample.3.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.5.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libfdk-aac.2.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libpng16.16.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    if(VLC_PLAYER)
+        install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.7.dylib
+        install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libavformat.58.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libavutil.56.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.55.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libswresample.3.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libswscale.5.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libfdk-aac.2.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libpng16.16.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        if(VLC_PLAYER)
-            install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
-                    PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-            install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
-                    PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-            install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
-                    DESTINATION ../MacOS)
-        endif()
+        install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
+                DESTINATION ../MacOS)
     endif()
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
             DESTINATION ../Resources)
