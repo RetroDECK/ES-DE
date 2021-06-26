@@ -16,9 +16,8 @@ If you just want to get started as quickly as possible, simply follow these step
 2) Start the application and press the _Create directories_ button to generate the ROMs directory structure
 3) Put your game ROMs in the directories created by the previous step, or see [here](USERGUIDE-DEV.md#supported-game-systems) for additional details
 4) Install and configure [RetroArch](https://www.retroarch.com)
-5) _Windows only: add the RetroArch directory to your system path environmental variable_
-6) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE-DEV.md#supported-game-systems)
-7) Start ES-DE, scrape game media for your collection and play some games!
+5) Start RetroArch and install the required emulator cores - to see which ones you need look in the systeminfo.txt files in the directories created by step 2, or again see [here](USERGUIDE-DEV.md#supported-game-systems)
+6) Start ES-DE, scrape game media for your collection and play some games!
 
 You can always press F4 to close the application.
 
@@ -566,30 +565,17 @@ ES-DE is a game browsing frontend and does not provide any emulation by itself. 
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
-A general recommendation regarding installation on Linux though is to try to avoid the RetroArch releases included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap, Flatpak or AppImage distributions or build from source.
+Keep in mind that ES-DE will not install any RetroArch cores, you need to do this manually from within the RetroArch user interface.
 
-The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Unix/Linux this should normally just work (except for AppImage, see below), and for macOS it will work as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Windows it's a bit more complicated as there is really no standard location where applications are installed on this operating system, and RetroArch does not add itself to the Path environment variable during installation. In general it's therefore recommended to manually add the RetroArch directory to your Path variable (tip: open Settings from the Start menu and search for _path_).
+A general recommendation regarding installation on Linux is to try to avoid the RetroArch releases included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap, Flatpak or AppImage distributions or build from source.
 
-However the following directories are defined in es_find_rules.xml for Windows, so if you've installed RetroArch to any of these, ES-DE will be able to find it:
-
-```
-C:\RetroArch-Win64\retroarch.exe
-C:\RetroArch\retroarch.exe
-C:\Program Files\RetroArch-Win64\retroarch.exe
-C:\Program Files\RetroArch\retroarch.exe
-C:\Program Files (x86)\RetroArch-Win64\retroarch.exe
-C:\Program Files (x86)\RetroArch\retroarch.exe
-```
-
-There is also a special case on Linux if using the AppImage release of RetroArch as there is no real standardized directory for storing these images. ES-DE will look for the RetroArch AppImage in the following locations in addition to searching the system PATH:
+The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS as well as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImages as there is no real standardized directory for storing these images. ES-DE will look for the RetroArch AppImage in the following locations in addition to searching the system PATH:
 
 ```
 ~/Applications/RetroArch-Linux-x86_64.AppImage
 ~/.local/bin/RetroArch-Linux-x86_64.AppImage
 ~/bin/RetroArch-Linux-x86_64.AppImage
 ```
-
-As an alternative, if the emulator is not in your search path, you can either hardcode an absolute path in es_systems.xml or use the %ESPATH% variable to set the emulator relative to the ES-DE binary location. Again, please refer to [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) for details regarding this.
 
 In any instance, ES-DE will display an error notification if attempting to launch a game where the emulator binary is not found. Likewise it will notify if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 

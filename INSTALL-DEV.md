@@ -597,14 +597,6 @@ libx264_plugin.dylib
 libx265_plugin.dylib
 ```
 
-If you only want to build ES-DE to be used on your own computer, there's the option to skip the entire bundling of the libraries and use the ones already installed using Homebrew, meaning you can skip the previous .dylib copying. To do so, run CMake with the following option:
-
-```
-cmake -DAPPLE_SKIP_INSTALL_LIBS=ON .
-```
-
-This also affects the .dmg package generation using cpack, so if this option is enabled, the package will be unusable for anyone but yourself as the required libraries will not be bundled with the application.
-
 On macOS you can install the application as a normal user, i.e. no root privileges are required. Simply run the following:
 
 ```
@@ -1519,7 +1511,7 @@ The file is located in the resources directory at the same location as the es_sy
 Here's an example es_find_rules.xml file for Unix:
 ```xml
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Unix. -->
+<!-- This is the ES-DE find rules configuration file for Unix -->
 <ruleList>
   <emulator name="RETROARCH">
     <rule type="systempath">
@@ -1535,7 +1527,7 @@ Here's an example es_find_rules.xml file for Unix:
     </rule>
   </emulator>
   <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu. -->
+    <!-- Nintendo Switch emulator Yuzu -->
     <rule type="systempath">
       <entry>yuzu</entry>
       <entry>org.yuzu_emu.yuzu</entry>
@@ -1571,7 +1563,9 @@ Here's an example es_find_rules.xml file for Unix:
 </ruleList>
 ```
 
-It's pretty straightforward, there are currently two rules supported for finding emulators, `systempath` and `staticpath` and there is one rule supported for finding the emulator cores, `corepath`. More advanced find rules may be added in future ES-DE versions.
+It's pretty straightforward, there are currently three rules supported for finding emulators, `winregistrypath`, `systempath` and `staticpath` and there is one rule supported for finding the emulator cores, `corepath`.
+
+Of these, `winregistrypath` is only available on Windows, and attempting to use the rule on any other operating system will generate a warning in the log file when processing the es_find_fules.xml file.
 
 The `name` attribute must correspond to the command tags in es_systems.xml, take for example this line:
 
@@ -1579,25 +1573,30 @@ The `name` attribute must correspond to the command tags in es_systems.xml, take
 <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
 ```
 
-Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so nice).
+Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so pretty).
 
 Of course this makes it possible to add any number of emulators to the configuration file if not only using RetroArch.
 
-The rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defining absolute paths to the emulator. For staticpath, the actual emulator binary must also be included in the entry tag.
+The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe` will be searched for. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the key actually exists, and if not, processing will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
 
-The `corepath` rule is simply a path to search for the emulator core.
 
-Each rule supports multiple entry tags which are tried in the order that they are defined in the file until there is a match.
+The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must also be included in the entry tag.
+
+The winregistrypath rules are always processed first, followed by systempath and then staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
+
+As for `corepath` this rule is simply a path to search for the emulator core.
+
+Each rule supports multiple entry tags which are tried in the order that they are defined in the file.
 
 The %EMUPATH% and %ESPATH% variables can also be used inside the entry tags, making for quite powerful find rules.
 
-The tilde symbol `~` is supported and will expand to the user home directory. Be aware that if ES-DE has been started with the --home command line option, the home directory is considered to be whatever path was passed as an argument to this option.
+The tilde symbol `~` is supported and will expand to the user home directory. Be aware that if ES-DE has been started with the --home command line option, the home directory is considered to be whatever path was passed as an argument to that option.
 
 For reference, here are also example es_find_rules.xml files for macOS and Windows:
 
 ```xml
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for macOS. -->
+<!-- This is the ES-DE find rules configuration file for macOS -->
 <ruleList>
   <emulator name="RETROARCH">
     <rule type="staticpath">
@@ -1617,32 +1616,40 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 
 ```xml
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Windows. -->
+<!-- This is the ES-DE find rules configuration file for Windows -->
 <ruleList>
   <emulator name="RETROARCH">
+    <rule type="winregistrypath">
+      <!-- Check for an App Paths entry in the Windows Registry -->
+      <entry>retroarch.exe</entry>
+    </rule>
     <rule type="systempath">
       <!-- This requires that the user has manually updated the Path variable -->
       <entry>retroarch.exe</entry>
     </rule>
     <rule type="staticpath">
-      <!-- Some reasonable installation locations -->
+      <!-- Some reasonable installation locations as fallback -->
       <entry>C:\RetroArch-Win64\retroarch.exe</entry>
       <entry>C:\RetroArch\retroarch.exe</entry>
+      <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
       <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
       <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
       <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
       <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
       <!-- Portable installation -->
+      <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
       <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
     </rule>
   </emulator>
   <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu. -->
+    <!-- Nintendo Switch emulator Yuzu -->
     <rule type="systempath">
       <entry>yuzu.exe</entry>
     </rule>
     <rule type="staticpath">
       <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+      <!-- Portable installation -->
+      <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
     </rule>
   </emulator>
   <core name="RETROARCH">

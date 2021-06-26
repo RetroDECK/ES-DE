@@ -8,11 +8,13 @@
 
 ### Release overview
 
-The 1.1 release brings several large changes including a fullscreen media viewer, a game launch screen, a miximage generator, a new video player, a new controller API featuring automatic controller configuration and controller profiles, and a better mechanism to find emulators and emulator cores.
+The 1.1 release brings many large changes including a fullscreen media viewer, a game launch screen, a miximage generator, a new video player and a new controller API featuring automatic controller configuration and controller profiles.
 
-Refer to the User guide for in-depth explanations of the new functionality.
+A much better mechanism to find emulators and emulator cores has been implemented as well, which among other things removes the need to manually modify the Path variable on Windows to find RetroArch. It also eliminates the requirement for a separate Flatpak-specific es_systems.xml file on Linux.
 
-Apart from this, many small improvements and bug fixes are part of the release, as detailed below.
+The User guide contains additional in-depth explanations of the new functionality.
+
+Apart from this, many small improvements and bug fixes are part of the release, as listed below.
 
 ### Detailed list of changes
 
@@ -23,6 +25,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added a new video player based on FFmpeg
 * Added a 60 FPS frame rate upscaler option to the video player which results in slightly smoother playback for low frame rate videos (e.g. 24 and 30 FPS)
 * Implemented a new mechanism for locating emulators and cores, with configurable find rules (this eliminates some hacks such as the separate Flatpak es_systems.cfg file)
+* Added a Windows-specific find rule that searches the Registry for the App Paths keys, which should eliminate the need to modify the Path manually to find RetroArch
 * Removed the deprecated %COREPATH% setting and corresponding menu entry
 * Moved to the SDL GameController API which gives numerous improvements to the controller handling
 * Default controller configuration is now automatically applied, input configuration should rarely if ever be required any longer except for deliberate button customization
@@ -52,6 +55,8 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Removed the marquee image from rbsimple-DE as it's now baked into the miximages
 * Set the gamelist video scanline rendering option to disabled by default
 * Changed the setting description for the favorites game toggling button
+* Simplified the setup of portable installations on Windows
+* Converted all navigation sound files to stereo as previously it was a mix of mono and stereo files (done for rbsimple-DE and the fallback sounds)
 * The themes and scripts directories are now automatically created during startup
 * Cleaned up some application startup messages
 * The application version is now saved to es_settings.xml, which can be used in the future to notify the user after upgrades to a newer release
@@ -59,6 +64,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added the CImg library as a Git subtree and created some utility functions for it (used by the miximage generator and the game launch screen)
 * Added a function to ImageComponent to crop fully transparent areas around an image
 * Added a CMake option to control whether the VLC video player should be built, and set this to off by default
+* Removed the pointless APPLE_SKIP_INSTALL_LIBS CMake option
 * Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
 
@@ -68,7 +74,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Games that were filtered out were included in the random game selection for the grouped custom collections view
 * After switching theme sets with only a single system available, diagonal slide transitions would sometimes play when moving to the system view
 * Ongoing slide transition animations would continue to play after switching theme sets
-* On Windows, images with Unicode characters in the game name that were resized when scraping would not be saved with valid filenames
+* On Windows, images with Unicode characters in the game name that were resized when scraping would not get saved with valid filenames
 * The glitches when configuring trigger buttons in GuiInputConfig have been fixed
 * GuiDetectDevice wouldn't detect controller input that was of the "axis" type (i.e. analog inputs)
 * GuiInputConfig didn't correctly inform which buttons could be skipped for some rows
