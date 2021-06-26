@@ -80,6 +80,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { NINTENDO_GAME_AND_WATCH, "4950" },
     { NINTENDO_POKEMON_MINI, "4957" },
     { NINTENDO_SATELLAVIEW, "6" },
+    { NINTENDO_SWITCH, "4971" },
     { BANDAI_SUFAMI_TURBO, "6" },
     { DOS, "1" },
     { PC, "1" },
