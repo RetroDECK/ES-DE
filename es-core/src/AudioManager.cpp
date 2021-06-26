@@ -122,7 +122,12 @@ void AudioManager::init()
 
 void AudioManager::deinit()
 {
-    SDL_FreeAudioStream(sConversionStream);
+    // Due to bugs in SDL, freeing the stream causes random crashes. This is reported to the
+    // user on some operating systems such as macOS, and it's annoying to have a crash at the
+    // end of debugging session. So we'll simply disable the function until it has been properly
+    // fixed in the SDL library.
+//    SDL_FreeAudioStream(sConversionStream);
+
     SDL_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
     sInstance = nullptr;
