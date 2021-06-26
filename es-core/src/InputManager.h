@@ -60,8 +60,8 @@ private:
     void loadDefaultKBConfig();
     void loadDefaultControllerConfig(SDL_JoystickID deviceIndex);
 
-    void addJoystickByDeviceIndex(int deviceIndex);
-    void removeJoystickByJoystickID(SDL_JoystickID deviceIndex);
+    void addControllerByDeviceIndex(int deviceIndex);
+    void removeControllerByJoystickID(SDL_JoystickID joyID);
 
     static InputManager* sInstance;
     static const int DEADZONE = 23000;

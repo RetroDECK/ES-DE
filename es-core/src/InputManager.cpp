@@ -106,7 +106,7 @@ void InputManager::init()
             numJoysticks--;
 
     for (int i = 0; i < numJoysticks; i++)
-        addJoystickByDeviceIndex(i);
+        addControllerByDeviceIndex(i);
 
     SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
     SDL_USER_CECBUTTONUP = SDL_USER_CECBUTTONDOWN + 1;
@@ -451,11 +451,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             break;
         }
         case SDL_CONTROLLERDEVICEADDED: {
-            addJoystickByDeviceIndex(event.cdevice.which);
+            addControllerByDeviceIndex(event.cdevice.which);
             return true;
         }
         case SDL_CONTROLLERDEVICEREMOVED: {
-            removeJoystickByJoystickID(event.cdevice.which);
+            removeControllerByJoystickID(event.cdevice.which);
             return false;
         }
     }
@@ -592,7 +592,7 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
     cfg->mapInput("RightThumbstickClick", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_RIGHTSTICK, 1, true));
 }
 
-void InputManager::addJoystickByDeviceIndex(int deviceIndex)
+void InputManager::addControllerByDeviceIndex(int deviceIndex)
 {
     // Open joystick and add it to our list.
     SDL_GameController* controller = SDL_GameControllerOpen(deviceIndex);
@@ -633,14 +633,21 @@ void InputManager::addJoystickByDeviceIndex(int deviceIndex)
         mPrevButtonValues[std::make_pair(joyID, button)] = -1;
 }
 
-void InputManager::removeJoystickByJoystickID(SDL_JoystickID deviceIndex)
+void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
 {
-    assert(deviceIndex != -1);
+    assert(joyID != -1);
+
+    char guid[65];
+    SDL_Joystick* joy = SDL_JoystickFromInstanceID(joyID);
+    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), guid, 65);
+
+    LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID]) <<
+            "\" (GUID: " << guid << ", instance ID: " << joyID << ")";
 
     // Delete mPrevAxisValues for the device.
     int axisEntries = static_cast<int>(mPrevAxisValues.size());
     for (int i = 0; i < axisEntries; i++) {
-        auto entry = mPrevAxisValues.find(std::make_pair(deviceIndex, i));
+        auto entry = mPrevAxisValues.find(std::make_pair(joyID, i));
         if (entry != mPrevAxisValues.end()) {
             mPrevAxisValues.erase(entry);
         }
@@ -649,22 +656,22 @@ void InputManager::removeJoystickByJoystickID(SDL_JoystickID deviceIndex)
     // Delete mPrevButtonValues for the device.
     int buttonEntries = static_cast<int>(mPrevButtonValues.size());
     for (int i = 0; i < buttonEntries; i++) {
-        auto entry = mPrevButtonValues.find(std::make_pair(deviceIndex, i));
+        auto entry = mPrevButtonValues.find(std::make_pair(joyID, i));
         if (entry != mPrevButtonValues.end()) {
             mPrevButtonValues.erase(entry);
         }
     }
 
-    auto it = mInputConfigs.find(deviceIndex);
+    auto it = mInputConfigs.find(joyID);
     mInputConfigs.erase(it);
 
     // Close the controllers.
-    auto controllerIt = mControllers.find(deviceIndex);
+    auto controllerIt = mControllers.find(joyID);
     if (controllerIt != mControllers.cend()) {
         SDL_GameControllerClose(controllerIt->second);
         mControllers.erase(controllerIt);
     }
     else {
-        LOG(LogError) << "Couldn't find controller to close (instance ID: " << deviceIndex << ")";
+        LOG(LogError) << "Couldn't find controller to close (instance ID: " << joyID << ")";
     }
 }
