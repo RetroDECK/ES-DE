@@ -41,6 +41,9 @@ public:
 
 private:
     struct EmulatorRules {
+        #if defined(_WIN64)
+        std::vector<std::string> winRegistryPaths;
+        #endif
         std::vector<std::string> systemPaths;
         std::vector<std::string> staticPaths;
     };

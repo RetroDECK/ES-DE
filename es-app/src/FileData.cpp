@@ -1064,6 +1064,9 @@ std::string FileData::findEmulatorPath(std::string& command)
 
     // Method 1, emulator binary is defined using find rules:
 
+    #if defined(_WIN64)
+    std::vector<std::string> emulatorWinRegistryPaths;
+    #endif
     std::vector<std::string> emulatorSystemPaths;
     std::vector<std::string> emulatorStaticPaths;
     std::string emulatorEntry;
@@ -1076,6 +1079,10 @@ std::string FileData::findEmulatorPath(std::string& command)
     }
 
     if (emulatorEntry != "") {
+        #if defined(_WIN64)
+        emulatorWinRegistryPaths =
+                SystemData::sFindRules.get()->mEmulators[emulatorEntry].winRegistryPaths;
+        #endif
         emulatorSystemPaths = SystemData::sFindRules.get()->mEmulators[emulatorEntry].systemPaths;
         emulatorStaticPaths = SystemData::sFindRules.get()->mEmulators[emulatorEntry].staticPaths;
     }
@@ -1083,6 +1090,66 @@ std::string FileData::findEmulatorPath(std::string& command)
     // Error handling in case of no emulator find rule.
     if (emulatorEntry != "" && emulatorSystemPaths.empty() && emulatorStaticPaths.empty())
         return "NO EMULATOR RULE: " + emulatorEntry;
+
+    #if defined(_WIN64)
+    for (std::string path : emulatorWinRegistryPaths) {
+        // Search for the emulator using the App Paths keys in the Windows Registry.
+        std::string registryKeyPath =
+                "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + path;
+
+        HKEY registryKey;
+        LSTATUS keyStatus = -1;
+        LSTATUS pathStatus = -1;
+        char registryPath[1024] {};
+        DWORD pathSize = 1024;
+
+        // First look in HKEY_CURRENT_USER.
+        keyStatus = RegOpenKeyEx(
+                HKEY_CURRENT_USER,
+                registryKeyPath.c_str(),
+                0,
+                KEY_QUERY_VALUE,
+                &registryKey);
+
+        // If not found, then try in HKEY_LOCAL_MACHINE.
+        if (keyStatus != ERROR_SUCCESS) {
+            keyStatus = RegOpenKeyEx(
+                    HKEY_LOCAL_MACHINE,
+                    registryKeyPath.c_str(),
+                    0,
+                    KEY_QUERY_VALUE,
+                    &registryKey);
+        }
+
+        // If the key exists, then try to retrieve the value.
+        if (keyStatus == ERROR_SUCCESS) {
+            pathStatus = RegGetValue(
+                    registryKey,
+                    nullptr,
+                    nullptr,
+                    RRF_RT_REG_SZ,
+                    nullptr,
+                    &registryPath,
+                    &pathSize);
+        }
+        else {
+            RegCloseKey(registryKey);
+            continue;
+        }
+
+        // That a value was found does not guarantee that the emulator binary actually exists,
+        // so check for that as well.
+        if (pathStatus == ERROR_SUCCESS) {
+            if (Utils::FileSystem::isRegularFile(registryPath) ||
+                    Utils::FileSystem::isSymlink(registryPath)) {
+                command.replace(0, endPos + 1, registryPath);
+                RegCloseKey(registryKey);
+                return registryPath;
+            }
+        }
+        RegCloseKey(registryKey);
+    }
+    #endif
 
     for (std::string path : emulatorSystemPaths) {
         #if defined(_WIN64)

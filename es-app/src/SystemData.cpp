@@ -115,7 +115,12 @@ void FindRules::loadFindRules()
                         emulatorName << "\", skipping entry";
                 continue;
             }
+            #if defined(_WIN64)
+            if (ruleType != "winregistrypath" && ruleType != "systempath" &&
+                    ruleType != "staticpath") {
+            #else
             if (ruleType != "systempath" && ruleType != "staticpath") {
+            #endif
                 LOG(LogWarning) << "Found invalid rule type \"" << ruleType <<
                         "\" for emulator \"" << emulatorName << "\", skipping entry";
                 continue;
@@ -127,11 +132,18 @@ void FindRules::loadFindRules()
                     emulatorRules.systemPaths.push_back(entryValue);
                 else if (ruleType == "staticpath")
                     emulatorRules.staticPaths.push_back(entryValue);
+                #if defined(_WIN64)
+                else if (ruleType == "winregistrypath")
+                    emulatorRules.winRegistryPaths.push_back(entryValue);
+                #endif
             }
         }
         mEmulators[emulatorName] = emulatorRules;
         emulatorRules.systemPaths.clear();
         emulatorRules.staticPaths.clear();
+        #if defined(_WIN64)
+        emulatorRules.winRegistryPaths.clear();
+        #endif
     }
 
     for (pugi::xml_node core = ruleList.child("core"); core;
