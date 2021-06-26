@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Unix. -->
+<!-- This is the ES-DE find rules configuration file for Unix -->
 <ruleList>
   <emulator name="RETROARCH">
     <rule type="systempath">
@@ -15,7 +15,7 @@
     </rule>
   </emulator>
   <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu. -->
+    <!-- Nintendo Switch emulator Yuzu -->
     <rule type="systempath">
       <entry>yuzu</entry>
       <entry>org.yuzu_emu.yuzu</entry>
