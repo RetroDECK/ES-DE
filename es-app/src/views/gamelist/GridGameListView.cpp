@@ -705,7 +705,13 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
     if (Settings::getInstance()->getBool("QuickSystemSelect"))
         prompts.push_back(HelpPrompt("lr", "system"));
     prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
-    prompts.push_back(HelpPrompt("a", "launch"));
+
+    if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
+            ViewController::get()->getState().viewing == ViewController::GAME_LIST)
+        prompts.push_back(HelpPrompt("a", "enter"));
+    else
+        prompts.push_back(HelpPrompt("a", "launch"));
+
     prompts.push_back(HelpPrompt("b", "back"));
 
     if (mRoot->getSystem()->isGameSystem() &&

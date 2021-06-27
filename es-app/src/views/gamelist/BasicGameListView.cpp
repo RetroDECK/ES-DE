@@ -312,7 +312,13 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("left/right", "system"));
 
     prompts.push_back(HelpPrompt("up/down", "choose"));
-    prompts.push_back(HelpPrompt("a", "launch"));
+
+    if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
+            ViewController::get()->getState().viewing == ViewController::GAME_LIST)
+        prompts.push_back(HelpPrompt("a", "enter"));
+    else
+        prompts.push_back(HelpPrompt("a", "launch"));
+
     prompts.push_back(HelpPrompt("b", "back"));
     prompts.push_back(HelpPrompt("x", "view media"));
 
