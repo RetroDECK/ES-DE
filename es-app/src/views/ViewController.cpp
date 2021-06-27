@@ -115,7 +115,7 @@ void ViewController::noGamesDialog()
             "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL\n"
             "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME\n"
             "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-            "THIS IS THE CURRENTLY CONFIGURED ROM PATH:\n";
+            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
 
     #if defined(_WIN64)
     mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
@@ -124,7 +124,7 @@ void ViewController::noGamesDialog()
     #endif
 
     mNoGamesMessageBox = new GuiMsgBox(mWindow, HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
-            "CHANGE ROM PATH", [this] {
+            "CHANGE ROM DIRECTORY", [this] {
         std::string currentROMDirectory;
         #if defined(_WIN64)
         currentROMDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
