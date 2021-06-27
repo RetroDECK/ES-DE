@@ -147,7 +147,7 @@ void Settings::setDefaults()
     mBoolMap["FavoritesStar"] = { true, true };
     mBoolMap["ListScrollOverlay"] = { false, false };
     mBoolMap["FavoritesAddButton"] = { true, true };
-    mBoolMap["RandomAddButton"] = { true, true };
+    mBoolMap["RandomAddButton"] = { false, false };
     mBoolMap["GamelistFilters"] = { true, true };
     mBoolMap["QuickSystemSelect"] = { true, true };
     mBoolMap["ShowHelpPrompts"] = { true, true };
