@@ -36,7 +36,8 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Increased the max allowed size for images when scraping, which should now only downscale files which really need it
 * Changed the resampling algorithm for image downscaling for the scraper from bilinear to Lanczos which results in noticeably sharper images
 * Added a configurable option to automatically retry scraping up to eight times in case of ScreenScraper TLS errors
-* Changed the button for jumping to a random system or game and added a setting for disabling the functionality altogether
+* Changed the button for jumping to a random system or game and added a setting for enabling or disabling the functionality altogether
+* The help text for the "A" button now shows "Enter" instead of "Launch" in the grouped custom collections view
 * Added navigation sounds for some actions where it was missing, such as when attempting to add folders, placeholders or systems to custom collections
 * Changed the custom collection "Jump to" navigation sound to the select sound instead of the scroll sound
 * A notification is now displayed in the grouped custom collections view if a filter is applied to the collection
@@ -149,7 +150,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added metadata entry to mark games as broken/not working (e.g. useful for MAME games)
 * Added metadata entry to indicate whether the file should be counted as a game (e.g. useful to exclude setup files and similar for DOS games)
 * Added metadata entry to hide the metadata values from the gamelist views (useful for general folders, DOS game configuration utilities etc.)
-* Added a 'clear' button to the metadata editor to delete the media files and gamelist.xml entry for a game or folder while still retaining the game file
+* Added a "Clear" button to the metadata editor to delete the media files and gamelist.xml entry for a game or folder while still retaining the game file
 * Added a system view counter for favorite games in addition to the total number of games
 * Added a gamelist info text field displaying the game count, any applied filters as well as an icon if a folder has been entered (requires theme support)
 * Properly implemented the option to show or hide hidden files and folders
@@ -247,12 +248,12 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 ## Known issues
 
-**The issues below are relevant for ES-DE v1.0.1**
+**The issues below are relevant for ES-DE v1.1.0**
 
-* The input configuration can be a bit glitchy on some devices, most notably the setup of trigger buttons for Xbox and PlayStation controllers. Once configured everything should work fine though. This configuration issue will be resolved in ES-DE v1.1 with the move to the SDL2 GameController API.
+* On macOS Big Sur (and possibly other OS versions) when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting "Only accept input from first controller" in the ES-DE input device settings. The reason this bug may not be visible in other games and applications is that ES-DE auto-configures and enables all connected controllers while for example RetroArch requires you to manually setup each controller. This issue does not seem to be present on older macOS versions such as El Capitan.
 
-* Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. The issue is apparently more prevalent when running ES-DE at a lower resolution on 4K displays by using the --resolution command line option (which is only available on Unix). This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
+* Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
 
-* The launching of games can freeze ES-DE on some Windows installations. It probably only occurs on Windows 8.1 but that's not confirmed. The setting 'Run in background (while game is launched)' can be enabled to get around this problem, but this causes some other issues so it should only be used as a last resort. It's unclear if this problem can or will be resolved. If it's confirmed to only affect older Windows versions, then it's probably not worthwhile fixing it.
+* The launching of games can freeze ES-DE on some Windows installations. It probably only occurs on Windows 8.1 but that's not confirmed. The setting "Run in background (while game is launched)" can be enabled to get around this problem, but this causes some other issues so it should only be used as a last resort. It's unclear if this problem can or will be resolved. If it's confirmed to only affect older Windows versions, then it's probably not worthwhile fixing it.
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.

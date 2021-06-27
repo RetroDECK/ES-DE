@@ -434,6 +434,7 @@ git clone https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
 git checkout n4.4
 ./configure --prefix=/usr/local --enable-gpl --enable-nonfree --enable-shared --enable-libfdk-aac --enable-libvpx
+make
 sudo make install
 ```
 
@@ -545,6 +546,11 @@ libvlccore.dylib        (only if building with the VLC video player)
 All except the VLC libraries should be located in /usr/local/lib. The VLC libraries should be located in /Applications/VLC.app/Contents/MacOS/lib/
 
 Note that the filenames could be slightly different depending on what versions you have installed on your system.
+
+After copying the libraries to the build directory, set the permissions to writable:
+```
+chmod 755 ./*.dylib
+```
 
 There are some secondary internal dependencies between some of these library files, and these are baked into the files as absolut paths. As such we need to rewrite these to rpaths (relative paths) which is done using the install_name_tool command.
 
@@ -1170,7 +1176,7 @@ The contents of f:\ should now look something like this:
 EmulationStation-DE\
 ES-DE_Home\
 RetroArch-Win64\
-yuzu\                (if you're using this Nintendo Switch emulator)
+yuzu\                (optional Nintendo Switch emulator)
 Start_ES-DE.bat
 ```
 
@@ -1899,4 +1905,4 @@ After creating the two scripts, you should have something like this on the files
 ~/.emulationstation/scripts/game-end/set_resolution_4K.sh
 ```
 
-Don't forget to make the scripts executable (e.g. 'chmod 755 ./set_resolution_1080p.sh').
+Don't forget to make the scripts executable (e.g. "chmod 755 ./set_resolution_1080p.sh").

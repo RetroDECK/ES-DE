@@ -32,21 +32,17 @@ There are also installation videos available at the ES-DE YouTube channel:\
 
 Getting started with ES-DE is easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows and macOS you'll use the installer instead of a package.
 
-The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
+The following operating systems have been tested with ES-DE (all for the x86 architecture unless otherwise stated):
 
-* Ubuntu 20.04 LTS
-* Ubuntu 20.10
-* Ubuntu 21.04
+* Ubuntu 20.04 to 21.04
 * Linux Mint 20
-* Manjaro
+* Manjaro 21
 * Fedora 33 Workstation
 * FreeBSD 12.2
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 11 "Big Sur" (x86 and ARM via Rosetta 2)
-* macOS 10.15 "Catalina"
-* macOS 10.14 "Mojave"
-* macOS 10.11 "El Capitan"
+* macOS 10.14 "Mojave" to 11 "Big Sur" (ARM via Rosetta 2 is supported)
+* macOS 10.11 "El Capitan" (v1.0 release only)
 * Windows 10
 * Windows 8.1
 

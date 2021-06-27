@@ -11,21 +11,17 @@ YouTube channel with installation instruction videos:\
 
 Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
-The current version 1.0 has been tested on the following operating systems (all for the x86 architecture unless otherwise stated):
+The following operating systems have been tested with ES-DE (all for the x86 architecture unless otherwise stated):
 
-* Ubuntu 20.04 LTS
-* Ubuntu 20.10
-* Ubuntu 21.04
+* Ubuntu 20.04 to 21.04
 * Linux Mint 20
-* Manjaro
+* Manjaro 21
 * Fedora 33 Workstation
 * FreeBSD 12.2
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 11 "Big Sur" (x86 and ARM via Rosetta 2)
-* macOS 10.15 "Catalina"
-* macOS 10.14 "Mojave"
-* macOS 10.11 "El Capitan"
+* macOS 10.14 "Mojave" to 11 "Big Sur" (ARM via Rosetta 2 is supported)
+* macOS 10.11 "El Capitan" (v1.0 release only)
 * Windows 10
 * Windows 8.1
 

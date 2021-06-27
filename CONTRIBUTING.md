@@ -48,7 +48,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.3
 
 * Localization/multi-language support
-* Checksum support for the scraper to verify each file before accepting/saving it
+* Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Complete overhaul of the grid view style
 * A nice and useful grid view implementation in rbsimple-DE
 * Improved text and font functions, e.g. faster and cleaner line wrapping

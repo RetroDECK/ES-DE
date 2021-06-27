@@ -30,21 +30,17 @@ There are also installation videos available at the ES-DE YouTube channel:\
 
 Getting started with ES-DE is easy, just make sure to install the software properly, either manually as built from source code or using one of the supplied packages. On Windows and macOS you'll use the installer instead of a package.
 
-The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
+The following operating systems have been tested with ES-DE (all for the x86 architecture unless otherwise stated):
 
-* Ubuntu 20.04 LTS
-* Ubuntu 20.10
-* Ubuntu 21.04
+* Ubuntu 20.04 to 21.04
 * Linux Mint 20
-* Manjaro
+* Manjaro 21
 * Fedora 33 Workstation
 * FreeBSD 12.2
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 11 "Big Sur" (x86 and ARM via Rosetta 2)
-* macOS 10.15 "Catalina"
-* macOS 10.14 "Mojave"
-* macOS 10.11 "El Capitan"
+* macOS 10.14 "Mojave" to 11 "Big Sur" (ARM via Rosetta 2 is supported)
+* macOS 10.11 "El Capitan" (v1.0 release only)
 * Windows 10
 * Windows 8.1
 
@@ -162,6 +158,8 @@ Note that custom button mappings will not change the help prompts.
 
 If you have issues with your input configuration, as a last resort you can reset all the mappings by deleting or renaming the file ~/.emulationstation/es_input.xml.
 
+**Note:** If you experience double button presses with your DualShock 4 controller on macOS, please read about the workaround for this issue in the [Known issues](CHANGELOG.md#known-issues) section of the changelog.
+
 ## System view (main screen)
 
 When starting EmulationStation with the default settings, you will see the main screen first. From here you can navigate your game systems and enter their respective gamelists.
@@ -254,7 +252,7 @@ Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
 **Left and right thumbstick click**\
 _(F2 / F3)_
 
-Jumps to a random game or system depending on whether pressed when in the system view or gamelist view.
+Jumps to a random game or system depending on whether pressed when in the system view or gamelist view. This functionality can be enabled or disabled via a menu option.
 
 **A button**\
 _(Enter)_
@@ -274,7 +272,7 @@ Starts the game media viewer (which is accessible from the gamelist views). Used
 **Y button**\
 _(Insert on Unix and Windows, F13 on macOS)_
 
-Marks games as favorites in the gamelist views. Used by some other minor functions as explained by the help system and/or this guide.
+Marks games as favorites in the gamelist view (this functionality can be enabled or disabled via a menu option). Used by some other minor functions as explained by the help system and/or this guide.
 
 **F4 (keyboard only)**
 
@@ -679,9 +677,9 @@ Must have corresponding filenames for its media files in this fashion:
 
 JPG and PNG file formats and file extensions are supported for images, and AVI, MKV, MOV, MP4 and WMV are supported for videos.
 
-Remember that on Unix files are case sensitive, and as well the file extensions must be in lower case, such as .png instead of .PNG or .Png or the file won't be found.
+Remember that on Unix filenames are case sensitive, and as well the file extensions must be in lower case, such as .png instead of .PNG or .Png or the file won't be found.
 
-It's possible to change the game media directory from within ES-DE, for this see the option **Game media directory**.
+It's possible to change the game media directory location from within ES-DE, for this see the option **Game media directory**.
 
 
 ## Main menu
