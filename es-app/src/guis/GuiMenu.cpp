@@ -19,7 +19,6 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
-#include "guis/GuiSettings.h"
 #include "views/gamelist/IGameListView.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
@@ -827,14 +826,21 @@ void GuiMenu::openInputDeviceOptions()
             (mWindow, "CONFIGURE KEYBOARD AND CONTROLLERS",
             Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
     configure_input_row.addElement(makeArrow(mWindow), false);
-    configure_input_row.makeAcceptInputHandler(std::bind(&GuiMenu::openConfigInput, this));
+    configure_input_row.makeAcceptInputHandler(std::bind(&GuiMenu::openConfigInput, this, s));
     s->addRow(configure_input_row);
 
     mWindow->pushGui(s);
 }
 
-void GuiMenu::openConfigInput()
+void GuiMenu::openConfigInput(GuiSettings* settings)
 {
+    // Always save the settings before starting the input configuration, in case the
+    // controller type was changed.
+    settings->save();
+    // Also unset the save flag so that a double saving does not take place when closing
+    // the input device settings menu later on.
+    settings->setNeedsSaving(false);
+
     std::string message =
             "THE KEYBOARD AND ANY CONNECTED CONTROLLERS\n"
             "ARE AUTOMATICALLY CONFIGURED ON STARTUP, BUT\n"

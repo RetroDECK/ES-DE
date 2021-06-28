@@ -11,6 +11,7 @@
 #define ES_APP_GUIS_GUI_MENU_H
 
 #include "components/MenuComponent.h"
+#include "guis/GuiSettings.h"
 #include "GuiComponent.h"
 
 class GuiMenu : public GuiComponent
@@ -36,7 +37,7 @@ private:
     void openScreensaverOptions();
     void openSoundOptions();
     void openInputDeviceOptions();
-    void openConfigInput();
+    void openConfigInput(GuiSettings* settings);
     void openCollectionSystemOptions();
     void openOtherOptions();
     void openUtilitiesMenu();
