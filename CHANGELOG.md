@@ -44,6 +44,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Changed the default screensaver type from "dim" to "video" and made the fallback screensaver "dim" instead of "black"
 * Moved the video screensaver audio setting to the sound settings menu
 * Added support for the Nintendo Switch game system (using the Yuzu emulator)
+* Added an option to use plain ASCII characters for the favorite, folder and tickmark symbols, which makes some themes with very pixelated fonts look coherent
 * Created a new main menu entry for input device settings
 * Moved the input device configuration tool to the input device settings menu
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
@@ -75,6 +76,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Games that were filtered out were included in the random game selection for the grouped custom collections view
 * After switching theme sets with only a single system available, diagonal slide transitions would sometimes play when moving to the system view
 * Ongoing slide transition animations would continue to play after switching theme sets
+* Long game names that were horizontally scrolling in the gamelist view would sometimes flicker when returning to the start position
 * On Windows, images with Unicode characters in the game name that were resized when scraping would not get saved with valid filenames
 * The glitches when configuring trigger buttons in GuiInputConfig have been fixed
 * GuiDetectDevice wouldn't detect controller input that was of the "axis" type (i.e. analog inputs)
@@ -250,7 +252,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 **The issues below are relevant for ES-DE v1.1.0**
 
-* On macOS Big Sur (and possibly other OS versions) when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting "Only accept input from first controller" in the ES-DE input device settings. The reason this bug may not be visible in other games and applications is that ES-DE auto-configures and enables all connected controllers while for example RetroArch requires you to manually setup each controller. This issue does not seem to be present on older macOS versions such as El Capitan.
+* On macOS Big Sur (and possibly other OS versions) when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting "Only accept input from first controller" in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
 
 * Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
 

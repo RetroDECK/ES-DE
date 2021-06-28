@@ -398,7 +398,7 @@ or to specify only a portion of the value of a theme property:
 
 # Reference
 
-## Views, their elements, and themable properties:
+## Views, their elements, and themeable properties:
 
 #### basic
 * `helpsystem name="help"` - ALL
@@ -608,7 +608,7 @@ Common to almost all elements is a `pos` and `size` property of the NORMALIZED_P
 
 The order you define properties in does not matter.
 Remember, you do *not* need to specify every property!
-*Note that a view may choose to only make only certain properties on a particular element themable!*
+*Note that a view may choose to only make only certain properties on a particular element themeable!*
 
 #### image
 
@@ -620,7 +620,7 @@ Can be created as an extra.
 * `maxSize` - type: NORMALIZED_PAIR.
     - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themable, "ORIGIN" is implied.
+    - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
     - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
@@ -694,7 +694,7 @@ Can be created as an extra.
 * `maxSize` - type: NORMALIZED_PAIR.
     - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themable, "ORIGIN" is implied.
+    - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
@@ -723,7 +723,7 @@ Can be created as an extra.
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themable, "ORIGIN" is implied.
+    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
@@ -749,7 +749,7 @@ Can be created as an extra.
 * `pos` - type: NORMALIZED_PAIR.
 * `size` - type: NORMALIZED_PAIR.
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themable, "ORIGIN" is implied.
+    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `selectorColor` - type: COLOR.
     - Color of the "selector bar."
 * `selectorImagePath` - type: PATH.
@@ -795,7 +795,7 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 * `size` - type: NORMALIZED_PAIR.
     - Only one value is actually used. The other value should be zero.  (e.g. specify width OR height, but not both.  This is done to maintain the aspect ratio.)
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themable, "ORIGIN" is implied.
+    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
     - angle in degrees that the rating should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
@@ -819,7 +819,7 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themable, "ORIGIN" is implied.
+    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
@@ -866,7 +866,7 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 * `size` - type: NORMALIZED_PAIR. Default is "1 0.2325"
 * `pos` - type: NORMALIZED_PAIR.  Default is "0 0.38375".
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themable, "ORIGIN" is implied.
+    - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `color` - type: COLOR.
     - Controls the color of the carousel background.
     - Default is FFFFFFD8
