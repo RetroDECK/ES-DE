@@ -145,6 +145,7 @@ void Settings::setDefaults()
     mBoolMap["FoldersOnTop"] = { true, true };
     mBoolMap["FavoritesFirst"] = { true, true };
     mBoolMap["FavoritesStar"] = { true, true };
+    mBoolMap["SpecialCharsASCII"] = { false, false };
     mBoolMap["ListScrollOverlay"] = { false, false };
     mBoolMap["FavoritesAddButton"] = { true, true };
     mBoolMap["RandomAddButton"] = { false, false };

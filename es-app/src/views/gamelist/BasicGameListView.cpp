@@ -77,19 +77,32 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
             // Add a leading tick mark icon to the game name if it's part of the custom collection
             // currently being edited.
             if (isEditing && (*it)->getType() == GAME) {
-                if (CollectionSystemsManager::get()->inCustomCollection(editingCollection, (*it)))
-                    inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
-                else
+                if (CollectionSystemsManager::get()->inCustomCollection(editingCollection, (*it))) {
+                    if (Settings::getInstance()->getBool("SpecialCharsASCII"))
+                        inCollectionPrefix = "! ";
+                    else
+                        inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
+                }
+                else {
                     inCollectionPrefix = "";
+                }
             }
+
             if ((*it)->getFavorite() && favoriteStar &&
                     mRoot->getSystem()->getName() != "favorites") {
-                mList.add(inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
-                    (*it)->getName(), *it, ((*it)->getType() == FOLDER));
+                if (Settings::getInstance()->getBool("SpecialCharsASCII"))
+                    mList.add(inCollectionPrefix + "* " +
+                            (*it)->getName(), *it, ((*it)->getType() == FOLDER));
+                else
+                    mList.add(inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
+                            (*it)->getName(), *it, ((*it)->getType() == FOLDER));
             }
             else if ((*it)->getType() == FOLDER &&
                     mRoot->getSystem()->getName() != "collections") {
-                mList.add(ViewController::FOLDER_CHAR + "  " + (*it)->getName(), *it, true);
+                if (Settings::getInstance()->getBool("SpecialCharsASCII"))
+                    mList.add("# " + (*it)->getName(), *it, true);
+                else
+                    mList.add(ViewController::FOLDER_CHAR + "  " + (*it)->getName(), *it, true);
             }
             else {
                 mList.add(inCollectionPrefix + (*it)->getName(), *it, ((*it)->getType() == FOLDER));
