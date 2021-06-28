@@ -105,6 +105,7 @@ private:
     int mMarqueeOffset;
     int mMarqueeOffset2;
     int mMarqueeTime;
+    bool mMarqueeScroll;
 
     Alignment mAlignment;
     float mHorizontalMargin;
@@ -133,8 +134,9 @@ TextListComponent<T>::TextListComponent(Window* window) :
     mMarqueeOffset = 0;
     mMarqueeOffset2 = 0;
     mMarqueeTime = 0;
+    mMarqueeScroll = false;
 
-    mHorizontalMargin = 0;
+    mHorizontalMargin = 0.0f;
     mAlignment = ALIGN_CENTER;
 
     mFont = Font::get(FONT_SIZE_MEDIUM);
@@ -153,17 +155,17 @@ TextListComponent<T>::TextListComponent(Window* window) :
 template <typename T>
 void TextListComponent<T>::render(const Transform4x4f& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
-
-    std::shared_ptr<Font>& font = mFont;
-
     if (size() == 0)
         return;
 
-    const float entrySize = std::max(font->getHeight(1.0),
-            static_cast<float>(font->getSize())) * mLineSpacing;
+    Transform4x4f trans = parentTrans * getTransform();
+    std::shared_ptr<Font>& font = mFont;
 
     int startEntry = 0;
+    float y = 0;
+
+    const float entrySize = std::max(font->getHeight(1.0),
+            static_cast<float>(font->getSize())) * mLineSpacing;
 
     // Number of entries that can fit on the screen simultaneously.
     int screenCount = static_cast<int>(mSize.y() / entrySize + 0.5f);
@@ -176,8 +178,6 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
             startEntry = size() - screenCount;
     }
 
-    float y = 0;
-
     int listCutoff = startEntry + screenCount;
     if (listCutoff > size())
         listCutoff = size();
@@ -185,16 +185,15 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
     // Draw selector bar.
     if (startEntry < listCutoff) {
         if (mSelectorImage.hasImage()) {
-            mSelectorImage.setPosition(0.f,
-                    (mCursor - startEntry)*entrySize + mSelectorOffsetY, 0.f);
+            mSelectorImage.setPosition(0.0f, (mCursor - startEntry) *
+                    entrySize + mSelectorOffsetY, 0.0f);
             mSelectorImage.render(trans);
         }
         else {
             Renderer::setMatrix(trans);
             Renderer::drawRect(
                     0.0f,
-                    (mCursor - startEntry)*entrySize +
-                    mSelectorOffsetY,
+                    (mCursor - startEntry) * entrySize + mSelectorOffsetY,
                     mSize.x(),
                     mSelectorHeight,
                     mSelectorColor,
@@ -210,7 +209,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
     }
 
     // Clip to inside margins.
-    Vector3f dim(mSize.x(), mSize.y(), 0);
+    Vector3f dim(mSize.x(), mSize.y(), 0.0f);
     dim = trans * dim - trans.translation();
     Renderer::pushClipRect(Vector2i(static_cast<int>(trans.translation().x() +
             mHorizontalMargin), static_cast<int>(trans.translation().y())),
@@ -240,7 +239,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
         else
             entry.data.textCache->setColor(color);
 
-        Vector3f offset(0, y, 0);
+        Vector3f offset(0.0f, y, 0.0f);
 
         switch (mAlignment) {
         case ALIGN_LEFT:
@@ -248,7 +247,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
             break;
         case ALIGN_CENTER:
             offset[0] = static_cast<float>((mSize.x() -
-                    entry.data.textCache->metrics.size.x()) / 2);
+                    entry.data.textCache->metrics.size.x()) / 2.0f);
             if (offset[0] < mHorizontalMargin)
                 offset[0] = mHorizontalMargin;
             break;
@@ -264,19 +263,23 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
         Transform4x4f drawTrans = trans;
 
         // Currently selected item text might be scrolling.
-        if ((mCursor == i) && (mMarqueeOffset > 0))
-            drawTrans.translate(offset - Vector3f(static_cast<float>(mMarqueeOffset), 0, 0));
+        if (mCursor == i && mMarqueeOffset > 0)
+            drawTrans.translate(offset - Vector3f(static_cast<float>(mMarqueeOffset), 0.0f, 0.0f));
         else
             drawTrans.translate(offset);
+
+        // Needed to avoid flickering when returning to the start position.
+        if (mMarqueeOffset == 0 && mMarqueeOffset2 == 0)
+            mMarqueeScroll = false;
 
         Renderer::setMatrix(drawTrans);
         font->renderTextCache(entry.data.textCache.get());
 
-        // Render currently selected item text again if marquee is
-        // scrolled far enough for it to repeat.
-        if ((mCursor == i) && (mMarqueeOffset2 < 0)) {
+        // Render currently selected row again if marquee is scrolled far enough for it to repeat.
+        if ((mCursor == i && mMarqueeOffset2 < 0) || (mCursor == i && mMarqueeScroll)) {
+            mMarqueeScroll = true;
             drawTrans = trans;
-            drawTrans.translate(offset - Vector3f(static_cast<float>(mMarqueeOffset2), 0, 0));
+            drawTrans.translate(offset - Vector3f(static_cast<float>(mMarqueeOffset2), 0.0f, 0.0f));
             Renderer::setMatrix(drawTrans);
             font->renderTextCache(entry.data.textCache.get());
         }
@@ -344,23 +347,23 @@ void TextListComponent<T>::update(int deltaTime)
 
     if (!isScrolling() && size() > 0) {
         // Always reset the marquee offsets.
-        mMarqueeOffset  = 0;
+        mMarqueeOffset = 0;
         mMarqueeOffset2 = 0;
 
-        // If we're not scrolling and this object's text goes outside our size, marquee it!
+        // If we're not scrolling and this object's text exceeds our size, then marquee it.
         const float textLength = mFont->sizeText(Utils::String::toUpper(
                 mEntries.at(static_cast<unsigned int>(mCursor)).name)).x();
-        const float limit = mSize.x() - mHorizontalMargin * 2;
+        const float limit = mSize.x() - mHorizontalMargin * 2.0f;
 
         if (textLength > limit) {
             // Loop.
             // Pixels per second (based on nes-mini font at 1920x1080 to produce a speed of 200).
             const float speed = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x() * 0.247f;
-            const float delay = 3000;
+            const float delay = 3000.0f;
             const float scrollLength = textLength;
             const float returnLength = speed * 1.5f;
-            const float scrollTime = (scrollLength * 1000) / speed;
-            const float returnTime = (returnLength * 1000) / speed;
+            const float scrollTime = (scrollLength * 1000.0f) / speed;
+            const float returnTime = (returnLength * 1000.0f) / speed;
             const int maxTime = static_cast<int>(delay + scrollTime + returnTime);
 
             mMarqueeTime += deltaTime;
