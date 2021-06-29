@@ -284,7 +284,7 @@
     <name>desktop</name>
     <fullname>Desktop applications</fullname>
     <path>%ROMPATH%/desktop</path>
-    <extension>.sh .csh</extension>
+    <extension>.sh</extension>
     <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>desktop</theme>
@@ -446,7 +446,7 @@
     <name>kodi</name>
     <fullname>Kodi home theatre software</fullname>
     <path>%ROMPATH%/kodi</path>
-    <extension>.sh .csh</extension>
+    <extension>.sh</extension>
     <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>kodi</theme>
@@ -815,7 +815,7 @@
     <name>ports</name>
     <fullname>Ports</fullname>
     <path>%ROMPATH%/ports</path>
-    <extension>.sh .csh</extension>
+    <extension>.sh</extension>
     <command>bash %ROM%</command>
     <platform>pc</platform>
     <theme>ports</theme>
@@ -1013,7 +1013,7 @@
     <name>steam</name>
     <fullname>Valve Steam</fullname>
     <path>%ROMPATH%/steam</path>
-    <extension>.sh .csh</extension>
+    <extension>.sh</extension>
     <command>bash %ROM%</command>
     <platform>steam</platform>
     <theme>steam</theme>
