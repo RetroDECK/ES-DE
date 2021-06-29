@@ -904,9 +904,13 @@ void FileData::launchGame(Window* window)
             separatorPos = quotePos;
 
         if (separatorPos != std::string::npos) {
-                coreName = command.substr(coreFilePos + 1, separatorPos - (coreFilePos + 1));
+                coreName = command.substr(coreFilePos + 2, separatorPos - (coreFilePos + 2));
 
-            std::string coreFile = Utils::FileSystem::expandHomePath(path + coreName);
+            #if defined(_WIN64)
+            std::string coreFile = Utils::FileSystem::expandHomePath(path + "\\" + coreName);
+            #else
+            std::string coreFile = Utils::FileSystem::expandHomePath(path + "/" + coreName);
+            #endif
 
             // Expand %EMUPATH% if it has been used in the %CORE_ variable.
             size_t stringPos = coreFile.find("%EMUPATH%");
