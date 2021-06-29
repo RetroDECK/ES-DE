@@ -91,23 +91,10 @@ Log::~Log()
         return;
     }
 
-    #if defined(_WIN64)
-    // This is really a hack as it will not only replace forward slashes for filenames but
-    // for any string that contains this character. But it's probably still better than doing
-    // nothing and it's unlikely to be worth the effort to implement proper string replacements
-    // at all the locations that would otherwise be required.
-    std::string formattedString = Utils::String::replace(os.str(), "/", "\\");
-    file << formattedString;
-    #else
     file << os.str();
-    #endif
 
     // If it's an error, also print to console.
     // Print all messages if using --debug.
     if (messageLevel == LogError || reportingLevel >= LogDebug)
-        #if defined(_WIN64)
-        std::cerr << formattedString;
-        #else
         std::cerr << os.str();
-        #endif
 }
