@@ -151,15 +151,16 @@ int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
             &si,                                // Pointer to the STARTUPINFOW structure.
             &pi);                               // Pointer to the PROCESS_INFORMATION structure.
 
-    // Unfortunately suspending ES-DE and resuming when the game/emulator process has exited
-    // doesn't work reliably on Windows, so we may need to keep ES-DE running in the background
-    // while the game is launched. I'm not sure if there is a workaround for this, but on most
-    // Windows installations it seems to work fine so we'll let the user choose via a menu option.
-    // Possibly the issue is specific to Windows 8.
-    // Running in the background is also required for Steam games as ES-DE would otherwise
-    // wait forever for Steam to exit unless it was already running when the game was launched.
     if (!runInBackground) {
-        // Wait for the child process to exit.
+        if (Settings::getInstance()->getBool("LaunchWorkaround")) {
+            // Ugly hack to make the emulator window render correctly with some graphics drivers
+            // (probably only those from AMD and Intel as Nvidia seems to work fine without this).
+            // Unfortunately this turns the screen white as the emulator is starting.
+            // This definitely needs a proper solution some time in the future.
+            SDL_HideWindow(Renderer::getSDLWindow());
+            SDL_ShowWindow(Renderer::getSDLWindow());
+        }
+
         WaitForSingleObject(pi.hThread, INFINITE);
         WaitForSingleObject(pi.hProcess, INFINITE);
     }

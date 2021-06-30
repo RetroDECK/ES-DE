@@ -246,6 +246,9 @@ void Settings::setDefaults()
     mBoolMap["HideTaskbar"] = { false, false };
     #endif
     mBoolMap["RunInBackground"] = { false, false };
+    #if defined(_WIN64)
+    mBoolMap["LaunchWorkaround"] = { true, true };
+    #endif
     mStringMap["MediaDirectory"] = { "", "" };
     mBoolMap["VideoUpscaleFrameRate"] = { false, false };
     mBoolMap["LaunchCommandOverride"] = { true, true };

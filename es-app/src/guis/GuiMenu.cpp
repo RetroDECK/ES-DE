@@ -1046,6 +1046,27 @@ void GuiMenu::openOtherOptions()
         }
     });
 
+    #if defined(_WIN64)
+    // Workaround for launching games on AMD and Intel graphics drivers.
+    auto launch_workaround = std::make_shared<SwitchComponent>(mWindow);
+    launch_workaround->setState(Settings::getInstance()->getBool("LaunchWorkaround"));
+    s->addWithLabel("AMD AND INTEL GPU GAME LAUNCH WORKAROUND", launch_workaround);
+    s->addSaveFunc([launch_workaround, s] {
+        if (launch_workaround->getState() != Settings::getInstance()->getBool("LaunchWorkaround")) {
+            Settings::getInstance()->setBool("LaunchWorkaround", launch_workaround->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // If the RunInBackground setting is enabled, then disable this option.
+    if (Settings::getInstance()->getBool("RunInBackground")) {
+        launch_workaround->setEnabled(false);
+        launch_workaround->setOpacity(DISABLED_OPACITY);
+        launch_workaround->getParent()->getChild(launch_workaround->
+                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+    }
+    #endif
+
     // Whether to upscale the video frame rate to 60 FPS.
     auto video_upscale_frame_rate = std::make_shared<SwitchComponent>(mWindow);
     video_upscale_frame_rate->setState(Settings::getInstance()->getBool("VideoUpscaleFrameRate"));
@@ -1178,6 +1199,25 @@ void GuiMenu::openOtherOptions()
             GuiMenu::close(false);
         }
     });
+    #endif
+
+    #if defined(_WIN64)
+    // Switch callback.
+    auto launchWorkAroundToggleFunc = [launch_workaround]() {
+        if (launch_workaround->getEnabled()) {
+            launch_workaround->setEnabled(false);
+            launch_workaround->setOpacity(DISABLED_OPACITY);
+            launch_workaround->getParent()->getChild(launch_workaround->
+                    getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            launch_workaround->setEnabled(true);
+            launch_workaround->setOpacity(255);
+            launch_workaround->getParent()->getChild(launch_workaround->
+                    getChildIndex() - 1)->setOpacity(255);
+        }
+    };
+    run_in_background->setCallback(launchWorkAroundToggleFunc);
     #endif
 
     mWindow->pushGui(s);
