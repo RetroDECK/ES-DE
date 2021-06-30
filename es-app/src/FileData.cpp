@@ -815,6 +815,16 @@ void FileData::launchGame(Window* window)
         window->setInfoPopup(s);
         return;
     }
+    else {
+        #if defined(_WIN64)
+        LOG(LogDebug) << "FileData::launchGame(): Found emulator binary \"" <<
+                Utils::String::replace(Utils::String::replace(
+                binaryPath, "%ESPATH%", esPath), "/", "\\") << "\"";
+        #else
+        LOG(LogDebug) << "FileData::launchGame(): Found emulator binary \"" <<
+                Utils::String::replace(binaryPath, "%ESPATH%", esPath) << "\"";
+        #endif
+    }
 
     // If %EMUPATH% is used in es_systems.xml for this system, then check that the core
     // file actually exists.
@@ -890,7 +900,6 @@ void FileData::launchGame(Window* window)
     // If a %CORE_ find rule entry is used in es_systems.xml for this system, then try to find
     // the emulator core using the rules defined in es_find_rules.xml.
     for (std::string path : emulatorCorePaths) {
-
         // The position of the %CORE_ variable could have changed as there may have been an
         // %EMULATOR_ variable that was substituted for the actual emulator binary.
         coreEntryPos = command.find("%CORE_");
@@ -1195,6 +1204,8 @@ std::string FileData::findEmulatorPath(std::string& command)
 
     for (std::string path : emulatorStaticPaths) {
         path = Utils::FileSystem::expandHomePath(path);
+        // If %ESPATH% is used for the rule, then expand it to the binary directory of ES-DE.
+        path = Utils::String::replace(path, "%ESPATH%", Utils::FileSystem::getExePath());
         #if defined(_WIN64)
         path = Utils::String::replace(path, "/", "\\");
         #endif
@@ -1206,6 +1217,12 @@ std::string FileData::findEmulatorPath(std::string& command)
     }
 
     // Method 2, exact emulator binary name:
+
+    // If %ESPATH% is used, then expand it to the binary directory of ES-DE.
+    command = Utils::String::replace(command, "%ESPATH%", Utils::FileSystem::getExePath());
+    #if defined(_WIN64)
+    command = Utils::String::replace(command, "/", "\\");
+    #endif
 
     // If the first character is a quotation mark, then we need to extract up to the
     // next quotation mark, otherwise we'll only extract up to the first space character.
@@ -1228,20 +1245,19 @@ std::string FileData::findEmulatorPath(std::string& command)
 
         SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", size + 1 ,
                 pathBuffer.data(), &fileName);
-        std::wstring pathString = pathBuffer.data();
 
-        if (pathString.length()) {
-            exePath = Utils::String::wideStringToString(pathString.substr(0, pathString.size() -
-                    std::wstring(fileName).size()));
-            exePath.pop_back();
-        }
+        exePath = Utils::String::wideStringToString(pathBuffer.data());
     }
     #else
     if (Utils::FileSystem::isRegularFile(emuExecutable) ||
-            Utils::FileSystem::isSymlink(emuExecutable))
-        exePath = Utils::FileSystem::getParent(emuExecutable);
-    else
+            Utils::FileSystem::isSymlink(emuExecutable)) {
+        exePath = emuExecutable;
+    }
+    else {
         exePath = Utils::FileSystem::getPathToBinary(emuExecutable);
+        if (exePath != "")
+            exePath += "/" + emuExecutable;
+    }
     #endif
 
     return exePath;
