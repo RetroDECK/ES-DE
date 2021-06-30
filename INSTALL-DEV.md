@@ -1139,62 +1139,6 @@ The theme is not mandatory to start the application, but ES-DE will be basically
 
 So the home directory will always take precedence, and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
-## Portable installation on Windows
-
-It's possible to easily create a portable installation of ES-DE for Windows, for example to place on a USB memory stick.
-
-For the sake of this example, let's assume that the removable media has the device name `f:\`
-
-These are the steps to perform:
-
-* Copy the EmulationStation-DE installation directory to f:\
-* Copy your emulator directories to f:\EmulationStation-DE\
-* Copy your ROMs directory to f:\EmulationStation-DE\
-* Create an empty file named portable.txt in f:\EmulationStation-DE\
-
-You should end up with something like this:
-```
-f:\EmulationStation-DE\
-f:\EmulationStation-DE\RetroArch-Win64\
-f:\EmulationStation-DE\yuzu\
-f:\EmulationStation-DE\ROMs\
-f:\EmulationStation-DE\portable.txt
-```
-
-(Yuzu is an optional Nintendo Switch emulator.)
-
-Of course there will be many more files and directories from the normal installation than those listed above.
-
-How this works is that when ES-DE finds a file named portable.txt in its executable directory, it will locate the .emulationstation directory directly in this folder. It's however also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under f:\ in this example.
-
-If the --home command line parameter is passed when starting ES-DE, that will override the portable.txt file.
-
-The emulators that will be automatically searched for by ES-DE are (relative to the EmulationStation-DE directory):
-
-```
-RetroArch-Win64\retroarch.exe
-RetroArch\retroarch.exe
-yuzu\yuzu-windows-msvc\yuzu.exe
-..\RetroArch-Win64\retroarch.exe
-..\RetroArch\retroarch.exe
-..\yuzu\yuzu-windows-msvc\yuzu.exe
-```
-
-If you want to place your emulators elsewhere, you need to create a customized es_find_rules.xml file, which is explained later in this document.
-
-Start ES-DE from the f:\ device and check that everything works as expected.
-
-Following this, optionally copy any existing gamelist.xml files, game media files etc. to the removable media. For example:
-
-```
-f:\EmulationStation-DE\.emulationstation\gamelists\
-f:\EmulationStation-DE\.emulationstation\downloaded_media\
-```
-
-You now have a fully functional portable retro gaming installation!
-
-The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
-
 
 ## CA certificates and MAME ROM information
 
@@ -1821,6 +1765,63 @@ This will draw a semi-transparent blue frame around all text elements.
 **Ctrl + r**
 
 This will reload either a single gamelist or all gamelists depending on where you're located when entering the key combination (go to the system view to make a complete reload). Very useful for theme development as any changes to the theme files will be activated without requiring an application restart. Note that the menu needs to be closed for this key combination to have any effect.
+
+
+## Portable installation on Windows
+
+It's possible to easily create a portable installation of ES-DE for Windows, for example to place on a USB memory stick.
+
+For the sake of this example, let's assume that the removable media has the device name `f:\`
+
+These are the steps to perform:
+
+* Copy the EmulationStation-DE installation directory to f:\
+* Copy your emulator directories to f:\EmulationStation-DE\
+* Copy your ROMs directory to f:\EmulationStation-DE\
+* Create an empty file named portable.txt in f:\EmulationStation-DE\
+
+You should end up with something like this:
+```
+f:\EmulationStation-DE\
+f:\EmulationStation-DE\RetroArch-Win64\
+f:\EmulationStation-DE\yuzu\
+f:\EmulationStation-DE\ROMs\
+f:\EmulationStation-DE\portable.txt
+```
+
+(Yuzu is an optional Nintendo Switch emulator.)
+
+Of course there will be many more files and directories from the normal installation than those listed above.
+
+How this works is that when ES-DE finds a file named portable.txt in its executable directory, it will locate the .emulationstation directory directly in this folder. It's however also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under f:\ in this example.
+
+If the --home command line parameter is passed when starting ES-DE, that will override the portable.txt file.
+
+The emulators that will be automatically searched for by ES-DE are (relative to the EmulationStation-DE directory):
+
+```
+RetroArch-Win64\retroarch.exe
+RetroArch\retroarch.exe
+yuzu\yuzu-windows-msvc\yuzu.exe
+..\RetroArch-Win64\retroarch.exe
+..\RetroArch\retroarch.exe
+..\yuzu\yuzu-windows-msvc\yuzu.exe
+```
+
+If you want to place your emulators elsewhere, you need to create a customized es_find_rules.xml file, which is explained later in this document.
+
+Start ES-DE from the f:\ device and check that everything works as expected.
+
+Following this, optionally copy any existing gamelist.xml files, game media files etc. to the removable media. For example:
+
+```
+f:\EmulationStation-DE\.emulationstation\gamelists\
+f:\EmulationStation-DE\.emulationstation\downloaded_media\
+```
+
+You now have a fully functional portable retro gaming installation!
+
+The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
 
 
 ## Custom event scripts
