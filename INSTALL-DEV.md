@@ -652,7 +652,7 @@ And it will look in the following locations for the themes, also in the listed o
 
 A theme is not mandatory to start the application, but ES will be basically useless without it.
 
-The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES executable.
+The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES-DE executable.
 
 **Creating a .dmg installer:**
 
@@ -1137,56 +1137,58 @@ And it will look in the following locations for the themes, also in the listed o
 
 The theme is not mandatory to start the application, but ES-DE will be basically useless without it.
 
-So the home directory will always take precedence, and any resources or themes located there will override the ones in the path of the ES executable.
+So the home directory will always take precedence, and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
-**Setting up a portable installation:**
+## Portable installation on Windows
 
-It's possible to easily create a portable installation of ES-DE for Windows, for example on a USB memory stick.
+It's possible to easily create a portable installation of ES-DE for Windows, for example to place on a USB memory stick.
 
 For the sake of this example, let's assume that the removable media has the device name `f:\`
 
 These are the steps to perform:
 
 * Copy the EmulationStation-DE installation directory to f:\
-* Copy your emulator directories to f:\
-* Create the directory `ES-DE_Home` directly under f:\
-* Copy your game ROMs into `f:\ES-DE_Home\ROMs`
-* Create the file `Start_ES-DE.bat` directly under f:\
+* Copy your emulator directories to f:\EmulationStation-DE\
+* Copy your ROMs directory to f:\EmulationStation-DE\
+* Create an empty file named portable.txt in f:\EmulationStation-DE\
 
-Add the following lines to the Start_ES-DE.bat file:
+You should end up with something like this:
 ```
-@echo off
-EmulationStation-DE\EmulationStation.exe --home %CD:~0,3%ES-DE_Home
+f:\EmulationStation-DE\
+f:\EmulationStation-DE\RetroArch-Win64\
+f:\EmulationStation-DE\yuzu\
+f:\EmulationStation-DE\ROMs\
+f:\EmulationStation-DE\portable.txt
 ```
+
+(Yuzu is an optional Nintendo Switch emulator.)
+
+Of course there will be many more files and directories from the normal installation than those listed above.
+
+How this works is that when ES-DE finds a file named portable.txt in its executable directory, it will locate the .emulationstation directory directly in this folder. It's however also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under f:\ in this example.
+
+If the --home command line parameter is passed when starting ES-DE, that will override the portable.txt file.
 
 The emulators that will be automatically searched for by ES-DE are (relative to the EmulationStation-DE directory):
 
 ```
+RetroArch-Win64\retroarch.exe
+RetroArch\retroarch.exe
+yuzu\yuzu-windows-msvc\yuzu.exe
 ..\RetroArch-Win64\retroarch.exe
 ..\RetroArch\retroarch.exe
 ..\yuzu\yuzu-windows-msvc\yuzu.exe
 ```
 
-The two dots will of course resolve to the root of the device in this example, such as ..\RetroArch-Win64\retroarch.exe being the same as f:\RetroArch-Win64\retroarch.exe
+If you want to place your emulators elsewhere, you need to create a customized es_find_rules.xml file, which is explained later in this document.
 
-This means that as long has you don't have any non-standard directory names for your emulators, everything should work fine with the default configuration. But if needed, these paths can be easily customized by modifying f:\EmulationStation-DE\resources\systems\windows\es_find_rules.xml
+Start ES-DE from the f:\ device and check that everything works as expected.
 
-The contents of f:\ should now look something like this:
-```
-EmulationStation-DE\
-ES-DE_Home\
-RetroArch-Win64\
-yuzu\                (optional Nintendo Switch emulator)
-Start_ES-DE.bat
-```
-
-Now run the batch script to start ES-DE and check that everything works as expected.
-
-Following this, optionally copy any existing gamelist.xml files and game media files to the removable media. By default these should be located here:
+Following this, optionally copy any existing gamelist.xml files, game media files etc. to the removable media. For example:
 
 ```
-f:\ES-DE_Home\.emulationstation\gamelists\
-f:\ES-DE_Home\.emulationstation\downloaded_media\
+f:\EmulationStation-DE\.emulationstation\gamelists\
+f:\EmulationStation-DE\.emulationstation\downloaded_media\
 ```
 
 You now have a fully functional portable retro gaming installation!
@@ -1278,15 +1280,17 @@ pcengine
 However, if you've saved your ROMs to another directory, you need to configure the ROMDirectory setting in es_settings.xml.\
 Here's an example:
 
-`<string name="ROMDirectory" value="~/games/ROMs" />`
+```xml
+<string name="ROMDirectory" value="~/games/ROMs" />
+```
 
 Keep in mind that you still need to group the ROMs into directories corresponding to the `<path>` tags in es_systems.xml.
 
-There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES executable is started from. You would normally not need this, but the option is there, should you require it for some reason.
+There is also support to add the variable %ESPATH% to the ROM directory setting, this will expand to the path where the ES-DE executable is started from. You should normally not need this, but the option is there for special cases. For example:
 
-Here is such an example:
-
-`<string name="ROMDirectory" value="%ESPATH%/../ROMs" />`
+```xml
+<string name="ROMDirectory" value="%ESPATH%/../ROMs" />
+```
 
 **~/.emulationstation/es_input.xml:**
 
@@ -1428,8 +1432,8 @@ Below is an overview of the file layout with various examples. For a real system
         <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
 
         <!-- An example for use in a portable Windows emulator installation, for instance on a USB memory stick. The %ESPATH% variable is
-        expanded to the directory of the ES executable. -->
-        <command>"%ESPATH%\..\RetroArch\retroarch.exe" -L "%ESPATH%\..\RetroArch\cores\snes9x_libretro.dll" %ROM%</command>
+        expanded to the directory of the ES-DE executable. -->
+        <command>"%ESPATH%\RetroArch\retroarch.exe" -L "%ESPATH%\RetroArch\cores\snes9x_libretro.dll" %ROM%</command>
 
         <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
         The entry is case insensitive as it will be converted to lower case during startup.
@@ -1512,7 +1516,7 @@ And finally one for Windows:
 
 This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.
 
-The file is located in the resources directory at the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
+The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
 
 Here's an example es_find_rules.xml file for Unix:
 ```xml
@@ -1594,9 +1598,11 @@ As for `corepath` this rule is simply a path to search for the emulator core.
 
 Each rule supports multiple entry tags which are tried in the order that they are defined in the file.
 
-The %EMUPATH% and %ESPATH% variables can also be used inside the entry tags, making for quite powerful find rules.
+The %ESPATH% variable can be used inside the staticpath rules and both the %EMUPATH% and %ESPATH% variables can be used inside the corepath rules.
 
-The tilde symbol `~` is supported and will expand to the user home directory. Be aware that if ES-DE has been started with the --home command line option, the home directory is considered to be whatever path was passed as an argument to that option.
+The tilde symbol `~` is supported for the staticpath and corepath rules and will expand to the user home directory. Be aware that if ES-DE has been started with the --home command line option, the home directory is considered to be whatever path was passed as an argument to that option. The same is true if using a portable.txt file.
+
+All these options combined makes it possible to create quite powerful find rules.
 
 For reference, here are also example es_find_rules.xml files for macOS and Windows:
 
@@ -1643,6 +1649,8 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
       <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
       <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
       <!-- Portable installation -->
+      <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
+      <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
       <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
       <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
     </rule>
@@ -1655,6 +1663,7 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
     <rule type="staticpath">
       <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
       <!-- Portable installation -->
+      <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
       <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
     </rule>
   </emulator>
@@ -1673,11 +1682,17 @@ The gamelist.xml file for a system defines the metadata for its entries, such as
 
 As of the fork to EmulationStation Desktop Edition, game media information no longer needs to be defined in the gamelist.xml files. Instead the application will look for any media matching the ROM filename. The media path where to look for game media is configurable either manually in `es_settings.xml` or via the GUI. If configured manually in es_settings.xml, it looks something like this:
 
-```
-<string name="MediaDirectory" value="~/games/images/emulationstation" />
+```xml
+<string name="MediaDirectory" value="~/games/media/emulationstation" />
 ```
 
-The default directory is `~/.emulationstation/downloaded_media`
+There is also support to add the variable %ESPATH% to the media directory setting, this will expand to the path where the ES-DE executable is started from. You should normally not need this, but the option is there for special cases. For example:
+
+```xml
+<string name="MediaDirectory" value="%ESPATH%/../downloaded_media" />
+```
+
+The default media directory is `~/.emulationstation/downloaded_media`
 
 You can use ES-DE's scraping tools to populate the gamelist.xml files, or manually update individual entries using the metadata editor. All of this is explained in the [User guide](USERGUIDE.md).
 

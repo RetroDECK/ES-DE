@@ -918,7 +918,7 @@ With this setting enabled, there is a star symbol added at the beginning of the 
 
 **Use plain ASCII for special gamelist characters**
 
-There are some special characters in ES-DE such as the favorites star, the folder icon and the tickmark (seen when editing custom collections) that are displayed using symbols from the bundled Font Awesome. This normally looks perfectly fine, but on some specific themes with very pixelated fonts such as [es-themes-snes-mini](https://github.com/ruckage/es-theme-snes-mini) and [es-themes-workbench](https://github.com/ehettervik/es-theme-workbench) these symbols look terrible. For such themes, this option is available, which will use plain ASCII characters instead of the Font Awesome symbols. For the favorites an asterisk `*` will be used, for folders a hash sign `#` will be used and for the tickmark an exclamation mark `!` will be used. This only applies to the gamelist view, at all other places in the application the Font Awesome symbols are retained. Make sure to disable this option if not using such a pixelated theme as it looks equally terrible to enable this option on themes where it's not supposed to be used.
+There are some special characters in ES-DE such as the favorites star, the folder icon and the tickmark (seen when editing custom collections) that are displayed using symbols from the bundled Font Awesome. This normally looks perfectly fine, but on some specific theme sets with very pixelated fonts such as [es-themes-snes-mini](https://github.com/ruckage/es-theme-snes-mini) and [es-themes-workbench](https://github.com/ehettervik/es-theme-workbench) these symbols look terrible. For such themes, this option is available, which will use plain ASCII characters instead of the Font Awesome symbols. For the favorites an asterisk `*` will be used, for folders a hash sign `#` will be used and for the tickmark an exclamation mark `!` will be used. This only applies to the gamelist view, in all other places in the application the Font Awesome symbols are retained. Make sure to disable this option if not using such a pixelated theme as it looks equally terrible to enable this option on themes where it's not supposed to be used.
 
 **Enable quick list scrolling overlay**
 
@@ -1018,7 +1018,7 @@ Whether to search the custom image directory recursively.
 
 **Custom image directory**
 
-The directory for the custom images.
+The directory for the custom images. The tilde `~` symbol can be used which will expand to the ES-DE home directory. It's also possible to use the %ESPATH% and %ROMPATH% variables which will set the directory relative to the ES-DE binary directory or the ROM directory.
 
 #### Video screensaver settings
 
@@ -1171,9 +1171,13 @@ This setting defines the directory for the game media, i.e. game images and vide
 
 With this setting enabled, the taskbar will be hidden when launching ES-DE, and it will be restored when the application exits. This can make for a more seamless experience as the taskbar could otherwise flash by briefly when launching games and when returning from games. It could potentially cause some issues on some Windows installations though, so the option is disabled by default.
 
-**Run in background (while game is launched)** _(Windows only)_
+**Run in background (while game is launched)**
 
-This is really a last-resort setting if ES-DE freezes when launching games. This issue seems to only occur on Windows 8.1 and older but that's not fully confirmed. ES-DE will behave a bit strange with this option enabled so keep it disabled unless you absolutely need it.
+Enabling this option makes ES-DE continue to run while a game is launched. This is normally not recommended as it leads to a slightly strange application behavior and also removes the ability to capture return codes and log output from the emulators. But with some graphics drivers on Windows this may be a suitable workaround if there are problems launching games (also see the next option below). Note that launching Steam games on all supported operating systems always makes ES-DE continue to run in the background for technical reasons.
+
+**AMD and Intel GPU game launch workaround** _(Windows only)_
+
+There is an issue with launching games on some Windows computers, seemingly on those with AMD and Intel GPUs. The emulator will start and work correctly, but the screen will be blank. Enabling this option is a workaround for that problem, with the drawback that the screen will become white instead of black when the emulator is loading. This option is enabled by default, so experiment with disabling it for a slightly better user experience. If you're using an Nvidia GPU, chances are high that it will then work fine. An alternative workaround is to enable the _Run in background (while game is launched)_ option described above, so test which gives the best result. The two options can however not be enabled at the same time. Hopefully this whole game launching issue can be resolved completely in a future ES-DE release.
 
 **Upscale video frame rate to 60 FPS (FFmpeg)**
 
@@ -1565,7 +1569,7 @@ The setup for event scripts is a bit technical, so please refer to the [INSTALL-
 
 ## Portable installation (Windows only)
 
-On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md#building-on-windows) document to see how it's done.
+On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, please refer to [INSTALL-DEV.md](INSTALL-DEV.md#portable-installation-on-windows) to see how it's done.
 
 
 ## Command line arguments

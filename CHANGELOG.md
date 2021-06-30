@@ -27,6 +27,8 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Implemented a new mechanism for locating emulators and cores, with configurable find rules (this eliminates some hacks such as the separate Flatpak es_systems.cfg file)
 * Added a Windows-specific find rule that searches the Registry for the App Paths keys, which should eliminate the need to modify the Path manually to find RetroArch
 * Removed the deprecated %COREPATH% setting and corresponding menu entry
+* The "Run in background (while game is launched)" option can now be enabled on all operating systems instead of only on Windows
+* Added a workaround for a game launch issue on Windows when using AMD and Intel GPUs
 * Moved to the SDL GameController API which gives numerous improvements to the controller handling
 * Default controller configuration is now automatically applied, input configuration should rarely if ever be required any longer except for deliberate button customization
 * Added support for selecting the controller type (Xbox, Xbox 360, PS4, PS5 and SNES), which changes the help icons, help text and the input configuration tool icons and text
@@ -50,14 +52,16 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Adjusted the size and position of the various menus to accomodate one additional entry on the screen
 * The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
 * Removed the "Display game media from ROM directories" setting as it doesn't make sense to support this legacy functionality any longer
+* Added support for using the %ESPATH% and %ROMPATH% variables in the slideshow screensaver custom image directory setting
 * Removed the menu fade-in effect as it looked terrible
 * Enabled the menu scale-up effect for the OpenGL ES renderer
 * Renamed es_systems.cfg, es_settings.cfg and es_input.cfg to es_systems.xml, es_settings.xml and es_input.xml
 * Changed the es_systems.xml logic so it loads from the program resources directory by default (a customized file can be placed in ~/.emulationstation/custom_systems)
+* Added support for using the %ESPATH% variable in the media directory setting
 * Removed the marquee image from rbsimple-DE as it's now baked into the miximages
 * Set the gamelist video scanline rendering option to disabled by default
 * Changed the setting description for the favorites game toggling button
-* Simplified the setup of portable installations on Windows
+* Simplified and improved the setup of portable installations on Windows
 * Converted all navigation sound files to stereo as previously it was a mix of mono and stereo files (done for rbsimple-DE and the fallback sounds)
 * The themes and scripts directories are now automatically created during startup
 * Cleaned up some application startup messages
@@ -252,10 +256,10 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 **The issues below are relevant for ES-DE v1.1.0**
 
+* There is an issue with launching games on Windows when using AMD and Intel GPUs. This causes the emulator to just output a blank screen. There is a workaround available for this which is enabled by default and that can be disabled via the menu option "AMD and Intel GPU game launch workaround". The drawback of this workaround is that a white instead of a black screen will displayed when launching games. If using an Nvidia GPU, it should be safe to disable this option for a slightly better user experience. An alternative workaround is to enable the option "Run in background (while game is launched)".
+
 * On macOS Big Sur (and possibly other OS versions) when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting "Only accept input from first controller" in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
 
 * Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
-
-* The launching of games can freeze ES-DE on some Windows installations. It probably only occurs on Windows 8.1 but that's not confirmed. The setting "Run in background (while game is launched)" can be enabled to get around this problem, but this causes some other issues so it should only be used as a last resort. It's unclear if this problem can or will be resolved. If it's confirmed to only affect older Windows versions, then it's probably not worthwhile fixing it.
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.
