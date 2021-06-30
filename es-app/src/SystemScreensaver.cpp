@@ -495,6 +495,11 @@ void SystemScreensaver::generateCustomImageList()
     std::string imageDir = Utils::FileSystem::expandHomePath(
             Settings::getInstance()->getString("ScreensaverSlideshowImageDir"));
 
+    // This makes it possible to set the custom image directory relative to the ES-DE binary
+    // directory or the ROM directory.
+    imageDir = Utils::String::replace(imageDir, "%ESPATH%", Utils::FileSystem::getExePath());
+    imageDir = Utils::String::replace(imageDir, "%ROMPATH%", FileData::getROMDirectory());
+
     if (imageDir != "" && Utils::FileSystem::isDirectory(imageDir)) {
         std::string imageFilter = ".jpg, .JPG, .png, .PNG";
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(
