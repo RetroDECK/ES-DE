@@ -48,6 +48,7 @@
 #endif
 
 #include <FreeImage.h>
+#include <fstream>
 #include <iostream>
 #include <time.h>
 
@@ -135,6 +136,46 @@ bool parseArgs(int argc, char* argv[])
     if (argc > 1)
         win64ConsoleType consoleType = outputToConsole(false);
     #endif
+
+    std::string portableFilePath = Utils::FileSystem::getExePath() + "/portable.txt";
+
+    // This is primarily intended for portable ES-DE installations on Windows (for example
+    // placed on a USB memory stick) but it may be usable for other operating systems too.
+    if (Utils::FileSystem::exists(portableFilePath)) {
+        std::cout << "Found portable.txt in the ES-DE executable directory\n";
+        std::ifstream portableFile;
+        std::string homePath;
+        #if defined(_WIN64)
+        portableFile.open(Utils::String::stringToWideString(portableFilePath).c_str());
+        #else
+        portableFile.open(portableFilePath.c_str());
+        #endif
+        if (!portableFile.fail()) {
+            std::string relativePath;
+            getline(portableFile, relativePath);
+            // If the file is empty, use the ES-DE executable directory as home.
+            if (relativePath == "")
+                homePath = Utils::FileSystem::getExePath();
+            else
+                homePath = Utils::FileSystem::getExePath() + "/" + relativePath;
+
+            #if defined(_WIN64)
+            homePath = Utils::String::replace(homePath, "/", "\\");
+            #endif
+
+            if (!Utils::FileSystem::exists(homePath)) {
+                std::cerr << "Error: Defined home path \"" << homePath << "\" does not exist\n";
+            }
+            else if (Utils::FileSystem::isRegularFile(homePath)) {
+                std::cerr << "Error: Defined home path \"" << homePath << "\" is a file\n";
+            }
+            else {
+                std::cout << "Setting home path to \"" << homePath << "\"\n";
+                Utils::FileSystem::setHomePath(homePath);
+            }
+        }
+        portableFile.close();
+    }
 
     // We need to process --home before any call to Settings::getInstance(),
     // because settings are loaded from the home path.
@@ -359,8 +400,13 @@ bool checkApplicationHomeDirectory()
     std::string home = Utils::FileSystem::getHomePath();
     std::string applicationHome = home + "/.emulationstation";
     if (!Utils::FileSystem::exists(applicationHome)) {
+        #if defined(_WIN64)
+            std::cout << "First startup, creating application home directory \"" <<
+                Utils::String::replace(applicationHome, "/", "\\") << "\"\n";
+        #else
         std::cout << "First startup, creating application home directory \"" <<
                 applicationHome << "\"\n";
+        #endif
         Utils::FileSystem::createDirectory(applicationHome);
         if (!Utils::FileSystem::exists(applicationHome)) {
             std::cerr << "Fatal error: Couldn't create directory, permission problems?\n";
