@@ -948,9 +948,11 @@ void FileData::launchGame(Window* window)
                 if (coreFile.find(" ") != std::string::npos)
                     coreFile = Utils::FileSystem::getEscapedPath(coreFile);
                 command.replace(coreEntryPos, separatorPos - coreEntryPos, coreFile);
+                #if !defined(_WIN64)
                 // Remove any quotation marks as it would make the launch function fail.
                 if (command.find("\"") != std::string::npos)
                     command = Utils::String::replace(command, "\"", "");
+                #endif
                 break;
             }
         }
@@ -984,7 +986,6 @@ void FileData::launchGame(Window* window)
     command = Utils::String::replace(command, "%ROM%", romPath);
     command = Utils::String::replace(command, "%BASENAME%", baseName);
     command = Utils::String::replace(command, "%ROMRAW%", romRaw);
-    command = Utils::String::replace(command, "%ESPATH%", esPath);
 
     // swapBuffers() is called here to turn the screen black to eliminate some potential
     // flickering and to avoid showing the game launch message briefly when returning
