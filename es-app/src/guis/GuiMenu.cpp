@@ -1203,7 +1203,7 @@ void GuiMenu::openOtherOptions()
 
     #if defined(_WIN64)
     // Switch callback.
-    auto launchWorkAroundToggleFunc = [launch_workaround]() {
+    auto launchWorkaroundToggleFunc = [launch_workaround]() {
         if (launch_workaround->getEnabled()) {
             launch_workaround->setEnabled(false);
             launch_workaround->setOpacity(DISABLED_OPACITY);
@@ -1217,7 +1217,7 @@ void GuiMenu::openOtherOptions()
                     getChildIndex() - 1)->setOpacity(255);
         }
     };
-    run_in_background->setCallback(launchWorkAroundToggleFunc);
+    run_in_background->setCallback(launchWorkaroundToggleFunc);
     #endif
 
     mWindow->pushGui(s);
