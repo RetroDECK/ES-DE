@@ -1033,6 +1033,7 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+    #endif
 
     // Run ES in the background when a game has been launched.
     auto run_in_background = std::make_shared<SwitchComponent>(mWindow);
@@ -1044,7 +1045,6 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
-    #endif
 
     // Whether to upscale the video frame rate to 60 FPS.
     auto video_upscale_frame_rate = std::make_shared<SwitchComponent>(mWindow);

@@ -607,18 +607,14 @@ void ViewController::onFileChanged(FileData* file, bool reloadGameList)
 
 bool ViewController::runInBackground(SystemData* system)
 {
-    #if defined(_WIN64)
+    // Running in the background is required for Steam games as Steam itself may start together
+    // with the game. In that situation ES-DE would wait until the whole Steam application was
+    // shut down before it would resume. I.e. it would not be enough to just stop the game.
     if (system->hasPlatformId(PlatformIds::VALVE_STEAM) ||
             Settings::getInstance()->getBool("RunInBackground"))
         return true;
     else
         return false;
-    #else
-    if (system->hasPlatformId(PlatformIds::VALVE_STEAM))
-        return true;
-    else
-        return false;
-    #endif
 }
 
 void ViewController::launch(FileData* game)
@@ -788,11 +784,11 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mLockInput)
         return true;
 
-    // For Steam games or if enabling the "RunInBackground" setting on Windows, ES-DE will
-    // run in the background while a game is launched. If we're in this state and then
-    // register some input, it means that the user is back in ES-DE. Therefore unset the game
-    // launch flag and update all the GUI components. This will re-enable the video player
-    // and let the screensaver start on schedule again.
+    // For Steam games or if enabling the "RunInBackground" setting, ES-DE will run in the
+    // background while a game is launched. If we're in this state and then register some
+    // input, it means that the user is back in ES-DE. Therefore unset the game launch flag
+    // and update all the GUI components. This will re-enable the video player and let the
+    // screensaver start on schedule again.
     if (mWindow->getGameLaunchedState())
         mWindow->unsetLaunchedGame();
 
@@ -954,10 +950,10 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
         }
     }
 
-    // For Steam games or if enabling the "RunInBackground" setting on Windows, ES-DE will
-    // run in the background while a game is launched. If this flag has been set, then update
-    // all the GUI components. This will disable the video player and prevent the screensaver
-    // from starting on schedule.
+    // For Steam games or if enabling the "RunInBackground" setting, ES-DE will run in the
+    // background while a game is launched. If this flag has been set, then update all the
+    // GUI components. This will disable the video player and prevent the screensaver from
+    // starting on schedule.
     if (mWindow->getGameLaunchedState())
         mWindow->setLaunchedGame();
 

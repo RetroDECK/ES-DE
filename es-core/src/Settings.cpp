@@ -244,11 +244,8 @@ void Settings::setDefaults()
     mStringMap["SaveGamelistsMode"] = { "always", "always" };
     #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = { false, false };
-    // This setting may cause problems on some Windows versions, but it seems as if Windows 10
-    // handles the suspension of ES correctly. As there are some adverse affects from running ES
-    // in the background while a game is running, by default this is set to false.
-    mBoolMap["RunInBackground"] = { false, false };
     #endif
+    mBoolMap["RunInBackground"] = { false, false };
     mStringMap["MediaDirectory"] = { "", "" };
     mBoolMap["VideoUpscaleFrameRate"] = { false, false };
     mBoolMap["LaunchCommandOverride"] = { true, true };
