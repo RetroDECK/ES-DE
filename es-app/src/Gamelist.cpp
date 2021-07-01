@@ -284,7 +284,7 @@ void updateGamelist(SystemData* system)
                     continue;
                 }
 
-                std::string nodePath =Utils::FileSystem::getCanonicalPath(
+                std::string nodePath = Utils::FileSystem::getCanonicalPath(
                         Utils::FileSystem::resolveRelativePath(pathNode.text().get(),
                         system->getStartPath(), true));
                 std::string gamePath = Utils::FileSystem::getCanonicalPath((*fit)->getPath());
