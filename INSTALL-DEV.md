@@ -1542,7 +1542,7 @@ As for `corepath` this rule is simply a path to search for the emulator core.
 
 Each rule supports multiple entry tags which are tried in the order that they are defined in the file.
 
-The %ESPATH% variable can be used inside the staticpath rules and both the %EMUPATH% and %ESPATH% variables can be used inside the corepath rules.
+The %ESPATH% and %ROMPATH% variables can be used inside the staticpath rules and the %ESPATH% and %EMUPATH% variables can be used inside the corepath rules.
 
 The tilde symbol `~` is supported for the staticpath and corepath rules and will expand to the user home directory. Be aware that if ES-DE has been started with the --home command line option, the home directory is considered to be whatever path was passed as an argument to that option. The same is true if using a portable.txt file.
 

@@ -309,6 +309,8 @@ It's required that the ROM files are in one of the supported file extensions, or
 
 It's highly recommended to use filenames that are corresponding to the full name of the game, otherwise you will need to manually feed the scraper the game name when scraping which is very tedious.
 
+**Note:** Symlinks are supported for both ROM directories and individual game files, but make sure to not symlink between files within the same system or there may be undefined application behavior when scraping, launching games etc.
+
 The default game directory folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs, on macOS /Users/\<username\>/ROMs and on Windows C:\Users\\<username\>\ROMs\. Be aware that if the --home command line option was used to start ES-DE, the tilde `~` symbol will resolve to whatever directory was passed as an argument to this option.
 
 If ES-DE can't find any game files during startup, an error message will be displayed with the option to change the ROM directory path.
