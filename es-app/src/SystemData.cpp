@@ -278,6 +278,15 @@ bool SystemData::populateFolder(FileData* folder)
             it != dirContent.cend(); it++) {
         filePath = *it;
 
+        // Skip any recursive symlinks as those would hang the application at various places.
+        if (Utils::FileSystem::isSymlink(filePath)) {
+            if (Utils::FileSystem::resolveSymlink(filePath) ==
+                    Utils::FileSystem::getFileName(filePath)) {
+                LOG(LogWarning) << "Skipped \"" << filePath << "\" as it's a recursive symlink";
+                continue;
+            }
+        }
+
         // Skip hidden files and folders.
         if (!showHiddenFiles && Utils::FileSystem::isHidden(filePath)) {
             LOG(LogDebug) << "SystemData::populateFolder(): Skipping hidden " <<
