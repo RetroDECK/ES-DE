@@ -43,8 +43,8 @@ public:
 
 private:
     UIModeController();
-    bool inputIsMatch(InputConfig * config, Input input);
-    bool isValidInput(InputConfig * config, Input input);
+    bool inputIsMatch(InputConfig* config, Input input);
+    bool isValidInput(InputConfig* config, Input input);
 
     // Return UI mode to 'full'.
     void unlockUIMode();
@@ -53,10 +53,13 @@ private:
 
     // Default passkeyseq = "uuddlrlrba", as defined in the setting 'UIMode_passkey'.
     std::string mPassKeySequence;
+
+    std::string mCurrentUIMode;
     int mPassKeyCounter;
+
+    // These are Xbox button names, so they may be different in pracise on non-Xbox controllers.
     const std::vector<std::string> mInputVals =
             { "up", "down", "left", "right", "a", "b", "x", "y" };
-    std::string mCurrentUIMode;
 };
 
 #endif // ES_APP_VIEWS_UI_MODE_CONTROLLER_H

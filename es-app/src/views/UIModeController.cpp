@@ -124,7 +124,35 @@ std::string UIModeController::getFormattedPassKeyStr()
 
     std::string out = "";
     for (auto c : mPassKeySequence) {
-        out += (out == "") ? "" : ", ";  // Add a comma after the first entry.
+        out += (out == "") ? "" : " , ";  // Add commas between the entries.
+
+        std::string controllerType = Settings::getInstance()->getString("InputControllerType");
+        std::string symbolA;
+        std::string symbolB;
+        std::string symbolX;
+        std::string symbolY;
+
+        if (controllerType == "snes") {
+            symbolA = "B";
+            symbolB = "A";
+            symbolX = "Y";
+            symbolY = "X";
+        }
+        else if (controllerType == "ps4" || controllerType == "ps5") {
+            // These symbols are far from perfect but you can at least understand what
+            // they are supposed to depict.
+            symbolA = "\uF00D"; // Cross.
+            symbolB = "\uF111"; // Circle
+            symbolX = "\uF04D"; // Square.
+            symbolY = "\uF0D8"; // Triangle.
+        }
+        else {
+            // Xbox controller.
+            symbolA = "A";
+            symbolB = "B";
+            symbolX = "X";
+            symbolY = "Y";
+        }
 
         switch (c) {
             case 'u':
@@ -140,16 +168,16 @@ std::string UIModeController::getFormattedPassKeyStr()
                 out += Utils::String::unicode2Chars(0x2192); // Arrow pointing right.
                 break;
             case 'a':
-                out += "A";
+                out += symbolA;
                 break;
             case 'b':
-                out += "B";
+                out += symbolB;
                 break;
             case 'x':
-                out += "X";
+                out += symbolX;
                 break;
             case 'y':
-                out += "Y";
+                out += symbolY;
                 break;
         }
     }
