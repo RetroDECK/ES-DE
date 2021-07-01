@@ -1212,6 +1212,8 @@ std::string FileData::findEmulatorPath(std::string& command)
         path = Utils::FileSystem::expandHomePath(path);
         // If %ESPATH% is used for the rule, then expand it to the binary directory of ES-DE.
         path = Utils::String::replace(path, "%ESPATH%", Utils::FileSystem::getExePath());
+        // Likewise for the %ROMPATH% variable which expands to the configured ROM directory.
+        path = Utils::String::replace(path, "%ROMPATH%", getROMDirectory());
         #if defined(_WIN64)
         path = Utils::String::replace(path, "/", "\\");
         #endif
