@@ -64,7 +64,8 @@ private:
     void removeControllerByJoystickID(SDL_JoystickID joyID);
 
     static InputManager* sInstance;
-    static const int DEADZONE = 23000;
+    static const int DEADZONE_TRIGGERS = 18000;
+    static const int DEADZONE_THUMBSTICKS = 23000;
     bool mConfigFileExists;
 
     std::map<SDL_JoystickID, SDL_Joystick*> mJoysticks;

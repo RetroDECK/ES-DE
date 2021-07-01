@@ -374,12 +374,19 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             }
 
             axisValue = event.caxis.value;
+            int deadzone = 0;
+
+            if (event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT ||
+                    event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
+                deadzone = DEADZONE_TRIGGERS;
+            else
+                deadzone = DEADZONE_THUMBSTICKS;
 
             // Check if the input value switched boundaries.
-            if ((abs(axisValue) > DEADZONE) != (abs(mPrevAxisValues[
-                    std::make_pair(event.caxis.which, event.caxis.axis)]) > DEADZONE)) {
+            if ((abs(axisValue) > deadzone) != (abs(mPrevAxisValues[
+                    std::make_pair(event.caxis.which, event.caxis.axis)]) > deadzone)) {
                 int normValue;
-                if (abs(axisValue) <= DEADZONE) {
+                if (abs(axisValue) <= deadzone) {
                     normValue = 0;
                 }
                 else {
