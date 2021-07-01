@@ -1184,6 +1184,33 @@ void GuiMenu::openOtherOptions()
         }
     });
 
+    // Exit button configuration.
+    auto exit_button_config = std::make_shared<OptionListComponent<std::string>>
+            (mWindow, getHelpStyle(), "CHOOSE EXIT BUTTON COMBO", false);
+    std::vector<std::string> exitButtonCombos;
+    exitButtonCombos.push_back("F4");
+    exitButtonCombos.push_back("Alt + F4");
+    exitButtonCombos.push_back("Escape");
+    #if defined(__APPLE__)
+    exitButtonCombos.push_back("\u2318 + Q");
+    #endif
+    #if defined(_WIN64)
+    exitButtonCombos.push_back("Ctrl + F4");
+    #endif
+    for (auto it = exitButtonCombos.cbegin(); it != exitButtonCombos.cend(); it++) {
+        exit_button_config->add(*it, *it, Settings::getInstance()->
+                getString("ExitButtonCombo") == *it);
+    }
+    s->addWithLabel("CHOOSE EXIT BUTTON COMBO", exit_button_config);
+    s->addSaveFunc([exit_button_config, s] {
+        if (exit_button_config->getSelected() !=
+            Settings::getInstance()->getString("ExitButtonCombo")) {
+            Settings::getInstance()->setString("ExitButtonCombo",
+                                               exit_button_config->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
     // macOS requires root privileges to reboot and power off so it doesn't make much
     // sense to enable this setting and menu entry for that operating system.
     #if !defined(__APPLE__)
