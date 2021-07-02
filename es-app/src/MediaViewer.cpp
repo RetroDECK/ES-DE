@@ -116,7 +116,7 @@ void MediaViewer::render()
         Renderer::shaderPostprocessing(shaders, videoParameters);
         #endif
     }
-    else if (mImage && mImage->hasImage()) {
+    else if (mImage && mImage->hasImage() && mImage->getSize() != 0) {
         mImage->render(transform);
 
         #if defined(USE_OPENGL_21)
