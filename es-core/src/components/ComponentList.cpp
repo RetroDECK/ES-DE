@@ -13,8 +13,14 @@
 ComponentList::ComponentList(Window* window) : IList<ComponentListRow,
         void*>(window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP)
 {
-    mSelectorBarOffset = 0;
-    mCameraOffset = 0;
+    // Adjust the padding relative to the aspect ratio and screen resolution to make it look
+    // coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
+    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    mHorizontalPadding = TOTAL_HORIZONTAL_PADDING_PX * aspectValue *
+            Renderer::getScreenWidthModifier();
+
+    mSelectorBarOffset = 0.0f;
+    mCameraOffset = 0.0f;
     mFocused = false;
 }
 
@@ -179,14 +185,14 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     Transform4x4f trans = parentTrans * getTransform();
 
     // Clip everything to be inside our bounds.
-    Vector3f dim(mSize.x(), mSize.y(), 0);
+    Vector3f dim(mSize.x(), mSize.y(), 0.0f);
     dim = trans * dim - trans.translation();
     Renderer::pushClipRect(Vector2i(static_cast<int>(std::round(trans.translation().x())),
             static_cast<int>(std::round(trans.translation().y()))), Vector2i(static_cast<int>(
             std::round(dim.x())), static_cast<int>(std::round(dim.y()))));
 
     // Scroll the camera.
-    trans.translate(Vector3f(0, -std::round(mCameraOffset), 0));
+    trans.translate(Vector3f(0.0f, -std::round(mCameraOffset), 0.0f));
 
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
@@ -313,20 +319,20 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
 
     // Assumes updateElementSize has already been called.
     float rowHeight = getRowHeight(row);
+    float x = mHorizontalPadding / 2.0f;
 
-    float x = (TOTAL_HORIZONTAL_PADDING_PX * Renderer::getScreenWidthModifier()) / 2;
     for (unsigned int i = 0; i < row.elements.size(); i++) {
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.
-        comp->setPosition(x, (rowHeight - comp->getSize().y()) / 2 + yOffset);
+        comp->setPosition(x, (rowHeight - comp->getSize().y()) / 2.0f + yOffset);
         x += comp->getSize().x();
     }
 }
 
 void ComponentList::updateElementSize(const ComponentListRow& row)
 {
-    float width = mSize.x() - (TOTAL_HORIZONTAL_PADDING_PX * Renderer::getScreenWidthModifier());
+    float width = mSize.x() - mHorizontalPadding;
     std::vector<std::shared_ptr<GuiComponent>> resizeVec;
 
     for (auto it = row.elements.cbegin(); it != row.elements.cend(); it++) {

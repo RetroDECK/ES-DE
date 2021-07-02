@@ -95,6 +95,7 @@ private:
 
     float getRowHeight(const ComponentListRow& row) const;
 
+    float mHorizontalPadding;
     float mSelectorBarOffset;
     float mCameraOffset;
 
