@@ -54,7 +54,12 @@ void NinePatchComponent::buildVertices()
     // Scale the corner size relative to the screen resolution, but keep the scale factor
     // within reason as extreme resolutions may cause artifacts. Any "normal" resolution
     // (e.g. from 720p to 4K) will be within these boundaries though.
-    float scaleFactor = Math::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
+    float scaleFactor;
+    if (Renderer::getScreenWidth() > Renderer::getScreenHeight())
+        scaleFactor = Math::clamp(Renderer::getScreenHeightModifier(), 0.4f, 3.0f);
+    else
+        scaleFactor = Math::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
+
     mTexture = TextureResource::get(mPath, false, false, true, scaleFactor);
 
     if (mTexture->getSize() == Vector2i::Zero()) {
