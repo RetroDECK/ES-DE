@@ -175,7 +175,10 @@ void GuiGameScraper::update(int deltaTime)
 
 std::vector<HelpPrompt> GuiGameScraper::getHelpPrompts()
 {
-    return mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    prompts.push_back(HelpPrompt("b", "back (cancel)"));
+
+    return prompts;
 }
 
 HelpStyle GuiGameScraper::getHelpStyle()
