@@ -73,7 +73,6 @@ float ComponentGrid::getRowHeight(int row)
 
 void ComponentGrid::setColWidthPerc(int col, float width, bool update)
 {
-    assert(width >= 0 && width <= 1);
     assert(col >= 0 && col < mGridSize.x());
     mColWidths[col] = width;
 
