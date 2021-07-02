@@ -58,6 +58,7 @@ public:
     void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }
 
     std::vector<unsigned char> getRawRGBAData() { return mDataRGBA; }
+    std::string getTextureFilePath() { return mPath; }
     bool tiled() { return mTile; }
 
 private:

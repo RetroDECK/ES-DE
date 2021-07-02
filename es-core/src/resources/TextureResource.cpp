@@ -115,6 +115,16 @@ std::vector<unsigned char> TextureResource::getRawRGBAData()
         return std::vector<unsigned char>(0);
 }
 
+std::string TextureResource::getTextureFilePath()
+{
+    std::shared_ptr<TextureData> data = sTextureDataManager.get(this);
+
+    if (data)
+        return data->getTextureFilePath();
+    else
+        return "";
+}
+
 const Vector2i TextureResource::getSize() const
 {
     return mSize;

@@ -39,6 +39,8 @@ public:
     // Returns the raw pixel values.
     std::vector<unsigned char> getRawRGBAData();
 
+    std::string getTextureFilePath();
+
     // For SVG graphics this function effectively rescales the image to the defined size.
     // It does unload and re-rasterize the texture though which may cause flickering in some
     // situations. An alternative is to set a scaling factor directly when loading the texture

@@ -426,7 +426,8 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
                     mTargetSize.y(), 0xFF000033, 0xFF000033);
             Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0xFF000033, 0xFF000033);
         }
-        if (mTexture->isInitialized()) {
+        // An image with zero size would normally indicate a corrupt image file.
+        if (mTexture->isInitialized() && mTexture->getSize() != 0) {
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just
@@ -441,7 +442,19 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
             Renderer::drawTriangleStrips(&mVertices[0], 4, trans);
         }
         else {
-            LOG(LogError) << "Image texture is not initialized!";
+            if (!mTexture) {
+                LOG(LogError) << "Image texture is not initialized";
+            }
+            else {
+                std::string textureFilePath = mTexture->getTextureFilePath();
+                if (textureFilePath != "") {
+                    LOG(LogError) << "Image texture for file \"" << textureFilePath <<
+                            "\" has zero size";
+                }
+                else {
+                    LOG(LogError) << "Image texture has zero size";
+                }
+            }
             mTexture.reset();
         }
     }

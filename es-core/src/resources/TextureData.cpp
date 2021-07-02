@@ -124,7 +124,7 @@ bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t leng
 
     if (imageRGBA.size() == 0) {
         LOG(LogError) << "Couldn't initialize texture from memory, invalid data (" <<
-                (mPath != "" ? "file path: " + mPath + ", " : "") << "data ptr: " <<
+                (mPath != "" ? "file path: \"" + mPath + "\", " : "") << "data ptr: " <<
                 reinterpret_cast<size_t>(fileData) << ", reported size: " << length << ")";
         return false;
     }
