@@ -16,9 +16,6 @@
 #include "Log.h"
 #include "Settings.h"
 
-#define OFFSET_X 12 // Move the entire thing right by this amount (px).
-#define OFFSET_Y 12 // Move the entire thing up by this amount (px).
-
 #define ICON_TEXT_SPACING 8 // Space between [icon] and [text] (px).
 #define ENTRY_SPACING 16 // Space between [text] and next [icon] (px).
 
@@ -144,7 +141,7 @@ void HelpComponent::updateGrid()
     mGrid->setSize(width, height);
 
     for (unsigned int i = 0; i < icons.size(); i++) {
-        const int col = i*4;
+        const int col = i * 4;
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x() / width);
         mGrid->setColWidthPerc(col + 1, (ICON_TEXT_SPACING *
                 Renderer::getScreenWidthModifier()) / width);
@@ -155,7 +152,6 @@ void HelpComponent::updateGrid()
     }
 
     mGrid->setPosition(Vector3f(mStyle.position.x(), mStyle.position.y(), 0.0f));
-    //mGrid->setPosition(OFFSET_X, Renderer::getScreenHeight() - mGrid->getSize().y() - OFFSET_Y);
     mGrid->setOrigin(mStyle.origin);
 }
 
