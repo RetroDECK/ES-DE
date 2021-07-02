@@ -88,11 +88,17 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     if (multiLine)
         textHeight *= 6;
 
-    mText->setSize(0, textHeight);
-    mInfoString2->setSize(Renderer::getScreenWidth() * 0.70f, mInfoString2->getFont()->getHeight());
+    // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
+    // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
+    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    float infoWidth = Math::clamp(0.70f * aspectValue, 0.60f, 0.85f) * Renderer::getScreenWidth();
+    float windowWidth = Math::clamp(0.75f * aspectValue, 0.65f, 0.90f) * Renderer::getScreenWidth();
 
-    setSize(Renderer::getScreenWidth() * 0.75f, mTitle->getFont()->getHeight() +
-            textHeight + mButtonGrid->getSize().y() + mButtonGrid->getSize().y() * 1.85f);
+    mText->setSize(0, textHeight);
+    mInfoString2->setSize(infoWidth, mInfoString2->getFont()->getHeight());
+
+    setSize(windowWidth, mTitle->getFont()->getHeight() + textHeight +
+            mButtonGrid->getSize().y() + mButtonGrid->getSize().y() * 1.85f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
             (Renderer::getScreenHeight() - mSize.y()) / 2);
     mText->startEditing();

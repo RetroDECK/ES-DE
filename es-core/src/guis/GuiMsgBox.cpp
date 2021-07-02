@@ -27,11 +27,14 @@ GuiMsgBox::GuiMsgBox(Window* window, const HelpStyle& helpstyle, const std::stri
         mDisableBackButton(disableBackButton),
         mDeleteOnButtonPress(deleteOnButtonPress)
 {
-    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 80% of the screen
-    // width rather than the 60% allowed for wider displays.
-    float width = Renderer::getScreenWidth() *
-            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.8f : 0.6f);
-    float minWidth = Renderer::getScreenWidth() * 0.3f;
+    // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
+    // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
+    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+
+    float width = floorf(Math::clamp(0.60f * aspectValue, 0.60f, 0.80f) *
+            Renderer::getScreenWidth());
+    float minWidth = floorf(Math::clamp(0.30f * aspectValue, 0.10f, 0.50f) *
+            Renderer::getScreenWidth());
 
     mMsg = std::make_shared<TextComponent>(mWindow, text, Font::get(FONT_SIZE_MEDIUM),
             0x777777FF, ALIGN_CENTER);
@@ -95,11 +98,13 @@ void GuiMsgBox::changeText(const std::string& newText)
     mMsg->setText(newText);
     mMsg->setSize(mMsg->getFont()->sizeText(newText));
 
-    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 80% of the screen
-    // width rather than the 60% allowed for wider displays.
-    float width = Renderer::getScreenWidth() *
-            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.8f : 0.6f);
+    // Adjust the width depending on the aspect ratio of the screen, to make the screen look
+    // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
+    // reference.
+    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
 
+    float width = floorf(Math::clamp(0.60f * aspectValue, 0.60f, 0.80f) *
+            Renderer::getScreenWidth());
     float minWidth = Renderer::getScreenWidth() * 0.3f;
 
     // Decide final width.

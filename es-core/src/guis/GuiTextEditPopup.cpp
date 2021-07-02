@@ -62,10 +62,10 @@ GuiTextEditPopup::GuiTextEditPopup(
         textHeight *= 6;
     mText->setSize(0, textHeight);
 
-    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 70% of the screen
-    // width rather than the 50% allowed for wider displays.
-    float width = Renderer::getScreenWidth() *
-            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.7f : 0.5f);
+    // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
+    // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
+    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    float width = Math::clamp(0.50f * aspectValue, 0.40f, 0.70f) * Renderer::getScreenWidth();
 
     setSize(width, mTitle->getFont()->getHeight() +
             textHeight + mButtonGrid->getSize().y() + mButtonGrid->getSize().y() / 2);

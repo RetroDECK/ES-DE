@@ -77,10 +77,10 @@ GuiDetectDevice::GuiDetectDevice(
             Font::get(FONT_SIZE_MEDIUM), 0xFFFFFFFF, ALIGN_CENTER);
     mGrid.setEntry(mDeviceHeld, Vector2i(0, 4), false, true);
 
-    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 80% of the screen
-    // width rather than the 60% allowed for wider displays.
-    float width = Renderer::getScreenWidth() *
-            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.8f : 0.6f);
+    // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
+    // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
+    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    float width = Math::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.5f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
