@@ -724,7 +724,7 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
     if (properties & FONT_PATH && elem->has("fontPath"))
         path = elem->get<std::string>("fontPath");
 
-    if (!Utils::FileSystem::exists(path)) {
+    if (!((path[0] == ':') && (path[1] == '/')) && !Utils::FileSystem::exists(path)) {
         LOG(LogError) << "Font file \"" << path << "\" defined by the theme does not exist, "
                 "falling back to \"" << getDefaultPath() << "\"";
         path = getDefaultPath();
