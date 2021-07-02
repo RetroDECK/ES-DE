@@ -141,10 +141,17 @@ std::string UIModeController::getFormattedPassKeyStr()
         else if (controllerType == "ps4" || controllerType == "ps5") {
             // These symbols are far from perfect but you can at least understand what
             // they are supposed to depict.
+            #if defined(_MSC_VER) // MSVC compiler.
+            symbolA = Utils::String::wideStringToString(L"\uF00D"); // Cross.
+            symbolB = Utils::String::wideStringToString(L"\uF111"); // Circle
+            symbolX = Utils::String::wideStringToString(L"\uF04D"); // Square.
+            symbolY = Utils::String::wideStringToString(L"\uF0D8"); // Triangle.
+            #else
             symbolA = "\uF00D"; // Cross.
             symbolB = "\uF111"; // Circle
             symbolX = "\uF04D"; // Square.
             symbolY = "\uF0D8"; // Triangle.
+            #endif
         }
         else {
             // Xbox controller.
