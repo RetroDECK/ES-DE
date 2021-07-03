@@ -48,6 +48,10 @@ GuiDetectDevice::GuiDetectDevice(
         deviceInfo << numDevices << " GAMEPAD" << (numDevices > 1 ? "S" : "") << " DETECTED";
     else
         deviceInfo << "NO GAMEPADS DETECTED";
+
+    if (numDevices > 1 && Settings::getInstance()->getBool("InputOnlyFirstController"))
+        deviceInfo << " (ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)";
+
     mDeviceInfo = std::make_shared<TextComponent>(mWindow, deviceInfo.str(),
             Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
     mGrid.setEntry(mDeviceInfo, Vector2i(0, 1), false, true);
