@@ -272,20 +272,6 @@ std::string InputManager::getTemporaryConfigPath()
     return path;
 }
 
-int InputManager::getNumJoysticks()
-{
-    int numJoysticks = 0;
-
-    // This is a workaround to exclude the keyboard (ID -1) from the total joystick count.
-    // It's incorrectly added when configuring the keyboard in GuiInputConfig, but I've
-    // been unable to find a proper fix to not having it added to mJoysticks.
-    for (auto it = mJoysticks.cbegin(); it != mJoysticks.cend(); it++) {
-        if ((*it).first >= 0)
-            numJoysticks += 1;
-    }
-    return numJoysticks;
-}
-
 int InputManager::getNumConfiguredDevices()
 {
     int num = 0;
@@ -672,7 +658,7 @@ void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
     auto it = mInputConfigs.find(joyID);
     mInputConfigs.erase(it);
 
-    // Close the controllers.
+    // Close the controller and remove its entry.
     auto controllerIt = mControllers.find(joyID);
     if (controllerIt != mControllers.cend()) {
         SDL_GameControllerClose(controllerIt->second);
@@ -680,5 +666,14 @@ void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
     }
     else {
         LOG(LogError) << "Couldn't find controller to close (instance ID: " << joyID << ")";
+    }
+
+    // Remove the joystick entry.
+    auto joystickIt = mJoysticks.find(joyID);
+    if (joystickIt != mJoysticks.cend()) {
+        mJoysticks.erase(joystickIt);
+    }
+    else {
+        LOG(LogError) << "Couldn't find joystick entry to remove (instance ID: " << joyID << ")";
     }
 }

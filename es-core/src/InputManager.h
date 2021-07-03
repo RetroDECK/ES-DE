@@ -43,7 +43,6 @@ public:
     static std::string getConfigPath();
     static std::string getTemporaryConfigPath();
 
-    int getNumJoysticks();
     int getNumConfiguredDevices();
     int getAxisCountByDevice(int deviceId);
     int getButtonCountByDevice(int deviceId);
@@ -52,6 +51,8 @@ public:
     InputConfig* getInputConfigByDevice(int deviceId);
 
     bool parseEvent(const SDL_Event& event, Window* window);
+
+    int getNumJoysticks() { return mJoysticks.size(); }
 
 private:
     bool initialized() const;
