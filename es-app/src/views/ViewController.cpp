@@ -404,6 +404,11 @@ void ViewController::goToGameList(SystemData* system)
         mPreviousView.reset();
         mPreviousView = nullptr;
     }
+    else if (!mPreviousView && mState.viewing == GAME_LIST) {
+        // This is needed as otherwise the static image would not get rendered during the
+        // first Slide transition when coming from the System view.
+        mSkipView = getGameListView(system);
+    }
 
     if (mState.viewing != SYSTEM_SELECT) {
         mPreviousView = mCurrentView;

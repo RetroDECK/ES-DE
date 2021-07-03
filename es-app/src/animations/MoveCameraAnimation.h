@@ -27,7 +27,8 @@ public:
     {
         // Cubic ease out.
         t -= 1;
-        cameraOut.translation() = -Vector3f().lerp(-mCameraStart.translation(), mTarget, t*t*t + 1);
+        cameraOut.translation() =
+                -Vector3f().lerp(-mCameraStart.translation(), mTarget, t * t * t + 1);
     }
 
 private:
