@@ -45,14 +45,14 @@ The latest stable version is 1.0.1 (released 2021-05-01)
 | macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.1-x64_legacy.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.1-x64_legacy.dmg)|
 | Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.1-x64.exe](https://es-de.org/releases/stable/Windows/EmulationStation-DE-1.0.1-x64.exe)|
 
-The latest pre-release version is 1.1.0-beta1 (released 2021-06-27)
+The latest pre-release version is 1.1.0-beta2 (released 2021-07-04)
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-beta1-x64.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-beta1-x64.deb)|
-| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-beta1-x64.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-beta1-x64.rpm)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-beta1-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.1.0-beta1-x64.dmg)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-beta1-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.1.0-beta1-x64.exe)|
+| Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-beta2-x64.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-beta2-x64.deb)|
+| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-beta2-x64.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-beta2-x64.rpm)|
+| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-beta2-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.1.0-beta2-x64.dmg)|
+| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-beta2-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.1.0-beta2-x64.exe)|
 
 Unfortunately due to technical reasons, v1.0.1 will be the last release for legacy macOS versions.
 
