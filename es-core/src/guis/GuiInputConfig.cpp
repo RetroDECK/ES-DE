@@ -180,37 +180,6 @@ GuiInputConfig::GuiInputConfig(
     buttons.push_back(std::make_shared<ButtonComponent>
             (mWindow, "OK", "ok", [this, okFunction] { okFunction(); }));
 
-//    This code is disabled as there is no intention to provide emulator configuration or
-//    similar control via ES-DE. Let's keep the code for reference though.
-//    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [this, okFunction] {
-//        // Check if the hotkey enable button is set. if not prompt the
-//        // user to use select or nothing.
-//        Input input;
-//        okFunction();
-//        if (!mTargetConfig->getInputByName("HotKeyEnable", &input)) {
-//            mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-//                    "YOU DIDN'T CHOOSE A HOTKEY ENABLE BUTTON. THIS IS REQUIRED FOR EXITING "
-//                    "GAMES WITH A CONTROLLER. DO YOU WANT TO USE THE SELECT BUTTON DEFAULT ? "
-//                    "PLEASE ANSWER YES TO USE SELECT OR NO TO NOT SET A HOTKEY ENABLE BUTTON.",
-//                    "YES", [this, okFunction] {
-//                Input input;
-//                mTargetConfig->getInputByName("Back", &input);
-//                mTargetConfig->mapInput("HotKeyEnable", input);
-//                okFunction();
-//            },
-//            "NO", [this, okFunction] {
-//                // For a disabled hotkey enable button, set to a key with id 0,
-//                // so the input configuration script can be backwards compatible.
-//                mTargetConfig->mapInput("HotKeyEnable", Input(DEVICE_KEYBOARD,
-//                    TYPE_KEY, 0, 1, true));
-//                okFunction();
-//            }));
-//        }
-//        else {
-//            okFunction();
-//        }
-//    }));
-
     mButtonGrid = makeButtonGrid(mWindow, buttons);
     mGrid.setEntry(mButtonGrid, Vector2i(0, 6), true, false);
 
@@ -239,9 +208,9 @@ void GuiInputConfig::populateConfigList()
 
     if (controllerType == "snes") {
         sGuiInputConfigList[4] =
-        { "Start",                false, "START",                  ":/help/button_start_SNES.svg" };
-        sGuiInputConfigList[5] =
         { "Back",                 false, "SELECT",                 ":/help/button_back_SNES.svg" };
+        sGuiInputConfigList[5] =
+        { "Start",                false, "START",                  ":/help/button_start_SNES.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "B",                      ":/help/mbuttons_a_SNES.svg" };
         sGuiInputConfigList[7] =
@@ -253,9 +222,9 @@ void GuiInputConfig::populateConfigList()
     }
     else if (controllerType == "ps4") {
         sGuiInputConfigList[4] =
-        { "Start",                false, "OPTIONS",                ":/help/button_start_PS4.svg" };
-        sGuiInputConfigList[5] =
         { "Back",                 false, "SHARE",                  ":/help/button_back_PS4.svg" };
+        sGuiInputConfigList[5] =
+        { "Start",                false, "OPTIONS",                ":/help/button_start_PS4.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "CROSS",                  ":/help/mbuttons_a_PS.svg" };
         sGuiInputConfigList[7] =
@@ -267,9 +236,9 @@ void GuiInputConfig::populateConfigList()
     }
     else if (controllerType == "ps5") {
         sGuiInputConfigList[4] =
-        { "Start",                false, "OPTIONS",                ":/help/button_start_PS5.svg" };
-        sGuiInputConfigList[5] =
         { "Back",                 false, "CREATE",                 ":/help/button_back_PS5.svg" };
+        sGuiInputConfigList[5] =
+        { "Start",                false, "OPTIONS",                ":/help/button_start_PS5.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "CROSS",                  ":/help/mbuttons_a_PS.svg" };
         sGuiInputConfigList[7] =
@@ -281,9 +250,9 @@ void GuiInputConfig::populateConfigList()
     }
     else if (controllerType == "xbox360") {
         sGuiInputConfigList[4] =
-        { "Start",                false, "START",                  ":/help/button_start_XBOX360.svg" };
-        sGuiInputConfigList[5] =
         { "Back",                 false, "BACK",                   ":/help/button_back_XBOX360.svg" };
+        sGuiInputConfigList[5] =
+        { "Start",                false, "START",                  ":/help/button_start_XBOX360.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "A",                      ":/help/mbuttons_a_XBOX.svg" };
         sGuiInputConfigList[7] =
@@ -296,9 +265,9 @@ void GuiInputConfig::populateConfigList()
     else {
         // Xbox One and later.
         sGuiInputConfigList[4] =
-        { "Start",                false, "MENU",                   ":/help/button_start_XBOX.svg" };
-        sGuiInputConfigList[5] =
         { "Back",                 false, "VIEW",                   ":/help/button_back_XBOX.svg" };
+        sGuiInputConfigList[5] =
+        { "Start",                false, "MENU",                   ":/help/button_start_XBOX.svg" };
         sGuiInputConfigList[6] =
         { "A",                    false, "A",                      ":/help/mbuttons_a_XBOX.svg" };
         sGuiInputConfigList[7] =
