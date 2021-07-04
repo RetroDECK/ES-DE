@@ -52,7 +52,7 @@ public:
 
     bool parseEvent(const SDL_Event& event, Window* window);
 
-    int getNumJoysticks() { return mJoysticks.size(); }
+    int getNumJoysticks() { return static_cast<int>(mJoysticks.size()); }
 
 private:
     bool initialized() const;
