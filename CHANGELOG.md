@@ -54,6 +54,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * The quit menu is now disabled by default, instead showing the "Quit EmulationStation" entry unless configured otherwise
 * Removed the "Display game media from ROM directories" setting as it doesn't make sense to support this legacy functionality any longer
 * Added support for using the %ESPATH% and %ROMPATH% variables in the slideshow screensaver custom image directory setting
+* Improved scaling relative to the screen aspect ratio for various GUI components which enhances the layout on 4:3 displays and ultrawide monitors
 * Removed the menu fade-in effect as it looked terrible
 * Enabled the menu scale-up effect for the OpenGL ES renderer
 * Renamed es_systems.cfg, es_settings.cfg and es_input.cfg to es_systems.xml, es_settings.xml and es_input.xml
@@ -78,9 +79,11 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 ### Bug fixes
 
 * Marking all games as favorites for a system or folder or removing all favorite markings would sometimes crash the application
+* Attempting to load a non-existent font file defined by the theme crashed the application instead of using the bundled fallback font
 * Games that were filtered out were included in the random game selection for the grouped custom collections view
 * After switching theme sets with only a single system available, diagonal slide transitions would sometimes play when moving to the system view
 * Ongoing slide transition animations would continue to play after switching theme sets
+* When using the Video view style, the static image would not get rendered during the first Slide transition when coming from the System view
 * Long game names that were horizontally scrolling in the gamelist view would sometimes flicker when returning to the start position
 * On Windows, images with Unicode characters in the game name that were resized when scraping would not get saved with valid filenames
 * The glitches when configuring trigger buttons in GuiInputConfig have been fixed
@@ -88,7 +91,9 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * GuiInputConfig didn't correctly inform which buttons could be skipped for some rows
 * The scraper would sometimes consider very small images to be invalid
 * The Quick System Select help prompt was shown even when there was only a single game system present
+* The "Back (cancel)" help prompt was missing for the single-game scraper
 * The "Y" button help prompt wasn't displayed correctly when using the Grid view style
+* Encountering a corrupt image file would lead to a continuous loop of attempts to load the image while filling the log file with error messages
 * Cropping in ImageComponent didn't work correctly
 * The debug logging for the analog controller inputs had some inconsistent signs
 

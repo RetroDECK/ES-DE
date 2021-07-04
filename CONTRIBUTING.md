@@ -43,22 +43,22 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
 * On-screen keyboard
 * Web proxy support for the scraper
-* Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
+* Add GLM library dependency for matrix and vector operations, starting to decommission the built-in functions
+* Flatpak and Snap releases on Linux
 
 #### v1.3
 
 * Localization/multi-language support
+* Overhaul of the theme handling, adding capabilities and improving compatibility with Recalbox and Batocera themes
+* Scrapping the Grid view style and adding a general grid/wall component instead
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
-* Complete overhaul of the grid view style
-* A nice and useful grid view implementation in rbsimple-DE
-* Improved text and font functions, e.g. faster and cleaner line wrapping
-* Flatpak and Snap support on Linux
+* Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
 #### v1.4
 
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
+* Scrollbars for menus and gamelists
 * Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
-* Simple file browsing component
 * Add 'time played' counter per game, similar to how it works in Steam
 * Preload all built-in resources and never clear them from the cache
 * Improved multi-threading
@@ -66,8 +66,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.5
 
 * Bulk metadata editor
-* Overhaul of the GUI element scaling and placement logic to make ES-DE look more consistent across different resolutions
-* Scrollbars for menus and gamelists
+* Simple file browsing component
 * Improve the performance of the GLSL shader code
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Support for additional scraper services (if feasible?)
