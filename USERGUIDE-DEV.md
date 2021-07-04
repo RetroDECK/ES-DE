@@ -215,7 +215,7 @@ _The help system is displayed at the bottom of the screen, showing the various a
 
 ## General navigation
 
-The built-in help system will provide a contextual summary of the available navigation options, but here's still a general overview. These are the inputs you mapped in the previous input device configuration step. Note that this is not an exhaustive list, but it covers most situations.
+The built-in help system will provide a contextual summary of the available navigation options, but here's still a general overview. These are the buttons optionally mapped in the previous input device configuration step. Note that this is not an exhaustive list, but it covers most situations. The button names are based on the Xbox 360 controller as that is the naming convention used by the SDL library which handles the controller input in ES-DE.
 
 The default keyboard mappings are shown in brackets.
 
@@ -234,7 +234,7 @@ _(Escape)_
 
 Opens and closes the main menu.
 
-**Select button**\
+**Back button**\
 _(F1)_
 
 Opens and closes the game options menu in the gamelist view, or toggles the screensaver in the system view (if the _Enable screensaver controls_ setting is activated).
@@ -257,7 +257,7 @@ Jumps to a random game or system depending on whether pressed when in the system
 **A button**\
 _(Enter)_
 
-Select button to open gamelists from the system view, launch games, choose menu entries etc.
+Used to open gamelists from the system view, launch games, choose menu entries etc.
 
 **B button**\
 _(Back key)_
@@ -988,7 +988,7 @@ The screensaven type to use; _Dim_, _Black_, _Slideshow_ or _Video_.
 
 **Enable screensaver controls**
 
-This includes the ability to start the screensaver manually using the _Select_ button from the system view, but also while the screensaver is running to jump to a new random game using the _Left_ and _Right_ buttons, to launch the game currently shown using the _A_ button and to jump to the game in its gamelist using the _Y_ button. If this setting is disabled, any key or button press will stop the screensaver.
+This includes the ability to start the screensaver manually using the _Back_ button from the system view, but also while the screensaver is running to jump to a new random game using the _Left_ and _Right_ buttons, to launch the game currently shown using the _A_ button and to jump to the game in its gamelist using the _Y_ button. If this setting is disabled, any key or button press will stop the screensaver.
 
 #### Slideshow screensaver settings
 
@@ -1242,7 +1242,7 @@ Self explanatory.
 
 This menu is opened from the gamelist views, and can't be accessed from the system view. The menu changes slightly depending on the context, for example if a game file or a folder is selected, or whether the current system is a collection or a normal game platform.
 
-You open the menu using the **Select** button, and by pressing **B** or selecting the **Apply** button any settings such as letter jumping using the quick selector or sorting changes are applied. If you instead press the Select button again, the menu is closed without applying any changes.
+You open the menu using the **Back** button, and by pressing **B** or selecting the **Apply** button any settings such as letter jumping using the quick selector or sorting changes are applied. If you instead press the Back button again, the menu is closed without applying any changes.
 
 ![alt text](images/current/es-de_game_options_menu.png "ES-DE Game Options Menu")
 _The game options menu as laid out when opening it from within a custom collection, which adds the menu entry to add or remove games from the collection._
@@ -1449,7 +1449,7 @@ Numerous options can be set for these screensavers, as detailed [here](USERGUIDE
 
 The Dim screensaver simply dims and desaturates the current view and Black will show a black screen. The Slideshow and Video screensavers are more interesting as they can display images and videos from your game collection. In addition to this, the Slideshow screensaver can be configured to only show images from a specified directory.
 
-If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the **Select** key. In addition to this, for the Slideshow and Video screensavers, the controls will allow you to jump to a new random image or video using the **Left** and **Right** buttons on your keyboard or controller. It's also possible to launch the game currently displayed using the **A** button, and the **Y** button will jump to the game in its gamelist without starting it.
+If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the **Back** button. In addition to this, for the Slideshow and Video screensavers, the controls will allow you to jump to a new random image or video using the **Left** and **Right** buttons on your keyboard or controller. It's also possible to launch the game currently displayed using the **A** button, and the **Y** button will jump to the game in its gamelist without starting it.
 
 If the Video screensaver has been selected and there are no videos available, a fallback to the Dim screensaver will take place. The same is true for the Slideshow screensaver if no game images are available.
 

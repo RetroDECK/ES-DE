@@ -14,6 +14,8 @@ ES-DE is developed and compiled using Clang/LLVM and GCC on Unix, Clang/LLVM on 
 
 CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `nmake` and `make` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during the development. The only exception is notarization of codesigned macOS packages which require the `altool` and `stapler` binaries that come bundled with Xcode.
 
+For automatic code formatting clang-format is used.
+
 Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
 
 
@@ -27,7 +29,7 @@ The code has some dependencies. For building, you'll need CMake and development 
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install build-essential git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libgl1-mesa-dev
+sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libgl1-mesa-dev
 ```
 
 If building with the optional VLC video player, the following packages are also needed:
@@ -39,7 +41,7 @@ sudo apt-get install vlc libvlc-dev
 
 Use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel rapidjson-devel alsa-lib-devel mesa-libGL-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel rapidjson-devel alsa-lib-devel mesa-libGL-devel
 ```
 
 If building with the VLC video player, add the RPM Fusion repository.
@@ -56,7 +58,7 @@ sudo dnf install vlc vlc-devel
 Use pacman to install all the required packages:
 
 ```
-sudo pacman -S gcc make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml rapidjson
+sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml rapidjson
 ```
 
 If building with the optional VLC video player, the following package is also needed:
@@ -82,7 +84,7 @@ Clang/LLVM and cURL should already be installed in the base OS image.
 
 Use pkgin to install the dependencies:
 ```
-pkgin install git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml rapidjson
+pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml rapidjson
 ```
 
 If building with the optional VLC video player, the following package is also needed:
@@ -90,13 +92,13 @@ If building with the optional VLC video player, the following package is also ne
 pkgin vlc
 ```
 
-NetBSD ships with GCC by default, and although you should be able to install and use Clang/LLVM, it's probably easier to just stick to the default compiler environment.
+NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
 
 **On OpenBSD**
 
 Use pkg_add to install the dependencies:
 ```
-pkg_add cmake pkgconf sdl2 ffmpeg freeimage
+pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage
 ```
 
 If building with the optional VLC video player, the following package is also needed:
@@ -416,7 +418,7 @@ Be aware that Homebrew can be really slow, especially when it compiles packages 
 Install the required tools and dependencies:
 
 ```
-brew install cmake pkg-config nasm fdk-aac libvpx sdl2 freeimage freetype pugixml rapidjson
+brew install clang-format cmake pkg-config nasm fdk-aac libvpx sdl2 freeimage freetype pugixml rapidjson
 ```
 
 If building with the optional VLC video player, then run this as well:
@@ -767,6 +769,11 @@ After installation, make a copy of `TDM-GCC-64/bin/mingw32-make` to `make` just 
 Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW installation should work fine though.
 
 **Other preparations:**
+
+In order to get clang-format onto the system you need to download and install Clang: \
+[https://llvm.org/builds](https://llvm.org/builds)
+
+Just run the installer and make sure to select the option "Add LLVM to the system PATH for current user".
 
 Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
 
@@ -1138,6 +1145,37 @@ And it will look in the following locations for the themes, also in the listed o
 The theme is not mandatory to start the application, but ES-DE will be basically useless without it.
 
 So the home directory will always take precedence, and any resources or themes located there will override the ones in the path of the ES-DE executable.
+
+
+## Using clang-format for automatic code formatting
+
+Although not completed yet as of writing this, ES-DE will have its entire codebase automatically formatted by clang-format. There is a style configuration file named .clang-format located directly at the root of the ES-DE source repository which can be used to apply the formatting anywhere in the source tree.
+
+How to install clang-format is detailed per operating system earlier in this document.
+
+There are two ways to run this tool, from the command line or from inside an editor such as VSCode.
+
+To format a file from the command line, simply run:
+
+```clang-format -i <source file>```
+
+The -i flag will make an inplace edit of the file.
+
+But the recommended way is to run clang-format from within the editor. If using VSCode, there is an extension available named Clang-Format. After installing this, simply open a source file, right click and choose `Format Document` or use the applicable keyboard shortcut. The first time you do this, you will have to make a choice to perform the formatting using clang-format. The rest should be completely automatic.
+
+In some instances you want to avoid getting code formatted, and you accomplish this by simply enclosing the code by the two comments "clang-format off" and "clang-format on", such as this:
+
+```c++
+// clang-format off
+CollectionSystemDecl systemDecls[] = {
+//  Type                  Name                Long name       Theme folder           isCustom
+    { AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false },
+    { AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false },
+    { AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false },
+    { CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true  }
+};
+// clang-format on
+```
 
 
 ## CA certificates and MAME ROM information

@@ -87,36 +87,20 @@ To see which features have been implemented in previous versions, please refer t
 
 ### Coding style
 
-The coding style for ES-DE is mostly a combination of the Linux kernel style (although that's C it's close enough to C++ as far as I'm concerned) and Google's C++ guidelines.
+The coding style for ES-DE is mostly a combination of the Webkit and Linux kernel guidelines. The cosmetic aspect of the style is auto-formatted using clang-format, so all code changes must first have been processed using this tool. You can read in [INSTALL-DEV.md](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
 
-Please refer to these documents here:
+But of course clang-format won't change the actual code content or fix all code style choices so here are some additional key points:
 
-https://www.kernel.org/doc/html/v4.10/process/coding-style.html \
-https://google.github.io/styleguide/cppguide.html
-
-**Some key points:**
-
-* Column width (line length) is 100 characters
-* Indentation is 4 spaces, don't use tabs as they can be interpreted differently
-* Line break is Unix-style (line feed only, no carriage return)
-* Do not leave trailing whitespaces at the end of the lines (a good source code editor should have a setting to automatically trim these for you)
-* When breaking up long lines into multiple lines, consider what could be useful data to grep for so you don't break in the middle of such a string
-* Comments always in C++ style, i.e. `//` instead of `/* */`
+* Always write comments in C++ style, i.e. `//` instead of `/* */`
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
-* Use K&R placements of braces, read the Linux kernel coding style document for clarifications
-* Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while ()` etc.
-* Indentation of switch/case statements is optional, but it's usually easier to read the code with indentations in place
-* Use `std::string` or `std::vector<char>` instead of `char *` or `char []` unless there is a specific reason requiring the latter
-* Actually, try to use C++ syntax in general instead of C syntax, another example would be `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
-* If the arguments (and initializer list) for a function or class exceeds 4 items, arrange them vertically to make the code easier to read
+* As a general rule, use C++ syntax instead of C syntax, for example `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
 * Always declare one variable per line, never combine multiple declarations of the same type
-* Name local variables with the first word in small letters and the proceeding words starting with capital letters, e.g. `myExampleVariable`
-* Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables with an `s` such as `sMyStaticVariable`
-* Use the same naming convention for functions as for local variables, e.g. `someFunction()`
-* Single-line function definitions are fine to put in the header files, but if it's more than one line, place it in the corresponding .cpp file
-* Inline functions makes perfect sense to use, but don't overdo it by using them for functions that won't be called very frequently
-* Don't put more than one statement on a single line (there are some exceptions though like lambda expressions and possibly switch statements)
+* Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables starting with an `s` such as `sMyStaticVariable`
+* Single-line function definitions can be placed in either the .h or .cpp files depending on the situation
+
+* Inline functions makes perfect sense to use, but don't overdo it by using them for code that won't be called very frequently
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
+* Try to be coherent with the existing codebase regarding names, structure etc., it should not be obvious which person wrote what parts
 * For the rest, check the code and have fun! :)
 
 ### Building and configuring

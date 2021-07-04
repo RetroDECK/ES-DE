@@ -33,6 +33,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Default controller configuration is now automatically applied, input configuration should rarely if ever be required any longer except for deliberate button customization
 * Added support for selecting the controller type (Xbox, Xbox 360, PS4, PS5 and SNES), which changes the help icons, help text and the input configuration tool icons and text
 * Added an option to limit the input in ES-DE to only the first controller (does not affect the emulators)
+* Switched the order of the "Back" and "Start" buttons (or equivalents) in the input configurator to align with the other button entries which go from left to right
 * Added separate controller deadzone values for the triggers and thumbsticks
 * Removed the startup notification regarding default keyboard mappings being in use, instead default mappings are now considered the recommended input configuration
 * The controller input configuration is not automatically started any longer if there is no es_input.cfg file or if there are no applicable configuration entries in the file
@@ -73,6 +74,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added a function to ImageComponent to crop fully transparent areas around an image
 * Added a CMake option to control whether the VLC video player should be built, and set this to off by default
 * Removed the pointless APPLE_SKIP_INSTALL_LIBS CMake option
+* Added a clang-format style configuration file to use for automatic code formatting
 * Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
 
