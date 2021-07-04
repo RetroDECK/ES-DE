@@ -13,6 +13,8 @@
 #include "Settings.h"
 #include "Window.h"
 
+#define DEBUG_VIDEO false
+
 VideoFFmpegComponent::VideoFFmpegComponent(
         Window* window)
         : VideoComponent(window),
@@ -631,10 +633,10 @@ void VideoFFmpegComponent::getProcessedFrames()
             mAudioFrameResampled) >= 0) {
 
         AudioFrame currFrame;
+        AVRational timeBase;
 
         mAudioFrameResampled->best_effort_timestamp = mAudioFrameResampled->pts;
 
-        AVRational timeBase;
         timeBase.num = 1;
         timeBase.den = mAudioFrameResampled->sample_rate;
 
@@ -671,10 +673,12 @@ void VideoFFmpegComponent::outputFrames()
     while (!mAudioFrameQueue.empty()) {
         if (mAudioFrameQueue.front().pts < mAccumulatedTime + AUDIO_BUFFER) {
             // Enable only when needed, as this generates a lot of debug output.
-//            LOG(LogDebug) << "Processing audio frame with PTS: " <<
-//            mAudioFrameQueue.front().pts;
-//            LOG(LogDebug) << "Total audio frames processed / audio frame queue size: " <<
-//            mAudioFrameCount << " / " << std::to_string(mAudioFrameQueue.size());
+            if (DEBUG_VIDEO) {
+                LOG(LogDebug) << "Processing audio frame with PTS: " <<
+                mAudioFrameQueue.front().pts;
+                LOG(LogDebug) << "Total audio frames processed / audio frame queue size: " <<
+                mAudioFrameCount << " / " << std::to_string(mAudioFrameQueue.size());
+            }
 
             bool outputSound = false;
 
@@ -712,10 +716,12 @@ void VideoFFmpegComponent::outputFrames()
     while (mIsActuallyPlaying && !mVideoFrameQueue.empty()) {
         if (mVideoFrameQueue.front().pts < mAccumulatedTime) {
             // Enable only when needed, as this generates a lot of debug output.
-//            LOG(LogDebug) << "Processing video frame with PTS: " <<
-//                    mVideoFrameQueue.front().pts;
-//            LOG(LogDebug) << "Total video frames processed / video frame queue size: " <<
-//                    mVideoFrameCount << " / " << std::to_string(mVideoFrameQueue.size());
+            if (DEBUG_VIDEO) {
+                LOG(LogDebug) << "Processing video frame with PTS: " <<
+                        mVideoFrameQueue.front().pts;
+                LOG(LogDebug) << "Total video frames processed / video frame queue size: " <<
+                        mVideoFrameCount << " / " << std::to_string(mVideoFrameQueue.size());
+            }
 
             mPictureMutex.lock();
 
