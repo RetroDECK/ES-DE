@@ -97,7 +97,6 @@ But of course clang-format won't change the actual code content or fix all code 
 * Always declare one variable per line, never combine multiple declarations of the same type
 * Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables starting with an `s` such as `sMyStaticVariable`
 * Single-line function definitions can be placed in either the .h or .cpp files depending on the situation
-
 * Inline functions makes perfect sense to use, but don't overdo it by using them for code that won't be called very frequently
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
 * Try to be coherent with the existing codebase regarding names, structure etc., it should not be obvious which person wrote what parts
