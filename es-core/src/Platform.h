@@ -13,6 +13,7 @@
 
 #if defined(_WIN64)
 #include <winsock2.h>
+// This order is required as MinGW complains if windows.h is included before winsock2.h.
 #include <windows.h>
 #endif
 
