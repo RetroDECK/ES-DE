@@ -20,7 +20,6 @@
 #
 #  This script is only intended to be used on Linux systems.
 #
-#
 
 if [ ! -f ../es-app/CMakeLists.txt ]; then
   echo "You need to run this script from within the tools directory."
