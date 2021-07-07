@@ -1186,7 +1186,7 @@ void GuiMenu::openOtherOptions()
 
     // Exit button configuration.
     auto exit_button_config = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "CHOOSE EXIT BUTTON COMBO", false);
+            (mWindow, getHelpStyle(), "EXIT BUTTON COMBO", false);
     std::vector<std::string> exitButtonCombos;
     exitButtonCombos.push_back("F4");
     exitButtonCombos.push_back("Alt + F4");
