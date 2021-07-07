@@ -28,7 +28,7 @@
 int SDL_USER_CECBUTTONDOWN = -1;
 int SDL_USER_CECBUTTONUP = -1;
 
-// save button states for combo-button exit support and predefine exit option-function map
+// Save button states for combo-button exit support and predefine exit option-function map.
 static bool altDown = false;
 static bool lguiDown = false;
 
@@ -436,15 +436,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
         }
         case SDL_KEYDOWN: {
 
-            // save button states for alt and command
+            // Save button states for alt and command.
             if (event.key.keysym.sym == SDLK_LALT)
-            {
                 altDown = true;
-            }
             if (event.key.keysym.sym == SDLK_LGUI)
-            {
                 lguiDown = true;
-            }
 
             if (event.key.keysym.sym == SDLK_BACKSPACE && SDL_IsTextInputActive())
                 window->textInput("\b");
@@ -452,18 +448,17 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             if (event.key.repeat)
                 return false;
 
-            // handle application exit
+            // Handle application exit.
             bool exitState;
             std::string exitOption = Settings::getInstance()->getString("ExitButtonCombo");
-            if (exitOption == "AltF4"){
+            if (exitOption == "AltF4")
                 exitState = event.key.keysym.sym == SDLK_F4 && altDown;
-            }else if (exitOption == "CmdQ"){
+            else if (exitOption == "CmdQ")
                 exitState = event.key.keysym.sym == SDLK_q && lguiDown;
-            }else if (exitOption == "AltQ"){
+            else if (exitOption == "AltQ")
                 exitState = event.key.keysym.sym == SDLK_q && altDown;
-            }else{
+            else
                 exitState = event.key.keysym.sym == SDLK_F4;
-            }
             if (exitState) {
                 SDL_Event quit;
                 quit.type = SDL_QUIT;
@@ -477,15 +472,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
         }
         case SDL_KEYUP: {
 
-            // release button states
+            // Release button states.
             if (event.key.keysym.sym == SDLK_LALT)
-            {
                 altDown = false;
-            }
             if (event.key.keysym.sym == SDLK_LGUI)
-            {
                 lguiDown = false;
-            }
 
             window->input(getInputConfigByDevice(DEVICE_KEYBOARD), Input(DEVICE_KEYBOARD,
                     TYPE_KEY, event.key.keysym.sym, 0, false));
