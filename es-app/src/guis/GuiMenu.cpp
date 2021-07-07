@@ -1190,12 +1190,11 @@ void GuiMenu::openOtherOptions()
     std::vector<std::string> exitButtonCombos;
     exitButtonCombos.push_back("F4");
     exitButtonCombos.push_back("Alt + F4");
-    exitButtonCombos.push_back("Escape");
+    #if defined(_WIN64) || defined(__unix__)
+    exitButtonCombos.push_back("Alt + Q");
+    #endif
     #if defined(__APPLE__)
     exitButtonCombos.push_back("\u2318 + Q");
-    #endif
-    #if defined(_WIN64)
-    exitButtonCombos.push_back("Ctrl + F4");
     #endif
     for (auto it = exitButtonCombos.cbegin(); it != exitButtonCombos.cend(); it++) {
         exit_button_config->add(*it, *it, Settings::getInstance()->

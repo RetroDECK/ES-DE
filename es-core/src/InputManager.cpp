@@ -30,7 +30,6 @@ int SDL_USER_CECBUTTONUP = -1;
 
 // save button states for combo-button exit support and predefine exit option-function map
 static bool altDown = false;
-static bool ctrlDown = false;
 static bool lguiDown = false;
 
 InputManager* InputManager::sInstance = nullptr;
@@ -442,10 +441,6 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             {
                 altDown = true;
             }
-            if (event.key.keysym.sym == SDLK_LCTRL)
-            {
-                ctrlDown = true;
-            }
             if (event.key.keysym.sym == SDLK_LGUI)
             {
                 lguiDown = true;
@@ -458,18 +453,16 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
                 return false;
 
             // handle application exit
-            bool exitState = false;
+            bool exitState;
             std::string exitOption = Settings::getInstance()->getString("ExitButtonCombo");
-            if (exitOption == "F4"){
-                exitState = event.key.keysym.sym == SDLK_F4;
-            }else if (exitOption == "Alt + F4"){
+            if (exitOption == "Alt + F4"){
                 exitState = event.key.keysym.sym == SDLK_F4 && altDown;
             }else if (exitOption == "\u2318 + Q"){
-                exitState = event.key.keysym.sym == SDLK_F4 && lguiDown;
-            }else if (exitOption == "Ctrl + F4"){
-                exitState = event.key.keysym.sym == SDLK_F4 && ctrlDown;
-            }else if (exitOption == "Escape"){
-                exitState = event.key.keysym.sym == SDLK_ESCAPE;
+                exitState = event.key.keysym.sym == SDLK_q && lguiDown;
+            }else if (exitOption == "Alt + Q"){
+                exitState = event.key.keysym.sym == SDLK_q && altDown;
+            }else{
+                exitState = event.key.keysym.sym == SDLK_F4;
             }
             if (exitState) {
                 SDL_Event quit;
@@ -488,10 +481,6 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             if (event.key.keysym.sym == SDLK_LALT)
             {
                 altDown = false;
-            }
-            if (event.key.keysym.sym == SDLK_LCTRL)
-            {
-                ctrlDown = false;
             }
             if (event.key.keysym.sym == SDLK_LGUI)
             {
