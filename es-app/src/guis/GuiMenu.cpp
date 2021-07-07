@@ -1187,20 +1187,16 @@ void GuiMenu::openOtherOptions()
     // Exit button configuration.
     auto exit_button_config = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "EXIT BUTTON COMBO", false);
-    std::vector<std::string> exitButtonCombos;
-    exitButtonCombos.push_back("F4");
-    exitButtonCombos.push_back("Alt + F4");
+    std::string selectedExitButtonCombo = Settings::getInstance()->getString("ExitButtonCombo");
+    exit_button_config->add("F4", "F4", selectedExitButtonCombo == "F4");
+    exit_button_config->add("Alt + F4", "AltF4", selectedExitButtonCombo == "AltF4");
     #if defined(_WIN64) || defined(__unix__)
-    exitButtonCombos.push_back("Alt + Q");
+    exit_button_config->add("Alt + Q", "AltQ", selectedExitButtonCombo == "AltQ");
     #endif
     #if defined(__APPLE__)
-    exitButtonCombos.push_back("\u2318 + Q");
+    exit_button_config->add("\u2318 + Q", "CmdQ", selectedExitButtonCombo == "CmdQ");
     #endif
-    for (auto it = exitButtonCombos.cbegin(); it != exitButtonCombos.cend(); it++) {
-        exit_button_config->add(*it, *it, Settings::getInstance()->
-                getString("ExitButtonCombo") == *it);
-    }
-    s->addWithLabel("CHOOSE EXIT BUTTON COMBO", exit_button_config);
+    s->addWithLabel("EXIT BUTTON COMBO", exit_button_config);
     s->addSaveFunc([exit_button_config, s] {
         if (exit_button_config->getSelected() !=
             Settings::getInstance()->getString("ExitButtonCombo")) {

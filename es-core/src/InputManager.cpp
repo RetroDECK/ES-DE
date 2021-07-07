@@ -455,11 +455,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             // handle application exit
             bool exitState;
             std::string exitOption = Settings::getInstance()->getString("ExitButtonCombo");
-            if (exitOption == "Alt + F4"){
+            if (exitOption == "AltF4"){
                 exitState = event.key.keysym.sym == SDLK_F4 && altDown;
-            }else if (exitOption == "\u2318 + Q"){
+            }else if (exitOption == "CmdQ"){
                 exitState = event.key.keysym.sym == SDLK_q && lguiDown;
-            }else if (exitOption == "Alt + Q"){
+            }else if (exitOption == "AltQ"){
                 exitState = event.key.keysym.sym == SDLK_q && altDown;
             }else{
                 exitState = event.key.keysym.sym == SDLK_F4;
