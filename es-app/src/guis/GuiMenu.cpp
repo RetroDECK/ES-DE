@@ -948,6 +948,28 @@ void GuiMenu::openOtherOptions()
     });
     #endif
 
+    // Exit button configuration.
+    auto exit_button_config = std::make_shared<OptionListComponent<std::string>>
+                                                                              (mWindow, getHelpStyle(), "EXIT BUTTON COMBO", false);
+    std::string selectedExitButtonCombo = Settings::getInstance()->getString("ExitButtonCombo");
+    exit_button_config->add("F4", "F4", selectedExitButtonCombo == "F4");
+    exit_button_config->add("Alt + F4", "AltF4", selectedExitButtonCombo == "AltF4");
+    #if defined(_WIN64) || defined(__unix__)
+    exit_button_config->add("Alt + Q", "AltQ", selectedExitButtonCombo == "AltQ");
+    #endif
+    #if defined(__APPLE__)
+    exit_button_config->add("\u2318 + Q", "CmdQ", selectedExitButtonCombo == "CmdQ");
+    #endif
+    s->addWithLabel("EXIT BUTTON COMBO", exit_button_config);
+    s->addSaveFunc([exit_button_config, s] {
+        if (exit_button_config->getSelected() !=
+            Settings::getInstance()->getString("ExitButtonCombo")) {
+            Settings::getInstance()->setString("ExitButtonCombo",
+                                               exit_button_config->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
     // When to save game metadata.
     auto save_gamelist_mode = std::make_shared<OptionListComponent<std::string>>
             (mWindow, getHelpStyle(), "WHEN TO SAVE METADATA", false);
@@ -1180,28 +1202,6 @@ void GuiMenu::openOtherOptions()
         if (Settings::getInstance()->getBool("EnableMenuKidMode") !=
                 enable_menu_kid_mode->getState()) {
             Settings::getInstance()->setBool("EnableMenuKidMode", enable_menu_kid_mode->getState());
-            s->setNeedsSaving();
-        }
-    });
-
-    // Exit button configuration.
-    auto exit_button_config = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "EXIT BUTTON COMBO", false);
-    std::string selectedExitButtonCombo = Settings::getInstance()->getString("ExitButtonCombo");
-    exit_button_config->add("F4", "F4", selectedExitButtonCombo == "F4");
-    exit_button_config->add("Alt + F4", "AltF4", selectedExitButtonCombo == "AltF4");
-    #if defined(_WIN64) || defined(__unix__)
-    exit_button_config->add("Alt + Q", "AltQ", selectedExitButtonCombo == "AltQ");
-    #endif
-    #if defined(__APPLE__)
-    exit_button_config->add("\u2318 + Q", "CmdQ", selectedExitButtonCombo == "CmdQ");
-    #endif
-    s->addWithLabel("EXIT BUTTON COMBO", exit_button_config);
-    s->addSaveFunc([exit_button_config, s] {
-        if (exit_button_config->getSelected() !=
-            Settings::getInstance()->getString("ExitButtonCombo")) {
-            Settings::getInstance()->setString("ExitButtonCombo",
-                                               exit_button_config->getSelected());
             s->setNeedsSaving();
         }
     });
