@@ -36,8 +36,8 @@ void RatingComponent::setValue(const std::string& value)
         mValue = 0.0f;
     }
     else {
-        // Round up to the closest .1 value, i.e. to the closest half-icon.
-        mValue = ceilf(stof(value) / 0.1f) / 10.0f;
+        // Round to the closest .1 value, i.e. to the closest half-icon.
+        mValue = std::round(stof(value) / 0.1f) / 10.0f;
         mOriginalValue = static_cast<int>(mValue * 10.0f);
 
         // If the argument to colorize the rating icons has been passed, set the
