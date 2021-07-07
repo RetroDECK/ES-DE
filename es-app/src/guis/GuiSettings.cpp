@@ -10,33 +10,31 @@
 
 #include "guis/GuiSettings.h"
 
-#include "components/HelpComponent.h"
-#include "guis/GuiTextEditPopup.h"
-#include "views/gamelist/IGameListView.h"
-#include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "Settings.h"
 #include "SystemData.h"
 #include "Window.h"
+#include "components/HelpComponent.h"
+#include "guis/GuiTextEditPopup.h"
+#include "views/ViewController.h"
+#include "views/gamelist/IGameListView.h"
 
-GuiSettings::GuiSettings(
-        Window* window,
-        std::string title)
-        : GuiComponent(window),
-        mMenu(window, title),
-        mNeedsSaving(false),
-        mNeedsReloadHelpPrompts(false),
-        mNeedsCollectionsUpdate(false),
-        mNeedsSorting(false),
-        mNeedsSortingCollections(false),
-        mNeedsResetFilters(false),
-        mNeedsReloading(false),
-        mNeedsGoToStart(false),
-        mNeedsGoToSystem(false),
-        mNeedsGoToGroupedCollections(false),
-        mInvalidateCachedBackground(false),
-        mGoToSystem(nullptr)
+GuiSettings::GuiSettings(Window* window, std::string title)
+    : GuiComponent(window)
+    , mMenu(window, title)
+    , mNeedsSaving(false)
+    , mNeedsReloadHelpPrompts(false)
+    , mNeedsCollectionsUpdate(false)
+    , mNeedsSorting(false)
+    , mNeedsSortingCollections(false)
+    , mNeedsResetFilters(false)
+    , mNeedsReloading(false)
+    , mNeedsGoToStart(false)
+    , mNeedsGoToSystem(false)
+    , mNeedsGoToGroupedCollections(false)
+    , mInvalidateCachedBackground(false)
+    , mGoToSystem(nullptr)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -44,11 +42,12 @@ GuiSettings::GuiSettings(
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
     mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2.0f,
-            Renderer::getScreenHeight() * 0.13f);
+                      Renderer::getScreenHeight() * 0.13f);
 }
 
 GuiSettings::~GuiSettings()
 {
+    // Save on exit.
     save();
 }
 
@@ -72,11 +71,11 @@ void GuiSettings::save()
     }
 
     if (mNeedsSorting) {
-        for (auto it = SystemData::sSystemVector.cbegin(); it !=
-                SystemData::sSystemVector.cend(); it++) {
-            if (!(!mNeedsSortingCollections && (*it)->isCollection())) {
+        for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
+             it++) {
+            if (!(!mNeedsSortingCollections && (*it)->isCollection()))
                 (*it)->sortSystem(true);
-            }
+
             // Jump to the first row of the gamelist.
             IGameListView* gameList = ViewController::get()->getGameListView((*it)).get();
             gameList->setCursor(gameList->getFirstEntry());
@@ -84,11 +83,10 @@ void GuiSettings::save()
     }
 
     if (mNeedsResetFilters) {
-        for (auto it = SystemData::sSystemVector.cbegin();
-                it != SystemData::sSystemVector.cend(); it++) {
+        for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+             it != SystemData::sSystemVector.cend(); it++) {
             if ((*it)->getThemeFolder() == "custom-collections") {
-                for (FileData* customSystem :
-                        (*it)->getRootFolder()->getChildrenListToDisplay())
+                for (FileData* customSystem : (*it)->getRootFolder()->getChildrenListToDisplay())
                     customSystem->getSystem()->getIndex()->resetFilters();
             }
             (*it)->getIndex()->resetFilters();
@@ -125,7 +123,7 @@ void GuiSettings::save()
         // these views can behave a bit strange during collection changes so it's better to be on
         // the safe side.
         if (state.getSystem()->isCollection() &&
-                state.getSystem()->getThemeFolder() != "custom-collections") {
+            state.getSystem()->getThemeFolder() != "custom-collections") {
             ViewController::get()->goToStart();
             ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
             // We don't want to invalidate the cached background when there has been a collection
@@ -135,7 +133,7 @@ void GuiSettings::save()
         // If the last displayed custom collection was just disabled, then go to start (to the
         // system view).
         if (std::find(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(),
-                state.getSystem()) == SystemData::sSystemVector.end()) {
+                      state.getSystem()) == SystemData::sSystemVector.end()) {
             ViewController::get()->goToStart();
             return;
         }
@@ -152,18 +150,17 @@ void GuiSettings::save()
     }
 }
 
-void GuiSettings::addEditableTextComponent(
-        const std::string label,
-        std::shared_ptr<GuiComponent> ed,
-        std::string value,
-        std::string defaultValue,
-        bool isPassword)
+void GuiSettings::addEditableTextComponent(const std::string label,
+                                           std::shared_ptr<GuiComponent> ed,
+                                           std::string value,
+                                           std::string defaultValue,
+                                           bool isPassword)
 {
     ComponentListRow row;
     row.elements.clear();
 
     auto lbl = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(label),
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                                               Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     row.addElement(lbl, true);
     row.addElement(ed, true);
@@ -200,11 +197,11 @@ void GuiSettings::addEditableTextComponent(
     row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
         // Never display the value if it's a password, instead set it to blank.
         if (isPassword)
-            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
-                    "", updateVal, false));
+            mWindow->pushGui(
+                new GuiTextEditPopup(mWindow, getHelpStyle(), label, "", updateVal, false));
         else
-            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
-                    ed->getValue(), updateVal, false));
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, ed->getValue(),
+                                                  updateVal, false));
     });
     assert(ed);
     addRow(row);
@@ -218,15 +215,6 @@ bool GuiSettings::input(InputConfig* config, Input input)
         delete this;
         return true;
     }
-
-//  Keep code for potential future use.
-//  if (config->isMappedTo("start", input) && input.value != 0) {
-//      // Close everything.
-//      Window* window = mWindow;
-//      while (window->peekGui() && window->peekGui() != ViewController::get())
-//          delete window->peekGui();
-//      return true;
-//  }
 
     return GuiComponent::input(config, input);
 }

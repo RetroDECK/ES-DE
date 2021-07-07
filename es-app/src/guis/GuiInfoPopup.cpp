@@ -14,21 +14,18 @@
 
 #include <SDL2/SDL_timer.h>
 
-GuiInfoPopup::GuiInfoPopup(
-        Window* window,
-        std::string message,
-        int duration)
-        : GuiComponent(window),
-        mMessage(message),
-        mDuration(duration),
-        mRunning(true)
+GuiInfoPopup::GuiInfoPopup(Window* window, std::string message, int duration)
+    : GuiComponent(window)
+    , mMessage(message)
+    , mDuration(duration)
+    , mRunning(true)
 {
     mFrame = new NinePatchComponent(window);
     float maxWidth = Renderer::getScreenWidth() * 0.9f;
     float maxHeight = Renderer::getScreenHeight() * 0.2f;
 
-    std::shared_ptr<TextComponent> s = std::make_shared<TextComponent>(mWindow, "",
-            Font::get(FONT_SIZE_MINI), 0x444444FF, ALIGN_CENTER);
+    std::shared_ptr<TextComponent> s = std::make_shared<TextComponent>(
+        mWindow, "", Font::get(FONT_SIZE_MINI), 0x444444FF, ALIGN_CENTER);
 
     // We do this to force the text container to resize and return the actual expected popup size.
     s->setSize(0.0f, 0.0f);
@@ -51,13 +48,13 @@ GuiInfoPopup::GuiInfoPopup(
     mSize[0] = mSize.x() + paddingX;
     mSize[1] = mSize.y() + paddingY;
 
-    float posX = Renderer::getScreenWidth()* 0.5f - mSize.x() * 0.5f;
+    float posX = Renderer::getScreenWidth() * 0.5f - mSize.x() * 0.5f;
     float posY = Renderer::getScreenHeight() * 0.02f;
 
     setPosition(posX, posY, 0);
 
     mFrame->setImagePath(":/graphics/frame.svg");
-    mFrame->fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
+    mFrame->fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
     addChild(mFrame);
 
     // We only initialize the actual time when we first start to render.

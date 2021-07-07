@@ -9,11 +9,12 @@
 
 #include "MetaData.h"
 
-#include "utils/FileSystemUtil.h"
 #include "Log.h"
+#include "utils/FileSystemUtil.h"
 
 #include <pugixml.hpp>
 
+// clang-format off
 MetaDataDecl gameDecls[] = {
 // key,           type,                default,           statistic, name in GuiMetaDataEd,        prompt in GuiMetaDataEd,            shouldScrape
 {"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
@@ -39,9 +40,6 @@ MetaDataDecl gameDecls[] = {
 {"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
 };
 
-const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls +
-        sizeof(gameDecls) / sizeof(gameDecls[0]));
-
 MetaDataDecl folderDecls[] = {
 {"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
 {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
@@ -59,13 +57,18 @@ MetaDataDecl folderDecls[] = {
 {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",       "enter hide metadata off/on",       false},
 {"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
 };
+// clang-format on
 
-const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls +
-        sizeof(folderDecls) / sizeof(folderDecls[0]));
+const std::vector<MetaDataDecl> gameMDD(gameDecls,
+                                        gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
+
+const std::vector<MetaDataDecl> folderMDD(folderDecls,
+                                          folderDecls +
+                                              sizeof(folderDecls) / sizeof(folderDecls[0]));
 
 const std::vector<MetaDataDecl>& getMDDByType(MetaDataListType type)
 {
-    switch(type) {
+    switch (type) {
         case GAME_METADATA:
             return gameMDD;
         case FOLDER_METADATA:
@@ -77,7 +80,8 @@ const std::vector<MetaDataDecl>& getMDDByType(MetaDataListType type)
 }
 
 MetaDataList::MetaDataList(MetaDataListType type)
-        : mType(type), mWasChanged(false)
+    : mType(type)
+    , mWasChanged(false)
 {
     const std::vector<MetaDataDecl>& mdd = getMDD();
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++)
@@ -85,7 +89,8 @@ MetaDataList::MetaDataList(MetaDataListType type)
 }
 
 MetaDataList MetaDataList::createFromXML(MetaDataListType type,
-        pugi::xml_node& node, const std::string& relativeTo)
+                                         pugi::xml_node& node,
+                                         const std::string& relativeTo)
 {
     MetaDataList mdl(type);
 
@@ -107,8 +112,9 @@ MetaDataList MetaDataList::createFromXML(MetaDataListType type,
     return mdl;
 }
 
-void MetaDataList::appendToXML(pugi::xml_node& parent, bool ignoreDefaults,
-        const std::string& relativeTo) const
+void MetaDataList::appendToXML(pugi::xml_node& parent,
+                               bool ignoreDefaults,
+                               const std::string& relativeTo) const
 {
     const std::vector<MetaDataDecl>& mdd = getMDD();
 
@@ -138,30 +144,33 @@ void MetaDataList::set(const std::string& key, const std::string& value)
 
 const std::string& MetaDataList::get(const std::string& key) const
 {
-    // Check that the key actually exists, otherwise return empty string.
+    // Check that the key actually exists, otherwise return an empty string.
     if (mMap.count(key) > 0)
         return mMap.at(key);
     else
-
-    return mNoResult;
+        return mNoResult;
 }
 
 int MetaDataList::getInt(const std::string& key) const
 {
+    // Return integer value.
     return atoi(get(key).c_str());
 }
 
 float MetaDataList::getFloat(const std::string& key) const
 {
+    // Return float value.
     return static_cast<float>(atof(get(key).c_str()));
 }
 
 bool MetaDataList::wasChanged() const
 {
+    // Return whether the metadata was changed.
     return mWasChanged;
 }
 
 void MetaDataList::resetChangedFlag()
 {
+    // Reset the change flag.
     mWasChanged = false;
 }

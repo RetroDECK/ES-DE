@@ -48,8 +48,9 @@ namespace FileSorts
         FileData::SortType(&compareSystemDescending, "system, descending")
     };
 
-    const std::vector<FileData::SortType> SortTypes(typesArr, typesArr +
-            sizeof(typesArr)/sizeof(typesArr[0]));
+    const std::vector<FileData::SortType> SortTypes(typesArr,
+                                                    typesArr +
+                                                        sizeof(typesArr) / sizeof(typesArr[0]));
 
     bool compareName(const FileData* file1, const FileData* file2)
     {
@@ -155,11 +156,13 @@ namespace FileSorts
             file2Players = file2Players.substr(dashPos + 1, file2Players.size() - dashPos - 1);
         // Any non-numeric value will end up as zero.
         if (!file1Players.empty() &&
-                std::all_of(file1Players.begin(), file1Players.end(), ::isdigit))
+            std::all_of(file1Players.begin(), file1Players.end(), ::isdigit)) {
             file1Int = stoi(file1Players);
+        }
         if (!file2Players.empty() &&
-                std::all_of(file2Players.begin(), file2Players.end(), ::isdigit))
+            std::all_of(file2Players.begin(), file2Players.end(), ::isdigit)) {
             file2Int = stoi(file2Players);
+        }
         return file1Int < file2Int;
     }
 
@@ -177,11 +180,13 @@ namespace FileSorts
         if (dashPos != std::string::npos)
             file2Players = file2Players.substr(dashPos + 1, file2Players.size() - dashPos - 1);
         if (!file1Players.empty() &&
-                std::all_of(file1Players.begin(), file1Players.end(), ::isdigit))
+            std::all_of(file1Players.begin(), file1Players.end(), ::isdigit)) {
             file1Int = stoi(file1Players);
+        }
         if (!file2Players.empty() &&
-                std::all_of(file2Players.begin(), file2Players.end(), ::isdigit))
+            std::all_of(file2Players.begin(), file2Players.end(), ::isdigit)) {
             file2Int = stoi(file2Players);
+        }
         return file1Int > file2Int;
     }
 
@@ -201,16 +206,18 @@ namespace FileSorts
     {
         // Only games have playcount metadata.
         if (file1->metadata.getType() == GAME_METADATA &&
-                file2->metadata.getType() == GAME_METADATA)
+            file2->metadata.getType() == GAME_METADATA) {
             return (file1)->metadata.getInt("playcount") < (file2)->metadata.getInt("playcount");
+        }
         return false;
     }
 
     bool compareTimesPlayedDescending(const FileData* file1, const FileData* file2)
     {
         if (file1->metadata.getType() == GAME_METADATA &&
-                file2->metadata.getType() == GAME_METADATA)
+            file2->metadata.getType() == GAME_METADATA) {
             return (file1)->metadata.getInt("playcount") > (file2)->metadata.getInt("playcount");
+        }
         return false;
     }
 
@@ -227,4 +234,5 @@ namespace FileSorts
         std::string system2 = Utils::String::toUpper(file2->getSystemName());
         return system1.compare(system2) > 0;
     }
-};
+
+}; // namespace FileSorts

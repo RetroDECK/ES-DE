@@ -22,7 +22,7 @@ public:
     ~GuiInfoPopup();
 
     void render(const Transform4x4f& parentTrans) override;
-    inline void stop() override { mRunning = false; }
+    void stop() override { mRunning = false; }
 
 private:
     bool updateState();

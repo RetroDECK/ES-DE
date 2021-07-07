@@ -8,45 +8,40 @@
 
 #include "views/gamelist/DetailedGameListView.h"
 
-#include "animations/LambdaAnimation.h"
-#include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
 #include "SystemData.h"
+#include "animations/LambdaAnimation.h"
+#include "views/ViewController.h"
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 650
 
-DetailedGameListView::DetailedGameListView(
-        Window* window,
-        FileData* root)
-        : BasicGameListView(window, root),
-        mDescContainer(window),
-        mDescription(window),
-        mGamelistInfo(window),
-
-        mThumbnail(window),
-        mMarquee(window),
-        mImage(window),
-
-        mLblRating(window),
-        mLblReleaseDate(window),
-        mLblDeveloper(window),
-        mLblPublisher(window),
-        mLblGenre(window),
-        mLblPlayers(window),
-        mLblLastPlayed(window),
-        mLblPlayCount(window),
-
-        mRating(window),
-        mReleaseDate(window),
-        mDeveloper(window),
-        mPublisher(window),
-        mGenre(window),
-        mPlayers(window),
-        mLastPlayed(window),
-        mPlayCount(window),
-        mName(window),
-        mLastUpdated(nullptr)
+DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
+    : BasicGameListView(window, root)
+    , mDescContainer(window)
+    , mDescription(window)
+    , mGamelistInfo(window)
+    , mThumbnail(window)
+    , mMarquee(window)
+    , mImage(window)
+    , mLblRating(window)
+    , mLblReleaseDate(window)
+    , mLblDeveloper(window)
+    , mLblPublisher(window)
+    , mLblGenre(window)
+    , mLblPlayers(window)
+    , mLblLastPlayed(window)
+    , mLblPlayCount(window)
+    , mRating(window)
+    , mReleaseDate(window)
+    , mDeveloper(window)
+    , mPublisher(window)
+    , mGenre(window)
+    , mPlayers(window)
+    , mLastPlayed(window)
+    , mPlayCount(window)
+    , mName(window)
+    , mLastUpdated(nullptr)
 {
     const float padding = 0.01f;
 
@@ -114,8 +109,8 @@ DetailedGameListView::DetailedGameListView(
     addChild(&mName);
 
     mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
-    mDescContainer.setSize(mSize.x() * (0.50f - 2 * padding), mSize.y() -
-            mDescContainer.getPosition().y());
+    mDescContainer.setSize(mSize.x() * (0.50f - 2.0f * padding),
+                           mSize.y() - mDescContainer.getPosition().y());
     mDescContainer.setAutoScroll(true);
     mDescContainer.setDefaultZIndex(40);
     addChild(&mDescContainer);
@@ -140,20 +135,20 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 
     using namespace ThemeFlags;
     mThumbnail.applyTheme(theme, getName(), "md_thumbnail",
-            POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+                          POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mMarquee.applyTheme(theme, getName(), "md_marquee",
-            POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+                        POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mImage.applyTheme(theme, getName(), "md_image",
-            POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+                      POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mName.applyTheme(theme, getName(), "md_name", ALL);
 
     initMDLabels();
     std::vector<TextComponent*> labels = getMDLabels();
     assert(labels.size() == 8);
-    std::vector<std::string> lblElements = {
-            "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher",
-            "md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
-    };
+    std::vector<std::string> lblElements = { "md_lbl_rating",     "md_lbl_releasedate",
+                                             "md_lbl_developer",  "md_lbl_publisher",
+                                             "md_lbl_genre",      "md_lbl_players",
+                                             "md_lbl_lastplayed", "md_lbl_playcount" };
 
     for (unsigned int i = 0; i < labels.size(); i++)
         labels[i]->applyTheme(theme, getName(), lblElements[i], ALL);
@@ -161,19 +156,19 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
     initMDValues();
     std::vector<GuiComponent*> values = getMDValues();
     assert(values.size() == 8);
-    std::vector<std::string> valElements = {
-            "md_rating", "md_releasedate", "md_developer", "md_publisher",
-            "md_genre", "md_players", "md_lastplayed", "md_playcount"
-    };
+    std::vector<std::string> valElements = { "md_rating",     "md_releasedate", "md_developer",
+                                             "md_publisher",  "md_genre",       "md_players",
+                                             "md_lastplayed", "md_playcount" };
 
     for (unsigned int i = 0; i < values.size(); i++)
         values[i]->applyTheme(theme, getName(), valElements[i], ALL ^ ThemeFlags::TEXT);
 
     mDescContainer.applyTheme(theme, getName(), "md_description",
-            POSITION | ThemeFlags::SIZE | Z_INDEX | VISIBLE);
+                              POSITION | ThemeFlags::SIZE | Z_INDEX | VISIBLE);
     mDescription.setSize(mDescContainer.getSize().x(), 0);
-    mDescription.applyTheme(theme, getName(), "md_description",
-            ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
+    mDescription.applyTheme(
+        theme, getName(), "md_description",
+        ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
 
     mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
     // If there is no position defined in the theme for gamelistInfo, then hide it.
@@ -205,7 +200,7 @@ void DetailedGameListView::initMDLabels()
         }
         else {
             // Work from the last component.
-            GuiComponent* lc = components[i-1];
+            GuiComponent* lc = components[i - 1];
             pos = lc->getPosition() + Vector3f(0, lc->getSize().y() + rowPadding, 0);
         }
 
@@ -232,13 +227,13 @@ void DetailedGameListView::initMDValues()
 
     float bottom = 0.0f;
 
-    const float colSize = (mSize.x() * 0.48f) / 2;
+    const float colSize = (mSize.x() * 0.48f) / 2.0f;
     for (unsigned int i = 0; i < labels.size(); i++) {
-        const float heightDiff = (labels[i]->getSize().y() - values[i]->getSize().y()) / 2;
+        const float heightDiff = (labels[i]->getSize().y() - values[i]->getSize().y()) / 2.0f;
         values[i]->setPosition(labels[i]->getPosition() +
-                Vector3f(labels[i]->getSize().x(), heightDiff, 0));
+                               Vector3f(labels[i]->getSize().x(), heightDiff, 0));
         values[i]->setSize(colSize - labels[i]->getSize().x(), values[i]->getSize().y());
-        values[i]->setDefaultZIndex(40);
+        values[i]->setDefaultZIndex(40.0f);
 
         float testBot = values[i]->getPosition().y() + values[i]->getSize().y();
 
@@ -247,8 +242,8 @@ void DetailedGameListView::initMDValues()
     }
 
     mDescContainer.setPosition(mDescContainer.getPosition().x(), bottom + mSize.y() * 0.01f);
-    mDescContainer.setSize(mDescContainer.getSize().x(), mSize.y() -
-            mDescContainer.getPosition().y());
+    mDescContainer.setSize(mDescContainer.getSize().x(),
+                           mSize.y() - mDescContainer.getPosition().y());
 }
 
 void DetailedGameListView::updateInfoPanel()
@@ -267,7 +262,7 @@ void DetailedGameListView::updateInfoPanel()
     if (file) {
         // Always hide the metadata fields if browsing grouped custom collections.
         if (file->getSystem()->isCustomCollection() &&
-                file->getPath() == file->getSystem()->getName())
+            file->getPath() == file->getSystem()->getName())
             hideMetaDataFields = true;
         else
             hideMetaDataFields = (file->metadata.get("hidemetadata") == "true");
@@ -283,9 +278,9 @@ void DetailedGameListView::updateInfoPanel()
     // or if we're in the grouped custom collection view.
     if (mList.isScrolling())
         if ((mLastUpdated && mLastUpdated->metadata.get("hidemetadata") == "true") ||
-                (mLastUpdated->getSystem()->isCustomCollection() &&
-                mLastUpdated->getPath() == mLastUpdated->getSystem()->getName()))
-        hideMetaDataFields = true;
+            (mLastUpdated->getSystem()->isCustomCollection() &&
+             mLastUpdated->getPath() == mLastUpdated->getSystem()->getName()))
+            hideMetaDataFields = true;
 
     if (hideMetaDataFields) {
         mLblRating.setVisible(false);
@@ -333,9 +328,9 @@ void DetailedGameListView::updateInfoPanel()
         // which will generate a description of three random games and return a pointer to
         // the first of these so that we can display its game media.
         if (file->getSystem()->isCustomCollection() &&
-                file->getPath() == file->getSystem()->getName()) {
-            mRandomGame = CollectionSystemsManager::get()->
-                    updateCollectionFolderMetadata(file->getSystem());
+            file->getPath() == file->getSystem()->getName()) {
+            mRandomGame =
+                CollectionSystemsManager::get()->updateCollectionFolderMetadata(file->getSystem());
             if (mRandomGame) {
                 mThumbnail.setImage(mRandomGame->getThumbnailPath());
                 mMarquee.setImage(mRandomGame->getMarqueePath());
@@ -366,21 +361,21 @@ void DetailedGameListView::updateInfoPanel()
         if (mIsFiltered) {
             if (mFilteredGameCountAll == mFilteredGameCount)
                 gamelistInfoString += ViewController::FILTER_CHAR + " " +
-                        std::to_string(mFilteredGameCount) + " / " +
-                        std::to_string(mGameCount);
+                                      std::to_string(mFilteredGameCount) + " / " +
+                                      std::to_string(mGameCount);
             else
                 gamelistInfoString += ViewController::FILTER_CHAR + " " +
-                        std::to_string(mFilteredGameCount) + " + " +
-                        std::to_string(mFilteredGameCountAll - mFilteredGameCount) + " / " +
-                        std::to_string(mGameCount);
+                                      std::to_string(mFilteredGameCount) + " + " +
+                                      std::to_string(mFilteredGameCountAll - mFilteredGameCount) +
+                                      " / " + std::to_string(mGameCount);
         }
         else {
-            gamelistInfoString += ViewController::CONTROLLER_CHAR + " " +
-                    std::to_string(mGameCount);
+            gamelistInfoString +=
+                ViewController::CONTROLLER_CHAR + " " + std::to_string(mGameCount);
             if (!(file->getSystem()->isCollection() &&
-                    file->getSystem()->getFullName() == "favorites"))
-                gamelistInfoString += "  " + ViewController::FAVORITE_CHAR + " "
-                        + std::to_string(mFavoritesGameCount);
+                  file->getSystem()->getFullName() == "favorites"))
+                gamelistInfoString += "  " + ViewController::FAVORITE_CHAR + " " +
+                                      std::to_string(mFavoritesGameCount);
         }
 
         if (mIsFolder && infoAlign != ALIGN_RIGHT)
@@ -390,9 +385,9 @@ void DetailedGameListView::updateInfoPanel()
 
         // Fade in the game image.
         auto func = [this](float t) {
-            mImage.setOpacity(static_cast<unsigned char>(Math::lerp(
-                    static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
-            };
+            mImage.setOpacity(static_cast<unsigned char>(
+                Math::lerp(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+        };
         mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
 
         mDescription.setText(file->metadata.get("desc"));

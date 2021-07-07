@@ -13,11 +13,11 @@
 #ifndef ES_APP_VIEWS_VIEW_CONTROLLER_H
 #define ES_APP_VIEWS_VIEW_CONTROLLER_H
 
+#include "FileData.h"
+#include "GuiComponent.h"
 #include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiMsgBox.h"
 #include "renderers/Renderer.h"
-#include "FileData.h"
-#include "GuiComponent.h"
 
 #include <vector>
 
@@ -46,8 +46,10 @@ public:
     // If a basic view detected a metadata change, it can request to recreate
     // the current gamelist view (as it may change to be detailed).
     void reloadGameListView(IGameListView* gamelist, bool reloadTheme = false);
-    inline void reloadGameListView(SystemData* system, bool reloadTheme = false)
-            { reloadGameListView(getGameListView(system).get(), reloadTheme); }
+    void reloadGameListView(SystemData* system, bool reloadTheme = false)
+    {
+        reloadGameListView(getGameListView(system).get(), reloadTheme);
+    }
     // Reload everything with a theme.
     // Used when the "ThemeSet" setting changes.
     void reloadAll();
@@ -67,22 +69,26 @@ public:
     void stopScrolling();
 
     void onFileChanged(FileData* file, bool reloadGameList);
-    void triggerGameLaunch(FileData* game) { mGameToLaunch = game; mLockInput = true; };
-    bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); };
+    void triggerGameLaunch(FileData* game)
+    {
+        mGameToLaunch = game;
+        mLockInput = true;
+    };
+    bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const Transform4x4f& parentTrans) override;
 
     enum ViewMode {
-        NOTHING,
+        NOTHING, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
         START_SCREEN,
         SYSTEM_SELECT,
         GAME_LIST
     };
 
     enum GameListViewStyle {
-        AUTOMATIC,
+        AUTOMATIC, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
         BASIC,
         DETAILED,
         GRID,
@@ -93,18 +99,18 @@ public:
         ViewMode viewing;
         GameListViewStyle viewstyle;
 
-        inline SystemData* getSystem() const
+        SystemData* getSystem() const
         {
             assert(viewing == GAME_LIST || viewing == SYSTEM_SELECT);
             return system;
         }
 
-        private:
-            friend ViewController;
-            SystemData* system;
+    private:
+        friend ViewController;
+        SystemData* system;
     };
 
-    inline const State& getState() const { return mState; }
+    const State& getState() const { return mState; }
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
     virtual HelpStyle getHelpStyle() override;
@@ -143,6 +149,9 @@ private:
     std::map<SystemData*, std::shared_ptr<IGameListView>> mGameListViews;
     std::shared_ptr<SystemView> mSystemListView;
 
+    FileData* mGameToLaunch;
+    State mState;
+
     Transform4x4f mCamera;
     bool mSystemViewTransition;
     bool mWrappedViews;
@@ -151,9 +160,6 @@ private:
     bool mCancelledTransition; // Needed only for the Fade transition style.
     bool mLockInput;
     bool mNextSystem;
-    FileData* mGameToLaunch;
-
-    State mState;
 };
 
 #endif // ES_APP_VIEWS_VIEW_CONTROLLER_H

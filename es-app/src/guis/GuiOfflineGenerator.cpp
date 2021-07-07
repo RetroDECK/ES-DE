@@ -9,17 +9,15 @@
 
 #include "guis/GuiOfflineGenerator.h"
 
+#include "SystemData.h"
 #include "components/MenuComponent.h"
 #include "views/ViewController.h"
-#include "SystemData.h"
 
-GuiOfflineGenerator::GuiOfflineGenerator(
-        Window* window,
-        const std::queue<FileData*>& gameQueue)
-        : GuiComponent(window),
-        mBackground(window, ":/graphics/frame.svg"),
-        mGrid(window, Vector2i(6, 13)),
-        mGameQueue(gameQueue)
+GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileData*>& gameQueue)
+    : GuiComponent(window)
+    , mBackground(window, ":/graphics/frame.svg")
+    , mGrid(window, Vector2i(6, 13))
+    , mGameQueue(gameQueue)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -39,140 +37,139 @@ GuiOfflineGenerator::GuiOfflineGenerator(
 
     // Header.
     mTitle = std::make_shared<TextComponent>(mWindow, "MIXIMAGE OFFLINE GENERATOR",
-            Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+                                             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, Vector2i(0, 0), false, true, Vector2i(6, 1));
 
-    mStatus = std::make_shared<TextComponent>(mWindow, "NOT STARTED",
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+    mStatus = std::make_shared<TextComponent>(mWindow, "NOT STARTED", Font::get(FONT_SIZE_MEDIUM),
+                                              0x777777FF, ALIGN_CENTER);
     mGrid.setEntry(mStatus, Vector2i(0, 1), false, true, Vector2i(6, 1));
 
-    mGameCounter = std::make_shared<TextComponent>(mWindow,
-            std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
+    mGameCounter = std::make_shared<TextComponent>(
+        mWindow,
+        std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
             (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
+        Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
     mGrid.setEntry(mGameCounter, Vector2i(0, 2), false, true, Vector2i(6, 1));
 
     // Spacer row with top border.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 3),
-            false, false, Vector2i(6, 1), GridFlags::BORDER_TOP);
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 3), false, false,
+                   Vector2i(6, 1), GridFlags::BORDER_TOP);
 
     // Left spacer.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 4),
-            false, false, Vector2i(1, 7));
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 4), false, false,
+                   Vector2i(1, 7));
 
     // Generated label.
-    mGeneratedLbl = std::make_shared<TextComponent>(mWindow, "Generated:",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mGeneratedLbl = std::make_shared<TextComponent>(
+        mWindow, "Generated:", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mGeneratedLbl, Vector2i(1, 4), false, true, Vector2i(1, 1));
 
     // Generated value/counter.
-    mGeneratedVal = std::make_shared<TextComponent>(mWindow,
-            std::to_string(mGamesProcessed),
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mGeneratedVal =
+        std::make_shared<TextComponent>(mWindow, std::to_string(mGamesProcessed),
+                                        Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mGeneratedVal, Vector2i(2, 4), false, true, Vector2i(1, 1));
 
     // Overwritten label.
-    mOverwrittenLbl = std::make_shared<TextComponent>(mWindow, "Overwritten:",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mOverwrittenLbl = std::make_shared<TextComponent>(
+        mWindow, "Overwritten:", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mOverwrittenLbl, Vector2i(1, 5), false, true, Vector2i(1, 1));
 
     // Overwritten value/counter.
-    mOverwrittenVal = std::make_shared<TextComponent>(mWindow,
-            std::to_string(mImagesOverwritten),
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mOverwrittenVal =
+        std::make_shared<TextComponent>(mWindow, std::to_string(mImagesOverwritten),
+                                        Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mOverwrittenVal, Vector2i(2, 5), false, true, Vector2i(1, 1));
 
     // Skipping label.
-    mSkippedLbl = std::make_shared<TextComponent>(mWindow, "Skipped (existing):",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mSkippedLbl = std::make_shared<TextComponent>(
+        mWindow, "Skipped (existing):", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mSkippedLbl, Vector2i(1, 6), false, true, Vector2i(1, 1));
 
     // Skipping value/counter.
-    mSkippedVal= std::make_shared<TextComponent>(mWindow,
-            std::to_string(mGamesSkipped),
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mSkippedVal = std::make_shared<TextComponent>(
+        mWindow, std::to_string(mGamesSkipped), Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mSkippedVal, Vector2i(2, 6), false, true, Vector2i(1, 1));
 
     // Failed label.
-    mFailedLbl = std::make_shared<TextComponent>(mWindow, "Failed:",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mFailedLbl = std::make_shared<TextComponent>(mWindow, "Failed:", Font::get(FONT_SIZE_SMALL),
+                                                 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mFailedLbl, Vector2i(1, 7), false, true, Vector2i(1, 1));
 
     // Failed value/counter.
-    mFailedVal = std::make_shared<TextComponent>(mWindow,
-            std::to_string(mGamesFailed),
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mFailedVal = std::make_shared<TextComponent>(
+        mWindow, std::to_string(mGamesFailed), Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mFailedVal, Vector2i(2, 7), false, true, Vector2i(1, 1));
 
     // Processing label.
-    mProcessingLbl = std::make_shared<TextComponent>(mWindow, "Processing: ",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mProcessingLbl = std::make_shared<TextComponent>(
+        mWindow, "Processing: ", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mProcessingLbl, Vector2i(3, 4), false, true, Vector2i(1, 1));
 
     // Processing value.
-    mProcessingVal = std::make_shared<TextComponent>(mWindow, "",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mProcessingVal = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_SMALL),
+                                                     0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mProcessingVal, Vector2i(4, 4), false, true, Vector2i(1, 1));
 
     // Spacer row.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 8),
-            false, false, Vector2i(4, 1));
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 8), false, false,
+                   Vector2i(4, 1));
 
     // Last error message label.
-    mLastErrorLbl = std::make_shared<TextComponent>(mWindow, "Last error message:",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mLastErrorLbl = std::make_shared<TextComponent>(
+        mWindow, "Last error message:", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mLastErrorLbl, Vector2i(1, 9), false, true, Vector2i(4, 1));
 
     // Last error message value.
-    mLastErrorVal = std::make_shared<TextComponent>(mWindow, "",
-            Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
+    mLastErrorVal = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_SMALL),
+                                                    0x888888FF, ALIGN_LEFT);
     mGrid.setEntry(mLastErrorVal, Vector2i(1, 10), false, true, Vector2i(4, 1));
 
     // Right spacer.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(5, 4),
-            false, false, Vector2i(1, 7));
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(5, 4), false, false,
+                   Vector2i(1, 7));
 
     // Spacer row with bottom border.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 11),
-            false, false, Vector2i(6, 1), GridFlags::BORDER_BOTTOM);
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 11), false, false,
+                   Vector2i(6, 1), GridFlags::BORDER_BOTTOM);
 
     // Buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-    mStartPauseButton = std::make_shared<ButtonComponent>(mWindow, "START",
-            "start processing", [this](){
-        if (!mProcessing) {
-            mProcessing = true;
-            mPaused = false;
-            mStartPauseButton->setText("PAUSE", "pause processing");
-            mCloseButton->setText("CLOSE", "close (abort processing)");
-            mStatus->setText("RUNNING...");
-            if (mGamesProcessed == 0) {
-                LOG(LogInfo) << "GuiOfflineGenerator: Processing " << mTotalGames << " games";
+    mStartPauseButton =
+        std::make_shared<ButtonComponent>(mWindow, "START", "start processing", [this]() {
+            if (!mProcessing) {
+                mProcessing = true;
+                mPaused = false;
+                mStartPauseButton->setText("PAUSE", "pause processing");
+                mCloseButton->setText("CLOSE", "close (abort processing)");
+                mStatus->setText("RUNNING...");
+                if (mGamesProcessed == 0) {
+                    LOG(LogInfo) << "GuiOfflineGenerator: Processing " << mTotalGames << " games";
+                }
             }
-        }
-        else {
-            if (mMiximageGeneratorThread.joinable())
-                mMiximageGeneratorThread.join();
-            mPaused = true;
-            update(1);
-            mProcessing = false;
-            this->mStartPauseButton->setText("START", "start processing");
-            this->mCloseButton->setText("CLOSE", "close (abort processing)");
-            mStatus->setText("PAUSED");
-        }
-    });
+            else {
+                if (mMiximageGeneratorThread.joinable())
+                    mMiximageGeneratorThread.join();
+                mPaused = true;
+                update(1);
+                mProcessing = false;
+                this->mStartPauseButton->setText("START", "start processing");
+                this->mCloseButton->setText("CLOSE", "close (abort processing)");
+                mStatus->setText("PAUSED");
+            }
+        });
 
     buttons.push_back(mStartPauseButton);
 
-    mCloseButton = std::make_shared<ButtonComponent>(mWindow, "CLOSE", "close", [this](){
+    mCloseButton = std::make_shared<ButtonComponent>(mWindow, "CLOSE", "close", [this]() {
         if (mGamesProcessed != 0 && mGamesProcessed != mTotalGames) {
-            LOG(LogInfo) << "GuiOfflineGenerator: Aborted after processing " <<
-                    mGamesProcessed << (mGamesProcessed == 1 ? " game (" : " games (") <<
-                    mImagesGenerated << (mImagesGenerated == 1 ? " image " : " images ") <<
-                    "generated, " << mGamesSkipped <<
-                    (mGamesSkipped == 1 ? " game " : " games ") << "skipped, " << mGamesFailed <<
-                    (mGamesFailed == 1 ? " game " : " games ") << "failed)";
+            LOG(LogInfo) << "GuiOfflineGenerator: Aborted after processing " << mGamesProcessed
+                         << (mGamesProcessed == 1 ? " game (" : " games (") << mImagesGenerated
+                         << (mImagesGenerated == 1 ? " image " : " images ") << "generated, "
+                         << mGamesSkipped << (mGamesSkipped == 1 ? " game " : " games ")
+                         << "skipped, " << mGamesFailed
+                         << (mGamesFailed == 1 ? " game " : " games ") << "failed)";
         }
         delete this;
     });
@@ -184,12 +181,12 @@ GuiOfflineGenerator::GuiOfflineGenerator(
 
     // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 95% of the screen
     // width rather than the 85% allowed for wider displays.
-    float width = Renderer::getScreenWidth() *
-            ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f);
+    float width =
+        Renderer::getScreenWidth() * ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f);
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-            (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
 }
 
 GuiOfflineGenerator::~GuiOfflineGenerator()
@@ -281,12 +278,12 @@ void GuiOfflineGenerator::update(int deltaTime)
         mGame = mGameQueue.front();
         mGameQueue.pop();
 
-        mGameName = mGame->getName() + " [" +
-                Utils::String::toUpper(mGame->getSystem()->getName()) + "]";
+        mGameName =
+            mGame->getName() + " [" + Utils::String::toUpper(mGame->getSystem()->getName()) + "]";
         mProcessingVal->setText(mGameName);
 
         if (!Settings::getInstance()->getBool("MiximageOverwrite") &&
-                mGame->getMiximagePath() != "") {
+            mGame->getMiximagePath() != "") {
             mGamesProcessed++;
             mGamesSkipped++;
             mSkippedVal->setText(std::to_string(mGamesSkipped));
@@ -303,14 +300,14 @@ void GuiOfflineGenerator::update(int deltaTime)
             mGeneratorFuture = mGeneratorPromise.get_future();
 
             mMiximageGeneratorThread = std::thread(&MiximageGenerator::startThread,
-                    mMiximageGenerator.get(), &mGeneratorPromise);
+                                                   mMiximageGenerator.get(), &mGeneratorPromise);
         }
     }
 
     // Update the statistics.
     mStatus->setText("RUNNING...");
     mGameCounter->setText(std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
-            (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED");
+                          (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED");
 
     mGeneratedVal->setText(std::to_string(mImagesGenerated));
     mFailedVal->setText(std::to_string(mGamesFailed));
@@ -319,13 +316,13 @@ void GuiOfflineGenerator::update(int deltaTime)
     if (mGamesProcessed == mTotalGames) {
         mStatus->setText("COMPLETED");
         mStartPauseButton->setText("DONE", "done (close)");
-        mStartPauseButton->setPressedFunc([this](){ delete this; });
+        mStartPauseButton->setPressedFunc([this]() { delete this; });
         mCloseButton->setText("CLOSE", "close");
         mProcessingVal->setText("");
-        LOG(LogInfo) << "GuiOfflineGenerator: Completed processing (" << mImagesGenerated <<
-                (mImagesGenerated == 1 ? " image " : " images ") << "generated, " <<
-                mGamesSkipped << (mGamesSkipped == 1 ? " game " : " games ") << "skipped, " <<
-                mGamesFailed << (mGamesFailed == 1 ? " game " : " games ") << "failed)";
+        LOG(LogInfo) << "GuiOfflineGenerator: Completed processing (" << mImagesGenerated
+                     << (mImagesGenerated == 1 ? " image " : " images ") << "generated, "
+                     << mGamesSkipped << (mGamesSkipped == 1 ? " game " : " games ") << "skipped, "
+                     << mGamesFailed << (mGamesFailed == 1 ? " game " : " games ") << "failed)";
         mProcessing = false;
     }
 }

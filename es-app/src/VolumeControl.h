@@ -38,18 +38,18 @@ public:
 
     static VolumeControl* sInstance;
 
-    #if defined(__linux__)
+#if defined(__linux__)
     static std::string mixerName;
     static std::string mixerCard;
     int mixerIndex;
     snd_mixer_t* mixerHandle;
     snd_mixer_elem_t* mixerElem;
     snd_mixer_selem_id_t* mixerSelemId;
-    #elif defined(_WIN64)
+#elif defined(_WIN64)
     HMIXER mixerHandle;
     MIXERCONTROL mixerControl;
-    IAudioEndpointVolume * endpointVolume;
-    #endif
+    IAudioEndpointVolume* endpointVolume;
+#endif
 };
 
 #endif // ES_APP_VOLUME_CONTROL_H

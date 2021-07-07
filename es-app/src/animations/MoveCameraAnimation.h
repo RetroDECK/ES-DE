@@ -14,12 +14,12 @@
 class MoveCameraAnimation : public Animation
 {
 public:
-    MoveCameraAnimation(
-            Transform4x4f& camera,
-            const Vector3f& target)
-            : mCameraStart(camera),
-            mTarget(target),
-            cameraOut(camera) {}
+    MoveCameraAnimation(Transform4x4f& camera, const Vector3f& target)
+        : mCameraStart(camera)
+        , mTarget(target)
+        , cameraOut(camera)
+    {
+    }
 
     int getDuration() const override { return 400; }
 
@@ -28,7 +28,7 @@ public:
         // Cubic ease out.
         t -= 1;
         cameraOut.translation() =
-                -Vector3f().lerp(-mCameraStart.translation(), mTarget, t * t * t + 1);
+            -Vector3f().lerp(-mCameraStart.translation(), mTarget, t * t * t + 1);
     }
 
 private:

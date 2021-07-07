@@ -8,48 +8,42 @@
 
 #include "views/gamelist/GridGameListView.h"
 
-#include "animations/LambdaAnimation.h"
-#include "views/UIModeController.h"
-#include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
+#include "animations/LambdaAnimation.h"
+#include "views/UIModeController.h"
+#include "views/ViewController.h"
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 650
 
-GridGameListView::GridGameListView(
-        Window* window,
-        FileData* root)
-        : ISimpleGameListView(window, root),
-
-        mGrid(window),
-        mMarquee(window),
-        mImage(window),
-
-        mDescContainer(window),
-        mDescription(window),
-        mGamelistInfo(window),
-
-        mLblRating(window),
-        mLblReleaseDate(window),
-        mLblDeveloper(window),
-        mLblPublisher(window),
-        mLblGenre(window),
-        mLblPlayers(window),
-        mLblLastPlayed(window),
-        mLblPlayCount(window),
-
-        mRating(window),
-        mReleaseDate(window),
-        mDeveloper(window),
-        mPublisher(window),
-        mGenre(window),
-        mPlayers(window),
-        mLastPlayed(window),
-        mPlayCount(window),
-        mName(window)
+GridGameListView::GridGameListView(Window* window, FileData* root)
+    : ISimpleGameListView(window, root)
+    , mGrid(window)
+    , mMarquee(window)
+    , mImage(window)
+    , mDescContainer(window)
+    , mDescription(window)
+    , mGamelistInfo(window)
+    , mLblRating(window)
+    , mLblReleaseDate(window)
+    , mLblDeveloper(window)
+    , mLblPublisher(window)
+    , mLblGenre(window)
+    , mLblPlayers(window)
+    , mLblLastPlayed(window)
+    , mLblPlayCount(window)
+    , mRating(window)
+    , mReleaseDate(window)
+    , mDeveloper(window)
+    , mPublisher(window)
+    , mGenre(window)
+    , mPlayers(window)
+    , mLastPlayed(window)
+    , mPlayCount(window)
+    , mName(window)
 {
     const float padding = 0.01f;
 
@@ -95,8 +89,8 @@ GridGameListView::GridGameListView(
     addChild(&mName);
 
     mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
-    mDescContainer.setSize(mSize.x() * (0.50f - 2 * padding), mSize.y() -
-            mDescContainer.getPosition().y());
+    mDescContainer.setSize(mSize.x() * (0.50f - 2.0f * padding),
+                           mSize.y() - mDescContainer.getPosition().y());
     mDescContainer.setAutoScroll(true);
     mDescContainer.setDefaultZIndex(40);
     addChild(&mDescContainer);
@@ -107,7 +101,7 @@ GridGameListView::GridGameListView(
 
     mMarquee.setOrigin(0.5f, 0.5f);
     mMarquee.setPosition(mSize.x() * 0.25f, mSize.y() * 0.10f);
-    mMarquee.setMaxSize(mSize.x() * (0.5f - 2 * padding), mSize.y() * 0.18f);
+    mMarquee.setMaxSize(mSize.x() * (0.5f - 2.0f * padding), mSize.y() * 0.18f);
     mMarquee.setDefaultZIndex(35);
     mMarquee.setVisible(false);
     addChild(&mMarquee);
@@ -130,10 +124,6 @@ GridGameListView::GridGameListView(
     updateInfoPanel();
 }
 
-GridGameListView::~GridGameListView()
-{
-}
-
 void GridGameListView::onFileChanged(FileData* file, bool reloadGameList)
 {
     if (reloadGameList) {
@@ -143,11 +133,6 @@ void GridGameListView::onFileChanged(FileData* file, bool reloadGameList)
     }
 
     ISimpleGameListView::onFileChanged(file, reloadGameList);
-}
-
-FileData* GridGameListView::getCursor()
-{
-    return mGrid.getSelected();
 }
 
 void GridGameListView::setCursor(FileData* cursor)
@@ -176,47 +161,11 @@ void GridGameListView::setCursor(FileData* cursor)
     }
 }
 
-FileData* GridGameListView::getNextEntry()
-{
-    return mGrid.getNext();;
-}
-
-FileData* GridGameListView::getPreviousEntry()
-{
-    return mGrid.getPrevious();
-}
-
-FileData* GridGameListView::getFirstEntry()
-{
-    return mGrid.getFirst();;
-}
-
-FileData* GridGameListView::getLastEntry()
-{
-    return mGrid.getLast();
-}
-
-FileData* GridGameListView::getFirstGameEntry()
-{
-    return firstGameEntry;
-}
-
-std::string GridGameListView::getQuickSystemSelectRightButton()
-{
-    return "rightshoulder";
-}
-
-std::string GridGameListView::getQuickSystemSelectLeftButton()
-{
-    return "leftshoulder";
-}
-
 bool GridGameListView::input(InputConfig* config, Input input)
 {
-    if (input.value == 0 && (config->isMappedLike("left", input) ||
-            config->isMappedLike("right", input) ||
-            (config->isMappedLike("up", input)) ||
-            (config->isMappedLike("down", input)) ))
+    if (input.value == 0 &&
+        (config->isMappedLike("left", input) || config->isMappedLike("right", input) ||
+         (config->isMappedLike("up", input)) || (config->isMappedLike("down", input))))
         NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 
     if (input.value != 0 && config->isMappedLike("righttrigger", input)) {
@@ -288,17 +237,17 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mGrid.applyTheme(theme, getName(), "gamegrid", ALL);
     mName.applyTheme(theme, getName(), "md_name", ALL);
     mMarquee.applyTheme(theme, getName(), "md_marquee",
-            POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+                        POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mImage.applyTheme(theme, getName(), "md_image",
-            POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+                      POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
 
     initMDLabels();
     std::vector<TextComponent*> labels = getMDLabels();
     assert(labels.size() == 8);
-    std::vector<std::string> lblElements = {
-            "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher",
-            "md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
-    };
+    std::vector<std::string> lblElements = { "md_lbl_rating",     "md_lbl_releasedate",
+                                             "md_lbl_developer",  "md_lbl_publisher",
+                                             "md_lbl_genre",      "md_lbl_players",
+                                             "md_lbl_lastplayed", "md_lbl_playcount" };
 
     for (unsigned int i = 0; i < labels.size(); i++)
         labels[i]->applyTheme(theme, getName(), lblElements[i], ALL);
@@ -306,19 +255,19 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     initMDValues();
     std::vector<GuiComponent*> values = getMDValues();
     assert(values.size() == 8);
-    std::vector<std::string> valElements = {
-            "md_rating", "md_releasedate", "md_developer", "md_publisher",
-            "md_genre", "md_players", "md_lastplayed", "md_playcount"
-    };
+    std::vector<std::string> valElements = { "md_rating",     "md_releasedate", "md_developer",
+                                             "md_publisher",  "md_genre",       "md_players",
+                                             "md_lastplayed", "md_playcount" };
 
     for (unsigned int i = 0; i < values.size(); i++)
         values[i]->applyTheme(theme, getName(), valElements[i], ALL ^ ThemeFlags::TEXT);
 
     mDescContainer.applyTheme(theme, getName(), "md_description",
-            POSITION | ThemeFlags::SIZE | Z_INDEX | VISIBLE);
+                              POSITION | ThemeFlags::SIZE | Z_INDEX | VISIBLE);
     mDescription.setSize(mDescContainer.getSize().x(), 0);
-    mDescription.applyTheme(theme, getName(), "md_description",
-            ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
+    mDescription.applyTheme(
+        theme, getName(), "md_description",
+        ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
 
     // Repopulate list in case a new theme is displaying a different image.
     // Preserve selection.
@@ -334,6 +283,12 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         mGamelistInfo.setVisible(true);
 
     sortChildren();
+}
+
+void GridGameListView::onShow()
+{
+    GuiComponent::onShow();
+    updateInfoPanel();
 }
 
 void GridGameListView::initMDLabels()
@@ -356,7 +311,7 @@ void GridGameListView::initMDLabels()
         }
         else {
             // Work from the last component.
-            GuiComponent* lc = components[i-1];
+            GuiComponent* lc = components[i - 1];
             pos = lc->getPosition() + Vector3f(0, lc->getSize().y() + rowPadding, 0);
         }
 
@@ -383,11 +338,11 @@ void GridGameListView::initMDValues()
 
     float bottom = 0.0f;
 
-    const float colSize = (mSize.x() * 0.48f) / 2;
+    const float colSize = (mSize.x() * 0.48f) / 2.0f;
     for (unsigned int i = 0; i < labels.size(); i++) {
-        const float heightDiff = (labels[i]->getSize().y() - values[i]->getSize().y()) / 2;
+        const float heightDiff = (labels[i]->getSize().y() - values[i]->getSize().y()) / 2.0f;
         values[i]->setPosition(labels[i]->getPosition() +
-                Vector3f(labels[i]->getSize().x(), heightDiff, 0));
+                               Vector3f(labels[i]->getSize().x(), heightDiff, 0));
         values[i]->setSize(colSize - labels[i]->getSize().x(), values[i]->getSize().y());
         values[i]->setDefaultZIndex(40);
 
@@ -397,8 +352,8 @@ void GridGameListView::initMDValues()
     }
 
     mDescContainer.setPosition(mDescContainer.getPosition().x(), bottom + mSize.y() * 0.01f);
-    mDescContainer.setSize(mDescContainer.getSize().x(), mSize.y() -
-            mDescContainer.getPosition().y());
+    mDescContainer.setSize(mDescContainer.getSize().x(),
+                           mSize.y() - mDescContainer.getPosition().y());
 }
 
 void GridGameListView::updateInfoPanel()
@@ -465,21 +420,22 @@ void GridGameListView::updateInfoPanel()
 
         if (mIsFiltered) {
             if (mFilteredGameCountAll == mFilteredGameCount)
-                gamelistInfoString += ViewController::FILTER_CHAR + " "
-                        + std::to_string(mFilteredGameCount) + " / " + std::to_string(mGameCount);
+                gamelistInfoString += ViewController::FILTER_CHAR + " " +
+                                      std::to_string(mFilteredGameCount) + " / " +
+                                      std::to_string(mGameCount);
             else
                 gamelistInfoString += ViewController::FILTER_CHAR + " " +
-                        std::to_string(mFilteredGameCount) + " + " +
-                        std::to_string(mFilteredGameCountAll - mFilteredGameCount) + " / " +
-                        std::to_string(mGameCount);
+                                      std::to_string(mFilteredGameCount) + " + " +
+                                      std::to_string(mFilteredGameCountAll - mFilteredGameCount) +
+                                      " / " + std::to_string(mGameCount);
         }
         else {
-            gamelistInfoString += ViewController::CONTROLLER_CHAR + " " +
-                    std::to_string(mGameCount);
+            gamelistInfoString +=
+                ViewController::CONTROLLER_CHAR + " " + std::to_string(mGameCount);
             if (!(file->getSystem()->isCollection() &&
-                    file->getSystem()->getFullName() == "favorites"))
+                  file->getSystem()->getFullName() == "favorites"))
                 gamelistInfoString += "  " + ViewController::FAVORITE_CHAR + " " +
-                        std::to_string(mFavoritesGameCount);
+                                      std::to_string(mFavoritesGameCount);
         }
 
         if (mIsFolder && infoAlign != ALIGN_RIGHT)
@@ -489,9 +445,9 @@ void GridGameListView::updateInfoPanel()
 
         // Fade in the game image.
         auto func = [this](float t) {
-            mImage.setOpacity(static_cast<unsigned char>(Math::lerp(
-                    static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
-            };
+            mImage.setOpacity(static_cast<unsigned char>(
+                Math::lerp(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+        };
         mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
 
         mDescription.setText(file->metadata.get("desc"));
@@ -535,10 +491,10 @@ void GridGameListView::updateInfoPanel()
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
-           (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
+            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {
-            // TEMPORARY - This does not seem to work, needs to be reviewed later.
-            //    comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
+                // TEMPORARY - This does not seem to work, needs to be reviewed later.
+                //    comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
             };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
@@ -560,6 +516,7 @@ void GridGameListView::addPlaceholder(FileData* firstEntry)
 
 void GridGameListView::launch(FileData* game)
 {
+    // This triggers ViewController to launch the game.
     ViewController::get()->triggerGameLaunch(game);
 }
 
@@ -605,8 +562,8 @@ void GridGameListView::removeMedia(FileData* game)
 
     // If there are no media files left in the directory after the deletion, then remove
     // the directory too. Remove any empty parent directories as well.
-    auto removeEmptyDirFunc = []
-            (std::string systemMediaDir, std::string mediaType, std::string path) {
+    auto removeEmptyDirFunc = [](std::string systemMediaDir, std::string mediaType,
+                                 std::string path) {
         std::string parentPath = Utils::FileSystem::getParent(path);
         while (parentPath != systemMediaDir + "/" + mediaType) {
             if (Utils::FileSystem::getDirContent(parentPath).size() == 0) {
@@ -707,7 +664,7 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
     prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
-            ViewController::get()->getState().viewing == ViewController::GAME_LIST)
+        ViewController::get()->getState().viewing == ViewController::GAME_LIST)
         prompts.push_back(HelpPrompt("a", "enter"));
     else
         prompts.push_back(HelpPrompt("a", "launch"));
@@ -715,32 +672,30 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "back"));
 
     if (mRoot->getSystem()->isGameSystem() &&
-            mRoot->getSystem()->getThemeFolder() != "custom-collections")
+        mRoot->getSystem()->getThemeFolder() != "custom-collections")
         prompts.push_back(HelpPrompt("x", "view media"));
 
     if (mRoot->getSystem()->isGameSystem() && !mCursorStack.empty() &&
-            mRoot->getSystem()->getThemeFolder() == "custom-collections")
+        mRoot->getSystem()->getThemeFolder() == "custom-collections")
         prompts.push_back(HelpPrompt("x", "view media"));
 
     if (!UIModeController::getInstance()->isUIModeKid())
         prompts.push_back(HelpPrompt("back", "options"));
-    if (mRoot->getSystem()->isGameSystem() &&
-            Settings::getInstance()->getBool("RandomAddButton"))
+    if (mRoot->getSystem()->isGameSystem() && Settings::getInstance()->getBool("RandomAddButton"))
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (mRoot->getSystem()->isGameSystem() &&
-            (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||
-            !mCursorStack.empty()) &&
-            !UIModeController::getInstance()->isUIModeKid() &&
-            !UIModeController::getInstance()->isUIModeKiosk() &&
-            (Settings::getInstance()->getBool("FavoritesAddButton") ||
-            CollectionSystemsManager::get()->isEditing())) {
+        (mRoot->getSystem()->getThemeFolder() != "custom-collections" || !mCursorStack.empty()) &&
+        !UIModeController::getInstance()->isUIModeKid() &&
+        !UIModeController::getInstance()->isUIModeKiosk() &&
+        (Settings::getInstance()->getBool("FavoritesAddButton") ||
+         CollectionSystemsManager::get()->isEditing())) {
         std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
-            mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-            CollectionSystemsManager::get()->isEditing()) {
+             mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+             CollectionSystemsManager::get()->isEditing()) {
         std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
@@ -749,11 +704,6 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
 
 void GridGameListView::update(int deltaTime)
 {
+    // Update.
     ISimpleGameListView::update(deltaTime);
-}
-
-void GridGameListView::onShow()
-{
-    GuiComponent::onShow();
-    updateInfoPanel();
 }

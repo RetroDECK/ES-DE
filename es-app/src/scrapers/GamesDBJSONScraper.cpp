@@ -10,20 +10,20 @@
 #include "scrapers/GamesDBJSONScraper.h"
 #include "scrapers/GamesDBJSONScraperResources.h"
 
-#include "utils/StringUtil.h"
-#include "utils/TimeUtil.h"
 #include "FileData.h"
 #include "Log.h"
 #include "MameNames.h"
 #include "PlatformId.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "utils/StringUtil.h"
+#include "utils/TimeUtil.h"
 
-#include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
 #include <exception>
 #include <map>
 #include <pugixml.hpp>
+#include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
 
 using namespace PlatformIds;
 using namespace rapidjson;
@@ -103,10 +103,10 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { SONY_PLAYSTATION_PORTABLE, "13" },
     { SUPER_NINTENDO, "6" },
     { SHARP_X1, "4977" },
-    { SHARP_X68000, "4931"},
+    { SHARP_X68000, "4931" },
     { NEC_SUPERGRAFX, "34" },
-    { NEC_PC_8800, "4933"},
-    { NEC_PC_9800, "4934"},
+    { NEC_PC_8800, "4933" },
+    { NEC_PC_9800, "4934" },
     { NEC_PC_ENGINE, "34" },
     { NEC_PC_ENGINE_CD, "4955" },
     { BANDAI_WONDERSWAN, "4925" },
@@ -118,9 +118,10 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { TANDY_TRS80, "4941" },
 };
 
-void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params,
-        std::queue<std::unique_ptr<ScraperRequest>>& requests,
-        std::vector<ScraperSearchResult>& results)
+void thegamesdb_generate_json_scraper_requests(
+    const ScraperSearchParams& params,
+    std::queue<std::unique_ptr<ScraperRequest>>& requests,
+    std::vector<ScraperSearchResult>& results)
 {
     resources.prepare();
     std::string path = "https://api.thegamesdb.net/v1";
@@ -168,8 +169,8 @@ void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params
         if (!platforms.empty()) {
             bool first = true;
             platformQueryParam += "&filter%5Bplatform%5D=";
-            for (auto platformIt = platforms.cbegin();
-                    platformIt != platforms.cend(); platformIt++) {
+            for (auto platformIt = platforms.cbegin(); // Line break.
+                 platformIt != platforms.cend(); platformIt++) {
                 auto mapIt = gamesdb_new_platformid_map.find(*platformIt);
                 if (mapIt != gamesdb_new_platformid_map.cend()) {
                     if (!first)
@@ -178,8 +179,9 @@ void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params
                     first = false;
                 }
                 else {
-                    LOG(LogWarning) << "TheGamesDB scraper: No support for platform \"" <<
-                            getPlatformName(*platformIt) << "\", search will be inaccurate";
+                    LOG(LogWarning)
+                        << "TheGamesDB scraper: No support for platform \""
+                        << getPlatformName(*platformIt) << "\", search will be inaccurate";
                 }
             }
             path += platformQueryParam;
@@ -188,15 +190,15 @@ void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params
             LOG(LogWarning) << "TheGamesDB scraper: No platform defined, search will be inaccurate";
         }
 
-        requests.push(std::unique_ptr<ScraperRequest>
-                (new TheGamesDBJSONRequest(requests, results, path)));
+        requests.push(
+            std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(requests, results, path)));
     }
 }
 
 void thegamesdb_generate_json_scraper_requests(
-        const std::string& gameIDs,
-        std::queue<std::unique_ptr<ScraperRequest>>& requests,
-        std::vector<ScraperSearchResult>& results)
+    const std::string& gameIDs,
+    std::queue<std::unique_ptr<ScraperRequest>>& requests,
+    std::vector<ScraperSearchResult>& results)
 {
     resources.prepare();
     std::string path = "https://api.thegamesdb.net/v1";
@@ -204,158 +206,158 @@ void thegamesdb_generate_json_scraper_requests(
 
     path += "/Games/Images/GamesImages?" + apiKey + "&games_id=" + gameIDs;
 
-    requests.push(std::unique_ptr<ScraperRequest>
-                (new TheGamesDBJSONRequest(requests, results, path)));
+    requests.push(
+        std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(requests, results, path)));
 }
 
 namespace
 {
-
-std::string getStringOrThrow(const Value& v, const std::string& key)
-{
-    if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsString()) {
-        throw std::runtime_error(
+    std::string getStringOrThrow(const Value& v, const std::string& key)
+    {
+        if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsString()) {
+            throw std::runtime_error(
                 "rapidjson internal assertion failure: missing or non string key:" + key);
+        }
+        return v[key.c_str()].GetString();
     }
-    return v[key.c_str()].GetString();
-}
 
-int getIntOrThrow(const Value& v, const std::string& key)
-{
-    if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsInt()) {
-        throw std::runtime_error(
+    int getIntOrThrow(const Value& v, const std::string& key)
+    {
+        if (!v.HasMember(key.c_str()) || !v[key.c_str()].IsInt()) {
+            throw std::runtime_error(
                 "rapidjson internal assertion failure: missing or non int key:" + key);
-    }
-    return v[key.c_str()].GetInt();
-}
-
-int getIntOrThrow(const Value& v)
-{
-    if (!v.IsInt()) {
-        throw std::runtime_error("rapidjson internal assertion failure: not an int");
-    }
-    return v.GetInt();
-}
-
-std::string getDeveloperString(const Value& v)
-{
-    if (!v.IsArray())
-        return "";
-
-    std::string out = "";
-    bool first = true;
-    for (int i = 0; i < static_cast<int>(v.Size()); i++) {
-        auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
-
-        if (mapIt == resources.gamesdb_new_developers_map.cend())
-            continue;
-
-        if (!first)
-            out += ", ";
-
-        out += mapIt->second;
-        first = false;
-    }
-    return out;
-}
-
-std::string getPublisherString(const Value& v)
-{
-    if (!v.IsArray())
-        return "";
-
-    std::string out = "";
-    bool first = true;
-    for (int i = 0; i < static_cast<int>(v.Size()); i++) {
-        auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
-
-        if (mapIt == resources.gamesdb_new_publishers_map.cend())
-            continue;
-
-        if (!first)
-            out += ", ";
-
-        out += mapIt->second;
-        first = false;
-    }
-    return out;
-}
-
-std::string getGenreString(const Value& v)
-{
-    if (!v.IsArray())
-        return "";
-
-    std::string out = "";
-    bool first = true;
-    for (int i = 0; i < static_cast<int>(v.Size()); i++) {
-        auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
-
-        if (mapIt == resources.gamesdb_new_genres_map.cend())
-            continue;
-
-        if (!first)
-            out += ", ";
-
-        out += mapIt->second;
-        first = false;
-    }
-    return out;
-}
-
-void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
-{
-    ScraperSearchResult result;
-
-    if (game.HasMember("id") && game["id"].IsInt())
-        result.gameID = std::to_string(getIntOrThrow(game, "id"));
-
-    result.mdl.set("name", getStringOrThrow(game, "game_title"));
-    LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Name: " << result.mdl.get("name");
-
-    if (game.HasMember("overview") && game["overview"].IsString())
-        result.mdl.set("desc", Utils::String::replace(game["overview"].GetString(), "\r", ""));
-
-    if (game.HasMember("release_date") && game["release_date"].IsString()) {
-        result.mdl.set("releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(
-                game["release_date"].GetString(), "%Y-%m-%d")));
-        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (unparsed): " <<
-                game["release_date"].GetString();
-        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (parsed): " <<
-            result.mdl.get("releasedate");
+        }
+        return v[key.c_str()].GetInt();
     }
 
-    if (game.HasMember("developers") && game["developers"].IsArray()) {
-        result.mdl.set("developer", getDeveloperString(game["developers"]));
-        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Developer: " <<
-                result.mdl.get("developer");
+    int getIntOrThrow(const Value& v)
+    {
+        if (!v.IsInt()) {
+            throw std::runtime_error("rapidjson internal assertion failure: not an int");
+        }
+        return v.GetInt();
     }
 
-    if (game.HasMember("publishers") && game["publishers"].IsArray()) {
-        result.mdl.set("publisher", getPublisherString(game["publishers"]));
-        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Publisher: " <<
-            result.mdl.get("publisher");
+    std::string getDeveloperString(const Value& v)
+    {
+        if (!v.IsArray())
+            return "";
+
+        std::string out = "";
+        bool first = true;
+        for (int i = 0; i < static_cast<int>(v.Size()); i++) {
+            auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
+
+            if (mapIt == resources.gamesdb_new_developers_map.cend())
+                continue;
+
+            if (!first)
+                out += ", ";
+
+            out += mapIt->second;
+            first = false;
+        }
+        return out;
     }
 
-    if (game.HasMember("genres") && game["genres"].IsArray()) {
-        result.mdl.set("genre", getGenreString(game["genres"]));
-        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Genre: " <<
-                result.mdl.get("genre");
+    std::string getPublisherString(const Value& v)
+    {
+        if (!v.IsArray())
+            return "";
+
+        std::string out = "";
+        bool first = true;
+        for (int i = 0; i < static_cast<int>(v.Size()); i++) {
+            auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
+
+            if (mapIt == resources.gamesdb_new_publishers_map.cend())
+                continue;
+
+            if (!first)
+                out += ", ";
+
+            out += mapIt->second;
+            first = false;
+        }
+        return out;
     }
 
-    if (game.HasMember("players") && game["players"].IsInt()) {
-        result.mdl.set("players", std::to_string(game["players"].GetInt()));
-        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Players: " <<
-                result.mdl.get("players");
+    std::string getGenreString(const Value& v)
+    {
+        if (!v.IsArray())
+            return "";
+
+        std::string out = "";
+        bool first = true;
+        for (int i = 0; i < static_cast<int>(v.Size()); i++) {
+            auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
+
+            if (mapIt == resources.gamesdb_new_genres_map.cend())
+                continue;
+
+            if (!first)
+                out += ", ";
+
+            out += mapIt->second;
+            first = false;
+        }
+        return out;
     }
 
-    result.mediaURLFetch = NOT_STARTED;
-    results.push_back(result);
-}
+    void processGame(const Value& game, std::vector<ScraperSearchResult>& results)
+    {
+        ScraperSearchResult result;
+
+        if (game.HasMember("id") && game["id"].IsInt())
+            result.gameID = std::to_string(getIntOrThrow(game, "id"));
+
+        result.mdl.set("name", getStringOrThrow(game, "game_title"));
+        LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Name: " << result.mdl.get("name");
+
+        if (game.HasMember("overview") && game["overview"].IsString())
+            result.mdl.set("desc", Utils::String::replace(game["overview"].GetString(), "\r", ""));
+
+        if (game.HasMember("release_date") && game["release_date"].IsString()) {
+            result.mdl.set("releasedate", Utils::Time::DateTime(Utils::Time::stringToTime(
+                                              game["release_date"].GetString(), "%Y-%m-%d")));
+            LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (unparsed): "
+                          << game["release_date"].GetString();
+            LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Release Date (parsed): "
+                          << result.mdl.get("releasedate");
+        }
+
+        if (game.HasMember("developers") && game["developers"].IsArray()) {
+            result.mdl.set("developer", getDeveloperString(game["developers"]));
+            LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Developer: "
+                          << result.mdl.get("developer");
+        }
+
+        if (game.HasMember("publishers") && game["publishers"].IsArray()) {
+            result.mdl.set("publisher", getPublisherString(game["publishers"]));
+            LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Publisher: "
+                          << result.mdl.get("publisher");
+        }
+
+        if (game.HasMember("genres") && game["genres"].IsArray()) {
+            result.mdl.set("genre", getGenreString(game["genres"]));
+            LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Genre: "
+                          << result.mdl.get("genre");
+        }
+
+        if (game.HasMember("players") && game["players"].IsInt()) {
+            result.mdl.set("players", std::to_string(game["players"].GetInt()));
+            LOG(LogDebug) << "GamesDBJSONScraper::processGame(): Players: "
+                          << result.mdl.get("players");
+        }
+
+        result.mediaURLFetch = NOT_STARTED;
+        results.push_back(result);
+    }
 } // namespace
 
-void processMediaURLs(const Value& images, const std::string& base_url,
-        std::vector<ScraperSearchResult>& results)
+void processMediaURLs(const Value& images,
+                      const std::string& base_url,
+                      std::vector<ScraperSearchResult>& results)
 {
     ScraperSearchResult result;
 
@@ -367,9 +369,8 @@ void processMediaURLs(const Value& images, const std::string& base_url,
         result.marqueeUrl = "";
         result.screenshotUrl = "";
 
-        // Quite excessive testing for valid values, but you never know
-        // what the server has returned and we don't want to crash the
-        // program due to malformed data.
+        // Quite excessive testing for valid values, but you never know what the server has
+        // returned and we don't want to crash the program due to malformed data.
         if (gameMedia.IsArray()) {
             for (SizeType i = 0; i < gameMedia.Size(); i++) {
                 std::string mediatype;
@@ -390,13 +391,13 @@ void processMediaURLs(const Value& images, const std::string& base_url,
                         result.screenshotUrl = base_url + gameMedia[i]["filename"].GetString();
             }
         }
-    result.mediaURLFetch = COMPLETED;
-    results.push_back(result);
+        result.mediaURLFetch = COMPLETED;
+        results.push_back(result);
     }
 }
 
 void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
-        std::vector<ScraperSearchResult>& results)
+                                    std::vector<ScraperSearchResult>& results)
 {
     assert(req->status() == HttpReq::REQ_SUCCESS);
 
@@ -404,9 +405,8 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     doc.Parse(req->getContent().c_str());
 
     if (doc.HasParseError()) {
-        std::string err =
-            std::string("TheGamesDBJSONRequest - Error parsing JSON \n\t") +
-                    GetParseError_En(doc.GetParseError());
+        std::string err = std::string("TheGamesDBJSONRequest - Error parsing JSON \n\t") +
+                          GetParseError_En(doc.GetParseError());
         setError(err);
         LOG(LogError) << err;
         return;
@@ -414,7 +414,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
 
     // If the response contains the 'images' object, then it's a game media URL request.
     if (doc.HasMember("data") && doc["data"].HasMember("images") &&
-            doc["data"]["images"].IsObject()) {
+        doc["data"]["images"].IsObject()) {
 
         const Value& images = doc["data"]["images"];
         const Value& base_url = doc["data"]["base_url"];
@@ -440,19 +440,18 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         if (doc.HasMember("remaining_monthly_allowance") && doc.HasMember("extra_allowance")) {
             for (auto i = 0; i < results.size(); i++) {
                 results[i].scraperRequestAllowance =
-                        doc["remaining_monthly_allowance"].GetInt() +
-                        doc["extra_allowance"].GetInt();
+                    doc["remaining_monthly_allowance"].GetInt() + doc["extra_allowance"].GetInt();
             }
             LOG(LogDebug) << "TheGamesDBJSONRequest::process(): "
-                    "Remaining monthly scraping allowance: " <<
-                    results.back().scraperRequestAllowance;
+                             "Remaining monthly scraping allowance: "
+                          << results.back().scraperRequestAllowance;
         }
         return;
     }
 
     // These process steps are for the initial scraping response.
     if (!doc.HasMember("data") || !doc["data"].HasMember("games") ||
-            !doc["data"]["games"].IsArray()) {
+        !doc["data"]["games"].IsArray()) {
         LOG(LogWarning) << "TheGamesDBJSONRequest - Response had no game data\n";
         return;
     }

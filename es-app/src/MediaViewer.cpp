@@ -12,11 +12,14 @@
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
-#include "views/ViewController.h"
 #include "AudioManager.h"
 #include "Sound.h"
+#include "views/ViewController.h"
 
-MediaViewer::MediaViewer(Window* window) : mWindow(window), mVideo(nullptr), mImage(nullptr)
+MediaViewer::MediaViewer(Window* window)
+    : mWindow(window)
+    , mVideo(nullptr)
+    , mImage(nullptr)
 {
     mWindow->setMediaViewer(this);
 }
@@ -85,12 +88,12 @@ void MediaViewer::render()
 
     // Render a black background below the game media.
     Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+                       static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
     if (mVideo && !mDisplayingImage) {
         mVideo->render(transform);
 
-        #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
         Renderer::shaderParameters videoParameters;
         unsigned int shaders = 0;
         if (Settings::getInstance()->getBool("MediaViewerVideoScanlines"))
@@ -98,6 +101,7 @@ void MediaViewer::render()
         if (Settings::getInstance()->getBool("MediaViewerVideoBlur")) {
             shaders |= Renderer::SHADER_BLUR_HORIZONTAL;
             float heightModifier = Renderer::getScreenHeightModifier();
+            // clang-format off
             if (heightModifier < 1)
                 videoParameters.blurPasses = 2;        // Below 1080
             else if (heightModifier >= 4)
@@ -112,18 +116,19 @@ void MediaViewer::render()
                 videoParameters.blurPasses = 3;        // 1440
             else if (heightModifier >= 1)
                 videoParameters.blurPasses = 2;        // 1080
+            // clang-format on
         }
         Renderer::shaderPostprocessing(shaders, videoParameters);
-        #endif
+#endif
     }
     else if (mImage && mImage->hasImage() && mImage->getSize() != 0) {
         mImage->render(transform);
 
-        #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
         if (mCurrentImageIndex == mScreenShotIndex &&
-                Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
+            Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
             Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
-        #endif
+#endif
 
         // This is necessary so that the video loops if viewing an image when
         // the video ends.
@@ -244,14 +249,14 @@ void MediaViewer::playVideo()
     mDisplayingImage = false;
     ViewController::get()->onStopVideo();
 
-    #if defined(BUILD_VLC_PLAYER)
+#if defined(BUILD_VLC_PLAYER)
     if (Settings::getInstance()->getString("VideoPlayer") == "ffmpeg")
         mVideo = new VideoFFmpegComponent(mWindow);
     else
         mVideo = new VideoVlcComponent(mWindow);
-    #else
+#else
     mVideo = new VideoFFmpegComponent(mWindow);
-    #endif
+#endif
 
     mVideo->topWindow(true);
     mVideo->setOrigin(0.5f, 0.5f);
@@ -259,10 +264,10 @@ void MediaViewer::playVideo()
 
     if (Settings::getInstance()->getBool("MediaViewerStretchVideos"))
         mVideo->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()));
+                          static_cast<float>(Renderer::getScreenHeight()));
     else
         mVideo->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()));
+                           static_cast<float>(Renderer::getScreenHeight()));
 
     mVideo->setVideo(mVideoFile);
     mVideo->setMediaViewerMode(true);
@@ -282,6 +287,6 @@ void MediaViewer::showImage(int index)
         mImage->setOrigin(0.5f, 0.5f);
         mImage->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
         mImage->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()));
+                           static_cast<float>(Renderer::getScreenHeight()));
     }
 }

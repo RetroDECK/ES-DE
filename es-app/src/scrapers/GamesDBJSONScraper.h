@@ -12,39 +12,42 @@
 
 #include "scrapers/Scraper.h"
 
-namespace pugi {
+namespace pugi
+{
     class xml_document;
 }
 
-void thegamesdb_generate_json_scraper_requests(const ScraperSearchParams& params,
-        std::queue<std::unique_ptr<ScraperRequest>>& requests,
-        std::vector<ScraperSearchResult>& results);
+void thegamesdb_generate_json_scraper_requests(
+    const ScraperSearchParams& params,
+    std::queue<std::unique_ptr<ScraperRequest>>& requests,
+    std::vector<ScraperSearchResult>& results);
 
-void thegamesdb_generate_json_scraper_requests(const std::string& gameIDs,
-        std::queue<std::unique_ptr<ScraperRequest>>& requests,
-        std::vector<ScraperSearchResult>& results);
+void thegamesdb_generate_json_scraper_requests(
+    const std::string& gameIDs,
+    std::queue<std::unique_ptr<ScraperRequest>>& requests,
+    std::vector<ScraperSearchResult>& results);
 
 class TheGamesDBJSONRequest : public ScraperHttpRequest
 {
-  public:
+public:
     // Constructor for a GetGameList request.
-    TheGamesDBJSONRequest(
-            std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
-            std::vector<ScraperSearchResult>& resultsWrite,
-            const std::string& url)
-            : ScraperHttpRequest(resultsWrite, url),
-            mRequestQueue(&requestsWrite)
+    TheGamesDBJSONRequest(std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
+                          std::vector<ScraperSearchResult>& resultsWrite,
+                          const std::string& url)
+        : ScraperHttpRequest(resultsWrite, url)
+        , mRequestQueue(&requestsWrite)
     {
     }
     // Constructior for a GetGame request
     TheGamesDBJSONRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url)
-            : ScraperHttpRequest(resultsWrite, url), mRequestQueue(nullptr)
+        : ScraperHttpRequest(resultsWrite, url)
+        , mRequestQueue(nullptr)
     {
     }
 
-  protected:
+protected:
     void process(const std::unique_ptr<HttpReq>& req,
-            std::vector<ScraperSearchResult>& results) override;
+                 std::vector<ScraperSearchResult>& results) override;
     bool isGameRequest() { return !mRequestQueue; }
 
     std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;

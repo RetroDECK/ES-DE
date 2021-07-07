@@ -11,6 +11,12 @@
 
 #include "guis/GuiMetaDataEd.h"
 
+#include "CollectionSystemsManager.h"
+#include "FileData.h"
+#include "FileFilterIndex.h"
+#include "Gamelist.h"
+#include "SystemData.h"
+#include "Window.h"
 #include "components/ButtonComponent.h"
 #include "components/ComponentList.h"
 #include "components/DateTimeEditComponent.h"
@@ -18,69 +24,63 @@
 #include "components/RatingComponent.h"
 #include "components/SwitchComponent.h"
 #include "components/TextComponent.h"
+#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiGameScraper.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiTextEditPopup.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
-#include "CollectionSystemsManager.h"
-#include "FileData.h"
-#include "FileFilterIndex.h"
-#include "Gamelist.h"
-#include "SystemData.h"
-#include "Window.h"
 
-GuiMetaDataEd::GuiMetaDataEd(
-        Window* window,
-        MetaDataList* md,
-        const std::vector<MetaDataDecl>& mdd,
-        ScraperSearchParams scraperParams,
-        const std::string& /*header*/,
-        std::function<void()> saveCallback,
-        std::function<void()> clearGameFunc,
-        std::function<void()> deleteGameFunc)
-        : GuiComponent(window),
-        mScraperParams(scraperParams),
-        mBackground(window, ":/graphics/frame.svg"),
-        mGrid(window, Vector2i(1, 3)),
-        mMetaDataDecl(mdd),
-        mMetaData(md),
-        mSavedCallback(saveCallback),
-        mClearGameFunc(clearGameFunc),
-        mDeleteGameFunc(deleteGameFunc),
-        mMediaFilesUpdated(false)
+GuiMetaDataEd::GuiMetaDataEd(Window* window,
+                             MetaDataList* md,
+                             const std::vector<MetaDataDecl>& mdd,
+                             ScraperSearchParams scraperParams,
+                             const std::string& /*header*/,
+                             std::function<void()> saveCallback,
+                             std::function<void()> clearGameFunc,
+                             std::function<void()> deleteGameFunc)
+    : GuiComponent(window)
+    , mScraperParams(scraperParams)
+    , mBackground(window, ":/graphics/frame.svg")
+    , mGrid(window, Vector2i(1, 3))
+    , mMetaDataDecl(mdd)
+    , mMetaData(md)
+    , mSavedCallback(saveCallback)
+    , mClearGameFunc(clearGameFunc)
+    , mDeleteGameFunc(deleteGameFunc)
+    , mMediaFilesUpdated(false)
 {
     addChild(&mBackground);
     addChild(&mGrid);
 
     mHeaderGrid = std::make_shared<ComponentGrid>(mWindow, Vector2i(1, 5));
 
-    mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA",
-            Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
+                                             0x555555FF, ALIGN_CENTER);
 
     // Extract possible subfolders from the path.
-    std::string folderPath = Utils::String::replace(
-            Utils::FileSystem::getParent(scraperParams.game->getPath()),
-            scraperParams.system->getSystemEnvData()->mStartPath, "");
+    std::string folderPath =
+        Utils::String::replace(Utils::FileSystem::getParent(scraperParams.game->getPath()),
+                               scraperParams.system->getSystemEnvData()->mStartPath, "");
 
     if (folderPath.size() >= 2) {
         folderPath.erase(0, 1);
-        #if defined(_WIN64)
+#if defined(_WIN64)
         folderPath.push_back('\\');
         folderPath = Utils::String::replace(folderPath, "/", "\\");
-        #else
+#else
         folderPath.push_back('/');
-        #endif
+#endif
     }
 
-    mSubtitle = std::make_shared<TextComponent>(mWindow, folderPath +
-            Utils::FileSystem::getFileName(scraperParams.game->getPath()) +
-            " [" + Utils::String::toUpper(scraperParams.system->getName()) + "]" +
+    mSubtitle = std::make_shared<TextComponent>(
+        mWindow,
+        folderPath + Utils::FileSystem::getFileName(scraperParams.game->getPath()) + " [" +
+            Utils::String::toUpper(scraperParams.system->getName()) + "]" +
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
-            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, Vector3f(0.0f, 0.0f, 0.0f),
-            Vector2f(0.0f, 0.0f), 0x00000000, 0.05f);
+        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, Vector3f(0.0f, 0.0f, 0.0f),
+        Vector2f(0.0f, 0.0f), 0x00000000, 0.05f);
     mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
     mHeaderGrid->setEntry(mSubtitle, Vector2i(0, 3), false, true);
 
@@ -102,27 +102,26 @@ GuiMetaDataEd::GuiMetaDataEd(
 
         // Don't show the launch command override entry if this option has been disabled.
         if (!Settings::getInstance()->getBool("LaunchCommandOverride") &&
-                iter->type == MD_LAUNCHCOMMAND) {
-            ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL,
-                    FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+            iter->type == MD_LAUNCHCOMMAND) {
+            ed = std::make_shared<TextComponent>(
+                window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
             assert(ed);
             ed->setValue(mMetaData->get(iter->key));
             mEditors.push_back(ed);
             continue;
         }
 
-        // Create ed and add it (and any related components) to mMenu.
-        // ed's value will be set below.
         // It's very important to put the element with the help prompt as the last row
         // entry instead of for instance the spacer. That is so because ComponentList
         // always looks for the help prompt at the back of the element stack.
         ComponentListRow row;
-        auto lbl = std::make_shared<TextComponent>(mWindow,
-                Utils::String::toUpper(iter->displayName), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+        auto lbl =
+            std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(iter->displayName),
+                                            Font::get(FONT_SIZE_SMALL), 0x777777FF);
         row.addElement(lbl, true); // Label.
 
         switch (iter->type) {
-        case MD_BOOL: {
+            case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
                 // Make the switches slightly smaller.
                 auto switchSize = ed->getSize() * 0.9f;
@@ -133,9 +132,9 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(ed, false, true);
                 break;
             }
-        case MD_RATING: {
+            case MD_RATING: {
                 auto spacer = std::make_shared<GuiComponent>(mWindow);
-                spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
+                spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0.0f);
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<RatingComponent>(window, true);
@@ -145,17 +144,17 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(ed, false, true);
 
                 auto ratingSpacer = std::make_shared<GuiComponent>(mWindow);
-                ratingSpacer->setSize(Renderer::getScreenWidth() * 0.001f, 0);
+                ratingSpacer->setSize(Renderer::getScreenWidth() * 0.001f, 0.0f);
                 row.addElement(ratingSpacer, false);
 
                 // Pass input to the actual RatingComponent instead of the spacer.
-                row.input_handler = std::bind(&GuiComponent::input,
-                        ed.get(), std::placeholders::_1, std::placeholders::_2);
+                row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
+                                              std::placeholders::_2);
                 break;
             }
-        case MD_DATE: {
+            case MD_DATE: {
                 auto spacer = std::make_shared<GuiComponent>(mWindow);
-                spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0);
+                spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0.0f);
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<DateTimeEditComponent>(window, true);
@@ -164,29 +163,22 @@ GuiMetaDataEd::GuiMetaDataEd(
                 row.addElement(ed, false);
 
                 auto dateSpacer = std::make_shared<GuiComponent>(mWindow);
-                dateSpacer->setSize(Renderer::getScreenWidth() * 0.0035f, 0);
+                dateSpacer->setSize(Renderer::getScreenWidth() * 0.0035f, 0.0f);
                 row.addElement(dateSpacer, false);
 
                 // Pass input to the actual DateTimeEditComponent instead of the spacer.
-                row.input_handler = std::bind(&GuiComponent::input, ed.get(),
-                        std::placeholders::_1, std::placeholders::_2);
+                row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
+                                              std::placeholders::_2);
                 break;
             }
-//        Not in use as 'lastplayed' is flagged as statistics and these are skipped.
-//        Let's still keep the code because it may be needed in the future.
-//        case MD_TIME: {
-//                ed = std::make_shared<DateTimeEditComponent>(window,
-//                        DateTimeEditComponent::DISP_RELATIVE_TO_NOW);
-//                row.addElement(ed, false);
-//                break;
-//            }
-        case MD_LAUNCHCOMMAND: {
+            case MD_LAUNCHCOMMAND: {
                 ed = std::make_shared<TextComponent>(window, "",
-                        Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+                                                     Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                     0x777777FF, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>(mWindow);
-                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
+                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
@@ -207,26 +199,27 @@ GuiMetaDataEd::GuiMetaDataEd(
                 };
 
                 std::string staticTextString = "Default value from es_systems.xml:";
-                std::string defaultLaunchCommand = scraperParams.system->
-                        getSystemEnvData()->mLaunchCommand;
+                std::string defaultLaunchCommand =
+                    scraperParams.system->getSystemEnvData()->mLaunchCommand;
 
-                row.makeAcceptInputHandler([this, title, staticTextString,
-                        defaultLaunchCommand, ed, updateVal, multiLine] {
-                            mWindow->pushGui(new GuiComplexTextEditPopup(mWindow, getHelpStyle(),
-                            title, staticTextString, defaultLaunchCommand, ed->getValue(),
-                            updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
+                row.makeAcceptInputHandler([this, title, staticTextString, defaultLaunchCommand, ed,
+                                            updateVal, multiLine] {
+                    mWindow->pushGui(new GuiComplexTextEditPopup(
+                        mWindow, getHelpStyle(), title, staticTextString, defaultLaunchCommand,
+                        ed->getValue(), updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
                 });
                 break;
             }
-        case MD_MULTILINE_STRING:
-        default: {
+            case MD_MULTILINE_STRING:
+            default: {
                 // MD_STRING.
-                ed = std::make_shared<TextComponent>(window, "", Font::get(FONT_SIZE_SMALL,
-                        FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+                ed = std::make_shared<TextComponent>(window, "",
+                                                     Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                     0x777777FF, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>(mWindow);
-                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
+                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
@@ -239,9 +232,9 @@ GuiMetaDataEd::GuiMetaDataEd(
 
                 gamePath = Utils::FileSystem::getStem(mScraperParams.game->getPath());
 
-                 // OK callback (apply new value to ed).
-                auto updateVal = [ed, currentKey, originalValue, gamePath]
-                        (const std::string& newVal) {
+                // OK callback (apply new value to ed).
+                auto updateVal = [ed, currentKey, originalValue,
+                                  gamePath](const std::string& newVal) {
                     // If the user has entered a blank game name, then set the name to the ROM
                     // filename (minus the extension).
                     if (currentKey == "name" && newVal == "") {
@@ -251,27 +244,28 @@ GuiMetaDataEd::GuiMetaDataEd(
                         else
                             ed->setColor(TEXTCOLOR_USERMARKED);
                     }
-                    else if (newVal == "" && (currentKey == "developer" ||
-                            currentKey == "publisher" || currentKey == "genre" ||
-                            currentKey == "players")) {
+                    else if (newVal == "" &&
+                             (currentKey == "developer" || currentKey == "publisher" ||
+                              currentKey == "genre" || currentKey == "players")) {
                         ed->setValue("unknown");
                         if (originalValue == "unknown")
                             ed->setColor(DEFAULT_TEXTCOLOR);
                         else
-                           ed->setColor(TEXTCOLOR_USERMARKED);
+                            ed->setColor(TEXTCOLOR_USERMARKED);
                     }
                     else {
                         ed->setValue(newVal);
                         if (newVal == originalValue)
                             ed->setColor(DEFAULT_TEXTCOLOR);
                         else
-                           ed->setColor(TEXTCOLOR_USERMARKED);
+                            ed->setColor(TEXTCOLOR_USERMARKED);
                     }
-                 };
+                };
 
                 row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
                     mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
-                            ed->getValue(), updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
+                                                          ed->getValue(), updateVal, multiLine,
+                                                          "APPLY", "APPLY CHANGES?"));
                 });
                 break;
             }
@@ -286,8 +280,8 @@ GuiMetaDataEd::GuiMetaDataEd(
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
     if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
-        buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SCRAPE", "scrape",
-                std::bind(&GuiMetaDataEd::fetch, this)));
+        buttons.push_back(std::make_shared<ButtonComponent>(
+            mWindow, "SCRAPE", "scrape", std::bind(&GuiMetaDataEd::fetch, this)));
 
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata", [&] {
         save();
@@ -295,49 +289,60 @@ GuiMetaDataEd::GuiMetaDataEd(
         delete this;
     }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel changes",
-            [&] { delete this; }));
-
+                                                        [&] { delete this; }));
     if (scraperParams.game->getType() == FOLDER) {
         if (mClearGameFunc) {
-            auto clearSelf = [&] { mClearGameFunc(); delete this; };
+            auto clearSelf = [&] {
+                mClearGameFunc();
+                delete this;
+            };
             auto clearSelfBtnFunc = [this, clearSelf] {
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                        "THIS WILL DELETE ANY MEDIA FILES AND\n"
-                        "THE GAMELIST.XML ENTRY FOR THIS FOLDER,\n"
-                        "BUT NEITHER THE FOLDER ITSELF OR ANY\n"
-                        "CONTENT INSIDE IT WILL BE REMOVED\n"
-                        "ARE YOU SURE?",
-                        "YES", clearSelf, "NO", nullptr)); };
-            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR",
-                    "clear folder", clearSelfBtnFunc));
+                                               "THIS WILL DELETE ANY MEDIA FILES AND\n"
+                                               "THE GAMELIST.XML ENTRY FOR THIS FOLDER,\n"
+                                               "BUT NEITHER THE FOLDER ITSELF OR ANY\n"
+                                               "CONTENT INSIDE IT WILL BE REMOVED\n"
+                                               "ARE YOU SURE?",
+                                               "YES", clearSelf, "NO", nullptr));
+            };
+            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear folder",
+                                                                clearSelfBtnFunc));
         }
     }
     else {
         if (mClearGameFunc) {
-            auto clearSelf = [&] { mClearGameFunc(); delete this; };
+            auto clearSelf = [&] {
+                mClearGameFunc();
+                delete this;
+            };
             auto clearSelfBtnFunc = [this, clearSelf] {
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                        "THIS WILL DELETE ANY MEDIA FILES\n"
-                        "AND THE GAMELIST.XML ENTRY FOR\n"
-                        "THIS GAME, BUT THE GAME FILE\n"
-                        "ITSELF WILL NOT BE REMOVED\n"
-                        "ARE YOU SURE?",
-                        "YES", clearSelf, "NO", nullptr)); };
-            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR",
-                    "clear file", clearSelfBtnFunc));
+                                               "THIS WILL DELETE ANY MEDIA FILES\n"
+                                               "AND THE GAMELIST.XML ENTRY FOR\n"
+                                               "THIS GAME, BUT THE GAME FILE\n"
+                                               "ITSELF WILL NOT BE REMOVED\n"
+                                               "ARE YOU SURE?",
+                                               "YES", clearSelf, "NO", nullptr));
+            };
+            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear file",
+                                                                clearSelfBtnFunc));
         }
 
         if (mDeleteGameFunc) {
-            auto deleteFilesAndSelf = [&] { mDeleteGameFunc(); delete this; };
+            auto deleteFilesAndSelf = [&] {
+                mDeleteGameFunc();
+                delete this;
+            };
             auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
                 mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                        "THIS WILL DELETE THE GAME\n"
-                        "FILE, ANY MEDIA FILES AND\n"
-                        "THE GAMELIST.XML ENTRY\n"
-                        "ARE YOU SURE?",
-                        "YES", deleteFilesAndSelf, "NO", nullptr)); };
-            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE",
-                    "delete game", deleteGameBtnFunc));
+                                               "THIS WILL DELETE THE GAME\n"
+                                               "FILE, ANY MEDIA FILES AND\n"
+                                               "THE GAMELIST.XML ENTRY\n"
+                                               "ARE YOU SURE?",
+                                               "YES", deleteFilesAndSelf, "NO", nullptr));
+            };
+            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE", "delete game",
+                                                                deleteGameBtnFunc));
         }
     }
 
@@ -345,11 +350,12 @@ GuiMetaDataEd::GuiMetaDataEd(
     mGrid.setEntry(mButtons, Vector2i(0, 2), true, false);
 
     // Resize + center.
-    float width = static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() *
-            1.05f), static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
+    float width =
+        static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() * 1.05f),
+                                    static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
     setSize(width, Renderer::getScreenHeight() * 0.83f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
-            (Renderer::getScreenHeight() - mSize.y()) / 2);
+    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
 }
 
 void GuiMetaDataEd::onSizeChanged()
@@ -360,8 +366,8 @@ void GuiMetaDataEd::onSizeChanged()
     const float subtitleHeight = mSubtitle->getFont()->getLetterHeight();
     const float titleSubtitleSpacing = mSize.y() * 0.03f;
 
-    mGrid.setRowHeightPerc(0, (titleHeight + titleSubtitleSpacing + subtitleHeight +
-            TITLE_VERT_PADDING) / mSize.y());
+    mGrid.setRowHeightPerc(
+        0, (titleHeight + titleSubtitleSpacing + subtitleHeight + TITLE_VERT_PADDING) / mSize.y());
     mGrid.setRowHeightPerc(2, mButtons->getSize().y() / mSize.y());
 
     // Snap list size to the row height to prevent a fraction of a row from being displayed.
@@ -383,7 +389,7 @@ void GuiMetaDataEd::onSizeChanged()
     mList->setSize(mList->getSize().x(), listHeight);
     Vector2f newWindowSize = mSize;
     newWindowSize.y() -= heightAdjustment;
-    mBackground.fitTo(newWindowSize, Vector3f::Zero(), Vector2f(-32, -32));
+    mBackground.fitTo(newWindowSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
 
     // Move the buttons up as well to make the layout align correctly after the resize.
     Vector3f newButtonPos = mButtons->getPosition();
@@ -411,13 +417,13 @@ void GuiMetaDataEd::save()
             continue;
 
         if (!showHiddenGames && mMetaDataDecl.at(i).key == "hidden" &&
-                mEditors.at(i)->getValue() != mMetaData->get("hidden"))
+            mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
 
         // Check whether the flag to count the entry as a game was set to enabled.
         if (mMetaDataDecl.at(i).key == "nogamecount" &&
-                mEditors.at(i)->getValue() != mMetaData->get("nogamecount") &&
-                mMetaData->get("nogamecount") == "true") {
+            mEditors.at(i)->getValue() != mMetaData->get("nogamecount") &&
+            mMetaData->get("nogamecount") == "true") {
             setGameAsCounted = true;
         }
 
@@ -450,7 +456,7 @@ void GuiMetaDataEd::save()
             for (FileData* child : mScraperParams.game->getChildrenRecursive()) {
                 if (!child->getHidden())
                     child->metadata.set("hidden", "true");
-                    hideGames.push_back(child);
+                hideGames.push_back(child);
             }
         }
         else {
@@ -501,8 +507,8 @@ void GuiMetaDataEd::save()
 
 void GuiMetaDataEd::fetch()
 {
-    GuiGameScraper* scr = new GuiGameScraper(mWindow, mScraperParams,
-            std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1));
+    GuiGameScraper* scr = new GuiGameScraper(
+        mWindow, mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1));
     mWindow->pushGui(scr);
 }
 
@@ -513,10 +519,6 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     metadata = new MetaDataList(*mMetaData);
 
     mMediaFilesUpdated = result.savedNewMedia;
-
-//    Curently disabled as I'm not sure if this is more annoying than helpful.
-//    // Select the Save button.
-//    mButtons->moveCursor(Vector2i(1, 0));
 
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
@@ -561,42 +563,31 @@ void GuiMetaDataEd::close()
         }
     }
 
-//	Keep code for potential future use.
-//	std::function<void()> closeFunc;
-//	if (!closeAllWindows) {
-//		closeFunc = [this] { delete this; };
-//	}
-//	else {
-//		Window* window = mWindow;
-//		closeFunc = [window, this] {
-//			while (window->peekGui() != ViewController::get())
-//				delete window->peekGui();
-//		};
-//	}
-
     std::function<void()> closeFunc;
-        closeFunc = [this] {
-            if (mMediaFilesUpdated) {
-                // Always reload the gamelist if media files were updated, even if the user
-                // chose to not save any metadata changes. Also manually unload the game image
-                // and marquee, as otherwise they would not get updated until the user scrolls up
-                // and down the gamelist.
-                TextureResource::manualUnload(mScraperParams.game->getImagePath(), false);
-                TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
-                ViewController::get()->reloadGameListView(mScraperParams.system);
-                mWindow->invalidateCachedBackground();
-            }
-            ViewController::get()->onPauseVideo();
-            delete this;
-        };
+    closeFunc = [this] {
+        if (mMediaFilesUpdated) {
+            // Always reload the gamelist if media files were updated, even if the user
+            // chose to not save any metadata changes. Also manually unload the game image
+            // and marquee, as otherwise they would not get updated until the user scrolls up
+            // and down the gamelist.
+            TextureResource::manualUnload(mScraperParams.game->getImagePath(), false);
+            TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
+            ViewController::get()->reloadGameListView(mScraperParams.system);
+            mWindow->invalidateCachedBackground();
+        }
+        ViewController::get()->onPauseVideo();
+        delete this;
+    };
 
     if (metadataUpdated) {
         // Changes were made, ask if the user wants to save them.
-        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-            "SAVE CHANGES?",
-            "YES", [this, closeFunc] { save(); closeFunc(); },
-            "NO", closeFunc
-        ));
+        mWindow->pushGui(new GuiMsgBox(
+            mWindow, getHelpStyle(), "SAVE CHANGES?", "YES",
+            [this, closeFunc] {
+                save();
+                closeFunc();
+            },
+            "NO", closeFunc));
     }
     else {
         // Always save if the media files have been changed (i.e. newly scraped images).

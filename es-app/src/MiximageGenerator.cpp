@@ -9,47 +9,45 @@
 
 #include "MiximageGenerator.h"
 
-#include "math/Misc.h"
-#include "utils/StringUtil.h"
 #include "Log.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "math/Misc.h"
+#include "utils/StringUtil.h"
 
 #include <chrono>
 
 MiximageGenerator::MiximageGenerator(FileData* game, std::string& resultMessage)
-        : mGame(game),
-        mResultMessage(resultMessage),
-        mWidth(1280),
-        mHeight(960),
-        mMarquee(false),
-        mBox3D(false),
-        mCover(false)
+    : mGame(game)
+    , mResultMessage(resultMessage)
+    , mWidth(1280)
+    , mHeight(960)
+    , mMarquee(false)
+    , mBox3D(false)
+    , mCover(false)
 {
 }
 
-MiximageGenerator::~MiximageGenerator()
-{
-}
+MiximageGenerator::~MiximageGenerator() {}
 
 void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
 {
     mMiximagePromise = miximagePromise;
 
     LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): Creating miximage for \""
-            << mGame->getFileName() << "\"";
+                  << mGame->getFileName() << "\"";
 
     if (mGame->getMiximagePath() != "" && !Settings::getInstance()->getBool("MiximageOverwrite")) {
         LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): File already exists and miximage "
-                "overwriting has not been enabled, aborting";
+                         "overwriting has not been enabled, aborting";
         mMiximagePromise->set_value(true);
         return;
     }
 
     if ((mScreenshotPath = mGame->getScreenshotPath()) == "") {
         LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): "
-                "No screenshot image found, aborting";
-            mResultMessage = "No screenshot image found, couldn't generate miximage";
+                         "No screenshot image found, aborting";
+        mResultMessage = "No screenshot image found, couldn't generate miximage";
         mMiximagePromise->set_value(true);
         return;
     }
@@ -68,14 +66,14 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
             mBox3D = true;
         }
         else if (Settings::getInstance()->getBool("MiximageCoverFallback") &&
-                (mCoverPath= mGame->getCoverPath()) != "") {
+                 (mCoverPath = mGame->getCoverPath()) != "") {
             LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): "
-                    "No 3D box image found, using cover image as fallback";
+                             "No 3D box image found, using cover image as fallback";
             mCover = true;
         }
         else if (Settings::getInstance()->getBool("MiximageCoverFallback")) {
             LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): "
-                    "No 3D box or cover images found";
+                             "No 3D box or cover images found";
         }
         else {
             LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): No 3D box image found";
@@ -93,9 +91,10 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
     else {
         const auto endTime = std::chrono::system_clock::now();
 
-        LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): Processing completed in: " <<
-            std::chrono::duration_cast<std::chrono::milliseconds>
-            (endTime - startTime).count() << " ms";
+        LOG(LogDebug)
+            << "MiximageGenerator::MiximageGenerator(): Processing completed in: "
+            << std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count()
+            << " ms";
     }
 
     mResultMessage = mMessage;
@@ -113,19 +112,19 @@ bool MiximageGenerator::generateImage()
     unsigned int fileHeight = 0;
     unsigned int filePitch = 0;
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     fileFormat = FreeImage_GetFileTypeU(Utils::String::stringToWideString(mScreenshotPath).c_str());
-    #else
+#else
     fileFormat = FreeImage_GetFileType(mScreenshotPath.c_str());
-    #endif
+#endif
 
     if (fileFormat == FIF_UNKNOWN)
-        #if defined(_WIN64)
+#if defined(_WIN64)
         fileFormat = FreeImage_GetFIFFromFilenameU(
-                Utils::String::stringToWideString(mScreenshotPath).c_str());
-        #else
+            Utils::String::stringToWideString(mScreenshotPath).c_str());
+#else
         fileFormat = FreeImage_GetFIFFromFilename(mScreenshotPath.c_str());
-        #endif
+#endif
 
     if (fileFormat == FIF_UNKNOWN) {
         LOG(LogError) << "Screenshot image in unknown image format, aborting";
@@ -135,12 +134,12 @@ bool MiximageGenerator::generateImage()
 
     // Make sure that we can actually read this format.
     if (FreeImage_FIFSupportsReading(fileFormat)) {
-    #if defined(_WIN64)
-        screenshotFile = FreeImage_LoadU(fileFormat,
-                Utils::String::stringToWideString(mScreenshotPath).c_str());
-    #else
+#if defined(_WIN64)
+        screenshotFile =
+            FreeImage_LoadU(fileFormat, Utils::String::stringToWideString(mScreenshotPath).c_str());
+#else
         screenshotFile = FreeImage_Load(fileFormat, mScreenshotPath.c_str());
-    #endif
+#endif
     }
     else {
         LOG(LogError) << "Screenshot file format not supported";
@@ -155,20 +154,20 @@ bool MiximageGenerator::generateImage()
     }
 
     if (mMarquee) {
-        #if defined(_WIN64)
-        fileFormat = FreeImage_GetFileTypeU(
-                Utils::String::stringToWideString(mMarqueePath).c_str());
-        #else
+#if defined(_WIN64)
+        fileFormat =
+            FreeImage_GetFileTypeU(Utils::String::stringToWideString(mMarqueePath).c_str());
+#else
         fileFormat = FreeImage_GetFileType(mMarqueePath.c_str());
-        #endif
+#endif
 
         if (fileFormat == FIF_UNKNOWN)
-            #if defined(_WIN64)
+#if defined(_WIN64)
             fileFormat = FreeImage_GetFIFFromFilenameU(
-                    Utils::String::stringToWideString(mMarqueePath).c_str());
-            #else
+                Utils::String::stringToWideString(mMarqueePath).c_str());
+#else
             fileFormat = FreeImage_GetFIFFromFilename(mMarqueePath.c_str());
-            #endif
+#endif
 
         if (fileFormat == FIF_UNKNOWN) {
             LOG(LogDebug) << "Marquee in unknown format, skipping image";
@@ -180,12 +179,12 @@ bool MiximageGenerator::generateImage()
             mMarquee = false;
         }
         else {
-            #if defined(_WIN64)
+#if defined(_WIN64)
             marqueeFile = FreeImage_LoadU(fileFormat,
-                    Utils::String::stringToWideString(mMarqueePath).c_str());
-            #else
+                                          Utils::String::stringToWideString(mMarqueePath).c_str());
+#else
             marqueeFile = FreeImage_Load(fileFormat, mMarqueePath.c_str());
-            #endif
+#endif
             if (!marqueeFile) {
                 LOG(LogError) << "Couldn't load marquee image, corrupt file?";
                 mMessage = "Error loading marquee image, corrupt file?";
@@ -195,19 +194,19 @@ bool MiximageGenerator::generateImage()
     }
 
     if (mBox3D) {
-        #if defined(_WIN64)
+#if defined(_WIN64)
         fileFormat = FreeImage_GetFileTypeU(Utils::String::stringToWideString(mBox3DPath).c_str());
-        #else
+#else
         fileFormat = FreeImage_GetFileType(mBox3DPath.c_str());
-        #endif
+#endif
 
         if (fileFormat == FIF_UNKNOWN)
-            #if defined(_WIN64)
+#if defined(_WIN64)
             fileFormat = FreeImage_GetFIFFromFilenameU(
-                    Utils::String::stringToWideString(mBox3DPath).c_str());
-            #else
+                Utils::String::stringToWideString(mBox3DPath).c_str());
+#else
             fileFormat = FreeImage_GetFIFFromFilename(mBox3DPath.c_str());
-            #endif
+#endif
 
         if (fileFormat == FIF_UNKNOWN) {
             LOG(LogDebug) << "3D box in unknown format, skipping image";
@@ -219,12 +218,12 @@ bool MiximageGenerator::generateImage()
             mBox3D = false;
         }
         else {
-            #if defined(_WIN64)
-            boxFile = FreeImage_LoadU(fileFormat,
-                    Utils::String::stringToWideString(mBox3DPath).c_str());
-            #else
+#if defined(_WIN64)
+            boxFile =
+                FreeImage_LoadU(fileFormat, Utils::String::stringToWideString(mBox3DPath).c_str());
+#else
             boxFile = FreeImage_Load(fileFormat, mBox3DPath.c_str());
-            #endif
+#endif
             if (!boxFile) {
                 LOG(LogError) << "Couldn't load 3D box image, corrupt file?";
                 mMessage = "Error loading 3d box image, corrupt file?";
@@ -233,20 +232,19 @@ bool MiximageGenerator::generateImage()
         }
     }
     else if (mCover) {
-        #if defined(_WIN64)
-        fileFormat = FreeImage_GetFileTypeU(
-                Utils::String::stringToWideString(mCoverPath).c_str());
-        #else
+#if defined(_WIN64)
+        fileFormat = FreeImage_GetFileTypeU(Utils::String::stringToWideString(mCoverPath).c_str());
+#else
         fileFormat = FreeImage_GetFileType(mCoverPath.c_str());
-        #endif
+#endif
 
         if (fileFormat == FIF_UNKNOWN)
-            #if defined(_WIN64)
+#if defined(_WIN64)
             fileFormat = FreeImage_GetFIFFromFilenameU(
-                    Utils::String::stringToWideString(mCoverPath).c_str());
-            #else
+                Utils::String::stringToWideString(mCoverPath).c_str());
+#else
             fileFormat = FreeImage_GetFIFFromFilename(mCoverPath.c_str());
-            #endif
+#endif
 
         if (fileFormat == FIF_UNKNOWN) {
             LOG(LogDebug) << "Box cover in unknown format, skipping image";
@@ -258,12 +256,12 @@ bool MiximageGenerator::generateImage()
             mCover = false;
         }
         else {
-            #if defined(_WIN64)
-            boxFile = FreeImage_LoadU(fileFormat,
-                    Utils::String::stringToWideString(mCoverPath).c_str());
-            #else
+#if defined(_WIN64)
+            boxFile =
+                FreeImage_LoadU(fileFormat, Utils::String::stringToWideString(mCoverPath).c_str());
+#else
             boxFile = FreeImage_Load(fileFormat, mCoverPath.c_str());
-            #endif
+#endif
             if (!boxFile) {
                 LOG(LogError) << "Couldn't load box cover image, corrupt file?";
                 mMessage = "Error loading box cover image, corrupt file?";
@@ -318,7 +316,7 @@ bool MiximageGenerator::generateImage()
     std::vector<unsigned char> screenshotVector(fileWidth * fileHeight * 4);
 
     FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&screenshotVector.at(0)), screenshotFile,
-            filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
+                               filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
 
     CImg<unsigned char> screenshotImage(fileWidth, fileHeight, 1, 4, 0);
 
@@ -386,10 +384,10 @@ bool MiximageGenerator::generateImage()
         std::vector<unsigned char> marqueeVector(fileWidth * fileHeight * 4);
 
         FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&marqueeVector.at(0)), marqueeFile,
-                filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
+                                   filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
 
         marqueeImage = CImg<unsigned char>(FreeImage_GetWidth(marqueeFile),
-                FreeImage_GetHeight(marqueeFile), 1, 4, 0);
+                                           FreeImage_GetHeight(marqueeFile), 1, 4, 0);
 
         Utils::CImg::convertRGBAToCImg(marqueeVector, marqueeImage);
         Utils::CImg::removeTransparentPadding(marqueeImage);
@@ -409,7 +407,7 @@ bool MiximageGenerator::generateImage()
         yPosMarquee = 0;
 
         // Only RGB channels for the image.
-        marqueeImageRGB = CImg<unsigned char>(marqueeImage.get_shared_channels(0,2));
+        marqueeImageRGB = CImg<unsigned char>(marqueeImage.get_shared_channels(0, 2));
         // Only alpha channel for the image.
         marqueeImageAlpha = CImg<unsigned char>(marqueeImage.get_shared_channel(3));
     }
@@ -427,17 +425,17 @@ bool MiximageGenerator::generateImage()
 
         std::vector<unsigned char> boxVector(fileWidth * fileHeight * 4);
 
-        FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&boxVector.at(0)), boxFile,
-                filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
+        FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&boxVector.at(0)), boxFile, filePitch,
+                                   32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
 
-        boxImage = CImg<unsigned char>(FreeImage_GetWidth(boxFile),
-                FreeImage_GetHeight(boxFile), 1, 4);
+        boxImage =
+            CImg<unsigned char>(FreeImage_GetWidth(boxFile), FreeImage_GetHeight(boxFile), 1, 4);
 
         Utils::CImg::convertRGBAToCImg(boxVector, boxImage);
         Utils::CImg::removeTransparentPadding(boxImage);
 
-        float scaleFactor = static_cast<float>(boxTargetHeight) /
-                static_cast<float>(boxImage.height());
+        float scaleFactor =
+            static_cast<float>(boxTargetHeight) / static_cast<float>(boxImage.height());
         unsigned int width = static_cast<int>(static_cast<float>(boxImage.width()) * scaleFactor);
         unsigned int targetWidth = 0;
 
@@ -464,7 +462,7 @@ bool MiximageGenerator::generateImage()
         yPosBox = canvasImage.height() - boxImage.height();
 
         // Only RGB channels for the image.
-        boxImageRGB = CImg<unsigned char>(boxImage.get_shared_channels(0,2));
+        boxImageRGB = CImg<unsigned char>(boxImage.get_shared_channels(0, 2));
         // Only alpha channel for the image.
         boxImageAlpha = CImg<unsigned char>(boxImage.get_shared_channel(3));
     }
@@ -478,20 +476,15 @@ bool MiximageGenerator::generateImage()
     sampleFrameColor(screenshotImage, frameColor);
 
     // Upper / lower frame.
-    frameImage.draw_rectangle(
-            xPosScreenshot + 2,
-            yPosScreenshot - screenshotFrameWidth,
-            xPosScreenshot + screenshotWidth - 2,
-            yPosScreenshot + screenshotHeight + screenshotFrameWidth - 1,
-            frameColor);
+    frameImage.draw_rectangle(xPosScreenshot + 2, yPosScreenshot - screenshotFrameWidth,
+                              xPosScreenshot + screenshotWidth - 2,
+                              yPosScreenshot + screenshotHeight + screenshotFrameWidth - 1,
+                              frameColor);
 
     // Left / right frame.
-    frameImage.draw_rectangle(
-            xPosScreenshot - screenshotFrameWidth,
-            yPosScreenshot + 2,
-            xPosScreenshot + screenshotWidth + screenshotFrameWidth - 1,
-            yPosScreenshot + screenshotHeight - 2,
-            frameColor);
+    frameImage.draw_rectangle(xPosScreenshot - screenshotFrameWidth, yPosScreenshot + 2,
+                              xPosScreenshot + screenshotWidth + screenshotFrameWidth - 1,
+                              yPosScreenshot + screenshotHeight - 2, frameColor);
 
     // We draw circles in order to get rounded corners for the frame.
     const unsigned int circleRadius = 8 * resolutionMultiplier;
@@ -499,16 +492,18 @@ bool MiximageGenerator::generateImage()
 
     // Upper left corner.
     frameImage.draw_circle(xPosScreenshot + circleOffset, yPosScreenshot + circleOffset,
-            circleRadius, frameColor);
+                           circleRadius, frameColor);
     // Upper right corner.
     frameImage.draw_circle(xPosScreenshot + screenshotWidth - circleOffset - 1,
-            yPosScreenshot + circleOffset, circleRadius, frameColor);
+                           yPosScreenshot + circleOffset, circleRadius, frameColor);
     // Lower right corner.
     frameImage.draw_circle(xPosScreenshot + screenshotWidth - circleOffset - 1,
-            yPosScreenshot + screenshotHeight - circleOffset - 1, circleRadius, frameColor);
+                           yPosScreenshot + screenshotHeight - circleOffset - 1, circleRadius,
+                           frameColor);
     // Lower left corner.
     frameImage.draw_circle(xPosScreenshot + circleOffset,
-            yPosScreenshot + screenshotHeight - circleOffset - 1, circleRadius, frameColor);
+                           yPosScreenshot + screenshotHeight - circleOffset - 1, circleRadius,
+                           frameColor);
 
     CImg<unsigned char> frameImageRGB(frameImage.get_shared_channels(0, 2));
 
@@ -516,8 +511,8 @@ bool MiximageGenerator::generateImage()
     canvasImage.draw_image(xPosScreenshot, yPosScreenshot, screenshotImage);
 
     if (mMarquee)
-        canvasImage.draw_image(xPosMarquee, yPosMarquee, marqueeImageRGB,
-                marqueeImageAlpha, 1, 255);
+        canvasImage.draw_image(xPosMarquee, yPosMarquee, marqueeImageRGB, marqueeImageAlpha, 1,
+                               255);
     if (mBox3D || mCover)
         canvasImage.draw_image(xPosBox, yPosBox, boxImageRGB, boxImageAlpha, 1, 255);
 
@@ -528,15 +523,16 @@ bool MiximageGenerator::generateImage()
 
     FIBITMAP* mixImage = nullptr;
     mixImage = FreeImage_ConvertFromRawBits(&canvasVector.at(0), canvasImage.width(),
-            canvasImage.height(), canvasImage.width() * 4, 32,
-            FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE);
+                                            canvasImage.height(), canvasImage.width() * 4, 32,
+                                            FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE);
 
-    #if defined(_WIN64)
-    bool savedImage = (FreeImage_SaveU(FIF_PNG, mixImage,
-            Utils::String::stringToWideString(getSavePath()).c_str()) != 0);
-    #else
+#if defined(_WIN64)
+    bool savedImage =
+        (FreeImage_SaveU(FIF_PNG, mixImage,
+                         Utils::String::stringToWideString(getSavePath()).c_str()) != 0);
+#else
     bool savedImage = (FreeImage_Save(FIF_PNG, mixImage, getSavePath().c_str()) != 0);
-    #endif
+#endif
 
     if (!savedImage) {
         LOG(LogError) << "Couldn't save miximage, permission problems or disk full?";
@@ -555,7 +551,9 @@ bool MiximageGenerator::generateImage()
 }
 
 void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
-        const unsigned int& targetHeight, unsigned int& width, unsigned int& height)
+                                             const unsigned int& targetHeight,
+                                             unsigned int& width,
+                                             unsigned int& height)
 {
     unsigned int adjustedTargetWidth = 0;
     float widthModifier = 0.5f;
@@ -572,13 +570,13 @@ void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
     if (widthRatio >= 4)
         widthModifier += Math::clamp(widthRatio / 40.0f, 0.0f, 0.3f);
 
-    adjustedTargetWidth = static_cast<unsigned int>(
-                static_cast<float>(targetWidth) * widthModifier);
+    adjustedTargetWidth =
+        static_cast<unsigned int>(static_cast<float>(targetWidth) * widthModifier);
     scaleFactor = static_cast<float>(adjustedTargetWidth) / static_cast<float>(width);
 
     // For really tall and narrow images, we may have exceeded the target height.
     if (static_cast<int>(scaleFactor * static_cast<float>(height)) >
-            static_cast<float>(targetHeight))
+        static_cast<float>(targetHeight))
         scaleFactor = static_cast<float>(targetHeight) / static_cast<float>(height);
 
     width = static_cast<int>(static_cast<float>(width) * scaleFactor);
@@ -586,7 +584,7 @@ void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
 }
 
 void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
-        unsigned char (&frameColor)[4])
+                                         unsigned char (&frameColor)[4])
 {
     // Calculate the number of samples relative to the configured resolution so we get
     // the same result regardless of miximage target size seting.
@@ -627,7 +625,7 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
     unsigned char blueC = Math::clamp(static_cast<int>(blueLine / 255), 0, 255);
 
     // Convert to the HSL color space to be able to modify saturation and lightness.
-    CImg<float> colorHSL = CImg<>(1,1,1,3).fill(redC, greenC, blueC).RGBtoHSL();
+    CImg<float> colorHSL = CImg<>(1, 1, 1, 3).fill(redC, greenC, blueC).RGBtoHSL();
 
     float hue = colorHSL(0, 0, 0, 0);
     float saturation = colorHSL(0, 0, 0, 1);
@@ -656,7 +654,7 @@ std::string MiximageGenerator::getSavePath()
     // Extract possible subfolders from the path.
     if (mGame->getSystemEnvData()->mStartPath != "")
         subFolders = Utils::String::replace(Utils::FileSystem::getParent(mGame->getPath()),
-                mGame->getSystemEnvData()->mStartPath, "");
+                                            mGame->getSystemEnvData()->mStartPath, "");
 
     std::string path = FileData::getMediaDirectory();
 

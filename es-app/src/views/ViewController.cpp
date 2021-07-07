@@ -12,17 +12,6 @@
 
 #include "views/ViewController.h"
 
-#include "animations/Animation.h"
-#include "animations/LambdaAnimation.h"
-#include "animations/MoveCameraAnimation.h"
-#include "guis/GuiInfoPopup.h"
-#include "guis/GuiMenu.h"
-#include "views/gamelist/DetailedGameListView.h"
-#include "views/gamelist/GridGameListView.h"
-#include "views/gamelist/IGameListView.h"
-#include "views/gamelist/VideoGameListView.h"
-#include "views/SystemView.h"
-#include "views/UIModeController.h"
 #include "AudioManager.h"
 #include "FileFilterIndex.h"
 #include "InputManager.h"
@@ -32,8 +21,20 @@
 #include "SystemData.h"
 #include "SystemView.h"
 #include "Window.h"
+#include "animations/Animation.h"
+#include "animations/LambdaAnimation.h"
+#include "animations/MoveCameraAnimation.h"
+#include "guis/GuiInfoPopup.h"
+#include "guis/GuiMenu.h"
+#include "views/SystemView.h"
+#include "views/UIModeController.h"
+#include "views/gamelist/DetailedGameListView.h"
+#include "views/gamelist/GridGameListView.h"
+#include "views/gamelist/IGameListView.h"
+#include "views/gamelist/VideoGameListView.h"
 
 ViewController* ViewController::sInstance = nullptr;
+
 #if defined(_MSC_VER) // MSVC compiler.
 const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uF005");
 const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uF07C");
@@ -60,21 +61,20 @@ void ViewController::init(Window* window)
     sInstance = new ViewController(window);
 }
 
-ViewController::ViewController(
-        Window* window)
-        : GuiComponent(window),
-        mCurrentView(nullptr),
-        mPreviousView(nullptr),
-        mSkipView(nullptr),
-        mCamera(Transform4x4f::Identity()),
-        mSystemViewTransition(false),
-        mWrappedViews(false),
-        mFadeOpacity(0),
-        mCancelledTransition(false),
-        mLockInput(false),
-        mNextSystem(false),
-        mGameToLaunch(nullptr),
-        mNoGamesMessageBox(nullptr)
+ViewController::ViewController(Window* window)
+    : GuiComponent(window)
+    , mCurrentView(nullptr)
+    , mPreviousView(nullptr)
+    , mSkipView(nullptr)
+    , mCamera(Transform4x4f::Identity())
+    , mSystemViewTransition(false)
+    , mWrappedViews(false)
+    , mFadeOpacity(0)
+    , mCancelledTransition(false)
+    , mLockInput(false)
+    , mNextSystem(false)
+    , mGameToLaunch(nullptr)
+    , mNoGamesMessageBox(nullptr)
 {
     mState.viewing = NOTHING;
     mState.viewstyle = AUTOMATIC;
@@ -89,108 +89,106 @@ ViewController::~ViewController()
 
 void ViewController::invalidSystemsFileDialog()
 {
-    std::string errorMessage =
-            "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE.\n"
-            "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN\n"
-            "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX.\n"
-            "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE\n"
-            "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE\n"
-            "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO.";
+    std::string errorMessage = "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE.\n"
+                               "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN\n"
+                               "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX.\n"
+                               "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE\n"
+                               "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE\n"
+                               "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO.";
 
-    mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-            errorMessage.c_str(),
-            "QUIT", [] {
-                SDL_Event quit;
-                quit.type = SDL_QUIT;
-                SDL_PushEvent(&quit);
-            }, "", nullptr, "", nullptr, true));
+    mWindow->pushGui(new GuiMsgBox(
+        mWindow, HelpStyle(), errorMessage.c_str(), "QUIT",
+        [] {
+            SDL_Event quit;
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
+        },
+        "", nullptr, "", nullptr, true));
 }
 
 void ViewController::noGamesDialog()
 {
-    mNoGamesErrorMessage =
-            "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN\n"
-            "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE\n"
-            "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM\n"
-            "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL\n"
-            "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME\n"
-            "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
-            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
+    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN\n"
+                           "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE\n"
+                           "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM\n"
+                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL\n"
+                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME\n"
+                           "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
+                           "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-    #else
+#else
     mRomDirectory = FileData::getROMDirectory();
-    #endif
+#endif
 
-    mNoGamesMessageBox = new GuiMsgBox(mWindow, HelpStyle(), mNoGamesErrorMessage + mRomDirectory,
-            "CHANGE ROM DIRECTORY", [this] {
-        std::string currentROMDirectory;
-        #if defined(_WIN64)
-        currentROMDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-        #else
-        currentROMDirectory = FileData::getROMDirectory();
-        #endif
+    mNoGamesMessageBox = new GuiMsgBox(
+        mWindow, HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "CHANGE ROM DIRECTORY",
+        [this] {
+            std::string currentROMDirectory;
+#if defined(_WIN64)
+            currentROMDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+#else
+            currentROMDirectory = FileData::getROMDirectory();
+#endif
 
-        mWindow->pushGui(new GuiComplexTextEditPopup(
-                mWindow,
-                HelpStyle(),
-                "ENTER ROM DIRECTORY PATH",
-                "Currently configured path:",
-                currentROMDirectory,
-                currentROMDirectory,
+            mWindow->pushGui(new GuiComplexTextEditPopup(
+                mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH",
+                "Currently configured path:", currentROMDirectory, currentROMDirectory,
                 [this](const std::string& newROMDirectory) {
                     Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
                     Settings::getInstance()->saveFile();
-                    #if defined(_WIN64)
+#if defined(_WIN64)
                     mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
-                    #else
+#else
                     mRomDirectory = FileData::getROMDirectory();
-                    #endif
+#endif
                     mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
                     mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-                            "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                            "THE APPLICATION TO RESCAN THE SYSTEMS",
-                            "OK", nullptr, "", nullptr, "", nullptr, true));
+                                                   "ROM DIRECTORY SETTING SAVED, RESTART\n"
+                                                   "THE APPLICATION TO RESCAN THE SYSTEMS",
+                                                   "OK", nullptr, "", nullptr, "", nullptr, true));
                 },
-                false,
-                "SAVE",
-                "SAVE CHANGES?",
-                "LOAD CURRENT",
-                "LOAD CURRENTLY CONFIGURED VALUE",
-                "CLEAR",
-                "CLEAR (LEAVE BLANK TO RESET TO DEFAULT DIRECTORY)",
-                false));
-    },
-    "CREATE DIRECTORIES", [this] {
-        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                false, "SAVE", "SAVE CHANGES?", "LOAD CURRENT", "LOAD CURRENTLY CONFIGURED VALUE",
+                "CLEAR", "CLEAR (LEAVE BLANK TO RESET TO DEFAULT DIRECTORY)", false));
+        },
+        "CREATE DIRECTORIES",
+        [this] {
+            mWindow->pushGui(new GuiMsgBox(
+                mWindow, HelpStyle(),
                 "THIS WILL CREATE DIRECTORIES FOR ALL THE\n"
                 "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
                 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S\n"
                 "ADVICED TO REMOVE THE ONES YOU DON'T NEED\n\n"
                 "PROCEED?",
-                "YES", [this] {
-            if (!SystemData::createSystemDirectories()) {
-                mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-                        "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY\n"
-                        "GENERATED, EXIT THE APPLICATION AND PLACE\n"
-                        "YOUR GAMES IN THE NEWLY CREATED FOLDERS", "OK", nullptr,
-                        "", nullptr, "", nullptr, true));
-            }
-            else {
-                mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-                        "ERROR CREATING THE SYSTEM DIRECTORIES,\n"
-                        "PERMISSION PROBLEMS OR DISK FULL?\n\n"
-                        "SEE THE LOG FILE FOR MORE DETAILS", "OK", nullptr,
-                        "", nullptr, "", nullptr, true));
-            }
-        }, "NO", nullptr, "", nullptr, true));
-    },
-    "QUIT", [] {
-        SDL_Event quit;
-        quit.type = SDL_QUIT;
-        SDL_PushEvent(&quit);
-    }, true, false);
+                "YES",
+                [this] {
+                    if (!SystemData::createSystemDirectories()) {
+                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                                                       "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY\n"
+                                                       "GENERATED, EXIT THE APPLICATION AND PLACE\n"
+                                                       "YOUR GAMES IN THE NEWLY CREATED FOLDERS",
+                                                       "OK", nullptr, "", nullptr, "", nullptr,
+                                                       true));
+                    }
+                    else {
+                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                                                       "ERROR CREATING THE SYSTEM DIRECTORIES,\n"
+                                                       "PERMISSION PROBLEMS OR DISK FULL?\n\n"
+                                                       "SEE THE LOG FILE FOR MORE DETAILS",
+                                                       "OK", nullptr, "", nullptr, "", nullptr,
+                                                       true));
+                    }
+                },
+                "NO", nullptr, "", nullptr, true));
+        },
+        "QUIT",
+        [] {
+            SDL_Event quit;
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
+        },
+        true, false);
 
     mWindow->pushGui(mNoGamesMessageBox);
 }
@@ -205,8 +203,8 @@ void ViewController::goToStart()
     // If a specific system is requested, go directly to its game list.
     auto requestedSystem = Settings::getInstance()->getString("StartupSystem");
     if ("" != requestedSystem && "retropie" != requestedSystem) {
-        for (auto it = SystemData::sSystemVector.cbegin();
-                it != SystemData::sSystemVector.cend(); it++) {
+        for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+             it != SystemData::sSystemVector.cend(); it++) {
             if ((*it)->getName() == requestedSystem) {
                 goToGameList(*it);
                 return;
@@ -237,7 +235,7 @@ bool ViewController::isCameraMoving()
 {
     if (mCurrentView) {
         if (mCamera.r3().x() - -mCurrentView->getPosition().x() != 0 ||
-                mCamera.r3().y() - -mCurrentView->getPosition().y() != 0)
+            mCamera.r3().y() - -mCurrentView->getPosition().y() != 0)
             return true;
     }
     return false;
@@ -322,7 +320,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
     auto systemList = getSystemListView();
     systemList->setPosition(getSystemId(system) * static_cast<float>(Renderer::getScreenWidth()),
-            systemList->getPosition().y());
+                            systemList->getPosition().y());
 
     systemList->goToSystem(system, false);
     mCurrentView = systemList;
@@ -333,7 +331,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         mCamera.translation() = -mCurrentView->getPosition();
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
             if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
-                    getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
+                getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
                 mCamera.translation().y() += Renderer::getScreenHeight();
             else
                 mCamera.translation().x() -= Renderer::getScreenWidth();
@@ -341,7 +339,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
             if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
-                    getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
+                getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
                 mCamera.translation().y() += Renderer::getScreenHeight();
             else
                 mCamera.translation().x() += Renderer::getScreenWidth();
@@ -396,8 +394,9 @@ void ViewController::goToGameList(SystemData* system)
         restoreViewPosition();
 
     if (mPreviousView && Settings::getInstance()->getString("TransitionStyle") == "fade" &&
-            isAnimationPlaying(0))
+        isAnimationPlaying(0)) {
         mPreviousView->onHide();
+    }
 
     if (mPreviousView) {
         mSkipView = mPreviousView;
@@ -449,7 +448,7 @@ void ViewController::goToGameList(SystemData* system)
         int sysId = getSystemId(system);
 
         sysList->setPosition(sysId * static_cast<float>(Renderer::getScreenWidth()),
-                sysList->getPosition().y());
+                             sysList->getPosition().y());
         offsetX = sysList->getPosition().x() - offsetX;
         mCamera.translation().x() -= offsetX;
     }
@@ -464,7 +463,7 @@ void ViewController::goToGameList(SystemData* system)
         float offsetX = getGameListView(system)->getPosition().x();
         // This is needed to move the camera in the correct direction if there are only two systems.
         if (SystemData::sSystemVector.size() == 2 && mNextSystem)
-           offsetX -= Renderer::getScreenWidth();
+            offsetX -= Renderer::getScreenWidth();
         else
             offsetX += Renderer::getScreenWidth();
         currentPosition.x() = offsetX;
@@ -541,11 +540,13 @@ void ViewController::playViewTransition(bool instant)
     std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
 
     if (instant || transition_style == "instant") {
-        setAnimation(new LambdaAnimation([this, target](float /*t*/) {
-            this->mCamera.translation() = -target;
-            if (mPreviousView)
-                mPreviousView->onHide();
-        }, 1));
+        setAnimation(new LambdaAnimation(
+            [this, target](float /*t*/) {
+                this->mCamera.translation() = -target;
+                if (mPreviousView)
+                    mPreviousView->onHide();
+            },
+            1));
         updateHelpPrompts();
     }
     else if (transition_style == "fade") {
@@ -558,7 +559,7 @@ void ViewController::playViewTransition(bool instant)
             // Without this, a (much shorter) fade transition would still play as
             // finishedCallback is calling this function.
             if (!mCancelledTransition)
-                mFadeOpacity = Math::lerp(0, 1, t);
+                mFadeOpacity = Math::lerp(0.0f, 1.0f, t);
         };
 
         auto fadeCallback = [this]() {
@@ -569,12 +570,12 @@ void ViewController::playViewTransition(bool instant)
         const static int FADE_DURATION = 120; // Fade in/out time.
         const static int FADE_WAIT = 200; // Time to wait between in/out.
         setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), 0,
-                [this, fadeFunc, fadeCallback, target] {
-            this->mCamera.translation() = -target;
-            updateHelpPrompts();
-            setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION),
-                    FADE_WAIT, fadeCallback, true);
-        });
+                     [this, fadeFunc, fadeCallback, target] {
+                         this->mCamera.translation() = -target;
+                         updateHelpPrompts();
+                         setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), FADE_WAIT,
+                                      fadeCallback, true);
+                     });
 
         // Fast-forward animation if we're partway faded.
         if (target == -mCamera.translation()) {
@@ -616,7 +617,7 @@ bool ViewController::runInBackground(SystemData* system)
     // with the game. In that situation ES-DE would wait until the whole Steam application was
     // shut down before it would resume. I.e. it would not be enough to just stop the game.
     if (system->hasPlatformId(PlatformIds::VALVE_STEAM) ||
-            Settings::getInstance()->getBool("RunInBackground"))
+        Settings::getInstance()->getBool("RunInBackground"))
         return true;
     else
         return false;
@@ -646,8 +647,9 @@ void ViewController::launch(FileData* game)
     if (durationString == "disabled") {
         // If the game launch screen has been set as disabled, show a simple info popup
         // notification instead.
-        GuiInfoPopup* s = new GuiInfoPopup(mWindow, "LAUNCHING GAME '" +
-                Utils::String::toUpper(game->metadata.get("name") + "'"), 10000);
+        GuiInfoPopup* s = new GuiInfoPopup(
+            mWindow, "LAUNCHING GAME '" + Utils::String::toUpper(game->metadata.get("name") + "'"),
+            10000);
         mWindow->setInfoPopup(s);
         duration = 1700;
     }
@@ -670,16 +672,14 @@ void ViewController::launch(FileData* game)
     // This is just a dummy animation in order for the launch screen or notification popup
     // to be displayed briefly, and for the navigation sound playing to be able to complete.
     // During this time period, all user input is blocked.
-    setAnimation(new LambdaAnimation([](float t){}, duration), 0, [this, game] {
+    setAnimation(new LambdaAnimation([](float t) {}, duration), 0, [this, game] {
         game->launchGame(mWindow);
         // If the launch screen is disabled then this will do nothing.
         mWindow->closeLaunchScreen();
         onFileChanged(game, true);
         // This is a workaround so that any keys or button presses used for exiting the emulator
         // are not captured upon returning.
-        setAnimation(new LambdaAnimation([](float t){}, 1), 0, [this] {
-            mLockInput = false;
-        });
+        setAnimation(new LambdaAnimation([](float t) {}, 1), 0, [this] { mLockInput = false; });
     });
 }
 
@@ -733,38 +733,41 @@ std::shared_ptr<IGameListView> ViewController::getGameListView(SystemData* syste
     }
 
     // Create the view.
-    switch (selectedViewStyle)
-    {
-        case VIDEO:
+    switch (selectedViewStyle) {
+        case VIDEO: {
             view = std::shared_ptr<IGameListView>(
-                    new VideoGameListView(mWindow, system->getRootFolder()));
+                new VideoGameListView(mWindow, system->getRootFolder()));
             mState.viewstyle = VIDEO;
             break;
-        case DETAILED:
+        }
+        case DETAILED: {
             view = std::shared_ptr<IGameListView>(
-                    new DetailedGameListView(mWindow, system->getRootFolder()));
+                new DetailedGameListView(mWindow, system->getRootFolder()));
             mState.viewstyle = DETAILED;
             break;
-        case GRID:
+        }
+        case GRID: {
             view = std::shared_ptr<IGameListView>(
-                    new GridGameListView(mWindow, system->getRootFolder()));
+                new GridGameListView(mWindow, system->getRootFolder()));
             mState.viewstyle = GRID;
             break;
-        case BASIC:
-        default:
+        }
+        case BASIC: {
+        }
+        default: {
             view = std::shared_ptr<IGameListView>(
-                    new BasicGameListView(mWindow, system->getRootFolder()));
+                new BasicGameListView(mWindow, system->getRootFolder()));
             mState.viewstyle = BASIC;
             break;
+        }
     }
 
     view->setTheme(system->getTheme());
 
     std::vector<SystemData*>& sysVec = SystemData::sSystemVector;
-    int id = static_cast<int>(
-            std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin());
+    int id = static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin());
     view->setPosition(id * static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight() * 2));
+                      static_cast<float>(Renderer::getScreenHeight() * 2));
 
     addChild(view.get());
 
@@ -799,8 +802,8 @@ bool ViewController::input(InputConfig* config, Input input)
 
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&
-            !Settings::getInstance()->getBool("EnableMenuKidMode")) &&
-            config->isMappedTo("start", input) && input.value != 0) {
+          !Settings::getInstance()->getBool("EnableMenuKidMode")) &&
+        config->isMappedTo("start", input) && input.value != 0) {
         // If we don't stop the scrolling here, it will continue to
         // run after closing the menu.
         if (mSystemListView->isScrolling())
@@ -854,7 +857,7 @@ void ViewController::render(const Transform4x4f& parentTrans)
     // Camera position, position + size.
     Vector3f viewStart = transInverse.translation();
     Vector3f viewEnd = transInverse * Vector3f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight(), 0));
+                                               static_cast<float>(Renderer::getScreenHeight(), 0));
 
     // Keep track of UI mode changes.
     UIModeController::getInstance()->monitorUIMode();
@@ -870,11 +873,11 @@ void ViewController::render(const Transform4x4f& parentTrans)
         if (it->second == mCurrentView || (it->second == mPreviousView && isCameraMoving())) {
             // Clipping.
             Vector3f guiStart = it->second->getPosition();
-            Vector3f guiEnd = it->second->getPosition() + Vector3f(it->second->getSize().x(),
-                    it->second->getSize().y(), 0);
+            Vector3f guiEnd = it->second->getPosition() +
+                              Vector3f(it->second->getSize().x(), it->second->getSize().y(), 0);
 
             if (guiEnd.x() >= viewStart.x() && guiEnd.y() >= viewStart.y() &&
-                    guiStart.x() <= viewEnd.x() && guiStart.y() <= viewEnd.y())
+                guiStart.x() <= viewEnd.x() && guiStart.y() <= viewEnd.y())
                 it->second->render(trans);
         }
     }
@@ -887,7 +890,7 @@ void ViewController::render(const Transform4x4f& parentTrans)
         unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255);
         Renderer::setMatrix(parentTrans);
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()), fadeColor, fadeColor);
+                           static_cast<float>(Renderer::getScreenHeight()), fadeColor, fadeColor);
     }
 }
 
@@ -895,13 +898,14 @@ void ViewController::preload()
 {
     unsigned int systemCount = static_cast<int>(SystemData::sSystemVector.size());
 
-    for (auto it = SystemData::sSystemVector.cbegin();
-            it != SystemData::sSystemVector.cend(); it ++) {
+    for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
+         it++) {
         if (Settings::getInstance()->getBool("SplashScreen") &&
-                Settings::getInstance()->getBool("SplashScreenProgress")) {
-            mWindow->renderLoadingScreen("Loading '" + (*it)->getFullName() + "' (" +
-                    std::to_string(std::distance(SystemData::sSystemVector.cbegin(), it)+1) +
-                    "/" + std::to_string(systemCount) + ")");
+            Settings::getInstance()->getBool("SplashScreenProgress")) {
+            mWindow->renderLoadingScreen(
+                "Loading '" + (*it)->getFullName() + "' (" +
+                std::to_string(std::distance(SystemData::sSystemVector.cbegin(), it) + 1) + "/" +
+                std::to_string(systemCount) + ")");
         }
         (*it)->getIndex()->resetFilters();
         getGameListView(*it);
@@ -1028,7 +1032,7 @@ std::vector<HelpPrompt> ViewController::getHelpPrompts()
 
     prompts = mCurrentView->getHelpPrompts();
     if (!(UIModeController::getInstance()->isUIModeKid() &&
-            !Settings::getInstance()->getBool("EnableMenuKidMode")))
+          !Settings::getInstance()->getBool("EnableMenuKidMode")))
         prompts.push_back(HelpPrompt("start", "menu"));
     return prompts;
 }

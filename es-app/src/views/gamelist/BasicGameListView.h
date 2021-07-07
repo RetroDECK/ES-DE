@@ -21,30 +21,33 @@ public:
     virtual void onFileChanged(FileData* file, bool reloadGameList) override;
 
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
-
-    virtual FileData* getCursor() override;
     virtual void setCursor(FileData* cursor) override;
-    virtual FileData* getNextEntry() override;
-    virtual FileData* getPreviousEntry() override;
-    virtual FileData* getFirstEntry() override;
-    virtual FileData* getLastEntry() override;
-    virtual FileData* getFirstGameEntry() override;
+
+    virtual FileData* getCursor() override { return mList.getSelected(); }
+    virtual FileData* getNextEntry() override { return mList.getNext(); }
+    virtual FileData* getPreviousEntry() override { return mList.getPrevious(); }
+    virtual FileData* getFirstEntry() override { return mList.getFirst(); }
+    virtual FileData* getLastEntry() override { return mList.getLast(); }
+    virtual FileData* getFirstGameEntry() override { return mFirstGameEntry; }
 
     virtual std::string getName() const override { return "basic"; }
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
-    virtual void launch(FileData* game) override;
 
-    virtual bool isListScrolling() override { return mList.isScrolling(); };
-    virtual void stopListScrolling() override { mList.stopScrolling(); };
+    virtual bool isListScrolling() override { return mList.isScrolling(); }
+    virtual void stopListScrolling() override { mList.stopScrolling(); }
 
     virtual const std::vector<std::string>& getFirstLetterIndex() override
-            { return mFirstLetterIndex; };
+    {
+        return mFirstLetterIndex;
+    }
+
     virtual void addPlaceholder(FileData* firstEntry = nullptr) override;
+    virtual void launch(FileData* game) override;
 
 protected:
-    virtual std::string getQuickSystemSelectRightButton() override;
-    virtual std::string getQuickSystemSelectLeftButton() override;
+    virtual std::string getQuickSystemSelectRightButton() override { return "right"; }
+    virtual std::string getQuickSystemSelectLeftButton() override { return "left"; }
     virtual void populateList(const std::vector<FileData*>& files, FileData* firstEntry) override;
     virtual void remove(FileData* game, bool deleteFile) override;
     virtual void removeMedia(FileData* game) override;

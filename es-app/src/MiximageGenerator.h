@@ -10,9 +10,9 @@
 #ifndef ES_APP_SCRAPERS_MIXIMAGE_GENERATOR_H
 #define ES_APP_SCRAPERS_MIXIMAGE_GENERATOR_H
 
-#include "utils/CImgUtil.h"
 #include "FileData.h"
 #include "GuiComponent.h"
+#include "utils/CImgUtil.h"
 
 #include <FreeImage.h>
 #include <future>
@@ -29,8 +29,10 @@ public:
 
 private:
     bool generateImage();
-    void calculateMarqueeSize(const unsigned int& targetWidth, const unsigned int& targetHeight,
-            unsigned int& width, unsigned int& height);
+    void calculateMarqueeSize(const unsigned int& targetWidth,
+                              const unsigned int& targetHeight,
+                              unsigned int& width,
+                              unsigned int& height);
     void sampleFrameColor(CImg<unsigned char>& screenshotImage, unsigned char (&frameColor)[4]);
 
     std::string getSavePath();

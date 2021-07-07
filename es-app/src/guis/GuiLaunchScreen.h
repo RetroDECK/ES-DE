@@ -9,12 +9,12 @@
 #ifndef ES_APP_GUIS_GUI_LAUNCH_SCREEN_H
 #define ES_APP_GUIS_GUI_LAUNCH_SCREEN_H
 
+#include "GuiComponent.h"
+#include "Window.h"
 #include "components/ComponentGrid.h"
 #include "components/ImageComponent.h"
 #include "components/NinePatchComponent.h"
 #include "components/TextComponent.h"
-#include "GuiComponent.h"
-#include "Window.h"
 
 class FileData;
 
@@ -35,7 +35,6 @@ public:
 private:
     Window* mWindow;
     ComponentGrid* mGrid;
-
     NinePatchComponent mBackground;
 
     std::shared_ptr<TextComponent> mTitle;

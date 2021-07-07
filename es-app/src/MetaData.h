@@ -18,7 +18,10 @@
 #include <string>
 #include <vector>
 
-namespace pugi { class xml_node; }
+namespace pugi
+{
+    class xml_node;
+}
 
 enum MetaDataType {
     // Generic types.
@@ -40,7 +43,7 @@ struct MetaDataDecl {
     std::string key;
     MetaDataType type;
     std::string defaultValue;
-     // If true, ignore values for this metadata.
+    // If true, ignore values for this metadata.
     bool isStatistic;
     // Displayed as this in editors.
     std::string displayName;
@@ -51,7 +54,7 @@ struct MetaDataDecl {
 };
 
 enum MetaDataListType {
-    GAME_METADATA,
+    GAME_METADATA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     FOLDER_METADATA
 };
 
@@ -61,9 +64,11 @@ class MetaDataList
 {
 public:
     static MetaDataList createFromXML(MetaDataListType type,
-            pugi::xml_node& node, const std::string& relativeTo);
-    void appendToXML(pugi::xml_node& parent, bool ignoreDefaults,
-            const std::string& relativeTo) const;
+                                      pugi::xml_node& node,
+                                      const std::string& relativeTo);
+    void appendToXML(pugi::xml_node& parent,
+                     bool ignoreDefaults,
+                     const std::string& relativeTo) const;
 
     MetaDataList(MetaDataListType type);
 
@@ -76,10 +81,12 @@ public:
     bool wasChanged() const;
     void resetChangedFlag();
 
-    inline MetaDataListType getType() const { return mType; }
-    inline const std::vector<MetaDataDecl>& getMDD() const { return getMDDByType(getType()); }
-    inline const std::vector<MetaDataDecl>& getMDD(MetaDataListType type) const
-            { return getMDDByType(type); }
+    MetaDataListType getType() const { return mType; }
+    const std::vector<MetaDataDecl>& getMDD() const { return getMDDByType(getType()); }
+    const std::vector<MetaDataDecl>& getMDD(MetaDataListType type) const
+    {
+        return getMDDByType(type);
+    }
 
 private:
     MetaDataListType mType;

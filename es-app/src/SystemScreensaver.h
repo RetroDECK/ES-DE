@@ -22,9 +22,12 @@ public:
     SystemScreensaver(Window* window);
     virtual ~SystemScreensaver();
 
-    virtual bool allowSleep();
-    virtual bool isScreensaverActive();
-    virtual bool isFallbackScreensaver();
+    virtual bool allowSleep()
+    {
+        return ((mVideoScreensaver == nullptr) && (mImageScreensaver == nullptr));
+    }
+    virtual bool isScreensaverActive() { return (mState != STATE_INACTIVE); }
+    virtual bool isFallbackScreensaver() { return mFallbackScreensaver; }
 
     virtual void startScreensaver(bool generateMediaList);
     virtual void stopScreensaver();
@@ -35,8 +38,8 @@ public:
     virtual void renderScreensaver();
     virtual void update(int deltaTime);
 
-    virtual FileData* getCurrentGame() { return mCurrentGame; };
-    virtual void triggerNextGame() { mTriggerNextGame = true; };
+    virtual FileData* getCurrentGame() { return mCurrentGame; }
+    virtual void triggerNextGame() { mTriggerNextGame = true; }
 
 private:
     void generateImageList();

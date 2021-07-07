@@ -8,15 +8,16 @@
 
 #include "views/gamelist/BasicGameListView.h"
 
-#include "utils/FileSystemUtil.h"
-#include "views/UIModeController.h"
-#include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "utils/FileSystemUtil.h"
+#include "views/UIModeController.h"
+#include "views/ViewController.h"
 
 BasicGameListView::BasicGameListView(Window* window, FileData* root)
-        : ISimpleGameListView(window, root), mList(window)
+    : ISimpleGameListView(window, root)
+    , mList(window)
 {
     mList.setSize(mSize.x(), mSize.y() * 0.8f);
     mList.setPosition(0, mSize.y() * 0.2f);
@@ -89,16 +90,16 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
             }
 
             if ((*it)->getFavorite() && favoriteStar &&
-                    mRoot->getSystem()->getName() != "favorites") {
+                mRoot->getSystem()->getName() != "favorites") {
                 if (Settings::getInstance()->getBool("SpecialCharsASCII"))
-                    mList.add(inCollectionPrefix + "* " +
-                            (*it)->getName(), *it, ((*it)->getType() == FOLDER));
+                    mList.add(inCollectionPrefix + "* " + (*it)->getName(), *it,
+                              ((*it)->getType() == FOLDER));
                 else
                     mList.add(inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
-                            (*it)->getName(), *it, ((*it)->getType() == FOLDER));
+                                  (*it)->getName(),
+                              *it, ((*it)->getType() == FOLDER));
             }
-            else if ((*it)->getType() == FOLDER &&
-                    mRoot->getSystem()->getName() != "collections") {
+            else if ((*it)->getType() == FOLDER && mRoot->getSystem()->getName() != "collections") {
                 if (Settings::getInstance()->getBool("SpecialCharsASCII"))
                     mList.add("# " + (*it)->getName(), *it, true);
                 else
@@ -117,11 +118,6 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
     generateFirstLetterIndex(files);
 }
 
-FileData* BasicGameListView::getCursor()
-{
-    return mList.getSelected();
-}
-
 void BasicGameListView::setCursor(FileData* cursor)
 {
     if (!mList.setCursor(cursor) && (!cursor->isPlaceHolder())) {
@@ -133,6 +129,7 @@ void BasicGameListView::setCursor(FileData* cursor)
         if (mCursorStack.empty() || mCursorStack.top() != cursor->getParent()) {
             std::stack<FileData*> tmp;
             FileData* ptr = cursor->getParent();
+
             while (ptr && ptr != mRoot) {
                 tmp.push(ptr);
                 ptr = ptr->getParent();
@@ -148,31 +145,6 @@ void BasicGameListView::setCursor(FileData* cursor)
     }
 }
 
-FileData* BasicGameListView::getNextEntry()
-{
-    return mList.getNext();
-}
-
-FileData* BasicGameListView::getPreviousEntry()
-{
-    return mList.getPrevious();
-}
-
-FileData* BasicGameListView::getFirstEntry()
-{
-    return mList.getFirst();
-}
-
-FileData* BasicGameListView::getLastEntry()
-{
-    return mList.getLast();
-}
-
-FileData* BasicGameListView::getFirstGameEntry()
-{
-    return mFirstGameEntry;
-}
-
 void BasicGameListView::addPlaceholder(FileData* firstEntry)
 {
     // Empty list, add a placeholder.
@@ -186,18 +158,9 @@ void BasicGameListView::addPlaceholder(FileData* firstEntry)
     mList.add(placeholder->getName(), placeholder, (placeholder->getType() == PLACEHOLDER));
 }
 
-std::string BasicGameListView::getQuickSystemSelectRightButton()
-{
-    return "right";
-}
-
-std::string BasicGameListView::getQuickSystemSelectLeftButton()
-{
-    return "left";
-}
-
 void BasicGameListView::launch(FileData* game)
 {
+    // This triggers ViewController to launch the game.
     ViewController::get()->triggerGameLaunch(game);
 }
 
@@ -235,7 +198,7 @@ void BasicGameListView::remove(FileData* game, bool deleteFile)
 
     if (deleteFile) {
         parent->sort(parent->getSortTypeFromString(parent->getSortTypeString()),
-                Settings::getInstance()->getBool("FavoritesFirst"));
+                     Settings::getInstance()->getBool("FavoritesFirst"));
         onFileChanged(parent, false);
     }
 }
@@ -251,8 +214,8 @@ void BasicGameListView::removeMedia(FileData* game)
 
     // If there are no media files left in the directory after the deletion, then remove
     // the directory too. Remove any empty parent directories as well.
-    auto removeEmptyDirFunc = []
-            (std::string systemMediaDir, std::string mediaType, std::string path) {
+    auto removeEmptyDirFunc = [](std::string systemMediaDir, std::string mediaType,
+                                 std::string path) {
         std::string parentPath = Utils::FileSystem::getParent(path);
         while (parentPath != systemMediaDir + "/" + mediaType) {
             if (Utils::FileSystem::getDirContent(parentPath).size() == 0) {
@@ -321,13 +284,13 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
     std::vector<HelpPrompt> prompts;
 
     if (Settings::getInstance()->getBool("QuickSystemSelect") &&
-            SystemData::sSystemVector.size() > 1)
+        SystemData::sSystemVector.size() > 1)
         prompts.push_back(HelpPrompt("left/right", "system"));
 
     prompts.push_back(HelpPrompt("up/down", "choose"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
-            ViewController::get()->getState().viewing == ViewController::GAME_LIST)
+        ViewController::get()->getState().viewing == ViewController::GAME_LIST)
         prompts.push_back(HelpPrompt("a", "enter"));
     else
         prompts.push_back(HelpPrompt("a", "launch"));
@@ -341,24 +304,24 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-            !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
-            ViewController::get()->getState().viewing == ViewController::GAME_LIST &&
-            ViewController::get()->getState().viewstyle != ViewController::BASIC) {
+        !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
+        ViewController::get()->getState().viewing == ViewController::GAME_LIST &&
+        ViewController::get()->getState().viewstyle != ViewController::BASIC) {
         prompts.push_back(HelpPrompt("y", "jump to game"));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
-            (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||
-            !mCursorStack.empty()) &&
-            !UIModeController::getInstance()->isUIModeKid() &&
-            !UIModeController::getInstance()->isUIModeKiosk() &&
-            (Settings::getInstance()->getBool("FavoritesAddButton") ||
-            CollectionSystemsManager::get()->isEditing())) {
+             (mRoot->getSystem()->getThemeFolder() != "custom-collections" ||
+              !mCursorStack.empty()) &&
+             !UIModeController::getInstance()->isUIModeKid() &&
+             !UIModeController::getInstance()->isUIModeKiosk() &&
+             (Settings::getInstance()->getBool("FavoritesAddButton") ||
+              CollectionSystemsManager::get()->isEditing())) {
         std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
-            mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-            CollectionSystemsManager::get()->isEditing()) {
+             mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
+             CollectionSystemsManager::get()->isEditing()) {
         std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }

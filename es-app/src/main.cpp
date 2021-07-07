@@ -18,13 +18,6 @@
 //  environment and starts listening to SDL events.
 //
 
-#include "guis/GuiDetectDevice.h"
-#include "guis/GuiMsgBox.h"
-#include "guis/GuiComplexTextEditPopup.h"
-#include "guis/GuiLaunchScreen.h"
-#include "utils/FileSystemUtil.h"
-#include "utils/StringUtil.h"
-#include "views/ViewController.h"
 #include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "EmulationStation.h"
@@ -37,6 +30,13 @@
 #include "Sound.h"
 #include "SystemData.h"
 #include "SystemScreensaver.h"
+#include "guis/GuiComplexTextEditPopup.h"
+#include "guis/GuiDetectDevice.h"
+#include "guis/GuiLaunchScreen.h"
+#include "guis/GuiMsgBox.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
+#include "views/ViewController.h"
 
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_main.h>
@@ -56,14 +56,14 @@ bool forceInputConfig = false;
 bool settingsNeedSaving = false;
 
 enum loadSystemsReturnCode {
-    LOADING_OK,
+    LOADING_OK, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     INVALID_FILE,
     NO_ROMS
 };
 
 #if defined(_WIN64)
 enum win64ConsoleType {
-    NO_CONSOLE,
+    NO_CONSOLE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     PARENT_CONSOLE,
     ALLOCATED_CONSOLE
 };
@@ -85,7 +85,7 @@ win64ConsoleType outputToConsole(bool allocConsole)
 
     // Try to attach to a parent console process.
     if (AttachConsole(ATTACH_PARENT_PROCESS))
-            outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+        outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
     // If there is a parent console process, then attempt to retrieve its handle.
     if (outputHandle != INVALID_HANDLE_VALUE && outputHandle != nullptr) {
@@ -131,11 +131,11 @@ bool parseArgs(int argc, char* argv[])
 {
     Utils::FileSystem::setExePath(argv[0]);
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     // Print any command line output to the console.
     if (argc > 1)
         win64ConsoleType consoleType = outputToConsole(false);
-    #endif
+#endif
 
     std::string portableFilePath = Utils::FileSystem::getExePath() + "/portable.txt";
 
@@ -145,11 +145,11 @@ bool parseArgs(int argc, char* argv[])
         std::cout << "Found portable.txt in the ES-DE executable directory\n";
         std::ifstream portableFile;
         std::string homePath;
-        #if defined(_WIN64)
+#if defined(_WIN64)
         portableFile.open(Utils::String::stringToWideString(portableFilePath).c_str());
-        #else
+#else
         portableFile.open(portableFilePath.c_str());
-        #endif
+#endif
         if (!portableFile.fail()) {
             std::string relativePath;
             getline(portableFile, relativePath);
@@ -159,9 +159,9 @@ bool parseArgs(int argc, char* argv[])
             else
                 homePath = Utils::FileSystem::getExePath() + "/" + relativePath;
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             homePath = Utils::String::replace(homePath, "/", "\\");
-            #endif
+#endif
 
             if (!Utils::FileSystem::exists(homePath)) {
                 std::cerr << "Error: Defined home path \"" << homePath << "\" does not exist\n";
@@ -185,18 +185,18 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: No home path supplied with \'--home'\n";
                 return false;
             }
-            #if defined(_WIN64)
+#if defined(_WIN64)
             if (!Utils::FileSystem::exists(argv[i + 1]) &&
-                    (!Utils::FileSystem::driveExists(argv[i + 1]))) {
-            #else
+                (!Utils::FileSystem::driveExists(argv[i + 1]))) {
+#else
             if (!Utils::FileSystem::exists(argv[i + 1])) {
-            #endif
+#endif
                 std::cerr << "Error: Home path \'" << argv[i + 1] << "\' does not exist\n";
                 return false;
             }
             if (Utils::FileSystem::isRegularFile(argv[i + 1])) {
-                std::cerr << "Error: Home path \'" << argv[i + 1] <<
-                        "\' is a file and not a directory\n";
+                std::cerr << "Error: Home path \'" << argv[i + 1]
+                          << "\' is a file and not a directory\n";
                 return false;
             }
             Utils::FileSystem::setHomePath(argv[i + 1]);
@@ -228,16 +228,16 @@ bool parseArgs(int argc, char* argv[])
             std::string widthArg = argv[i + 1];
             std::string heightArg = argv[i + 2];
             if (widthArg.find_first_not_of("0123456789") != std::string::npos ||
-                    heightArg.find_first_not_of("0123456789") != std::string::npos) {
+                heightArg.find_first_not_of("0123456789") != std::string::npos) {
                 std::cerr << "Error: Invalid resolution values supplied.\n";
                 return false;
             }
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
             if (width < 640 || height < 480 || width > 7680 || height > 4320 ||
-                    height < width / 4 || width < height / 2) {
-                std::cerr << "Error: Unsupported resolution "
-                        << width << "x" << height << " supplied.\n";
+                height < width / 4 || width < height / 2) {
+                std::cerr << "Error: Unsupported resolution " << width << "x" << height
+                          << " supplied.\n";
                 return false;
             }
             Settings::getInstance()->setInt("WindowWidth", width);
@@ -277,7 +277,8 @@ bool parseArgs(int argc, char* argv[])
         }
         // On Unix, enable settings for the fullscreen mode.
         // On macOS and Windows only windowed mode is supported.
-        #if defined(__unix__)
+
+#if defined(__unix__)
         else if (strcmp(argv[i], "--windowed") == 0) {
             Settings::getInstance()->setBool("Windowed", true);
         }
@@ -289,7 +290,7 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setString("FullscreenMode", "borderless");
             settingsNeedSaving = true;
         }
-        #endif
+#endif
         else if (strcmp(argv[i], "--vsync") == 0) {
             if (i >= argc - 1) {
                 std::cerr << "Error: No VSync value supplied.\n";
@@ -297,7 +298,7 @@ bool parseArgs(int argc, char* argv[])
             }
             std::string vSyncValue = argv[i + 1];
             if (vSyncValue != "on" && vSyncValue != "off" && vSyncValue != "1" &&
-                    vSyncValue != "0") {
+                vSyncValue != "0") {
                 std::cerr << "Error: Invalid VSync value supplied.\n";
                 return false;
             }
@@ -350,12 +351,12 @@ bool parseArgs(int argc, char* argv[])
             Log::setReportingLevel(LogDebug);
         }
         else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0) {
-            std::cout <<
-            "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << "\n";
+            std::cout << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << "\n";
             return false;
         }
         else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
             std::cout <<
+                // clang-format off
 "Usage: emulationstation [options]\n"
 "EmulationStation Desktop Edition, Emulator Front-end\n\n"
 "Options:\n"
@@ -381,6 +382,7 @@ bool parseArgs(int argc, char* argv[])
 "  --debug                         Print debug information\n"
 "  --version, -v                   Display version information\n"
 "  --help, -h                      Summon a sentient, angry tuba\n";
+            // clang-format on
             return false; // Exit after printing help.
         }
         else {
@@ -400,13 +402,13 @@ bool checkApplicationHomeDirectory()
     std::string home = Utils::FileSystem::getHomePath();
     std::string applicationHome = home + "/.emulationstation";
     if (!Utils::FileSystem::exists(applicationHome)) {
-        #if defined(_WIN64)
-            std::cout << "First startup, creating application home directory \"" <<
-                Utils::String::replace(applicationHome, "/", "\\") << "\"\n";
-        #else
-        std::cout << "First startup, creating application home directory \"" <<
-                applicationHome << "\"\n";
-        #endif
+#if defined(_WIN64)
+        std::cout << "First startup, creating application home directory \""
+                  << Utils::String::replace(applicationHome, "/", "\\") << "\"\n";
+#else
+        std::cout << "First startup, creating application home directory \"" << applicationHome
+                  << "\"\n";
+#endif
         Utils::FileSystem::createDirectory(applicationHome);
         if (!Utils::FileSystem::exists(applicationHome)) {
             std::cerr << "Fatal error: Couldn't create directory, permission problems?\n";
@@ -424,16 +426,16 @@ loadSystemsReturnCode loadSystemConfigFile()
 
     if (SystemData::sSystemVector.size() == 0) {
         LOG(LogError) << "No game files were found, make sure that the system directories are "
-                "setup correctly and that the file extensions are supported";
+                         "setup correctly and that the file extensions are supported";
         return NO_ROMS;
     }
 
     return LOADING_OK;
 }
 
-// Called on exit, assuming we get far enough to have the log initialized.
 void onExit()
 {
+    // Called on exit, assuming we get far enough to have the log initialized.
     Log::close();
 }
 
@@ -443,12 +445,12 @@ int main(int argc, char* argv[])
 
     std::locale::global(std::locale("C"));
 
-    #if defined(__APPLE__)
+#if defined(__APPLE__)
     // This is a workaround to disable the incredibly annoying save state functionality in
     // macOS which forces a restore of the previous window state. The problem is that this
     // removes the splash screen on startup and it may have other adverse effects as well.
     std::string saveStateDir = Utils::FileSystem::expandHomePath(
-                "~/Library/Saved Application State/org.es-de.EmulationStation.savedState");
+        "~/Library/Saved Application State/org.es-de.EmulationStation.savedState");
     // Deletion of the state files should normally not be required as there shouldn't be any
     // files to begin with. But maybe the files can still be created for unknown reasons
     // as macOS really really loves to restore windows. Let's therefore include this deletion
@@ -465,22 +467,22 @@ int main(int argc, char* argv[])
     // the functionality.
     std::string chmodCommand = "chmod 500 \"" + saveStateDir + "\"";
     system(chmodCommand.c_str());
-    #endif
+#endif
 
     if (!parseArgs(argc, argv)) {
-        #if defined(_WIN64)
+#if defined(_WIN64)
         FreeConsole();
-        #endif
+#endif
         return 0;
     }
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     // Send debug output to the console..
     if (Settings::getInstance()->getBool("Debug"))
         outputToConsole(true);
-    #endif
+#endif
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     // Hide taskbar if the setting for this is enabled.
     bool taskbarStateChanged = false;
     unsigned int taskbarState;
@@ -490,12 +492,12 @@ int main(int argc, char* argv[])
         taskbarState = getTaskbarState();
         hideTaskbar();
     }
-    #endif
+#endif
 
+#if defined(FREEIMAGE_LIB)
     // Call this ONLY when linking with FreeImage as a static library.
-    #if defined(FREEIMAGE_LIB)
     FreeImage_Initialise();
-    #endif
+#endif
 
     // If ~/.emulationstation doesn't exist and cannot be created, bail.
     if (!checkApplicationHomeDirectory())
@@ -504,8 +506,8 @@ int main(int argc, char* argv[])
     // Start the logger.
     Log::init();
     Log::open();
-    LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING <<
-            ", built " << PROGRAM_BUILT_STRING;
+    LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << ", built "
+                 << PROGRAM_BUILT_STRING;
 
     // Always close the log on exit.
     atexit(&onExit);
@@ -513,7 +515,7 @@ int main(int argc, char* argv[])
     // Check if the configuration file exists, and if not, create it.
     // This should only happen on first application startup.
     if (!Utils::FileSystem::exists(Utils::FileSystem::getHomePath() +
-            "/.emulationstation/es_settings.xml")) {
+                                   "/.emulationstation/es_settings.xml")) {
         LOG(LogInfo) << "Settings file es_settings.xml does not exist, creating it...";
         Settings::getInstance()->saveFile();
     }
@@ -525,15 +527,15 @@ int main(int argc, char* argv[])
     // Check if the application version has changed, which would normally mean that the
     // user has upgraded to a newer release.
     std::string applicationVersion;
-    if ((applicationVersion = Settings::getInstance()->
-            getString("ApplicationVersion")) != PROGRAM_VERSION_STRING) {
+    if ((applicationVersion = Settings::getInstance()->getString("ApplicationVersion")) !=
+        PROGRAM_VERSION_STRING) {
         if (applicationVersion != "") {
-            LOG(LogInfo) << "Application version changed from previous startup, from \"" <<
-                    applicationVersion << "\" to \"" << PROGRAM_VERSION_STRING << "\"";
+            LOG(LogInfo) << "Application version changed from previous startup, from \""
+                         << applicationVersion << "\" to \"" << PROGRAM_VERSION_STRING << "\"";
         }
         else {
-            LOG(LogInfo) << "Application version setting is blank, changing it to \"" <<
-                    PROGRAM_VERSION_STRING << "\"";
+            LOG(LogInfo) << "Application version setting is blank, changing it to \""
+                         << PROGRAM_VERSION_STRING << "\"";
         }
         Settings::getInstance()->setString("ApplicationVersion", PROGRAM_VERSION_STRING);
         Settings::getInstance()->saveFile();
@@ -582,11 +584,11 @@ int main(int argc, char* argv[])
     if (event.type == SDL_QUIT)
         return 1;
 
+#if !defined(__APPLE__)
     // This hides the mouse cursor during startup, i.e. before we have begun to capture SDL events.
     // On macOS this causes the mouse cursor to jump back to the Dock so don't do it on this OS.
-    #if !defined(__APPLE__)
     SDL_SetRelativeMouseMode(SDL_TRUE);
-    #endif
+#endif
 
     if (splashScreen) {
         std::string progressText = "Loading...";
@@ -625,8 +627,8 @@ int main(int argc, char* argv[])
     // Open the input configuration GUI if the flag to force this was passed from the command line.
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
-            window.pushGui(new GuiDetectDevice(&window, false, true, [] {
-                ViewController::get()->goToStart(); }));
+            window.pushGui(new GuiDetectDevice(&window, false, true,
+                                               [] { ViewController::get()->goToStart(); }));
         }
         else {
             ViewController::get()->goToStart();
@@ -639,16 +641,19 @@ int main(int argc, char* argv[])
     int lastTime = SDL_GetTicks();
     const auto applicationEndTime = std::chrono::system_clock::now();
 
-    LOG(LogInfo) << "Application startup time: " <<
-            std::chrono::duration_cast<std::chrono::milliseconds>
-            (applicationEndTime - applicationStartTime).count() << " ms";
+    LOG(LogInfo) << "Application startup time: "
+                 << std::chrono::duration_cast<std::chrono::milliseconds>(applicationEndTime -
+                                                                          applicationStartTime)
+                        .count()
+                 << " ms";
 
     bool running = true;
+
+#if !defined(__APPLE__)
     // Now that we've finished loading, disable the relative mouse mode or otherwise mouse
     // input wouldn't work in any games that are launched.
-    #if !defined(__APPLE__)
     SDL_SetRelativeMouseMode(SDL_FALSE);
-    #endif
+#endif
 
     while (running) {
         if (SDL_PollEvent(&event)) {
@@ -657,8 +662,8 @@ int main(int argc, char* argv[])
 
                 if (event.type == SDL_QUIT)
                     running = false;
-            }
-            while (SDL_PollEvent(&event));
+
+            } while (SDL_PollEvent(&event));
         }
 
         if (window.isSleeping()) {
@@ -694,24 +699,24 @@ int main(int argc, char* argv[])
     NavigationSounds::getInstance()->deinit();
     Settings::deinit();
 
+#if defined(FREEIMAGE_LIB)
     // Call this ONLY when linking with FreeImage as a static library.
-    #if defined(FREEIMAGE_LIB)
     FreeImage_DeInitialise();
-    #endif
+#endif
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     // If the taskbar state was changed (taskbar was hidden), then revert it.
     if (taskbarStateChanged)
         revertTaskbarState(taskbarState);
-    #endif
+#endif
 
     processQuitMode();
 
     LOG(LogInfo) << "EmulationStation cleanly shutting down";
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     FreeConsole();
-    #endif
+#endif
 
     return 0;
 }

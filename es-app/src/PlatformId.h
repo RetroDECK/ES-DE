@@ -135,6 +135,7 @@ namespace PlatformIds
 
     PlatformId getPlatformId(const std::string& str);
     const std::string getPlatformName(PlatformId id);
-}
+
+} // namespace PlatformIds
 
 #endif // ES_APP_PLATFORM_ID_H

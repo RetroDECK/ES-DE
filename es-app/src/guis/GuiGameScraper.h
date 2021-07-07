@@ -11,15 +11,16 @@
 #ifndef ES_APP_GUIS_GUI_GAME_SCRAPER_H
 #define ES_APP_GUIS_GUI_GAME_SCRAPER_H
 
+#include "GuiComponent.h"
 #include "components/NinePatchComponent.h"
 #include "guis/GuiScraperSearch.h"
-#include "GuiComponent.h"
 
 class GuiGameScraper : public GuiComponent
 {
 public:
-    GuiGameScraper(Window* window, ScraperSearchParams params,
-            std::function<void(const ScraperSearchResult&)> doneFunc);
+    GuiGameScraper(Window* window,
+                   ScraperSearchParams params,
+                   std::function<void(const ScraperSearchResult&)> doneFunc);
 
     void onSizeChanged() override;
 

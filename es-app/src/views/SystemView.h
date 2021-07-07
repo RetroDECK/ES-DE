@@ -9,11 +9,11 @@
 #ifndef ES_APP_VIEWS_SYSTEM_VIEW_H
 #define ES_APP_VIEWS_SYSTEM_VIEW_H
 
+#include "GuiComponent.h"
+#include "Sound.h"
 #include "components/IList.h"
 #include "components/TextComponent.h"
 #include "resources/Font.h"
-#include "GuiComponent.h"
-#include "Sound.h"
 
 #include <memory>
 
@@ -55,8 +55,8 @@ public:
     SystemView(Window* window);
     ~SystemView();
 
-    virtual void onShow() override;
-    virtual void onHide() override;
+    virtual void onShow() override { mShowing = true; }
+    virtual void onHide() override { mShowing = false; }
 
     void goToSystem(SystemData* system, bool animate);
 
@@ -69,12 +69,14 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
     virtual HelpStyle getHelpStyle() override;
 
-    CarouselType getCarouselType() { return mCarousel.type; };
+    CarouselType getCarouselType() { return mCarousel.type; }
 
 protected:
     void onCursorChanged(const CursorState& state) override;
-    virtual void onScroll() override {
-        NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND); }
+    virtual void onScroll() override
+    {
+        NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
+    }
 
 private:
     void populate();
