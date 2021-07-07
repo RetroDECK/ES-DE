@@ -609,11 +609,10 @@ void CollectionSystemsManager::setEditMode(std::string collectionName, bool show
     mEditingCollectionSystemData = sysData;
 
     if (showPopup) {
-        GuiInfoPopup* s =
-            new GuiInfoPopup(mWindow,
-                             "EDITING '" + Utils::String::toUpper(collectionName) +
-                                 "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'",
-                             10000);
+        GuiInfoPopup* s = new GuiInfoPopup(mWindow,
+                                           "EDITING '" + Utils::String::toUpper(collectionName) +
+                                               "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'",
+                                           10000);
 
         mWindow->setInfoPopup(s);
     }
@@ -942,8 +941,7 @@ void CollectionSystemsManager::deleteCustomCollection(std::string collectionName
                       << configFile << "'.";
 
         GuiInfoPopup* s = new GuiInfoPopup(
-            mWindow, "DELETED COLLECTION '" + Utils::String::toUpper(collectionName) + "'",
-            5000);
+            mWindow, "DELETED COLLECTION '" + Utils::String::toUpper(collectionName) + "'", 5000);
         mWindow->setInfoPopup(s);
     }
     else {
