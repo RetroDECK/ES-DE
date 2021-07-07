@@ -87,20 +87,21 @@ To see which features have been implemented in previous versions, please refer t
 
 ### Coding style
 
-The coding style for ES-DE is mostly a combination of the Webkit and Linux kernel guidelines. The cosmetic aspect of the style is auto-formatted using clang-format, so all code changes must first have been processed using this tool. You can read in [INSTALL-DEV.md](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
+The visual appearance aspect of the coding style is automatically applied using clang-format, so to understand the exact formatting rules, refer to the .clang-format file in the root of the repository.
 
-But of course clang-format won't change the actual code content or fix all code style choices so here are some additional key points:
+Due to this approach, all code changes must be auto-formatted before they are committed. You can read in [INSTALL-DEV.md](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
+
+But as clang-format won't change the actual code content or fix all code style choices, here are some additional key points:
 
 * Always write comments in C++ style, i.e. `//` instead of `/* */`
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
 * As a general rule, use C++ syntax instead of C syntax, for example `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
 * Always declare one variable per line, never combine multiple declarations of the same type
 * Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables starting with an `s` such as `sMyStaticVariable`
-* Single-line function definitions can be placed in either the .h or .cpp files depending on the situation
-* Inline functions makes perfect sense to use, but don't overdo it by using them for code that won't be called very frequently
+* Short function definitions can be placed in either the .h or .cpp file depending on the situation
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
-* Try to be coherent with the existing codebase regarding names, structure etc., it should not be obvious which person wrote what parts
-* For the rest, check the code and have fun! :)
+* Try to be coherent with the existing codebase regarding names, structure etc., it should not be obvious what person wrote which parts
+* For the rest, check the code and have fun :)
 
 ### Building and configuring
 

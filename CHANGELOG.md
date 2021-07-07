@@ -75,6 +75,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added a CMake option to control whether the VLC video player should be built, and set this to off by default
 * Removed the pointless APPLE_SKIP_INSTALL_LIBS CMake option
 * Added a clang-format style configuration file to use for automatic code formatting
+* Formatted the entire codebase using clang-format
 * Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
 

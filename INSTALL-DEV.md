@@ -248,26 +248,24 @@ On Linux, if you're not building a package and instead intend to install using `
 
 Both Clang/LLVM and GCC work fine for building ES-DE.
 
-I did some small benchmarks comparing Clang to GCC with the ES-DE codebase (as of writing it's year 2020) and it's pretty interesting.
+I did some small benchmarks comparing Clang 10.0 to GCC 9.3.0 with the ES-DE v1.1 codebase on an Intel Xeon W-2245 @ 3.90GHz running Kubuntu 20.04.2 LTS and it's pretty interesting.
 
 Advantages with Clang (vs GCC):
-* 10% smaller binary size for a release build
-* 17% smaller binary size for a debug build
-* 2% faster compile time for a release build
-* 16% faster compile time for a debug build
+* 8% smaller binary size for a release build
+* 31% smaller binary size for a debug build
+* 16% faster compile time for a release build
+* 25% faster compile time for a debug build
+* 13% faster application startup time for a release build
 * 4% faster application startup time for a debug build
-
-Advantage with GCC (vs Clang):
-* 1% faster application startup time for a release build
 
 *Release build: Optimizations enabled, debug info disabled, binary stripped.* \
 *Debug build: Optimizations disabled, debug info enabled, binary not stripped.*
 
 This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCode that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance std::string variables.
 
-It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 36% slower! The same goes for the binary size, instead of 17% smaller it's now 17% larger.
+It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 25% slower. The same goes for the binary size, instead of 31% smaller it's now 5% larger. The compilation time is still less than GCC but only by 10% instead of 25%.
 
-I'm expecting this to be resolved in the near future though, and as I think Clang is an interesting compiler, I use it as the default when working on the project (I sometimes test with GCC to make sure that it still builds the software correctly).
+I'm expecting this to be resolved in the near future though, and as I think Clang has the best error messages and comes with good tools such as the static analyzer, this is now my primary compiler.
 
 It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
 
@@ -1149,11 +1147,13 @@ So the home directory will always take precedence, and any resources or themes l
 
 ## Using clang-format for automatic code formatting
 
-Although not completed yet as of writing this, ES-DE will have its entire codebase automatically formatted by clang-format. There is a style configuration file named .clang-format located directly at the root of the ES-DE source repository which can be used to apply the formatting anywhere in the source tree.
+The entire ES-DE codebase is formatted using clang-format and all code commits must have been processed using this tool.
+
+There is a style configuration file named .clang-format located directly at the root of the repository which contains the formatting rules.
 
 How to install clang-format is detailed per operating system earlier in this document.
 
-There are two ways to run this tool, from the command line or from inside an editor such as VSCode.
+There are two ways to run the tool, from the command line or from inside an editor such as VSCode.
 
 To format a file from the command line, simply run:
 
@@ -1163,7 +1163,7 @@ The -i flag will make an inplace edit of the file.
 
 But the recommended way is to run clang-format from within the editor. If using VSCode, there is an extension available named Clang-Format. After installing this, simply open a source file, right click and choose `Format Document` or use the applicable keyboard shortcut. The first time you do this, you will have to make a choice to perform the formatting using clang-format. The rest should be completely automatic.
 
-In some instances you want to avoid getting code formatted, and you accomplish this by simply enclosing the code by the two comments "clang-format off" and "clang-format on", such as this:
+In some instances you may want to avoid getting code formatted, and you can accomplish this by simply enclosing the lines with the two comments "clang-format off" and "clang-format on", such as this:
 
 ```c++
 // clang-format off
@@ -1177,6 +1177,41 @@ CollectionSystemDecl systemDecls[] = {
 // clang-format on
 ```
 
+Adding a comment (or a semicolon) on its own line will also prevent some formatting such as turning short functions and lambda expressions into single lines. For this function such a comment has been added:
+
+```c++
+const std::string FileData::get3DBoxPath() const
+{
+    // Return path to the 3D box image.
+    return getMediafilePath("3dboxes", "3dbox");
+}
+```
+
+If the comment was omitted, the function would get formatted like this:
+
+```c++
+const std::string FileData::get3DBoxPath() const { return getMediafilePath("3dboxes", "3dbox"); }
+```
+
+Adding comments (even empty ones) can also force line breaks to avoid ugly formatting such as this:
+
+```c++
+for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
+     it++) {
+    (*it)->setScrapeFlag(false);
+}
+```
+
+Adding a comment at the right place produces this much nicer formatting:
+```c++
+for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+     it != SystemData::sSystemVector.cend(); it++) {
+    (*it)->setScrapeFlag(false);
+}
+```
+
+
+Of course you would like to get the code formatted according to the clang-format rules in most instances, these workaround are only meant for rare exceptions. Some compromises are necessary when auto-formatting code, at least with clang-format in its current state.
 
 ## CA certificates and MAME ROM information
 
