@@ -27,19 +27,24 @@ namespace Utils
         std::string toLower(const std::string& stringArg);
         std::string toUpper(const std::string& stringArg);
         std::string trim(const std::string& stringArg);
-        std::string replace(const std::string& stringArg, const std::string& replace,
-                const std::string& with);
+        std::string replace(const std::string& stringArg,
+                            const std::string& replace,
+                            const std::string& with);
         std::wstring stringToWideString(const std::string& stringArg);
         std::string wideStringToString(const std::wstring& stringArg);
         bool startsWith(const std::string& stringArg, const std::string& start);
         bool endsWith(const std::string& stringArg, const std::string& end);
         std::string removeParenthesis(const std::string& stringArg);
         std::vector<std::string> delimitedStringToVector(const std::string& stringArg,
-                const std::string& delimiter, bool sort = false, bool caseInsensitive = false);
+                                                         const std::string& delimiter,
+                                                         bool sort = false,
+                                                         bool caseInsensitive = false);
         std::string vectorToDelimitedString(std::vector<std::string> vectorArg,
-                const std::string& delimiter, bool caseInsensitive = false);
+                                            const std::string& delimiter,
+                                            bool caseInsensitive = false);
         std::string scramble(const std::string& input, const std::string& key);
-    }
-}
+    } // namespace String
+
+} // namespace Utils
 
 #endif // ES_CORE_UTILS_STRING_UTIL_H

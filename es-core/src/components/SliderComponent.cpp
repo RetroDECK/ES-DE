@@ -14,23 +14,19 @@
 #define MOVE_REPEAT_RATE 40
 
 SliderComponent::SliderComponent(
-        Window* window,
-        float min,
-        float max,
-        float increment,
-        const std::string& suffix)
-        : GuiComponent(window),
-        mMin(min),
-        mMax(max),
-        mSingleIncrement(increment),
-        mMoveRate(0),
-        mKnob(window),
-        mSuffix(suffix)
+    Window* window, float min, float max, float increment, const std::string& suffix)
+    : GuiComponent(window)
+    , mMin(min)
+    , mMax(max)
+    , mSingleIncrement(increment)
+    , mMoveRate(0)
+    , mKnob(window)
+    , mSuffix(suffix)
 {
     assert((min - max) != 0);
 
     // Some sane default value.
-    mValue = (max + min) / 2;
+    mValue = (max + min) / 2.0f;
 
     mKnob.setOrigin(0.5f, 0.5f);
     mKnob.setImage(":/graphics/slider_knob.svg");
@@ -87,14 +83,15 @@ void SliderComponent::render(const Transform4x4f& parentTrans)
     if (mValueCache)
         mFont->renderTextCache(mValueCache.get());
 
-    float width = mSize.x() - mKnob.getSize().x() -
-            (mValueCache ? mValueCache->metrics.size.x() +
-            (4 * Renderer::getScreenWidthModifier()) : 0);
+    float width =
+        mSize.x() - mKnob.getSize().x() -
+        (mValueCache ? mValueCache->metrics.size.x() + (4.0f * Renderer::getScreenWidthModifier()) :
+                       0);
 
     // Render line.
-    const float lineWidth = 2 * Renderer::getScreenHeightModifier();;
-    Renderer::drawRect(mKnob.getSize().x() / 2, mSize.y() / 2 -
-            lineWidth / 2, width, lineWidth, 0x777777FF, 0x777777FF);
+    const float lineWidth = 2.0f * Renderer::getScreenHeightModifier();
+    Renderer::drawRect(mKnob.getSize().x() / 2.0f, mSize.y() / 2.0f - lineWidth / 2.0f, width,
+                       lineWidth, 0x777777FF, 0x777777FF);
 
     // Render knob.
     mKnob.render(trans);
@@ -113,10 +110,7 @@ void SliderComponent::setValue(float value)
     onValueChanged();
 }
 
-float SliderComponent::getValue()
-{
-    return mValue;
-}
+float SliderComponent::getValue() { return mValue; }
 
 void SliderComponent::onSizeChanged()
 {
@@ -146,18 +140,20 @@ void SliderComponent::onValueChanged()
         const std::string max = ss.str();
 
         Vector2f textSize = mFont->sizeText(max);
-        mValueCache = std::shared_ptr<TextCache>(mFont->buildTextCache(val, mSize.x() -
-                textSize.x(), (mSize.y() - textSize.y()) / 2, 0x777777FF));
+        mValueCache = std::shared_ptr<TextCache>(mFont->buildTextCache(
+            val, mSize.x() - textSize.x(), (mSize.y() - textSize.y()) / 2.0f, 0x777777FF));
         mValueCache->metrics.size[0] = textSize.x(); // Fudge the width.
     }
 
     // Update knob position/size.
     mKnob.setResize(0, mSize.y() * 0.7f);
-    float lineLength = mSize.x() - mKnob.getSize().x() -
-            (mValueCache ? mValueCache->metrics.size.x() +
-            (4 * Renderer::getScreenWidthModifier()) : 0);
-    mKnob.setPosition(((mValue - mMin / 2) / mMax) * lineLength +
-            mKnob.getSize().x() / 2, mSize.y() / 2);
+    float lineLength =
+        mSize.x() - mKnob.getSize().x() -
+        (mValueCache ? mValueCache->metrics.size.x() + (4.0f * Renderer::getScreenWidthModifier()) :
+                       0);
+
+    mKnob.setPosition(((mValue - mMin / 2.0f) / mMax) * lineLength + mKnob.getSize().x() / 2.0f,
+                      mSize.y() / 2.0f);
 }
 
 std::vector<HelpPrompt> SliderComponent::getHelpPrompts()

@@ -8,18 +8,18 @@
 
 #include "renderers/Renderer.h"
 
-#include "math/Transform4x4f.h"
-#include "math/Vector2i.h"
-#include "resources/ResourceManager.h"
 #include "ImageIO.h"
 #include "Log.h"
 #include "Settings.h"
 #include "Shader_GL21.h"
+#include "math/Transform4x4f.h"
+#include "math/Vector2i.h"
+#include "resources/ResourceManager.h"
 
 #include <SDL2/SDL.h>
 #include <stack>
 
-#if defined (_WIN64)
+#if defined(_WIN64)
 #include <windows.h>
 #endif
 
@@ -44,31 +44,31 @@ namespace Renderer
     {
         size_t width = 0;
         size_t height = 0;
-        ResourceData resData = ResourceManager::getInstance()->
-                getFileData(":/graphics/window_icon_256.png");
+        ResourceData resData =
+            ResourceManager::getInstance()->getFileData(":/graphics/window_icon_256.png");
         std::vector<unsigned char> rawData =
-                ImageIO::loadFromMemoryRGBA32(resData.ptr.get(), resData.length, width, height);
+            ImageIO::loadFromMemoryRGBA32(resData.ptr.get(), resData.length, width, height);
 
         if (!rawData.empty()) {
             ImageIO::flipPixelsVert(rawData.data(), width, height);
 
-            #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
             unsigned int rmask = 0xFF000000;
             unsigned int gmask = 0x00FF0000;
             unsigned int bmask = 0x0000FF00;
             unsigned int amask = 0x000000FF;
-            #else
+#else
             unsigned int rmask = 0x000000FF;
             unsigned int gmask = 0x0000FF00;
             unsigned int bmask = 0x00FF0000;
             unsigned int amask = 0xFF000000;
-            #endif
+#endif
 
             // Try creating SDL surface from logo data.
-            SDL_Surface* logoSurface = SDL_CreateRGBSurfaceFrom(
-                    static_cast<void*>(rawData.data()),
-                    static_cast<int>(width), static_cast<int>(height), 32,
-                    static_cast<int>((width * 4)), rmask, gmask, bmask, amask);
+            SDL_Surface* logoSurface =
+                SDL_CreateRGBSurfaceFrom(static_cast<void*>(rawData.data()),
+                                         static_cast<int>(width), static_cast<int>(height), 32,
+                                         static_cast<int>((width * 4)), rmask, gmask, bmask, amask);
 
             if (logoSurface != nullptr) {
                 SDL_SetWindowIcon(sdlWindow, logoSurface);
@@ -100,8 +100,8 @@ namespace Renderer
 
         int availableDisplays = SDL_GetNumVideoDisplays();
         if (displayIndex > availableDisplays - 1) {
-            LOG(LogWarning) << "Requested display " << std::to_string(displayIndex + 1) <<
-                    " does not exist, changing to display 1";
+            LOG(LogWarning) << "Requested display " << std::to_string(displayIndex + 1)
+                            << " does not exist, changing to display 1";
             displayIndex = 0;
         }
         else {
@@ -111,7 +111,7 @@ namespace Renderer
         SDL_DisplayMode displayMode;
         SDL_GetDesktopDisplayMode(displayIndex, &displayMode);
 
-        #if defined (_WIN64)
+#if defined(_WIN64)
         // Tell Windows that we're DPI aware so that we can set a physical resolution and
         // avoid any automatic DPI scaling.
         SetProcessDPIAware();
@@ -122,28 +122,35 @@ namespace Renderer
         SDL_GetDisplayBounds(displayIndex, &displayBounds);
         displayMode.w = displayBounds.w;
         displayMode.h = displayBounds.h;
-        #endif
+#endif
 
         windowWidth = Settings::getInstance()->getInt("WindowWidth") ?
-                Settings::getInstance()->getInt("WindowWidth") : displayMode.w;
+                          Settings::getInstance()->getInt("WindowWidth") :
+                          displayMode.w;
         windowHeight = Settings::getInstance()->getInt("WindowHeight") ?
-                Settings::getInstance()->getInt("WindowHeight") : displayMode.h;
+                           Settings::getInstance()->getInt("WindowHeight") :
+                           displayMode.h;
         screenWidth = Settings::getInstance()->getInt("ScreenWidth") ?
-                Settings::getInstance()->getInt("ScreenWidth") : windowWidth;
+                          Settings::getInstance()->getInt("ScreenWidth") :
+                          windowWidth;
         screenHeight = Settings::getInstance()->getInt("ScreenHeight") ?
-                Settings::getInstance()->getInt("ScreenHeight") : windowHeight;
+                           Settings::getInstance()->getInt("ScreenHeight") :
+                           windowHeight;
         screenOffsetX = Settings::getInstance()->getInt("ScreenOffsetX") ?
-                Settings::getInstance()->getInt("ScreenOffsetX") : 0;
+                            Settings::getInstance()->getInt("ScreenOffsetX") :
+                            0;
         screenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ?
-                Settings::getInstance()->getInt("ScreenOffsetY") : 0;
+                            Settings::getInstance()->getInt("ScreenOffsetY") :
+                            0;
         screenRotate = Settings::getInstance()->getInt("ScreenRotate") ?
-                Settings::getInstance()->getInt("ScreenRotate") : 0;
+                           Settings::getInstance()->getInt("ScreenRotate") :
+                           0;
 
         // Prevent the application window from minimizing when switching windows (when launching
         // games or when manually switching windows using the task switcher).
         SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
 
-        #if defined(__unix__)
+#if defined(__unix__)
         // Disabling desktop composition can lead to better framerates and a more fluid user
         // interface, but with some drivers it can cause strange behaviours when returning to
         // the desktop.
@@ -151,29 +158,28 @@ namespace Renderer
             SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "1");
         else
             SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
-        #endif
+#endif
 
-        #if defined(__APPLE__) || defined(__unix__)
+#if defined(__APPLE__) || defined(__unix__)
         bool userResolution = false;
         // Check if the user has changed the resolution from the command line.
         if (windowWidth != displayMode.w || windowHeight != displayMode.h)
             userResolution = true;
-        // Not sure if this could be a useful setting for some users.
-//        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
-        #endif
-
-        setupWindow();
+            // Not sure if this could be a useful setting for some users.
+            //        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
+#endif
 
         unsigned int windowFlags;
+        setupWindow();
 
-        #if defined(_WIN64)
+#if defined(_WIN64)
         // For Windows, always set the mode to windowed, as full screen mode seems to
         // behave quite erratic. There may be a proper fix for this, but for now windowed
         // mode seems to behave well and it's almost completely seamless, especially with
         // a hidden taskbar. As well, setting SDL_WINDOW_BORDERLESS introduces issues too
         // so unfortunately this needs to be avoided.
         windowFlags = getWindowFlags();
-        #elif defined(__APPLE__)
+#elif defined(__APPLE__)
         // This seems to be the only full window mode that somehow works on macOS as a real
         // fullscreen mode will do lots of weird stuff like preventing window switching
         // or refusing to let emulators run at all. SDL_WINDOW_FULLSCREEN_DESKTOP almost
@@ -190,7 +196,7 @@ namespace Renderer
             // If the user has changed the resolution from the command line, then add a
             // border to the window.
             windowFlags = SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
-        #else
+#else
         if (Settings::getInstance()->getBool("Windowed")) {
             windowFlags = getWindowFlags();
         }
@@ -205,17 +211,17 @@ namespace Renderer
         else {
             windowFlags = SDL_WINDOW_FULLSCREEN | getWindowFlags();
         }
-        #endif
+#endif
 
-        if ((sdlWindow = SDL_CreateWindow("EmulationStation",
-                SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
-                SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
-                windowWidth, windowHeight, windowFlags)) == nullptr) {
+        if ((sdlWindow =
+                 SDL_CreateWindow("EmulationStation", SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex),
+                                  SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayIndex), windowWidth,
+                                  windowHeight, windowFlags)) == nullptr) {
             LOG(LogError) << "Couldn't create SDL window. " << SDL_GetError();
             return false;
         }
 
-        #if defined(__APPLE__)
+#if defined(__APPLE__)
         // The code below is required as the high DPI scaling on macOS is very bizarre and is
         // measured in "points" rather than pixels (even though the naming convention sure looks
         // like pixels). For example there could be a 1920x1080 entry in the OS display settings
@@ -231,25 +237,25 @@ namespace Renderer
         SDL_GL_GetDrawableSize(sdlWindow, &width, nullptr);
         int scaleFactor = static_cast<int>(width / windowWidth);
 
-        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x" <<
-                std::to_string(displayMode.h) << " (physical resolution " <<
-                std::to_string(displayMode.w * scaleFactor) << "x" <<
-                std::to_string(displayMode.h * scaleFactor) << ")";
-        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x" <<
-                std::to_string(windowHeight) << " (physical resolution " <<
-                std::to_string(windowWidth * scaleFactor) << "x" <<
-                std::to_string(windowHeight * scaleFactor) << ")";
+        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
+                     << std::to_string(displayMode.h) << " (physical resolution "
+                     << std::to_string(displayMode.w * scaleFactor) << "x"
+                     << std::to_string(displayMode.h * scaleFactor) << ")";
+        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x"
+                     << std::to_string(windowHeight) << " (physical resolution "
+                     << std::to_string(windowWidth * scaleFactor) << "x"
+                     << std::to_string(windowHeight * scaleFactor) << ")";
 
         windowWidth *= scaleFactor;
         windowHeight *= scaleFactor;
         screenWidth *= scaleFactor;
         screenHeight *= scaleFactor;
-        #else
-        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x" <<
-                std::to_string(displayMode.h);
-        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x" <<
-                std::to_string(windowHeight);
-        #endif
+#else
+        LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
+                     << std::to_string(displayMode.h);
+        LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x"
+                     << std::to_string(windowHeight);
+#endif
 
         screenHeightModifier = static_cast<float>(screenHeight) / 1080.0f;
         screenWidthModifier = static_cast<float>(screenWidth) / 1920.0f;
@@ -263,14 +269,14 @@ namespace Renderer
         setIcon();
         setSwapInterval();
 
+#if defined(_WIN64)
         // It seems as if Windows needs this to avoid a brief white screen flash on startup.
         // Possibly this is driver-specific rather than OS-specific. There is additional code
         // in init() to work around the white screen flash issue on all operating systems.
-        #if defined(_WIN64)
         swapBuffers();
-        #endif
+#endif
 
-        #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
         LOG(LogInfo) << "Loading shaders...";
 
         std::vector<std::string> shaderFiles;
@@ -294,19 +300,17 @@ namespace Renderer
 
             sShaderProgramVector.push_back(loadShader);
         }
-        #endif
+#endif
 
         return true;
     }
 
     static void destroyWindow()
     {
-        #if defined(USE_OPENGL_21)
-        for (auto it = sShaderProgramVector.cbegin();
-                it != sShaderProgramVector.cend(); it++) {
+#if defined(USE_OPENGL_21)
+        for (auto it = sShaderProgramVector.cbegin(); it != sShaderProgramVector.cend(); it++)
             delete *it;
-        }
-        #endif
+#endif
 
         destroyContext();
         SDL_DestroyWindow(sdlWindow);
@@ -332,42 +336,42 @@ namespace Renderer
                 viewport.w = screenWidth;
                 viewport.h = screenHeight;
                 projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
-                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
+                                           static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
+                break;
             }
-            break;
             case 1: {
                 viewport.x = windowWidth - screenOffsetY - screenHeight;
                 viewport.y = screenOffsetX;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
                 projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
-                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(90)), {0, 0, 1});
-                projection.translate({0, screenHeight * -1.0f, 0});
+                                           static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
+                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(90)), { 0, 0, 1 });
+                projection.translate({ 0, screenHeight * -1.0f, 0 });
+                break;
             }
-            break;
             case 2: {
-                viewport.x = windowWidth  - screenOffsetX - screenWidth;
+                viewport.x = windowWidth - screenOffsetX - screenWidth;
                 viewport.y = windowHeight - screenOffsetY - screenHeight;
                 viewport.w = screenWidth;
                 viewport.h = screenHeight;
                 projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
-                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(180)), {0, 0, 1});
-                projection.translate({screenWidth * -1.0f, screenHeight * -1.0f, 0});
+                                           static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
+                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(180)), { 0, 0, 1 });
+                projection.translate({ screenWidth * -1.0f, screenHeight * -1.0f, 0 });
+                break;
             }
-            break;
             case 3: {
                 viewport.x = screenOffsetY;
                 viewport.y = windowHeight - screenOffsetX - screenWidth;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
                 projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
-                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(270)), {0, 0, 1});
-                projection.translate({screenWidth * -1.0f, 0, 0});
+                                           static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
+                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(270)), { 0, 0, 1 });
+                projection.translate({ screenWidth * -1.0f, 0, 0 });
+                break;
             }
-            break;
         }
 
         mProjectionMatrix = projection;
@@ -377,7 +381,7 @@ namespace Renderer
 
         // This is required to avoid a brief white screen flash during startup on some systems.
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+                           static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
         swapBuffers();
 
         return true;
@@ -385,6 +389,7 @@ namespace Renderer
 
     void deinit()
     {
+        // Destroy the window.
         destroyWindow();
     }
 
@@ -400,32 +405,38 @@ namespace Renderer
         switch (screenRotate) {
             case 0:
                 box = Rect(screenOffsetX + box.x, screenOffsetY + box.y, box.w, box.h);
-            break;
+                break;
             case 1:
-                box = Rect(windowWidth - screenOffsetY - box.y - box.h,
-                        screenOffsetX + box.x, box.h, box.w);
-            break;
+                box = Rect(windowWidth - screenOffsetY - box.y - box.h, screenOffsetX + box.x,
+                           box.h, box.w);
+                break;
             case 2:
-                box = Rect(windowWidth - screenOffsetX - box.x - box.w, windowHeight -
-                        screenOffsetY - box.y - box.h, box.w, box.h);
-            break;
+                box = Rect(windowWidth - screenOffsetX - box.x - box.w,
+                           windowHeight - screenOffsetY - box.y - box.h, box.w, box.h);
+                break;
             case 3:
-                box = Rect(screenOffsetY + box.y, windowHeight -
-                        screenOffsetX - box.x - box.w, box.h, box.w);
-            break;
+                box = Rect(screenOffsetY + box.y, windowHeight - screenOffsetX - box.x - box.w,
+                           box.h, box.w);
+                break;
         }
 
         // Make sure the box fits within clipStack.top(), and clip further accordingly.
         if (clipStack.size()) {
             const Rect& top = clipStack.top();
-            if ( top.x >  box.x) box.x = top.x;
-            if ( top.y >  box.y) box.y = top.y;
-            if ((top.x + top.w) < (box.x + box.w)) box.w = (top.x + top.w) - box.x;
-            if ((top.y + top.h) < (box.y + box.h)) box.h = (top.y + top.h) - box.y;
+            if (top.x > box.x)
+                box.x = top.x;
+            if (top.y > box.y)
+                box.y = top.y;
+            if ((top.x + top.w) < (box.x + box.w))
+                box.w = (top.x + top.w) - box.x;
+            if ((top.y + top.h) < (box.y + box.h))
+                box.h = (top.y + top.h) - box.y;
         }
 
-        if (box.w < 0) box.w = 0;
-        if (box.h < 0) box.h = 0;
+        if (box.w < 0)
+            box.w = 0;
+        if (box.h < 0)
+            box.h = 0;
 
         clipStack.push(box);
 
@@ -447,18 +458,17 @@ namespace Renderer
             setScissor(clipStack.top());
     }
 
-    void drawRect(
-            const float _x,
-            const float _y,
-            const float _w,
-            const float _h,
-            const unsigned int _color,
-            const unsigned int _colorEnd,
-            bool horizontalGradient,
-            const float _opacity,
-            const Transform4x4f& _trans,
-            const Blend::Factor _srcBlendFactor,
-            const Blend::Factor _dstBlendFactor)
+    void drawRect(const float _x,
+                  const float _y,
+                  const float _w,
+                  const float _h,
+                  const unsigned int _color,
+                  const unsigned int _colorEnd,
+                  bool horizontalGradient,
+                  const float _opacity,
+                  const Transform4x4f& _trans,
+                  const Blend::Factor _srcBlendFactor,
+                  const Blend::Factor _dstBlendFactor)
     {
         const unsigned int color = convertRGBAToABGR(_color);
         const unsigned int colorEnd = convertRGBAToABGR(_colorEnd);
@@ -474,10 +484,12 @@ namespace Renderer
         if (_hL > 0.0f && _hL < 1.0f)
             _hL = 1.0f;
 
+        // clang-format off
         vertices[0] = { { _x      , _y       }, { 0.0f, 0.0f }, color };
         vertices[1] = { { _x      , _y + _hL }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
         vertices[2] = { { _x + _wL, _y       }, { 0.0f, 0.0f }, horizontalGradient ? color : colorEnd };
         vertices[3] = { { _x + _wL, _y + _hL }, { 0.0f, 0.0f }, colorEnd };
+        // clang-format on
 
         // Round vertices.
         for (int i = 0; i < 4; i++)
@@ -524,17 +536,13 @@ namespace Renderer
             index++;
         }
 
-        if (sShaderProgramVector.size() > index-1)
-            return sShaderProgramVector[index-1];
+        if (sShaderProgramVector.size() > index - 1)
+            return sShaderProgramVector[index - 1];
         else
             return nullptr;
     };
 
-    const Transform4x4f getProjectionMatrix()
-    {
-        return mProjectionMatrix;
-    }
-
+    const Transform4x4f getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
     int getWindowWidth() { return windowWidth; }
     int getWindowHeight() { return windowHeight; }
@@ -547,4 +555,4 @@ namespace Renderer
     float getScreenHeightModifier() { return screenHeightModifier; }
     float getScreenAspectRatio() { return screenAspectRatio; }
 
-} // Renderer::
+} // namespace Renderer

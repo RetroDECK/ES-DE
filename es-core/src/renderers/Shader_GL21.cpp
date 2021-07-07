@@ -10,26 +10,27 @@
 
 #include "Shader_GL21.h"
 
+#include "Log.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
-#include "Log.h"
 
 namespace Renderer
 {
     Renderer::Shader::Shader()
-            : mProgramID(-1),
-            shaderMVPMatrix(-1),
-            shaderTextureSize(-1),
-            shaderTextureCoord(-1),
-            shaderColor(-1),
-            shaderSaturation(-1),
-            shaderOpacity(-1),
-            shaderDimValue(-1)
+        : mProgramID(-1)
+        , shaderMVPMatrix(-1)
+        , shaderTextureSize(-1)
+        , shaderTextureCoord(-1)
+        , shaderColor(-1)
+        , shaderSaturation(-1)
+        , shaderOpacity(-1)
+        , shaderDimValue(-1)
     {
     }
 
     Renderer::Shader::~Shader()
     {
+        // Delete the shader program when destroyed.
         deleteProgram(mProgramID);
     }
 
@@ -52,8 +53,7 @@ namespace Renderer
         else if (shaderType == GL_FRAGMENT_SHADER)
             preprocessorDefines += "#define FRAGMENT\n";
 
-        shaderVector.push_back(std::make_tuple(
-                path, preprocessorDefines + shaderCode, shaderType));
+        shaderVector.push_back(std::make_tuple(path, preprocessorDefines + shaderCode, shaderType));
     }
 
     bool Renderer::Shader::createProgram()
@@ -67,16 +67,16 @@ namespace Renderer
             GLuint currentShader = glCreateShader(std::get<2>(*it));
             GLchar const* shaderCodePtr = std::get<1>(*it).c_str();
 
-            glShaderSource(currentShader, 1,
-                    reinterpret_cast<const GLchar**>(&shaderCodePtr), nullptr);
+            glShaderSource(currentShader, 1, reinterpret_cast<const GLchar**>(&shaderCodePtr),
+                           nullptr);
             glCompileShader(currentShader);
 
             GLint shaderCompiled;
             glGetShaderiv(currentShader, GL_COMPILE_STATUS, &shaderCompiled);
 
             if (shaderCompiled != GL_TRUE) {
-                LOG(LogError) << "OpenGL error: Unable to compile shader " <<
-                        currentShader << " (" << std::get<0>(*it) << ").";
+                LOG(LogError) << "OpenGL error: Unable to compile shader " << currentShader << " ("
+                              << std::get<0>(*it) << ").";
                 printShaderInfoLog(currentShader, std::get<2>(*it));
                 return false;
             }
@@ -118,7 +118,7 @@ namespace Renderer
     {
         if (shaderMVPMatrix != -1)
             GL_CHECK_ERROR(glUniformMatrix4fv(shaderMVPMatrix, 1, GL_FALSE,
-                    reinterpret_cast<GLfloat*>(&mvpMatrix)));
+                                              reinterpret_cast<GLfloat*>(&mvpMatrix)));
     }
 
     void Renderer::Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)
@@ -130,16 +130,16 @@ namespace Renderer
     void Renderer::Shader::setTextureCoordinates(std::array<GLfloat, 4> shaderVec4)
     {
         if (shaderTextureCoord != -1) {
-            glVertexAttrib4f(shaderTextureCoord, shaderVec4[0], shaderVec4[1],
-                    shaderVec4[2], shaderVec4[3]);
+            glVertexAttrib4f(shaderTextureCoord, shaderVec4[0], shaderVec4[1], shaderVec4[2],
+                             shaderVec4[3]);
         }
     }
 
     void Renderer::Shader::setColor(std::array<GLfloat, 4> shaderVec4)
     {
         if (shaderColor != -1)
-            GL_CHECK_ERROR(glUniform4f(shaderColor, shaderVec4[0],
-                            shaderVec4[1], shaderVec4[2], shaderVec4[3]));
+            GL_CHECK_ERROR(glUniform4f(shaderColor, shaderVec4[0], shaderVec4[1], shaderVec4[2],
+                                       shaderVec4[3]));
     }
 
     void Renderer::Shader::setSaturation(GLfloat saturation)
@@ -162,17 +162,14 @@ namespace Renderer
 
     void Renderer::Shader::activateShaders()
     {
+        // Install the shader program.
         GL_CHECK_ERROR(glUseProgram(mProgramID));
     }
 
     void Renderer::Shader::deactivateShaders()
     {
+        // Remove the shader program.
         GL_CHECK_ERROR(glUseProgram(0));
-    }
-
-    GLuint Renderer::Shader::getProgramID()
-    {
-        return mProgramID;
     }
 
     void Renderer::Shader::printProgramInfoLog(GLuint programID)
@@ -187,8 +184,8 @@ namespace Renderer
             glGetProgramInfoLog(programID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printProgramLog():\n" <<
-                        std::string(infoLog.begin(), infoLog.end());
+                LOG(LogDebug) << "Renderer_GL21::printProgramLog():\n"
+                              << std::string(infoLog.begin(), infoLog.end());
             }
         }
         else {
@@ -208,9 +205,10 @@ namespace Renderer
             glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printShaderLog(): Error in " <<
-                        (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
-                        "FRAGMENT section:\n") << std::string(infoLog.begin(), infoLog.end());
+                LOG(LogDebug) << "Renderer_GL21::printShaderLog(): Error in "
+                              << (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
+                                                                   "FRAGMENT section:\n")
+                              << std::string(infoLog.begin(), infoLog.end());
             }
         }
         else {
@@ -218,6 +216,6 @@ namespace Renderer
         }
     }
 
-} // Renderer
+} // namespace Renderer
 
 #endif // USE_OPENGL_21

@@ -12,7 +12,7 @@
 #include <string>
 
 enum AsyncHandleStatus {
-    ASYNC_IN_PROGRESS,
+    ASYNC_IN_PROGRESS, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     ASYNC_ERROR,
     ASYNC_DONE
 };
@@ -21,17 +21,24 @@ enum AsyncHandleStatus {
 class AsyncHandle
 {
 public:
-    AsyncHandle() : mStatus(ASYNC_IN_PROGRESS) {};
-    virtual ~AsyncHandle() {};
+    AsyncHandle()
+        : mStatus(ASYNC_IN_PROGRESS)
+    {
+    }
+    virtual ~AsyncHandle() {}
 
     virtual void update() = 0;
 
     // Update and return the latest status.
-    inline AsyncHandleStatus status() { update(); return mStatus; }
+    AsyncHandleStatus status()
+    {
+        update();
+        return mStatus;
+    }
 
     // User-friendly string of our current status.
     // Will return error message if status() == SEARCH_ERROR.
-    inline std::string getStatusString()
+    std::string getStatusString()
     {
         switch (mStatus) {
             case ASYNC_IN_PROGRESS:
@@ -46,8 +53,12 @@ public:
     }
 
 protected:
-    inline void setStatus(AsyncHandleStatus status) { mStatus = status; }
-    inline void setError(const std::string& error) { setStatus(ASYNC_ERROR); mError = error; }
+    void setStatus(AsyncHandleStatus status) { mStatus = status; }
+    void setError(const std::string& error)
+    {
+        setStatus(ASYNC_ERROR);
+        mError = error;
+    }
 
     std::string mError;
     AsyncHandleStatus mStatus;

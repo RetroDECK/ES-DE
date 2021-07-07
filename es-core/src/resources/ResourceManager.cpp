@@ -9,22 +9,18 @@
 
 #include "ResourceManager.h"
 
-#include "utils/FileSystemUtil.h"
-#include "utils/StringUtil.h"
 #include "Log.h"
 #include "Platform.h"
 #include "Scripting.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 #include <fstream>
 
 auto array_deleter = [](unsigned char* p) { delete[] p; };
-auto nop_deleter = [](unsigned char* /*p*/) { };
+auto nop_deleter = [](unsigned char* /*p*/) {};
 
 std::shared_ptr<ResourceManager> ResourceManager::sInstance = nullptr;
-
-ResourceManager::ResourceManager()
-{
-}
 
 std::shared_ptr<ResourceManager>& ResourceManager::getInstance()
 {
@@ -34,8 +30,7 @@ std::shared_ptr<ResourceManager>& ResourceManager::getInstance()
     return sInstance;
 }
 
-std::string ResourceManager::getResourcePath(const std::string& path,
-        bool terminateOnFailure) const
+std::string ResourceManager::getResourcePath(const std::string& path, bool terminateOnFailure) const
 {
     // Check if this is a resource file.
     if ((path[0] == ':') && (path[1] == '/')) {
@@ -47,17 +42,17 @@ std::string ResourceManager::getResourcePath(const std::string& path,
         if (Utils::FileSystem::exists(testHome))
             return testHome;
 
+#if defined(__APPLE__)
         // For macOS, check in the ../Resources directory relative to the executable directory.
-        #if defined(__APPLE__)
         std::string applePackagePath =
-                Utils::FileSystem::getExePath() + "/../Resources/resources/" + &path[2];
+            Utils::FileSystem::getExePath() + "/../Resources/resources/" + &path[2];
 
         if (Utils::FileSystem::exists(applePackagePath)) {
             return applePackagePath;
         }
 
+#elif defined(__unix__)
         // Check under the data installation directory (Unix only).
-        #elif defined(__unix__)
         std::string testDataPath;
 
         testDataPath = Utils::FileSystem::getProgramDataPath() + "/resources/" + &path[2];
@@ -65,7 +60,7 @@ std::string ResourceManager::getResourcePath(const std::string& path,
         if (Utils::FileSystem::exists(testDataPath)) {
             return testDataPath;
         }
-        #endif
+#endif
 
         // Check under the ES executable directory.
         std::string testExePath = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
@@ -81,11 +76,11 @@ std::string ResourceManager::getResourcePath(const std::string& path,
                 LOG(LogError) << "Program resource missing: " << path;
                 LOG(LogError) << "Tried to find the resource in the following locations:";
                 LOG(LogError) << testHome;
-                #if defined(__APPLE__)
+#if defined(__APPLE__)
                 LOG(LogError) << applePackagePath;
-                #elif defined(__unix__)
+#elif defined(__unix__)
                 LOG(LogError) << testDataPath;
-                #endif
+#endif
                 LOG(LogError) << testExePath;
                 LOG(LogError) << "Has EmulationStation been properly installed?";
                 Scripting::fireEvent("quit");
@@ -112,17 +107,17 @@ const ResourceData ResourceManager::getFileData(const std::string& path) const
     }
 
     // If the file doesn't exist, return an "empty" ResourceData.
-    ResourceData data = {nullptr, 0};
+    ResourceData data = { nullptr, 0 };
     return data;
 }
 
 ResourceData ResourceManager::loadFile(const std::string& path) const
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     std::ifstream stream(Utils::String::stringToWideString(path).c_str(), std::ios::binary);
-    #else
+#else
     std::ifstream stream(path, std::ios::binary);
-    #endif
+#endif
 
     stream.seekg(0, stream.end);
     size_t size = static_cast<size_t>(stream.tellg());
@@ -133,7 +128,7 @@ ResourceData ResourceManager::loadFile(const std::string& path) const
     stream.read(reinterpret_cast<char*>(data.get()), size);
     stream.close();
 
-    ResourceData ret = {data, size};
+    ResourceData ret = { data, size };
     return ret;
 }
 

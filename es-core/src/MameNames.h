@@ -24,8 +24,14 @@ public:
     static MameNames* getInstance();
     std::string getRealName(const std::string& _mameName);
     std::string getCleanName(const std::string& _mameName);
-    const bool isBios(const std::string& _biosName);
-    const bool isDevice(const std::string& _deviceName);
+    const bool isBios(const std::string& _biosName)
+    {
+        return MameNames::find(mMameBioses, _biosName);
+    }
+    const bool isDevice(const std::string& _deviceName)
+    {
+        return MameNames::find(mMameDevices, _deviceName);
+    }
 
 private:
     struct NamePair {
@@ -35,8 +41,8 @@ private:
 
     typedef std::vector<NamePair> namePairVector;
 
-     MameNames();
-    ~MameNames();
+    MameNames();
+    ~MameNames() {}
 
     static MameNames* sInstance;
 

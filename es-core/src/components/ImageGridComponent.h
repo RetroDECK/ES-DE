@@ -9,21 +9,21 @@
 #ifndef ES_CORE_COMPONENTS_IMAGE_GRID_COMPONENT_H
 #define ES_CORE_COMPONENTS_IMAGE_GRID_COMPONENT_H
 
+#include "GridTileComponent.h"
+#include "Log.h"
 #include "animations/LambdaAnimation.h"
 #include "components/IList.h"
 #include "resources/TextureResource.h"
-#include "GridTileComponent.h"
-#include "Log.h"
 
 #define EXTRAITEMS 2
 
 enum ScrollDirection {
-    SCROLL_VERTICALLY,
+    SCROLL_VERTICALLY, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     SCROLL_HORIZONTALLY
 };
 
 enum ImageSource {
-    THUMBNAIL,
+    THUMBNAIL, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     IMAGE,
     MIXIMAGE,
     SCREENSHOT,
@@ -36,8 +36,7 @@ struct ImageGridData {
     std::string texturePath;
 };
 
-template<typename T>
-class ImageGridComponent : public IList<ImageGridData, T>
+template <typename T> class ImageGridComponent : public IList<ImageGridData, T>
 {
 protected:
     using IList<ImageGridData, T>::mEntries;
@@ -49,9 +48,6 @@ protected:
     using IList<ImageGridData, T>::mSize;
     using IList<ImageGridData, T>::mCursor;
     using IList<ImageGridData, T>::mWindow;
-    // The following change is required for compilation with Clang.
-    // http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html#2070
-    // using IList<ImageGridData, T>::Entry;
     using IList<ImageGridData, T>::IList;
 
 public:
@@ -66,14 +62,18 @@ public:
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const Transform4x4f& parentTrans) override;
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
-            const std::string& element, unsigned int properties) override;
+    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                            const std::string& view,
+                            const std::string& element,
+                            unsigned int properties) override;
 
     void onSizeChanged() override;
-    inline void setCursorChangedCallback(const std::function<void(CursorState state)>& func)
-            { mCursorChangedCallback = func; }
+    void setCursorChangedCallback(const std::function<void(CursorState state)>& func)
+    {
+        mCursorChangedCallback = func;
+    }
 
-    ImageSource	getImageSource() { return mImageSource; };
+    ImageSource getImageSource() { return mImageSource; }
 
 protected:
     virtual void onCursorChanged(const CursorState& state) override;
@@ -81,13 +81,14 @@ protected:
 private:
     // Tiles.
     void buildTiles();
-    void updateTiles(bool ascending = true, bool allowAnimation = true,
-            bool updateSelectedState = true);
+    void updateTiles(bool ascending = true,
+                     bool allowAnimation = true,
+                     bool updateSelectedState = true);
     void updateTileAtPos(int tilePos, int imgPos, bool allowAnimation, bool updateSelectedState);
     void calcGridDimension();
     bool isScrollLoop();
 
-    bool isVertical() { return mScrollDirection == SCROLL_VERTICALLY; };
+    bool isVertical() { return mScrollDirection == SCROLL_VERTICALLY; }
 
     // Images and entries.
     bool mEntriesDirty;
@@ -121,11 +122,12 @@ private:
     std::function<void(CursorState state)> mCursorChangedCallback;
 };
 
-template<typename T>
-ImageGridComponent<T>::ImageGridComponent(Window* window) : IList<ImageGridData, T>(window)
+template <typename T>
+ImageGridComponent<T>::ImageGridComponent(Window* window)
+    : IList<ImageGridData, T>(window)
 {
     Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                               static_cast<float>(Renderer::getScreenHeight()));
 
     mCamera = 0.0;
     mCameraDirection = 1.0;
@@ -152,7 +154,7 @@ ImageGridComponent<T>::ImageGridComponent(Window* window) : IList<ImageGridData,
     mImageSource = THUMBNAIL;
 }
 
-template<typename T>
+template <typename T>
 void ImageGridComponent<T>::add(const std::string& name, const std::string& imagePath, const T& obj)
 {
     typename IList<ImageGridData, T>::Entry entry;
@@ -164,8 +166,7 @@ void ImageGridComponent<T>::add(const std::string& name, const std::string& imag
     mEntriesDirty = true;
 }
 
-template<typename T>
-bool ImageGridComponent<T>::input(InputConfig* config, Input input)
+template <typename T> bool ImageGridComponent<T>::input(InputConfig* config, Input input)
 {
     if (input.value != 0) {
         int idx = isVertical() ? 0 : 1;
@@ -190,15 +191,15 @@ bool ImageGridComponent<T>::input(InputConfig* config, Input input)
     }
     else {
         if (config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
-                config->isMappedLike("left", input) || config->isMappedLike("right", input))
+            config->isMappedLike("left", input) || config->isMappedLike("right", input)) {
             stopScrolling();
+        }
     }
 
     return GuiComponent::input(config, input);
 }
 
-template<typename T>
-void ImageGridComponent<T>::update(int deltaTime)
+template <typename T> void ImageGridComponent<T>::update(int deltaTime)
 {
     GuiComponent::update(deltaTime);
     listUpdate(deltaTime);
@@ -207,16 +208,15 @@ void ImageGridComponent<T>::update(int deltaTime)
         (*it)->update(deltaTime);
 }
 
-template<typename T>
-void ImageGridComponent<T>::render(const Transform4x4f& parentTrans)
+template <typename T> void ImageGridComponent<T>::render(const Transform4x4f& parentTrans)
 {
     Transform4x4f trans = getTransform() * parentTrans;
     Transform4x4f tileTrans = trans;
 
-    float offsetX = isVertical() ? 0.0f : mCamera * mCameraDirection *
-            (mTileSize.x() + mMargin.x());
-    float offsetY = isVertical() ? mCamera * mCameraDirection *
-            (mTileSize.y() + mMargin.y()) : 0.0f;
+    float offsetX =
+        isVertical() ? 0.0f : mCamera * mCameraDirection * (mTileSize.x() + mMargin.x());
+    float offsetY =
+        isVertical() ? mCamera * mCameraDirection * (mTileSize.y() + mMargin.y()) : 0.0f;
 
     tileTrans.translate(Vector3f(offsetX, offsetY, 0.0));
 
@@ -230,9 +230,9 @@ void ImageGridComponent<T>::render(const Transform4x4f& parentTrans)
     float scaleY = trans.r1().y();
 
     Vector2i pos(static_cast<int>(std::round(trans.translation()[0])),
-            static_cast<int>(std::round(trans.translation()[1])));
+                 static_cast<int>(std::round(trans.translation()[1])));
     Vector2i size(static_cast<int>(std::round(mSize.x() * scaleX)),
-            static_cast<int>(std::round(mSize.y() * scaleY)));
+                  static_cast<int>(std::round(mSize.y() * scaleY)));
 
     Renderer::pushClipRect(pos, size);
 
@@ -258,9 +258,11 @@ void ImageGridComponent<T>::render(const Transform4x4f& parentTrans)
     GuiComponent::renderChildren(trans);
 }
 
-template<typename T>
+template <typename T>
 void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
-        const std::string& view, const std::string& element, unsigned int properties)
+                                       const std::string& view,
+                                       const std::string& element,
+                                       unsigned int properties)
 {
     // Apply theme to GuiComponent but not the size property, which will be applied
     // at the end of this function.
@@ -270,7 +272,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mTheme = theme;
 
     Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                               static_cast<float>(Renderer::getScreenHeight()));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "imagegrid");
     if (elem) {
@@ -279,7 +281,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("padding"))
             mPadding = elem->get<Vector4f>("padding") *
-                    Vector4f(screen.x(), screen.y(), screen.x(), screen.y());
+                       Vector4f(screen.x(), screen.y(), screen.x(), screen.y());
 
         if (elem->has("autoLayout"))
             mAutoLayout = elem->get<Vector2f>("autoLayout");
@@ -309,8 +311,8 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("scrollDirection"))
-            mScrollDirection = (ScrollDirection)(elem->
-                    get<std::string>("scrollDirection") == "horizontal");
+            mScrollDirection =
+                (ScrollDirection)(elem->get<std::string>("scrollDirection") == "horizontal");
 
         if (elem->has("centerSelection")) {
             mCenterSelection = (elem->get<bool>("centerSelection"));
@@ -367,9 +369,8 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // grid dimension, and then (re)build the tiles.
     elem = theme->getElement(view, "default", "gridtile");
 
-    mTileSize = elem && elem->has("size") ?
-                elem->get<Vector2f>("size") * screen :
-                GridTileComponent::getDefaultTileSize();
+    mTileSize = elem && elem->has("size") ? elem->get<Vector2f>("size") * screen :
+                                            GridTileComponent::getDefaultTileSize();
 
     // Apply size property which will trigger a call to onSizeChanged() which will build the tiles.
     GuiComponent::applyTheme(theme, view, element, ThemeFlags::SIZE);
@@ -379,15 +380,13 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         buildTiles();
 }
 
-template<typename T>
-void ImageGridComponent<T>::onSizeChanged()
+template <typename T> void ImageGridComponent<T>::onSizeChanged()
 {
     buildTiles();
     updateTiles();
 }
 
-template<typename T>
-void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
+template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
 {
     if (mLastCursor == mCursor) {
         if (state == CURSOR_STOPPED && mCursorChangedCallback)
@@ -470,7 +469,7 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
         mStartPosition = lastScroll * dimOpposite;
     }
     else if ((maxCentralCol != centralCol && col == firstVisibleCol + maxCentralCol) ||
-            col == firstVisibleCol + centralCol) {
+             col == firstVisibleCol + centralCol) {
         if (col == firstVisibleCol + maxCentralCol)
             mStartPosition = (col - maxCentralCol) * dimOpposite;
         else
@@ -507,23 +506,23 @@ void ImageGridComponent<T>::onCursorChanged(const CursorState& state)
         if (!moveCamera)
             return;
 
-        t -= 1; // Cubic ease out.
-        float pct = Math::lerp(0, 1, t*t*t + 1);
+        t -= 1.0f; // Cubic ease out.
+        float pct = Math::lerp(0, 1.0f, t * t * t + 1.0f);
         t = startPos * (1.0f - pct) + endPos * pct;
         mCamera = t;
     };
 
     reinterpret_cast<GuiComponent*>(this)->setAnimation(
-            new LambdaAnimation(func, 250), 0, [this, direction] {
-        mCamera = 0;
-        updateTiles(direction, false);
-    }, false, 2);
+        new LambdaAnimation(func, 250), 0,
+        [this, direction] {
+            mCamera = 0;
+            updateTiles(direction, false);
+        },
+        false, 2);
 }
 
-
 // Create and position tiles (mTiles).
-template<typename T>
-void ImageGridComponent<T>::buildTiles()
+template <typename T> void ImageGridComponent<T>::buildTiles()
 {
     mStartPosition = 0;
     mTiles.clear();
@@ -531,18 +530,20 @@ void ImageGridComponent<T>::buildTiles()
     calcGridDimension();
 
     if (mCenterSelection) {
-        int dimScrollable = (isVertical() ? mGridDimension.y() :
-                mGridDimension.x()) - 2 * EXTRAITEMS;
+        int dimScrollable =
+            (isVertical() ? mGridDimension.y() : mGridDimension.x()) - 2 * EXTRAITEMS;
         mStartPosition -= static_cast<int>(floorf(dimScrollable / 2.0f));
     }
 
     Vector2f tileDistance = mTileSize + mMargin;
 
     if (mAutoLayout.x() != 0.0f && mAutoLayout.y() != 0.0f) {
-        auto x = (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1.0f)) - mPadding.x() -
-                mPadding.z()) / static_cast<int>(mAutoLayout.x());
-        auto y = (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1.0f)) - mPadding.y() -
-                mPadding.w()) / static_cast<int>(mAutoLayout.y());
+        auto x =
+            (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1.0f)) - mPadding.x() - mPadding.z()) /
+            static_cast<int>(mAutoLayout.x());
+        auto y =
+            (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1.0f)) - mPadding.y() - mPadding.w()) /
+            static_cast<int>(mAutoLayout.y());
 
         mTileSize = Vector2f(x, y);
         tileDistance = mTileSize + mMargin;
@@ -566,8 +567,8 @@ void ImageGridComponent<T>::buildTiles()
             X = vert ? x : y - EXTRAITEMS;
             Y = vert ? y - EXTRAITEMS : x;
 
-            tile->setPosition(X * tileDistance.x() + startPosition.x(), Y *
-                    tileDistance.y() + startPosition.y());
+            tile->setPosition(X * tileDistance.x() + startPosition.x(),
+                              Y * tileDistance.y() + startPosition.y());
             tile->setOrigin(0.5f, 0.5f);
             tile->setImage("");
 
@@ -582,9 +583,10 @@ void ImageGridComponent<T>::buildTiles()
     }
 }
 
-template<typename T>
-void ImageGridComponent<T>::updateTiles(bool ascending, bool allowAnimation,
-        bool updateSelectedState)
+template <typename T>
+void ImageGridComponent<T>::updateTiles(bool ascending,
+                                        bool allowAnimation,
+                                        bool updateSelectedState)
 {
     if (!mTiles.size())
         return;
@@ -631,9 +633,11 @@ void ImageGridComponent<T>::updateTiles(bool ascending, bool allowAnimation,
     mLastCursor = mCursor;
 }
 
-template<typename T>
-void ImageGridComponent<T>::updateTileAtPos(int tilePos, int imgPos,
-        bool allowAnimation, bool updateSelectedState)
+template <typename T>
+void ImageGridComponent<T>::updateTileAtPos(int tilePos,
+                                            int imgPos,
+                                            bool allowAnimation,
+                                            bool updateSelectedState)
 {
     std::shared_ptr<GridTileComponent> tile = mTiles.at(tilePos);
 
@@ -647,7 +651,7 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos, int imgPos,
     // If we have more tiles than we can display on screen, hide them.
     // Same for tiles out of the buffer.
     if (imgPos < 0 || imgPos >= size() || tilePos < 0 ||
-            tilePos >= static_cast<int>(mTiles.size())) {
+        tilePos >= static_cast<int>(mTiles.size())) {
         if (updateSelectedState)
             tile->setSelected(false, allowAnimation);
         tile->reset();
@@ -680,14 +684,12 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos, int imgPos,
                 tile->setSelected(imgPos == mCursor, allowAnimation);
             }
         }
-
     }
 }
 
 // Calculate how many tiles of size mTileSize we can fit in a grid of size mSize using
 // a margin size of mMargin.
-template<typename T>
-void ImageGridComponent<T>::calcGridDimension()
+template <typename T> void ImageGridComponent<T>::calcGridDimension()
 {
     // grid_size = columns * tile_size + (columns - 1) * margin
     // <=> columns = (grid_size + margin) / (tile_size + margin)
@@ -700,7 +702,7 @@ void ImageGridComponent<T>::calcGridDimension()
 
     // Ceil y dim so we can display partial last row.
     mGridDimension = Vector2i(static_cast<const int>(gridDimension.x()),
-            static_cast<const int>(ceilf(gridDimension.y())));
+                              static_cast<const int>(ceilf(gridDimension.y())));
 
     // Grid dimension validation.
     if (mGridDimension.x() < 1) {
@@ -717,13 +719,13 @@ void ImageGridComponent<T>::calcGridDimension()
         mGridDimension.x() += 2 * EXTRAITEMS;
 }
 
-template<typename T>
-bool ImageGridComponent<T>::isScrollLoop() {
+template <typename T> bool ImageGridComponent<T>::isScrollLoop()
+{
     if (!mScrollLoop)
         return false;
     if (isVertical())
         return (mGridDimension.x() * (mGridDimension.y() - 2 * EXTRAITEMS)) <= mEntries.size();
     return (mGridDimension.y() * (mGridDimension.x() - 2 * EXTRAITEMS)) <= mEntries.size();
-};
+}
 
 #endif // ES_CORE_COMPONENTS_IMAGE_GRID_COMPONENT_H

@@ -10,28 +10,28 @@
 
 #include "components/DateTimeComponent.h"
 
-#include "utils/StringUtil.h"
 #include "Log.h"
 #include "Settings.h"
+#include "utils/StringUtil.h"
 
 DateTimeComponent::DateTimeComponent(Window* window)
-        : TextComponent(window), mDisplayRelative(false)
+    : TextComponent(window)
+    , mDisplayRelative(false)
 {
     // ISO 8601 date format.
     setFormat("%Y-%m-%d");
 }
 
-DateTimeComponent::DateTimeComponent(
-        Window* window,
-        const std::string& text,
-        const std::shared_ptr<Font>& font,
-        unsigned int color,
-        Alignment align,
-        Vector3f pos,
-        Vector2f size,
-        unsigned int bgcolor)
-        : TextComponent(window, text, font, color, align, pos, size, bgcolor),
-        mDisplayRelative(false)
+DateTimeComponent::DateTimeComponent(Window* window,
+                                     const std::string& text,
+                                     const std::shared_ptr<Font>& font,
+                                     unsigned int color,
+                                     Alignment align,
+                                     Vector3f pos,
+                                     Vector2f size,
+                                     unsigned int bgcolor)
+    : TextComponent(window, text, font, color, align, pos, size, bgcolor)
+    , mDisplayRelative(false)
 {
     // ISO 8601 date format.
     setFormat("%Y-%m-%d");
@@ -45,6 +45,7 @@ void DateTimeComponent::setValue(const std::string& val)
 
 std::string DateTimeComponent::getValue() const
 {
+    // Return time value as a string.
     return mTime;
 }
 
@@ -79,17 +80,17 @@ std::string DateTimeComponent::getDisplayString() const
         std::string buf;
 
         if (dur.getDays() > 0)
-            buf = std::to_string(dur.getDays()) + " day" +
-                    (dur.getDays() > 1 ? "s" : "") + " ago";
+            buf = std::to_string(dur.getDays()) + " day" + // Line break.
+                  (dur.getDays() > 1 ? "s" : "") + " ago";
         else if (dur.getHours() > 0)
-            buf = std::to_string(dur.getHours()) + " hour" +
-                    (dur.getHours() > 1 ? "s" : "") + " ago";
+            buf = std::to_string(dur.getHours()) + " hour" + // Line break.
+                  (dur.getHours() > 1 ? "s" : "") + " ago";
         else if (dur.getMinutes() > 0)
-            buf = std::to_string(dur.getMinutes()) + " minute" +
-                    (dur.getMinutes() > 1 ? "s" : "") + " ago";
+            buf = std::to_string(dur.getMinutes()) + " minute" + // Line break.
+                  (dur.getMinutes() > 1 ? "s" : "") + " ago";
         else
-            buf = std::to_string(dur.getSeconds()) + " second" +
-                    (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") + " ago";
+            buf = std::to_string(dur.getSeconds()) + " second" + // Line break.
+                  (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") + " ago";
 
         return std::string(buf);
     }
@@ -106,7 +107,9 @@ void DateTimeComponent::render(const Transform4x4f& parentTrans)
 }
 
 void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-        const std::string& view, const std::string& element, unsigned int properties)
+                                   const std::string& view,
+                                   const std::string& element,
+                                   unsigned int properties)
 {
     GuiComponent::applyTheme(theme, view, element, properties);
 
@@ -140,7 +143,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else if (str == "right")
             setHorizontalAlignment(ALIGN_RIGHT);
         else
-        LOG(LogError) << "Unknown text alignment string: " << str;
+            LOG(LogError) << "Unknown text alignment string: " << str;
     }
 
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))

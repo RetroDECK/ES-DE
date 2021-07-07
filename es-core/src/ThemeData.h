@@ -21,10 +21,12 @@
 #include <sstream>
 #include <vector>
 
-namespace pugi { class xml_node; }
+namespace pugi
+{
+    class xml_node;
+}
 
-template<typename T>
-class TextListComponent;
+template <typename T> class TextListComponent;
 
 class GuiComponent;
 class ImageComponent;
@@ -63,10 +65,9 @@ public:
 
     virtual const char* what() const throw() { return msg.c_str(); }
 
-    template<typename T>
-    friend ThemeException& operator<<(ThemeException& e, T msg);
+    template <typename T> friend ThemeException& operator<<(ThemeException& e, T msg);
 
-    inline void setFiles(const std::deque<std::string>& deque)
+    void setFiles(const std::deque<std::string>& deque)
     {
         *this << "From theme \"" << deque.front() << "\"";
         for (auto it = deque.cbegin() + 1; it != deque.cend(); it++)
@@ -74,8 +75,7 @@ public:
     }
 };
 
-template<typename T>
-ThemeException& operator<<(ThemeException& e, T appendMsg)
+template <typename T> ThemeException& operator<<(ThemeException& e, T appendMsg)
 {
     std::stringstream ss;
     ss << e.msg << appendMsg;
@@ -83,13 +83,14 @@ ThemeException& operator<<(ThemeException& e, T appendMsg)
     return e;
 }
 
-struct ThemeSet
-{
+struct ThemeSet {
     std::string path;
 
-    inline std::string getName() const { return Utils::FileSystem::getStem(path); }
-    inline std::string getThemePath(const std::string& system) const
-            { return path + "/" + system + "/theme.xml"; }
+    std::string getName() const { return Utils::FileSystem::getStem(path); }
+    std::string getThemePath(const std::string& system) const
+    {
+        return path + "/" + system + "/theme.xml";
+    }
 };
 
 class ThemeData
@@ -124,8 +125,7 @@ public:
 
         std::map<std::string, Property> properties;
 
-        template<typename T>
-        const T get(const std::string& prop) const
+        template <typename T> const T get(const std::string& prop) const
         {
             if (std::is_same<T, Vector2f>::value)
                 return *(const T*)&properties.at(prop).v;
@@ -142,8 +142,10 @@ public:
             return T();
         }
 
-        inline bool has(const std::string& prop) const
-                { return (properties.find(prop) != properties.cend()); }
+        bool has(const std::string& prop) const
+        {
+            return (properties.find(prop) != properties.cend());
+        }
     };
 
 private:
@@ -173,11 +175,13 @@ public:
     bool hasView(const std::string& view);
 
     // If expectedType is an empty string, will do no type checking.
-    const ThemeElement* getElement(const std::string& view, const std::string& element,
-            const std::string& expectedType) const;
+    const ThemeElement* getElement(const std::string& view,
+                                   const std::string& element,
+                                   const std::string& expectedType) const;
 
     static std::vector<GuiComponent*> makeExtras(const std::shared_ptr<ThemeData>& theme,
-            const std::string& view, Window* window);
+                                                 const std::string& view,
+                                                 Window* window);
 
     static const std::shared_ptr<ThemeData>& getDefault();
 
@@ -198,7 +202,8 @@ private:
     void parseViews(const pugi::xml_node& themeRoot);
     void parseView(const pugi::xml_node& viewNode, ThemeView& view);
     void parseElement(const pugi::xml_node& elementNode,
-            const std::map<std::string, ElementPropertyType>& typeMap, ThemeElement& element);
+                      const std::map<std::string, ElementPropertyType>& typeMap,
+                      ThemeElement& element);
 
     std::map<std::string, ThemeView> mViews;
 };

@@ -9,25 +9,23 @@
 
 #include "components/RatingComponent.h"
 
-#include "resources/TextureResource.h"
 #include "Settings.h"
 #include "ThemeData.h"
+#include "resources/TextureResource.h"
 
-RatingComponent::RatingComponent(
-        Window* window,
-        bool colorizeChanges)
-        : GuiComponent(window),
-        mColorShift(DEFAULT_COLORSHIFT),
-        mColorShiftEnd(DEFAULT_COLORSHIFT),
-        mUnfilledColor(DEFAULT_COLORSHIFT),
-        mColorizeChanges(colorizeChanges),
-        mColorOriginalValue(DEFAULT_COLORSHIFT),
-        mColorChangedValue(DEFAULT_COLORSHIFT)
+RatingComponent::RatingComponent(Window* window, bool colorizeChanges)
+    : GuiComponent(window)
+    , mColorShift(DEFAULT_COLORSHIFT)
+    , mColorShiftEnd(DEFAULT_COLORSHIFT)
+    , mUnfilledColor(DEFAULT_COLORSHIFT)
+    , mColorizeChanges(colorizeChanges)
+    , mColorOriginalValue(DEFAULT_COLORSHIFT)
+    , mColorChangedValue(DEFAULT_COLORSHIFT)
 {
     mFilledTexture = TextureResource::get(":/graphics/star_filled.svg", true);
     mUnfilledTexture = TextureResource::get(":/graphics/star_unfilled.svg", true);
     mValue = 0.5f;
-    mSize = Vector2f(64 * NUM_RATING_STARS, 64);
+    mSize = Vector2f(64.0f * NUM_RATING_STARS, 64.0f);
     updateVertices();
     updateColors();
 }
@@ -39,13 +37,13 @@ void RatingComponent::setValue(const std::string& value)
     }
     else {
         // Round up to the closest .1 value, i.e. to the closest half-icon.
-        mValue = ceilf(stof(value) / 0.1f) / 10;
-        mOriginalValue = static_cast<int>(mValue * 10);
+        mValue = ceilf(stof(value) / 0.1f) / 10.0f;
+        mOriginalValue = static_cast<int>(mValue * 10.0f);
 
         // If the argument to colorize the rating icons has been passed, set the
         // color shift accordingly.
         if (mColorizeChanges) {
-            if (static_cast<int>(mValue * 10) == mOriginalValue)
+            if (static_cast<int>(mValue * 10.0f) == mOriginalValue)
                 setColorShift(mColorOriginalValue);
             else
                 setColorShift(mColorChangedValue);
@@ -122,6 +120,7 @@ void RatingComponent::updateVertices()
     const float fw = getSize().y() * numStars;
     const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
 
+    // clang-format off
     mVertices[0] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
     mVertices[1] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
     mVertices[2] = { { w,    0.0f }, { mValue * numStars, 1.0f }, color };
@@ -131,13 +130,7 @@ void RatingComponent::updateVertices()
     mVertices[5] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
     mVertices[6] = { { fw,   0.0f }, { numStars,          1.0f }, color };
     mVertices[7] = { { fw,   h    }, { numStars,          0.0f }, color };
-
-
-//    Disabled this code as it caused subtle but strange rendering errors
-//    where the icons changed size slightly when changing rating scores.
-//    // Round vertices.
-//    for (int i = 0; i < 8; i++)
-//        mVertices[i].pos.round();
+    // clang-format on
 }
 
 void RatingComponent::updateColors()
@@ -159,8 +152,8 @@ void RatingComponent::render(const Transform4x4f& parentTrans)
 
     if (mOpacity > 0) {
         if (Settings::getInstance()->getBool("DebugImage")) {
-            Renderer::drawRect(0.0f, 0.0f, mSize.y() * NUM_RATING_STARS,
-                    mSize.y(), 0xFF000033, 0xFF000033);
+            Renderer::drawRect(0.0f, 0.0f, mSize.y() * NUM_RATING_STARS, mSize.y(), 0xFF000033,
+                               0xFF000033);
         }
 
         if (mUnfilledTexture->bind()) {
@@ -189,14 +182,14 @@ void RatingComponent::render(const Transform4x4f& parentTrans)
 bool RatingComponent::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("a", input) && input.value != 0) {
-        mValue += (1.f/2) / NUM_RATING_STARS;
+        mValue += (1.0f / 2.0f) / NUM_RATING_STARS;
         if (mValue > 1.05f)
             mValue = 0.0f;
 
         // If the argument to colorize the rating icons has been passed,
         // set the color shift accordingly.
         if (mColorizeChanges) {
-            if (static_cast<int>(mValue * 10) == mOriginalValue)
+            if (static_cast<int>(mValue * 10.0f) == mOriginalValue)
                 setColorShift(mColorOriginalValue);
             else
                 setColorShift(mColorChangedValue);
@@ -208,7 +201,9 @@ bool RatingComponent::input(InputConfig* config, Input input)
 }
 
 void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-        const std::string& view, const std::string& element, unsigned int properties)
+                                 const std::string& view,
+                                 const std::string& element,
+                                 unsigned int properties)
 {
     using namespace ThemeFlags;
 

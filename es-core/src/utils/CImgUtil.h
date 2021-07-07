@@ -20,17 +20,20 @@ namespace Utils
     namespace CImg
     {
         void convertRGBAToCImg(std::vector<unsigned char> imageRGBA,
-                cimg_library::CImg<unsigned char>& image);
+                               cimg_library::CImg<unsigned char>& image);
         void convertCImgToRGBA(cimg_library::CImg<unsigned char> image,
-                std::vector<unsigned char>& imageRGBA);
+                               std::vector<unsigned char>& imageRGBA);
         void getTransparentPaddingCoords(cimg_library::CImg<unsigned char>& image,
-                int (&imageCoords)[4]);
+                                         int (&imageCoords)[4]);
         void removeTransparentPadding(cimg_library::CImg<unsigned char>& image);
         void cropLetterboxes(cimg_library::CImg<unsigned char>& image);
         void cropPillarboxes(cimg_library::CImg<unsigned char>& image);
-        void addDropShadow(cimg_library::CImg<unsigned char>& image, unsigned int shadowDistance,
-                float transparency, unsigned int iterations);
-    }
-}
+        void addDropShadow(cimg_library::CImg<unsigned char>& image,
+                           unsigned int shadowDistance,
+                           float transparency,
+                           unsigned int iterations);
+    } // namespace CImg
+
+} // namespace Utils
 
 #endif // ES_CORE_UTILS_CIMG_UTIL_H

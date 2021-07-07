@@ -24,11 +24,13 @@ class ScrollableContainer : public GuiComponent
 public:
     ScrollableContainer(Window* window);
 
-    Vector2f getScrollPos() const;
-    void setScrollPos(const Vector2f& pos);
+    Vector2f getScrollPos() const { return mScrollPos; }
+    void setScrollPos(const Vector2f& pos) { mScrollPos = pos; }
+
     void setAutoScroll(bool autoScroll);
-    void setScrollParameters(float autoScrollDelayConstant, float autoScrollResetDelayConstant,
-            int autoScrollSpeedConstant) override;
+    void setScrollParameters(float autoScrollDelayConstant,
+                             float autoScrollResetDelayConstant,
+                             int autoScrollSpeedConstant) override;
     void reset();
 
     void update(int deltaTime) override;

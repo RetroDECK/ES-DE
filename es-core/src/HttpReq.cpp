@@ -10,21 +10,21 @@
 
 #include "HttpReq.h"
 
+#include "Log.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
-#include "Log.h"
 
 #include <assert.h>
 
 CURLM* HttpReq::s_multi_handle;
 std::map<CURL*, HttpReq*> HttpReq::s_requests;
 
-std::string HttpReq::urlEncode(const std::string &s)
+std::string HttpReq::urlEncode(const std::string& s)
 {
     const std::string unreserved =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
 
-    std::string escaped="";
+    std::string escaped = "";
     for (size_t i = 0; i < s.length(); i++) {
         if (unreserved.find_first_of(s[i]) != std::string::npos) {
             escaped.push_back(s[i]);
@@ -43,11 +43,13 @@ bool HttpReq::isUrl(const std::string& str)
 {
     // The worst guess.
     return (!str.empty() && !Utils::FileSystem::exists(str) &&
-        (str.find("http://") != std::string::npos || str.find("https://") !=
-                std::string::npos || str.find("www.") != std::string::npos));
+            (str.find("http://") != std::string::npos ||
+             str.find("https://") != std::string::npos || str.find("www.") != std::string::npos));
 }
 
-HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nullptr)
+HttpReq::HttpReq(const std::string& url)
+    : mStatus(REQ_IN_PROGRESS)
+    , mHandle(nullptr)
 {
     // The multi-handle is cleaned up via a call from GuiScraperSearch after the scraping
     // has been completed for a game, meaning the handle is valid for all cURL requests
@@ -57,14 +59,16 @@ HttpReq::HttpReq(const std::string& url) : mStatus(REQ_IN_PROGRESS), mHandle(nul
 
     mHandle = curl_easy_init();
 
+#if defined(_WIN64)
     // On Windows, use the bundled cURL TLS/SSL certificates (which actually come from the
     // Mozilla project). There is a possibility to use the OS provided Schannel certificates
     // but I haven't been able to get this to work and it also seems to be problematic on
     // older Windows versions.
-    #if defined(_WIN64)
-    curl_easy_setopt(mHandle, CURLOPT_CAINFO, ResourceManager::getInstance()->
-            getResourcePath(":/certificates/curl-ca-bundle.crt").c_str());
-    #endif
+    curl_easy_setopt(mHandle, CURLOPT_CAINFO,
+                     ResourceManager::getInstance()
+                         ->getResourcePath(":/certificates/curl-ca-bundle.crt")
+                         .c_str());
+#endif
 
     if (mHandle == nullptr) {
         mStatus = REQ_IO_ERROR;
@@ -140,8 +144,8 @@ HttpReq::~HttpReq()
         CURLMcode merr = curl_multi_remove_handle(s_multi_handle, mHandle);
 
         if (merr != CURLM_OK) {
-            LOG(LogError) << "Error removing curl_easy handle from curl_multi: " <<
-                    curl_multi_strerror(merr);
+            LOG(LogError) << "Error removing curl_easy handle from curl_multi: "
+                          << curl_multi_strerror(merr);
         }
 
         curl_easy_cleanup(mHandle);
@@ -192,16 +196,6 @@ std::string HttpReq::getContent() const
 {
     assert(mStatus == REQ_SUCCESS);
     return mContent.str();
-}
-
-void HttpReq::onError(const std::string& msg)
-{
-    mErrorMsg = msg;
-}
-
-std::string HttpReq::getErrorMsg()
-{
-    return mErrorMsg;
 }
 
 // Used as a curl callback.

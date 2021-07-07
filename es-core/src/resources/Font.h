@@ -10,11 +10,11 @@
 #ifndef ES_CORE_RESOURCES_FONT_H
 #define ES_CORE_RESOURCES_FONT_H
 
+#include "ThemeData.h"
 #include "math/Vector2f.h"
 #include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
-#include "ThemeData.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -22,6 +22,7 @@
 
 class TextCache;
 
+// clang-format off
 #define FONT_SIZE_MINI (static_cast<unsigned int>(0.030f * \
         std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
 #define FONT_SIZE_SMALL (static_cast<unsigned int>(0.035f * \
@@ -30,6 +31,7 @@ class TextCache;
         std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
 #define FONT_SIZE_LARGE (static_cast<unsigned int>(0.085f * \
         std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
+// clang-format on
 
 #define FONT_PATH_LIGHT ":/fonts/Akrobat-Regular.ttf"
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
@@ -47,54 +49,58 @@ enum Alignment {
 class Font : public IReloadable
 {
 public:
-    static void initLibrary();
-
-    static std::shared_ptr<Font> get(int size, const std::string& path = getDefaultPath());
-
     virtual ~Font();
+    static void initLibrary();
+    static std::shared_ptr<Font> get(int size, const std::string& path = getDefaultPath());
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     Vector2f sizeText(std::string text, float lineSpacing = 1.5f);
+
     // Returns the portion of a string that fits within the passed argument maxWidth.
     std::string getTextMaxWidth(std::string text, float maxWidth);
-    TextCache* buildTextCache(
-            const std::string& text,
-            float offsetX,
-            float offsetY,
-            unsigned int color,
-            float lineSpacing = 1.5f,
-            bool noTopMargin = false);
-    TextCache* buildTextCache(
-            const std::string& text,
-            Vector2f offset,
-            unsigned int color,
-            float xLen,
-            Alignment alignment = ALIGN_LEFT,
-            float lineSpacing = 1.5f,
-            bool noTopMargin = false);
+
+    TextCache* buildTextCache(const std::string& text,
+                              float offsetX,
+                              float offsetY,
+                              unsigned int color,
+                              float lineSpacing = 1.5f,
+                              bool noTopMargin = false);
+
+    TextCache* buildTextCache(const std::string& text,
+                              Vector2f offset,
+                              unsigned int color,
+                              float xLen,
+                              Alignment alignment = ALIGN_LEFT,
+                              float lineSpacing = 1.5f,
+                              bool noTopMargin = false);
+
     void renderTextCache(TextCache* cache);
 
     // Inserts newlines into text to make it wrap properly.
     std::string wrapText(std::string text, float xLen);
+
     // Returns the expected size of a string after wrapping is applied.
     Vector2f sizeWrappedText(std::string text, float xLen, float lineSpacing = 1.5f);
-    // Returns the position of of the cursor after moving "cursor" characters.
-    Vector2f getWrappedTextCursorOffset(std::string text, float xLen, size_t cursor,
-            float lineSpacing = 1.5f);
+
+    // Returns the position of the cursor after moving a "cursor" amount of characters.
+    Vector2f getWrappedTextCursorOffset(std::string text,
+                                        float xLen,
+                                        size_t cursor,
+                                        float lineSpacing = 1.5f);
 
     float getHeight(float lineSpacing = 1.5f) const;
     float getLetterHeight();
 
-    void unload(std::shared_ptr<ResourceManager>& rm) override;
-    void reload(std::shared_ptr<ResourceManager>& rm) override;
+    void reload(std::shared_ptr<ResourceManager>& rm) override { rebuildTextures(); }
+    void unload(std::shared_ptr<ResourceManager>& rm) override { unloadTextures(); }
 
-    int getSize() const;
-    inline const std::string& getPath() const { return mPath; }
-
-    inline static std::string getDefaultPath() { return FONT_PATH_REGULAR; }
+    int getSize() const { return mSize; }
+    const std::string& getPath() const { return mPath; }
+    static std::string getDefaultPath() { return FONT_PATH_REGULAR; }
 
     static std::shared_ptr<Font> getFromTheme(const ThemeData::ThemeElement* elem,
-            unsigned int properties, const std::shared_ptr<Font>& orig);
+                                              unsigned int properties,
+                                              const std::shared_ptr<Font>& orig);
 
     // Returns an approximation of VRAM used by this font's texture (in bytes).
     size_t getMemUsage() const;
@@ -122,6 +128,7 @@ private:
         // Initializes the OpenGL texture according to this FontTexture's settings,
         // updating textureId.
         void initTexture();
+
         // Deinitializes the OpenGL texture if any exists, is automatically called
         // in the destructor.
         void deinitTexture();
@@ -140,8 +147,9 @@ private:
 
     std::vector<FontTexture> mTextures;
 
-    void getTextureForNewGlyph(const Vector2i& glyphSize, FontTexture*& tex_out,
-            Vector2i& cursor_out);
+    void getTextureForNewGlyph(const Vector2i& glyphSize,
+                               FontTexture*& tex_out,
+                               Vector2i& cursor_out);
 
     std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
     FT_Face getFaceForChar(unsigned int id);
@@ -166,8 +174,10 @@ private:
     const int mSize;
     const std::string mPath;
 
-    float getNewlineStartOffset(const std::string& text, const unsigned int& charStart,
-            const float& xLen, const Alignment& alignment);
+    float getNewlineStartOffset(const std::string& text,
+                                const unsigned int& charStart,
+                                const float& xLen,
+                                const Alignment& alignment);
 
     friend TextCache;
 };

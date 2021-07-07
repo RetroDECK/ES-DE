@@ -9,11 +9,11 @@
 
 #include "Settings.h"
 
-#include "utils/FileSystemUtil.h"
-#include "utils/StringUtil.h"
 #include "Log.h"
 #include "Platform.h"
 #include "Scripting.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 #include <algorithm>
 #include <pugixml.hpp>
@@ -25,7 +25,9 @@ Settings* Settings::sInstance = nullptr;
 // the in-program settings menu. Most can be set using command-line arguments,
 // but some are debug flags that are either hardcoded or set by internal debug
 // functions.
-std::vector<std::string> settings_dont_save {
+std::vector<std::string> settingsSkipSaving
+{
+    // clang-format off
     // These options can be set using command-line arguments:
     "WindowWidth",          // Set via --resolution [width] [height]
     "WindowHeight",         // set via --resolution [width] [height]
@@ -55,6 +57,7 @@ std::vector<std::string> settings_dont_save {
     "DebugImage",
     "SplashScreenProgress",
     "ScraperFilter"
+    // clang-format on
 };
 
 Settings::Settings()
@@ -174,9 +177,8 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverSlideshowScanlines"] = { true, true };
     mBoolMap["ScreensaverSlideshowCustomImages"] = { false, false };
     mBoolMap["ScreensaverSlideshowRecurse"] = { false, false };
-    mStringMap["ScreensaverSlideshowImageDir"] = {
-            "~/.emulationstation/slideshow/custom_images",
-            "~/.emulationstation/slideshow/custom_images" };
+    mStringMap["ScreensaverSlideshowImageDir"] = { "~/.emulationstation/slideshow/custom_images",
+                                                   "~/.emulationstation/slideshow/custom_images" };
 
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreensaverSwapVideoTimeout"] = { 0, 0 };
@@ -185,6 +187,7 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverVideoScanlines"] = { true, true };
     mBoolMap["ScreensaverVideoBlur"] = { false, false };
 
+#if defined(_RPI_)
     // Sound settings.
     // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
     // As PulseAudio controls the sound devices for the desktop environment, it doesn't
@@ -193,7 +196,6 @@ void Settings::setDefaults()
     // settings could be added later on, if needed.
     // The code is still active for Raspberry Pi though as I'm not sure if this is
     // useful for that device.
-    #if defined(_RPI_)
     mStringMap["AudioCard"] = { "default", "default" };
     // Audio out device for volume control.
     //#endif
@@ -201,9 +203,8 @@ void Settings::setDefaults()
     mStringMap["AudioDevice"] = { "PCM", "PCM" };
     // Audio out device for Video playback using OMX player.
     mStringMap["OMXAudioDev"] = { "both", "both" };
-    //#else
-    //    mStringMap["AudioDevice"] = { "Master", "Master" };
-    #endif
+#endif
+
     mIntMap["SoundVolumeNavigation"] = { 80, 80 };
     mIntMap["SoundVolumeVideos"] = { 100, 100 };
     mBoolMap["GamelistVideoAudio"] = { true, true };
@@ -223,32 +224,32 @@ void Settings::setDefaults()
     mBoolMap["UseCustomCollectionsSystem"] = { true, true };
     mBoolMap["CollectionShowSystemInfo"] = { true, true };
 
-    // Other settings.
-    #if defined(_RPI_)
+// Other settings.
+#if defined(_RPI_)
     mIntMap["MaxVRAM"] = { 80, 80 };
-    #else
+#else
     mIntMap["MaxVRAM"] = { 256, 256 };
-    #endif
+#endif
     mIntMap["DisplayIndex"] = { 1, 1 };
-    #if defined (__unix__)
+#if defined(__unix__)
     mStringMap["FullscreenMode"] = { "normal", "normal" };
-    #endif
-    #if defined(BUILD_VLC_PLAYER)
+#endif
+#if defined(BUILD_VLC_PLAYER)
     mStringMap["VideoPlayer"] = { "ffmpeg", "ffmpeg" };
-    #endif
-    #if defined(_RPI_)
+#endif
+#if defined(_RPI_)
     mBoolMap["VideoOmxPlayer"] = { false, false };
     // We're defaulting to OMX Player for full screen video on the Pi.
     mBoolMap["ScreensaverOmxPlayer"] = { true, true };
-    #endif
+#endif
     mStringMap["SaveGamelistsMode"] = { "always", "always" };
-    #if defined(_WIN64)
+#if defined(_WIN64)
     mBoolMap["HideTaskbar"] = { false, false };
-    #endif
+#endif
     mBoolMap["RunInBackground"] = { false, false };
-    #if defined(_WIN64)
+#if defined(_WIN64)
     mBoolMap["LaunchWorkaround"] = { true, true };
-    #endif
+#endif
     mStringMap["MediaDirectory"] = { "", "" };
     mBoolMap["VideoUpscaleFrameRate"] = { false, false };
     mBoolMap["LaunchCommandOverride"] = { true, true };
@@ -256,15 +257,15 @@ void Settings::setDefaults()
     mBoolMap["ShowHiddenGames"] = { true, true };
     mBoolMap["CustomEventScripts"] = { false, false };
     mBoolMap["ParseGamelistOnly"] = { false, false };
-    #if defined(__unix__)
+#if defined(__unix__)
     mBoolMap["DisableComposition"] = { true, true };
-    #endif
+#endif
     mBoolMap["DisplayGPUStatistics"] = { false, false };
-    // macOS requires root privileges to reboot and power off so it doesn't make much
-    // sense to enable this setting and menu entry for that operating system.
-    #if !defined(__APPLE__)
+// macOS requires root privileges to reboot and power off so it doesn't make much
+// sense to enable this setting and menu entry for that operating system.
+#if !defined(__APPLE__)
     mBoolMap["ShowQuitMenu"] = { false, false };
-    #endif
+#endif
 
     //
     // Settings configured via command-line arguments.
@@ -278,18 +279,18 @@ void Settings::setDefaults()
     mBoolMap["IgnoreGamelist"] = { false, false };
     mBoolMap["SplashScreen"] = { true, true };
     mBoolMap["VSync"] = { true, true };
-    #if !defined(_WIN64)
+#if !defined(_WIN64)
     mBoolMap["Windowed"] = { false, false };
-    #endif
-    mIntMap["WindowWidth"]   = { 0, 0 };
-    mIntMap["WindowHeight"]  = { 0, 0 };
-    mIntMap["ScreenWidth"]   = { 0, 0 };
+#endif
+    mIntMap["WindowWidth"] = { 0, 0 };
+    mIntMap["WindowHeight"] = { 0, 0 };
+    mIntMap["ScreenWidth"] = { 0, 0 };
 
     // Undocumented options.
-    mIntMap["ScreenHeight"]  = { 0, 0 };
+    mIntMap["ScreenHeight"] = { 0, 0 };
     mIntMap["ScreenOffsetX"] = { 0, 0 };
     mIntMap["ScreenOffsetY"] = { 0, 0 };
-    mIntMap["ScreenRotate"]  = { 0, 0 };
+    mIntMap["ScreenRotate"] = { 0, 0 };
 
     //
     // Settings that can be changed in es_settings.xml
@@ -317,9 +318,10 @@ void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& ty
 {
     for (auto iter = map.cbegin(); iter != map.cend(); iter++) {
         // Key is on the "don't save" list, so don't save it.
-        if (std::find(settings_dont_save.cbegin(), settings_dont_save.cend(),
-                iter->first) != settings_dont_save.cend())
+        if (std::find(settingsSkipSaving.cbegin(), settingsSkipSaving.cend(), iter->first) !=
+            settingsSkipSaving.cend()) {
             continue;
+        }
 
         pugi::xml_node node = doc.append_child(type.c_str());
         node.append_attribute("name").set_value(iter->first.c_str());
@@ -330,8 +332,8 @@ void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& ty
 void Settings::saveFile()
 {
     LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.xml";
-    const std::string path = Utils::FileSystem::getHomePath() +
-            "/.emulationstation/es_settings.xml";
+    const std::string path =
+        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.xml";
 
     pugi::xml_document doc;
 
@@ -345,11 +347,11 @@ void Settings::saveFile()
         node.append_attribute("value").set_value(iter->second.second.c_str());
     }
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     doc.save_file(Utils::String::stringToWideString(path).c_str());
-    #else
+#else
     doc.save_file(path.c_str());
-    #endif
+#endif
 
     Scripting::fireEvent("config-changed");
     Scripting::fireEvent("settings-changed");
@@ -358,11 +360,11 @@ void Settings::saveFile()
 void Settings::loadFile()
 {
     // Prior to ES-DE v1.1, the configuration file had the .cfg suffix instead of .xml
-    const std::string legacyConfigFile = Utils::FileSystem::getHomePath() +
-            "/.emulationstation/es_settings.cfg";
+    const std::string legacyConfigFile =
+        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.cfg";
 
-    const std::string configFile = Utils::FileSystem::getHomePath() +
-            "/.emulationstation/es_settings.xml";
+    const std::string configFile =
+        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.xml";
 
     if (Utils::FileSystem::exists(legacyConfigFile) && !Utils::FileSystem::exists(configFile))
         Utils::FileSystem::copyFile(legacyConfigFile, configFile, false);
@@ -371,12 +373,12 @@ void Settings::loadFile()
         return;
 
     pugi::xml_document doc;
-    #if defined(_WIN64)
+#if defined(_WIN64)
     pugi::xml_parse_result result =
-            doc.load_file(Utils::String::stringToWideString(configFile).c_str());
-    #else
+        doc.load_file(Utils::String::stringToWideString(configFile).c_str());
+#else
     pugi::xml_parse_result result = doc.load_file(configFile.c_str());
-    #endif
+#endif
     if (!result) {
         LOG(LogError) << "Could not parse the es_settings.xml file\n   " << result.description();
         return;
@@ -392,37 +394,37 @@ void Settings::loadFile()
         setString(node.attribute("name").as_string(), node.attribute("value").as_string());
 }
 
-// Print a warning message if the setting we're trying to get doesn't already exist in
-// the map. Then return the value in the map.
-#define SETTINGS_GETSET(type, mapName, getFunction, getDefaultFunction, setFunction) \
-type Settings::getFunction(const std::string& name) \
-{ \
-    if (mapName.find(name) == mapName.cend()) { \
-        LOG(LogError) << "Tried to use unset setting " << name; \
-    } \
-    return mapName[name].second; \
-} \
-type Settings::getDefaultFunction(const std::string& name) \
-{ \
-    if (mapName.find(name) == mapName.cend()) { \
-        LOG(LogError) << "Tried to use unset setting " << name; \
-    } \
-    return mapName[name].first; \
-} \
-bool Settings::setFunction(const std::string& name, type value) \
-{ \
-    if (mapName.count(name) == 0 || mapName[name].second != value) { \
-        mapName[name].second = value; \
-\
-        if (std::find(settings_dont_save.cbegin(), settings_dont_save.cend(), name) \
-                 == settings_dont_save.cend()) \
-            mWasChanged = true; \
-\
-        return true; \
-    } \
-    return false; \
-}
+// Macro to create the get and set functions for the various data types
+#define SETTINGS_GETSET(type, mapName, getFunction, getDefaultFunction, setFunction)               \
+    type Settings::getFunction(const std::string& name)                                            \
+    {                                                                                              \
+        if (mapName.find(name) == mapName.cend()) {                                                \
+            LOG(LogError) << "Tried to use unset setting " << name;                                \
+        }                                                                                          \
+        return mapName[name].second;                                                               \
+    }                                                                                              \
+    type Settings::getDefaultFunction(const std::string& name)                                     \
+    {                                                                                              \
+        if (mapName.find(name) == mapName.cend()) {                                                \
+            LOG(LogError) << "Tried to use unset setting " << name;                                \
+        }                                                                                          \
+        return mapName[name].first;                                                                \
+    }                                                                                              \
+    bool Settings::setFunction(const std::string& name, type value)                                \
+    {                                                                                              \
+        if (mapName.count(name) == 0 || mapName[name].second != value) {                           \
+            mapName[name].second = value;                                                          \
+                                                                                                   \
+            if (std::find(settingsSkipSaving.cbegin(), settingsSkipSaving.cend(), name) ==         \
+                settingsSkipSaving.cend())                                                         \
+                mWasChanged = true;                                                                \
+                                                                                                   \
+            return true;                                                                           \
+        }                                                                                          \
+        return false;                                                                              \
+    }
 
+// Parameters for the macro defined above.
 SETTINGS_GETSET(bool, mBoolMap, getBool, getDefaultBool, setBool);
 SETTINGS_GETSET(int, mIntMap, getInt, getDefaultInt, setInt);
 SETTINGS_GETSET(float, mFloatMap, getFloat, getDefaultFloat, setFloat);

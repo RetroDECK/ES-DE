@@ -14,40 +14,41 @@
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
-#include "resources/Font.h"
 #include "AudioManager.h"
 #include "InputManager.h"
 #include "Log.h"
-#include "Scripting.h"
 #include "Sound.h"
+#include "resources/Font.h"
 
 #include <algorithm>
 #include <iomanip>
 
+#define CLOCK_BACKGROUND_CREATION false
+
 Window::Window()
-        : mScreensaver(nullptr),
-        mMediaViewer(nullptr),
-        mLaunchScreen(nullptr),
-        mInfoPopup(nullptr),
-        mNormalizeNextUpdate(false),
-        mFrameTimeElapsed(0),
-        mFrameCountElapsed(0),
-        mAverageDeltaTime(10),
-        mAllowSleep(true),
-        mSleeping(false),
-        mTimeSinceLastInput(0),
-        mRenderScreensaver(false),
-        mRenderMediaViewer(false),
-        mRenderLaunchScreen(false),
-        mGameLaunchedState(false),
-        mAllowTextScrolling(true),
-        mCachedBackground(false),
-        mInvalidatedCachedBackground(false),
-        mVideoPlayerCount(0),
-        mTopOpacity(0),
-        mTopScale(0.5),
-        mListScrollOpacity(0),
-        mChangedThemeSet(false)
+    : mScreensaver(nullptr)
+    , mMediaViewer(nullptr)
+    , mLaunchScreen(nullptr)
+    , mInfoPopup(nullptr)
+    , mNormalizeNextUpdate(false)
+    , mFrameTimeElapsed(0)
+    , mFrameCountElapsed(0)
+    , mAverageDeltaTime(10)
+    , mAllowSleep(true)
+    , mSleeping(false)
+    , mTimeSinceLastInput(0)
+    , mRenderScreensaver(false)
+    , mRenderMediaViewer(false)
+    , mRenderLaunchScreen(false)
+    , mGameLaunchedState(false)
+    , mAllowTextScrolling(true)
+    , mCachedBackground(false)
+    , mInvalidatedCachedBackground(false)
+    , mVideoPlayerCount(0)
+    , mTopOpacity(0)
+    , mTopScale(0.5)
+    , mListScrollOpacity(0)
+    , mChangedThemeSet(false)
 {
     mHelp = new HelpComponent(this);
     mBackgroundOverlay = new ImageComponent(this);
@@ -122,7 +123,7 @@ bool Window::init()
 
     mBackgroundOverlay->setImage(":/graphics/screen_gradient.png");
     mBackgroundOverlay->setResize(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                                  static_cast<float>(Renderer::getScreenHeight()));
 
     mListScrollFont = Font::get(FONT_SIZE_LARGE);
 
@@ -141,9 +142,9 @@ void Window::deinit()
 
     InputManager::getInstance()->deinit();
     ResourceManager::getInstance()->unloadAll();
-    #if defined(BUILD_VLC_PLAYER)
+#if defined(BUILD_VLC_PLAYER)
     VideoVlcComponent::deinit();
-    #endif
+#endif
     Renderer::deinit();
 }
 
@@ -154,8 +155,9 @@ void Window::input(InputConfig* config, Input input)
     // The DebugSkipInputLogging option has to be set manually in es_settings.xml as
     // it does not have any settings menu entry.
     if (Settings::getInstance()->getBool("Debug") &&
-            !Settings::getInstance()->getBool("DebugSkipInputLogging"))
+        !Settings::getInstance()->getBool("DebugSkipInputLogging")) {
         logInput(config, input);
+    }
 
     if (mMediaViewer && mRenderMediaViewer) {
         if (config->isMappedLike("right", input) && input.value != 0)
@@ -177,17 +179,17 @@ void Window::input(InputConfig* config, Input input)
 
     if (mScreensaver) {
         if (mScreensaver->isScreensaverActive() &&
-                Settings::getInstance()->getBool("ScreensaverControls") &&
-                ((Settings::getInstance()->getString("ScreensaverType") == "video") ||
-                (Settings::getInstance()->getString("ScreensaverType") == "slideshow"))) {
+            Settings::getInstance()->getBool("ScreensaverControls") &&
+            ((Settings::getInstance()->getString("ScreensaverType") == "video") ||
+             (Settings::getInstance()->getString("ScreensaverType") == "slideshow"))) {
             bool customImageSlideshow = false;
             if (Settings::getInstance()->getString("ScreensaverType") == "slideshow" &&
-                    Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages"))
+                Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages"))
                 customImageSlideshow = true;
 
             if ((customImageSlideshow || mScreensaver->getCurrentGame() != nullptr) &&
-                    (config->isMappedTo("a", input) ||  config->isMappedTo("y", input) ||
-                    config->isMappedLike("left", input) || config->isMappedLike("right", input))) {
+                (config->isMappedTo("a", input) || config->isMappedTo("y", input) ||
+                 config->isMappedLike("left", input) || config->isMappedLike("right", input))) {
                 // Left or right browses to the next video or image.
                 if (config->isMappedLike("left", input) || config->isMappedLike("right", input)) {
                     if (input.value != 0) {
@@ -230,22 +232,22 @@ void Window::input(InputConfig* config, Input input)
     }
 
     if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_g &&
-            SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
+        SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
         // Toggle debug grid with Ctrl-G.
         Settings::getInstance()->setBool("DebugGrid",
-                !Settings::getInstance()->getBool("DebugGrid"));
+                                         !Settings::getInstance()->getBool("DebugGrid"));
     }
     else if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_t &&
-            SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
+             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
         // Toggle TextComponent debug view with Ctrl-T.
         Settings::getInstance()->setBool("DebugText",
-                !Settings::getInstance()->getBool("DebugText"));
+                                         !Settings::getInstance()->getBool("DebugText"));
     }
     else if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_i &&
-            SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
+             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
         // Toggle ImageComponent debug view with Ctrl-I.
         Settings::getInstance()->setBool("DebugImage",
-                !Settings::getInstance()->getBool("DebugImage"));
+                                         !Settings::getInstance()->getBool("DebugImage"));
     }
     else {
         if (peekGui())
@@ -270,8 +272,8 @@ void Window::logInput(InputConfig* config, Input input)
         mapname += ", ";
     }
 
-    LOG(LogDebug) << "Window::logInput(" << config->getDeviceName() << "): " <<
-            input.string() << ", isMappedTo=" << mapname << "value=" << input.value;
+    LOG(LogDebug) << "Window::logInput(" << config->getDeviceName() << "): " << input.string()
+                  << ", isMappedTo=" << mapname << "value=" << input.value;
 }
 
 void Window::update(int deltaTime)
@@ -292,12 +294,13 @@ void Window::update(int deltaTime)
             std::stringstream ss;
 
             // FPS.
-            ss << std::fixed << std::setprecision(1) <<
-                    (1000.0f * static_cast<float>(mFrameCountElapsed) /
-                    static_cast<float>(mFrameTimeElapsed)) << " FPS (";
-            ss << std::fixed << std::setprecision(2) <<
-                    (static_cast<float>(mFrameTimeElapsed) /
-                    static_cast<float>(mFrameCountElapsed)) << " ms)";
+            ss << std::fixed << std::setprecision(1)
+               << (1000.0f * static_cast<float>(mFrameCountElapsed) /
+                   static_cast<float>(mFrameTimeElapsed))
+               << " FPS (";
+            ss << std::fixed << std::setprecision(2)
+               << (static_cast<float>(mFrameTimeElapsed) / static_cast<float>(mFrameCountElapsed))
+               << " ms)";
 
             // The following calculations are not accurate, and the font calculation is completely
             // broken. For now, still report the figures as it's somehow useful to locate memory
@@ -307,12 +310,12 @@ void Window::update(int deltaTime)
             float textureTotalUsageMiB = TextureResource::getTotalTextureSize() / 1024.0f / 1024.0f;
             float fontVramUsageMiB = Font::getTotalMemUsage() / 1024.0f / 1024.0f;
 
-            ss << "\nFont VRAM: " << fontVramUsageMiB << " MiB\nTexture VRAM: " <<
-                    textureVramUsageMiB << " MiB\nMax Texture VRAM: " <<
-                    textureTotalUsageMiB << " MiB";
-            mFrameDataText = std::unique_ptr<TextCache>
-                    (mDefaultFonts.at(0)->buildTextCache(ss.str(), Renderer::getScreenWidth() *
-                    0.02f, Renderer::getScreenHeight() * 0.02f, 0xFF00FFFF, 1.3f));
+            ss << "\nFont VRAM: " << fontVramUsageMiB
+               << " MiB\nTexture VRAM: " << textureVramUsageMiB
+               << " MiB\nMax Texture VRAM: " << textureTotalUsageMiB << " MiB";
+            mFrameDataText = std::unique_ptr<TextCache>(mDefaultFonts.at(0)->buildTextCache(
+                ss.str(), Renderer::getScreenWidth() * 0.02f, Renderer::getScreenHeight() * 0.02f,
+                0xFF00FFFF, 1.3f));
         }
 
         mFrameTimeElapsed = 0;
@@ -368,27 +371,29 @@ void Window::render()
         else if (mRenderScreensaver && mScreensaver->isFallbackScreensaver())
             renderBottom = true;
         else if (mRenderScreensaver &&
-                Settings::getInstance()->getString("ScreensaverType") == "video")
+                 Settings::getInstance()->getString("ScreensaverType") == "video")
             renderBottom = false;
         else if (mRenderScreensaver &&
-                Settings::getInstance()->getString("ScreensaverType") == "slideshow")
+                 Settings::getInstance()->getString("ScreensaverType") == "slideshow")
             renderBottom = false;
 
         if (renderBottom)
             bottom->render(transform);
 
         if (bottom != top || mRenderLaunchScreen) {
-            #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
             if (!mCachedBackground) {
                 // Generate a cache texture of the shaded background when opening the menu, which
                 // will remain valid until the menu is closed. This is way faster than having to
                 // render the shaders for every frame.
-//                const auto backgroundStartTime = std::chrono::system_clock::now();
+#if (CLOCK_BACKGROUND_CREATION)
+                const auto backgroundStartTime = std::chrono::system_clock::now();
+#endif
 
                 std::shared_ptr<TextureResource> mPostprocessedBackground;
                 mPostprocessedBackground = TextureResource::get("");
-                unsigned char* processedTexture = new unsigned char[Renderer::getScreenWidth() *
-                        Renderer::getScreenHeight() * 4];
+                unsigned char* processedTexture =
+                    new unsigned char[Renderer::getScreenWidth() * Renderer::getScreenHeight() * 4];
 
                 // Defocus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
@@ -396,7 +401,7 @@ void Window::render()
 
                 if (Settings::getInstance()->getBool("MenuBlurBackground")) {
                     float heightModifier = Renderer::getScreenHeightModifier();
-
+                    // clang-format off
                     if (heightModifier < 1)
                         backgroundParameters.blurPasses = 2;        // Below 1080
                     else if (heightModifier >= 4)
@@ -411,23 +416,25 @@ void Window::render()
                         backgroundParameters.blurPasses = 3;        // 1440
                     else if (heightModifier >= 1)
                         backgroundParameters.blurPasses = 2;        // 1080
+                    // clang-format on
 
                     // Also dim the background slightly.
                     backgroundParameters.fragmentDimValue = 0.60f;
 
                     Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
-                            Renderer::SHADER_BLUR_VERTICAL | Renderer::SHADER_DIM,
-                            backgroundParameters, processedTexture);
+                                                       Renderer::SHADER_BLUR_VERTICAL |
+                                                       Renderer::SHADER_DIM,
+                                                   backgroundParameters, processedTexture);
                 }
                 else {
                     // Dim the background slightly.
                     backgroundParameters.fragmentDimValue = 0.60f;
-                    Renderer::shaderPostprocessing(
-                            Renderer::SHADER_DIM, backgroundParameters, processedTexture);
+                    Renderer::shaderPostprocessing(Renderer::SHADER_DIM, backgroundParameters,
+                                                   processedTexture);
                 }
 
-                mPostprocessedBackground->initFromPixels(processedTexture,
-                        Renderer::getScreenWidth(), Renderer::getScreenHeight());
+                mPostprocessedBackground->initFromPixels(
+                    processedTexture, Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
                 mBackgroundOverlay->setImage(mPostprocessedBackground);
 
@@ -444,10 +451,14 @@ void Window::render()
                 delete[] processedTexture;
                 mCachedBackground = true;
 
-//                const auto backgroundEndTime = std::chrono::system_clock::now();
-//                LOG(LogDebug) << "Window::render(): Time to create cached background: " <<
-//                        std::chrono::duration_cast<std::chrono::milliseconds>
-//                        (backgroundEndTime - backgroundStartTime).count() << " ms";
+#if (CLOCK_BACKGROUND_CREATION)
+                const auto backgroundEndTime = std::chrono::system_clock::now();
+                LOG(LogDebug) << "Window::render(): Time to create cached background: "
+                              << std::chrono::duration_cast<std::chrono::milliseconds>(
+                                     backgroundEndTime - backgroundStartTime)
+                                     .count()
+                              << " ms";
+#endif
             }
             // Fade in the cached background if the menu opening effect has been set to scale-up.
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
@@ -455,7 +466,7 @@ void Window::render()
                 if (mBackgroundOverlayOpacity < 255)
                     mBackgroundOverlayOpacity = Math::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
             }
-            #endif
+#endif // USE_OPENGL_21
 
             mBackgroundOverlay->render(transform);
 
@@ -464,8 +475,8 @@ void Window::render()
                 if (mTopScale < 1.0f) {
                     mTopScale = Math::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
                     Vector2f topCenter = top->getCenter();
-                    top->setOrigin({0.5, 0.5});
-                    top->setPosition({topCenter.x(), topCenter.y(), 0});
+                    top->setOrigin({ 0.5f, 0.5f });
+                    top->setPosition({ topCenter.x(), topCenter.y(), 0.0f });
                     top->setScale(mTopScale);
                 }
             }
@@ -476,7 +487,7 @@ void Window::render()
         else {
             mCachedBackground = false;
             mTopOpacity = 0;
-            mTopScale = 0.5;
+            mTopScale = 0.5f;
         }
     }
 
@@ -484,15 +495,15 @@ void Window::render()
     if (mListScrollOpacity != 0) {
         Renderer::setMatrix(Transform4x4f::Identity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()),
-                0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
+                           static_cast<float>(Renderer::getScreenHeight()),
+                           0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
 
         Vector2f offset = mListScrollFont->sizeText(mListScrollText);
         offset[0] = (Renderer::getScreenWidth() - offset.x()) * 0.5f;
         offset[1] = (Renderer::getScreenHeight() - offset.y()) * 0.5f;
 
-        TextCache* cache = mListScrollFont->buildTextCache(mListScrollText,
-                offset.x(), offset.y(), 0xFFFFFF00 | mListScrollOpacity);
+        TextCache* cache = mListScrollFont->buildTextCache(mListScrollText, offset.x(), offset.y(),
+                                                           0xFFFFFF00 | mListScrollOpacity);
         mListScrollFont->renderTextCache(cache);
         delete cache;
     }
@@ -501,7 +512,7 @@ void Window::render()
         mHelp->render(transform);
 
     unsigned int screensaverTimer =
-            static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"));
+        static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"));
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
         // If the media viewer is running or if a menu is open, reset the screensaver timer so
         // that the screensaver won't start.
@@ -549,17 +560,17 @@ void Window::renderLoadingScreen(std::string text)
     Transform4x4f trans = Transform4x4f::Identity();
     Renderer::setMatrix(trans);
     Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+                       static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
     ImageComponent splash(this, true);
     splash.setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);
     splash.setImage(":/graphics/splash.svg");
-    splash.setPosition((Renderer::getScreenWidth() - splash.getSize().x()) / 2,
-            (Renderer::getScreenHeight() - splash.getSize().y()) / 2 * 0.6f);
+    splash.setPosition((Renderer::getScreenWidth() - splash.getSize().x()) / 2.0f,
+                       (Renderer::getScreenHeight() - splash.getSize().y()) / 2.0f * 0.6f);
     splash.render(trans);
 
     auto& font = mDefaultFonts.at(1);
-    TextCache* cache = font->buildTextCache(text, 0, 0, 0x656565FF);
+    TextCache* cache = font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF);
 
     float x = std::round((Renderer::getScreenWidth() - cache->metrics.size.x()) / 2.0f);
     float y = std::round(Renderer::getScreenHeight() * 0.835f);
@@ -602,20 +613,17 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
 
                 // Can we combine? (dpad only).
                 if ((it->first == "up/down" &&
-                        addPrompts.at(mappedTo->second).first != "left/right") ||
-                        (it->first == "left/right" &&
-                        addPrompts.at(mappedTo->second).first != "up/down")) {
-                    // Yes!
+                     addPrompts.at(mappedTo->second).first != "left/right") ||
+                    (it->first == "left/right" &&
+                     addPrompts.at(mappedTo->second).first != "up/down")) {
+                    // Yes.
                     addPrompts.at(mappedTo->second).first = "up/down/left/right";
-                    // Don't need to add this to addPrompts since we just merged.
                 }
                 else {
-                    // No, we can't combine!
                     addPrompts.push_back(*it);
                 }
             }
             else {
-                // No, it hasn't!
                 mappedToSeenMap.emplace(it->second, static_cast<int>(addPrompts.size()));
                 addPrompts.push_back(*it);
             }
@@ -624,29 +632,31 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
 
     // Sort prompts so it goes [dpad_all] [dpad_u/d] [dpad_l/r] [a/b/x/y/l/r] [start/back].
     std::sort(addPrompts.begin(), addPrompts.end(),
-            [](const HelpPrompt& a, const HelpPrompt& b) -> bool {
+              [](const HelpPrompt& a, const HelpPrompt& b) -> bool {
+                  static const std::vector<std::string> map = { "up/down/left/right",
+                                                                "up/down",
+                                                                "left/right",
+                                                                "a",
+                                                                "b",
+                                                                "x",
+                                                                "y",
+                                                                "l",
+                                                                "r",
+                                                                "start",
+                                                                "back" };
+                  int i = 0;
+                  int aVal = 0;
+                  int bVal = 0;
+                  while (i < map.size()) {
+                      if (a.first == map[i])
+                          aVal = i;
+                      if (b.first == map[i])
+                          bVal = i;
+                      i++;
+                  }
 
-        static const std::vector<std::string> map = {
-                "up/down/left/right",
-                "up/down",
-                "left/right",
-                "a", "b", "x", "y", "l", "r",
-                "start", "back"
-        };
-
-        int i = 0;
-        int aVal = 0;
-        int bVal = 0;
-        while (i < map.size()) {
-            if (a.first == map[i])
-                aVal = i;
-            if (b.first == map[i])
-                bVal = i;
-            i++;
-        }
-
-        return aVal > bVal;
-    });
+                  return aVal > bVal;
+              });
 
     mHelp->setPrompts(addPrompts);
 }
@@ -789,18 +799,8 @@ void Window::invalidateCachedBackground()
     mInvalidatedCachedBackground = true;
 }
 
-void Window::onSleep()
-{
-    Scripting::fireEvent("sleep");
-}
-
-void Window::onWake()
-{
-    Scripting::fireEvent("wake");
-}
-
 bool Window::isProcessing()
 {
-    return count_if (mGuiStack.cbegin(), mGuiStack.cend(), [](GuiComponent* c) {
-        return c->isProcessing(); }) > 0;
+    return count_if(mGuiStack.cbegin(), mGuiStack.cend(),
+                    [](GuiComponent* c) { return c->isProcessing(); }) > 0;
 }

@@ -17,20 +17,21 @@
 
 #include <cmath>
 
+#define TITLE_VERT_PADDING (Renderer::getScreenHeight() * 0.0637f)
+
 class ButtonComponent;
 class ImageComponent;
 
-std::shared_ptr<ComponentGrid> makeButtonGrid(Window* window,
-        const std::vector<std::shared_ptr<ButtonComponent>>& buttons);
+std::shared_ptr<ComponentGrid> makeButtonGrid(
+    Window* window, const std::vector<std::shared_ptr<ButtonComponent>>& buttons);
 std::shared_ptr<ImageComponent> makeArrow(Window* window);
-
-#define TITLE_VERT_PADDING (Renderer::getScreenHeight() * 0.0637f)
 
 class MenuComponent : public GuiComponent
 {
 public:
-    MenuComponent(Window* window, std::string title,
-            const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
+    MenuComponent(Window* window,
+                  std::string title,
+                  const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
     virtual ~MenuComponent();
 
     void save();
@@ -38,31 +39,42 @@ public:
 
     void setNeedsSaving() { mNeedsSaving = true; }
 
-    inline void addRow(const ComponentListRow& row, bool setCursorHere = false)
-            { mList->addRow(row, setCursorHere); updateSize(); }
+    void addRow(const ComponentListRow& row, bool setCursorHere = false)
+    {
+        mList->addRow(row, setCursorHere);
+        updateSize();
+    }
 
-    inline void addWithLabel(const std::string& label, const std::shared_ptr<GuiComponent>& comp,
-            bool setCursorHere = false, bool invert_when_selected = true)
+    void addWithLabel(const std::string& label,
+                      const std::shared_ptr<GuiComponent>& comp,
+                      bool setCursorHere = false,
+                      bool invert_when_selected = true)
     {
         ComponentListRow row;
-        row.addElement(std::make_shared<TextComponent>(mWindow,
-                Utils::String::toUpper(label), Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+        row.addElement(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(label),
+                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                       true);
         row.addElement(comp, false, invert_when_selected);
         addRow(row, setCursorHere);
     }
 
-    inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); }
+    void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); }
 
-    void addButton(const std::string& label, const std::string& helpText,
-            const std::function<void()>& callback);
+    void addButton(const std::string& label,
+                   const std::string& helpText,
+                   const std::function<void()>& callback);
 
     void setTitle(std::string title, const std::shared_ptr<Font>& font);
 
     void setCursorToFirstListEntry() { mList->moveCursor(-mList->getCursorId()); }
-    inline void setCursorToList() { mGrid.setCursorTo(mList); }
-    inline void setCursorToButtons() { assert(mButtonGrid); mGrid.setCursorTo(mButtonGrid); }
+    void setCursorToList() { mGrid.setCursorTo(mList); }
+    void setCursorToButtons()
+    {
+        assert(mButtonGrid);
+        mGrid.setCursorTo(mButtonGrid);
+    }
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    virtual std::vector<HelpPrompt> getHelpPrompts() override { return mGrid.getHelpPrompts(); }
 
 private:
     void updateSize();

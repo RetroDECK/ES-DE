@@ -12,11 +12,12 @@
 #include <string>
 
 #if defined(_WIN64)
+#include <winsock2.h>
 #include <windows.h>
 #endif
 
 enum QuitMode {
-    QUIT = 0,
+    QUIT = 0, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     REBOOT = 1,
     POWEROFF = 2
 };
@@ -35,6 +36,7 @@ void revertTaskbarState(unsigned int& state);
 
 // Clean, normal shutdown.
 int quitES(QuitMode mode = QuitMode::QUIT);
+
 // Immediately shut down the application as cleanly as possible.
 void emergencyShutdown();
 void processQuitMode();

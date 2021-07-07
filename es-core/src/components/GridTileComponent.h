@@ -28,8 +28,10 @@ public:
     GridTileComponent(Window* window);
 
     void render(const Transform4x4f& parentTrans) override;
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
-            const std::string& element, unsigned int properties) override;
+    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                            const std::string& view,
+                            const std::string& element,
+                            unsigned int properties) override;
 
     // Made this a static function because the ImageGridComponent needs to know the default tile
     // max size to calculate the grid dimension before it instantiates the GridTileComponents.
@@ -37,12 +39,14 @@ public:
     Vector2f getSelectedTileSize() const;
     bool isSelected() const;
 
-    void reset();
+    void reset() { setImage(""); }
 
     void setImage(const std::string& path);
     void setImage(const std::shared_ptr<TextureResource>& texture);
-    void setSelected(bool selected, bool allowAnimation = true,
-            Vector3f* pPosition = nullptr, bool force=false);
+    void setSelected(bool selected,
+                     bool allowAnimation = true,
+                     Vector3f* pPosition = nullptr,
+                     bool force = false);
     void setVisible(bool visible);
 
     void forceSize(Vector2f size, float selectedZoom);

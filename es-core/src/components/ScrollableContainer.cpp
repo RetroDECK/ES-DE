@@ -9,22 +9,21 @@
 
 #include "components/ScrollableContainer.h"
 
+#include "Window.h"
 #include "animations/LambdaAnimation.h"
 #include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 #include "resources/Font.h"
-#include "Window.h"
 
-ScrollableContainer::ScrollableContainer(
-        Window* window)
-        : GuiComponent(window),
-        mAutoScrollDelay(0),
-        mAutoScrollSpeed(0),
-        mAutoScrollAccumulator(0),
-        mScrollPos(0, 0),
-        mScrollDir(0, 0),
-        mAutoScrollResetAccumulator(0),
-        mFontSize(0.0f)
+ScrollableContainer::ScrollableContainer(Window* window)
+    : GuiComponent(window)
+    , mAutoScrollDelay(0)
+    , mAutoScrollSpeed(0)
+    , mAutoScrollAccumulator(0)
+    , mScrollPos(0, 0)
+    , mScrollDir(0, 0)
+    , mAutoScrollResetAccumulator(0)
+    , mFontSize(0.0f)
 {
     // Set the modifier to get equivalent scrolling speed regardless of screen resolution.
     mResolutionModifier = Renderer::getScreenHeightModifier();
@@ -33,7 +32,8 @@ ScrollableContainer::ScrollableContainer(
     // For narrower aspect ratios than 16:9 there is a need to set an additional compensation
     // to get somehow consistent scrolling speeds.
     float aspectCompensation = static_cast<float>(Renderer::getScreenHeight()) /
-            static_cast<float>(Renderer::getScreenWidth()) - 0.5625f;
+                                   static_cast<float>(Renderer::getScreenWidth()) -
+                               0.5625f;
     if (aspectCompensation > 0)
         mResolutionModifier += aspectCompensation * 4.0f;
 
@@ -42,24 +42,14 @@ ScrollableContainer::ScrollableContainer(
     mAutoScrollSpeedConstant = AUTO_SCROLL_SPEED;
 }
 
-Vector2f ScrollableContainer::getScrollPos() const
-{
-    return mScrollPos;
-}
-
-void ScrollableContainer::setScrollPos(const Vector2f& pos)
-{
-    mScrollPos = pos;
-}
-
 void ScrollableContainer::setAutoScroll(bool autoScroll)
 {
     if (autoScroll) {
         mScrollDir = Vector2f(0, 1);
         mAutoScrollDelay = static_cast<int>(mAutoScrollDelayConstant);
         mAutoScrollSpeed = mAutoScrollSpeedConstant;
-        mAutoScrollSpeed = static_cast<int>(static_cast<float>(mAutoScrollSpeedConstant) /
-                mResolutionModifier);
+        mAutoScrollSpeed =
+            static_cast<int>(static_cast<float>(mAutoScrollSpeedConstant) / mResolutionModifier);
         reset();
     }
     else {
@@ -71,7 +61,8 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
 }
 
 void ScrollableContainer::setScrollParameters(float autoScrollDelayConstant,
-        float autoScrollResetDelayConstant, int autoScrollSpeedConstant)
+                                              float autoScrollResetDelayConstant,
+                                              int autoScrollSpeedConstant)
 {
     mAutoScrollResetDelayConstant = autoScrollResetDelayConstant;
     mAutoScrollDelayConstant = autoScrollDelayConstant;
@@ -90,7 +81,7 @@ void ScrollableContainer::update(int deltaTime)
 {
     // Don't scroll if the media viewer or screensaver is active or if text scrolling is disabled;
     if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
-            !mWindow->getAllowTextScrolling()) {
+        !mWindow->getAllowTextScrolling()) {
         if (mScrollPos != 0 && !mWindow->isLaunchScreenDisplayed())
             reset();
         return;
@@ -105,8 +96,8 @@ void ScrollableContainer::update(int deltaTime)
 
     // Also adjust the scrolling speed based on the size of the font.
     float fontSizeModifier = mSmallFontSize / mFontSize;
-    adjustedAutoScrollSpeed = static_cast<int>(adjustedAutoScrollSpeed *
-            fontSizeModifier * fontSizeModifier);
+    adjustedAutoScrollSpeed =
+        static_cast<int>(adjustedAutoScrollSpeed * fontSizeModifier * fontSizeModifier);
 
     if (adjustedAutoScrollSpeed < 0)
         adjustedAutoScrollSpeed = 1;
@@ -165,11 +156,11 @@ void ScrollableContainer::render(const Transform4x4f& parentTrans)
     Transform4x4f trans = parentTrans * getTransform();
 
     Vector2i clipPos(static_cast<int>(trans.translation().x()),
-            static_cast<int>(trans.translation().y()));
+                     static_cast<int>(trans.translation().y()));
 
     Vector3f dimScaled = trans * Vector3f(mSize.x(), mSize.y(), 0);
     Vector2i clipDim(static_cast<int>((dimScaled.x()) - trans.translation().x()),
-            static_cast<int>((dimScaled.y()) - trans.translation().y()));
+                     static_cast<int>((dimScaled.y()) - trans.translation().y()));
 
     Renderer::pushClipRect(clipPos, clipDim);
 

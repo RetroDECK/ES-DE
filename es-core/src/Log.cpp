@@ -8,31 +8,15 @@
 
 #include "Log.h"
 
-#include "utils/FileSystemUtil.h"
-#include "utils/StringUtil.h"
 #include "Platform.h"
+#include "utils/StringUtil.h"
 
 #include <fstream>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 
 LogLevel Log::reportingLevel = LogInfo;
 std::ofstream file;
-
-LogLevel Log::getReportingLevel()
-{
-    return reportingLevel;
-}
-
-std::string Log::getLogPath()
-{
-    return Utils::FileSystem::getHomePath() + "/.emulationstation/es_log.txt";
-}
-
-void Log::setReportingLevel(LogLevel level)
-{
-    reportingLevel = level;
-}
 
 void Log::init()
 {
@@ -44,24 +28,24 @@ void Log::init()
 
 void Log::open()
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     file.open(Utils::String::stringToWideString(getLogPath()).c_str());
-    #else
+#else
     file.open(getLogPath().c_str());
-    #endif
+#endif
 }
 
 std::ostringstream& Log::get(LogLevel level)
 {
     time_t t = time(nullptr);
     struct tm tm;
-    #if defined(_WIN64)
+#if defined(_WIN64)
     // Of course Windows does not follow standards and puts the parameters the other way
     // around compared to POSIX.
     localtime_s(&tm, &t);
-    #else
+#else
     localtime_r(&t, &tm);
-    #endif
+#endif
     os << std::put_time(&tm, "%b %d %T ") << logLevelMap[level] << ":\t";
     messageLevel = level;
 
@@ -70,6 +54,7 @@ std::ostringstream& Log::get(LogLevel level)
 
 void Log::flush()
 {
+    // This runs on application exit.
     file.flush();
 }
 
@@ -85,8 +70,8 @@ Log::~Log()
 
     if (!file.is_open()) {
         // Not open yet, print to stdout.
-        std::cerr << "ERROR - tried to write to log file before it was open! "
-                "The following won't be logged:\n";
+        std::cerr << "Error: Tried to write to log file before it was open, "
+                     "the following won't be logged:\n";
         std::cerr << os.str();
         return;
     }

@@ -8,12 +8,12 @@
 
 #include "guis/GuiInputConfig.h"
 
-#include "components/ButtonComponent.h"
-#include "components/MenuComponent.h"
-#include "guis/GuiMsgBox.h"
 #include "InputManager.h"
 #include "Log.h"
 #include "Window.h"
+#include "components/ButtonComponent.h"
+#include "components/MenuComponent.h"
+#include "guis/GuiMsgBox.h"
 
 #define HOLD_TO_SKIP_MS 1000
 
@@ -27,23 +27,22 @@ struct InputConfigStructure {
 static const int inputCount = 24;
 static InputConfigStructure sGuiInputConfigList[inputCount];
 
-GuiInputConfig::GuiInputConfig(
-        Window* window,
-        InputConfig* target,
-        bool reconfigureAll,
-        const std::function<void()>& okCallback)
-        : GuiComponent(window),
-        mBackground(window, ":/graphics/frame.svg"),
-        mGrid(window, Vector2i(1, 7)),
-        mTargetConfig(target),
-        mHoldingInput(false)
+GuiInputConfig::GuiInputConfig(Window* window,
+                               InputConfig* target,
+                               bool reconfigureAll,
+                               const std::function<void()>& okCallback)
+    : GuiComponent(window)
+    , mBackground(window, ":/graphics/frame.svg")
+    , mGrid(window, Vector2i(1, 7))
+    , mTargetConfig(target)
+    , mHoldingInput(false)
 {
     // Populate the configuration list with the text and icons applicable to the
     // configured controller type.
     populateConfigList();
 
-    LOG(LogInfo) << "Configuring device " << target->getDeviceId() << " (" <<
-            target->getDeviceName() << ").";
+    LOG(LogInfo) << "Configuring device " << target->getDeviceId() << " ("
+                 << target->getDeviceName() << ").";
 
     if (reconfigureAll)
         target->clear();
@@ -57,8 +56,8 @@ GuiInputConfig::GuiInputConfig(
     // 0 is a spacer row.
     mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 0), false);
 
-    mTitle = std::make_shared<TextComponent>(mWindow, "CONFIGURING",
-            Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(mWindow, "CONFIGURING", Font::get(FONT_SIZE_LARGE),
+                                             0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, Vector2i(0, 1), false, true);
 
     std::stringstream ss;
@@ -67,13 +66,15 @@ GuiInputConfig::GuiInputConfig(
     else if (target->getDeviceId() == DEVICE_CEC)
         ss << "CEC";
     else
-         ss << "GAMEPAD " << (target->getDeviceId() + 1) << " (" << target->getDeviceName() << ")";
-    mSubtitle1 = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(ss.str()),
-            Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
+        ss << "GAMEPAD " << (target->getDeviceId() + 1) << " (" << target->getDeviceName() << ")";
+    mSubtitle1 =
+        std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(ss.str()),
+                                        Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mSubtitle1, Vector2i(0, 2), false, true);
 
-    mSubtitle2 = std::make_shared<TextComponent>(mWindow, "HOLD ANY BUTTON 1 SECOND TO SKIP",
-            Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+    mSubtitle2 =
+        std::make_shared<TextComponent>(mWindow, "HOLD ANY BUTTON 1 SECOND TO SKIP",
+                                        Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
     // The opacity will be set to visible for any row that is skippable.
     mSubtitle2->setOpacity(0);
 
@@ -98,12 +99,13 @@ GuiInputConfig::GuiInputConfig(
         spacer->setSize(16, 0);
         row.addElement(spacer, false);
 
-        auto text = std::make_shared<TextComponent>(mWindow,
-                sGuiInputConfigList[i].dispName, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        auto text = std::make_shared<TextComponent>(mWindow, sGuiInputConfigList[i].dispName,
+                                                    Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
         row.addElement(text, true);
 
         auto mapping = std::make_shared<TextComponent>(mWindow, "-NOT DEFINED-",
-                Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x999999FF, ALIGN_RIGHT);
+                                                       Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT),
+                                                       0x999999FF, ALIGN_RIGHT);
         setNotDefined(mapping); // Overrides the text and color set above.
         row.addElement(mapping, true);
         mMappings.push_back(mapping);
@@ -142,9 +144,10 @@ GuiInputConfig::GuiInputConfig(
             else {
                 // Button released. Make sure we were holding something and we let go of
                 // what we were previously holding.
-                if (!mHoldingInput || mHeldInput.device != input.device || mHeldInput.id !=
-                        input.id || mHeldInput.type != input.type)
+                if (!mHoldingInput || mHeldInput.device != input.device ||
+                    mHeldInput.id != input.id || mHeldInput.type != input.type) {
                     return true;
+                }
 
                 mHoldingInput = false;
 
@@ -177,8 +180,8 @@ GuiInputConfig::GuiInputConfig(
         delete this;
     };
 
-    buttons.push_back(std::make_shared<ButtonComponent>
-            (mWindow, "OK", "ok", [this, okFunction] { okFunction(); }));
+    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok",
+                                                        [this, okFunction] { okFunction(); }));
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
     mGrid.setEntry(mButtonGrid, Vector2i(0, 6), true, false);
@@ -190,122 +193,76 @@ GuiInputConfig::GuiInputConfig(
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
     setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-            (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
 }
 
 void GuiInputConfig::populateConfigList()
 {
     std::string controllerType = Settings::getInstance()->getString("InputControllerType");
 
-    sGuiInputConfigList[0] =
-        { "Up",                   false, "D-PAD UP",               ":/help/dpad_up.svg" };
-    sGuiInputConfigList[1] =
-        { "Down",                 false, "D-PAD DOWN",             ":/help/dpad_down.svg" };
-    sGuiInputConfigList[2] =
-        { "Left",                 false, "D-PAD LEFT",             ":/help/dpad_left.svg" };
-    sGuiInputConfigList[3] =
-        { "Right",                false, "D-PAD RIGHT",            ":/help/dpad_right.svg" };
+    // clang-format off
+    sGuiInputConfigList[0] = { "Up",    false, "D-PAD UP",    ":/help/dpad_up.svg" };
+    sGuiInputConfigList[1] = { "Down",  false, "D-PAD DOWN",  ":/help/dpad_down.svg" };
+    sGuiInputConfigList[2] = { "Left",  false, "D-PAD LEFT",  ":/help/dpad_left.svg" };
+    sGuiInputConfigList[3] = { "Right", false, "D-PAD RIGHT", ":/help/dpad_right.svg" };
 
     if (controllerType == "snes") {
-        sGuiInputConfigList[4] =
-        { "Back",                 false, "SELECT",                 ":/help/button_back_SNES.svg" };
-        sGuiInputConfigList[5] =
-        { "Start",                false, "START",                  ":/help/button_start_SNES.svg" };
-        sGuiInputConfigList[6] =
-        { "A",                    false, "B",                      ":/help/mbuttons_a_SNES.svg" };
-        sGuiInputConfigList[7] =
-        { "B",                    false, "A",                      ":/help/mbuttons_b_SNES.svg" };
-        sGuiInputConfigList[8] =
-        { "X",                    true,  "Y",                      ":/help/mbuttons_x_SNES.svg" };
-        sGuiInputConfigList[9] =
-        { "Y",                    true,  "X",                      ":/help/mbuttons_y_SNES.svg" };
+        sGuiInputConfigList[4] = { "Back",  false, "SELECT",    ":/help/button_back_SNES.svg" };
+        sGuiInputConfigList[5] = { "Start", false, "START",     ":/help/button_start_SNES.svg" };
+        sGuiInputConfigList[6] = { "A",     false, "B",         ":/help/mbuttons_a_SNES.svg" };
+        sGuiInputConfigList[7] = { "B",     false, "A",         ":/help/mbuttons_b_SNES.svg" };
+        sGuiInputConfigList[8] = { "X",     true,  "Y",         ":/help/mbuttons_x_SNES.svg" };
+        sGuiInputConfigList[9] = { "Y",     true,  "X",         ":/help/mbuttons_y_SNES.svg" };
     }
     else if (controllerType == "ps4") {
-        sGuiInputConfigList[4] =
-        { "Back",                 false, "SHARE",                  ":/help/button_back_PS4.svg" };
-        sGuiInputConfigList[5] =
-        { "Start",                false, "OPTIONS",                ":/help/button_start_PS4.svg" };
-        sGuiInputConfigList[6] =
-        { "A",                    false, "CROSS",                  ":/help/mbuttons_a_PS.svg" };
-        sGuiInputConfigList[7] =
-        { "B",                    false, "CIRCLE",                 ":/help/mbuttons_b_PS.svg" };
-        sGuiInputConfigList[8] =
-        { "X",                    true,  "SQUARE",                 ":/help/mbuttons_x_PS.svg" };
-        sGuiInputConfigList[9] =
-        { "Y",                    true,  "TRIANGLE",               ":/help/mbuttons_y_PS.svg" };
+        sGuiInputConfigList[4] = { "Back",  false, "SHARE",     ":/help/button_back_PS4.svg" };
+        sGuiInputConfigList[5] = { "Start", false, "OPTIONS",   ":/help/button_start_PS4.svg" };
+        sGuiInputConfigList[6] = { "A",     false, "CROSS",     ":/help/mbuttons_a_PS.svg" };
+        sGuiInputConfigList[7] = { "B",     false, "CIRCLE",    ":/help/mbuttons_b_PS.svg" };
+        sGuiInputConfigList[8] = { "X",     true,  "SQUARE",    ":/help/mbuttons_x_PS.svg" };
+        sGuiInputConfigList[9] = { "Y",     true,  "TRIANGLE",  ":/help/mbuttons_y_PS.svg" };
     }
     else if (controllerType == "ps5") {
-        sGuiInputConfigList[4] =
-        { "Back",                 false, "CREATE",                 ":/help/button_back_PS5.svg" };
-        sGuiInputConfigList[5] =
-        { "Start",                false, "OPTIONS",                ":/help/button_start_PS5.svg" };
-        sGuiInputConfigList[6] =
-        { "A",                    false, "CROSS",                  ":/help/mbuttons_a_PS.svg" };
-        sGuiInputConfigList[7] =
-        { "B",                    false, "CIRCLE",                 ":/help/mbuttons_b_PS.svg" };
-        sGuiInputConfigList[8] =
-        { "X",                    true,  "SQUARE",                 ":/help/mbuttons_x_PS.svg" };
-        sGuiInputConfigList[9] =
-        { "Y",                    true,  "TRIANGLE",               ":/help/mbuttons_y_PS.svg" };
+        sGuiInputConfigList[4] = { "Back",  false, "CREATE",    ":/help/button_back_PS5.svg" };
+        sGuiInputConfigList[5] = { "Start", false, "OPTIONS",   ":/help/button_start_PS5.svg" };
+        sGuiInputConfigList[6] = { "A",     false, "CROSS",     ":/help/mbuttons_a_PS.svg" };
+        sGuiInputConfigList[7] = { "B",     false, "CIRCLE",    ":/help/mbuttons_b_PS.svg" };
+        sGuiInputConfigList[8] = { "X",     true,  "SQUARE",    ":/help/mbuttons_x_PS.svg" };
+        sGuiInputConfigList[9] = { "Y",     true,  "TRIANGLE",  ":/help/mbuttons_y_PS.svg" };
     }
     else if (controllerType == "xbox360") {
-        sGuiInputConfigList[4] =
-        { "Back",                 false, "BACK",                   ":/help/button_back_XBOX360.svg" };
-        sGuiInputConfigList[5] =
-        { "Start",                false, "START",                  ":/help/button_start_XBOX360.svg" };
-        sGuiInputConfigList[6] =
-        { "A",                    false, "A",                      ":/help/mbuttons_a_XBOX.svg" };
-        sGuiInputConfigList[7] =
-        { "B",                    false, "B",                      ":/help/mbuttons_b_XBOX.svg" };
-        sGuiInputConfigList[8] =
-        { "X",                    true,  "X",                      ":/help/mbuttons_x_XBOX.svg" };
-        sGuiInputConfigList[9] =
-        { "Y",                    true,  "Y",                      ":/help/mbuttons_y_XBOX.svg" };
+        sGuiInputConfigList[4] = { "Back",  false, "BACK",      ":/help/button_back_XBOX360.svg" };
+        sGuiInputConfigList[5] = { "Start", false, "START",     ":/help/button_start_XBOX360.svg" };
+        sGuiInputConfigList[6] = { "A",     false, "A",         ":/help/mbuttons_a_XBOX.svg" };
+        sGuiInputConfigList[7] = { "B",     false, "B",         ":/help/mbuttons_b_XBOX.svg" };
+        sGuiInputConfigList[8] = { "X",     true,  "X",         ":/help/mbuttons_x_XBOX.svg" };
+        sGuiInputConfigList[9] = { "Y",     true,  "Y",         ":/help/mbuttons_y_XBOX.svg" };
     }
     else {
         // Xbox One and later.
-        sGuiInputConfigList[4] =
-        { "Back",                 false, "VIEW",                   ":/help/button_back_XBOX.svg" };
-        sGuiInputConfigList[5] =
-        { "Start",                false, "MENU",                   ":/help/button_start_XBOX.svg" };
-        sGuiInputConfigList[6] =
-        { "A",                    false, "A",                      ":/help/mbuttons_a_XBOX.svg" };
-        sGuiInputConfigList[7] =
-        { "B",                    false, "B",                      ":/help/mbuttons_b_XBOX.svg" };
-        sGuiInputConfigList[8] =
-        { "X",                    true,  "X",                      ":/help/mbuttons_x_XBOX.svg" };
-        sGuiInputConfigList[9] =
-        { "Y",                    true,  "Y",                      ":/help/mbuttons_y_XBOX.svg" };
+        sGuiInputConfigList[4] = { "Back",  false, "VIEW", ":/help/button_back_XBOX.svg" };
+        sGuiInputConfigList[5] = { "Start", false, "MENU", ":/help/button_start_XBOX.svg" };
+        sGuiInputConfigList[6] = { "A",     false, "A",    ":/help/mbuttons_a_XBOX.svg" };
+        sGuiInputConfigList[7] = { "B",     false, "B",    ":/help/mbuttons_b_XBOX.svg" };
+        sGuiInputConfigList[8] = { "X",     true,  "X",    ":/help/mbuttons_x_XBOX.svg" };
+        sGuiInputConfigList[9] = { "Y",     true,  "Y",    ":/help/mbuttons_y_XBOX.svg" };
     }
 
-    sGuiInputConfigList[10] =
-        { "LeftShoulder",         true,  "LEFT SHOULDER",          ":/help/button_l.svg" };
-    sGuiInputConfigList[11] =
-        { "RightShoulder",        true,  "RIGHT SHOULDER",         ":/help/button_r.svg" };
-    sGuiInputConfigList[12] =
-        { "LeftTrigger",          true,  "LEFT TRIGGER",           ":/help/button_lt.svg" };
-    sGuiInputConfigList[13] =
-        { "RightTrigger",         true,  "RIGHT TRIGGER",          ":/help/button_rt.svg" };
-    sGuiInputConfigList[14] =
-        { "LeftThumbstickUp",     true,  "LEFT THUMBSTICK UP",     ":/help/thumbstick_up.svg" };
-    sGuiInputConfigList[15] =
-        { "LeftThumbstickDown",   true,  "LEFT THUMBSTICK DOWN",   ":/help/thumbstick_down.svg" };
-    sGuiInputConfigList[16] =
-        { "LeftThumbstickLeft",   true,  "LEFT THUMBSTICK LEFT",   ":/help/thumbstick_left.svg" };
-    sGuiInputConfigList[17] =
-        { "LeftThumbstickRight",  true,  "LEFT THUMBSTICK RIGHT",  ":/help/thumbstick_right.svg" };
-    sGuiInputConfigList[18] =
-        { "LeftThumbstickClick",  true,  "LEFT THUMBSTICK CLICK",  ":/help/thumbstick_click.svg" };
-    sGuiInputConfigList[19] =
-        { "RightThumbstickUp",    true,  "RIGHT THUMBSTICK UP",    ":/help/thumbstick_up.svg" };
-    sGuiInputConfigList[20] =
-        { "RightThumbstickDown",  true,  "RIGHT THUMBSTICK DOWN",  ":/help/thumbstick_down.svg" };
-    sGuiInputConfigList[21] =
-        { "RightThumbstickLeft",  true,  "RIGHT THUMBSTICK LEFT",  ":/help/thumbstick_left.svg" };
-    sGuiInputConfigList[22] =
-        { "RightThumbstickRight", true,  "RIGHT THUMBSTICK RIGHT", ":/help/thumbstick_right.svg" };
-    sGuiInputConfigList[23] =
-        { "RightThumbstickClick", true,  "RIGHT THUMBSTICK CLICK", ":/help/thumbstick_click.svg" };
+    sGuiInputConfigList[10] = { "LeftShoulder",         true, "LEFT SHOULDER",          ":/help/button_l.svg" };
+    sGuiInputConfigList[11] = { "RightShoulder",        true, "RIGHT SHOULDER",         ":/help/button_r.svg" };
+    sGuiInputConfigList[12] = { "LeftTrigger",          true, "LEFT TRIGGER",           ":/help/button_lt.svg" };
+    sGuiInputConfigList[13] = { "RightTrigger",         true, "RIGHT TRIGGER",          ":/help/button_rt.svg" };
+    sGuiInputConfigList[14] = { "LeftThumbstickUp",     true, "LEFT THUMBSTICK UP",     ":/help/thumbstick_up.svg" };
+    sGuiInputConfigList[15] = { "LeftThumbstickDown",   true, "LEFT THUMBSTICK DOWN",   ":/help/thumbstick_down.svg" };
+    sGuiInputConfigList[16] = { "LeftThumbstickLeft",   true, "LEFT THUMBSTICK LEFT",   ":/help/thumbstick_left.svg" };
+    sGuiInputConfigList[17] = { "LeftThumbstickRight",  true, "LEFT THUMBSTICK RIGHT",  ":/help/thumbstick_right.svg" };
+    sGuiInputConfigList[18] = { "LeftThumbstickClick",  true, "LEFT THUMBSTICK CLICK",  ":/help/thumbstick_click.svg" };
+    sGuiInputConfigList[19] = { "RightThumbstickUp",    true, "RIGHT THUMBSTICK UP",    ":/help/thumbstick_up.svg" };
+    sGuiInputConfigList[20] = { "RightThumbstickDown",  true, "RIGHT THUMBSTICK DOWN",  ":/help/thumbstick_down.svg" };
+    sGuiInputConfigList[21] = { "RightThumbstickLeft",  true, "RIGHT THUMBSTICK LEFT",  ":/help/thumbstick_left.svg" };
+    sGuiInputConfigList[22] = { "RightThumbstickRight", true, "RIGHT THUMBSTICK RIGHT", ":/help/thumbstick_right.svg" };
+    sGuiInputConfigList[23] = { "RightThumbstickClick", true, "RIGHT THUMBSTICK CLICK", ":/help/thumbstick_click.svg" };
+    // clang-format on
 }
 
 void GuiInputConfig::update(int deltaTime)
@@ -336,7 +293,7 @@ void GuiInputConfig::update(int deltaTime)
 
 void GuiInputConfig::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
+    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
 
     // Update grid.
     mGrid.setSize(mSize);
@@ -400,8 +357,8 @@ bool GuiInputConfig::assign(Input input, int inputId)
     // If this input is mapped to something other than "nothing" or the current row,
     // generate an error. (If it's the same as what it was before, allow it.)
     if (mTargetConfig->getMappedTo(input).size() > 0 &&
-            !mTargetConfig->isMappedTo(sGuiInputConfigList[inputId].name, input) &&
-            sGuiInputConfigList[inputId].name != "HotKeyEnable") {
+        !mTargetConfig->isMappedTo(sGuiInputConfigList[inputId].name, input) &&
+        sGuiInputConfigList[inputId].name != "HotKeyEnable") {
         error(mMappings.at(inputId), "Already mapped!");
         return false;
     }
@@ -411,8 +368,8 @@ bool GuiInputConfig::assign(Input input, int inputId)
     input.configured = true;
     mTargetConfig->mapInput(sGuiInputConfigList[inputId].name, input);
 
-    LOG(LogInfo) << "Mapping [" << input.string() << "] to [" <<
-            sGuiInputConfigList[inputId].name << "]";
+    LOG(LogInfo) << "Mapping [" << input.string() << "] to [" << sGuiInputConfigList[inputId].name
+                 << "]";
 
     return true;
 }

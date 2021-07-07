@@ -10,14 +10,14 @@
 
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
-ComponentList::ComponentList(Window* window) : IList<ComponentListRow,
-        void*>(window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP)
+ComponentList::ComponentList(Window* window)
+    : IList<ComponentListRow, void*>(window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP)
 {
     // Adjust the padding relative to the aspect ratio and screen resolution to make it look
     // coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    mHorizontalPadding = TOTAL_HORIZONTAL_PADDING_PX * aspectValue *
-            Renderer::getScreenWidthModifier();
+    mHorizontalPadding =
+        TOTAL_HORIZONTAL_PADDING_PX * aspectValue * Renderer::getScreenWidthModifier();
 
     mSelectorBarOffset = 0.0f;
     mCameraOffset = 0.0f;
@@ -34,7 +34,7 @@ void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
     this->add(e);
 
     for (auto it = mEntries.back().data.elements.cbegin();
-            it != mEntries.back().data.elements.cend(); it++)
+         it != mEntries.back().data.elements.cend(); it++)
         addChild(it->component.get());
 
     updateElementSize(mEntries.back().data);
@@ -54,16 +54,6 @@ void ComponentList::onSizeChanged()
     }
 
     updateCameraOffset();
-}
-
-void ComponentList::onFocusLost()
-{
-    mFocused = false;
-}
-
-void ComponentList::onFocusGained()
-{
-    mFocused = true;
 }
 
 bool ComponentList::input(InputConfig* config, Input input)
@@ -122,7 +112,7 @@ void ComponentList::update(int deltaTime)
     if (size()) {
         // Update our currently selected row.
         for (auto it = mEntries.at(mCursor).data.elements.cbegin();
-                it != mEntries.at(mCursor).data.elements.cend(); it++)
+             it != mEntries.at(mCursor).data.elements.cend(); it++)
             it->component->update(deltaTime);
     }
 }
@@ -156,8 +146,8 @@ void ComponentList::updateCameraOffset()
     // Move the camera to scroll.
     const float totalHeight = getTotalRowHeight();
     if (totalHeight > mSize.y()) {
-        float target = mSelectorBarOffset +
-                getRowHeight(mEntries.at(mCursor).data) / 2.0f - (mSize.y() / 2.0f);
+        float target = mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f -
+                       (mSize.y() / 2.0f);
 
         // Clamp the camera to prevent a fraction of a row from being displayed.
         mCameraOffset = 0.0f;
@@ -187,9 +177,10 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     // Clip everything to be inside our bounds.
     Vector3f dim(mSize.x(), mSize.y(), 0.0f);
     dim = trans * dim - trans.translation();
-    Renderer::pushClipRect(Vector2i(static_cast<int>(std::round(trans.translation().x())),
-            static_cast<int>(std::round(trans.translation().y()))), Vector2i(static_cast<int>(
-            std::round(dim.x())), static_cast<int>(std::round(dim.y()))));
+    Renderer::pushClipRect(
+        Vector2i(static_cast<int>(std::round(trans.translation().x())),
+                 static_cast<int>(std::round(trans.translation().y()))),
+        Vector2i(static_cast<int>(std::round(dim.x())), static_cast<int>(std::round(dim.y()))));
 
     // Scroll the camera.
     trans.translate(Vector3f(0.0f, -std::round(mCameraOffset), 0.0f));
@@ -205,7 +196,7 @@ void ComponentList::render(const Transform4x4f& parentTrans)
                 // For the row where the cursor is at, we want to remove any hue from the
                 // font or image before inverting, as it would otherwise lead to an ugly
                 // inverted color (e.g. red inverting to a green hue).
-                if (i == mCursor && it->component->getValue() != "" ) {
+                if (i == mCursor && it->component->getValue() != "") {
                     // Check if we're dealing with text or an image component.
                     bool isTextComponent = true;
                     unsigned int origColor = it->component->getColor();
@@ -260,13 +251,13 @@ void ComponentList::render(const Transform4x4f& parentTrans)
         const float selectedRowHeight = getRowHeight(mEntries.at(mCursor).data);
 
         if (opacity == 1) {
-            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(),
-                    selectedRowHeight, 0xFFFFFFFF, 0xFFFFFFFF, false, opacity, trans,
-                    Renderer::Blend::ONE_MINUS_DST_COLOR, Renderer::Blend::ZERO);
+            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(), selectedRowHeight, 0xFFFFFFFF,
+                               0xFFFFFFFF, false, opacity, trans,
+                               Renderer::Blend::ONE_MINUS_DST_COLOR, Renderer::Blend::ZERO);
 
-            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(),
-                    selectedRowHeight, 0x777777FF, 0x777777FF, false, opacity, trans,
-                    Renderer::Blend::ONE, Renderer::Blend::ONE);
+            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(), selectedRowHeight, 0x777777FF,
+                               0x777777FF, false, opacity, trans, Renderer::Blend::ONE,
+                               Renderer::Blend::ONE);
         }
 
         for (auto it = drawAfterCursor.cbegin(); it != drawAfterCursor.cend(); it++)
@@ -281,12 +272,12 @@ void ComponentList::render(const Transform4x4f& parentTrans)
     float y = 0;
     for (unsigned int i = 0; i < mEntries.size(); i++) {
         Renderer::drawRect(0.0f, y, mSize.x(), 1.0f * Renderer::getScreenHeightModifier(),
-                0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
+                           0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
         y += getRowHeight(mEntries.at(i).data);
     }
 
-    Renderer::drawRect(0.0f, y, mSize.x(), 1.0f * Renderer::getScreenHeightModifier(),
-            0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
+    Renderer::drawRect(0.0f, y, mSize.x(), 1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF,
+                       0xC6C7C6FF, false, opacity, trans);
     Renderer::popClipRect();
 }
 
@@ -362,7 +353,7 @@ std::vector<HelpPrompt> ComponentList::getHelpPrompts()
         return std::vector<HelpPrompt>();
 
     std::vector<HelpPrompt> prompts =
-            mEntries.at(mCursor).data.elements.back().component->getHelpPrompts();
+        mEntries.at(mCursor).data.elements.back().component->getHelpPrompts();
 
     if (size() > 1) {
         bool addMovePrompt = true;

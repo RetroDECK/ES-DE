@@ -12,12 +12,10 @@
 
 using namespace GridFlags;
 
-ComponentGrid::ComponentGrid(
-        Window* window,
-        const Vector2i& gridDimensions)
-        : GuiComponent(window),
-        mGridSize(gridDimensions),
-        mCursor(0, 0)
+ComponentGrid::ComponentGrid(Window* window, const Vector2i& gridDimensions)
+    : GuiComponent(window)
+    , mGridSize(gridDimensions)
+    , mCursor(0, 0)
 {
     assert(gridDimensions.x() > 0 && gridDimensions.y() > 0);
 
@@ -25,6 +23,7 @@ ComponentGrid::ComponentGrid(
 
     mColWidths = new float[gridDimensions.x()];
     mRowHeights = new float[gridDimensions.y()];
+
     for (int x = 0; x < gridDimensions.x(); x++)
         mColWidths[x] = 0;
     for (int y = 0; y < gridDimensions.y(); y++)
@@ -90,14 +89,13 @@ void ComponentGrid::setRowHeightPerc(int row, float height, bool update)
         onSizeChanged();
 }
 
-void ComponentGrid::setEntry(
-        const std::shared_ptr<GuiComponent>& comp,
-        const Vector2i& pos,
-        bool canFocus,
-        bool resize,
-        const Vector2i& size,
-        unsigned int border,
-        GridFlags::UpdateType updateType)
+void ComponentGrid::setEntry(const std::shared_ptr<GuiComponent>& comp,
+                             const Vector2i& pos,
+                             bool canFocus,
+                             bool resize,
+                             const Vector2i& size,
+                             unsigned int border,
+                             GridFlags::UpdateType updateType)
 {
     assert(pos.x() >= 0 && pos.x() < mGridSize.x() && pos.y() >= 0 && pos.y() < mGridSize.y());
     assert(comp != nullptr);
@@ -294,14 +292,14 @@ bool ComponentGrid::moveCursor(Vector2i dir)
     Vector2i searchAxis(dir.x() == 0, dir.y() == 0);
 
     while (mCursor.x() >= 0 && mCursor.y() >= 0 && mCursor.x() < mGridSize.x() &&
-            mCursor.y() < mGridSize.y()) {
+           mCursor.y() < mGridSize.y()) {
         mCursor = mCursor + dir;
         Vector2i curDirPos = mCursor;
         const GridEntry* cursorEntry;
 
         // Spread out on search axis+
-        while (mCursor.x() < mGridSize.x() && mCursor.y() < mGridSize.y()
-            && mCursor.x() >= 0 && mCursor.y() >= 0) {
+        while (mCursor.x() < mGridSize.x() && mCursor.y() < mGridSize.y() && mCursor.x() >= 0 &&
+               mCursor.y() >= 0) {
             cursorEntry = getCellAt(mCursor);
             if (cursorEntry && cursorEntry->canFocus && cursorEntry != currentCursorEntry) {
                 onCursorMoved(origCursor, mCursor);
@@ -312,8 +310,8 @@ bool ComponentGrid::moveCursor(Vector2i dir)
 
         // Now again on search axis-
         mCursor = curDirPos;
-        while (mCursor.x() >= 0 && mCursor.y() >= 0
-            && mCursor.x() < mGridSize.x() && mCursor.y() < mGridSize.y()) {
+        while (mCursor.x() >= 0 && mCursor.y() >= 0 && mCursor.x() < mGridSize.x() &&
+               mCursor.y() < mGridSize.y()) {
             cursorEntry = getCellAt(mCursor);
 
             if (cursorEntry && cursorEntry->canFocus && cursorEntry != currentCursorEntry) {
@@ -356,8 +354,9 @@ void ComponentGrid::update(int deltaTime)
     const GridEntry* cursorEntry = getCellAt(mCursor);
     for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
         if (it->updateType == UPDATE_ALWAYS ||
-                (it->updateType == UPDATE_WHEN_SELECTED && cursorEntry == &(*it)))
+            (it->updateType == UPDATE_WHEN_SELECTED && cursorEntry == &(*it))) {
             it->component->update(deltaTime);
+        }
     }
 }
 
@@ -371,7 +370,7 @@ void ComponentGrid::render(const Transform4x4f& parentTrans)
     for (size_t i = 0; i < mSeparators.size(); i++) {
         Renderer::setMatrix(trans);
         Renderer::drawRect(mSeparators[i][0], mSeparators[i][1], mSeparators[i][2],
-                mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);
+                           mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);
     }
 }
 

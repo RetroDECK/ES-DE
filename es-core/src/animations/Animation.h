@@ -12,7 +12,7 @@
 class Animation
 {
 public:
-    virtual ~Animation() {};
+    virtual ~Animation() {}
     virtual int getDuration() const = 0;
     virtual void apply(float t) = 0;
 };

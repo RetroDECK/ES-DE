@@ -22,7 +22,7 @@ class ThemeData;
 class Sound
 {
 public:
-    ~Sound();
+    ~Sound() {}
 
     void init();
     void deinit();
@@ -30,17 +30,18 @@ public:
     void loadFile(const std::string& path);
 
     void play();
-    bool isPlaying() const;
+    bool isPlaying() const { return playing; }
     void stop();
 
-    const Uint8* getData() const;
-    Uint32 getPosition() const;
+    const Uint8* getData() const { return mSampleData; }
+    Uint32 getPosition() const { return mSamplePos; }
     void setPosition(Uint32 newPosition);
-    Uint32 getLength() const;
+    Uint32 getLength() const { return mSampleLength; }
 
     static std::shared_ptr<Sound> get(const std::string& path);
     static std::shared_ptr<Sound> getFromTheme(const std::shared_ptr<ThemeData>& theme,
-            const std::string& view, const std::string& elem);
+                                               const std::string& view,
+                                               const std::string& elem);
 
 private:
     Sound(const std::string& path = "");

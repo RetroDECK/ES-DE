@@ -47,7 +47,7 @@ public:
     bool fileExists(const std::string& path) const;
 
 private:
-    ResourceManager();
+    ResourceManager() {}
 
     static std::shared_ptr<ResourceManager> sInstance;
     std::list<std::weak_ptr<IReloadable>> mReloadables;

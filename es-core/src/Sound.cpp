@@ -9,11 +9,11 @@
 
 #include "Sound.h"
 
-#include "resources/ResourceManager.h"
 #include "AudioManager.h"
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
+#include "resources/ResourceManager.h"
 
 NavigationSounds* NavigationSounds::sInstance = nullptr;
 
@@ -32,11 +32,12 @@ std::shared_ptr<Sound> Sound::get(const std::string& path)
 }
 
 std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& theme,
-        const std::string& view, const std::string& element)
+                                           const std::string& view,
+                                           const std::string& element)
 {
     if (!theme) {
-        LOG(LogDebug) << "Sound::getFromTheme(): Using fallback sound file for \""
-                << element << "\"";
+        LOG(LogDebug) << "Sound::getFromTheme(): Using fallback sound file for \"" << element
+                      << "\"";
         return get(ResourceManager::getInstance()->getResourcePath(":/sounds/" + element + ".wav"));
     }
 
@@ -44,7 +45,7 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
     if (!elem || !elem->has("path")) {
-        LOG(LogDebug) << "Sound::getFromTheme(): " << "Tag not found, using fallback sound file";
+        LOG(LogDebug) << "Sound::getFromTheme(): Tag not found, using fallback sound file";
         return get(ResourceManager::getInstance()->getResourcePath(":/sounds/" + element + ".wav"));
     }
 
@@ -52,18 +53,13 @@ std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& the
     return get(elem->get<std::string>("path"));
 }
 
-Sound::Sound(
-        const std::string& path)
-        : mSampleData(nullptr),
-        mSamplePos(0),
-        mSampleLength(0),
-        playing(false)
+Sound::Sound(const std::string& path)
+    : mSampleData(nullptr)
+    , mSamplePos(0)
+    , mSampleLength(0)
+    , playing(false)
 {
     loadFile(path);
-}
-
-Sound::~Sound()
-{
 }
 
 void Sound::loadFile(const std::string& path)
@@ -91,9 +87,9 @@ void Sound::init()
     }
 
     // Convert sound file to the format required by ES-DE.
-    SDL_AudioStream *conversionStream = SDL_NewAudioStream(wave.format, wave.channels, wave.freq,
-            AudioManager::sAudioFormat.format, AudioManager::sAudioFormat.channels,
-            AudioManager::sAudioFormat.freq);
+    SDL_AudioStream* conversionStream =
+        SDL_NewAudioStream(wave.format, wave.channels, wave.freq, AudioManager::sAudioFormat.format,
+                           AudioManager::sAudioFormat.channels, AudioManager::sAudioFormat.freq);
 
     if (conversionStream == nullptr) {
         LOG(LogError) << "Failed to create sample conversion stream:";
@@ -169,11 +165,6 @@ void Sound::play()
     AudioManager::getInstance()->play();
 }
 
-bool Sound::isPlaying() const
-{
-    return playing;
-}
-
 void Sound::stop()
 {
     // Flag our sample as not playing and rewind its position.
@@ -181,16 +172,6 @@ void Sound::stop()
     playing = false;
     mSamplePos = 0;
     SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
-}
-
-const Uint8* Sound::getData() const
-{
-    return mSampleData;
-}
-
-Uint32 Sound::getPosition() const
-{
-    return mSamplePos;
 }
 
 void Sound::setPosition(Uint32 newPosition)
@@ -201,11 +182,6 @@ void Sound::setPosition(Uint32 newPosition)
         playing = false;
         mSamplePos = 0;
     }
-}
-
-Uint32 Sound::getLength() const
-{
-    return mSampleLength;
 }
 
 NavigationSounds* NavigationSounds::getInstance()
@@ -234,11 +210,12 @@ void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData
 {
     if (theme) {
         LOG(LogDebug) << "NavigationSounds::loadThemeNavigationSounds(): "
-                "Theme set includes navigation sound support, loading custom sounds";
+                         "Theme set includes navigation sound support, loading custom sounds";
     }
     else {
-        LOG(LogDebug) << "NavigationSounds::loadThemeNavigationSounds(): "
-                "Theme set does not include navigation sound support, using fallback sounds";
+        LOG(LogDebug)
+            << "NavigationSounds::loadThemeNavigationSounds(): "
+               "Theme set does not include navigation sound support, using fallback sounds";
     }
 
     navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "systembrowse")));

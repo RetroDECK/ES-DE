@@ -8,25 +8,24 @@
 
 #include "guis/GuiDetectDevice.h"
 
+#include "InputManager.h"
+#include "Window.h"
 #include "components/TextComponent.h"
 #include "guis/GuiInputConfig.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
-#include "InputManager.h"
-#include "Window.h"
 
 #define HOLD_TIME 1000
 
-GuiDetectDevice::GuiDetectDevice(
-        Window* window,
-        bool firstRun,
-        bool forcedConfig,
-        const std::function<void()>& doneCallback)
-        : GuiComponent(window),
-        mFirstRun(firstRun),
-        mForcedConfig(forcedConfig),
-        mBackground(window, ":/graphics/frame.svg"),
-        mGrid(window, Vector2i(1, 5))
+GuiDetectDevice::GuiDetectDevice(Window* window,
+                                 bool firstRun,
+                                 bool forcedConfig,
+                                 const std::function<void()>& doneCallback)
+    : GuiComponent(window)
+    , mFirstRun(firstRun)
+    , mForcedConfig(forcedConfig)
+    , mBackground(window, ":/graphics/frame.svg")
+    , mGrid(window, Vector2i(1, 5))
 {
     mHoldingConfig = nullptr;
     mHoldTime = 0;
@@ -36,8 +35,9 @@ GuiDetectDevice::GuiDetectDevice(
     addChild(&mGrid);
 
     // Title.
-    mTitle = std::make_shared<TextComponent>(mWindow, firstRun ? "WELCOME" :
-        "CONFIGURE INPUT DEVICE", Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle =
+        std::make_shared<TextComponent>(mWindow, firstRun ? "WELCOME" : "CONFIGURE INPUT DEVICE",
+                                        Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, Vector2i(0, 0), false, true, Vector2i(1, 1), GridFlags::BORDER_BOTTOM);
 
     // Device info.
@@ -52,33 +52,33 @@ GuiDetectDevice::GuiDetectDevice(
     if (numDevices > 1 && Settings::getInstance()->getBool("InputOnlyFirstController"))
         deviceInfo << " (ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)";
 
-    mDeviceInfo = std::make_shared<TextComponent>(mWindow, deviceInfo.str(),
-            Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+    mDeviceInfo = std::make_shared<TextComponent>(
+        mWindow, deviceInfo.str(), Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
     mGrid.setEntry(mDeviceInfo, Vector2i(0, 1), false, true);
 
     // Message.
     if (numDevices > 0) {
-        mMsg1 = std::make_shared<TextComponent>(mWindow,
-                "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT",
-                Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+        mMsg1 = std::make_shared<TextComponent>(
+            mWindow, "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT",
+            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     }
     else {
-        mMsg1 = std::make_shared<TextComponent>(mWindow,
-                "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT",
-                Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+        mMsg1 = std::make_shared<TextComponent>(
+            mWindow, "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT", Font::get(FONT_SIZE_SMALL),
+            0x777777FF, ALIGN_CENTER);
     }
 
     mGrid.setEntry(mMsg1, Vector2i(0, 2), false, true);
 
-    const std::string msg2str = firstRun ?
-            "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" : "PRESS ESC TO CANCEL";
-    mMsg2 = std::make_shared<TextComponent>(mWindow, msg2str,
-            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+    const std::string msg2str =
+        firstRun ? "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" : "PRESS ESC TO CANCEL";
+    mMsg2 = std::make_shared<TextComponent>(mWindow, msg2str, Font::get(FONT_SIZE_SMALL),
+                                            0x777777FF, ALIGN_CENTER);
     mGrid.setEntry(mMsg2, Vector2i(0, 3), false, true);
 
     // Currently held device.
-    mDeviceHeld = std::make_shared<TextComponent>(mWindow, "",
-            Font::get(FONT_SIZE_MEDIUM), 0xFFFFFFFF, ALIGN_CENTER);
+    mDeviceHeld = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
+                                                  0xFFFFFFFF, ALIGN_CENTER);
     mGrid.setEntry(mDeviceHeld, Vector2i(0, 4), false, true);
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
@@ -87,27 +87,27 @@ GuiDetectDevice::GuiDetectDevice(
     float width = Math::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.5f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2,
-            (Renderer::getScreenHeight() - mSize.y()) / 2);
+    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
 }
 
 void GuiDetectDevice::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
+    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
 
     // Grid.
     mGrid.setSize(mSize);
     mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y());
-    //mGrid.setRowHeightPerc(1, mDeviceInfo->getFont()->getHeight() / mSize.y());
+    // mGrid.setRowHeightPerc(1, mDeviceInfo->getFont()->getHeight() / mSize.y());
     mGrid.setRowHeightPerc(2, mMsg1->getFont()->getHeight() / mSize.y());
     mGrid.setRowHeightPerc(3, mMsg2->getFont()->getHeight() / mSize.y());
-    //mGrid.setRowHeightPerc(4, mDeviceHeld->getFont()->getHeight() / mSize.y());
+    // mGrid.setRowHeightPerc(4, mDeviceHeld->getFont()->getHeight() / mSize.y());
 }
 
 bool GuiDetectDevice::input(InputConfig* config, Input input)
 {
-    if (!mFirstRun && input.device == DEVICE_KEYBOARD && input.type == TYPE_KEY &&
-            input.value && input.id == SDLK_ESCAPE) {
+    if (!mFirstRun && input.device == DEVICE_KEYBOARD && input.type == TYPE_KEY && input.value &&
+        input.id == SDLK_ESCAPE) {
         // Cancel the configuration.
         delete this; // Delete GUI element.
         return true;
@@ -115,15 +115,15 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
     // First run, but the user chooses to skip the configuration. This will default to the
     // built-in keyboard mappings.
     else if (mFirstRun && input.device == DEVICE_KEYBOARD && input.type == TYPE_KEY &&
-            input.value && input.id == SDLK_ESCAPE) {
-            if (mDoneCallback)
-                mDoneCallback();
-            delete this; // Delete GUI element.
-            return true;
+             input.value && input.id == SDLK_ESCAPE) {
+        if (mDoneCallback)
+            mDoneCallback();
+        delete this; // Delete GUI element.
+        return true;
     }
 
     if (input.type == TYPE_BUTTON || input.type == TYPE_AXIS || input.type == TYPE_KEY ||
-            input.type == TYPE_CEC_BUTTON) {
+        input.type == TYPE_CEC_BUTTON) {
         if (input.value && mHoldingConfig == nullptr) {
             // Started holding.
             mHoldingConfig = config;
@@ -146,8 +146,8 @@ void GuiDetectDevice::update(int deltaTime)
         // configuration unless the flag to force the configuration was passed on the
         // command line.
         if (!mForcedConfig && mFirstRun &&
-                Utils::FileSystem::exists(InputManager::getConfigPath()) &&
-                InputManager::getInstance()->getNumConfiguredDevices() > 0) {
+            Utils::FileSystem::exists(InputManager::getConfigPath()) &&
+            InputManager::getInstance()->getNumConfiguredDevices() > 0) {
             if (mDoneCallback)
                 mDoneCallback();
             delete this; // Delete GUI element.

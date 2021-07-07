@@ -9,10 +9,10 @@
 #if defined(_RPI_)
 #include "components/VideoOmxComponent.h"
 
-#include "renderers/Renderer.h"
-#include "utils/StringUtil.h"
 #include "AudioManager.h"
 #include "Settings.h"
+#include "renderers/Renderer.h"
+#include "utils/StringUtil.h"
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -21,18 +21,19 @@
 class VolumeControl
 {
 public:
-    static std::shared_ptr<VolumeControl> & getInstance();
+    static std::shared_ptr<VolumeControl>& getInstance();
     int getVolume() const;
 };
 
-VideoOmxComponent::VideoOmxComponent(Window* window) :
-    VideoComponent(window),
-    mPlayerPid(-1)
+VideoOmxComponent::VideoOmxComponent(Window* window)
+    : VideoComponent(window)
+    , mPlayerPid(-1)
 {
 }
 
 VideoOmxComponent::~VideoOmxComponent()
 {
+    // Stop video when destroyed.
     stopVideo();
 }
 
@@ -79,8 +80,8 @@ void VideoOmxComponent::startVideo()
             mPlayingVideoPath = mVideoPath;
 
             // Disable AudioManager so video can play, in case we're requesting ALSA.
-            if (Utils::String::startsWith(Settings::getInstance()->
-                    getString("OMXAudioDev").c_str(), "alsa"))
+            if (Utils::String::startsWith(Settings::getInstance()->getString("OMXAudioDev").c_str(),
+                                          "alsa"))
                 AudioManager::getInstance()->deinit();
 
             // Start the player process.
@@ -112,66 +113,84 @@ void VideoOmxComponent::startVideo()
                         const int x2 = static_cast<int>(x1 + mSize.x());
                         const int y2 = static_cast<int>(y1 + mSize.y());
                         sprintf(buf1, "%d,%d,%d,%d", x1, y1, x2, y2);
-                    }
-                    break;
+                    } break;
 
                     case 1: {
-                        const int x1 = static_cast<int>(Renderer::getWindowWidth() -
-                                Renderer::getScreenOffsetY() - y - mSize.y());
+                        const int x1 =
+                            static_cast<int>(Renderer::getWindowWidth() -
+                                             Renderer::getScreenOffsetY() - y - mSize.y());
                         const int y1 = static_cast<int>(Renderer::getScreenOffsetX() + x);
                         const int x2 = static_cast<int>(x1 + mSize.y());
                         const int y2 = static_cast<int>(y1 + mSize.x());
                         sprintf(buf1, "%d,%d,%d,%d", x1, y1, x2, y2);
-                    }
-                    break;
+                    } break;
 
                     case 2: {
-                        const int x1 = static_cast<int>(Renderer::getWindowWidth()  -
-                                Renderer::getScreenOffsetX() - x - mSize.x());
-                        const int y1 = static_cast<int>(Renderer::getWindowHeight() -
-                                Renderer::getScreenOffsetY() - y - mSize.y());
+                        const int x1 =
+                            static_cast<int>(Renderer::getWindowWidth() -
+                                             Renderer::getScreenOffsetX() - x - mSize.x());
+                        const int y1 =
+                            static_cast<int>(Renderer::getWindowHeight() -
+                                             Renderer::getScreenOffsetY() - y - mSize.y());
                         const int x2 = static_cast<int>(x1 + mSize.x());
                         const int y2 = static_cast<int>(y1 + mSize.y());
                         sprintf(buf1, "%d,%d,%d,%d", x1, y1, x2, y2);
-                    }
-                    break;
+                    } break;
 
                     case 3: {
                         const int x1 = static_cast<int>(Renderer::getScreenOffsetY() + y);
-                        const int y1 = static_cast<int>(Renderer::getWindowHeight() -
-                                Renderer::getScreenOffsetX() - x - mSize.x());
+                        const int y1 =
+                            static_cast<int>(Renderer::getWindowHeight() -
+                                             Renderer::getScreenOffsetX() - x - mSize.x());
                         const int x2 = static_cast<int>(x1 + mSize.y());
                         const int y2 = static_cast<int>(y1 + mSize.x());
                         sprintf(buf1, "%d,%d,%d,%d", x1, y1, x2, y2);
-                    }
-                    break;
+                    } break;
                 }
 
                 // Rotate the video.
                 switch (Renderer::getScreenRotate()) {
-                    case 0: { sprintf(buf2, "%d", static_cast<int>(0)); } break;
-                    case 1: { sprintf(buf2, "%d", static_cast<int>(90)); } break;
-                    case 2: { sprintf(buf2, "%d", static_cast<int>(180)); } break;
-                    case 3: { sprintf(buf2, "%d", static_cast<int>(270)); } break;
+                    case 0: {
+                        sprintf(buf2, "%d", static_cast<int>(0));
+                    } break;
+                    case 1: {
+                        sprintf(buf2, "%d", static_cast<int>(90));
+                    } break;
+                    case 2: {
+                        sprintf(buf2, "%d", static_cast<int>(180));
+                    } break;
+                    case 3: {
+                        sprintf(buf2, "%d", static_cast<int>(270));
+                    } break;
                 }
 
                 // We need to specify the layer of 10000 or above to ensure the video is
                 // displayed on top of our SDL display.
-                const char* argv[] = { "", "--layer", "10010", "--loop", "--no-osd",
-                        "--aspect-mode", "letterbox", "--vol", "0", "-o", "both",
-                        "--win", buf1, "--orientation", buf2, "", "", "", "", "", "",
-                        "", "", "", "", "", NULL };
+                const char* argv[] = { "",          "--layer",
+                                       "10010",     "--loop",
+                                       "--no-osd",  "--aspect-mode",
+                                       "letterbox", "--vol",
+                                       "0",         "-o",
+                                       "both",      "--win",
+                                       buf1,        "--orientation",
+                                       buf2,        "",
+                                       "",          "",
+                                       "",          "",
+                                       "",          "",
+                                       "",          "",
+                                       "",          "",
+                                       NULL };
 
                 // Check if we want to mute the audio.
                 if ((!Settings::getInstance()->getBool("GamelistVideoAudio") ||
-                        static_cast<float>(VolumeControl::getInstance()->getVolume()) == 0) ||
-                        (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
-                        mScreensaverMode)) {
+                     static_cast<float>(VolumeControl::getInstance()->getVolume()) == 0) ||
+                    (!Settings::getInstance()->getBool("ScreensaverVideoAudio") &&
+                     mScreensaverMode)) {
                     argv[8] = "-1000000";
                 }
                 else {
                     float percentVolume =
-                            static_cast<float>(VolumeControl::getInstance()->getVolume());
+                        static_cast<float>(VolumeControl::getInstance()->getVolume());
                     int OMXVolume = static_cast<int>((percentVolume - 98) * 105);
                     argv[8] = std::to_string(OMXVolume).c_str();
                 }

@@ -10,9 +10,9 @@
 #ifndef ES_CORE_GUIS_GUI_MSG_BOX_H
 #define ES_CORE_GUIS_GUI_MSG_BOX_H
 
+#include "GuiComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
-#include "GuiComponent.h"
 
 class ButtonComponent;
 class TextComponent;
@@ -20,18 +20,17 @@ class TextComponent;
 class GuiMsgBox : public GuiComponent
 {
 public:
-    GuiMsgBox(
-            Window* window,
-            const HelpStyle& helpstyle,
-            const std::string& text,
-            const std::string& name1 = "OK",
-            const std::function<void()>& func1 = nullptr,
-            const std::string& name2 = "",
-            const std::function<void()>& func2 = nullptr,
-            const std::string& name3 = "",
-            const std::function<void()>& func3 = nullptr,
-            bool disableBackButton = false,
-            bool deleteOnButtonPress = true);
+    GuiMsgBox(Window* window,
+              const HelpStyle& helpstyle,
+              const std::string& text,
+              const std::string& name1 = "OK",
+              const std::function<void()>& func1 = nullptr,
+              const std::string& name2 = "",
+              const std::function<void()>& func2 = nullptr,
+              const std::string& name3 = "",
+              const std::function<void()>& func3 = nullptr,
+              bool disableBackButton = false,
+              bool deleteOnButtonPress = true);
 
     void changeText(const std::string& newText);
 
@@ -39,7 +38,7 @@ public:
     void onSizeChanged() override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return mHelpStyle; };
+    HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
     void deleteMeAndCall(const std::function<void()>& func);

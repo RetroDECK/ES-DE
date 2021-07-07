@@ -14,8 +14,7 @@
 
 #include "VideoComponent.h"
 
-extern "C"
-{
+extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavfilter/avfilter.h>
 #include <libavfilter/buffersink.h>
@@ -89,8 +88,8 @@ private:
     AVFormatContext* mFormatContext;
     AVStream* mVideoStream;
     AVStream* mAudioStream;
-    AVCodec *mVideoCodec;
-    AVCodec *mAudioCodec;
+    AVCodec* mVideoCodec;
+    AVCodec* mAudioCodec;
     AVCodecContext* mVideoCodecContext;
     AVCodecContext* mAudioCodecContext;
     int mVideoStreamIndex;

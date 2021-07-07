@@ -34,23 +34,28 @@ namespace Utils
         std::string getEscapedPath(const std::string& path);
         std::string getCanonicalPath(const std::string& path);
         std::string getAbsolutePath(const std::string& path,
-                const std::string& base = getCWDPath());
+                                    const std::string& base = getCWDPath());
         std::string getParent(const std::string& path);
         std::string getFileName(const std::string& path);
         std::string getStem(const std::string& path);
         std::string getExtension(const std::string& path);
         std::string expandHomePath(const std::string& path);
         std::string resolveRelativePath(const std::string& path,
-                const std::string& relativeTo, const bool allowHome);
+                                        const std::string& relativeTo,
+                                        const bool allowHome);
         std::string createRelativePath(const std::string& path,
-                const std::string& relativeTo, const bool allowHome);
+                                       const std::string& relativeTo,
+                                       const bool allowHome);
         std::string removeCommonPath(const std::string& path,
-                const std::string& commonArg, bool& contains);
+                                     const std::string& commonArg,
+                                     bool& contains);
         std::string resolveSymlink(const std::string& path);
         bool copyFile(const std::string& sourcePath,
-                const std::string& destinationPath, bool overwrite);
+                      const std::string& destinationPath,
+                      bool overwrite);
         bool renameFile(const std::string& sourcePath,
-                const std::string& destinationPath, bool overwrite);
+                        const std::string& destinationPath,
+                        bool overwrite);
         bool removeFile(const std::string& path);
         bool removeDirectory(const std::string& path);
         bool createDirectory(const std::string& path);
@@ -61,7 +66,8 @@ namespace Utils
         bool isDirectory(const std::string& path);
         bool isSymlink(const std::string& path);
         bool isHidden(const std::string& path);
-    }
-}
+    } // namespace FileSystem
+
+} // namespace Utils
 
 #endif // ES_CORE_UTILS_FILE_SYSTEM_UTIL_H

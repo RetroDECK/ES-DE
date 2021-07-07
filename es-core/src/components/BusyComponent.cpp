@@ -14,21 +14,23 @@
 
 // Animation definition.
 AnimationFrame BUSY_ANIMATION_FRAMES[] = {
-    {":/graphics/busy_0.svg", 300},
-    {":/graphics/busy_1.svg", 300},
-    {":/graphics/busy_2.svg", 300},
-    {":/graphics/busy_3.svg", 300},
+    { ":/graphics/busy_0.svg", 300 },
+    { ":/graphics/busy_1.svg", 300 },
+    { ":/graphics/busy_2.svg", 300 },
+    { ":/graphics/busy_3.svg", 300 },
 };
 
 const AnimationDef BUSY_ANIMATION_DEF = { BUSY_ANIMATION_FRAMES, 4, true };
 
-BusyComponent::BusyComponent(Window* window): GuiComponent(window),
-        mBackground(window, ":/graphics/frame.png"), mGrid(window, Vector2i(5, 3))
+BusyComponent::BusyComponent(Window* window)
+    : GuiComponent(window)
+    , mBackground(window, ":/graphics/frame.png")
+    , mGrid(window, Vector2i(5, 3))
 {
     mAnimation = std::make_shared<AnimatedImageComponent>(mWindow);
     mAnimation->load(&BUSY_ANIMATION_DEF);
-    mText = std::make_shared<TextComponent>(mWindow, "WORKING...",
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mText = std::make_shared<TextComponent>(mWindow, "WORKING...", Font::get(FONT_SIZE_MEDIUM),
+                                            0x777777FF);
 
     // Col 0 = animation, col 1 = spacer, col 2 = text.
     mGrid.setEntry(mAnimation, Vector2i(1, 1), false, true);
@@ -57,13 +59,13 @@ void BusyComponent::onSizeChanged()
     mGrid.setRowHeightPerc(1, textHeight / mSize.y());
 
     mBackground.setCornerSize({ 16.0f * Renderer::getScreenWidthModifier(),
-            16.0f * Renderer::getScreenHeightModifier() });
-    mBackground.fitTo(Vector2f(mGrid.getColWidth(1) + mGrid.getColWidth(2) +
-        mGrid.getColWidth(3), textHeight + (2 * Renderer::getScreenHeightModifier())),
-        mAnimation->getPosition(), Vector2f(0, 0));
+                                16.0f * Renderer::getScreenHeightModifier() });
+    mBackground.fitTo(Vector2f(mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3),
+                               textHeight + (2.0f * Renderer::getScreenHeightModifier())),
+                      mAnimation->getPosition(), Vector2f(0, 0));
 }
 
 void BusyComponent::reset()
 {
-    //mAnimation->reset();
+    // mAnimation->reset();
 }

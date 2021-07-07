@@ -21,28 +21,20 @@
 
 // Used to display a list of options.
 // Can select one or multiple options.
-
-// if !multiSelect
-// * <- curEntry ->
-// Always
-// * press a -> open full list.
-
-template<typename T>
-class OptionListComponent : public GuiComponent
+template <typename T> class OptionListComponent : public GuiComponent
 {
 public:
-    OptionListComponent(
-            Window* window,
-            const HelpStyle& helpstyle,
-            const std::string& name,
-            bool multiSelect = false)
-            : GuiComponent(window),
-            mHelpStyle(helpstyle),
-            mMultiSelect(multiSelect),
-            mName(name),
-            mText(window),
-            mLeftArrow(window),
-            mRightArrow(window)
+    OptionListComponent(Window* window,
+                        const HelpStyle& helpstyle,
+                        const std::string& name,
+                        bool multiSelect = false)
+        : GuiComponent(window)
+        , mHelpStyle(helpstyle)
+        , mMultiSelect(multiSelect)
+        , mName(name)
+        , mText(window)
+        , mLeftArrow(window)
+        , mRightArrow(window)
     {
         auto font = Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT);
         mText.setFont(font);
@@ -79,15 +71,15 @@ public:
             LOG(LogWarning) << "OptionListComponent too narrow";
         }
 
-        mText.setSize(mSize.x() - mLeftArrow.getSize().x() -
-                mRightArrow.getSize().x(), mText.getFont()->getHeight());
+        mText.setSize(mSize.x() - mLeftArrow.getSize().x() - mRightArrow.getSize().x(),
+                      mText.getFont()->getHeight());
 
         // Position.
         mLeftArrow.setPosition(0, (mSize.y() - mLeftArrow.getSize().y()) / 2);
         mText.setPosition(mLeftArrow.getPosition().x() + mLeftArrow.getSize().x(),
-                (mSize.y() - mText.getSize().y()) / 2);
+                          (mSize.y() - mText.getSize().y()) / 2);
         mRightArrow.setPosition(mText.getPosition().x() + mText.getSize().x(),
-                (mSize.y() - mRightArrow.getSize().y()) / 2);
+                                (mSize.y() - mRightArrow.getSize().y()) / 2);
     }
 
     bool input(InputConfig* config, Input input) override
@@ -115,7 +107,6 @@ public:
                     mEntries.at(next).selected = true;
                     onSelectedChanged();
                     return true;
-
                 }
                 else if (config->isMappedLike("right", input)) {
                     // Ignore input if the component has been disabled.
@@ -205,7 +196,7 @@ public:
     void sortEntriesByName()
     {
         std::sort(std::begin(mEntries), std::end(mEntries),
-                [](OptionListData a, OptionListData b) { return a.name < b.name; });
+                  [](OptionListData a, OptionListData b) { return a.name < b.name; });
     }
 
     unsigned int getSelectedId()
@@ -217,11 +208,11 @@ public:
         }
 
         LOG(LogWarning) << "OptionListComponent::getSelectedId() - "
-                "no selected element found, defaulting to 0";
+                           "no selected element found, defaulting to 0";
         return 0;
     }
 
-    HelpStyle getHelpStyle() override { return mHelpStyle; };
+    HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
     struct OptionListData {
@@ -232,10 +223,7 @@ private:
 
     HelpStyle mHelpStyle;
 
-    void open()
-    {
-        mWindow->pushGui(new OptionListPopup(mWindow, getHelpStyle(), this, mName));
-    }
+    void open() { mWindow->pushGui(new OptionListPopup(mWindow, getHelpStyle(), this, mName)); }
 
     void onSelectedChanged()
     {
@@ -246,7 +234,8 @@ private:
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y());
             setSize(mText.getSize().x() + mRightArrow.getSize().x() +
-                    24 * Renderer::getScreenWidthModifier(), mText.getSize().y());
+                        24 * Renderer::getScreenWidthModifier(),
+                    mText.getSize().y());
             if (mParent) // Hack since there's no "on child size changed" callback.
                 mParent->onSizeChanged();
         }
@@ -257,8 +246,9 @@ private:
                     mText.setText(Utils::String::toUpper(it->name));
                     mText.setSize(0, mText.getSize().y());
                     setSize(mText.getSize().x() + mLeftArrow.getSize().x() +
-                            mRightArrow.getSize().x() +
-                            24 * Renderer::getScreenWidthModifier(), mText.getSize().y());
+                                mRightArrow.getSize().x() +
+                                24.0f * Renderer::getScreenWidthModifier(),
+                            mText.getSize().y());
                     if (mParent) // Hack since there's no "on child size changed" callback.
                         mParent->onSizeChanged();
                     break;
@@ -290,15 +280,14 @@ private:
     class OptionListPopup : public GuiComponent
     {
     public:
-        OptionListPopup(
-                Window* window,
-                const HelpStyle& helpstyle,
-                OptionListComponent<T>* parent,
-                const std::string& title)
-                : GuiComponent(window),
-                mHelpStyle(helpstyle),
-                mMenu(window, title.c_str()),
-                mParent(parent)
+        OptionListPopup(Window* window,
+                        const HelpStyle& helpstyle,
+                        OptionListComponent<T>* parent,
+                        const std::string& title)
+            : GuiComponent(window)
+            , mHelpStyle(helpstyle)
+            , mMenu(window, title.c_str())
+            , mParent(parent)
         {
             auto font = Font::get(FONT_SIZE_MEDIUM);
             ComponentListRow row;
@@ -308,8 +297,9 @@ private:
 
             for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); it++) {
                 row.elements.clear();
-                row.addElement(std::make_shared<TextComponent>
-                        (mWindow, Utils::String::toUpper(it->name), font, 0x777777FF), true);
+                row.addElement(std::make_shared<TextComponent>(
+                                   mWindow, Utils::String::toUpper(it->name), font, 0x777777FF),
+                               true);
 
                 OptionListData& e = *it;
 
@@ -367,7 +357,7 @@ private:
             }
 
             mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2.0f,
-                    Renderer::getScreenHeight() * 0.13f);
+                              Renderer::getScreenHeight() * 0.13f);
             addChild(&mMenu);
         }
 
@@ -389,7 +379,7 @@ private:
             return prompts;
         }
 
-        HelpStyle getHelpStyle() override { return mHelpStyle; };
+        HelpStyle getHelpStyle() override { return mHelpStyle; }
 
     private:
         MenuComponent mMenu;

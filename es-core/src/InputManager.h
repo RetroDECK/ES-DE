@@ -55,7 +55,7 @@ public:
     int getNumJoysticks() { return static_cast<int>(mJoysticks.size()); }
 
 private:
-    bool initialized() const;
+    bool initialized() const { return mKeyboardInputConfig != nullptr; }
 
     bool loadInputConfig(InputConfig* config);
     void loadDefaultKBConfig();

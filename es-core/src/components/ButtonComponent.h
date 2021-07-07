@@ -9,18 +9,20 @@
 #ifndef ES_CORE_COMPONENTS_BUTTON_COMPONENT_H
 #define ES_CORE_COMPONENTS_BUTTON_COMPONENT_H
 
-#include "components/NinePatchComponent.h"
 #include "GuiComponent.h"
+#include "components/NinePatchComponent.h"
 
 class TextCache;
 
 class ButtonComponent : public GuiComponent
 {
 public:
-    ButtonComponent(Window* window, const std::string& text = "",
-            const std::string& helpText = "", const std::function<void()>& func = nullptr);
+    ButtonComponent(Window* window,
+                    const std::string& text = "",
+                    const std::string& helpText = "",
+                    const std::function<void()>& func = nullptr);
 
-    void setPressedFunc(std::function<void()> f);
+    void setPressedFunc(std::function<void()> f) { mPressedFunc = f; }
     void setEnabled(bool state) override;
 
     bool input(InputConfig* config, Input input) override;
@@ -28,8 +30,8 @@ public:
 
     void setText(const std::string& text, const std::string& helpText);
 
-    inline const std::string& getText() const { return mText; };
-    inline const std::function<void()>& getPressedFunc() const { return mPressedFunc; };
+    const std::string& getText() const { return mText; }
+    const std::function<void()>& getPressedFunc() const { return mPressedFunc; }
 
     void onSizeChanged() override;
     void onFocusGained() override;

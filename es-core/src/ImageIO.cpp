@@ -14,7 +14,9 @@
 #include <string.h>
 
 std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* data,
-        const size_t size, size_t& width, size_t& height)
+                                                         const size_t size,
+                                                         size_t& width,
+                                                         size_t& height)
 {
     std::vector<unsigned char> rawData;
     width = 0;
@@ -44,8 +46,7 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
                     // This is necessary, because width*height*bpp might not be == pitch.
                     unsigned char* tempData = new unsigned char[width * height * 4];
                     for (size_t i = 0; i < height; i++) {
-                        const BYTE* scanLine =
-                                FreeImage_GetScanLine(fiBitmap, static_cast<int>(i));
+                        const BYTE* scanLine = FreeImage_GetScanLine(fiBitmap, static_cast<int>(i));
                         memcpy(tempData + (i * width * 4), scanLine, width * 4);
                     }
                     // Convert from BGRA to RGBA.
@@ -69,8 +70,8 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
             }
         }
         else {
-            LOG(LogError) << "Couldn't load image, file is missing or the file type is " <<
-                    (format == FIF_UNKNOWN ? "unknown" : "unsupported");
+            LOG(LogError) << "Couldn't load image, file is missing or the file type is "
+                          << (format == FIF_UNKNOWN ? "unknown" : "unsupported");
         }
         // Free fiMemory again.
         FreeImage_CloseMemory(fiMemory);

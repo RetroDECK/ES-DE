@@ -8,20 +8,21 @@
 
 #include "components/HelpComponent.h"
 
+#include "Log.h"
+#include "Settings.h"
 #include "components/ComponentGrid.h"
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
-#include "Log.h"
-#include "Settings.h"
 
 #define ICON_TEXT_SPACING 8 // Space between [icon] and [text] (px).
 #define ENTRY_SPACING 16 // Space between [text] and next [icon] (px).
 
 static std::map<std::string, std::string> sIconPathMap {};
 
-HelpComponent::HelpComponent(Window* window) : GuiComponent(window)
+HelpComponent::HelpComponent(Window* window)
+    : GuiComponent(window)
 {
     assignIcons();
 }
@@ -113,7 +114,7 @@ void HelpComponent::updateGrid()
     std::shared_ptr<Font>& font = mStyle.font;
 
     mGrid = std::make_shared<ComponentGrid>(mWindow,
-            Vector2i(static_cast<int>(mPrompts.size()) * 4, 1));
+                                            Vector2i(static_cast<int>(mPrompts.size()) * 4, 1));
 
     // [icon] [spacer1] [text] [spacer2]
 
@@ -130,12 +131,12 @@ void HelpComponent::updateGrid()
         icon->setResize(0, height);
         icons.push_back(icon);
 
-        auto lbl = std::make_shared<TextComponent>(mWindow,
-                Utils::String::toUpper(it->second), font, mStyle.textColor);
+        auto lbl = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(it->second),
+                                                   font, mStyle.textColor);
         labels.push_back(lbl);
 
         width += icon->getSize().x() + lbl->getSize().x() +
-                ((ICON_TEXT_SPACING + ENTRY_SPACING) * Renderer::getScreenWidthModifier());
+                 ((ICON_TEXT_SPACING + ENTRY_SPACING) * Renderer::getScreenWidthModifier());
     }
 
     mGrid->setSize(width, height);
@@ -143,8 +144,8 @@ void HelpComponent::updateGrid()
     for (unsigned int i = 0; i < icons.size(); i++) {
         const int col = i * 4;
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x() / width);
-        mGrid->setColWidthPerc(col + 1, (ICON_TEXT_SPACING *
-                Renderer::getScreenWidthModifier()) / width);
+        mGrid->setColWidthPerc(col + 1,
+                               (ICON_TEXT_SPACING * Renderer::getScreenWidthModifier()) / width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x() / width);
 
         mGrid->setEntry(icons.at(i), Vector2i(col, 0), false, false);
@@ -167,13 +168,13 @@ std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
         return nullptr;
     }
     if (!ResourceManager::getInstance()->fileExists(pathLookup->second)) {
-        LOG(LogError) << "Couldn't load help icon \"" << name <<
-                "\" as the file \"" << pathLookup->second << "\" is missing";
+        LOG(LogError) << "Couldn't load help icon \"" << name << "\" as the file \""
+                      << pathLookup->second << "\" is missing";
         return nullptr;
     }
 
     std::shared_ptr<TextureResource> tex =
-            TextureResource::get(pathLookup->second, false, false, false);
+        TextureResource::get(pathLookup->second, false, false, false);
     mIconCache[std::string(name)] = tex;
     return tex;
 }

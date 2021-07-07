@@ -9,8 +9,8 @@
 #ifndef ES_CORE_COMPONENTS_SLIDER_COMPONENT_H
 #define ES_CORE_COMPONENTS_SLIDER_COMPONENT_H
 
-#include "components/ImageComponent.h"
 #include "GuiComponent.h"
+#include "components/ImageComponent.h"
 
 class Font;
 class TextCache;
@@ -20,13 +20,9 @@ class SliderComponent : public GuiComponent
 {
 public:
     // Minimum value (far left of the slider), maximum value (far right of the slider),
-    // increment size (how much just pressing L/R moves by), unit to display (optional).
+    // increment size (how much pressing L/R moves by), unit to display (optional).
     SliderComponent(
-            Window* window,
-            float min,
-            float max,
-            float increment,
-            const std::string& suffix = "");
+        Window* window, float min, float max, float increment, const std::string& suffix = "");
 
     void setValue(float val);
     float getValue();
