@@ -18,7 +18,12 @@
 #endif
 
 #include <SDL2/SDL.h>
+// Hack until shader support has been added for OpenGL ES.
+#if defined(USE_OPENGL_21)
 #include <SDL2/SDL_opengl.h>
+#else
+#include <SDL2/SDL_opengles.h>
+#endif
 #include <array>
 #include <string>
 #include <vector>
