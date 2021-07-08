@@ -1,15 +1,14 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition, an emulator front-end
-//  with controller navigation and theming support.
+//  EmulationStation Desktop Edition (ES-DE) is a front-end for browsing
+//  and launching games from your multi-platform game collection.
 //
-//  Originally created by Alec "Aloshi" Lofquist.
-//  http://www.aloshi.com
+//  Originally created by Alec Lofquist.
 //  Improved and extended by the RetroPie community.
 //  Desktop Edition fork by Leon Styhre.
 //
-//  The line length limit is 100 characters and the indentations are 4 spaces.
-//  Line breaks are Unix-style (line feed only).
+//  The column limit is 100 characters.
+//  All ES-DE C++ source code is formatted using clang-format.
 //
 //  main.cpp
 //
