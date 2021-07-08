@@ -10,9 +10,6 @@
 #include "SystemScreensaver.h"
 
 #include "components/VideoFFmpegComponent.h"
-#if defined(_RPI_)
-#include "components/VideoOmxComponent.h"
-#endif
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
@@ -163,15 +160,7 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo"))
                 generateOverlayInfo();
 
-#if defined(_RPI_)
-            // Create the correct type of video component.
-            if (Settings::getInstance()->getBool("ScreensaverOmxPlayer"))
-                mVideoScreensaver = new VideoOmxComponent(mWindow);
-            else if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
-                mVideoScreensaver = new VideoVlcComponent(mWindow);
-            else
-                mVideoScreensaver = new VideoFFmpegComponent(mWindow);
-#elif defined(BUILD_VLC_PLAYER)
+#if defined(BUILD_VLC_PLAYER)
             if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
                 mVideoScreensaver = new VideoVlcComponent(mWindow);
             else

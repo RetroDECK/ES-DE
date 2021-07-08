@@ -257,21 +257,6 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
         }
     });
 
-#if defined(_RPI_)
-    // Use OMX player for screensaver.
-    auto screensaver_omx_player = std::make_shared<SwitchComponent>(mWindow);
-    screensaver_omx_player->setState(Settings::getInstance()->getBool("ScreensaverOmxPlayer"));
-    s->addWithLabel("USE OMX PLAYER FOR SCREENSAVER", screensaver_omx_player);
-    s->addSaveFunc([screensaver_omx_player, s] {
-        if (screensaver_omx_player->getState() !=
-            Settings::getInstance()->getBool("ScreensaverOmxPlayer")) {
-            Settings::getInstance()->setBool("ScreensaverOmxPlayer",
-                                             screensaver_omx_player->getState());
-            s->setNeedsSaving();
-        }
-    });
-#endif
-
 #if defined(USE_OPENGL_21)
     // Render scanlines using a shader.
     auto screensaver_video_scanlines = std::make_shared<SwitchComponent>(mWindow);

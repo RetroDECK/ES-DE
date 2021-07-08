@@ -631,105 +631,6 @@ void GuiMenu::openSoundOptions()
     });
 
     if (UIModeController::getInstance()->isUIModeFull()) {
-        // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
-        // As PulseAudio controls the sound devices for the desktop environment, it doesn't
-        // make much sense to be able to select ALSA devices directly. Normally (always?)
-        // the selection doesn't make any difference at all. But maybe some PulseAudio
-        // settings could be added later on, if needed.
-        // The code is still active for Raspberry Pi though as I'm not sure if this is
-        // useful for that device.
-        //    #if defined(__linux__)
-#if defined(_RPI_)
-        // Audio card.
-        auto audio_card = std::make_shared<OptionListComponent<std::string>>(
-            mWindow, getHelpStyle(), "AUDIO CARD", false);
-        std::vector<std::string> audio_cards;
-#if defined(_RPI_)
-        // RPi Specific Audio Cards.
-        audio_cards.push_back("local");
-        audio_cards.push_back("hdmi");
-        audio_cards.push_back("both");
-#endif
-        audio_cards.push_back("default");
-        audio_cards.push_back("sysdefault");
-        audio_cards.push_back("dmix");
-        audio_cards.push_back("hw");
-        audio_cards.push_back("plughw");
-        audio_cards.push_back("null");
-        if (Settings::getInstance()->getString("AudioCard") != "") {
-            if (std::find(audio_cards.begin(), audio_cards.end(),
-                          Settings::getInstance()->getString("AudioCard")) == audio_cards.end()) {
-                audio_cards.push_back(Settings::getInstance()->getString("AudioCard"));
-            }
-        }
-        for (auto ac = audio_cards.cbegin(); ac != audio_cards.cend(); ac++)
-            audio_card->add(*ac, *ac, Settings::getInstance()->getString("AudioCard") == *ac);
-        s->addWithLabel("AUDIO CARD", audio_card);
-        s->addSaveFunc([audio_card, s] {
-            if (audio_card->getSelected() != Settings::getInstance()->getString("AudioCard")) {
-                Settings::getInstance()->setString("AudioCard", audio_card->getSelected());
-                VolumeControl::getInstance()->deinit();
-                VolumeControl::getInstance()->init();
-                s->setNeedsSaving();
-            }
-        });
-
-        // Volume control device.
-        auto vol_dev = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
-                                                                          "AUDIO DEVICE", false);
-        std::vector<std::string> transitions;
-        transitions.push_back("PCM");
-        transitions.push_back("Speaker");
-        transitions.push_back("Master");
-        transitions.push_back("Digital");
-        transitions.push_back("Analogue");
-        if (Settings::getInstance()->getString("AudioDevice") != "") {
-            if (std::find(transitions.begin(), transitions.end(),
-                          Settings::getInstance()->getString("AudioDevice")) == transitions.end()) {
-                transitions.push_back(Settings::getInstance()->getString("AudioDevice"));
-            }
-        }
-        for (auto it = transitions.cbegin(); it != transitions.cend(); it++)
-            vol_dev->add(*it, *it, Settings::getInstance()->getString("AudioDevice") == *it);
-        s->addWithLabel("AUDIO DEVICE", vol_dev);
-        s->addSaveFunc([vol_dev, s] {
-            if (vol_dev->getSelected() != Settings::getInstance()->getString("AudioDevice")) {
-                Settings::getInstance()->setString("AudioDevice", vol_dev->getSelected());
-                VolumeControl::getInstance()->deinit();
-                VolumeControl::getInstance()->init();
-                s->setNeedsSaving();
-            }
-        });
-#endif
-
-#if defined(_RPI_)
-        // OMXPlayer audio device.
-        auto omx_audio_dev = std::make_shared<OptionListComponent<std::string>>(
-            mWindow, getHelpStyle(), "OMX PLAYER AUDIO DEVICE", false);
-        std::vector<std::string> omx_cards;
-        // RPi Specific  Audio Cards
-        omx_cards.push_back("local");
-        omx_cards.push_back("hdmi");
-        omx_cards.push_back("both");
-        omx_cards.push_back("alsa:hw:0,0");
-        omx_cards.push_back("alsa:hw:1,0");
-        if (Settings::getInstance()->getString("OMXAudioDev") != "") {
-            if (std::find(omx_cards.begin(), omx_cards.end(),
-                          Settings::getInstance()->getString("OMXAudioDev")) == omx_cards.end()) {
-                omx_cards.push_back(Settings::getInstance()->getString("OMXAudioDev"));
-            }
-        }
-        for (auto it = omx_cards.cbegin(); it != omx_cards.cend(); it++)
-            omx_audio_dev->add(*it, *it, Settings::getInstance()->getString("OMXAudioDev") == *it);
-        s->addWithLabel("OMX PLAYER AUDIO DEVICE", omx_audio_dev);
-        s->addSaveFunc([omx_audio_dev, s] {
-            if (omx_audio_dev->getSelected() != Settings::getInstance()->getString("OMXAudioDev")) {
-                Settings::getInstance()->setString("OMXAudioDev", omx_audio_dev->getSelected());
-                s->setNeedsSaving();
-            }
-        });
-#endif
-
         // Play audio for gamelist videos.
         auto gamelist_video_audio = std::make_shared<SwitchComponent>(mWindow);
         gamelist_video_audio->setState(Settings::getInstance()->getBool("GamelistVideoAudio"));
@@ -999,21 +900,6 @@ void GuiMenu::openOtherOptions()
             multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
     });
     s->addRow(rowMediaDir);
-
-#if defined(_RPI_)
-    // Video playing using OMXPlayer.
-    auto video_omx_player = std::make_shared<SwitchComponent>(mWindow);
-    video_omx_player->setState(Settings::getInstance()->getBool("VideoOmxPlayer"));
-    s->addWithLabel("USE OMX PLAYER (HW ACCELERATED)", video_omx_player);
-    s->addSaveFunc([video_omx_player, s] {
-        if (video_omx_player->getState() != Settings::getInstance()->getBool("VideoOmxPlayer")) {
-            Settings::getInstance()->setBool("VideoOmxPlayer", video_omx_player->getState());
-            s->setNeedsSaving();
-            // Need to reload all views to re-create the right video components.
-            s->setNeedsReloading();
-        }
-    });
-#endif
 
 #if defined(_WIN64)
     // Hide taskbar during the ES program session.

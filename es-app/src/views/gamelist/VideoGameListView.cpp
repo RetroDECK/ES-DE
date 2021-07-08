@@ -10,9 +10,6 @@
 
 #include "animations/LambdaAnimation.h"
 #include "components/VideoFFmpegComponent.h"
-#if defined(_RPI_)
-#include "components/VideoOmxComponent.h"
-#endif
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
@@ -56,15 +53,9 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
 {
     const float padding = 0.01f;
 
-// Create the correct type of video window.
-#if defined(_RPI_)
-    if (Settings::getInstance()->getBool("VideoOmxPlayer"))
-        mVideo = new VideoOmxComponent(window);
-    else if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
-        mVideo = new VideoVlcComponent(window);
-    else
-        mVideo = new VideoFFmpegComponent(window);
-#elif defined(BUILD_VLC_PLAYER)
+    // Create the correct type of video window.
+
+#if defined(BUILD_VLC_PLAYER)
     if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
         mVideo = new VideoVlcComponent(window);
     else
