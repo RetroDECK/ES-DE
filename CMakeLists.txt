@@ -14,8 +14,6 @@ set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
 # Package type to use for CPack on Linux.
 set(LINUX_CPACK_GENERATOR "DEB" CACHE STRING "CPack generator, DEB or RPM")
 
-set(VLC_PLAYER OFF CACHE BOOL "Whether to build with the VLC video player")
-
 # Add local find modules to the CMake path.
 list(APPEND CMAKE_MODULE_PATH
         ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
@@ -26,38 +24,24 @@ option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
+option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
 
 #---------------------------------------------------------------------------------------------------
 # OpenGL setup.
 
-if(GLES)
-    set(GLSystem "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
-elseif(GL)
-    set(GLSystem "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
-
 # Check if we're running on a Raspberry Pi.
-elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
-    MESSAGE("bcm_host.h found")
-    set(BCMHOST found)
+if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
+    message("-- Building on a Raspberry Pi (bcm_host.h found)")
+    # Setting BCMHOST seems to break OpenGL ES on the RPi 4?
+    #set(BCMHOST found)
+    # Simply set RPI instead to enable the RPi-specific parts of the code.
+    set(RPI ON)
     set(GLSystem "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
-
-# Check if we're running on OSMC Vero4K.
-elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib/libMali.so")
-    MESSAGE("libMali.so found")
-    set(VERO4K found)
-    set(GLSystem "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
-
-# Check if we're running on olinuxino / odroid / etc.
-elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/libMali.so" OR
-    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/libMali.so" OR
-    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/aarch64-linux-gnu/libMali.so" OR
-    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/mali-egl/libmali.so" OR
-    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/libmali.so")
-    MESSAGE("libMali.so found")
+elseif(GLES)
     set(GLSystem "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
 else()
     set(GLSystem "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
-endif(GLES)
+endif()
 
 set_property(CACHE GLSystem PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 
@@ -80,7 +64,7 @@ if(NOT WIN32)
     find_package(Pugixml REQUIRED)
     find_package(RapidJSON REQUIRED)
     find_package(SDL2 REQUIRED)
-    if(VLC_PLAYER OR RPI)
+    if(VLC_PLAYER)
         find_package(VLC REQUIRED)
     endif()
 endif()
@@ -193,11 +177,6 @@ endif()
 
 if(DEFINED BCMHOST OR RPI)
     add_definitions(-D_RPI_)
-    add_definitions(-DBUILD_VLC_PLAYER)
-endif()
-
-if(DEFINED VERO4K)
-    add_definitions(-D_VERO4K_)
 endif()
 
 if(DEFINED libCEC_FOUND)
@@ -240,7 +219,7 @@ set(COMMON_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
         ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
-if(VLC_PLAYER OR RPI)
+if(VLC_PLAYER)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
 endif()
 
@@ -250,7 +229,6 @@ if(WIN32)
     if(NOT EXISTS ${WIN32_INCLUDE_DIR})
         message(SEND_ERROR "Can't find WIN32 include directory: ${WIN32_INCLUDE_DIR}")
     endif()
-    #include_directories(${WIN32_INCLUDE_DIR})
 endif()
 
 # Temporary solution until the VLC find module has been updated to work properly on macOS.
@@ -278,17 +256,6 @@ if(DEFINED BCMHOST)
             "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos"
             "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vmcs_host/linux"
             "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos/pthreads")
-# Add Vero4k include directory.
-elseif(DEFINED VERO4K)
-    list(APPEND COMMON_INCLUDE_DIRS "${CMAKE_FIND_ROOT_PATH}/opt/vero3/include")
-else()
-    # Add OpenGL include directory.
-    if(${GLSystem} MATCHES "Desktop OpenGL")
-        list(APPEND COMMON_INCLUDE_DIRS ${OPENGL_INCLUDE_DIR})
-    else()
-        # Add OpenGL ES include directory.
-        list(APPEND COMMON_INCLUDE_DIRS ${OPENGLES_INCLUDE_DIR})
-    endif()
 endif()
 
 #---------------------------------------------------------------------------------------------------
@@ -302,7 +269,7 @@ if(NOT WIN32)
             ${FREETYPE_LIBRARIES}
             ${PUGIXML_LIBRARIES}
             ${SDL2_LIBRARY})
-    if(VLC_PLAYER OR RPI)
+    if(VLC_PLAYER)
         set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${VLC_LIBRARIES})
     endif()
 elseif(WIN32)
@@ -368,9 +335,9 @@ endif()
 
 # Add libCEC libraries.
 if(DEFINED libCEC_FOUND)
-if(DEFINED BCMHOST)
-    list(APPEND COMMON_LIBRARIES vchiq_arm)
-endif()
+    if(DEFINED BCMHOST)
+        list(APPEND COMMON_LIBRARIES vchiq_arm)
+    endif()
     list(APPEND COMMON_LIBRARIES dl ${libCEC_LIBRARIES})
 endif()
 
@@ -382,15 +349,12 @@ endif()
 if(DEFINED BCMHOST)
     link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
     list(APPEND COMMON_LIBRARIES bcm_host brcmEGL ${OPENGLES_LIBRARIES})
-elseif(DEFINED VERO4K)
-    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vero3/lib")
-    list(APPEND COMMON_LIBRARIES EGL ${OPENGLES_LIBRARIES})
+endif()
+
+if(${GLSystem} MATCHES "Desktop OpenGL")
+    list(APPEND COMMON_LIBRARIES ${OPENGL_LIBRARIES})
 else()
-    if(${GLSystem} MATCHES "Desktop OpenGL")
-        list(APPEND COMMON_LIBRARIES ${OPENGL_LIBRARIES})
-    else()
-        list(APPEND COMMON_LIBRARIES EGL ${OPENGLES_LIBRARIES})
-    endif()
+    list(APPEND COMMON_LIBRARIES EGL ${OPENGLES_LIBRARIES})
 endif()
 
 #---------------------------------------------------------------------------------------------------
