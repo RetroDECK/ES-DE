@@ -187,24 +187,7 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverVideoScanlines"] = { true, true };
     mBoolMap["ScreensaverVideoBlur"] = { false, false };
 
-#if defined(_RPI_)
     // Sound settings.
-    // The ALSA Audio Card and Audio Device selection code is disabled at the moment.
-    // As PulseAudio controls the sound devices for the desktop environment, it doesn't
-    // make much sense to be able to select ALSA devices directly. Normally (always?)
-    // the selection doesn't make any difference at all. But maybe some PulseAudio
-    // settings could be added later on, if needed.
-    // The code is still active for Raspberry Pi though as I'm not sure if this is
-    // useful for that device.
-    mStringMap["AudioCard"] = { "default", "default" };
-    // Audio out device for volume control.
-    //#endif
-    //#if defined(_RPI_)
-    mStringMap["AudioDevice"] = { "PCM", "PCM" };
-    // Audio out device for Video playback using OMX player.
-    mStringMap["OMXAudioDev"] = { "both", "both" };
-#endif
-
     mIntMap["SoundVolumeNavigation"] = { 80, 80 };
     mIntMap["SoundVolumeVideos"] = { 100, 100 };
     mBoolMap["GamelistVideoAudio"] = { true, true };
@@ -235,12 +218,12 @@ void Settings::setDefaults()
     mStringMap["FullscreenMode"] = { "normal", "normal" };
 #endif
 #if defined(BUILD_VLC_PLAYER)
+#if defined(_RPI_)
+    // As the FFmpeg video player is not HW accelerated, use VLC as default on this weak device.
+    mStringMap["VideoPlayer"] = { "vlc", "vlc" };
+#else
     mStringMap["VideoPlayer"] = { "ffmpeg", "ffmpeg" };
 #endif
-#if defined(_RPI_)
-    mBoolMap["VideoOmxPlayer"] = { false, false };
-    // We're defaulting to OMX Player for full screen video on the Pi.
-    mBoolMap["ScreensaverOmxPlayer"] = { true, true };
 #endif
     mStringMap["SaveGamelistsMode"] = { "always", "always" };
 #if defined(_WIN64)
@@ -394,7 +377,7 @@ void Settings::loadFile()
         setString(node.attribute("name").as_string(), node.attribute("value").as_string());
 }
 
-// Macro to create the get and set functions for the various data types
+// Macro to create the get and set functions for the various data types.
 #define SETTINGS_GETSET(type, mapName, getFunction, getDefaultFunction, setFunction)               \
     type Settings::getFunction(const std::string& name)                                            \
     {                                                                                              \
