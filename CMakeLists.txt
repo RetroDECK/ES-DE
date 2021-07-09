@@ -25,6 +25,15 @@ option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
 option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
+option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" ${CLANG_TIDY})
+
+if (CLANG_TIDY)
+    message("-- Building with the clang-tidy static analyzer")
+    set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-checks=*,-fuchsia-*,-hicpp-*,-llvm-*, \
+            -readability-braces-*,-google-readability-braces-*, \
+            -readability-uppercase-literal-suffix,-modernize-use-trailing-return-type, \
+            -cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers")
+endif()
 
 #---------------------------------------------------------------------------------------------------
 # OpenGL setup.
