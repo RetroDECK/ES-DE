@@ -32,12 +32,11 @@ option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
 # Check if we're running on a Raspberry Pi.
 if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
     message("-- Building on a Raspberry Pi (bcm_host.h found)")
-    # Setting BCMHOST seems to break OpenGL ES on the RPi 4?
+    # Setting BCMHOST seems to break OpenGL ES on the RPi 4 so set RPI instead.
     #set(BCMHOST found)
-    # Simply set RPI instead to enable the RPi-specific parts of the code.
     set(RPI ON)
     set(GLSystem "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
-elseif(GLES)
+elseif(GLES OR RPI)
     set(GLSystem "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
 else()
     set(GLSystem "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
@@ -250,7 +249,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     list(APPEND COMMON_INCLUDE_DIRS ${ALSA_INCLUDE_DIRS})
 endif()
 
-if(DEFINED BCMHOST)
+if(DEFINED BCMHOST OR RPI)
     list(APPEND COMMON_INCLUDE_DIRS
             "${CMAKE_FIND_ROOT_PATH}/opt/vc/include"
             "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos"
@@ -335,8 +334,8 @@ endif()
 
 # Add libCEC libraries.
 if(DEFINED libCEC_FOUND)
-    if(DEFINED BCMHOST)
-        list(APPEND COMMON_LIBRARIES vchiq_arm)
+    if(DEFINED BCMHOST OR RPI)
+        list(APPEND COMMON_LIBRARIES bcm_host vchiq_arm)
     endif()
     list(APPEND COMMON_LIBRARIES dl ${libCEC_LIBRARIES})
 endif()
@@ -349,6 +348,9 @@ endif()
 if(DEFINED BCMHOST)
     link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
     list(APPEND COMMON_LIBRARIES bcm_host brcmEGL ${OPENGLES_LIBRARIES})
+elseif(DEFINED RPI)
+    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
+    list(APPEND COMMON_LIBRARIES ${OPENGLES_LIBRARIES})
 endif()
 
 if(${GLSystem} MATCHES "Desktop OpenGL")
