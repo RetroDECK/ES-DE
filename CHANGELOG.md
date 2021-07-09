@@ -73,9 +73,12 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added the CImg library as a Git subtree and created some utility functions for it (used by the miximage generator and the game launch screen)
 * Added a function to ImageComponent to crop fully transparent areas around an image
 * Added a CMake option to control whether the VLC video player should be built, and set this to off by default
+* Made it possible to build on the Raspberry Pi 4 (Raspberry Pi OS)
+* Removed the deprecated VideoOmxComponent
 * Removed the pointless APPLE_SKIP_INSTALL_LIBS CMake option
 * Added a clang-format style configuration file to use for automatic code formatting
 * Formatted the entire codebase using clang-format
+* Integrated clang-tidy with CMake and made it possible to enable it via a flag
 * Added the NanoSVG library as a proper Git subtree
 * Changed the language standard from C++11 to C++14
 
@@ -96,6 +99,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * The Quick System Select help prompt was shown even when there was only a single game system present
 * The "Back (cancel)" help prompt was missing for the single-game scraper
 * The "Y" button help prompt wasn't displayed correctly when using the Grid view style
+* Fractional game rating values would always get rounded up
 * Encountering a corrupt image file would lead to a continuous loop of attempts to load the image while filling the log file with error messages
 * Cropping in ImageComponent didn't work correctly
 * The debug logging for the analog controller inputs had some inconsistent signs

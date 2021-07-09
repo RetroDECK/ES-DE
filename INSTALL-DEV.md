@@ -14,7 +14,7 @@ ES-DE is developed and compiled using Clang/LLVM and GCC on Unix, Clang/LLVM on 
 
 CMake is the build system for all the supported operating systems, used in conjunction with `make` on Unix and macOS and `nmake` and `make` on Windows. Xcode on macOS or Visual Studio on Windows are not required for building ES-DE and they have not been used during the development. The only exception is notarization of codesigned macOS packages which require the `altool` and `stapler` binaries that come bundled with Xcode.
 
-For automatic code formatting clang-format is used.
+For automatic code formatting [clang-format](https://clang.llvm.org/docs/ClangFormat.html) is used.
 
 Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
 
@@ -25,7 +25,7 @@ The code has some dependencies. For building, you'll need CMake and development 
 
 **Installing dependencies:**
 
-**On Debian/Ubuntu**
+**Debian/Ubuntu**
 
 All of the required packages can be installed with apt-get:
 ```
@@ -37,7 +37,7 @@ If building with the optional VLC video player, the following packages are also 
 sudo apt-get install vlc libvlc-dev
 ```
 
-**On Fedora**
+**Fedora**
 
 Use dnf to install all the required packages:
 ```
@@ -53,7 +53,7 @@ sudo dnf install ./rpmfusion-free-release-33.noarch.rpm
 sudo dnf install vlc vlc-devel
 ```
 
-**On Manjaro**
+**Manjaro**
 
 Use pacman to install all the required packages:
 
@@ -66,7 +66,26 @@ If building with the optional VLC video player, the following package is also ne
 sudo pacman -S vlc
 ```
 
-**On FreeBSD**
+**Raspberry Pi OS (Raspian)**
+
+Note: The Raspberry Pi 4 is the minimum recommended model to use with ES-DE. As this type of device is quite weak and because the FFmpeg video player currently lacks hardware decoding/acceleration it is strongly adviced to build with the VLC player, which is hardware accelerated.
+
+All of the required packages can be installed with apt-get:
+```
+sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libcurl4-gnutls-dev libpugixml-dev rapidjson-dev
+```
+
+If building with the optional VLC video player, the following packages are also needed:
+```
+sudo apt-get install vlc libvlc-dev
+```
+
+To build with CEC support you also need to install these packages:
+```
+sudo apt-get install libcec-dev libp8-platform-dev
+```
+
+**FreeBSD**
 
 Use pkg to install the dependencies:
 ```
@@ -80,7 +99,7 @@ pkg install vlc
 
 Clang/LLVM and cURL should already be installed in the base OS image.
 
-**On NetBSD**
+**NetBSD**
 
 Use pkgin to install the dependencies:
 ```
@@ -94,7 +113,7 @@ pkgin vlc
 
 NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
 
-**On OpenBSD**
+**OpenBSD**
 
 Use pkg_add to install the dependencies:
 ```
@@ -209,7 +228,14 @@ scan-build cmake -DCMAKE_BUILD_TYPE=Debug .
 scan-build make -j6
 ```
 
-You open the report with the `scan-view` command which lets you browse it using your web browser. Note that the compilation time is much higher when using the static analyzer compared to a normal compilation. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
+You open the report with the `scan-view` command which lets you browse it using your web browser. Note that the compilation time is much longer when using the static analyzer compared to a normal build. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
+
+An even more advanced static analyzer is `clang-tidy`, to use it first make sure it's installed on your system and then run the following:
+```
+cmake -DCLANG_TIDY=on .
+```
+
+Even though many irrelevant checks are filtered out via the configuration, this will still likely produce a quite huge report (at least until most of the recommendations have been implemented). In the same manner as for scan-view, the compilation time is much longer when using this static analyzer compared to a normal build.
 
 To build ES-DE with CEC support, enable the corresponding option, for example:
 
@@ -217,14 +243,14 @@ To build ES-DE with CEC support, enable the corresponding option, for example:
 cmake -DCMAKE_BUILD_TYPE=Debug -DCEC=on .
 make
 ```
-I have however not been able to test the CEC support and I'm not entirely sure how it's supposed to work.
+You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
 
 To build with the GLES renderer, run the following:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DGLES=on .
 make
 ```
-Note that the GLES renderer is quite limited as there is no shader support for it, so ES-DE will definitely not look as pretty as when using the default OpenGL renderer.
+The GLES renderer is quite limited as there is no shader support for it, so ES-DE will definitely not look as pretty as when using the default OpenGL renderer. When building on a Raspberry Pi, the GLES renderer will be automatically selected.
 
 Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
 
@@ -265,7 +291,7 @@ This Clang debug build is LLVM "native", i.e. intended to be debugged using the 
 
 It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 25% slower. The same goes for the binary size, instead of 31% smaller it's now 5% larger. The compilation time is still less than GCC but only by 10% instead of 25%.
 
-I'm expecting this to be resolved in the near future though, and as I think Clang has the best error messages and comes with good tools such as the static analyzer, this is now my primary compiler.
+But I'm expecting this issue to be resolved in the near future so the workaround can be removed.
 
 It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
 
@@ -1149,9 +1175,7 @@ So the home directory will always take precedence, and any resources or themes l
 
 The entire ES-DE codebase is formatted using clang-format and all code commits must have been processed using this tool.
 
-There is a style configuration file named .clang-format located directly at the root of the repository which contains the formatting rules.
-
-How to install clang-format is detailed per operating system earlier in this document.
+There is a style configuration file named .clang-format located directly at the root of the repository which contains the formatting rules. How to install clang-format is detailed per operating system earlier in this document.
 
 There are two ways to run the tool, from the command line or from inside an editor such as VSCode.
 

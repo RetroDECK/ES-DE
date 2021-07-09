@@ -2,7 +2,7 @@
 
 # Programming
 
-Alec "Aloshi" Lofquist (original version) \
+Alec Lofquist (original version) \
 http://www.aloshi.com
 
 RetroPie Community (RetroPie fork) \

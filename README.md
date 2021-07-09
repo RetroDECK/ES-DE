@@ -31,7 +31,7 @@ The following operating systems have been tested with ES-DE (all for the x86 arc
 
 **Note:** If using a Mac with an ARM CPU (e.g. M1) you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
-At the moment Raspberry Pi is not supported, but this is planned for version 1.2. It may still be possible to compile and run ES-DE on this type of device, but as of v1.1 it's not actively used during development and therefore not tested.
+The Raspberry Pi 4 has been tested as well (with Raspberry Pi OS) but it's a bit buggy at the moment and is missing some features like GLSL shaders. Official support will probably be added for this device as of ES-DE v1.2.
 
 ### Download
 
