@@ -239,8 +239,8 @@ void VideoFFmpegComponent::frameProcessing()
 {
     mWindow->increaseVideoPlayerCount();
 
-    bool videoFilter;
-    bool audioFilter;
+    bool videoFilter = false;
+    bool audioFilter = false;
 
     videoFilter = setupVideoFilters();
 
@@ -527,9 +527,22 @@ void VideoFFmpegComponent::readFrames()
                     if (!avcodec_send_packet(mVideoCodecContext, mPacket) &&
                         !avcodec_receive_frame(mVideoCodecContext, mVideoFrame)) {
 
+                        int returnValue = 0;
+
                         // We have a video frame that needs conversion to RGBA format.
-                        int returnValue = av_buffersrc_add_frame_flags(
-                            mVBufferSrcContext, mVideoFrame, AV_BUFFERSRC_FLAG_KEEP_REF);
+                        // Prioritize audio by dropping video frames if the audio frame queue
+                        // gets too small, i.e. if the computer can't keep up the processing.
+                        if ((!mAudioCodecContext || !mDecodedFrame ||
+                             mAudioFrameCount < mAudioTargetQueueSize) ||
+                            mAudioFrameQueue.size() > 3) {
+                            returnValue = av_buffersrc_add_frame_flags(
+                                mVBufferSrcContext, mVideoFrame, AV_BUFFERSRC_FLAG_KEEP_REF);
+                        }
+                        else {
+                            LOG(LogDebug)
+                                << "VideoFFmpegComponent::readFrames(): Dropped video frame as "
+                                   "the audio buffer was too small";
+                        }
 
                         if (returnValue < 0) {
                             LOG(LogError) << "VideoFFmpegComponent::readFrames(): "

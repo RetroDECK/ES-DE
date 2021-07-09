@@ -145,14 +145,13 @@ private:
     // Used for audio and video synchronization.
     std::chrono::high_resolution_clock::time_point mTimeReference;
 
+    int mAudioFrameCount;
+    int mVideoFrameCount;
+
     double mAccumulatedTime;
     bool mStartTimeAccumulation;
     bool mDecodedFrame;
     bool mEndOfVideo;
-
-    // These are only used for debugging.
-    int mAudioFrameCount;
-    int mVideoFrameCount;
 };
 
 #endif // ES_CORE_COMPONENTS_VIDEO_FFMPEG_COMPONENT_H
