@@ -37,11 +37,9 @@ namespace Scripting
         if (Utils::FileSystem::exists(scriptDir))
             scriptDirList.push_back(scriptDir);
 
-        for (std::list<std::string>::const_iterator dirIt = scriptDirList.cbegin();
-             dirIt != scriptDirList.cend(); dirIt++) {
+        for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); dirIt++) {
             std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
-            for (std::list<std::string>::const_iterator it = scripts.cbegin(); // Line break.
-                 it != scripts.cend(); it++) {
+            for (auto it = scripts.cbegin(); it != scripts.cend(); it++) {
                 std::string arg1Quotation;
                 std::string arg2Quotation;
                 // Add quotation marks around the arguments as long as these are not already
@@ -50,8 +48,16 @@ namespace Scripting
                     arg1Quotation = "\"";
                 if (arg2.front() != '\"')
                     arg2Quotation = "\"";
-                std::string script = *it + " " + arg1Quotation + arg1 + arg1Quotation + " " +
-                                     arg2Quotation + arg2 + arg2Quotation;
+                std::string script;
+                script.append(*it)
+                    .append(" ")
+                    .append(arg1Quotation)
+                    .append(arg1)
+                    .append(arg1Quotation)
+                    .append(" ")
+                    .append(arg2Quotation)
+                    .append(arg2)
+                    .append(arg2Quotation);
                 LOG(LogDebug) << "Executing: " << script;
                 runSystemCommand(script);
             }

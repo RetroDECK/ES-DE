@@ -627,7 +627,7 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
     // Convert to the HSL color space to be able to modify saturation and lightness.
     CImg<float> colorHSL = CImg<>(1, 1, 1, 3).fill(redC, greenC, blueC).RGBtoHSL();
 
-    float hue = colorHSL(0, 0, 0, 0);
+    // float hue = colorHSL(0, 0, 0, 0);
     float saturation = colorHSL(0, 0, 0, 1);
     float lightness = colorHSL(0, 0, 0, 2);
 

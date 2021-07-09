@@ -307,17 +307,14 @@ void AudioManager::clearStream()
     //    SDL_AudioStreamClear(sConversionStream);
 
     mIsClearingStream = true;
-
-    int streamSize;
     int length = sAudioFormat.samples * 4;
 
-    while ((streamSize = SDL_AudioStreamAvailable(sConversionStream)) > 0) {
+    while (SDL_AudioStreamAvailable(sConversionStream) > 0) {
         std::vector<Uint8> readBuffer(length);
         int processedLength =
             SDL_AudioStreamGet(sConversionStream, static_cast<void*>(&readBuffer.at(0)), length);
-        if (processedLength <= 0) {
+        if (processedLength <= 0)
             break;
-        }
     }
 
     mIsClearingStream = false;
