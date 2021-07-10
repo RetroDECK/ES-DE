@@ -466,6 +466,12 @@ bool SystemData::loadConfig()
         // Platform ID list
         const std::string platformList =
             Utils::String::toLower(system.child("platform").text().get());
+
+        if (platformList == "") {
+            LOG(LogWarning) << "No platform defined for system \"" << name
+                            << "\", scraper searches will be inaccurate";
+        }
+
         std::vector<std::string> platformStrs = readList(platformList);
         std::vector<PlatformIds::PlatformId> platformIds;
         for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
@@ -483,7 +489,7 @@ bool SystemData::loadConfig()
             // platforms, then generate a warning.
             if (str != "" && platformId == PlatformIds::PLATFORM_UNKNOWN)
                 LOG(LogWarning) << "Unknown platform \"" << str << "\" defined for system \""
-                                << name << "\"";
+                                << name << "\", scraper searches will be inaccurate";
             else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
                 platformIds.push_back(platformId);
         }
