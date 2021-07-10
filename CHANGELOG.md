@@ -72,6 +72,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added a DebugSkipInputLogging option which is intended primarily for development and needs to be manually set in es_settings.xml
 * Added the CImg library as a Git subtree and created some utility functions for it (used by the miximage generator and the game launch screen)
 * Added a function to ImageComponent to crop fully transparent areas around an image
+* Added and clarified startup log warnings for missing or invalid es_systems.xml platform tags
 * Added a CMake option to control whether the VLC video player should be built, and set this to off by default
 * Made it possible to build on the Raspberry Pi 4 (Raspberry Pi OS)
 * Removed the deprecated VideoOmxComponent

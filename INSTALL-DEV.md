@@ -21,9 +21,7 @@ Any code editor can be used of course, but I recommend [VSCode](https://code.vis
 
 ## Building on Unix
 
-The code has some dependencies. For building, you'll need CMake and development packages for cURL, FFmpeg, FreeImage, FreeType, pugixml, SDL2 and RapidJSON (and optionally VLC).
-
-**Installing dependencies:**
+There are some dependencies that need to be fulfilled in order to build ES-DE. These are detailed per operating system below.
 
 **Debian/Ubuntu**
 
@@ -46,7 +44,7 @@ sudo dnf install gcc-c++ clang-tools-extra cmake SDL2-devel ffmpeg-devel freeima
 
 If building with the VLC video player, add the RPM Fusion repository.
 
-Go to [https://rpmfusion.org/Configuration](https://rpmfusion.org/Configuration) and download the .rpm package for the free repository, then install it as well as VLC:
+Go to [https://rpmfusion.org/Configuration](https://rpmfusion.org/Configuration) and download the .rpm package for the free repository. Then install it, followed by VLC:
 
 ```
 sudo dnf install ./rpmfusion-free-release-33.noarch.rpm
@@ -97,7 +95,7 @@ If building with the optional VLC video player, the following package is also ne
 pkg install vlc
 ```
 
-Clang/LLVM and cURL should already be installed in the base OS image.
+Clang/LLVM and cURL should already be included in the base OS installation.
 
 **NetBSD**
 
@@ -164,7 +162,7 @@ cmake .
 make
 ```
 
-By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+By default the master branch will be used, which is where development takes place. To instead build the latest stable release, switch to the `stable` branch:
 
 ```
 cd emulationstation-de
@@ -228,7 +226,7 @@ scan-build cmake -DCMAKE_BUILD_TYPE=Debug .
 scan-build make -j6
 ```
 
-You open the report with the `scan-view` command which lets you browse it using your web browser. Note that the compilation time is much longer when using the static analyzer compared to a normal build. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
+You open the report with the `scan-view` command which lets you read it using your web browser. Note that the compilation time is much longer when using the static analyzer compared to a normal build. As well this tool generates a lot of extra files and folders in the build tree, so it may make sense to run it in a separate copy of the source folder to avoid having to clean up all this extra data when the analysis has been completed.
 
 An even more advanced static analyzer is `clang-tidy`, to use it first make sure it's installed on your system and then run the following:
 ```
@@ -240,14 +238,14 @@ Even though many irrelevant checks are filtered out via the configuration, this 
 To build ES-DE with CEC support, enable the corresponding option, for example:
 
 ```
-cmake -DCMAKE_BUILD_TYPE=Debug -DCEC=on .
+cmake -DCEC=on .
 make
 ```
 You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
 
 To build with the GLES renderer, run the following:
 ```
-cmake -DCMAKE_BUILD_TYPE=Debug -DGLES=on .
+cmake -DGLES=on .
 make
 ```
 The GLES renderer is quite limited as there is no shader support for it, so ES-DE will definitely not look as pretty as when using the default OpenGL renderer. When building on a Raspberry Pi, the GLES renderer will be automatically selected.
@@ -266,7 +264,7 @@ The following example will build the application for installtion under /opt:
 cmake -DCMAKE_INSTALL_PREFIX=/opt .
 ```
 
-It's important to know that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code inside ES-DE used to locate the required program resources. So it's necessary that the install prefix corresponds to the location where the application will actually be installed.
+It's important to understand that this is not only the directory used by the install script, the CMAKE_INSTALL_PREFIX variable also modifies code inside ES-DE used to locate the required program resources. So it's necessary that the install prefix corresponds to the location where the application will actually be installed.
 
 On Linux, if you're not building a package and instead intend to install using `make install` it's recommended to set the installation prefix to /usr/local instead of /usr.
 
@@ -291,7 +289,7 @@ This Clang debug build is LLVM "native", i.e. intended to be debugged using the 
 
 It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 25% slower. The same goes for the binary size, instead of 31% smaller it's now 5% larger. The compilation time is still less than GCC but only by 10% instead of 25%.
 
-But I'm expecting this issue to be resolved in the near future so the workaround can be removed.
+But I'm expecting this issue to be resolved in the future so the workaround can be removed.
 
 It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
 
@@ -337,7 +335,7 @@ However, when installing manually instead of building a package, it's recommende
 
 Be aware that if using the GNOME desktop environment, /usr/share/pixmaps/emulationstation.svg must exist in order for the ES-DE icon to be shown in the Dash and task switcher.
 
-ES-DE will look in the following locations for the resources, in the listed order:
+ES-DE will look in the following locations for application resources, in the listed order:
 
 * \<home\>/.emulationstation/resources/
 * \<install prefix\>/share/emulationstation/resources/
@@ -345,7 +343,7 @@ ES-DE will look in the following locations for the resources, in the listed orde
 
 The resources directory is critical, without it the application won't start.
 
-And it will look in the following locations for the themes, also in the listed order:
+As well the following locations will be searched for themes, also in the listed order:
 
 * \<home\>/.emulationstation/themes/
 * \<install prefix\>/share/emulationstation/themes/
@@ -353,7 +351,7 @@ And it will look in the following locations for the themes, also in the listed o
 
 A theme is not mandatory to start the application, but ES-DE will be basically useless without it.
 
-The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES-DE executable.
+As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the installation path, or in the path of the ES-DE executable.
 
 **Creating .deb and .rpm packages**
 
@@ -370,7 +368,7 @@ CPackDeb: - Generating dependency list
 CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-1.1.0-x64.deb generated.
 ```
 
-You may like to check that the dependencies look fine, as they're automatically generated by CMake:
+You may want to check that the dependencies look fine, as they're (mostly) automatically generated by CMake:
 
 ```
 dpkg -I ./emulationstation-de-1.1.0-x64.deb
@@ -401,17 +399,17 @@ CPackRPM: Will use GENERATED spec file: /home/myusername/emulationstation-de/_CP
 CPack: - package: /home/myusername/emulationstation-de/emulationstation-de-1.1.0-x64.rpm generated.
 ```
 
-On Fedora, you need to install rpmbuild before this command can be run though:
+On Fedora, you need to install rpmbuild before this command can be run:
 ```
 sudo dnf install rpm-build
 ```
 
-After the package generation you can check that the metadata looks fine using this command:
+After the package generation you can check that the metadata looks fine using the `rpm` command:
 ```
 rpm -qi ./emulationstation-de-1.1.0-x64.rpm
 ```
 
-And to see the automatically generated dependency requirements, run this:
+To see the automatically generated dependencies, run this:
 ```
 rpm -q --requires ./emulationstation-de-1.1.0-x64.rpm
 ```
@@ -431,7 +429,7 @@ As for code editing, I use [VSCode](https://code.visualstudio.com). I suppose Xc
 
 Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command `clang`. This will open a dialog that will let you download and install the tools.
 
-Following this, install the Homebrew package manager which will simplify the rest of the installation greatly. Install it by runing the following in a terminal window:
+Following this, install the Homebrew package manager which will greatly simplify the rest of the installation. Install it by runing the following in a terminal window:
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
@@ -453,7 +451,7 @@ brew install --cask vlc
 
 **Compiling FFmpeg:**
 
-The FFmpeg build distributed via Homebrew has a lot of dependencies we don't need, and which would make it very difficult to package it in an installer. Instead we will build this software with only some limited options:
+The FFmpeg build distributed via Homebrew has a lot of dependencies we don't need, and which would make it very difficult to package the application. Instead we will build this software with only some limited options:
 
 ```
 git clone https://github.com/FFmpeg/FFmpeg.git
@@ -470,7 +468,7 @@ Enable developer mode to avoid annoying password requests when attaching the deb
 ```
 sudo /usr/sbin/DevToolsSecurity --enable
 ```
-It makes me wonder who designed this functionality and what was their thinking, but a simple command is enough to not having to ponder this any further.
+It makes me wonder who designed this functionality and what was their thinking, I've never seen anything like this on any of the other systems I've been developing on.
 
 If required, define SDKROOT. This is only needed if during compilation you get error messages regarding missing include files. Running the following will properly setup the development environment paths:
 ```
@@ -504,36 +502,35 @@ cmake .
 make
 ```
 
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
+To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option:
 ```
 cmake -DVLC_PLAYER=on .
 make
 ```
 
-To generate a debug build, run this instead:
+To generate a debug build, run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
-Keep in mind though that a debug version will be much slower due to all compiler optimizations being disabled.
+Keep in mind that the debug version will be much slower due to all compiler optimizations being disabled.
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
-After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC is actually enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using 'make install'. It's only needed to be able to run the binary from the build directory. The following will of course only be active during your session, and you need to set the variable for each terminal window that you want to start ES-DE from, unless you add it to your shell profile file:
-
+After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC was enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using _make install_. It's only needed to be able to run the binary from the build directory. You should add this to your shell profile file to avoid having to set it each time you open a new terminal window:
 ```
 export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
 ```
 
-**Note:** Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
+Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
 Be aware that the approach taken for macOS has the limitation that you can't build for previous operating system versions. You can certainly set CMAKE_OSX_DEPLOYMENT_TARGET to whatever version you like, but the problem is that the Homebrew libraries will most likely not work on earlier macOS versions. In theory this can be worked around by building all these libraries yourself with a lower deployment target, but it's hardly worth the effort. It's better to build on the lowest OS version that should be supported and rely on forward compatibility.
 
 **Code signing:**
 
-Due to the Apple notarization requirement implemented as of macOS 10.14.5 a build with simple code signing is needed for versions up to 10.13 and another build with both code signing and notarization will be required for versions 10.14 and higher.
+Due to the Apple notarization requirement implemented as of macOS 10.14.5 a build with simple code signing is needed for versions up to 10.13 and another build with both code signing and notarization is required for version 10.14 and higher.
 
-macOS code signing is beyond the scope of this document, but the option MACOS_CODESIGN_IDENTITY is used to to specify the code signing certificate identity, for example:
+macOS code signing is beyond the scope of this document, but the option MACOS_CODESIGN_IDENTITY is used to specify the code signing certificate identity, for example:
 ```
 cmake -DMACOS_CODESIGN_IDENTITY="My Name" .
 ```
@@ -542,11 +539,13 @@ Assuming the code signing ceritificate is properly setup in Keychain Access, the
 
 **Legacy build:**
 
-Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy build for earlier operating system versions can be enabled. This has been tested with a minimum version of 10.11 and it's unclear if it works with even older macOS versions.
+Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy build for earlier operating system versions can be enabled. This has been tested with a minimum version of 10.11. It's unclear if it works with even older macOS versions.
 
 To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add 'legacy' to the DMG installer file name when running CPack.
 
 You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for.
+
+Due to issues with getting FFmpeg to compile on some older macOS versions, ES-DE v1.0.1 is the last version where a legacy build has been tested.
 
 **Installing:**
 
@@ -573,12 +572,12 @@ All except the VLC libraries should be located in /usr/local/lib. The VLC librar
 
 Note that the filenames could be slightly different depending on what versions you have installed on your system.
 
-After copying the libraries to the build directory, set the permissions to writable:
+After copying the libraries to the build directory, set their permissions like this:
 ```
 chmod 755 ./*.dylib
 ```
 
-There are some secondary internal dependencies between some of these library files, and these are baked into the files as absolut paths. As such we need to rewrite these to rpaths (relative paths) which is done using the install_name_tool command.
+There are some secondary internal dependencies between some of these library files, and these are baked into the files as absolute paths. As such we need to rewrite these to rpaths (relative paths) which is done using the install_name_tool command.
 
 A script is available to automate this: `tools/macOS_change_dylib_rpaths.sh`
 
@@ -662,23 +661,23 @@ This will be the directory structure for the installation (the VLC-related files
 /Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/*
 ```
 
-ES will look in the following locations for the resources, in the listed order:
+ES-DE will look in the following locations for application resources, in the listed order:
 
 * \<home\>/.emulationstation/resources/
 * \<ES-DE executable directory\>/../Resources/resources/
 * \<ES-DE executable directory\>/resources/
 
-**Note:** The resources directory is critical, without it the application won't start.
+The resources directory is critical, without it the application won't start.
 
-And it will look in the following locations for the themes, also in the listed order:
+As well the following locations will be searched for themes, also in the listed order:
 
 * \<HOME\>/.emulationstation/themes/
 * \<ES-DE executable directory\>/../Resources/themes/
 * \<ES-DE executable directory\>/themes/
 
-A theme is not mandatory to start the application, but ES will be basically useless without it.
+A theme is not mandatory to start the application, but ES-DE will be basically useless without it.
 
-The home directory will always take precedence, and any resources or themes located there will override the ones in the installation path or in the path of the ES-DE executable.
+As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
 **Creating a .dmg installer:**
 
@@ -694,7 +693,7 @@ CPack: Create package
 CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.1.0-x64.dmg generated.
 ```
 
-Generating .dmg installers on older version of macOS seems to make them forward compatible to a pretty good extent, for instance building on El Capitan seems to generate an application that is usable on Catalina and Big Sur. The other way around does however not seem to be true, which is quite unsurprising.
+Generating .dmg installers on older version of macOS seems to make them forward compatible to a pretty good extent, for instance building on El Capitan seems to generate an application that is usable on Catalina and Big Sur. The other way around is not true due to the use of dependencies from the Homebrew repository.
 
 **Special considerations regarding run-paths:**
 
@@ -727,29 +726,12 @@ This is what an incorrect line would look like:
 
 `/usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib (compatibility version 13.0.0, current version 13.0.0)`
 
-This is the section in es-app/CMakeLists.txt that would need to be modified:
-
-```
-add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
-        -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib
-        -change /usr/local/lib/libavfilter.7.dylib @rpath/libavfilter.7.dylib
-        -change /usr/local/lib/libavformat.58.dylib @rpath/libavformat.58.dylib
-        -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib
-        -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib
-        -change /usr/local/lib/libswscale.5.dylib @rpath/libswscale.5.dylib
-        -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
-        -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
-        -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
-        -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
-        $<TARGET_FILE:EmulationStation>)
-```
-
 
 ## Building on Windows
 
 Both MSVC and MinGW (GCC) work fine for building ES-DE on Windows.
 
-Although I would prefer to exclude support for MSVC, this proprietary compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. For release builds though MinGW is very fast and it seems as if ES-DE starts around 18% faster when built with MinGW so this compiler probably generates more efficient code overall. As well MSVC requires a lot more junk DLL files to be distributed with the application so it's not a good candidate for the final release build.
+Although I would prefer to exclude support for MSVC, this compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. But for release builds MinGW is very fast and ES-DE starts around 18% faster when built with MinGW meaning this compiler probably generates more efficient code overall. As well MSVC requires a lot more junk DLL files to be distributed with the application so it's not a good candidate for the final release build.
 
 For this reason I think MSVC makes sense for development and MinGW for the releases.
 
@@ -772,7 +754,7 @@ Just-In-Time debugger
 C++ CMake tools for Windows
 ```
 
-If you intend to use both MinGW and MSVC on the machine, it's probably better to exclude CMake and install it manually as described in the MinGW setup instructions below.
+If you intend to use both MinGW and MSVC on the same machine, it's probably better to exclude CMake and install it manually as described in the MinGW setup instructions below.
 
 The way the MSVC environment works is that a specific developer shell is provided where the build environment is properly configured. You open this from the Start menu via `Visual Studio 2019` -> `Visual Studio tools` -> `VC` -> `x64 Native Tools Command Prompt for VS 2019`.
 
@@ -788,24 +770,24 @@ Download the following packages and install them:
 
 [https://jmeubank.github.io/tdm-gcc](https://jmeubank.github.io/tdm-gcc)
 
-After installation, make a copy of `TDM-GCC-64/bin/mingw32-make` to `make` just for convenience.
+After installation, make a copy of `TDM-GCC-64\bin\mingw32-make` to `make` just for convenience.
 
-Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW installation should work fine though.
+Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW distribution should work fine though.
 
 **Other preparations:**
 
 In order to get clang-format onto the system you need to download and install Clang: \
 [https://llvm.org/builds](https://llvm.org/builds)
 
-Just run the installer and make sure to select the option "Add LLVM to the system PATH for current user".
+Just run the installer and make sure to select the option _Add LLVM to the system PATH for current user_.
 
 Install your editor of choice, I use [VSCode](https://code.visualstudio.com).
 
-Configure Git. I won't get into the details on how it's done, but there are many resources available online to support with this. The `Git Bash` shell shipped with Git for Windows is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS2.
+Configure Git. I won't get into the details on how this is done, but there are many resources available online to support with this. The `Git Bash` shell shipped with Git for Windows is very useful though as it's somewhat reproducing a Unix environment using MinGW/MSYS2.
 
-It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor, although it can also be configured in Git for conversion during commits. The source code for ES-DE only uses Unix-style line breaks.
+It's strongly recommended to set line breaks to Unix-style (line feed only) directly in the editor. But if not done, lines breaks will anyway be converted when running clang-format on the code, as explained [here](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting).
 
-In the description below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
+In the descriptions below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
 
 
 **Download the dependency packages:**
@@ -816,7 +798,7 @@ FFmpeg (choose a package with win64-gpl-shared in the filename, the latest snaps
 FreeImage (binary distribution) \
 [https://sourceforge.net/projects/freeimage](https://sourceforge.net/projects/freeimage)
 
-cURL (Windows 64 bit binary, the MinGW version even if using MSVC) \
+cURL (Windows 64 bit binary, select the MinGW version even if using MSVC) \
 [https://curl.haxx.se/download.html](https://curl.haxx.se/download.html)
 
 SDL2 (development libraries, MinGW or VC/MSVC) \
@@ -890,7 +872,7 @@ make
 
 [RapidJSON](http://rapidjson.org)
 
-For RapidJSON, you don't need to compile it, you just need the include files:
+For RapidJSON you don't need to compile, you just need the include files:
 
 ```
 git clone git://github.com/Tencent/rapidjson.git
@@ -908,7 +890,7 @@ This works the same as on Unix or macOS, just run the following:
 git clone https://gitlab.com/leonstyhre/emulationstation-de.git
 ```
 
-By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+By default the master branch will be used, which is where development takes place. To instead build the latest stable release, switch to the `stable` branch:
 
 ```
 cd emulationstation-de
@@ -927,7 +909,7 @@ You may need to create the SDL2 directory manually and copy the header files the
 
 For FFmpeg, copy the directories libavcodec, libavfilter, libavformat and libavutil.
 
-It should then look something like this:
+It should look something like this:
 
 ```
 $ ls -1 include/
@@ -1036,11 +1018,9 @@ vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 201
 
 **Additional files for both MSVC and MinGW if building with the VLC video player:**
 
-In addition to the files above, you need to copy some libraries from the VLC `plugins` folder to be able to play video files. There is a subdirectory structure under the plugins folder but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
+In addition to the files above, you need to copy some libraries from the VLC `plugins` folder. This contains a subdirectory structure but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
 
-It's a bit tricky to know which libraries are really needed. But as the plugins directory is around 120 MB (as of VLC version 3.0.11), we definitely only want to copy the files we need.
-
-The following files seem to be required to play most video and audio formats (place them in `emulationstation-de\plugins`):
+The following libraries seem to be required to play most video and audio formats:
 
 ```
 access\libfilesystem_plugin.dll
@@ -1060,7 +1040,9 @@ video_chroma\libswscale_plugin.dll
 video_output\libvmem_plugin.dll
 ```
 
-The combined size of these files is around 22 MB which is more reasonable.
+The reason to not simply copy all plugins is that the combined size of these is around 120 MB (as of VLC version 3.0.11) and the size of the selected files listed above is around 22 MB, which is more reasonable.
+
+Place the files in the `emulationstation-de\plugins\` directory.
 
 **Building ES-DE using MSVC:**
 
@@ -1128,7 +1110,7 @@ Note that compilation time is much longer than on Unix or macOS, and linking tim
 
 If you are running Windows in a virtualized environment such as QEMU-KVM that does not support HW accelerated OpenGL, you can install the Mesa3D for Windows library, which can be downloaded at [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag).
 
-You simply extract the opengl32.dll file into the ES-DE directory and this will enable the llvmpipe renderer. The performance will be terrible of course, but everything should work and it should be good enough for test building on Windows without having to reboot your computer to a native Windows installation. (Note that you may need to copy opengl32.dll to your RetroArch installation directory as well to get the emulators to work correctly.)
+You simply extract the opengl32.dll file into the ES-DE directory and this will enable the llvmpipe renderer. The performance will be terrible of course, but everything should work and it should be good enough for test building on Windows without having to reboot your computer to a native Windows installation. (Note that you may need to copy opengl32.dll to your RetroArch installation directory as well to get the emulators to work somehow correctly.)
 
 Obviously this library is only intended for development and will not be shipped with ES-DE.
 
@@ -1154,26 +1136,26 @@ CPack: - package: C:/Programming/emulationstation-de/EmulationStation-DE-1.1.0-x
 
 The default installation directory suggested by the installer is `C:\Program Files\EmulationStation-DE` but this can of course be changed by the user.
 
-ES will look in the following locations for the resources, in the listed order:
+ES-DE will look in the following locations for application resources, in the listed order:
 
 * \<home\>\\.emulationstation\resources\
 * \<ES-DE executable directory\>\resources\
 
 The resources directory is critical, without it the application won't start.
 
-And it will look in the following locations for the themes, also in the listed order:
+As well the following locations will be searched for themes, also in the listed order:
 
 * \<home\>\\.emulationstation\themes\
 * \<ES-DE executable directory\>\themes\
 
-The theme is not mandatory to start the application, but ES-DE will be basically useless without it.
+A theme is not mandatory to start the application, but ES-DE will be basically useless without it.
 
-So the home directory will always take precedence, and any resources or themes located there will override the ones in the path of the ES-DE executable.
+As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
 
 ## Using clang-format for automatic code formatting
 
-The entire ES-DE codebase is formatted using clang-format and all code commits must have been processed using this tool.
+The entire ES-DE codebase is formatted using clang-format and all new code must be formatted using this tool before being committed.
 
 There is a style configuration file named .clang-format located directly at the root of the repository which contains the formatting rules. How to install clang-format is detailed per operating system earlier in this document.
 
@@ -1185,7 +1167,7 @@ To format a file from the command line, simply run:
 
 The -i flag will make an inplace edit of the file.
 
-But the recommended way is to run clang-format from within the editor. If using VSCode, there is an extension available named Clang-Format. After installing this, simply open a source file, right click and choose `Format Document` or use the applicable keyboard shortcut. The first time you do this, you will have to make a choice to perform the formatting using clang-format. The rest should be completely automatic.
+But the recommended approach is to run clang-format from within the editor. If using VSCode, there is an extension available named Clang-Format. After installing this, simply open a source file, right click and choose `Format Document` or use the applicable keyboard shortcut. The first time you do this, you will have to make a choice to perform the formatting using clang-format. The rest should be completely automatic.
 
 In some instances you may want to avoid getting code formatted, and you can accomplish this by simply enclosing the lines with the two comments "clang-format off" and "clang-format on", such as this:
 
@@ -1201,7 +1183,7 @@ CollectionSystemDecl systemDecls[] = {
 // clang-format on
 ```
 
-Adding a comment (or a semicolon) on its own line will also prevent some formatting such as turning short functions and lambda expressions into single lines. For this function such a comment has been added:
+Adding a comment on its own line will also prevent some formatting such as turning short functions and lambda expressions into single lines. For this function such a comment has been added:
 
 ```c++
 const std::string FileData::get3DBoxPath() const
@@ -1220,20 +1202,29 @@ const std::string FileData::get3DBoxPath() const { return getMediafilePath("3dbo
 Adding comments (even empty ones) can also force line breaks to avoid ugly formatting such as this:
 
 ```c++
-for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
-     it++) {
-    (*it)->setScrapeFlag(false);
+for (auto it = mCursorStackHistory.begin(); it != mCursorStackHistory.end();
+        it++) {
+    if (std::find(listEntries.begin(), listEntries.end(), *it) !=
+        listEntries.end()) {
+        newCursor = *it;
+        mCursorStackHistory.erase(it);
+        break;
+    }
 }
 ```
 
-Adding a comment at the right place produces this much nicer formatting:
+A comment at the right place produces this much nicer formatting:
 ```c++
-for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-     it != SystemData::sSystemVector.cend(); it++) {
-    (*it)->setScrapeFlag(false);
+for (auto it = mCursorStackHistory.begin(); // Line break.
+        it != mCursorStackHistory.end(); it++) {
+    if (std::find(listEntries.begin(), listEntries.end(), *it) !=
+        listEntries.end()) {
+        newCursor = *it;
+        mCursorStackHistory.erase(it);
+        break;
+    }
 }
 ```
-
 
 Of course you would like to get the code formatted according to the clang-format rules in most instances, these workaround are only meant for rare exceptions. Some compromises are necessary when auto-formatting code, at least with clang-format in its current state.
 
@@ -1255,9 +1246,9 @@ emulationstation-de/resources/certificates/curl-ca-bundle.crt
 
 **MAME ROM info:**
 
-This is a bit tricky as the data needs to be converted to an internal format used by ES-DE. The original file is huge and most of the information is not required.
+ES-DE automatically identifies and excludes MAME BIOS and device files, as well as translating the short MAME ROM names to their full game names. This is done using information from the MAME driver file shipped with the official MAME distribution. The file needs to be converted to an internal format used by ES-DE as the original file is huge and most of the information is not required.
 
-Go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like `mame0226lx.zip` and unzipping it will give you a file name such as `mame0226.xml`.
+To get hold of the driver file, go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like `mame0226lx.zip` and unzipping it will give you a file name such as `mame0226.xml`.
 
 Move the XML driver file to the resources/MAME directory and then convert it to the ES-DE internal files:
 
@@ -1294,14 +1285,14 @@ git diff mamebioses
 git diff mamedevices
 ```
 
-The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions would have missing information. This is so as the MAME project sometimes removes older entries when they're reorganizing the ROM sets. By merging the files we retain backwards compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
+The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions would have missing information. This is so as the MAME project sometimes removes older entries when they're reorganizing the ROM sets. By merging the files we retain backward compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
 
 
 ## Configuration
 
 **~/.emulationstation/es_settings.xml:**
 
-When ES-DE is first run, a configuration file will be created as `~/.emulationstation/es_settings.xml`.
+When ES-DE is first started, a configuration file will be created as `~/.emulationstation/es_settings.xml`
 
 This file will contain all supported settings at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES-DE to update all the necessary settings.
 
@@ -1335,9 +1326,11 @@ There is also support to add the variable %ESPATH% to the ROM directory setting,
 
 **~/.emulationstation/es_input.xml:**
 
-You normally don't need to modify this file manually as it's created by the built-in input configuration step. This procedure is detailed in the [User guide](USERGUIDE.md#input-device-configuration).
+As ES-DE auto-configures the keyboard and controllers, neither the input configuration step or manual adjustments to the es_input.xml file should normally be needed. Actually, unless the button layout has been customized using the input configurator, the es_input.xml file will not even exist.
 
-If your controller and keyboard stop working, you can delete the `~/.emulationstation/es_input.xml` file to make the input configuration screen re-appear on the next startup, or you can start ES-DE with the `--force-input-config` command line option.
+But if you have customized your button layout and your controller or keyboard stop working, you can delete the `~/.emulationstation/es_input.xml` file to remove the customizations, or you can start ES-DE with the `--force-input-config` command line option to make the input configurator appear.
+
+The input configuration is described in the [User guide](USERGUIDE-DEV.md#input-device-configuration).
 
 
 ## Command line options
@@ -1412,15 +1405,17 @@ ES-DE ships with a comprehensive `es_systems.xml` configuration file and normall
 
 To make a customized version of the systems configuration file, it first needs to be copied to `~/.emulationstation/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden using the --home command line option.)
 
-The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS and `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
+The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
 
-Note that when copying the bundled es_systems.xml file to ~/.emulationstation/custom_systems/, it will completely replace the default file. So when upgrading to future ES-DE versions, any modifications such as additional game systems will not be enabled until the customized configuration file has been manually updated.
+Note that when copying the bundled es_systems.xml file to ~/.emulationstation/custom_systems/, it will completely replace the default file processing. So when upgrading to future ES-DE versions, any modifications such as additional game systems will not be enabled until the customized configuration file has been manually updated.
 
 It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
 
 Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
 
-Below is an overview of the file layout with various examples. For a real system entry there can of course not be multiple entries for the same tag such as the multiple \<command\> entries listed here.
+Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic described later in this document removes the need for most of the legacy options, but they are still supported for special configurations and for backward compatibility with old configuration files.
+
+For a real system entry there can of course not be multiple entries for the same tag such as the multiple \<command\> entries listed here.
 
 ```xml
 <?xml version="1.0"?>
@@ -1433,7 +1428,7 @@ Below is an overview of the file layout with various examples. For a real system
         <name>snes</name>
 
         <!-- The full system name, used for sorting the systems, for selecting the systems to multi-scrape etc. -->
-        <fullname>Super Nintendo Entertainment System</fullname>
+        <fullname>Nintendo SNES (Super Nintendo)</fullname>
 
         <!-- The path to look for ROMs in. '~' will be expanded to $HOME or %HOMEPATH%, depending on the operating system.
         The optional %ROMPATH% variable will expand to the path defined in the setting ROMDirectory in es_settings.xml.
@@ -1458,7 +1453,7 @@ Below is an overview of the file layout with various examples. For a real system
         the find rules for the emulator cores. -->
         <command>retroarch -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
 
-        <!-- This is an example for macOS, which is very similar to the Unix example above except using an absolut path to the emulator. -->
+        <!-- This is an example for macOS, which is very similar to the Unix example above except using an absolute path to the emulator. -->
         <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
 
         <!-- This is an example for Windows. The .exe extension is optional and both forward slashes and backslashes are allowed as
@@ -1478,14 +1473,14 @@ Below is an overview of the file layout with various examples. For a real system
 
         <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
         The entry is case insensitive as it will be converted to lower case during startup.
-        This tag is optional but the system can't be scraped if it's left out.
+        This tag is optional but scraper searches for the system will be inaccurate if it's left out.
         You can use multiple platforms too, delimited with any of the whitespace characters (", \r\n\t"), e.g. "megadrive, genesis". -->
         <platform>snes</platform>
 
         <!-- The theme to load from the current theme set. See THEMES.md for more information.
         This tag is optional and if it doesn't exist, ES-DE will attempt to find a theme with the same name as the system name.
         If no such match is made, the system will be unthemed.
-        It's strongly recommended to include this tag even if it's just to clarify that the theme should correspond to the system name. -->
+        It's recommended to include this tag even if it's just to clarify that the theme should correspond to the system name. -->
         <theme>snes</theme>
     </system>
 </systemList>
@@ -1497,7 +1492,7 @@ The following variable is expanded for the `path` tag:
 
 The following variables are expanded for the `command` tag:
 
-`%ROM%` - Replaced with the absolute path to the selected ROM, with most Bash special characters escaped with a backslash.
+`%ROM%` - Replaced with the absolute path to the selected ROM, with most special characters escaped with a backslash.
 
 `%ROMRAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
 
@@ -1626,12 +1621,12 @@ The `name` attribute must correspond to the command tags in es_systems.xml, take
 
 Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so pretty).
 
-Of course this makes it possible to add any number of emulators to the configuration file if not only using RetroArch.
+Of course this makes it possible to add any number of emulators to the configuration file.
 
-The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe` will be searched for. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the key actually exists, and if not, processing will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
+The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe` will be searched for. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the key actually exists, and if not, it will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
 
 
-The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must also be included in the entry tag.
+The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag.
 
 The winregistrypath rules are always processed first, followed by systempath and then staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
 
@@ -1735,7 +1730,7 @@ There is also support to add the variable %ESPATH% to the media directory settin
 
 The default media directory is `~/.emulationstation/downloaded_media`
 
-You can use ES-DE's scraping tools to populate the gamelist.xml files, or manually update individual entries using the metadata editor. All of this is explained in the [User guide](USERGUIDE.md).
+You can use ES-DE's scrapers to populate the gamelist.xml files, or manually update individual entries using the metadata editor. All of this is explained in the [User guide](USERGUIDE-DEV.md).
 
 The gamelist.xml files are searched for in the ES-DE home directory, i.e. `~/.emulationstation/gamelists/<system name>/gamelist.xml`
 
@@ -1777,10 +1772,10 @@ There are a few different data types for the metadata which the string values in
 * `string` - just text
 * `float` - a floating-point decimal value (written as a string)
 * `integer` - an integer value (written as a string)
-* `datetime` - a date and, potentially, a time.  These are encoded as an ISO string, in the following format: "%Y%m%dT%H%M%S%F%q".  For example, the release date for Chrono Trigger is encoded as "19950311T000000" (no time specified)
+* `datetime` - a date and optionally a time encoded as an ISO string in the format "%Y%m%dT%H%M%S",  for example "19950311T000000"
 * `bool` - a true or false value
 
-Some metadata is also marked as "statistic" - these are kept track of by ES-DE and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
+Some metadata is also marked as "statistic", these are kept track of by ES-DE and do not show up in the metadata editor. They are shown in certain views (for example, the detailed view and the video view both show `lastplayed`, although the label can be disabled by the theme).
 
 There are two basic categories of metadata, `game` and `folders` and the metdata tags for these are described in detail below.
 
@@ -1863,34 +1858,36 @@ This will draw a semi-transparent blue frame around all text elements.
 
 This will reload either a single gamelist or all gamelists depending on where you're located when entering the key combination (go to the system view to make a complete reload). Very useful for theme development as any changes to the theme files will be activated without requiring an application restart. Note that the menu needs to be closed for this key combination to have any effect.
 
+By default all controller input (keyboard and controller button presses) will be logged when the --debug flag has been passed. To disable the input logging, the setting DebugSkipInputLogging kan be set to false in the es_settings.xml file. There is no menu entry to change this as it's intended for developers and not for end users.
+
 
 ## Portable installation on Windows
 
-It's possible to easily create a portable installation of ES-DE for Windows, for example to place on a USB memory stick.
+It's possible to easily create a portable installation of ES-DE on Windows, for example to place on a USB memory stick.
 
-For the sake of this example, let's assume that the removable media has the device name `f:\`
+For the sake of this example, let's assume that the removable media has the device name `F:\`
 
 These are the steps to perform:
 
-* Copy the EmulationStation-DE installation directory to f:\
-* Copy your emulator directories to f:\EmulationStation-DE\
-* Copy your ROMs directory to f:\EmulationStation-DE\
-* Create an empty file named portable.txt in f:\EmulationStation-DE\
+* Copy the EmulationStation-DE installation directory to F:\
+* Copy your emulator directories to F:\EmulationStation-DE\
+* Copy your ROMs directory to F:\EmulationStation-DE\
+* Create an empty file named portable.txt in F:\EmulationStation-DE\
 
 You should end up with something like this:
 ```
-f:\EmulationStation-DE\
-f:\EmulationStation-DE\RetroArch-Win64\
-f:\EmulationStation-DE\yuzu\
-f:\EmulationStation-DE\ROMs\
-f:\EmulationStation-DE\portable.txt
+F:\EmulationStation-DE\
+F:\EmulationStation-DE\RetroArch-Win64\
+F:\EmulationStation-DE\yuzu\
+F:\EmulationStation-DE\ROMs\
+F:\EmulationStation-DE\portable.txt
 ```
 
 (Yuzu is an optional Nintendo Switch emulator.)
 
 Of course there will be many more files and directories from the normal installation than those listed above.
 
-How this works is that when ES-DE finds a file named portable.txt in its executable directory, it will locate the .emulationstation directory directly in this folder. It's however also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under f:\ in this example.
+How this works is that when ES-DE finds a file named portable.txt in its executable directory, it will by default locate the .emulationstation directory directly in this folder. It's also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under F:\ in this example.
 
 If the --home command line parameter is passed when starting ES-DE, that will override the portable.txt file.
 
@@ -1905,15 +1902,15 @@ yuzu\yuzu-windows-msvc\yuzu.exe
 ..\yuzu\yuzu-windows-msvc\yuzu.exe
 ```
 
-If you want to place your emulators elsewhere, you need to create a customized es_find_rules.xml file, which is explained later in this document.
+If you want to place your emulators elsewhere, you need to create a customized es_find_rules.xml file, which is explained earlier in this document.
 
-Start ES-DE from the f:\ device and check that everything works as expected.
+Start ES-DE from the F:\ device and check that everything works as expected.
 
 Following this, optionally copy any existing gamelist.xml files, game media files etc. to the removable media. For example:
 
 ```
-f:\EmulationStation-DE\.emulationstation\gamelists\
-f:\EmulationStation-DE\.emulationstation\downloaded_media\
+F:\EmulationStation-DE\.emulationstation\gamelists\
+F:\EmulationStation-DE\.emulationstation\downloaded_media\
 ```
 
 You now have a fully functional portable retro gaming installation!
@@ -1928,10 +1925,10 @@ There are numerous locations throughout ES-DE where custom scripts will be execu
 The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files.
 
 We'll go through two examples:
-* Create a log file that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming
-* Change the system resolution when launching and returning from a game in order to run the emulator at a lower resolution than ES-DE
+* Creating a log file that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming
+* Changing the system resolution when launching and returning from a game in order to run the emulator at a lower resolution than ES-DE
 
-**Note:** The following examples are for Unix systems, but it works the same way in macOS (which is also Unix after all), and on Windows (although .bat batch files are then used instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix).
+**Note:** The following examples are for Unix systems, but it works the same way on macOS (which is also Unix after all), and on Windows (although .bat batch files are then used instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix).
 
 The events executed when a game starts and ends are called `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
 
@@ -1964,7 +1961,7 @@ After creating the two scripts, you should have something like this on the files
 ~/.emulationstation/scripts/game-end/game_end_logging.sh
 ```
 
-Don't forget to make the scripts executable (e.g. 'chmod 755 ./game_start_logging.sh').
+Don't forget to make the scripts executable (e.g. "chmod 755 ./game_start_logging.sh").
 
 If we now start ES-DE with the debug flag and launch a game, something like the following should show up in es_log.txt:
 
