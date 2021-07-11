@@ -240,7 +240,7 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // Ratings are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    // Ratings are not supported by TheGamesDB, so gray out the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scrape_ratings->setEnabled(false);
         scrape_ratings->setOpacity(DISABLED_OPACITY);
@@ -271,7 +271,7 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // Videos are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    // Videos are not supported by TheGamesDB, so gray out the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scrape_videos->setEnabled(false);
         scrape_videos->setOpacity(DISABLED_OPACITY);
@@ -325,7 +325,7 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // 3D box images are not supported by TheGamesDB, so disable the option if this scraper
+    // 3D box images are not supported by TheGamesDB, so gray out the option if this scraper
     // is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scrape_3dboxes->setEnabled(false);
@@ -544,7 +544,7 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    // Regions are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    // Regions are not supported by TheGamesDB, so gray out the option if this scraper is selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scraper_region->setEnabled(false);
         scraper_region->setOpacity(DISABLED_OPACITY);
@@ -592,7 +592,8 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    // Languages are not supported by TheGamesDB, so disable the option if this scraper is selected.
+    // Languages are not supported by TheGamesDB, so gray out the option if this scraper is
+    // selected.
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scraper_language->setEnabled(false);
         scraper_language->setOpacity(DISABLED_OPACITY);
@@ -667,7 +668,7 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    // If interactive mode is set to off, then disable this option.
+    // If interactive mode is set to off, then gray out this option.
     if (!Settings::getInstance()->getBool("ScraperInteractive")) {
         scraper_semiautomatic->setEnabled(false);
         scraper_semiautomatic->setOpacity(DISABLED_OPACITY);
@@ -704,7 +705,7 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    // If respecting excluded files is set to off, then disable this option.
+    // If respecting excluded files is set to off, then gray out this option.
     if (!Settings::getInstance()->getBool("ScraperRespectExclusions")) {
         scraper_exclude_recursively->setEnabled(false);
         scraper_exclude_recursively->setOpacity(DISABLED_OPACITY);
@@ -739,6 +740,16 @@ void GuiScraperMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+
+    // The TLS/certificate issue is not present for TheGamesDB, so gray out the option if this
+    // scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        retry_peer_verification->setEnabled(false);
+        retry_peer_verification->setOpacity(DISABLED_OPACITY);
+        retry_peer_verification->getParent()
+            ->getChild(retry_peer_verification->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
 
     // Switch callbacks.
     auto interactiveToggleFunc = [scraper_semiautomatic]() {

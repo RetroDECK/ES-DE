@@ -937,7 +937,7 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-    // If the RunInBackground setting is enabled, then disable this option.
+    // If the RunInBackground setting is enabled, then gray out this option.
     if (Settings::getInstance()->getBool("RunInBackground")) {
         launch_workaround->setEnabled(false);
         launch_workaround->setOpacity(DISABLED_OPACITY);
