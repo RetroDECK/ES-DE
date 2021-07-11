@@ -79,13 +79,22 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     if (mApproveResults) {
         buttons.push_back(
             std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH", "refine search", [&] {
-                mSearchComp->openInputScreen(mSearchQueue.front());
-                mGrid.resetCursor();
+                // Refine the search, unless the result has already been accepted or we're in
+                // semi-automatic mode and there are less than 2 search results.
+                if (!mSearchComp->getAcceptedResult() &&
+                    !(mSearchComp->getSearchType() == GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                      mSearchComp->getScraperResultSize() < 2)) {
+                    mSearchComp->openInputScreen(mSearchQueue.front());
+                    mGrid.resetCursor();
+                }
             }));
 
         buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SKIP", "skip game", [&] {
-            skip();
-            mGrid.resetCursor();
+            // Skip game, unless the result has already been accepted.
+            if (!mSearchComp->getAcceptedResult()) {
+                skip();
+                mGrid.resetCursor();
+            }
         }));
     }
 

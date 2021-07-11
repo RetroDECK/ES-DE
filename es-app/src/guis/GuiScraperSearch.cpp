@@ -49,6 +49,7 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
     addChild(&mGrid);
 
     mBlockAccept = false;
+    mAcceptedResult = false;
     mRetrySearch = false;
     mRetryCount = 0;
 
@@ -325,6 +326,7 @@ void GuiScraperSearch::updateViewStyle()
 void GuiScraperSearch::search(const ScraperSearchParams& params)
 {
     mBlockAccept = true;
+    mAcceptedResult = false;
     mMiximageResult = false;
     mScrapeResult = {};
 
@@ -347,6 +349,7 @@ void GuiScraperSearch::stop()
     mMDRetrieveURLsHandle.reset();
     mMiximageGenerator.reset();
     mBlockAccept = false;
+    mAcceptedResult = false;
     mMiximageResult = false;
     mScrapeResult = {};
 }
@@ -546,12 +549,17 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
             return true;
     }
 
-    // Refine search.
-    if (config->isMappedTo("y", input) && input.value != 0)
-        openInputScreen(mLastSearch);
+    // Refine the search, unless the result has already been accepted or we're in semi-automatic
+    // mode and there are less than 2 search results.
+    if (!mAcceptedResult && config->isMappedTo("y", input) && input.value != 0) {
+        if (mSearchType != ACCEPT_SINGLE_MATCHES ||
+            mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1) {
+            openInputScreen(mLastSearch);
+        }
+    }
 
-    // Skip game.
-    if (mScrapeCount > 1 && config->isMappedTo("x", input) && input.value != 0)
+    // Skip game, unless the result has already been accepted.
+    if (!mAcceptedResult && mScrapeCount > 1 && config->isMappedTo("x", input) && input.value != 0)
         mSkipCallback();
 
     return GuiComponent::input(config, input);
@@ -573,6 +581,7 @@ void GuiScraperSearch::render(const Transform4x4f& parentTrans)
 void GuiScraperSearch::returnResult(ScraperSearchResult result)
 {
     mBlockAccept = true;
+    mAcceptedResult = true;
 
     // Resolve metadata image before returning.
     if (result.mediaFilesDownloadStatus != COMPLETED) {
@@ -791,8 +800,8 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         }
         else {
             // If searching based on the actual file name, then expand to the full game name
-            // in case the scraper is set to TheGamesDB and it's an arcade game. This is required
-            // as TheGamesDB has issues with searches using the short MAME names.
+            // in case the scraper is set to TheGamesDB and it's an arcade game. This is
+            // required as TheGamesDB does not support searches using the short MAME names.
             if (params.game->isArcadeGame() &&
                 Settings::getInstance()->getString("Scraper") == "thegamesdb")
                 searchString = MameNames::getInstance()->getCleanName(params.game->getCleanName());

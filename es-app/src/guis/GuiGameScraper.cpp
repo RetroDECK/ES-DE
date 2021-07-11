@@ -72,8 +72,11 @@ GuiGameScraper::GuiGameScraper(Window* window,
 
     buttons.push_back(
         std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH", "refine search", [&] {
-            mSearch->openInputScreen(mSearchParams);
-            mGrid.resetCursor();
+            // Refine the search, unless the result has already been accepted.
+            if (!mSearch->getAcceptedResult()) {
+                mSearch->openInputScreen(mSearchParams);
+                mGrid.resetCursor();
+            }
         }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel", [&] {
         if (mSearch->getSavedNewMedia()) {
