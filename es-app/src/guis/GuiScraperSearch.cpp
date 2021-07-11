@@ -782,12 +782,12 @@ void GuiScraperSearch::updateThumbnail()
 void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 {
     auto searchForFunc = [&](const std::string& name) {
+        stop();
         mRefinedSearch = true;
         params.nameOverride = name;
         search(params);
     };
 
-    stop();
     mRetryCount = 0;
 
     std::string searchString;
