@@ -507,6 +507,7 @@ void GuiMetaDataEd::save()
 
 void GuiMetaDataEd::fetch()
 {
+    mMediaFilesUpdated = false;
     GuiGameScraper* scr = new GuiGameScraper(
         mWindow, mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1));
     mWindow->pushGui(scr);
