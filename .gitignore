@@ -29,7 +29,7 @@ emulationstation.core
 gmon.out
 
 # Patch/diff files
-*.diff
+*.patch
 
 # Build directories
 build
