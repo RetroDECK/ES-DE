@@ -47,7 +47,7 @@ public:
     void search(const ScraperSearchParams& params);
     void openInputScreen(ScraperSearchParams& from);
     void stop();
-    int getScraperResultSize() { return static_cast<int>(mScraperResults.size()); }
+    int getScraperResultsSize() { return static_cast<int>(mScraperResults.size()); }
     bool getAcceptedResult() { return mAcceptedResult; }
     SearchType getSearchType() const { return mSearchType; }
     bool getSavedNewMedia()

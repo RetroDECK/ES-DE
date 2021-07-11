@@ -83,7 +83,7 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
                 // semi-automatic mode and there are less than 2 search results.
                 if (!mSearchComp->getAcceptedResult() &&
                     !(mSearchComp->getSearchType() == GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
-                      mSearchComp->getScraperResultSize() < 2)) {
+                      mSearchComp->getScraperResultsSize() < 2)) {
                     mSearchComp->openInputScreen(mSearchQueue.front());
                     mGrid.resetCursor();
                 }
