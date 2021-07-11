@@ -74,7 +74,7 @@ Upon first startup, ES-DE will create its `~/.emulationstation` home directory.
 
 On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username\>\\.emulationstation\
 
-**Note:** As of ES-DE v1.1 there is no internationalization support, which means that the application will always require the physical rather than the localized path to your home directory. For instance on macOS configured for the Swedish language /Users/myusername will be the physical path but /Användare/myusername is the localized path that is actually shown in the user interface. The same is true on Windows where the directories would be C:\Users\myusername and C:\Användare\myusername respectively. If attempting to enter the localized path for any directory-related setting, ES-DE will not be able to find it. But it's always possible to use the tilde `~` symbol when referring to your home directory, which ES-DE will expand to the physical location regardless of what language you have configured for your operating system. If you're using an English-localized system, this whole point is irrelevant as the physical and localized paths are always identical.
+**Note:** As of ES-DE v1.1 there is no internationalization support, which means that the application will always require the physical rather than the localized path to your home directory. For instance on macOS configured for the Swedish language /Users/myusername will be the physical path but /Användare/myusername is the localized path that is actually shown in the user interface. The same is true on Windows where the directories would be C:\Users\myusername and C:\Användare\myusername respectively. If attempting to enter the localized path for any directory-related setting, ES-DE will not be able to find it. But it's always possible to use the tilde `~` symbol when referring to your home directory, which ES-DE will expand to the physical location regardless of what language you have configured for your operating system. If you're using an English-localized system, this whole point is irrelevant as the physical and localized paths are then identical.
 
 It's also possible to override the home directory path using the --home command line option, but this is normally required only for very special situations so we can safely ignore that option for now.
 
@@ -151,11 +151,9 @@ ES-DE automatically configures the keyboard and any connected controllers using 
 
 You can also force a run of this tool directly on startup via the command line argument `--force-input-config`.
 
-The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions.
+The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions. But note that custom button mappings will not change the help prompts.
 
 Any custom configuration is applied per unique device ID (GUID). So if two identical controllers are used with ES-DE, both will have the same configuration applied. If connecting controllers of the same type but of different revisions, the GUID may differ and therefore the custom configuration would need to be applied to each device individually.
-
-Note that custom button mappings will not change the help prompts.
 
 If you have issues with your input configuration, as a last resort you can reset all the mappings by deleting or renaming the file ~/.emulationstation/es_input.xml.
 
@@ -1087,7 +1085,7 @@ Settings related to the input devices, i.e. the keyboard and controllers.
 
 **Controller type**
 
-This setting gives the ability to choose between the controller types _Xbox, Xbox 360, PlayStation 4, PlayStation 5_ and _SNES_ (Super Nintendo). Doing so changes the help icons as well as the icons and text for the input device configurator. The setting is only cosmetic and does not change the controller behavior or the controller button mappings.
+This setting gives the ability to choose between the controller types _Xbox, Xbox 360, PlayStation 4, PlayStation 5_ and _SNES_ (Super Nintendo). Doing so alters the help icons and help text as well as the icons and text for the input device configurator. The setting is only cosmetic and does not change the controller behavior or the controller button mappings.
 
 **Only accept input from first controller**
 
@@ -1223,12 +1221,14 @@ Enabling or disabling the menu when the UI mode is set to Kid. Mostly intended f
 With this setting enabled, there is a Quit menu shown as the last entry on the main menu which provides options to quit ES-DE, to reboot the computer or to power off the computer. With this setting disabled, there will simply be an entry to quit the application instead of the complete quit menu.
 
 
-### Quit
-The menu where you quit ES-DE, or reboot or power off your system. This menu is disabled by default, but can be enabled using a setting under _Other settings_. If disabled, the menu is replaced with a _Quit EmulationStation_ entry.
+### Quit / Quit EmulationStation
+The _Quit_ menu or _Quit EmulationStation_ entry as described by the _Show quit menu (reboot and power off entries)_ option above.
+
+If the menu is enabled, these are its entries:
 
 **Quit EmulationStation**
 
-If the option _When to save game metadata_ has been set to _On exit_, the gamelist.xml files will be updated at this point.
+If the option _When to save game metadata_ has been set to _On exit_, the gamelist.xml files will be updated at this point. This of course also applies if the Quit menu is disabled and replaced by the _Quit EmulationStation_ entry.
 
 **Reboot system** _(Unix and Windows only)_
 
@@ -1452,7 +1452,7 @@ The Dim screensaver simply dims and desaturates the current view and Black will 
 
 If the option **Enable screensaver controls** has been activated, you can manually toggle the screensaver from the system view by pressing the **Back** button. In addition to this, for the Slideshow and Video screensavers, the controls will allow you to jump to a new random image or video by using the **Left** and **Right** buttons on your keyboard or controller. It's also possible to launch the game currently displayed using the **A** button, and the **Y** button will jump to the game in its gamelist without starting it.
 
-For the video and slideshow screensavers, an overlay can be enabled via the screensaver options that displays the game name and the game system as well as a star to indicate that the game is marked as a favorite.
+For the video and slideshow screensavers, an overlay can be enabled via the screensaver options that displays the game name and the game system as well as a star if the game is marked as a favorite.
 
 If the Video screensaver has been selected and there are no videos available, a fallback to the Dim screensaver will take place. The same is true for the Slideshow screensaver if no game images are available.
 

@@ -12,9 +12,9 @@ The 1.1 release brings many large changes including a fullscreen media viewer, a
 
 A much better mechanism to find emulators and emulator cores has been implemented as well, which among other things removes the need to manually modify the Path variable on Windows to find RetroArch. It also eliminates the requirement for a separate Flatpak-specific es_systems.xml file on Linux.
 
-The User guide contains additional in-depth explanations of the new functionality.
+There are also several changes under the hood, such as the addition of the CImg image processing library, automatic code formatting of the entire codebase using clang-format, change of language standard from C++11 to C++14 and lots of general code refactoring.
 
-Apart from this, many small improvements and bug fixes are part of the release, as listed below.
+Apart from this, numerous small improvements and bug fixes are part of the release, as detailed below.
 
 ### Detailed list of changes
 
@@ -25,14 +25,14 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added a new video player based on FFmpeg
 * Added a 60 FPS frame rate upscaler option to the video player which results in slightly smoother playback for low frame rate videos (e.g. 24 and 30 FPS)
 * Implemented a new mechanism for locating emulators and cores, with configurable find rules (this eliminates some hacks such as the separate Flatpak es_systems.cfg file)
-* Added a Windows-specific find rule that searches the Registry for the App Paths keys, which should eliminate the need to modify the Path manually to find RetroArch
+* Added a Windows-specific find rule that searches the Registry for the App Paths keys, which eliminates the need to modify the Path manually to find RetroArch
 * Removed the deprecated %COREPATH% setting and corresponding menu entry
 * The "Run in background (while game is launched)" option can now be enabled on all operating systems instead of only on Windows
 * Added a workaround for a game launch issue on Windows when using AMD and Intel GPUs
 * Moved to the SDL GameController API which gives numerous improvements to the controller handling
 * Default controller configuration is now automatically applied, input configuration should rarely if ever be required any longer except for deliberate button customization
 * Added support for selecting the controller type (Xbox, Xbox 360, PS4, PS5 and SNES), which changes the help icons, help text and the input configuration tool icons and text
-* Added an option to limit the input in ES-DE to only the first controller (does not affect the emulators)
+* Added an option to limit the input in ES-DE to only the first controller (this does not affect the emulators)
 * Switched the order of the "Back" and "Start" buttons (or equivalents) in the input configurator to align with the other button entries which go from left to right
 * Added separate controller deadzone values for the triggers and thumbsticks
 * Removed the startup notification regarding default keyboard mappings being in use, instead default mappings are now considered the recommended input configuration
@@ -44,7 +44,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * The help text for the "A" button now shows "Enter" instead of "Launch" in the grouped custom collections view
 * Added navigation sounds for some actions where it was missing, such as when attempting to add folders, placeholders or systems to custom collections
 * Changed the custom collection "Jump to" navigation sound to the select sound instead of the scroll sound
-* A notification is now displayed in the grouped custom collections view if a filter is applied to the collection
+* A notification is now displayed in the grouped custom collections view if a filter is applied to the selected collection
 * Changed the default screensaver type from "dim" to "video" and made the fallback screensaver "dim" instead of "black"
 * Moved the video screensaver audio setting to the sound settings menu
 * Added support for the Nintendo Switch game system (using the Yuzu emulator)
@@ -74,7 +74,7 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 * Added a function to ImageComponent to crop fully transparent areas around an image
 * Added and clarified startup log warnings for missing or invalid es_systems.xml platform tags
 * Added a CMake option to control whether the VLC video player should be built, and set this to off by default
-* Made it possible to build on the Raspberry Pi 4 (Raspberry Pi OS)
+* Made it possible to build on the Raspberry Pi 4 (tested on Raspberry Pi OS)
 * Removed the deprecated VideoOmxComponent
 * Removed the pointless APPLE_SKIP_INSTALL_LIBS CMake option
 * Added a clang-format style configuration file to use for automatic code formatting
@@ -86,7 +86,10 @@ Apart from this, many small improvements and bug fixes are part of the release, 
 ### Bug fixes
 
 * Marking all games as favorites for a system or folder or removing all favorite markings would sometimes crash the application
-* Attempting to load a non-existent font file defined by the theme crashed the application instead of using the bundled fallback font
+* Scraping new game media using the single-game scraper followed by a re-scrape that was aborted could crash the application
+* The scraper search could be refined or skipped after the result was accepted which sometimes crashed the application
+* Attempting to load a non-existent font file defined by the theme crashed the application instead of using the bundled font as fallback
+* Refining a search before it was completed and then cancelling the dialog would lead to an empty scraper screen
 * Games that were filtered out were included in the random game selection for the grouped custom collections view
 * After switching theme sets with only a single system available, diagonal slide transitions would sometimes play when moving to the system view
 * Ongoing slide transition animations would continue to play after switching theme sets
