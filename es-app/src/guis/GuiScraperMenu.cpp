@@ -578,7 +578,7 @@ void GuiScraperMenu::openOtherOptions()
     scraper_language->add("Čeština",    "cz", selectedScraperLanguage == "cz");
     scraper_language->add("Slovenčina", "sk", selectedScraperLanguage == "sk");
     scraper_language->add("Türkçe",     "tr", selectedScraperLanguage == "tr");
-    //clang-format on
+    // clang-format on
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the language to "English" in this case.
     if (scraper_language->getSelectedObjects().size() == 0)
@@ -586,7 +586,7 @@ void GuiScraperMenu::openOtherOptions()
     s->addWithLabel("PREFERRED LANGUAGE", scraper_language);
     s->addSaveFunc([scraper_language, s] {
         if (scraper_language->getSelected() !=
-                Settings::getInstance()->getString("ScraperLanguage")) {
+            Settings::getInstance()->getString("ScraperLanguage")) {
             Settings::getInstance()->setString("ScraperLanguage", scraper_language->getSelected());
             s->setNeedsSaving();
         }
@@ -596,8 +596,9 @@ void GuiScraperMenu::openOtherOptions()
     if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
         scraper_language->setEnabled(false);
         scraper_language->setOpacity(DISABLED_OPACITY);
-        scraper_language->getParent()->getChild(scraper_language->
-                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+        scraper_language->getParent()
+            ->getChild(scraper_language->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
     }
 
     // Overwrite files and data.
@@ -606,37 +607,37 @@ void GuiScraperMenu::openOtherOptions()
     s->addWithLabel("OVERWRITE FILES AND DATA", scraper_overwrite_data);
     s->addSaveFunc([scraper_overwrite_data, s] {
         if (scraper_overwrite_data->getState() !=
-                Settings::getInstance()->getBool("ScraperOverwriteData")) {
+            Settings::getInstance()->getBool("ScraperOverwriteData")) {
             Settings::getInstance()->setBool("ScraperOverwriteData",
-                    scraper_overwrite_data->getState());
+                                             scraper_overwrite_data->getState());
             s->setNeedsSaving();
         }
     });
 
     // Halt scraping on invalid media files.
     auto scraper_halt_on_invalid_media = std::make_shared<SwitchComponent>(mWindow);
-    scraper_halt_on_invalid_media->
-            setState(Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia"));
+    scraper_halt_on_invalid_media->setState(
+        Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia"));
     s->addWithLabel("HALT ON INVALID MEDIA FILES", scraper_halt_on_invalid_media);
     s->addSaveFunc([scraper_halt_on_invalid_media, s] {
         if (scraper_halt_on_invalid_media->getState() !=
-                Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia")) {
+            Settings::getInstance()->getBool("ScraperHaltOnInvalidMedia")) {
             Settings::getInstance()->setBool("ScraperHaltOnInvalidMedia",
-                    scraper_halt_on_invalid_media->getState());
+                                             scraper_halt_on_invalid_media->getState());
             s->setNeedsSaving();
         }
     });
 
     // Search using metadata names.
     auto scraper_search_metadata_name = std::make_shared<SwitchComponent>(mWindow);
-    scraper_search_metadata_name->
-            setState(Settings::getInstance()->getBool("ScraperSearchMetadataName"));
+    scraper_search_metadata_name->setState(
+        Settings::getInstance()->getBool("ScraperSearchMetadataName"));
     s->addWithLabel("SEARCH USING METADATA NAMES", scraper_search_metadata_name);
     s->addSaveFunc([scraper_search_metadata_name, s] {
         if (scraper_search_metadata_name->getState() !=
-                Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
+            Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
             Settings::getInstance()->setBool("ScraperSearchMetadataName",
-                    scraper_search_metadata_name->getState());
+                                             scraper_search_metadata_name->getState());
             s->setNeedsSaving();
         }
     });
@@ -647,7 +648,7 @@ void GuiScraperMenu::openOtherOptions()
     s->addWithLabel("INTERACTIVE MODE", scraper_interactive);
     s->addSaveFunc([scraper_interactive, s] {
         if (scraper_interactive->getState() !=
-                Settings::getInstance()->getBool("ScraperInteractive")) {
+            Settings::getInstance()->getBool("ScraperInteractive")) {
             Settings::getInstance()->setBool("ScraperInteractive", scraper_interactive->getState());
             s->setNeedsSaving();
         }
@@ -657,11 +658,11 @@ void GuiScraperMenu::openOtherOptions()
     auto scraper_semiautomatic = std::make_shared<SwitchComponent>(mWindow);
     scraper_semiautomatic->setState(Settings::getInstance()->getBool("ScraperSemiautomatic"));
     s->addWithLabel("AUTO-ACCEPT SINGLE GAME MATCHES", scraper_semiautomatic);
-    s->addSaveFunc([scraper_semiautomatic ,s] {
-         if (scraper_semiautomatic->getState() !=
-                Settings::getInstance()->getBool("ScraperSemiautomatic")) {
+    s->addSaveFunc([scraper_semiautomatic, s] {
+        if (scraper_semiautomatic->getState() !=
+            Settings::getInstance()->getBool("ScraperSemiautomatic")) {
             Settings::getInstance()->setBool("ScraperSemiautomatic",
-                    scraper_semiautomatic->getState());
+                                             scraper_semiautomatic->getState());
             s->setNeedsSaving();
         }
     });
@@ -670,21 +671,21 @@ void GuiScraperMenu::openOtherOptions()
     if (!Settings::getInstance()->getBool("ScraperInteractive")) {
         scraper_semiautomatic->setEnabled(false);
         scraper_semiautomatic->setOpacity(DISABLED_OPACITY);
-        scraper_semiautomatic->getParent()->getChild(scraper_semiautomatic->
-                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+        scraper_semiautomatic->getParent()
+            ->getChild(scraper_semiautomatic->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
     }
-
 
     // Respect the per-file multi-scraper exclusion flag.
     auto scraper_respect_exclusions = std::make_shared<SwitchComponent>(mWindow);
     scraper_respect_exclusions->setState(
-            Settings::getInstance()->getBool("ScraperRespectExclusions"));
+        Settings::getInstance()->getBool("ScraperRespectExclusions"));
     s->addWithLabel("RESPECT PER-FILE SCRAPER EXCLUSIONS", scraper_respect_exclusions);
     s->addSaveFunc([scraper_respect_exclusions, s] {
         if (scraper_respect_exclusions->getState() !=
-                Settings::getInstance()->getBool("ScraperRespectExclusions")) {
+            Settings::getInstance()->getBool("ScraperRespectExclusions")) {
             Settings::getInstance()->setBool("ScraperRespectExclusions",
-                    scraper_respect_exclusions->getState());
+                                             scraper_respect_exclusions->getState());
             s->setNeedsSaving();
         }
     });
@@ -692,13 +693,13 @@ void GuiScraperMenu::openOtherOptions()
     // Exclude files recursively for excluded folders.
     auto scraper_exclude_recursively = std::make_shared<SwitchComponent>(mWindow);
     scraper_exclude_recursively->setState(
-            Settings::getInstance()->getBool("ScraperExcludeRecursively"));
+        Settings::getInstance()->getBool("ScraperExcludeRecursively"));
     s->addWithLabel("EXCLUDE FOLDERS RECURSIVELY", scraper_exclude_recursively);
     s->addSaveFunc([scraper_exclude_recursively, s] {
         if (scraper_exclude_recursively->getState() !=
-                Settings::getInstance()->getBool("ScraperExcludeRecursively")) {
+            Settings::getInstance()->getBool("ScraperExcludeRecursively")) {
             Settings::getInstance()->setBool("ScraperExcludeRecursively",
-                    scraper_exclude_recursively->getState());
+                                             scraper_exclude_recursively->getState());
             s->setNeedsSaving();
         }
     });
@@ -707,20 +708,20 @@ void GuiScraperMenu::openOtherOptions()
     if (!Settings::getInstance()->getBool("ScraperRespectExclusions")) {
         scraper_exclude_recursively->setEnabled(false);
         scraper_exclude_recursively->setOpacity(DISABLED_OPACITY);
-        scraper_exclude_recursively->getParent()->getChild(scraper_exclude_recursively->
-                getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+        scraper_exclude_recursively->getParent()
+            ->getChild(scraper_exclude_recursively->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
     }
 
     // Include actual folders when scraping.
     auto scraper_include_folders = std::make_shared<SwitchComponent>(mWindow);
-    scraper_include_folders->setState(
-            Settings::getInstance()->getBool("ScraperIncludeFolders"));
+    scraper_include_folders->setState(Settings::getInstance()->getBool("ScraperIncludeFolders"));
     s->addWithLabel("SCRAPE ACTUAL FOLDERS", scraper_include_folders);
     s->addSaveFunc([scraper_include_folders, s] {
         if (scraper_include_folders->getState() !=
-                Settings::getInstance()->getBool("ScraperIncludeFolders")) {
+            Settings::getInstance()->getBool("ScraperIncludeFolders")) {
             Settings::getInstance()->setBool("ScraperIncludeFolders",
-                    scraper_include_folders->getState());
+                                             scraper_include_folders->getState());
             s->setNeedsSaving();
         }
     });
@@ -728,13 +729,13 @@ void GuiScraperMenu::openOtherOptions()
     // Retry search on peer verification errors (TLS/certificate issues).
     auto retry_peer_verification = std::make_shared<SwitchComponent>(mWindow);
     retry_peer_verification->setState(
-            Settings::getInstance()->getBool("ScraperRetryPeerVerification"));
+        Settings::getInstance()->getBool("ScraperRetryPeerVerification"));
     s->addWithLabel("AUTO-RETRY ON PEER VERIFICATION ERRORS", retry_peer_verification);
     s->addSaveFunc([retry_peer_verification, s] {
         if (retry_peer_verification->getState() !=
-                Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
+            Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
             Settings::getInstance()->setBool("ScraperRetryPeerVerification",
-                    retry_peer_verification->getState());
+                                             retry_peer_verification->getState());
             s->setNeedsSaving();
         }
     });
@@ -744,14 +745,16 @@ void GuiScraperMenu::openOtherOptions()
         if (scraper_semiautomatic->getEnabled()) {
             scraper_semiautomatic->setEnabled(false);
             scraper_semiautomatic->setOpacity(DISABLED_OPACITY);
-            scraper_semiautomatic->getParent()->getChild(scraper_semiautomatic->
-                    getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+            scraper_semiautomatic->getParent()
+                ->getChild(scraper_semiautomatic->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
         }
         else {
             scraper_semiautomatic->setEnabled(true);
             scraper_semiautomatic->setOpacity(255);
-            scraper_semiautomatic->getParent()->getChild(scraper_semiautomatic->
-                    getChildIndex() - 1)->setOpacity(255);
+            scraper_semiautomatic->getParent()
+                ->getChild(scraper_semiautomatic->getChildIndex() - 1)
+                ->setOpacity(255);
         }
     };
 
@@ -759,14 +762,16 @@ void GuiScraperMenu::openOtherOptions()
         if (scraper_exclude_recursively->getEnabled()) {
             scraper_exclude_recursively->setEnabled(false);
             scraper_exclude_recursively->setOpacity(DISABLED_OPACITY);
-            scraper_exclude_recursively->getParent()->getChild(scraper_exclude_recursively->
-                    getChildIndex() - 1)->setOpacity(DISABLED_OPACITY);
+            scraper_exclude_recursively->getParent()
+                ->getChild(scraper_exclude_recursively->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
         }
         else {
             scraper_exclude_recursively->setEnabled(true);
             scraper_exclude_recursively->setOpacity(255);
-            scraper_exclude_recursively->getParent()->getChild(scraper_exclude_recursively->
-                    getChildIndex() - 1)->setOpacity(255);
+            scraper_exclude_recursively->getParent()
+                ->getChild(scraper_exclude_recursively->getChildIndex() - 1)
+                ->setOpacity(255);
         }
     };
 
@@ -789,19 +794,18 @@ void GuiScraperMenu::pressedStart()
             std::string warningString;
             if (sys.size() == 1) {
                 warningString = "The selected system does not have a\n"
-                        "platform set, results may be inaccurate\n"
-                        "Continue anyway?";
+                                "platform set, results may be inaccurate\n"
+                                "Continue anyway?";
             }
             else {
                 warningString = "At least one of your selected\n"
-                        "systems does not have a platform\n"
-                        "set, results may be inaccurate\n"
-                        "Continue anyway?";
+                                "systems does not have a platform\n"
+                                "set, results may be inaccurate\n"
+                                "Continue anyway?";
             }
             mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                    Utils::String::toUpper(warningString),
-                    "YES", std::bind(&GuiScraperMenu::start, this),
-                    "NO", nullptr));
+                                           Utils::String::toUpper(warningString), "YES",
+                                           std::bind(&GuiScraperMenu::start, this), "NO", nullptr));
             return;
         }
     }
@@ -811,8 +815,8 @@ void GuiScraperMenu::pressedStart()
 void GuiScraperMenu::start()
 {
     if (mSystems->getSelectedObjects().empty()) {
-        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"));
+        mWindow->pushGui(
+            new GuiMsgBox(mWindow, getHelpStyle(), "PLEASE SELECT AT LEAST ONE SYSTEM TO SCRAPE"));
         return;
     }
 
@@ -826,7 +830,7 @@ void GuiScraperMenu::start()
             break;
         }
         if (scraperService == "screenscraper" &&
-                Settings::getInstance()->getBool("ScrapeRatings")) {
+            Settings::getInstance()->getBool("ScrapeRatings")) {
             contentToScrape = true;
             break;
         }
@@ -834,8 +838,7 @@ void GuiScraperMenu::start()
             contentToScrape = true;
             break;
         }
-        if (scraperService == "screenscraper" &&
-                Settings::getInstance()->getBool("ScrapeVideos")) {
+        if (scraperService == "screenscraper" && Settings::getInstance()->getBool("ScrapeVideos")) {
             contentToScrape = true;
             break;
         }
@@ -852,7 +855,7 @@ void GuiScraperMenu::start()
             break;
         }
         if (scraperService == "screenscraper" &&
-                Settings::getInstance()->getBool("Scrape3DBoxes")) {
+            Settings::getInstance()->getBool("Scrape3DBoxes")) {
             contentToScrape = true;
             break;
         }
@@ -860,35 +863,35 @@ void GuiScraperMenu::start()
 
     if (!contentToScrape) {
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-            "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"));
+                                       "PLEASE SELECT AT LEAST ONE CONTENT TYPE TO SCRAPE"));
         return;
     }
 
     std::queue<ScraperSearchParams> searches =
-            getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
+        getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
 
     if (searches.empty()) {
-        mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-            "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"));
+        mWindow->pushGui(
+            new GuiMsgBox(mWindow, getHelpStyle(), "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"));
     }
     else {
-        GuiScraperMulti* gsm = new GuiScraperMulti(mWindow, searches,
-                Settings::getInstance()->getBool("ScraperInteractive"));
+        GuiScraperMulti* gsm = new GuiScraperMulti(
+            mWindow, searches, Settings::getInstance()->getBool("ScraperInteractive"));
         mWindow->pushGui(gsm);
         mMenu.setCursorToList();
         mMenu.setCursorToFirstListEntry();
     }
 }
 
-std::queue<ScraperSearchParams> GuiScraperMenu::getSearches(
-        std::vector<SystemData*> systems, GameFilterFunc selector)
+std::queue<ScraperSearchParams> GuiScraperMenu::getSearches(std::vector<SystemData*> systems,
+                                                            GameFilterFunc selector)
 {
     std::queue<ScraperSearchParams> queue;
     for (auto sys = systems.cbegin(); sys != systems.cend(); sys++) {
         std::vector<FileData*> games = (*sys)->getRootFolder()->getScrapeFilesRecursive(
-                Settings::getInstance()->getBool("ScraperIncludeFolders"),
-                Settings::getInstance()->getBool("ScraperExcludeRecursively"),
-                Settings::getInstance()->getBool("ScraperRespectExclusions"));
+            Settings::getInstance()->getBool("ScraperIncludeFolders"),
+            Settings::getInstance()->getBool("ScraperExcludeRecursively"),
+            Settings::getInstance()->getBool("ScraperRespectExclusions"));
         for (auto game = games.cbegin(); game != games.cend(); game++) {
             if (selector((*sys), (*game))) {
                 ScraperSearchParams search;
@@ -902,8 +905,10 @@ std::queue<ScraperSearchParams> GuiScraperMenu::getSearches(
     return queue;
 }
 
-void GuiScraperMenu::addEntry(const std::string& name, unsigned int color,
-        bool add_arrow, const std::function<void()>& func)
+void GuiScraperMenu::addEntry(const std::string& name,
+                              unsigned int color,
+                              bool add_arrow,
+                              const std::function<void()>& func)
 {
     std::shared_ptr<Font> font = Font::get(FONT_SIZE_MEDIUM);
 
