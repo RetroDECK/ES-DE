@@ -307,12 +307,12 @@ elseif(WIN32)
         endif()
     else()
         set(COMMON_LIBRARIES
-                "${PROJECT_SOURCE_DIR}/avcodec-59.dll"
-                "${PROJECT_SOURCE_DIR}/avfilter-8.dll"
-                "${PROJECT_SOURCE_DIR}/avformat-59.dll"
-                "${PROJECT_SOURCE_DIR}/avutil-57.dll"
-                "${PROJECT_SOURCE_DIR}/swresample-4.dll"
-                "${PROJECT_SOURCE_DIR}/swscale-6.dll"
+                "${PROJECT_SOURCE_DIR}/avcodec-58.dll"
+                "${PROJECT_SOURCE_DIR}/avfilter-7.dll"
+                "${PROJECT_SOURCE_DIR}/avformat-58.dll"
+                "${PROJECT_SOURCE_DIR}/avutil-56.dll"
+                "${PROJECT_SOURCE_DIR}/swresample-3.dll"
+                "${PROJECT_SOURCE_DIR}/swscale-5.dll"
                 "${PROJECT_SOURCE_DIR}/FreeImage.dll"
                 "${PROJECT_SOURCE_DIR}/glew32.dll"
                 "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
