@@ -100,6 +100,14 @@ int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
     }
 
     returnValue = pclose(commandPipe);
+
+#if defined(_RPI_)
+    // Hack to avoid that the application window occasionally loses focus when returning from
+    // a game, which only seems to happen on the Raspberry Pi.
+    SDL_Delay(50);
+    SDL_SetWindowInputFocus(Renderer::getSDLWindow());
+#endif
+
     // We need to shift the return value as it contains some flags (which we don't need).
     returnValue >>= 8;
 
