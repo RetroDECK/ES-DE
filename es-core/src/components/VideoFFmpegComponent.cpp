@@ -15,6 +15,11 @@
 
 #define DEBUG_VIDEO false
 
+enum AVHWDeviceType VideoFFmpegComponent::sDeviceType = AV_HWDEVICE_TYPE_NONE;
+enum AVPixelFormat VideoFFmpegComponent::sPixelFormat = AV_PIX_FMT_NONE;
+std::vector<std::string> VideoFFmpegComponent::sHWDecodedVideos;
+std::vector<std::string> VideoFFmpegComponent::sSWDecodedVideos;
+
 VideoFFmpegComponent::VideoFFmpegComponent(Window* window)
     : VideoComponent(window)
     , mFrameProcessingThread(nullptr)
@@ -23,6 +28,8 @@ VideoFFmpegComponent::VideoFFmpegComponent(Window* window)
     , mAudioStream(nullptr)
     , mVideoCodec(nullptr)
     , mAudioCodec(nullptr)
+    , mHardwareCodec(nullptr)
+    , mHwContext(nullptr)
     , mVideoCodecContext(nullptr)
     , mAudioCodecContext(nullptr)
     , mVBufferSrcContext(nullptr)
@@ -529,19 +536,41 @@ void VideoFFmpegComponent::readFrames()
 
                         int returnValue = 0;
 
-                        // We have a video frame that needs conversion to RGBA format.
-                        // Prioritize audio by dropping video frames if the audio frame queue
-                        // gets too small, i.e. if the computer can't keep up the processing.
-                        if ((!mAudioCodecContext || !mDecodedFrame ||
-                             mAudioFrameCount < mAudioTargetQueueSize) ||
-                            mAudioFrameQueue.size() > 3) {
+                        if (mSWDecoder) {
                             returnValue = av_buffersrc_add_frame_flags(
-                                mVBufferSrcContext, mVideoFrame, AV_BUFFERSRC_FLAG_KEEP_REF);
+                                mVBufferSrcContext, mVideoFrame, AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT);
                         }
                         else {
-                            LOG(LogDebug)
-                                << "VideoFFmpegComponent::readFrames(): Dropped video frame as "
-                                   "the audio buffer was too small";
+                            AVFrame* destFrame = nullptr;
+                            destFrame = av_frame_alloc();
+
+                            if (mVideoFrame->format == sPixelFormat) {
+                                if (av_hwframe_transfer_data(destFrame, mVideoFrame, 0) < 0) {
+                                    LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
+                                                     "Couldn't transfer decoded video frame to "
+                                                     "system memory";
+                                    av_frame_free(&destFrame);
+                                    av_packet_unref(mPacket);
+                                    break;
+                                }
+                                else {
+                                    destFrame->pts = mVideoFrame->pts;
+                                    destFrame->pkt_dts = mVideoFrame->pkt_dts;
+                                    destFrame->pict_type = mVideoFrame->pict_type;
+                                    destFrame->chroma_location = mVideoFrame->chroma_location;
+                                    destFrame->pkt_pos = mVideoFrame->pkt_pos;
+                                    destFrame->pkt_duration = mVideoFrame->pkt_duration;
+                                    destFrame->pkt_size = mVideoFrame->pkt_size;
+                                }
+                            }
+                            else {
+                                LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
+                                                 "Couldn't decode video frame";
+                            }
+
+                            returnValue = av_buffersrc_add_frame_flags(
+                                mVBufferSrcContext, destFrame, AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT);
+                            av_frame_free(&destFrame);
                         }
 
                         if (returnValue < 0) {
@@ -551,6 +580,9 @@ void VideoFFmpegComponent::readFrames()
 
                         av_packet_unref(mPacket);
                         break;
+                    }
+                    else {
+                        av_packet_unref(mPacket);
                     }
                 }
                 else if (mPacket->stream_index == mAudioStreamIndex) {
@@ -569,6 +601,13 @@ void VideoFFmpegComponent::readFrames()
                         av_packet_unref(mPacket);
                         continue;
                     }
+                    else {
+                        av_packet_unref(mPacket);
+                    }
+                }
+                else {
+                    // Ignore any stream that is not video or audio.
+                    av_packet_unref(mPacket);
                 }
             }
         }
@@ -808,14 +847,290 @@ void VideoFFmpegComponent::calculateBlackRectangle()
     }
 }
 
+void VideoFFmpegComponent::detectHWDecoder()
+{
+#if defined(__APPLE__)
+    LOG(LogDebug) << "VideoFFmpegComponent::detectHWDecoder(): Using hardware decoder VideoToolbox";
+    sDeviceType = AV_HWDEVICE_TYPE_VIDEOTOOLBOX;
+    return;
+#elif defined(_WIN64)
+    bool hasDXVA2 = false;
+    bool hasD3D11VA = false;
+
+    AVBufferRef* testContext = nullptr;
+    AVHWDeviceType tempDevice = AV_HWDEVICE_TYPE_NONE;
+
+    while ((tempDevice = av_hwdevice_iterate_types(tempDevice)) != AV_HWDEVICE_TYPE_NONE) {
+        // The Direct3D 11 decoder detection seems to cause stability issues on some machines
+        // so disabling it for now.
+        if (tempDevice == AV_HWDEVICE_TYPE_DXVA2) {
+            // if (tempDevice == AV_HWDEVICE_TYPE_DXVA2 || tempDevice == AV_HWDEVICE_TYPE_D3D11VA) {
+            if (av_hwdevice_ctx_create(&testContext, tempDevice, nullptr, nullptr, 0) >= 0) {
+                if (tempDevice == AV_HWDEVICE_TYPE_DXVA2)
+                    hasDXVA2 = true;
+                else
+                    hasD3D11VA = true;
+            }
+            av_buffer_unref(&testContext);
+        }
+    }
+
+    // Prioritize DXVA2.
+    if (hasDXVA2) {
+        LOG(LogDebug) << "VideoFFmpegComponent::detectHWDecoder(): Using hardware decoder DXVA2";
+        sDeviceType = AV_HWDEVICE_TYPE_DXVA2;
+    }
+    else if (hasD3D11VA) {
+        LOG(LogDebug) << "VideoFFmpegComponent::detectHWDecoder(): Using hardware decoder D3D11VA";
+        sDeviceType = AV_HWDEVICE_TYPE_D3D11VA;
+    }
+    else {
+        LOG(LogWarning) << "VideoFFmpegComponent::detectHWDecoder(): Unable to detect any usable "
+                           "hardware decoder";
+    }
+#else
+    // This would mostly be Linux, but possibly also BSD Unix.
+
+    bool hasVAAPI = false;
+    bool hasVDPAU = false;
+
+    AVBufferRef* testContext = nullptr;
+    AVHWDeviceType tempDevice = AV_HWDEVICE_TYPE_NONE;
+
+    while ((tempDevice = av_hwdevice_iterate_types(tempDevice)) != AV_HWDEVICE_TYPE_NONE) {
+        if (tempDevice == AV_HWDEVICE_TYPE_VDPAU || tempDevice == AV_HWDEVICE_TYPE_VAAPI) {
+            if (av_hwdevice_ctx_create(&testContext, tempDevice, nullptr, nullptr, 0) >= 0) {
+                if (tempDevice == AV_HWDEVICE_TYPE_VAAPI)
+                    hasVAAPI = true;
+                else
+                    hasVDPAU = true;
+            }
+            av_buffer_unref(&testContext);
+        }
+    }
+
+    // Prioritize VAAPI.
+    if (hasVAAPI) {
+        LOG(LogDebug) << "VideoFFmpegComponent::detectHWDecoder(): Using hardware decoder VAAPI";
+        sDeviceType = AV_HWDEVICE_TYPE_VAAPI;
+    }
+    else if (hasVDPAU) {
+        LOG(LogDebug) << "VideoFFmpegComponent::detectHWDecoder(): Using hardware decoder VDPAU";
+        sDeviceType = AV_HWDEVICE_TYPE_VDPAU;
+    }
+    else {
+        LOG(LogWarning) << "VideoFFmpegComponent::detectHWDecoder(): Unable to detect any "
+                           "usable hardware decoder";
+    }
+#endif
+}
+
+bool VideoFFmpegComponent::decoderInitHW()
+{
+    // This should only be required the first time any video is played.
+    if (sDeviceType == AV_HWDEVICE_TYPE_NONE)
+        detectHWDecoder();
+
+    // If there is no device, the detection failed.
+    if (sDeviceType == AV_HWDEVICE_TYPE_NONE)
+        return true;
+
+    // If the hardware decoding of the file was previously unsuccessful during the program
+    // session, then don't attempt it again.
+    if (std::find(sSWDecodedVideos.begin(), sSWDecodedVideos.end(), mVideoPath) !=
+        sSWDecodedVideos.end()) {
+        return true;
+    }
+
+    // 50 is just an arbitrary number so we don't potentially get stuck in an endless loop.
+    for (int i = 0; i < 50; i++) {
+        const AVCodecHWConfig* config = avcodec_get_hw_config(mHardwareCodec, i);
+        if (!config) {
+            LOG(LogDebug) << "VideoFFmpegComponent::decoderInitHW(): Hardware decoder \""
+                          << av_hwdevice_get_type_name(sDeviceType)
+                          << "\" does not seem to support codec \"" << mHardwareCodec->name << "\"";
+        }
+        else if (config->methods & AV_CODEC_HW_CONFIG_METHOD_HW_DEVICE_CTX &&
+                 config->device_type == sDeviceType) {
+            sPixelFormat = config->pix_fmt;
+            break;
+        }
+    }
+
+    // If the pixel format is not set properly, then hardware decoding won't work for the file.
+    if (sPixelFormat == AV_PIX_FMT_NONE)
+        return true;
+
+    if (av_hwdevice_ctx_create(&mHwContext, sDeviceType, nullptr, nullptr, 0) < 0) {
+        LOG(LogDebug) << "VideoFFmpegComponent::decoderInitHW(): Unable to open hardware device \""
+                      << av_hwdevice_get_type_name(sDeviceType) << "\"";
+        av_buffer_unref(&mHwContext);
+        return true;
+    }
+
+    // Callback function for AVCodecContext.
+    // clang-format off
+    auto formatFunc =
+        [](AVCodecContext* ctx, const enum AVPixelFormat* pix_fmts) -> enum AVPixelFormat {
+
+        const enum AVPixelFormat* pixelFormats;
+
+        for (pixelFormats = pix_fmts; *pixelFormats != -1; pixelFormats++)
+            if (*pixelFormats == sPixelFormat)
+                return static_cast<enum AVPixelFormat>(sPixelFormat);
+
+        return AV_PIX_FMT_NONE;
+    };
+
+    // Check if the video can actually be hardware decoded (unless this has already been done).
+    if (std::find(sHWDecodedVideos.begin(), sHWDecodedVideos.end(), mVideoPath) ==
+        sHWDecodedVideos.end()) {
+
+        // clang-format on
+        AVCodecContext* checkCodecContext = avcodec_alloc_context3(mHardwareCodec);
+
+        if (avcodec_parameters_to_context(checkCodecContext, mVideoStream->codecpar)) {
+            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                             "Couldn't fill the video codec context parameters for file \""
+                          << mVideoPath << "\"";
+            avcodec_free_context(&checkCodecContext);
+            return true;
+        }
+        else {
+            bool onlySWDecode = false;
+
+            checkCodecContext->get_format = formatFunc;
+            checkCodecContext->hw_device_ctx = av_buffer_ref(mHwContext);
+
+            if (avcodec_open2(checkCodecContext, mHardwareCodec, nullptr)) {
+                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                                 "Couldn't initialize the video codec context for file \""
+                              << mVideoPath << "\"";
+            }
+
+            AVPacket* checkPacket = av_packet_alloc();
+            int readFrameReturn = 0;
+
+            while ((readFrameReturn = av_read_frame(mFormatContext, checkPacket)) == 0) {
+                if (checkPacket->stream_index != mVideoStreamIndex)
+                    av_packet_unref(checkPacket);
+                else
+                    break;
+            }
+
+            // Supplying a packet to the decoder will cause an immediate error for some videos
+            // while others will require that one or several frame receive attempts are performed
+            // before we get a definitive result. On error we fall back to the software decoder.
+            if (readFrameReturn == 0 && checkPacket->stream_index == mVideoStreamIndex) {
+                if (avcodec_send_packet(checkCodecContext, checkPacket) < 0) {
+                    // Save the file path to the list of videos that require software decoding
+                    // so we don't have to check it again during the program session.
+                    sSWDecodedVideos.emplace_back(mVideoPath);
+                    onlySWDecode = true;
+                }
+                else {
+                    AVFrame* checkFrame;
+                    checkFrame = av_frame_alloc();
+
+                    onlySWDecode = true;
+
+                    // For some videos we need to process at least one extra frame to verify
+                    // that the hardware encoder can actually be used, otherwise the fallback
+                    // to software decoding would take place when it's not necessary.
+                    for (int i = 0; i < 3; i++) {
+                        if (avcodec_receive_frame(checkCodecContext, checkFrame) < 0) {
+                            av_packet_unref(checkPacket);
+                            while (av_read_frame(mFormatContext, checkPacket) == 0) {
+                                if (checkPacket->stream_index != mVideoStreamIndex)
+                                    av_packet_unref(checkPacket);
+                                else
+                                    break;
+                            }
+
+                            avcodec_send_packet(checkCodecContext, checkPacket);
+                            av_packet_unref(checkPacket);
+
+                            if (avcodec_receive_frame(checkCodecContext, checkFrame) == 0) {
+                                onlySWDecode = false;
+                                break;
+                            }
+                            else {
+                                onlySWDecode = true;
+                            }
+                        }
+                        else {
+                            onlySWDecode = false;
+                        }
+                        av_packet_unref(checkPacket);
+                        av_frame_unref(checkFrame);
+                    }
+
+                    av_frame_free(&checkFrame);
+
+                    if (onlySWDecode == false) {
+                        // Save the file path to the list of videos that work with hardware
+                        // decoding so we don't have to check it again during the program session.
+                        sHWDecodedVideos.emplace_back(mVideoPath);
+                    }
+                }
+
+                av_packet_free(&checkPacket);
+                avcodec_free_context(&checkCodecContext);
+
+                // Seek back to the start position of the file.
+                av_seek_frame(mFormatContext, -1, 0, AVSEEK_FLAG_ANY);
+
+                if (onlySWDecode)
+                    return true;
+            }
+        }
+    }
+
+    // The hardware decoding check passed successfully or it was done previously for the file.
+    // Now perform the real setup.
+    mVideoCodecContext = avcodec_alloc_context3(mHardwareCodec);
+
+    if (!mVideoCodecContext) {
+        LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                         "Couldn't allocate video codec context for file \""
+                      << mVideoPath << "\"";
+        avcodec_free_context(&mVideoCodecContext);
+        return true;
+    }
+
+    if (avcodec_parameters_to_context(mVideoCodecContext, mVideoStream->codecpar)) {
+        LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                         "Couldn't fill the video codec context parameters for file \""
+                      << mVideoPath << "\"";
+        avcodec_free_context(&mVideoCodecContext);
+        return true;
+    }
+
+    mVideoCodecContext->get_format = formatFunc;
+    mVideoCodecContext->hw_device_ctx = av_buffer_ref(mHwContext);
+
+    if (avcodec_open2(mVideoCodecContext, mHardwareCodec, nullptr)) {
+        LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                         "Couldn't initialize the video codec context for file \""
+                      << mVideoPath << "\"";
+        avcodec_free_context(&mVideoCodecContext);
+        return true;
+    }
+
+    return false;
+}
+
 void VideoFFmpegComponent::startVideo()
 {
     if (!mFormatContext) {
+        mHardwareCodec = nullptr;
+        mHwContext = nullptr;
         mFrameProcessingThread = nullptr;
         mVideoWidth = 0;
         mVideoHeight = 0;
         mAccumulatedTime = 0;
         mStartTimeAccumulation = false;
+        mSWDecoder = true;
         mDecodedFrame = false;
         mEndOfVideo = false;
         mVideoFrameCount = 0;
@@ -858,13 +1173,21 @@ void VideoFFmpegComponent::startVideo()
 
         // Video stream setup.
 
+#if defined(_RPI_)
+        bool hwDecoding = false;
+#else
+        bool hwDecoding = Settings::getInstance()->getBool("VideoHardwareDecoding");
+#endif
+
         mVideoStreamIndex =
-            av_find_best_stream(mFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, nullptr, 0);
+            av_find_best_stream(mFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, &mHardwareCodec, 0);
 
         if (mVideoStreamIndex < 0) {
             LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
                              "Couldn't retrieve video stream for file \""
                           << mVideoPath << "\"";
+            avformat_close_input(&mFormatContext);
+            avformat_free_context(mFormatContext);
             return;
         }
 
@@ -872,50 +1195,69 @@ void VideoFFmpegComponent::startVideo()
         mVideoWidth = mFormatContext->streams[mVideoStreamIndex]->codecpar->width;
         mVideoHeight = mFormatContext->streams[mVideoStreamIndex]->codecpar->height;
 
-        mVideoCodec = const_cast<AVCodec*>(avcodec_find_decoder(mVideoStream->codecpar->codec_id));
+        LOG(LogDebug) << "VideoFFmpegComponent::startVideo(): "
+                      << "Playing video \"" << mVideoPath << "\" (codec: "
+                      << avcodec_get_name(
+                             mFormatContext->streams[mVideoStreamIndex]->codecpar->codec_id)
+                      << ", decoder: " << (hwDecoding ? "hardware" : "software") << ")";
 
-        if (!mVideoCodec) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
-                             "Couldn't find a suitable video codec for file \""
-                          << mVideoPath << "\"";
-            return;
+        if (hwDecoding)
+            mSWDecoder = decoderInitHW();
+        else
+            mSWDecoder = true;
+
+        if (mSWDecoder) {
+            // The hardware decoder initialization failed, which can happen for a number of reasons.
+            if (hwDecoding) {
+                LOG(LogDebug) << "VideoFFmpegComponent::startVideo(): Hardware decoding failed, "
+                                 "falling back to software decoder";
+            }
+
+            mVideoCodec =
+                const_cast<AVCodec*>(avcodec_find_decoder(mVideoStream->codecpar->codec_id));
+
+            if (!mVideoCodec) {
+                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                                 "Couldn't find a suitable video codec for file \""
+                              << mVideoPath << "\"";
+                return;
+            }
+
+            mVideoCodecContext = avcodec_alloc_context3(mVideoCodec);
+
+            if (!mVideoCodecContext) {
+                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                                 "Couldn't allocate video codec context for file \""
+                              << mVideoPath << "\"";
+                return;
+            }
+
+            if (mVideoCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
+                mVideoCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
+
+            if (avcodec_parameters_to_context(mVideoCodecContext, mVideoStream->codecpar)) {
+                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                                 "Couldn't fill the video codec context parameters for file \""
+                              << mVideoPath << "\"";
+                return;
+            }
+
+            if (avcodec_open2(mVideoCodecContext, mVideoCodec, nullptr)) {
+                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                                 "Couldn't initialize the video codec context for file \""
+                              << mVideoPath << "\"";
+                return;
+            }
         }
 
-        mVideoCodecContext = avcodec_alloc_context3(mVideoCodec);
-
-        if (!mVideoCodec) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
-                             "Couldn't allocate video codec context for file \""
-                          << mVideoPath << "\"";
-            return;
-        }
-
-        if (mVideoCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
-            mVideoCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
-
-        if (avcodec_parameters_to_context(mVideoCodecContext, mVideoStream->codecpar)) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
-                             "Couldn't fill the video codec context parameters for file \""
-                          << mVideoPath << "\"";
-            return;
-        }
-
-        if (avcodec_open2(mVideoCodecContext, mVideoCodec, nullptr)) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
-                             "Couldn't initialize the video codec context for file \""
-                          << mVideoPath << "\"";
-            return;
-        }
-
-        // Audio stream setup, optional as some videos may not have any audio tracks.
+        // Audio stream setup, optional as some videos do not have any audio tracks.
 
         mAudioStreamIndex =
             av_find_best_stream(mFormatContext, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
 
         if (mAudioStreamIndex < 0) {
             LOG(LogDebug) << "VideoFFmpegComponent::startVideo(): "
-                             "Couldn't retrieve audio stream for file \""
-                          << mVideoPath << "\"";
+                             "File does not seem to contain any audio streams";
         }
 
         if (mAudioStreamIndex >= 0) {
@@ -996,12 +1338,14 @@ void VideoFFmpegComponent::stopVideo()
         mFrameProcessingThread->join();
         mFrameProcessingThread.reset();
         mOutputAudio.clear();
-        AudioManager::getInstance()->clearStream();
     }
 
     // Clear the video and audio frame queues.
     std::queue<VideoFrame>().swap(mVideoFrameQueue);
     std::queue<AudioFrame>().swap(mAudioFrameQueue);
+
+    // Clear the audio buffer.
+    AudioManager::getInstance()->clearStream();
 
     if (mFormatContext) {
         av_frame_free(&mVideoFrame);
@@ -1010,7 +1354,7 @@ void VideoFFmpegComponent::stopVideo()
         av_frame_free(&mAudioFrameResampled);
         av_packet_unref(mPacket);
         av_packet_free(&mPacket);
-
+        av_buffer_unref(&mHwContext);
         avcodec_free_context(&mVideoCodecContext);
         avcodec_free_context(&mAudioCodecContext);
         avformat_close_input(&mFormatContext);

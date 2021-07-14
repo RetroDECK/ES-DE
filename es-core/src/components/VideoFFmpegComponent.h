@@ -69,6 +69,10 @@ private:
     // Calculate the black rectangle that is shown behind videos with non-standard aspect ratios.
     void calculateBlackRectangle();
 
+    // Detect and initialize the hardware decoder.
+    static void detectHWDecoder();
+    bool decoderInitHW();
+
     // Start the video immediately.
     virtual void startVideo() override;
     // Stop the video.
@@ -77,6 +81,11 @@ private:
     virtual void pauseVideo() override;
     // Handle looping the video. Must be called periodically.
     virtual void handleLooping() override;
+
+    static enum AVHWDeviceType sDeviceType;
+    static enum AVPixelFormat sPixelFormat;
+    static std::vector<std::string> sSWDecodedVideos;
+    static std::vector<std::string> sHWDecodedVideos;
 
     std::shared_ptr<TextureResource> mTexture;
     std::vector<float> mVideoRectangleCoords;
@@ -90,6 +99,8 @@ private:
     AVStream* mAudioStream;
     AVCodec* mVideoCodec;
     AVCodec* mAudioCodec;
+    AVCodec* mHardwareCodec;
+    AVBufferRef* mHwContext;
     AVCodecContext* mVideoCodecContext;
     AVCodecContext* mAudioCodecContext;
     int mVideoStreamIndex;
@@ -152,6 +163,7 @@ private:
     bool mStartTimeAccumulation;
     bool mDecodedFrame;
     bool mEndOfVideo;
+    bool mSWDecoder;
 };
 
 #endif // ES_CORE_COMPONENTS_VIDEO_FFMPEG_COMPONENT_H

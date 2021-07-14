@@ -234,6 +234,9 @@ void Settings::setDefaults()
     mBoolMap["LaunchWorkaround"] = { true, true };
 #endif
     mStringMap["MediaDirectory"] = { "", "" };
+#if !defined(_RPI_)
+    mBoolMap["VideoHardwareDecoding"] = { false, false };
+#endif
     mBoolMap["VideoUpscaleFrameRate"] = { false, false };
     mBoolMap["LaunchCommandOverride"] = { true, true };
     mBoolMap["ShowHiddenFiles"] = { true, true };

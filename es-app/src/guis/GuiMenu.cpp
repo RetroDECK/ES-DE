@@ -947,6 +947,25 @@ void GuiMenu::openOtherOptions()
     }
 #endif
 
+#if !defined(_RPI_)
+    // Whether to enable hardware decoding for the FFmpeg video player.
+    auto video_hardware_decoding = std::make_shared<SwitchComponent>(mWindow);
+    video_hardware_decoding->setState(Settings::getInstance()->getBool("VideoHardwareDecoding"));
+#if defined(BUILD_VLC_PLAYER)
+    s->addWithLabel("FFMPEG HARDWARE DECODING (EXPERIMENTAL)", video_hardware_decoding);
+#else
+    s->addWithLabel("VIDEO HARDWARE DECODING (EXPERIMENTAL)", video_hardware_decoding);
+#endif
+    s->addSaveFunc([video_hardware_decoding, s] {
+        if (video_hardware_decoding->getState() !=
+            Settings::getInstance()->getBool("VideoHardwareDecoding")) {
+            Settings::getInstance()->setBool("VideoHardwareDecoding",
+                                             video_hardware_decoding->getState());
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
     // Whether to upscale the video frame rate to 60 FPS.
     auto video_upscale_frame_rate = std::make_shared<SwitchComponent>(mWindow);
     video_upscale_frame_rate->setState(Settings::getInstance()->getBool("VideoUpscaleFrameRate"));
