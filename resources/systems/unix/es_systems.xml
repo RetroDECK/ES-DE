@@ -114,7 +114,7 @@
     <fullname>Atari 2600</fullname>
     <path>%ROMPATH%/atari2600</path>
     <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella_libretro.so %ROM%</command>
+    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella2014_libretro.so %ROM%</command>
     <platform>atari2600</platform>
     <theme>atari2600</theme>
   </system>
