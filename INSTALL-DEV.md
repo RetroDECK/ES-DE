@@ -66,7 +66,7 @@ sudo pacman -S vlc
 
 **Raspberry Pi OS (Raspian)**
 
-Note: The Raspberry Pi 4 is the minimum recommended model to use with ES-DE. As this type of device is quite weak and because the FFmpeg video player currently lacks hardware decoding/acceleration it is strongly adviced to build with the VLC player, which is hardware accelerated.
+Note: The Raspberry Pi 4 is the minimum recommended model to use with ES-DE. As this type of device is quite weak and because the FFmpeg video player does not support hardware decoding on this platform, it's strongly adviced to build with the VLC player, which is hardware accelerated.
 
 All of the required packages can be installed with apt-get:
 ```
@@ -792,7 +792,7 @@ In the descriptions below it's assumed that all build steps for MinGW/GCC will b
 
 **Download the dependency packages:**
 
-FFmpeg (choose a package with win64-gpl-shared in the filename, the latest snapshot build should generally be fine to use) \
+FFmpeg (choose the n4.4 package with win64-gpl-shared in the filename, the snapshot version will not work) \
 [https://github.com/BtbN/FFmpeg-Builds/releases](https://github.com/BtbN/FFmpeg-Builds/releases)
 
 FreeImage (binary distribution) \
@@ -937,18 +937,18 @@ Copy the files to the `emulationstation-de` build directory. Most of them will c
 
 **Required files for MSVC:**
 ```
-avcodec-59.dll
+avcodec-58.dll
 avcodec.lib
 avfilter.lib
-avfilter-8.dll
-avformat-59.dll
+avfilter-7.dll
+avformat-58.dll
 avformat.lib
-avutil-57.dll
+avutil-56.dll
 avutil.lib
-postproc-56.dll
-swresample-4.dll
+postproc-55.dll
+swresample-3.dll
 swresample.lib
-swscale-6.dll
+swscale-5.dll
 swscale.lib
 FreeImage.dll
 FreeImage.lib
@@ -995,13 +995,13 @@ lib /def:libvlc.def /out:libvlc.lib /machine:x64
 **Required files for MinGW:**
 
 ```
-avcodec-59.dll
-avfilter-8.dll
-avformat-59.dll
-avutil-57.dll
-postproc-56.dll
-swresample-4.dll
-swscale-6.dll
+avcodec-58.dll
+avfilter-7.dll
+avformat-58.dll
+avutil-56.dll
+postproc-55.dll
+swresample-3.dll
+swscale-5.dll
 FreeImage.dll
 glew32.dll
 libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
