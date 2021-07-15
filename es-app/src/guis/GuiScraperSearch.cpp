@@ -553,7 +553,7 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
     // mode and there are less than 2 search results.
     if (!mAcceptedResult && config->isMappedTo("y", input) && input.value != 0) {
         if (mSearchType != ACCEPT_SINGLE_MATCHES ||
-            mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1) {
+            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)) {
             openInputScreen(mLastSearch);
         }
     }
