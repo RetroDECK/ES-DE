@@ -38,7 +38,7 @@ Leon Styhre (Desktop Edition fork) <https://es-de.org/>
 
 RetroPie community (RetroPie fork)
 
-Alec \"Aloshi\" Lofquist (original version)
+Alec Lofquist (original version)
 
 [SEE ALSO]
 Full documentation is available at: <https://gitlab.com/leonstyhre/emulationstation-de/>
