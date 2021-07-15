@@ -1182,7 +1182,7 @@ There is an issue with launching games on some Windows computers, seemingly on t
 
 **FFmpeg/Video hardware decoding (experimental)** _(All platforms except Raspberry Pi)_
 
-Enabling this option offloads video decoding to the GPU. Whether this actually increases performance is another matter. As desktop-class CPUs are very capable of decoding the video streams directly, the performance may actually get worse as hardware decoding requires data to be passed back and forth between the CPU and GPU. This potential degradation is especially true for integrated GPUs, and even more so if the GPU is heavily utilized. In addition to this, most GPUs can only decode a subset of video codecs and profiles, meaning ES-DE will anyway have to fallback to software rendering when the GPU is unable to process the stream. With that said, there are still situations where hardware decoding can help, so experiment with the setting to see if it's useful for your configuration. Unfortunately hardware decoding for the FFmpeg video player is not supported on the Raspberry Pi, and it will probably stay this way unless FFmpeg starts to support the MMAL decoder internally. For this device, the VLC-based video player can be used instead, for which hardware decoding is available.
+Enabling this option offloads video decoding to the GPU. Whether this actually increases performance is another matter. As desktop-class CPUs are very capable of decoding the video streams directly, the performance may actually get worse as hardware decoding requires data to be passed back and forth between the CPU and GPU. This potential degradation is especially true for integrated GPUs, and even more so if the GPU is heavily utilized. In addition to this, most GPUs can only decode a subset of video codecs and profiles, meaning ES-DE will anyway have to fallback to software decoding when the GPU is unable to process the stream. With that said, there are still situations where hardware decoding can help, so experiment with the setting to see if it's useful for your configuration. Unfortunately hardware decoding for the FFmpeg video player is not supported on the Raspberry Pi and it will probably stay this way unless FFmpeg starts to support the MMAL decoder internally. For this device the VLC-based video player can be used instead, which supports hardware decoding.
 
 **Upscale video frame rate to 60 FPS (FFmpeg)**
 
@@ -1190,7 +1190,7 @@ With this option enabled, videos with lower frame rates than 60 FPS, such as 24 
 
 **Per game launch command override**
 
-If enabled, you can override the launch command defined in es_systems.xml on a per-game basis. It's only recommended to disable this option for testing purposes, such as when a game won't start and you're unsure if it's your custom launch command that causes the problem.
+If enabled, you can override the launch command defined in es_systems.xml on a per-game basis using the metadata editor. It's only recommended to disable this option for testing purposes, such as when a game won't start and you're unsure if it's your custom launch command that causes the problem.
 
 **Show hidden files and folders (requires restart)**
 
