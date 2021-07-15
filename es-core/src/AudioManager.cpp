@@ -306,16 +306,37 @@ void AudioManager::clearStream()
     // to empty the stream.
     //    SDL_AudioStreamClear(sConversionStream);
 
-    mIsClearingStream = true;
-    int length = sAudioFormat.samples * 4;
+    // If sSoundVector is empty it means we are shutting down. In this case don't attempt
+    // to clear the stream as this could lead to a crash.
+    if (sSoundVector.empty())
+        return;
 
-    while (SDL_AudioStreamAvailable(sConversionStream) > 0) {
-        std::vector<Uint8> readBuffer(length);
-        int processedLength =
-            SDL_AudioStreamGet(sConversionStream, static_cast<void*>(&readBuffer.at(0)), length);
-        if (processedLength <= 0)
-            break;
+    mIsClearingStream = true;
+
+    // This code is required as there's seemingly a bug in SDL_AudioStreamAvailable().
+    // The function sometimes returns 0 even if there is data left in the buffer, possibly
+    // because the remaining data is less than the configured sample size. It happens almost
+    // permanently on NetBSD but also on at least Linux from time to time. Adding some data
+    // to the stream buffer to get above this threshold before calling the function will
+    // return the proper number. So adding 10000 as we do here would give a return value of
+    // for instance 10880 instead of 0, assuming there were 880 bytes of data left in the buffer.
+    // Fortunately the SDL_AudioStreamGet() function acts correctly on any arbitrary sample size
+    // so we can actually clear the entire buffer. If this workaround was not implemented, there
+    // would be a sound glitch when some samples from the previous video would play any time a
+    // new video was started (assuming the issue was triggered be some remaining buffer data).
+    std::vector<Uint8> writeBuffer(10000);
+    if (SDL_AudioStreamPut(sConversionStream, reinterpret_cast<const void*>(&writeBuffer.at(0)),
+                           10000) == -1) {
+        LOG(LogError) << "Failed to put samples in the conversion stream:";
+        LOG(LogError) << SDL_GetError();
+        mIsClearingStream = false;
+        return;
     }
+
+    int length = SDL_AudioStreamAvailable(sConversionStream);
+
+    std::vector<Uint8> readBuffer(length);
+    SDL_AudioStreamGet(sConversionStream, static_cast<void*>(&readBuffer.at(0)), length);
 
     mIsClearingStream = false;
 }
