@@ -60,6 +60,7 @@ Apart from this, numerous small improvements and bug fixes are part of the relea
 * Enabled the menu scale-up effect for the OpenGL ES renderer
 * Renamed es_systems.cfg, es_settings.cfg and es_input.cfg to es_systems.xml, es_settings.xml and es_input.xml
 * Changed the es_systems.xml logic so it loads from the program resources directory by default (a customized file can be placed in ~/.emulationstation/custom_systems)
+* Added a %HIDEWINDOW% variable which can be used in the es_systems.xml file on Windows, primarily intended for hiding console windows when launching scripts
 * Added support for using the %ESPATH% variable in the media directory setting
 * Removed the marquee image from rbsimple-DE as it's now baked into the miximages
 * Set the gamelist video scanline rendering option to disabled by default

@@ -539,7 +539,6 @@ And on macOS with the filename `Broforce.sh`:
 
 And finally on Windows with the filename `Broforce.bat`:
 ```
-@echo off
 "c:\Program Files (x86)\Steam\steam.exe" steam://rungameid/26800
 ```
 

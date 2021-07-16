@@ -1471,6 +1471,13 @@ For a real system entry there can of course not be multiple entries for the same
         expanded to the directory of the ES-DE executable. -->
         <command>"%ESPATH%\RetroArch\retroarch.exe" -L "%ESPATH%\RetroArch\cores\snes9x_libretro.dll" %ROM%</command>
 
+        <!-- An example on Unix which launches a script, this is for example used by source ports, Steam games etc. -->
+        <command>bash %ROM%</command>
+
+        <!-- The equivalent configuration as above, but for Windows.
+        The optional %HIDEWINDOW% variable is used to hide the console window, which would otherwise be visible when launching the game. -->
+        <command>%HIDEWINDOW% cmd /C %ROM%</command>
+
         <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
         The entry is case insensitive as it will be converted to lower case during startup.
         This tag is optional but scraper searches for the system will be inaccurate if it's left out.
@@ -1505,6 +1512,8 @@ The following variables are expanded for the `command` tag:
 `%EMULATOR_` - This utilizes the emulator find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command. The find rules are explained in more detail below.
 
 `%CORE_` - This utilizes the core find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command.
+
+`%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching the game. It needs to be placed first in the command tag.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
