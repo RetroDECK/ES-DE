@@ -143,6 +143,10 @@ int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
     PROCESS_INFORMATION pi;
 
     si.cb = sizeof(si);
+    // The console window is hidden by default when compiled with MSVC, but when
+    // using MinGW it has to be set explicitly.
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
     bool processReturnValue = true;
     DWORD errorCode = 0;
 
