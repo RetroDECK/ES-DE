@@ -127,8 +127,8 @@ endif()
 if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        install(FILES ../avcodec-59.dll ../avfilter-8.dll ../avformat-59.dll ../avutil-57.dll
-                ../postproc-56.dll ../swresample-4.dll ../swscale-6.dll ../FreeImage.dll
+        install(FILES ../avcodec-58.dll ../avfilter-7.dll ../avformat-58.dll ../avutil-56.dll
+                ../postproc-55.dll ../swresample-3.dll ../swscale-5.dll ../FreeImage.dll
                 ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll ../freetype.dll
                 ../pugixml.dll ../libssl-1_1-x64.dll ../SDL2.dll ../MSVCP140.dll ../VCOMP140.DLL
                 ../VCRUNTIME140.dll ../VCRUNTIME140_1.dll DESTINATION .)
@@ -136,8 +136,8 @@ if(WIN32)
             install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
         endif()
     else()
-        install(FILES ../avcodec-59.dll ../avfilter-8.dll ../avformat-59.dll ../avutil-57.dll
-                ../postproc-56.dll ../swresample-4.dll ../swscale-6.dll ../FreeImage.dll
+        install(FILES ../avcodec-58.dll ../avfilter-7.dll ../avformat-58.dll ../avutil-56.dll
+                ../postproc-55.dll ../swresample-3.dll ../swscale-5.dll ../FreeImage.dll
                 ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll ../libfreetype.dll
                 ../libpugixml.dll ../libssl-1_1-x64.dll ../SDL2.dll ../vcomp140.dll DESTINATION .)
         if(VLC_PLAYER)
@@ -275,7 +275,7 @@ endif()
 set(CPACK_PACKAGE_VENDOR "Leon Styhre")
 
 # Update this when there has been a new release.
-set(CPACK_PACKAGE_VERSION "1.1.0-beta2-dev")
+set(CPACK_PACKAGE_VERSION "1.1.0-rc")
 
 # Use the shorter x64 descriptor if on the x86_64/AMD64 architecture.
 if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL x86_64 OR CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL AMD64)
@@ -332,7 +332,7 @@ else()
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://es-de.org")
     set(CPACK_DEBIAN_PACKAGE_SECTION "games")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-    if(VLC_PLAYER OR RPI)
+    if(VLC_PLAYER)
         set(CPACK_DEBIAN_PACKAGE_DEPENDS "vlc")
     endif()
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)

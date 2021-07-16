@@ -11,11 +11,11 @@
 
 #include "resources/TextureData.h"
 
+#include "ImageIO.h"
+#include "Log.h"
 #include "math/Misc.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
-#include "ImageIO.h"
-#include "Log.h"
 
 #include <nanosvg.h>
 #include <nanosvgrast.h>
@@ -23,17 +23,16 @@
 
 #define DPI 96
 
-TextureData::TextureData(
-        bool tile)
-        : mTile(tile),
-        mTextureID(0),
-        mDataRGBA({}),
-        mScaleDuringLoad(1.0f),
-        mScalable(false),
-        mWidth(0),
-        mHeight(0),
-        mSourceWidth(0.0f),
-        mSourceHeight(0.0f)
+TextureData::TextureData(bool tile)
+    : mTile(tile)
+    , mTextureID(0)
+    , mDataRGBA({})
+    , mScaleDuringLoad(1.0f)
+    , mScalable(false)
+    , mWidth(0)
+    , mHeight(0)
+    , mSourceWidth(0.0f)
+    , mSourceHeight(0.0f)
 {
 }
 
@@ -78,13 +77,13 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.
-        mWidth = static_cast<size_t>(std::round((static_cast<float>(mHeight) /
-                svgImage->height) * svgImage->width));
+        mWidth = static_cast<size_t>(
+            std::round((static_cast<float>(mHeight) / svgImage->height) * svgImage->width));
     }
     else if (mHeight == 0) {
         // Auto scale height to keep aspect ratio.
-        mHeight = static_cast<size_t>(std::round((static_cast<float>(mWidth) /
-                svgImage->width) * svgImage->height));
+        mHeight = static_cast<size_t>(
+            std::round((static_cast<float>(mWidth) / svgImage->width) * svgImage->height));
     }
 
     std::vector<unsigned char> tempVector;
@@ -93,14 +92,15 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     NSVGrasterizer* rast = nsvgCreateRasterizer();
 
     nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, tempVector.data(),
-            static_cast<int>(mWidth), static_cast<int>(mHeight), static_cast<int>(mWidth) * 4);
+                  static_cast<int>(mWidth), static_cast<int>(mHeight),
+                  static_cast<int>(mWidth) * 4);
 
     // This is important in order to avoid memory leaks.
     nsvgDeleteRasterizer(rast);
     nsvgDelete(svgImage);
 
-    mDataRGBA.insert(mDataRGBA.begin(),
-            tempVector.data(), tempVector.data() + (mWidth * mHeight * 4));
+    mDataRGBA.insert(mDataRGBA.begin(), tempVector.data(),
+                     tempVector.data() + (mWidth * mHeight * 4));
 
     ImageIO::flipPixelsVert(mDataRGBA.data(), mWidth, mHeight);
 
@@ -120,12 +120,13 @@ bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t leng
     }
 
     std::vector<unsigned char> imageRGBA = ImageIO::loadFromMemoryRGBA32(
-            static_cast<const unsigned char*>(fileData), length, width, height);
+        static_cast<const unsigned char*>(fileData), length, width, height);
 
     if (imageRGBA.size() == 0) {
-        LOG(LogError) << "Couldn't initialize texture from memory, invalid data (" <<
-                (mPath != "" ? "file path: " + mPath + ", " : "") << "data ptr: " <<
-                reinterpret_cast<size_t>(fileData) << ", reported size: " << length << ")";
+        LOG(LogError) << "Couldn't initialize texture from memory, invalid data ("
+                      << (mPath != "" ? "file path: \"" + mPath + "\", " : "")
+                      << "data ptr: " << reinterpret_cast<size_t>(fileData)
+                      << ", reported size: " << length << ")";
         return false;
     }
 
@@ -167,8 +168,8 @@ bool TextureData::load()
             retval = initSVGFromMemory(dataString);
         }
         else {
-            retval = initImageFromMemory(static_cast<const unsigned char*>(data.ptr.get()),
-                    data.length);
+            retval =
+                initImageFromMemory(static_cast<const unsigned char*>(data.ptr.get()), data.length);
         }
     }
     return retval;
@@ -196,9 +197,9 @@ bool TextureData::uploadAndBind()
             return false;
 
         // Upload texture.
-        mTextureID = Renderer::createTexture(Renderer::Texture::RGBA, true, mTile,
-                static_cast<const unsigned int>(mWidth), static_cast<const unsigned int>(mHeight),
-                mDataRGBA.data());
+        mTextureID = Renderer::createTexture(
+            Renderer::Texture::RGBA, true, mTile, static_cast<const unsigned int>(mWidth),
+            static_cast<const unsigned int>(mHeight), mDataRGBA.data());
     }
     return true;
 }

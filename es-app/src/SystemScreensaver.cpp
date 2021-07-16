@@ -10,21 +10,18 @@
 #include "SystemScreensaver.h"
 
 #include "components/VideoFFmpegComponent.h"
-#if defined(_RPI_)
-#include "components/VideoOmxComponent.h"
-#endif
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
-#include "resources/Font.h"
-#include "utils/FileSystemUtil.h"
-#include "utils/StringUtil.h"
-#include "views/gamelist/IGameListView.h"
-#include "views/ViewController.h"
 #include "AudioManager.h"
 #include "FileData.h"
 #include "Log.h"
 #include "SystemData.h"
+#include "resources/Font.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
+#include "views/ViewController.h"
+#include "views/gamelist/IGameListView.h"
 
 #include <random>
 #include <time.h>
@@ -36,24 +33,23 @@
 
 #define FADE_TIME 300
 
-SystemScreensaver::SystemScreensaver(
-        Window* window)
-        : mWindow(window),
-        mState(STATE_INACTIVE),
-        mImageScreensaver(nullptr),
-        mVideoScreensaver(nullptr),
-        mCurrentGame(nullptr),
-        mPreviousGame(nullptr),
-        mTimer(0),
-        mMediaSwapTime(0),
-        mTriggerNextGame(false),
-        mHasMediaFiles(false),
-        mFallbackScreensaver(false),
-        mOpacity(0.0f),
-        mDimValue(1.0),
-        mRectangleFadeIn(50),
-        mTextFadeIn(0),
-        mSaturationAmount(1.0)
+SystemScreensaver::SystemScreensaver(Window* window)
+    : mWindow(window)
+    , mState(STATE_INACTIVE)
+    , mImageScreensaver(nullptr)
+    , mVideoScreensaver(nullptr)
+    , mCurrentGame(nullptr)
+    , mPreviousGame(nullptr)
+    , mTimer(0)
+    , mMediaSwapTime(0)
+    , mTriggerNextGame(false)
+    , mHasMediaFiles(false)
+    , mFallbackScreensaver(false)
+    , mOpacity(0.0f)
+    , mDimValue(1.0)
+    , mRectangleFadeIn(50)
+    , mTextFadeIn(0)
+    , mSaturationAmount(1.0)
 {
     mWindow->setScreensaver(this);
 }
@@ -63,21 +59,6 @@ SystemScreensaver::~SystemScreensaver()
     mCurrentGame = nullptr;
     delete mVideoScreensaver;
     delete mImageScreensaver;
-}
-
-bool SystemScreensaver::allowSleep()
-{
-    return ((mVideoScreensaver == nullptr) && (mImageScreensaver == nullptr));
-}
-
-bool SystemScreensaver::isScreensaverActive()
-{
-    return (mState != STATE_INACTIVE);
-}
-
-bool SystemScreensaver::isFallbackScreensaver()
-{
-    return mFallbackScreensaver;
 }
 
 void SystemScreensaver::startScreensaver(bool generateMediaList)
@@ -146,14 +127,14 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             mImageScreensaver->setImage(path);
             mImageScreensaver->setOrigin(0.5f, 0.5f);
             mImageScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
-                    Renderer::getScreenHeight() / 2.0f);
+                                           Renderer::getScreenHeight() / 2.0f);
 
             if (Settings::getInstance()->getBool("ScreensaverStretchImages"))
                 mImageScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                        static_cast<float>(Renderer::getScreenHeight()));
+                                             static_cast<float>(Renderer::getScreenHeight()));
             else
                 mImageScreensaver->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                        static_cast<float>(Renderer::getScreenHeight()));
+                                              static_cast<float>(Renderer::getScreenHeight()));
         }
         mTimer = 0;
         return;
@@ -179,34 +160,26 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo"))
                 generateOverlayInfo();
 
-            #if defined(_RPI_)
-            // Create the correct type of video component.
-            if (Settings::getInstance()->getBool("ScreensaverOmxPlayer"))
-                mVideoScreensaver = new VideoOmxComponent(mWindow);
-            else if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
-                mVideoScreensaver = new VideoVlcComponent(mWindow);
-            else
-                mVideoScreensaver = new VideoFFmpegComponent(mWindow);
-            #elif defined(BUILD_VLC_PLAYER)
+#if defined(BUILD_VLC_PLAYER)
             if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
                 mVideoScreensaver = new VideoVlcComponent(mWindow);
             else
                 mVideoScreensaver = new VideoFFmpegComponent(mWindow);
-            #else
+#else
             mVideoScreensaver = new VideoFFmpegComponent(mWindow);
-            #endif
+#endif
 
             mVideoScreensaver->topWindow(true);
             mVideoScreensaver->setOrigin(0.5f, 0.5f);
             mVideoScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
-                    Renderer::getScreenHeight() / 2.0f);
+                                           Renderer::getScreenHeight() / 2.0f);
 
             if (Settings::getInstance()->getBool("ScreensaverStretchVideos"))
                 mVideoScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                        static_cast<float>(Renderer::getScreenHeight()));
+                                             static_cast<float>(Renderer::getScreenHeight()));
             else
                 mVideoScreensaver->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                        static_cast<float>(Renderer::getScreenHeight()));
+                                              static_cast<float>(Renderer::getScreenHeight()));
 
             mVideoScreensaver->setVideo(path);
             mVideoScreensaver->setScreensaverMode(true);
@@ -229,16 +202,17 @@ void SystemScreensaver::stopScreensaver()
 
     mState = STATE_INACTIVE;
 
-    mDimValue = 1.0;
+    mDimValue = 1.0f;
     mRectangleFadeIn = 50;
     mTextFadeIn = 0;
-    mSaturationAmount = 1.0;
+    mSaturationAmount = 1.0f;
 
     if (mGameOverlay)
         mGameOverlay.reset();
 }
 
-void SystemScreensaver::nextGame() {
+void SystemScreensaver::nextGame()
+{
     stopScreensaver();
     startScreensaver(false);
 }
@@ -249,8 +223,8 @@ void SystemScreensaver::launchGame()
         // Launching game
         ViewController::get()->triggerGameLaunch(mCurrentGame);
         ViewController::get()->goToGameList(mCurrentGame->getSystem());
-        IGameListView* view = ViewController::get()->
-                getGameListView(mCurrentGame->getSystem()).get();
+        IGameListView* view =
+            ViewController::get()->getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
         ViewController::get()->cancelViewTransitions();
     }
@@ -261,8 +235,8 @@ void SystemScreensaver::goToGame()
     if (mCurrentGame != nullptr) {
         // Go to the game in the gamelist view, but don't launch it.
         ViewController::get()->goToGameList(mCurrentGame->getSystem());
-        IGameListView* view = ViewController::get()->
-                getGameListView(mCurrentGame->getSystem()).get();
+        IGameListView* view =
+            ViewController::get()->getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
         ViewController::get()->cancelViewTransitions();
     }
@@ -276,7 +250,7 @@ void SystemScreensaver::renderScreensaver()
         // Render a black background below the video.
         Renderer::setMatrix(Transform4x4f::Identity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+                           static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
@@ -288,7 +262,7 @@ void SystemScreensaver::renderScreensaver()
         // Render a black background below the image.
         Renderer::setMatrix(Transform4x4f::Identity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+                           static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
         // Only render the image if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
@@ -305,20 +279,20 @@ void SystemScreensaver::renderScreensaver()
         Renderer::setMatrix(Transform4x4f::Identity());
         if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
             if (mHasMediaFiles) {
-                #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
                     Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
-                #endif
+#endif
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
-                        mGameOverlay) {
+                    mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
-                        Renderer::drawRect(mGameOverlayRectangleCoords[0],
-                                mGameOverlayRectangleCoords[1], mGameOverlayRectangleCoords[2],
-                                mGameOverlayRectangleCoords[3], 0x00000000 | mRectangleFadeIn,
-                                0x00000000 | mRectangleFadeIn );
+                        Renderer::drawRect(
+                            mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
+                            mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
+                            0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                     }
-                    mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6 +
-                            mRectangleFadeIn / 20, 0, 170);
+                    mRectangleFadeIn =
+                        Math::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     if (mTextFadeIn > 50)
@@ -333,7 +307,7 @@ void SystemScreensaver::renderScreensaver()
         }
         else if (Settings::getInstance()->getString("ScreensaverType") == "video") {
             if (mHasMediaFiles) {
-                #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
                 Renderer::shaderParameters videoParameters;
                 unsigned int shaders = 0;
                 if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
@@ -341,6 +315,7 @@ void SystemScreensaver::renderScreensaver()
                 if (Settings::getInstance()->getBool("ScreensaverVideoBlur")) {
                     shaders |= Renderer::SHADER_BLUR_HORIZONTAL;
                     float heightModifier = Renderer::getScreenHeightModifier();
+                    // clang-format off
                     if (heightModifier < 1)
                         videoParameters.blurPasses = 2;        // Below 1080
                     else if (heightModifier >= 4)
@@ -355,21 +330,22 @@ void SystemScreensaver::renderScreensaver()
                         videoParameters.blurPasses = 3;        // 1440
                     else if (heightModifier >= 1)
                         videoParameters.blurPasses = 2;        // 1080
+                    // clang-format on
                 }
                 Renderer::shaderPostprocessing(shaders, videoParameters);
-                #endif
+#endif
                 if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
-                        #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
                         Renderer::shaderPostprocessing(Renderer::SHADER_OPACITY);
-                        #endif
-                        Renderer::drawRect(mGameOverlayRectangleCoords[0],
-                                mGameOverlayRectangleCoords[1], mGameOverlayRectangleCoords[2],
-                                mGameOverlayRectangleCoords[3], 0x00000000 | mRectangleFadeIn,
-                                0x00000000 | mRectangleFadeIn );
+#endif
+                        Renderer::drawRect(
+                            mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
+                            mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
+                            0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                     }
-                    mRectangleFadeIn = Math::clamp(mRectangleFadeIn + 6 +
-                            mRectangleFadeIn / 20, 0, 170);
+                    mRectangleFadeIn =
+                        Math::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     if (mTextFadeIn > 50)
@@ -383,8 +359,8 @@ void SystemScreensaver::renderScreensaver()
             }
         }
         if (mFallbackScreensaver ||
-                Settings::getInstance()->getString("ScreensaverType") == "dim") {
-            #if defined(USE_OPENGL_21)
+            Settings::getInstance()->getString("ScreensaverType") == "dim") {
+#if defined(USE_OPENGL_21)
             Renderer::shaderParameters dimParameters;
             dimParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
@@ -394,22 +370,22 @@ void SystemScreensaver::renderScreensaver()
             Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
             if (mSaturationAmount > 0.0)
                 mSaturationAmount = Math::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
-            #else
-            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                    Renderer::getScreenHeight(), 0x000000A0, 0x000000A0);
-            #endif
+#else
+            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                               0x000000A0, 0x000000A0);
+#endif
         }
         else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
-            #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
             Renderer::shaderParameters blackParameters;
             blackParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
             if (mDimValue > 0.0)
                 mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
-            #else
-            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(),
-                    Renderer::getScreenHeight(), 0x000000FF, 0x000000FF);
-            #endif
+#else
+            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                               0x000000FF, 0x000000FF);
+#endif
         }
     }
 }
@@ -458,8 +434,8 @@ void SystemScreensaver::update(int deltaTime)
 
 void SystemScreensaver::generateImageList()
 {
-    for (auto it = SystemData::sSystemVector.cbegin();
-            it != SystemData::sSystemVector.cend(); it++) {
+    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+         it != SystemData::sSystemVector.cend(); it++) {
         // We only want nodes from game systems that are not collections.
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
@@ -475,8 +451,8 @@ void SystemScreensaver::generateImageList()
 
 void SystemScreensaver::generateVideoList()
 {
-    for (auto it = SystemData::sSystemVector.cbegin();
-            it != SystemData::sSystemVector.cend(); it++) {
+    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+         it != SystemData::sSystemVector.cend(); it++) {
         // We only want nodes from game systems that are not collections.
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
@@ -493,7 +469,7 @@ void SystemScreensaver::generateVideoList()
 void SystemScreensaver::generateCustomImageList()
 {
     std::string imageDir = Utils::FileSystem::expandHomePath(
-            Settings::getInstance()->getString("ScreensaverSlideshowImageDir"));
+        Settings::getInstance()->getString("ScreensaverSlideshowImageDir"));
 
     // This makes it possible to set the custom image directory relative to the ES-DE binary
     // directory or the ROM directory.
@@ -503,7 +479,7 @@ void SystemScreensaver::generateCustomImageList()
     if (imageDir != "" && Utils::FileSystem::isDirectory(imageDir)) {
         std::string imageFilter = ".jpg, .JPG, .png, .PNG";
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(
-                imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
+            imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
 
         for (auto it = dirContent.begin(); it != dirContent.end(); it++) {
             if (Utils::FileSystem::isRegularFile(*it)) {
@@ -513,8 +489,7 @@ void SystemScreensaver::generateCustomImageList()
         }
     }
     else {
-        LOG(LogWarning) << "Custom screensaver image directory '" <<
-                imageDir << "' does not exist.";
+        LOG(LogWarning) << "Custom screensaver image directory '" << imageDir << "' does not exist";
     }
 }
 
@@ -540,12 +515,11 @@ void SystemScreensaver::pickRandomImage(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
-        std::uniform_int_distribution<int>
-                uniform_dist(0, static_cast<int>(mImageFiles.size()) - 1);
+        std::mt19937 engine { randDev() };
+        std::uniform_int_distribution<int> uniform_dist(0,
+                                                        static_cast<int>(mImageFiles.size()) - 1);
         index = uniform_dist(engine);
-    }
-    while (mPreviousGame && mImageFiles.at(index) == mPreviousGame);
+    } while (mPreviousGame && mImageFiles.at(index) == mPreviousGame);
 
     path = mImageFiles.at(index)->getImagePath();
     mGameName = mImageFiles.at(index)->getName();
@@ -575,12 +549,11 @@ void SystemScreensaver::pickRandomVideo(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
-        std::uniform_int_distribution<int>
-                uniform_dist(0, static_cast<int>(mVideoFiles.size()) - 1);
+        std::mt19937 engine { randDev() };
+        std::uniform_int_distribution<int> uniform_dist(0,
+                                                        static_cast<int>(mVideoFiles.size()) - 1);
         index = uniform_dist(engine);
-    }
-    while (mPreviousGame && mVideoFiles.at(index) == mPreviousGame);
+    } while (mPreviousGame && mVideoFiles.at(index) == mPreviousGame);
 
     path = mVideoFiles.at(index)->getVideoPath();
     mGameName = mVideoFiles.at(index)->getName();
@@ -604,12 +577,11 @@ void SystemScreensaver::pickRandomCustomImage(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
-        std::uniform_int_distribution<int>
-                uniform_dist(0, static_cast<int>(mImageCustomFiles.size()) - 1);
+        std::mt19937 engine { randDev() };
+        std::uniform_int_distribution<int> uniform_dist(
+            0, static_cast<int>(mImageCustomFiles.size()) - 1);
         index = uniform_dist(engine);
-    }
-    while (mPreviousCustomImage != "" && mImageCustomFiles.at(index) == mPreviousCustomImage);
+    } while (mPreviousCustomImage != "" && mImageCustomFiles.at(index) == mPreviousCustomImage);
 
     path = mImageCustomFiles.at(index);
     mPreviousCustomImage = path;
@@ -633,8 +605,8 @@ void SystemScreensaver::generateOverlayInfo()
     const std::string systemName = Utils::String::toUpper(mSystemName);
     const std::string overlayText = gameName + "\n" + systemName;
 
-    mGameOverlay = std::unique_ptr<TextCache>(mGameOverlayFont.at(0)->
-            buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
+    mGameOverlay = std::unique_ptr<TextCache>(
+        mGameOverlayFont.at(0)->buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
 
     float textSizeX;
     float textSizeY = mGameOverlayFont[0].get()->sizeText(overlayText).y();
@@ -645,7 +617,7 @@ void SystemScreensaver::generateOverlayInfo()
     // injected in the size calculation. Regardless, this workaround is working
     // fine for the time being.
     if (mGameOverlayFont[0].get()->sizeText(gameName).x() >
-            mGameOverlayFont[0].get()->sizeText(systemName).x())
+        mGameOverlayFont[0].get()->sizeText(systemName).x())
         textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x();
     else
         textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x();

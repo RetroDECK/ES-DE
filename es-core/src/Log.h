@@ -9,15 +9,19 @@
 #ifndef ES_CORE_LOG_H
 #define ES_CORE_LOG_H
 
+#include "utils/FileSystemUtil.h"
+
 #include <map>
 #include <sstream>
 
-#define LOG(level) \
-if (level > Log::getReportingLevel()); \
-else Log().get(level)
+#define LOG(level)                                                                                 \
+    if (level > Log::getReportingLevel())                                                          \
+        ;                                                                                          \
+    else                                                                                           \
+        Log().get(level)
 
 enum LogLevel {
-    LogError,
+    LogError, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     LogWarning,
     LogInfo,
     LogDebug
@@ -29,10 +33,12 @@ public:
     ~Log();
     std::ostringstream& get(LogLevel level = LogInfo);
 
-    static LogLevel getReportingLevel();
-    static void setReportingLevel(LogLevel level);
-
-    static std::string getLogPath();
+    static LogLevel getReportingLevel() { return reportingLevel; }
+    static void setReportingLevel(LogLevel level) { reportingLevel = level; }
+    static std::string getLogPath()
+    {
+        return Utils::FileSystem::getHomePath() + "/.emulationstation/es_log.txt";
+    }
 
     static void flush();
     static void init();
@@ -43,11 +49,11 @@ protected:
     std::ostringstream os;
 
 private:
-    std::map<LogLevel, std::string> logLevelMap {
-        { LogError, "Error" },
-        { LogWarning, "Warn" },
-        { LogInfo, "Info" },
-        { LogDebug, "Debug" }
+    std::map<LogLevel, std::string> logLevelMap { // Log level indicators.
+                                                  { LogError, "Error" },
+                                                  { LogWarning, "Warn" },
+                                                  { LogInfo, "Info" },
+                                                  { LogDebug, "Debug" }
     };
 
     static LogLevel reportingLevel;

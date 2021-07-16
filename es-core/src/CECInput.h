@@ -11,7 +11,10 @@
 
 #include <string>
 
-namespace CEC { class ICECAdapter; }
+namespace CEC
+{
+    class ICECAdapter;
+}
 
 class CECInput
 {
@@ -23,7 +26,7 @@ public:
     static std::string getKeyCodeString(const unsigned int _keyCode);
 
 private:
-     CECInput();
+    CECInput();
     ~CECInput();
 
     static CECInput* sInstance;

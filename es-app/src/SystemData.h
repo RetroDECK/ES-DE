@@ -35,15 +35,14 @@ class FindRules
 {
 public:
     FindRules();
-    ~FindRules();
 
     void loadFindRules();
 
 private:
     struct EmulatorRules {
-        #if defined(_WIN64)
+#if defined(_WIN64)
         std::vector<std::string> winRegistryPaths;
-        #endif
+#endif
         std::vector<std::string> systemPaths;
         std::vector<std::string> staticPaths;
     };
@@ -61,38 +60,41 @@ private:
 class SystemData
 {
 public:
-    SystemData(
-            const std::string& name,
-            const std::string& fullName,
-            SystemEnvironmentData* envData,
-            const std::string& themeFolder,
-            bool CollectionSystem = false,
-            bool CustomCollectionSystem = false);
+    SystemData(const std::string& name,
+               const std::string& fullName,
+               SystemEnvironmentData* envData,
+               const std::string& themeFolder,
+               bool CollectionSystem = false,
+               bool CustomCollectionSystem = false);
 
     ~SystemData();
 
-    inline FileData* getRootFolder() const { return mRootFolder; };
-    inline const std::string& getName() const { return mName; }
-    inline const std::string& getFullName() const { return mFullName; }
-    inline const std::string& getStartPath() const { return mEnvData->mStartPath; }
-    inline const std::vector<std::string>& getExtensions() const
-            { return mEnvData->mSearchExtensions; }
-    inline const std::string& getThemeFolder() const { return mThemeFolder; }
-    inline SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
-    inline const std::vector<PlatformIds::PlatformId>& getPlatformIds() const
-            { return mEnvData->mPlatformIds; }
-    inline bool hasPlatformId(PlatformIds::PlatformId id) { if (!mEnvData) return false;
-            return std::find(mEnvData->mPlatformIds.cbegin(), mEnvData->mPlatformIds.cend(), id)
-            != mEnvData->mPlatformIds.cend(); }
+    FileData* getRootFolder() const { return mRootFolder; }
+    const std::string& getName() const { return mName; }
+    const std::string& getFullName() const { return mFullName; }
+    const std::string& getStartPath() const { return mEnvData->mStartPath; }
+    const std::vector<std::string>& getExtensions() const { return mEnvData->mSearchExtensions; }
+    const std::string& getThemeFolder() const { return mThemeFolder; }
+    SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
+    const std::vector<PlatformIds::PlatformId>& getPlatformIds() const
+    {
+        return mEnvData->mPlatformIds;
+    }
+    bool hasPlatformId(PlatformIds::PlatformId id)
+    {
+        if (!mEnvData)
+            return false;
+        return std::find(mEnvData->mPlatformIds.cbegin(), mEnvData->mPlatformIds.cend(), id) !=
+               mEnvData->mPlatformIds.cend();
+    }
 
-    inline const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
+    const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
 
     std::string getGamelistPath(bool forWrite) const;
-    bool hasGamelist() const;
     std::string getThemePath() const;
 
     std::pair<unsigned int, unsigned int> getDisplayedGameCount() const;
-    bool getScrapeFlag() { return mScrapeFlag; };
+    bool getScrapeFlag() { return mScrapeFlag; }
     void setScrapeFlag(bool scrapeflag) { mScrapeFlag = scrapeflag; }
 
     static void deleteSystems();
@@ -106,16 +108,22 @@ public:
     static std::vector<SystemData*> sSystemVector;
     static std::unique_ptr<FindRules> sFindRules;
 
-    inline std::vector<SystemData*>::const_iterator getIterator() const
-            { return std::find(sSystemVector.cbegin(), sSystemVector.cend(), this); };
-    inline std::vector<SystemData*>::const_reverse_iterator getRevIterator() const
-            { return std::find(sSystemVector.crbegin(), sSystemVector.crend(), this); };
-    inline bool isCollection() { return mIsCollectionSystem; };
-    inline bool isCustomCollection() { return mIsCustomCollectionSystem; };
-    inline bool isGroupedCustomCollection() { return mIsGroupedCustomCollectionSystem; };
+    std::vector<SystemData*>::const_iterator getIterator() const
+    {
+        return std::find(sSystemVector.cbegin(), sSystemVector.cend(), this);
+    }
+    std::vector<SystemData*>::const_reverse_iterator getRevIterator() const
+    {
+        return std::find(sSystemVector.crbegin(), sSystemVector.crend(), this);
+    }
+    bool isCollection() { return mIsCollectionSystem; }
+    bool isCustomCollection() { return mIsCustomCollectionSystem; }
+    bool isGroupedCustomCollection() { return mIsGroupedCustomCollectionSystem; }
     void setIsGroupedCustomCollection(bool isGroupedCustom)
-                { mIsGroupedCustomCollectionSystem = isGroupedCustom; };
-    inline bool isGameSystem() { return mIsGameSystem; };
+    {
+        mIsGroupedCustomCollectionSystem = isGroupedCustom;
+    };
+    bool isGameSystem() { return mIsGameSystem; }
 
     bool isVisible();
 
@@ -123,14 +131,14 @@ public:
     SystemData* getPrev() const;
     static SystemData* getRandomSystem(const SystemData* currentSystem);
     FileData* getRandomGame(const FileData* currentGame = nullptr);
-    FileData* getPlaceholder() { return mPlaceholder; };
+    FileData* getPlaceholder() { return mPlaceholder; }
 
     void sortSystem(bool reloadGamelist = true, bool jumpToFirstRow = false);
 
     // Load or re-load theme.
     void loadTheme();
 
-    FileFilterIndex* getIndex() { return mFilterIndex; };
+    FileFilterIndex* getIndex() { return mFilterIndex; }
     void onMetaDataSavePoint();
     void writeMetaData();
 
@@ -141,7 +149,7 @@ private:
     bool mIsCustomCollectionSystem;
     bool mIsGroupedCustomCollectionSystem;
     bool mIsGameSystem;
-    bool mScrapeFlag;  // Only used by scraper GUI to remember which systems to scrape.
+    bool mScrapeFlag; // Only used by scraper GUI to remember which systems to scrape.
     std::string mName;
     std::string mFullName;
     SystemEnvironmentData* mEnvData;

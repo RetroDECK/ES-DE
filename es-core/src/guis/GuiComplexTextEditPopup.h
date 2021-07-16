@@ -11,9 +11,9 @@
 #ifndef ES_CORE_GUIS_GUI_COMPLEX_TEXT_EDIT_POPUP_H
 #define ES_CORE_GUIS_GUI_COMPLEX_TEXT_EDIT_POPUP_H
 
+#include "GuiComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
-#include "GuiComponent.h"
 
 class TextComponent;
 class TextEditComponent;
@@ -21,28 +21,27 @@ class TextEditComponent;
 class GuiComplexTextEditPopup : public GuiComponent
 {
 public:
-    GuiComplexTextEditPopup(
-            Window* window,
-            const HelpStyle& helpstyle,
-            const std::string& title,
-            const std::string& infoString1,
-            const std::string& infoString2,
-            const std::string& initValue,
-            const std::function<void(const std::string&)>& okCallback,
-            bool multiLine,
-            const std::string& acceptBtnText = "OK",
-            const std::string& saveConfirmationText = "SAVE CHANGES?",
-            const std::string& loadBtnText = "LOAD",
-            const std::string& loadBtnHelpText = "load default",
-            const std::string& clearBtnText = "CLEAR",
-            const std::string& clearBtnHelpText = "clear",
-            bool hideCancelButton = false);
+    GuiComplexTextEditPopup(Window* window,
+                            const HelpStyle& helpstyle,
+                            const std::string& title,
+                            const std::string& infoString1,
+                            const std::string& infoString2,
+                            const std::string& initValue,
+                            const std::function<void(const std::string&)>& okCallback,
+                            bool multiLine,
+                            const std::string& acceptBtnText = "OK",
+                            const std::string& saveConfirmationText = "SAVE CHANGES?",
+                            const std::string& loadBtnText = "LOAD",
+                            const std::string& loadBtnHelpText = "load default",
+                            const std::string& clearBtnText = "CLEAR",
+                            const std::string& clearBtnHelpText = "clear",
+                            bool hideCancelButton = false);
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return mHelpStyle; };
+    HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
     NinePatchComponent mBackground;

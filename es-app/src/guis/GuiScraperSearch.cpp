@@ -15,6 +15,13 @@
 
 #include "guis/GuiScraperSearch.h"
 
+#include "CollectionSystemsManager.h"
+#include "FileData.h"
+#include "Log.h"
+#include "MameNames.h"
+#include "PlatformId.h"
+#include "SystemData.h"
+#include "Window.h"
 #include "components/ComponentList.h"
 #include "components/DateTimeEditComponent.h"
 #include "components/ImageComponent.h"
@@ -26,42 +33,33 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
-#include "CollectionSystemsManager.h"
-#include "FileData.h"
-#include "Log.h"
-#include "MameNames.h"
-#include "PlatformId.h"
-#include "SystemData.h"
-#include "Window.h"
 
 #define FAILED_VERIFICATION_RETRIES 8
 
-GuiScraperSearch::GuiScraperSearch(
-        Window* window,
-        SearchType type,
-        unsigned int scrapeCount)
-        : GuiComponent(window),
-        mGrid(window, Vector2i(4, 3)),
-        mBusyAnim(window),
-        mSearchType(type),
-        mScrapeCount(scrapeCount),
-        mScrapeRatings(false),
-        mRefinedSearch(false),
-        mFoundGame(false)
+GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int scrapeCount)
+    : GuiComponent(window)
+    , mGrid(window, Vector2i(4, 3))
+    , mBusyAnim(window)
+    , mSearchType(type)
+    , mScrapeCount(scrapeCount)
+    , mScrapeRatings(false)
+    , mRefinedSearch(false)
+    , mFoundGame(false)
 {
     addChild(&mGrid);
 
     mBlockAccept = false;
+    mAcceptedResult = false;
     mRetrySearch = false;
     mRetryCount = 0;
 
     // Left spacer (empty component, needed for borders).
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 0),
-            false, false, Vector2i(1, 3), GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 0), false, false,
+                   Vector2i(1, 3), GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
     // Selected result name.
     mResultName = std::make_shared<TextComponent>(mWindow, "Result name",
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                                                  Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     // Selected result thumbnail.
     mResultThumbnail = std::make_shared<ImageComponent>(mWindow);
@@ -77,7 +75,7 @@ GuiScraperSearch::GuiScraperSearch(
         mDescContainer->setScrollParameters(6000, 3000, 85);
 
     mResultDesc = std::make_shared<TextComponent>(mWindow, "Result desc",
-            Font::get(FONT_SIZE_SMALL), 0x777777FF);
+                                                  Font::get(FONT_SIZE_SMALL), 0x777777FF);
     mDescContainer->addChild(mResultDesc.get());
     mDescContainer->setAutoScroll(true);
 
@@ -89,40 +87,47 @@ GuiScraperSearch::GuiScraperSearch(
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>(mWindow);
     mMD_ReleaseDate->setColor(mdColor);
     mMD_ReleaseDate->setUppercase(true);
-    mMD_Developer = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
-    mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
-    mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
-    mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-            Vector3f::Zero(), Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Developer =
+        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
+                                        Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Publisher =
+        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
+                                        Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Genre =
+        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
+                                        Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Players =
+        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
+                                        Vector2f::Zero(), 0x00000000, 0.02f);
     mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
     if (Settings::getInstance()->getString("Scraper") != "thegamesdb")
         mScrapeRatings = true;
 
     if (mScrapeRatings)
-        mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-                (mWindow, "RATING:", font, mdLblColor), mMD_Rating, false));
-    mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "RELEASED:", font, mdLblColor), mMD_ReleaseDate));
-    mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "DEVELOPER:", font, mdLblColor), mMD_Developer));
-    mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "PUBLISHER:", font, mdLblColor), mMD_Publisher));
-    mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "GENRE:", font, mdLblColor), mMD_Genre));
-    mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "PLAYERS:", font, mdLblColor), mMD_Players));
+        mMD_Pairs.push_back(
+            MetaDataPair(std::make_shared<TextComponent>(mWindow, "RATING:", font, mdLblColor),
+                         mMD_Rating, false));
+
+    mMD_Pairs.push_back(MetaDataPair(
+        std::make_shared<TextComponent>(mWindow, "RELEASED:", font, mdLblColor), mMD_ReleaseDate));
+    mMD_Pairs.push_back(MetaDataPair(
+        std::make_shared<TextComponent>(mWindow, "DEVELOPER:", font, mdLblColor), mMD_Developer));
+    mMD_Pairs.push_back(MetaDataPair(
+        std::make_shared<TextComponent>(mWindow, "PUBLISHER:", font, mdLblColor), mMD_Publisher));
+    mMD_Pairs.push_back(MetaDataPair(
+        std::make_shared<TextComponent>(mWindow, "GENRE:", font, mdLblColor), mMD_Genre));
+    mMD_Pairs.push_back(MetaDataPair(
+        std::make_shared<TextComponent>(mWindow, "PLAYERS:", font, mdLblColor), mMD_Players));
+
     // If no rating is being scraped, add a filler to make sure that the fonts keep the same
     // size so the GUI looks consistent.
     if (!mScrapeRatings)
-        mMD_Pairs.push_back(MetaDataPair(std::make_shared<TextComponent>
-            (mWindow, "", font, mdLblColor), mMD_Filler));
+        mMD_Pairs.push_back(MetaDataPair(
+            std::make_shared<TextComponent>(mWindow, "", font, mdLblColor), mMD_Filler));
 
-    mMD_Grid = std::make_shared<ComponentGrid>(mWindow,
-            Vector2i(2, static_cast<int>(mMD_Pairs.size()*2 - 1)));
+    mMD_Grid = std::make_shared<ComponentGrid>(
+        mWindow, Vector2i(2, static_cast<int>(mMD_Pairs.size() * 2 - 1)));
     unsigned int i = 0;
     for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); it++) {
         mMD_Grid->setEntry(it->first, Vector2i(0, i), false, true);
@@ -135,7 +140,9 @@ GuiScraperSearch::GuiScraperSearch(
     // Result list.
     mResultList = std::make_shared<ComponentList>(mWindow);
     mResultList->setCursorChangedCallback([this](CursorState state) {
-            if (state == CURSOR_STOPPED) updateInfoPane(); });
+        if (state == CURSOR_STOPPED)
+            updateInfoPane();
+    });
 
     updateViewStyle();
 }
@@ -163,7 +170,7 @@ GuiScraperSearch::~GuiScraperSearch()
     // This is required to properly refresh the gamelist view if the user aborted the
     // scraping when the miximage was getting generated.
     if (Settings::getInstance()->getBool("MiximageGenerate") &&
-            mMiximageGeneratorThread.joinable()) {
+        mMiximageGeneratorThread.joinable()) {
         mScrapeResult.savedNewMedia = true;
         // We always let the miximage generator thread complete.
         mMiximageGeneratorThread.join();
@@ -196,7 +203,7 @@ void GuiScraperSearch::onSizeChanged()
     // Row heights.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) // Show name.
         mGrid.setRowHeightPerc(0, (mResultName->getFont()->getHeight() * 1.6f) /
-                mGrid.getSize().y()); // Result name.
+                                      mGrid.getSize().y()); // Result name.
     else
         mGrid.setRowHeightPerc(0, 0.0825f); // Hide name but do padding.
 
@@ -216,11 +223,11 @@ void GuiScraperSearch::onSizeChanged()
     resizeMetadata();
 
     if (mSearchType != ALWAYS_ACCEPT_FIRST_RESULT)
-        mDescContainer->setSize(mGrid.getColWidth(1) * boxartCellScale +
-            mGrid.getColWidth(2), mResultDesc->getFont()->getHeight() * 3);
+        mDescContainer->setSize(mGrid.getColWidth(1) * boxartCellScale + mGrid.getColWidth(2),
+                                mResultDesc->getFont()->getHeight() * 3.0f);
     else
         mDescContainer->setSize(mGrid.getColWidth(3) * boxartCellScale,
-                mResultDesc->getFont()->getHeight() * 6);
+                                mResultDesc->getFont()->getHeight() * 6.0f);
 
     // Make description text wrap at edge of container.
     mResultDesc->setSize(mDescContainer->getSize().x(), 0);
@@ -247,13 +254,14 @@ void GuiScraperSearch::resizeMetadata()
             it->first->setFont(fontLbl);
             it->first->setSize(0, 0);
             if (it->first->getSize().x() > maxLblWidth)
-                maxLblWidth = it->first->getSize().x() +
-                (16.0f * Renderer::getScreenWidthModifier());
+                maxLblWidth =
+                    it->first->getSize().x() + (16.0f * Renderer::getScreenWidthModifier());
         }
 
         for (unsigned int i = 0; i < mMD_Pairs.size(); i++)
-            mMD_Grid->setRowHeightPerc(i * 2, (fontLbl->getLetterHeight() +
-                    (2.0f * Renderer::getScreenHeightModifier())) / mMD_Grid->getSize().y());
+            mMD_Grid->setRowHeightPerc(
+                i * 2, (fontLbl->getLetterHeight() + (2.0f * Renderer::getScreenHeightModifier())) /
+                           mMD_Grid->getSize().y());
 
         // Update component fonts.
         mMD_ReleaseDate->setFont(fontComp);
@@ -286,30 +294,30 @@ void GuiScraperSearch::updateViewStyle()
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
         // Show name.
         mGrid.setEntry(mResultName, Vector2i(1, 0), false, false, Vector2i(2, 1),
-                GridFlags::BORDER_TOP);
+                       GridFlags::BORDER_TOP);
 
         // Need a border on the bottom left.
-        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 2),
-                false, false, Vector2i(3, 1), GridFlags::BORDER_BOTTOM);
+        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 2), false, false,
+                       Vector2i(3, 1), GridFlags::BORDER_BOTTOM);
 
         // Show description on the right.
         mGrid.setEntry(mDescContainer, Vector2i(3, 0), false, false, Vector2i(1, 3),
-                GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+                       GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
         // Make description text wrap at edge of container.
         mResultDesc->setSize(mDescContainer->getSize().x(), 0.0f);
     }
     else {
         // Fake row where name would be.
-        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 0),
-                false, true, Vector2i(2, 1), GridFlags::BORDER_TOP);
+        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 0), false, true,
+                       Vector2i(2, 1), GridFlags::BORDER_TOP);
 
         // Show result list on the right.
         mGrid.setEntry(mResultList, Vector2i(3, 0), true, true, Vector2i(1, 3),
-                GridFlags::BORDER_LEFT | GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+                       GridFlags::BORDER_LEFT | GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
         // Show description under image/info.
         mGrid.setEntry(mDescContainer, Vector2i(1, 2), false, false, Vector2i(2, 1),
-                GridFlags::BORDER_BOTTOM);
+                       GridFlags::BORDER_BOTTOM);
         // Make description text wrap at edge of container.
         mResultDesc->setSize(mDescContainer->getSize().x(), 0);
     }
@@ -318,6 +326,7 @@ void GuiScraperSearch::updateViewStyle()
 void GuiScraperSearch::search(const ScraperSearchParams& params)
 {
     mBlockAccept = true;
+    mAcceptedResult = false;
     mMiximageResult = false;
     mScrapeResult = {};
 
@@ -340,6 +349,7 @@ void GuiScraperSearch::stop()
     mMDRetrieveURLsHandle.reset();
     mMiximageGenerator.reset();
     mBlockAccept = false;
+    mAcceptedResult = false;
     mMiximageResult = false;
     mScrapeResult = {};
 }
@@ -355,16 +365,17 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
     if (results.empty()) {
         // Check if the scraper used is still valid.
         if (!isValidConfiguredScraper()) {
-            mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                    Utils::String::toUpper("Configured scraper is no longer available.\n"
-                    "Please change the scraping source in the settings."),
+            mWindow->pushGui(new GuiMsgBox(
+                mWindow, getHelpStyle(),
+                Utils::String::toUpper("Configured scraper is no longer available.\n"
+                                       "Please change the scraping source in the settings."),
                 "FINISH", mSkipCallback));
         }
         else {
             mFoundGame = false;
             ComponentListRow row;
-            row.addElement(std::make_shared<TextComponent>(mWindow, "NO GAMES FOUND",
-                    font, color), true);
+            row.addElement(std::make_shared<TextComponent>(mWindow, "NO GAMES FOUND", font, color),
+                           true);
 
             if (mSkipCallback)
                 row.makeAcceptInputHandler(mSkipCallback);
@@ -379,8 +390,10 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
 
         for (size_t i = 0; i < results.size(); i++) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>(mWindow,
-                    Utils::String::toUpper(results.at(i).mdl.get("name")), font, color), true);
+            row.addElement(
+                std::make_shared<TextComponent>(
+                    mWindow, Utils::String::toUpper(results.at(i).mdl.get("name")), font, color),
+                true);
             row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
             mResultList->addRow(row);
         }
@@ -393,14 +406,14 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
     // If there is no thumbnail to download and we're in semi-automatic mode, proceed to return
     // the results or we'll get stuck forever waiting for a thumbnail to be downloaded.
     if (mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1 &&
-            mScraperResults.front().thumbnailImageUrl == "")
+        mScraperResults.front().thumbnailImageUrl == "")
         returnResult(mScraperResults.front());
 
     // For automatic mode, if there's no thumbnail to download or no matching games found,
     // proceed directly or we'll get stuck forever.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
-        if (mScraperResults.size() == 0 || (mScraperResults.size() > 0 &&
-                mScraperResults.front().thumbnailImageUrl == "")) {
+        if (mScraperResults.size() == 0 ||
+            (mScraperResults.size() > 0 && mScraperResults.front().thumbnailImageUrl == "")) {
             if (mScraperResults.size() == 0)
                 mSkipCallback();
             else
@@ -420,12 +433,12 @@ void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status s
     // the error dialog will be presented to the user, and if the "Retry" button is pressed,
     // a new round of retries will take place.
     if (status == HttpReq::REQ_FAILED_VERIFICATION && mRetryCount < FAILED_VERIFICATION_RETRIES &&
-            Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
+        Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mRetrySearch = true;
         mRetryCount++;
-        LOG(LogError) << "GuiScraperSearch: Attempting automatic retry " << mRetryCount <<
-                " of " << FAILED_VERIFICATION_RETRIES;
+        LOG(LogError) << "GuiScraperSearch: Attempting automatic retry " << mRetryCount << " of "
+                      << FAILED_VERIFICATION_RETRIES;
         return;
     }
     else {
@@ -435,15 +448,16 @@ void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status s
     if (mScrapeCount > 1) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
-            "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
-            "SKIP", mSkipCallback,
-            "CANCEL", mCancelCallback, true));
+                                       "RETRY",
+                                       std::bind(&GuiScraperSearch::search, this, mLastSearch),
+                                       "SKIP", mSkipCallback, "CANCEL", mCancelCallback, true));
     }
     else {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), Utils::String::toUpper(error),
-            "RETRY", std::bind(&GuiScraperSearch::search, this, mLastSearch),
-            "CANCEL", mCancelCallback, "", nullptr, true));
+                                       "RETRY",
+                                       std::bind(&GuiScraperSearch::search, this, mLastSearch),
+                                       "CANCEL", mCancelCallback, "", nullptr, true));
     }
 }
 
@@ -489,9 +503,9 @@ void GuiScraperSearch::updateInfoPane()
                     // Add an entry into the thumbnail map, this way we can track and download
                     // each thumbnail separately even as they're downloading while scrolling
                     // through the result list.
-                    mThumbnailReqMap.insert(std::pair<std::string,
-                            std::unique_ptr<HttpReq>>(mScraperResults[i].thumbnailImageUrl,
-                            std::unique_ptr<HttpReq>(new HttpReq(thumb))));
+                    mThumbnailReqMap.insert(std::pair<std::string, std::unique_ptr<HttpReq>>(
+                        mScraperResults[i].thumbnailImageUrl,
+                        std::unique_ptr<HttpReq>(new HttpReq(thumb))));
                 }
             }
         }
@@ -535,12 +549,17 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
             return true;
     }
 
-    // Refine search.
-    if (config->isMappedTo("y", input) && input.value != 0)
-        openInputScreen(mLastSearch);
+    // Refine the search, unless the result has already been accepted or we're in semi-automatic
+    // mode and there are less than 2 search results.
+    if (!mAcceptedResult && config->isMappedTo("y", input) && input.value != 0) {
+        if (mSearchType != ACCEPT_SINGLE_MATCHES ||
+            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)) {
+            openInputScreen(mLastSearch);
+        }
+    }
 
-    // Skip game.
-    if (mScrapeCount > 1 && config->isMappedTo("x", input) && input.value != 0)
+    // Skip game, unless the result has already been accepted.
+    if (!mAcceptedResult && mScrapeCount > 1 && config->isMappedTo("x", input) && input.value != 0)
         mSkipCallback();
 
     return GuiComponent::input(config, input);
@@ -562,6 +581,7 @@ void GuiScraperSearch::render(const Transform4x4f& parentTrans)
 void GuiScraperSearch::returnResult(ScraperSearchResult result)
 {
     mBlockAccept = true;
+    mAcceptedResult = true;
 
     // Resolve metadata image before returning.
     if (result.mediaFilesDownloadStatus != COMPLETED) {
@@ -593,8 +613,8 @@ void GuiScraperSearch::update(int deltaTime)
 
     // Check if the thumbnail for the currently selected game has finished downloading.
     if (mScraperResults.size() > 0) {
-        auto it = mThumbnailReqMap.find(mScraperResults[mResultList->
-                getCursorId()].thumbnailImageUrl);
+        auto it =
+            mThumbnailReqMap.find(mScraperResults[mResultList->getCursorId()].thumbnailImageUrl);
         if (it != mThumbnailReqMap.end() && it->second->status() != HttpReq::REQ_IN_PROGRESS)
             updateThumbnail();
     }
@@ -681,13 +701,14 @@ void GuiScraperSearch::update(int deltaTime)
             mMDResolveHandle.reset();
 
             if (mScrapeResult.mediaFilesDownloadStatus == COMPLETED &&
-                    Settings::getInstance()->getBool("MiximageGenerate")) {
+                Settings::getInstance()->getBool("MiximageGenerate")) {
                 std::string currentMiximage = mLastSearch.game->getMiximagePath();
-                if (currentMiximage == "" || (currentMiximage != "" &&
-                        Settings::getInstance()->getBool("MiximageOverwrite"))) {
+                if (currentMiximage == "" ||
+                    (currentMiximage != "" &&
+                     Settings::getInstance()->getBool("MiximageOverwrite"))) {
 
-                    mMiximageGenerator = std::make_unique<MiximageGenerator>(mLastSearch.game,
-                            mResultMessage);
+                    mMiximageGenerator =
+                        std::make_unique<MiximageGenerator>(mLastSearch.game, mResultMessage);
 
                     // The promise/future mechanism is used as signaling for the thread to
                     // indicate that processing has been completed. The reason to run a separate
@@ -697,8 +718,9 @@ void GuiScraperSearch::update(int deltaTime)
                     std::promise<bool>().swap(mGeneratorPromise);
                     mGeneratorFuture = mGeneratorPromise.get_future();
 
-                    mMiximageGeneratorThread = std::thread(&MiximageGenerator::startThread,
-                            mMiximageGenerator.get(), &mGeneratorPromise);
+                    mMiximageGeneratorThread =
+                        std::thread(&MiximageGenerator::startThread, mMiximageGenerator.get(),
+                                    &mGeneratorPromise);
                 }
                 else {
                     returnResult(mScrapeResult);
@@ -724,7 +746,7 @@ void GuiScraperSearch::updateThumbnail()
         // thumbnail download has been completed for this game.
         if (mScraperResults[mResultList->getCursorId()].thumbnailDownloadStatus == IN_PROGRESS) {
             mScraperResults[mResultList->getCursorId()].thumbnailImageData =
-                    it->second->getContent();
+                it->second->getContent();
             mScraperResults[mResultList->getCursorId()].thumbnailDownloadStatus = COMPLETED;
         }
         // Activate the thumbnail in the GUI.
@@ -737,7 +759,7 @@ void GuiScraperSearch::updateThumbnail()
     else {
         mResultThumbnail->setImage("");
         onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg(),
-                it->second->status());
+                      it->second->status());
     }
 
     mThumbnailReqMap.erase(it);
@@ -746,9 +768,9 @@ void GuiScraperSearch::updateThumbnail()
     // we are in semi-automatic mode with a single matching game result, we proceed
     // to immediately download the rest of the media files.
     if ((mSearchType == ALWAYS_ACCEPT_FIRST_RESULT ||
-            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() == 1 &&
-            mRefinedSearch == false)) &&
-            mScraperResults.front().thumbnailDownloadStatus == COMPLETED) {
+         (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() == 1 &&
+          mRefinedSearch == false)) &&
+        mScraperResults.front().thumbnailDownloadStatus == COMPLETED) {
         mRefinedSearch = false;
         if (mScraperResults.size() == 0)
             mSkipCallback();
@@ -760,12 +782,12 @@ void GuiScraperSearch::updateThumbnail()
 void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 {
     auto searchForFunc = [&](const std::string& name) {
+        stop();
         mRefinedSearch = true;
         params.nameOverride = name;
         search(params);
     };
 
-    stop();
     mRetryCount = 0;
 
     std::string searchString;
@@ -778,25 +800,26 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         }
         else {
             // If searching based on the actual file name, then expand to the full game name
-            // in case the scraper is set to TheGamesDB and it's an arcade game. This is required
-            // as TheGamesDB has issues with searches using the short MAME names.
+            // in case the scraper is set to TheGamesDB and it's an arcade game. This is
+            // required as TheGamesDB does not support searches using the short MAME names.
             if (params.game->isArcadeGame() &&
-                    Settings::getInstance()->getString("Scraper") == "thegamesdb")
+                Settings::getInstance()->getString("Scraper") == "thegamesdb")
                 searchString = MameNames::getInstance()->getCleanName(params.game->getCleanName());
             else
                 searchString = params.game->getCleanName();
         }
     }
-    else  {
+    else {
         searchString = params.nameOverride;
     }
 
-    mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
-            searchString, searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
+    mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH", searchString,
+                                          searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
 }
 
-bool GuiScraperSearch::saveMetadata(
-        const ScraperSearchResult& result, MetaDataList& metadata, FileData* scrapedGame)
+bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
+                                    MetaDataList& metadata,
+                                    FileData* scrapedGame)
 {
     bool metadataUpdated = false;
     bool hasDefaultName = false;
@@ -825,7 +848,7 @@ bool GuiScraperSearch::saveMetadata(
         // Skip element if the setting to not scrape metadata has been set,
         // unless its type is rating or name.
         if (!Settings::getInstance()->getBool("ScrapeMetadata") &&
-                (key != "rating" && key != "name"))
+            (key != "rating" && key != "name"))
             continue;
 
         // Skip saving of rating if the corresponding option has been set to false.
@@ -885,7 +908,7 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
     if (mScrapeCount > 1)
         prompts.push_back(HelpPrompt("x", "skip"));
     if (mFoundGame && (mRefinedSearch || mSearchType != ACCEPT_SINGLE_MATCHES ||
-            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)))
+                       (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)))
         prompts.push_back(HelpPrompt("a", "accept result"));
 
     return prompts;
@@ -896,14 +919,4 @@ HelpStyle GuiScraperSearch::getHelpStyle()
     HelpStyle style = HelpStyle();
     style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
     return style;
-}
-
-void GuiScraperSearch::onFocusGained()
-{
-    mGrid.onFocusGained();
-}
-
-void GuiScraperSearch::onFocusLost()
-{
-    mGrid.onFocusLost();
 }

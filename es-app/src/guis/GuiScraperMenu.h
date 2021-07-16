@@ -16,11 +16,10 @@
 #include "scrapers/Scraper.h"
 
 class FileData;
-template<typename T>
-class OptionListComponent;
 class SwitchComponent;
 class SystemData;
 
+template <typename T> class OptionListComponent;
 typedef std::function<bool(SystemData*, FileData*)> GameFilterFunc;
 
 class GuiScraperMenu : public GuiComponent
@@ -38,16 +37,18 @@ private:
     void pressedStart();
     void start();
 
-    void addEntry(const std::string&, unsigned int color,
-            bool add_arrow, const std::function<void()>& func);
+    void addEntry(const std::string&,
+                  unsigned int color,
+                  bool add_arrow,
+                  const std::function<void()>& func);
     void openAccountOptions();
     void openContentOptions();
     void openMiximageOptions();
     void openOfflineGenerator(GuiSettings* settings);
     void openOtherOptions();
 
-    std::queue<ScraperSearchParams> getSearches(
-            std::vector<SystemData*> systems, GameFilterFunc selector);
+    std::queue<ScraperSearchParams> getSearches(std::vector<SystemData*> systems,
+                                                GameFilterFunc selector);
 
     std::shared_ptr<OptionListComponent<std::string>> mScraper;
     std::shared_ptr<OptionListComponent<GameFilterFunc>> mFilters;

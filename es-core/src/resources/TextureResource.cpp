@@ -8,21 +8,20 @@
 
 #include "resources/TextureResource.h"
 
-#include "utils/FileSystemUtil.h"
 #include "resources/TextureData.h"
+#include "utils/FileSystemUtil.h"
 
 TextureDataManager TextureResource::sTextureDataManager;
-std::map< TextureResource::TextureKeyType,
-        std::weak_ptr<TextureResource>> TextureResource::sTextureMap;
+std::map<TextureResource::TextureKeyType, std::weak_ptr<TextureResource>>
+    TextureResource::sTextureMap;
 std::set<TextureResource*> TextureResource::sAllTextures;
 
-TextureResource::TextureResource(
-        const std::string& path,
-        bool tile,
-        bool dynamic,
-        float scaleDuringLoad)
-        : mTextureData(nullptr),
-        mForceLoad(false)
+TextureResource::TextureResource(const std::string& path,
+                                 bool tile,
+                                 bool dynamic,
+                                 float scaleDuringLoad)
+    : mTextureData(nullptr)
+    , mForceLoad(false)
 {
     // Create a texture data object for this texture.
     if (!path.empty()) {
@@ -88,8 +87,8 @@ void TextureResource::initFromMemory(const char* data, size_t length)
     mTextureData->releaseRAM();
     mTextureData->initImageFromMemory(reinterpret_cast<const unsigned char*>(data), length);
     // Get the size from the texture data.
-    mSize = Vector2i(static_cast<int>(mTextureData->width()),
-            static_cast<int>(mTextureData->height()));
+    mSize =
+        Vector2i(static_cast<int>(mTextureData->width()), static_cast<int>(mTextureData->height()));
     mSourceSize = Vector2f(mTextureData->sourceWidth(), mTextureData->sourceHeight());
 }
 
@@ -115,9 +114,14 @@ std::vector<unsigned char> TextureResource::getRawRGBAData()
         return std::vector<unsigned char>(0);
 }
 
-const Vector2i TextureResource::getSize() const
+std::string TextureResource::getTextureFilePath()
 {
-    return mSize;
+    std::shared_ptr<TextureData> data = sTextureDataManager.get(this);
+
+    if (data)
+        return data->getTextureFilePath();
+    else
+        return "";
 }
 
 bool TextureResource::isTiled() const
@@ -140,11 +144,7 @@ bool TextureResource::bind()
 }
 
 std::shared_ptr<TextureResource> TextureResource::get(
-        const std::string& path,
-        bool tile,
-        bool forceLoad,
-        bool dynamic,
-        float scaleDuringLoad)
+    const std::string& path, bool tile, bool forceLoad, bool dynamic, float scaleDuringLoad)
 {
     std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
 
@@ -167,7 +167,7 @@ std::shared_ptr<TextureResource> TextureResource::get(
     // Need to create it.
     std::shared_ptr<TextureResource> tex;
     tex = std::shared_ptr<TextureResource>(
-            new TextureResource(key.first, tile, dynamic, scaleDuringLoad));
+        new TextureResource(key.first, tile, dynamic, scaleDuringLoad));
     std::shared_ptr<TextureData> data = sTextureDataManager.get(tex.get());
 
     // Is it an SVG?
@@ -201,16 +201,6 @@ void TextureResource::rasterizeAt(size_t width, size_t height)
     data->setSourceSize(static_cast<float>(width), static_cast<float>(height));
     if (mForceLoad || (mTextureData != nullptr))
         data->load();
-}
-
-Vector2f TextureResource::getSourceImageSize() const
-{
-    return mSourceSize;
-}
-
-bool TextureResource::isInitialized() const
-{
-    return true;
 }
 
 size_t TextureResource::getTotalMemUsage()

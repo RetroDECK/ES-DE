@@ -8,22 +8,21 @@
 
 #include "components/MenuComponent.h"
 
-#include "components/ButtonComponent.h"
 #include "Settings.h"
+#include "components/ButtonComponent.h"
 
 #define BUTTON_GRID_VERT_PADDING 32.0f
 #define BUTTON_GRID_HORIZ_PADDING 10.0f
 
 #define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + TITLE_VERT_PADDING)
 
-MenuComponent::MenuComponent(
-        Window* window,
-        std::string title,
-        const std::shared_ptr<Font>& titleFont)
-        : GuiComponent(window),
-        mBackground(window),
-        mGrid(window, Vector2i(1, 3)),
-        mNeedsSaving(false)
+MenuComponent::MenuComponent(Window* window,
+                             std::string title,
+                             const std::shared_ptr<Font>& titleFont)
+    : GuiComponent(window)
+    , mBackground(window)
+    , mGrid(window, Vector2i(1, 3))
+    , mNeedsSaving(false)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -49,6 +48,7 @@ MenuComponent::MenuComponent(
 
 MenuComponent::~MenuComponent()
 {
+    // Save when destroyed.
     save();
 }
 
@@ -75,15 +75,15 @@ void MenuComponent::setTitle(std::string title, const std::shared_ptr<Font>& fon
 float MenuComponent::getButtonGridHeight() const
 {
     return (mButtonGrid ? mButtonGrid->getSize().y() :
-            Font::get(FONT_SIZE_MEDIUM)->getHeight() +
-            (BUTTON_GRID_VERT_PADDING * Renderer::getScreenHeightModifier()));
+                          Font::get(FONT_SIZE_MEDIUM)->getHeight() +
+                              (BUTTON_GRID_VERT_PADDING * Renderer::getScreenHeightModifier()));
 }
 
 void MenuComponent::updateSize()
 {
     const float maxHeight = Renderer::getScreenHeight() * 0.80f;
     float height = TITLE_HEIGHT + mList->getTotalRowHeight() + getButtonGridHeight() +
-            (2.0f * Renderer::getScreenHeightModifier());
+                   (2.0f * Renderer::getScreenHeightModifier());
     if (height > maxHeight) {
         height = TITLE_HEIGHT + getButtonGridHeight();
         int i = 0;
@@ -98,14 +98,15 @@ void MenuComponent::updateSize()
         }
     }
 
-    float width = static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() *
-            1.05f), static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
+    float width =
+        static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() * 1.05f),
+                                    static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
     setSize(width, height);
 }
 
 void MenuComponent::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
+    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
 
     // Update grid row/column sizes.
     mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y());
@@ -115,10 +116,11 @@ void MenuComponent::onSizeChanged()
 }
 
 void MenuComponent::addButton(const std::string& name,
-        const std::string& helpText, const std::function<void()>& callback)
+                              const std::string& helpText,
+                              const std::function<void()>& callback)
 {
-    mButtons.push_back(std::make_shared<ButtonComponent>
-            (mWindow,Utils::String::toUpper(name), helpText, callback));
+    mButtons.push_back(std::make_shared<ButtonComponent>(mWindow, Utils::String::toUpper(name),
+                                                         helpText, callback));
     updateGrid();
     updateSize();
 }
@@ -136,30 +138,28 @@ void MenuComponent::updateGrid()
     }
 }
 
-std::vector<HelpPrompt> MenuComponent::getHelpPrompts()
+std::shared_ptr<ComponentGrid> makeButtonGrid(
+    Window* window, const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
 {
-    return mGrid.getHelpPrompts();
-}
-
-std::shared_ptr<ComponentGrid> makeButtonGrid(Window* window,
-        const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
-{
-    std::shared_ptr<ComponentGrid> buttonGrid = std::make_shared<ComponentGrid>
-            (window, Vector2i(static_cast<int>(buttons.size()), 2));
+    std::shared_ptr<ComponentGrid> buttonGrid =
+        std::make_shared<ComponentGrid>(window, Vector2i(static_cast<int>(buttons.size()), 2));
 
     // Initialize to padding.
-    float buttonGridWidth = BUTTON_GRID_HORIZ_PADDING *
-            Renderer::getScreenWidthModifier() * buttons.size();
+    float buttonGridWidth =
+        BUTTON_GRID_HORIZ_PADDING * Renderer::getScreenWidthModifier() * buttons.size();
     for (int i = 0; i < static_cast<int>(buttons.size()); i++) {
         buttonGrid->setEntry(buttons.at(i), Vector2i(i, 0), true, false);
         buttonGridWidth += buttons.at(i)->getSize().x();
     }
     for (unsigned int i = 0; i < buttons.size(); i++)
-        buttonGrid->setColWidthPerc(i, (buttons.at(i)->getSize().x() +
-                BUTTON_GRID_HORIZ_PADDING * Renderer::getScreenWidthModifier()) / buttonGridWidth);
+        buttonGrid->setColWidthPerc(
+            i, (buttons.at(i)->getSize().x() +
+                BUTTON_GRID_HORIZ_PADDING * Renderer::getScreenWidthModifier()) /
+                   buttonGridWidth);
 
-    buttonGrid->setSize(buttonGridWidth, buttons.at(0)->getSize().y() +
-            (BUTTON_GRID_VERT_PADDING * Renderer::getScreenHeightModifier()) + 2);
+    buttonGrid->setSize(buttonGridWidth,
+                        buttons.at(0)->getSize().y() +
+                            (BUTTON_GRID_VERT_PADDING * Renderer::getScreenHeightModifier()) + 2);
     // Spacer row to deal with dropshadow to make buttons look centered.
     buttonGrid->setRowHeightPerc(1, 2 / buttonGrid->getSize().y());
 

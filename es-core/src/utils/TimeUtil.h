@@ -29,7 +29,7 @@ namespace Utils
             DateTime(const time_t& time);
             DateTime(const tm& timeStruct);
             DateTime(const std::string& isoString);
-            ~DateTime();
+            ~DateTime() {}
 
             const bool operator<(const DateTime& other) const { return (mTime < other.mTime); }
             const bool operator<=(const DateTime& other) const { return (mTime <= other.mTime); }
@@ -43,8 +43,8 @@ namespace Utils
             const time_t& getTime() const { return mTime; }
             void setTimeStruct(const tm& timeStruct);
             const tm& getTimeStruct() const { return mTimeStruct; }
-            void setIsoString (const std::string& isoString);
-            const std::string& getIsoString () const { return mIsoString; }
+            void setIsoString(const std::string& isoString);
+            const std::string& getIsoString() const { return mIsoString; }
 
         private:
             time_t mTime;
@@ -56,7 +56,7 @@ namespace Utils
         {
         public:
             Duration(const time_t& time);
-            ~Duration();
+            ~Duration() {}
 
             unsigned int getDays() const { return mDays; }
             unsigned int getHours() const { return mHours; }
@@ -76,7 +76,8 @@ namespace Utils
         std::string timeToString(const time_t& time, const std::string& format = "%Y%m%dT%H%M%S");
         int daysInMonth(const int year, const int month);
         int daysInYear(const int year);
-    }
-} // Utils::
+    } // namespace Time
+
+} // namespace Utils
 
 #endif // ES_CORE_UTILS_TIME_UTIL_H

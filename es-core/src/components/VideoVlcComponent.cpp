@@ -10,12 +10,12 @@
 
 #include "components/VideoVlcComponent.h"
 
-#include "renderers/Renderer.h"
-#include "resources/TextureResource.h"
-#include "utils/StringUtil.h"
 #include "AudioManager.h"
 #include "Settings.h"
 #include "Window.h"
+#include "renderers/Renderer.h"
+#include "resources/TextureResource.h"
+#include "utils/StringUtil.h"
 
 #if defined(__APPLE__)
 #include "utils/FileSystemUtil.h"
@@ -26,19 +26,18 @@
 #include <vlc/vlc.h>
 
 #if defined(_WIN64)
-#include <cstring>
 #include <codecvt>
+#include <cstring>
 #endif
 
 libvlc_instance_t* VideoVlcComponent::mVLC = nullptr;
 
-VideoVlcComponent::VideoVlcComponent(
-        Window* window)
-        : VideoComponent(window),
-        mMediaPlayer(nullptr),
-        mMedia(nullptr),
-        mContext({}),
-        mHasSetAudioVolume(false)
+VideoVlcComponent::VideoVlcComponent(Window* window)
+    : VideoComponent(window)
+    , mMediaPlayer(nullptr)
+    , mMedia(nullptr)
+    , mContext({})
+    , mHasSetAudioVolume(false)
 {
     // Get an empty texture for rendering the video.
     mTexture = TextureResource::get("");
@@ -86,7 +85,7 @@ void VideoVlcComponent::setupVLC()
     if (!mVLC) {
         const char* args[] = { "--quiet" };
 
-        #if defined(__APPLE__)
+#if defined(__APPLE__)
         // It's required to set the VLC_PLUGIN_PATH variable on macOS, or the libVLC
         // initialization will fail (with no error message).
         std::string vlcPluginPath = Utils::FileSystem::getExePath() + "/plugins";
@@ -94,7 +93,7 @@ void VideoVlcComponent::setupVLC()
             setenv("VLC_PLUGIN_PATH", vlcPluginPath.c_str(), 1);
         else
             setenv("VLC_PLUGIN_PATH", "/Applications/VLC.app/Contents/MacOS/plugins/", 1);
-        #endif
+#endif
 
         mVLC = libvlc_new(1, args);
     }
@@ -105,7 +104,8 @@ void VideoVlcComponent::setupContext()
     if (!mContext.valid) {
         // Create an RGBA surface to render the video into.
         mContext.surface = SDL_CreateRGBSurface(SDL_SWSURFACE, static_cast<int>(mVideoWidth),
-                static_cast<int>(mVideoHeight), 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+                                                static_cast<int>(mVideoHeight), 32, 0xff000000,
+                                                0x00ff0000, 0x0000ff00, 0x000000ff);
         mContext.mutex = SDL_CreateMutex();
         mContext.valid = true;
         resize();
@@ -148,7 +148,6 @@ void VideoVlcComponent::resize()
 
         mSize[1] = std::round(mSize[1]);
         mSize[0] = (mSize[1] / textureSize.y()) * textureSize.x();
-
     }
     else {
         // If both components are set, we just stretch.
@@ -196,8 +195,8 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
         unsigned int color;
         if (mFadeIn < 1) {
             const unsigned int fadeIn = static_cast<int>(mFadeIn * 255.0f);
-            color = Renderer::convertRGBAToABGR((fadeIn << 24) |
-                    (fadeIn << 16) | (fadeIn << 8) | 255);
+            color =
+                Renderer::convertRGBAToABGR((fadeIn << 24) | (fadeIn << 16) | (fadeIn << 8) | 255);
         }
         else {
             color = 0xFFFFFFFF;
@@ -209,13 +208,16 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
         // Render the black rectangle behind the video.
         if (mVideoRectangleCoords.size() == 4) {
             Renderer::drawRect(mVideoRectangleCoords[0], mVideoRectangleCoords[1],
-                    mVideoRectangleCoords[2], mVideoRectangleCoords[3], 0x000000FF, 0x000000FF);
+                               mVideoRectangleCoords[2], mVideoRectangleCoords[3], // Line break.
+                               0x000000FF, 0x000000FF);
         }
 
+        // clang-format off
         vertices[0] = { { 0.0f     , 0.0f      }, { 0.0f, 0.0f }, color };
         vertices[1] = { { 0.0f     , mSize.y() }, { 0.0f, 1.0f }, color };
         vertices[2] = { { mSize.x(), 0.0f      }, { 1.0f, 0.0f }, color };
         vertices[3] = { { mSize.x(), mSize.y() }, { 1.0f, 1.0f }, color };
+        // clang-format on
 
         // Round vertices.
         for (int i = 0; i < 4; i++)
@@ -223,17 +225,18 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
 
         // Build a texture for the video frame.
         mTexture->initFromPixels(reinterpret_cast<unsigned char*>(mContext.surface->pixels),
-                mContext.surface->w, mContext.surface->h);
+                                 mContext.surface->w, mContext.surface->h);
         mTexture->bind();
 
-        #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
         // Render scanlines if this option is enabled. However, if this is the media viewer
         // or the video screensaver, then skip this as the scanline rendering is then handled
         // in those modules as a postprocessing step.
         if ((!mScreensaverMode && !mMediaViewerMode) &&
-                Settings::getInstance()->getBool("GamelistVideoScanlines"))
+            Settings::getInstance()->getBool("GamelistVideoScanlines")) {
             vertices[0].shaders = Renderer::SHADER_SCANLINES;
-        #endif
+        }
+#endif
 
         // Render it.
         Renderer::setMatrix(trans);
@@ -283,10 +286,10 @@ void VideoVlcComponent::calculateBlackRectangle()
                 rectHeight = mSize.y();
             }
             // Populate the rectangle coordinates to be used in render().
-            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.x() -
-                    rectWidth * mOrigin.x()));
-            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.y() -
-                    rectHeight * mOrigin.y()));
+            mVideoRectangleCoords.push_back(
+                std::round(mVideoAreaPos.x() - rectWidth * mOrigin.x()));
+            mVideoRectangleCoords.push_back(
+                std::round(mVideoAreaPos.y() - rectHeight * mOrigin.y()));
             mVideoRectangleCoords.push_back(std::round(rectWidth));
             mVideoRectangleCoords.push_back(std::round(rectHeight));
         }
@@ -310,20 +313,18 @@ void VideoVlcComponent::setAudioVolume()
         bool outputSound = false;
 
         if ((!mScreensaverMode && !mMediaViewerMode) &&
-                Settings::getInstance()->getBool("GamelistVideoAudio"))
+            Settings::getInstance()->getBool("GamelistVideoAudio"))
             outputSound = true;
-        else if (mScreensaverMode && Settings::getInstance()->
-                getBool("ScreensaverVideoAudio"))
+        else if (mScreensaverMode && Settings::getInstance()->getBool("ScreensaverVideoAudio"))
             outputSound = true;
-        else if (mMediaViewerMode && Settings::getInstance()->
-                getBool("MediaViewerVideoAudio"))
+        else if (mMediaViewerMode && Settings::getInstance()->getBool("MediaViewerVideoAudio"))
             outputSound = true;
 
         if (outputSound) {
             if (libvlc_audio_get_mute(mMediaPlayer) == 1)
                 libvlc_audio_set_mute(mMediaPlayer, 0);
             libvlc_audio_set_volume(mMediaPlayer,
-                    Settings::getInstance()->getInt("SoundVolumeVideos"));
+                                    Settings::getInstance()->getInt("SoundVolumeVideos"));
         }
         else {
             libvlc_audio_set_volume(mMediaPlayer, 0);
@@ -339,11 +340,11 @@ void VideoVlcComponent::startVideo()
         mVideoWidth = 0;
         mVideoHeight = 0;
 
-        #if defined(_WIN64)
+#if defined(_WIN64)
         std::string path(Utils::String::replace(mVideoPath, "/", "\\"));
-        #else
+#else
         std::string path(mVideoPath);
-        #endif
+#endif
         // Make sure we have a video path.
         if (mVLC && (path.size() > 0)) {
             // Set the video that we are going to be playing so we don't attempt to restart it.
@@ -356,8 +357,8 @@ void VideoVlcComponent::startVideo()
                 int parseResult;
 
                 // Asynchronous media parsing.
-                libvlc_event_attach(libvlc_media_event_manager(mMedia),
-                        libvlc_MediaParsedChanged, VlcMediaParseCallback, 0);
+                libvlc_event_attach(libvlc_media_event_manager(mMedia), libvlc_MediaParsedChanged,
+                                    VlcMediaParseCallback, 0);
                 parseResult = libvlc_media_parse_with_options(mMedia, libvlc_media_parse_local, -1);
 
                 if (!parseResult) {
@@ -382,8 +383,8 @@ void VideoVlcComponent::startVideo()
                 }
                 libvlc_media_tracks_release(tracks, track_count);
                 libvlc_media_parse_stop(mMedia);
-                libvlc_event_detach(libvlc_media_event_manager(mMedia),
-                        libvlc_MediaParsedChanged, VlcMediaParseCallback, 0);
+                libvlc_event_detach(libvlc_media_event_manager(mMedia), libvlc_MediaParsedChanged,
+                                    VlcMediaParseCallback, 0);
 
                 // Make sure we found a valid video track.
                 if ((mVideoWidth > 0) && (mVideoHeight > 0)) {
@@ -395,32 +396,36 @@ void VideoVlcComponent::startVideo()
                     // The code below enables the libVLC audio output to be processed inside ES-DE.
                     // Unfortunately this causes excessive stuttering for some reason that I still
                     // don't understand, so at the moment this code is disabled.
-//                    auto audioFormatCallback = [](void **data, char *format,
-//                            unsigned *rate, unsigned *channels) -> int {
-//                        format = const_cast<char*>("F32L");
-//                        *rate = 48000;
-//                        *channels = 2;
-//                        return 0;
-//                    };
-//
-//                    libvlc_audio_set_format_callbacks(mMediaPlayer,
-//                            audioFormatCallback, nullptr);
-//
-//                    auto audioPlayCallback = [](void* data, const void* samples,
-//                            unsigned count, int64_t pts) {
-//                        AudioManager::getInstance()->processStream(samples, count);
-//                    };
-//
-//                    libvlc_audio_set_callbacks(mMediaPlayer, audioPlayCallback,
-//                            nullptr, nullptr, nullptr, nullptr, this);
+                    //                    auto audioFormatCallback = [](void **data, char *format,
+                    //                            unsigned *rate, unsigned *channels) -> int {
+                    //                        format = const_cast<char*>("F32L");
+                    //                        *rate = 48000;
+                    //                        *channels = 2;
+                    //                        return 0;
+                    //                    };
+                    //
+                    //                    libvlc_audio_set_format_callbacks(mMediaPlayer,
+                    //                            audioFormatCallback, nullptr);
+                    //
+                    //                    auto audioPlayCallback = [](void* data, const void*
+                    //                    samples,
+                    //                            unsigned count, int64_t pts) {
+                    //                        AudioManager::getInstance()->processStream(samples,
+                    //                        count);
+                    //                    };
+                    //
+                    //                    libvlc_audio_set_callbacks(mMediaPlayer,
+                    //                    audioPlayCallback,
+                    //                            nullptr, nullptr, nullptr, nullptr, this);
 
                     libvlc_video_set_format(mMediaPlayer, "RGBA", static_cast<int>(mVideoWidth),
-                            static_cast<int>(mVideoHeight), static_cast<int>(mVideoWidth * 4));
+                                            static_cast<int>(mVideoHeight),
+                                            static_cast<int>(mVideoWidth * 4));
 
                     // Lock video memory as a preparation for rendering a frame.
                     auto videoLockCallback = [](void* data, void** p_pixels) -> void* {
                         struct VideoContext* videoContext =
-                                reinterpret_cast<struct VideoContext*>(data);
+                            reinterpret_cast<struct VideoContext*>(data);
                         SDL_LockMutex(videoContext->mutex);
                         SDL_LockSurface(videoContext->surface);
                         *p_pixels = videoContext->surface->pixels;
@@ -428,15 +433,15 @@ void VideoVlcComponent::startVideo()
                     };
 
                     // Unlock the video memory after rendering a frame.
-                    auto videoUnlockCallback = [](void* data, void*, void *const*) {
+                    auto videoUnlockCallback = [](void* data, void*, void* const*) {
                         struct VideoContext* videoContext =
-                                reinterpret_cast<struct VideoContext*>(data);
+                            reinterpret_cast<struct VideoContext*>(data);
                         SDL_UnlockSurface(videoContext->surface);
                         SDL_UnlockMutex(videoContext->mutex);
                     };
 
-                    libvlc_video_set_callbacks(mMediaPlayer, videoLockCallback,
-                            videoUnlockCallback, nullptr, reinterpret_cast<void*>(&mContext));
+                    libvlc_video_set_callbacks(mMediaPlayer, videoLockCallback, videoUnlockCallback,
+                                               nullptr, reinterpret_cast<void*>(&mContext));
 
                     libvlc_media_player_play(mMediaPlayer);
 
@@ -517,7 +522,7 @@ void VideoVlcComponent::handleLooping()
             // If the screensaver video swap time is set to 0, it means we should
             // skip to the next game when the video has finished playing.
             if (mScreensaverMode &&
-                    Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout") == 0) {
+                Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout") == 0) {
                 mWindow->screensaverTriggerNextGame();
             }
             else {
@@ -527,13 +532,13 @@ void VideoVlcComponent::handleLooping()
                 bool outputSound = false;
 
                 if ((!mScreensaverMode && !mMediaViewerMode) &&
-                        Settings::getInstance()->getBool("GamelistVideoAudio"))
+                    Settings::getInstance()->getBool("GamelistVideoAudio"))
                     outputSound = true;
-                else if (mScreensaverMode && Settings::getInstance()->
-                        getBool("ScreensaverVideoAudio"))
+                else if (mScreensaverMode &&
+                         Settings::getInstance()->getBool("ScreensaverVideoAudio"))
                     outputSound = true;
-                else if (mMediaViewerMode && Settings::getInstance()->
-                        getBool("MediaViewerVideoAudio"))
+                else if (mMediaViewerMode &&
+                         Settings::getInstance()->getBool("MediaViewerVideoAudio"))
                     outputSound = true;
 
                 if (!outputSound)

@@ -11,19 +11,19 @@
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
 #define ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
 
-#include "components/MenuComponent.h"
 #include "FileFilterIndex.h"
 #include "GuiComponent.h"
+#include "components/MenuComponent.h"
 
-template<typename T>
-class OptionListComponent;
+template <typename T> class OptionListComponent;
 class SystemData;
 
 class GuiGamelistFilter : public GuiComponent
 {
 public:
     GuiGamelistFilter(Window* window,
-            SystemData* system, std::function<void(bool)> filtersChangedCallback);
+                      SystemData* system,
+                      std::function<void(bool)> filtersChangedCallback);
 
     ~GuiGamelistFilter();
     bool input(InputConfig* config, Input input) override;

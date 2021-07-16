@@ -12,11 +12,11 @@
 #ifndef ES_APP_GUIS_GUI_SCRAPER_MULTI_H
 #define ES_APP_GUIS_GUI_SCRAPER_MULTI_H
 
+#include "GuiComponent.h"
+#include "MetaData.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
 #include "scrapers/Scraper.h"
-#include "GuiComponent.h"
-#include "MetaData.h"
 
 class GuiScraperSearch;
 class TextComponent;
@@ -24,10 +24,9 @@ class TextComponent;
 class GuiScraperMulti : public GuiComponent
 {
 public:
-    GuiScraperMulti(
-            Window* window,
-            const std::queue<ScraperSearchParams>& searches,
-            bool approveResults);
+    GuiScraperMulti(Window* window,
+                    const std::queue<ScraperSearchParams>& searches,
+                    bool approveResults);
 
     virtual ~GuiScraperMulti();
 
@@ -40,15 +39,7 @@ private:
     void acceptResult(const ScraperSearchResult& result);
     void skip();
     void doNextSearch();
-
     void finish();
-    unsigned int mTotalGames;
-    unsigned int mCurrentGame;
-    unsigned int mTotalSuccessful;
-    unsigned int mTotalSkipped;
-    std::queue<ScraperSearchParams> mSearchQueue;
-    std::vector<MetaDataDecl> mMetaDataDecl;
-    bool mApproveResults;
 
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
@@ -58,6 +49,14 @@ private:
     std::shared_ptr<TextComponent> mSubtitle;
     std::shared_ptr<GuiScraperSearch> mSearchComp;
     std::shared_ptr<ComponentGrid> mButtonGrid;
+
+    std::queue<ScraperSearchParams> mSearchQueue;
+    std::vector<MetaDataDecl> mMetaDataDecl;
+    unsigned int mTotalGames;
+    unsigned int mCurrentGame;
+    unsigned int mTotalSuccessful;
+    unsigned int mTotalSkipped;
+    bool mApproveResults;
 };
 
 #endif // ES_APP_GUIS_GUI_SCRAPER_MULTI_H

@@ -11,8 +11,8 @@
 #ifndef ES_APP_GUIS_GUI_SETTINGS_H
 #define ES_APP_GUIS_GUI_SETTINGS_H
 
-#include "components/MenuComponent.h"
 #include "SystemData.h"
+#include "components/MenuComponent.h"
 
 // This is just a really simple template for a GUI that calls some save functions when closed.
 class GuiSettings : public GuiComponent
@@ -22,29 +22,33 @@ public:
     virtual ~GuiSettings();
 
     void save();
-    inline void addRow(const ComponentListRow& row) { mMenu.addRow(row); };
-    inline void addWithLabel(const std::string& label,
-            const std::shared_ptr<GuiComponent>& comp) { mMenu.addWithLabel(label, comp); };
-    void addEditableTextComponent(
-            const std::string label,
-            std::shared_ptr<GuiComponent> ed,
-            std::string value,
-            std::string defaultValue = "",
-            bool isPassword = false);
-    inline void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); };
+    void addRow(const ComponentListRow& row) { mMenu.addRow(row); }
+    void addWithLabel(const std::string& label, const std::shared_ptr<GuiComponent>& comp)
+    {
+        mMenu.addWithLabel(label, comp);
+    }
+    void addEditableTextComponent(const std::string label,
+                                  std::shared_ptr<GuiComponent> ed,
+                                  std::string value,
+                                  std::string defaultValue = "",
+                                  bool isPassword = false);
+    void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); }
 
-    void setNeedsSaving(bool state = true) { mNeedsSaving = state; };
-    void setNeedsReloadHelpPrompts() { mNeedsReloadHelpPrompts = true; };
-    void setNeedsCollectionsUpdate() { mNeedsCollectionsUpdate = true; };
-    void setNeedsSorting() { mNeedsSorting = true; };
-    void setNeedsSortingCollections() { mNeedsSortingCollections = true; };
+    void setNeedsSaving(bool state = true) { mNeedsSaving = state; }
+    void setNeedsReloadHelpPrompts() { mNeedsReloadHelpPrompts = true; }
+    void setNeedsCollectionsUpdate() { mNeedsCollectionsUpdate = true; }
+    void setNeedsSorting() { mNeedsSorting = true; }
+    void setNeedsSortingCollections() { mNeedsSortingCollections = true; }
     void setNeedsResetFilters() { mNeedsResetFilters = true; }
-    void setNeedsReloading() { mNeedsReloading = true; };
-    void setNeedsGoToStart() { mNeedsGoToStart = true; };
+    void setNeedsReloading() { mNeedsReloading = true; }
+    void setNeedsGoToStart() { mNeedsGoToStart = true; }
     void setNeedsGoToSystem(SystemData* goToSystem)
-            { mNeedsGoToSystem = true; mGoToSystem = goToSystem; };
-    void setNeedsGoToGroupedCollections() { mNeedsGoToGroupedCollections = true; };
-    void setInvalidateCachedBackground() { mInvalidateCachedBackground = true; };
+    {
+        mNeedsGoToSystem = true;
+        mGoToSystem = goToSystem;
+    };
+    void setNeedsGoToGroupedCollections() { mNeedsGoToGroupedCollections = true; }
+    void setInvalidateCachedBackground() { mInvalidateCachedBackground = true; }
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -53,6 +57,8 @@ public:
 private:
     MenuComponent mMenu;
     std::vector<std::function<void()>> mSaveFuncs;
+    SystemData* mGoToSystem;
+
     bool mNeedsSaving;
     bool mNeedsReloadHelpPrompts;
     bool mNeedsCollectionsUpdate;
@@ -64,8 +70,6 @@ private:
     bool mNeedsGoToSystem;
     bool mNeedsGoToGroupedCollections;
     bool mInvalidateCachedBackground;
-
-    SystemData* mGoToSystem;
 };
 
 #endif // ES_APP_GUIS_GUI_SETTINGS_H

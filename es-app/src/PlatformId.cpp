@@ -13,6 +13,7 @@
 
 namespace PlatformIds
 {
+    // clang-format off
     std::vector<std::string> platformNames = {
         "unknown", // Nothing set.
 
@@ -132,6 +133,7 @@ namespace PlatformIds
         "ignore",  // Do not allow scraping for this system.
         "invalid"
     };
+    // clang-format on
 
     PlatformId getPlatformId(const std::string& str)
     {
@@ -148,6 +150,8 @@ namespace PlatformIds
 
     const std::string getPlatformName(PlatformId id)
     {
+        // Return the platform name.
         return platformNames[id];
     }
-}
+
+} // namespace PlatformIds

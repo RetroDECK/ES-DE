@@ -9,9 +9,9 @@
 #ifndef ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
 
-#include "views/gamelist/IGameListView.h"
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
+#include "views/gamelist/IGameListView.h"
 
 #include <stack>
 
@@ -39,9 +39,13 @@ public:
     // These functions are used to retain the folder cursor history, for instance
     // during a view reload. The calling function stores the history temporarily.
     void copyCursorHistory(std::vector<FileData*>& cursorHistory) override
-            { cursorHistory = mCursorStackHistory; };
+    {
+        cursorHistory = mCursorStackHistory;
+    };
     void populateCursorHistory(std::vector<FileData*>& cursorHistory) override
-            { mCursorStackHistory = cursorHistory; };
+    {
+        mCursorStackHistory = cursorHistory;
+    };
 
 protected:
     virtual std::string getQuickSystemSelectRightButton() = 0;

@@ -8,24 +8,21 @@
 
 #include "components/DateTimeEditComponent.h"
 
+#include "Settings.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
-#include "Settings.h"
 
-DateTimeEditComponent::DateTimeEditComponent(
-        Window* window,
-        bool alignRight,
-        DisplayMode dispMode)
-        : GuiComponent(window),
-        mEditing(false),
-        mEditIndex(0),
-        mDisplayMode(dispMode),
-        mRelativeUpdateAccumulator(0),
-        mColor(0x777777FF),
-        mFont(Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT)),
-        mUppercase(false),
-        mAutoSize(true),
-        mAlignRight(alignRight)
+DateTimeEditComponent::DateTimeEditComponent(Window* window, bool alignRight, DisplayMode dispMode)
+    : GuiComponent(window)
+    , mEditing(false)
+    , mEditIndex(0)
+    , mDisplayMode(dispMode)
+    , mRelativeUpdateAccumulator(0)
+    , mColor(0x777777FF)
+    , mFont(Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT))
+    , mUppercase(false)
+    , mAutoSize(true)
+    , mAlignRight(alignRight)
 {
     updateTextCache();
 }
@@ -68,8 +65,9 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
     if (mEditing) {
 
         if (config->isMappedLike("lefttrigger", input) ||
-                config->isMappedLike("righttrigger", input))
+            config->isMappedLike("righttrigger", input)) {
             return true;
+        }
 
         if (config->isMappedTo("b", input)) {
             mEditing = false;
@@ -101,23 +99,21 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
                     new_tm.tm_mon = 0;
                 else if (new_tm.tm_mon < 0)
                     new_tm.tm_mon = 11;
-
             }
             else if (mEditIndex == 2) {
                 const int days_in_month =
-                        Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1);
+                    Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1);
                 new_tm.tm_mday += incDir;
 
                 if (new_tm.tm_mday > days_in_month)
                     new_tm.tm_mday = 1;
                 else if (new_tm.tm_mday < 1)
                     new_tm.tm_mday = days_in_month;
-
             }
 
             // Validate day.
             const int days_in_month =
-                    Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1);
+                Utils::Time::daysInMonth(new_tm.tm_year + 1900, new_tm.tm_mon + 1);
             if (new_tm.tm_mday > days_in_month)
                 new_tm.tm_mday = days_in_month;
 
@@ -185,11 +181,11 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
         if (Settings::getInstance()->getBool("DebugText")) {
             Renderer::setMatrix(trans);
             if (mTextCache->metrics.size.x() > 0) {
-                Renderer::drawRect(0.0f, 0.0f - off.y(),
-                        mSize.x() - off.x(), mSize.y(), 0x0000FF33, 0x0000FF33);
+                Renderer::drawRect(0.0f, 0.0f - off.y(), mSize.x() - off.x(), mSize.y(), 0x0000FF33,
+                                   0x0000FF33);
             }
             Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x(),
-                    mTextCache->metrics.size.y(), 0x00000033, 0x00000033);
+                               mTextCache->metrics.size.y(), 0x00000033, 0x00000033);
         }
 
         mTextCache->setColor((mColor & 0xFFFFFF00) | getOpacity());
@@ -198,8 +194,8 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
         if (mEditing) {
             if (mEditIndex >= 0 && static_cast<unsigned int>(mEditIndex) < mCursorBoxes.size())
                 Renderer::drawRect(mCursorBoxes[mEditIndex][0], mCursorBoxes[mEditIndex][1],
-                    mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
-                    0x00000022, 0x00000022);
+                                   mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
+                                   0x00000022, 0x00000022);
         }
     }
 }
@@ -211,41 +207,24 @@ void DateTimeEditComponent::setValue(const std::string& val)
     updateTextCache();
 }
 
-std::string DateTimeEditComponent::getValue() const
-{
-    return mTime;
-}
-
-DateTimeEditComponent::DisplayMode DateTimeEditComponent::getCurrentDisplayMode() const
-{
-//	if (mEditing) {
-//		if (mDisplayMode == DISP_RELATIVE_TO_NOW) {
-//			// TODO: if time component == 00:00:00, return DISP_DATE, else return DISP_DATE_TIME.
-//			return DISP_DATE;
-//		}
-//	}
-
-    return mDisplayMode;
-}
-
 std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
 {
     // ISO 8601 date format.
     std::string fmt;
     switch (mode) {
-    case DISP_DATE: {
-        if (mTime.getTime() == 0)
-            return "unknown";
-        fmt = "%Y-%m-%d";
-        break;
-    }
-    case DISP_DATE_TIME: {
-        if (mTime.getTime() == 0)
-            return "unknown";
-        fmt = "%Y-%m-%d %H:%M:%S";
-        break;
-    }
-    case DISP_RELATIVE_TO_NOW: {
+        case DISP_DATE: {
+            if (mTime.getTime() == 0)
+                return "unknown";
+            fmt = "%Y-%m-%d";
+            break;
+        }
+        case DISP_DATE_TIME: {
+            if (mTime.getTime() == 0)
+                return "unknown";
+            fmt = "%Y-%m-%d %H:%M:%S";
+            break;
+        }
+        case DISP_RELATIVE_TO_NOW: {
             // Relative time.
             if (mTime.getTime() == 0)
                 return "never";
@@ -256,21 +235,22 @@ std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
             std::string buf;
 
             if (dur.getDays() > 0)
-                buf = std::to_string(dur.getDays()) + " day" +
-                        (dur.getDays() > 1 ? "s" : "") + " ago";
+                buf = std::to_string(dur.getDays()) + // Line break.
+                      " day" + (dur.getDays() > 1 ? "s" : "") + " ago";
             else if (dur.getHours() > 0)
-                buf = std::to_string(dur.getHours()) + " hour" +
-                        (dur.getHours() > 1 ? "s" : "") + " ago";
+                buf = std::to_string(dur.getHours()) + // Line break.
+                      " hour" + (dur.getHours() > 1 ? "s" : "") + " ago";
             else if (dur.getMinutes() > 0)
-                buf = std::to_string(dur.getMinutes()) + " minute" +
-                        (dur.getMinutes() > 1 ? "s" : "") + " ago";
+                buf = std::to_string(dur.getMinutes()) + // Line break.
+                      " minute" + (dur.getMinutes() > 1 ? "s" : "") + " ago";
             else
-                buf = std::to_string(dur.getSeconds()) + " second" +
-                        (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") + " ago";
+                buf = std::to_string(dur.getSeconds()) + // Line break.
+                      " second" + (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") +
+                      " ago";
 
             return std::string(buf);
+            break;
         }
-        break;
     }
 
     return Utils::Time::timeToString(mTime, fmt);
@@ -296,16 +276,16 @@ void DateTimeEditComponent::updateTextCache()
         dispString = "";
     }
     else {
-        dispString = mUppercase ? Utils::String::toUpper(getDisplayString(mode)) :
-                getDisplayString(mode);
+        dispString =
+            mUppercase ? Utils::String::toUpper(getDisplayString(mode)) : getDisplayString(mode);
     }
     std::shared_ptr<Font> font = getFont();
     mTextCache = std::unique_ptr<TextCache>(font->buildTextCache(dispString, 0, 0, mColor));
 
     if (mAutoSize) {
         mSize = mTextCache->metrics.size;
-
         mAutoSize = false;
+
         if (getParent())
             getParent()->onSizeChanged();
     }
@@ -367,7 +347,9 @@ void DateTimeEditComponent::setUppercase(bool uppercase)
 }
 
 void DateTimeEditComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-        const std::string& view, const std::string& element, unsigned int properties)
+                                       const std::string& view,
+                                       const std::string& element,
+                                       unsigned int properties)
 {
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "datetime");
 

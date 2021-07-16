@@ -9,18 +9,18 @@
 #ifndef ES_CORE_INPUT_CONFIG_H
 #define ES_CORE_INPUT_CONFIG_H
 
+#include <CECInput.h>
 #include <SDL2/SDL_joystick.h>
 #include <SDL2/SDL_keyboard.h>
-#include <CECInput.h>
 #include <map>
 #include <sstream>
 #include <vector>
 
 #define DEVICE_KEYBOARD -1
-#define DEVICE_CEC      -2
+#define DEVICE_CEC -2
 
 enum InputType {
-    TYPE_AXIS,
+    TYPE_AXIS, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     TYPE_BUTTON,
     TYPE_KEY,
     TYPE_CEC_BUTTON,
@@ -32,8 +32,7 @@ namespace pugi
     class xml_node;
 }
 
-struct Input
-{
+struct Input {
 public:
     int device;
     InputType type;
@@ -50,23 +49,16 @@ public:
         type = TYPE_COUNT;
     }
 
-    Input(
-            int dev,
-            InputType t,
-            int i,
-            int val,
-            bool conf)
-            : device(dev),
-            type(t),id(i),
-            value(val),
-            configured(conf)
+    Input(int dev, InputType t, int i, int val, bool conf)
+        : device(dev)
+        , type(t)
+        , id(i)
+        , value(val)
+        , configured(conf)
     {
     }
 
-    std::string getCECButtonName(int keycode)
-    {
-        return CECInput::getKeyCodeString(keycode);
-    }
+    std::string getCECButtonName(int keycode) { return CECInput::getKeyCodeString(keycode); }
 
     std::string string()
     {
@@ -113,8 +105,8 @@ public:
     InputType stringToInputType(const std::string& type);
     std::string toLower(std::string str);
 
-    void clear();
-    bool isConfigured();
+    void clear() { mNameMap.clear(); }
+    bool isConfigured() { return mNameMap.size() > 0; }
 
     void mapInput(const std::string& name, Input input);
     void unmapInput(const std::string& name); // Unmap all Inputs mapped to this name.
@@ -134,9 +126,9 @@ public:
     void loadFromXML(pugi::xml_node& root);
     void writeToXML(pugi::xml_node& parent);
 
-    inline int getDeviceId() const { return mDeviceId; };
-    inline const std::string& getDeviceName() { return mDeviceName; }
-    inline const std::string& getDeviceGUIDString() { return mDeviceGUID; }
+    int getDeviceId() const { return mDeviceId; }
+    const std::string& getDeviceName() { return mDeviceName; }
+    const std::string& getDeviceGUIDString() { return mDeviceGUID; }
 
 private:
     std::map<std::string, Input> mNameMap;

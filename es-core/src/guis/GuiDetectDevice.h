@@ -9,17 +9,19 @@
 #ifndef ES_CORE_GUIS_GUI_DETECT_DEVICE_H
 #define ES_CORE_GUIS_GUI_DETECT_DEVICE_H
 
+#include "GuiComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
-#include "GuiComponent.h"
 
 class TextComponent;
 
 class GuiDetectDevice : public GuiComponent
 {
 public:
-    GuiDetectDevice(Window* window, bool firstRun, bool forcedConfig,
-            const std::function<void()>& doneCallback);
+    GuiDetectDevice(Window* window,
+                    bool firstRun,
+                    bool forcedConfig,
+                    const std::function<void()>& doneCallback);
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;

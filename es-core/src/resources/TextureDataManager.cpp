@@ -8,20 +8,20 @@
 
 #include "resources/TextureDataManager.h"
 
-#include "resources/TextureData.h"
-#include "resources/TextureResource.h"
 #include "Log.h"
 #include "Settings.h"
+#include "resources/TextureData.h"
+#include "resources/TextureResource.h"
 
 TextureDataManager::TextureDataManager()
 {
     unsigned char data[5 * 5 * 4];
     mBlank = std::shared_ptr<TextureData>(new TextureData(false));
     for (int i = 0; i < (5 * 5); i++) {
-        data[i*4] = (i % 2) * 255;
-        data[i*4+1] = (i % 2) * 255;
-        data[i*4+2] = (i % 2) * 255;
-        data[i*4+3] = 0;
+        data[i * 4] = (i % 2) * 255;
+        data[i * 4 + 1] = (i % 2) * 255;
+        data[i * 4 + 2] = (i % 2) * 255;
+        data[i * 4 + 3] = 0;
     }
     mBlank->initFromRGBA(data, 5, 5);
     mLoader = new TextureLoader;
@@ -29,6 +29,7 @@ TextureDataManager::TextureDataManager()
 
 TextureDataManager::~TextureDataManager()
 {
+    // Delete TextureLoader object when destroyed.
     delete mLoader;
 }
 
@@ -103,6 +104,7 @@ size_t TextureDataManager::getCommittedSize()
 
 size_t TextureDataManager::getQueueSize()
 {
+    // Return queue size.
     return mLoader->getQueueSize();
 }
 
@@ -116,14 +118,14 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
     size_t settingVRAM = static_cast<size_t>(Settings::getInstance()->getInt("MaxVRAM"));
 
     if (settingVRAM < 80) {
-        LOG(LogWarning) << "MaxVRAM is too low at " << settingVRAM <<
-                " MiB, setting it to the minimum allowed value of 80 MiB";
+        LOG(LogWarning) << "MaxVRAM is too low at " << settingVRAM
+                        << " MiB, setting it to the minimum allowed value of 80 MiB";
         Settings::getInstance()->setInt("MaxVRAM", 80);
         settingVRAM = 80;
     }
     else if (settingVRAM > 1024) {
-        LOG(LogWarning) << "MaxVRAM is too high at " << settingVRAM <<
-                " MiB, setting it to the maximum allowed value of 1024 MiB";
+        LOG(LogWarning) << "MaxVRAM is too high at " << settingVRAM
+                        << " MiB, setting it to the maximum allowed value of 1024 MiB";
         Settings::getInstance()->setInt("MaxVRAM", 1024);
         settingVRAM = 1024;
     }
@@ -133,7 +135,6 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
     for (auto it = mTextures.crbegin(); it != mTextures.crend(); it++) {
         if (size < max_texture)
             break;
-        //size -= (*it)->getVRAMUsage();
         (*it)->releaseVRAM();
         (*it)->releaseRAM();
         // It may be already in the loader queue. In this case it wouldn't have been using
@@ -141,13 +142,15 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
         mLoader->remove(*it);
         size = TextureResource::getTotalMemUsage();
     }
+
     if (!block)
         mLoader->load(tex);
     else
         tex->load();
 }
 
-TextureLoader::TextureLoader() : mExit(false)
+TextureLoader::TextureLoader()
+    : mExit(false)
 {
     mThread = std::make_unique<std::thread>(&TextureLoader::threadProc, this);
 }

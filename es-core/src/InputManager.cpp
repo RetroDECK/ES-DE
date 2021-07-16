@@ -10,14 +10,14 @@
 
 #include "InputManager.h"
 
-#include "resources/ResourceManager.h"
-#include "utils/FileSystemUtil.h"
-#include "utils/StringUtil.h"
 #include "CECInput.h"
 #include "Log.h"
 #include "Platform.h"
 #include "Scripting.h"
 #include "Window.h"
+#include "resources/ResourceManager.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 #include <iostream>
 #include <pugixml.hpp>
@@ -34,12 +34,14 @@ static bool lguiDown = false;
 
 InputManager* InputManager::sInstance = nullptr;
 
-InputManager::InputManager() : mKeyboardInputConfig(nullptr)
+InputManager::InputManager()
+    : mKeyboardInputConfig(nullptr)
 {
 }
 
 InputManager::~InputManager()
 {
+    // Deinit when destroyed.
     deinit();
 }
 
@@ -70,8 +72,8 @@ void InputManager::init()
         mConfigFileExists = true;
     }
 
-    mKeyboardInputConfig = std::make_unique<InputConfig>(DEVICE_KEYBOARD,
-            "Keyboard", KEYBOARD_GUID_STRING);
+    mKeyboardInputConfig =
+        std::make_unique<InputConfig>(DEVICE_KEYBOARD, "Keyboard", KEYBOARD_GUID_STRING);
 
     bool customConfig = loadInputConfig(mKeyboardInputConfig.get());
 
@@ -88,18 +90,18 @@ void InputManager::init()
     // the bundled mapping is incorrect, or the SDL version is a bit older, it makes sense to be
     // able to customize this. If a controller GUID is present in the mappings file that is
     // already present inside SDL, the custom mapping will overwrite the bundled one.
-    std::string mappingsFile = Utils::FileSystem::getHomePath() +
-            "/.emulationstation/" + "es_controller_mappings.cfg";
+    std::string mappingsFile =
+        Utils::FileSystem::getHomePath() + "/.emulationstation/" + "es_controller_mappings.cfg";
 
     if (!Utils::FileSystem::exists(mappingsFile))
-        mappingsFile = ResourceManager::getInstance()->
-                getResourcePath(":/controllers/es_controller_mappings.cfg");
+        mappingsFile = ResourceManager::getInstance()->getResourcePath(
+            ":/controllers/es_controller_mappings.cfg");
 
     int controllerMappings = SDL_GameControllerAddMappingsFromFile(mappingsFile.c_str());
 
     if (controllerMappings != -1 && controllerMappings != 0) {
-        LOG(LogInfo) << "Loaded " << controllerMappings << " controller " <<
-                (controllerMappings == 1 ? "mapping" : "mappings");
+        LOG(LogInfo) << "Loaded " << controllerMappings << " controller "
+                     << (controllerMappings == 1 ? "mapping" : "mappings");
     }
 
     int numJoysticks = SDL_NumJoysticks();
@@ -154,18 +156,20 @@ void InputManager::writeDeviceConfig(InputConfig* config)
     std::string path = getConfigPath();
 
     LOG(LogDebug) << "InputManager::writeDeviceConfig(): "
-            "Saving input configuration file to \"" << path << "\"";
+                     "Saving input configuration file to \""
+                  << path << "\"";
 
     pugi::xml_document doc;
 
     if (Utils::FileSystem::exists(path)) {
         // Merge files.
-        #if defined(_WIN64)
+
+#if defined(_WIN64)
         pugi::xml_parse_result result =
-                doc.load_file(Utils::String::stringToWideString(path).c_str());
-        #else
+            doc.load_file(Utils::String::stringToWideString(path).c_str());
+#else
         pugi::xml_parse_result result = doc.load_file(path.c_str());
-        #endif
+#endif
         if (!result) {
             LOG(LogError) << "Couldn't parse input configuration file: " << result.description();
         }
@@ -176,8 +180,8 @@ void InputManager::writeDeviceConfig(InputConfig* config)
                 // If inputAction @type=onfinish is set, let doOnFinish command take care of
                 // creating input configuration. We just put the input configuration into a
                 // temporary input config file.
-                pugi::xml_node actionnode = root.find_child_by_attribute("inputAction",
-                        "type", "onfinish");
+                pugi::xml_node actionnode =
+                    root.find_child_by_attribute("inputAction", "type", "onfinish");
                 if (actionnode) {
                     path = getTemporaryConfigPath();
                     doc.reset();
@@ -185,12 +189,12 @@ void InputManager::writeDeviceConfig(InputConfig* config)
                     root.append_copy(actionnode);
                 }
                 else {
-                    pugi::xml_node oldEntry = root.find_child_by_attribute("inputConfig",
-                            "deviceGUID", config->getDeviceGUIDString().c_str());
+                    pugi::xml_node oldEntry = root.find_child_by_attribute(
+                        "inputConfig", "deviceGUID", config->getDeviceGUIDString().c_str());
                     if (oldEntry)
                         root.remove_child(oldEntry);
                     oldEntry = root.find_child_by_attribute("inputConfig", "deviceName",
-                            config->getDeviceName().c_str());
+                                                            config->getDeviceName().c_str());
                     if (oldEntry)
                         root.remove_child(oldEntry);
                 }
@@ -204,11 +208,11 @@ void InputManager::writeDeviceConfig(InputConfig* config)
 
     config->writeToXML(root);
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     doc.save_file(Utils::String::stringToWideString(path).c_str());
-    #else
+#else
     doc.save_file(path.c_str());
-    #endif
+#endif
 
     Scripting::fireEvent("config-changed");
     Scripting::fireEvent("controls-changed");
@@ -226,12 +230,12 @@ void InputManager::doOnFinish()
     pugi::xml_document doc;
 
     if (Utils::FileSystem::exists(path)) {
-        #if defined(_WIN64)
+#if defined(_WIN64)
         pugi::xml_parse_result result =
-                doc.load_file(Utils::String::stringToWideString(path).c_str());
-        #else
+            doc.load_file(Utils::String::stringToWideString(path).c_str());
+#else
         pugi::xml_parse_result result = doc.load_file(path.c_str());
-        #endif
+#endif
 
         if (!result) {
             LOG(LogError) << "Couldn't parse input configuration file: " << result.description();
@@ -242,18 +246,18 @@ void InputManager::doOnFinish()
                 root = root.find_child_by_attribute("inputAction", "type", "onfinish");
                 if (root) {
                     for (pugi::xml_node command = root.child("command"); command;
-                            command = command.next_sibling("command")) {
+                         command = command.next_sibling("command")) {
                         std::string tocall = command.text().get();
 
                         LOG(LogInfo) << "	" << tocall;
                         std::cout << "==============================================\n"
-                                "input config finish command:\n";
+                                     "input config finish command:\n";
                         int exitCode = runSystemCommand(tocall);
                         std::cout << "==============================================\n";
 
                         if (exitCode != 0) {
-                            LOG(LogWarning) << "...launch terminated with nonzero exit code " <<
-                                    exitCode << "!";
+                            LOG(LogWarning) << "...launch terminated with nonzero exit code "
+                                            << exitCode << "!";
                         }
                     }
                 }
@@ -274,20 +278,6 @@ std::string InputManager::getTemporaryConfigPath()
     std::string path = Utils::FileSystem::getHomePath();
     path += "/.emulationstation/es_temporaryinput.xml";
     return path;
-}
-
-int InputManager::getNumJoysticks()
-{
-    int numJoysticks = 0;
-
-    // This is a workaround to exclude the keyboard (ID -1) from the total joystick count.
-    // It's incorrectly added when configuring the keyboard in GuiInputConfig, but I've
-    // been unable to find a proper fix to not having it added to mJoysticks.
-    for (auto it = mJoysticks.cbegin(); it != mJoysticks.cend(); it++) {
-        if ((*it).first >= 0)
-            numJoysticks += 1;
-    }
-    return numJoysticks;
 }
 
 int InputManager::getNumConfiguredDevices()
@@ -316,11 +306,11 @@ int InputManager::getButtonCountByDevice(SDL_JoystickID id)
     if (id == DEVICE_KEYBOARD)
         return -1;
     else if (id == DEVICE_CEC)
-    #if defined(HAVE_CECLIB)
+#if defined(HAVE_CECLIB)
         return CEC::CEC_USER_CONTROL_CODE_MAX;
-    #else
+#else
         return 0;
-    #endif
+#endif
     else
         return SDL_JoystickNumButtons(mJoysticks[id]);
 }
@@ -361,10 +351,10 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
 
     switch (event.type) {
         case SDL_CONTROLLERAXISMOTION: {
-        // Whether to only accept input from the first controller.
-        if (Settings::getInstance()->getBool("InputOnlyFirstController"))
-            if (mInputConfigs.begin()->first != event.cdevice.which)
-                return false;
+            // Whether to only accept input from the first controller.
+            if (Settings::getInstance()->getBool("InputOnlyFirstController"))
+                if (mInputConfigs.begin()->first != event.cdevice.which)
+                    return false;
 
             // This is needed for a situation which sometimes occur when a game is launched,
             // some axis input is generated and then the controller is disconnected before
@@ -381,14 +371,17 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             int deadzone = 0;
 
             if (event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT ||
-                    event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
+                event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
                 deadzone = DEADZONE_TRIGGERS;
-            else
+            }
+            else {
                 deadzone = DEADZONE_THUMBSTICKS;
+            }
 
             // Check if the input value switched boundaries.
-            if ((abs(axisValue) > deadzone) != (abs(mPrevAxisValues[
-                    std::make_pair(event.caxis.which, event.caxis.axis)]) > deadzone)) {
+            if ((abs(axisValue) > deadzone) !=
+                (abs(mPrevAxisValues[std::make_pair(event.caxis.which, event.caxis.axis)]) >
+                 deadzone)) {
                 int normValue;
                 if (abs(axisValue) <= deadzone) {
                     normValue = 0;
@@ -400,8 +393,9 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
                         normValue = -1;
                 }
 
-                window->input(getInputConfigByDevice(event.caxis.which), Input(event.caxis.which,
-                        TYPE_AXIS, event.caxis.axis, normValue, false));
+                window->input(
+                    getInputConfigByDevice(event.caxis.which),
+                    Input(event.caxis.which, TYPE_AXIS, event.caxis.axis, normValue, false));
                 causedEvent = true;
             }
 
@@ -411,26 +405,27 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
         case SDL_CONTROLLERBUTTONDOWN: {
         }
         case SDL_CONTROLLERBUTTONUP: {
-        // Whether to only accept input from the first controller.
-        if (Settings::getInstance()->getBool("InputOnlyFirstController"))
-            if (mInputConfigs.begin()->first != event.cdevice.which)
-                return false;
+            // Whether to only accept input from the first controller.
+            if (Settings::getInstance()->getBool("InputOnlyFirstController"))
+                if (mInputConfigs.begin()->first != event.cdevice.which)
+                    return false;
 
             // The event filtering below is required as some controllers send button presses
             // starting with the state 0 when using the D-pad. I consider this invalid behaviour
             // and the more popular controllers such as those from Microsoft and Sony do not show
             // this strange behavior.
-            int buttonState = mPrevButtonValues[
-                    std::make_pair(event.cbutton.which, event.cbutton.button)];
+            int buttonState =
+                mPrevButtonValues[std::make_pair(event.cbutton.which, event.cbutton.button)];
 
             if ((buttonState == -1 || buttonState == 0) && event.cbutton.state == 0)
                 return false;
 
             mPrevButtonValues[std::make_pair(event.cbutton.which, event.cbutton.button)] =
-                    event.cbutton.state;
+                event.cbutton.state;
 
-            window->input(getInputConfigByDevice(event.cbutton.which), Input(event.cbutton.which,
-                    TYPE_BUTTON, event.cbutton.button, event.cbutton.state == SDL_PRESSED, false));
+            window->input(getInputConfigByDevice(event.cbutton.which),
+                          Input(event.cbutton.which, TYPE_BUTTON, event.cbutton.button,
+                                event.cbutton.state == SDL_PRESSED, false));
 
             return true;
         }
@@ -466,8 +461,8 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
                 return false;
             }
 
-            window->input(getInputConfigByDevice(DEVICE_KEYBOARD), Input(DEVICE_KEYBOARD,
-                    TYPE_KEY, event.key.keysym.sym, 1, false));
+            window->input(getInputConfigByDevice(DEVICE_KEYBOARD),
+                          Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 1, false));
             return true;
         }
         case SDL_KEYUP: {
@@ -478,8 +473,8 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             if (event.key.keysym.sym == SDLK_LGUI)
                 lguiDown = false;
 
-            window->input(getInputConfigByDevice(DEVICE_KEYBOARD), Input(DEVICE_KEYBOARD,
-                    TYPE_KEY, event.key.keysym.sym, 0, false));
+            window->input(getInputConfigByDevice(DEVICE_KEYBOARD),
+                          Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));
             return true;
         }
         case SDL_TEXTINPUT: {
@@ -497,19 +492,15 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
     }
 
     if ((event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN)) ||
-            (event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONUP))) {
-        window->input(getInputConfigByDevice(DEVICE_CEC), Input(DEVICE_CEC,
-                TYPE_CEC_BUTTON, event.user.code, event.type ==
-                static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN), false));
+        (event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONUP))) {
+        window->input(getInputConfigByDevice(DEVICE_CEC),
+                      Input(DEVICE_CEC, TYPE_CEC_BUTTON, event.user.code,
+                            event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN),
+                            false));
         return true;
     }
 
     return false;
-}
-
-bool InputManager::initialized() const
-{
-    return mKeyboardInputConfig != nullptr;
 }
 
 bool InputManager::loadInputConfig(InputConfig* config)
@@ -520,11 +511,11 @@ bool InputManager::loadInputConfig(InputConfig* config)
     std::string path = getConfigPath();
 
     pugi::xml_document doc;
-    #if defined(_WIN64)
+#if defined(_WIN64)
     pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
-    #else
+#else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
-    #endif
+#endif
 
     if (!res) {
         LOG(LogError) << "Couldn't parse the input configuration file: " << res.description();
@@ -535,16 +526,16 @@ bool InputManager::loadInputConfig(InputConfig* config)
     if (!root)
         return false;
 
-    pugi::xml_node configNode = root.find_child_by_attribute("inputConfig",
-            "deviceGUID", config->getDeviceGUIDString().c_str());
+    pugi::xml_node configNode = root.find_child_by_attribute("inputConfig", "deviceGUID",
+                                                             config->getDeviceGUIDString().c_str());
 
     // Enabling this will match an entry in es_input.xml based on the device name if there
     // was no GUID match. This is probably not a good idea as many controllers share the same
     // name even though the GUID differ and potentially the button configuration could be
     // different between them. Keeping the code for now though.
-//    if (!configNode)
-//        configNode = root.find_child_by_attribute("inputConfig",
-//                "deviceName", config->getDeviceName().c_str());
+    //    if (!configNode)
+    //        configNode = root.find_child_by_attribute("inputConfig",
+    //                "deviceName", config->getDeviceName().c_str());
 
     // With the move to the SDL GameController API the button layout changed quite a lot, so
     // es_input.xml files generated using the old API will end up with a completely unusable
@@ -578,11 +569,11 @@ void InputManager::loadDefaultKBConfig()
     cfg->mapInput("A", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_RETURN, 1, true));
     cfg->mapInput("B", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_BACKSPACE, 1, true));
     cfg->mapInput("X", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_DELETE, 1, true));
-    #if defined(__APPLE__)
+#if defined(__APPLE__)
     cfg->mapInput("Y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_PRINTSCREEN, 1, true));
-    #else
+#else
     cfg->mapInput("Y", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_INSERT, 1, true));
-    #endif
+#endif
     cfg->mapInput("Start", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_ESCAPE, 1, true));
     cfg->mapInput("Back", Input(DEVICE_KEYBOARD, TYPE_KEY, SDLK_F1, 1, true));
 
@@ -602,6 +593,7 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
     if (cfg->isConfigured())
         return;
 
+    // clang-format off
     cfg->mapInput("Up", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_UP, 1, true));
     cfg->mapInput("Down", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_DOWN, 1, true));
     cfg->mapInput("Left", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_DPAD_LEFT, 1, true));
@@ -626,6 +618,7 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
     cfg->mapInput("RightThumbstickLeft", Input(deviceIndex, TYPE_AXIS, SDL_CONTROLLER_AXIS_RIGHTX, -1, true));
     cfg->mapInput("RightThumbstickRight", Input(deviceIndex, TYPE_AXIS, SDL_CONTROLLER_AXIS_RIGHTX, 1, true));
     cfg->mapInput("RightThumbstickClick", Input(deviceIndex, TYPE_BUTTON, SDL_CONTROLLER_BUTTON_RIGHTSTICK, 1, true));
+    // clang-format on
 }
 
 void InputManager::addControllerByDeviceIndex(int deviceIndex)
@@ -642,21 +635,21 @@ void InputManager::addControllerByDeviceIndex(int deviceIndex)
     char guid[65];
     SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), guid, 65);
 
-    mInputConfigs[joyID] = std::make_unique<InputConfig>(
-            joyID, SDL_GameControllerName(mControllers[joyID]), guid);
+    mInputConfigs[joyID] =
+        std::make_unique<InputConfig>(joyID, SDL_GameControllerName(mControllers[joyID]), guid);
 
     bool customConfig = loadInputConfig(mInputConfigs[joyID].get());
 
     if (customConfig) {
-        LOG(LogInfo) << "Added controller with custom configuration: \"" <<
-                SDL_GameControllerName(mControllers[joyID]) << "\" (GUID: " << guid <<
-                ", instance ID: " << joyID << ", device index: " << deviceIndex << ")";
+        LOG(LogInfo) << "Added controller with custom configuration: \""
+                     << SDL_GameControllerName(mControllers[joyID]) << "\" (GUID: " << guid
+                     << ", instance ID: " << joyID << ", device index: " << deviceIndex << ")";
     }
     else {
         loadDefaultControllerConfig(joyID);
-        LOG(LogInfo) << "Added controller with default configuration: \"" <<
-                SDL_GameControllerName(mControllers[joyID]) << "\" (GUID: " << guid <<
-                ", instance ID: " << joyID << ", device index: " << deviceIndex << ")";
+        LOG(LogInfo) << "Added controller with default configuration: \""
+                     << SDL_GameControllerName(mControllers[joyID]) << "\" (GUID: " << guid
+                     << ", instance ID: " << joyID << ", device index: " << deviceIndex << ")";
     }
 
     int numAxes = SDL_JoystickNumAxes(joy);
@@ -677,8 +670,8 @@ void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
     SDL_Joystick* joy = SDL_JoystickFromInstanceID(joyID);
     SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), guid, 65);
 
-    LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID]) <<
-            "\" (GUID: " << guid << ", instance ID: " << joyID << ")";
+    LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID])
+                 << "\" (GUID: " << guid << ", instance ID: " << joyID << ")";
 
     // Delete mPrevAxisValues for the device.
     int axisEntries = static_cast<int>(mPrevAxisValues.size());
@@ -701,7 +694,7 @@ void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
     auto it = mInputConfigs.find(joyID);
     mInputConfigs.erase(it);
 
-    // Close the controllers.
+    // Close the controller and remove its entry.
     auto controllerIt = mControllers.find(joyID);
     if (controllerIt != mControllers.cend()) {
         SDL_GameControllerClose(controllerIt->second);
@@ -709,5 +702,14 @@ void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
     }
     else {
         LOG(LogError) << "Couldn't find controller to close (instance ID: " << joyID << ")";
+    }
+
+    // Remove the joystick entry.
+    auto joystickIt = mJoysticks.find(joyID);
+    if (joystickIt != mJoysticks.cend()) {
+        mJoysticks.erase(joystickIt);
+    }
+    else {
+        LOG(LogError) << "Couldn't find joystick entry to remove (instance ID: " << joyID << ")";
     }
 }

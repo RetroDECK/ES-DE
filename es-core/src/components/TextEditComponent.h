@@ -9,8 +9,9 @@
 #ifndef ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
 #define ES_CORE_COMPONENTS_TEXT_EDIT_COMPONENT_H
 
-#include "components/NinePatchComponent.h"
 #include "GuiComponent.h"
+#include "components/NinePatchComponent.h"
+#include "resources/Font.h"
 
 class Font;
 class TextCache;
@@ -32,13 +33,13 @@ public:
     void onSizeChanged() override;
 
     void setValue(const std::string& val) override;
-    std::string getValue() const override;
+    std::string getValue() const override { return mText; }
 
     void startEditing();
     void stopEditing();
 
-    inline bool isEditing() const { return mEditing; };
-    inline std::shared_ptr<Font> getFont() const override{ return mFont; }
+    bool isEditing() const { return mEditing; }
+    std::shared_ptr<Font> getFont() const override { return mFont; }
 
     void setCursor(size_t pos);
 
@@ -51,7 +52,7 @@ private:
     void updateCursorRepeat(int deltaTime);
     void moveCursor(int amt);
 
-    bool isMultiline();
+    bool isMultiline() { return (getSize().y() > mFont->getHeight() * 1.25f); }
     Vector2f getTextAreaPos() const;
     Vector2f getTextAreaSize() const;
 

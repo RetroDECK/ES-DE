@@ -24,7 +24,7 @@ public:
 
     // These functions populate mDataRGBA but do not upload the texture to VRAM.
 
-    //!!!! Needs to be canonical path. Caller should check for duplicates before calling this.
+    // Needs to be canonical path. Caller should check for duplicates before calling this.
     void initFromPath(const std::string& path);
     bool initSVGFromMemory(const std::string& fileData);
     bool initImageFromMemory(const unsigned char* fileData, size_t length);
@@ -58,6 +58,7 @@ public:
     void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }
 
     std::vector<unsigned char> getRawRGBAData() { return mDataRGBA; }
+    std::string getTextureFilePath() { return mPath; }
     bool tiled() { return mTile; }
 
 private:

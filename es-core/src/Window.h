@@ -10,10 +10,11 @@
 #ifndef ES_CORE_WINDOW_H
 #define ES_CORE_WINDOW_H
 
-#include "resources/TextureResource.h"
 #include "HelpPrompt.h"
 #include "InputConfig.h"
+#include "Scripting.h"
 #include "Settings.h"
+#include "resources/TextureResource.h"
 
 #include <memory>
 #include <mutex>
@@ -78,7 +79,7 @@ public:
     public:
         virtual void render(const Transform4x4f& parentTrans) = 0;
         virtual void stop() = 0;
-        virtual ~InfoPopup() {};
+        virtual ~InfoPopup() {}
     };
 
     Window();
@@ -87,7 +88,7 @@ public:
     void pushGui(GuiComponent* gui);
     void removeGui(GuiComponent* gui);
     GuiComponent* peekGui();
-    inline int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
+    int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
 
     bool init();
     void deinit();
@@ -102,7 +103,7 @@ public:
 
     bool getAllowSleep() { return mAllowSleep; }
     void setAllowSleep(bool sleep) { mAllowSleep = sleep; }
-    inline bool isSleeping() const { return mSleeping; }
+    bool isSleeping() const { return mSleeping; }
 
     void renderLoadingScreen(std::string text);
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
@@ -148,8 +149,8 @@ public:
     bool getChangedThemeSet() { return mChangedThemeSet; }
 
 private:
-    void onSleep();
-    void onWake();
+    void onSleep() { Scripting::fireEvent("sleep"); }
+    void onWake() { Scripting::fireEvent("wake"); }
 
     // Returns true if at least one component on the stack is processing.
     bool isProcessing();

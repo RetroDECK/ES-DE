@@ -17,20 +17,22 @@ namespace Math
 
     float smoothStep(const float _left, const float _right, const float _x)
     {
-        const float x = clamp((_x - _left)/(_right - _left), 0.0f, 1.0f);
+        const float x = clamp((_x - _left) / (_right - _left), 0.0f, 1.0f);
         return x * x * (3 - (2 * x));
     }
 
     float smootherStep(const float _left, const float _right, const float _x)
     {
-        const float x = clamp((_x - _left)/(_right - _left), 0.0f, 1.0f);
+        const float x = clamp((_x - _left) / (_right - _left), 0.0f, 1.0f);
         return x * x * x * (x * ((x * 6) - 15) + 10);
     }
 
     namespace Scroll
     {
-        float bounce(const float _delayTime, const float _scrollTime,
-                const float _currentTime, const float _scrollLength)
+        float bounce(const float _delayTime,
+                     const float _scrollTime,
+                     const float _currentTime,
+                     const float _scrollLength)
         {
             if (_currentTime < _delayTime) {
                 // Wait.
@@ -47,16 +49,18 @@ namespace Math
             }
             else if (_currentTime < (_delayTime + _scrollTime + _delayTime + _scrollTime)) {
                 // Lerp back from scrollLength to 0.
-                const float fraction = (_currentTime - _delayTime - _scrollTime -
-                        _delayTime) / _scrollTime;
+                const float fraction =
+                    (_currentTime - _delayTime - _scrollTime - _delayTime) / _scrollTime;
                 return lerp(_scrollLength, 0.0f, smootherStep(0, 1, fraction));
             }
             // And back to waiting.
             return 0;
         }
 
-        float loop(const float _delayTime, const float _scrollTime,
-                const float _currentTime, const float _scrollLength)
+        float loop(const float _delayTime,
+                   const float _scrollTime,
+                   const float _currentTime,
+                   const float _scrollLength)
         {
             if (_currentTime < _delayTime) {
                 // Wait.
@@ -72,5 +76,7 @@ namespace Math
             return 0;
 
         } // Math::Scroll::loop
-    } // Math::Scroll::
-} // Math::
+
+    } // namespace Scroll
+
+} // namespace Math

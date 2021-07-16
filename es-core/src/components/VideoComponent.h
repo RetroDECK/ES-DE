@@ -9,8 +9,8 @@
 #ifndef ES_CORE_COMPONENTS_VIDEO_COMPONENT_H
 #define ES_CORE_COMPONENTS_VIDEO_COMPONENT_H
 
-#include "components/ImageComponent.h"
 #include "GuiComponent.h"
+#include "components/ImageComponent.h"
 
 #include <string>
 
@@ -34,15 +34,15 @@ public:
     // Loads the video at the given filepath.
     bool setVideo(std::string path);
     // Configures the component to show the default video.
-    void setDefaultVideo();
+    void setDefaultVideo() { setVideo(mConfig.defaultVideoPath); }
     // Loads a static image that is displayed if the video cannot be played.
     void setImage(std::string path);
     // Sets whether we're in media viewer mode.
-    void setMediaViewerMode(bool isMediaViewer);
+    void setMediaViewerMode(bool isMediaViewer) { mMediaViewerMode = isMediaViewer; }
     // Sets whether we're in screensaver mode.
-    void setScreensaverMode(bool isScreensaver);
+    void setScreensaverMode(bool isScreensaver) { mScreensaverMode = isScreensaver; }
     // Set the opacity for the embedded static image.
-    void setOpacity(unsigned char opacity) override;
+    void setOpacity(unsigned char opacity) override { mOpacity = opacity; }
 
     virtual void onShow() override;
     virtual void onHide() override;
@@ -57,15 +57,17 @@ public:
     virtual void topWindow(bool isTop) override;
 
     // These functions update the embedded static image.
-    void onOriginChanged() override;
-    void onPositionChanged() override;
-    void onSizeChanged() override;
+    void onOriginChanged() override { mStaticImage.setOrigin(mOrigin); }
+    void onPositionChanged() override { mStaticImage.setPosition(mPosition); }
+    void onSizeChanged() override { mStaticImage.onSizeChanged(); }
 
     void render(const Transform4x4f& parentTrans) override;
     void renderSnapshot(const Transform4x4f& parentTrans);
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
-            const std::string& element, unsigned int properties) override;
+    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                            const std::string& view,
+                            const std::string& element,
+                            unsigned int properties) override;
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
@@ -76,24 +78,24 @@ public:
     // zero, no resizing. This can be set before or after a video is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     virtual void setResize(float width, float height) override = 0;
-    inline void setResize(const Vector2f& size) { setResize(size.x(), size.y()); }
+    void setResize(const Vector2f& size) { setResize(size.x(), size.y()); }
 
     // Resize the video to be as large as possible but fit within a box of this size.
     // This can be set before or after a video is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     virtual void setMaxSize(float width, float height) = 0;
-    inline void setMaxSize(const Vector2f& size) { setMaxSize(size.x(), size.y()); }
+    void setMaxSize(const Vector2f& size) { setMaxSize(size.x(), size.y()); }
 
 private:
     // Start the video immediately.
-    virtual void startVideo() {};
+    virtual void startVideo() {}
     // Stop the video.
-    virtual void stopVideo() {};
+    virtual void stopVideo() {}
     // Pause the video when a game has been launched.
-    virtual void pauseVideo() {};
+    virtual void pauseVideo() {}
     // Handle looping of the video. Must be called periodically.
-    virtual void handleLooping() {};
-    virtual void updatePlayer() {};
+    virtual void handleLooping() {}
+    virtual void updatePlayer() {}
 
     // Start the video after any configured delay.
     void startVideoWithDelay();

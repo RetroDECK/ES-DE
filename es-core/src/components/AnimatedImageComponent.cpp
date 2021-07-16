@@ -8,12 +8,13 @@
 
 #include "components/AnimatedImageComponent.h"
 
+#include "Log.h"
 #include "components/ImageComponent.h"
 #include "resources/ResourceManager.h"
-#include "Log.h"
 
 AnimatedImageComponent::AnimatedImageComponent(Window* window)
-        : GuiComponent(window), mEnabled(false)
+    : GuiComponent(window)
+    , mEnabled(false)
 {
 }
 
@@ -25,9 +26,9 @@ void AnimatedImageComponent::load(const AnimationDef* def)
 
     for (size_t i = 0; i < def->frameCount; i++) {
         if (def->frames[i].path != "" &&
-                !ResourceManager::getInstance()->fileExists(def->frames[i].path)) {
-            LOG(LogError) << "Missing animation frame " << i <<
-                    " (\"" << def->frames[i].path << "\")";
+            !ResourceManager::getInstance()->fileExists(def->frames[i].path)) {
+            LOG(LogError) << "Missing animation frame " << i << " (\"" << def->frames[i].path
+                          << "\")";
             continue;
         }
 

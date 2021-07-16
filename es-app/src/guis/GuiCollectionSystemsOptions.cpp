@@ -9,6 +9,7 @@
 
 #include "guis/GuiCollectionSystemsOptions.h"
 
+#include "CollectionSystemsManager.h"
 #include "components/OptionListComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
@@ -16,21 +17,23 @@
 #include "guis/GuiTextEditPopup.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
-#include "CollectionSystemsManager.h"
 
-GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
-        Window* window,
-        std::string title)
-        : GuiSettings(window, title),
-        mAddedCustomCollection(false),
-        mDeletedCustomCollection(false)
+GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::string title)
+    : GuiSettings(window, title)
+    , mAddedCustomCollection(false)
+    , mDeletedCustomCollection(false)
 {
     // Finish editing custom collection.
     if (CollectionSystemsManager::get()->isEditing()) {
         ComponentListRow row;
-        row.addElement(std::make_shared<TextComponent>(mWindow, "FINISH EDITING '" +
-                Utils::String::toUpper(CollectionSystemsManager::get()->getEditingCollection()) +
-                "' COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF), true);
+        row.addElement(std::make_shared<TextComponent>(
+                           mWindow,
+                           "FINISH EDITING '" +
+                               Utils::String::toUpper(
+                                   CollectionSystemsManager::get()->getEditingCollection()) +
+                               "' COLLECTION",
+                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                       true);
         row.makeAcceptInputHandler([this] {
             CollectionSystemsManager::get()->exitEditMode();
             mWindow->invalidateCachedBackground();
@@ -40,19 +43,20 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
     }
 
     // Automatic collections.
-    collection_systems_auto = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
+    collection_systems_auto = std::make_shared<OptionListComponent<std::string>>(
+        mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
     std::map<std::string, CollectionSystemData, stringComparator> autoSystems =
-            CollectionSystemsManager::get()->getAutoCollectionSystems();
+        CollectionSystemsManager::get()->getAutoCollectionSystems();
     // Add automatic systems.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
-            it = autoSystems.cbegin(); it != autoSystems.cend() ; it++)
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
+             autoSystems.cbegin();
+         it != autoSystems.cend(); it++)
         collection_systems_auto->add(it->second.decl.longName, it->second.decl.name,
-                it->second.isEnabled);
+                                     it->second.isEnabled);
     addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
     addSaveFunc([this, autoSystems] {
         std::string autoSystemsSelected = Utils::String::vectorToDelimitedString(
-                collection_systems_auto->getSelectedObjects(), ",", true);
+            collection_systems_auto->getSelectedObjects(), ",", true);
         std::string autoSystemsConfig = Settings::getInstance()->getString("CollectionSystemsAuto");
         if (autoSystemsSelected != autoSystemsConfig) {
             if (CollectionSystemsManager::get()->isEditing())
@@ -67,19 +71,19 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
             }
             else if (autoSystemsSelected != "") {
                 std::vector<std::string> selectedVector =
-                        Utils::String::delimitedStringToVector(autoSystemsSelected, ",");
+                    Utils::String::delimitedStringToVector(autoSystemsSelected, ",");
                 std::vector<std::string> configuredVector =
-                        Utils::String::delimitedStringToVector(autoSystemsConfig, ",");
+                    Utils::String::delimitedStringToVector(autoSystemsConfig, ",");
                 for (std::string system : selectedVector) {
                     if (std::find(configuredVector.begin(), configuredVector.end(), system) ==
-                            configuredVector.end())
+                        configuredVector.end())
                         addedAutoSystems.push_back(system);
                 }
             }
             if (!addedAutoSystems.empty()) {
                 for (std::string system : addedAutoSystems)
-                    CollectionSystemsManager::get()->
-                            repopulateCollection(autoSystems.find(system)->second.system);
+                    CollectionSystemsManager::get()->repopulateCollection(
+                        autoSystems.find(system)->second.system);
             }
             setNeedsSaving();
             setNeedsReloading();
@@ -88,50 +92,52 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
     });
 
     // Custom collections.
-    collection_systems_custom = std::make_shared<OptionListComponent<std::string>>
-            (mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
+    collection_systems_custom = std::make_shared<OptionListComponent<std::string>>(
+        mWindow, getHelpStyle(), "SELECT COLLECTIONS", true);
     std::map<std::string, CollectionSystemData, stringComparator> customSystems =
-            CollectionSystemsManager::get()->getCustomCollectionSystems();
+        CollectionSystemsManager::get()->getCustomCollectionSystems();
     // Add custom systems.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
-            it = customSystems.cbegin(); it != customSystems.cend() ; it++)
+    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
+             customSystems.cbegin();
+         it != customSystems.cend(); it++)
         collection_systems_custom->add(it->second.decl.longName, it->second.decl.name,
-                it->second.isEnabled);
+                                       it->second.isEnabled);
+
     addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
     addSaveFunc([this, customSystems] {
         if (!mDeletedCustomCollection) {
             std::string customSystemsSelected = Utils::String::vectorToDelimitedString(
-                    collection_systems_custom->getSelectedObjects(), ",", true);
-            std::string customSystemsConfig = Settings::getInstance()->
-                    getString("CollectionSystemsCustom");
+                collection_systems_custom->getSelectedObjects(), ",", true);
+            std::string customSystemsConfig =
+                Settings::getInstance()->getString("CollectionSystemsCustom");
             if (customSystemsSelected != customSystemsConfig) {
                 if (CollectionSystemsManager::get()->isEditing())
                     CollectionSystemsManager::get()->exitEditMode();
                 Settings::getInstance()->setString("CollectionSystemsCustom",
-                        customSystemsSelected);
+                                                   customSystemsSelected);
                 // Check if any systems have been enabled, and if so repopulate them, which
                 // results in a complete initialization of their content. This is necessary as
                 // collections aren't updated while they are disabled.
                 std::vector<std::string> addedCustomSystems;
                 if (customSystemsConfig == "") {
                     addedCustomSystems =
-                            Utils::String::delimitedStringToVector(customSystemsSelected, ",");
+                        Utils::String::delimitedStringToVector(customSystemsSelected, ",");
                 }
                 else if (customSystemsSelected != "") {
                     std::vector<std::string> selectedVector =
-                            Utils::String::delimitedStringToVector(customSystemsSelected, ",");
+                        Utils::String::delimitedStringToVector(customSystemsSelected, ",");
                     std::vector<std::string> configuredVector =
-                            Utils::String::delimitedStringToVector(customSystemsConfig, ",");
+                        Utils::String::delimitedStringToVector(customSystemsConfig, ",");
                     for (std::string system : selectedVector) {
                         if (std::find(configuredVector.begin(), configuredVector.end(), system) ==
-                                configuredVector.end())
+                            configuredVector.end())
                             addedCustomSystems.push_back(system);
                     }
                 }
                 if (!mAddedCustomCollection && !addedCustomSystems.empty()) {
                     for (std::string system : addedCustomSystems)
-                        CollectionSystemsManager::get()->
-                                repopulateCollection(customSystems.find(system)->second.system);
+                        CollectionSystemsManager::get()->repopulateCollection(
+                            customSystems.find(system)->second.system);
                 }
                 setNeedsSaving();
                 setNeedsReloading();
@@ -143,32 +149,33 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
 
     // Create custom collection from theme.
     std::vector<std::string> unusedFolders =
-            CollectionSystemsManager::get()->getUnusedSystemsFromTheme();
+        CollectionSystemsManager::get()->getUnusedSystemsFromTheme();
     if (unusedFolders.size() > 0) {
         ComponentListRow row;
-        auto themeCollection = std::make_shared<TextComponent>(mWindow,
-                "CREATE NEW CUSTOM COLLECTION FROM THEME", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        auto themeCollection =
+            std::make_shared<TextComponent>(mWindow, "CREATE NEW CUSTOM COLLECTION FROM THEME",
+                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
         auto bracketThemeCollection = std::make_shared<ImageComponent>(mWindow);
         bracketThemeCollection->setImage(":/graphics/arrow.svg");
-        bracketThemeCollection->setResize(Vector2f(0,
-                Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+        bracketThemeCollection->setResize(
+            Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
         row.addElement(themeCollection, true);
         row.addElement(bracketThemeCollection, false);
         row.makeAcceptInputHandler([this, unusedFolders] {
             auto ss = new GuiSettings(mWindow, "SELECT THEME FOLDER");
             std::shared_ptr<OptionListComponent<std::string>> folderThemes =
-                    std::make_shared<OptionListComponent<std::string>>(mWindow,
-                    getHelpStyle(), "SELECT THEME FOLDER", true);
+                std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
+                                                                   "SELECT THEME FOLDER", true);
             // Add custom systems.
-            for (auto it = unusedFolders.cbegin() ; it != unusedFolders.cend() ; it++ ) {
+            for (auto it = unusedFolders.cbegin(); it != unusedFolders.cend(); it++) {
                 ComponentListRow row;
                 std::string name = *it;
                 std::function<void()> createCollectionCall = [this, name] {
                     createCustomCollection(name);
                 };
                 row.makeAcceptInputHandler(createCollectionCall);
-                auto themeFolder = std::make_shared<TextComponent>(mWindow,
-                        Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+                auto themeFolder = std::make_shared<TextComponent>(
+                    mWindow, Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
                 row.addElement(themeFolder, true);
                 // This transparent bracket is only added to generate the correct help prompts.
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
@@ -184,12 +191,11 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
 
     // Create new custom collection.
     ComponentListRow row;
-    auto newCollection = std::make_shared<TextComponent>(mWindow,
-            "CREATE NEW CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto newCollection = std::make_shared<TextComponent>(mWindow, "CREATE NEW CUSTOM COLLECTION",
+                                                         Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     auto bracketNewCollection = std::make_shared<ImageComponent>(mWindow);
     bracketNewCollection->setImage(":/graphics/arrow.svg");
-    bracketNewCollection->setResize(Vector2f(0,
-            Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    bracketNewCollection->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
     row.addElement(newCollection, true);
     row.addElement(bracketNewCollection, false);
     auto createCollectionCall = [this](const std::string& newVal) {
@@ -202,72 +208,72 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
         createCustomCollection(name);
     };
     row.makeAcceptInputHandler([this, createCollectionCall] {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(),
-                "New Collection Name", "", createCollectionCall, false, "SAVE"));
+        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name", "",
+                                              createCollectionCall, false, "SAVE"));
     });
     addRow(row);
 
     // Delete custom collection.
     row.elements.clear();
-    auto deleteCollection = std::make_shared<TextComponent>(mWindow,
-            "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto deleteCollection = std::make_shared<TextComponent>(
+        mWindow, "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     auto bracketDeleteCollection = std::make_shared<ImageComponent>(mWindow);
     bracketDeleteCollection->setImage(":/graphics/arrow.svg");
-    bracketDeleteCollection->setResize(Vector2f(0,
-            Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    bracketDeleteCollection->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
     row.addElement(deleteCollection, true);
     row.addElement(bracketDeleteCollection, false);
     row.makeAcceptInputHandler([this, customSystems] {
         auto ss = new GuiSettings(mWindow, "SELECT COLLECTION TO DELETE");
         std::shared_ptr<OptionListComponent<std::string>> customCollections =
-                std::make_shared<OptionListComponent<std::string>>(mWindow,
-                getHelpStyle(), "", true);
-        for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator
-                it = customSystems.cbegin(); it != customSystems.cend() ; it++) {
+            std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(), "", true);
+        for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
+                 customSystems.cbegin();
+             it != customSystems.cend(); it++) {
             ComponentListRow row;
             std::string name = (*it).first;
             std::function<void()> deleteCollectionCall = [this, name] {
-                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                        "THIS WILL PERMANENTLY\nDELETE THE COLLECTION\n'" +
-                        Utils::String::toUpper(name) + "'\n"
+                mWindow->pushGui(new GuiMsgBox(
+                    mWindow, getHelpStyle(),
+                    "THIS WILL PERMANENTLY\nDELETE THE COLLECTION\n'" +
+                        Utils::String::toUpper(name) +
+                        "'\n"
                         "ARE YOU SURE?",
-                        "YES", [this, name] {
-                            if (CollectionSystemsManager::get()->isEditing())
-                                CollectionSystemsManager::get()->exitEditMode();
-                            mDeletedCustomCollection = true;
-                            std::vector<std::string> selectedCustomCollections =
-                                    collection_systems_custom->getSelectedObjects();
-                            std::string collectionsConfigEntry;
-                            // Create the configuration file entry. If the collection to be
-                            // deleted was activated, then exclude it.
-                            for (auto it = selectedCustomCollections.begin();
-                                    it != selectedCustomCollections.end(); it++) {
-                                if ((*it) != name) {
-                                    if ((*it) != selectedCustomCollections.front() &&
-                                            collectionsConfigEntry != "")
-                                        collectionsConfigEntry += ",";
-                                    collectionsConfigEntry += (*it);
-                                }
+                    "YES",
+                    [this, name] {
+                        if (CollectionSystemsManager::get()->isEditing())
+                            CollectionSystemsManager::get()->exitEditMode();
+                        mDeletedCustomCollection = true;
+                        std::vector<std::string> selectedCustomCollections =
+                            collection_systems_custom->getSelectedObjects();
+                        std::string collectionsConfigEntry;
+                        // Create the configuration file entry. If the collection to be
+                        // deleted was activated, then exclude it.
+                        for (auto it = selectedCustomCollections.begin();
+                             it != selectedCustomCollections.end(); it++) {
+                            if ((*it) != name) {
+                                if ((*it) != selectedCustomCollections.front() &&
+                                    collectionsConfigEntry != "")
+                                    collectionsConfigEntry += ",";
+                                collectionsConfigEntry += (*it);
                             }
-                            // If the system to be deleted was present in es_settings.xml, we
-                            // need to re-write it.
-                            if (collectionsConfigEntry !=
-                                    Settings::getInstance()->getString("CollectionSystemsCustom")) {
-                                Settings::getInstance()->setString("CollectionSystemsCustom",
-                                        collectionsConfigEntry);
-                                setNeedsSaving();
-                                setNeedsGoToStart();
-                            }
-                            CollectionSystemsManager::get()->deleteCustomCollection(name);
-                            return true;
-                        },
-                        "NO", [this] {
-                            return false;
-                        }));
+                        }
+                        // If the system to be deleted was present in es_settings.xml, we
+                        // need to re-write it.
+                        if (collectionsConfigEntry !=
+                            Settings::getInstance()->getString("CollectionSystemsCustom")) {
+                            Settings::getInstance()->setString("CollectionSystemsCustom",
+                                                               collectionsConfigEntry);
+                            setNeedsSaving();
+                            setNeedsGoToStart();
+                        }
+                        CollectionSystemsManager::get()->deleteCustomCollection(name);
+                        return true;
+                    },
+                    "NO", [this] { return false; }));
             };
             row.makeAcceptInputHandler(deleteCollectionCall);
-            auto customCollection = std::make_shared<TextComponent>(mWindow,
-                    Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+            auto customCollection = std::make_shared<TextComponent>(
+                mWindow, Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
             row.addElement(customCollection, true);
             // This transparent bracket is only added generate the correct help prompts.
             auto bracket = std::make_shared<ImageComponent>(mWindow);
@@ -310,14 +316,14 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
 
     // Group unthemed custom collections.
     auto use_custom_collections_system = std::make_shared<SwitchComponent>(mWindow);
-    use_custom_collections_system->setState(Settings::getInstance()->
-            getBool("UseCustomCollectionsSystem"));
+    use_custom_collections_system->setState(
+        Settings::getInstance()->getBool("UseCustomCollectionsSystem"));
     addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", use_custom_collections_system);
     addSaveFunc([this, use_custom_collections_system] {
         if (use_custom_collections_system->getState() !=
-                Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
+            Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
             Settings::getInstance()->setBool("UseCustomCollectionsSystem",
-                    use_custom_collections_system->getState());
+                                             use_custom_collections_system->getState());
             if (CollectionSystemsManager::get()->isEditing())
                 CollectionSystemsManager::get()->exitEditMode();
             setNeedsSaving();
@@ -330,14 +336,14 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(
 
     // Show system names in collections.
     auto collection_show_system_info = std::make_shared<SwitchComponent>(mWindow);
-    collection_show_system_info->setState(Settings::getInstance()->
-            getBool("CollectionShowSystemInfo"));
+    collection_show_system_info->setState(
+        Settings::getInstance()->getBool("CollectionShowSystemInfo"));
     addWithLabel("SHOW SYSTEM NAMES IN COLLECTIONS", collection_show_system_info);
     addSaveFunc([this, collection_show_system_info] {
         if (collection_show_system_info->getState() !=
-                Settings::getInstance()->getBool("CollectionShowSystemInfo")) {
+            Settings::getInstance()->getBool("CollectionShowSystemInfo")) {
             Settings::getInstance()->setBool("CollectionShowSystemInfo",
-                    collection_show_system_info->getState());
+                                             collection_show_system_info->getState());
             setNeedsSaving();
             setNeedsReloading();
             setInvalidateCachedBackground();
@@ -350,10 +356,9 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
     if (CollectionSystemsManager::get()->isEditing())
         CollectionSystemsManager::get()->exitEditMode();
 
-    std::string collectionName = CollectionSystemsManager::get()->
-            getValidNewCollectionName(inName);
-    SystemData* newCollection = CollectionSystemsManager::get()->
-            addNewCustomCollection(collectionName);
+    std::string collectionName = CollectionSystemsManager::get()->getValidNewCollectionName(inName);
+    SystemData* newCollection =
+        CollectionSystemsManager::get()->addNewCustomCollection(collectionName);
 
     CollectionSystemsManager::get()->saveCustomCollection(newCollection);
     collection_systems_custom->add(collectionName, collectionName, true);

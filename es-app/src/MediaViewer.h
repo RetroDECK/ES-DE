@@ -9,10 +9,10 @@
 #ifndef ES_APP_MEDIA_VIEWER_H
 #define ES_APP_MEDIA_VIEWER_H
 
-#include "components/ImageComponent.h"
-#include "components/VideoComponent.h"
 #include "FileData.h"
 #include "Window.h"
+#include "components/ImageComponent.h"
+#include "components/VideoComponent.h"
 
 class MediaViewer : public Window::MediaViewer
 {

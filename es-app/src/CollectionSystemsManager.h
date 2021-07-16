@@ -34,7 +34,7 @@ class Window;
 struct SystemEnvironmentData;
 
 enum CollectionSystemType {
-    AUTO_ALL_GAMES,
+    AUTO_ALL_GAMES, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     AUTO_LAST_PLAYED,
     AUTO_FAVORITES,
     CUSTOM_COLLECTION
@@ -115,13 +115,17 @@ public:
     // Repopulate the collection, which is basically a forced update of its complete content.
     void repopulateCollection(SystemData* sysData);
 
-    inline std::map<std::string, CollectionSystemData, stringComparator>
-            getAutoCollectionSystems() { return mAutoCollectionSystemsData; };
-    inline std::map<std::string, CollectionSystemData, stringComparator>
-            getCustomCollectionSystems() { return mCustomCollectionSystemsData; };
-    inline SystemData* getCustomCollectionsBundle() { return mCustomCollectionsBundle; };
-    inline bool isEditing() { return mIsEditingCustom; };
-    inline std::string getEditingCollection() { return mEditingCollection; };
+    std::map<std::string, CollectionSystemData, stringComparator> getAutoCollectionSystems()
+    {
+        return mAutoCollectionSystemsData;
+    }
+    std::map<std::string, CollectionSystemData, stringComparator> getCustomCollectionSystems()
+    {
+        return mCustomCollectionSystemsData;
+    }
+    SystemData* getCustomCollectionsBundle() { return mCustomCollectionsBundle; }
+    bool isEditing() { return mIsEditingCustom; }
+    std::string getEditingCollection() { return mEditingCollection; }
 
 private:
     static CollectionSystemsManager* sInstance;
@@ -143,7 +147,9 @@ private:
     SystemData* getAllGamesCollection();
     // Create a new empty collection system based on the name and declaration.
     SystemData* createNewCollectionEntry(std::string name,
-            CollectionSystemDecl sysDecl, bool index = true, bool custom = false);
+                                         CollectionSystemDecl sysDecl,
+                                         bool index = true,
+                                         bool custom = false);
     // Populate an automatic collection system.
     void populateAutoCollection(CollectionSystemData* sysData);
     // Populate a custom collection system.
@@ -151,8 +157,8 @@ private:
 
     // Functions to handle System View removal and insertion of collections:
     void removeCollectionsFromDisplayedSystems();
-    void addEnabledCollectionsToDisplayedSystems(std::map<std::string,
-            CollectionSystemData, stringComparator>* colSystemData);
+    void addEnabledCollectionsToDisplayedSystems(
+        std::map<std::string, CollectionSystemData, stringComparator>* colSystemData);
 
     // Auxiliary functions:
     std::vector<std::string> getSystemsFromConfig();

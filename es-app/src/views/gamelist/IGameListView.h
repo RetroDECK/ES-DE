@@ -9,9 +9,9 @@
 #ifndef ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
 
-#include "renderers/Renderer.h"
 #include "FileData.h"
 #include "GuiComponent.h"
+#include "renderers/Renderer.h"
 
 class ThemeData;
 class Window;
@@ -20,12 +20,7 @@ class Window;
 class IGameListView : public GuiComponent
 {
 public:
-    IGameListView(Window* window, FileData* root) : GuiComponent(window), mRoot(root)
-    {
-        setSize(static_cast<float>(Renderer::getScreenWidth()),
-        static_cast<float>(Renderer::getScreenHeight()));
-    }
-
+    IGameListView(Window* window, FileData* root);
     virtual ~IGameListView() {}
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
@@ -35,7 +30,7 @@ public:
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) = 0;
 
     void setTheme(const std::shared_ptr<ThemeData>& theme);
-    inline const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
+    const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
 
     virtual FileData* getCursor() = 0;
     virtual void setCursor(FileData*) = 0;

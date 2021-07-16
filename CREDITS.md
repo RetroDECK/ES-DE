@@ -2,7 +2,7 @@
 
 # Programming
 
-Alec "Aloshi" Lofquist (original version) \
+Alec Lofquist (original version) \
 http://www.aloshi.com
 
 RetroPie Community (RetroPie fork) \
@@ -110,6 +110,6 @@ https://freesound.org/people/farpro/sounds/264762
 https://freesound.org/people/farpro/sounds/264763/
 
 https://freesound.org/people/newlocknew/sounds/515827 \
-(Sample cut slightly.)
+(Sample cut slightly)
 
 https://freesound.org/people/ertfelda/sounds/243701/

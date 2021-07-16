@@ -11,12 +11,6 @@
 
 #include "SystemData.h"
 
-#include "resources/ResourceManager.h"
-#include "utils/FileSystemUtil.h"
-#include "utils/StringUtil.h"
-#include "views/gamelist/IGameListView.h"
-#include "views/UIModeController.h"
-#include "views/ViewController.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
@@ -25,6 +19,12 @@
 #include "Platform.h"
 #include "Settings.h"
 #include "ThemeData.h"
+#include "resources/ResourceManager.h"
+#include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
+#include "views/UIModeController.h"
+#include "views/ViewController.h"
+#include "views/gamelist/IGameListView.h"
 
 #include <fstream>
 #include <pugixml.hpp>
@@ -39,14 +39,10 @@ FindRules::FindRules()
     loadFindRules();
 }
 
-FindRules::~FindRules()
-{
-}
-
 void FindRules::loadFindRules()
 {
     std::string customSystemsDirectory =
-            Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems";
+        Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems";
 
     std::string path = customSystemsDirectory + "/es_find_rules.xml";
 
@@ -54,16 +50,16 @@ void FindRules::loadFindRules()
         LOG(LogInfo) << "Found custom find rules configuration file";
     }
     else {
-        #if defined(_WIN64)
-        path = ResourceManager::getInstance()->
-                getResourcePath(":/systems/windows/es_find_rules.xml", false);
-        #elif defined(__APPLE__)
-        path = ResourceManager::getInstance()->
-                getResourcePath(":/systems/macos/es_find_rules.xml", false);
-        #else
-        path = ResourceManager::getInstance()->
-                getResourcePath(":/systems/unix/es_find_rules.xml", false);
-        #endif
+#if defined(_WIN64)
+        path = ResourceManager::getInstance()->getResourcePath(
+            ":/systems/windows/es_find_rules.xml", false);
+#elif defined(__APPLE__)
+        path = ResourceManager::getInstance()->getResourcePath(":/systems/macos/es_find_rules.xml",
+                                                               false);
+#else
+        path = ResourceManager::getInstance()->getResourcePath(":/systems/unix/es_find_rules.xml",
+                                                               false);
+#endif
     }
 
     if (path == "") {
@@ -74,11 +70,11 @@ void FindRules::loadFindRules()
     LOG(LogInfo) << "Parsing find rules configuration file \"" << path << "\"...";
 
     pugi::xml_document doc;
-    #if defined(_WIN64)
+#if defined(_WIN64)
     pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
-    #else
+#else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
-    #endif
+#endif
 
     if (!res) {
         LOG(LogError) << "Couldn't parse es_find_rules.xml: " << res.description();
@@ -97,81 +93,79 @@ void FindRules::loadFindRules()
     CoreRules coreRules;
 
     for (pugi::xml_node emulator = ruleList.child("emulator"); emulator;
-            emulator = emulator.next_sibling("emulator")) {
+         emulator = emulator.next_sibling("emulator")) {
         std::string emulatorName = emulator.attribute("name").as_string();
         if (emulatorName.empty()) {
             LOG(LogWarning) << "Found emulator tag without name attribute, skipping entry";
             continue;
         }
         if (mEmulators.find(emulatorName) != mEmulators.end()) {
-            LOG(LogWarning) << "Found repeating emulator tag \"" << emulatorName <<
-                    "\", skipping entry";
+            LOG(LogWarning) << "Found repeating emulator tag \"" << emulatorName
+                            << "\", skipping entry";
             continue;
         }
         for (pugi::xml_node rule = emulator.child("rule"); rule; rule = rule.next_sibling("rule")) {
             std::string ruleType = rule.attribute("type").as_string();
             if (ruleType.empty()) {
-                LOG(LogWarning) << "Found rule tag without type attribute for emulator \"" <<
-                        emulatorName << "\", skipping entry";
+                LOG(LogWarning) << "Found rule tag without type attribute for emulator \""
+                                << emulatorName << "\", skipping entry";
                 continue;
             }
-            #if defined(_WIN64)
+#if defined(_WIN64)
             if (ruleType != "winregistrypath" && ruleType != "systempath" &&
-                    ruleType != "staticpath") {
-            #else
+                ruleType != "staticpath") {
+#else
             if (ruleType != "systempath" && ruleType != "staticpath") {
-            #endif
-                LOG(LogWarning) << "Found invalid rule type \"" << ruleType <<
-                        "\" for emulator \"" << emulatorName << "\", skipping entry";
+#endif
+                LOG(LogWarning) << "Found invalid rule type \"" << ruleType << "\" for emulator \""
+                                << emulatorName << "\", skipping entry";
                 continue;
             }
             for (pugi::xml_node entry = rule.child("entry"); entry;
-                    entry = entry.next_sibling("entry")) {
+                 entry = entry.next_sibling("entry")) {
                 std::string entryValue = entry.text().get();
                 if (ruleType == "systempath")
                     emulatorRules.systemPaths.push_back(entryValue);
                 else if (ruleType == "staticpath")
                     emulatorRules.staticPaths.push_back(entryValue);
-                #if defined(_WIN64)
+#if defined(_WIN64)
                 else if (ruleType == "winregistrypath")
                     emulatorRules.winRegistryPaths.push_back(entryValue);
-                #endif
+#endif
             }
         }
         mEmulators[emulatorName] = emulatorRules;
         emulatorRules.systemPaths.clear();
         emulatorRules.staticPaths.clear();
-        #if defined(_WIN64)
+#if defined(_WIN64)
         emulatorRules.winRegistryPaths.clear();
-        #endif
+#endif
     }
 
-    for (pugi::xml_node core = ruleList.child("core"); core;
-            core = core.next_sibling("core")) {
+    for (pugi::xml_node core = ruleList.child("core"); core; core = core.next_sibling("core")) {
         std::string coreName = core.attribute("name").as_string();
         if (coreName.empty()) {
             LOG(LogWarning) << "Found core tag without name attribute, skipping entry";
             continue;
         }
         if (mCores.find(coreName) != mCores.end()) {
-            LOG(LogWarning) << "Found repeating core tag \"" << coreName <<
-                    "\", skipping entry";
+            LOG(LogWarning) << "Found repeating core tag \"" << coreName << "\", skipping entry";
             continue;
         }
         for (pugi::xml_node rule = core.child("rule"); rule; rule = rule.next_sibling("rule")) {
             std::string ruleType = rule.attribute("type").as_string();
             if (ruleType.empty()) {
-                LOG(LogWarning) << "Found rule tag without type attribute for core \"" <<
-                        coreName << "\", skipping entry";
+                LOG(LogWarning) << "Found rule tag without type attribute for core \"" << coreName
+                                << "\", skipping entry";
                 continue;
             }
             if (ruleType != "corepath") {
-                LOG(LogWarning) << "Found invalid rule type \"" << ruleType <<
-                        "\" for core \"" << coreName << "\", skipping entry";
+                LOG(LogWarning) << "Found invalid rule type \"" << ruleType << "\" for core \""
+                                << coreName << "\", skipping entry";
                 continue;
             }
             for (pugi::xml_node entry = rule.child("entry"); entry;
-                    entry = entry.next_sibling("entry")) {
+                 entry = entry.next_sibling("entry")) {
                 std::string entryValue = entry.text().get();
                 if (ruleType == "corepath")
                     coreRules.corePaths.push_back(entryValue);
@@ -182,23 +176,22 @@ void FindRules::loadFindRules()
     }
 }
 
-SystemData::SystemData(
-        const std::string& name,
-        const std::string& fullName,
-        SystemEnvironmentData* envData,
-        const std::string& themeFolder,
-        bool CollectionSystem,
-        bool CustomCollectionSystem)
-        : mName(name),
-        mFullName(fullName),
-        mEnvData(envData),
-        mThemeFolder(themeFolder),
-        mIsCollectionSystem(CollectionSystem),
-        mIsCustomCollectionSystem(CustomCollectionSystem),
-        mIsGroupedCustomCollectionSystem(false),
-        mIsGameSystem(true),
-        mScrapeFlag(false),
-        mPlaceholder(nullptr)
+SystemData::SystemData(const std::string& name,
+                       const std::string& fullName,
+                       SystemEnvironmentData* envData,
+                       const std::string& themeFolder,
+                       bool CollectionSystem,
+                       bool CustomCollectionSystem)
+    : mName(name)
+    , mFullName(fullName)
+    , mEnvData(envData)
+    , mThemeFolder(themeFolder)
+    , mIsCollectionSystem(CollectionSystem)
+    , mIsCustomCollectionSystem(CustomCollectionSystem)
+    , mIsGroupedCustomCollectionSystem(false)
+    , mIsGameSystem(true)
+    , mScrapeFlag(false)
+    , mPlaceholder(nullptr)
 {
     mFilterIndex = new FileFilterIndex();
 
@@ -220,7 +213,7 @@ SystemData::SystemData(
         setupSystemSortType(mRootFolder);
 
         mRootFolder->sort(mRootFolder->getSortTypeFromString(mRootFolder->getSortTypeString()),
-                Settings::getInstance()->getBool("FavoritesFirst"));
+                          Settings::getInstance()->getBool("FavoritesFirst"));
 
         indexAllGameFilters(mRootFolder);
     }
@@ -275,14 +268,23 @@ bool SystemData::populateFolder(FileData* folder)
         return false;
 
     for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
-            it != dirContent.cend(); it++) {
+         it != dirContent.cend(); it++) {
         filePath = *it;
+
+        // Skip any recursive symlinks as those would hang the application at various places.
+        if (Utils::FileSystem::isSymlink(filePath)) {
+            if (Utils::FileSystem::resolveSymlink(filePath) ==
+                Utils::FileSystem::getFileName(filePath)) {
+                LOG(LogWarning) << "Skipped \"" << filePath << "\" as it's a recursive symlink";
+                continue;
+            }
+        }
 
         // Skip hidden files and folders.
         if (!showHiddenFiles && Utils::FileSystem::isHidden(filePath)) {
-            LOG(LogDebug) << "SystemData::populateFolder(): Skipping hidden " <<
-                    (Utils::FileSystem::isDirectory(filePath) ? "directory \"" : "file \"") <<
-                    filePath << "\"";
+            LOG(LogDebug) << "SystemData::populateFolder(): Skipping hidden "
+                          << (Utils::FileSystem::isDirectory(filePath) ? "directory \"" : "file \"")
+                          << filePath << "\"";
             continue;
         }
 
@@ -297,7 +299,7 @@ bool SystemData::populateFolder(FileData* folder)
 
         isGame = false;
         if (std::find(mEnvData->mSearchExtensions.cbegin(), mEnvData->mSearchExtensions.cend(),
-                extension) != mEnvData->mSearchExtensions.cend()) {
+                      extension) != mEnvData->mSearchExtensions.cend()) {
             FileData* newGame = new FileData(GAME, filePath, mEnvData, this);
 
             // Prevent new arcade assets from being added.
@@ -317,15 +319,17 @@ bool SystemData::populateFolder(FileData* folder)
             if (Utils::FileSystem::isSymlink(filePath)) {
                 const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(filePath);
                 const std::string canonicalStartPath =
-                        Utils::FileSystem::getCanonicalPath(mEnvData->mStartPath);
-                const std::string combinedPath = mEnvData->mStartPath +
-                        canonicalPath.substr(canonicalStartPath.size(),
-                        canonicalStartPath.size() - canonicalPath.size());
+                    Utils::FileSystem::getCanonicalPath(mEnvData->mStartPath);
+                const std::string combinedPath =
+                    mEnvData->mStartPath +
+                    canonicalPath.substr(canonicalStartPath.size(),
+                                         canonicalStartPath.size() - canonicalPath.size());
                 if (filePath.find(combinedPath) == 0) {
                     LOG(LogWarning) << "Skipped \"" << filePath << "\" as it's a recursive symlink";
                     continue;
                 }
             }
+
             FileData* newFolder = new FileData(FOLDER, filePath, mEnvData, this);
             populateFolder(newFolder);
 
@@ -343,17 +347,15 @@ void SystemData::indexAllGameFilters(const FileData* folder)
 {
     const std::vector<FileData*>& children = folder->getChildren();
 
-    for (std::vector<FileData*>::const_iterator it = children.cbegin();
-            it != children.cend(); it++) {
+    for (std::vector<FileData*>::const_iterator it = children.cbegin(); // Line break.
+         it != children.cend(); it++) {
         switch ((*it)->getType()) {
-            case GAME: {
+            case GAME:
                 mFilterIndex->addToIndex(*it);
-            }
-            break;
-            case FOLDER: {
+                break;
+            case FOLDER:
                 indexAllGameFilters(*it);
-            }
-            break;
+                break;
             default:
                 break;
         }
@@ -391,11 +393,11 @@ bool SystemData::loadConfig()
     LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
 
     pugi::xml_document doc;
-    #if defined(_WIN64)
+#if defined(_WIN64)
     pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
-    #else
+#else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
-    #endif
+#endif
 
     if (!res) {
         LOG(LogError) << "Couldn't parse es_systems.xml: " << res.description();
@@ -411,7 +413,7 @@ bool SystemData::loadConfig()
     }
 
     for (pugi::xml_node system = systemList.child("system"); system;
-            system = system.next_sibling("system")) {
+         system = system.next_sibling("system")) {
         std::string name;
         std::string fullname;
         std::string path;
@@ -427,21 +429,21 @@ bool SystemData::loadConfig()
         // the ROM path configured as ROMDirectory in es_settings.xml. If it's set to ""
         // in this configuration file, the default hardcoded path $HOME/ROMs/ will be used.
         path = Utils::String::replace(path, "%ROMPATH%", rompath);
-        #if defined(_WIN64)
+#if defined(_WIN64)
         path = Utils::String::replace(path, "\\", "/");
-        #endif
+#endif
         path = Utils::String::replace(path, "//", "/");
 
         // Check that the ROM directory for the system is valid or otherwise abort the processing.
         if (!Utils::FileSystem::exists(path)) {
-        LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" <<
-                name << "\" as the defined ROM directory \"" << path << "\" does not exist";
+            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+                          << "\" as the defined ROM directory \"" << path << "\" does not exist";
             continue;
         }
         if (!Utils::FileSystem::isDirectory(path)) {
-        LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" <<
-                name << "\" as the defined ROM directory \"" << path <<
-                "\" is not actually a directory";
+            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+                          << "\" as the defined ROM directory \"" << path
+                          << "\" is not actually a directory";
             continue;
         }
         if (Utils::FileSystem::isSymlink(path)) {
@@ -449,9 +451,9 @@ bool SystemData::loadConfig()
             // as that would lead to an infite loop, meaning the application would never start.
             std::string resolvedRompath = Utils::FileSystem::getCanonicalPath(rompath);
             if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
-                LOG(LogWarning) << "Skipping system \"" << name <<
-                        "\" as the defined ROM directory \"" << path <<
-                        "\" is an infinitely recursive symlink";
+                LOG(LogWarning) << "Skipping system \"" << name
+                                << "\" as the defined ROM directory \"" << path
+                                << "\" is an infinitely recursive symlink";
                 continue;
             }
         }
@@ -463,7 +465,13 @@ bool SystemData::loadConfig()
 
         // Platform ID list
         const std::string platformList =
-                Utils::String::toLower(system.child("platform").text().get());
+            Utils::String::toLower(system.child("platform").text().get());
+
+        if (platformList == "") {
+            LOG(LogWarning) << "No platform defined for system \"" << name
+                            << "\", scraper searches will be inaccurate";
+        }
+
         std::vector<std::string> platformStrs = readList(platformList);
         std::vector<PlatformIds::PlatformId> platformIds;
         for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
@@ -480,8 +488,8 @@ bool SystemData::loadConfig()
             // If there's a platform entry defined but it does not match the list of supported
             // platforms, then generate a warning.
             if (str != "" && platformId == PlatformIds::PLATFORM_UNKNOWN)
-                LOG(LogWarning) << "Unknown platform \"" << str << "\" defined for system \"" <<
-                        name << "\"";
+                LOG(LogWarning) << "Unknown platform \"" << str << "\" defined for system \""
+                                << name << "\", scraper searches will be inaccurate";
             else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
                 platformIds.push_back(platformId);
         }
@@ -492,26 +500,27 @@ bool SystemData::loadConfig()
         // Validate.
 
         if (name.empty()) {
-            LOG(LogError) <<
-                    "A system in the es_systems.xml file has no name defined, skipping entry";
+            LOG(LogError)
+                << "A system in the es_systems.xml file has no name defined, skipping entry";
             continue;
         }
         else if (fullname.empty() || path.empty() || extensions.empty() || cmd.empty()) {
-            LOG(LogError) << "System \"" << name << "\" is missing the fullname, path, "
-                    "extension, or command tag, skipping entry";
+            LOG(LogError) << "System \"" << name
+                          << "\" is missing the fullname, path, "
+                             "extension, or command tag, skipping entry";
             continue;
         }
 
         // Convert path to generic directory seperators.
         path = Utils::FileSystem::getGenericPath(path);
 
-        #if defined(_WIN64)
+#if defined(_WIN64)
         if (!Settings::getInstance()->getBool("ShowHiddenFiles") &&
-                Utils::FileSystem::isHidden(path)) {
+            Utils::FileSystem::isHidden(path)) {
             LOG(LogWarning) << "Skipping hidden ROM folder \"" << path << "\"";
             continue;
         }
-        #endif
+#endif
 
         // Create the system runtime environment data.
         SystemEnvironmentData* envData = new SystemEnvironmentData;
@@ -526,8 +535,7 @@ bool SystemData::loadConfig()
         // If the option to show hidden games has been disabled, then check whether all
         // games for the system are hidden. That will flag the system as empty.
         if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
-            std::vector<FileData*> recursiveGames =
-                    newSys->getRootFolder()->getChildrenRecursive();
+            std::vector<FileData*> recursiveGames = newSys->getRootFolder()->getChildrenRecursive();
             onlyHidden = true;
             for (auto it = recursiveGames.cbegin(); it != recursiveGames.cend(); it++) {
                 if ((*it)->getType() != FOLDER) {
@@ -539,8 +547,8 @@ bool SystemData::loadConfig()
         }
 
         if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
-            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" <<
-                    name << "\" as no files matched any of the defined file extensions";
+            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+                          << "\" as no files matched any of the defined file extensions";
             delete newSys;
         }
         else {
@@ -550,8 +558,7 @@ bool SystemData::loadConfig()
 
     // Sort systems by their full names.
     std::sort(std::begin(sSystemVector), std::end(sSystemVector),
-            [](SystemData* a, SystemData* b) {
-                return a->getFullName() < b->getFullName(); });
+              [](SystemData* a, SystemData* b) { return a->getFullName() < b->getFullName(); });
 
     // Don't load any collections if there are no systems available.
     if (sSystemVector.size() > 0)
@@ -571,18 +578,18 @@ void SystemData::deleteSystems()
 std::string SystemData::getConfigPath(bool legacyWarning)
 {
     if (legacyWarning) {
-        std::string legacyConfigFile = Utils::FileSystem::getHomePath() +
-                "/.emulationstation/es_systems.cfg";
+        std::string legacyConfigFile =
+            Utils::FileSystem::getHomePath() + "/.emulationstation/es_systems.cfg";
 
         if (Utils::FileSystem::exists(legacyConfigFile)) {
-            LOG(LogInfo) << "Found legacy systems configuration file \"" << legacyConfigFile <<
-                    "\", to retain your customizations move it to "
-                    "\"custom_systems/es_systems.xml\" or otherwise delete the file";
+            LOG(LogInfo) << "Found legacy systems configuration file \"" << legacyConfigFile
+                         << "\", to retain your customizations move it to "
+                            "\"custom_systems/es_systems.xml\" or otherwise delete the file";
         }
     }
 
     std::string customSystemsDirectory =
-            Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems";
+        Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems";
 
     if (!Utils::FileSystem::exists(customSystemsDirectory)) {
         LOG(LogInfo) << "Creating custom systems directory \"" << customSystemsDirectory << "\"...";
@@ -599,16 +606,14 @@ std::string SystemData::getConfigPath(bool legacyWarning)
         return path;
     }
 
-    #if defined(_WIN64)
-    path = ResourceManager::getInstance()->
-            getResourcePath(":/systems/windows/es_systems.xml", true);
-    #elif defined(__APPLE__)
-    path = ResourceManager::getInstance()->
-            getResourcePath(":/systems/macos/es_systems.xml", true);
-    #else
-    path = ResourceManager::getInstance()->
-            getResourcePath(":/systems/unix/es_systems.xml", true);
-    #endif
+#if defined(_WIN64)
+    path =
+        ResourceManager::getInstance()->getResourcePath(":/systems/windows/es_systems.xml", true);
+#elif defined(__APPLE__)
+    path = ResourceManager::getInstance()->getResourcePath(":/systems/macos/es_systems.xml", true);
+#else
+    path = ResourceManager::getInstance()->getResourcePath(":/systems/unix/es_systems.xml", true);
+#endif
 
     return path;
 }
@@ -618,16 +623,16 @@ bool SystemData::createSystemDirectories()
     std::string path = getConfigPath(false);
     const std::string rompath = FileData::getROMDirectory();
 
-   if (!Utils::FileSystem::exists(path)) {
+    if (!Utils::FileSystem::exists(path)) {
         LOG(LogInfo) << "Systems configuration file does not exist, aborting";
         return true;
-   }
+    }
 
     LOG(LogInfo) << "Generating ROM directory structure...";
 
     if (Utils::FileSystem::exists(rompath) && Utils::FileSystem::isRegularFile(rompath)) {
-        LOG(LogError) <<
-                "Requested ROM directory \"" << rompath << "\" is actually a file, aborting";
+        LOG(LogError) << "Requested ROM directory \"" << rompath
+                      << "\" is actually a file, aborting";
         return true;
     }
 
@@ -645,11 +650,11 @@ bool SystemData::createSystemDirectories()
     LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
 
     pugi::xml_document doc;
-    #if defined(_WIN64)
+#if defined(_WIN64)
     pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
-    #else
+#else
     pugi::xml_parse_result res = doc.load_file(path.c_str());
-    #endif
+#endif
 
     if (!res) {
         LOG(LogError) << "Couldn't parse es_systems.xml";
@@ -668,7 +673,7 @@ bool SystemData::createSystemDirectories()
     std::vector<std::string> systemsVector;
 
     for (pugi::xml_node system = systemList.child("system"); system;
-            system = system.next_sibling("system")) {
+         system = system.next_sibling("system")) {
         std::string systemDir;
         std::string name;
         std::string fullname;
@@ -692,8 +697,9 @@ bool SystemData::createSystemDirectories()
         // Check that the %ROMPATH% variable is actually used for the path element.
         // If not, skip the system.
         if (path.find("%ROMPATH%") != 0) {
-            LOG(LogWarning) << "The path element for system \"" << name << "\" does not "
-                    "utilize the %ROMPATH% variable, skipping entry";
+            LOG(LogWarning) << "The path element for system \"" << name
+                            << "\" does not "
+                               "utilize the %ROMPATH% variable, skipping entry";
             continue;
         }
         else {
@@ -702,14 +708,13 @@ bool SystemData::createSystemDirectories()
 
         // Trim any leading directory separator characters.
         systemDir.erase(systemDir.begin(),
-                std::find_if(systemDir.begin(), systemDir.end(), [](char c) {
-            return c != '/' && c != '\\';
-        }));
+                        std::find_if(systemDir.begin(), systemDir.end(),
+                                     [](char c) { return c != '/' && c != '\\'; }));
 
         if (!Utils::FileSystem::exists(rompath + systemDir)) {
             if (!Utils::FileSystem::createDirectory(rompath + systemDir)) {
-                LOG(LogError) << "Couldn't create system directory \"" << systemDir <<
-                        "\", permission problems or disk full?";
+                LOG(LogError) << "Couldn't create system directory \"" << systemDir
+                              << "\", permission problems or disk full?";
                 return true;
             }
             else {
@@ -730,16 +735,17 @@ bool SystemData::createSystemDirectories()
                 return true;
         }
 
-        #if defined(_WIN64)
-        systemInfoFile.open(Utils::String::stringToWideString(rompath +
-                systemDir + systemInfoFileName).c_str());
-        #else
+#if defined(_WIN64)
+        systemInfoFile.open(
+            Utils::String::stringToWideString(rompath + systemDir + systemInfoFileName).c_str());
+#else
         systemInfoFile.open(rompath + systemDir + systemInfoFileName);
-        #endif
+#endif
 
         if (systemInfoFile.fail()) {
-            LOG(LogError) << "Couldn't create system information file \"" << rompath +
-                    systemDir + systemInfoFileName << "\", permission problems or disk full?";
+            LOG(LogError) << "Couldn't create system information file \""
+                          << rompath + systemDir + systemInfoFileName
+                          << "\", permission problems or disk full?";
             systemInfoFile.close();
             return true;
         }
@@ -761,12 +767,12 @@ bool SystemData::createSystemDirectories()
         systemsVector.push_back(systemDir + ": " + fullname);
 
         if (replaceInfoFile) {
-            LOG(LogInfo) << "Replaced existing system information file \"" <<
-                    rompath + systemDir + systemInfoFileName << "\"";
+            LOG(LogInfo) << "Replaced existing system information file \""
+                         << rompath + systemDir + systemInfoFileName << "\"";
         }
         else {
-            LOG(LogInfo) << "Created system information file \"" <<
-                    rompath + systemDir + systemInfoFileName << "\"";
+            LOG(LogInfo) << "Created system information file \""
+                         << rompath + systemDir + systemInfoFileName << "\"";
         }
     }
 
@@ -784,11 +790,11 @@ bool SystemData::createSystemDirectories()
 
         if (systemsFileSuccess) {
             std::ofstream systemsFile;
-            #if defined(_WIN64)
+#if defined(_WIN64)
             systemsFile.open(Utils::String::stringToWideString(rompath + systemsFileName).c_str());
-            #else
+#else
             systemsFile.open(rompath + systemsFileName);
-            #endif
+#endif
             if (systemsFile.fail()) {
                 systemsFileSuccess = false;
             }
@@ -802,7 +808,7 @@ bool SystemData::createSystemDirectories()
 
         if (!systemsFileSuccess) {
             LOG(LogWarning) << "System directories successfully created but couldn't create "
-                    "the systems.txt file in the ROM directory root";
+                               "the systems.txt file in the ROM directory root";
             return false;
         }
     }
@@ -858,8 +864,8 @@ std::string SystemData::getGamelistPath(bool forWrite) const
     if (Utils::FileSystem::exists(filePath))
         return filePath;
 
-    filePath = Utils::FileSystem::getHomePath() + "/.emulationstation/gamelists/" +
-            mName + "/gamelist.xml";
+    filePath = Utils::FileSystem::getHomePath() + "/.emulationstation/gamelists/" + mName +
+               "/gamelist.xml";
 
     // Make sure the directory exists if we're going to write to it,
     // or crashes will happen.
@@ -890,15 +896,10 @@ std::string SystemData::getThemePath() const
         return localThemePath;
 
     // Not system theme, try default system theme in theme set.
-    localThemePath = Utils::FileSystem::getParent(Utils::FileSystem::getParent(localThemePath)) +
-            "/theme.xml";
+    localThemePath =
+        Utils::FileSystem::getParent(Utils::FileSystem::getParent(localThemePath)) + "/theme.xml";
 
     return localThemePath;
-}
-
-bool SystemData::hasGamelist() const
-{
-    return (Utils::FileSystem::exists(getGamelistPath(false)));
 }
 
 SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
@@ -918,7 +919,7 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
+        std::mt19937 engine { randDev() };
         std::uniform_int_distribution<int> uniform_dist(0, total - 1);
         int target = uniform_dist(engine);
 
@@ -933,8 +934,7 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
                 }
             }
         }
-    }
-    while (randomSystem == currentSystem);
+    } while (randomSystem == currentSystem);
 
     return randomSystem;
 }
@@ -947,13 +947,17 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
 
     // If we're in the custom collection group list, then get the list of collections,
     // otherwise get a list of all the folder and file entries in the view.
-    if (currentGame && currentGame->getType() == FOLDER && currentGame->
-            getSystem()->isGroupedCustomCollection()) {
+    if (currentGame && currentGame->getType() == FOLDER &&
+        currentGame->getSystem()->isGroupedCustomCollection()) {
         gameList = mRootFolder->getParent()->getChildrenListToDisplay();
     }
     else {
-        gameList = ViewController::get()->getGameListView(mRootFolder->
-                getSystem()).get()->getCursor()->getParent()->getChildrenListToDisplay();
+        gameList = ViewController::get()
+                       ->getGameListView(mRootFolder->getSystem())
+                       .get()
+                       ->getCursor()
+                       ->getParent()
+                       ->getChildrenListToDisplay();
     }
 
     if (gameList.size() > 0 && gameList.front()->getParent()->getOnlyFoldersFlag())
@@ -994,11 +998,10 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
+        std::mt19937 engine { randDev() };
         std::uniform_int_distribution<int> uniform_dist(0, total - 1);
         target = uniform_dist(engine);
-    }
-    while (currentGame && gameList.at(target) == currentGame);
+    } while (currentGame && gameList.at(target) == currentGame);
 
     return gameList.at(target);
 }
@@ -1011,23 +1014,25 @@ void SystemData::sortSystem(bool reloadGamelist, bool jumpToFirstRow)
     bool favoritesSorting;
 
     if (this->isCustomCollection() ||
-            (this->isCollection() && this->getFullName() == "collections"))
+        (this->isCollection() && this->getFullName() == "collections")) {
         favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
-    else
+    }
+    else {
         favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
+    }
 
     FileData* rootFolder = getRootFolder();
     // Assign the sort type to all grouped custom collections.
     if (mIsCollectionSystem && mFullName == "collections") {
-        for (auto it = rootFolder->getChildren().begin();
-                it != rootFolder->getChildren().end(); it++) {
+        for (auto it = rootFolder->getChildren().begin(); // Line break.
+             it != rootFolder->getChildren().end(); it++) {
             setupSystemSortType((*it)->getSystem()->getRootFolder());
         }
     }
     setupSystemSortType(rootFolder);
 
-    rootFolder->sort(rootFolder->getSortTypeFromString(
-            rootFolder->getSortTypeString()), favoritesSorting);
+    rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                     favoritesSorting);
 
     if (reloadGamelist)
         ViewController::get()->reloadGameListView(this, false);
@@ -1070,7 +1075,8 @@ void SystemData::loadTheme()
     }
 }
 
-void SystemData::writeMetaData() {
+void SystemData::writeMetaData()
+{
     if (Settings::getInstance()->getBool("IgnoreGamelist") || mIsCollectionSystem)
         return;
 
@@ -1078,7 +1084,8 @@ void SystemData::writeMetaData() {
     updateGamelist(this);
 }
 
-void SystemData::onMetaDataSavePoint() {
+void SystemData::onMetaDataSavePoint()
+{
     if (Settings::getInstance()->getString("SaveGamelistsMode") != "always")
         return;
 
@@ -1091,15 +1098,15 @@ void SystemData::setupSystemSortType(FileData* mRootFolder)
     if (Settings::getInstance()->getString("DefaultSortOrder") != "") {
         for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
             if (FileSorts::SortTypes.at(i).description ==
-                    Settings::getInstance()->getString("DefaultSortOrder")) {
-                mRootFolder->setSortTypeString(Settings::getInstance()->
-                        getString("DefaultSortOrder"));
+                Settings::getInstance()->getString("DefaultSortOrder")) {
+                mRootFolder->setSortTypeString(
+                    Settings::getInstance()->getString("DefaultSortOrder"));
                 break;
             }
         }
     }
     // If no valid sort type was defined in the configuration file, set to default sorting.
     if (mRootFolder->getSortTypeString() == "")
-        mRootFolder->setSortTypeString(Settings::getInstance()->
-                getDefaultString("DefaultSortOrder"));
+        mRootFolder->setSortTypeString(
+            Settings::getInstance()->getDefaultString("DefaultSortOrder"));
 }

@@ -43,22 +43,22 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
 * On-screen keyboard
 * Web proxy support for the scraper
-* Add GLM library dependency for matrix and vector operations, decommissioning the built-in functions
+* Add GLM library dependency for matrix and vector operations, starting to decommission the built-in functions
+* Flatpak and Snap releases on Linux
 
 #### v1.3
 
 * Localization/multi-language support
+* Overhaul of the theme handling, adding capabilities and improving compatibility with Recalbox and Batocera themes
+* Scrapping the Grid view style and adding a general grid/wall component instead
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
-* Complete overhaul of the grid view style
-* A nice and useful grid view implementation in rbsimple-DE
-* Improved text and font functions, e.g. faster and cleaner line wrapping
-* Flatpak and Snap support on Linux
+* Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
 #### v1.4
 
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
+* Scrollbars for menus and gamelists
 * Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
-* Simple file browsing component
 * Add 'time played' counter per game, similar to how it works in Steam
 * Preload all built-in resources and never clear them from the cache
 * Improved multi-threading
@@ -66,8 +66,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.5
 
 * Bulk metadata editor
-* Overhaul of the GUI element scaling and placement logic to make ES-DE look more consistent across different resolutions
-* Scrollbars for menus and gamelists
+* Simple file browsing component
 * Improve the performance of the GLSL shader code
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Support for additional scraper services (if feasible?)
@@ -88,37 +87,21 @@ To see which features have been implemented in previous versions, please refer t
 
 ### Coding style
 
-The coding style for ES-DE is mostly a combination of the Linux kernel style (although that's C it's close enough to C++ as far as I'm concerned) and Google's C++ guidelines.
+The visual appearance aspect of the coding style is automatically applied using clang-format, so to understand the exact formatting rules, refer to the .clang-format file in the root of the repository.
 
-Please refer to these documents here:
+Due to this approach, all code changes must be auto-formatted before they are committed. You can read in [INSTALL-DEV.md](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
 
-https://www.kernel.org/doc/html/v4.10/process/coding-style.html \
-https://google.github.io/styleguide/cppguide.html
+But as clang-format won't change the actual code content or fix all code style choices, here are some additional key points:
 
-**Some key points:**
-
-* Column width (line length) is 100 characters
-* Indentation is 4 spaces, don't use tabs as they can be interpreted differently
-* Line break is Unix-style (line feed only, no carriage return)
-* Do not leave trailing whitespaces at the end of the lines (a good source code editor should have a setting to automatically trim these for you)
-* When breaking up long lines into multiple lines, consider what could be useful data to grep for so you don't break in the middle of such a string
-* Comments always in C++ style, i.e. `//` instead of `/* */`
+* Always write comments in C++ style, i.e. `//` instead of `/* */`
 * Comments should be proper sentences, starting with a capital letter and ending with a dot
-* Use K&R placements of braces, read the Linux kernel coding style document for clarifications
-* Always use spaces between keywords and opening brackets, i.e. `if ()`, `for ()`, `while ()` etc.
-* Indentation of switch/case statements is optional, but it's usually easier to read the code with indentations in place
-* Use `std::string` or `std::vector<char>` instead of `char *` or `char []` unless there is a specific reason requiring the latter
-* Actually, try to use C++ syntax in general instead of C syntax, another example would be `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
-* If the arguments (and initializer list) for a function or class exceeds 4 items, arrange them vertically to make the code easier to read
+* As a general rule, use C++ syntax instead of C syntax, for example `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
 * Always declare one variable per line, never combine multiple declarations of the same type
-* Name local variables with the first word in small letters and the proceeding words starting with capital letters, e.g. `myExampleVariable`
-* Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables with an `s` such as `sMyStaticVariable`
-* Use the same naming convention for functions as for local variables, e.g. `someFunction()`
-* Single-line function definitions are fine to put in the header files, but if it's more than one line, place it in the corresponding .cpp file
-* Inline functions makes perfect sense to use, but don't overdo it by using them for functions that won't be called very frequently
-* Don't put more than one statement on a single line (there are some exceptions though like lambda expressions and possibly switch statements)
+* Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables starting with an `s` such as `sMyStaticVariable`
+* Short function definitions can be placed in either the .h or .cpp file depending on the situation
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
-* For the rest, check the code and have fun! :)
+* Try to be coherent with the existing codebase regarding names, structure etc., it should not be obvious what person wrote which parts
+* For the rest, check the code and have fun :)
 
 ### Building and configuring
 

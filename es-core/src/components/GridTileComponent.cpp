@@ -8,16 +8,17 @@
 
 #include "GridTileComponent.h"
 
+#include "ThemeData.h"
 #include "animations/LambdaAnimation.h"
 #include "resources/TextureResource.h"
-#include "ThemeData.h"
 
-GridTileComponent::GridTileComponent(Window* window) :
-        GuiComponent(window), mBackground(window, ":/graphics/frame.png")
+GridTileComponent::GridTileComponent(Window* window)
+    : GuiComponent(window)
+    , mBackground(window, ":/graphics/frame.png")
 {
     mDefaultProperties.mSize = getDefaultTileSize();
     mDefaultProperties.mPadding = Vector2f(16.0f * Renderer::getScreenWidthModifier(),
-            16.0f * Renderer::getScreenHeightModifier());
+                                           16.0f * Renderer::getScreenHeightModifier());
     mDefaultProperties.mImageColor = 0xAAAAAABB;
     // Attempting to use frame.svg instead causes quite severe performance problems.
     mDefaultProperties.mBackgroundImage = ":/graphics/frame.png";
@@ -76,7 +77,7 @@ void GridTileComponent::update(int deltaTime)
 void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTileProperties* properties)
 {
     Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                               static_cast<float>(Renderer::getScreenHeight()));
 
     if (elem->has("size"))
         properties->mSize = elem->get<Vector2f>("size") * screen;
@@ -106,10 +107,12 @@ void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTilePropert
 }
 
 void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-        const std::string& view, const std::string& /*element*/, unsigned int /*properties*/)
+                                   const std::string& view,
+                                   const std::string& /*element*/,
+                                   unsigned int /*properties*/)
 {
     Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                               static_cast<float>(Renderer::getScreenHeight()));
 
     // Apply theme to the default gridtile.
     const ThemeData::ThemeElement* elem = theme->getElement(view, "default", "gridtile");
@@ -133,24 +136,21 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 Vector2f GridTileComponent::getDefaultTileSize()
 {
     Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                               static_cast<float>(Renderer::getScreenHeight()));
 
     return screen * 0.22f;
 }
 
 Vector2f GridTileComponent::getSelectedTileSize() const
 {
+    // Return the tile size.
     return mDefaultProperties.mSize * 1.2f;
 }
 
 bool GridTileComponent::isSelected() const
 {
+    // Return whether the tile is selected.
     return mSelected;
-}
-
-void GridTileComponent::reset()
-{
-    setImage("");
 }
 
 void GridTileComponent::setImage(const std::string& path)
@@ -169,8 +169,10 @@ void GridTileComponent::setImage(const std::shared_ptr<TextureResource>& texture
     resize();
 }
 
-void GridTileComponent::setSelected(
-        bool selected, bool allowAnimation, Vector3f* pPosition, bool force)
+void GridTileComponent::setSelected(bool selected,
+                                    bool allowAnimation,
+                                    Vector3f* pPosition,
+                                    bool force)
 {
     if (mSelected == selected && !force)
         return;
@@ -191,15 +193,18 @@ void GridTileComponent::setSelected(
 
             auto func = [this](float t) {
                 t -= 1; // Cubic ease out.
-                float pct = Math::lerp(0, 1, t*t*t + 1);
+                float pct = Math::lerp(0, 1, t * t * t + 1);
                 this->setSelectedZoom(pct);
             };
 
             cancelAnimation(3);
-            setAnimation(new LambdaAnimation(func, 250), 0, [this] {
-                this->setSelectedZoom(1);
-                mAnimPosition = Vector3f(0, 0, 0);
-            }, false, 3);
+            setAnimation(
+                new LambdaAnimation(func, 250), 0,
+                [this] {
+                    this->setSelectedZoom(1);
+                    mAnimPosition = Vector3f(0, 0, 0);
+                },
+                false, 3);
         }
     }
     else {
@@ -213,15 +218,14 @@ void GridTileComponent::setSelected(
             this->setSelectedZoom(1);
 
             auto func = [this](float t) {
-                t -= 1; // Cubic ease out.
-                float pct = Math::lerp(0, 1, t*t*t + 1);
+                t -= 1.0f; // Cubic ease out.
+                float pct = Math::lerp(0, 1, t * t * t + 1.0f);
                 this->setSelectedZoom(1.0f - pct);
             };
 
             cancelAnimation(3);
-            setAnimation(new LambdaAnimation(func, 250), 0, [this] {
-                this->setSelectedZoom(0);
-            }, false, 3);
+            setAnimation(
+                new LambdaAnimation(func, 250), 0, [this] { this->setSelectedZoom(0); }, false, 3);
         }
     }
 }
@@ -235,10 +239,7 @@ void GridTileComponent::setSelectedZoom(float percent)
     resize();
 }
 
-void GridTileComponent::setVisible(bool visible)
-{
-    mVisible = visible;
-}
+void GridTileComponent::setVisible(bool visible) { mVisible = visible; }
 
 void GridTileComponent::resize()
 {
@@ -278,30 +279,31 @@ void GridTileComponent::calcCurrentProperties()
     if (mSelectedZoomPercent != 0.0f && mSelectedZoomPercent != 1.0f) {
         if (mDefaultProperties.mSize != mSelectedProperties.mSize)
             mCurrentProperties.mSize = mDefaultProperties.mSize * zoomPercentInverse +
-                    mSelectedProperties.mSize * mSelectedZoomPercent;
+                                       mSelectedProperties.mSize * mSelectedZoomPercent;
 
         if (mDefaultProperties.mPadding != mSelectedProperties.mPadding)
             mCurrentProperties.mPadding = mDefaultProperties.mPadding * zoomPercentInverse +
-                    mSelectedProperties.mPadding * mSelectedZoomPercent;
+                                          mSelectedProperties.mPadding * mSelectedZoomPercent;
 
         if (mDefaultProperties.mImageColor != mSelectedProperties.mImageColor)
-            mCurrentProperties.mImageColor = mixColors(mDefaultProperties.mImageColor,
-                    mSelectedProperties.mImageColor, mSelectedZoomPercent);
+            mCurrentProperties.mImageColor =
+                mixColors(mDefaultProperties.mImageColor, mSelectedProperties.mImageColor,
+                          mSelectedZoomPercent);
 
         if (mDefaultProperties.mBackgroundCornerSize != mSelectedProperties.mBackgroundCornerSize)
-            mCurrentProperties.mBackgroundCornerSize = mDefaultProperties.mBackgroundCornerSize *
-                    zoomPercentInverse + mSelectedProperties.mBackgroundCornerSize *
-                    mSelectedZoomPercent;
+            mCurrentProperties.mBackgroundCornerSize =
+                mDefaultProperties.mBackgroundCornerSize * zoomPercentInverse +
+                mSelectedProperties.mBackgroundCornerSize * mSelectedZoomPercent;
 
         if (mDefaultProperties.mBackgroundCenterColor != mSelectedProperties.mBackgroundCenterColor)
             mCurrentProperties.mBackgroundCenterColor =
-                    mixColors(mDefaultProperties.mBackgroundCenterColor,
-                    mSelectedProperties.mBackgroundCenterColor, mSelectedZoomPercent);
+                mixColors(mDefaultProperties.mBackgroundCenterColor,
+                          mSelectedProperties.mBackgroundCenterColor, mSelectedZoomPercent);
 
         if (mDefaultProperties.mBackgroundEdgeColor != mSelectedProperties.mBackgroundEdgeColor)
             mCurrentProperties.mBackgroundEdgeColor =
-                    mixColors(mDefaultProperties.mBackgroundEdgeColor,
-                    mSelectedProperties.mBackgroundEdgeColor, mSelectedZoomPercent);
+                mixColors(mDefaultProperties.mBackgroundEdgeColor,
+                          mSelectedProperties.mBackgroundEdgeColor, mSelectedZoomPercent);
     }
 }
 

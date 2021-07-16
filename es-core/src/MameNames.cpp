@@ -11,10 +11,10 @@
 
 #include "MameNames.h"
 
+#include "Log.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
-#include "Log.h"
 
 #include <pugixml.hpp>
 #include <string.h>
@@ -53,25 +53,23 @@ MameNames::MameNames()
     LOG(LogInfo) << "Parsing MAME names file \"" << xmlpath << "\"...";
 
     pugi::xml_document doc;
-    #if defined(_WIN64)
+#if defined(_WIN64)
     pugi::xml_parse_result result =
-            doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
-    #else
+        doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
+#else
     pugi::xml_parse_result result = doc.load_file(xmlpath.c_str());
-    #endif
+#endif
 
     if (!result) {
-        LOG(LogError) << "Error parsing MAME names file \"" << xmlpath << "\": "
-                << result.description();
+        LOG(LogError) << "Error parsing MAME names file \"" << xmlpath
+                      << "\": " << result.description();
         return;
     }
 
-    for (pugi::xml_node gameNode = doc.child("game");
-            gameNode; gameNode = gameNode.next_sibling("game")) {
-        NamePair namePair = {
-            gameNode.child("mamename").text().get(),
-            gameNode.child("realname").text().get()
-        };
+    for (pugi::xml_node gameNode = doc.child("game"); gameNode;
+         gameNode = gameNode.next_sibling("game")) {
+        NamePair namePair = { gameNode.child("mamename").text().get(),
+                              gameNode.child("realname").text().get() };
         mNamePairs.push_back(namePair);
     }
 
@@ -83,20 +81,20 @@ MameNames::MameNames()
 
     LOG(LogInfo) << "Parsing MAME BIOSes file \"" << xmlpath << "\"...";
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     result = doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
-    #else
+#else
     result = doc.load_file(xmlpath.c_str());
-    #endif
+#endif
 
     if (!result) {
-        LOG(LogError) << "Error parsing MAME BIOSes file \"" << xmlpath << "\": "
-                << result.description();
+        LOG(LogError) << "Error parsing MAME BIOSes file \"" << xmlpath
+                      << "\": " << result.description();
         return;
     }
 
-    for (pugi::xml_node biosNode = doc.child("bios");
-            biosNode; biosNode = biosNode.next_sibling("bios")) {
+    for (pugi::xml_node biosNode = doc.child("bios"); biosNode;
+         biosNode = biosNode.next_sibling("bios")) {
         std::string bios = biosNode.text().get();
         mMameBioses.push_back(bios);
     }
@@ -109,27 +107,23 @@ MameNames::MameNames()
 
     LOG(LogInfo) << "Parsing MAME devices file \"" << xmlpath << "\"...";
 
-    #if defined(_WIN64)
+#if defined(_WIN64)
     result = doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
-    #else
+#else
     result = doc.load_file(xmlpath.c_str());
-    #endif
+#endif
 
     if (!result) {
-        LOG(LogError) << "Error parsing MAME devices file \"" << xmlpath << "\": "
-                << result.description();
+        LOG(LogError) << "Error parsing MAME devices file \"" << xmlpath
+                      << "\": " << result.description();
         return;
     }
 
-    for (pugi::xml_node deviceNode = doc.child("device");
-            deviceNode; deviceNode = deviceNode.next_sibling("device")) {
+    for (pugi::xml_node deviceNode = doc.child("device"); deviceNode;
+         deviceNode = deviceNode.next_sibling("device")) {
         std::string device = deviceNode.text().get();
         mMameDevices.push_back(device);
     }
-}
-
-MameNames::~MameNames()
-{
 }
 
 std::string MameNames::getRealName(const std::string& _mameName)
@@ -156,17 +150,6 @@ std::string MameNames::getCleanName(const std::string& _mameName)
 {
     std::string cleanName = Utils::String::removeParenthesis(getRealName(_mameName));
     return cleanName;
-}
-
-const bool MameNames::isBios(const std::string& _biosName)
-{
-    return MameNames::find(mMameBioses, _biosName);
-}
-
-const bool MameNames::isDevice(const std::string& _deviceName)
-{
-    return MameNames::find(mMameDevices, _deviceName);
-
 }
 
 const bool MameNames::find(std::vector<std::string> devices, const std::string& name)

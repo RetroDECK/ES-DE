@@ -9,12 +9,12 @@
 
 #include "UIModeController.h"
 
-#include "utils/StringUtil.h"
-#include "views/ViewController.h"
 #include "FileFilterIndex.h"
 #include "Log.h"
 #include "SystemData.h"
 #include "Window.h"
+#include "utils/StringUtil.h"
+#include "views/ViewController.h"
 
 UIModeController* UIModeController::sInstance = nullptr;
 
@@ -34,7 +34,8 @@ void UIModeController::deinit()
     }
 }
 
-UIModeController::UIModeController() : mPassKeyCounter(0)
+UIModeController::UIModeController()
+    : mPassKeyCounter(0)
 {
     mPassKeySequence = Settings::getInstance()->getString("UIMode_passkey");
     mCurrentUIMode = Settings::getInstance()->getString("UIMode");
@@ -47,13 +48,12 @@ void UIModeController::monitorUIMode()
     if (uimode != mCurrentUIMode && !ViewController::get()->isCameraMoving()) {
         mCurrentUIMode = uimode;
         // Reset filters and sort gamelists (which will update the game counter).
-        for (auto it = SystemData::sSystemVector.cbegin(); it !=
-                SystemData::sSystemVector.cend(); it++) {
+        for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+             it != SystemData::sSystemVector.cend(); it++) {
             (*it)->sortSystem(true);
             (*it)->getIndex()->resetFilters();
             if ((*it)->getThemeFolder() == "custom-collections") {
-                for (FileData* customSystem :
-                        (*it)->getRootFolder()->getChildrenListToDisplay())
+                for (FileData* customSystem : (*it)->getRootFolder()->getChildrenListToDisplay())
                     customSystem->getSystem()->getIndex()->resetFilters();
             }
         }
@@ -75,6 +75,7 @@ bool UIModeController::listen(InputConfig* config, Input input)
         unlockUIMode();
         return true;
     }
+
     return false;
 }
 
@@ -101,21 +102,21 @@ void UIModeController::unlockUIMode()
 
 bool UIModeController::isUIModeFull()
 {
-    return ((mCurrentUIMode == "full" || (isUIModeKid() &&
-            Settings::getInstance()->getBool("EnableMenuKidMode")))
-            && !Settings::getInstance()->getBool("ForceKiosk"));
+    return ((mCurrentUIMode == "full" ||
+             (isUIModeKid() && Settings::getInstance()->getBool("EnableMenuKidMode"))) &&
+            !Settings::getInstance()->getBool("ForceKiosk"));
 }
 
 bool UIModeController::isUIModeKid()
 {
     return (Settings::getInstance()->getBool("ForceKid") ||
-        ((mCurrentUIMode == "kid") && !Settings::getInstance()->getBool("ForceKiosk")));
+            ((mCurrentUIMode == "kid") && !Settings::getInstance()->getBool("ForceKiosk")));
 }
 
 bool UIModeController::isUIModeKiosk()
 {
     return (Settings::getInstance()->getBool("ForceKiosk") ||
-        ((mCurrentUIMode == "kiosk") && !Settings::getInstance()->getBool("ForceKid")));
+            ((mCurrentUIMode == "kiosk") && !Settings::getInstance()->getBool("ForceKid")));
 }
 
 std::string UIModeController::getFormattedPassKeyStr()
@@ -124,7 +125,7 @@ std::string UIModeController::getFormattedPassKeyStr()
 
     std::string out = "";
     for (auto c : mPassKeySequence) {
-        out += (out == "") ? "" : " , ";  // Add commas between the entries.
+        out += (out == "") ? "" : " , "; // Add commas between the entries.
 
         std::string controllerType = Settings::getInstance()->getString("InputControllerType");
         std::string symbolA;
@@ -139,12 +140,19 @@ std::string UIModeController::getFormattedPassKeyStr()
             symbolY = "X";
         }
         else if (controllerType == "ps4" || controllerType == "ps5") {
+#if defined(_MSC_VER) // MSVC compiler.
             // These symbols are far from perfect but you can at least understand what
             // they are supposed to depict.
+            symbolA = Utils::String::wideStringToString(L"\uF00D"); // Cross.
+            symbolB = Utils::String::wideStringToString(L"\uF111"); // Circle
+            symbolX = Utils::String::wideStringToString(L"\uF04D"); // Square.
+            symbolY = Utils::String::wideStringToString(L"\uF0D8"); // Triangle.
+#else
             symbolA = "\uF00D"; // Cross.
             symbolB = "\uF111"; // Circle
             symbolX = "\uF04D"; // Square.
             symbolY = "\uF0D8"; // Triangle.
+#endif
         }
         else {
             // Xbox controller.
@@ -186,8 +194,8 @@ std::string UIModeController::getFormattedPassKeyStr()
 
 bool UIModeController::isValidInput(InputConfig* config, Input input)
 {
-    if ((config->getMappedTo(input).size() == 0)  || // Not a mapped input, so ignore it.
-            (!input.value))	// Not a key-down event.
+    if ((config->getMappedTo(input).size() == 0) || // Not a mapped input, so ignore it.
+        (!input.value)) // Not a key-down event.
         return false;
     else
         return true;

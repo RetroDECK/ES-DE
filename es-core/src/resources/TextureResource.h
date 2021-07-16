@@ -26,12 +26,11 @@ class TextureData;
 class TextureResource : public IReloadable
 {
 public:
-    static std::shared_ptr<TextureResource> get(
-            const std::string& path,
-            bool tile = false,
-            bool forceLoad = false,
-            bool dynamic = true,
-            float scaleDuringLoad = 1.0f);
+    static std::shared_ptr<TextureResource> get(const std::string& path,
+                                                bool tile = false,
+                                                bool forceLoad = false,
+                                                bool dynamic = true,
+                                                float scaleDuringLoad = 1.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
     static void manualUnload(std::string path, bool tile);
@@ -39,19 +38,21 @@ public:
     // Returns the raw pixel values.
     std::vector<unsigned char> getRawRGBAData();
 
+    std::string getTextureFilePath();
+
     // For SVG graphics this function effectively rescales the image to the defined size.
     // It does unload and re-rasterize the texture though which may cause flickering in some
     // situations. An alternative is to set a scaling factor directly when loading the texture
     // using get(), by using the scaleDuringLoad parameter (which also works for raster graphics).
     void rasterizeAt(size_t width, size_t height);
-    Vector2f getSourceImageSize() const;
+    Vector2f getSourceImageSize() const { return mSourceSize; }
 
     virtual ~TextureResource();
 
-    bool isInitialized() const;
+    bool isInitialized() const { return true; }
     bool isTiled() const;
 
-    const Vector2i getSize() const;
+    const Vector2i getSize() const { return mSize; }
     bool bind();
 
     // Returns an approximation of total VRAM used by textures (in bytes).

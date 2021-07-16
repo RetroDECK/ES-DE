@@ -8,20 +8,21 @@
 
 #include "components/ButtonComponent.h"
 
+#include "Settings.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
-#include "Settings.h"
 
-ButtonComponent::ButtonComponent(
-    Window* window, const std::string& text,
-    const std::string& helpText,
-    const std::function<void()>& func)
-    : GuiComponent(window),
-    mBox(window, ":/graphics/button.svg"),
-    mFont(Font::get(FONT_SIZE_MEDIUM)),
-    mFocused(false),
-    mEnabled(true),
-    mTextColorFocused(0xFFFFFFFF), mTextColorUnfocused(0x777777FF)
+ButtonComponent::ButtonComponent(Window* window,
+                                 const std::string& text,
+                                 const std::string& helpText,
+                                 const std::function<void()>& func)
+    : GuiComponent(window)
+    , mBox(window, ":/graphics/button.svg")
+    , mFont(Font::get(FONT_SIZE_MEDIUM))
+    , mFocused(false)
+    , mEnabled(true)
+    , mTextColorFocused(0xFFFFFFFF)
+    , mTextColorUnfocused(0x777777FF)
 {
     setPressedFunc(func);
     setText(text, helpText);
@@ -30,12 +31,8 @@ ButtonComponent::ButtonComponent(
 
 void ButtonComponent::onSizeChanged()
 {
-    mBox.fitTo(mSize, Vector3f::Zero(), Vector2f(-32, -32));
-}
-
-void ButtonComponent::setPressedFunc(std::function<void()> f)
-{
-    mPressedFunc = f;
+    // Fit to mBox.
+    mBox.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
 }
 
 bool ButtonComponent::input(InputConfig* config, Input input)
@@ -56,9 +53,10 @@ void ButtonComponent::setText(const std::string& text, const std::string& helpTe
 
     mTextCache = std::unique_ptr<TextCache>(mFont->buildTextCache(mText, 0, 0, getCurTextColor()));
 
-    float minWidth = mFont->sizeText("DELETE").x() + (12 * Renderer::getScreenWidthModifier());
-    setSize(std::max(mTextCache->metrics.size.x() + (12 * Renderer::getScreenWidthModifier()),
-            minWidth), mTextCache->metrics.size.y());
+    float minWidth = mFont->sizeText("DELETE").x() + (12.0f * Renderer::getScreenWidthModifier());
+    setSize(std::max(mTextCache->metrics.size.x() + (12.0f * Renderer::getScreenWidthModifier()),
+                     minWidth),
+            mTextCache->metrics.size.y());
 
     updateHelpPrompts();
 }
@@ -103,14 +101,14 @@ void ButtonComponent::render(const Transform4x4f& parentTrans)
 
     if (mTextCache) {
         Vector3f centerOffset((mSize.x() - mTextCache->metrics.size.x()) / 2.0f,
-                (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0);
+                              (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0);
         trans = trans.translate(centerOffset);
 
         if (Settings::getInstance()->getBool("DebugText")) {
-            Renderer::drawRect(centerOffset.x(), 0.0f, mTextCache->metrics.size.x(),
-                    mSize.y(), 0x00000033, 0x00000033);
-            Renderer::drawRect(mBox.getPosition().x(), 0.0f, mBox.getSize().x(),
-                    mSize.y(), 0x0000FF33, 0x0000FF33);
+            Renderer::drawRect(centerOffset.x(), 0.0f, mTextCache->metrics.size.x(), mSize.y(),
+                               0x00000033, 0x00000033);
+            Renderer::drawRect(mBox.getPosition().x(), 0.0f, mBox.getSize().x(), mSize.y(),
+                               0x0000FF33, 0x0000FF33);
         }
 
         Renderer::setMatrix(trans);

@@ -9,14 +9,14 @@
 #ifndef ES_CORE_COMPONENTS_COMPONENT_GRID_H
 #define ES_CORE_COMPONENTS_COMPONENT_GRID_H
 
+#include "GuiComponent.h"
 #include "math/Vector2i.h"
 #include "renderers/Renderer.h"
-#include "GuiComponent.h"
 
 namespace GridFlags
 {
     enum UpdateType {
-        UPDATE_ALWAYS,
+        UPDATE_ALWAYS, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
         UPDATE_WHEN_SELECTED,
         UPDATE_NEVER
     };
@@ -28,7 +28,7 @@ namespace GridFlags
         BORDER_LEFT = 4,
         BORDER_RIGHT = 8
     };
-};
+}; // namespace GridFlags
 
 // Provides basic layout of components in an X*Y grid.
 class ComponentGrid : public GuiComponent
@@ -39,14 +39,13 @@ public:
 
     bool removeEntry(const std::shared_ptr<GuiComponent>& comp);
 
-    void setEntry(
-            const std::shared_ptr<GuiComponent>& comp,
-            const Vector2i& pos,
-            bool canFocus,
-            bool resize = true,
-            const Vector2i& size = Vector2i(1, 1),
-            unsigned int border = GridFlags::BORDER_NONE,
-            GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
+    void setEntry(const std::shared_ptr<GuiComponent>& comp,
+                  const Vector2i& pos,
+                  bool canFocus,
+                  bool resize = true,
+                  const Vector2i& size = Vector2i(1, 1),
+                  unsigned int border = GridFlags::BORDER_NONE,
+                  GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
 
     void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;
@@ -69,7 +68,7 @@ public:
     bool moveCursor(Vector2i dir);
     void setCursorTo(const std::shared_ptr<GuiComponent>& comp);
 
-    inline std::shared_ptr<GuiComponent> getSelectedComponent()
+    std::shared_ptr<GuiComponent> getSelectedComponent()
     {
         const GridEntry* e = getCellAt(mCursor);
         if (e)
@@ -95,28 +94,24 @@ private:
         GridFlags::UpdateType updateType;
         unsigned int border;
 
-        GridEntry(
-                const Vector2i& p = Vector2i::Zero(),
-                const Vector2i& d = Vector2i::Zero(),
-                const std::shared_ptr<GuiComponent>& cmp = nullptr,
-                bool f = false,
-                bool r = true,
-                GridFlags::UpdateType u = GridFlags::UPDATE_ALWAYS,
-                unsigned int b =
-                GridFlags::BORDER_NONE)
-                : pos(p),
-                dim(d),
-                component(cmp),
-                canFocus(f),
-                resize(r),
-                updateType(u),
-                border(b)
-        {};
-
-        operator bool() const
+        GridEntry(const Vector2i& p = Vector2i::Zero(),
+                  const Vector2i& d = Vector2i::Zero(),
+                  const std::shared_ptr<GuiComponent>& cmp = nullptr,
+                  bool f = false,
+                  bool r = true,
+                  GridFlags::UpdateType u = GridFlags::UPDATE_ALWAYS,
+                  unsigned int b = GridFlags::BORDER_NONE)
+            : pos(p)
+            , dim(d)
+            , component(cmp)
+            , canFocus(f)
+            , resize(r)
+            , updateType(u)
+            , border(b)
         {
-            return component != nullptr;
         }
+
+        operator bool() const { return component != nullptr; }
     };
 
     // Update position and size.
@@ -125,9 +120,7 @@ private:
 
     void onCursorMoved(Vector2i from, Vector2i to);
     const GridEntry* getCellAt(int x, int y) const;
-
-    inline const GridEntry* getCellAt(const Vector2i& pos) const
-            { return getCellAt(pos.x(), pos.y()); }
+    const GridEntry* getCellAt(const Vector2i& pos) const { return getCellAt(pos.x(), pos.y()); }
 
     std::vector<std::vector<float>> mSeparators;
     Vector2i mGridSize;

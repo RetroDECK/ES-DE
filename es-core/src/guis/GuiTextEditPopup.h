@@ -9,9 +9,9 @@
 #ifndef ES_CORE_GUIS_GUI_TEXT_EDIT_POPUP_H
 #define ES_CORE_GUIS_GUI_TEXT_EDIT_POPUP_H
 
+#include "GuiComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
-#include "GuiComponent.h"
 
 class TextComponent;
 class TextEditComponent;
@@ -19,21 +19,20 @@ class TextEditComponent;
 class GuiTextEditPopup : public GuiComponent
 {
 public:
-    GuiTextEditPopup(
-            Window* window,
-            const HelpStyle& helpstyle,
-            const std::string& title,
-            const std::string& initValue,
-            const std::function<void(const std::string&)>& okCallback,
-            bool multiLine,
-            const std::string& acceptBtnText = "OK",
-            const std::string& saveConfirmationText = "SAVE CHANGES?");
+    GuiTextEditPopup(Window* window,
+                     const HelpStyle& helpstyle,
+                     const std::string& title,
+                     const std::string& initValue,
+                     const std::function<void(const std::string&)>& okCallback,
+                     bool multiLine,
+                     const std::string& acceptBtnText = "OK",
+                     const std::string& saveConfirmationText = "SAVE CHANGES?");
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override { return mHelpStyle; };
+    HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
     NinePatchComponent mBackground;

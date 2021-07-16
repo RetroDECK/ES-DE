@@ -52,13 +52,13 @@ public:
     void removeFromIndex(FileData* game);
     void setFilter(FilterIndexType type, std::vector<std::string>* values);
     void setTextFilter(std::string textFilter);
-    std::string getTextFilter() { return mTextFilter; };
+    std::string getTextFilter() { return mTextFilter; }
     void clearAllFilters();
     void debugPrintIndexes();
     bool showFile(FileData* game);
     bool isFiltered();
     bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
-    std::vector<FilterDataDecl>& getFilterDataDecls();
+    std::vector<FilterDataDecl>& getFilterDataDecls() { return filterDataDecl; }
 
     void importIndex(FileFilterIndex* indexToImport);
     void resetIndex();
@@ -81,7 +81,7 @@ private:
 
     void manageIndexEntry(std::map<std::string, int>* index, std::string key, bool remove);
 
-    void clearIndex(std::map<std::string, int>& indexMap);
+    void clearIndex(std::map<std::string, int>& indexMap) { indexMap.clear(); }
 
     std::string mTextFilter;
     bool mFilterByText;
@@ -117,7 +117,6 @@ private:
     std::vector<std::string> mHiddenIndexFilteredKeys;
 
     FileData* mRootFolder;
-
 };
 
 #endif // ES_APP_FILE_FILTER_INDEX_H

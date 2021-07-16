@@ -8,39 +8,38 @@
 
 #include "components/VideoComponent.h"
 
-#include "resources/ResourceManager.h"
-#include "utils/FileSystemUtil.h"
 #include "ThemeData.h"
 #include "Window.h"
+#include "resources/ResourceManager.h"
+#include "utils/FileSystemUtil.h"
 
 #include <SDL2/SDL_timer.h>
 
 #define SCREENSAVER_FADE_IN_TIME 1100
 #define MEDIA_VIEWER_FADE_IN_TIME 600
 
-VideoComponent::VideoComponent(
-        Window* window)
-        : GuiComponent(window),
-        mWindow(window),
-        mStaticImage(window),
-        mVideoHeight(0),
-        mVideoWidth(0),
-        mStartDelayed(false),
-        mIsPlaying(false),
-        mIsActuallyPlaying(false),
-        mPause(false),
-        mShowing(false),
-        mDisable(false),
-        mMediaViewerMode(false),
-        mScreensaverActive(false),
-        mScreensaverMode(false),
-        mGameLaunched(false),
-        mBlockPlayer(false),
-        mTargetIsMax(false),
-        mFadeIn(1.0),
-        mTargetSize(0, 0),
-        mVideoAreaPos(0, 0),
-        mVideoAreaSize(0, 0)
+VideoComponent::VideoComponent(Window* window)
+    : GuiComponent(window)
+    , mWindow(window)
+    , mStaticImage(window)
+    , mVideoHeight(0)
+    , mVideoWidth(0)
+    , mStartDelayed(false)
+    , mIsPlaying(false)
+    , mIsActuallyPlaying(false)
+    , mPause(false)
+    , mShowing(false)
+    , mDisable(false)
+    , mMediaViewerMode(false)
+    , mScreensaverActive(false)
+    , mScreensaverMode(false)
+    , mGameLaunched(false)
+    , mBlockPlayer(false)
+    , mTargetIsMax(false)
+    , mFadeIn(1.0)
+    , mTargetSize(0, 0)
+    , mVideoAreaPos(0, 0)
+    , mVideoAreaSize(0, 0)
 {
     // Setup the default configuration.
     mConfig.showSnapshotDelay = false;
@@ -79,11 +78,6 @@ bool VideoComponent::setVideo(std::string path)
     return false;
 }
 
-void VideoComponent::setDefaultVideo()
-{
-    setVideo(mConfig.defaultVideoPath);
-}
-
 void VideoComponent::setImage(std::string path)
 {
     // Check that the image has changed.
@@ -92,21 +86,6 @@ void VideoComponent::setImage(std::string path)
 
     mStaticImage.setImage(path);
     mStaticImagePath = path;
-}
-
-void VideoComponent::setScreensaverMode(bool isScreensaver)
-{
-    mScreensaverMode = isScreensaver;
-}
-
-void VideoComponent::setMediaViewerMode(bool isMediaViewer)
-{
-    mMediaViewerMode = isMediaViewer;
-}
-
-void VideoComponent::setOpacity(unsigned char opacity)
-{
-    mOpacity = opacity;
 }
 
 void VideoComponent::onShow()
@@ -192,21 +171,6 @@ void VideoComponent::topWindow(bool isTop)
     manageState();
 }
 
-void VideoComponent::onOriginChanged()
-{
-    mStaticImage.setOrigin(mOrigin);
-}
-
-void VideoComponent::onPositionChanged()
-{
-    mStaticImage.setPosition(mPosition);
-}
-
-void VideoComponent::onSizeChanged()
-{
-    mStaticImage.onSizeChanged();
-}
-
 void VideoComponent::render(const Transform4x4f& parentTrans)
 {
     if (!isVisible())
@@ -237,19 +201,22 @@ void VideoComponent::renderSnapshot(const Transform4x4f& parentTrans)
     // set to start playing the video immediately. Although this may seem a bit inconsistent it
     // simply looks better than leaving an empty space where the video would have been located.
     if (mWindow->getGuiStackSize() > 1 || (mConfig.showSnapshotNoVideo && mVideoPath.empty()) ||
-            (mStartDelayed && mConfig.showSnapshotDelay)) {
+        (mStartDelayed && mConfig.showSnapshotDelay)) {
         mStaticImage.setOpacity(mOpacity);
         mStaticImage.render(parentTrans);
     }
 }
 
-void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
-        const std::string& element, unsigned int properties)
+void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                                const std::string& view,
+                                const std::string& element,
+                                unsigned int properties)
 {
     using namespace ThemeFlags;
 
-    GuiComponent::applyTheme(theme, view, element, (properties ^ ThemeFlags::SIZE) |
-            ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
+    GuiComponent::applyTheme(theme, view, element,
+                             (properties ^ ThemeFlags::SIZE) |
+                                 ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "video");
 
@@ -257,8 +224,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
         return;
 
     Vector2f scale = getParent() ? getParent()->getSize() :
-            Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                                   Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+                                            static_cast<float>(Renderer::getScreenHeight()));
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
@@ -308,12 +275,12 @@ void VideoComponent::update(int deltaTime)
     // Fade in videos, the time period is a bit different between the screensaver,
     // media viewer and gamelist view.
     if (mScreensaverMode && mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime /
-                static_cast<float>(SCREENSAVER_FADE_IN_TIME)), 0.0f, 1.0f);
+        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(SCREENSAVER_FADE_IN_TIME)),
+                              0.0f, 1.0f);
     }
     else if (mMediaViewerMode && mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime /
-                static_cast<float>(MEDIA_VIEWER_FADE_IN_TIME)), 0.0f, 1.0f);
+        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(MEDIA_VIEWER_FADE_IN_TIME)),
+                              0.0f, 1.0f);
     }
     else if (mFadeIn < 1.0f) {
         mFadeIn = Math::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);

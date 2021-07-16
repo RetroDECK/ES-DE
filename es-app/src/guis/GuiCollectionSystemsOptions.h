@@ -12,8 +12,7 @@
 
 #include "GuiSettings.h"
 
-template<typename T>
-class OptionListComponent;
+template <typename T> class OptionListComponent;
 
 class GuiCollectionSystemsOptions : public GuiSettings
 {

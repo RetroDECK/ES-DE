@@ -43,7 +43,6 @@ public:
     static std::string getConfigPath();
     static std::string getTemporaryConfigPath();
 
-    int getNumJoysticks();
     int getNumConfiguredDevices();
     int getAxisCountByDevice(int deviceId);
     int getButtonCountByDevice(int deviceId);
@@ -53,8 +52,10 @@ public:
 
     bool parseEvent(const SDL_Event& event, Window* window);
 
+    int getNumJoysticks() { return static_cast<int>(mJoysticks.size()); }
+
 private:
-    bool initialized() const;
+    bool initialized() const { return mKeyboardInputConfig != nullptr; }
 
     bool loadInputConfig(InputConfig* config);
     void loadDefaultKBConfig();

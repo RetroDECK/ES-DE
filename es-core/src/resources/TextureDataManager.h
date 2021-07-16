@@ -35,8 +35,8 @@ private:
     void threadProc();
 
     std::list<std::shared_ptr<TextureData>> mTextureDataQ;
-    std::map<TextureData*,
-            std::list<std::shared_ptr<TextureData>>::const_iterator> mTextureDataLookup;
+    std::map<TextureData*, std::list<std::shared_ptr<TextureData>>::const_iterator>
+        mTextureDataLookup;
 
     std::unique_ptr<std::thread> mThread;
     std::mutex mMutex;
@@ -75,19 +75,19 @@ public:
     bool bind(const TextureResource* key);
 
     // Get the total size of all textures managed by this object, loaded and unloaded in bytes.
-    size_t	getTotalSize();
+    size_t getTotalSize();
     // Get the total size of all committed textures (in VRAM) in bytes.
-    size_t	getCommittedSize();
+    size_t getCommittedSize();
     // Get the total size of all load-pending textures in the queue - these will
     // be committed to VRAM as the queue is processed.
-    size_t  getQueueSize();
+    size_t getQueueSize();
     // Load a texture, freeing resources as necessary to make space.
     void load(std::shared_ptr<TextureData> tex, bool block = false);
 
 private:
     std::list<std::shared_ptr<TextureData>> mTextures;
-    std::map<const TextureResource*,
-            std::list<std::shared_ptr<TextureData>>::const_iterator> mTextureLookup;
+    std::map<const TextureResource*, std::list<std::shared_ptr<TextureData>>::const_iterator>
+        mTextureLookup;
     std::shared_ptr<TextureData> mBlank;
     TextureLoader* mLoader;
 };

@@ -33,11 +33,12 @@ extern int SDL_USER_CECBUTTONUP;
 CECInput* CECInput::sInstance = nullptr;
 
 #if defined(HAVE_LIBCEC)
-static void onAlert(void* /*cbParam*/, const CEC::libcec_alert type,
-        const CEC::libcec_parameter param)
+static void onAlert(void* /*cbParam*/,
+                    const CEC::libcec_alert type,
+                    const CEC::libcec_parameter param)
 {
-    LOG(LogDebug) << "CECInput::onAlert type: " << CECInput::getAlertTypeString(type) <<
-            " parameter: " << reinterpret_cast<char*>(param.paramData);
+    LOG(LogDebug) << "CECInput::onAlert type: " << CECInput::getAlertTypeString(type)
+                  << " parameter: " << reinterpret_cast<char*>(param.paramData);
 }
 
 static void onCommand(void* /*cbParam*/, const CEC::cec_command* command)
@@ -50,7 +51,7 @@ static void onKeyPress(void* /*cbParam*/, const CEC::cec_keypress* key)
     LOG(LogDebug) << "CECInput::onKeyPress keycode: " << CECInput::getKeyCodeString(key->keycode);
 
     SDL_Event event;
-    event.type      = (key->duration > 0) ? SDL_USER_CECBUTTONUP : SDL_USER_CECBUTTONDOWN;
+    event.type = (key->duration > 0) ? SDL_USER_CECBUTTONUP : SDL_USER_CECBUTTONDOWN;
     event.user.code = key->keycode;
     SDL_PushEvent(&event);
 }
@@ -93,14 +94,15 @@ void CECInput::deinit()
     }
 }
 
-CECInput::CECInput() : mlibCEC(nullptr)
+CECInput::CECInput()
+    : mlibCEC(nullptr)
 {
-    #if defined(HAVE_LIBCEC)
-    #if defined(_RPI_)
+#if defined(HAVE_LIBCEC)
+#if defined(_RPI_)
     // Restart vchi tv and CEC in case we just came back from another app using CEC (like Kodi).
     vchi_tv_and_cec_deinit();
     vchi_tv_and_cec_init();
-    #endif // _RPI_
+#endif // _RPI_
 
     CEC::ICECCallbacks callbacks;
     CEC::libcec_configuration config;
@@ -136,8 +138,8 @@ CECInput::CECInput() : mlibCEC(nullptr)
     }
 
     for (int i = 0; i < numAdapters; i++)
-        LOG(LogDebug) << "CEC adapter: " << i << " path: " << adapters[i].strComPath <<
-                " name: " << adapters[i].strComName;
+        LOG(LogDebug) << "CEC adapter: " << i << " path: " << adapters[i].strComPath
+                      << " name: " << adapters[i].strComName;
 
     if (!mlibCEC->Open(adapters[0].strComName)) {
         LOG(LogError) << "CECInput::mAdapter->Open failed";
@@ -145,28 +147,29 @@ CECInput::CECInput() : mlibCEC(nullptr)
         mlibCEC = nullptr;
         return;
     }
-    #endif // HAVE_LIBCEC
+#endif // HAVE_LIBCEC
 }
 
 CECInput::~CECInput()
 {
 
-    #if defined(HAVE_LIBCEC)
+#if defined(HAVE_LIBCEC)
     if (mlibCEC) {
         mlibCEC->Close();
         UnloadLibCec(mlibCEC);
         mlibCEC = nullptr;
     }
 
-    #if defined(_RPI_)
+#if defined(_RPI_)
     // Deinit vchi tv and CEC in case we are going to launch another app using CEC (like Kodi).
     vchi_tv_and_cec_deinit();
-    #endif // _RPI_
-    #endif // HAVE_LIBCEC
+#endif // _RPI_
+#endif // HAVE_LIBCEC
 }
 
 std::string CECInput::getAlertTypeString(const unsigned int _type)
 {
+    // clang-format off
     switch (_type) {
         #if defined(HAVE_LIBCEC)
         case CEC::CEC_ALERT_SERVICE_DEVICE:         { return "Service-Device";         } break;
@@ -180,10 +183,12 @@ std::string CECInput::getAlertTypeString(const unsigned int _type)
         #endif // HAVE_LIBCEC
         default:                                    { return "Unknown";                } break;
     }
+    // clang-format on
 }
 
 std::string CECInput::getOpCodeString(const unsigned int _opCode)
 {
+    // clang-format off
     switch (_opCode) {
         #if defined(HAVE_LIBCEC)
         case CEC::CEC_OPCODE_ACTIVE_SOURCE:                 { return "Active-Source";                 } break;
@@ -261,10 +266,12 @@ std::string CECInput::getOpCodeString(const unsigned int _opCode)
         #endif // HAVE_LIBCEC
         default:                                            { return "Unknown";                       } break;
     }
+    // clang-format on
 }
 
 std::string CECInput::getKeyCodeString(const unsigned int _keyCode)
 {
+    // clang-format off
     switch (_keyCode) {
         #if defined(HAVE_LIBCEC)
         case CEC::CEC_USER_CONTROL_CODE_SELECT:                      { return "Select";                      } break;
@@ -358,5 +365,6 @@ std::string CECInput::getKeyCodeString(const unsigned int _keyCode)
         case 0:
         #endif // HAVE_LIBCEC
         default:                                                     { return "Unknown";                     } break;
+        // clang-format off
     }
 }

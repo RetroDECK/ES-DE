@@ -12,13 +12,10 @@
 
 #include <pugixml.hpp>
 
-InputConfig::InputConfig(
-        int deviceId,
-        const std::string& deviceName,
-        const std::string& deviceGUID)
-        : mDeviceId(deviceId),
-        mDeviceName(deviceName),
-        mDeviceGUID(deviceGUID)
+InputConfig::InputConfig(int deviceId, const std::string& deviceName, const std::string& deviceGUID)
+    : mDeviceId(deviceId)
+    , mDeviceName(deviceName)
+    , mDeviceGUID(deviceGUID)
 {
 }
 
@@ -59,16 +56,6 @@ std::string InputConfig::toLower(std::string str)
     return str;
 }
 
-void InputConfig::clear()
-{
-    mNameMap.clear();
-}
-
-bool InputConfig::isConfigured()
-{
-    return mNameMap.size() > 0;
-}
-
 void InputConfig::mapInput(const std::string& name, Input input)
 {
     mNameMap[toLower(name)] = input;
@@ -100,19 +87,19 @@ bool InputConfig::isMappedLike(const std::string& name, Input input)
 {
     if (name == "left") {
         return isMappedTo("left", input) || isMappedTo("leftthumbstickleft", input) ||
-                isMappedTo("rightthumbstickleft", input);
+               isMappedTo("rightthumbstickleft", input);
     }
     else if (name == "right") {
         return isMappedTo("right", input) || isMappedTo("leftthumbstickright", input) ||
-                isMappedTo("rightthumbstickright", input);
+               isMappedTo("rightthumbstickright", input);
     }
     else if (name == "up") {
         return isMappedTo("up", input) || isMappedTo("leftthumbstickup", input) ||
-                isMappedTo("rightthumbstickup", input);
+               isMappedTo("rightthumbstickup", input);
     }
     else if (name == "down") {
         return isMappedTo("down", input) || isMappedTo("leftthumbstickdown", input) ||
-                isMappedTo("rightthumbstickdown", input);
+               isMappedTo("rightthumbstickdown", input);
     }
     else if (name == "leftshoulder") {
         return isMappedTo("leftshoulder", input) || isMappedTo("pageup", input);
@@ -182,8 +169,8 @@ void InputConfig::loadFromXML(pugi::xml_node& node)
         InputType typeEnum = stringToInputType(type);
 
         if (typeEnum == TYPE_COUNT) {
-            LOG(LogError) << "InputConfig load error - input of type \"" << type <<
-                    "\" is invalid! Skipping input \"" << name << "\".\n";
+            LOG(LogError) << "InputConfig load error - input of type \"" << type
+                          << "\" is invalid! Skipping input \"" << name << "\".\n";
             continue;
         }
 
@@ -191,8 +178,7 @@ void InputConfig::loadFromXML(pugi::xml_node& node)
         int value = input.attribute("value").as_int();
 
         if (value == 0) {
-            LOG(LogWarning) << "InputConfig value is 0 for " <<
-                    type << " " << id << "!\n";
+            LOG(LogWarning) << "InputConfig value is 0 for " << type << " " << id << "!\n";
         }
 
         mNameMap[toLower(name)] = Input(mDeviceId, typeEnum, id, value, true);

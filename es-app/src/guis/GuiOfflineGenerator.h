@@ -10,10 +10,10 @@
 #ifndef ES_APP_GUIS_GUI_OFFLINE_GENERATOR_H
 #define ES_APP_GUIS_GUI_OFFLINE_GENERATOR_H
 
-#include "components/ButtonComponent.h"
-#include "components/ComponentGrid.h"
 #include "GuiComponent.h"
 #include "MiximageGenerator.h"
+#include "components/ButtonComponent.h"
+#include "components/ComponentGrid.h"
 
 #include <queue>
 

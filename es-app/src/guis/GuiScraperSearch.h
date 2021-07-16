@@ -16,11 +16,11 @@
 #ifndef ES_APP_GUIS_GUI_SCRAPER_SEARCH_H
 #define ES_APP_GUIS_GUI_SCRAPER_SEARCH_H
 
+#include "GuiComponent.h"
+#include "MiximageGenerator.h"
 #include "components/BusyComponent.h"
 #include "components/ComponentGrid.h"
 #include "scrapers/Scraper.h"
-#include "GuiComponent.h"
-#include "MiximageGenerator.h"
 
 #include <future>
 #include <thread>
@@ -36,9 +36,9 @@ class GuiScraperSearch : public GuiComponent
 {
 public:
     enum SearchType {
-        ALWAYS_ACCEPT_FIRST_RESULT,
-        ACCEPT_SINGLE_MATCHES,
-        NEVER_AUTO_ACCEPT
+        ALWAYS_ACCEPT_FIRST_RESULT, // Automatic mode.
+        ACCEPT_SINGLE_MATCHES, // Semi-automatic mode.
+        NEVER_AUTO_ACCEPT // Manual mode.
     };
 
     GuiScraperSearch(Window* window, SearchType searchType, unsigned int scrapeCount = 1);
@@ -47,20 +47,31 @@ public:
     void search(const ScraperSearchParams& params);
     void openInputScreen(ScraperSearchParams& from);
     void stop();
-    inline SearchType getSearchType() const { return mSearchType; }
+    int getScraperResultsSize() { return static_cast<int>(mScraperResults.size()); }
+    bool getAcceptedResult() { return mAcceptedResult; }
+    SearchType getSearchType() const { return mSearchType; }
     bool getSavedNewMedia()
-                { return (mMDResolveHandle ? mMDResolveHandle->getSavedNewMedia() : false); };
+    {
+        return (mMDResolveHandle ? mMDResolveHandle->getSavedNewMedia() : false);
+    }
     static bool saveMetadata(const ScraperSearchResult& result,
-            MetaDataList& metadata, FileData* scrapedGame);
+                             MetaDataList& metadata,
+                             FileData* scrapedGame);
 
-    // Metadata assets will be resolved before calling the accept callback
-    // (e.g. result.mdl's "image" is automatically downloaded and properly set).
-    inline void setAcceptCallback(const std::function<void(const ScraperSearchResult&)>&
-            acceptCallback) { mAcceptCallback = acceptCallback; }
-    inline void setSkipCallback(const std::function<void()>&
-            skipCallback) { mSkipCallback = skipCallback; };
-    inline void setCancelCallback(const std::function<void()>&
-            cancelCallback) { mScrapeCount -= 1; mCancelCallback = cancelCallback; }
+    // Metadata assets will be resolved before calling the accept callback.
+    void setAcceptCallback(const std::function<void(const ScraperSearchResult&)>& acceptCallback)
+    {
+        mAcceptCallback = acceptCallback;
+    }
+    void setSkipCallback(const std::function<void()>& skipCallback)
+    {
+        mSkipCallback = skipCallback;
+    }
+    void setCancelCallback(const std::function<void()>& cancelCallback)
+    {
+        mScrapeCount -= 1;
+        mCancelCallback = cancelCallback;
+    }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -68,20 +79,19 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override;
     void onSizeChanged() override;
-    void onFocusGained() override;
-    void onFocusLost() override;
 
     void unsetRefinedSearch() { mRefinedSearch = false; }
+    void onFocusGained() override { mGrid.onFocusGained(); }
+    void onFocusLost() override { mGrid.onFocusLost(); }
 
 private:
     void updateViewStyle();
     void updateThumbnail();
     void updateInfoPane();
-
     void resizeMetadata();
 
-    void onSearchError(const std::string& error, HttpReq::Status status =
-            HttpReq::REQ_UNDEFINED_ERROR);
+    void onSearchError(const std::string& error,
+                       HttpReq::Status status = HttpReq::REQ_UNDEFINED_ERROR);
     void onSearchDone(const std::vector<ScraperSearchResult>& results);
 
     int getSelectedIndex();
@@ -117,8 +127,13 @@ private:
         bool resize;
 
         MetaDataPair(const std::shared_ptr<TextComponent>& f,
-                const std::shared_ptr<GuiComponent>& s, bool r = true)
-                : first(f), second(s), resize(r) {};
+                     const std::shared_ptr<GuiComponent>& s,
+                     bool r = true)
+            : first(f)
+            , second(s)
+            , resize(r)
+        {
+        }
     };
 
     std::vector<MetaDataPair> mMD_Pairs;
@@ -132,6 +147,7 @@ private:
     unsigned int mScrapeCount;
     bool mRefinedSearch;
     bool mBlockAccept;
+    bool mAcceptedResult;
     bool mFoundGame;
     bool mScrapeRatings;
 

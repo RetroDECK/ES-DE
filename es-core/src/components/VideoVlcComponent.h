@@ -66,7 +66,7 @@ private:
     // Handle looping the video. Must be called periodically.
     virtual void handleLooping() override;
 
-    static void VlcMediaParseCallback(const libvlc_event_t *event, void *user_data) {};
+    static void VlcMediaParseCallback(const libvlc_event_t* event, void* user_data) {}
 
     static VideoVlcComponent* sInstance;
     static libvlc_instance_t* mVLC;

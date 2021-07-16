@@ -9,17 +9,17 @@
 #ifndef ES_CORE_COMPONENTS_ILIST_H
 #define ES_CORE_COMPONENTS_ILIST_H
 
+#include "Window.h"
 #include "components/ImageComponent.h"
 #include "utils/StringUtil.h"
-#include "Window.h"
 
 enum CursorState {
-    CURSOR_STOPPED,
+    CURSOR_STOPPED, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     CURSOR_SCROLLING
 };
 
 enum ListLoopType {
-    LIST_ALWAYS_LOOP,
+    LIST_ALWAYS_LOOP, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     LIST_PAUSE_AT_END,
     LIST_NEVER_LOOP
 };
@@ -35,10 +35,11 @@ struct ScrollTierList {
 };
 
 // Default scroll tiers.
+// clang-format off
 const ScrollTier QUICK_SCROLL_TIERS[] = {
-    {500, 500},
-    {1200, 114},
-    {0, 16}
+    { 500, 500 },
+    { 1200, 114 },
+    { 0, 16 }
 };
 const ScrollTierList LIST_SCROLL_STYLE_QUICK = {
     3,
@@ -46,17 +47,17 @@ const ScrollTierList LIST_SCROLL_STYLE_QUICK = {
 };
 
 const ScrollTier SLOW_SCROLL_TIERS[] = {
-    {500, 500},
-    {0, 200}
+    { 500, 500 },
+    { 0, 200 }
 };
 
 const ScrollTierList LIST_SCROLL_STYLE_SLOW = {
     2,
     SLOW_SCROLL_TIERS
 };
+// clang-format on
 
-template <typename EntryData, typename UserData>
-class IList : public GuiComponent
+template <typename EntryData, typename UserData> class IList : public GuiComponent
 {
 public:
     struct Entry {
@@ -82,14 +83,13 @@ protected:
     Window* mWindow;
 
 public:
-    IList(
-            Window* window,
-            const ScrollTierList& tierList = LIST_SCROLL_STYLE_QUICK,
-            const ListLoopType& loopType = LIST_PAUSE_AT_END)
-            : GuiComponent(window),
-            mTierList(tierList),
-            mLoopType(loopType),
-            mWindow(window)
+    IList(Window* window,
+          const ScrollTierList& tierList = LIST_SCROLL_STYLE_QUICK,
+          const ListLoopType& loopType = LIST_PAUSE_AT_END)
+        : GuiComponent(window)
+        , mTierList(tierList)
+        , mLoopType(loopType)
+        , mWindow(window)
     {
         mCursor = 0;
         mScrollTier = 0;
@@ -101,15 +101,9 @@ public:
         mTitleOverlayColor = 0xFFFFFF00;
     }
 
-    bool isScrolling() const
-    {
-        return (mScrollVelocity != 0 && mScrollTier > 0);
-    }
+    bool isScrolling() const { return (mScrollVelocity != 0 && mScrollTier > 0); }
 
-    int getScrollingVelocity()
-    {
-        return mScrollVelocity;
-    }
+    int getScrollingVelocity() { return mScrollVelocity; }
 
     void stopScrolling()
     {
@@ -128,43 +122,43 @@ public:
         onCursorChanged(CURSOR_STOPPED);
     }
 
-    inline const std::string& getSelectedName()
+    const std::string& getSelectedName()
     {
         assert(size() > 0);
         return mEntries.at(mCursor).name;
     }
 
-    inline const UserData& getSelected() const
+    const UserData& getSelected() const
     {
         assert(size() > 0);
         return mEntries.at(mCursor).object;
     }
 
-    inline const UserData& getNext() const
+    const UserData& getNext() const
     {
         // If there is a next entry, then return it, otherwise return the current entry.
         if (mCursor + 1 < mEntries.size())
-            return mEntries.at(mCursor+1).object;
+            return mEntries.at(mCursor + 1).object;
         else
             return mEntries.at(mCursor).object;
     }
 
-    inline const UserData& getPrevious() const
+    const UserData& getPrevious() const
     {
         // If there is a previous entry, then return it, otherwise return the current entry.
         if (mCursor != 0)
-            return mEntries.at(mCursor-1).object;
+            return mEntries.at(mCursor - 1).object;
         else
             return mEntries.at(mCursor).object;
     }
 
-    inline const UserData& getFirst() const
+    const UserData& getFirst() const
     {
         assert(size() > 0);
         return mEntries.front().object;
     }
 
-    inline const UserData& getLast() const
+    const UserData& getLast() const
     {
         assert(size() > 0);
         return mEntries.back().object;
@@ -192,10 +186,7 @@ public:
     }
 
     // Entry management.
-    void add(const Entry& e)
-    {
-        mEntries.push_back(e);
-    }
+    void add(const Entry& e) { mEntries.push_back(e); }
 
     bool remove(const UserData& obj)
     {
@@ -209,10 +200,7 @@ public:
         return false;
     }
 
-    inline int size() const
-    {
-        return static_cast<int>(mEntries.size());
-    }
+    int size() const { return static_cast<int>(mEntries.size()); }
 
 protected:
     void remove(typename std::vector<Entry>::const_iterator& it)
@@ -240,7 +228,6 @@ protected:
         onScroll();
         return true;
     }
-
 
     bool listInput(int velocity) // A velocity of 0 = stop scrolling.
     {
@@ -284,8 +271,8 @@ protected:
         }
 
         // Should we go to the next scrolling tier?
-        while (mScrollTier < mTierList.count - 1 && mScrollTierAccumulator >=
-                mTierList.tiers[mScrollTier].length) {
+        while (mScrollTier < mTierList.count - 1 &&
+               mScrollTierAccumulator >= mTierList.tiers[mScrollTier].length) {
             mScrollTierAccumulator -= mTierList.tiers[mScrollTier].length;
             mScrollTier++;
         }
@@ -314,11 +301,11 @@ protected:
             favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
         if (favoritesSorting && getSelected()->getFavorite()) {
-            #if defined(_MSC_VER) // MSVC compiler.
+#if defined(_MSC_VER) // MSVC compiler.
             titleIndex = Utils::String::wideStringToString(L"\uF005");
-            #else
+#else
             titleIndex = "\uF005";
-            #endif
+#endif
         }
         else {
             titleIndex = getSelected()->getName();

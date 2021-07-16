@@ -8,12 +8,12 @@
 
 #include "Platform.h"
 
-#include "renderers/Renderer.h"
-#include "utils/StringUtil.h"
 #include "AudioManager.h"
 #include "Log.h"
 #include "MameNames.h"
 #include "Settings.h"
+#include "renderers/Renderer.h"
+#include "utils/StringUtil.h"
 
 #include <SDL2/SDL_events.h>
 
@@ -52,36 +52,36 @@ int runPoweroffCommand()
 
 int runSystemCommand(const std::string& cmd_utf8)
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     // On Windows we use _wsystem to support non-ASCII paths
     // which requires converting from UTF-8 to a wstring.
     std::wstring wchar_str = Utils::String::stringToWideString(cmd_utf8);
     return _wsystem(wchar_str.c_str());
-    #else
+#else
     return system(cmd_utf8.c_str());
-    #endif
+#endif
 }
 
 int runSystemCommand(const std::wstring& cmd_utf16)
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     return _wsystem(cmd_utf16.c_str());
-    #else
+#else
     return 0;
-    #endif
+#endif
 }
 
 int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
 {
-    #if defined(__unix__) || defined (__APPLE__)
+#if defined(__unix__) || defined(__APPLE__)
     std::string command = std::string(cmd_utf8) + " 2>&1 &";
 
     // Launching games while keeping ES-DE running in the background is very crude as for
     // instance no output from the command is captured and no real error handling is
     // implemented. It should therefore only be used when absolutely necessary.
     if (runInBackground) {
-        LOG(LogDebug) << "Platform::launchGameUnix(): Launching game while keeping ES-DE "
-                "running in the background, no command output will be written to the log file";
+        LOG(LogDebug) << "Platform::launchGameUnix(): Launching game while keeping ES-DE running "
+                         "in the background, no command output will be written to the log file";
         return system(command.c_str());
     }
 
@@ -100,18 +100,25 @@ int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
     }
 
     returnValue = pclose(commandPipe);
+
+#if defined(_RPI_)
+    // Hack to avoid that the application window occasionally loses focus when returning from
+    // a game, which only seems to happen on the Raspberry Pi.
+    SDL_Delay(50);
+    SDL_SetWindowInputFocus(Renderer::getSDLWindow());
+#endif
+
     // We need to shift the return value as it contains some flags (which we don't need).
     returnValue >>= 8;
 
     // Remove any trailing newline from the command output.
     if (commandOutput.size()) {
         if (commandOutput.back() == '\n')
-           commandOutput.pop_back();
+            commandOutput.pop_back();
     }
 
     if (returnValue) {
-        LOG(LogError) << "launchGameUnix - return value " <<
-                std::to_string(returnValue) + ":";
+        LOG(LogError) << "launchGameUnix - return value " << std::to_string(returnValue) + ":";
         if (commandOutput.size())
             LOG(LogError) << commandOutput;
         else
@@ -124,14 +131,14 @@ int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
 
     return returnValue;
 
-    #else // __unix__
+#else // __unix__
     return 0;
-    #endif
+#endif
 }
 
 int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     STARTUPINFOW si {};
     PROCESS_INFORMATION pi;
 
@@ -139,17 +146,19 @@ int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
     bool processReturnValue = true;
     DWORD errorCode = 0;
 
+    // clang-format off
     processReturnValue = CreateProcessW(
-            nullptr,                            // No application name (use command line).
-            const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
-            nullptr,                            // Process attributes.
-            nullptr,                            // Thread attributes.
-            FALSE,                              // Handles inheritance.
-            0,                                  // Creation flags.
-            nullptr,                            // Use parent's environment block.
-            nullptr,                            // Use parent's starting directory.
-            &si,                                // Pointer to the STARTUPINFOW structure.
-            &pi);                               // Pointer to the PROCESS_INFORMATION structure.
+        nullptr,                                 // No application name (use command line).
+        const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
+        nullptr,                                 // Process attributes.
+        nullptr,                                 // Thread attributes.
+        FALSE,                                   // Handles inheritance.
+        0,                                       // Creation flags.
+        nullptr,                                 // Use parent's environment block.
+        nullptr,                                 // Use parent's starting directory.
+        &si,                                     // Pointer to the STARTUPINFOW structure.
+        &pi);                                    // Pointer to the PROCESS_INFORMATION structure.
+    // clang-format on
 
     if (!runInBackground) {
         if (Settings::getInstance()->getBool("LaunchWorkaround")) {
@@ -169,9 +178,9 @@ int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
     if (!processReturnValue) {
         LPWSTR pBuffer = nullptr;
 
-        FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER,
-                nullptr, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                reinterpret_cast<LPWSTR>(&pBuffer), 0, nullptr);
+        FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER, nullptr,
+                       GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                       reinterpret_cast<LPWSTR>(&pBuffer), 0, nullptr);
 
         errorCode = GetLastError();
 
@@ -186,8 +195,8 @@ int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
             }
         }
 
-        LOG(LogError) << "launchGameWindows - system error code " <<
-                errorCode << ": " << errorMessage;
+        LOG(LogError) << "launchGameWindows - system error code " << errorCode << ": "
+                      << errorMessage;
     }
 
     // Close process and thread handles.
@@ -196,40 +205,40 @@ int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
 
     return errorCode;
 
-    #else // _WIN64
+#else // _WIN64
     return 0;
-    #endif
+#endif
 }
 
 unsigned int getTaskbarState()
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     APPBARDATA barData;
     barData.cbSize = sizeof(APPBARDATA);
     return static_cast<UINT>(SHAppBarMessage(ABM_GETSTATE, &barData));
-    #else
+#else
     return 0;
-    #endif
+#endif
 }
 
 void hideTaskbar()
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     APPBARDATA barData;
     barData.cbSize = sizeof(APPBARDATA);
     barData.lParam = ABS_AUTOHIDE;
     SHAppBarMessage(ABM_SETSTATE, &barData);
-    #endif
+#endif
 }
 
 void revertTaskbarState(unsigned int& state)
 {
-    #if defined(_WIN64)
+#if defined(_WIN64)
     APPBARDATA barData;
     barData.cbSize = sizeof(APPBARDATA);
     barData.lParam = state;
     SHAppBarMessage(ABM_SETSTATE, &barData);
-    #endif
+#endif
 }
 
 QuitMode quitMode = QuitMode::QUIT;
@@ -264,7 +273,7 @@ void touch(const std::string& filename)
     if (fp != nullptr)
         fclose(fp);
 #else
-    int fd = open(filename.c_str(), O_CREAT|O_WRONLY, 0644);
+    int fd = open(filename.c_str(), O_CREAT | O_WRONLY, 0644);
     if (fd >= 0)
         close(fd);
 #endif
@@ -273,15 +282,18 @@ void touch(const std::string& filename)
 void processQuitMode()
 {
     switch (quitMode) {
-    case QuitMode::REBOOT:
-        LOG(LogInfo) << "Rebooting system";
-        runRebootCommand();
-        break;
-    case QuitMode::POWEROFF:
-        LOG(LogInfo) << "Powering off system";
-        runPoweroffCommand();
-        break;
-    default:
-        break;
+        case QuitMode::REBOOT: {
+            LOG(LogInfo) << "Rebooting system";
+            runRebootCommand();
+            break;
+        }
+        case QuitMode::POWEROFF: {
+            LOG(LogInfo) << "Powering off system";
+            runPoweroffCommand();
+            break;
+        }
+        default: {
+            break;
+        }
     }
 }

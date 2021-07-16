@@ -8,21 +8,20 @@
 
 #include "components/NinePatchComponent.h"
 
-#include "resources/TextureResource.h"
 #include "Log.h"
 #include "ThemeData.h"
+#include "resources/TextureResource.h"
 
-NinePatchComponent::NinePatchComponent(
-        Window* window,
-        const std::string& path,
-        unsigned int edgeColor,
-        unsigned int centerColor)
-        : GuiComponent(window),
-        mCornerSize(16.0f, 16.0f),
-        mEdgeColor(edgeColor),
-        mCenterColor(centerColor),
-        mPath(path),
-        mVertices(nullptr)
+NinePatchComponent::NinePatchComponent(Window* window,
+                                       const std::string& path,
+                                       unsigned int edgeColor,
+                                       unsigned int centerColor)
+    : GuiComponent(window)
+    , mCornerSize(16.0f, 16.0f)
+    , mEdgeColor(edgeColor)
+    , mCenterColor(centerColor)
+    , mPath(path)
+    , mVertices(nullptr)
 {
     if (!mPath.empty())
         buildVertices();
@@ -42,8 +41,8 @@ void NinePatchComponent::updateColors()
     for (int i = 0; i < 6 * 9; i++)
         mVertices[i].col = edgeColor;
 
-    for (int i = 6*4; i < 6; i++)
-        mVertices[(6*4)+i].col = centerColor;
+    for (int i = 6 * 4; i < 6; i++)
+        mVertices[(6 * 4) + i].col = centerColor;
 }
 
 void NinePatchComponent::buildVertices()
@@ -54,7 +53,12 @@ void NinePatchComponent::buildVertices()
     // Scale the corner size relative to the screen resolution, but keep the scale factor
     // within reason as extreme resolutions may cause artifacts. Any "normal" resolution
     // (e.g. from 720p to 4K) will be within these boundaries though.
-    float scaleFactor = Math::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
+    float scaleFactor;
+    if (Renderer::getScreenWidth() > Renderer::getScreenHeight())
+        scaleFactor = Math::clamp(Renderer::getScreenHeightModifier(), 0.4f, 3.0f);
+    else
+        scaleFactor = Math::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
+
     mTexture = TextureResource::get(mPath, false, false, true, scaleFactor);
 
     if (mTexture->getSize() == Vector2i::Zero()) {
@@ -67,19 +71,21 @@ void NinePatchComponent::buildVertices()
     mVertices = new Renderer::Vertex[6 * 9];
 
     texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
-            static_cast<float>(mTexture->getSize().y()));
+                       static_cast<float>(mTexture->getSize().y()));
 
-    const float imgSizeX[3] = { mCornerSize.x(), mSize.x() - mCornerSize.x() * 2, mCornerSize.x()};
-    const float imgSizeY[3] = { mCornerSize.y(), mSize.y() - mCornerSize.y() * 2, mCornerSize.y()};
-    const float imgPosX[3]  = { 0, imgSizeX[0], imgSizeX[0] + imgSizeX[1]};
-    const float imgPosY[3]  = { 0, imgSizeY[0], imgSizeY[0] + imgSizeY[1]};
+    // clang-format off
+    const float imgSizeX[3] = { mCornerSize.x(), mSize.x() - mCornerSize.x() * 2.0f, mCornerSize.x() };
+    const float imgSizeY[3] = { mCornerSize.y(), mSize.y() - mCornerSize.y() * 2.0f, mCornerSize.y() };
+    const float imgPosX[3] = { 0, imgSizeX[0], imgSizeX[0] + imgSizeX[1] };
+    const float imgPosY[3] = { 0, imgSizeY[0], imgSizeY[0] + imgSizeY[1] };
 
     // The "1 +" in posY and "-" in sizeY is to deal with texture coordinates having a bottom
     // left corner origin vs. verticies having a top left origin.
-    const float texSizeX[3] = {  mCornerSize.x() / texSize.x(),  (texSize.x() - mCornerSize.x() * 2) / texSize.x(),  mCornerSize.x() / texSize.x() };
-    const float texSizeY[3] = { -mCornerSize.y() / texSize.y(), -(texSize.y() - mCornerSize.y() * 2) / texSize.y(), -mCornerSize.y() / texSize.y() };
-    const float texPosX[3]  = {  0,     texSizeX[0],     texSizeX[0] + texSizeX[1] };
-    const float texPosY[3]  = {  1, 1 + texSizeY[0], 1 + texSizeY[0] + texSizeY[1] };
+    const float texSizeX[3] = {  mCornerSize.x() / texSize.x(),  (texSize.x() - mCornerSize.x() * 2.0f) / texSize.x(),  mCornerSize.x() / texSize.x() };
+    const float texSizeY[3] = { -mCornerSize.y() / texSize.y(), -(texSize.y() - mCornerSize.y() * 2.0f) / texSize.y(), -mCornerSize.y() / texSize.y() };
+    const float texPosX[3]  = {  0.0f,        texSizeX[0],        texSizeX[0] + texSizeX[1] };
+    const float texPosY[3]  = {  1.0f, 1.0f + texSizeY[0], 1.0f + texSizeY[0] + texSizeY[1] };
+    // clang-format on
 
     int v = 0;
 
@@ -91,10 +97,12 @@ void NinePatchComponent::buildVertices()
         const Vector2f texPos = Vector2f(texPosX[sliceX], texPosY[sliceY]);
         const Vector2f texSize = Vector2f(texSizeX[sliceX], texSizeY[sliceY]);
 
+        // clang-format off
         mVertices[v + 1] = { { imgPos.x()              , imgPos.y()               }, { texPos.x(),               texPos.y()               }, 0 };
         mVertices[v + 2] = { { imgPos.x()              , imgPos.y() + imgSize.y() }, { texPos.x(),               texPos.y() + texSize.y() }, 0 };
         mVertices[v + 3] = { { imgPos.x() + imgSize.x(), imgPos.y()               }, { texPos.x() + texSize.x(), texPos.y()               }, 0 };
         mVertices[v + 4] = { { imgPos.x() + imgSize.x(), imgPos.y() + imgSize.y() }, { texPos.x() + texSize.x(), texPos.y() + texSize.y() }, 0 };
+        // clang-format on
 
         // Round vertices.
         for (int i = 1; i < 5; i++)
@@ -136,10 +144,7 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
     renderChildren(trans);
 }
 
-void NinePatchComponent::onSizeChanged()
-{
-    buildVertices();
-}
+void NinePatchComponent::onSizeChanged() { buildVertices(); }
 
 void NinePatchComponent::fitTo(Vector2f size, Vector3f position, Vector2f padding)
 {
@@ -171,7 +176,9 @@ void NinePatchComponent::setCenterColor(unsigned int centerColor)
 }
 
 void NinePatchComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-        const std::string& view, const std::string& element, unsigned int properties)
+                                    const std::string& view,
+                                    const std::string& element,
+                                    unsigned int properties)
 {
     GuiComponent::applyTheme(theme, view, element, properties);
 

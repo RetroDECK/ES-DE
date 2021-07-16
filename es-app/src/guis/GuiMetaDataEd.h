@@ -12,11 +12,11 @@
 #ifndef ES_APP_GUIS_GUI_META_DATA_ED_H
 #define ES_APP_GUIS_GUI_META_DATA_ED_H
 
+#include "GuiComponent.h"
+#include "MetaData.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
 #include "scrapers/Scraper.h"
-#include "GuiComponent.h"
-#include "MetaData.h"
 
 class ComponentList;
 class TextComponent;
@@ -24,14 +24,14 @@ class TextComponent;
 class GuiMetaDataEd : public GuiComponent
 {
 public:
-    GuiMetaDataEd(
-            Window* window,
-            MetaDataList* md, const std::vector<MetaDataDecl>&mdd,
-            ScraperSearchParams params,
-            const std::string& header,
-            std::function<void()> savedCallback,
-            std::function<void()> clearGameFunc,
-            std::function<void()> deleteGameFunc);
+    GuiMetaDataEd(Window* window,
+                  MetaDataList* md,
+                  const std::vector<MetaDataDecl>& mdd,
+                  ScraperSearchParams params,
+                  const std::string& header,
+                  std::function<void()> savedCallback,
+                  std::function<void()> clearGameFunc,
+                  std::function<void()> deleteGameFunc);
 
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;

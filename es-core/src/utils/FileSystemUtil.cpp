@@ -16,20 +16,20 @@
 
 #include "utils/FileSystemUtil.h"
 
-#include "utils/StringUtil.h"
 #include "Log.h"
+#include "utils/StringUtil.h"
 
-#include <sys/stat.h>
 #include <fstream>
 #include <string>
+#include <sys/stat.h>
 
 #if defined(_WIN64)
-#include <direct.h>
 #include <Windows.h>
+#include <direct.h>
 #if defined(_MSC_VER) // MSVC compiler.
 #define stat64 _stat64
-#define S_ISREG(x) (((x) & S_IFMT) == S_IFREG)
-#define S_ISDIR(x) (((x) & S_IFMT) == S_IFDIR)
+#define S_ISREG(x) (((x)&S_IFMT) == S_IFREG)
+#define S_ISDIR(x) (((x)&S_IFMT) == S_IFDIR)
 #endif
 #else
 #include <dirent.h>
@@ -69,7 +69,7 @@ namespace Utils
             // Only parse the directory, if it's a directory.
             if (isDirectory(genericPath)) {
 
-                #if defined(_WIN64)
+#if defined(_WIN64)
                 WIN32_FIND_DATAW findData;
                 std::wstring wildcard = Utils::String::stringToWideString(genericPath) + L"/*";
                 HANDLE hFind = FindFirstFileW(wildcard.c_str(), &findData);
@@ -88,11 +88,10 @@ namespace Utils
                                 contentList.merge(getDirContent(fullName, true));
                             }
                         }
-                    }
-                    while (FindNextFileW(hFind, &findData));
+                    } while (FindNextFileW(hFind, &findData));
                     FindClose(hFind);
                 }
-                #else
+#else
                 DIR* dir = opendir(genericPath.c_str());
 
                 if (dir != nullptr) {
@@ -114,7 +113,7 @@ namespace Utils
                     }
                     closedir(dir);
                 }
-                #endif
+#endif
             }
             contentList.sort();
             return contentList;
@@ -142,6 +141,7 @@ namespace Utils
 
         void setHomePath(const std::string& path)
         {
+            // Set home path.
             homePath = getGenericPath(path);
         }
 
@@ -151,33 +151,33 @@ namespace Utils
             if (homePath.length())
                 return homePath;
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             // On Windows we need to check HOMEDRIVE and HOMEPATH.
             if (!homePath.length()) {
                 std::wstring envHomeDrive;
                 std::wstring envHomePath;
-                #if defined(_MSC_VER) // MSVC compiler.
+#if defined(_MSC_VER) // MSVC compiler.
                 wchar_t* buffer;
                 if (!_wdupenv_s(&buffer, nullptr, L"HOMEDRIVE"))
                     envHomeDrive = buffer;
                 if (!_wdupenv_s(&buffer, nullptr, L"HOMEPATH"))
                     envHomePath = buffer;
-                #else
+#else
                 envHomeDrive = _wgetenv(L"HOMEDRIVE");
                 envHomePath = _wgetenv(L"HOMEPATH");
-                #endif
+#endif
                 if (envHomeDrive.length() && envHomePath.length())
                     homePath = getGenericPath(Utils::String::wideStringToString(envHomeDrive) +
-                            "/" + Utils::String::wideStringToString(envHomePath));
+                                              "/" + Utils::String::wideStringToString(envHomePath));
             }
-            #else
+#else
 
             if (!homePath.length()) {
                 std::string envHome = getenv("HOME");
                 if (envHome.length())
                     homePath = getGenericPath(envHome);
             }
-            #endif
+#endif
 
             // No homepath found, fall back to current working directory.
             if (!homePath.length())
@@ -189,24 +189,26 @@ namespace Utils
         std::string getCWDPath()
         {
             // Return current working directory.
-            #if defined(_WIN64)
+
+#if defined(_WIN64)
             wchar_t tempWide[512];
             return (_wgetcwd(tempWide, 512) ?
-                    getGenericPath(Utils::String::wideStringToString(tempWide)) : "");
-            #else
+                        getGenericPath(Utils::String::wideStringToString(tempWide)) :
+                        "");
+#else
             char temp[512];
             return (getcwd(temp, 512) ? getGenericPath(temp) : "");
-            #endif
+#endif
         }
 
         std::string getPathToBinary(const std::string& executable)
         {
-            #if defined(_WIN64)
+#if defined(_WIN64)
             return "";
-            #else
+#else
             std::string pathVariable = std::string(getenv("PATH"));
             std::vector<std::string> pathList =
-                    Utils::String::delimitedStringToVector(pathVariable, ":");
+                Utils::String::delimitedStringToVector(pathVariable, ":");
 
             std::string pathTest;
 
@@ -216,21 +218,21 @@ namespace Utils
                     return it->c_str();
             }
             return "";
-            #endif
+#endif
         }
 
         void setExePath(const std::string& path)
         {
             constexpr int pathMax = 32767;
-            #if defined(_WIN64)
+#if defined(_WIN64)
             std::wstring result(pathMax, 0);
             if (GetModuleFileNameW(nullptr, &result[0], pathMax) != 0)
                 exePath = Utils::String::wideStringToString(result);
-            #else
+#else
             std::string result(pathMax, 0);
             if (readlink("/proc/self/exe", &result[0], pathMax) != -1)
                 exePath = result;
-            #endif
+#endif
             exePath = getCanonicalPath(exePath);
 
             // Fallback to argv[0] if everything else fails.
@@ -242,27 +244,28 @@ namespace Utils
 
         std::string getExePath()
         {
+            // Return executable path.
             return exePath;
         }
 
         std::string getProgramDataPath()
         {
-            #if defined(__unix__)
+#if defined(__unix__)
             return installPrefix + "/share/emulationstation";
-            #else
+#else
             return "";
-            #endif
+#endif
         }
 
         std::string getPreferredPath(const std::string& path)
         {
             std::string preferredPath = path;
             size_t offset = std::string::npos;
-            #if defined(_WIN64)
+#if defined(_WIN64)
             // Convert '/' to '\\'
             while ((offset = preferredPath.find('/')) != std::string::npos)
                 preferredPath.replace(offset, 1, "\\");
-            #endif
+#endif
             return preferredPath;
         }
 
@@ -277,15 +280,15 @@ namespace Utils
 
             // Convert '\\' to '/'
             while ((offset = genericPath.find('\\')) != std::string::npos)
-                genericPath.replace(offset, 1 ,"/");
+                genericPath.replace(offset, 1, "/");
 
             // Remove double '/'
             while ((offset = genericPath.find("//")) != std::string::npos)
                 genericPath.erase(offset, 1);
 
             // Remove trailing '/' when the path is more than a simple '/'
-            while (genericPath.length() > 1 && ((offset = genericPath.find_last_of('/')) ==
-                    (genericPath.length() - 1)))
+            while (genericPath.length() > 1 &&
+                   ((offset = genericPath.find_last_of('/')) == (genericPath.length() - 1)))
                 genericPath.erase(offset, 1);
 
             return genericPath;
@@ -295,10 +298,10 @@ namespace Utils
         {
             std::string escapedPath = getGenericPath(path);
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             // Windows escapes stuff by just putting everything in quotes.
             return '"' + getPreferredPath(escapedPath) + '"';
-            #else
+#else
             // Insert a backslash before most characters that would mess up a bash path.
             const char* invalidChars = "\\ '\"!$^&*(){}[]?;<>";
             const char* invalidChar = invalidChars;
@@ -318,7 +321,7 @@ namespace Utils
                 invalidChar++;
             }
             return escapedPath;
-            #endif
+#endif
         }
 
         std::string getCanonicalPath(const std::string& path)
@@ -337,8 +340,8 @@ namespace Utils
                 canonicalPath.clear();
                 scan = false;
 
-                for (stringList::const_iterator it = pathList.cbegin();
-                        it != pathList.cend(); it++) {
+                for (stringList::const_iterator it = pathList.cbegin(); it != pathList.cend();
+                     it++) {
                     // Ignore empty.
                     if ((*it).empty())
                         continue;
@@ -353,13 +356,13 @@ namespace Utils
                         continue;
                     }
 
-                    #if defined(_WIN64)
+#if defined(_WIN64)
                     // Append folder to path.
                     canonicalPath += (canonicalPath.size() == 0) ? (*it) : ("/" + (*it));
-                    #else
+#else
                     // Append folder to path.
                     canonicalPath += ("/" + (*it));
-                    #endif
+#endif
 
                     if (isSymlink(canonicalPath)) {
                         std::string resolved = resolveSymlink(canonicalPath);
@@ -389,8 +392,7 @@ namespace Utils
             std::string baseVar = isAbsolute(base) ? getGenericPath(base) : getAbsolutePath(base);
 
             return isAbsolute(absolutePath) ? absolutePath :
-                    getGenericPath(baseVar + "/" + absolutePath);
-
+                                              getGenericPath(baseVar + "/" + absolutePath);
         }
 
         std::string getParent(const std::string& path)
@@ -414,7 +416,7 @@ namespace Utils
             // Find last '/' and return the filename.
             if ((offset = genericPath.find_last_of('/')) != std::string::npos)
                 return ((genericPath[offset + 1] == 0) ? "." :
-                        std::string(genericPath, offset + 1));
+                                                         std::string(genericPath, offset + 1));
 
             // No '/' found, entire path is a filename.
             return genericPath;
@@ -466,11 +468,12 @@ namespace Utils
         }
 
         std::string resolveRelativePath(const std::string& path,
-                const std::string& relativeTo, const bool allowHome)
+                                        const std::string& relativeTo,
+                                        const bool allowHome)
         {
             std::string genericPath = getGenericPath(path);
-            std::string relativeToVar = isDirectory(relativeTo) ?
-                    getGenericPath(relativeTo) : getParent(relativeTo);
+            std::string relativeToVar =
+                isDirectory(relativeTo) ? getGenericPath(relativeTo) : getParent(relativeTo);
 
             // Nothing to resolve.
             if (!genericPath.length())
@@ -489,7 +492,8 @@ namespace Utils
         }
 
         std::string createRelativePath(const std::string& path,
-                const std::string& relativeTo, const bool allowHome)
+                                       const std::string& relativeTo,
+                                       const bool allowHome)
         {
             bool contains = false;
             std::string relativePath = removeCommonPath(path, relativeTo, contains);
@@ -507,11 +511,12 @@ namespace Utils
         }
 
         std::string removeCommonPath(const std::string& path,
-                const std::string& commonArg, bool& contains)
+                                     const std::string& commonArg,
+                                     bool& contains)
         {
             std::string genericPath = getGenericPath(path);
-            std::string common = isDirectory(commonArg) ?
-                    getGenericPath(commonArg) : getParent(commonArg);
+            std::string common =
+                isDirectory(commonArg) ? getGenericPath(commonArg) : getParent(commonArg);
 
             if (genericPath.find(common) == 0) {
                 contains = true;
@@ -527,37 +532,39 @@ namespace Utils
             std::string genericPath = getGenericPath(path);
             std::string resolved;
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             std::wstring resolvedW;
             HANDLE hFile = CreateFileW(Utils::String::stringToWideString(genericPath).c_str(),
-                    FILE_READ_ATTRIBUTES, FILE_SHARE_READ, 0,
-                    OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, 0);
+                                       FILE_READ_ATTRIBUTES, FILE_SHARE_READ, 0, OPEN_EXISTING,
+                                       FILE_FLAG_BACKUP_SEMANTICS, 0);
             if (hFile != INVALID_HANDLE_VALUE) {
-                resolvedW.resize(GetFinalPathNameByHandleW(hFile, nullptr, 0,
-                        FILE_NAME_NORMALIZED) + 1);
-               if (GetFinalPathNameByHandleW(hFile, const_cast<LPWSTR>(resolvedW.data()),
-                        static_cast<DWORD>(resolvedW.size()), FILE_NAME_NORMALIZED) > 0) {
+                resolvedW.resize(
+                    GetFinalPathNameByHandleW(hFile, nullptr, 0, FILE_NAME_NORMALIZED) + 1);
+                if (GetFinalPathNameByHandleW(hFile, const_cast<LPWSTR>(resolvedW.data()),
+                                              static_cast<DWORD>(resolvedW.size()),
+                                              FILE_NAME_NORMALIZED) > 0) {
                     resolvedW.resize(resolvedW.size() - 1);
                     resolved = getGenericPath(Utils::String::wideStringToString(resolvedW));
                 }
                 CloseHandle(hFile);
             }
-            #else
+#else
             struct stat info;
 
             // Check if lstat succeeded.
             if (lstat(genericPath.c_str(), &info) == 0) {
                 resolved.resize(info.st_size);
                 if (readlink(genericPath.c_str(), const_cast<char*>(resolved.data()),
-                        resolved.size()) > 0)
+                             resolved.size()) > 0)
                     resolved = getGenericPath(resolved);
             }
-            #endif
+#endif
             return resolved;
         }
 
         bool copyFile(const std::string& sourcePath,
-                const std::string& destinationPath, bool overwrite)
+                      const std::string& destinationPath,
+                      bool overwrite)
         {
             if (!exists(sourcePath)) {
                 LOG(LogError) << "Can't copy file, source file does not exist:";
@@ -573,34 +580,34 @@ namespace Utils
 
             if (!overwrite && exists(destinationPath)) {
                 LOG(LogError) << "Destination file exists and the overwrite flag "
-                        "has not been set";
+                                 "has not been set";
                 return true;
             }
 
-            #if defined(_WIN64)
-            std::ifstream sourceFile(
-                    Utils::String::stringToWideString(sourcePath).c_str(), std::ios::binary);
-            #else
+#if defined(_WIN64)
+            std::ifstream sourceFile(Utils::String::stringToWideString(sourcePath).c_str(),
+                                     std::ios::binary);
+#else
             std::ifstream sourceFile(sourcePath, std::ios::binary);
-            #endif
+#endif
 
             if (sourceFile.fail()) {
-                LOG(LogError) << "Couldn't read from source file \"" << sourcePath <<
-                        "\", permission problems?";
+                LOG(LogError) << "Couldn't read from source file \"" << sourcePath
+                              << "\", permission problems?";
                 sourceFile.close();
                 return true;
             }
 
-            #if defined(_WIN64)
-            std::ofstream targetFile(
-                    Utils::String::stringToWideString(destinationPath).c_str(), std::ios::binary);
-            #else
+#if defined(_WIN64)
+            std::ofstream targetFile(Utils::String::stringToWideString(destinationPath).c_str(),
+                                     std::ios::binary);
+#else
             std::ofstream targetFile(destinationPath, std::ios::binary);
-            #endif
+#endif
 
             if (targetFile.fail()) {
-                LOG(LogError) << "Couldn't write to target file \"" << destinationPath <<
-                        "\", permission problems?";
+                LOG(LogError) << "Couldn't write to target file \"" << destinationPath
+                              << "\", permission problems?";
                 targetFile.close();
                 return true;
             }
@@ -614,7 +621,8 @@ namespace Utils
         }
 
         bool renameFile(const std::string& sourcePath,
-                const std::string& destinationPath, bool overwrite)
+                        const std::string& destinationPath,
+                        bool overwrite)
         {
             // Don't print any error message for a missing source file as Log will use this
             // function when initializing the logging. It would always generate an error in
@@ -630,17 +638,16 @@ namespace Utils
             }
 
             if (!overwrite && exists(destinationPath)) {
-                LOG(LogError) << "Destination file exists and the overwrite flag "
-                        "has not been set";
+                LOG(LogError) << "Destination file exists and the overwrite flag has not been set";
                 return true;
             }
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             _wrename(Utils::String::stringToWideString(sourcePath).c_str(),
-                    Utils::String::stringToWideString(destinationPath).c_str());
-            #else
+                     Utils::String::stringToWideString(destinationPath).c_str());
+#else
             std::rename(sourcePath.c_str(), destinationPath.c_str());
-            #endif
+#endif
 
             return false;
         }
@@ -653,7 +660,7 @@ namespace Utils
             if (!exists(genericPath))
                 return true;
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             if (_wunlink(Utils::String::stringToWideString(genericPath).c_str()) != 0) {
                 LOG(LogError) << "Couldn't delete file, permission problems?";
                 LOG(LogError) << genericPath;
@@ -662,7 +669,7 @@ namespace Utils
             else {
                 return false;
             }
-            #else
+#else
             if (unlink(genericPath.c_str()) != 0) {
                 LOG(LogError) << "Couldn't delete file, permission problems?";
                 LOG(LogError) << genericPath;
@@ -672,7 +679,7 @@ namespace Utils
                 return false;
             }
             return (unlink(genericPath.c_str()) == 0);
-            #endif
+#endif
         }
 
         bool removeDirectory(const std::string& path)
@@ -687,17 +694,17 @@ namespace Utils
                 LOG(LogError) << path;
                 return false;
             }
-            #if defined(_WIN64)
+#if defined(_WIN64)
             if (_wrmdir(Utils::String::stringToWideString(path).c_str()) != 0) {
-            #else
+#else
             if (rmdir(path.c_str()) != 0) {
-            #endif
+#endif
                 LOG(LogError) << "Couldn't delete directory, permission problems?";
                 LOG(LogError) << path;
                 return false;
             }
             return true;
-        }
+        } // namespace FileSystem
 
         bool createDirectory(const std::string& path)
         {
@@ -706,13 +713,13 @@ namespace Utils
             if (exists(genericPath))
                 return true;
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             if (_wmkdir(Utils::String::stringToWideString(genericPath).c_str()) == 0)
                 return true;
-            #else
+#else
             if (mkdir(genericPath.c_str(), 0755) == 0)
                 return true;
-            #endif
+#endif
 
             // Failed to create directory, try to create the parent.
             std::string parent = getParent(genericPath);
@@ -721,33 +728,34 @@ namespace Utils
             if (parent != genericPath)
                 createDirectory(parent);
 
-            // Try to create directory again now that the parent should exist.
-            #if defined(_WIN64)
+                // Try to create directory again now that the parent should exist.
+
+#if defined(_WIN64)
             return (_wmkdir(Utils::String::stringToWideString(genericPath).c_str()) == 0);
-            #else
+#else
             return (mkdir(genericPath.c_str(), 0755) == 0);
-            #endif
+#endif
         }
 
         bool exists(const std::string& path)
         {
             std::string genericPath = getGenericPath(path);
 
-            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
             return (stat(genericPath.c_str(), &info) == 0);
-            #elif defined(_WIN64)
+#elif defined(_WIN64)
             struct _stat64 info;
             return (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) == 0);
-            #else
-            struct stat64 info;
-            return (stat64(genericPath.c_str(), &info) == 0);
-            #endif
+#else
+        struct stat64 info;
+        return (stat64(genericPath.c_str(), &info) == 0);
+#endif
         }
 
         bool driveExists(const std::string& path)
         {
-            #if defined(_WIN64)
+#if defined(_WIN64)
             std::string genericPath = getGenericPath(path);
             // Try to add a dot or a backslash and a dot depending on how the drive
             // letter was defined by the user.
@@ -759,39 +767,39 @@ namespace Utils
             struct _stat64 info;
             return (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) == 0);
 
-            #else
+#else
             return false;
-            #endif
+#endif
         }
 
         bool isAbsolute(const std::string& path)
         {
             std::string genericPath = getGenericPath(path);
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             return ((genericPath.size() > 1) && (genericPath[1] == ':'));
-            #else
+#else
             return ((genericPath.size() > 0) && (genericPath[0] == '/'));
-            #endif
+#endif
         }
 
         bool isRegularFile(const std::string& path)
         {
             std::string genericPath = getGenericPath(path);
 
-            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
             if (stat(genericPath.c_str(), &info) != 0)
                 return false;
-            #elif defined(_WIN64)
+#elif defined(_WIN64)
             struct stat64 info;
             if (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) != 0)
                 return false;
-            #else
-            struct stat64 info;
-            if (stat64(genericPath.c_str(), &info) != 0)
-                return false;
-            #endif
+#else
+        struct stat64 info;
+        if (stat64(genericPath.c_str(), &info) != 0)
+            return false;
+#endif
 
             // Check for S_IFREG attribute.
             return (S_ISREG(info.st_mode));
@@ -801,19 +809,19 @@ namespace Utils
         {
             std::string genericPath = getGenericPath(path);
 
-            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
             if (stat(genericPath.c_str(), &info) != 0)
                 return false;
-            #elif defined(_WIN64)
+#elif defined(_WIN64)
             struct stat64 info;
             if (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) != 0)
                 return false;
-            #else
-            struct stat64 info;
-            if (stat64(genericPath.c_str(), &info) != 0)
-                return false;
-            #endif
+#else
+        struct stat64 info;
+        if (stat64(genericPath.c_str(), &info) != 0)
+            return false;
+#endif
 
             // Check for S_IFDIR attribute.
             return (S_ISDIR(info.st_mode));
@@ -823,30 +831,30 @@ namespace Utils
         {
             std::string genericPath = getGenericPath(path);
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             // Check for symlink attribute.
             const DWORD Attributes =
-                    GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str());
+                GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str());
             if ((Attributes != INVALID_FILE_ATTRIBUTES) &&
-                    (Attributes & FILE_ATTRIBUTE_REPARSE_POINT))
+                (Attributes & FILE_ATTRIBUTE_REPARSE_POINT))
                 return true;
-            #else
+#else
 
-            #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
 
             if (lstat(genericPath.c_str(), &info) != 0)
                 return false;
-            #else
+#else
             struct stat64 info;
 
             if (lstat64(genericPath.c_str(), &info) != 0)
                 return false;
-            #endif
+#endif
 
             // Check for S_IFLNK attribute.
             return (S_ISLNK(info.st_mode));
-            #endif
+#endif
 
             // Not a symlink.
             return false;
@@ -856,13 +864,13 @@ namespace Utils
         {
             std::string genericPath = getGenericPath(path);
 
-            #if defined(_WIN64)
+#if defined(_WIN64)
             // Check for hidden attribute.
             const DWORD Attributes =
-                    GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str());
+                GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str());
             if ((Attributes != INVALID_FILE_ATTRIBUTES) && (Attributes & FILE_ATTRIBUTE_HIDDEN))
                 return true;
-            #endif
+#endif
 
             // Filenames starting with . are hidden in Linux, but
             // we do this check for windows as well.
@@ -872,6 +880,6 @@ namespace Utils
             return false;
         }
 
-    } // FileSystem::
+    } // namespace FileSystem
 
-} // Utils::
+} // namespace Utils

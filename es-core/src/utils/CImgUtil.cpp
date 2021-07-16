@@ -13,7 +13,7 @@ namespace Utils
     namespace CImg
     {
         void convertRGBAToCImg(std::vector<unsigned char> imageRGBA,
-                cimg_library::CImg<unsigned char>& image)
+                               cimg_library::CImg<unsigned char>& image)
         {
             // CImg does not interleave the pixels as in RGBARGBARGBA so a conversion is required.
             int counter = 0;
@@ -29,20 +29,20 @@ namespace Utils
         }
 
         void convertCImgToRGBA(cimg_library::CImg<unsigned char> image,
-                std::vector<unsigned char>& imageRGBA)
+                               std::vector<unsigned char>& imageRGBA)
         {
             for (int r = image.height() - 1; r >= 0; r--) {
                 for (int c = 0; c < image.width(); c++) {
-                    imageRGBA.push_back((unsigned char)image(c,r,0,2));
-                    imageRGBA.push_back((unsigned char)image(c,r,0,1));
-                    imageRGBA.push_back((unsigned char)image(c,r,0,0));
-                    imageRGBA.push_back((unsigned char)image(c,r,0,3));
+                    imageRGBA.push_back((unsigned char)image(c, r, 0, 2));
+                    imageRGBA.push_back((unsigned char)image(c, r, 0, 1));
+                    imageRGBA.push_back((unsigned char)image(c, r, 0, 0));
+                    imageRGBA.push_back((unsigned char)image(c, r, 0, 3));
                 }
             }
         }
 
         void getTransparentPaddingCoords(cimg_library::CImg<unsigned char>& image,
-                int (&imageCoords)[4])
+                                         int (&imageCoords)[4])
         {
             // Check that the image actually has an alpha channel.
             if (image.spectrum() != 4)
@@ -147,8 +147,7 @@ namespace Utils
             }
 
             if (rowCounterTop > 0)
-                image.crop(0, 0, 0, 3, image.width() - 1, image.height() - 1 -
-                        rowCounterTop, 0, 0);
+                image.crop(0, 0, 0, 3, image.width() - 1, image.height() - 1 - rowCounterTop, 0, 0);
 
             if (rowCounterBottom > 0)
                 image.crop(0, rowCounterBottom, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
@@ -157,8 +156,8 @@ namespace Utils
                 image.crop(columnCounterLeft, 0, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
 
             if (columnCounterRight > 0)
-                image.crop(0, 0, 0, 3, image.width() - columnCounterRight - 1,
-                        image.height() - 1, 0, 0);
+                image.crop(0, 0, 0, 3, image.width() - columnCounterRight - 1, image.height() - 1,
+                           0, 0);
         }
 
         void cropLetterboxes(cimg_library::CImg<unsigned char>& image)
@@ -190,8 +189,8 @@ namespace Utils
             }
 
             if (rowCounterUpper > 0)
-                image.crop(0, 0, 0, 3, image.width() - 1, image.height() - 1 -
-                        rowCounterUpper, 0, 0);
+                image.crop(0, 0, 0, 3, image.width() - 1, image.height() - 1 - rowCounterUpper, 0,
+                           0);
 
             if (rowCounterLower > 0)
                 image.crop(0, rowCounterLower, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
@@ -229,20 +228,23 @@ namespace Utils
                 image.crop(columnCounterLeft, 0, 0, 3, image.width() - 1, image.height() - 1, 0, 0);
 
             if (columnCounterRight > 0)
-                image.crop(0, 0, 0, 3, image.width() - columnCounterRight - 1,
-                        image.height() - 1, 0, 0);
+                image.crop(0, 0, 0, 3, image.width() - columnCounterRight - 1, image.height() - 1,
+                           0, 0);
         }
 
-        void addDropShadow(cimg_library::CImg<unsigned char>& image, unsigned int shadowDistance,
-                float transparency, unsigned int iterations)
+        void addDropShadow(cimg_library::CImg<unsigned char>& image,
+                           unsigned int shadowDistance,
+                           float transparency,
+                           unsigned int iterations)
         {
             // Check that the image actually has an alpha channel.
             if (image.spectrum() != 4)
                 return;
 
-            // Make the shadow image larger than the source image to leave space for the drop shadow.
-            cimg_library::CImg<unsigned char> shadowImage(image.width() + shadowDistance * 3,
-                    image.height() + shadowDistance * 3, 1, 4, 0);
+            // Make the shadow image larger than the source image to leave space for the
+            // drop shadow.
+            cimg_library::CImg<unsigned char> shadowImage(
+                image.width() + shadowDistance * 3, image.height() + shadowDistance * 3, 1, 4, 0);
 
             // Create a mask image.
             cimg_library::CImg<unsigned char> maskImage(image.width(), image.height(), 1, 4, 0);
@@ -256,20 +258,20 @@ namespace Utils
             // Lower the transparency and apply the blur.
             shadowImage.get_shared_channel(3) /= transparency;
             shadowImage.blur_box(static_cast<const float>(shadowDistance),
-                    static_cast<const float>(shadowDistance), 1, true, iterations);
+                                 static_cast<const float>(shadowDistance), 1, true, iterations);
 
             // Add the mask to the alpha channel of the shadow image.
             shadowImage.get_shared_channel(3).draw_image(0, 0, maskImage.get_shared_channels(0, 0),
-                    maskImage.get_shared_channel(3), 1, 255);
+                                                         maskImage.get_shared_channel(3), 1, 255);
             // Draw the source image on top of the shadow image.
             shadowImage.draw_image(0, 0, image.get_shared_channels(0, 2),
-                    image.get_shared_channel(3), 1, 255);
+                                   image.get_shared_channel(3), 1, 255);
             // Remove the any unused space that we added to leave room for the shadow.
             removeTransparentPadding(shadowImage);
 
             image = shadowImage;
         }
 
-    } // CImg::
+    } // namespace CImg
 
-} // Utils::
+} // namespace Utils

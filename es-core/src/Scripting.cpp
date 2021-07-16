@@ -14,20 +14,20 @@
 
 #include "Scripting.h"
 
-#include "utils/FileSystemUtil.h"
 #include "Log.h"
 #include "Platform.h"
 #include "Settings.h"
+#include "utils/FileSystemUtil.h"
 
 namespace Scripting
 {
-	void fireEvent(const std::string& eventName, const std::string& arg1, const std::string& arg2)
-	{
+    void fireEvent(const std::string& eventName, const std::string& arg1, const std::string& arg2)
+    {
         if (!Settings::getInstance()->getBool("CustomEventScripts"))
             return;
 
-		LOG(LogDebug) << "Scripting::fireEvent(): " << eventName << " \"" << arg1 <<
-                "\" \"" << arg2 << "\"";
+        LOG(LogDebug) << "Scripting::fireEvent(): " << eventName << " \"" << arg1 << "\" \"" << arg2
+                      << "\"";
 
         std::list<std::string> scriptDirList;
         std::string scriptDir;
@@ -37,11 +37,9 @@ namespace Scripting
         if (Utils::FileSystem::exists(scriptDir))
             scriptDirList.push_back(scriptDir);
 
-        for (std::list<std::string>::const_iterator dirIt = scriptDirList.cbegin();
-                dirIt != scriptDirList.cend(); dirIt++) {
+        for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); dirIt++) {
             std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
-            for (std::list<std::string>::const_iterator it = scripts.cbegin();
-                    it != scripts.cend(); it++) {
+            for (auto it = scripts.cbegin(); it != scripts.cend(); it++) {
                 std::string arg1Quotation;
                 std::string arg2Quotation;
                 // Add quotation marks around the arguments as long as these are not already
@@ -50,11 +48,19 @@ namespace Scripting
                     arg1Quotation = "\"";
                 if (arg2.front() != '\"')
                     arg2Quotation = "\"";
-                std::string script = *it + " " + arg1Quotation + arg1 + arg1Quotation + " " +
-                        arg2Quotation + arg2 + arg2Quotation;
+                std::string script;
+                script.append(*it)
+                    .append(" ")
+                    .append(arg1Quotation)
+                    .append(arg1)
+                    .append(arg1Quotation)
+                    .append(" ")
+                    .append(arg2Quotation)
+                    .append(arg2)
+                    .append(arg2Quotation);
                 LOG(LogDebug) << "Executing: " << script;
                 runSystemCommand(script);
             }
         }
-	}
-}
+    }
+} // namespace Scripting

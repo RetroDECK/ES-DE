@@ -8,49 +8,47 @@
 
 #include "components/TextComponent.h"
 
-#include "utils/StringUtil.h"
 #include "Log.h"
 #include "Settings.h"
+#include "utils/StringUtil.h"
 
-TextComponent::TextComponent(
-        Window* window)
-        : GuiComponent(window),
-        mFont(Font::get(FONT_SIZE_MEDIUM)),
-        mUppercase(false),
-        mColor(0x000000FF),
-        mAutoCalcExtent(true, true),
-        mHorizontalAlignment(ALIGN_LEFT),
-        mVerticalAlignment(ALIGN_CENTER),
-        mLineSpacing(1.5f),
-        mNoTopMargin(false),
-        mBgColor(0),
-        mMargin(0.0f),
-        mRenderBackground(false)
+TextComponent::TextComponent(Window* window)
+    : GuiComponent(window)
+    , mFont(Font::get(FONT_SIZE_MEDIUM))
+    , mUppercase(false)
+    , mColor(0x000000FF)
+    , mAutoCalcExtent(true, true)
+    , mHorizontalAlignment(ALIGN_LEFT)
+    , mVerticalAlignment(ALIGN_CENTER)
+    , mLineSpacing(1.5f)
+    , mNoTopMargin(false)
+    , mBgColor(0)
+    , mMargin(0.0f)
+    , mRenderBackground(false)
 {
 }
 
-TextComponent::TextComponent(
-        Window* window,
-        const std::string& text,
-        const std::shared_ptr<Font>& font,
-        unsigned int color,
-        Alignment align,
-        Vector3f pos,
-        Vector2f size,
-        unsigned int bgcolor,
-        float margin)
-        : GuiComponent(window),
-        mFont(nullptr),
-        mUppercase(false),
-        mColor(0x000000FF),
-        mAutoCalcExtent(true, true),
-        mHorizontalAlignment(align),
-        mVerticalAlignment(ALIGN_CENTER),
-        mLineSpacing(1.5f),
-        mNoTopMargin(false),
-        mBgColor(0),
-        mMargin(margin),
-        mRenderBackground(false)
+TextComponent::TextComponent(Window* window,
+                             const std::string& text,
+                             const std::shared_ptr<Font>& font,
+                             unsigned int color,
+                             Alignment align,
+                             Vector3f pos,
+                             Vector2f size,
+                             unsigned int bgcolor,
+                             float margin)
+    : GuiComponent(window)
+    , mFont(nullptr)
+    , mUppercase(false)
+    , mColor(0x000000FF)
+    , mAutoCalcExtent(true, true)
+    , mHorizontalAlignment(align)
+    , mVerticalAlignment(ALIGN_CENTER)
+    , mLineSpacing(1.5f)
+    , mNoTopMargin(false)
+    , mBgColor(0)
+    , mMargin(margin)
+    , mRenderBackground(false)
 {
     setFont(font);
     setColor(color);
@@ -87,43 +85,28 @@ void TextComponent::setBackgroundColor(unsigned int color)
     mBgColorOpacity = mBgColor & 0x000000FF;
 }
 
-void TextComponent::setRenderBackground(bool render)
-{
-    mRenderBackground = render;
-}
-
 //  Scale the opacity.
 void TextComponent::setOpacity(unsigned char opacity)
 {
-    // This function is mostly called to do fading in-out of the Text component element.
-    // Therefore, we assume here that opacity is a fractional value (expressed as an int 0-255),
-    // of the opacity originally set with setColor() or setBackgroundColor().
-    unsigned char o = static_cast<unsigned char>(static_cast<float>(opacity) / 255.f *
-            static_cast<float>(mColorOpacity));
+    // This function is mostly called to do fade in and fade out of the text component element.
+    // Therefore we assume here that opacity is a fractional value (expressed as an unsigned
+    // char 0 - 255) of the opacity originally set with setColor() or setBackgroundColor().
+    unsigned char o = static_cast<unsigned char>(static_cast<float>(opacity) / 255.0f *
+                                                 static_cast<float>(mColorOpacity));
     mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(o);
 
-    unsigned char bgo = static_cast<unsigned char>(static_cast<float>(opacity) / 255.f *
-            static_cast<float>(mBgColorOpacity));
+    unsigned char bgo = static_cast<unsigned char>(static_cast<float>(opacity) / 255.0f *
+                                                   static_cast<float>(mBgColorOpacity));
     mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(bgo);
 
     onColorChanged();
     GuiComponent::setOpacity(opacity);
 }
 
-unsigned char TextComponent::getOpacity() const
-{
-    return mColor & 0x000000FF;
-}
-
 void TextComponent::setText(const std::string& text)
 {
     mText = text;
     onTextChanged();
-}
-
-void TextComponent::setHiddenText(const std::string& text)
-{
-    mHiddenText = text;
 }
 
 void TextComponent::setUppercase(bool uppercase)
@@ -148,17 +131,21 @@ void TextComponent::render(const Transform4x4f& parentTrans)
         const Vector2f& textSize = mTextCache->metrics.size;
         float yOff = 0;
         switch (mVerticalAlignment) {
-            case ALIGN_TOP:
+            case ALIGN_TOP: {
                 yOff = 0;
                 break;
-            case ALIGN_BOTTOM:
+            }
+            case ALIGN_BOTTOM: {
                 yOff = (getSize().y() - textSize.y());
                 break;
-            case ALIGN_CENTER:
+            }
+            case ALIGN_CENTER: {
                 yOff = (getSize().y() - textSize.y()) / 2.0f;
                 break;
-            default:
+            }
+            default: {
                 break;
+            }
         }
         Vector3f off(0, yOff, 0);
 
@@ -174,22 +161,26 @@ void TextComponent::render(const Transform4x4f& parentTrans)
         // Draw the text area, where the text actually is located.
         if (Settings::getInstance()->getBool("DebugText")) {
             switch (mHorizontalAlignment) {
-            case ALIGN_LEFT:
-                Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x(),
-                        mTextCache->metrics.size.y(), 0x00000033, 0x00000033);
-                break;
-            case ALIGN_CENTER:
-                Renderer::drawRect((mSize.x() - mTextCache->metrics.size.x()) / 2.0f, 0.0f,
-                        mTextCache->metrics.size.x(), mTextCache->metrics.size.y(),
-                        0x00000033, 0x00000033);
-                break;
-            case ALIGN_RIGHT:
-                Renderer::drawRect(mSize.x() - mTextCache->metrics.size.x(), 0.0f,
-                        mTextCache->metrics.size.x(), mTextCache->metrics.size.y(),
-                        0x00000033, 0x00000033);
-                break;
-            default:
-                break;
+                case ALIGN_LEFT: {
+                    Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x(),
+                                       mTextCache->metrics.size.y(), 0x00000033, 0x00000033);
+                    break;
+                }
+                case ALIGN_CENTER: {
+                    Renderer::drawRect((mSize.x() - mTextCache->metrics.size.x()) / 2.0f, 0.0f,
+                                       mTextCache->metrics.size.x(), mTextCache->metrics.size.y(),
+                                       0x00000033, 0x00000033);
+                    break;
+                }
+                case ALIGN_RIGHT: {
+                    Renderer::drawRect(mSize.x() - mTextCache->metrics.size.x(), 0.0f,
+                                       mTextCache->metrics.size.x(), mTextCache->metrics.size.y(),
+                                       0x00000033, 0x00000033);
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
         }
         mFont->renderTextCache(mTextCache.get());
@@ -203,8 +194,10 @@ void TextComponent::calculateExtent()
     }
     else {
         if (mAutoCalcExtent.y())
-            mSize[1] = mFont->sizeWrappedText(mUppercase ? Utils::String::toUpper(mText)
-                    : mText, getSize().x(), mLineSpacing).y();
+            mSize[1] = mFont
+                           ->sizeWrappedText(mUppercase ? Utils::String::toUpper(mText) : mText,
+                                             getSize().x(), mLineSpacing)
+                           .y();
     }
 }
 
@@ -246,14 +239,14 @@ void TextComponent::onTextChanged()
 
         text.append(abbrev);
 
-        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(text, Vector2f(0, 0),
-                (mColor >> 8 << 8) | mOpacity, mSize.x(), mHorizontalAlignment,
-                mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(
+            f->buildTextCache(text, Vector2f(0, 0), (mColor >> 8 << 8) | mOpacity, mSize.x(),
+                              mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
-        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(f->wrapText(
-                text, mSize.x()), Vector2f(0, 0), (mColor >> 8 << 8) | mOpacity, mSize.x(),
-                        mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
+            f->wrapText(text, mSize.x()), Vector2f(0, 0), (mColor >> 8 << 8) | mOpacity, mSize.x(),
+            mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
 }
 
@@ -269,10 +262,7 @@ void TextComponent::setHorizontalAlignment(Alignment align)
     onTextChanged();
 }
 
-void TextComponent::setVerticalAlignment(Alignment align)
-{
-    mVerticalAlignment = align;
-}
+void TextComponent::setVerticalAlignment(Alignment align) { mVerticalAlignment = align; }
 
 void TextComponent::setLineSpacing(float spacing)
 {
@@ -286,28 +276,10 @@ void TextComponent::setNoTopMargin(bool margin)
     onTextChanged();
 }
 
-std::string TextComponent::getValue() const
-{
-    return mText;
-}
-
-void TextComponent::setValue(const std::string& value)
-{
-    setText(value);
-}
-
-std::string TextComponent::getHiddenValue() const
-{
-    return mHiddenText;
-}
-
-void TextComponent::setHiddenValue(const std::string& value)
-{
-    setHiddenText(value);
-}
-
-void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
-        const std::string& element, unsigned int properties)
+void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                               const std::string& view,
+                               const std::string& element,
+                               unsigned int properties)
 {
     GuiComponent::applyTheme(theme, view, element, properties);
 

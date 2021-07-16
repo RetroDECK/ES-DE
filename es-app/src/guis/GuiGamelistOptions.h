@@ -13,11 +13,11 @@
 #ifndef ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 #define ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
 
+#include "FileData.h"
+#include "GuiComponent.h"
 #include "components/MenuComponent.h"
 #include "components/OptionListComponent.h"
 #include "utils/StringUtil.h"
-#include "FileData.h"
-#include "GuiComponent.h"
 
 class IGameListView;
 class SystemData;

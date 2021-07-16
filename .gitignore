@@ -28,6 +28,9 @@ emulationstation.core
 # Profiling data
 gmon.out
 
+# Patch/diff files
+*.patch
+
 # Build directories
 build
 Debug

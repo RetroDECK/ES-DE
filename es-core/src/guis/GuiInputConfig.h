@@ -9,9 +9,9 @@
 #ifndef ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 #define ES_CORE_GUIS_GUI_INPUT_CONFIG_H
 
+#include "GuiComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
-#include "GuiComponent.h"
 
 class ComponentList;
 class TextComponent;
@@ -19,8 +19,10 @@ class TextComponent;
 class GuiInputConfig : public GuiComponent
 {
 public:
-    GuiInputConfig(Window* window, InputConfig* target, bool reconfigureAll,
-            const std::function<void()>& okCallback);
+    GuiInputConfig(Window* window,
+                   InputConfig* target,
+                   bool reconfigureAll,
+                   const std::function<void()>& okCallback);
 
     void populateConfigList();
 

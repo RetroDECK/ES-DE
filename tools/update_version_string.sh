@@ -20,7 +20,6 @@
 #
 #  This script is only intended to be used on Linux systems.
 #
-#
 
 if [ ! -f ../es-app/CMakeLists.txt ]; then
   echo "You need to run this script from within the tools directory."
@@ -54,6 +53,25 @@ mv $TEMPFILE $MODIFYFILE
 ##### EmulationStation.h
 
 MODIFYFILE=../es-app/src/EmulationStation.h
+
+MODIFYSTRING=$(grep "PROGRAM_VERSION_MAJOR     " $MODIFYFILE)
+NEWSTRING="#define PROGRAM_VERSION_MAJOR        ${1}"
+
+cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
+mv $TEMPFILE $MODIFYFILE
+
+MODIFYSTRING=$(grep "PROGRAM_VERSION_MINOR     " $MODIFYFILE)
+NEWSTRING="#define PROGRAM_VERSION_MINOR        ${2}"
+
+cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
+mv $TEMPFILE $MODIFYFILE
+
+MODIFYSTRING=$(grep "PROGRAM_VERSION_MAINTENANCE  " $MODIFYFILE)
+NEWSTRING="#define PROGRAM_VERSION_MAINTENANCE  ${3}"
+
+cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
+mv $TEMPFILE $MODIFYFILE
+
 MODIFYSTRING=$(grep "PROGRAM_VERSION_STRING" $MODIFYFILE)
 NEWSTRING="#define PROGRAM_VERSION_STRING \"${1}.${2}.${3}${SUFFIX}\""
 

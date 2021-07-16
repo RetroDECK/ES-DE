@@ -8,11 +8,11 @@
 
 #include "components/ImageComponent.h"
 
-#include "resources/TextureResource.h"
-#include "utils/CImgUtil.h"
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
+#include "resources/TextureResource.h"
+#include "utils/CImgUtil.h"
 
 Vector2i ImageComponent::getTextureSize() const
 {
@@ -27,32 +27,25 @@ Vector2f ImageComponent::getSize() const
     return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
 }
 
-ImageComponent::ImageComponent(
-        Window* window,
-        bool forceLoad,
-        bool dynamic)
-        : GuiComponent(window),
-        mTargetIsMax(false),
-        mTargetIsMin(false),
-        mFlipX(false),
-        mFlipY(false),
-        mTargetSize(0, 0),
-        mColorShift(0xFFFFFFFF),
-        mColorShiftEnd(0xFFFFFFFF),
-        mColorGradientHorizontal(true),
-        mForceLoad(forceLoad),
-        mDynamic(dynamic),
-        mFadeOpacity(0),
-        mFading(false),
-        mRotateByTargetSize(false),
-        mTopLeftCrop(0.0f, 0.0f),
-        mBottomRightCrop(1.0f, 1.0f)
+ImageComponent::ImageComponent(Window* window, bool forceLoad, bool dynamic)
+    : GuiComponent(window)
+    , mTargetIsMax(false)
+    , mTargetIsMin(false)
+    , mFlipX(false)
+    , mFlipY(false)
+    , mTargetSize(0, 0)
+    , mColorShift(0xFFFFFFFF)
+    , mColorShiftEnd(0xFFFFFFFF)
+    , mColorGradientHorizontal(true)
+    , mForceLoad(forceLoad)
+    , mDynamic(dynamic)
+    , mFadeOpacity(0)
+    , mFading(false)
+    , mRotateByTargetSize(false)
+    , mTopLeftCrop(0.0f, 0.0f)
+    , mBottomRightCrop(1.0f, 1.0f)
 {
     updateColors();
-}
-
-ImageComponent::~ImageComponent()
-{
 }
 
 void ImageComponent::resize()
@@ -91,8 +84,8 @@ void ImageComponent::resize()
                 mSize[1] = floorf(mSize[1] * resizeScale.y());
                 // For SVG rasterization, always calculate width from rounded height (see comment
                 // above). We need to make sure we're not creating an image larger than max size.
-                mSize[0] = std::min((mSize[1] / textureSize.y()) * textureSize.x(),
-                        mTargetSize.x());
+                mSize[0] =
+                    std::min((mSize[1] / textureSize.y()) * textureSize.x(), mTargetSize.x());
             }
         }
         else if (mTargetIsMin) {
@@ -118,7 +111,6 @@ void ImageComponent::resize()
             // above). We need to make sure we're not creating an image smaller than min size.
             mSize[1] = std::max(floorf(mSize[1]), mTargetSize.y());
             mSize[0] = std::max((mSize[1] / textureSize.y()) * textureSize.x(), mTargetSize.x());
-
         }
         else {
             // If both components are set, we just stretch.
@@ -145,16 +137,6 @@ void ImageComponent::resize()
     mTexture->rasterizeAt(static_cast<size_t>(mSize.x()), static_cast<size_t>(mSize.y()));
 
     onSizeChanged();
-}
-
-void ImageComponent::onSizeChanged()
-{
-    updateVertices();
-}
-
-void ImageComponent::setDefaultImage(std::string path)
-{
-    mDefaultPath = path;
 }
 
 void ImageComponent::setImage(std::string path, bool tile)
@@ -218,16 +200,6 @@ void ImageComponent::setMinSize(float width, float height)
     resize();
 }
 
-Vector2f ImageComponent::getRotationSize() const
-{
-    return mRotateByTargetSize ? mTargetSize : mSize;
-}
-
-void ImageComponent::setRotateByTargetSize(bool rotate)
-{
-    mRotateByTargetSize = rotate;
-}
-
 void ImageComponent::cropLeft(float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
@@ -262,6 +234,7 @@ void ImageComponent::crop(float left, float top, float right, float bot)
 
 void ImageComponent::uncrop()
 {
+    // Remove any applied crop.
     crop(0, 0, 0, 0);
 }
 
@@ -375,10 +348,12 @@ void ImageComponent::updateVertices()
     const float px = mTexture->isTiled() ? mSize.x() / getTextureSize().x() : 1.0f;
     const float py = mTexture->isTiled() ? mSize.y() / getTextureSize().y() : 1.0f;
 
+    // clang-format off
     mVertices[0] = { { topLeft.x(),     topLeft.y()     }, { mTopLeftCrop.x(),          py   - mTopLeftCrop.y()     }, 0 };
     mVertices[1] = { { topLeft.x(),     bottomRight.y() }, { mTopLeftCrop.x(),          1.0f - mBottomRightCrop.y() }, 0 };
     mVertices[2] = { { bottomRight.x(), topLeft.y()     }, { mBottomRightCrop.x() * px, py   - mTopLeftCrop.y()     }, 0 };
     mVertices[3] = { { bottomRight.x(), bottomRight.y() }, { mBottomRightCrop.x() * px, 1.0f - mBottomRightCrop.y() }, 0 };
+    // clang-format on
 
     updateColors();
 
@@ -400,10 +375,11 @@ void ImageComponent::updateVertices()
 void ImageComponent::updateColors()
 {
     const float opacity = (mOpacity * (mFading ? mFadeOpacity / 255.0f : 1.0f)) / 255.0f;
-    const unsigned int color = Renderer::convertRGBAToABGR((mColorShift & 0xFFFFFF00) |
-            static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
-    const unsigned int colorEnd = Renderer::convertRGBAToABGR((mColorShiftEnd & 0xFFFFFF00) |
-            static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity));
+    const unsigned int color = Renderer::convertRGBAToABGR(
+        (mColorShift & 0xFFFFFF00) | static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
+    const unsigned int colorEnd =
+        Renderer::convertRGBAToABGR((mColorShiftEnd & 0xFFFFFF00) |
+                                    static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity));
 
     mVertices[0].col = color;
     mVertices[1].col = mColorGradientHorizontal ? colorEnd : color;
@@ -423,25 +399,38 @@ void ImageComponent::render(const Transform4x4f& parentTrans)
         if (Settings::getInstance()->getBool("DebugImage")) {
             Vector2f targetSizePos = (mTargetSize - mSize) * mOrigin * -1;
             Renderer::drawRect(targetSizePos.x(), targetSizePos.y(), mTargetSize.x(),
-                    mTargetSize.y(), 0xFF000033, 0xFF000033);
+                               mTargetSize.y(), 0xFF000033, 0xFF000033);
             Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0xFF000033, 0xFF000033);
         }
-        if (mTexture->isInitialized()) {
+        // An image with zero size would normally indicate a corrupt image file.
+        if (mTexture->isInitialized() && mTexture->getSize() != 0) {
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just
             // 'jump' in when it finally loads.
             fadeIn(mTexture->bind());
-            #if defined(USE_OPENGL_21)
+#if defined(USE_OPENGL_21)
             if (mSaturation < 1.0) {
                 mVertices[0].shaders = Renderer::SHADER_DESATURATE;
                 mVertices[0].saturation = mSaturation;
             }
-            #endif
+#endif
             Renderer::drawTriangleStrips(&mVertices[0], 4, trans);
         }
         else {
-            LOG(LogError) << "Image texture is not initialized!";
+            if (!mTexture) {
+                LOG(LogError) << "Image texture is not initialized";
+            }
+            else {
+                std::string textureFilePath = mTexture->getTextureFilePath();
+                if (textureFilePath != "") {
+                    LOG(LogError) << "Image texture for file \"" << textureFilePath
+                                  << "\" has zero size";
+                }
+                else {
+                    LOG(LogError) << "Image texture has zero size";
+                }
+            }
             mTexture.reset();
         }
     }
@@ -479,26 +468,24 @@ void ImageComponent::fadeIn(bool textureLoaded)
     }
 }
 
-bool ImageComponent::hasImage()
-{
-    return (bool)mTexture;
-}
-
-void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view,
-        const std::string& element, unsigned int properties)
+void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                                const std::string& view,
+                                const std::string& element,
+                                unsigned int properties)
 {
     using namespace ThemeFlags;
 
-    GuiComponent::applyTheme(theme, view, element, (properties ^ ThemeFlags::SIZE) |
-            ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
+    GuiComponent::applyTheme(theme, view, element,
+                             (properties ^ ThemeFlags::SIZE) |
+                                 ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "image");
     if (!elem)
         return;
 
     Vector2f scale = getParent() ? getParent()->getSize() :
-            Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+                                   Vector2f(static_cast<float>(Renderer::getScreenWidth()),
+                                            static_cast<float>(Renderer::getScreenHeight()));
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size"))
@@ -523,8 +510,8 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme, const s
         if (elem->has("colorEnd"))
             setColorShiftEnd(elem->get<unsigned int>("colorEnd"));
         if (elem->has("gradientType"))
-            setColorGradientHorizontal(!(elem->
-                    get<std::string>("gradientType").compare("horizontal")));
+            setColorGradientHorizontal(
+                !(elem->get<std::string>("gradientType").compare("horizontal")));
     }
 }
 

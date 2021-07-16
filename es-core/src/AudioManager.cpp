@@ -19,17 +19,20 @@ std::vector<std::shared_ptr<Sound>> AudioManager::sSoundVector;
 SDL_AudioDeviceID AudioManager::sAudioDevice = 0;
 SDL_AudioSpec AudioManager::sAudioFormat;
 SDL_AudioStream* AudioManager::sConversionStream;
+
 bool AudioManager::sMuteStream = false;
 bool AudioManager::sHasAudioDevice = true;
 bool AudioManager::mIsClearingStream = false;
 
 AudioManager::AudioManager()
 {
+    // Init on construction.
     init();
 }
 
 AudioManager::~AudioManager()
 {
+    // Deinit on destruction.
     deinit();
 }
 
@@ -74,7 +77,7 @@ void AudioManager::init()
     }
 
     sAudioDevice = SDL_OpenAudioDevice(0, 0, &sRequestedAudioFormat, &sAudioFormat,
-            SDL_AUDIO_ALLOW_ANY_CHANGE);
+                                       SDL_AUDIO_ALLOW_ANY_CHANGE);
 
     if (sAudioDevice == 0) {
         LOG(LogError) << "Unable to open audio device: " << SDL_GetError();
@@ -82,29 +85,30 @@ void AudioManager::init()
     }
 
     if (sAudioFormat.freq != sRequestedAudioFormat.freq) {
-        LOG(LogDebug) << "AudioManager::init(): Requested sample rate " <<
-                std::to_string(sRequestedAudioFormat.freq) << " could not be "
-                "set, obtained " << std::to_string(sAudioFormat.freq);
+        LOG(LogDebug) << "AudioManager::init(): Requested sample rate "
+                      << std::to_string(sRequestedAudioFormat.freq)
+                      << " could not be set, obtained " << std::to_string(sAudioFormat.freq);
     }
     if (sAudioFormat.format != sRequestedAudioFormat.format) {
-        LOG(LogDebug) << "AudioManager::init(): Requested format " <<
-                std::to_string(sRequestedAudioFormat.format) << " could not be "
-                "set, obtained " << std::to_string(sAudioFormat.format);
+        LOG(LogDebug) << "AudioManager::init(): Requested format "
+                      << std::to_string(sRequestedAudioFormat.format)
+                      << " could not be set, obtained " << std::to_string(sAudioFormat.format);
     }
     if (sAudioFormat.channels != sRequestedAudioFormat.channels) {
-        LOG(LogDebug) << "AudioManager::init(): Requested channel count " <<
-                std::to_string(sRequestedAudioFormat.channels) << " could not be "
-                "set, obtained " << std::to_string(sAudioFormat.channels);
+        LOG(LogDebug) << "AudioManager::init(): Requested channel count "
+                      << std::to_string(sRequestedAudioFormat.channels)
+                      << " could not be set, obtained " << std::to_string(sAudioFormat.channels);
     }
-    #if defined(_WIN64) || defined(__APPLE__)
+#if defined(_WIN64) || defined(__APPLE__)
     // Beats me why the buffer size is not divided by the channel count on some operating systems.
     if (sAudioFormat.samples != sRequestedAudioFormat.samples) {
-    #else
+#else
     if (sAudioFormat.samples != sRequestedAudioFormat.samples / sRequestedAudioFormat.channels) {
-    #endif
-        LOG(LogDebug) << "AudioManager::init(): Requested sample buffer size " <<
-                std::to_string(sRequestedAudioFormat.samples / sRequestedAudioFormat.channels) <<
-                " could not be set, obtained " << std::to_string(sAudioFormat.samples);
+#endif
+        LOG(LogDebug) << "AudioManager::init(): Requested sample buffer size "
+                      << std::to_string(sRequestedAudioFormat.samples /
+                                        sRequestedAudioFormat.channels)
+                      << " could not be set, obtained " << std::to_string(sAudioFormat.samples);
     }
 
     // Just in case someone changed the es_settings.xml file manually to invalid values.
@@ -126,7 +130,7 @@ void AudioManager::deinit()
     // user on some operating systems such as macOS, and it's annoying to have a crash at the
     // end of debugging session. So we'll simply disable the function until it has been properly
     // fixed in the SDL library.
-//    SDL_FreeAudioStream(sConversionStream);
+    //    SDL_FreeAudioStream(sConversionStream);
 
     SDL_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
@@ -153,9 +157,9 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
                 restLength = len;
             }
             // Mix sample into stream.
-            SDL_MixAudioFormat(stream, &(sound->getData()[sound->getPosition()]),
-                    sAudioFormat.format, restLength, static_cast<int>(Settings::getInstance()->
-                    getInt("SoundVolumeNavigation") * 1.28f));
+            SDL_MixAudioFormat(
+                stream, &(sound->getData()[sound->getPosition()]), sAudioFormat.format, restLength,
+                static_cast<int>(Settings::getInstance()->getInt("SoundVolumeNavigation") * 1.28f));
             if (sound->getPosition() + restLength < sound->getLength()) {
                 // Sample hasn't ended yet.
                 stillPlaying = true;
@@ -191,8 +195,8 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
 
     std::vector<Uint8> converted(chunkLength);
 
-    int processedLength = SDL_AudioStreamGet(sConversionStream,
-            static_cast<void*>(&converted.at(0)), chunkLength);
+    int processedLength =
+        SDL_AudioStreamGet(sConversionStream, static_cast<void*>(&converted.at(0)), chunkLength);
 
     if (processedLength < 0) {
         LOG(LogError) << "AudioManager::mixAudio(): Couldn't convert sound chunk:";
@@ -201,9 +205,9 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
     }
 
     // Enable only when needed, as this generates a lot of debug output.
-//    LOG(LogDebug) << "AudioManager::mixAudio(): chunkLength "
-//            "/ processedLength / streamLength: " << chunkLength << " / " <<
-//            " / " << processedLength << " / " << streamLength;
+    //    LOG(LogDebug) << "AudioManager::mixAudio(): chunkLength "
+    //            "/ processedLength / streamLength: " << chunkLength << " / " <<
+    //            " / " << processedLength << " / " << streamLength;
 
     // This mute flag is used to make sure that the audio buffer already sent to the
     // stream is not played when the video player has been stopped. Otherwise there would
@@ -213,8 +217,9 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
         SDL_MixAudioFormat(stream, &converted.at(0), sAudioFormat.format, processedLength, 0);
     }
     else {
-        SDL_MixAudioFormat(stream, &converted.at(0), sAudioFormat.format, processedLength,
-                static_cast<int>(Settings::getInstance()->getInt("SoundVolumeVideos") * 1.28f));
+        SDL_MixAudioFormat(
+            stream, &converted.at(0), sAudioFormat.format, processedLength,
+            static_cast<int>(Settings::getInstance()->getInt("SoundVolumeVideos") * 1.28f));
     }
 
     // If nothing is playing, pause the device until there is more audio to output.
@@ -224,6 +229,7 @@ void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)
 
 void AudioManager::registerSound(std::shared_ptr<Sound>& sound)
 {
+    // Add sound to sound vector.
     sSoundVector.push_back(sound);
 }
 
@@ -267,7 +273,7 @@ void AudioManager::setupAudioStream(int sampleRate)
 
     // Used for streaming audio from videos.
     sConversionStream = SDL_NewAudioStream(AUDIO_F32, 2, sampleRate, sAudioFormat.format,
-            sAudioFormat.channels, sAudioFormat.freq);
+                                           sAudioFormat.channels, sAudioFormat.freq);
     if (sConversionStream == nullptr) {
         LOG(LogError) << "Failed to create audio conversion stream:";
         LOG(LogError) << SDL_GetError();
@@ -298,21 +304,39 @@ void AudioManager::clearStream()
     // The SDL_AudioStreamClear() function is unstable and causes random crashes, so
     // we have to implement a workaround instead where SDL_AudioStreamGet() is used
     // to empty the stream.
-//    SDL_AudioStreamClear(sConversionStream);
+    //    SDL_AudioStreamClear(sConversionStream);
+
+    // If sSoundVector is empty it means we are shutting down. In this case don't attempt
+    // to clear the stream as this could lead to a crash.
+    if (sSoundVector.empty())
+        return;
 
     mIsClearingStream = true;
 
-    int streamSize;
-    int length = sAudioFormat.samples * 4;
-
-    while ((streamSize = SDL_AudioStreamAvailable(sConversionStream)) > 0) {
-        std::vector<Uint8> readBuffer(length);
-        int processedLength = SDL_AudioStreamGet(sConversionStream,
-                static_cast<void*>(&readBuffer.at(0)), length);
-        if (processedLength <= 0) {
-            break;
-        }
+    // This code is required as there's seemingly a bug in SDL_AudioStreamAvailable().
+    // The function sometimes returns 0 even if there is data left in the buffer, possibly
+    // because the remaining data is less than the configured sample size. It happens almost
+    // permanently on NetBSD but also on at least Linux from time to time. Adding some data
+    // to the stream buffer to get above this threshold before calling the function will
+    // return the proper number. So adding 10000 as we do here would give a return value of
+    // for instance 10880 instead of 0, assuming there were 880 bytes of data left in the buffer.
+    // Fortunately the SDL_AudioStreamGet() function acts correctly on any arbitrary sample size
+    // so we can actually clear the entire buffer. If this workaround was not implemented, there
+    // would be a sound glitch when some samples from the previous video would play any time a
+    // new video was started (assuming the issue was triggered be some remaining buffer data).
+    std::vector<Uint8> writeBuffer(10000);
+    if (SDL_AudioStreamPut(sConversionStream, reinterpret_cast<const void*>(&writeBuffer.at(0)),
+                           10000) == -1) {
+        LOG(LogError) << "Failed to put samples in the conversion stream:";
+        LOG(LogError) << SDL_GetError();
+        mIsClearingStream = false;
+        return;
     }
+
+    int length = SDL_AudioStreamAvailable(sConversionStream);
+
+    std::vector<Uint8> readBuffer(length);
+    SDL_AudioStreamGet(sConversionStream, static_cast<void*>(&readBuffer.at(0)), length);
 
     mIsClearingStream = false;
 }

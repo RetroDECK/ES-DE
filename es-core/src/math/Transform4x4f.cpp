@@ -10,6 +10,7 @@
 
 #include <cmath>
 
+// clang-format off
 const Transform4x4f Transform4x4f::operator*(const Transform4x4f& _other) const
 {
     const float* tm = reinterpret_cast<const float*>(this);
@@ -321,3 +322,4 @@ Transform4x4f& Transform4x4f::round()
 
     return *this;
 }
+// clang-format on
