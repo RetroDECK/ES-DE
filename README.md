@@ -31,8 +31,6 @@ The following operating systems have been tested with ES-DE (all for the x86 arc
 
 **Note:** If using a Mac with an ARM CPU (e.g. M1) you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
-The Raspberry Pi 4 has been tested as well (with Raspberry Pi OS) but it's a bit buggy at the moment and is missing some features like GLSL shaders. Official support will probably be added for this device as of ES-DE v1.2.
-
 ### Download
 
 The latest stable version is 1.0.1 (released 2021-05-01)
@@ -45,16 +43,19 @@ The latest stable version is 1.0.1 (released 2021-05-01)
 | macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.1-x64_legacy.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.1-x64_legacy.dmg)|
 | Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.1-x64.exe](https://es-de.org/releases/stable/Windows/EmulationStation-DE-1.0.1-x64.exe)|
 
-The latest pre-release version is 1.1.0-beta2 (released 2021-07-04)
+The latest pre-release version is 1.1.0-rc (released 2021-07-16)
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-beta2-x64.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-beta2-x64.deb)|
-| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-beta2-x64.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-beta2-x64.rpm)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-beta2-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.1.0-beta2-x64.dmg)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-beta2-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.1.0-beta2-x64.exe)|
+| Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-rc-x64.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-rc-x64.deb)|
+| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-rc-x64.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-rc-x64.rpm)|
+| Debian DEB package  | Raspberry Pi OS (Raspian) - preview release             | ARM          | [emulationstation-de-1.1.0-rc-preview-armv7l.deb](https://es-de.org/releases/beta/RaspberryPi/emulationstation-de-1.1.0-rc-preview-armv7l.deb)|
+| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-rc-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.1.0-rc-x64.dmg)|
+| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-rc-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.1.0-rc-x64.exe)|
 
 Unfortunately due to technical reasons, v1.0.1 will be the last release for legacy macOS versions.
+
+The Raspberry Pi 4 release is a preview only, there are some bugs such as graphical glitches on this platform and some features like GLSL shaders are missing. Official support will probably be added for this device as of v1.2.
 
 For some of the rarer operating systems listed at the top you need to build ES-DE from source. The plan is to have ES-DE available in the software repositories of all supported operating systems (where this is applicable), so in the long term building from source should not be required.
 
