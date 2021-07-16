@@ -1217,9 +1217,7 @@ std::string FileData::findEmulatorPath(std::string& command)
         path = Utils::String::replace(path, "%ESPATH%", Utils::FileSystem::getExePath());
         // Likewise for the %ROMPATH% variable which expands to the configured ROM directory.
         path = Utils::String::replace(path, "%ROMPATH%", getROMDirectory());
-#if defined(_WIN64)
-        path = Utils::String::replace(path, "/", "\\");
-#endif
+
         if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
             command.replace(0, endPos + 1, path);
             return path;
@@ -1230,9 +1228,6 @@ std::string FileData::findEmulatorPath(std::string& command)
 
     // If %ESPATH% is used, then expand it to the binary directory of ES-DE.
     command = Utils::String::replace(command, "%ESPATH%", Utils::FileSystem::getExePath());
-#if defined(_WIN64)
-    command = Utils::String::replace(command, "/", "\\");
-#endif
 
     // If the first character is a quotation mark, then we need to extract up to the
     // next quotation mark, otherwise we'll only extract up to the first space character.
