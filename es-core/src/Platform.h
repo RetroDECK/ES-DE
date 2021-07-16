@@ -29,7 +29,7 @@ int runSystemCommand(const std::string& cmd_utf8);
 int runSystemCommand(const std::wstring& cmd_utf16);
 
 int launchGameUnix(const std::string& cmd_utf8, bool runInBackground);
-int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground);
+int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool hideWindow);
 
 unsigned int getTaskbarState();
 void hideTaskbar();

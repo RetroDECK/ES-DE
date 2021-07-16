@@ -285,7 +285,7 @@
     <fullname>Desktop applications</fullname>
     <path>%ROMPATH%\desktop</path>
     <extension>.bat</extension>
-    <command>cmd.exe /C %ROM%</command>
+    <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
     <platform>pc</platform>
     <theme>desktop</theme>
   </system>
@@ -447,7 +447,7 @@
     <fullname>Kodi home theatre software</fullname>
     <path>%ROMPATH%\kodi</path>
     <extension>.bat</extension>
-    <command>cmd.exe /C %ROM%</command>
+    <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
     <platform>pc</platform>
     <theme>kodi</theme>
   </system>
@@ -816,7 +816,7 @@
     <fullname>Ports</fullname>
     <path>%ROMPATH%\ports</path>
     <extension>.bat</extension>
-    <command>cmd.exe /C %ROM%</command>
+    <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
     <platform>pc</platform>
     <theme>ports</theme>
   </system>
@@ -1014,7 +1014,7 @@
     <fullname>Valve Steam</fullname>
     <path>%ROMPATH%\steam</path>
     <extension>.bat</extension>
-    <command>cmd.exe /C %ROM%</command>
+    <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
     <platform>steam</platform>
     <theme>steam</theme>
   </system>

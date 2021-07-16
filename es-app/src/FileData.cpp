@@ -766,12 +766,30 @@ void FileData::launchGame(Window* window)
     const std::string romRaw = Utils::FileSystem::getPreferredPath(getPath());
     const std::string esPath = Utils::FileSystem::getExePath();
 
+#if defined(_WIN64)
+    bool hideWindow = false;
+#endif
+
     std::string coreEntry;
     std::string coreName;
     size_t coreEntryPos = 0;
     size_t coreFilePos = 0;
     bool foundCoreFile = false;
     std::vector<std::string> emulatorCorePaths;
+
+#if defined(_WIN64)
+    // If the %HIDEWINDOW% variable is defined, we pass a flag to launchGameWindows() to
+    // hide the window. This is intended primarily for hiding console windows when launching
+    // scripts (used for example by Steam games and source ports).
+    if (command.substr(0, 12) == "%HIDEWINDOW%") {
+        hideWindow = true;
+        command = Utils::String::replace(command, "%HIDEWINDOW%", "");
+        // Trim any leading whitespaces as they could cause the script execution to fail.
+        command.erase(command.begin(), std::find_if(command.begin(), command.end(), [](char c) {
+                          return !std::isspace(static_cast<unsigned char>(c));
+                      }));
+    }
+#endif
 
     // If there's a quotation mark before the %CORE_ variable, then remove it.
     // The closing quotation mark will be removed later below.
@@ -1025,7 +1043,7 @@ void FileData::launchGame(Window* window)
 
 #if defined(_WIN64)
     returnValue = launchGameWindows(Utils::String::stringToWideString(command),
-                                    ViewController::get()->runInBackground(mSystem));
+                                    ViewController::get()->runInBackground(mSystem), hideWindow);
 #else
     returnValue = launchGameUnix(command, ViewController::get()->runInBackground(mSystem));
 #endif

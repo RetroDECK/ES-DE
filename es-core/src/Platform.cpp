@@ -136,17 +136,19 @@ int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
 #endif
 }
 
-int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground)
+int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool hideWindow)
 {
 #if defined(_WIN64)
     STARTUPINFOW si {};
     PROCESS_INFORMATION pi;
 
     si.cb = sizeof(si);
-    // The console window is hidden by default when compiled with MSVC, but when
-    // using MinGW it has to be set explicitly.
-    si.dwFlags = STARTF_USESHOWWINDOW;
-    si.wShowWindow = SW_HIDE;
+    if (hideWindow) {
+        // Optionally hide the window. This is intended primarily for hiding console windows when
+        // launching scripts (used for example by Steam games and source ports).
+        si.dwFlags = STARTF_USESHOWWINDOW;
+        si.wShowWindow = SW_HIDE;
+    }
     bool processReturnValue = true;
     DWORD errorCode = 0;
 
