@@ -19,7 +19,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleVersion</key>
-    <string>1.1.0-rc</string>
+    <string>1.1.0-dev</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.14.0</string>
     <key>LSUIPresentationMode</key>
