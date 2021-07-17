@@ -85,8 +85,8 @@ namespace PlatformIds
         "pc",                   // IBM PC
         "pc88",                 // NEC PC-8800 series
         "pc98",                 // NEC PC-9800 series
-        "pcengine",             // NEC PC Engine
-        "pcenginecd",           // NEC PC Engine CD
+        "pcengine",             // NEC PC Engine / TurboGrafx-16
+        "pcenginecd",           // NEC PC Engine CD / TurboGrafx-CD
         "pcfx",                 // NEC PC-FX
         "pokemini",             // Nintendo Pokémon Mini
         "ps2",                  // Sony PlayStation 2

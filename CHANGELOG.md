@@ -101,6 +101,7 @@ Apart from this, numerous small improvements and bug fixes are part of the relea
 * GuiDetectDevice wouldn't detect controller input that was of the "axis" type (i.e. analog inputs)
 * GuiInputConfig didn't correctly inform which buttons could be skipped for some rows
 * The scraper would sometimes consider very small images to be invalid
+* Scraper searches for Nintendo Family Computer (Famicom) games were not accurate
 * The Quick System Select help prompt was shown even when there was only a single game system present
 * The "Back (cancel)" help prompt was missing for the single-game scraper
 * The "Y" button help prompt wasn't displayed correctly when using the Grid view style

@@ -67,6 +67,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
     { NINTENDO_3DS, 17 },
     { NINTENDO_64, 14 },
     { NINTENDO_DS, 15 },
+    { NINTENDO_FAMICOM, 3 },
     { NINTENDO_FAMICOM_DISK_SYSTEM, 106 },
     { NINTENDO_ENTERTAINMENT_SYSTEM, 3 },
     { FAIRCHILD_CHANNELF, 80 },

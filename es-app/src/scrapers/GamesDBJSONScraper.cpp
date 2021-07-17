@@ -68,6 +68,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
     { NINTENDO_3DS, "4912" },
     { NINTENDO_64, "3" },
     { NINTENDO_DS, "8" },
+    { NINTENDO_FAMICOM, "7" },
     { NINTENDO_FAMICOM_DISK_SYSTEM, "4936" },
     { NINTENDO_ENTERTAINMENT_SYSTEM, "7" },
     { NINTENDO_GAME_BOY, "4" },

@@ -331,7 +331,7 @@
     <path>%ROMPATH%/famicom</path>
     <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
     <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
-    <platform>nes, famicom</platform>
+    <platform>famicom</platform>
     <theme>famicom</theme>
   </system>
   <system>
@@ -421,7 +421,7 @@
     <path>%ROMPATH%/genesis</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.so %ROM%</command>
-    <platform>genesis, megadrive</platform>
+    <platform>genesis</platform>
     <theme>genesis</theme>
   </system>
   <system>
@@ -538,7 +538,7 @@
     <path>%ROMPATH%/megadrive</path>
     <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
     <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.so %ROM%</command>
-    <platform>megadrive, genesis</platform>
+    <platform>megadrive</platform>
     <theme>megadrive</theme>
   </system>
   <system>
