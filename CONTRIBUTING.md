@@ -31,19 +31,20 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
 * Ability to show game media in full screen from the gamelist view
 * Proper game launching screen
-* Replace libVLC with FFmpeg
+* New FFmpeg-based video player
 * Move to the SDL2 GameController API
 * Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)
-* Add to Linux repositories, BSD ports collections etc.
+* Add to the Debian repository
 
 #### v1.2
 
-* Support for Raspberry Pi 4 with OpenGL 2.1 (Ubuntu and Raspberry Pi OS)
-* Improve full-screen support, remove the temporary full screen hacks
+* Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
+* Improved full-screen support, removing the temporary full-screen hacks
 * On-screen keyboard
-* Web proxy support for the scraper
-* Add GLM library dependency for matrix and vector operations, starting to decommission the built-in functions
+* Support for the Raspberry Pi 4 with OpenGL ES 2.0 and GLSL shaders (Raspberry Pi OS)
+* Add GLM library dependency for matrix and vector operations, start to decommission the built-in functions
+* Add to more Linux repositories, BSD ports collections etc.
 * Flatpak and Snap releases on Linux
 
 #### v1.3
@@ -57,9 +58,9 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.4
 
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
-* Scrollbars for menus and gamelists
-* Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
-* Add 'time played' counter per game, similar to how it works in Steam
+* Scrollbar component for the gamelist view which can be used by the themes
+* Web proxy support for the scraper
+* Add "time played" counter per game, similar to how it works in Steam
 * Preload all built-in resources and never clear them from the cache
 * Improved multi-threading
 
@@ -70,6 +71,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Improve the performance of the GLSL shader code
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Support for additional scraper services (if feasible?)
+* Support for portrait orientation, e.g. for Tate Mode arcade cabinets
 
 #### v2.0
 
