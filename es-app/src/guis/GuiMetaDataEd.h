@@ -5,8 +5,7 @@
 //
 //  Game metadata edit user interface.
 //  This interface is triggered from the GuiGamelistOptions menu.
-//  The scraping interface is handled by GuiGameScraper which calls
-//  GuiScraperSearch.
+//  The scraping interface is handled by GuiGameScraper which calls GuiScraperSearch.
 //
 
 #ifndef ES_APP_GUIS_GUI_META_DATA_ED_H
