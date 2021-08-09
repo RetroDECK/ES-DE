@@ -91,6 +91,7 @@ Apart from this, numerous small improvements and bug fixes are part of the relea
 * The scraper search could be refined or skipped after the result was accepted which sometimes crashed the application
 * Attempting to load a non-existent font file defined by the theme crashed the application instead of using the bundled font as fallback
 * Refining a search before it was completed and then cancelling the dialog would lead to an empty scraper screen
+* Game media would sometimes not get displayed after single-game scraping
 * Games that were filtered out were included in the random game selection for the grouped custom collections view
 * After switching theme sets with only a single system available, diagonal slide transitions would sometimes play when moving to the system view
 * Ongoing slide transition animations would continue to play after switching theme sets
