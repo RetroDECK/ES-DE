@@ -162,11 +162,11 @@ cmake .
 make
 ```
 
-By default the master branch will be used, which is where development takes place. To instead build the latest stable release, switch to the `stable` branch:
+By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```
 cd emulationstation-de
-git checkout stable
+git checkout stable-1.1
 cmake .
 make
 ```
@@ -493,11 +493,11 @@ cmake .
 make
 ```
 
-By default the master branch will be used, which is where the development takes place. To instead build the latest stable release, switch to the `stable` branch:
+By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```
 cd emulationstation-de
-git checkout stable
+git checkout stable-1.1
 cmake .
 make
 ```
@@ -890,11 +890,11 @@ This works the same as on Unix or macOS, just run the following:
 git clone https://gitlab.com/leonstyhre/emulationstation-de.git
 ```
 
-By default the master branch will be used, which is where development takes place. To instead build the latest stable release, switch to the `stable` branch:
+By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```
 cd emulationstation-de
-git checkout stable
+git checkout stable-1.1
 ```
 
 **Setup the include directories:**

@@ -38,29 +38,23 @@ The following operating systems have been tested with ES-DE (all for the x86 arc
 
 ### Download
 
-The latest stable version is 1.0.1 (released 2021-05-01)
+The latest version is 1.1.0 (released 2021-08-10)
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.0.1-x64.deb](https://es-de.org/releases/stable/Linux/emulationstation-de-1.0.1-x64.deb)|
-| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.0.1-x64.rpm](https://es-de.org/releases/stable/Linux/emulationstation-de-1.0.1-x64.rpm)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.0.1-x64.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.1-x64.dmg)|
-| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.1-x64_legacy.dmg](https://es-de.org/releases/stable/macOS/EmulationStation-DE-1.0.1-x64_legacy.dmg)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.0.1-x64.exe](https://es-de.org/releases/stable/Windows/EmulationStation-DE-1.0.1-x64.exe)|
-
-The latest pre-release version is 1.1.0-rc (released 2021-07-16)
-
-| Package             | Operating systems                                       | Architecture | Download link  |
-| :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-rc-x64.deb](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-rc-x64.deb)|
-| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-rc-x64.rpm](https://es-de.org/releases/beta/Linux/emulationstation-de-1.1.0-rc-x64.rpm)|
-| Debian DEB package  | Raspberry Pi OS (Raspian) - preview release             | ARM          | [emulationstation-de-1.1.0-rc-preview-armv7l.deb](https://es-de.org/releases/beta/RaspberryPi/emulationstation-de-1.1.0-rc-preview-armv7l.deb)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-rc-x64.dmg](https://es-de.org/releases/beta/macOS/EmulationStation-DE-1.1.0-rc-x64.dmg)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-rc-x64.exe](https://es-de.org/releases/beta/Windows/EmulationStation-DE-1.1.0-rc-x64.exe)|
-
-Unfortunately due to technical reasons, v1.0.1 will be the last release for legacy macOS versions.
+| Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892301/download)|
+| Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892436/download)|
+| Debian DEB package  | Raspberry Pi OS (Raspian) - preview release             | ARM          | [emulationstation-de-1.1.0-preview-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892276/download)|
+| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892342/download)|
+| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892429/download)|
 
 The Raspberry Pi 4 release is a preview only, there are some bugs such as graphical glitches on this platform and some features like GLSL shaders are missing. Official support will probably be added for this device as of v1.2.
+
+Unfortunately due to technical reasons, v1.0.1 (released 2021-05-01) will be the last version for legacy macOS.
+
+| Package             | Operating systems                                       | Architecture | Download link  |
+| :------------------ | :------------------------------------------------------ | :----------- | :------------- |
+| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.1-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14888836/download)|
 
 For some of the rarer operating systems listed at the top you need to build ES-DE from source. The plan is to have ES-DE available in the software repositories of all supported operating systems (where this is applicable), so in the long term building from source should not be required.
 

@@ -91,7 +91,7 @@ To see which features have been implemented in previous versions, please refer t
 
 The visual appearance aspect of the coding style is automatically applied using clang-format, so to understand the exact formatting rules, refer to the .clang-format file in the root of the repository.
 
-Due to this approach, all code changes must be auto-formatted before they are committed. You can read in [INSTALL-DEV.md](INSTALL-DEV.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
+Due to this approach, all code changes must be auto-formatted before they are committed. You can read in [INSTALL.md](INSTALL.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
 
 But as clang-format won't change the actual code content or fix all code style choices, here are some additional key points:
 
