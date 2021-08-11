@@ -26,16 +26,6 @@ You can contact me (Leon) via email, either at info@es-de.org or alternatively u
 
 This plan is under constant review so expect it to change from time to time. Still it should give some feeling for which direction to move and what to work on first. These are only the larger topics, there are of course many smaller changes and improvements in addition to these.
 
-#### v1.1
-
-* Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)
-* Ability to show game media in full screen from the gamelist view
-* Proper game launching screen
-* New FFmpeg-based video player
-* Move to the SDL2 GameController API
-* Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)
-* Add to the Debian repository
-
 #### v1.2
 
 * Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
