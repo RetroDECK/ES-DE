@@ -19,7 +19,7 @@ If you just want to get started as quickly as possible, simply follow these step
 5) Start RetroArch and install the required emulator cores
 6) Start ES-DE, scrape game media for your collection and play some games!
 
-You can always close the application immediately by pressing F4 on the keyboard.
+You can always close the application immediately by using the keyboard, by default the exit key is mapped to F4 but it can be changed to Alt + F4, Alt + Q or Command Q using the _Exit button combo_ menu option.
 
 For additional details, read on below.
 
@@ -273,9 +273,9 @@ _(Insert on Unix and Windows, F13 on macOS)_
 
 Marks games as favorites in the gamelist view (if the _Enable toggle favorites button_ option has been enabled). Used by some other minor functions as explained by the help system and/or this guide.
 
-**F4 (keyboard only)**
+**F4 (keyboard only)** _Could alternatively be Alt + F4, Alt + Q or Command + Q_
 
-Quits the application immediately.
+Quits the application. This key combination can be changed using the _Exit button combo_ menu option described later in this document.
 
 ## Getting your games into ES-DE
 
@@ -686,7 +686,7 @@ It's possible to change the game media directory location from within ES-DE, for
 
 ## Main menu
 
-This menu can be accessed from both the system view and gamelist view. It contains the scraper, application settings and various tools such as the input configurator and the miximage generator. Settings are saved when navigating back from any menu screen, assuming at least one setting was changed. Pressing the application exit key (F4) will also save any pending changes.
+This menu can be accessed from both the system view and gamelist view. It contains the scraper, application settings and various tools such as the input configurator and the miximage generator. Settings are saved when navigating back from any menu screen, assuming at least one setting was changed. Pressing the application exit key (F4 by default) will also save any pending changes.
 
 ![alt text](images/current/es-de_main_menu.png "ES-DE Main Menu")
 _The ES-DE main menu._
@@ -1158,6 +1158,10 @@ This gives you a choice between _Normal_ and _Borderless_ modes. With the border
 **Video player** _(Only on some builds and operating systems)_
 
 This gives the choice between FFmpeg and VLC, which is applied to the gamelist videos, the media viewer and the video screensaver. The VLC video player is not included on some builds. If this option is not available in the menu, it means that the FFmpeg video player is in use.
+
+**Exit button combo**
+
+This gives the choice of which key combination to use to close the application. The default value is F4, but this can be changed to Alt + F4 on all operating systems. Additionally on macOS the Command + Q combination is selectable and on all other operating systems Alt + Q is selectable instead. Note that on Windows and most window managers on Unix/Linux, Alt + F4 will close the application regardless of the selected option as that key combination is a default which can't be restricted by ES-DE. Similarly on macOS, Command + Q always closes the application, so selecting this combination simply disables the previously selected exit button.
 
 **When to save game metadata**
 

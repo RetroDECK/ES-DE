@@ -10,6 +10,10 @@
 
 ### Detailed list of changes
 
+* Added a menu option to change the application exit key combination
+
+### Bug fixes
+
 ## Version 1.1.0
 
 **Release date:** 2021-08-10
