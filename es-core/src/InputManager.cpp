@@ -29,8 +29,8 @@ int SDL_USER_CECBUTTONDOWN = -1;
 int SDL_USER_CECBUTTONUP = -1;
 
 // Save button states for combo-button exit support and predefine exit option-function map.
-static bool altDown = false;
-static bool lguiDown = false;
+static bool sAltDown = false;
+static bool sLguiDown = false;
 
 InputManager* InputManager::sInstance = nullptr;
 
@@ -433,9 +433,9 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
 
             // Save button states for alt and command.
             if (event.key.keysym.sym == SDLK_LALT)
-                altDown = true;
+                sAltDown = true;
             if (event.key.keysym.sym == SDLK_LGUI)
-                lguiDown = true;
+                sLguiDown = true;
 
             if (event.key.keysym.sym == SDLK_BACKSPACE && SDL_IsTextInputActive())
                 window->textInput("\b");
@@ -447,11 +447,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             bool exitState;
             std::string exitOption = Settings::getInstance()->getString("ExitButtonCombo");
             if (exitOption == "AltF4")
-                exitState = event.key.keysym.sym == SDLK_F4 && altDown;
+                exitState = event.key.keysym.sym == SDLK_F4 && sAltDown;
             else if (exitOption == "CmdQ")
-                exitState = event.key.keysym.sym == SDLK_q && lguiDown;
+                exitState = event.key.keysym.sym == SDLK_q && sLguiDown;
             else if (exitOption == "AltQ")
-                exitState = event.key.keysym.sym == SDLK_q && altDown;
+                exitState = event.key.keysym.sym == SDLK_q && sAltDown;
             else
                 exitState = event.key.keysym.sym == SDLK_F4;
             if (exitState) {
@@ -469,9 +469,9 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
 
             // Release button states.
             if (event.key.keysym.sym == SDLK_LALT)
-                altDown = false;
+                sAltDown = false;
             if (event.key.keysym.sym == SDLK_LGUI)
-                lguiDown = false;
+                sLguiDown = false;
 
             window->input(getInputConfigByDevice(DEVICE_KEYBOARD),
                           Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));

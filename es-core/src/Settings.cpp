@@ -225,6 +225,7 @@ void Settings::setDefaults()
     mStringMap["VideoPlayer"] = { "ffmpeg", "ffmpeg" };
 #endif
 #endif
+    mStringMap["ExitButtonCombo"] = { "F4", "F4" };
     mStringMap["SaveGamelistsMode"] = { "always", "always" };
 #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = { false, false };
@@ -247,7 +248,6 @@ void Settings::setDefaults()
     mBoolMap["DisableComposition"] = { true, true };
 #endif
     mBoolMap["DisplayGPUStatistics"] = { false, false };
-    mStringMap["ExitButtonCombo"] = { "F4", "F4" };
 // macOS requires root privileges to reboot and power off so it doesn't make much
 // sense to enable this setting and menu entry for that operating system.
 #if !defined(__APPLE__)
