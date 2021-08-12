@@ -12,7 +12,7 @@ Twitter:\
 [https://twitter.com/ESDE_Frontend](https://twitter.com/ESDE_Frontend)
 
 Discord server:\
-[https://discord.gg/3jmbRXFe](https://discord.gg/3jmbRXFe)
+[https://discord.gg/3jmbRXFe](https://discord.gg/EVVX4DqWAP)
 
 Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
