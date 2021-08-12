@@ -1,6 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE)
 
-EmulationStation Desktop Edition is a front-end for browsing and launching games from your multi-platform game collection.
+EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection.
 
 Web site:\
 [https://es-de.org](https://es-de.org)

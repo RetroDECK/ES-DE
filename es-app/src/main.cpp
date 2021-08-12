@@ -1,6 +1,6 @@
 //  SPDX-License-Identifier: MIT
 //
-//  EmulationStation Desktop Edition (ES-DE) is a front-end for browsing
+//  EmulationStation Desktop Edition (ES-DE) is a frontend for browsing
 //  and launching games from your multi-platform game collection.
 //
 //  Originally created by Alec Lofquist.
@@ -357,7 +357,7 @@ bool parseArgs(int argc, char* argv[])
             std::cout <<
                 // clang-format off
 "Usage: emulationstation [options]\n"
-"EmulationStation Desktop Edition, Emulator Front-end\n\n"
+"EmulationStation Desktop Edition, Emulator Frontend\n\n"
 "Options:\n"
 "  --display [index 1-4]           Display/monitor to use\n"
 "  --resolution [width] [height]   Application resolution\n"

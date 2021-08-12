@@ -72,7 +72,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v2.1
 
-* Migration tools for importing game metadata and media from other front-end applications
+* Migration tools for importing game metadata and media from other frontend applications
 * Auto-import tools for Steam, Lutris etc.
 
 To see which features have been implemented in previous versions, please refer to [CHANGELOG.md](CHANGELOG.md).

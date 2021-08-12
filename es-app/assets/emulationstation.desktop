@@ -1,13 +1,13 @@
 [Desktop Entry]
 Version=1.2.0-alpha
 Name=EmulationStation Desktop Edition
-GenericName=Emulator Front-end
+GenericName=Emulator Frontend
 Type=Application
-Comment=Emulator Front-end
+Comment=Emulator Frontend
 Icon=emulationstation
 Exec=emulationstation
 Terminal=false
 StartupNotify=true
 Hidden=false
-Keywords=emulator;front-end;frontend;
+Keywords=emulator;emulation;front-end;frontend;
 Categories=Game;Emulator;

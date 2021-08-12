@@ -259,8 +259,8 @@ include(InstallRequiredSystemLibraries)
 # General CPack settings.
 
 set(CPACK_PACKAGE_NAME "emulationstation-de")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emulator front-end")
-set(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition (ES-DE) is a front-end for browsing and launching games from your multi-platform game collection.
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Emulator frontend")
+set(CPACK_PACKAGE_DESCRIPTION "EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and launching games from your multi-platform game collection.
 
 It's intended to be used in conjunction with emulators such as the RetroArch cores.")
 if(APPLE)

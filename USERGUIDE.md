@@ -559,7 +559,7 @@ This of course assumes that you have menu entries setup for your Steam games.
 
 ## RetroArch setup
 
-ES-DE is a game browsing front-end and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL.md](INSTALL.md#es_systemsxml) document which goes into details on the structure of this file and more advanced configuration topics in general.
+ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL.md](INSTALL.md#es_systemsxml) document which goes into details on the structure of this file and more advanced configuration topics in general.
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
