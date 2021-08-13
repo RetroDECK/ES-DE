@@ -11,6 +11,7 @@
 ### Detailed list of changes
 
 * Added a menu option to change the application exit key combination
+* Added the GLM (OpenGL Mathematics) library as a Git subtree
 
 ### Bug fixes
 

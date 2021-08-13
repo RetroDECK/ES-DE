@@ -44,6 +44,9 @@ http://www.freeimage.sourceforge.net
 GLEW \
 http://glew.sourceforge.net
 
+GLM \
+https://github.com/g-truc/glm
+
 libVLC \
 https://wiki.videolan.org/LibVLC
 
