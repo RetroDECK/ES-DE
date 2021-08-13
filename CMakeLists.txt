@@ -230,6 +230,7 @@ set(COMMON_INCLUDE_DIRS
         ${RAPIDJSON_INCLUDE_DIRS}
         ${SDL2_INCLUDE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
+        ${CMAKE_CURRENT_SOURCE_DIR}/external/glm
         ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
 if(VLC_PLAYER)
