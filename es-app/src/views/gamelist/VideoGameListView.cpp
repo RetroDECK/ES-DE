@@ -64,7 +64,7 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
     mVideo = new VideoFFmpegComponent(window);
 #endif
 
-    mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y());
+    mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y);
     mList.setSize(mSize.x() * (0.50f - padding), mList.getSize().y());
     mList.setAlignment(TextListComponent<FileData*>::ALIGN_LEFT);
     mList.setCursorChangedCallback([&](const CursorState& /*state*/) { updateInfoPanel(); });
@@ -127,7 +127,7 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
 
     mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
     mDescContainer.setSize(mSize.x() * (0.50f - 2.0f * padding),
-                           mSize.y() - mDescContainer.getPosition().y());
+                           mSize.y() - mDescContainer.getPosition().y);
     mDescContainer.setAutoScroll(true);
     mDescContainer.setDefaultZIndex(40);
     addChild(&mDescContainer);
@@ -194,7 +194,7 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
     mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
     // If there is no position defined in the theme for gamelistInfo, then hide it.
-    if (mGamelistInfo.getPosition() == 0)
+    if (mGamelistInfo.getPosition() == glm::vec3 {})
         mGamelistInfo.setVisible(false);
     else
         mGamelistInfo.setVisible(true);
@@ -209,21 +209,21 @@ void VideoGameListView::initMDLabels()
     const unsigned int colCount = 2;
     const unsigned int rowCount = static_cast<int>(components.size() / 2);
 
-    Vector3f start(mSize.x() * 0.01f, mSize.y() * 0.625f, 0.0f);
+    glm::vec3 start(mSize.x() * 0.01f, mSize.y() * 0.625f, 0.0f);
 
     const float colSize = (mSize.x() * 0.48f) / colCount;
     const float rowPadding = 0.01f * mSize.y();
 
     for (unsigned int i = 0; i < components.size(); i++) {
         const unsigned int row = i % rowCount;
-        Vector3f pos(0.0f, 0.0f, 0.0f);
+        glm::vec3 pos {};
         if (row == 0) {
-            pos = start + Vector3f(colSize * (i / rowCount), 0, 0);
+            pos = start + glm::vec3(colSize * (i / rowCount), 0.0f, 0.0f);
         }
         else {
             // Work from the last component.
             GuiComponent* lc = components[i - 1];
-            pos = lc->getPosition() + Vector3f(0, lc->getSize().y() + rowPadding, 0);
+            pos = lc->getPosition() + glm::vec3(0.0f, lc->getSize().y() + rowPadding, 0.0f);
         }
 
         components[i]->setFont(Font::get(FONT_SIZE_SMALL));
@@ -253,19 +253,19 @@ void VideoGameListView::initMDValues()
     for (unsigned int i = 0; i < labels.size(); i++) {
         const float heightDiff = (labels[i]->getSize().y() - values[i]->getSize().y()) / 2.0f;
         values[i]->setPosition(labels[i]->getPosition() +
-                               Vector3f(labels[i]->getSize().x(), heightDiff, 0));
+                               glm::vec3(labels[i]->getSize().x(), heightDiff, 0.0f));
         values[i]->setSize(colSize - labels[i]->getSize().x(), values[i]->getSize().y());
         values[i]->setDefaultZIndex(40);
 
-        float testBot = values[i]->getPosition().y() + values[i]->getSize().y();
+        float testBot = values[i]->getPosition().y + values[i]->getSize().y();
 
         if (testBot > bottom)
             bottom = testBot;
     }
 
-    mDescContainer.setPosition(mDescContainer.getPosition().x(), bottom + mSize.y() * 0.01f);
+    mDescContainer.setPosition(mDescContainer.getPosition().x, bottom + mSize.y() * 0.01f);
     mDescContainer.setSize(mDescContainer.getSize().x(),
-                           mSize.y() - mDescContainer.getPosition().y());
+                           mSize.y() - mDescContainer.getPosition().y);
 }
 
 void VideoGameListView::updateInfoPanel()

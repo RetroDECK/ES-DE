@@ -46,7 +46,7 @@ void TextEditComponent::onFocusLost()
 
 void TextEditComponent::onSizeChanged()
 {
-    mBox.fitTo(mSize, Vector3f::Zero(),
+    mBox.fitTo(mSize, {},
                Vector2f(-34 + mResolutionAdjustment,
                         -32 - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())));
     onTextChanged(); // Wrap point probably changed.
@@ -271,24 +271,26 @@ void TextEditComponent::onCursorChanged()
     }
 }
 
-void TextEditComponent::render(const Transform4x4f& parentTrans)
+void TextEditComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = getTransform() * parentTrans;
+    glm::mat4 trans = getTransform() * parentTrans;
     renderChildren(trans);
 
     // Text + cursor rendering.
     // Offset into our "text area" (padding).
-    trans.translation() += Vector3f(getTextAreaPos().x(), getTextAreaPos().y(), 0);
+    trans = glm::translate(trans, glm::vec3(getTextAreaPos().x(), getTextAreaPos().y(), 0.0f));
 
-    Vector2i clipPos(static_cast<int>(trans.translation().x()),
-                     static_cast<int>(trans.translation().y()));
+    Vector2i clipPos(static_cast<int>(trans[3].x), static_cast<int>(trans[3].y));
     // Use "text area" size for clipping.
-    Vector3f dimScaled = trans * Vector3f(getTextAreaSize().x(), getTextAreaSize().y(), 0);
-    Vector2i clipDim(static_cast<int>((dimScaled.x()) - trans.translation().x()),
-                     static_cast<int>((dimScaled.y()) - trans.translation().y()));
+    glm::vec3 dimScaled {};
+    dimScaled.x = std::fabs(trans[3].x + getTextAreaSize().x());
+    dimScaled.y = std::fabs(trans[3].y + getTextAreaSize().y());
+
+    Vector2i clipDim(static_cast<int>(dimScaled.x - trans[3].x),
+                     static_cast<int>(dimScaled.y - trans[3].y));
     Renderer::pushClipRect(clipPos, clipDim);
 
-    trans.translate(Vector3f(-mScrollOffset.x(), -mScrollOffset.y(), 0));
+    trans = glm::translate(trans, glm::vec3(-mScrollOffset.x(), -mScrollOffset.y(), 0.0f));
     Renderer::setMatrix(trans);
 
     if (mTextCache)

@@ -74,9 +74,9 @@ void SliderComponent::update(int deltaTime)
     GuiComponent::update(deltaTime);
 }
 
-void SliderComponent::render(const Transform4x4f& parentTrans)
+void SliderComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
     Renderer::setMatrix(trans);
 
     // Render suffix.

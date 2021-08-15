@@ -18,6 +18,7 @@
 #include "InputManager.h"
 #include "Log.h"
 #include "Sound.h"
+#include "math/Misc.h"
 #include "resources/Font.h"
 
 #include <algorithm>
@@ -348,7 +349,7 @@ void Window::update(int deltaTime)
 
 void Window::render()
 {
-    Transform4x4f transform = Transform4x4f::Identity();
+    glm::mat4 trans = Renderer::getIdentity();
 
     mRenderedHelpPrompts = false;
 
@@ -378,7 +379,7 @@ void Window::render()
             renderBottom = false;
 
         if (renderBottom)
-            bottom->render(transform);
+            bottom->render(trans);
 
         if (bottom != top || mRenderLaunchScreen) {
 #if defined(USE_OPENGL_21)
@@ -468,7 +469,7 @@ void Window::render()
             }
 #endif // USE_OPENGL_21
 
-            mBackgroundOverlay->render(transform);
+            mBackgroundOverlay->render(trans);
 
             // Scale-up menu opening effect.
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
@@ -482,7 +483,7 @@ void Window::render()
             }
 
             if (!mRenderLaunchScreen)
-                top->render(transform);
+                top->render(trans);
         }
         else {
             mCachedBackground = false;
@@ -493,7 +494,7 @@ void Window::render()
 
     // Render the quick list scrolling overlay, which is triggered in IList.
     if (mListScrollOpacity != 0) {
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                            static_cast<float>(Renderer::getScreenHeight()),
                            0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
@@ -509,7 +510,7 @@ void Window::render()
     }
 
     if (!mRenderedHelpPrompts)
-        mHelp->render(transform);
+        mHelp->render(trans);
 
     unsigned int screensaverTimer =
         static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"));
@@ -531,7 +532,7 @@ void Window::render()
     renderScreensaver();
 
     if (!mRenderScreensaver && mInfoPopup)
-        mInfoPopup->render(transform);
+        mInfoPopup->render(trans);
 
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
         if (!isProcessing() && mAllowSleep && (!mScreensaver)) {
@@ -550,14 +551,14 @@ void Window::render()
         mLaunchScreen->render();
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
     }
 }
 
 void Window::renderLoadingScreen(std::string text)
 {
-    Transform4x4f trans = Transform4x4f::Identity();
+    glm::mat4 trans = Renderer::getIdentity();
     Renderer::setMatrix(trans);
     Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                        static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
@@ -574,7 +575,7 @@ void Window::renderLoadingScreen(std::string text)
 
     float x = std::round((Renderer::getScreenWidth() - cache->metrics.size.x()) / 2.0f);
     float y = std::round(Renderer::getScreenHeight() * 0.835f);
-    trans = trans.translate(Vector3f(x, y, 0.0f));
+    trans = glm::translate(trans, glm::vec3(x, y, 0.0f));
     Renderer::setMatrix(trans);
     font->renderTextCache(cache);
     delete cache;
@@ -590,7 +591,7 @@ void Window::renderListScrollOverlay(unsigned char opacity, const std::string& t
 
 void Window::renderHelpPromptsEarly()
 {
-    mHelp->render(Transform4x4f::Identity());
+    mHelp->render(Renderer::getIdentity());
     mRenderedHelpPrompts = true;
 }
 

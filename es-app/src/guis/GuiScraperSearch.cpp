@@ -565,9 +565,9 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
     return GuiComponent::input(config, input);
 }
 
-void GuiScraperSearch::render(const Transform4x4f& parentTrans)
+void GuiScraperSearch::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     renderChildren(trans);
     Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x00000009, 0x00000009);

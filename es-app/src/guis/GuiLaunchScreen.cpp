@@ -169,13 +169,13 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
                                          mGrid->getRowHeight(3));
 
         mMarquee->setOrigin(0.5f, 0.5f);
-        Vector3f currentPos = mMarquee->getPosition();
+        glm::vec3 currentPos = mMarquee->getPosition();
         Vector2f currentSize = mMarquee->getSize();
 
         // Position the image in the middle of row four.
-        currentPos.x() = mSize.x() / 2.0f;
-        currentPos.y() = mGrid->getRowHeight(0) + mGrid->getRowHeight(1) + mGrid->getRowHeight(2) +
-                         mGrid->getRowHeight(3) / 2.0f;
+        currentPos.x = mSize.x() / 2.0f;
+        currentPos.y = mGrid->getRowHeight(0) + mGrid->getRowHeight(1) + mGrid->getRowHeight(2) +
+                       mGrid->getRowHeight(3) / 2.0f;
         mMarquee->setPosition(currentPos);
     }
 
@@ -185,7 +185,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
                 static_cast<float>(Renderer::getScreenHeight()) / 2.25f);
 
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
     mBackground.setEdgeColor(0xEEEEEEFF);
 }
 
@@ -228,7 +228,7 @@ void GuiLaunchScreen::render()
     if (mScaleUp < 1.0f)
         setScale(mScaleUp);
 
-    Transform4x4f trans = Transform4x4f::Identity() * getTransform();
+    glm::mat4 trans = Renderer::getIdentity() * getTransform();
     Renderer::setMatrix(trans);
 
     GuiComponent::renderChildren(trans);

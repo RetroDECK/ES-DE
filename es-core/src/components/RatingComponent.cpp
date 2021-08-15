@@ -141,12 +141,12 @@ void RatingComponent::updateColors()
         mVertices[i].col = color;
 }
 
-void RatingComponent::render(const Transform4x4f& parentTrans)
+void RatingComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr)
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     Renderer::setMatrix(trans);
 

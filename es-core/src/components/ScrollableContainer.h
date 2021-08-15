@@ -34,7 +34,7 @@ public:
     void reset();
 
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
 private:
     Vector2f getContentSize();

@@ -168,7 +168,7 @@ void VideoVlcComponent::resize()
     onSizeChanged();
 }
 
-void VideoVlcComponent::render(const Transform4x4f& parentTrans)
+void VideoVlcComponent::render(const glm::mat4& parentTrans)
 {
     // Set the audio volume. As libVLC is very unreliable we need to make an additional
     // attempt here in the render loop in addition to the initialization in startVideo().
@@ -179,7 +179,7 @@ void VideoVlcComponent::render(const Transform4x4f& parentTrans)
         setAudioVolume();
 
     VideoComponent::render(parentTrans);
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
     GuiComponent::renderChildren(trans);
 
     // Check the actual VLC state, i.e. if the video is really playing rather than
@@ -296,8 +296,8 @@ void VideoVlcComponent::calculateBlackRectangle()
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.
         else {
-            mVideoRectangleCoords.push_back(std::round(mPosition.x() - mSize.x() * mOrigin.x()));
-            mVideoRectangleCoords.push_back(std::round(mPosition.y() - mSize.y() * mOrigin.y()));
+            mVideoRectangleCoords.push_back(std::round(mPosition.x - mSize.x() * mOrigin.x()));
+            mVideoRectangleCoords.push_back(std::round(mPosition.y - mSize.y() * mOrigin.y()));
             mVideoRectangleCoords.push_back(std::round(mSize.x()));
             mVideoRectangleCoords.push_back(std::round(mSize.y()));
         }

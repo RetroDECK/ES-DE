@@ -148,23 +148,26 @@ void ScrollableContainer::update(int deltaTime)
     GuiComponent::update(deltaTime);
 }
 
-void ScrollableContainer::render(const Transform4x4f& parentTrans)
+void ScrollableContainer::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
-    Vector2i clipPos(static_cast<int>(trans.translation().x()),
-                     static_cast<int>(trans.translation().y()));
+    Vector2i clipPos(static_cast<int>(trans[3].x), static_cast<int>(trans[3].y));
 
-    Vector3f dimScaled = trans * Vector3f(mSize.x(), mSize.y(), 0);
-    Vector2i clipDim(static_cast<int>((dimScaled.x()) - trans.translation().x()),
-                     static_cast<int>((dimScaled.y()) - trans.translation().y()));
+    glm::vec3 dimScaled {};
+
+    dimScaled.x = std::fabs(trans[3].x + mSize.x());
+    dimScaled.y = std::fabs(trans[3].y + mSize.y());
+
+    Vector2i clipDim(static_cast<int>(dimScaled.x - trans[3].x),
+                     static_cast<int>(dimScaled.y - trans[3].y));
 
     Renderer::pushClipRect(clipPos, clipDim);
 
-    trans.translate(-Vector3f(mScrollPos.x(), mScrollPos.y(), 0));
+    trans = glm::translate(trans, -glm::vec3(mScrollPos.x(), mScrollPos.y(), 0.0f));
     Renderer::setMatrix(trans);
 
     GuiComponent::renderChildren(trans);

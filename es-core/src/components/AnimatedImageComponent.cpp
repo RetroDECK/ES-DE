@@ -86,7 +86,7 @@ void AnimatedImageComponent::update(int deltaTime)
     }
 }
 
-void AnimatedImageComponent::render(const Transform4x4f& trans)
+void AnimatedImageComponent::render(const glm::mat4& trans)
 {
     if (mFrames.size())
         mFrames.at(mCurrentFrame).first->render(getTransform() * trans);

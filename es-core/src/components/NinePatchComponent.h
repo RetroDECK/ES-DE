@@ -35,13 +35,11 @@ public:
                        unsigned int centerColor = 0xFFFFFFFF);
     virtual ~NinePatchComponent();
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void onSizeChanged() override;
 
-    void fitTo(Vector2f size,
-               Vector3f position = Vector3f::Zero(),
-               Vector2f padding = Vector2f::Zero());
+    void fitTo(Vector2f size, glm::vec3 position = {}, Vector2f padding = Vector2f::Zero());
 
     void setImagePath(const std::string& path);
     // Apply a color shift to the "edge" parts of the ninepatch.

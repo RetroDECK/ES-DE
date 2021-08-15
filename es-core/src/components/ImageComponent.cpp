@@ -387,12 +387,12 @@ void ImageComponent::updateColors()
     mVertices[3].col = colorEnd;
 }
 
-void ImageComponent::render(const Transform4x4f& parentTrans)
+void ImageComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
     Renderer::setMatrix(trans);
 
     if (mTexture && mOpacity > 0) {

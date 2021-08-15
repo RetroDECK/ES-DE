@@ -388,11 +388,11 @@ void GuiMetaDataEd::onSizeChanged()
     mList->setSize(mList->getSize().x(), listHeight);
     Vector2f newWindowSize = mSize;
     newWindowSize.y() -= heightAdjustment;
-    mBackground.fitTo(newWindowSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(newWindowSize, {}, Vector2f(-32.0f, -32.0f));
 
     // Move the buttons up as well to make the layout align correctly after the resize.
-    Vector3f newButtonPos = mButtons->getPosition();
-    newButtonPos.y() -= heightAdjustment;
+    glm::vec3 newButtonPos = mButtons->getPosition();
+    newButtonPos.y -= heightAdjustment;
     mButtons->setPosition(newButtonPos);
 
     mHeaderGrid->setRowHeightPerc(1, titleHeight / mHeaderGrid->getSize().y());

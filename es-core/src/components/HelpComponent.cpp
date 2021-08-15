@@ -152,7 +152,7 @@ void HelpComponent::updateGrid()
         mGrid->setEntry(labels.at(i), Vector2i(col + 2, 0), false, false);
     }
 
-    mGrid->setPosition(Vector3f(mStyle.position.x(), mStyle.position.y(), 0.0f));
+    mGrid->setPosition({ mStyle.position.x(), mStyle.position.y(), 0.0f });
     mGrid->setOrigin(mStyle.origin);
 }
 
@@ -187,9 +187,9 @@ void HelpComponent::setOpacity(unsigned char opacity)
         mGrid->getChild(i)->setOpacity(opacity);
 }
 
-void HelpComponent::render(const Transform4x4f& parentTrans)
+void HelpComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     if (mGrid)
         mGrid->render(trans);

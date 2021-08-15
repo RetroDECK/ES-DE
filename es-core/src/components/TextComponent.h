@@ -48,7 +48,7 @@ public:
     void setBackgroundColor(unsigned int color);
     void setRenderBackground(bool render) { mRenderBackground = render; }
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     std::string getValue() const override { return mText; }
     void setValue(const std::string& value) override { setText(value); }

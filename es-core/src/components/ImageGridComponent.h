@@ -61,7 +61,7 @@ public:
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,
                             const std::string& element,
@@ -208,17 +208,17 @@ template <typename T> void ImageGridComponent<T>::update(int deltaTime)
         (*it)->update(deltaTime);
 }
 
-template <typename T> void ImageGridComponent<T>::render(const Transform4x4f& parentTrans)
+template <typename T> void ImageGridComponent<T>::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = getTransform() * parentTrans;
-    Transform4x4f tileTrans = trans;
+    glm::mat4 trans = getTransform() * parentTrans;
+    glm::mat4 tileTrans = trans;
 
     float offsetX =
         isVertical() ? 0.0f : mCamera * mCameraDirection * (mTileSize.x() + mMargin.x());
     float offsetY =
         isVertical() ? mCamera * mCameraDirection * (mTileSize.y() + mMargin.y()) : 0.0f;
 
-    tileTrans.translate(Vector3f(offsetX, offsetY, 0.0));
+    tileTrans = glm::translate(tileTrans, glm::vec3(offsetX, offsetY, 0.0f));
 
     if (mEntriesDirty) {
         updateTiles();
@@ -226,11 +226,11 @@ template <typename T> void ImageGridComponent<T>::render(const Transform4x4f& pa
     }
 
     // Create a clipRect to hide tiles used to buffer texture loading.
-    float scaleX = trans.r0().x();
-    float scaleY = trans.r1().y();
+    float scaleX = trans[0].x;
+    float scaleY = trans[1].y;
 
-    Vector2i pos(static_cast<int>(std::round(trans.translation()[0])),
-                 static_cast<int>(std::round(trans.translation()[1])));
+    Vector2i pos(static_cast<int>(std::round(trans[3].x)),
+                 static_cast<int>(std::round(trans[3].y)));
     Vector2i size(static_cast<int>(std::round(mSize.x() * scaleX)),
                   static_cast<int>(std::round(mSize.y() * scaleY)));
 
@@ -449,7 +449,7 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
             }
         }
 
-        Vector3f oldPos = Vector3f::Zero();
+        glm::vec3 oldPos {};
 
         if (oldTile != nullptr && oldTile != newTile) {
             oldPos = oldTile->getBackgroundPosition();
@@ -457,7 +457,7 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
         }
 
         if (newTile != nullptr)
-            newTile->setSelected(true, true, oldPos == Vector3f::Zero() ? nullptr : &oldPos, true);
+            newTile->setSelected(true, true, oldPos == glm::vec3 {} ? nullptr : &oldPos, true);
     }
 
     int firstVisibleCol = mStartPosition / dimOpposite;
@@ -677,7 +677,7 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos,
                 if (idx < 0 || idx >= mTiles.size())
                     idx = 0;
 
-                Vector3f pos = mTiles.at(idx)->getBackgroundPosition();
+                glm::vec3 pos = mTiles.at(idx)->getBackgroundPosition();
                 tile->setSelected(true, allowAnimation, &pos);
             }
             else {

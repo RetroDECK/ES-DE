@@ -50,9 +50,9 @@ GridTileComponent::GridTileComponent(Window* window)
     setVisible(true);
 }
 
-void GridTileComponent::render(const Transform4x4f& parentTrans)
+void GridTileComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = getTransform() * parentTrans;
+    glm::mat4 trans = getTransform() * parentTrans;
 
     if (mVisible)
         renderChildren(trans);
@@ -171,7 +171,7 @@ void GridTileComponent::setImage(const std::shared_ptr<TextureResource>& texture
 
 void GridTileComponent::setSelected(bool selected,
                                     bool allowAnimation,
-                                    Vector3f* pPosition,
+                                    glm::vec3* pPosition,
                                     bool force)
 {
     if (mSelected == selected && !force)
@@ -189,7 +189,7 @@ void GridTileComponent::setSelected(bool selected,
             resize();
         }
         else {
-            mAnimPosition = Vector3f(pPosition->x(), pPosition->y(), pPosition->z());
+            mAnimPosition = Vector3f(pPosition->x, pPosition->y, pPosition->z);
 
             auto func = [this](float t) {
                 t -= 1; // Cubic ease out.
@@ -307,7 +307,7 @@ void GridTileComponent::calcCurrentProperties()
     }
 }
 
-Vector3f GridTileComponent::getBackgroundPosition()
+glm::vec3 GridTileComponent::getBackgroundPosition()
 {
     return mBackground.getPosition() + mPosition;
 }

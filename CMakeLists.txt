@@ -196,6 +196,10 @@ if(DEFINED libCEC_FOUND)
     add_definitions(-DHAVE_LIBCEC)
 endif()
 
+# GLM library options.
+add_definitions(-DGLM_FORCE_CXX14)
+add_definitions(-DGLM_FORCE_XYZW_ONLY)
+
 # For Unix systems, assign the installation prefix. If it's not explicitly set,
 # we use /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD.
 if(NOT WIN32 AND NOT APPLE)

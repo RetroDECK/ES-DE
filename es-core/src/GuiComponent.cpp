@@ -24,11 +24,11 @@ GuiComponent::GuiComponent(Window* window)
     , mColorShiftEnd(0)
     , mOpacity(255)
     , mSaturation(1.0f)
-    , mPosition(Vector3f::Zero())
+    , mPosition({})
     , mOrigin(Vector2f::Zero())
     , mRotationOrigin(0.5f, 0.5f)
     , mSize(Vector2f::Zero())
-    , mTransform(Transform4x4f::Identity())
+    , mTransform(Renderer::getIdentity())
     , mIsProcessing(false)
     , mVisible(true)
     , mEnabled(true)
@@ -78,16 +78,16 @@ void GuiComponent::update(int deltaTime)
     updateChildren(deltaTime);
 }
 
-void GuiComponent::render(const Transform4x4f& parentTrans)
+void GuiComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
     renderChildren(trans);
 }
 
-void GuiComponent::renderChildren(const Transform4x4f& transform) const
+void GuiComponent::renderChildren(const glm::mat4& transform) const
 {
     for (unsigned int i = 0; i < getChildCount(); i++)
         getChild(i)->render(transform);
@@ -95,7 +95,7 @@ void GuiComponent::renderChildren(const Transform4x4f& transform) const
 
 void GuiComponent::setPosition(float x, float y, float z)
 {
-    mPosition = Vector3f(x, y, z);
+    mPosition = glm::vec3(x, y, z);
     onPositionChanged();
 }
 
@@ -113,8 +113,8 @@ void GuiComponent::setSize(float w, float h)
 
 Vector2f GuiComponent::getCenter() const
 {
-    return Vector2f(mPosition.x() - (getSize().x() * mOrigin.x()) + getSize().x() / 2.0f,
-                    mPosition.y() - (getSize().y() * mOrigin.y()) + getSize().y() / 2.0f);
+    return Vector2f(mPosition.x - (getSize().x() * mOrigin.x()) + getSize().x() / 2.0f,
+                    mPosition.y - (getSize().y() * mOrigin.y()) + getSize().y() / 2.0f);
 }
 
 void GuiComponent::addChild(GuiComponent* cmp)
@@ -171,13 +171,13 @@ void GuiComponent::setOpacity(unsigned char opacity)
         (*it)->setOpacity(opacity);
 }
 
-const Transform4x4f& GuiComponent::getTransform()
+const glm::mat4& GuiComponent::getTransform()
 {
-    mTransform = Transform4x4f::Identity();
-    mTransform.translate(mPosition);
+    mTransform = Renderer::getIdentity();
+    mTransform = glm::translate(mTransform, mPosition);
 
     if (mScale != 1.0f)
-        mTransform.scale(mScale);
+        mTransform = glm::scale(mTransform, glm::vec3(mScale));
 
     if (mRotation != 0.0f) {
         // Calculate offset as difference between origin and rotation origin.
@@ -187,17 +187,18 @@ const Transform4x4f& GuiComponent::getTransform()
 
         // Transform to offset point.
         if (xOff != 0.0f || yOff != 0.0f)
-            mTransform.translate(Vector3f(xOff * -1.0f, yOff * -1.0f, 0.0f));
+            mTransform = glm::translate(mTransform, glm::vec3(xOff * -1.0f, yOff * -1.0f, 0.0f));
 
         // Apply rotation transform.
-        mTransform.rotateZ(mRotation);
+        mTransform = glm::rotate(mTransform, mRotation, glm::vec3(0.0f, 0.0f, 1.0f));
 
         // Transform back to original point.
         if (xOff != 0.0f || yOff != 0.0f)
-            mTransform.translate(Vector3f(xOff, yOff, 0.0f));
+            mTransform = glm::translate(mTransform, glm::vec3(xOff, yOff, 0.0f));
     }
-    mTransform.translate(
-        Vector3f(mOrigin.x() * mSize.x() * -1.0f, mOrigin.y() * mSize.y() * -1.0f, 0.0f));
+    mTransform = glm::translate(mTransform, glm::vec3(mOrigin.x() * mSize.x() * -1.0f,
+                                                      mOrigin.y() * mSize.y() * -1.0f, 0.0f));
+
     return mTransform;
 }
 
@@ -312,7 +313,7 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     using namespace ThemeFlags;
     if (properties & POSITION && elem->has("pos")) {
         Vector2f denormalized = elem->get<Vector2f>("pos") * scale;
-        setPosition(Vector3f(denormalized.x(), denormalized.y(), 0));
+        setPosition(glm::vec3(denormalized.x(), denormalized.y(), 0.0f));
     }
 
     if (properties & ThemeFlags::SIZE && elem->has("size"))

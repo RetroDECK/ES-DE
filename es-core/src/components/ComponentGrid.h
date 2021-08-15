@@ -50,7 +50,7 @@ public:
     void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     void onSizeChanged() override;
 
     void resetCursor();

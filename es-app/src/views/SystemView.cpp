@@ -396,12 +396,12 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     setAnimation(anim, 0, nullptr, false, 0);
 }
 
-void SystemView::render(const Transform4x4f& parentTrans)
+void SystemView::render(const glm::mat4& parentTrans)
 {
     if (size() == 0)
         return; // Nothing to render.
 
-    Transform4x4f trans = getTransform() * parentTrans;
+    glm::mat4 trans = getTransform() * parentTrans;
 
     renderExtras(trans, INT16_MIN, INT16_MAX);
 
@@ -449,7 +449,6 @@ void SystemView::onThemeChanged(const std::shared_ptr<ThemeData>& /*theme*/)
     populate();
 }
 
-//  Get the ThemeElements that make up the SystemView.
 void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
 {
     LOG(LogDebug) << "SystemView::getViewElements()";
@@ -473,18 +472,20 @@ void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
     mViewNeedsReload = false;
 }
 
-//  Render system carousel.
-void SystemView::renderCarousel(const Transform4x4f& trans)
+void SystemView::renderCarousel(const glm::mat4& trans)
 {
-    // Background box behind logos.
-    Transform4x4f carouselTrans = trans;
-    carouselTrans.translate(Vector3f(mCarousel.pos.x(), mCarousel.pos.y(), 0.0));
-    carouselTrans.translate(Vector3f(mCarousel.origin.x() * mCarousel.size.x() * -1.0f,
-                                     mCarousel.origin.y() * mCarousel.size.y() * -1.0f, 0.0f));
 
-    Vector2f clipPos(carouselTrans.translation().x(), carouselTrans.translation().y());
+    // Background box behind logos.
+    glm::mat4 carouselTrans = trans;
+    carouselTrans =
+        glm::translate(carouselTrans, glm::vec3(mCarousel.pos.x(), mCarousel.pos.y(), 0.0f));
+    carouselTrans = glm::translate(
+        carouselTrans, glm::vec3(mCarousel.origin.x() * mCarousel.size.x() * -1.0f,
+                                 mCarousel.origin.y() * mCarousel.size.y() * -1.0f, 0.0f));
+
+    glm::vec2 clipPos(carouselTrans[3].x, carouselTrans[3].y);
     Renderer::pushClipRect(
-        Vector2i(static_cast<int>(clipPos.x()), static_cast<int>(clipPos.y())),
+        Vector2i(static_cast<int>(clipPos.x), static_cast<int>(clipPos.y)),
         Vector2i(static_cast<int>(mCarousel.size.x()), static_cast<int>(mCarousel.size.y())));
 
     Renderer::setMatrix(carouselTrans);
@@ -575,8 +576,9 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
         while (index >= static_cast<int>(mEntries.size()))
             index -= static_cast<int>(mEntries.size());
 
-        Transform4x4f logoTrans = carouselTrans;
-        logoTrans.translate(Vector3f(i * logoSpacing[0] + xOff, i * logoSpacing[1] + yOff, 0));
+        glm::mat4 logoTrans = carouselTrans;
+        logoTrans = glm::translate(
+            logoTrans, glm::vec3(i * logoSpacing[0] + xOff, i * logoSpacing[1] + yOff, 0.0f));
 
         float distance = i - mCamOffset;
 
@@ -600,8 +602,7 @@ void SystemView::renderCarousel(const Transform4x4f& trans)
     Renderer::popClipRect();
 }
 
-// Draw background extras.
-void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upper)
+void SystemView::renderExtras(const glm::mat4& trans, float lower, float upper)
 {
     int extrasCenter = static_cast<int>(mExtrasCamOffset);
 
@@ -621,15 +622,16 @@ void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upp
 
         // Only render selected system when not showing.
         if (mShowing || index == mCursor) {
-            Transform4x4f extrasTrans = trans;
+            glm::mat4 extrasTrans = trans;
             if (mCarousel.type == HORIZONTAL || mCarousel.type == HORIZONTAL_WHEEL)
-                extrasTrans.translate(Vector3f((i - mExtrasCamOffset) * mSize.x(), 0, 0));
+                extrasTrans = glm::translate(
+                    extrasTrans, glm::vec3((i - mExtrasCamOffset) * mSize.x(), 0.0f, 0.0f));
             else
-                extrasTrans.translate(Vector3f(0, (i - mExtrasCamOffset) * mSize.y(), 0));
+                extrasTrans = glm::translate(
+                    extrasTrans, glm::vec3(0.0f, (i - mExtrasCamOffset) * mSize.y(), 0.0f));
 
             Renderer::pushClipRect(
-                Vector2i(static_cast<int>(extrasTrans.translation()[0]),
-                         static_cast<int>(extrasTrans.translation()[1])),
+                Vector2i(static_cast<int>(extrasTrans[3].x), static_cast<int>(extrasTrans[3].y)),
                 Vector2i(static_cast<int>(mSize.x()), static_cast<int>(mSize.y())));
             SystemViewData data = mEntries.at(index).data;
             for (unsigned int j = 0; j < data.backgroundExtras.size(); j++) {
@@ -644,14 +646,13 @@ void SystemView::renderExtras(const Transform4x4f& trans, float lower, float upp
     Renderer::popClipRect();
 }
 
-void SystemView::renderFade(const Transform4x4f& trans)
+void SystemView::renderFade(const glm::mat4& trans)
 {
     unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mExtrasFadeOpacity * 255.0f);
     Renderer::setMatrix(trans);
     Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), fadeColor, fadeColor);
 }
 
-// Populate the system carousel with the legacy values.
 void SystemView::getDefaultElements(void)
 {
     // Carousel.

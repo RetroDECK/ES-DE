@@ -78,7 +78,7 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
 
 void GuiTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
 
     mText->setSize(mSize.x() - 40, mText->getSize().y());
 

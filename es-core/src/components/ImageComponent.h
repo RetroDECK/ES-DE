@@ -90,7 +90,7 @@ public:
     bool hasImage() { return static_cast<bool>(mTexture); }
     std::shared_ptr<TextureResource> getTexture() { return mTexture; }
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,

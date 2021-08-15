@@ -115,7 +115,7 @@ GuiGameScraper::GuiGameScraper(Window* window,
 
 void GuiGameScraper::onSizeChanged()
 {
-    mBox.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBox.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
 
     mGrid.setRowHeightPerc(0, 0.04f, false);
     mGrid.setRowHeightPerc(1, mGameName->getFont()->getLetterHeight() / mSize.y(),

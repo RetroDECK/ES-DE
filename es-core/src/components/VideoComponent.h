@@ -61,8 +61,8 @@ public:
     void onPositionChanged() override { mStaticImage.setPosition(mPosition); }
     void onSizeChanged() override { mStaticImage.onSizeChanged(); }
 
-    void render(const Transform4x4f& parentTrans) override;
-    void renderSnapshot(const Transform4x4f& parentTrans);
+    void render(const glm::mat4& parentTrans) override;
+    void renderSnapshot(const glm::mat4& parentTrans);
 
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,

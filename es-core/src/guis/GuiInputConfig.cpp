@@ -293,7 +293,7 @@ void GuiInputConfig::update(int deltaTime)
 
 void GuiInputConfig::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
 
     // Update grid.
     mGrid.setSize(mSize);

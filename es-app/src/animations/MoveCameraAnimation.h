@@ -10,14 +10,15 @@
 #define ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
 
 #include "animations/Animation.h"
+#include "math/Misc.h"
 
 class MoveCameraAnimation : public Animation
 {
 public:
-    MoveCameraAnimation(Transform4x4f& camera, const Vector3f& target)
+    MoveCameraAnimation(glm::mat4& camera, const glm::vec3& target)
         : mCameraStart(camera)
         , mTarget(target)
-        , cameraOut(camera)
+        , cameraPosition(camera)
     {
     }
 
@@ -25,17 +26,16 @@ public:
 
     void apply(float t) override
     {
-        // Cubic ease out.
         t -= 1;
-        cameraOut.translation() =
-            -Vector3f().lerp(-mCameraStart.translation(), mTarget, t * t * t + 1);
+        cameraPosition[3].x = -Math::lerp(-mCameraStart[3].x, mTarget.x, t * t * t + 1);
+        cameraPosition[3].y = -Math::lerp(-mCameraStart[3].y, mTarget.y, t * t * t + 1);
+        cameraPosition[3].z = -Math::lerp(-mCameraStart[3].z, mTarget.z, t * t * t + 1);
     }
 
 private:
-    Transform4x4f mCameraStart;
-    Vector3f mTarget;
-
-    Transform4x4f& cameraOut;
+    glm::mat4 mCameraStart;
+    glm::mat4& cameraPosition;
+    glm::vec3 mTarget;
 };
 
 #endif // ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H

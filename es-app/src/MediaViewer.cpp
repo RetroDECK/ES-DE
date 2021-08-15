@@ -83,15 +83,15 @@ void MediaViewer::update(int deltaTime)
 
 void MediaViewer::render()
 {
-    Transform4x4f transform = Transform4x4f::Identity();
-    Renderer::setMatrix(transform);
+    glm::mat4 trans = Renderer::getIdentity();
+    Renderer::setMatrix(trans);
 
     // Render a black background below the game media.
     Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                        static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
     if (mVideo && !mDisplayingImage) {
-        mVideo->render(transform);
+        mVideo->render(trans);
 
 #if defined(USE_OPENGL_21)
         Renderer::shaderParameters videoParameters;
@@ -122,7 +122,7 @@ void MediaViewer::render()
 #endif
     }
     else if (mImage && mImage->hasImage() && mImage->getSize() != 0) {
-        mImage->render(transform);
+        mImage->render(trans);
 
 #if defined(USE_OPENGL_21)
         if (mCurrentImageIndex == mScreenShotIndex &&

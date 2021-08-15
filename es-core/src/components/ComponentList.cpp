@@ -167,23 +167,25 @@ void ComponentList::updateCameraOffset()
     }
 }
 
-void ComponentList::render(const Transform4x4f& parentTrans)
+void ComponentList::render(const glm::mat4& parentTrans)
 {
     if (!size())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     // Clip everything to be inside our bounds.
-    Vector3f dim(mSize.x(), mSize.y(), 0.0f);
-    dim = trans * dim - trans.translation();
+    glm::vec3 dim(mSize.x(), mSize.y(), 0.0f);
+    dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
+    dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
+
     Renderer::pushClipRect(
-        Vector2i(static_cast<int>(std::round(trans.translation().x())),
-                 static_cast<int>(std::round(trans.translation().y()))),
-        Vector2i(static_cast<int>(std::round(dim.x())), static_cast<int>(std::round(dim.y()))));
+        Vector2i(static_cast<int>(std::round(trans[3].x)),
+                 static_cast<int>(std::round(trans[3].y))),
+        Vector2i(static_cast<int>(std::round(dim.x)), static_cast<int>(std::round(dim.y))));
 
     // Scroll the camera.
-    trans.translate(Vector3f(0.0f, -std::round(mCameraOffset), 0.0f));
+    trans = glm::translate(trans, glm::vec3(0.0f, -std::round(mCameraOffset), 0.0f));
 
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
@@ -243,11 +245,6 @@ void ComponentList::render(const Transform4x4f& parentTrans)
 
     // Draw selector bar.
     if (mFocused) {
-        // Inversion: src * (1 - dst) + dst * 0 = where src = 1
-        // Need a function that goes roughly 0x777777 -> 0xFFFFFF
-        // and 0xFFFFFF -> 0x777777
-        // (1 - dst) + 0x77
-
         const float selectedRowHeight = getRowHeight(mEntries.at(mCursor).data);
 
         if (opacity == 1) {

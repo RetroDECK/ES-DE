@@ -93,7 +93,7 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
 
 void GuiDetectDevice::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
 
     // Grid.
     mGrid.setSize(mSize);

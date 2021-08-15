@@ -154,9 +154,9 @@ void DateTimeEditComponent::update(int deltaTime)
     GuiComponent::update(deltaTime);
 }
 
-void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
+void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     if (mTextCache) {
         std::shared_ptr<Font> font = getFont();
@@ -170,18 +170,18 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
         }
 
         // Vertically center.
-        Vector3f off(0, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
+        glm::vec3 off(0.0f, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
 
         if (mAlignRight)
-            off.x() += referenceSize - mTextCache->metrics.size.x();
-        trans.translate(off);
+            off.x += referenceSize - mTextCache->metrics.size.x();
+        trans = glm::translate(trans, off);
 
         Renderer::setMatrix(trans);
 
         if (Settings::getInstance()->getBool("DebugText")) {
             Renderer::setMatrix(trans);
             if (mTextCache->metrics.size.x() > 0) {
-                Renderer::drawRect(0.0f, 0.0f - off.y(), mSize.x() - off.x(), mSize.y(), 0x0000FF33,
+                Renderer::drawRect(0.0f, 0.0f - off.y, mSize.x() - off.x, mSize.y(), 0x0000FF33,
                                    0x0000FF33);
             }
             Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x(),

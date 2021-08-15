@@ -118,12 +118,12 @@ void NinePatchComponent::buildVertices()
     updateColors();
 }
 
-void NinePatchComponent::render(const Transform4x4f& parentTrans)
+void NinePatchComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     if (mTexture && mVertices != nullptr) {
         Renderer::setMatrix(trans);
@@ -146,15 +146,15 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
 
 void NinePatchComponent::onSizeChanged() { buildVertices(); }
 
-void NinePatchComponent::fitTo(Vector2f size, Vector3f position, Vector2f padding)
+void NinePatchComponent::fitTo(Vector2f size, glm::vec3 position, Vector2f padding)
 {
     size += padding;
     position[0] -= padding.x() / 2.0f;
     position[1] -= padding.y() / 2.0f;
 
     setSize(size + mCornerSize * 2.0f);
-    setPosition(position.x() + Math::lerp(-mCornerSize.x(), mCornerSize.x(), mOrigin.x()),
-                position.y() + Math::lerp(-mCornerSize.y(), mCornerSize.y(), mOrigin.y()));
+    setPosition(position.x + Math::lerp(-mCornerSize.x(), mCornerSize.x(), mOrigin.x()),
+                position.y + Math::lerp(-mCornerSize.y(), mCornerSize.y(), mOrigin.y()));
 }
 
 void NinePatchComponent::setImagePath(const std::string& path)

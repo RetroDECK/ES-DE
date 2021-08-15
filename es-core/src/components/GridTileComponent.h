@@ -27,7 +27,7 @@ class GridTileComponent : public GuiComponent
 public:
     GridTileComponent(Window* window);
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,
                             const std::string& element,
@@ -45,13 +45,13 @@ public:
     void setImage(const std::shared_ptr<TextureResource>& texture);
     void setSelected(bool selected,
                      bool allowAnimation = true,
-                     Vector3f* pPosition = nullptr,
+                     glm::vec3* pPosition = nullptr,
                      bool force = false);
     void setVisible(bool visible);
 
     void forceSize(Vector2f size, float selectedZoom);
 
-    Vector3f getBackgroundPosition();
+    glm::vec3 getBackgroundPosition();
 
     virtual void update(int deltaTime) override;
 

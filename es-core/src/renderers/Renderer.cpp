@@ -12,7 +12,6 @@
 #include "Log.h"
 #include "Settings.h"
 #include "Shader_GL21.h"
-#include "math/Transform4x4f.h"
 #include "math/Vector2i.h"
 #include "resources/ResourceManager.h"
 
@@ -326,28 +325,19 @@ namespace Renderer
         if (!createWindow())
             return false;
 
-        Transform4x4f projection = Transform4x4f::Identity();
+        glm::mat4 projection = getIdentity();
         Rect viewport = Rect(0, 0, 0, 0);
 
         switch (screenRotate) {
-            case 0: {
-                viewport.x = screenOffsetX;
-                viewport.y = screenOffsetY;
-                viewport.w = screenWidth;
-                viewport.h = screenHeight;
-                projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
-                                           static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                break;
-            }
             case 1: {
                 viewport.x = windowWidth - screenOffsetY - screenHeight;
                 viewport.y = screenOffsetX;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
-                projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
-                                           static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(90)), { 0, 0, 1 });
-                projection.translate({ 0, screenHeight * -1.0f, 0 });
+                projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
+                                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
+                projection = glm::rotate(projection, glm::radians(90.0f), { 0.0f, 0.0f, 1.0f });
+                projection = glm::translate(projection, { 0.0f, screenHeight * -1.0f, 0.0f });
                 break;
             }
             case 2: {
@@ -355,10 +345,11 @@ namespace Renderer
                 viewport.y = windowHeight - screenOffsetY - screenHeight;
                 viewport.w = screenWidth;
                 viewport.h = screenHeight;
-                projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
-                                           static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(180)), { 0, 0, 1 });
-                projection.translate({ screenWidth * -1.0f, screenHeight * -1.0f, 0 });
+                projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
+                                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
+                projection = glm::rotate(projection, glm::radians(180.0f), { 0.0f, 0.0f, 1.0f });
+                projection =
+                    glm::translate(projection, { screenWidth * -1.0f, screenHeight * -1.0f, 0.0f });
                 break;
             }
             case 3: {
@@ -366,10 +357,19 @@ namespace Renderer
                 viewport.y = windowHeight - screenOffsetX - screenWidth;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
-                projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
-                                           static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(270)), { 0, 0, 1 });
-                projection.translate({ screenWidth * -1.0f, 0, 0 });
+                projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
+                                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
+                projection = glm::rotate(projection, glm::radians(270.0f), { 0.0f, 0.0f, 1.0f });
+                projection = glm::translate(projection, { screenWidth * -1.0f, 0.0f, 0.0f });
+                break;
+            }
+            default: {
+                viewport.x = screenOffsetX;
+                viewport.y = screenOffsetY;
+                viewport.w = screenWidth;
+                viewport.h = screenHeight;
+                projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
+                                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
                 break;
             }
         }
@@ -466,7 +466,7 @@ namespace Renderer
                   const unsigned int _colorEnd,
                   bool horizontalGradient,
                   const float _opacity,
-                  const Transform4x4f& _trans,
+                  const glm::mat4& _trans,
                   const Blend::Factor _srcBlendFactor,
                   const Blend::Factor _dstBlendFactor)
     {
@@ -542,7 +542,7 @@ namespace Renderer
             return nullptr;
     };
 
-    const Transform4x4f getProjectionMatrix() { return mProjectionMatrix; }
+    const glm::mat4 getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
     int getWindowWidth() { return windowWidth; }
     int getWindowHeight() { return windowHeight; }

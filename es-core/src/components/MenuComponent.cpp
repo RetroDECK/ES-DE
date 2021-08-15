@@ -106,7 +106,7 @@ void MenuComponent::updateSize()
 
 void MenuComponent::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
 
     // Update grid row/column sizes.
     mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y());

@@ -141,17 +141,16 @@ void ComponentGrid::updateCellComponent(const GridEntry& cell)
     if (cell.resize)
         cell.component->setSize(size);
 
-    // Position.
     // Find top left corner.
-    Vector3f pos(0, 0, 0);
+    glm::vec3 pos {};
     for (int x = 0; x < cell.pos.x(); x++)
         pos[0] += getColWidth(x);
     for (int y = 0; y < cell.pos.y(); y++)
         pos[1] += getRowHeight(y);
 
     // Center component.
-    pos[0] = pos.x() + (size.x() - cell.component->getSize().x()) / 2;
-    pos[1] = pos.y() + (size.y() - cell.component->getSize().y()) / 2;
+    pos[0] = pos.x + (size.x() - cell.component->getSize().x()) / 2.0f;
+    pos[1] = pos.y + (size.y() - cell.component->getSize().y()) / 2.0f;
 
     cell.component->setPosition(pos);
 }
@@ -360,9 +359,9 @@ void ComponentGrid::update(int deltaTime)
     }
 }
 
-void ComponentGrid::render(const Transform4x4f& parentTrans)
+void ComponentGrid::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     renderChildren(trans);
 

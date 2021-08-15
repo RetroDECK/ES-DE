@@ -282,7 +282,7 @@ protected:
             scroll(mScrollVelocity);
     }
 
-    void listRenderTitleOverlay(const Transform4x4f& /*trans*/)
+    void listRenderTitleOverlay(const glm::mat4& /*trans*/)
     {
         if (!Settings::getInstance()->getBool("ListScrollOverlay"))
             return;

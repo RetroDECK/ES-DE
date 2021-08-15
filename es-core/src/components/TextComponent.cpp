@@ -54,7 +54,11 @@ TextComponent::TextComponent(Window* window,
     setColor(color);
     setBackgroundColor(bgcolor);
     setText(text);
-    setPosition(pos);
+
+    // TEMPORARY
+    glm::vec3 tempvec = { pos.x(), pos.y(), pos.z() };
+
+    setPosition(tempvec);
     setSize(size);
 }
 
@@ -115,12 +119,12 @@ void TextComponent::setUppercase(bool uppercase)
     onTextChanged();
 }
 
-void TextComponent::render(const Transform4x4f& parentTrans)
+void TextComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
 
     if (mRenderBackground) {
         Renderer::setMatrix(trans);
@@ -147,7 +151,7 @@ void TextComponent::render(const Transform4x4f& parentTrans)
                 break;
             }
         }
-        Vector3f off(0, yOff, 0);
+        glm::vec3 off(0.0f, yOff, 0.0f);
 
         if (Settings::getInstance()->getBool("DebugText")) {
             // Draw the "textbox" area, what we are aligned within.
@@ -155,7 +159,7 @@ void TextComponent::render(const Transform4x4f& parentTrans)
             Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x0000FF33, 0x0000FF33);
         }
 
-        trans.translate(off);
+        trans = glm::translate(trans, off);
         Renderer::setMatrix(trans);
 
         // Draw the text area, where the text actually is located.

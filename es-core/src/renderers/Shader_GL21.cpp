@@ -114,7 +114,7 @@ namespace Renderer
         shaderDimValue = glGetUniformLocation(mProgramID, "dimValue");
     }
 
-    void Renderer::Shader::setModelViewProjectionMatrix(Transform4x4f mvpMatrix)
+    void Renderer::Shader::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
     {
         if (shaderMVPMatrix != -1)
             GL_CHECK_ERROR(glUniformMatrix4fv(shaderMVPMatrix, 1, GL_FALSE,

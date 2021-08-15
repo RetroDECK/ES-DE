@@ -62,7 +62,7 @@ public:
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
@@ -81,13 +81,17 @@ protected:
 private:
     void populate();
     void updateGameCount();
+    //  Get the ThemeElements that make up the SystemView.
     void getViewElements(const std::shared_ptr<ThemeData>& theme);
+    // Populate the system carousel with the legacy values.
     void getDefaultElements(void);
     void getCarouselFromTheme(const ThemeData::ThemeElement* elem);
 
-    void renderCarousel(const Transform4x4f& parentTrans);
-    void renderExtras(const Transform4x4f& parentTrans, float lower, float upper);
-    void renderFade(const Transform4x4f& trans);
+    //  Render system carousel.
+    void renderCarousel(const glm::mat4& parentTrans);
+    // Draw background extras.
+    void renderExtras(const glm::mat4& parentTrans, float lower, float upper);
+    void renderFade(const glm::mat4& trans);
 
     SystemViewCarousel mCarousel;
     TextComponent mSystemInfo;

@@ -26,7 +26,7 @@ public:
     void setEnabled(bool state) override;
 
     bool input(InputConfig* config, Input input) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void setText(const std::string& text, const std::string& helpText);
 

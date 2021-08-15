@@ -119,10 +119,10 @@ void VideoFFmpegComponent::resize()
     onSizeChanged();
 }
 
-void VideoFFmpegComponent::render(const Transform4x4f& parentTrans)
+void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 {
     VideoComponent::render(parentTrans);
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans = parentTrans * getTransform();
     GuiComponent::renderChildren(trans);
 
     if (mIsPlaying && mFormatContext) {
@@ -839,8 +839,8 @@ void VideoFFmpegComponent::calculateBlackRectangle()
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.
         else {
-            mVideoRectangleCoords.push_back(std::round(mPosition.x() - mSize.x() * mOrigin.x()));
-            mVideoRectangleCoords.push_back(std::round(mPosition.y() - mSize.y() * mOrigin.y()));
+            mVideoRectangleCoords.push_back(std::round(mPosition.x - mSize.x() * mOrigin.x()));
+            mVideoRectangleCoords.push_back(std::round(mPosition.y - mSize.y() * mOrigin.y()));
             mVideoRectangleCoords.push_back(std::round(mSize.x()));
             mVideoRectangleCoords.push_back(std::round(mSize.y()));
         }

@@ -30,7 +30,7 @@ public:
                       Vector2f size = Vector2f::Zero(),
                       unsigned int bgcolor = 0x00000000);
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void setValue(const std::string& val) override;
     std::string getValue() const override;

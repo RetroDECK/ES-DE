@@ -248,19 +248,19 @@ void SystemScreensaver::renderScreensaver()
 
     if (mVideoScreensaver && screensaverType == "video") {
         // Render a black background below the video.
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                            static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
-            Transform4x4f transform = Transform4x4f::Identity();
-            mVideoScreensaver->render(transform);
+            glm::mat4 trans = Renderer::getIdentity();
+            mVideoScreensaver->render(trans);
         }
     }
     else if (mImageScreensaver && screensaverType == "slideshow") {
         // Render a black background below the image.
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                            static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
@@ -268,15 +268,14 @@ void SystemScreensaver::renderScreensaver()
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
             if (mImageScreensaver->hasImage()) {
                 mImageScreensaver->setOpacity(255 - static_cast<unsigned char>(mOpacity * 255));
-
-                Transform4x4f transform = Transform4x4f::Identity();
-                mImageScreensaver->render(transform);
+                glm::mat4 trans = Renderer::getIdentity();
+                mImageScreensaver->render(trans);
             }
         }
     }
 
     if (isScreensaverActive()) {
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
             if (mHasMediaFiles) {
 #if defined(USE_OPENGL_21)
