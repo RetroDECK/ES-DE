@@ -82,7 +82,7 @@ private:
     int mRelativeUpdateAccumulator;
 
     std::unique_ptr<TextCache> mTextCache;
-    std::vector<Vector4f> mCursorBoxes;
+    std::vector<glm::vec4> mCursorBoxes;
 
     unsigned int mColor;
     Utils::Time::DateTime mOriginalValue;

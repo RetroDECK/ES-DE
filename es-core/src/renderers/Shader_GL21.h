@@ -12,7 +12,6 @@
 #define GL_GLEXT_PROTOTYPES
 
 #include "math/Misc.h"
-#include "math/Vector3f.h"
 
 #if defined(_WIN64)
 #include <GL/glew.h>

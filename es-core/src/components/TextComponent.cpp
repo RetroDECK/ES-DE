@@ -33,7 +33,7 @@ TextComponent::TextComponent(Window* window,
                              const std::shared_ptr<Font>& font,
                              unsigned int color,
                              Alignment align,
-                             Vector3f pos,
+                             glm::vec3 pos,
                              Vector2f size,
                              unsigned int bgcolor,
                              float margin)
@@ -54,11 +54,7 @@ TextComponent::TextComponent(Window* window,
     setColor(color);
     setBackgroundColor(bgcolor);
     setText(text);
-
-    // TEMPORARY
-    glm::vec3 tempvec = { pos.x(), pos.y(), pos.z() };
-
-    setPosition(tempvec);
+    setPosition(pos);
     setSize(size);
 }
 

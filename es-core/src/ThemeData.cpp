@@ -450,20 +450,20 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         switch (typeIt->second) {
             case NORMALIZED_RECT: {
-                Vector4f val;
+                glm::vec4 val;
 
                 auto splits = Utils::String::delimitedStringToVector(str, " ");
                 if (splits.size() == 2) {
-                    val = Vector4f(static_cast<float>(atof(splits.at(0).c_str())),
-                                   static_cast<float>(atof(splits.at(1).c_str())),
-                                   static_cast<float>(atof(splits.at(0).c_str())),
-                                   static_cast<float>(atof(splits.at(1).c_str())));
+                    val = glm::vec4(static_cast<float>(atof(splits.at(0).c_str())),
+                                    static_cast<float>(atof(splits.at(1).c_str())),
+                                    static_cast<float>(atof(splits.at(0).c_str())),
+                                    static_cast<float>(atof(splits.at(1).c_str())));
                 }
                 else if (splits.size() == 4) {
-                    val = Vector4f(static_cast<float>(atof(splits.at(0).c_str())),
-                                   static_cast<float>(atof(splits.at(1).c_str())),
-                                   static_cast<float>(atof(splits.at(2).c_str())),
-                                   static_cast<float>(atof(splits.at(3).c_str())));
+                    val = glm::vec4(static_cast<float>(atof(splits.at(0).c_str())),
+                                    static_cast<float>(atof(splits.at(1).c_str())),
+                                    static_cast<float>(atof(splits.at(2).c_str())),
+                                    static_cast<float>(atof(splits.at(3).c_str())));
                 }
 
                 element.properties[node.name()] = val;

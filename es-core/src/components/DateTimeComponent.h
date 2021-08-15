@@ -26,7 +26,7 @@ public:
                       const std::shared_ptr<Font>& font,
                       unsigned int color = 0x000000FF,
                       Alignment align = ALIGN_LEFT,
-                      Vector3f pos = Vector3f::Zero(),
+                      glm::vec3 pos = {},
                       Vector2f size = Vector2f::Zero(),
                       unsigned int bgcolor = 0x00000000);
 

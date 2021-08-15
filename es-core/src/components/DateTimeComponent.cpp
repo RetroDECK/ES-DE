@@ -27,7 +27,7 @@ DateTimeComponent::DateTimeComponent(Window* window,
                                      const std::shared_ptr<Font>& font,
                                      unsigned int color,
                                      Alignment align,
-                                     Vector3f pos,
+                                     glm::vec3 pos,
                                      Vector2f size,
                                      unsigned int bgcolor)
     : TextComponent(window, text, font, color, align, pos, size, bgcolor)

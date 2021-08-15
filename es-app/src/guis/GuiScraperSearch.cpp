@@ -87,18 +87,14 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>(mWindow);
     mMD_ReleaseDate->setColor(mdColor);
     mMD_ReleaseDate->setUppercase(true);
-    mMD_Developer =
-        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
-                                        Vector2f::Zero(), 0x00000000, 0.02f);
-    mMD_Publisher =
-        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
-                                        Vector2f::Zero(), 0x00000000, 0.02f);
-    mMD_Genre =
-        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
-                                        Vector2f::Zero(), 0x00000000, 0.02f);
-    mMD_Players =
-        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, Vector3f::Zero(),
-                                        Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Developer = std::make_shared<TextComponent>(
+        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Publisher = std::make_shared<TextComponent>(
+        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
+                                                glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
+    mMD_Players = std::make_shared<TextComponent>(
+        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
     mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
     if (Settings::getInstance()->getString("Scraper") != "thegamesdb")

@@ -12,7 +12,6 @@
 #define ES_CORE_THEME_DATA_H
 
 #include "math/Vector2f.h"
-#include "math/Vector4f.h"
 #include "utils/FileSystemUtil.h"
 
 #include <deque>
@@ -103,11 +102,11 @@ public:
         std::string type;
 
         struct Property {
-            void operator=(const Vector4f& value)
+            void operator=(const glm::vec4& value)
             {
                 r = value;
-                const Vector4f initVector = value;
-                v = Vector2f(initVector.x(), initVector.y());
+                const glm::vec4 initVector = value;
+                v = Vector2f(initVector.x, initVector.y);
             }
             void operator=(const Vector2f& value) { v = value; }
             void operator=(const std::string& value) { s = value; }
@@ -115,7 +114,7 @@ public:
             void operator=(const float& value) { f = value; }
             void operator=(const bool& value) { b = value; }
 
-            Vector4f r;
+            glm::vec4 r;
             Vector2f v;
             std::string s;
             unsigned int i;
@@ -137,7 +136,7 @@ public:
                 return *(const T*)&properties.at(prop).f;
             else if (std::is_same<T, bool>::value)
                 return *(const T*)&properties.at(prop).b;
-            else if (std::is_same<T, Vector4f>::value)
+            else if (std::is_same<T, glm::vec4>::value)
                 return *(const T*)&properties.at(prop).r;
             return T();
         }

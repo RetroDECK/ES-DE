@@ -184,15 +184,15 @@ void GridTileComponent::setSelected(bool selected,
             cancelAnimation(3);
 
             this->setSelectedZoom(1);
-            mAnimPosition = Vector3f(0, 0, 0);
+            mAnimPosition = {};
 
             resize();
         }
         else {
-            mAnimPosition = Vector3f(pPosition->x, pPosition->y, pPosition->z);
+            mAnimPosition = glm::vec3(pPosition->x, pPosition->y, pPosition->z);
 
             auto func = [this](float t) {
-                t -= 1; // Cubic ease out.
+                t -= 1;
                 float pct = Math::lerp(0, 1, t * t * t + 1);
                 this->setSelectedZoom(pct);
             };
@@ -202,7 +202,7 @@ void GridTileComponent::setSelected(bool selected,
                 new LambdaAnimation(func, 250), 0,
                 [this] {
                     this->setSelectedZoom(1);
-                    mAnimPosition = Vector3f(0, 0, 0);
+                    mAnimPosition = {};
                 },
                 false, 3);
         }
@@ -218,7 +218,7 @@ void GridTileComponent::setSelected(bool selected,
             this->setSelectedZoom(1);
 
             auto func = [this](float t) {
-                t -= 1.0f; // Cubic ease out.
+                t -= 1.0f;
                 float pct = Math::lerp(0, 1, t * t * t + 1.0f);
                 this->setSelectedZoom(1.0f - pct);
             };

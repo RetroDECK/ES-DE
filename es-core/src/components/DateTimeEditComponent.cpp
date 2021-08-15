@@ -303,19 +303,19 @@ void DateTimeEditComponent::updateTextCache()
     Vector2f start(0, 0);
     Vector2f end = font->sizeText(dispString.substr(0, 4));
     Vector2f diff = end - start;
-    mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
+    mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
 
     // Month.
     start[0] = font->sizeText(dispString.substr(0, 5)).x();
     end = font->sizeText(dispString.substr(0, 7));
     diff = end - start;
-    mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
+    mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
 
     // Day.
     start[0] = font->sizeText(dispString.substr(0, 8)).x();
     end = font->sizeText(dispString.substr(0, 10));
     diff = end - start;
-    mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
+    mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
 
     // The logic for handling time for 'mode = DISP_DATE_TIME' is missing, but
     // nobody will use it anyway so it's not worthwhile implementing.

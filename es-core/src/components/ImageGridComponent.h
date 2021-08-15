@@ -101,7 +101,7 @@ private:
     Vector2f mAutoLayout;
     float mAutoLayoutZoom;
 
-    Vector4f mPadding;
+    glm::vec4 mPadding;
     Vector2f mMargin;
     Vector2f mTileSize;
     Vector2i mGridDimension;
@@ -144,7 +144,7 @@ ImageGridComponent<T>::ImageGridComponent(Window* window)
 
     mSize = screen * 0.80f;
     mMargin = screen * 0.07f;
-    mPadding = Vector4f::Zero();
+    mPadding = {};
     mTileSize = GridTileComponent::getDefaultTileSize();
 
     mAnimate = true;
@@ -280,8 +280,8 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mMargin = elem->get<Vector2f>("margin") * screen;
 
         if (elem->has("padding"))
-            mPadding = elem->get<Vector4f>("padding") *
-                       Vector4f(screen.x(), screen.y(), screen.x(), screen.y());
+            mPadding = elem->get<glm::vec4>("padding") *
+                       glm::vec4(screen.x(), screen.y(), screen.x(), screen.y());
 
         if (elem->has("autoLayout"))
             mAutoLayout = elem->get<Vector2f>("autoLayout");
@@ -506,7 +506,7 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
         if (!moveCamera)
             return;
 
-        t -= 1.0f; // Cubic ease out.
+        t -= 1.0f;
         float pct = Math::lerp(0, 1.0f, t * t * t + 1.0f);
         t = startPos * (1.0f - pct) + endPos * pct;
         mCamera = t;
@@ -538,12 +538,10 @@ template <typename T> void ImageGridComponent<T>::buildTiles()
     Vector2f tileDistance = mTileSize + mMargin;
 
     if (mAutoLayout.x() != 0.0f && mAutoLayout.y() != 0.0f) {
-        auto x =
-            (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1.0f)) - mPadding.x() - mPadding.z()) /
-            static_cast<int>(mAutoLayout.x());
-        auto y =
-            (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1.0f)) - mPadding.y() - mPadding.w()) /
-            static_cast<int>(mAutoLayout.y());
+        auto x = (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1.0f)) - mPadding.x - mPadding.z) /
+                 static_cast<int>(mAutoLayout.x());
+        auto y = (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1.0f)) - mPadding.y - mPadding.w) /
+                 static_cast<int>(mAutoLayout.y());
 
         mTileSize = Vector2f(x, y);
         tileDistance = mTileSize + mMargin;
@@ -551,7 +549,8 @@ template <typename T> void ImageGridComponent<T>::buildTiles()
 
     bool vert = isVertical();
     Vector2f startPosition = mTileSize / 2.0f;
-    startPosition += mPadding.v2();
+    startPosition.x() += mPadding.x;
+    startPosition.y() += mPadding.y;
 
     int X;
     int Y;

@@ -73,7 +73,7 @@ private:
     bool mSelected;
     bool mVisible;
 
-    Vector3f mAnimPosition;
+    glm::vec3 mAnimPosition;
 };
 
 #endif // ES_CORE_COMPONENTS_GRID_TILE_COMPONENT_H

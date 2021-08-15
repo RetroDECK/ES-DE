@@ -78,8 +78,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         folderPath + Utils::FileSystem::getFileName(scraperParams.game->getPath()) + " [" +
             Utils::String::toUpper(scraperParams.system->getName()) + "]" +
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
-        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, Vector3f(0.0f, 0.0f, 0.0f),
-        Vector2f(0.0f, 0.0f), 0x00000000, 0.05f);
+        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3 {}, Vector2f(0.0f, 0.0f),
+        0x00000000, 0.05f);
     mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
     mHeaderGrid->setEntry(mSubtitle, Vector2i(0, 3), false, true);
 
