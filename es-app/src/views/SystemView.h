@@ -34,18 +34,18 @@ struct SystemViewData {
 
 struct SystemViewCarousel {
     CarouselType type;
-    Vector2f pos;
-    Vector2f size;
-    Vector2f origin;
+    glm::vec2 pos;
+    glm::vec2 size;
+    glm::vec2 origin;
     float logoScale;
     float logoRotation;
-    Vector2f logoRotationOrigin;
+    glm::vec2 logoRotationOrigin;
     Alignment logoAlignment;
     unsigned int color;
     unsigned int colorEnd;
     bool colorGradientHorizontal;
     int maxLogoCount; // Number of logos shown on the carousel.
-    Vector2f logoSize;
+    glm::vec2 logoSize;
     float zIndex;
 };
 

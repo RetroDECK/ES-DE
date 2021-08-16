@@ -98,12 +98,12 @@ private:
 
     // Tiles.
     bool mLastRowPartial;
-    Vector2f mAutoLayout;
+    glm::vec2 mAutoLayout;
     float mAutoLayoutZoom;
 
     glm::vec4 mPadding;
-    Vector2f mMargin;
-    Vector2f mTileSize;
+    glm::vec2 mMargin;
+    glm::vec2 mTileSize;
     Vector2i mGridDimension;
     std::shared_ptr<ThemeData> mTheme;
     std::vector<std::shared_ptr<GridTileComponent>> mTiles;
@@ -126,14 +126,14 @@ template <typename T>
 ImageGridComponent<T>::ImageGridComponent(Window* window)
     : IList<ImageGridData, T>(window)
 {
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 screen(static_cast<float>(Renderer::getScreenWidth()),
+                     static_cast<float>(Renderer::getScreenHeight()));
 
-    mCamera = 0.0;
-    mCameraDirection = 1.0;
+    mCamera = 0.0f;
+    mCameraDirection = 1.0f;
 
-    mAutoLayout = Vector2f::Zero();
-    mAutoLayoutZoom = 1.0;
+    mAutoLayout = glm::vec2({});
+    mAutoLayoutZoom = 1.0f;
 
     mStartPosition = 0;
 
@@ -213,10 +213,8 @@ template <typename T> void ImageGridComponent<T>::render(const glm::mat4& parent
     glm::mat4 trans = getTransform() * parentTrans;
     glm::mat4 tileTrans = trans;
 
-    float offsetX =
-        isVertical() ? 0.0f : mCamera * mCameraDirection * (mTileSize.x() + mMargin.x());
-    float offsetY =
-        isVertical() ? mCamera * mCameraDirection * (mTileSize.y() + mMargin.y()) : 0.0f;
+    float offsetX = isVertical() ? 0.0f : mCamera * mCameraDirection * (mTileSize.x + mMargin.x);
+    float offsetY = isVertical() ? mCamera * mCameraDirection * (mTileSize.y + mMargin.y) : 0.0f;
 
     tileTrans = glm::translate(tileTrans, glm::vec3(offsetX, offsetY, 0.0f));
 
@@ -231,8 +229,8 @@ template <typename T> void ImageGridComponent<T>::render(const glm::mat4& parent
 
     Vector2i pos(static_cast<int>(std::round(trans[3].x)),
                  static_cast<int>(std::round(trans[3].y)));
-    Vector2i size(static_cast<int>(std::round(mSize.x() * scaleX)),
-                  static_cast<int>(std::round(mSize.y() * scaleY)));
+    Vector2i size(static_cast<int>(std::round(mSize.x * scaleX)),
+                  static_cast<int>(std::round(mSize.y * scaleY)));
 
     Renderer::pushClipRect(pos, size);
 
@@ -271,20 +269,20 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Keep the theme pointer to apply it on the tiles later on.
     mTheme = theme;
 
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 screen(static_cast<float>(Renderer::getScreenWidth()),
+                     static_cast<float>(Renderer::getScreenHeight()));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "imagegrid");
     if (elem) {
         if (elem->has("margin"))
-            mMargin = elem->get<Vector2f>("margin") * screen;
+            mMargin = elem->get<glm::vec2>("margin") * screen;
 
         if (elem->has("padding"))
-            mPadding = elem->get<glm::vec4>("padding") *
-                       glm::vec4(screen.x(), screen.y(), screen.x(), screen.y());
+            mPadding =
+                elem->get<glm::vec4>("padding") * glm::vec4(screen.x, screen.y, screen.x, screen.y);
 
         if (elem->has("autoLayout"))
-            mAutoLayout = elem->get<Vector2f>("autoLayout");
+            mAutoLayout = elem->get<glm::vec2>("autoLayout");
 
         if (elem->has("autoLayoutSelectedZoom"))
             mAutoLayoutZoom = elem->get<float>("autoLayoutSelectedZoom");
@@ -369,7 +367,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // grid dimension, and then (re)build the tiles.
     elem = theme->getElement(view, "default", "gridtile");
 
-    mTileSize = elem && elem->has("size") ? elem->get<Vector2f>("size") * screen :
+    mTileSize = elem && elem->has("size") ? elem->get<glm::vec2>("size") * screen :
                                             GridTileComponent::getDefaultTileSize();
 
     // Apply size property which will trigger a call to onSizeChanged() which will build the tiles.
@@ -457,7 +455,7 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
         }
 
         if (newTile != nullptr)
-            newTile->setSelected(true, true, oldPos == glm::vec3 {} ? nullptr : &oldPos, true);
+            newTile->setSelected(true, true, oldPos == glm::vec3({}) ? nullptr : &oldPos, true);
     }
 
     int firstVisibleCol = mStartPosition / dimOpposite;
@@ -535,22 +533,22 @@ template <typename T> void ImageGridComponent<T>::buildTiles()
         mStartPosition -= static_cast<int>(floorf(dimScrollable / 2.0f));
     }
 
-    Vector2f tileDistance = mTileSize + mMargin;
+    glm::vec2 tileDistance = mTileSize + mMargin;
 
-    if (mAutoLayout.x() != 0.0f && mAutoLayout.y() != 0.0f) {
-        auto x = (mSize.x() - (mMargin.x() * (mAutoLayout.x() - 1.0f)) - mPadding.x - mPadding.z) /
-                 static_cast<int>(mAutoLayout.x());
-        auto y = (mSize.y() - (mMargin.y() * (mAutoLayout.y() - 1.0f)) - mPadding.y - mPadding.w) /
-                 static_cast<int>(mAutoLayout.y());
+    if (mAutoLayout.x != 0.0f && mAutoLayout.y != 0.0f) {
+        auto x = (mSize.x - (mMargin.x * (mAutoLayout.x - 1.0f)) - mPadding.x - mPadding.z) /
+                 static_cast<int>(mAutoLayout.x);
+        auto y = (mSize.y - (mMargin.y * (mAutoLayout.y - 1.0f)) - mPadding.y - mPadding.w) /
+                 static_cast<int>(mAutoLayout.y);
 
-        mTileSize = Vector2f(x, y);
+        mTileSize = glm::vec2(x, y);
         tileDistance = mTileSize + mMargin;
     }
 
     bool vert = isVertical();
-    Vector2f startPosition = mTileSize / 2.0f;
-    startPosition.x() += mPadding.x;
-    startPosition.y() += mPadding.y;
+    glm::vec2 startPosition = mTileSize / 2.0f;
+    startPosition.x += mPadding.x;
+    startPosition.y += mPadding.y;
 
     int X;
     int Y;
@@ -566,15 +564,15 @@ template <typename T> void ImageGridComponent<T>::buildTiles()
             X = vert ? x : y - EXTRAITEMS;
             Y = vert ? y - EXTRAITEMS : x;
 
-            tile->setPosition(X * tileDistance.x() + startPosition.x(),
-                              Y * tileDistance.y() + startPosition.y());
+            tile->setPosition(X * tileDistance.x + startPosition.x,
+                              Y * tileDistance.y + startPosition.y);
             tile->setOrigin(0.5f, 0.5f);
             tile->setImage("");
 
             if (mTheme)
                 tile->applyTheme(mTheme, "grid", "gridtile", ThemeFlags::ALL);
 
-            if (mAutoLayout.x() != 0 && mAutoLayout.y() != 0)
+            if (mAutoLayout.x != 0 && mAutoLayout.y != 0.0f)
                 tile->forceSize(mTileSize, mAutoLayoutZoom);
 
             mTiles.push_back(tile);
@@ -692,16 +690,16 @@ template <typename T> void ImageGridComponent<T>::calcGridDimension()
 {
     // grid_size = columns * tile_size + (columns - 1) * margin
     // <=> columns = (grid_size + margin) / (tile_size + margin)
-    Vector2f gridDimension = (mSize + mMargin) / (mTileSize + mMargin);
+    glm::vec2 gridDimension = (mSize + mMargin) / (mTileSize + mMargin);
 
-    if (mAutoLayout.x() != 0 && mAutoLayout.y() != 0)
+    if (mAutoLayout.x != 0.0f && mAutoLayout.y != 0.0f)
         gridDimension = mAutoLayout;
 
-    mLastRowPartial = floorf(gridDimension.y()) != gridDimension.y();
+    mLastRowPartial = floorf(gridDimension.y) != gridDimension.y;
 
     // Ceil y dim so we can display partial last row.
-    mGridDimension = Vector2i(static_cast<const int>(gridDimension.x()),
-                              static_cast<const int>(ceilf(gridDimension.y())));
+    mGridDimension = Vector2i(static_cast<const int>(gridDimension.x),
+                              static_cast<const int>(ceilf(gridDimension.y)));
 
     // Grid dimension validation.
     if (mGridDimension.x() < 1) {

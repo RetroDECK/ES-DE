@@ -47,7 +47,7 @@ TextureResource::TextureResource(const std::string& path,
         }
 
         mSize = Vector2i(static_cast<int>(data->width()), static_cast<int>(data->height()));
-        mSourceSize = Vector2f(data->sourceWidth(), data->sourceHeight());
+        mSourceSize = glm::vec2(data->sourceWidth(), data->sourceHeight());
     }
     else {
         // Create a texture managed by this class because it cannot be dynamically
@@ -76,7 +76,7 @@ void TextureResource::initFromPixels(const unsigned char* dataRGBA, size_t width
     mTextureData->initFromRGBA(dataRGBA, width, height);
     // Cache the image dimensions.
     mSize = Vector2i(static_cast<int>(width), static_cast<int>(height));
-    mSourceSize = Vector2f(mTextureData->sourceWidth(), mTextureData->sourceHeight());
+    mSourceSize = glm::vec2(mTextureData->sourceWidth(), mTextureData->sourceHeight());
 }
 
 void TextureResource::initFromMemory(const char* data, size_t length)
@@ -89,7 +89,7 @@ void TextureResource::initFromMemory(const char* data, size_t length)
     // Get the size from the texture data.
     mSize =
         Vector2i(static_cast<int>(mTextureData->width()), static_cast<int>(mTextureData->height()));
-    mSourceSize = Vector2f(mTextureData->sourceWidth(), mTextureData->sourceHeight());
+    mSourceSize = glm::vec2(mTextureData->sourceWidth(), mTextureData->sourceHeight());
 }
 
 void TextureResource::manualUnload(std::string path, bool tile)
@@ -197,7 +197,7 @@ void TextureResource::rasterizeAt(size_t width, size_t height)
         data = mTextureData;
     else
         data = sTextureDataManager.get(this);
-    mSourceSize = Vector2f(static_cast<float>(width), static_cast<float>(height));
+    mSourceSize = glm::vec2(static_cast<float>(width), static_cast<float>(height));
     data->setSourceSize(static_cast<float>(width), static_cast<float>(height));
     if (mForceLoad || (mTextureData != nullptr))
         data->load();

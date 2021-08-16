@@ -24,8 +24,8 @@ class ScrollableContainer : public GuiComponent
 public:
     ScrollableContainer(Window* window);
 
-    Vector2f getScrollPos() const { return mScrollPos; }
-    void setScrollPos(const Vector2f& pos) { mScrollPos = pos; }
+    glm::vec2 getScrollPos() const { return mScrollPos; }
+    void setScrollPos(const glm::vec2& pos) { mScrollPos = pos; }
 
     void setAutoScroll(bool autoScroll);
     void setScrollParameters(float autoScrollDelayConstant,
@@ -37,10 +37,10 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
 private:
-    Vector2f getContentSize();
+    glm::vec2 getContentSize();
 
-    Vector2f mScrollPos;
-    Vector2f mScrollDir;
+    glm::vec2 mScrollPos;
+    glm::vec2 mScrollDir;
 
     float mFontSize;
     float mSmallFontSize;

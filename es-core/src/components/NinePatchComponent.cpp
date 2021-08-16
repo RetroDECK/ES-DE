@@ -67,22 +67,22 @@ void NinePatchComponent::buildVertices()
         return;
     }
 
-    Vector2f texSize;
+    glm::vec2 texSize;
     mVertices = new Renderer::Vertex[6 * 9];
 
-    texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
-                       static_cast<float>(mTexture->getSize().y()));
+    texSize = glm::vec2(static_cast<float>(mTexture->getSize().x()),
+                        static_cast<float>(mTexture->getSize().y()));
 
     // clang-format off
-    const float imgSizeX[3] = { mCornerSize.x(), mSize.x() - mCornerSize.x() * 2.0f, mCornerSize.x() };
-    const float imgSizeY[3] = { mCornerSize.y(), mSize.y() - mCornerSize.y() * 2.0f, mCornerSize.y() };
+    const float imgSizeX[3] = { mCornerSize.x, mSize.x - mCornerSize.x * 2.0f, mCornerSize.x };
+    const float imgSizeY[3] = { mCornerSize.y, mSize.y - mCornerSize.y * 2.0f, mCornerSize.y };
     const float imgPosX[3] = { 0, imgSizeX[0], imgSizeX[0] + imgSizeX[1] };
     const float imgPosY[3] = { 0, imgSizeY[0], imgSizeY[0] + imgSizeY[1] };
 
     // The "1 +" in posY and "-" in sizeY is to deal with texture coordinates having a bottom
     // left corner origin vs. verticies having a top left origin.
-    const float texSizeX[3] = {  mCornerSize.x() / texSize.x(),  (texSize.x() - mCornerSize.x() * 2.0f) / texSize.x(),  mCornerSize.x() / texSize.x() };
-    const float texSizeY[3] = { -mCornerSize.y() / texSize.y(), -(texSize.y() - mCornerSize.y() * 2.0f) / texSize.y(), -mCornerSize.y() / texSize.y() };
+    const float texSizeX[3] = {  mCornerSize.x / texSize.x,  (texSize.x - mCornerSize.x * 2.0f) / texSize.x,  mCornerSize.x / texSize.x };
+    const float texSizeY[3] = { -mCornerSize.y / texSize.y, -(texSize.y - mCornerSize.y * 2.0f) / texSize.y, -mCornerSize.y / texSize.y };
     const float texPosX[3]  = {  0.0f,        texSizeX[0],        texSizeX[0] + texSizeX[1] };
     const float texPosY[3]  = {  1.0f, 1.0f + texSizeY[0], 1.0f + texSizeY[0] + texSizeY[1] };
     // clang-format on
@@ -92,21 +92,21 @@ void NinePatchComponent::buildVertices()
     for (int slice = 0; slice < 9; slice++) {
         const int sliceX = slice % 3;
         const int sliceY = slice / 3;
-        const Vector2f imgPos = Vector2f(imgPosX[sliceX], imgPosY[sliceY]);
-        const Vector2f imgSize = Vector2f(imgSizeX[sliceX], imgSizeY[sliceY]);
-        const Vector2f texPos = Vector2f(texPosX[sliceX], texPosY[sliceY]);
-        const Vector2f texSize = Vector2f(texSizeX[sliceX], texSizeY[sliceY]);
+        const glm::vec2 imgPos = glm::vec2(imgPosX[sliceX], imgPosY[sliceY]);
+        const glm::vec2 imgSize = glm::vec2(imgSizeX[sliceX], imgSizeY[sliceY]);
+        const glm::vec2 texPos = glm::vec2(texPosX[sliceX], texPosY[sliceY]);
+        const glm::vec2 texSize = glm::vec2(texSizeX[sliceX], texSizeY[sliceY]);
 
         // clang-format off
-        mVertices[v + 1] = { { imgPos.x()              , imgPos.y()               }, { texPos.x(),               texPos.y()               }, 0 };
-        mVertices[v + 2] = { { imgPos.x()              , imgPos.y() + imgSize.y() }, { texPos.x(),               texPos.y() + texSize.y() }, 0 };
-        mVertices[v + 3] = { { imgPos.x() + imgSize.x(), imgPos.y()               }, { texPos.x() + texSize.x(), texPos.y()               }, 0 };
-        mVertices[v + 4] = { { imgPos.x() + imgSize.x(), imgPos.y() + imgSize.y() }, { texPos.x() + texSize.x(), texPos.y() + texSize.y() }, 0 };
+        mVertices[v + 1] = { { imgPos.x            , imgPos.y             }, { texPos.x,             texPos.y             }, 0 };
+        mVertices[v + 2] = { { imgPos.x            , imgPos.y + imgSize.y }, { texPos.x,             texPos.y + texSize.y }, 0 };
+        mVertices[v + 3] = { { imgPos.x + imgSize.x, imgPos.y             }, { texPos.x + texSize.x, texPos.y             }, 0 };
+        mVertices[v + 4] = { { imgPos.x + imgSize.x, imgPos.y + imgSize.y }, { texPos.x + texSize.x, texPos.y + texSize.y }, 0 };
         // clang-format on
 
         // Round vertices.
         for (int i = 1; i < 5; i++)
-            mVertices[v + i].pos.round();
+            mVertices[v + i].pos = glm::round(mVertices[v + i].pos);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
         mVertices[v + 0] = mVertices[v + 1];
@@ -146,15 +146,15 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
 
 void NinePatchComponent::onSizeChanged() { buildVertices(); }
 
-void NinePatchComponent::fitTo(Vector2f size, glm::vec3 position, Vector2f padding)
+void NinePatchComponent::fitTo(glm::vec2 size, glm::vec3 position, glm::vec2 padding)
 {
     size += padding;
-    position[0] -= padding.x() / 2.0f;
-    position[1] -= padding.y() / 2.0f;
+    position[0] -= padding.x / 2.0f;
+    position[1] -= padding.y / 2.0f;
 
     setSize(size + mCornerSize * 2.0f);
-    setPosition(position.x + Math::lerp(-mCornerSize.x(), mCornerSize.x(), mOrigin.x()),
-                position.y + Math::lerp(-mCornerSize.y(), mCornerSize.y(), mOrigin.y()));
+    setPosition(position.x + Math::lerp(-mCornerSize.x, mCornerSize.x, mOrigin.x),
+                position.y + Math::lerp(-mCornerSize.y, mCornerSize.y, mOrigin.y));
 }
 
 void NinePatchComponent::setImagePath(const std::string& path)

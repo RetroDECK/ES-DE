@@ -106,8 +106,8 @@ GuiGameScraper::GuiGameScraper(Window* window,
     float width = Math::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.747f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 
     mGrid.resetCursor();
     mSearch->search(params); // Start the search.
@@ -115,16 +115,14 @@ GuiGameScraper::GuiGameScraper(Window* window,
 
 void GuiGameScraper::onSizeChanged()
 {
-    mBox.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
+    mBox.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
 
     mGrid.setRowHeightPerc(0, 0.04f, false);
-    mGrid.setRowHeightPerc(1, mGameName->getFont()->getLetterHeight() / mSize.y(),
-                           false); // Game name.
+    mGrid.setRowHeightPerc(1, mGameName->getFont()->getLetterHeight() / mSize.y, false);
     mGrid.setRowHeightPerc(2, 0.04f, false);
-    mGrid.setRowHeightPerc(3, mSystemName->getFont()->getLetterHeight() / mSize.y(),
-                           false); // System name.
+    mGrid.setRowHeightPerc(3, mSystemName->getFont()->getLetterHeight() / mSize.y, false);
     mGrid.setRowHeightPerc(4, 0.04f, false);
-    mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y() / mSize.y(), false); // Buttons.
+    mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y / mSize.y, false);
     mGrid.setSize(mSize);
 }
 

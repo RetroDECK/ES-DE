@@ -78,7 +78,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         folderPath + Utils::FileSystem::getFileName(scraperParams.game->getPath()) + " [" +
             Utils::String::toUpper(scraperParams.system->getName()) + "]" +
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
-        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3 {}, Vector2f(0.0f, 0.0f),
+        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3({}), glm::vec2({}),
         0x00000000, 0.05f);
     mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
     mHeaderGrid->setEntry(mSubtitle, Vector2i(0, 3), false, true);
@@ -123,8 +123,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
                 // Make the switches slightly smaller.
-                auto switchSize = ed->getSize() * 0.9f;
-                ed->setResize(switchSize.x(), switchSize.y());
+                glm::vec2 switchSize = ed->getSize() * 0.9f;
+                ed->setResize(switchSize.x, switchSize.y);
                 ed->setOrigin(-0.05f, -0.09f);
 
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
@@ -138,8 +138,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 ed = std::make_shared<RatingComponent>(window, true);
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
-                const float height = lbl->getSize().y() * 0.71f;
-                ed->setSize(0, height);
+                const float height = lbl->getSize().y * 0.71f;
+                ed->setSize(0.0f, height);
                 row.addElement(ed, false, true);
 
                 auto ratingSpacer = std::make_shared<GuiComponent>(mWindow);
@@ -182,7 +182,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
                 bracket->setImage(":/graphics/arrow.svg");
-                bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
+                bracket->setResize(glm::vec2(0.0f, lbl->getFont()->getLetterHeight()));
                 row.addElement(bracket, false);
 
                 bool multiLine = false;
@@ -223,7 +223,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
                 bracket->setImage(":/graphics/arrow.svg");
-                bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
+                bracket->setResize(glm::vec2(0.0f, lbl->getFont()->getLetterHeight()));
                 row.addElement(bracket, false);
 
                 bool multiLine = iter->type == MD_MULTILINE_STRING;
@@ -353,8 +353,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() * 1.05f),
                                     static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
     setSize(width, Renderer::getScreenHeight() * 0.83f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 void GuiMetaDataEd::onSizeChanged()
@@ -363,19 +363,19 @@ void GuiMetaDataEd::onSizeChanged()
 
     const float titleHeight = mTitle->getFont()->getLetterHeight();
     const float subtitleHeight = mSubtitle->getFont()->getLetterHeight();
-    const float titleSubtitleSpacing = mSize.y() * 0.03f;
+    const float titleSubtitleSpacing = mSize.y * 0.03f;
 
     mGrid.setRowHeightPerc(
-        0, (titleHeight + titleSubtitleSpacing + subtitleHeight + TITLE_VERT_PADDING) / mSize.y());
-    mGrid.setRowHeightPerc(2, mButtons->getSize().y() / mSize.y());
+        0, (titleHeight + titleSubtitleSpacing + subtitleHeight + TITLE_VERT_PADDING) / mSize.y);
+    mGrid.setRowHeightPerc(2, mButtons->getSize().y / mSize.y);
 
     // Snap list size to the row height to prevent a fraction of a row from being displayed.
-    float listHeight = 0;
-    float listSize = mList->getSize().y();
+    float listHeight = 0.0f;
+    float listSize = mList->getSize().y;
     int i = 0;
     while (i < mList->size()) {
         // Add the separator height to the row height so that it also gets properly rendered.
-        float rowHeight = mList->getRowHeight(i) + (1 * Renderer::getScreenHeightModifier());
+        float rowHeight = mList->getRowHeight(i) + Renderer::getScreenHeightModifier();
         if (listHeight + rowHeight < listSize)
             listHeight += rowHeight;
         else
@@ -385,19 +385,19 @@ void GuiMetaDataEd::onSizeChanged()
 
     // Adjust the size of the list and window.
     float heightAdjustment = listSize - listHeight;
-    mList->setSize(mList->getSize().x(), listHeight);
-    Vector2f newWindowSize = mSize;
-    newWindowSize.y() -= heightAdjustment;
-    mBackground.fitTo(newWindowSize, {}, Vector2f(-32.0f, -32.0f));
+    mList->setSize(mList->getSize().x, listHeight);
+    glm::vec2 newWindowSize = mSize;
+    newWindowSize.y -= heightAdjustment;
+    mBackground.fitTo(newWindowSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
 
     // Move the buttons up as well to make the layout align correctly after the resize.
     glm::vec3 newButtonPos = mButtons->getPosition();
     newButtonPos.y -= heightAdjustment;
     mButtons->setPosition(newButtonPos);
 
-    mHeaderGrid->setRowHeightPerc(1, titleHeight / mHeaderGrid->getSize().y());
-    mHeaderGrid->setRowHeightPerc(2, titleSubtitleSpacing / mHeaderGrid->getSize().y());
-    mHeaderGrid->setRowHeightPerc(3, subtitleHeight / mHeaderGrid->getSize().y());
+    mHeaderGrid->setRowHeightPerc(1, titleHeight / mHeaderGrid->getSize().y);
+    mHeaderGrid->setRowHeightPerc(2, titleSubtitleSpacing / mHeaderGrid->getSize().y);
+    mHeaderGrid->setRowHeightPerc(3, subtitleHeight / mHeaderGrid->getSize().y);
 }
 
 void GuiMetaDataEd::save()

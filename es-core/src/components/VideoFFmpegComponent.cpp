@@ -57,7 +57,7 @@ VideoFFmpegComponent::~VideoFFmpegComponent() { stopVideo(); }
 void VideoFFmpegComponent::setResize(float width, float height)
 {
     // This resize function is used when stretching videos to full screen in the video screensaver.
-    mTargetSize = Vector2f(width, height);
+    mTargetSize = glm::vec2(width, height);
     mTargetIsMax = false;
     mStaticImage.setResize(width, height);
     resize();
@@ -67,7 +67,7 @@ void VideoFFmpegComponent::setMaxSize(float width, float height)
 {
     // This resize function is used in most instances, such as non-stretched video screensaver
     // and the gamelist videos.
-    mTargetSize = Vector2f(width, height);
+    mTargetSize = glm::vec2(width, height);
     mTargetIsMax = true;
     mStaticImage.setMaxSize(width, height);
     resize();
@@ -78,41 +78,41 @@ void VideoFFmpegComponent::resize()
     if (!mTexture)
         return;
 
-    const Vector2f textureSize(static_cast<float>(mVideoWidth), static_cast<float>(mVideoHeight));
+    const glm::vec2 textureSize(static_cast<float>(mVideoWidth), static_cast<float>(mVideoHeight));
 
-    if (textureSize == Vector2f::Zero())
+    if (textureSize == glm::vec2({}))
         return;
 
     if (mTargetIsMax) {
         mSize = textureSize;
 
-        Vector2f resizeScale((mTargetSize.x() / mSize.x()), (mTargetSize.y() / mSize.y()));
+        glm::vec2 resizeScale((mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y));
 
-        if (resizeScale.x() < resizeScale.y()) {
-            mSize[0] *= resizeScale.x();
-            mSize[1] *= resizeScale.x();
+        if (resizeScale.x < resizeScale.y) {
+            mSize.x *= resizeScale.x;
+            mSize.y *= resizeScale.x;
         }
         else {
-            mSize[0] *= resizeScale.y();
-            mSize[1] *= resizeScale.y();
+            mSize.x *= resizeScale.y;
+            mSize.y *= resizeScale.y;
         }
 
-        mSize[1] = std::round(mSize[1]);
-        mSize[0] = (mSize[1] / textureSize.y()) * textureSize.x();
+        mSize.y = std::round(mSize[1.0f]);
+        mSize.x = (mSize.y / textureSize.y) * textureSize.x;
     }
     else {
         // If both components are set, we just stretch.
         // If no components are set, we don't resize at all.
-        mSize = mTargetSize == Vector2f::Zero() ? textureSize : mTargetSize;
+        mSize = mTargetSize == glm::vec2({}) ? textureSize : mTargetSize;
 
         // If only one component is set, we resize in a way that maintains aspect ratio.
-        if (!mTargetSize.x() && mTargetSize.y()) {
-            mSize[1] = std::round(mTargetSize.y());
-            mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
+        if (!mTargetSize.x && mTargetSize.y) {
+            mSize.y = std::round(mTargetSize.y);
+            mSize.x = (mSize.y / textureSize.y) * textureSize.x;
         }
-        else if (mTargetSize.x() && !mTargetSize.y()) {
-            mSize[1] = std::round((mTargetSize.x() / textureSize.x()) * textureSize.y());
-            mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
+        else if (mTargetSize.x && !mTargetSize.y) {
+            mSize.y = std::round((mTargetSize.x / textureSize.x) * textureSize.y);
+            mSize.x = (mSize.y / textureSize.y) * textureSize.x;
         }
     }
 
@@ -147,14 +147,14 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
         // clang-format off
         vertices[0] = { { 0.0f     , 0.0f      }, { 0.0f, 0.0f }, color };
-        vertices[1] = { { 0.0f     , mSize.y() }, { 0.0f, 1.0f }, color };
-        vertices[2] = { { mSize.x(), 0.0f      }, { 1.0f, 0.0f }, color };
-        vertices[3] = { { mSize.x(), mSize.y() }, { 1.0f, 1.0f }, color };
+        vertices[1] = { { 0.0f     , mSize.y   }, { 0.0f, 1.0f }, color };
+        vertices[2] = { { mSize.x  , 0.0f      }, { 1.0f, 0.0f }, color };
+        vertices[3] = { { mSize.x  , mSize.y   }, { 1.0f, 1.0f }, color };
         // clang-format on
 
         // Round vertices.
         for (int i = 0; i < 4; i++)
-            vertices[i].pos.round();
+            vertices[i].pos = glm::round(vertices[i].pos);
 
         // This is needed to avoid a slight gap before the video starts playing.
         if (!mDecodedFrame)
@@ -798,51 +798,49 @@ void VideoFFmpegComponent::calculateBlackRectangle()
     // otherwise it will exactly match the video size. The reason to add a black rectangle
     // behind videos in this second instance is that the scanline rendering will make the
     // video partially transparent so this may avoid some unforseen issues with some themes.
-    if (mVideoAreaPos != 0 && mVideoAreaSize != 0) {
+    if (mVideoAreaPos != glm::vec2({}) && mVideoAreaSize != glm::vec2({})) {
         mVideoRectangleCoords.clear();
 
         if (Settings::getInstance()->getBool("GamelistVideoPillarbox")) {
             float rectHeight;
             float rectWidth;
             // Video is in landscape orientation.
-            if (mSize.x() > mSize.y()) {
+            if (mSize.x > mSize.y) {
                 // Checking the Y size should not normally be required as landscape format
                 // should mean the height can't be higher than the max size defined by the
                 // theme. But as the height in mSize is provided by FFmpeg in integer format
                 // and then scaled, there could be rounding errors that make the video height
                 // slightly higher than allowed. It's only a single pixel or a few pixels, but
                 // it's still visible for some videos.
-                if (mSize.y() < mVideoAreaSize.y() && mSize.y() / mVideoAreaSize.y() < 0.90)
-                    rectHeight = mVideoAreaSize.y();
+                if (mSize.y < mVideoAreaSize.y && mSize.y / mVideoAreaSize.y < 0.90f)
+                    rectHeight = mVideoAreaSize.y;
                 else
-                    rectHeight = mSize.y();
+                    rectHeight = mSize.y;
                 // Don't add a black border that is too narrow, that's what the 0.85 constant
                 // takes care of.
-                if (mSize.x() < mVideoAreaSize.x() && mSize.x() / mVideoAreaSize.x() < 0.85)
-                    rectWidth = mVideoAreaSize.x();
+                if (mSize.x < mVideoAreaSize.x && mSize.x / mVideoAreaSize.x < 0.85f)
+                    rectWidth = mVideoAreaSize.x;
                 else
-                    rectWidth = mSize.x();
+                    rectWidth = mSize.x;
             }
             // Video is in portrait orientation (or completely square).
             else {
-                rectWidth = mVideoAreaSize.x();
-                rectHeight = mSize.y();
+                rectWidth = mVideoAreaSize.x;
+                rectHeight = mSize.y;
             }
             // Populate the rectangle coordinates to be used in render().
-            mVideoRectangleCoords.push_back(
-                std::round(mVideoAreaPos.x() - rectWidth * mOrigin.x()));
-            mVideoRectangleCoords.push_back(
-                std::round(mVideoAreaPos.y() - rectHeight * mOrigin.y()));
+            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.x - rectWidth * mOrigin.x));
+            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.y - rectHeight * mOrigin.y));
             mVideoRectangleCoords.push_back(std::round(rectWidth));
             mVideoRectangleCoords.push_back(std::round(rectHeight));
         }
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.
         else {
-            mVideoRectangleCoords.push_back(std::round(mPosition.x - mSize.x() * mOrigin.x()));
-            mVideoRectangleCoords.push_back(std::round(mPosition.y - mSize.y() * mOrigin.y()));
-            mVideoRectangleCoords.push_back(std::round(mSize.x()));
-            mVideoRectangleCoords.push_back(std::round(mSize.y()));
+            mVideoRectangleCoords.push_back(std::round(mPosition.x - mSize.x * mOrigin.x));
+            mVideoRectangleCoords.push_back(std::round(mPosition.y - mSize.y * mOrigin.y));
+            mVideoRectangleCoords.push_back(std::round(mSize.x));
+            mVideoRectangleCoords.push_back(std::round(mSize.y));
         }
     }
 }

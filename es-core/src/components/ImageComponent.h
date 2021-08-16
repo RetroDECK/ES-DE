@@ -39,18 +39,18 @@ public:
     // Can be set before or after an image is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     void setResize(float width, float height) override;
-    void setResize(const Vector2f& size) { setResize(size.x(), size.y()); }
+    void setResize(const glm::vec2& size) { setResize(size.x, size.y); }
 
     // Resize the image to be as large as possible but fit within a box of this size.
     // Can be set before or after an image is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(float width, float height);
-    void setMaxSize(const Vector2f& size) { setMaxSize(size.x(), size.y()); }
+    void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
 
     void setMinSize(float width, float height);
-    void setMinSize(const Vector2f& size) { setMinSize(size.x(), size.y()); }
+    void setMinSize(const glm::vec2& size) { setMinSize(size.x, size.y); }
 
-    Vector2f getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
+    glm::vec2 getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
 
     // Applied AFTER image positioning and sizing.
     // cropTop(0.2) will crop 20% of the top of the image.
@@ -85,7 +85,7 @@ public:
     // May be different than drawn size (use getSize() for that).
     Vector2i getTextureSize() const;
 
-    Vector2f getSize() const override;
+    glm::vec2 getSize() const override;
 
     bool hasImage() { return static_cast<bool>(mTexture); }
     std::shared_ptr<TextureResource> getTexture() { return mTexture; }
@@ -100,7 +100,7 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    Vector2f mTargetSize;
+    glm::vec2 mTargetSize;
 
     bool mFlipX, mFlipY, mTargetIsMax, mTargetIsMin;
 
@@ -127,8 +127,8 @@ private:
     bool mDynamic;
     bool mRotateByTargetSize;
 
-    Vector2f mTopLeftCrop;
-    Vector2f mBottomRightCrop;
+    glm::vec2 mTopLeftCrop;
+    glm::vec2 mBottomRightCrop;
 };
 
 #endif // ES_CORE_COMPONENTS_IMAGE_COMPONENT_H

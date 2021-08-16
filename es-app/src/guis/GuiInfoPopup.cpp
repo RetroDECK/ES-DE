@@ -33,28 +33,28 @@ GuiInfoPopup::GuiInfoPopup(Window* window, std::string message, int duration)
     mSize = s->getSize();
 
     // Confirm that the size isn't larger than the screen width, otherwise cap it.
-    if (mSize.x() > maxWidth) {
-        s->setSize(maxWidth, mSize[1]);
-        mSize[0] = maxWidth;
+    if (mSize.x > maxWidth) {
+        s->setSize(maxWidth, mSize.y);
+        mSize.x = maxWidth;
     }
-    if (mSize.y() > maxHeight) {
-        s->setSize(mSize[0], maxHeight);
-        mSize[1] = maxHeight;
+    if (mSize.y > maxHeight) {
+        s->setSize(mSize.x, maxHeight);
+        mSize.y = maxHeight;
     }
 
     // Add a padding to the box.
     int paddingX = static_cast<int>(Renderer::getScreenWidth() * 0.03f);
     int paddingY = static_cast<int>(Renderer::getScreenHeight() * 0.02f);
-    mSize[0] = mSize.x() + paddingX;
-    mSize[1] = mSize.y() + paddingY;
+    mSize.x = mSize.x + paddingX;
+    mSize.y = mSize.y + paddingY;
 
-    float posX = Renderer::getScreenWidth() * 0.5f - mSize.x() * 0.5f;
+    float posX = Renderer::getScreenWidth() * 0.5f - mSize.x * 0.5f;
     float posY = Renderer::getScreenHeight() * 0.02f;
 
     setPosition(posX, posY, 0);
 
     mFrame->setImagePath(":/graphics/frame.svg");
-    mFrame->fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
+    mFrame->fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
     addChild(mFrame);
 
     // We only initialize the actual time when we first start to render.

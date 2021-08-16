@@ -164,28 +164,28 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 
         if (mAlignRight) {
             if (mTime != 0)
-                referenceSize = font->sizeText("ABCDEFG").x();
+                referenceSize = font->sizeText("ABCDEFG").x;
             else
-                referenceSize = font->sizeText("ABCDEIJ").x();
+                referenceSize = font->sizeText("ABCDEIJ").x;
         }
 
         // Vertically center.
-        glm::vec3 off(0.0f, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
+        glm::vec3 off(0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f);
 
         if (mAlignRight)
-            off.x += referenceSize - mTextCache->metrics.size.x();
+            off.x += referenceSize - mTextCache->metrics.size.x;
         trans = glm::translate(trans, off);
 
         Renderer::setMatrix(trans);
 
         if (Settings::getInstance()->getBool("DebugText")) {
             Renderer::setMatrix(trans);
-            if (mTextCache->metrics.size.x() > 0) {
-                Renderer::drawRect(0.0f, 0.0f - off.y, mSize.x() - off.x, mSize.y(), 0x0000FF33,
+            if (mTextCache->metrics.size.x > 0.0f) {
+                Renderer::drawRect(0.0f, 0.0f - off.y, mSize.x - off.x, mSize.y, 0x0000FF33,
                                    0x0000FF33);
             }
-            Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x(),
-                               mTextCache->metrics.size.y(), 0x00000033, 0x00000033);
+            Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
+                               0x00000033, 0x00000033);
         }
 
         mTextCache->setColor((mColor & 0xFFFFFF00) | getOpacity());
@@ -300,19 +300,19 @@ void DateTimeEditComponent::updateTextCache()
         return;
 
     // Year.
-    Vector2f start(0, 0);
-    Vector2f end = font->sizeText(dispString.substr(0, 4));
-    Vector2f diff = end - start;
+    glm::vec2 start(0.0f, 0.0f);
+    glm::vec2 end = font->sizeText(dispString.substr(0, 4));
+    glm::vec2 diff = end - start;
     mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
 
     // Month.
-    start[0] = font->sizeText(dispString.substr(0, 5)).x();
+    start[0] = font->sizeText(dispString.substr(0, 5)).x;
     end = font->sizeText(dispString.substr(0, 7));
     diff = end - start;
     mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
 
     // Day.
-    start[0] = font->sizeText(dispString.substr(0, 8)).x();
+    start[0] = font->sizeText(dispString.substr(0, 8)).x;
     end = font->sizeText(dispString.substr(0, 10));
     diff = end - start;
     mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));

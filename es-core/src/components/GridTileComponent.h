@@ -13,11 +13,11 @@
 #include "NinePatchComponent.h"
 
 struct GridTileProperties {
-    Vector2f mSize;
-    Vector2f mPadding;
+    glm::vec2 mSize;
+    glm::vec2 mPadding;
     unsigned int mImageColor;
     std::string mBackgroundImage;
-    Vector2f mBackgroundCornerSize;
+    glm::vec2 mBackgroundCornerSize;
     unsigned int mBackgroundCenterColor;
     unsigned int mBackgroundEdgeColor;
 };
@@ -35,8 +35,8 @@ public:
 
     // Made this a static function because the ImageGridComponent needs to know the default tile
     // max size to calculate the grid dimension before it instantiates the GridTileComponents.
-    static Vector2f getDefaultTileSize();
-    Vector2f getSelectedTileSize() const;
+    static glm::vec2 getDefaultTileSize();
+    glm::vec2 getSelectedTileSize() const;
     bool isSelected() const;
 
     void reset() { setImage(""); }
@@ -49,7 +49,7 @@ public:
                      bool force = false);
     void setVisible(bool visible);
 
-    void forceSize(Vector2f size, float selectedZoom);
+    void forceSize(glm::vec2 size, float selectedZoom);
 
     glm::vec3 getBackgroundPosition();
 

@@ -493,7 +493,7 @@ namespace Renderer
 
         // Round vertices.
         for (int i = 0; i < 4; i++)
-            vertices[i].pos.round();
+            vertices[i].pos = glm::round(vertices[i].pos);
 
         if (_opacity < 1.0) {
             vertices[0].shaders = SHADER_OPACITY;

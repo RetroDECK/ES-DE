@@ -88,13 +88,13 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
     mMD_ReleaseDate->setColor(mdColor);
     mMD_ReleaseDate->setUppercase(true);
     mMD_Developer = std::make_shared<TextComponent>(
-        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
+        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3({}), glm::vec2({}), 0x00000000, 0.02f);
     mMD_Publisher = std::make_shared<TextComponent>(
-        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
+        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3({}), glm::vec2({}), 0x00000000, 0.02f);
     mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-                                                glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
-    mMD_Players = std::make_shared<TextComponent>(
-        mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3 {}, Vector2f::Zero(), 0x00000000, 0.02f);
+                                                glm::vec3({}), glm::vec2({}), 0x00000000, 0.02f);
+    mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
+                                                  glm::vec3({}), glm::vec2({}), 0x00000000, 0.02f);
     mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
     if (Settings::getInstance()->getString("Scraper") != "thegamesdb")
@@ -180,7 +180,7 @@ void GuiScraperSearch::onSizeChanged()
 {
     mGrid.setSize(mSize);
 
-    if (mSize.x() == 0 || mSize.y() == 0)
+    if (mSize.x == 0 || mSize.y == 0)
         return;
 
     // Column widths.
@@ -199,7 +199,7 @@ void GuiScraperSearch::onSizeChanged()
     // Row heights.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) // Show name.
         mGrid.setRowHeightPerc(0, (mResultName->getFont()->getHeight() * 1.6f) /
-                                      mGrid.getSize().y()); // Result name.
+                                      mGrid.getSize().y); // Result name.
     else
         mGrid.setRowHeightPerc(0, 0.0825f); // Hide name but do padding.
 
@@ -226,11 +226,11 @@ void GuiScraperSearch::onSizeChanged()
                                 mResultDesc->getFont()->getHeight() * 6.0f);
 
     // Make description text wrap at edge of container.
-    mResultDesc->setSize(mDescContainer->getSize().x(), 0);
+    mResultDesc->setSize(mDescContainer->getSize().x, 0.0f);
 
     // Set the width of mResultName to the cell width so that text abbreviation will work correctly.
-    Vector2f resultNameSize = mResultName->getSize();
-    mResultName->setSize(mGrid.getColWidth(3), resultNameSize.y());
+    glm::vec2 resultNameSize = mResultName->getSize();
+    mResultName->setSize(mGrid.getColWidth(3), resultNameSize.y);
 
     mGrid.onSizeChanged();
     mBusyAnim.setSize(mSize);
@@ -239,8 +239,8 @@ void GuiScraperSearch::onSizeChanged()
 void GuiScraperSearch::resizeMetadata()
 {
     mMD_Grid->setSize(mGrid.getColWidth(2), mGrid.getRowHeight(1));
-    if (mMD_Grid->getSize().y() > mMD_Pairs.size()) {
-        const int fontHeight = static_cast<int>(mMD_Grid->getSize().y() / mMD_Pairs.size() * 0.8f);
+    if (mMD_Grid->getSize().y > mMD_Pairs.size()) {
+        const int fontHeight = static_cast<int>(mMD_Grid->getSize().y / mMD_Pairs.size() * 0.8f);
         auto fontLbl = Font::get(fontHeight, FONT_PATH_REGULAR);
         auto fontComp = Font::get(fontHeight, FONT_PATH_LIGHT);
 
@@ -249,15 +249,14 @@ void GuiScraperSearch::resizeMetadata()
         for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); it++) {
             it->first->setFont(fontLbl);
             it->first->setSize(0, 0);
-            if (it->first->getSize().x() > maxLblWidth)
-                maxLblWidth =
-                    it->first->getSize().x() + (16.0f * Renderer::getScreenWidthModifier());
+            if (it->first->getSize().x > maxLblWidth)
+                maxLblWidth = it->first->getSize().x + (16.0f * Renderer::getScreenWidthModifier());
         }
 
         for (unsigned int i = 0; i < mMD_Pairs.size(); i++)
             mMD_Grid->setRowHeightPerc(
                 i * 2, (fontLbl->getLetterHeight() + (2.0f * Renderer::getScreenHeightModifier())) /
-                           mMD_Grid->getSize().y());
+                           mMD_Grid->getSize().y);
 
         // Update component fonts.
         mMD_ReleaseDate->setFont(fontComp);
@@ -266,7 +265,7 @@ void GuiScraperSearch::resizeMetadata()
         mMD_Genre->setFont(fontComp);
         mMD_Players->setFont(fontComp);
 
-        mMD_Grid->setColWidthPerc(0, maxLblWidth / mMD_Grid->getSize().x());
+        mMD_Grid->setColWidthPerc(0, maxLblWidth / mMD_Grid->getSize().x);
 
         if (mScrapeRatings) {
             // Rating is manually sized.
@@ -300,7 +299,7 @@ void GuiScraperSearch::updateViewStyle()
         mGrid.setEntry(mDescContainer, Vector2i(3, 0), false, false, Vector2i(1, 3),
                        GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
         // Make description text wrap at edge of container.
-        mResultDesc->setSize(mDescContainer->getSize().x(), 0.0f);
+        mResultDesc->setSize(mDescContainer->getSize().x, 0.0f);
     }
     else {
         // Fake row where name would be.
@@ -315,7 +314,7 @@ void GuiScraperSearch::updateViewStyle()
         mGrid.setEntry(mDescContainer, Vector2i(1, 2), false, false, Vector2i(2, 1),
                        GridFlags::BORDER_BOTTOM);
         // Make description text wrap at edge of container.
-        mResultDesc->setSize(mDescContainer->getSize().x(), 0);
+        mResultDesc->setSize(mDescContainer->getSize().x, 0);
     }
 }
 
@@ -566,7 +565,7 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
     glm::mat4 trans = parentTrans * getTransform();
 
     renderChildren(trans);
-    Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x00000009, 0x00000009);
+    Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00000009, 0x00000009);
 
     if (mBlockAccept) {
         Renderer::setMatrix(trans);

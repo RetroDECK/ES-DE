@@ -12,7 +12,6 @@
 #include "Log.h"
 #include "Shader_GL21.h"
 #include "math/Misc.h"
-#include "math/Vector2f.h"
 
 #include <string>
 #include <vector>
@@ -115,14 +114,14 @@ namespace Renderer
 
     struct Vertex {
         Vertex() {}
-        Vertex(const Vector2f& _pos, const Vector2f& _tex, const unsigned int _col)
+        Vertex(const glm::vec2& _pos, const glm::vec2& _tex, const unsigned int _col)
             : pos(_pos)
             , tex(_tex)
             , col(_col)
         {
         }
-        Vector2f pos;
-        Vector2f tex;
+        glm::vec2 pos;
+        glm::vec2 tex;
         unsigned int col;
         float saturation = 1.0;
         float opacity = 1.0;

@@ -478,8 +478,8 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 std::string first = str.substr(0, divider);
                 std::string second = str.substr(divider, std::string::npos);
 
-                Vector2f val(static_cast<float>(atof(first.c_str())),
-                             static_cast<float>(atof(second.c_str())));
+                glm::vec2 val(static_cast<float>(atof(first.c_str())),
+                              static_cast<float>(atof(second.c_str())));
 
                 element.properties[node.name()] = val;
                 break;
@@ -602,7 +602,7 @@ std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData
                 comp = new TextComponent(window);
 
             if (comp) {
-                comp->setDefaultZIndex(10);
+                comp->setDefaultZIndex(10.0f);
                 comp->applyTheme(theme, view, *it, ThemeFlags::ALL);
                 comps.push_back(comp);
             }

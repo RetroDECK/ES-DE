@@ -878,9 +878,8 @@ void ViewController::render(const glm::mat4& parentTrans)
         if (it->second == mCurrentView || (it->second == mPreviousView && isCameraMoving())) {
             // Clipping.
             glm::vec3 guiStart = it->second->getPosition();
-            glm::vec3 guiEnd =
-                it->second->getPosition() +
-                glm::vec3(it->second->getSize().x(), it->second->getSize().y(), 0.0f);
+            glm::vec3 guiEnd = it->second->getPosition() +
+                               glm::vec3(it->second->getSize().x, it->second->getSize().y, 0.0f);
 
             if (guiEnd.x >= viewStart.x && guiEnd.y >= viewStart.y && guiStart.x <= viewEnd.x &&
                 guiStart.y <= viewEnd.y)

@@ -170,7 +170,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         std::max(font->getHeight(1.0), static_cast<float>(font->getSize())) * mLineSpacing;
 
     // Number of entries that can fit on the screen simultaneously.
-    int screenCount = static_cast<int>(mSize.y() / entrySize + 0.5f);
+    int screenCount = static_cast<int>(mSize.y / entrySize + 0.5f);
 
     if (size() >= screenCount) {
         startEntry = mCursor - screenCount / 2;
@@ -193,20 +193,20 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         }
         else {
             Renderer::setMatrix(trans);
-            Renderer::drawRect(0.0f, (mCursor - startEntry) * entrySize + mSelectorOffsetY,
-                               mSize.x(), mSelectorHeight, mSelectorColor, mSelectorColorEnd,
+            Renderer::drawRect(0.0f, (mCursor - startEntry) * entrySize + mSelectorOffsetY, mSize.x,
+                               mSelectorHeight, mSelectorColor, mSelectorColorEnd,
                                mSelectorColorGradientHorizontal);
         }
     }
 
     if (Settings::getInstance()->getBool("DebugText")) {
-        Renderer::drawRect(mHorizontalMargin, 0.0f, mSize.x() - mHorizontalMargin * 2.0f, mSize.y(),
+        Renderer::drawRect(mHorizontalMargin, 0.0f, mSize.x - mHorizontalMargin * 2.0f, mSize.y,
                            0x00000033, 0x00000033);
-        Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0x0000FF33, 0x0000FF33);
+        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
     }
 
     // Clip to inside margins.
-    glm::vec3 dim(mSize.x(), mSize.y(), 0.0f);
+    glm::vec3 dim(mSize.x, mSize.y, 0.0f);
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
@@ -244,12 +244,12 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
                 break;
             case ALIGN_CENTER:
                 offset.x =
-                    static_cast<float>((mSize.x() - entry.data.textCache->metrics.size.x()) / 2.0f);
+                    static_cast<float>((mSize.x - entry.data.textCache->metrics.size.x) / 2.0f);
                 if (offset.x < mHorizontalMargin)
                     offset.x = mHorizontalMargin;
                 break;
             case ALIGN_RIGHT:
-                offset.x = (mSize.x() - entry.data.textCache->metrics.size.x());
+                offset.x = (mSize.x - entry.data.textCache->metrics.size.x);
                 offset.x -= mHorizontalMargin;
                 if (offset.x < mHorizontalMargin)
                     offset.x = mHorizontalMargin;
@@ -349,13 +349,13 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
         const float textLength = mFont
                                      ->sizeText(Utils::String::toUpper(
                                          mEntries.at(static_cast<unsigned int>(mCursor)).name))
-                                     .x();
-        const float limit = mSize.x() - mHorizontalMargin * 2.0f;
+                                     .x;
+        const float limit = mSize.x - mHorizontalMargin * 2.0f;
 
         if (textLength > limit) {
             // Loop.
             // Pixels per second (based on nes-mini font at 1920x1080 to produce a speed of 200).
-            const float speed = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x() * 0.247f;
+            const float speed = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f;
             const float delay = 3000.0f;
             const float scrollLength = textLength;
             const float returnLength = speed * 1.5f;
@@ -452,7 +452,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         if (elem->has("horizontalMargin")) {
             mHorizontalMargin = elem->get<float>("horizontalMargin") *
-                                (this->mParent ? this->mParent->getSize().x() :
+                                (this->mParent ? this->mParent->getSize().x :
                                                  static_cast<float>(Renderer::getScreenWidth()));
         }
     }
@@ -466,7 +466,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("selectorHeight"))
             setSelectorHeight(elem->get<float>("selectorHeight") * Renderer::getScreenHeight());
         if (elem->has("selectorOffsetY")) {
-            float scale = this->mParent ? this->mParent->getSize().y() :
+            float scale = this->mParent ? this->mParent->getSize().y :
                                           static_cast<float>(Renderer::getScreenHeight());
             setSelectorOffsetY(elem->get<float>("selectorOffsetY") * scale);
         }
@@ -479,7 +479,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         std::string path = elem->get<std::string>("selectorImagePath");
         bool tile = elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile");
         mSelectorImage.setImage(path, tile);
-        mSelectorImage.setSize(mSize.x(), mSelectorHeight);
+        mSelectorImage.setSize(mSize.x, mSelectorHeight);
         mSelectorImage.setColorShift(mSelectorColor);
         mSelectorImage.setColorShiftEnd(mSelectorColorEnd);
     }

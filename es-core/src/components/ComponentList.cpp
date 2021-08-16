@@ -145,25 +145,25 @@ void ComponentList::updateCameraOffset()
 {
     // Move the camera to scroll.
     const float totalHeight = getTotalRowHeight();
-    if (totalHeight > mSize.y()) {
-        float target = mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f -
-                       (mSize.y() / 2.0f);
+    if (totalHeight > mSize.y) {
+        float target =
+            mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f - (mSize.y / 2.0f);
 
         // Clamp the camera to prevent a fraction of a row from being displayed.
         mCameraOffset = 0.0f;
         unsigned int i = 0;
         while (mCameraOffset < target && i < mEntries.size()) {
             mCameraOffset += getRowHeight(mEntries.at(i).data);
-            if (mCameraOffset > totalHeight - mSize.y())
+            if (mCameraOffset > totalHeight - mSize.y)
                 break;
             i++;
         }
 
-        if (mCameraOffset < 0)
-            mCameraOffset = 0;
+        if (mCameraOffset < 0.0f)
+            mCameraOffset = 0.0f;
     }
     else {
-        mCameraOffset = 0;
+        mCameraOffset = 0.0f;
     }
 }
 
@@ -175,7 +175,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     glm::mat4 trans = parentTrans * getTransform();
 
     // Clip everything to be inside our bounds.
-    glm::vec3 dim(mSize.x(), mSize.y(), 0.0f);
+    glm::vec3 dim(mSize.x, mSize.y, 0.0f);
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
@@ -248,11 +248,11 @@ void ComponentList::render(const glm::mat4& parentTrans)
         const float selectedRowHeight = getRowHeight(mEntries.at(mCursor).data);
 
         if (opacity == 1) {
-            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(), selectedRowHeight, 0xFFFFFFFF,
+            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight, 0xFFFFFFFF,
                                0xFFFFFFFF, false, opacity, trans,
                                Renderer::Blend::ONE_MINUS_DST_COLOR, Renderer::Blend::ZERO);
 
-            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x(), selectedRowHeight, 0x777777FF,
+            Renderer::drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight, 0x777777FF,
                                0x777777FF, false, opacity, trans, Renderer::Blend::ONE,
                                Renderer::Blend::ONE);
         }
@@ -268,12 +268,12 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw separators.
     float y = 0;
     for (unsigned int i = 0; i < mEntries.size(); i++) {
-        Renderer::drawRect(0.0f, y, mSize.x(), 1.0f * Renderer::getScreenHeightModifier(),
-                           0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
+        Renderer::drawRect(0.0f, y, mSize.x, 1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF,
+                           0xC6C7C6FF, false, opacity, trans);
         y += getRowHeight(mEntries.at(i).data);
     }
 
-    Renderer::drawRect(0.0f, y, mSize.x(), 1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF,
+    Renderer::drawRect(0.0f, y, mSize.x, 1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF,
                        0xC6C7C6FF, false, opacity, trans);
     Renderer::popClipRect();
 }
@@ -283,8 +283,8 @@ float ComponentList::getRowHeight(const ComponentListRow& row) const
     // Returns the highest component height found in the row.
     float height = 0;
     for (unsigned int i = 0; i < row.elements.size(); i++) {
-        if (row.elements.at(i).component->getSize().y() > height)
-            height = row.elements.at(i).component->getSize().y();
+        if (row.elements.at(i).component->getSize().y > height)
+            height = row.elements.at(i).component->getSize().y;
     }
 
     return height;
@@ -313,27 +313,27 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.
-        comp->setPosition(x, (rowHeight - comp->getSize().y()) / 2.0f + yOffset);
-        x += comp->getSize().x();
+        comp->setPosition(x, (rowHeight - comp->getSize().y) / 2.0f + yOffset);
+        x += comp->getSize().x;
     }
 }
 
 void ComponentList::updateElementSize(const ComponentListRow& row)
 {
-    float width = mSize.x() - mHorizontalPadding;
+    float width = mSize.x - mHorizontalPadding;
     std::vector<std::shared_ptr<GuiComponent>> resizeVec;
 
     for (auto it = row.elements.cbegin(); it != row.elements.cend(); it++) {
         if (it->resize_width)
             resizeVec.push_back(it->component);
         else
-            width -= it->component->getSize().x();
+            width -= it->component->getSize().x;
     }
 
     // Redistribute the "unused" width equally among the components with resize_width set to true.
     width = width / resizeVec.size();
     for (auto it = resizeVec.cbegin(); it != resizeVec.cend(); it++)
-        (*it)->setSize(width, (*it)->getSize().y());
+        (*it)->setSize(width, (*it)->getSize().y);
 }
 
 void ComponentList::textInput(const std::string& text)

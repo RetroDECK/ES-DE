@@ -78,13 +78,13 @@ public:
     // zero, no resizing. This can be set before or after a video is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     virtual void setResize(float width, float height) override = 0;
-    void setResize(const Vector2f& size) { setResize(size.x(), size.y()); }
+    void setResize(const glm::vec2& size) { setResize(size.x, size.y); }
 
     // Resize the video to be as large as possible but fit within a box of this size.
     // This can be set before or after a video is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     virtual void setMaxSize(float width, float height) = 0;
-    void setMaxSize(const Vector2f& size) { setMaxSize(size.x(), size.y()); }
+    void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
 
 private:
     // Start the video immediately.
@@ -110,9 +110,9 @@ protected:
     Window* mWindow;
     unsigned mVideoWidth;
     unsigned mVideoHeight;
-    Vector2f mTargetSize;
-    Vector2f mVideoAreaPos;
-    Vector2f mVideoAreaSize;
+    glm::vec2 mTargetSize;
+    glm::vec2 mVideoAreaPos;
+    glm::vec2 mVideoAreaSize;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
     ImageComponent mStaticImage;

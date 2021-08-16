@@ -87,20 +87,20 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
     float width = Math::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.5f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 void GuiDetectDevice::onSizeChanged()
 {
-    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
 
     // Grid.
     mGrid.setSize(mSize);
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y());
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y);
     // mGrid.setRowHeightPerc(1, mDeviceInfo->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(2, mMsg1->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(3, mMsg2->getFont()->getHeight() / mSize.y());
+    mGrid.setRowHeightPerc(2, mMsg1->getFont()->getHeight() / mSize.y);
+    mGrid.setRowHeightPerc(3, mMsg2->getFont()->getHeight() / mSize.y);
     // mGrid.setRowHeightPerc(4, mDeviceHeld->getFont()->getHeight() / mSize.y());
 }
 

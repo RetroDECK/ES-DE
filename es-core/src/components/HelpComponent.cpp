@@ -16,8 +16,8 @@
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
 
-#define ICON_TEXT_SPACING 8 // Space between [icon] and [text] (px).
-#define ENTRY_SPACING 16 // Space between [text] and next [icon] (px).
+#define ICON_TEXT_SPACING 8.0f // Space between [icon] and [text] (px).
+#define ENTRY_SPACING 16.0f // Space between [text] and next [icon] (px).
 
 static std::map<std::string, std::string> sIconPathMap {};
 
@@ -135,7 +135,7 @@ void HelpComponent::updateGrid()
                                                    font, mStyle.textColor);
         labels.push_back(lbl);
 
-        width += icon->getSize().x() + lbl->getSize().x() +
+        width += icon->getSize().x + lbl->getSize().x +
                  ((ICON_TEXT_SPACING + ENTRY_SPACING) * Renderer::getScreenWidthModifier());
     }
 
@@ -143,16 +143,16 @@ void HelpComponent::updateGrid()
 
     for (unsigned int i = 0; i < icons.size(); i++) {
         const int col = i * 4;
-        mGrid->setColWidthPerc(col, icons.at(i)->getSize().x() / width);
+        mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(col + 1,
                                (ICON_TEXT_SPACING * Renderer::getScreenWidthModifier()) / width);
-        mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x() / width);
+        mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
 
         mGrid->setEntry(icons.at(i), Vector2i(col, 0), false, false);
         mGrid->setEntry(labels.at(i), Vector2i(col + 2, 0), false, false);
     }
 
-    mGrid->setPosition({ mStyle.position.x(), mStyle.position.y(), 0.0f });
+    mGrid->setPosition({ mStyle.position.x, mStyle.position.y, 0.0f });
     mGrid->setOrigin(mStyle.origin);
 }
 

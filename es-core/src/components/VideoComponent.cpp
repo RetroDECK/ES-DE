@@ -223,24 +223,24 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    Vector2f scale = getParent() ? getParent()->getSize() :
-                                   Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                                            static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 scale = getParent() ? getParent()->getSize() :
+                                    glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
+                                              static_cast<float>(Renderer::getScreenHeight()));
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
-            setResize(elem->get<Vector2f>("size") * scale);
-            mVideoAreaSize = elem->get<Vector2f>("size") * scale;
+            setResize(elem->get<glm::vec2>("size") * scale);
+            mVideoAreaSize = elem->get<glm::vec2>("size") * scale;
         }
         else if (elem->has("maxSize")) {
-            setMaxSize(elem->get<Vector2f>("maxSize") * scale);
-            mVideoAreaSize = elem->get<Vector2f>("maxSize") * scale;
+            setMaxSize(elem->get<glm::vec2>("maxSize") * scale);
+            mVideoAreaSize = elem->get<glm::vec2>("maxSize") * scale;
         }
     }
 
     if (properties & ThemeFlags::POSITION) {
         if (elem->has("pos"))
-            mVideoAreaPos = elem->get<Vector2f>("pos") * scale;
+            mVideoAreaPos = elem->get<glm::vec2>("pos") * scale;
     }
 
     if (elem->has("default"))

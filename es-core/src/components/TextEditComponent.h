@@ -52,9 +52,9 @@ private:
     void updateCursorRepeat(int deltaTime);
     void moveCursor(int amt);
 
-    bool isMultiline() { return (getSize().y() > mFont->getHeight() * 1.25f); }
-    Vector2f getTextAreaPos() const;
-    Vector2f getTextAreaSize() const;
+    bool isMultiline() { return (getSize().y > mFont->getHeight() * 1.25f); }
+    glm::vec2 getTextAreaPos() const;
+    glm::vec2 getTextAreaSize() const;
 
     std::string mText;
     std::string mTextOrig;
@@ -65,7 +65,7 @@ private:
     int mCursorRepeatTimer;
     int mCursorRepeatDir;
 
-    Vector2f mScrollOffset;
+    glm::vec2 mScrollOffset;
 
     NinePatchComponent mBox;
     float mResolutionAdjustment;

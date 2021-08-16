@@ -39,7 +39,7 @@ ComponentGrid::~ComponentGrid()
 float ComponentGrid::getColWidth(int col)
 {
     if (mColWidths[col] != 0)
-        return mColWidths[col] * mSize.x();
+        return mColWidths[col] * mSize.x;
 
     // Calculate automatic width.
     float freeWidthPerc = 1;
@@ -50,13 +50,13 @@ float ComponentGrid::getColWidth(int col)
             between++;
     }
 
-    return (freeWidthPerc * mSize.x()) / between;
+    return (freeWidthPerc * mSize.x) / static_cast<float>(between);
 }
 
 float ComponentGrid::getRowHeight(int row)
 {
     if (mRowHeights[row] != 0)
-        return mRowHeights[row] * mSize.y();
+        return mRowHeights[row] * mSize.y;
 
     // Calculate automatic height.
     float freeHeightPerc = 1;
@@ -67,7 +67,7 @@ float ComponentGrid::getRowHeight(int row)
             between++;
     }
 
-    return (freeHeightPerc * mSize.y()) / between;
+    return (freeHeightPerc * mSize.y) / static_cast<float>(between);
 }
 
 void ComponentGrid::setColWidthPerc(int col, float width, bool update)
@@ -132,11 +132,11 @@ bool ComponentGrid::removeEntry(const std::shared_ptr<GuiComponent>& comp)
 void ComponentGrid::updateCellComponent(const GridEntry& cell)
 {
     // Size.
-    Vector2f size(0, 0);
+    glm::vec2 size(0.0f, 0.0f);
     for (int x = cell.pos.x(); x < cell.pos.x() + cell.dim.x(); x++)
-        size[0] += getColWidth(x);
+        size.x += getColWidth(x);
     for (int y = cell.pos.y(); y < cell.pos.y() + cell.dim.y(); y++)
-        size[1] += getRowHeight(y);
+        size.y += getRowHeight(y);
 
     if (cell.resize)
         cell.component->setSize(size);
@@ -144,13 +144,13 @@ void ComponentGrid::updateCellComponent(const GridEntry& cell)
     // Find top left corner.
     glm::vec3 pos {};
     for (int x = 0; x < cell.pos.x(); x++)
-        pos[0] += getColWidth(x);
+        pos.x += getColWidth(x);
     for (int y = 0; y < cell.pos.y(); y++)
-        pos[1] += getRowHeight(y);
+        pos.y += getRowHeight(y);
 
     // Center component.
-    pos[0] = pos.x + (size.x() - cell.component->getSize().x()) / 2.0f;
-    pos[1] = pos.y + (size.y() - cell.component->getSize().y()) / 2.0f;
+    pos.x = pos.x + (size.x - cell.component->getSize().x) / 2.0f;
+    pos.y = pos.y + (size.y - cell.component->getSize().y) / 2.0f;
 
     cell.component->setPosition(pos);
 }
@@ -161,16 +161,16 @@ void ComponentGrid::updateSeparators()
 
     bool drawAll = Settings::getInstance()->getBool("DebugGrid");
 
-    Vector2f pos;
-    Vector2f size;
+    glm::vec2 pos;
+    glm::vec2 size;
 
     for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
         if (!it->border && !drawAll)
             continue;
 
         // Find component position + size.
-        pos = Vector2f(0, 0);
-        size = Vector2f(0, 0);
+        pos = glm::vec2(0.0f, 0.0f);
+        size = glm::vec2(0.0f, 0.0f);
         for (int x = 0; x < it->pos.x(); x++)
             pos[0] += getColWidth(x);
         for (int y = 0; y < it->pos.y(); y++)
@@ -180,39 +180,39 @@ void ComponentGrid::updateSeparators()
         for (int y = it->pos.y(); y < it->pos.y() + it->dim.y(); y++)
             size[1] += getRowHeight(y);
 
-        if (size == 0)
+        if (size == glm::vec2({}))
             return;
 
         if (it->border & BORDER_TOP || drawAll) {
             std::vector<float> coordVector;
-            coordVector.push_back(pos.x());
-            coordVector.push_back(pos.y());
-            coordVector.push_back(size.x());
+            coordVector.push_back(pos.x);
+            coordVector.push_back(pos.y);
+            coordVector.push_back(size.x);
             coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
             mSeparators.push_back(coordVector);
         }
         if (it->border & BORDER_BOTTOM || drawAll) {
             std::vector<float> coordVector;
-            coordVector.push_back(pos.x());
-            coordVector.push_back(pos.y() + size.y());
-            coordVector.push_back(size.x());
+            coordVector.push_back(pos.x);
+            coordVector.push_back(pos.y + size.y);
+            coordVector.push_back(size.x);
             coordVector.push_back(1.0f * Renderer::getScreenHeightModifier());
             mSeparators.push_back(coordVector);
         }
         if (it->border & BORDER_LEFT || drawAll) {
             std::vector<float> coordVector;
-            coordVector.push_back(pos.x());
-            coordVector.push_back(pos.y());
+            coordVector.push_back(pos.x);
+            coordVector.push_back(pos.y);
             coordVector.push_back(1.0f * Renderer::getScreenWidthModifier());
-            coordVector.push_back(size.y());
+            coordVector.push_back(size.y);
             mSeparators.push_back(coordVector);
         }
         if (it->border & BORDER_RIGHT || drawAll) {
             std::vector<float> coordVector;
-            coordVector.push_back(pos.x() + size.x());
-            coordVector.push_back(pos.y());
+            coordVector.push_back(pos.x + size.x);
+            coordVector.push_back(pos.y);
             coordVector.push_back(1.0f * Renderer::getScreenWidthModifier());
-            coordVector.push_back(size.y());
+            coordVector.push_back(size.y);
             mSeparators.push_back(coordVector);
         }
     }

@@ -71,29 +71,29 @@ public:
     void setPosition(float x, float y, float z = 0.0f);
     virtual void onPositionChanged() {}
 
-    Vector2f getOrigin() const { return mOrigin; }
+    glm::vec2 getOrigin() const { return mOrigin; }
     // Sets the origin as a percentage of this image.
     // (e.g. (0, 0) is top left, (0.5, 0.5) is the center.)
     void setOrigin(float originX, float originY);
-    void setOrigin(Vector2f origin) { setOrigin(origin.x(), origin.y()); }
+    void setOrigin(glm::vec2 origin) { setOrigin(origin.x, origin.y); }
     virtual void onOriginChanged() {}
 
-    Vector2f getRotationOrigin() const { return mRotationOrigin; }
+    glm::vec2 getRotationOrigin() const { return mRotationOrigin; }
     // Sets the rotation origin as a percentage of this image.
     // (e.g. (0, 0) is top left, (0.5, 0.5) is the center.)
     void setRotationOrigin(float originX, float originY)
     {
-        mRotationOrigin = Vector2f(originX, originY);
+        mRotationOrigin = glm::vec2(originX, originY);
     }
-    void setRotationOrigin(Vector2f origin) { setRotationOrigin(origin.x(), origin.y()); }
+    void setRotationOrigin(glm::vec2 origin) { setRotationOrigin(origin.x, origin.y); }
 
-    virtual Vector2f getSize() const { return mSize; }
-    void setSize(const Vector2f& size) { setSize(size.x(), size.y()); }
+    virtual glm::vec2 getSize() const { return mSize; }
+    void setSize(const glm::vec2& size) { setSize(size.x, size.y); }
     void setSize(float w, float h);
     virtual void setResize(float width, float height) {}
     virtual void onSizeChanged() {}
 
-    virtual Vector2f getRotationSize() const { return getSize(); }
+    virtual glm::vec2 getRotationSize() const { return getSize(); }
     float getRotation() const { return mRotation; }
     void setRotation(float rotation) { mRotation = rotation; }
     void setRotationDegrees(float rotation)
@@ -114,7 +114,7 @@ public:
     void setVisible(bool visible) { mVisible = visible; }
 
     // Returns the center point of the image (takes origin into account).
-    Vector2f getCenter() const;
+    glm::vec2 getCenter() const;
 
     void setParent(GuiComponent* parent) { mParent = parent; }
     GuiComponent* getParent() const { return mParent; }
@@ -250,9 +250,9 @@ protected:
     std::vector<GuiComponent*> mChildren;
 
     glm::vec3 mPosition;
-    Vector2f mOrigin;
-    Vector2f mRotationOrigin;
-    Vector2f mSize;
+    glm::vec2 mOrigin;
+    glm::vec2 mRotationOrigin;
+    glm::vec2 mSize;
 
     float mRotation = 0.0;
     float mScale = 1.0;

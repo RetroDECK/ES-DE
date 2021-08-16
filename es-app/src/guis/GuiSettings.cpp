@@ -41,8 +41,7 @@ GuiSettings::GuiSettings(Window* window, std::string title)
 
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
-    mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2.0f,
-                      Renderer::getScreenHeight() * 0.13f);
+    mMenu.setPosition((mSize.x - mMenu.getSize().x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
 }
 
 GuiSettings::~GuiSettings()
@@ -171,7 +170,7 @@ void GuiSettings::addEditableTextComponent(const std::string label,
 
     auto bracket = std::make_shared<ImageComponent>(mWindow);
     bracket->setImage(":/graphics/arrow.svg");
-    bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
+    bracket->setResize(glm::vec2(0.0f, lbl->getFont()->getLetterHeight()));
     row.addElement(bracket, false);
 
     // OK callback (apply new value to ed).

@@ -28,7 +28,7 @@ DateTimeComponent::DateTimeComponent(Window* window,
                                      unsigned int color,
                                      Alignment align,
                                      glm::vec3 pos,
-                                     Vector2f size,
+                                     glm::vec2 size,
                                      unsigned int bgcolor)
     : TextComponent(window, text, font, color, align, pos, size, bgcolor)
     , mDisplayRelative(false)

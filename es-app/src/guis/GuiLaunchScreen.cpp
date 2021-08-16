@@ -114,7 +114,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
         Font::get(static_cast<int>(gameNameFontSize * std::min(Renderer::getScreenHeight(),
                                                                Renderer::getScreenWidth())))
             ->sizeText(Utils::String::toUpper(game->getName()))
-            .x();
+            .x;
 
     // Add a bit of width to compensate for the left and right spacers.
     fontWidth += static_cast<float>(Renderer::getScreenWidth()) * 0.05f;
@@ -131,15 +131,15 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
         mGrid->setRowHeightPerc(0, 0.09f, false);
     else
         mGrid->setRowHeightPerc(0, 0.15f, false);
-    mGrid->setRowHeightPerc(1, mTitle->getFont()->getLetterHeight() * 1.70f / mSize.y(), false);
+    mGrid->setRowHeightPerc(1, mTitle->getFont()->getLetterHeight() * 1.70f / mSize.y, false);
     mGrid->setRowHeightPerc(2, 0.05f, false);
     if (mImagePath != "")
         mGrid->setRowHeightPerc(3, 0.35f, false);
     else
         mGrid->setRowHeightPerc(3, 0.01f, false);
     mGrid->setRowHeightPerc(4, 0.05f, false);
-    mGrid->setRowHeightPerc(5, mGameName->getFont()->getHeight() * 0.80f / mSize.y(), false);
-    mGrid->setRowHeightPerc(6, mSystemName->getFont()->getHeight() * 0.90f / mSize.y(), false);
+    mGrid->setRowHeightPerc(5, mGameName->getFont()->getHeight() * 0.80f / mSize.y, false);
+    mGrid->setRowHeightPerc(6, mSystemName->getFont()->getHeight() * 0.90f / mSize.y, false);
 
     // Set left and right spacers column widths.
     mGrid->setColWidthPerc(0, 0.025f);
@@ -153,7 +153,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     for (int i = 0; i < 7; i++)
         totalRowHeight += mGrid->getRowHeight(i);
 
-    setSize(mSize.x(), totalRowHeight);
+    setSize(mSize.x, totalRowHeight);
 
     mGameName->setText(Utils::String::toUpper(game->getName()));
     mSystemName->setText(Utils::String::toUpper(game->getSystem()->getFullName()));
@@ -170,10 +170,10 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 
         mMarquee->setOrigin(0.5f, 0.5f);
         glm::vec3 currentPos = mMarquee->getPosition();
-        Vector2f currentSize = mMarquee->getSize();
+        glm::vec2 currentSize = mMarquee->getSize();
 
         // Position the image in the middle of row four.
-        currentPos.x = mSize.x() / 2.0f;
+        currentPos.x = mSize.x / 2.0f;
         currentPos.y = mGrid->getRowHeight(0) + mGrid->getRowHeight(1) + mGrid->getRowHeight(2) +
                        mGrid->getRowHeight(3) / 2.0f;
         mMarquee->setPosition(currentPos);
@@ -185,7 +185,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
                 static_cast<float>(Renderer::getScreenHeight()) / 2.25f);
 
-    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
     mBackground.setEdgeColor(0xEEEEEEFF);
 }
 

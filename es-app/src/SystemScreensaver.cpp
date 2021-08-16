@@ -608,18 +608,18 @@ void SystemScreensaver::generateOverlayInfo()
         mGameOverlayFont.at(0)->buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
 
     float textSizeX;
-    float textSizeY = mGameOverlayFont[0].get()->sizeText(overlayText).y();
+    float textSizeY = mGameOverlayFont[0].get()->sizeText(overlayText).y;
 
     // There is a weird issue with sizeText() where the X size value is returned
     // as too large if there are two rows in a string and the second row is longer
     // than the first row. Possibly it's the newline character that is somehow
     // injected in the size calculation. Regardless, this workaround is working
     // fine for the time being.
-    if (mGameOverlayFont[0].get()->sizeText(gameName).x() >
-        mGameOverlayFont[0].get()->sizeText(systemName).x())
-        textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x();
+    if (mGameOverlayFont[0].get()->sizeText(gameName).x >
+        mGameOverlayFont[0].get()->sizeText(systemName).x)
+        textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x;
     else
-        textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x();
+        textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x;
 
     float marginX = Renderer::getWindowWidth() * 0.01f;
 

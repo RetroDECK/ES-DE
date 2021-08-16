@@ -17,12 +17,12 @@ GridTileComponent::GridTileComponent(Window* window)
     , mBackground(window, ":/graphics/frame.png")
 {
     mDefaultProperties.mSize = getDefaultTileSize();
-    mDefaultProperties.mPadding = Vector2f(16.0f * Renderer::getScreenWidthModifier(),
-                                           16.0f * Renderer::getScreenHeightModifier());
+    mDefaultProperties.mPadding = glm::vec2(16.0f * Renderer::getScreenWidthModifier(),
+                                            16.0f * Renderer::getScreenHeightModifier());
     mDefaultProperties.mImageColor = 0xAAAAAABB;
     // Attempting to use frame.svg instead causes quite severe performance problems.
     mDefaultProperties.mBackgroundImage = ":/graphics/frame.png";
-    mDefaultProperties.mBackgroundCornerSize = Vector2f(16.0f, 16.0f);
+    mDefaultProperties.mBackgroundCornerSize = glm::vec2(16.0f, 16.0f);
     mDefaultProperties.mBackgroundCenterColor = 0xAAAAEEFF;
     mDefaultProperties.mBackgroundEdgeColor = 0xAAAAEEFF;
 
@@ -76,14 +76,14 @@ void GridTileComponent::update(int deltaTime)
 
 void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTileProperties* properties)
 {
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 screen(static_cast<float>(Renderer::getScreenWidth()),
+                     static_cast<float>(Renderer::getScreenHeight()));
 
     if (elem->has("size"))
-        properties->mSize = elem->get<Vector2f>("size") * screen;
+        properties->mSize = elem->get<glm::vec2>("size") * screen;
 
     if (elem->has("padding"))
-        properties->mPadding = elem->get<Vector2f>("padding");
+        properties->mPadding = elem->get<glm::vec2>("padding");
 
     if (elem->has("imageColor"))
         properties->mImageColor = elem->get<unsigned int>("imageColor");
@@ -92,7 +92,7 @@ void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTilePropert
         properties->mBackgroundImage = elem->get<std::string>("backgroundImage");
 
     if (elem->has("backgroundCornerSize"))
-        properties->mBackgroundCornerSize = elem->get<Vector2f>("backgroundCornerSize");
+        properties->mBackgroundCornerSize = elem->get<glm::vec2>("backgroundCornerSize");
 
     if (elem->has("backgroundColor")) {
         properties->mBackgroundCenterColor = elem->get<unsigned int>("backgroundColor");
@@ -111,9 +111,6 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    const std::string& /*element*/,
                                    unsigned int /*properties*/)
 {
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
-
     // Apply theme to the default gridtile.
     const ThemeData::ThemeElement* elem = theme->getElement(view, "default", "gridtile");
     if (elem)
@@ -133,15 +130,15 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         applyThemeToProperties(elem, &mSelectedProperties);
 }
 
-Vector2f GridTileComponent::getDefaultTileSize()
+glm::vec2 GridTileComponent::getDefaultTileSize()
 {
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 screen = glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
+                                 static_cast<float>(Renderer::getScreenHeight()));
 
     return screen * 0.22f;
 }
 
-Vector2f GridTileComponent::getSelectedTileSize() const
+glm::vec2 GridTileComponent::getSelectedTileSize() const
 {
     // Return the tile size.
     return mDefaultProperties.mSize * 1.2f;
@@ -320,7 +317,7 @@ std::shared_ptr<TextureResource> GridTileComponent::getTexture()
     return nullptr;
 };
 
-void GridTileComponent::forceSize(Vector2f size, float selectedZoom)
+void GridTileComponent::forceSize(glm::vec2 size, float selectedZoom)
 {
     mDefaultProperties.mSize = size;
     mSelectedProperties.mSize = size * selectedZoom;

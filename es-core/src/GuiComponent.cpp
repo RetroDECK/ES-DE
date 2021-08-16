@@ -25,9 +25,9 @@ GuiComponent::GuiComponent(Window* window)
     , mOpacity(255)
     , mSaturation(1.0f)
     , mPosition({})
-    , mOrigin(Vector2f::Zero())
+    , mOrigin({})
     , mRotationOrigin(0.5f, 0.5f)
-    , mSize(Vector2f::Zero())
+    , mSize({})
     , mTransform(Renderer::getIdentity())
     , mIsProcessing(false)
     , mVisible(true)
@@ -101,20 +101,20 @@ void GuiComponent::setPosition(float x, float y, float z)
 
 void GuiComponent::setOrigin(float x, float y)
 {
-    mOrigin = Vector2f(x, y);
+    mOrigin = glm::vec2(x, y);
     onOriginChanged();
 }
 
 void GuiComponent::setSize(float w, float h)
 {
-    mSize = Vector2f(w, h);
+    mSize = glm::vec2(w, h);
     onSizeChanged();
 }
 
-Vector2f GuiComponent::getCenter() const
+glm::vec2 GuiComponent::getCenter() const
 {
-    return Vector2f(mPosition.x - (getSize().x() * mOrigin.x()) + getSize().x() / 2.0f,
-                    mPosition.y - (getSize().y() * mOrigin.y()) + getSize().y() / 2.0f);
+    return glm::vec2(mPosition.x - (getSize().x * mOrigin.x) + getSize().x / 2.0f,
+                     mPosition.y - (getSize().y * mOrigin.y) + getSize().y / 2.0f);
 }
 
 void GuiComponent::addChild(GuiComponent* cmp)
@@ -181,9 +181,9 @@ const glm::mat4& GuiComponent::getTransform()
 
     if (mRotation != 0.0f) {
         // Calculate offset as difference between origin and rotation origin.
-        Vector2f rotationSize = getRotationSize();
-        float xOff = (mOrigin.x() - mRotationOrigin.x()) * rotationSize.x();
-        float yOff = (mOrigin.y() - mRotationOrigin.y()) * rotationSize.y();
+        glm::vec2 rotationSize = getRotationSize();
+        float xOff = (mOrigin.x - mRotationOrigin.x) * rotationSize.x;
+        float yOff = (mOrigin.y - mRotationOrigin.y) * rotationSize.y;
 
         // Transform to offset point.
         if (xOff != 0.0f || yOff != 0.0f)
@@ -196,8 +196,8 @@ const glm::mat4& GuiComponent::getTransform()
         if (xOff != 0.0f || yOff != 0.0f)
             mTransform = glm::translate(mTransform, glm::vec3(xOff, yOff, 0.0f));
     }
-    mTransform = glm::translate(mTransform, glm::vec3(mOrigin.x() * mSize.x() * -1.0f,
-                                                      mOrigin.y() * mSize.y() * -1.0f, 0.0f));
+    mTransform = glm::translate(
+        mTransform, glm::vec3(mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f));
 
     return mTransform;
 }
@@ -302,9 +302,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                               const std::string& element,
                               unsigned int properties)
 {
-    Vector2f scale = getParent() ? getParent()->getSize() :
-                                   Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                                            static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 scale = getParent() ? getParent()->getSize() :
+                                    glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
+                                              static_cast<float>(Renderer::getScreenHeight()));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "");
     if (!elem)
@@ -312,24 +312,24 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     using namespace ThemeFlags;
     if (properties & POSITION && elem->has("pos")) {
-        Vector2f denormalized = elem->get<Vector2f>("pos") * scale;
-        setPosition(glm::vec3(denormalized.x(), denormalized.y(), 0.0f));
+        glm::vec2 denormalized = elem->get<glm::vec2>("pos") * scale;
+        setPosition(glm::vec3(denormalized.x, denormalized.y, 0.0f));
     }
 
     if (properties & ThemeFlags::SIZE && elem->has("size"))
-        setSize(elem->get<Vector2f>("size") * scale);
+        setSize(elem->get<glm::vec2>("size") * scale);
 
     // Position + size also implies origin.
     if ((properties & ORIGIN || (properties & POSITION && properties & ThemeFlags::SIZE)) &&
         elem->has("origin")) {
-        setOrigin(elem->get<Vector2f>("origin"));
+        setOrigin(elem->get<glm::vec2>("origin"));
     }
 
     if (properties & ThemeFlags::ROTATION) {
         if (elem->has("rotation"))
             setRotationDegrees(elem->get<float>("rotation"));
         if (elem->has("rotationOrigin"))
-            setRotationOrigin(elem->get<Vector2f>("rotationOrigin"));
+            setRotationOrigin(elem->get<glm::vec2>("rotationOrigin"));
     }
 
     if (properties & ThemeFlags::Z_INDEX && elem->has("zIndex"))

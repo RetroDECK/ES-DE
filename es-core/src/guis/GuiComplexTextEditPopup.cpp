@@ -97,21 +97,21 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     mText->setSize(0, textHeight);
     mInfoString2->setSize(infoWidth, mInfoString2->getFont()->getHeight());
 
-    setSize(windowWidth, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y() +
-                             mButtonGrid->getSize().y() * 1.85f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setSize(windowWidth, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y +
+                             mButtonGrid->getSize().y * 1.85f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
     mText->startEditing();
 }
 
 void GuiComplexTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
-    mText->setSize(mSize.x() - 40.0f, mText->getSize().y());
+    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
+    mText->setSize(mSize.x - 40.0f, mText->getSize().y);
 
     // Update grid.
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(2, mButtonGrid->getSize().y() / mSize.y());
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y);
+    mGrid.setRowHeightPerc(2, mButtonGrid->getSize().y / mSize.y);
     mGrid.setSize(mSize);
 }
 

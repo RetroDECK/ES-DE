@@ -27,7 +27,7 @@ public:
                       unsigned int color = 0x000000FF,
                       Alignment align = ALIGN_LEFT,
                       glm::vec3 pos = {},
-                      Vector2f size = Vector2f::Zero(),
+                      glm::vec2 size = {},
                       unsigned int bgcolor = 0x00000000);
 
     void render(const glm::mat4& parentTrans) override;

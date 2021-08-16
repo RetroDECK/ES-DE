@@ -121,7 +121,7 @@ void MediaViewer::render()
         Renderer::shaderPostprocessing(shaders, videoParameters);
 #endif
     }
-    else if (mImage && mImage->hasImage() && mImage->getSize() != 0) {
+    else if (mImage && mImage->hasImage() && mImage->getSize() != glm::vec2({})) {
         mImage->render(trans);
 
 #if defined(USE_OPENGL_21)

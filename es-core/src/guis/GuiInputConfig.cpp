@@ -192,8 +192,8 @@ GuiInputConfig::GuiInputConfig(Window* window,
     float width = Math::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 void GuiInputConfig::populateConfigList()
@@ -293,16 +293,16 @@ void GuiInputConfig::update(int deltaTime)
 
 void GuiInputConfig::onSizeChanged()
 {
-    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
 
     // Update grid.
     mGrid.setSize(mSize);
 
-    mGrid.setRowHeightPerc(1, mTitle->getFont()->getHeight() * 0.75f / mSize.y());
-    mGrid.setRowHeightPerc(2, mSubtitle1->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(3, mSubtitle2->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(5, (mList->getRowHeight(0) * 5 + 2) / mSize.y());
-    mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y() / mSize.y());
+    mGrid.setRowHeightPerc(1, mTitle->getFont()->getHeight() * 0.75f / mSize.y);
+    mGrid.setRowHeightPerc(2, mSubtitle1->getFont()->getHeight() / mSize.y);
+    mGrid.setRowHeightPerc(3, mSubtitle2->getFont()->getHeight() / mSize.y);
+    mGrid.setRowHeightPerc(5, (mList->getRowHeight(0) * 5.0f + 2.0f) / mSize.y);
+    mGrid.setRowHeightPerc(6, mButtonGrid->getSize().y / mSize.y);
 }
 
 void GuiInputConfig::rowDone()

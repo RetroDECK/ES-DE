@@ -185,8 +185,8 @@ GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileDa
         Renderer::getScreenWidth() * ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f);
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 GuiOfflineGenerator::~GuiOfflineGenerator()
@@ -203,13 +203,13 @@ GuiOfflineGenerator::~GuiOfflineGenerator()
 
 void GuiOfflineGenerator::onSizeChanged()
 {
-    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
 
     // Set row heights.
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y(), false);
-    mGrid.setRowHeightPerc(1, (mStatus->getFont()->getLetterHeight() + 2.0f) / mSize.y(), false);
-    mGrid.setRowHeightPerc(2, mGameCounter->getFont()->getHeight() * 1.75f / mSize.y(), false);
-    mGrid.setRowHeightPerc(3, (mStatus->getFont()->getLetterHeight() + 3.0f) / mSize.y(), false);
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y, false);
+    mGrid.setRowHeightPerc(1, (mStatus->getFont()->getLetterHeight() + 2.0f) / mSize.y, false);
+    mGrid.setRowHeightPerc(2, mGameCounter->getFont()->getHeight() * 1.75f / mSize.y, false);
+    mGrid.setRowHeightPerc(3, (mStatus->getFont()->getLetterHeight() + 3.0f) / mSize.y, false);
     mGrid.setRowHeightPerc(4, 0.07f, false);
     mGrid.setRowHeightPerc(5, 0.07f, false);
     mGrid.setRowHeightPerc(6, 0.07f, false);
@@ -217,7 +217,7 @@ void GuiOfflineGenerator::onSizeChanged()
     mGrid.setRowHeightPerc(8, 0.02f, false);
     mGrid.setRowHeightPerc(9, 0.07f, false);
     mGrid.setRowHeightPerc(10, 0.07f, false);
-    mGrid.setRowHeightPerc(12, mButtonGrid->getSize().y() / mSize.y(), false);
+    mGrid.setRowHeightPerc(12, mButtonGrid->getSize().y / mSize.y, false);
 
     // Set column widths.
     mGrid.setColWidthPerc(0, 0.03f);

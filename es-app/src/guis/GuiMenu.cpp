@@ -75,8 +75,7 @@ GuiMenu::GuiMenu(Window* window)
     addChild(&mMenu);
     addVersionInfo();
     setSize(mMenu.getSize());
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                Renderer::getScreenHeight() * 0.13f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
 }
 
 GuiMenu::~GuiMenu()
@@ -97,17 +96,16 @@ void GuiMenu::openUIOptions()
     auto startup_system = std::make_shared<OptionListComponent<std::string>>(
         mWindow, getHelpStyle(), "GAMELIST ON STARTUP", false);
     startup_system->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
-    float dotsSize = Font::get(FONT_SIZE_MEDIUM)->sizeText("...").x();
+    float dotsSize = Font::get(FONT_SIZE_MEDIUM)->sizeText("...").x;
     for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
          it++) {
         if ((*it)->getName() != "retropie") {
             // If required, abbreviate the system name so it doesn't overlap the setting name.
             std::string abbreviatedString =
-                Font::get(FONT_SIZE_MEDIUM)
-                    ->getTextMaxWidth((*it)->getFullName(), mSize.x() * 0.47f);
-            float sizeDifference = Font::get(FONT_SIZE_MEDIUM)->sizeText((*it)->getFullName()).x() -
-                                   Font::get(FONT_SIZE_MEDIUM)->sizeText(abbreviatedString).x();
-            if (sizeDifference > 0) {
+                Font::get(FONT_SIZE_MEDIUM)->getTextMaxWidth((*it)->getFullName(), mSize.x * 0.47f);
+            float sizeDifference = Font::get(FONT_SIZE_MEDIUM)->sizeText((*it)->getFullName()).x -
+                                   Font::get(FONT_SIZE_MEDIUM)->sizeText(abbreviatedString).x;
+            if (sizeDifference > 0.0f) {
                 // It doesn't make sense to abbreviate if the number of pixels removed by
                 // the abbreviation is less or equal to the size of the three dots that
                 // would be appended to the string.
@@ -899,7 +897,8 @@ void GuiMenu::openOtherOptions()
                                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     auto bracketMediaDirectory = std::make_shared<ImageComponent>(mWindow);
     bracketMediaDirectory->setImage(":/graphics/arrow.svg");
-    bracketMediaDirectory->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    bracketMediaDirectory->setResize(
+        glm::vec2(0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
     rowMediaDir.addElement(media_directory, true);
     rowMediaDir.addElement(bracketMediaDirectory, false);
     std::string titleMediaDir = "ENTER GAME MEDIA DIRECTORY";
@@ -1259,8 +1258,8 @@ void GuiMenu::openCollectionSystemOptions()
 
 void GuiMenu::onSizeChanged()
 {
-    mVersion.setSize(mSize.x(), 0);
-    mVersion.setPosition(0, mSize.y() - mVersion.getSize().y());
+    mVersion.setSize(mSize.x, 0.0f);
+    mVersion.setPosition(0.0f, mSize.y - mVersion.getSize().y);
 }
 
 void GuiMenu::addEntry(const std::string& name,

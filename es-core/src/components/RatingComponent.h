@@ -48,8 +48,6 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    Vector2f mTargetSize;
-
     void updateVertices();
     void updateColors();
 

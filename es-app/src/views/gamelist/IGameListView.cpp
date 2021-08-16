@@ -69,8 +69,8 @@ void IGameListView::render(const glm::mat4& parentTrans)
 
     Vector2i pos(static_cast<int>(std::round(trans[3].x)),
                  static_cast<int>(std::round(trans[3].y)));
-    Vector2i size(static_cast<int>(std::round(mSize.x() * scaleX)),
-                  static_cast<int>(std::round(mSize.y() * scaleY)));
+    Vector2i size(static_cast<int>(std::round(mSize.x * scaleX)),
+                  static_cast<int>(std::round(mSize.y * scaleY)));
 
     Renderer::pushClipRect(pos, size);
     renderChildren(trans);

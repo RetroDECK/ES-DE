@@ -9,7 +9,7 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 #define ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 
-#include "math/Vector2f.h"
+#include "math/Misc.h"
 #include "math/Vector2i.h"
 #include "resources/ResourceManager.h"
 #include "resources/TextureDataManager.h"
@@ -45,7 +45,7 @@ public:
     // situations. An alternative is to set a scaling factor directly when loading the texture
     // using get(), by using the scaleDuringLoad parameter (which also works for raster graphics).
     void rasterizeAt(size_t width, size_t height);
-    Vector2f getSourceImageSize() const { return mSourceSize; }
+    glm::vec2 getSourceImageSize() const { return mSourceSize; }
 
     virtual ~TextureResource();
 
@@ -74,7 +74,7 @@ private:
     static TextureDataManager sTextureDataManager;
 
     Vector2i mSize;
-    Vector2f mSourceSize;
+    glm::vec2 mSourceSize;
     bool mForceLoad;
 
     typedef std::pair<std::string, bool> TextureKeyType;

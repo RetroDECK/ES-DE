@@ -475,9 +475,9 @@ void Window::render()
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 if (mTopScale < 1.0f) {
                     mTopScale = Math::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
-                    Vector2f topCenter = top->getCenter();
+                    glm::vec2 topCenter = top->getCenter();
                     top->setOrigin({ 0.5f, 0.5f });
-                    top->setPosition({ topCenter.x(), topCenter.y(), 0.0f });
+                    top->setPosition({ topCenter.x, topCenter.y, 0.0f });
                     top->setScale(mTopScale);
                 }
             }
@@ -499,11 +499,11 @@ void Window::render()
                            static_cast<float>(Renderer::getScreenHeight()),
                            0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
 
-        Vector2f offset = mListScrollFont->sizeText(mListScrollText);
-        offset[0] = (Renderer::getScreenWidth() - offset.x()) * 0.5f;
-        offset[1] = (Renderer::getScreenHeight() - offset.y()) * 0.5f;
+        glm::vec2 offset = mListScrollFont->sizeText(mListScrollText);
+        offset.x = (Renderer::getScreenWidth() - offset.x) * 0.5f;
+        offset.y = (Renderer::getScreenHeight() - offset.y) * 0.5f;
 
-        TextCache* cache = mListScrollFont->buildTextCache(mListScrollText, offset.x(), offset.y(),
+        TextCache* cache = mListScrollFont->buildTextCache(mListScrollText, offset.x, offset.y,
                                                            0xFFFFFF00 | mListScrollOpacity);
         mListScrollFont->renderTextCache(cache);
         delete cache;
@@ -566,14 +566,14 @@ void Window::renderLoadingScreen(std::string text)
     ImageComponent splash(this, true);
     splash.setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);
     splash.setImage(":/graphics/splash.svg");
-    splash.setPosition((Renderer::getScreenWidth() - splash.getSize().x()) / 2.0f,
-                       (Renderer::getScreenHeight() - splash.getSize().y()) / 2.0f * 0.6f);
+    splash.setPosition((Renderer::getScreenWidth() - splash.getSize().x) / 2.0f,
+                       (Renderer::getScreenHeight() - splash.getSize().y) / 2.0f * 0.6f);
     splash.render(trans);
 
     auto& font = mDefaultFonts.at(1);
     TextCache* cache = font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF);
 
-    float x = std::round((Renderer::getScreenWidth() - cache->metrics.size.x()) / 2.0f);
+    float x = std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f);
     float y = std::round(Renderer::getScreenHeight() * 0.835f);
     trans = glm::translate(trans, glm::vec3(x, y, 0.0f));
     Renderer::setMatrix(trans);

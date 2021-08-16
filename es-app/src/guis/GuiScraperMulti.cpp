@@ -110,8 +110,8 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     float width = Math::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.849f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 
     doNextSearch();
 }
@@ -130,12 +130,12 @@ GuiScraperMulti::~GuiScraperMulti()
 
 void GuiScraperMulti::onSizeChanged()
 {
-    mBackground.fitTo(mSize, {}, Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
 
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y(), false);
-    mGrid.setRowHeightPerc(1, (mSystem->getFont()->getLetterHeight() + 2.0f) / mSize.y(), false);
-    mGrid.setRowHeightPerc(2, mSubtitle->getFont()->getHeight() * 1.75f / mSize.y(), false);
-    mGrid.setRowHeightPerc(4, mButtonGrid->getSize().y() / mSize.y(), false);
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y, false);
+    mGrid.setRowHeightPerc(1, (mSystem->getFont()->getLetterHeight() + 2.0f) / mSize.y, false);
+    mGrid.setRowHeightPerc(2, mSubtitle->getFont()->getHeight() * 1.75f / mSize.y, false);
+    mGrid.setRowHeightPerc(4, mButtonGrid->getSize().y / mSize.y, false);
     mGrid.setSize(mSize);
 }
 
