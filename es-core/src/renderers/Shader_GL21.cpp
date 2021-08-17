@@ -184,7 +184,7 @@ namespace Renderer
             glGetProgramInfoLog(programID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printProgramLog():\n"
+                LOG(LogDebug) << "Renderer_GL21::printProgramInfoLog():\n"
                               << std::string(infoLog.begin(), infoLog.end());
             }
         }
@@ -205,7 +205,7 @@ namespace Renderer
             glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printShaderLog(): Error in "
+                LOG(LogDebug) << "Renderer_GL21::printShaderInfoLog(): Error in "
                               << (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
                                                                    "FRAGMENT section:\n")
                               << std::string(infoLog.begin(), infoLog.end());
