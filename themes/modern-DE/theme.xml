@@ -1,0 +1,221 @@
+<!--
+theme name:		Switch
+version:		3.0
+author:			Lilbud
+email:			bvw20002010@gmail.com
+license:		creative commons CC-BY-NC-SA
+based on:       Switch Theme for Launchbox by Grila
+-->
+
+<theme>
+	<formatVersion>4</formatVersion>
+	
+	<!--Choose Aspect Ratio (16_9, 4_3)-->
+	<include>./settings/16_9.xml</include>
+	<!----------------------------------->	
+	
+	<variables>
+			<mainFont>./assets/Oxygen-Regular.ttf</mainFont>
+	</variables>
+	
+	<include>./config.xml</include>
+	
+
+	<view name="system">
+		
+		<image name="logo">
+			<path>./art/${system.theme}.jpg</path>
+		</image>
+		
+		<text name="system_name_1" extra="true">
+			<text>${system.fullName}</text>
+			<forceUppercase>0</forceUppercase>
+			<size>0.743 0.015</size>
+			<pos>0.063 0.235</pos>
+			<origin>0 0</origin>
+			<fontSize>0.04</fontSize>
+			<alignment>left</alignment>
+			<fontPath>${mainFont}</fontPath>
+		</text>
+		
+		<image name="arrowblock" extra="true">
+			<pos>0.03 0.22</pos>
+			<path>./assets/arrow_block.svg</path>
+		</image>	
+	
+	</view>
+    <view name="system, basic, detailed, video">
+
+		<helpsystem name="help">
+			<textColor>22222200</textColor>
+			<iconColor>22222200</iconColor>
+			<pos>1 1</pos>
+			
+		</helpsystem>
+		
+		<image name="background" extra="true">
+			<pos>0 0</pos>
+			<tile>true</tile>
+			<origin>0 0</origin>
+			<size>1 1</size>
+			<path>./assets/box.png</path>
+			<zIndex>-100</zIndex>
+		</image>
+		
+		<image name="bottomline" extra="true">
+			<pos>0.5 0.9</pos>
+			<tile>false</tile>
+			<origin>0.5 0.5</origin>
+			<size>0.938 0.001</size>
+			<path>./assets/box.png</path>
+		</image>
+	
+	</view>
+	<view name="basic, detailed, video">
+		
+		<textlist name="gamelist">
+			<fontPath>${mainFont}</fontPath>
+			<scrollSound>./assets/Move.wav</scrollSound>
+			<fontSize>0.028</fontSize>
+			<horizontalMargin>0.01</horizontalMargin>
+			<lineSpacing>2.3</lineSpacing>
+		</textlist>	
+		
+		
+		<text name="system_name_1" extra="true">
+			<text>${system.fullName}</text>
+			<forceUppercase>0</forceUppercase>
+			<size>0.743 0.031</size>
+			<pos>0.034 0.065</pos>
+			<fontSize>0.03</fontSize>
+			<alignment>left</alignment>
+			<fontPath>${mainFont}</fontPath>
+		</text>
+		
+		<image name="logo">
+			<color>00000000</color>
+			<path>./assets/box.png</path>
+			<pos>1 1</pos>
+		</image>
+		
+		<image name="topline" extra="true">
+			<pos>0.5 0.13</pos>
+			<tile>false</tile>
+			<origin>0.5 0.5</origin>
+			<size>0.938 0.001</size>
+			<path>./assets/box.png</path>
+		</image>
+		
+		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_developer, md_genre, md_players, md_playcount, md_releasedate, md_description" extra="true">
+			<forceUppercase>0</forceUppercase>
+			<fontSize>0.028</fontSize>
+			<fontPath>${mainFont}</fontPath>
+		</text>
+		
+		<datetime name="md_releasedate">
+			<forceUppercase>0</forceUppercase>
+			<fontPath>${mainFont}</fontPath>
+			<fontSize>0.028</fontSize>
+		</datetime>
+		
+		<text name="md_lbl_lastplayed, md_lbl_publisher, md_publsher, md_lbl_rating, md_lbl_playcount, md_playcount">
+			<pos>1 1</pos>
+		</text>
+
+
+	</view>
+	<view name="detailed, video">
+		
+		<textlist name="gamelist">
+			<pos>0.04 0.182</pos>
+			<size>0.31 0.682</size>
+			<alignment>left</alignment>
+			<selectorImagePath>./assets/selector.png</selectorImagePath>
+			<selectorHeight>0.06</selectorHeight>
+			<selectorOffsetY>-0.008</selectorOffsetY>
+		</textlist>	
+		
+		<text name="md_description">
+			<forceUppercase>0</forceUppercase>
+			<fontSize>0.025</fontSize>
+			<size>0.309 0.336</size>
+			<pos>0.657 0.387</pos>
+		</text>
+		
+		<rating name="md_rating">
+			<pos>0.657 0.747</pos>
+			<size>0.27 0</size>
+		</rating>
+
+        <image name="md_broken">
+			<pos>0.966 0.240</pos>
+			<maxSize>0.05 0.05</maxSize>
+			<origin>1 1</origin>
+		</image>
+	
+	</view>
+	<view name="basic">
+		
+		<textlist name="gamelist">
+			<pos>0.04 0.182</pos>
+			<size>0.924 0.682</size>
+			<alignment>center</alignment>
+		</textlist>	
+
+	</view>
+	<view name="detailed">
+		
+		<image name="md_image">
+			<pos>0.360 0.180</pos>
+			<maxSize>0.277 0.615</maxSize>
+			<origin>0 0</origin>
+		</image>
+	
+	</view>
+	
+<feature supported="carousel">
+  
+  <view name="system">
+
+    <carousel name="systemcarousel">
+      <type>horizontal</type>
+      <pos>0 0.3</pos> 
+      <size>1 .4</size> 
+      <color>00000000</color>
+      <logoScale>1</logoScale>
+      <logoSize>0.234 0.397</logoSize>
+      <maxLogoCount>3.5</maxLogoCount>
+    </carousel>
+
+    <text name="systemInfo">
+      <backgroundColor>dddddd00</backgroundColor>
+      <forceUppercase>0</forceUppercase>
+      <fontSize>0.03</fontSize>
+	  <pos>0.5 0.75</pos>
+	  <origin>0.5 0.5</origin>
+	  <forceUppercase>0</forceUppercase>
+	  <fontPath>${mainFont}</fontPath>
+    </text>
+
+  </view>
+
+ </feature>
+  <view name="video">
+		
+	  <image name="md_marquee">
+			<origin>0.5 0.5</origin>
+			<pos>0.494 0.68</pos>
+			<maxSize>0.268 0.228</maxSize>
+	  </image>
+	  	  
+	  <video name="md_video">
+			<pos>0.494 0.358</pos>
+			<maxSize>0.268 0.367</maxSize>
+			<origin>0.5 0.5</origin>
+			<delay>1.5</delay>
+			<showSnapshotNoVideo>true</showSnapshotNoVideo>
+			<showSnapshotDelay>true</showSnapshotDelay>
+		</video>
+	
+</view>	
+</theme>

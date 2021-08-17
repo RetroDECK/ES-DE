@@ -1,0 +1,103 @@
+<!--
+theme name:		Switch
+version:		3.0
+author:			Lilbud
+email:			bvw20002010@gmail.com
+license:		creative commons CC-BY-NC-SA
+based on:       Switch Theme for Launchbox by Grila
+-->
+
+<theme>
+	<formatVersion>4</formatVersion>
+	
+		<!-- Color Variables -->
+	<variables>
+		
+		<backgroundColor>d9d9d9</backgroundColor>
+ 
+		<mainColor>334ff0</mainColor>
+		<secondaryColor>222222</secondaryColor>
+		<systemColor>3aa5ab</systemColor>
+ 
+	</variables>
+		
+		<view name="system">
+	
+		<text name="system_name_1" extra="true">
+			<color>${systemColor}</color>
+		</text>
+		
+		<image name="arrowblock" extra="true">
+			<color>${systemColor}</color>
+		</image>
+		
+	</view>
+		
+	<view name="system, basic, detailed, video">
+		
+		<image name="background">
+			<color>${backgroundColor}</color>
+		</image>
+		
+		<image name="topline, bottomline" extra="true">
+			<color>${secondaryColor}</color>
+		</image>
+		
+		<image name="gamelistbuttons, systembuttons" extra="true">
+			<color>${secondaryColor}</color>
+		</image>
+	
+	</view>
+	
+	<view name="detailed, video">
+		
+		<textlist name="gamelist">
+			<selectedColor>${mainColor}</selectedColor>
+			<primaryColor>${secondaryColor}</primaryColor>
+			<secondaryColor>${secondaryColor}</secondaryColor>
+			<selectorColor>${mainColor}</selectorColor>
+		</textlist>	
+		
+		<rating name="md_rating">
+			<filledPath>./../assets/light/filled_rating.svg</filledPath>
+			<unfilledPath>./../assets/light/unfilled_rating.svg</unfilledPath>
+		</rating>
+		
+		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_developer, md_genre, md_players, md_playcount, md_releasedate, md_description">
+			<color>${secondaryColor}</color>
+		</text>	
+	
+	</view>
+	
+	<view name="basic, detailed, video">
+		
+		<text name="system_name_1" extra="true">
+			<color>${secondaryColor}</color>
+		</text>	
+		
+	</view>
+	
+	<view name="basic">
+		
+		<textlist name="gamelist">
+			<selectedColor>${mainColor}</selectedColor>
+			<primaryColor>${secondaryColor}</primaryColor>
+			<secondaryColor>${secondaryColor}</secondaryColor>
+			<selectorColor>00000000</selectorColor>
+		</textlist>	
+	
+	</view>
+
+<feature supported="carousel">
+  
+  <view name="system">
+
+	<text name="systemInfo">
+      <color>${systemColor}</color>
+	</text>
+
+  </view>
+
+</feature>
+ 
+</theme>
