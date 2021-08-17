@@ -291,13 +291,13 @@ void SystemScreensaver::renderScreensaver()
                             0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                     }
                     mRectangleFadeIn =
-                        Math::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
+                        glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     if (mTextFadeIn > 50)
                         mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
                     if (mTextFadeIn < 255)
-                        mTextFadeIn = Math::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
+                        mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
                 }
             }
             else {
@@ -344,13 +344,13 @@ void SystemScreensaver::renderScreensaver()
                             0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                     }
                     mRectangleFadeIn =
-                        Math::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
+                        glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     if (mTextFadeIn > 50)
                         mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
                     if (mTextFadeIn < 255)
-                        mTextFadeIn = Math::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
+                        mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
                 }
             }
             else {
@@ -364,11 +364,11 @@ void SystemScreensaver::renderScreensaver()
             dimParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
             if (mDimValue > 0.4)
-                mDimValue = Math::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
+                mDimValue = glm::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
             dimParameters.fragmentSaturation = mSaturationAmount;
             Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
             if (mSaturationAmount > 0.0)
-                mSaturationAmount = Math::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
+                mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
 #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                                0x000000A0, 0x000000A0);
@@ -380,7 +380,7 @@ void SystemScreensaver::renderScreensaver()
             blackParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
             if (mDimValue > 0.0)
-                mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
+                mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
 #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                                0x000000FF, 0x000000FF);

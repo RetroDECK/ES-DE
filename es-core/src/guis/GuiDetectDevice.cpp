@@ -85,7 +85,7 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = Math::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
+    float width = glm::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.5f);
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,

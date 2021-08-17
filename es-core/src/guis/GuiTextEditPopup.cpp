@@ -67,7 +67,7 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = Math::clamp(0.50f * aspectValue, 0.40f, 0.70f) * Renderer::getScreenWidth();
+    float width = glm::clamp(0.50f * aspectValue, 0.40f, 0.70f) * Renderer::getScreenWidth();
 
     setSize(width, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y +
                        mButtonGrid->getSize().y / 2.0f);

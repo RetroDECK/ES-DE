@@ -18,7 +18,6 @@
 #include "InputManager.h"
 #include "Log.h"
 #include "Sound.h"
-#include "math/Misc.h"
 #include "resources/Font.h"
 
 #include <algorithm>
@@ -465,7 +464,7 @@ void Window::render()
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 mBackgroundOverlay->setOpacity(mBackgroundOverlayOpacity);
                 if (mBackgroundOverlayOpacity < 255)
-                    mBackgroundOverlayOpacity = Math::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
+                    mBackgroundOverlayOpacity = glm::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
             }
 #endif // USE_OPENGL_21
 
@@ -474,7 +473,7 @@ void Window::render()
             // Scale-up menu opening effect.
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 if (mTopScale < 1.0f) {
-                    mTopScale = Math::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
+                    mTopScale = glm::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
                     glm::vec2 topCenter{top->getCenter()};
                     top->setOrigin({0.5f, 0.5f});
                     top->setPosition({topCenter.x, topCenter.y, 0.0f});

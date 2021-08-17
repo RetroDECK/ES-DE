@@ -37,9 +37,9 @@ GuiMsgBox::GuiMsgBox(Window* window,
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
 
     float width =
-        floorf(Math::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth());
+        floorf(glm::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth());
     float minWidth =
-        floorf(Math::clamp(0.30f * aspectValue, 0.10f, 0.50f) * Renderer::getScreenWidth());
+        floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * Renderer::getScreenWidth());
 
     mMsg = std::make_shared<TextComponent>(mWindow, text, Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
                                            ALIGN_CENTER);
@@ -110,7 +110,7 @@ void GuiMsgBox::changeText(const std::string& newText)
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
 
     float width =
-        floorf(Math::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth());
+        floorf(glm::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth());
     float minWidth = Renderer::getScreenWidth() * 0.3f;
 
     // Decide final width.

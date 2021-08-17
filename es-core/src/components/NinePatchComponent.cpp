@@ -55,9 +55,9 @@ void NinePatchComponent::buildVertices()
     // (e.g. from 720p to 4K) will be within these boundaries though.
     float scaleFactor;
     if (Renderer::getScreenWidth() > Renderer::getScreenHeight())
-        scaleFactor = Math::clamp(Renderer::getScreenHeightModifier(), 0.4f, 3.0f);
+        scaleFactor = glm::clamp(Renderer::getScreenHeightModifier(), 0.4f, 3.0f);
     else
-        scaleFactor = Math::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
+        scaleFactor = glm::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
 
     mTexture = TextureResource::get(mPath, false, false, true, scaleFactor);
 
@@ -79,6 +79,7 @@ void NinePatchComponent::buildVertices()
 
     // The "1 +" in posY and "-" in sizeY is to deal with texture coordinates having a bottom
     // left corner origin vs. verticies having a top left origin.
+    // clang-format off
     const float texSizeX[3]{mCornerSize.x / texSize.x,  (texSize.x - mCornerSize.x * 2.0f) / texSize.x,  mCornerSize.x / texSize.x};
     const float texSizeY[3]{-mCornerSize.y / texSize.y, -(texSize.y - mCornerSize.y * 2.0f) / texSize.y, -mCornerSize.y / texSize.y};
 
@@ -150,8 +151,8 @@ void NinePatchComponent::fitTo(glm::vec2 size, glm::vec3 position, glm::vec2 pad
     position[1] -= padding.y / 2.0f;
 
     setSize(size + mCornerSize * 2.0f);
-    setPosition(position.x + Math::lerp(-mCornerSize.x, mCornerSize.x, mOrigin.x),
-                position.y + Math::lerp(-mCornerSize.y, mCornerSize.y, mOrigin.y));
+    setPosition(position.x + glm::mix(-mCornerSize.x, mCornerSize.x, mOrigin.x),
+                position.y + glm::mix(-mCornerSize.y, mCornerSize.y, mOrigin.y));
 }
 
 void NinePatchComponent::setImagePath(const std::string& path)

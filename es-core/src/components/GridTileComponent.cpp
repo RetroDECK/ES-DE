@@ -190,7 +190,7 @@ void GridTileComponent::setSelected(bool selected,
 
             auto func = [this](float t) {
                 t -= 1;
-                float pct = Math::lerp(0, 1, t * t * t + 1);
+                float pct = glm::mix(0.0f, 1.0f, t * t * t + 1.0f);
                 this->setSelectedZoom(pct);
             };
 
@@ -216,7 +216,7 @@ void GridTileComponent::setSelected(bool selected,
 
             auto func = [this](float t) {
                 t -= 1.0f;
-                float pct = Math::lerp(0, 1, t * t * t + 1.0f);
+                float pct = glm::mix(0.0f, 1.0f, t * t * t + 1.0f);
                 this->setSelectedZoom(1.0f - pct);
             };
 

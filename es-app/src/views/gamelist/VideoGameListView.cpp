@@ -424,7 +424,7 @@ void VideoGameListView::updateInfoPanel()
         // Fade in the game image.
         auto func = [this](float t) {
             mVideo->setOpacity(static_cast<unsigned char>(
-                Math::lerp(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+                glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
         };
         mVideo->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
 
@@ -472,7 +472,7 @@ void VideoGameListView::updateInfoPanel()
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
             (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {
-                comp->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
+                comp->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
             };
             comp->setAnimation(new LambdaAnimation(func, 200), 0, nullptr, fadingOut);
         }

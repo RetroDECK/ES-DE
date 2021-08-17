@@ -134,7 +134,7 @@ void ScrollableContainer::update(int deltaTime)
         if (mAutoScrollResetAccumulator >= static_cast<int>(mAutoScrollResetDelayConstant)) {
             // Fade in the text as it resets to the start position.
             auto func = [this](float t) {
-                this->setOpacity(static_cast<unsigned char>(Math::lerp(0.0f, 1.0f, t) * 255));
+                this->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
                 mScrollPos = glm::vec2{};
                 mAutoScrollResetAccumulator = 0;
                 mAutoScrollAccumulator = -mAutoScrollDelay + mAutoScrollSpeed;

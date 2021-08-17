@@ -13,7 +13,6 @@
 #include "HelpStyle.h"
 #include "InputConfig.h"
 #include "animations/AnimationController.h"
-#include "math/Misc.h"
 
 #include <functional>
 #include <memory>

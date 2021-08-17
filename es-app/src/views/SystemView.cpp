@@ -315,7 +315,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         anim = new LambdaAnimation(
             [this, startExtrasFade, startPos, endPos, posMax](float t) {
                 t -= 1;
-                float f = Math::lerp(startPos, endPos, t * t * t + 1);
+                float f = glm::mix(startPos, endPos, t * t * t + 1);
                 if (f < 0)
                     f += posMax;
                 if (f >= posMax)
@@ -325,11 +325,13 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 
                 t += 1;
                 if (t < 0.3f)
-                    this->mExtrasFadeOpacity = Math::lerp(0.0f, 1.0f, t / 0.2f + startExtrasFade);
+                    this->mExtrasFadeOpacity =
+                        glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startExtrasFade, 0.0f, 1.0f));
                 else if (t < 0.7f)
                     this->mExtrasFadeOpacity = 1.0f;
                 else
-                    this->mExtrasFadeOpacity = Math::lerp(1.0f, 0.0f, (t - 0.6f) / 0.3f);
+                    this->mExtrasFadeOpacity =
+                        glm::mix(1.0f, 0.0f, glm::clamp((t - 0.6f) / 0.3f, 0.0f, 1.0f));
 
                 if (t > 0.5f)
                     this->mExtrasCamOffset = endPos;
@@ -345,7 +347,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
                 t -= 1;
-                float f = Math::lerp(startPos, endPos, t * t * t + 1);
+                float f = glm::mix(startPos, endPos, t * t * t + 1);
                 if (f < 0)
                     f += posMax;
                 if (f >= posMax)
@@ -381,7 +383,7 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
                 t -= 1;
-                float f = Math::lerp(startPos, endPos, t * t * t + 1);
+                float f = glm::mix(startPos, endPos, t * t * t + 1);
                 if (f < 0)
                     f += posMax;
                 if (f >= posMax)

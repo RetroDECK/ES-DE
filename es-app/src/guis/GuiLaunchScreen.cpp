@@ -12,7 +12,6 @@
 #include "SystemData.h"
 #include "components/ComponentGrid.h"
 #include "components/TextComponent.h"
-#include "math/Misc.h"
 #include "utils/StringUtil.h"
 
 GuiLaunchScreen::GuiLaunchScreen(Window* window)
@@ -104,8 +103,8 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
 
-    float maxWidthModifier = Math::clamp(0.78f * aspectValue, 0.78f, 0.90f);
-    float minWidthModifier = Math::clamp(0.50f * aspectValue, 0.50f, 0.65f);
+    float maxWidthModifier = glm::clamp(0.78f * aspectValue, 0.78f, 0.90f);
+    float minWidthModifier = glm::clamp(0.50f * aspectValue, 0.50f, 0.65f);
 
     float maxWidth = static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
     float minWidth = static_cast<float>(Renderer::getScreenWidth()) * minWidthModifier;
@@ -119,7 +118,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // Add a bit of width to compensate for the left and right spacers.
     fontWidth += static_cast<float>(Renderer::getScreenWidth()) * 0.05f;
 
-    float width = Math::clamp(fontWidth, minWidth, maxWidth);
+    float width = glm::clamp(fontWidth, minWidth, maxWidth);
 
     if (mImagePath != "")
         setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.60f);
@@ -219,7 +218,7 @@ void GuiLaunchScreen::update(int deltaTime)
     if (Settings::getInstance()->getString("MenuOpeningEffect") == "none")
         mScaleUp = 1.0f;
     else if (mScaleUp < 1.0f)
-        mScaleUp = Math::clamp(mScaleUp + 0.07f, 0.0f, 1.0f);
+        mScaleUp = glm::clamp(mScaleUp + 0.07f, 0.0f, 1.0f);
 }
 
 void GuiLaunchScreen::render()

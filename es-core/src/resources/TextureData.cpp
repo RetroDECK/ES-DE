@@ -13,7 +13,6 @@
 
 #include "ImageIO.h"
 #include "Log.h"
-#include "math/Misc.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
 

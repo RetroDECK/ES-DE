@@ -212,13 +212,13 @@ int VolumeControl::getVolume() const
     }
 #endif
 
-    volume = Math::clamp(volume, 0, 100);
+    volume = glm::clamp(volume, 0, 100);
     return volume;
 }
 
 void VolumeControl::setVolume(int volume)
 {
-    volume = Math::clamp(volume, 0, 100);
+    volume = glm::clamp(volume, 0, 100);
 
 #if defined(__linux__)
     if (mixerElem != nullptr) {

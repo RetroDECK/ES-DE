@@ -505,7 +505,7 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
             return;
 
         t -= 1.0f;
-        float pct = Math::lerp(0, 1.0f, t * t * t + 1.0f);
+        float pct = glm::mix(0.0f, 1.0f, t * t * t + 1.0f);
         t = startPos * (1.0f - pct) + endPos * pct;
         mCamera = t;
     };

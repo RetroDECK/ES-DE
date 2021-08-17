@@ -561,7 +561,7 @@ void ViewController::playViewTransition(bool instant)
             // Without this, a (much shorter) fade transition would still play as
             // finishedCallback is calling this function.
             if (!mCancelledTransition)
-                mFadeOpacity = Math::lerp(0.0f, 1.0f, t);
+                mFadeOpacity = glm::mix(0.0f, 1.0f, t);
         };
 
         auto fadeCallback = [this]() {

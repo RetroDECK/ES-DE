@@ -12,7 +12,6 @@
 #include "Log.h"
 #include "Settings.h"
 #include "SystemData.h"
-#include "math/Misc.h"
 #include "utils/StringUtil.h"
 
 #include <chrono>
@@ -564,11 +563,11 @@ void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
     // an approximately equivalent amount of space on the miximage.
     float widthRatio = static_cast<float>(width) / static_cast<float>(height);
 
-    widthModifier = Math::clamp(widthModifier + widthRatio / 6.5f, 0.0f, 1.0f);
+    widthModifier = glm::clamp(widthModifier + widthRatio / 6.5f, 0.0f, 1.0f);
 
     // Hack to increase the size slightly for wider and shorter images.
     if (widthRatio >= 4)
-        widthModifier += Math::clamp(widthRatio / 40.0f, 0.0f, 0.3f);
+        widthModifier += glm::clamp(widthRatio / 40.0f, 0.0f, 0.3f);
 
     adjustedTargetWidth =
         static_cast<unsigned int>(static_cast<float>(targetWidth) * widthModifier);
@@ -620,9 +619,9 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
         }
     }
 
-    unsigned char redC = Math::clamp(static_cast<int>(redLine / 255), 0, 255);
-    unsigned char greenC = Math::clamp(static_cast<int>(greenLine / 255), 0, 255);
-    unsigned char blueC = Math::clamp(static_cast<int>(blueLine / 255), 0, 255);
+    unsigned char redC = glm::clamp(static_cast<int>(redLine / 255), 0, 255);
+    unsigned char greenC = glm::clamp(static_cast<int>(greenLine / 255), 0, 255);
+    unsigned char blueC = glm::clamp(static_cast<int>(blueLine / 255), 0, 255);
 
     // Convert to the HSL color space to be able to modify saturation and lightness.
     CImg<float> colorHSL = CImg<>(1, 1, 1, 3).fill(redC, greenC, blueC).RGBtoHSL();
@@ -635,8 +634,8 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
     // makes the end result look better than the raw average pixel value. Also clamp
     // the lightness to a low value so we don't get a frame that is nearly pitch black
     // if the screenshot mostly contains blacks or dark colors.
-    colorHSL(0, 0, 0, 1) = Math::clamp(saturation * 0.9f, 0.0f, 1.0f);
-    colorHSL(0, 0, 0, 2) = Math::clamp(lightness * 1.25f, 0.10f, 1.0f);
+    colorHSL(0, 0, 0, 1) = glm::clamp(saturation * 0.9f, 0.0f, 1.0f);
+    colorHSL(0, 0, 0, 2) = glm::clamp(lightness * 1.25f, 0.10f, 1.0f);
 
     const CImg<unsigned char> colorRGB = colorHSL.HSLtoRGB();
 

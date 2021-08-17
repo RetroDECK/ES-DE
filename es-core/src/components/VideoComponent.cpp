@@ -275,15 +275,15 @@ void VideoComponent::update(int deltaTime)
     // Fade in videos, the time period is a bit different between the screensaver,
     // media viewer and gamelist view.
     if (mScreensaverMode && mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(SCREENSAVER_FADE_IN_TIME)),
-                              0.0f, 1.0f);
+        mFadeIn = glm::clamp(mFadeIn + (deltaTime / static_cast<float>(SCREENSAVER_FADE_IN_TIME)),
+                             0.0f, 1.0f);
     }
     else if (mMediaViewerMode && mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(MEDIA_VIEWER_FADE_IN_TIME)),
-                              0.0f, 1.0f);
+        mFadeIn = glm::clamp(mFadeIn + (deltaTime / static_cast<float>(MEDIA_VIEWER_FADE_IN_TIME)),
+                             0.0f, 1.0f);
     }
     else if (mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);
+        mFadeIn = glm::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);
     }
 
     GuiComponent::update(deltaTime);

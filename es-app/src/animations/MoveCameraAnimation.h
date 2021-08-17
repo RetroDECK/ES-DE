@@ -27,9 +27,9 @@ public:
     void apply(float t) override
     {
         t -= 1;
-        cameraPosition[3].x = -Math::lerp(-mCameraStart[3].x, mTarget.x, t * t * t + 1);
-        cameraPosition[3].y = -Math::lerp(-mCameraStart[3].y, mTarget.y, t * t * t + 1);
-        cameraPosition[3].z = -Math::lerp(-mCameraStart[3].z, mTarget.z, t * t * t + 1);
+        cameraPosition[3].x = -glm::mix(-mCameraStart[3].x, mTarget.x, t * t * t + 1);
+        cameraPosition[3].y = -glm::mix(-mCameraStart[3].y, mTarget.y, t * t * t + 1);
+        cameraPosition[3].z = -glm::mix(-mCameraStart[3].z, mTarget.z, t * t * t + 1);
     }
 
 private:
