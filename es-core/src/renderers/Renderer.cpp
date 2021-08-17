@@ -12,7 +12,6 @@
 #include "Log.h"
 #include "Settings.h"
 #include "Shader_GL21.h"
-#include "math/Vector2i.h"
 #include "resources/ResourceManager.h"
 
 #include <SDL2/SDL.h>
@@ -325,8 +324,8 @@ namespace Renderer
         if (!createWindow())
             return false;
 
-        glm::mat4 projection = getIdentity();
-        Rect viewport = Rect(0, 0, 0, 0);
+        glm::mat4 projection{getIdentity()};
+        Rect viewport{0, 0, 0, 0};
 
         switch (screenRotate) {
             case 1: {
@@ -336,8 +335,8 @@ namespace Renderer
                 viewport.h = screenWidth;
                 projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
                                         static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection = glm::rotate(projection, glm::radians(90.0f), { 0.0f, 0.0f, 1.0f });
-                projection = glm::translate(projection, { 0.0f, screenHeight * -1.0f, 0.0f });
+                projection = glm::rotate(projection, glm::radians(90.0f), {0.0f, 0.0f, 1.0f});
+                projection = glm::translate(projection, {0.0f, screenHeight * -1.0f, 0.0f});
                 break;
             }
             case 2: {
@@ -347,9 +346,9 @@ namespace Renderer
                 viewport.h = screenHeight;
                 projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
                                         static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                projection = glm::rotate(projection, glm::radians(180.0f), { 0.0f, 0.0f, 1.0f });
+                projection = glm::rotate(projection, glm::radians(180.0f), {0.0f, 0.0f, 1.0f});
                 projection =
-                    glm::translate(projection, { screenWidth * -1.0f, screenHeight * -1.0f, 0.0f });
+                    glm::translate(projection, {screenWidth * -1.0f, screenHeight * -1.0f, 0.0f});
                 break;
             }
             case 3: {
@@ -359,8 +358,8 @@ namespace Renderer
                 viewport.h = screenWidth;
                 projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
                                         static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection = glm::rotate(projection, glm::radians(270.0f), { 0.0f, 0.0f, 1.0f });
-                projection = glm::translate(projection, { screenWidth * -1.0f, 0.0f, 0.0f });
+                projection = glm::rotate(projection, glm::radians(270.0f), {0.0f, 0.0f, 1.0f});
+                projection = glm::translate(projection, {screenWidth * -1.0f, 0.0f, 0.0f});
                 break;
             }
             default: {
@@ -393,9 +392,9 @@ namespace Renderer
         destroyWindow();
     }
 
-    void pushClipRect(const Vector2i& _pos, const Vector2i& _size)
+    void pushClipRect(const glm::ivec2& _pos, const glm::ivec2& _size)
     {
-        Rect box(_pos.x(), _pos.y(), _size.x(), _size.y());
+        Rect box(_pos.x, _pos.y, _size.x, _size.y);
 
         if (box.w == 0)
             box.w = screenWidth - box.x;
@@ -485,10 +484,10 @@ namespace Renderer
             _hL = 1.0f;
 
         // clang-format off
-        vertices[0] = { { _x      , _y       }, { 0.0f, 0.0f }, color };
-        vertices[1] = { { _x      , _y + _hL }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
-        vertices[2] = { { _x + _wL, _y       }, { 0.0f, 0.0f }, horizontalGradient ? color : colorEnd };
-        vertices[3] = { { _x + _wL, _y + _hL }, { 0.0f, 0.0f }, colorEnd };
+        vertices[0] = {{_x      , _y      }, {0.0f, 0.0f}, color};
+        vertices[1] = {{_x      , _y + _hL}, {0.0f, 0.0f}, horizontalGradient ? colorEnd : color};
+        vertices[2] = {{_x + _wL, _y      }, {0.0f, 0.0f}, horizontalGradient ? color : colorEnd};
+        vertices[3] = {{_x + _wL, _y + _hL}, {0.0f, 0.0f}, colorEnd};
         // clang-format on
 
         // Round vertices.

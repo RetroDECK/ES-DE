@@ -18,8 +18,6 @@
 
 struct SDL_Window;
 
-class Vector2i;
-
 namespace Renderer
 {
     const unsigned int SHADER_DESATURATE = 1;
@@ -38,8 +36,8 @@ namespace Renderer
         unsigned int blurPasses;
 
         shaderParameters()
-            : textureSize({ 0.0f, 0.0f })
-            , textureCoordinates({ 0.0f, 0.0f, 0.0f, 0.0f })
+            : textureSize({0.0f, 0.0f})
+            , textureCoordinates({0.0f, 0.0f, 0.0f, 0.0f})
             , fragmentSaturation(1.0f)
             , fragmentDimValue(0.4f)
             , fragmentOpacity(1.0f)
@@ -51,7 +49,7 @@ namespace Renderer
     static std::vector<Shader*> sShaderProgramVector;
     static GLuint shaderFBO;
     static glm::mat4 mProjectionMatrix;
-    static constexpr glm::mat4 getIdentity() { return glm::mat4(1.0f); }
+    static constexpr glm::mat4 getIdentity() { return glm::mat4{1.0f}; }
 
 #if !defined(NDEBUG)
 #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
@@ -130,7 +128,7 @@ namespace Renderer
 
     bool init();
     void deinit();
-    void pushClipRect(const Vector2i& _pos, const Vector2i& _size);
+    void pushClipRect(const glm::ivec2& _pos, const glm::ivec2& _size);
     void popClipRect();
     void drawRect(const float _x,
                   const float _y,

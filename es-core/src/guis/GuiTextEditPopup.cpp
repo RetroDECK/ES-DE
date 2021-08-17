@@ -25,7 +25,7 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
     : GuiComponent(window)
     , mHelpStyle(helpstyle)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 3))
+    , mGrid(window, glm::ivec2{1, 3})
     , mMultiLine(multiLine)
     , mInitValue(initValue)
     , mOkCallback(okCallback)
@@ -53,10 +53,10 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true);
-    mGrid.setEntry(mText, Vector2i(0, 1), true, false, Vector2i(1, 1),
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mText, glm::ivec2{0, 1}, true, false, glm::ivec2{1, 1},
                    GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 2), true, false);
+    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 2}, true, false);
 
     float textHeight = mText->getFont()->getHeight();
 
@@ -78,7 +78,7 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
 
 void GuiTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
     mText->setSize(mSize.x - 40.0f, mText->getSize().y);
 

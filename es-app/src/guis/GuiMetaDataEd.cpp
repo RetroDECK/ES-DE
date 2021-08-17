@@ -42,7 +42,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     : GuiComponent(window)
     , mScraperParams(scraperParams)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 3))
+    , mGrid(window, glm::ivec2{1, 3})
     , mMetaDataDecl(mdd)
     , mMetaData(md)
     , mSavedCallback(saveCallback)
@@ -53,7 +53,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mHeaderGrid = std::make_shared<ComponentGrid>(mWindow, Vector2i(1, 5));
+    mHeaderGrid = std::make_shared<ComponentGrid>(mWindow, glm::ivec2{1, 5});
 
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
@@ -78,15 +78,15 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         folderPath + Utils::FileSystem::getFileName(scraperParams.game->getPath()) + " [" +
             Utils::String::toUpper(scraperParams.system->getName()) + "]" +
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
-        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3({}), glm::vec2({}),
-        0x00000000, 0.05f);
-    mHeaderGrid->setEntry(mTitle, Vector2i(0, 1), false, true);
-    mHeaderGrid->setEntry(mSubtitle, Vector2i(0, 3), false, true);
+        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3{}, glm::vec2{}, 0x00000000,
+        0.05f);
+    mHeaderGrid->setEntry(mTitle, glm::ivec2{0, 1}, false, true);
+    mHeaderGrid->setEntry(mSubtitle, glm::ivec2{0, 3}, false, true);
 
-    mGrid.setEntry(mHeaderGrid, Vector2i(0, 0), false, true);
+    mGrid.setEntry(mHeaderGrid, glm::ivec2{0, 0}, false, true);
 
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, Vector2i(0, 1), true, true);
+    mGrid.setEntry(mList, glm::ivec2{0, 1}, true, true);
 
     // Populate list.
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
@@ -123,7 +123,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
                 // Make the switches slightly smaller.
-                glm::vec2 switchSize = ed->getSize() * 0.9f;
+                glm::vec2 switchSize{ed->getSize() * 0.9f};
                 ed->setResize(switchSize.x, switchSize.y);
                 ed->setOrigin(-0.05f, -0.09f);
 
@@ -182,7 +182,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
                 bracket->setImage(":/graphics/arrow.svg");
-                bracket->setResize(glm::vec2(0.0f, lbl->getFont()->getLetterHeight()));
+                bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
                 bool multiLine = false;
@@ -223,7 +223,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
                 bracket->setImage(":/graphics/arrow.svg");
-                bracket->setResize(glm::vec2(0.0f, lbl->getFont()->getLetterHeight()));
+                bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
                 bool multiLine = iter->type == MD_MULTILINE_STRING;
@@ -346,7 +346,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     }
 
     mButtons = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtons, Vector2i(0, 2), true, false);
+    mGrid.setEntry(mButtons, glm::ivec2{0, 2}, true, false);
 
     // Resize + center.
     float width =
@@ -386,12 +386,12 @@ void GuiMetaDataEd::onSizeChanged()
     // Adjust the size of the list and window.
     float heightAdjustment = listSize - listHeight;
     mList->setSize(mList->getSize().x, listHeight);
-    glm::vec2 newWindowSize = mSize;
+    glm::vec2 newWindowSize{mSize};
     newWindowSize.y -= heightAdjustment;
-    mBackground.fitTo(newWindowSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
+    mBackground.fitTo(newWindowSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
     // Move the buttons up as well to make the layout align correctly after the resize.
-    glm::vec3 newButtonPos = mButtons->getPosition();
+    glm::vec3 newButtonPos{mButtons->getPosition()};
     newButtonPos.y -= heightAdjustment;
     mButtons->setPosition(newButtonPos);
 

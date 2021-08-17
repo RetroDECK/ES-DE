@@ -76,20 +76,20 @@ void SliderComponent::update(int deltaTime)
 
 void SliderComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
     // Render suffix.
     if (mValueCache)
         mFont->renderTextCache(mValueCache.get());
 
-    float width =
-        mSize.x - mKnob.getSize().x -
-        (mValueCache ? mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
-                       0.0f);
+    float width{mSize.x - mKnob.getSize().x -
+                (mValueCache ?
+                     mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
+                     0.0f)};
 
     // Render line.
-    const float lineWidth = 2.0f * Renderer::getScreenHeightModifier();
+    const float lineWidth{2.0f * Renderer::getScreenHeightModifier()};
     Renderer::drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - lineWidth / 2.0f, width,
                        lineWidth, 0x777777FF, 0x777777FF);
 

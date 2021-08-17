@@ -156,7 +156,7 @@ void DateTimeEditComponent::update(int deltaTime)
 
 void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     if (mTextCache) {
         std::shared_ptr<Font> font = getFont();
@@ -170,7 +170,7 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
         }
 
         // Vertically center.
-        glm::vec3 off(0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f);
+        glm::vec3 off{0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
 
         if (mAlignRight)
             off.x += referenceSize - mTextCache->metrics.size.x;
@@ -300,22 +300,22 @@ void DateTimeEditComponent::updateTextCache()
         return;
 
     // Year.
-    glm::vec2 start(0.0f, 0.0f);
-    glm::vec2 end = font->sizeText(dispString.substr(0, 4));
-    glm::vec2 diff = end - start;
-    mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
+    glm::vec2 start{};
+    glm::vec2 end{font->sizeText(dispString.substr(0, 4))};
+    glm::vec2 diff{end - start};
+    mCursorBoxes.push_back(glm::vec4{start[0], start[1], diff[0], diff[1]});
 
     // Month.
     start[0] = font->sizeText(dispString.substr(0, 5)).x;
     end = font->sizeText(dispString.substr(0, 7));
     diff = end - start;
-    mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
+    mCursorBoxes.push_back(glm::vec4{start[0], start[1], diff[0], diff[1]});
 
     // Day.
     start[0] = font->sizeText(dispString.substr(0, 8)).x;
     end = font->sizeText(dispString.substr(0, 10));
     diff = end - start;
-    mCursorBoxes.push_back(glm::vec4(start[0], start[1], diff[0], diff[1]));
+    mCursorBoxes.push_back(glm::vec4{start[0], start[1], diff[0], diff[1]});
 
     // The logic for handling time for 'mode = DISP_DATE_TIME' is missing, but
     // nobody will use it anyway so it's not worthwhile implementing.

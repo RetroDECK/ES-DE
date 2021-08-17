@@ -23,8 +23,8 @@
 #endif
 
 // Buffer values for scrolling velocity (left, stopped, right).
-const int logoBuffersLeft[] = { -5, -2, -1 };
-const int logoBuffersRight[] = { 1, 2, 5 };
+const int logoBuffersLeft[] = {-5, -2, -1};
+const int logoBuffersRight[] = {1, 2, 5};
 
 SystemView::SystemView(Window* window)
     : IList<SystemViewData, SystemData*>(window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP)
@@ -123,7 +123,7 @@ void SystemView::populate()
                     e.data.logo->setOrigin(0.5, 0.5);
             }
 
-            glm::vec2 denormalized = mCarousel.logoSize * e.data.logo->getOrigin();
+            glm::vec2 denormalized{mCarousel.logoSize * e.data.logo->getOrigin()};
             e.data.logo->setPosition(denormalized.x, denormalized.y, 0.0f);
 
             // Make background extras.
@@ -401,7 +401,7 @@ void SystemView::render(const glm::mat4& parentTrans)
     if (size() == 0)
         return; // Nothing to render.
 
-    glm::mat4 trans = getTransform() * parentTrans;
+    glm::mat4 trans{getTransform() * parentTrans};
 
     renderExtras(trans, INT16_MIN, INT16_MAX);
 
@@ -475,17 +475,17 @@ void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
 void SystemView::renderCarousel(const glm::mat4& trans)
 {
     // Background box behind logos.
-    glm::mat4 carouselTrans = trans;
+    glm::mat4 carouselTrans{trans};
     carouselTrans =
-        glm::translate(carouselTrans, glm::vec3(mCarousel.pos.x, mCarousel.pos.y, 0.0f));
+        glm::translate(carouselTrans, glm::vec3{mCarousel.pos.x, mCarousel.pos.y, 0.0f});
     carouselTrans = glm::translate(carouselTrans,
-                                   glm::vec3(mCarousel.origin.x * mCarousel.size.x * -1.0f,
-                                             mCarousel.origin.y * mCarousel.size.y * -1.0f, 0.0f));
+                                   glm::vec3{mCarousel.origin.x * mCarousel.size.x * -1.0f,
+                                             mCarousel.origin.y * mCarousel.size.y * -1.0f, 0.0f});
 
-    glm::vec2 clipPos(carouselTrans[3].x, carouselTrans[3].y);
+    glm::vec2 clipPos{carouselTrans[3].x, carouselTrans[3].y};
     Renderer::pushClipRect(
-        Vector2i(static_cast<int>(clipPos.x), static_cast<int>(clipPos.y)),
-        Vector2i(static_cast<int>(mCarousel.size.x), static_cast<int>(mCarousel.size.y)));
+        glm::ivec2{static_cast<int>(clipPos.x), static_cast<int>(clipPos.y)},
+        glm::ivec2{static_cast<int>(mCarousel.size.x), static_cast<int>(mCarousel.size.y)});
 
     Renderer::setMatrix(carouselTrans);
     Renderer::drawRect(0.0f, 0.0f, mCarousel.size.x, mCarousel.size.y, mCarousel.color,
@@ -493,7 +493,7 @@ void SystemView::renderCarousel(const glm::mat4& trans)
 
     // Draw logos.
     // Note: logoSpacing will also include the size of the logo itself.
-    glm::vec2 logoSpacing(0.0f, 0.0f);
+    glm::vec2 logoSpacing{};
     float xOff = 0.0f;
     float yOff = 0.0f;
 
@@ -569,9 +569,9 @@ void SystemView::renderCarousel(const glm::mat4& trans)
         while (index >= static_cast<int>(mEntries.size()))
             index -= static_cast<int>(mEntries.size());
 
-        glm::mat4 logoTrans = carouselTrans;
+        glm::mat4 logoTrans{carouselTrans};
         logoTrans = glm::translate(
-            logoTrans, glm::vec3(i * logoSpacing.x + xOff, i * logoSpacing.y + yOff, 0.0f));
+            logoTrans, glm::vec3{i * logoSpacing.x + xOff, i * logoSpacing.y + yOff, 0.0f});
 
         float distance = i - mCamOffset;
 
@@ -600,10 +600,10 @@ void SystemView::renderExtras(const glm::mat4& trans, float lower, float upper)
     int extrasCenter = static_cast<int>(mExtrasCamOffset);
 
     // Adding texture loading buffers depending on scrolling speed and status.
-    int bufferIndex = getScrollingVelocity() + 1;
+    int bufferIndex{getScrollingVelocity() + 1};
 
-    Renderer::pushClipRect(Vector2i::Zero(),
-                           Vector2i(static_cast<int>(mSize.x), static_cast<int>(mSize.y)));
+    Renderer::pushClipRect(glm::ivec2{},
+                           glm::ivec2{static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
 
     for (int i = extrasCenter + logoBuffersLeft[bufferIndex];
          i <= extrasCenter + logoBuffersRight[bufferIndex]; i++) {
@@ -615,17 +615,17 @@ void SystemView::renderExtras(const glm::mat4& trans, float lower, float upper)
 
         // Only render selected system when not showing.
         if (mShowing || index == mCursor) {
-            glm::mat4 extrasTrans = trans;
+            glm::mat4 extrasTrans{trans};
             if (mCarousel.type == HORIZONTAL || mCarousel.type == HORIZONTAL_WHEEL)
                 extrasTrans = glm::translate(
-                    extrasTrans, glm::vec3((i - mExtrasCamOffset) * mSize.x, 0.0f, 0.0f));
+                    extrasTrans, glm::vec3{(i - mExtrasCamOffset) * mSize.x, 0.0f, 0.0f});
             else
                 extrasTrans = glm::translate(
-                    extrasTrans, glm::vec3(0.0f, (i - mExtrasCamOffset) * mSize.y, 0.0f));
+                    extrasTrans, glm::vec3{0.0f, (i - mExtrasCamOffset) * mSize.y, 0.0f});
 
             Renderer::pushClipRect(
-                Vector2i(static_cast<int>(extrasTrans[3].x), static_cast<int>(extrasTrans[3].y)),
-                Vector2i(static_cast<int>(mSize.x), static_cast<int>(mSize.y)));
+                glm::ivec2{static_cast<int>(extrasTrans[3].x), static_cast<int>(extrasTrans[3].y)},
+                glm::ivec2{static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
             SystemViewData data = mEntries.at(index).data;
             for (unsigned int j = 0; j < data.backgroundExtras.size(); j++) {
                 GuiComponent* extra = data.backgroundExtras[j];

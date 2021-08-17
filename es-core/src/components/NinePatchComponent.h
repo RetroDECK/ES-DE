@@ -37,8 +37,7 @@ public:
 
     void render(const glm::mat4& parentTrans) override;
 
-    void onSizeChanged() override;
-
+    void onSizeChanged() override { buildVertices(); }
     void fitTo(glm::vec2 size, glm::vec3 position = {}, glm::vec2 padding = {});
 
     void setImagePath(const std::string& path);

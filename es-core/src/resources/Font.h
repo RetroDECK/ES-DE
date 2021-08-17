@@ -11,7 +11,6 @@
 #define ES_CORE_RESOURCES_FONT_H
 
 #include "ThemeData.h"
-#include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
 
@@ -114,14 +113,14 @@ private:
 
     struct FontTexture {
         unsigned int textureId;
-        Vector2i textureSize;
+        glm::ivec2 textureSize;
 
-        Vector2i writePos;
+        glm::ivec2 writePos;
         int rowHeight;
 
         FontTexture(const int mSize);
         ~FontTexture();
-        bool findEmpty(const Vector2i& size, Vector2i& cursor_out);
+        bool findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out);
 
         // You must call initTexture() after creating a FontTexture to get a textureId.
         // Initializes the OpenGL texture according to this FontTexture's settings,
@@ -146,9 +145,9 @@ private:
 
     std::vector<FontTexture> mTextures;
 
-    void getTextureForNewGlyph(const Vector2i& glyphSize,
+    void getTextureForNewGlyph(const glm::ivec2& glyphSize,
                                FontTexture*& tex_out,
-                               Vector2i& cursor_out);
+                               glm::ivec2& cursor_out);
 
     std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
     FT_Face getFaceForChar(unsigned int id);

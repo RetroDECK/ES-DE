@@ -69,9 +69,9 @@ public:
     const int& x() const { return mX; }
     const int& y() const { return mY; }
 
-    static const Vector2i Zero() { return { 0, 0 }; }
-    static const Vector2i UnitX() { return { 1, 0 }; }
-    static const Vector2i UnitY() { return { 0, 1 }; }
+    static const Vector2i Zero() { return {0, 0}; }
+    static const Vector2i UnitX() { return {1, 0}; }
+    static const Vector2i UnitY() { return {0, 1}; }
 
 private:
     int mX;

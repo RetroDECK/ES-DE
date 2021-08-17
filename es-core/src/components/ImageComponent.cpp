@@ -14,12 +14,12 @@
 #include "resources/TextureResource.h"
 #include "utils/CImgUtil.h"
 
-Vector2i ImageComponent::getTextureSize() const
+glm::ivec2 ImageComponent::getTextureSize() const
 {
     if (mTexture)
         return mTexture->getSize();
     else
-        return Vector2i::Zero();
+        return glm::ivec2{};
 }
 
 glm::vec2 ImageComponent::getSize() const
@@ -53,8 +53,8 @@ void ImageComponent::resize()
     if (!mTexture)
         return;
 
-    const glm::vec2 textureSize = mTexture->getSourceImageSize();
-    if (textureSize == glm::vec2({}))
+    const glm::vec2 textureSize{mTexture->getSourceImageSize()};
+    if (textureSize == glm::vec2{})
         return;
 
     if (mTexture->isTiled()) {
@@ -71,7 +71,7 @@ void ImageComponent::resize()
         if (mTargetIsMax) {
             mSize = textureSize;
 
-            glm::vec2 resizeScale((mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y));
+            glm::vec2 resizeScale{(mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y)};
 
             if (resizeScale.x < resizeScale.y) {
                 // This will be mTargetSize.x. We can't exceed it, nor be lower than it.
@@ -90,7 +90,7 @@ void ImageComponent::resize()
         else if (mTargetIsMin) {
             mSize = textureSize;
 
-            glm::vec2 resizeScale((mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y));
+            glm::vec2 resizeScale{(mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y)};
 
             if (resizeScale.x > resizeScale.y) {
                 mSize.x *= resizeScale.x;
@@ -114,7 +114,7 @@ void ImageComponent::resize()
         else {
             // If both components are set, we just stretch.
             // If no components are set, we don't resize at all.
-            mSize = mTargetSize == glm::vec2({}) ? textureSize : mTargetSize;
+            mSize = mTargetSize == glm::vec2{} ? textureSize : mTargetSize;
 
             // If only one component is set, we resize in a way that maintains aspect ratio.
             // For SVG rasterization, we always calculate width from rounded height (see
@@ -177,7 +177,7 @@ void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture)
 
 void ImageComponent::setResize(float width, float height)
 {
-    mTargetSize = glm::vec2(width, height);
+    mTargetSize = glm::vec2{width, height};
     mTargetIsMax = false;
     mTargetIsMin = false;
     resize();
@@ -185,7 +185,7 @@ void ImageComponent::setResize(float width, float height)
 
 void ImageComponent::setMaxSize(float width, float height)
 {
-    mTargetSize = glm::vec2(width, height);
+    mTargetSize = glm::vec2{width, height};
     mTargetIsMax = true;
     mTargetIsMin = false;
     resize();
@@ -193,7 +193,7 @@ void ImageComponent::setMaxSize(float width, float height)
 
 void ImageComponent::setMinSize(float width, float height)
 {
-    mTargetSize = glm::vec2(width, height);
+    mTargetSize = glm::vec2{width, height};
     mTargetIsMax = false;
     mTargetIsMin = true;
     resize();
@@ -239,7 +239,7 @@ void ImageComponent::uncrop()
 
 void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
 {
-    if (mSize == glm::vec2({}))
+    if (mSize == glm::vec2{})
         return;
 
     std::vector<unsigned char> imageRGBA = mTexture.get()->getRawRGBAData();
@@ -247,10 +247,10 @@ void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
     if (imageRGBA.size() == 0)
         return;
 
-    Vector2i imageSize = mTexture.get()->getSize();
-    cimg_library::CImg<unsigned char> imageCImg(imageSize.x(), imageSize.y(), 1, 4, 0);
+    glm::ivec2 imageSize{mTexture.get()->getSize()};
+    cimg_library::CImg<unsigned char> imageCImg(imageSize.x, imageSize.y, 1, 4, 0);
 
-    int paddingCoords[4] = {};
+    int paddingCoords[4]{};
 
     // We need to convert our RGBA data to the CImg internal format as CImg does not interleave
     // the pixels (as in RGBARGBARGBA).
@@ -259,12 +259,12 @@ void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
     // This will give us the coordinates for the fully transparent areas.
     Utils::CImg::getTransparentPaddingCoords(imageCImg, paddingCoords);
 
-    glm::vec2 originalSize = mSize;
+    glm::vec2 originalSize{mSize};
 
-    float cropLeft = static_cast<float>(paddingCoords[0]) / static_cast<float>(imageSize.x());
-    float cropTop = static_cast<float>(paddingCoords[1]) / static_cast<float>(imageSize.y());
-    float cropRight = static_cast<float>(paddingCoords[2]) / static_cast<float>(imageSize.x());
-    float cropBottom = static_cast<float>(paddingCoords[3]) / static_cast<float>(imageSize.y());
+    float cropLeft{static_cast<float>(paddingCoords[0]) / static_cast<float>(imageSize.x)};
+    float cropTop{static_cast<float>(paddingCoords[1]) / static_cast<float>(imageSize.y)};
+    float cropRight{static_cast<float>(paddingCoords[2]) / static_cast<float>(imageSize.x)};
+    float cropBottom{static_cast<float>(paddingCoords[3]) / static_cast<float>(imageSize.y)};
 
     crop(cropLeft, cropTop, cropRight, cropBottom);
 
@@ -342,16 +342,16 @@ void ImageComponent::updateVertices()
 
     // We go through this mess to make sure everything is properly rounded.
     // If we just round vertices at the end, edge cases occur near sizes of 0.5.
-    const glm::vec2 topLeft = { 0.0f, 0.0f };
-    const glm::vec2 bottomRight = mSize;
-    const float px = mTexture->isTiled() ? mSize.x / getTextureSize().x() : 1.0f;
-    const float py = mTexture->isTiled() ? mSize.y / getTextureSize().y() : 1.0f;
+    const glm::vec2 topLeft{};
+    const glm::vec2 bottomRight{mSize};
+    const float px{mTexture->isTiled() ? mSize.x / getTextureSize().x : 1.0f};
+    const float py{mTexture->isTiled() ? mSize.y / getTextureSize().y : 1.0f};
 
     // clang-format off
-    mVertices[0] = { { topLeft.x,     topLeft.y     }, { mTopLeftCrop.x,          py   - mTopLeftCrop.y     }, 0 };
-    mVertices[1] = { { topLeft.x,     bottomRight.y }, { mTopLeftCrop.x,          1.0f - mBottomRightCrop.y }, 0 };
-    mVertices[2] = { { bottomRight.x, topLeft.y     }, { mBottomRightCrop.x * px, py   - mTopLeftCrop.y     }, 0 };
-    mVertices[3] = { { bottomRight.x, bottomRight.y }, { mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y }, 0 };
+    mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
+    mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
+    mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
+    mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
     // clang-format on
 
     updateColors();
@@ -391,18 +391,18 @@ void ImageComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
     if (mTexture && mOpacity > 0) {
         if (Settings::getInstance()->getBool("DebugImage")) {
-            glm::vec2 targetSizePos = (mTargetSize - mSize) * mOrigin * glm::vec2(-1.0f);
+            glm::vec2 targetSizePos{(mTargetSize - mSize) * mOrigin * glm::vec2{-1.0f}};
             Renderer::drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
                                0xFF000033, 0xFF000033);
             Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
         }
         // An image with zero size would normally indicate a corrupt image file.
-        if (mTexture->isInitialized() && mTexture->getSize() != 0) {
+        if (mTexture->isInitialized() && mTexture->getSize() != glm::ivec2{}) {
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just
@@ -482,9 +482,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    glm::vec2 scale = getParent() ? getParent()->getSize() :
-                                    glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
-                                              static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 scale{getParent() ? getParent()->getSize() :
+                                  glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
+                                            static_cast<float>(Renderer::getScreenHeight()))};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size"))

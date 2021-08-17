@@ -49,12 +49,11 @@ protected:
     std::ostringstream os;
 
 private:
-    std::map<LogLevel, std::string> logLevelMap { // Log level indicators.
-                                                  { LogError, "Error" },
-                                                  { LogWarning, "Warn" },
-                                                  { LogInfo, "Info" },
-                                                  { LogDebug, "Debug" }
-    };
+    std::map<LogLevel, std::string> logLevelMap{// Log level indicators.
+                                                {LogError, "Error"},
+                                                {LogWarning, "Warn"},
+                                                {LogInfo, "Info"},
+                                                {LogDebug, "Debug"}};
 
     static LogLevel reportingLevel;
     LogLevel messageLevel;

@@ -139,7 +139,7 @@ int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
 int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool hideWindow)
 {
 #if defined(_WIN64)
-    STARTUPINFOW si {};
+    STARTUPINFOW si{};
     PROCESS_INFORMATION pi;
 
     si.cb = sizeof(si);

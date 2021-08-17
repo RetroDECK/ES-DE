@@ -83,7 +83,7 @@ void MediaViewer::update(int deltaTime)
 
 void MediaViewer::render()
 {
-    glm::mat4 trans = Renderer::getIdentity();
+    glm::mat4 trans{Renderer::getIdentity()};
     Renderer::setMatrix(trans);
 
     // Render a black background below the game media.
@@ -95,7 +95,7 @@ void MediaViewer::render()
 
 #if defined(USE_OPENGL_21)
         Renderer::shaderParameters videoParameters;
-        unsigned int shaders = 0;
+        unsigned int shaders{0};
         if (Settings::getInstance()->getBool("MediaViewerVideoScanlines"))
             shaders = Renderer::SHADER_SCANLINES;
         if (Settings::getInstance()->getBool("MediaViewerVideoBlur")) {
@@ -121,7 +121,7 @@ void MediaViewer::render()
         Renderer::shaderPostprocessing(shaders, videoParameters);
 #endif
     }
-    else if (mImage && mImage->hasImage() && mImage->getSize() != glm::vec2({})) {
+    else if (mImage && mImage->hasImage() && mImage->getSize() != glm::vec2{}) {
         mImage->render(trans);
 
 #if defined(USE_OPENGL_21)

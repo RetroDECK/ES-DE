@@ -120,8 +120,8 @@ void parseGamelist(SystemData* system)
     std::string relativeTo = system->getStartPath();
     bool showHiddenFiles = Settings::getInstance()->getBool("ShowHiddenFiles");
 
-    std::vector<std::string> tagList = { "game", "folder" };
-    FileType typeList[2] = { GAME, FOLDER };
+    std::vector<std::string> tagList = {"game", "folder"};
+    FileType typeList[2] = {GAME, FOLDER};
     for (int i = 0; i < 2; i++) {
         std::string tag = tagList[i];
         FileType type = typeList[i];

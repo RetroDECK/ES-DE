@@ -35,7 +35,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     : GuiComponent(window)
     , mHelpStyle(helpstyle)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 5))
+    , mGrid(window, glm::ivec2{1, 5})
     , mMultiLine(multiLine)
     , mInitValue(initValue)
     , mOkCallback(okCallback)
@@ -75,12 +75,12 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true);
-    mGrid.setEntry(mInfoString1, Vector2i(0, 1), false, true);
-    mGrid.setEntry(mInfoString2, Vector2i(0, 2), false, false);
-    mGrid.setEntry(mText, Vector2i(0, 3), true, false, Vector2i(1, 1),
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mInfoString1, glm::ivec2{0, 1}, false, true);
+    mGrid.setEntry(mInfoString2, glm::ivec2{0, 2}, false, false);
+    mGrid.setEntry(mText, glm::ivec2{0, 3}, true, false, glm::ivec2{1, 1},
                    GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 4), true, false);
+    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 4}, true, false);
     mGrid.setRowHeightPerc(1, 0.15f, true);
 
     float textHeight = mText->getFont()->getHeight();
@@ -106,7 +106,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 
 void GuiComplexTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
     mText->setSize(mSize.x - 40.0f, mText->getSize().y);
 
     // Update grid.

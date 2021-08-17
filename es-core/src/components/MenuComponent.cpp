@@ -21,7 +21,7 @@ MenuComponent::MenuComponent(Window* window,
                              const std::shared_ptr<Font>& titleFont)
     : GuiComponent(window)
     , mBackground(window)
-    , mGrid(window, Vector2i(1, 3))
+    , mGrid(window, glm::ivec2{1, 3})
     , mNeedsSaving(false)
 {
     addChild(&mBackground);
@@ -34,11 +34,11 @@ MenuComponent::MenuComponent(Window* window,
     mTitle->setHorizontalAlignment(ALIGN_CENTER);
     mTitle->setColor(0x555555FF);
     setTitle(title, titleFont);
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false);
+    mGrid.setEntry(mTitle, glm::ivec2{}, false);
 
     // Set up list which will never change (externally, anyway).
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, Vector2i(0, 1), true);
+    mGrid.setEntry(mList, glm::ivec2{0, 1}, true);
 
     updateGrid();
     updateSize();
@@ -106,7 +106,7 @@ void MenuComponent::updateSize()
 
 void MenuComponent::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
     // Update grid row/column sizes.
     mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y);
@@ -134,7 +134,7 @@ void MenuComponent::updateGrid()
 
     if (mButtons.size()) {
         mButtonGrid = makeButtonGrid(mWindow, mButtons);
-        mGrid.setEntry(mButtonGrid, Vector2i(0, 2), true, false);
+        mGrid.setEntry(mButtonGrid, glm::ivec2{0, 2}, true, false);
     }
 }
 
@@ -142,13 +142,13 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(
     Window* window, const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
 {
     std::shared_ptr<ComponentGrid> buttonGrid =
-        std::make_shared<ComponentGrid>(window, Vector2i(static_cast<int>(buttons.size()), 2));
+        std::make_shared<ComponentGrid>(window, glm::ivec2{static_cast<int>(buttons.size()), 2});
 
     // Initialize to padding.
     float buttonGridWidth =
         BUTTON_GRID_HORIZ_PADDING * Renderer::getScreenWidthModifier() * buttons.size();
     for (int i = 0; i < static_cast<int>(buttons.size()); i++) {
-        buttonGrid->setEntry(buttons.at(i), Vector2i(i, 0), true, false);
+        buttonGrid->setEntry(buttons.at(i), glm::ivec2{i, 0}, true, false);
         buttonGridWidth += buttons.at(i)->getSize().x;
     }
     for (unsigned int i = 0; i < buttons.size(); i++)

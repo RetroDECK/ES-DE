@@ -32,7 +32,7 @@ ButtonComponent::ButtonComponent(Window* window,
 void ButtonComponent::onSizeChanged()
 {
     // Fit to mBox.
-    mBox.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
+    mBox.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 }
 
 bool ButtonComponent::input(InputConfig* config, Input input)
@@ -95,13 +95,13 @@ void ButtonComponent::updateImage()
 
 void ButtonComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     mBox.render(trans);
 
     if (mTextCache) {
-        glm::vec3 centerOffset((mSize.x - mTextCache->metrics.size.x) / 2.0f,
-                               (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f);
+        glm::vec3 centerOffset{(mSize.x - mTextCache->metrics.size.x) / 2.0f,
+                               (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
         trans = glm::translate(trans, centerOffset);
 
         if (Settings::getInstance()->getBool("DebugText")) {

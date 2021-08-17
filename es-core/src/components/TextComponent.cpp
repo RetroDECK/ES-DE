@@ -60,7 +60,7 @@ TextComponent::TextComponent(Window* window,
 
 void TextComponent::onSizeChanged()
 {
-    mAutoCalcExtent = Vector2i((getSize().x == 0), (getSize().y == 0));
+    mAutoCalcExtent = glm::ivec2{(getSize().x == 0), (getSize().y == 0)};
     onTextChanged();
 }
 
@@ -120,7 +120,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     if (mRenderBackground) {
         Renderer::setMatrix(trans);
@@ -128,7 +128,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
     }
 
     if (mTextCache) {
-        const glm::vec2& textSize = mTextCache->metrics.size;
+        const glm::vec2& textSize{mTextCache->metrics.size};
         float yOff = 0.0f;
         switch (mVerticalAlignment) {
             case ALIGN_TOP: {
@@ -147,7 +147,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
                 break;
             }
         }
-        glm::vec3 off(0.0f, yOff, 0.0f);
+        glm::vec3 off{0.0f, yOff, 0.0f};
 
         if (Settings::getInstance()->getBool("DebugText")) {
             // Draw the "textbox" area, what we are aligned within.
@@ -189,11 +189,11 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
 void TextComponent::calculateExtent()
 {
-    if (mAutoCalcExtent.x()) {
+    if (mAutoCalcExtent.x) {
         mSize = mFont->sizeText(mUppercase ? Utils::String::toUpper(mText) : mText, mLineSpacing);
     }
     else {
-        if (mAutoCalcExtent.y())
+        if (mAutoCalcExtent.y)
             mSize.y = mFont
                           ->sizeWrappedText(mUppercase ? Utils::String::toUpper(mText) : mText,
                                             getSize().x, mLineSpacing)
@@ -223,11 +223,11 @@ void TextComponent::onTextChanged()
         addAbbrev = newline != std::string::npos;
     }
 
-    glm::vec2 size = f->sizeText(text);
+    glm::vec2 size{f->sizeText(text)};
     if (!isMultiline && mSize.x > 0.0f && text.size() && (size.x > mSize.x || addAbbrev)) {
         // Abbreviate text.
         const std::string abbrev = "...";
-        glm::vec2 abbrevSize = f->sizeText(abbrev);
+        glm::vec2 abbrevSize{f->sizeText(abbrev)};
         // mMargin adds a margin around the text if it's abbreviated.
         float marginAdjustedSize = mSize.x - (mSize.x * mMargin);
 
@@ -240,12 +240,12 @@ void TextComponent::onTextChanged()
         text.append(abbrev);
 
         mTextCache = std::shared_ptr<TextCache>(
-            f->buildTextCache(text, glm::vec2({}), (mColor >> 8 << 8) | mOpacity, mSize.x,
+            f->buildTextCache(text, glm::vec2{}, (mColor >> 8 << 8) | mOpacity, mSize.x,
                               mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
         mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
-            f->wrapText(text, mSize.x), glm::vec2({}), (mColor >> 8 << 8) | mOpacity, mSize.x,
+            f->wrapText(text, mSize.x), glm::vec2{}, (mColor >> 8 << 8) | mOpacity, mSize.x,
             mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
 }

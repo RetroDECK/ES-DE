@@ -88,7 +88,7 @@ private:
     bool mRenderBackground;
 
     bool mUppercase;
-    Vector2i mAutoCalcExtent;
+    glm::ivec2 mAutoCalcExtent;
     std::shared_ptr<TextCache> mTextCache;
     Alignment mHorizontalAlignment;
     Alignment mVerticalAlignment;

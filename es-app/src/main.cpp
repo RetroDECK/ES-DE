@@ -572,7 +572,7 @@ int main(int argc, char* argv[])
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
-    SDL_Event event {};
+    SDL_Event event{};
 
     if (!window.init()) {
         LOG(LogError) << "Window failed to initialize";

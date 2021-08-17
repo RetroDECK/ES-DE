@@ -25,7 +25,7 @@ RatingComponent::RatingComponent(Window* window, bool colorizeChanges)
     mFilledTexture = TextureResource::get(":/graphics/star_filled.svg", true);
     mUnfilledTexture = TextureResource::get(":/graphics/star_unfilled.svg", true);
     mValue = 0.5f;
-    mSize = glm::vec2(64.0f * NUM_RATING_STARS, 64.0f);
+    mSize = glm::vec2{64.0f * NUM_RATING_STARS, 64.0f};
     updateVertices();
     updateColors();
 }
@@ -121,15 +121,15 @@ void RatingComponent::updateVertices()
     const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
 
     // clang-format off
-    mVertices[0] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
-    mVertices[1] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
-    mVertices[2] = { { w,    0.0f }, { mValue * numStars, 1.0f }, color };
-    mVertices[3] = { { w,    h    }, { mValue * numStars, 0.0f }, color };
+    mVertices[0] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
+    mVertices[1] = {{0.0f, h   }, {0.0f,              0.0f}, color};
+    mVertices[2] = {{w,    0.0f}, {mValue * numStars, 1.0f}, color};
+    mVertices[3] = {{w,    h   }, {mValue * numStars, 0.0f}, color};
 
-    mVertices[4] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
-    mVertices[5] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
-    mVertices[6] = { { fw,   0.0f }, { numStars,          1.0f }, color };
-    mVertices[7] = { { fw,   h    }, { numStars,          0.0f }, color };
+    mVertices[4] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
+    mVertices[5] = {{0.0f, h   }, {0.0f,              0.0f}, color};
+    mVertices[6] = {{fw,   0.0f}, {numStars,          1.0f}, color};
+    mVertices[7] = {{fw,   h   }, {numStars,          0.0f}, color};
     // clang-format on
 }
 
@@ -146,7 +146,7 @@ void RatingComponent::render(const glm::mat4& parentTrans)
     if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr)
         return;
 
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     Renderer::setMatrix(trans);
 

@@ -10,7 +10,6 @@
 #define ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 
 #include "math/Misc.h"
-#include "math/Vector2i.h"
 #include "resources/ResourceManager.h"
 #include "resources/TextureDataManager.h"
 
@@ -52,7 +51,7 @@ public:
     bool isInitialized() const { return true; }
     bool isTiled() const;
 
-    const Vector2i getSize() const { return mSize; }
+    const glm::ivec2 getSize() const { return mSize; }
     bool bind();
 
     // Returns an approximation of total VRAM used by textures (in bytes).
@@ -73,7 +72,7 @@ private:
     // The texture data manager manages loading and unloading of filesystem based textures.
     static TextureDataManager sTextureDataManager;
 
-    Vector2i mSize;
+    glm::ivec2 mSize;
     glm::vec2 mSourceSize;
     bool mForceLoad;
 

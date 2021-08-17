@@ -172,20 +172,20 @@ void ComponentList::render(const glm::mat4& parentTrans)
     if (!size())
         return;
 
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     // Clip everything to be inside our bounds.
-    glm::vec3 dim(mSize.x, mSize.y, 0.0f);
+    glm::vec3 dim{mSize.x, mSize.y, 0.0f};
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
     Renderer::pushClipRect(
-        Vector2i(static_cast<int>(std::round(trans[3].x)),
-                 static_cast<int>(std::round(trans[3].y))),
-        Vector2i(static_cast<int>(std::round(dim.x)), static_cast<int>(std::round(dim.y))));
+        glm::ivec2{static_cast<int>(std::round(trans[3].x)),
+                   static_cast<int>(std::round(trans[3].y))},
+        glm::ivec2{static_cast<int>(std::round(dim.x)), static_cast<int>(std::round(dim.y))});
 
     // Scroll the camera.
-    trans = glm::translate(trans, glm::vec3(0.0f, -std::round(mCameraOffset), 0.0f));
+    trans = glm::translate(trans, glm::vec3{0.0f, -std::round(mCameraOffset), 0.0f});
 
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;

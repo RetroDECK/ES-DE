@@ -160,14 +160,14 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     if (size() == 0)
         return;
 
-    glm::mat4 trans = parentTrans * getTransform();
-    std::shared_ptr<Font>& font = mFont;
+    glm::mat4 trans{parentTrans * getTransform()};
+    std::shared_ptr<Font>& font{mFont};
 
-    int startEntry = 0;
-    float y = 0;
+    int startEntry{0};
+    float y{0.0f};
 
-    const float entrySize =
-        std::max(font->getHeight(1.0), static_cast<float>(font->getSize())) * mLineSpacing;
+    const float entrySize{std::max(font->getHeight(1.0), static_cast<float>(font->getSize())) *
+                          mLineSpacing};
 
     // Number of entries that can fit on the screen simultaneously.
     int screenCount = static_cast<int>(mSize.y / entrySize + 0.5f);
@@ -206,13 +206,13 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     }
 
     // Clip to inside margins.
-    glm::vec3 dim(mSize.x, mSize.y, 0.0f);
+    glm::vec3 dim{mSize.x, mSize.y, 0.0f};
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
     Renderer::pushClipRect(
-        Vector2i(static_cast<int>(trans[3].x + mHorizontalMargin), static_cast<int>(trans[3].y)),
-        Vector2i(static_cast<int>(dim.x - mHorizontalMargin * 2.0f), static_cast<int>(dim.y)));
+        glm::ivec2{static_cast<int>(trans[3].x + mHorizontalMargin), static_cast<int>(trans[3].y)},
+        glm::ivec2{static_cast<int>(dim.x - mHorizontalMargin * 2.0f), static_cast<int>(dim.y)});
 
     for (int i = startEntry; i < listCutoff; i++) {
         typename IList<TextListData, T>::Entry& entry = mEntries.at(static_cast<unsigned int>(i));
@@ -236,7 +236,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         else
             entry.data.textCache->setColor(color);
 
-        glm::vec3 offset(0.0f, y, 0.0f);
+        glm::vec3 offset{0.0f, y, 0.0f};
 
         switch (mAlignment) {
             case ALIGN_LEFT:
@@ -257,12 +257,12 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         }
 
         // Render text.
-        glm::mat4 drawTrans = trans;
+        glm::mat4 drawTrans{trans};
 
         // Currently selected item text might be scrolling.
         if (mCursor == i && mMarqueeOffset > 0)
             drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3(static_cast<float>(mMarqueeOffset), 0.0f, 0.0f));
+                drawTrans, offset - glm::vec3{static_cast<float>(mMarqueeOffset), 0.0f, 0.0f});
         else
             drawTrans = glm::translate(drawTrans, offset);
 
@@ -278,7 +278,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             mMarqueeScroll = true;
             drawTrans = trans;
             drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3(static_cast<float>(mMarqueeOffset2), 0.0f, 0.0f));
+                drawTrans, offset - glm::vec3{static_cast<float>(mMarqueeOffset2), 0.0f, 0.0f});
             Renderer::setMatrix(drawTrans);
             font->renderTextCache(entry.data.textCache.get());
         }

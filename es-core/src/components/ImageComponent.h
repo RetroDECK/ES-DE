@@ -10,7 +10,6 @@
 #define ES_CORE_COMPONENTS_IMAGE_COMPONENT_H
 
 #include "GuiComponent.h"
-#include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 
 class TextureResource;
@@ -83,7 +82,7 @@ public:
 
     // Returns the size of the current texture, or (0, 0) if none is loaded.
     // May be different than drawn size (use getSize() for that).
-    Vector2i getTextureSize() const;
+    glm::ivec2 getTextureSize() const;
 
     glm::vec2 getSize() const override;
 

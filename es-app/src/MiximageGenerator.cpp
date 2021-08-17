@@ -472,7 +472,7 @@ bool MiximageGenerator::generateImage()
     frameImageAlpha.draw_image(xPosMarquee, yPosMarquee, marqueeImageAlpha);
 
     // Set a frame color based on an average of the screenshot contents.
-    unsigned char frameColor[] = { 0, 0, 0, 0 };
+    unsigned char frameColor[] = {0, 0, 0, 0};
     sampleFrameColor(screenshotImage, frameColor);
 
     // Upper / lower frame.

@@ -254,7 +254,7 @@ void SystemScreensaver::renderScreensaver()
 
         // Only render the video if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
-            glm::mat4 trans = Renderer::getIdentity();
+            glm::mat4 trans{Renderer::getIdentity()};
             mVideoScreensaver->render(trans);
         }
     }
@@ -268,7 +268,7 @@ void SystemScreensaver::renderScreensaver()
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
             if (mImageScreensaver->hasImage()) {
                 mImageScreensaver->setOpacity(255 - static_cast<unsigned char>(mOpacity * 255));
-                glm::mat4 trans = Renderer::getIdentity();
+                glm::mat4 trans{Renderer::getIdentity()};
                 mImageScreensaver->render(trans);
             }
         }
@@ -514,7 +514,7 @@ void SystemScreensaver::pickRandomImage(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine { randDev() };
+        std::mt19937 engine{randDev()};
         std::uniform_int_distribution<int> uniform_dist(0,
                                                         static_cast<int>(mImageFiles.size()) - 1);
         index = uniform_dist(engine);
@@ -548,7 +548,7 @@ void SystemScreensaver::pickRandomVideo(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine { randDev() };
+        std::mt19937 engine{randDev()};
         std::uniform_int_distribution<int> uniform_dist(0,
                                                         static_cast<int>(mVideoFiles.size()) - 1);
         index = uniform_dist(engine);
@@ -576,7 +576,7 @@ void SystemScreensaver::pickRandomCustomImage(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine { randDev() };
+        std::mt19937 engine{randDev()};
         std::uniform_int_distribution<int> uniform_dist(
             0, static_cast<int>(mImageCustomFiles.size()) - 1);
         index = uniform_dist(engine);

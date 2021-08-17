@@ -14,8 +14,8 @@
 HelpStyle::HelpStyle()
 {
     position =
-        glm::vec2(Renderer::getScreenWidth() * 0.012f, Renderer::getScreenHeight() * 0.9515f);
-    origin = glm::vec2(0.0f, 0.0f);
+        glm::vec2{Renderer::getScreenWidth() * 0.012f, Renderer::getScreenHeight() * 0.9515f};
+    origin = glm::vec2{};
     iconColor = 0x777777FF;
     textColor = 0x777777FF;
 
@@ -33,8 +33,8 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
 
     if (elem->has("pos"))
         position = elem->get<glm::vec2>("pos") *
-                   glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
-                             static_cast<float>(Renderer::getScreenHeight()));
+                   glm::vec2{static_cast<float>(Renderer::getScreenWidth()),
+                             static_cast<float>(Renderer::getScreenHeight())};
 
     if (elem->has("origin"))
         origin = elem->get<glm::vec2>("origin");

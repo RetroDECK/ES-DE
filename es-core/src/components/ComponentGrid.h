@@ -10,7 +10,6 @@
 #define ES_CORE_COMPONENTS_COMPONENT_GRID_H
 
 #include "GuiComponent.h"
-#include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 
 namespace GridFlags
@@ -34,16 +33,16 @@ namespace GridFlags
 class ComponentGrid : public GuiComponent
 {
 public:
-    ComponentGrid(Window* window, const Vector2i& gridDimensions);
+    ComponentGrid(Window* window, const glm::ivec2& gridDimensions);
     virtual ~ComponentGrid();
 
     bool removeEntry(const std::shared_ptr<GuiComponent>& comp);
 
     void setEntry(const std::shared_ptr<GuiComponent>& comp,
-                  const Vector2i& pos,
+                  const glm::ivec2& pos,
                   bool canFocus,
                   bool resize = true,
-                  const Vector2i& size = Vector2i(1, 1),
+                  const glm::ivec2& size = glm::ivec2{1, 1},
                   unsigned int border = GridFlags::BORDER_NONE,
                   GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
 
@@ -65,7 +64,7 @@ public:
     // Dito.
     void setRowHeightPerc(int row, float height, bool update = true);
 
-    bool moveCursor(Vector2i dir);
+    bool moveCursor(glm::ivec2 dir);
     void setCursorTo(const std::shared_ptr<GuiComponent>& comp);
 
     std::shared_ptr<GuiComponent> getSelectedComponent()
@@ -86,16 +85,16 @@ private:
     class GridEntry
     {
     public:
-        Vector2i pos;
-        Vector2i dim;
+        glm::ivec2 pos;
+        glm::ivec2 dim;
         std::shared_ptr<GuiComponent> component;
         bool canFocus;
         bool resize;
         GridFlags::UpdateType updateType;
         unsigned int border;
 
-        GridEntry(const Vector2i& p = Vector2i::Zero(),
-                  const Vector2i& d = Vector2i::Zero(),
+        GridEntry(const glm::ivec2& p = glm::ivec2{},
+                  const glm::ivec2& d = glm::ivec2{},
                   const std::shared_ptr<GuiComponent>& cmp = nullptr,
                   bool f = false,
                   bool r = true,
@@ -118,14 +117,14 @@ private:
     void updateCellComponent(const GridEntry& cell);
     void updateSeparators();
 
-    void onCursorMoved(Vector2i from, Vector2i to);
+    void onCursorMoved(glm::ivec2 from, glm::ivec2 to);
     const GridEntry* getCellAt(int x, int y) const;
-    const GridEntry* getCellAt(const Vector2i& pos) const { return getCellAt(pos.x(), pos.y()); }
+    const GridEntry* getCellAt(const glm::ivec2& pos) const { return getCellAt(pos.x, pos.y); }
 
     std::vector<std::vector<float>> mSeparators;
-    Vector2i mGridSize;
+    glm::ivec2 mGridSize;
     std::vector<GridEntry> mCells;
-    Vector2i mCursor;
+    glm::ivec2 mCursor;
 
     float* mRowHeights;
     float* mColWidths;

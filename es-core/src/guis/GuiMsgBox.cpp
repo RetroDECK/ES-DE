@@ -28,7 +28,7 @@ GuiMsgBox::GuiMsgBox(Window* window,
     : GuiComponent(window)
     , mHelpStyle(helpstyle)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 2))
+    , mGrid(window, glm::ivec2{1, 2})
     , mDisableBackButton(disableBackButton)
     , mDeleteOnButtonPress(deleteOnButtonPress)
 {
@@ -43,7 +43,7 @@ GuiMsgBox::GuiMsgBox(Window* window,
 
     mMsg = std::make_shared<TextComponent>(mWindow, text, Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
                                            ALIGN_CENTER);
-    mGrid.setEntry(mMsg, Vector2i(0, 0), false, false);
+    mGrid.setEntry(mMsg, glm::ivec2{0, 0}, false, false);
 
     // Create the buttons.
     mButtons.push_back(std::make_shared<ButtonComponent>(
@@ -71,7 +71,8 @@ GuiMsgBox::GuiMsgBox(Window* window,
 
     // Put the buttons into a ComponentGrid.
     mButtonGrid = makeButtonGrid(mWindow, mButtons);
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 1), true, false, Vector2i(1, 1), GridFlags::BORDER_TOP);
+    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 1}, true, false, glm::ivec2{1, 1},
+                   GridFlags::BORDER_TOP);
 
     // Decide final width.
     if (mMsg->getSize().x < width && mButtonGrid->getSize().x < width) {
@@ -160,7 +161,7 @@ void GuiMsgBox::onSizeChanged()
                   mGrid.getRowHeight(0));
     mGrid.onSizeChanged();
 
-    mBackground.fitTo(mSize, glm::vec3({}), glm::vec2(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 }
 
 void GuiMsgBox::deleteMeAndCall(const std::function<void()>& func)

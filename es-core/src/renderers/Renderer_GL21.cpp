@@ -137,7 +137,7 @@ namespace Renderer
             return false;
         }
 
-        uint8_t data[4] = { 255, 255, 255, 255 };
+        uint8_t data[4] = {255, 255, 255, 255};
         whiteTexture = createTexture(Texture::RGBA, false, true, 1, 1, data);
 
         GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
@@ -301,7 +301,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setTextureSize({ width, height });
+                    runShader->setTextureSize({width, height});
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
                     runShader->deactivateShaders();
                 }
@@ -312,7 +312,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setTextureSize({ width, height });
+                    runShader->setTextureSize({width, height});
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
                     runShader->deactivateShaders();
                 }
@@ -343,7 +343,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setTextureSize({ shaderWidth, shaderHeight });
+                    runShader->setTextureSize({shaderWidth, shaderHeight});
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
                     runShader->deactivateShaders();
                 }
@@ -360,7 +360,7 @@ namespace Renderer
 
     void setMatrix(const glm::mat4& _matrix)
     {
-        glm::mat4 matrix = _matrix;
+        glm::mat4 matrix{_matrix};
         matrix[3] = glm::round(matrix[3]);
 
         GL_CHECK_ERROR(glMatrixMode(GL_MODELVIEW));

@@ -44,7 +44,7 @@ bool SwitchComponent::input(InputConfig* config, Input input)
 
 void SwitchComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
     mImage.render(trans);
     renderChildren(trans);
 }
