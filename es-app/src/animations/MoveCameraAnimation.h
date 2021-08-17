@@ -10,7 +10,7 @@
 #define ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
 
 #include "animations/Animation.h"
-#include "math/Misc.h"
+#include "utils/MathUtil.h"
 
 class MoveCameraAnimation : public Animation
 {

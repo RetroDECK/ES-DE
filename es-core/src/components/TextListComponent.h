@@ -352,8 +352,7 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
         const float limit = mSize.x - mHorizontalMargin * 2.0f;
 
         if (textLength > limit) {
-            // Loop.
-            // Pixels per second (based on nes-mini font at 1920x1080 to produce a speed of 200).
+            // Loop the text.
             const float speed = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f;
             const float delay = 3000.0f;
             const float scrollLength = textLength;
@@ -366,9 +365,9 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
             while (mMarqueeTime > maxTime)
                 mMarqueeTime -= maxTime;
 
-            mMarqueeOffset = static_cast<int>(Math::Scroll::loop(delay, scrollTime + returnTime,
-                                                                 static_cast<float>(mMarqueeTime),
-                                                                 scrollLength + returnLength));
+            mMarqueeOffset = static_cast<int>(Utils::Math::Scroll::loop(
+                delay, scrollTime + returnTime, static_cast<float>(mMarqueeTime),
+                scrollLength + returnLength));
 
             if (mMarqueeOffset > (scrollLength - (limit - returnLength)))
                 mMarqueeOffset2 = static_cast<int>(mMarqueeOffset - (scrollLength + returnLength));

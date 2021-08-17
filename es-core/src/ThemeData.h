@@ -11,8 +11,8 @@
 #ifndef ES_CORE_THEME_DATA_H
 #define ES_CORE_THEME_DATA_H
 
-#include "math/Misc.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/MathUtil.h"
 
 #include <deque>
 #include <map>

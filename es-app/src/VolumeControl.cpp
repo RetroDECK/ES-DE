@@ -9,7 +9,7 @@
 #include "VolumeControl.h"
 
 #include "Log.h"
-#include "math/Misc.h"
+#include "utils/MathUtil.h"
 
 #if defined(_WIN64)
 #include <cmath>

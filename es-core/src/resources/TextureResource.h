@@ -9,9 +9,9 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 #define ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 
-#include "math/Misc.h"
 #include "resources/ResourceManager.h"
 #include "resources/TextureDataManager.h"
+#include "utils/MathUtil.h"
 
 #include <cmath>
 #include <set>

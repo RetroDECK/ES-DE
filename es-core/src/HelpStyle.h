@@ -10,7 +10,7 @@
 #ifndef ES_CORE_HELP_STYLE_H
 #define ES_CORE_HELP_STYLE_H
 
-#include "math/Misc.h"
+#include "utils/MathUtil.h"
 
 #include <memory>
 #include <string>

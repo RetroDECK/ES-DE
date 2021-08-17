@@ -57,9 +57,6 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.h
 
-        # Math
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.h
-
         # Renderers
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Shader_GL21.h
@@ -74,6 +71,7 @@ set(CORE_HEADERS
         # Utils
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.h
 )
@@ -129,9 +127,6 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.cpp
 
-        # Math
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.cpp
-
         # Renderer
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer_GL21.cpp
@@ -148,6 +143,7 @@ set(CORE_SOURCES
         # Utils
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
 )

@@ -11,7 +11,7 @@
 
 #define GL_GLEXT_PROTOTYPES
 
-#include "math/Misc.h"
+#include "utils/MathUtil.h"
 
 #if defined(_WIN64)
 #include <GL/glew.h>

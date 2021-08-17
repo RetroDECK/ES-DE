@@ -11,7 +11,7 @@
 
 #include "Log.h"
 #include "Shader_GL21.h"
-#include "math/Misc.h"
+#include "utils/MathUtil.h"
 
 #include <string>
 #include <vector>
