@@ -6,8 +6,8 @@
 //  Animation to play when moving the camera, used by the slide transition style.
 //
 
-#ifndef ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
-#define ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
+#ifndef ES_CORE_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
+#define ES_CORE_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
 
 #include "animations/Animation.h"
 #include "utils/MathUtil.h"
@@ -38,4 +38,4 @@ private:
     glm::vec3 mTarget;
 };
 
-#endif // ES_APP_ANIMATIONS_MOVE_CAMERA_ANIMATION_H
+#endif // ES_CORE_ANIMATIONS_MOVE_CAMERA_ANIMATION_H

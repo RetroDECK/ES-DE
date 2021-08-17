@@ -48,9 +48,6 @@ set(ES_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h
-
-        # Animations
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/MoveCameraAnimation.h
 )
 
 set(ES_SOURCES

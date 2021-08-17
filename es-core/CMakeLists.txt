@@ -22,6 +22,7 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/Animation.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/AnimationController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/LambdaAnimation.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/MoveCameraAnimation.h
 
         # GUI components
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.h
