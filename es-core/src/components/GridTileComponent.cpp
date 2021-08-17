@@ -17,12 +17,12 @@ GridTileComponent::GridTileComponent(Window* window)
     , mBackground(window, ":/graphics/frame.png")
 {
     mDefaultProperties.mSize = getDefaultTileSize();
-    mDefaultProperties.mPadding = Vector2f(16.0f * Renderer::getScreenWidthModifier(),
-                                           16.0f * Renderer::getScreenHeightModifier());
+    mDefaultProperties.mPadding = glm::vec2{16.0f * Renderer::getScreenWidthModifier(),
+                                            16.0f * Renderer::getScreenHeightModifier()};
     mDefaultProperties.mImageColor = 0xAAAAAABB;
     // Attempting to use frame.svg instead causes quite severe performance problems.
     mDefaultProperties.mBackgroundImage = ":/graphics/frame.png";
-    mDefaultProperties.mBackgroundCornerSize = Vector2f(16.0f, 16.0f);
+    mDefaultProperties.mBackgroundCornerSize = glm::vec2{16.0f, 16.0f};
     mDefaultProperties.mBackgroundCenterColor = 0xAAAAEEFF;
     mDefaultProperties.mBackgroundEdgeColor = 0xAAAAEEFF;
 
@@ -50,9 +50,9 @@ GridTileComponent::GridTileComponent(Window* window)
     setVisible(true);
 }
 
-void GridTileComponent::render(const Transform4x4f& parentTrans)
+void GridTileComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = getTransform() * parentTrans;
+    glm::mat4 trans{getTransform() * parentTrans};
 
     if (mVisible)
         renderChildren(trans);
@@ -76,14 +76,14 @@ void GridTileComponent::update(int deltaTime)
 
 void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTileProperties* properties)
 {
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 screen{static_cast<float>(Renderer::getScreenWidth()),
+                     static_cast<float>(Renderer::getScreenHeight())};
 
     if (elem->has("size"))
-        properties->mSize = elem->get<Vector2f>("size") * screen;
+        properties->mSize = elem->get<glm::vec2>("size") * screen;
 
     if (elem->has("padding"))
-        properties->mPadding = elem->get<Vector2f>("padding");
+        properties->mPadding = elem->get<glm::vec2>("padding");
 
     if (elem->has("imageColor"))
         properties->mImageColor = elem->get<unsigned int>("imageColor");
@@ -92,7 +92,7 @@ void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTilePropert
         properties->mBackgroundImage = elem->get<std::string>("backgroundImage");
 
     if (elem->has("backgroundCornerSize"))
-        properties->mBackgroundCornerSize = elem->get<Vector2f>("backgroundCornerSize");
+        properties->mBackgroundCornerSize = elem->get<glm::vec2>("backgroundCornerSize");
 
     if (elem->has("backgroundColor")) {
         properties->mBackgroundCenterColor = elem->get<unsigned int>("backgroundColor");
@@ -111,9 +111,6 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    const std::string& /*element*/,
                                    unsigned int /*properties*/)
 {
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
-
     // Apply theme to the default gridtile.
     const ThemeData::ThemeElement* elem = theme->getElement(view, "default", "gridtile");
     if (elem)
@@ -133,15 +130,15 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         applyThemeToProperties(elem, &mSelectedProperties);
 }
 
-Vector2f GridTileComponent::getDefaultTileSize()
+glm::vec2 GridTileComponent::getDefaultTileSize()
 {
-    Vector2f screen = Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 screen{glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
+                               static_cast<float>(Renderer::getScreenHeight()))};
 
     return screen * 0.22f;
 }
 
-Vector2f GridTileComponent::getSelectedTileSize() const
+glm::vec2 GridTileComponent::getSelectedTileSize() const
 {
     // Return the tile size.
     return mDefaultProperties.mSize * 1.2f;
@@ -171,7 +168,7 @@ void GridTileComponent::setImage(const std::shared_ptr<TextureResource>& texture
 
 void GridTileComponent::setSelected(bool selected,
                                     bool allowAnimation,
-                                    Vector3f* pPosition,
+                                    glm::vec3* pPosition,
                                     bool force)
 {
     if (mSelected == selected && !force)
@@ -184,15 +181,15 @@ void GridTileComponent::setSelected(bool selected,
             cancelAnimation(3);
 
             this->setSelectedZoom(1);
-            mAnimPosition = Vector3f(0, 0, 0);
+            mAnimPosition = {};
 
             resize();
         }
         else {
-            mAnimPosition = Vector3f(pPosition->x(), pPosition->y(), pPosition->z());
+            mAnimPosition = glm::vec3{pPosition->x, pPosition->y, pPosition->z};
 
             auto func = [this](float t) {
-                t -= 1; // Cubic ease out.
+                t -= 1;
                 float pct = Math::lerp(0, 1, t * t * t + 1);
                 this->setSelectedZoom(pct);
             };
@@ -202,7 +199,7 @@ void GridTileComponent::setSelected(bool selected,
                 new LambdaAnimation(func, 250), 0,
                 [this] {
                     this->setSelectedZoom(1);
-                    mAnimPosition = Vector3f(0, 0, 0);
+                    mAnimPosition = {};
                 },
                 false, 3);
         }
@@ -218,7 +215,7 @@ void GridTileComponent::setSelected(bool selected,
             this->setSelectedZoom(1);
 
             auto func = [this](float t) {
-                t -= 1.0f; // Cubic ease out.
+                t -= 1.0f;
                 float pct = Math::lerp(0, 1, t * t * t + 1.0f);
                 this->setSelectedZoom(1.0f - pct);
             };
@@ -307,7 +304,7 @@ void GridTileComponent::calcCurrentProperties()
     }
 }
 
-Vector3f GridTileComponent::getBackgroundPosition()
+glm::vec3 GridTileComponent::getBackgroundPosition()
 {
     return mBackground.getPosition() + mPosition;
 }
@@ -320,7 +317,7 @@ std::shared_ptr<TextureResource> GridTileComponent::getTexture()
     return nullptr;
 };
 
-void GridTileComponent::forceSize(Vector2f size, float selectedZoom)
+void GridTileComponent::forceSize(glm::vec2 size, float selectedZoom)
 {
     mDefaultProperties.mSize = size;
     mSelectedProperties.mSize = size * selectedZoom;

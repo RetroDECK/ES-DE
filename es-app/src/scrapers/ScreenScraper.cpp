@@ -26,109 +26,108 @@ using namespace PlatformIds;
 
 // List of systems and their IDs from:
 // https://www.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
-const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
-    { THREEDO, 29 },
-    { COMMODORE_AMIGA, 64 },
-    { COMMODORE_AMIGA_CD32, 130 },
-    { AMSTRAD_CPC, 65 },
-    { AMSTRAD_GX4000, 87 },
-    { APPLE_II, 86 },
-    { APPLE_IIGS, 217 },
-    { ARCADE, 75 },
-    { ATARI_800, 43 },
-    { ATARI_2600, 26 },
-    { ATARI_5200, 40 },
-    { ATARI_7800, 41 },
-    { ATARI_JAGUAR, 27 },
-    { ATARI_JAGUAR_CD, 171 },
-    { ATARI_LYNX, 28 },
-    { ATARI_ST, 42 },
-    { ATARI_XE, 43 },
-    { ATOMISWAVE, 53 },
-    { BBC_MICRO, 37 },
-    { CAVESTORY, 135 },
-    { COLECOVISION, 48 },
-    { COMMODORE_64, 66 },
-    { COMMODORE_CDTV, 129 },
-    { DAPHNE, 49 },
-    { INTELLIVISION, 115 },
-    { GAMEENGINE_LUTRO, 206 },
-    { APPLE_MACINTOSH, 146 },
-    { MICROSOFT_XBOX, 32 },
-    { MICROSOFT_XBOX_360, 33 },
-    { MOONLIGHT, 138 },
-    { MSX, 113 },
-    { MSX2, 116 },
-    { MSX_TURBO_R, 118 },
-    { SNK_NEO_GEO, 142 },
-    { SNK_NEO_GEO_CD, 142 },
-    { SNK_NEO_GEO_POCKET, 25 },
-    { SNK_NEO_GEO_POCKET_COLOR, 82 },
-    { NINTENDO_3DS, 17 },
-    { NINTENDO_64, 14 },
-    { NINTENDO_DS, 15 },
-    { NINTENDO_FAMICOM, 3 },
-    { NINTENDO_FAMICOM_DISK_SYSTEM, 106 },
-    { NINTENDO_ENTERTAINMENT_SYSTEM, 3 },
-    { FAIRCHILD_CHANNELF, 80 },
-    { NINTENDO_GAME_BOY, 9 },
-    { NINTENDO_GAME_BOY_ADVANCE, 12 },
-    { NINTENDO_GAME_BOY_COLOR, 10 },
-    { NINTENDO_GAMECUBE, 13 },
-    { NINTENDO_WII, 16 },
-    { NINTENDO_WII_U, 18 },
-    { NINTENDO_VIRTUAL_BOY, 11 },
-    { NINTENDO_GAME_AND_WATCH, 52 },
-    { NINTENDO_POKEMON_MINI, 211 },
-    { NINTENDO_SATELLAVIEW, 107 },
-    { NINTENDO_SWITCH, 225 },
-    { BANDAI_SUFAMI_TURBO, 108 },
-    { DOS, 135 },
-    { PC, 135 },
-    { VALVE_STEAM, 135 },
-    { NEC_PCFX, 72 },
-    { GAMEENGINE_OPENBOR, 214 },
-    { TANGERINE_ORIC, 131 },
-    { GAMEENGINE_SCUMMVM, 123 },
-    { SEGA_32X, 19 },
-    { SEGA_CD, 20 },
-    { SEGA_DREAMCAST, 23 },
-    { SEGA_GAME_GEAR, 21 },
-    { SEGA_GENESIS, 1 },
-    { SEGA_MASTER_SYSTEM, 2 },
-    { SEGA_MEGA_DRIVE, 1 },
-    { SEGA_SATURN, 22 },
-    { SEGA_SG1000, 109 },
-    { SHARP_X1, 220 },
-    { SHARP_X68000, 79 },
-    { GAMEENGINE_SOLARUS, 223 },
-    { SONY_PLAYSTATION, 57 },
-    { SONY_PLAYSTATION_2, 58 },
-    { SONY_PLAYSTATION_3, 59 },
-    { SONY_PLAYSTATION_VITA, 62 },
-    { SONY_PLAYSTATION_PORTABLE, 61 },
-    { SAMCOUPE, 213 },
-    { SUPER_NINTENDO, 4 },
-    { NEC_SUPERGRAFX, 105 },
-    { GAMEENGINE_TIC80, 222 },
-    { NEC_PC_8800, 221 },
-    { NEC_PC_9800, 208 },
-    { NEC_PC_ENGINE, 31 },
-    { NEC_PC_ENGINE_CD, 114 },
-    { BANDAI_WONDERSWAN, 45 },
-    { BANDAI_WONDERSWAN_COLOR, 46 },
-    { SINCLAIR_ZX_SPECTRUM, 76 },
-    { SINCLAIR_ZX81_SINCLAR, 77 },
-    { VIDEOPAC_ODYSSEY2, 104 },
-    { VECTREX, 102 },
-    { TANDY_TRS80, 144 },
-    { TANDY_COLOR_COMPUTER, 144 },
-    { SEGA_NAOMI, 56 },
-    { THOMSON_MOTO, 141 },
-    { UZEBOX, 216 },
-    { SPECTRAVIDEO, 218 },
-    { PALM_OS, 219 }
-};
+const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
+    {THREEDO, 29},
+    {COMMODORE_AMIGA, 64},
+    {COMMODORE_AMIGA_CD32, 130},
+    {AMSTRAD_CPC, 65},
+    {AMSTRAD_GX4000, 87},
+    {APPLE_II, 86},
+    {APPLE_IIGS, 217},
+    {ARCADE, 75},
+    {ATARI_800, 43},
+    {ATARI_2600, 26},
+    {ATARI_5200, 40},
+    {ATARI_7800, 41},
+    {ATARI_JAGUAR, 27},
+    {ATARI_JAGUAR_CD, 171},
+    {ATARI_LYNX, 28},
+    {ATARI_ST, 42},
+    {ATARI_XE, 43},
+    {ATOMISWAVE, 53},
+    {BBC_MICRO, 37},
+    {CAVESTORY, 135},
+    {COLECOVISION, 48},
+    {COMMODORE_64, 66},
+    {COMMODORE_CDTV, 129},
+    {DAPHNE, 49},
+    {INTELLIVISION, 115},
+    {GAMEENGINE_LUTRO, 206},
+    {APPLE_MACINTOSH, 146},
+    {MICROSOFT_XBOX, 32},
+    {MICROSOFT_XBOX_360, 33},
+    {MOONLIGHT, 138},
+    {MSX, 113},
+    {MSX2, 116},
+    {MSX_TURBO_R, 118},
+    {SNK_NEO_GEO, 142},
+    {SNK_NEO_GEO_CD, 142},
+    {SNK_NEO_GEO_POCKET, 25},
+    {SNK_NEO_GEO_POCKET_COLOR, 82},
+    {NINTENDO_3DS, 17},
+    {NINTENDO_64, 14},
+    {NINTENDO_DS, 15},
+    {NINTENDO_FAMICOM, 3},
+    {NINTENDO_FAMICOM_DISK_SYSTEM, 106},
+    {NINTENDO_ENTERTAINMENT_SYSTEM, 3},
+    {FAIRCHILD_CHANNELF, 80},
+    {NINTENDO_GAME_BOY, 9},
+    {NINTENDO_GAME_BOY_ADVANCE, 12},
+    {NINTENDO_GAME_BOY_COLOR, 10},
+    {NINTENDO_GAMECUBE, 13},
+    {NINTENDO_WII, 16},
+    {NINTENDO_WII_U, 18},
+    {NINTENDO_VIRTUAL_BOY, 11},
+    {NINTENDO_GAME_AND_WATCH, 52},
+    {NINTENDO_POKEMON_MINI, 211},
+    {NINTENDO_SATELLAVIEW, 107},
+    {NINTENDO_SWITCH, 225},
+    {BANDAI_SUFAMI_TURBO, 108},
+    {DOS, 135},
+    {PC, 135},
+    {VALVE_STEAM, 135},
+    {NEC_PCFX, 72},
+    {GAMEENGINE_OPENBOR, 214},
+    {TANGERINE_ORIC, 131},
+    {GAMEENGINE_SCUMMVM, 123},
+    {SEGA_32X, 19},
+    {SEGA_CD, 20},
+    {SEGA_DREAMCAST, 23},
+    {SEGA_GAME_GEAR, 21},
+    {SEGA_GENESIS, 1},
+    {SEGA_MASTER_SYSTEM, 2},
+    {SEGA_MEGA_DRIVE, 1},
+    {SEGA_SATURN, 22},
+    {SEGA_SG1000, 109},
+    {SHARP_X1, 220},
+    {SHARP_X68000, 79},
+    {GAMEENGINE_SOLARUS, 223},
+    {SONY_PLAYSTATION, 57},
+    {SONY_PLAYSTATION_2, 58},
+    {SONY_PLAYSTATION_3, 59},
+    {SONY_PLAYSTATION_VITA, 62},
+    {SONY_PLAYSTATION_PORTABLE, 61},
+    {SAMCOUPE, 213},
+    {SUPER_NINTENDO, 4},
+    {NEC_SUPERGRAFX, 105},
+    {GAMEENGINE_TIC80, 222},
+    {NEC_PC_8800, 221},
+    {NEC_PC_9800, 208},
+    {NEC_PC_ENGINE, 31},
+    {NEC_PC_ENGINE_CD, 114},
+    {BANDAI_WONDERSWAN, 45},
+    {BANDAI_WONDERSWAN_COLOR, 46},
+    {SINCLAIR_ZX_SPECTRUM, 76},
+    {SINCLAIR_ZX81_SINCLAR, 77},
+    {VIDEOPAC_ODYSSEY2, 104},
+    {VECTREX, 102},
+    {TANDY_TRS80, 144},
+    {TANDY_COLOR_COMPUTER, 144},
+    {SEGA_NAOMI, 56},
+    {THOMSON_MOTO, 141},
+    {UZEBOX, 216},
+    {SPECTRAVIDEO, 218},
+    {PALM_OS, 219}};
 
 // Helper XML parsing method, finding a node-by-name recursively.
 pugi::xml_node find_node_by_name_re(const pugi::xml_node& node,
@@ -333,11 +332,10 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             Utils::String::toLower(Settings::getInstance()->getString("ScraperLanguage"));
 
         // Name fallback: US, WOR(LD). (Xpath: Data/jeu[0]/noms/nom[*]).
-        result.mdl.set("name",
-                       find_child_by_attribute_list(game.child("noms"), "nom", "region",
-                                                    { region, "wor", "us", "ss", "eu", "jp" })
-                           .text()
-                           .get());
+        result.mdl.set("name", find_child_by_attribute_list(game.child("noms"), "nom", "region",
+                                                            {region, "wor", "us", "ss", "eu", "jp"})
+                                   .text()
+                                   .get());
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " << result.mdl.get("name");
 
         // Validate rating.
@@ -360,7 +358,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 
         // Description fallback language: EN, WOR(LD).
         std::string description = find_child_by_attribute_list(game.child("synopsis"), "synopsis",
-                                                               "langue", { language, "en", "wor" })
+                                                               "langue", {language, "en", "wor"})
                                       .text()
                                       .get();
 
@@ -373,7 +371,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         // Get the date proper. The API returns multiple 'date' children nodes to the 'dates'
         // main child of 'jeu'. Date fallback: WOR(LD), US, SS, JP, EU.
         std::string _date = find_child_by_attribute_list(game.child("dates"), "date", "region",
-                                                         { region, "wor", "us", "ss", "jp", "eu" })
+                                                         {region, "wor", "us", "ss", "jp", "eu"})
                                 .text()
                                 .get();
 
@@ -411,10 +409,10 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
         }
 
         // Genre fallback language: EN. (Xpath: Data/jeu[0]/genres/genre[*]).
-        std::string genre = find_child_by_attribute_list(game.child("genres"), "genre", "langue",
-                                                         { language, "en" })
-                                .text()
-                                .get();
+        std::string genre =
+            find_child_by_attribute_list(game.child("genres"), "genre", "langue", {language, "en"})
+                .text()
+                .get();
         if (!genre.empty()) {
             result.mdl.set("genre", genre);
             LOG(LogDebug) << "ScreenScraperRequest::processGame(): Genre: "
@@ -482,8 +480,7 @@ void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
         }
         else {
             // Region fallback: WOR(LD), US, CUS(TOM?), JP, EU.
-            for (auto _region :
-                 std::vector<std::string> { region, "wor", "us", "cus", "jp", "eu" }) {
+            for (auto _region : std::vector<std::string>{region, "wor", "us", "cus", "jp", "eu"}) {
                 if (art)
                     break;
 

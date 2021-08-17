@@ -74,23 +74,23 @@ void SliderComponent::update(int deltaTime)
     GuiComponent::update(deltaTime);
 }
 
-void SliderComponent::render(const Transform4x4f& parentTrans)
+void SliderComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
     // Render suffix.
     if (mValueCache)
         mFont->renderTextCache(mValueCache.get());
 
-    float width =
-        mSize.x() - mKnob.getSize().x() -
-        (mValueCache ? mValueCache->metrics.size.x() + (4.0f * Renderer::getScreenWidthModifier()) :
-                       0);
+    float width{mSize.x - mKnob.getSize().x -
+                (mValueCache ?
+                     mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
+                     0.0f)};
 
     // Render line.
-    const float lineWidth = 2.0f * Renderer::getScreenHeightModifier();
-    Renderer::drawRect(mKnob.getSize().x() / 2.0f, mSize.y() / 2.0f - lineWidth / 2.0f, width,
+    const float lineWidth{2.0f * Renderer::getScreenHeightModifier()};
+    Renderer::drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - lineWidth / 2.0f, width,
                        lineWidth, 0x777777FF, 0x777777FF);
 
     // Render knob.
@@ -115,7 +115,7 @@ float SliderComponent::getValue() { return mValue; }
 void SliderComponent::onSizeChanged()
 {
     if (!mSuffix.empty())
-        mFont = Font::get(static_cast<int>(mSize.y()), FONT_PATH_LIGHT);
+        mFont = Font::get(static_cast<int>(mSize.y), FONT_PATH_LIGHT);
 
     onValueChanged();
 }
@@ -139,21 +139,21 @@ void SliderComponent::onValueChanged()
         ss << mSuffix;
         const std::string max = ss.str();
 
-        Vector2f textSize = mFont->sizeText(max);
+        glm::vec2 textSize = mFont->sizeText(max);
         mValueCache = std::shared_ptr<TextCache>(mFont->buildTextCache(
-            val, mSize.x() - textSize.x(), (mSize.y() - textSize.y()) / 2.0f, 0x777777FF));
-        mValueCache->metrics.size[0] = textSize.x(); // Fudge the width.
+            val, mSize.x - textSize.x, (mSize.y - textSize.y) / 2.0f, 0x777777FF));
+        mValueCache->metrics.size.x = textSize.x; // Fudge the width.
     }
 
     // Update knob position/size.
-    mKnob.setResize(0, mSize.y() * 0.7f);
+    mKnob.setResize(0, mSize.y * 0.7f);
     float lineLength =
-        mSize.x() - mKnob.getSize().x() -
-        (mValueCache ? mValueCache->metrics.size.x() + (4.0f * Renderer::getScreenWidthModifier()) :
-                       0);
+        mSize.x - mKnob.getSize().x -
+        (mValueCache ? mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
+                       0.0f);
 
-    mKnob.setPosition(((mValue - mMin / 2.0f) / mMax) * lineLength + mKnob.getSize().x() / 2.0f,
-                      mSize.y() / 2.0f);
+    mKnob.setPosition(((mValue - mMin / 2.0f) / mMax) * lineLength + mKnob.getSize().x / 2.0f,
+                      mSize.y / 2.0f);
 }
 
 std::vector<HelpPrompt> SliderComponent::getHelpPrompts()

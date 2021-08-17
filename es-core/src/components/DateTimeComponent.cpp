@@ -27,8 +27,8 @@ DateTimeComponent::DateTimeComponent(Window* window,
                                      const std::shared_ptr<Font>& font,
                                      unsigned int color,
                                      Alignment align,
-                                     Vector3f pos,
-                                     Vector2f size,
+                                     glm::vec3 pos,
+                                     glm::vec2 size,
                                      unsigned int bgcolor)
     : TextComponent(window, text, font, color, align, pos, size, bgcolor)
     , mDisplayRelative(false)
@@ -101,8 +101,9 @@ std::string DateTimeComponent::getDisplayString() const
     return Utils::Time::timeToString(mTime.getTime(), mFormat);
 }
 
-void DateTimeComponent::render(const Transform4x4f& parentTrans)
+void DateTimeComponent::render(const glm::mat4& parentTrans)
 {
+    // Render the component.
     TextComponent::render(parentTrans);
 }
 

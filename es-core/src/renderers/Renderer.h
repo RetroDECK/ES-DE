@@ -11,16 +11,12 @@
 
 #include "Log.h"
 #include "Shader_GL21.h"
-#include "math/Transform4x4f.h"
-#include "math/Vector2f.h"
+#include "math/Misc.h"
 
 #include <string>
 #include <vector>
 
 struct SDL_Window;
-
-class Transform4x4f;
-class Vector2i;
 
 namespace Renderer
 {
@@ -40,8 +36,8 @@ namespace Renderer
         unsigned int blurPasses;
 
         shaderParameters()
-            : textureSize({ 0.0f, 0.0f })
-            , textureCoordinates({ 0.0f, 0.0f, 0.0f, 0.0f })
+            : textureSize({0.0f, 0.0f})
+            , textureCoordinates({0.0f, 0.0f, 0.0f, 0.0f})
             , fragmentSaturation(1.0f)
             , fragmentDimValue(0.4f)
             , fragmentOpacity(1.0f)
@@ -52,7 +48,8 @@ namespace Renderer
 
     static std::vector<Shader*> sShaderProgramVector;
     static GLuint shaderFBO;
-    static Transform4x4f mProjectionMatrix;
+    static glm::mat4 mProjectionMatrix;
+    static constexpr glm::mat4 getIdentity() { return glm::mat4{1.0f}; }
 
 #if !defined(NDEBUG)
 #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
@@ -115,14 +112,14 @@ namespace Renderer
 
     struct Vertex {
         Vertex() {}
-        Vertex(const Vector2f& _pos, const Vector2f& _tex, const unsigned int _col)
+        Vertex(const glm::vec2& _pos, const glm::vec2& _tex, const unsigned int _col)
             : pos(_pos)
             , tex(_tex)
             , col(_col)
         {
         }
-        Vector2f pos;
-        Vector2f tex;
+        glm::vec2 pos;
+        glm::vec2 tex;
         unsigned int col;
         float saturation = 1.0;
         float opacity = 1.0;
@@ -131,7 +128,7 @@ namespace Renderer
 
     bool init();
     void deinit();
-    void pushClipRect(const Vector2i& _pos, const Vector2i& _size);
+    void pushClipRect(const glm::ivec2& _pos, const glm::ivec2& _size);
     void popClipRect();
     void drawRect(const float _x,
                   const float _y,
@@ -141,7 +138,7 @@ namespace Renderer
                   const unsigned int _colorEnd,
                   bool horizontalGradient = false,
                   const float _opacity = 1.0,
-                  const Transform4x4f& _trans = Transform4x4f::Identity(),
+                  const glm::mat4& _trans = getIdentity(),
                   const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
                   const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     SDL_Window* getSDLWindow();
@@ -160,7 +157,7 @@ namespace Renderer
     unsigned int convertABGRToRGBA(unsigned int color);
 
     Shader* getShaderProgram(unsigned int shaderID);
-    const Transform4x4f getProjectionMatrix();
+    const glm::mat4 getProjectionMatrix();
     void shaderPostprocessing(unsigned int shaders,
                               const Renderer::shaderParameters& parameters = shaderParameters(),
                               unsigned char* textureRGBA = nullptr);
@@ -191,12 +188,12 @@ namespace Renderer
                    const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     void drawTriangleStrips(const Vertex* _vertices,
                             const unsigned int _numVertices,
-                            const Transform4x4f& _trans = Transform4x4f::Identity(),
+                            const glm::mat4& _trans = getIdentity(),
                             const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
                             const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA,
                             const shaderParameters& _parameters = shaderParameters());
-    void setProjection(const Transform4x4f& _projection);
-    void setMatrix(const Transform4x4f& _matrix);
+    void setProjection(const glm::mat4& _projection);
+    void setMatrix(const glm::mat4& _matrix);
     void setViewport(const Rect& _viewport);
     void setScissor(const Rect& _scissor);
     void setSwapInterval();

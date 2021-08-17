@@ -10,7 +10,6 @@
 
 #include "Log.h"
 #include "Settings.h"
-#include "math/Transform4x4f.h"
 #include "renderers/Renderer.h"
 
 #include <SDL2/SDL.h>
@@ -91,7 +90,7 @@ namespace Renderer
                      << (extensions.find("GL_OES_texture_npot") != std::string::npos ? "OK" :
                                                                                        "MISSING");
 
-        uint8_t data[4] = { 255, 255, 255, 255 };
+        uint8_t data[4] = {255, 255, 255, 255};
         whiteTexture = createTexture(Texture::RGBA, false, true, 1, 1, data);
 
         GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
@@ -185,7 +184,7 @@ namespace Renderer
 
     void drawTriangleStrips(const Vertex* _vertices,
                             const unsigned int _numVertices,
-                            const Transform4x4f& _trans,
+                            const glm::mat4& _trans,
                             const Blend::Factor _srcBlendFactor,
                             const Blend::Factor _dstBlendFactor,
                             const shaderParameters& _parameters)
@@ -200,16 +199,16 @@ namespace Renderer
         GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
     }
 
-    void setProjection(const Transform4x4f& _projection)
+    void setProjection(const glm::mat4& _projection)
     {
         GL_CHECK_ERROR(glMatrixMode(GL_PROJECTION));
         GL_CHECK_ERROR(glLoadMatrixf((GLfloat*)&_projection));
     }
 
-    void setMatrix(const Transform4x4f& _matrix)
+    void setMatrix(const glm::mat4& _matrix)
     {
-        Transform4x4f matrix = _matrix;
-        matrix.round();
+        glm::mat4 matrix{_matrix};
+        matrix[3] = glm::round(matrix[3]);
 
         GL_CHECK_ERROR(glMatrixMode(GL_MODELVIEW));
         GL_CHECK_ERROR(glLoadMatrixf((GLfloat*)&matrix));

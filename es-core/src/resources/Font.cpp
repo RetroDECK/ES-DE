@@ -49,7 +49,7 @@ size_t Font::getMemUsage() const
 {
     size_t memUsage = 0;
     for (auto it = mTextures.cbegin(); it != mTextures.cend(); it++)
-        memUsage += it->textureSize.x() * it->textureSize.y() * 4;
+        memUsage += it->textureSize.x * it->textureSize.y * 4;
 
     for (auto it = mFaceCache.cbegin(); it != mFaceCache.cend(); it++)
         memUsage += it->second->data.length;
@@ -137,8 +137,8 @@ Font::FontTexture::FontTexture(const int mSize)
     // I'm not entirely sure if the 16 and 6 constants are correct, but they seem to provide
     // a texture buffer large enough to hold the fonts (otherwise the application would crash).
     // This logic is obviously a hack though and needs to be properly reviewed and improved.
-    textureSize = Vector2i(mSize * 16, mSize * 6);
-    writePos = Vector2i::Zero();
+    textureSize = glm::ivec2{mSize * 16, mSize * 6};
+    writePos = glm::ivec2{};
     rowHeight = 0;
 }
 
@@ -148,28 +148,30 @@ Font::FontTexture::~FontTexture()
     deinitTexture();
 }
 
-bool Font::FontTexture::findEmpty(const Vector2i& size, Vector2i& cursor_out)
+bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out)
 {
-    if (size.x() >= textureSize.x() || size.y() >= textureSize.y())
+    if (size.x >= textureSize.x || size.y >= textureSize.y)
         return false;
 
-    if (writePos.x() + size.x() >= textureSize.x() &&
-        writePos.y() + rowHeight + size.y() + 1 < textureSize.y()) {
+    if (writePos.x + size.x >= textureSize.x &&
+        writePos.y + rowHeight + size.y + 1 < textureSize.y) {
         // Row full, but it should fit on the next row so move the cursor there.
-        writePos = Vector2i(0, writePos.y() + rowHeight + 1); // Leave 1px of space between glyphs.
+        // Leave 1px of space between glyphs.
+        writePos = glm::ivec2{0, writePos.y + rowHeight + 1};
         rowHeight = 0;
     }
 
-    if (writePos.x() + size.x() >= textureSize.x() || writePos.y() + size.y() >= textureSize.y()) {
+    if (writePos.x + size.x >= textureSize.x || writePos.y + size.y >= textureSize.y) {
         // Nope, still won't fit.
         return false;
     }
 
     cursor_out = writePos;
-    writePos[0] += size.x() + 1; // Leave 1px of space between glyphs.
+    // Leave 1px of space between glyphs.
+    writePos.x += size.x + 1;
 
-    if (size.y() > rowHeight)
-        rowHeight = size.y();
+    if (size.y > rowHeight)
+        rowHeight = size.y;
 
     return true;
 }
@@ -177,8 +179,8 @@ bool Font::FontTexture::findEmpty(const Vector2i& size, Vector2i& cursor_out)
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
-    textureId = Renderer::createTexture(Renderer::Texture::ALPHA, false, false, textureSize.x(),
-                                        textureSize.y(), nullptr);
+    textureId = Renderer::createTexture(Renderer::Texture::ALPHA, false, false, textureSize.x,
+                                        textureSize.y, nullptr);
 }
 
 void Font::FontTexture::deinitTexture()
@@ -189,9 +191,9 @@ void Font::FontTexture::deinitTexture()
     }
 }
 
-void Font::getTextureForNewGlyph(const Vector2i& glyphSize,
+void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
                                  FontTexture*& tex_out,
-                                 Vector2i& cursor_out)
+                                 glm::ivec2& cursor_out)
 {
     if (mTextures.size()) {
         // Check if the most recent texture has space.
@@ -210,7 +212,7 @@ void Font::getTextureForNewGlyph(const Vector2i& glyphSize,
     bool ok = tex_out->findEmpty(glyphSize, cursor_out);
     if (!ok) {
         LOG(LogError) << "Glyph too big to fit on a new texture (glyph size > "
-                      << tex_out->textureSize.x() << ", " << tex_out->textureSize.y() << ")";
+                      << tex_out->textureSize.x << ", " << tex_out->textureSize.y << ")";
         tex_out = nullptr;
     }
 }
@@ -296,10 +298,10 @@ Font::Glyph* Font::getGlyph(unsigned int id)
         return nullptr;
     }
 
-    Vector2i glyphSize(g->bitmap.width, g->bitmap.rows);
+    glm::ivec2 glyphSize{g->bitmap.width, g->bitmap.rows};
 
     FontTexture* tex = nullptr;
-    Vector2i cursor;
+    glm::ivec2 cursor;
     getTextureForNewGlyph(glyphSize, tex, cursor);
 
     // getTextureForNewGlyph can fail if the glyph is bigger than the max texture
@@ -314,23 +316,23 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     Glyph& glyph = mGlyphMap[id];
 
     glyph.texture = tex;
-    glyph.texPos = Vector2f(cursor.x() / static_cast<float>(tex->textureSize.x()),
-                            cursor.y() / static_cast<float>(tex->textureSize.y()));
-    glyph.texSize = Vector2f(glyphSize.x() / static_cast<float>(tex->textureSize.x()),
-                             glyphSize.y() / static_cast<float>(tex->textureSize.y()));
+    glyph.texPos = glm::vec2{cursor.x / static_cast<float>(tex->textureSize.x),
+                             cursor.y / static_cast<float>(tex->textureSize.y)};
+    glyph.texSize = glm::vec2{glyphSize.x / static_cast<float>(tex->textureSize.x),
+                              glyphSize.y / static_cast<float>(tex->textureSize.y)};
 
-    glyph.advance = Vector2f(static_cast<float>(g->metrics.horiAdvance) / 64.0f,
-                             static_cast<float>(g->metrics.vertAdvance) / 64.0f);
-    glyph.bearing = Vector2f(static_cast<float>(g->metrics.horiBearingX) / 64.0f,
-                             static_cast<float>(g->metrics.horiBearingY) / 64.0f);
+    glyph.advance = glm::vec2{static_cast<float>(g->metrics.horiAdvance) / 64.0f,
+                              static_cast<float>(g->metrics.vertAdvance) / 64.0f};
+    glyph.bearing = glm::vec2{static_cast<float>(g->metrics.horiBearingX) / 64.0f,
+                              static_cast<float>(g->metrics.horiBearingY) / 64.0f};
 
     // Upload glyph bitmap to texture.
-    Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x(), cursor.y(),
-                            glyphSize.x(), glyphSize.y(), g->bitmap.buffer);
+    Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x, cursor.y,
+                            glyphSize.x, glyphSize.y, g->bitmap.buffer);
 
     // Update max glyph height.
-    if (glyphSize.y() > mMaxGlyphHeight)
-        mMaxGlyphHeight = glyphSize.y();
+    if (glyphSize.y > mMaxGlyphHeight)
+        mMaxGlyphHeight = glyphSize.y;
 
     // Done.
     return &glyph;
@@ -354,14 +356,14 @@ void Font::rebuildTextures()
         FontTexture* tex = it->second.texture;
 
         // Find the position/size.
-        Vector2i cursor(static_cast<int>(it->second.texPos.x() * tex->textureSize.x()),
-                        static_cast<int>(it->second.texPos.y() * tex->textureSize.y()));
-        Vector2i glyphSize(static_cast<int>(it->second.texSize.x() * tex->textureSize.x()),
-                           static_cast<int>(it->second.texSize.y() * tex->textureSize.y()));
+        glm::ivec2 cursor{static_cast<int>(it->second.texPos.x * tex->textureSize.x),
+                          static_cast<int>(it->second.texPos.y * tex->textureSize.y)};
+        glm::ivec2 glyphSize{static_cast<int>(it->second.texSize.x * tex->textureSize.x),
+                             static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
 
         // Upload to texture.
-        Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x(), cursor.y(),
-                                glyphSize.x(), glyphSize.y(), glyphSlot->bitmap.buffer);
+        Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x, cursor.y,
+                                glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
     }
 }
 
@@ -383,7 +385,7 @@ void Font::renderTextCache(TextCache* cache)
     }
 }
 
-Vector2f Font::sizeText(std::string text, float lineSpacing)
+glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 {
     float lineWidth = 0.0f;
     float highestWidth = 0.0f;
@@ -406,21 +408,21 @@ Vector2f Font::sizeText(std::string text, float lineSpacing)
 
         Glyph* glyph = getGlyph(character);
         if (glyph)
-            lineWidth += glyph->advance.x();
+            lineWidth += glyph->advance.x;
     }
 
     if (lineWidth > highestWidth)
         highestWidth = lineWidth;
 
-    return Vector2f(highestWidth, y);
+    return glm::vec2{highestWidth, y};
 }
 
 std::string Font::getTextMaxWidth(std::string text, float maxWidth)
 {
-    float width = sizeText(text).x();
+    float width = sizeText(text).x;
     while (width > maxWidth) {
         text.pop_back();
-        width = sizeText(text).x();
+        width = sizeText(text).x;
     }
     return text;
 }
@@ -435,7 +437,7 @@ float Font::getLetterHeight()
 {
     Glyph* glyph = getGlyph('S');
     assert(glyph);
-    return glyph->texSize.y() * glyph->texture->textureSize.y();
+    return glyph->texSize.y * glyph->texture->textureSize.y;
 }
 
 // Breaks up a normal string with newlines to make it fit xLen.
@@ -448,8 +450,8 @@ std::string Font::wrapText(std::string text, float xLen)
     std::string temp;
 
     size_t space;
-    Vector2f textSize;
-    float dotsSize = sizeText("...").x();
+    glm::vec2 textSize;
+    float dotsSize = sizeText("...").x;
 
     // While there's text or we still have text to render.
     while (text.length() > 0) {
@@ -465,7 +467,7 @@ std::string Font::wrapText(std::string text, float xLen)
         textSize = sizeText(temp);
 
         // If the word will fit on the line, add it to our line, and continue.
-        if (textSize.x() <= xLen) {
+        if (textSize.x <= xLen) {
             line = temp;
             continue;
         }
@@ -473,7 +475,7 @@ std::string Font::wrapText(std::string text, float xLen)
             // The next word won't fit, so break here.
 
             // If the word is too long to fit within xLen, then abbreviate it.
-            if (xLen > 0 && sizeText(word).x() > xLen) {
+            if (xLen > 0 && sizeText(word).x > xLen) {
                 float length = xLen - dotsSize;
                 if (length < 0)
                     length = 0;
@@ -495,16 +497,16 @@ std::string Font::wrapText(std::string text, float xLen)
     return out;
 }
 
-Vector2f Font::sizeWrappedText(std::string text, float xLen, float lineSpacing)
+glm::vec2 Font::sizeWrappedText(std::string text, float xLen, float lineSpacing)
 {
     text = wrapText(text, xLen);
     return sizeText(text, lineSpacing);
 }
 
-Vector2f Font::getWrappedTextCursorOffset(std::string text,
-                                          float xLen,
-                                          size_t stop,
-                                          float lineSpacing)
+glm::vec2 Font::getWrappedTextCursorOffset(std::string text,
+                                           float xLen,
+                                           size_t stop,
+                                           float lineSpacing)
 {
     std::string wrappedText = wrapText(text, xLen);
 
@@ -535,10 +537,10 @@ Vector2f Font::getWrappedTextCursorOffset(std::string text,
 
         Glyph* glyph = getGlyph(character);
         if (glyph)
-            lineWidth += glyph->advance.x();
+            lineWidth += glyph->advance.x;
     }
 
-    return Vector2f(lineWidth, y);
+    return glm::vec2{lineWidth, y};
 }
 
 //
@@ -560,7 +562,7 @@ float Font::getNewlineStartOffset(const std::string& text,
             return (xLen - sizeText(text.substr(charStart, endChar != std::string::npos ?
                                                                endChar - charStart :
                                                                endChar))
-                               .x()) /
+                               .x) /
                    2.0f;
         }
         case ALIGN_RIGHT: {
@@ -568,7 +570,7 @@ float Font::getNewlineStartOffset(const std::string& text,
             return xLen - (sizeText(text.substr(charStart, endChar != std::string::npos ?
                                                                endChar - charStart :
                                                                endChar))
-                               .x());
+                               .x);
         }
         default:
             return 0;
@@ -576,7 +578,7 @@ float Font::getNewlineStartOffset(const std::string& text,
 }
 
 TextCache* Font::buildTextCache(const std::string& text,
-                                Vector2f offset,
+                                glm::vec2 offset,
                                 unsigned int color,
                                 float xLen,
                                 Alignment alignment,
@@ -592,7 +594,7 @@ TextCache* Font::buildTextCache(const std::string& text,
         yBot = getHeight(1.5);
     }
     else {
-        yTop = getGlyph('S')->bearing.y();
+        yTop = getGlyph('S')->bearing.y;
         yBot = getHeight(lineSpacing);
     }
 
@@ -631,44 +633,41 @@ TextCache* Font::buildTextCache(const std::string& text,
         verts.resize(oldVertSize + 6);
         Renderer::Vertex* vertices = verts.data() + oldVertSize;
 
-        const float glyphStartX = x + glyph->bearing.x();
-        const Vector2i& textureSize = glyph->texture->textureSize;
+        const float glyphStartX{x + glyph->bearing.x};
+        const glm::ivec2& textureSize{glyph->texture->textureSize};
         const unsigned int convertedColor = Renderer::convertRGBAToABGR(color);
 
-        vertices[1] = { { glyphStartX, y - glyph->bearing.y() },
-                        { glyph->texPos.x(), glyph->texPos.y() },
-                        convertedColor };
-        vertices[2] = { { glyphStartX,
-                          y - glyph->bearing.y() + (glyph->texSize.y() * textureSize.y()) },
-                        { glyph->texPos.x(), glyph->texPos.y() + glyph->texSize.y() },
-                        convertedColor };
-        vertices[3] = { { glyphStartX + glyph->texSize.x() * textureSize.x(),
-                          y - glyph->bearing.y() },
-                        { glyph->texPos.x() + glyph->texSize.x(), glyph->texPos.y() },
-                        convertedColor };
-        vertices[4] = { { glyphStartX + glyph->texSize.x() * textureSize.x(),
-                          y - glyph->bearing.y() + (glyph->texSize.y() * textureSize.y()) },
-                        { glyph->texPos.x() + glyph->texSize.x(),
-                          glyph->texPos.y() + glyph->texSize.y() },
-                        convertedColor };
+        vertices[1] = {{glyphStartX, y - glyph->bearing.y},
+                       {glyph->texPos.x, glyph->texPos.y},
+                       convertedColor};
+        vertices[2] = {{glyphStartX, y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
+                       {glyph->texPos.x, glyph->texPos.y + glyph->texSize.y},
+                       convertedColor};
+        vertices[3] = {{glyphStartX + glyph->texSize.x * textureSize.x, y - glyph->bearing.y},
+                       {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y},
+                       convertedColor};
+        vertices[4] = {{glyphStartX + glyph->texSize.x * textureSize.x,
+                        y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
+                       {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y + glyph->texSize.y},
+                       convertedColor};
 
         // Round vertices.
         for (int i = 1; i < 5; i++)
-            vertices[i].pos.round();
+            vertices[i].pos = glm::round(vertices[i].pos);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
         vertices[0] = vertices[1];
         vertices[5] = vertices[4];
 
         // Advance.
-        x += glyph->advance.x();
+        x += glyph->advance.x;
     }
 
     // TextCache::CacheMetrics metrics = { sizeText(text, lineSpacing) };
 
     TextCache* cache = new TextCache();
     cache->vertexLists.resize(vertMap.size());
-    cache->metrics = { sizeText(text, lineSpacing) };
+    cache->metrics = {sizeText(text, lineSpacing)};
 
     unsigned int i = 0;
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); it++) {
@@ -689,7 +688,7 @@ TextCache* Font::buildTextCache(const std::string& text,
                                 float lineSpacing,
                                 bool noTopMargin)
 {
-    return buildTextCache(text, Vector2f(offsetX, offsetY), color, 0.0f, ALIGN_LEFT, lineSpacing,
+    return buildTextCache(text, glm::vec2{offsetX, offsetY}, color, 0.0f, ALIGN_LEFT, lineSpacing,
                           noTopMargin);
 }
 

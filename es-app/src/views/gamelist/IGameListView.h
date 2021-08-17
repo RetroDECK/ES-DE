@@ -54,7 +54,7 @@ public:
 
     virtual HelpStyle getHelpStyle() override;
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
 protected:
     FileData* mRoot;

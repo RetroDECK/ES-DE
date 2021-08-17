@@ -132,11 +132,11 @@ public:
     Vector4f& round();
     Vector4f& lerp(const Vector4f& _start, const Vector4f& _end, const float _fraction);
 
-    static const Vector4f Zero() { return { 0.0f, 0.0f, 0.0f, 0.0f }; }
-    static const Vector4f UnitX() { return { 1.0f, 0.0f, 0.0f, 0.0f }; }
-    static const Vector4f UnitY() { return { 0.0f, 1.0f, 0.0f, 0.0f }; }
-    static const Vector4f UnitZ() { return { 0.0f, 0.0f, 1.0f, 0.0f }; }
-    static const Vector4f UnitW() { return { 0.0f, 0.0f, 0.0f, 1.0f }; }
+    static const Vector4f Zero() { return {0.0f, 0.0f, 0.0f, 0.0f}; }
+    static const Vector4f UnitX() { return {1.0f, 0.0f, 0.0f, 0.0f}; }
+    static const Vector4f UnitY() { return {0.0f, 1.0f, 0.0f, 0.0f}; }
+    static const Vector4f UnitZ() { return {0.0f, 0.0f, 1.0f, 0.0f}; }
+    static const Vector4f UnitW() { return {0.0f, 0.0f, 0.0f, 1.0f}; }
 
 private:
     float mX;

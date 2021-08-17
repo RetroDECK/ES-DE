@@ -25,7 +25,7 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
     , mFirstRun(firstRun)
     , mForcedConfig(forcedConfig)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 5))
+    , mGrid(window, glm::ivec2{1, 5})
 {
     mHoldingConfig = nullptr;
     mHoldTime = 0;
@@ -38,7 +38,8 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
     mTitle =
         std::make_shared<TextComponent>(mWindow, firstRun ? "WELCOME" : "CONFIGURE INPUT DEVICE",
                                         Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true, Vector2i(1, 1), GridFlags::BORDER_BOTTOM);
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{1, 1},
+                   GridFlags::BORDER_BOTTOM);
 
     // Device info.
     std::stringstream deviceInfo;
@@ -54,7 +55,7 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
 
     mDeviceInfo = std::make_shared<TextComponent>(
         mWindow, deviceInfo.str(), Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
-    mGrid.setEntry(mDeviceInfo, Vector2i(0, 1), false, true);
+    mGrid.setEntry(mDeviceInfo, glm::ivec2{0, 1}, false, true);
 
     // Message.
     if (numDevices > 0) {
@@ -68,18 +69,18 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
             0x777777FF, ALIGN_CENTER);
     }
 
-    mGrid.setEntry(mMsg1, Vector2i(0, 2), false, true);
+    mGrid.setEntry(mMsg1, glm::ivec2{0, 2}, false, true);
 
     const std::string msg2str =
         firstRun ? "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" : "PRESS ESC TO CANCEL";
     mMsg2 = std::make_shared<TextComponent>(mWindow, msg2str, Font::get(FONT_SIZE_SMALL),
                                             0x777777FF, ALIGN_CENTER);
-    mGrid.setEntry(mMsg2, Vector2i(0, 3), false, true);
+    mGrid.setEntry(mMsg2, glm::ivec2{0, 3}, false, true);
 
     // Currently held device.
     mDeviceHeld = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
                                                   0xFFFFFFFF, ALIGN_CENTER);
-    mGrid.setEntry(mDeviceHeld, Vector2i(0, 4), false, true);
+    mGrid.setEntry(mDeviceHeld, glm::ivec2{0, 4}, false, true);
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
@@ -87,20 +88,20 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
     float width = Math::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.5f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 void GuiDetectDevice::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
     // Grid.
     mGrid.setSize(mSize);
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y());
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y);
     // mGrid.setRowHeightPerc(1, mDeviceInfo->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(2, mMsg1->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(3, mMsg2->getFont()->getHeight() / mSize.y());
+    mGrid.setRowHeightPerc(2, mMsg1->getFont()->getHeight() / mSize.y);
+    mGrid.setRowHeightPerc(3, mMsg2->getFont()->getHeight() / mSize.y);
     // mGrid.setRowHeightPerc(4, mDeviceHeld->getFont()->getHeight() / mSize.y());
 }
 

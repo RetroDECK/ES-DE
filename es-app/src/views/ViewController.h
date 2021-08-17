@@ -78,7 +78,7 @@ public:
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     enum ViewMode {
         NOTHING, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
@@ -152,7 +152,7 @@ private:
     FileData* mGameToLaunch;
     State mState;
 
-    Transform4x4f mCamera;
+    glm::mat4 mCamera;
     bool mSystemViewTransition;
     bool mWrappedViews;
     float mWrapPreviousPositionX;

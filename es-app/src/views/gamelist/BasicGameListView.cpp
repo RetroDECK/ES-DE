@@ -19,9 +19,9 @@ BasicGameListView::BasicGameListView(Window* window, FileData* root)
     : ISimpleGameListView(window, root)
     , mList(window)
 {
-    mList.setSize(mSize.x(), mSize.y() * 0.8f);
-    mList.setPosition(0, mSize.y() * 0.2f);
-    mList.setDefaultZIndex(20);
+    mList.setSize(mSize.x, mSize.y * 0.8f);
+    mList.setPosition(0.0f, mSize.y * 0.2f);
+    mList.setDefaultZIndex(20.0f);
     addChild(&mList);
 
     populateList(root->getChildrenListToDisplay(), root);

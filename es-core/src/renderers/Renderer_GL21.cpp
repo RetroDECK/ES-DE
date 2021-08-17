@@ -10,7 +10,6 @@
 
 #include "Settings.h"
 #include "Shader_GL21.h"
-#include "math/Transform4x4f.h"
 #include "renderers/Renderer.h"
 
 namespace Renderer
@@ -138,7 +137,7 @@ namespace Renderer
             return false;
         }
 
-        uint8_t data[4] = { 255, 255, 255, 255 };
+        uint8_t data[4] = {255, 255, 255, 255};
         whiteTexture = createTexture(Texture::RGBA, false, true, 1, 1, data);
 
         GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
@@ -239,7 +238,7 @@ namespace Renderer
 
     void drawTriangleStrips(const Vertex* _vertices,
                             const unsigned int _numVertices,
-                            const Transform4x4f& _trans,
+                            const glm::mat4& _trans,
                             const Blend::Factor _srcBlendFactor,
                             const Blend::Factor _dstBlendFactor,
                             const shaderParameters& _parameters)
@@ -302,7 +301,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setTextureSize({ width, height });
+                    runShader->setTextureSize({width, height});
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
                     runShader->deactivateShaders();
                 }
@@ -313,7 +312,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setTextureSize({ width, height });
+                    runShader->setTextureSize({width, height});
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
                     runShader->deactivateShaders();
                 }
@@ -344,7 +343,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setTextureSize({ shaderWidth, shaderHeight });
+                    runShader->setTextureSize({shaderWidth, shaderHeight});
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
                     runShader->deactivateShaders();
                 }
@@ -353,16 +352,16 @@ namespace Renderer
 #endif
     }
 
-    void setProjection(const Transform4x4f& _projection)
+    void setProjection(const glm::mat4& _projection)
     {
         GL_CHECK_ERROR(glMatrixMode(GL_PROJECTION));
         GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&_projection)));
     }
 
-    void setMatrix(const Transform4x4f& _matrix)
+    void setMatrix(const glm::mat4& _matrix)
     {
-        Transform4x4f matrix = _matrix;
-        matrix.round();
+        glm::mat4 matrix{_matrix};
+        matrix[3] = glm::round(matrix[3]);
 
         GL_CHECK_ERROR(glMatrixMode(GL_MODELVIEW));
         GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&matrix)));
@@ -448,7 +447,7 @@ namespace Renderer
         if (parameters.fragmentSaturation < 1.0)
             vertices[0].saturation = parameters.fragmentSaturation;
 
-        setMatrix(Transform4x4f::Identity());
+        setMatrix(getIdentity());
         GLuint screenTexture = createTexture(Texture::RGBA, false, false, width, height, nullptr);
 
         GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
@@ -475,7 +474,7 @@ namespace Renderer
                                                  GL_COLOR_BUFFER_BIT, GL_NEAREST));
 
                 // Apply/render the shaders.
-                drawTriangleStrips(vertices, 4, Transform4x4f::Identity(), Blend::SRC_ALPHA,
+                drawTriangleStrips(vertices, 4, getIdentity(), Blend::SRC_ALPHA,
                                    Blend::ONE_MINUS_SRC_ALPHA, parameters);
 
                 // If textureRGBA has an address, it means that the output should go to this

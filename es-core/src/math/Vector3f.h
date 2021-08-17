@@ -106,10 +106,10 @@ public:
     Vector3f& round();
     Vector3f& lerp(const Vector3f& _start, const Vector3f& _end, const float _fraction);
 
-    static const Vector3f Zero() { return { 0.0f, 0.0f, 0.0f }; }
-    static const Vector3f UnitX() { return { 1.0f, 0.0f, 0.0f }; }
-    static const Vector3f UnitY() { return { 0.0f, 1.0f, 0.0f }; }
-    static const Vector3f UnitZ() { return { 0.0f, 0.0f, 1.0f }; }
+    static const Vector3f Zero() { return {0.0f, 0.0f, 0.0f}; }
+    static const Vector3f UnitX() { return {1.0f, 0.0f, 0.0f}; }
+    static const Vector3f UnitY() { return {0.0f, 1.0f, 0.0f}; }
+    static const Vector3f UnitZ() { return {0.0f, 0.0f, 1.0f}; }
 
 private:
     float mX;

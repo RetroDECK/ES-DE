@@ -154,9 +154,9 @@ void DateTimeEditComponent::update(int deltaTime)
     GuiComponent::update(deltaTime);
 }
 
-void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
+void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     if (mTextCache) {
         std::shared_ptr<Font> font = getFont();
@@ -164,28 +164,28 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
 
         if (mAlignRight) {
             if (mTime != 0)
-                referenceSize = font->sizeText("ABCDEFG").x();
+                referenceSize = font->sizeText("ABCDEFG").x;
             else
-                referenceSize = font->sizeText("ABCDEIJ").x();
+                referenceSize = font->sizeText("ABCDEIJ").x;
         }
 
         // Vertically center.
-        Vector3f off(0, (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0.0f);
+        glm::vec3 off{0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
 
         if (mAlignRight)
-            off.x() += referenceSize - mTextCache->metrics.size.x();
-        trans.translate(off);
+            off.x += referenceSize - mTextCache->metrics.size.x;
+        trans = glm::translate(trans, off);
 
         Renderer::setMatrix(trans);
 
         if (Settings::getInstance()->getBool("DebugText")) {
             Renderer::setMatrix(trans);
-            if (mTextCache->metrics.size.x() > 0) {
-                Renderer::drawRect(0.0f, 0.0f - off.y(), mSize.x() - off.x(), mSize.y(), 0x0000FF33,
+            if (mTextCache->metrics.size.x > 0.0f) {
+                Renderer::drawRect(0.0f, 0.0f - off.y, mSize.x - off.x, mSize.y, 0x0000FF33,
                                    0x0000FF33);
             }
-            Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x(),
-                               mTextCache->metrics.size.y(), 0x00000033, 0x00000033);
+            Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
+                               0x00000033, 0x00000033);
         }
 
         mTextCache->setColor((mColor & 0xFFFFFF00) | getOpacity());
@@ -300,22 +300,22 @@ void DateTimeEditComponent::updateTextCache()
         return;
 
     // Year.
-    Vector2f start(0, 0);
-    Vector2f end = font->sizeText(dispString.substr(0, 4));
-    Vector2f diff = end - start;
-    mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
+    glm::vec2 start{};
+    glm::vec2 end{font->sizeText(dispString.substr(0, 4))};
+    glm::vec2 diff{end - start};
+    mCursorBoxes.push_back(glm::vec4{start[0], start[1], diff[0], diff[1]});
 
     // Month.
-    start[0] = font->sizeText(dispString.substr(0, 5)).x();
+    start[0] = font->sizeText(dispString.substr(0, 5)).x;
     end = font->sizeText(dispString.substr(0, 7));
     diff = end - start;
-    mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
+    mCursorBoxes.push_back(glm::vec4{start[0], start[1], diff[0], diff[1]});
 
     // Day.
-    start[0] = font->sizeText(dispString.substr(0, 8)).x();
+    start[0] = font->sizeText(dispString.substr(0, 8)).x;
     end = font->sizeText(dispString.substr(0, 10));
     diff = end - start;
-    mCursorBoxes.push_back(Vector4f(start[0], start[1], diff[0], diff[1]));
+    mCursorBoxes.push_back(glm::vec4{start[0], start[1], diff[0], diff[1]});
 
     // The logic for handling time for 'mode = DISP_DATE_TIME' is missing, but
     // nobody will use it anyway so it's not worthwhile implementing.

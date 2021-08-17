@@ -16,10 +16,10 @@
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
 
-#define ICON_TEXT_SPACING 8 // Space between [icon] and [text] (px).
-#define ENTRY_SPACING 16 // Space between [text] and next [icon] (px).
+#define ICON_TEXT_SPACING 8.0f // Space between [icon] and [text] (px).
+#define ENTRY_SPACING 16.0f // Space between [text] and next [icon] (px).
 
-static std::map<std::string, std::string> sIconPathMap {};
+static std::map<std::string, std::string> sIconPathMap{};
 
 HelpComponent::HelpComponent(Window* window)
     : GuiComponent(window)
@@ -114,7 +114,7 @@ void HelpComponent::updateGrid()
     std::shared_ptr<Font>& font = mStyle.font;
 
     mGrid = std::make_shared<ComponentGrid>(mWindow,
-                                            Vector2i(static_cast<int>(mPrompts.size()) * 4, 1));
+                                            glm::ivec2{static_cast<int>(mPrompts.size()) * 4, 1});
 
     // [icon] [spacer1] [text] [spacer2]
 
@@ -135,7 +135,7 @@ void HelpComponent::updateGrid()
                                                    font, mStyle.textColor);
         labels.push_back(lbl);
 
-        width += icon->getSize().x() + lbl->getSize().x() +
+        width += icon->getSize().x + lbl->getSize().x +
                  ((ICON_TEXT_SPACING + ENTRY_SPACING) * Renderer::getScreenWidthModifier());
     }
 
@@ -143,16 +143,16 @@ void HelpComponent::updateGrid()
 
     for (unsigned int i = 0; i < icons.size(); i++) {
         const int col = i * 4;
-        mGrid->setColWidthPerc(col, icons.at(i)->getSize().x() / width);
+        mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(col + 1,
                                (ICON_TEXT_SPACING * Renderer::getScreenWidthModifier()) / width);
-        mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x() / width);
+        mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
 
-        mGrid->setEntry(icons.at(i), Vector2i(col, 0), false, false);
-        mGrid->setEntry(labels.at(i), Vector2i(col + 2, 0), false, false);
+        mGrid->setEntry(icons.at(i), glm::ivec2{col, 0}, false, false);
+        mGrid->setEntry(labels.at(i), glm::ivec2{col + 2, 0}, false, false);
     }
 
-    mGrid->setPosition(Vector3f(mStyle.position.x(), mStyle.position.y(), 0.0f));
+    mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
     mGrid->setOrigin(mStyle.origin);
 }
 
@@ -187,9 +187,9 @@ void HelpComponent::setOpacity(unsigned char opacity)
         mGrid->getChild(i)->setOpacity(opacity);
 }
 
-void HelpComponent::render(const Transform4x4f& parentTrans)
+void HelpComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     if (mGrid)
         mGrid->render(trans);

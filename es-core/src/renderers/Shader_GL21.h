@@ -11,7 +11,7 @@
 
 #define GL_GLEXT_PROTOTYPES
 
-#include "math/Transform4x4f.h"
+#include "math/Misc.h"
 
 #if defined(_WIN64)
 #include <GL/glew.h>
@@ -45,7 +45,8 @@ namespace Renderer
         // Get references to the variables inside the compiled shaders.
         void getVariableLocations(GLuint programID);
         // One-way communication with the compiled shaders.
-        void setModelViewProjectionMatrix(Transform4x4f mvpMatrix);
+        void setModelViewProjectionMatrix(glm::mat4 mvpMatrix);
+
         void setTextureSize(std::array<GLfloat, 2> shaderVec2);
         void setTextureCoordinates(std::array<GLfloat, 4> shaderVec4);
         void setColor(std::array<GLfloat, 4> shaderVec4);

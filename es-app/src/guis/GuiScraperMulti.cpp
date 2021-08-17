@@ -28,7 +28,7 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
                                  bool approveResults)
     : GuiComponent(window)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 5))
+    , mGrid(window, glm::ivec2{1, 5})
     , mSearchQueue(searches)
     , mApproveResults(approveResults)
 {
@@ -47,15 +47,15 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     // Set up grid.
     mTitle = std::make_shared<TextComponent>(mWindow, "SCRAPING IN PROGRESS",
                                              Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true);
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
 
     mSystem = std::make_shared<TextComponent>(mWindow, "SYSTEM", Font::get(FONT_SIZE_MEDIUM),
                                               0x777777FF, ALIGN_CENTER);
-    mGrid.setEntry(mSystem, Vector2i(0, 1), false, true);
+    mGrid.setEntry(mSystem, glm::ivec2{0, 1}, false, true);
 
     mSubtitle = std::make_shared<TextComponent>(
         mWindow, "subtitle text", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
-    mGrid.setEntry(mSubtitle, Vector2i(0, 2), false, true);
+    mGrid.setEntry(mSubtitle, glm::ivec2{0, 2}, false, true);
 
     if (mApproveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
         mSearchComp = std::make_shared<GuiScraperSearch>(
@@ -70,7 +70,7 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
         std::bind(&GuiScraperMulti::acceptResult, this, std::placeholders::_1));
     mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));
     mSearchComp->setCancelCallback(std::bind(&GuiScraperMulti::finish, this));
-    mGrid.setEntry(mSearchComp, Vector2i(0, 3),
+    mGrid.setEntry(mSearchComp, glm::ivec2{0, 3},
                    mSearchComp->getSearchType() != GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT,
                    true);
 
@@ -102,7 +102,7 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
                                                         std::bind(&GuiScraperMulti::finish, this)));
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 4), true, false);
+    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 4}, true, false);
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
@@ -110,8 +110,8 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     float width = Math::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth();
 
     setSize(width, Renderer::getScreenHeight() * 0.849f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 
     doNextSearch();
 }
@@ -130,12 +130,12 @@ GuiScraperMulti::~GuiScraperMulti()
 
 void GuiScraperMulti::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y(), false);
-    mGrid.setRowHeightPerc(1, (mSystem->getFont()->getLetterHeight() + 2.0f) / mSize.y(), false);
-    mGrid.setRowHeightPerc(2, mSubtitle->getFont()->getHeight() * 1.75f / mSize.y(), false);
-    mGrid.setRowHeightPerc(4, mButtonGrid->getSize().y() / mSize.y(), false);
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y, false);
+    mGrid.setRowHeightPerc(1, (mSystem->getFont()->getLetterHeight() + 2.0f) / mSize.y, false);
+    mGrid.setRowHeightPerc(2, mSubtitle->getFont()->getHeight() * 1.75f / mSize.y, false);
+    mGrid.setRowHeightPerc(4, mButtonGrid->getSize().y / mSize.y, false);
     mGrid.setSize(mSize);
 }
 

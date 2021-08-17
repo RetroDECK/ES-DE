@@ -33,36 +33,36 @@ GuiInfoPopup::GuiInfoPopup(Window* window, std::string message, int duration)
     mSize = s->getSize();
 
     // Confirm that the size isn't larger than the screen width, otherwise cap it.
-    if (mSize.x() > maxWidth) {
-        s->setSize(maxWidth, mSize[1]);
-        mSize[0] = maxWidth;
+    if (mSize.x > maxWidth) {
+        s->setSize(maxWidth, mSize.y);
+        mSize.x = maxWidth;
     }
-    if (mSize.y() > maxHeight) {
-        s->setSize(mSize[0], maxHeight);
-        mSize[1] = maxHeight;
+    if (mSize.y > maxHeight) {
+        s->setSize(mSize.x, maxHeight);
+        mSize.y = maxHeight;
     }
 
     // Add a padding to the box.
     int paddingX = static_cast<int>(Renderer::getScreenWidth() * 0.03f);
     int paddingY = static_cast<int>(Renderer::getScreenHeight() * 0.02f);
-    mSize[0] = mSize.x() + paddingX;
-    mSize[1] = mSize.y() + paddingY;
+    mSize.x = mSize.x + paddingX;
+    mSize.y = mSize.y + paddingY;
 
-    float posX = Renderer::getScreenWidth() * 0.5f - mSize.x() * 0.5f;
+    float posX = Renderer::getScreenWidth() * 0.5f - mSize.x * 0.5f;
     float posY = Renderer::getScreenHeight() * 0.02f;
 
     setPosition(posX, posY, 0);
 
     mFrame->setImagePath(":/graphics/frame.svg");
-    mFrame->fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mFrame->fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
     addChild(mFrame);
 
     // We only initialize the actual time when we first start to render.
     mStartTime = 0;
 
-    mGrid = new ComponentGrid(window, Vector2i(1, 3));
+    mGrid = new ComponentGrid(window, glm::ivec2{1, 3});
     mGrid->setSize(mSize);
-    mGrid->setEntry(s, Vector2i(0, 1), false, true);
+    mGrid->setEntry(s, glm::ivec2{0, 1}, false, true);
     addChild(mGrid);
 }
 
@@ -72,10 +72,10 @@ GuiInfoPopup::~GuiInfoPopup()
     delete mFrame;
 }
 
-void GuiInfoPopup::render(const Transform4x4f& /*parentTrans*/)
+void GuiInfoPopup::render(const glm::mat4& /*parentTrans*/)
 {
-    // We use Identity() as we want to render on a specific window position, not on the view.
-    Transform4x4f trans = getTransform() * Transform4x4f::Identity();
+    // We use getIdentity() as we want to render on a specific window position, not on the view.
+    glm::mat4 trans{getTransform() * Renderer::getIdentity()};
     if (mRunning && updateState()) {
         // If we're still supposed to be rendering it.
         Renderer::setMatrix(trans);

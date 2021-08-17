@@ -87,9 +87,9 @@ public:
     Vector2f& round();
     Vector2f& lerp(const Vector2f& _start, const Vector2f& _end, const float _fraction);
 
-    static const Vector2f Zero() { return { 0.0f, 0.0f }; }
-    static const Vector2f UnitX() { return { 1.0f, 0.0f }; }
-    static const Vector2f UnitY() { return { 0.0f, 1.0f }; }
+    static const Vector2f Zero() { return {0.0f, 0.0f}; }
+    static const Vector2f UnitX() { return {1.0f, 0.0f}; }
+    static const Vector2f UnitY() { return {0.0f, 1.0f}; }
 
 private:
     float mX;

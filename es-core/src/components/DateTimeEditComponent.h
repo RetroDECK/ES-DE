@@ -34,7 +34,7 @@ public:
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     unsigned int getColor() const override { return mColor; }
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     void onSizeChanged() override;
 
     // Set how the point in time will be displayed:
@@ -82,7 +82,7 @@ private:
     int mRelativeUpdateAccumulator;
 
     std::unique_ptr<TextCache> mTextCache;
-    std::vector<Vector4f> mCursorBoxes;
+    std::vector<glm::vec4> mCursorBoxes;
 
     unsigned int mColor;
     Utils::Time::DateTime mOriginalValue;

@@ -28,18 +28,18 @@ ISimpleGameListView::ISimpleGameListView(Window* window, FileData* root)
     , mRandomGame(nullptr)
 {
     mHeaderText.setText("Logo Text");
-    mHeaderText.setSize(mSize.x(), 0);
-    mHeaderText.setPosition(0, 0);
+    mHeaderText.setSize(mSize.x, 0.0f);
+    mHeaderText.setPosition(0.0f, 0.0f);
     mHeaderText.setHorizontalAlignment(ALIGN_CENTER);
-    mHeaderText.setDefaultZIndex(50);
+    mHeaderText.setDefaultZIndex(50.0f);
 
-    mHeaderImage.setResize(0, mSize.y() * 0.185f);
+    mHeaderImage.setResize(0.0f, mSize.y * 0.185f);
     mHeaderImage.setOrigin(0.5f, 0.0f);
-    mHeaderImage.setPosition(mSize.x() / 2, 0);
-    mHeaderImage.setDefaultZIndex(50);
+    mHeaderImage.setPosition(mSize.x / 2.0f, 0.0f);
+    mHeaderImage.setDefaultZIndex(50.0f);
 
-    mBackground.setResize(mSize.x(), mSize.y());
-    mBackground.setDefaultZIndex(0);
+    mBackground.setResize(mSize.x, mSize.y);
+    mBackground.setDefaultZIndex(0.0f);
 
     addChild(&mHeaderText);
     addChild(&mBackground);

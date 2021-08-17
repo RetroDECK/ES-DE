@@ -14,15 +14,15 @@
 #include "resources/TextureResource.h"
 #include "utils/CImgUtil.h"
 
-Vector2i ImageComponent::getTextureSize() const
+glm::ivec2 ImageComponent::getTextureSize() const
 {
     if (mTexture)
         return mTexture->getSize();
     else
-        return Vector2i::Zero();
+        return glm::ivec2{};
 }
 
-Vector2f ImageComponent::getSize() const
+glm::vec2 ImageComponent::getSize() const
 {
     return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
 }
@@ -53,8 +53,8 @@ void ImageComponent::resize()
     if (!mTexture)
         return;
 
-    const Vector2f textureSize = mTexture->getSourceImageSize();
-    if (textureSize == Vector2f::Zero())
+    const glm::vec2 textureSize{mTexture->getSourceImageSize()};
+    if (textureSize == glm::vec2{})
         return;
 
     if (mTexture->isTiled()) {
@@ -71,70 +71,69 @@ void ImageComponent::resize()
         if (mTargetIsMax) {
             mSize = textureSize;
 
-            Vector2f resizeScale((mTargetSize.x() / mSize.x()), (mTargetSize.y() / mSize.y()));
+            glm::vec2 resizeScale{(mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y)};
 
-            if (resizeScale.x() < resizeScale.y()) {
-                // This will be mTargetSize.x(). We can't exceed it, nor be lower than it.
-                mSize[0] *= resizeScale.x();
+            if (resizeScale.x < resizeScale.y) {
+                // This will be mTargetSize.x. We can't exceed it, nor be lower than it.
+                mSize.x *= resizeScale.x;
                 // We need to make sure we're not creating an image larger than max size.
-                mSize[1] = std::min(floorf(mSize[1] *= resizeScale.x()), mTargetSize.y());
+                mSize.y = std::min(floorf(mSize.y *= resizeScale.x), mTargetSize.y);
             }
             else {
                 // This will be mTargetSize.y(). We can't exceed it.
-                mSize[1] = floorf(mSize[1] * resizeScale.y());
+                mSize.y = floorf(mSize.y * resizeScale.y);
                 // For SVG rasterization, always calculate width from rounded height (see comment
                 // above). We need to make sure we're not creating an image larger than max size.
-                mSize[0] =
-                    std::min((mSize[1] / textureSize.y()) * textureSize.x(), mTargetSize.x());
+                mSize.x = std::min((mSize.y / textureSize.y) * textureSize.x, mTargetSize.x);
             }
         }
         else if (mTargetIsMin) {
             mSize = textureSize;
 
-            Vector2f resizeScale((mTargetSize.x() / mSize.x()), (mTargetSize.y() / mSize.y()));
+            glm::vec2 resizeScale{(mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y)};
 
-            if (resizeScale.x() > resizeScale.y()) {
-                mSize[0] *= resizeScale.x();
-                mSize[1] *= resizeScale.x();
+            if (resizeScale.x > resizeScale.y) {
+                mSize.x *= resizeScale.x;
+                mSize.y *= resizeScale.x;
 
-                float cropPercent = (mSize.y() - mTargetSize.y()) / (mSize.y() * 2);
-                crop(0, cropPercent, 0, cropPercent);
+                float cropPercent = (mSize.y - mTargetSize.y) / (mSize.y * 2.0f);
+                crop(0.0f, cropPercent, 0.0f, cropPercent);
             }
             else {
-                mSize[0] *= resizeScale.y();
-                mSize[1] *= resizeScale.y();
+                mSize.x *= resizeScale.y;
+                mSize.y *= resizeScale.y;
 
-                float cropPercent = (mSize.x() - mTargetSize.x()) / (mSize.x() * 2);
-                crop(cropPercent, 0, cropPercent, 0);
+                float cropPercent = (mSize.x - mTargetSize.x) / (mSize.x * 2.0f);
+                crop(cropPercent, 0.0f, cropPercent, 0.0f);
             }
             // For SVG rasterization, always calculate width from rounded height (see comment
             // above). We need to make sure we're not creating an image smaller than min size.
-            mSize[1] = std::max(floorf(mSize[1]), mTargetSize.y());
-            mSize[0] = std::max((mSize[1] / textureSize.y()) * textureSize.x(), mTargetSize.x());
+            mSize.y = std::max(floorf(mSize.y), mTargetSize.y);
+            mSize.x = std::max((mSize.y / textureSize.y) * textureSize.x, mTargetSize.x);
         }
         else {
             // If both components are set, we just stretch.
             // If no components are set, we don't resize at all.
-            mSize = mTargetSize == Vector2f::Zero() ? textureSize : mTargetSize;
+            mSize = mTargetSize == glm::vec2{} ? textureSize : mTargetSize;
 
             // If only one component is set, we resize in a way that maintains aspect ratio.
             // For SVG rasterization, we always calculate width from rounded height (see
             // comment above).
-            if (!mTargetSize.x() && mTargetSize.y()) {
-                mSize[1] = floorf(mTargetSize.y());
-                mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
+            if (!mTargetSize.x && mTargetSize.y) {
+                mSize.y = floorf(mTargetSize.y);
+                mSize.x = (mSize.y / textureSize.y) * textureSize.x;
             }
-            else if (mTargetSize.x() && !mTargetSize.y()) {
-                mSize[1] = floorf((mTargetSize.x() / textureSize.x()) * textureSize.y());
-                mSize[0] = (mSize.y() / textureSize.y()) * textureSize.x();
+            else if (mTargetSize.x && !mTargetSize.y) {
+                mSize.y = floorf((mTargetSize.x / textureSize.x) * textureSize.y);
+                mSize.x = (mSize.y / textureSize.y) * textureSize.x;
             }
         }
     }
 
-    mSize[0] = floorf(mSize.x());
-    mSize[1] = floorf(mSize.y());
+    mSize.x = floorf(mSize.x);
+    mSize.y = floorf(mSize.y);
     // mSize.y() should already be rounded.
-    mTexture->rasterizeAt(static_cast<size_t>(mSize.x()), static_cast<size_t>(mSize.y()));
+    mTexture->rasterizeAt(static_cast<size_t>(mSize.x), static_cast<size_t>(mSize.y));
 
     onSizeChanged();
 }
@@ -178,7 +177,7 @@ void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture)
 
 void ImageComponent::setResize(float width, float height)
 {
-    mTargetSize = Vector2f(width, height);
+    mTargetSize = glm::vec2{width, height};
     mTargetIsMax = false;
     mTargetIsMin = false;
     resize();
@@ -186,7 +185,7 @@ void ImageComponent::setResize(float width, float height)
 
 void ImageComponent::setMaxSize(float width, float height)
 {
-    mTargetSize = Vector2f(width, height);
+    mTargetSize = glm::vec2{width, height};
     mTargetIsMax = true;
     mTargetIsMin = false;
     resize();
@@ -194,7 +193,7 @@ void ImageComponent::setMaxSize(float width, float height)
 
 void ImageComponent::setMinSize(float width, float height)
 {
-    mTargetSize = Vector2f(width, height);
+    mTargetSize = glm::vec2{width, height};
     mTargetIsMax = false;
     mTargetIsMin = true;
     resize();
@@ -203,25 +202,25 @@ void ImageComponent::setMinSize(float width, float height)
 void ImageComponent::cropLeft(float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
-    mTopLeftCrop.x() = percent;
+    mTopLeftCrop.x = percent;
 }
 
 void ImageComponent::cropTop(float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
-    mTopLeftCrop.y() = percent;
+    mTopLeftCrop.y = percent;
 }
 
 void ImageComponent::cropRight(float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
-    mBottomRightCrop.x() = 1.0f - percent;
+    mBottomRightCrop.x = 1.0f - percent;
 }
 
 void ImageComponent::cropBot(float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
-    mBottomRightCrop.y() = 1.0f - percent;
+    mBottomRightCrop.y = 1.0f - percent;
 }
 
 void ImageComponent::crop(float left, float top, float right, float bot)
@@ -235,12 +234,12 @@ void ImageComponent::crop(float left, float top, float right, float bot)
 void ImageComponent::uncrop()
 {
     // Remove any applied crop.
-    crop(0, 0, 0, 0);
+    crop(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
 {
-    if (mSize == 0)
+    if (mSize == glm::vec2{})
         return;
 
     std::vector<unsigned char> imageRGBA = mTexture.get()->getRawRGBAData();
@@ -248,10 +247,10 @@ void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
     if (imageRGBA.size() == 0)
         return;
 
-    Vector2i imageSize = mTexture.get()->getSize();
-    cimg_library::CImg<unsigned char> imageCImg(imageSize.x(), imageSize.y(), 1, 4, 0);
+    glm::ivec2 imageSize{mTexture.get()->getSize()};
+    cimg_library::CImg<unsigned char> imageCImg(imageSize.x, imageSize.y, 1, 4, 0);
 
-    int paddingCoords[4] = {};
+    int paddingCoords[4]{};
 
     // We need to convert our RGBA data to the CImg internal format as CImg does not interleave
     // the pixels (as in RGBARGBARGBA).
@@ -260,36 +259,36 @@ void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
     // This will give us the coordinates for the fully transparent areas.
     Utils::CImg::getTransparentPaddingCoords(imageCImg, paddingCoords);
 
-    Vector2f originalSize = mSize;
+    glm::vec2 originalSize{mSize};
 
-    float cropLeft = static_cast<float>(paddingCoords[0]) / static_cast<float>(imageSize.x());
-    float cropTop = static_cast<float>(paddingCoords[1]) / static_cast<float>(imageSize.y());
-    float cropRight = static_cast<float>(paddingCoords[2]) / static_cast<float>(imageSize.x());
-    float cropBottom = static_cast<float>(paddingCoords[3]) / static_cast<float>(imageSize.y());
+    float cropLeft{static_cast<float>(paddingCoords[0]) / static_cast<float>(imageSize.x)};
+    float cropTop{static_cast<float>(paddingCoords[1]) / static_cast<float>(imageSize.y)};
+    float cropRight{static_cast<float>(paddingCoords[2]) / static_cast<float>(imageSize.x)};
+    float cropBottom{static_cast<float>(paddingCoords[3]) / static_cast<float>(imageSize.y)};
 
     crop(cropLeft, cropTop, cropRight, cropBottom);
 
     // Cropping the image obviously leads to a reduction in size, so we need to determine
     // how much to scale up after cropping to keep within the max size restrictions that
     // were passed as arguments.
-    mSize.x() -= mSize.x() * (cropLeft + cropRight);
-    mSize.y() -= mSize.y() * (cropTop + cropBottom);
+    mSize.x -= mSize.x * (cropLeft + cropRight);
+    mSize.y -= mSize.y * (cropTop + cropBottom);
 
-    float scaleFactor = originalSize.y() / mSize.y();
+    float scaleFactor = originalSize.y / mSize.y;
 
-    if (scaleFactor * mSize.x() < maxSizeX)
-        scaleFactor = maxSizeX / mSize.x();
+    if (scaleFactor * mSize.x < maxSizeX)
+        scaleFactor = maxSizeX / mSize.x;
 
-    if (scaleFactor * mSize.y() < maxSizeY)
-        scaleFactor = maxSizeY / mSize.y();
+    if (scaleFactor * mSize.y < maxSizeY)
+        scaleFactor = maxSizeY / mSize.y;
 
-    if (scaleFactor * mSize.x() > maxSizeX)
-        scaleFactor = maxSizeX / mSize.x();
+    if (scaleFactor * mSize.x > maxSizeX)
+        scaleFactor = maxSizeX / mSize.x;
 
-    if (scaleFactor * mSize.y() > maxSizeY)
-        scaleFactor = maxSizeY / mSize.y();
+    if (scaleFactor * mSize.y > maxSizeY)
+        scaleFactor = maxSizeY / mSize.y;
 
-    setResize(mSize.x() * scaleFactor, mSize.y() * scaleFactor);
+    setResize(mSize.x * scaleFactor, mSize.y * scaleFactor);
     updateVertices();
 }
 
@@ -343,23 +342,23 @@ void ImageComponent::updateVertices()
 
     // We go through this mess to make sure everything is properly rounded.
     // If we just round vertices at the end, edge cases occur near sizes of 0.5.
-    const Vector2f topLeft = { 0, 0 };
-    const Vector2f bottomRight = mSize;
-    const float px = mTexture->isTiled() ? mSize.x() / getTextureSize().x() : 1.0f;
-    const float py = mTexture->isTiled() ? mSize.y() / getTextureSize().y() : 1.0f;
+    const glm::vec2 topLeft{};
+    const glm::vec2 bottomRight{mSize};
+    const float px{mTexture->isTiled() ? mSize.x / getTextureSize().x : 1.0f};
+    const float py{mTexture->isTiled() ? mSize.y / getTextureSize().y : 1.0f};
 
     // clang-format off
-    mVertices[0] = { { topLeft.x(),     topLeft.y()     }, { mTopLeftCrop.x(),          py   - mTopLeftCrop.y()     }, 0 };
-    mVertices[1] = { { topLeft.x(),     bottomRight.y() }, { mTopLeftCrop.x(),          1.0f - mBottomRightCrop.y() }, 0 };
-    mVertices[2] = { { bottomRight.x(), topLeft.y()     }, { mBottomRightCrop.x() * px, py   - mTopLeftCrop.y()     }, 0 };
-    mVertices[3] = { { bottomRight.x(), bottomRight.y() }, { mBottomRightCrop.x() * px, 1.0f - mBottomRightCrop.y() }, 0 };
+    mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
+    mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
+    mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
+    mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
     // clang-format on
 
     updateColors();
 
     // Round vertices.
     for (int i = 0; i < 4; i++)
-        mVertices[i].pos.round();
+        mVertices[i].pos = glm::round(mVertices[i].pos);
 
     if (mFlipX) {
         for (int i = 0; i < 4; i++)
@@ -387,23 +386,23 @@ void ImageComponent::updateColors()
     mVertices[3].col = colorEnd;
 }
 
-void ImageComponent::render(const Transform4x4f& parentTrans)
+void ImageComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
     if (mTexture && mOpacity > 0) {
         if (Settings::getInstance()->getBool("DebugImage")) {
-            Vector2f targetSizePos = (mTargetSize - mSize) * mOrigin * -1;
-            Renderer::drawRect(targetSizePos.x(), targetSizePos.y(), mTargetSize.x(),
-                               mTargetSize.y(), 0xFF000033, 0xFF000033);
-            Renderer::drawRect(0.0f, 0.0f, mSize.x(), mSize.y(), 0xFF000033, 0xFF000033);
+            glm::vec2 targetSizePos{(mTargetSize - mSize) * mOrigin * glm::vec2{-1.0f}};
+            Renderer::drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
+                               0xFF000033, 0xFF000033);
+            Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
         }
         // An image with zero size would normally indicate a corrupt image file.
-        if (mTexture->isInitialized() && mTexture->getSize() != 0) {
+        if (mTexture->isInitialized() && mTexture->getSize() != glm::ivec2{}) {
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just
@@ -483,17 +482,17 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    Vector2f scale = getParent() ? getParent()->getSize() :
-                                   Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                                            static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 scale{getParent() ? getParent()->getSize() :
+                                  glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
+                                            static_cast<float>(Renderer::getScreenHeight()))};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size"))
-            setResize(elem->get<Vector2f>("size") * scale);
+            setResize(elem->get<glm::vec2>("size") * scale);
         else if (elem->has("maxSize"))
-            setMaxSize(elem->get<Vector2f>("maxSize") * scale);
+            setMaxSize(elem->get<glm::vec2>("maxSize") * scale);
         else if (elem->has("minSize"))
-            setMinSize(elem->get<Vector2f>("minSize") * scale);
+            setMinSize(elem->get<glm::vec2>("minSize") * scale);
     }
 
     if (elem->has("default"))

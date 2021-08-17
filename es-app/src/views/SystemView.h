@@ -34,18 +34,18 @@ struct SystemViewData {
 
 struct SystemViewCarousel {
     CarouselType type;
-    Vector2f pos;
-    Vector2f size;
-    Vector2f origin;
+    glm::vec2 pos;
+    glm::vec2 size;
+    glm::vec2 origin;
     float logoScale;
     float logoRotation;
-    Vector2f logoRotationOrigin;
+    glm::vec2 logoRotationOrigin;
     Alignment logoAlignment;
     unsigned int color;
     unsigned int colorEnd;
     bool colorGradientHorizontal;
     int maxLogoCount; // Number of logos shown on the carousel.
-    Vector2f logoSize;
+    glm::vec2 logoSize;
     float zIndex;
 };
 
@@ -62,7 +62,7 @@ public:
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
@@ -81,13 +81,17 @@ protected:
 private:
     void populate();
     void updateGameCount();
+    //  Get the ThemeElements that make up the SystemView.
     void getViewElements(const std::shared_ptr<ThemeData>& theme);
+    // Populate the system carousel with the legacy values.
     void getDefaultElements(void);
     void getCarouselFromTheme(const ThemeData::ThemeElement* elem);
 
-    void renderCarousel(const Transform4x4f& parentTrans);
-    void renderExtras(const Transform4x4f& parentTrans, float lower, float upper);
-    void renderFade(const Transform4x4f& trans);
+    //  Render system carousel.
+    void renderCarousel(const glm::mat4& parentTrans);
+    // Draw background extras.
+    void renderExtras(const glm::mat4& parentTrans, float lower, float upper);
+    void renderFade(const glm::mat4& trans);
 
     SystemViewCarousel mCarousel;
     TextComponent mSystemInfo;

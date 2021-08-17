@@ -50,7 +50,7 @@ void GuiGamelistFilter::initializeMenu()
 
     mMenu.addButton("BACK", "back", std::bind(&GuiGamelistFilter::applyFilters, this));
 
-    mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2.0f,
+    mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x) / 2.0f,
                       Renderer::getScreenHeight() * 0.13f);
 
     // Save the initial filter values to be able to check later if any changes were made.
@@ -101,12 +101,12 @@ void GuiGamelistFilter::addFiltersToMenu()
         row.addElement(mTextFilterField, true);
 
         auto spacer = std::make_shared<GuiComponent>(mWindow);
-        spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
+        spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
         row.addElement(spacer, false);
 
         auto bracket = std::make_shared<ImageComponent>(mWindow);
         bracket->setImage(":/graphics/arrow.svg");
-        bracket->setResize(Vector2f(0, lbl->getFont()->getLetterHeight()));
+        bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
         row.addElement(bracket, false);
 
         mTextFilterField->setValue(mFilterIndex->getTextFilter());

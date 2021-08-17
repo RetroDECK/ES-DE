@@ -13,11 +13,11 @@
 #include "NinePatchComponent.h"
 
 struct GridTileProperties {
-    Vector2f mSize;
-    Vector2f mPadding;
+    glm::vec2 mSize;
+    glm::vec2 mPadding;
     unsigned int mImageColor;
     std::string mBackgroundImage;
-    Vector2f mBackgroundCornerSize;
+    glm::vec2 mBackgroundCornerSize;
     unsigned int mBackgroundCenterColor;
     unsigned int mBackgroundEdgeColor;
 };
@@ -27,7 +27,7 @@ class GridTileComponent : public GuiComponent
 public:
     GridTileComponent(Window* window);
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,
                             const std::string& element,
@@ -35,8 +35,8 @@ public:
 
     // Made this a static function because the ImageGridComponent needs to know the default tile
     // max size to calculate the grid dimension before it instantiates the GridTileComponents.
-    static Vector2f getDefaultTileSize();
-    Vector2f getSelectedTileSize() const;
+    static glm::vec2 getDefaultTileSize();
+    glm::vec2 getSelectedTileSize() const;
     bool isSelected() const;
 
     void reset() { setImage(""); }
@@ -45,13 +45,13 @@ public:
     void setImage(const std::shared_ptr<TextureResource>& texture);
     void setSelected(bool selected,
                      bool allowAnimation = true,
-                     Vector3f* pPosition = nullptr,
+                     glm::vec3* pPosition = nullptr,
                      bool force = false);
     void setVisible(bool visible);
 
-    void forceSize(Vector2f size, float selectedZoom);
+    void forceSize(glm::vec2 size, float selectedZoom);
 
-    Vector3f getBackgroundPosition();
+    glm::vec3 getBackgroundPosition();
 
     virtual void update(int deltaTime) override;
 
@@ -73,7 +73,7 @@ private:
     bool mSelected;
     bool mVisible;
 
-    Vector3f mAnimPosition;
+    glm::vec3 mAnimPosition;
 };
 
 #endif // ES_CORE_COMPONENTS_GRID_TILE_COMPONENT_H

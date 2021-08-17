@@ -11,8 +11,6 @@
 #define ES_CORE_RESOURCES_FONT_H
 
 #include "ThemeData.h"
-#include "math/Vector2f.h"
-#include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
 
@@ -54,7 +52,7 @@ public:
     static std::shared_ptr<Font> get(int size, const std::string& path = getDefaultPath());
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
-    Vector2f sizeText(std::string text, float lineSpacing = 1.5f);
+    glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
 
     // Returns the portion of a string that fits within the passed argument maxWidth.
     std::string getTextMaxWidth(std::string text, float maxWidth);
@@ -67,7 +65,7 @@ public:
                               bool noTopMargin = false);
 
     TextCache* buildTextCache(const std::string& text,
-                              Vector2f offset,
+                              glm::vec2 offset,
                               unsigned int color,
                               float xLen,
                               Alignment alignment = ALIGN_LEFT,
@@ -80,13 +78,13 @@ public:
     std::string wrapText(std::string text, float xLen);
 
     // Returns the expected size of a string after wrapping is applied.
-    Vector2f sizeWrappedText(std::string text, float xLen, float lineSpacing = 1.5f);
+    glm::vec2 sizeWrappedText(std::string text, float xLen, float lineSpacing = 1.5f);
 
     // Returns the position of the cursor after moving a "cursor" amount of characters.
-    Vector2f getWrappedTextCursorOffset(std::string text,
-                                        float xLen,
-                                        size_t cursor,
-                                        float lineSpacing = 1.5f);
+    glm::vec2 getWrappedTextCursorOffset(std::string text,
+                                         float xLen,
+                                         size_t cursor,
+                                         float lineSpacing = 1.5f);
 
     float getHeight(float lineSpacing = 1.5f) const;
     float getLetterHeight();
@@ -115,14 +113,14 @@ private:
 
     struct FontTexture {
         unsigned int textureId;
-        Vector2i textureSize;
+        glm::ivec2 textureSize;
 
-        Vector2i writePos;
+        glm::ivec2 writePos;
         int rowHeight;
 
         FontTexture(const int mSize);
         ~FontTexture();
-        bool findEmpty(const Vector2i& size, Vector2i& cursor_out);
+        bool findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out);
 
         // You must call initTexture() after creating a FontTexture to get a textureId.
         // Initializes the OpenGL texture according to this FontTexture's settings,
@@ -147,9 +145,9 @@ private:
 
     std::vector<FontTexture> mTextures;
 
-    void getTextureForNewGlyph(const Vector2i& glyphSize,
+    void getTextureForNewGlyph(const glm::ivec2& glyphSize,
                                FontTexture*& tex_out,
-                               Vector2i& cursor_out);
+                               glm::ivec2& cursor_out);
 
     std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
     FT_Face getFaceForChar(unsigned int id);
@@ -158,11 +156,11 @@ private:
     struct Glyph {
         FontTexture* texture;
 
-        Vector2f texPos;
-        Vector2f texSize; // In texels!
+        glm::vec2 texPos;
+        glm::vec2 texSize; // In texels.
 
-        Vector2f advance;
-        Vector2f bearing;
+        glm::vec2 advance;
+        glm::vec2 bearing;
     };
 
     std::map<unsigned int, Glyph> mGlyphMap;
@@ -202,7 +200,7 @@ protected:
 
 public:
     struct CacheMetrics {
-        Vector2f size;
+        glm::vec2 size;
     } metrics;
 
     void setColor(unsigned int color);

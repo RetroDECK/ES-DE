@@ -19,7 +19,7 @@ public:
     SwitchComponent(Window* window, bool state = false);
 
     bool input(InputConfig* config, Input input) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     void onSizeChanged() override { mImage.setSize(mSize); }
 
     void setResize(float width, float height) override { mImage.setResize(width, height); }

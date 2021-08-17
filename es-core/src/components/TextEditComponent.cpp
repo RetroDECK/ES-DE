@@ -28,7 +28,7 @@ TextEditComponent::TextEditComponent(Window* window)
 {
     addChild(&mBox);
     onFocusLost();
-    mResolutionAdjustment = -(34 * Renderer::getScreenWidthModifier() - 34);
+    mResolutionAdjustment = -(34.0f * Renderer::getScreenWidthModifier() - 34.0f);
     setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()));
 }
 
@@ -46,9 +46,9 @@ void TextEditComponent::onFocusLost()
 
 void TextEditComponent::onSizeChanged()
 {
-    mBox.fitTo(mSize, Vector3f::Zero(),
-               Vector2f(-34 + mResolutionAdjustment,
-                        -32 - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())));
+    mBox.fitTo(mSize, glm::vec3{},
+               glm::vec2{-34.0f + mResolutionAdjustment,
+                         -32.0f - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())});
     onTextChanged(); // Wrap point probably changed.
 }
 
@@ -239,10 +239,9 @@ void TextEditComponent::setCursor(size_t pos)
 
 void TextEditComponent::onTextChanged()
 {
-    std::string wrappedText =
-        (isMultiline() ? mFont->wrapText(mText, getTextAreaSize().x()) : mText);
+    std::string wrappedText = (isMultiline() ? mFont->wrapText(mText, getTextAreaSize().x) : mText);
     mTextCache = std::unique_ptr<TextCache>(
-        mFont->buildTextCache(wrappedText, 0, 0, 0x77777700 | getOpacity()));
+        mFont->buildTextCache(wrappedText, 0.0f, 0.0f, 0x77777700 | getOpacity()));
 
     if (mCursor > static_cast<int>(mText.length()))
         mCursor = static_cast<unsigned int>(mText.length());
@@ -251,44 +250,45 @@ void TextEditComponent::onTextChanged()
 void TextEditComponent::onCursorChanged()
 {
     if (isMultiline()) {
-        Vector2f textSize =
-            mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x(), mCursor);
+        glm::vec2 textSize{mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor)};
 
         // Need to scroll down?
-        if (mScrollOffset.y() + getTextAreaSize().y() < textSize.y() + mFont->getHeight())
-            mScrollOffset[1] = textSize.y() - getTextAreaSize().y() + mFont->getHeight();
+        if (mScrollOffset.y + getTextAreaSize().y < textSize.y + mFont->getHeight())
+            mScrollOffset.y = textSize.y - getTextAreaSize().y + mFont->getHeight();
         // Need to scroll up?
-        else if (mScrollOffset.y() > textSize.y())
-            mScrollOffset[1] = textSize.y();
+        else if (mScrollOffset.y > textSize.y)
+            mScrollOffset.y = textSize.y;
     }
     else {
-        Vector2f cursorPos = mFont->sizeText(mText.substr(0, mCursor));
+        glm::vec2 cursorPos{mFont->sizeText(mText.substr(0, mCursor))};
 
-        if (mScrollOffset.x() + getTextAreaSize().x() < cursorPos.x())
-            mScrollOffset[0] = cursorPos.x() - getTextAreaSize().x();
-        else if (mScrollOffset.x() > cursorPos.x())
-            mScrollOffset[0] = cursorPos.x();
+        if (mScrollOffset.x + getTextAreaSize().x < cursorPos.x)
+            mScrollOffset.x = cursorPos.x - getTextAreaSize().x;
+        else if (mScrollOffset.x > cursorPos.x)
+            mScrollOffset.x = cursorPos.x;
     }
 }
 
-void TextEditComponent::render(const Transform4x4f& parentTrans)
+void TextEditComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = getTransform() * parentTrans;
+    glm::mat4 trans{getTransform() * parentTrans};
     renderChildren(trans);
 
     // Text + cursor rendering.
     // Offset into our "text area" (padding).
-    trans.translation() += Vector3f(getTextAreaPos().x(), getTextAreaPos().y(), 0);
+    trans = glm::translate(trans, glm::vec3{getTextAreaPos().x, getTextAreaPos().y, 0.0f});
 
-    Vector2i clipPos(static_cast<int>(trans.translation().x()),
-                     static_cast<int>(trans.translation().y()));
+    glm::ivec2 clipPos{static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)};
     // Use "text area" size for clipping.
-    Vector3f dimScaled = trans * Vector3f(getTextAreaSize().x(), getTextAreaSize().y(), 0);
-    Vector2i clipDim(static_cast<int>((dimScaled.x()) - trans.translation().x()),
-                     static_cast<int>((dimScaled.y()) - trans.translation().y()));
+    glm::vec3 dimScaled{};
+    dimScaled.x = std::fabs(trans[3].x + getTextAreaSize().x);
+    dimScaled.y = std::fabs(trans[3].y + getTextAreaSize().y);
+
+    glm::ivec2 clipDim{static_cast<int>(dimScaled.x - trans[3].x),
+                       static_cast<int>(dimScaled.y - trans[3].y)};
     Renderer::pushClipRect(clipPos, clipDim);
 
-    trans.translate(Vector3f(-mScrollOffset.x(), -mScrollOffset.y(), 0));
+    trans = glm::translate(trans, glm::vec3{-mScrollOffset.x, -mScrollOffset.y, 0.0f});
     Renderer::setMatrix(trans);
 
     if (mTextCache)
@@ -299,9 +299,9 @@ void TextEditComponent::render(const Transform4x4f& parentTrans)
 
     // Draw cursor.
     if (mEditing) {
-        Vector2f cursorPos;
+        glm::vec2 cursorPos;
         if (isMultiline()) {
-            cursorPos = mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x(), mCursor);
+            cursorPos = mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor);
         }
         else {
             cursorPos = mFont->sizeText(mText.substr(0, mCursor));
@@ -309,24 +309,24 @@ void TextEditComponent::render(const Transform4x4f& parentTrans)
         }
 
         float cursorHeight = mFont->getHeight() * 0.8f;
-        Renderer::drawRect(
-            cursorPos.x(), cursorPos.y() + (mFont->getHeight() - cursorHeight) / 2.0f,
-            2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x000000FF, 0x000000FF);
+        Renderer::drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+                           2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x000000FF,
+                           0x000000FF);
     }
 }
 
-Vector2f TextEditComponent::getTextAreaPos() const
+glm::vec2 TextEditComponent::getTextAreaPos() const
 {
-    return Vector2f(
+    return glm::vec2{
         (-mResolutionAdjustment + (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier())) / 2.0f,
-        (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f);
+        (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f};
 }
 
-Vector2f TextEditComponent::getTextAreaSize() const
+glm::vec2 TextEditComponent::getTextAreaSize() const
 {
-    return Vector2f(mSize.x() + mResolutionAdjustment -
-                        (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()),
-                    mSize.y() - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()));
+    return glm::vec2{mSize.x + mResolutionAdjustment -
+                         (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()),
+                     mSize.y - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())};
 }
 
 std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()

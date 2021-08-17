@@ -10,10 +10,11 @@
 #define ES_CORE_MATH_MISC_H
 
 #include <algorithm>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/trigonometric.hpp>
 
-#define ES_PI (3.1415926535897932384626433832795028841971693993751058209749445923)
-#define ES_RAD_TO_DEG(_x) ((_x) * (180.0 / ES_PI))
-#define ES_DEG_TO_RAD(_x) ((_x) * (ES_PI / 180.0))
+#include <glm/gtc/round.hpp>
 
 namespace Math
 {
