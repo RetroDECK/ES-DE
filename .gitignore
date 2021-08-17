@@ -76,6 +76,3 @@ CPackSourceConfig.cmake
 
 # VSCode
 .vscode/
-
-# Modern theme source files
-themes/modern-DE/art-src
