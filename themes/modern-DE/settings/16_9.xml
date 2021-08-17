@@ -1,0 +1,85 @@
+<!--
+theme name:		Switch
+version:		2.0
+author:			Lilbud
+email:			bvw20002010@gmail.com
+license:		creative commons CC-BY-NC-SA
+based on:       Switch Theme for Launchbox by Grila
+-->
+
+<theme>
+	<formatVersion>4</formatVersion>
+	
+	<view name="system">
+		
+		<image name="gamelistbuttons, systembuttons" extra="true">
+			<pos>0.958 0.95</pos>
+			<origin>1.0 0.5</origin>
+			<size>0.53 0.036</size>	
+		</image>
+		
+		<image name="arrowblock" extra="true">
+			<size>0.023 0.047</size>
+		</image>	
+		
+		<text name="system_name_1" extra="true">
+			<size>0.743 0.015</size>
+			<pos>0.063 0.235</pos>
+		</text>
+	
+	</view>
+	
+	<view name="system, basic, detailed, video">
+		
+		<image name="gamelistbuttons, systembuttons" extra="true">
+			<pos>0.958 0.95</pos>
+			<origin>1.0 0.5</origin>
+			<size>0.53 0.036</size>	
+		</image>
+	
+	</view>
+	
+	<view name="detailed, video">	
+
+<!-------------PLAYERS------------------->		
+		<text name="md_lbl_players">
+			<pos>0.657 0.336</pos>
+		</text>
+		
+		<text name="md_players">
+			<pos>0.72 0.3307</pos>
+		</text>
+<!-------------GENRE--------------------->		
+		<text name="md_lbl_genre">
+			<pos>0.657 0.287</pos>
+		</text>
+		
+		<text name="md_genre">
+			<pos>0.711 0.2805</pos>
+		</text>
+<!-------------DEVELOPER----------------->		
+		<text name="md_lbl_developer">
+			<pos>0.657 0.189</pos>
+		</text>
+		
+		<text name="md_developer">
+			<pos>0.740 0.196</pos>
+			<size>0.2 0.028</size>
+		</text>
+<!-------------RELEASE------------------->		
+		<datetime name="md_releasedate">
+			<pos>0.731 0.232</pos>
+		</datetime>
+		
+		<text name="md_lbl_releasedate">
+			<pos>0.657 0.238</pos>
+		</text>
+<!-------------LAST PLAYED--------------->		
+		<datetime name="md_lastplayed">
+			<pos>1 1</pos>
+		</datetime>
+
+</view>
+</theme>
+		
+		
