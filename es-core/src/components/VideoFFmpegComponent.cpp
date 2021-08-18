@@ -6,6 +6,8 @@
 //  Video player based on FFmpeg.
 //
 
+#define DEBUG_VIDEO false
+
 #include "components/VideoFFmpegComponent.h"
 
 #include "AudioManager.h"
@@ -13,7 +15,7 @@
 #include "Window.h"
 #include "resources/TextureResource.h"
 
-#define DEBUG_VIDEO false
+#include <algorithm>
 
 enum AVHWDeviceType VideoFFmpegComponent::sDeviceType = AV_HWDEVICE_TYPE_NONE;
 enum AVPixelFormat VideoFFmpegComponent::sPixelFormat = AV_PIX_FMT_NONE;
@@ -146,10 +148,10 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         }
 
         // clang-format off
-        vertices[0] = {{0.0f     , 0.0f   }, {0.0f, 0.0f}, color};
-        vertices[1] = {{0.0f     , mSize.y}, {0.0f, 1.0f}, color};
-        vertices[2] = {{mSize.x  , 0.0f   }, {1.0f, 0.0f}, color};
-        vertices[3] = {{mSize.x  , mSize.y}, {1.0f, 1.0f}, color};
+        vertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, color};
+        vertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, color};
+        vertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, color};
+        vertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, color};
         // clang-format on
 
         // Round vertices.
