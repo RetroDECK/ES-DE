@@ -7,6 +7,10 @@
 //  Convert characters to Unicode, upper-/lowercase conversion, string formatting etc.
 //
 
+#if defined(_MSC_VER) // MSVC compiler.
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+#endif
+
 #include "utils/StringUtil.h"
 
 #include <algorithm>

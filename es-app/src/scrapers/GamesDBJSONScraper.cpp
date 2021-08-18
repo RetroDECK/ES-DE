@@ -7,6 +7,10 @@
 //  Called from Scraper.
 //
 
+#if defined(_MSC_VER) // MSVC compiler.
+#define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+#endif
+
 #include "scrapers/GamesDBJSONScraper.h"
 #include "scrapers/GamesDBJSONScraperResources.h"
 
