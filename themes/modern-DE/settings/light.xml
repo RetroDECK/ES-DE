@@ -34,7 +34,12 @@ based on:       Switch Theme for Launchbox by Grila
 	</view>
 		
 	<view name="system, basic, detailed, video">
-		
+
+		<helpsystem name="help">
+			<textColor>22222200</textColor>
+			<iconColor>222222ff</iconColor>
+		</helpsystem>
+
 		<image name="background">
 			<color>${backgroundColor}</color>
 		</image>

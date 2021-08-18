@@ -1,25 +1,25 @@
 <!--
-theme name:		Switch
-version:		3.0
-author:			Lilbud
-email:			bvw20002010@gmail.com
+theme name:		Modern-DE
+version:		4.0
+author:			Sophia Hadash
+email:			sophiahadash@gmail.com
 license:		creative commons CC-BY-NC-SA
-based on:       Switch Theme for Launchbox by Grila
+based on:       Switch Theme by Lilbud
 -->
 
 <theme>
-	<formatVersion>4</formatVersion>
-	
+	<formatVersion>6</formatVersion>
+
 	<!--Choose Aspect Ratio (16_9, 4_3)-->
 	<include>./settings/16_9.xml</include>
-	<!----------------------------------->	
-	
+
+	<!--Choose Theme Color (light or dark)-->
+	<include>./settings/light.xml</include>
+
 	<variables>
-			<mainFont>./assets/Oxygen-Regular.ttf</mainFont>
+		<mainFont>./assets/Oxygen-Regular.ttf</mainFont>
 	</variables>
-	
-	<include>./config.xml</include>
-	
+	<include>./navigationsounds.xml</include>
 
 	<view name="system">
 		
@@ -47,12 +47,12 @@ based on:       Switch Theme for Launchbox by Grila
     <view name="system, basic, detailed, video">
 
 		<helpsystem name="help">
-			<textColor>22222200</textColor>
-			<iconColor>22222200</iconColor>
-			<pos>1 1</pos>
-			
+			<pos>0.96 0.935</pos>
+			<origin>1 0</origin>
+			<fontPath>./assets/fonts/nswitchui.ttf</fontPath>
+			<fontSize>0.035f</fontSize>
 		</helpsystem>
-		
+
 		<image name="background" extra="true">
 			<pos>0 0</pos>
 			<tile>true</tile>
@@ -75,7 +75,6 @@ based on:       Switch Theme for Launchbox by Grila
 		
 		<textlist name="gamelist">
 			<fontPath>${mainFont}</fontPath>
-			<scrollSound>./assets/Move.wav</scrollSound>
 			<fontSize>0.028</fontSize>
 			<horizontalMargin>0.01</horizontalMargin>
 			<lineSpacing>2.3</lineSpacing>

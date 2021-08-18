@@ -33,7 +33,12 @@ based on:       Switch Theme for Launchbox by Grila
 	</view>
 		
 	<view name="system, basic, detailed, video">
-		
+
+		<helpsystem name="help">
+			<textColor>fefefe00</textColor>
+			<iconColor>fefefeff</iconColor>
+		</helpsystem>
+
 		<image name="background">
 			<color>${backgroundColor}</color>
 		</image>
