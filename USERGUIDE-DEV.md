@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - User guide (development version)
+# EmulationStation Desktop Edition (ES-DE) v1.2 (development version) - User guide
 
 This document is intended as a quick start guide and as a reference for the application settings and general functionality. For details on how to build ES-DE from source code and to perform more advanced configuration, please refer to [INSTALL-DEV.md](INSTALL-DEV.md).
 
@@ -25,6 +25,7 @@ For additional details, read on below.
 
 There are also installation videos available at the ES-DE YouTube channel:\
 [https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
+
 
 ## Installation and first startup
 
@@ -78,7 +79,7 @@ On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<user
 
 It's also possible to override the home directory path using the --home command line option, but this is normally required only for very special situations so we can safely ignore that option for now.
 
-Also on first startup the configuration file `es_settings.xml` will be generated in the ES-DE home directory, containing all the application settings at their default values. Following this, a file named `es_systems.xml` will be loaded from the resources directory (which is part of the ES-DE installation). This file contains the game system definitions including which emulator to use per platform, and it can be customized if needed. The customized version needs to be placed in the `custom_systems` folder in the ES-DE home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`. You can find information on how to customize the systems configuration file in the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) document.
+Also on first startup the configuration file `es_settings.xml` will be generated in the ES-DE home directory, containing all the application settings at their default values. Following this, a file named `es_systems.xml` will be loaded from the resources directory (which is part of the ES-DE installation). This file contains the game system definitions including which emulator to use per platform. The systems configuration file can be customized, as described in the next section.
 
 There's an application log file created in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
@@ -125,6 +126,11 @@ There will be a lot of directories created if using the es_systems.xml file bund
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
+## Customizing the systems configuration file
+
+The `es_systems.xml` file is located in the ES-DE resources directory which is part of the application installation. As such this file is not intended to be modified directly. If a customized file is needed, this should instead be placed in the `custom_systems` folder in the ES-DE home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`. You can find information on the file structure and how to adapt the configuration in the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) document.
+
+
 ## Migrating from other EmulationStation forks
 
 **IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!**
@@ -137,6 +143,7 @@ Due to this, always make backups of at least the following directories before te
 ~/.emulationstation/gameslists/
 ~/.emulationstation/collections/
 ```
+
 
 ## Running on high resolution displays
 
@@ -159,6 +166,7 @@ If you have issues with your input configuration, as a last resort you can reset
 
 If you experience double button presses with your DualShock 4 controller on macOS, please read about the workaround for this issue in the [Known issues](CHANGELOG.md#known-issues) section of the changelog.
 
+
 ## System view (main screen)
 
 When starting ES-DE with the default settings, you will see the System view first. From here you can navigate your game systems and enter their respective gamelists.
@@ -169,6 +177,7 @@ The game systems are sorted by their full names, as defined in the es_systems.xm
 
 ![alt text](images/current/es-de_system_view.png "ES-DE System View")
 _The **System view** is the default starting point for the application, it's here that you browse through your game systems._
+
 
 ## Gamelist view
 
@@ -190,6 +199,7 @@ _The **Gamelist view** is where you browse the games for a specific system._
 ![alt text](images/current/es-de_basic_view_style.png "ES-DE Basic View Style")
 _Here's an example of what the Basic view style looks like. Needless to say, ES-DE is not intended to be used like this. After scraping some game media for the system, the view style will automatically change to Detailed or Video (assuming the Automatic view style option has been selected)._
 
+
 ## UI modes
 
 ES-DE supports three separate modes, **Full**, **Kiosk** and **Kid**.
@@ -203,6 +213,7 @@ These modes mandate the functionalty provided by the application in the followin
 There is an unlock code available to revert to the Full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A** (or equivalent buttons if an Xbox controller is not used). Either the keyboard or a controller can be used to input the passkey sequence, but it can't be entered when a menu is open.
 
 The application can also be forced into any of the three modes via the command line options `--force-full`, `--force-kiosk` and `--force-kid`. This is only temporary until the restart of the application, unless the settings menu is entered and the setting is saved to the configuration file (this assumes that the main menu is available in the selected UI mode of course).
+
 
 ## Help system
 

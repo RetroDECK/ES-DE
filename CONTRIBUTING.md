@@ -33,7 +33,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Improved full-screen support, removing the temporary full-screen hacks
 * On-screen keyboard
 * Support for the Raspberry Pi 4 with OpenGL ES 2.0 and GLSL shaders (Raspberry Pi OS)
-* Add GLM library dependency for matrix and vector operations, start to decommission the built-in functions
+* Add GLM library dependency for matrix and vector operations, decommission the built-in functions
 * Add to more Linux repositories, BSD ports collections etc.
 * Flatpak and Snap releases on Linux
 
@@ -90,6 +90,7 @@ But as clang-format won't change the actual code content or fix all code style c
 * As a general rule, use C++ syntax instead of C syntax, for example `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
 * Always declare one variable per line, never combine multiple declarations of the same type
 * Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables starting with an `s` such as `sMyStaticVariable`
+* Use braced initializations when possible, e.g. `float myFloat{1.5f}` as this is generally the safest way to do it
 * Short function definitions can be placed in either the .h or .cpp file depending on the situation
 * Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
 * Try to be coherent with the existing codebase regarding names, structure etc., it should not be obvious what person wrote which parts

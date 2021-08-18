@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - Building and advanced configuration (development version)
+# EmulationStation Desktop Edition (ES-DE) v1.2 (development version) - Building and advanced configuration
 
 **Note:** This is a quite technical document intended for those that are interested in compiling ES-DE from source code, or would like to customize the configuration. If you just want to start using the software, check out [USERGUIDE-DEV.md](USERGUIDE-DEV.md) instead.
 
