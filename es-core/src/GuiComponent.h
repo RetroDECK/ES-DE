@@ -57,7 +57,7 @@ public:
     // By default, just calls renderChildren(parentTrans * getTransform())
     // Normally the following steps are required:
     // 1. Calculate the new transform that your component will draw at
-    //    glm::mat4 trans {parentTrans * getTransform()};
+    //    glm::mat4 trans{parentTrans * getTransform()};
     // 2. Set the renderer to use that new transform as the model matrix
     //    Renderer::setMatrix(trans);
     // 3. Draw your component
