@@ -190,7 +190,6 @@ private:
     int mVideoPlayerCount;
     std::mutex mVideoCountMutex;
 
-    unsigned char mTopOpacity;
     float mTopScale;
     bool mRenderedHelpPrompts;
     bool mChangedThemeSet;

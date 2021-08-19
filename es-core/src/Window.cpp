@@ -45,7 +45,6 @@ Window::Window()
     , mCachedBackground(false)
     , mInvalidatedCachedBackground(false)
     , mVideoPlayerCount(0)
-    , mTopOpacity(0)
     , mTopScale(0.5)
     , mListScrollOpacity(0)
     , mChangedThemeSet(false)
@@ -229,6 +228,20 @@ void Window::input(InputConfig* config, Input input)
     if (input.value != 0 && isScreensaverActive()) {
         stopScreensaver();
         return;
+    }
+
+    if (config->isMappedTo("a", input) && input.value != 0 &&
+        Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up" && mTopScale < 1.0f &&
+        mGuiStack.size() == 2) {
+        // The user has entered a submenu when the initial menu screen has not finished scaling
+        // up. So scale it to full size so it won't be stuck at a smaller size when returning
+        // from the submenu.
+        mTopScale = 1.0f;
+        GuiComponent* menu = mGuiStack.back();
+        glm::vec2 menuCenter{menu->getCenter()};
+        menu->setOrigin(0.5f, 0.5f);
+        menu->setPosition(menuCenter.x, menuCenter.y, 0.0f);
+        menu->setScale(1.0f);
     }
 
     if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_g &&
@@ -475,8 +488,8 @@ void Window::render()
                 if (mTopScale < 1.0f) {
                     mTopScale = glm::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
                     glm::vec2 topCenter{top->getCenter()};
-                    top->setOrigin({0.5f, 0.5f});
-                    top->setPosition({topCenter.x, topCenter.y, 0.0f});
+                    top->setOrigin(0.5f, 0.5f);
+                    top->setPosition(topCenter.x, topCenter.y, 0.0f);
                     top->setScale(mTopScale);
                 }
             }
@@ -486,7 +499,6 @@ void Window::render()
         }
         else {
             mCachedBackground = false;
-            mTopOpacity = 0;
             mTopScale = 0.5f;
         }
     }
