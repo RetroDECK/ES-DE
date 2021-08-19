@@ -287,8 +287,6 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         SystemData::sSystemVector.size() > 1)
         prompts.push_back(HelpPrompt("left/right", "system"));
 
-    prompts.push_back(HelpPrompt("up/down", "choose"));
-
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::get()->getState().viewing == ViewController::GAME_LIST)
         prompts.push_back(HelpPrompt("a", "enter"));
