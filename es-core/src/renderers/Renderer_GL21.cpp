@@ -281,7 +281,7 @@ namespace Renderer
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
                     vertices->opacity < 1.0f ? runShader->setOpacity(vertices->opacity) :
-                                                runShader->setOpacity(parameters.fragmentOpacity);
+                                               runShader->setOpacity(parameters.fragmentOpacity);
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
