@@ -29,6 +29,7 @@ public:
                                                 bool tile = false,
                                                 bool forceLoad = false,
                                                 bool dynamic = true,
+                                                bool linearMagnify = false,
                                                 float scaleDuringLoad = 1.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
@@ -60,7 +61,11 @@ public:
     static size_t getTotalTextureSize();
 
 protected:
-    TextureResource(const std::string& path, bool tile, bool dynamic, float scaleDuringLoad);
+    TextureResource(const std::string& path,
+                    bool tile,
+                    bool dynamic,
+                    bool linearMagnify,
+                    float scaleDuringLoad);
     virtual void unload(std::shared_ptr<ResourceManager>& rm);
     virtual void reload(std::shared_ptr<ResourceManager>& rm);
 

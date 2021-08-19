@@ -179,8 +179,8 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
-    textureId = Renderer::createTexture(Renderer::Texture::ALPHA, false, false, textureSize.x,
-                                        textureSize.y, nullptr);
+    textureId = Renderer::createTexture(Renderer::Texture::ALPHA, false, false, false,
+                                        textureSize.x, textureSize.y, nullptr);
 }
 
 void Font::FontTexture::deinitTexture()

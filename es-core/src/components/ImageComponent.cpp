@@ -138,7 +138,7 @@ void ImageComponent::resize()
     onSizeChanged();
 }
 
-void ImageComponent::setImage(std::string path, bool tile)
+void ImageComponent::setImage(std::string path, bool tile, bool linearMagnify)
 {
     // Always load bundled graphic resources statically, unless mForceLoad has been set.
     // This eliminates annoying texture pop-in problems that would otherwise occur.
@@ -150,10 +150,11 @@ void ImageComponent::setImage(std::string path, bool tile)
         if (mDefaultPath.empty() || !ResourceManager::getInstance()->fileExists(mDefaultPath))
             mTexture.reset();
         else
-            mTexture = TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic);
+            mTexture =
+                TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic, linearMagnify);
     }
     else {
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic);
+        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, linearMagnify);
     }
 
     resize();

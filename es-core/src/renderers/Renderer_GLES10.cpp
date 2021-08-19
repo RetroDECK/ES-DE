@@ -91,7 +91,7 @@ namespace Renderer
                                                                                        "MISSING");
 
         uint8_t data[4] = {255, 255, 255, 255};
-        whiteTexture = createTexture(Texture::RGBA, false, true, 1, 1, data);
+        whiteTexture = createTexture(Texture::RGBA, false, false, true, 1, 1, data);
 
         GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GL_CHECK_ERROR(glEnable(GL_TEXTURE_2D));
@@ -111,29 +111,31 @@ namespace Renderer
         sdlContext = nullptr;
     }
 
-    unsigned int createTexture(const Texture::Type _type,
-                               const bool _linear,
-                               const bool _repeat,
-                               const unsigned int _width,
-                               const unsigned int _height,
-                               void* _data)
+    unsigned int createTexture(const Texture::Type type,
+                               const bool linearMinify,
+                               const bool linearMagnify,
+                               const bool repeat,
+                               const unsigned int width,
+                               const unsigned int height,
+                               void* data)
     {
-        const GLenum type = convertTextureType(_type);
+        const GLenum textureType = convertTextureType(type);
         unsigned int texture;
 
         GL_CHECK_ERROR(glGenTextures(1, &texture));
         GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
 
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
-                                       _repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE));
+                                       repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE));
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
-                                       _repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE));
+                                       repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE));
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                                       _linear ? GL_LINEAR : GL_NEAREST));
-        GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+                                       linearMinify ? GL_LINEAR : GL_NEAREST));
+        GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+                                       linearMagnify ? GL_LINEAR : GL_NEAREST));
 
-        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, type, _width, _height, 0, type,
-                                    GL_UNSIGNED_BYTE, _data));
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
+                                    GL_UNSIGNED_BYTE, data));
 
         return texture;
     }

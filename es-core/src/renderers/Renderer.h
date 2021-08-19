@@ -167,12 +167,13 @@ namespace Renderer
     void setupWindow();
     bool createContext();
     void destroyContext();
-    unsigned int createTexture(const Texture::Type _type,
-                               const bool _linear,
-                               const bool _repeat,
-                               const unsigned int _width,
-                               const unsigned int _height,
-                               void* _data);
+    unsigned int createTexture(const Texture::Type type,
+                               const bool linearMinify,
+                               const bool linearMagnify,
+                               const bool repeat,
+                               const unsigned int width,
+                               const unsigned int height,
+                               void* data);
     void destroyTexture(const unsigned int _texture);
     void updateTexture(const unsigned int _texture,
                        const Texture::Type _type,
