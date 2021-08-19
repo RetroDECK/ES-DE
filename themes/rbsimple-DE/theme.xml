@@ -121,7 +121,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <origin>1 1</origin>
         </image>
         <text name="md_lbl_playcount, md_playcount">
-                <pos>1 1</pos>
+            <pos>1 1</pos>
         </text>
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
                     md_lbl_publisher, md_lbl_genre, md_lbl_players,
@@ -237,8 +237,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <alignment>right</alignment>
         </text>
         <!-- This block prevents additional elements from interfering when mixing layouts. -->
-        <image name="backframe4" extra="false">
-        </image>
+        <image name="backframe4" extra="false"></image>
     </view>
 
     <view name="basic">
@@ -337,7 +336,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <origin>1 1</origin>
         </image>
         <text name="md_lbl_playcount, md_playcount">
-                <pos>1 1</pos>
+            <pos>1 1</pos>
         </text>
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
                     md_lbl_publisher, md_lbl_genre, md_lbl_players,
