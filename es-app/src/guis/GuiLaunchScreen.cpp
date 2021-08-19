@@ -162,7 +162,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // width so that the sizes look somewhat consistent regardless of the aspect ratio
     // of the images.
     if (mImagePath != "") {
-        mMarquee->setImage(game->getMarqueePath(), false);
+        mMarquee->setImage(game->getMarqueePath(), false, true);
         mMarquee->cropTransparentPadding(static_cast<float>(Renderer::getScreenWidth()) *
                                              (0.25f * (1.778f / Renderer::getScreenAspectRatio())),
                                          mGrid->getRowHeight(3));
