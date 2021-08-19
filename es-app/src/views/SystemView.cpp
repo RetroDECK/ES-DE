@@ -432,7 +432,7 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 
     if (!UIModeController::getInstance()->isUIModeKid() &&
         Settings::getInstance()->getBool("ScreensaverControls"))
-        prompts.push_back(HelpPrompt("back", "toggle screensaver"));
+        prompts.push_back(HelpPrompt("back", "screensaver"));
 
     return prompts;
 }
