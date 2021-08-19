@@ -20,12 +20,12 @@ struct SDL_Window;
 
 namespace Renderer
 {
-    const unsigned int SHADER_DESATURATE = 1;
-    const unsigned int SHADER_OPACITY = 2;
-    const unsigned int SHADER_DIM = 4;
-    const unsigned int SHADER_BLUR_HORIZONTAL = 8;
-    const unsigned int SHADER_BLUR_VERTICAL = 16;
-    const unsigned int SHADER_SCANLINES = 32;
+    const unsigned int SHADER_DESATURATE{1};
+    const unsigned int SHADER_OPACITY{2};
+    const unsigned int SHADER_DIM{4};
+    const unsigned int SHADER_BLUR_HORIZONTAL{8};
+    const unsigned int SHADER_BLUR_VERTICAL{16};
+    const unsigned int SHADER_SCANLINES{32};
 
     struct shaderParameters {
         std::array<GLfloat, 2> textureSize;
@@ -36,12 +36,12 @@ namespace Renderer
         unsigned int blurPasses;
 
         shaderParameters()
-            : textureSize({0.0f, 0.0f})
-            , textureCoordinates({0.0f, 0.0f, 0.0f, 0.0f})
-            , fragmentSaturation(1.0f)
-            , fragmentDimValue(0.4f)
-            , fragmentOpacity(1.0f)
-            , blurPasses(1)
+            : textureSize{0.0f, 0.0f}
+            , textureCoordinates{0.0f, 0.0f, 0.0f, 0.0f}
+            , fragmentSaturation{1.0f}
+            , fragmentDimValue{0.4f}
+            , fragmentOpacity{1.0f}
+            , blurPasses{1}
         {
         }
     };
@@ -75,33 +75,33 @@ namespace Renderer
     namespace Blend
     {
         enum Factor {
-            ZERO = 0,
-            ONE = 1,
-            SRC_COLOR = 2,
-            ONE_MINUS_SRC_COLOR = 3,
-            SRC_ALPHA = 4,
-            ONE_MINUS_SRC_ALPHA = 5,
-            DST_COLOR = 6,
-            ONE_MINUS_DST_COLOR = 7,
-            DST_ALPHA = 8,
-            ONE_MINUS_DST_ALPHA = 9
+            ZERO,
+            ONE,
+            SRC_COLOR,
+            ONE_MINUS_SRC_COLOR,
+            SRC_ALPHA,
+            ONE_MINUS_SRC_ALPHA,
+            DST_COLOR,
+            ONE_MINUS_DST_COLOR,
+            DST_ALPHA,
+            ONE_MINUS_DST_ALPHA
         };
     }
 
     namespace Texture
     {
         enum Type {
-            RGBA = 0, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-            ALPHA = 1
+            RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+            ALPHA
         };
     }
 
     struct Rect {
-        Rect(const int _x, const int _y, const int _w, const int _h)
-            : x(_x)
-            , y(_y)
-            , w(_w)
-            , h(_h)
+        Rect(const int xValue, const int yValue, const int wValue, const int hValue)
+            : x(xValue)
+            , y(yValue)
+            , w(wValue)
+            , h(hValue)
         {
         }
         int x;
@@ -112,35 +112,35 @@ namespace Renderer
 
     struct Vertex {
         Vertex() {}
-        Vertex(const glm::vec2& _pos, const glm::vec2& _tex, const unsigned int _col)
-            : pos(_pos)
-            , tex(_tex)
-            , col(_col)
+        Vertex(const glm::vec2& position, const glm::vec2& textureCoord, const unsigned int color)
+            : pos(position)
+            , tex(textureCoord)
+            , col(color)
         {
         }
         glm::vec2 pos;
         glm::vec2 tex;
         unsigned int col;
-        float saturation = 1.0;
-        float opacity = 1.0;
-        unsigned int shaders = 0;
+        float saturation{1.0};
+        float opacity{1.0};
+        unsigned int shaders{0};
     };
 
     bool init();
     void deinit();
-    void pushClipRect(const glm::ivec2& _pos, const glm::ivec2& _size);
+    void pushClipRect(const glm::ivec2& pos, const glm::ivec2& size);
     void popClipRect();
-    void drawRect(const float _x,
-                  const float _y,
-                  const float _w,
-                  const float _h,
-                  const unsigned int _color,
-                  const unsigned int _colorEnd,
+    void drawRect(const float x,
+                  const float y,
+                  const float w,
+                  const float h,
+                  const unsigned int color,
+                  const unsigned int colorEnd,
                   bool horizontalGradient = false,
-                  const float _opacity = 1.0,
-                  const glm::mat4& _trans = getIdentity(),
-                  const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
-                  const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
+                  const float opacity = 1.0,
+                  const glm::mat4& trans = getIdentity(),
+                  const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
+                  const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     SDL_Window* getSDLWindow();
     int getWindowWidth();
     int getWindowHeight();
@@ -174,29 +174,29 @@ namespace Renderer
                                const unsigned int width,
                                const unsigned int height,
                                void* data);
-    void destroyTexture(const unsigned int _texture);
-    void updateTexture(const unsigned int _texture,
-                       const Texture::Type _type,
-                       const unsigned int _x,
-                       const unsigned _y,
-                       const unsigned int _width,
-                       const unsigned int _height,
-                       void* _data);
-    void bindTexture(const unsigned int _texture);
-    void drawLines(const Vertex* _vertices,
-                   const unsigned int _numVertices,
-                   const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
-                   const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
-    void drawTriangleStrips(const Vertex* _vertices,
-                            const unsigned int _numVertices,
-                            const glm::mat4& _trans = getIdentity(),
-                            const Blend::Factor _srcBlendFactor = Blend::SRC_ALPHA,
-                            const Blend::Factor _dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA,
-                            const shaderParameters& _parameters = shaderParameters());
-    void setProjection(const glm::mat4& _projection);
-    void setMatrix(const glm::mat4& _matrix);
-    void setViewport(const Rect& _viewport);
-    void setScissor(const Rect& _scissor);
+    void destroyTexture(const unsigned int texture);
+    void updateTexture(const unsigned int texture,
+                       const Texture::Type type,
+                       const unsigned int x,
+                       const unsigned y,
+                       const unsigned int width,
+                       const unsigned int height,
+                       void* data);
+    void bindTexture(const unsigned int texture);
+    void drawLines(const Vertex* vertices,
+                   const unsigned int numVertices,
+                   const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
+                   const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
+    void drawTriangleStrips(const Vertex* vertices,
+                            const unsigned int numVertices,
+                            const glm::mat4& trans = getIdentity(),
+                            const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
+                            const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA,
+                            const shaderParameters& parameters = shaderParameters());
+    void setProjection(const glm::mat4& projection);
+    void setMatrix(const glm::mat4& matrix);
+    void setViewport(const Rect& viewport);
+    void setScissor(const Rect& scissor);
     void setSwapInterval();
     void swapBuffers();
 

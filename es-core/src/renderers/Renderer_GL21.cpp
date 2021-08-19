@@ -195,133 +195,133 @@ namespace Renderer
         return texture;
     }
 
-    void destroyTexture(const unsigned int _texture)
+    void destroyTexture(const unsigned int texture)
     {
-        GL_CHECK_ERROR(glDeleteTextures(1, &_texture));
+        GL_CHECK_ERROR(glDeleteTextures(1, &texture));
     }
 
-    void updateTexture(const unsigned int _texture,
-                       const Texture::Type _type,
-                       const unsigned int _x,
-                       const unsigned _y,
-                       const unsigned int _width,
-                       const unsigned int _height,
-                       void* _data)
+    void updateTexture(const unsigned int texture,
+                       const Texture::Type type,
+                       const unsigned int x,
+                       const unsigned y,
+                       const unsigned int width,
+                       const unsigned int height,
+                       void* data)
     {
-        const GLenum type = convertTextureType(_type);
+        const GLenum textureType = convertTextureType(type);
 
-        GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, _texture));
-        GL_CHECK_ERROR(glTexSubImage2D(GL_TEXTURE_2D, 0, _x, _y, _width, _height, type,
-                                       GL_UNSIGNED_BYTE, _data));
+        GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
+        GL_CHECK_ERROR(glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, textureType,
+                                       GL_UNSIGNED_BYTE, data));
         GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, whiteTexture));
     }
 
-    void bindTexture(const unsigned int _texture)
+    void bindTexture(const unsigned int texture)
     {
-        if (_texture == 0)
+        if (texture == 0)
             GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, whiteTexture));
         else
-            GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, _texture));
+            GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
     }
 
-    void drawLines(const Vertex* _vertices,
-                   const unsigned int _numVertices,
-                   const Blend::Factor _srcBlendFactor,
-                   const Blend::Factor _dstBlendFactor)
+    void drawLines(const Vertex* vertices,
+                   const unsigned int numVertices,
+                   const Blend::Factor srcBlendFactor,
+                   const Blend::Factor dstBlendFactor)
     {
-        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].pos));
-        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].tex));
-        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &_vertices[0].col));
+        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].pos));
+        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].tex));
+        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].col));
 
         GL_CHECK_ERROR(
-            glBlendFunc(convertBlendFactor(_srcBlendFactor), convertBlendFactor(_dstBlendFactor)));
+            glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
 
-        GL_CHECK_ERROR(glDrawArrays(GL_LINES, 0, _numVertices));
+        GL_CHECK_ERROR(glDrawArrays(GL_LINES, 0, numVertices));
     }
 
-    void drawTriangleStrips(const Vertex* _vertices,
-                            const unsigned int _numVertices,
-                            const glm::mat4& _trans,
-                            const Blend::Factor _srcBlendFactor,
-                            const Blend::Factor _dstBlendFactor,
-                            const shaderParameters& _parameters)
+    void drawTriangleStrips(const Vertex* vertices,
+                            const unsigned int numVertices,
+                            const glm::mat4& trans,
+                            const Blend::Factor srcBlendFactor,
+                            const Blend::Factor dstBlendFactor,
+                            const shaderParameters& parameters)
     {
-        float width = _vertices[3].pos[0];
-        float height = _vertices[3].pos[1];
+        float width = vertices[3].pos[0];
+        float height = vertices[3].pos[1];
 
-        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].pos));
-        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &_vertices[0].tex));
-        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &_vertices[0].col));
+        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].pos));
+        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].tex));
+        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].col));
 
         GL_CHECK_ERROR(
-            glBlendFunc(convertBlendFactor(_srcBlendFactor), convertBlendFactor(_dstBlendFactor)));
+            glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
 
 #if defined(USE_OPENGL_21)
-        if (_vertices[0].shaders == 0) {
-            GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+        if (vertices[0].shaders == 0) {
+            GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
         }
         else {
             // If saturation is set below the maximum (default) value, run the
             // desaturation shader.
-            if (_vertices->saturation < 1.0f || _parameters.fragmentSaturation < 1.0f) {
+            if (vertices->saturation < 1.0f || parameters.fragmentSaturation < 1.0f) {
                 Shader* runShader = getShaderProgram(SHADER_DESATURATE);
                 // Only try to use the shader if it has been loaded properly.
                 if (runShader) {
                     runShader->activateShaders();
-                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setSaturation(_vertices->saturation);
-                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
+                    runShader->setSaturation(vertices->saturation);
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
             }
 
-            if (_vertices->shaders & SHADER_OPACITY) {
+            if (vertices->shaders & SHADER_OPACITY) {
                 Shader* runShader = getShaderProgram(SHADER_OPACITY);
                 if (runShader) {
                     runShader->activateShaders();
-                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    _vertices->opacity < 1.0f ? runShader->setOpacity(_vertices->opacity) :
-                                                runShader->setOpacity(_parameters.fragmentOpacity);
-                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
+                    vertices->opacity < 1.0f ? runShader->setOpacity(vertices->opacity) :
+                                                runShader->setOpacity(parameters.fragmentOpacity);
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
             }
 
             // Check if any other shaders are set to be used and if so, run them.
-            if (_vertices->shaders & SHADER_DIM) {
+            if (vertices->shaders & SHADER_DIM) {
                 Shader* runShader = getShaderProgram(SHADER_DIM);
                 if (runShader) {
                     runShader->activateShaders();
-                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
-                    runShader->setDimValue(_parameters.fragmentDimValue);
-                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
+                    runShader->setDimValue(parameters.fragmentDimValue);
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
             }
 
-            if (_vertices->shaders & SHADER_BLUR_HORIZONTAL) {
+            if (vertices->shaders & SHADER_BLUR_HORIZONTAL) {
                 Shader* runShader = getShaderProgram(SHADER_BLUR_HORIZONTAL);
                 if (runShader) {
                     runShader->activateShaders();
-                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
+                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
                     runShader->setTextureSize({width, height});
-                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
             }
 
-            if (_vertices->shaders & SHADER_BLUR_VERTICAL) {
+            if (vertices->shaders & SHADER_BLUR_VERTICAL) {
                 Shader* runShader = getShaderProgram(SHADER_BLUR_VERTICAL);
                 if (runShader) {
                     runShader->activateShaders();
-                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
+                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
                     runShader->setTextureSize({width, height});
-                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
             }
 
-            if (_vertices->shaders & SHADER_SCANLINES) {
+            if (vertices->shaders & SHADER_SCANLINES) {
                 Shader* runShader = getShaderProgram(SHADER_SCANLINES);
                 float shaderWidth = width * 1.2f;
                 // Scale the scanlines relative to screen resolution.
@@ -345,9 +345,9 @@ namespace Renderer
                 }
                 if (runShader) {
                     runShader->activateShaders();
-                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * _trans);
+                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
                     runShader->setTextureSize({shaderWidth, shaderHeight});
-                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, _numVertices));
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
             }
@@ -355,37 +355,37 @@ namespace Renderer
 #endif
     }
 
-    void setProjection(const glm::mat4& _projection)
+    void setProjection(const glm::mat4& projection)
     {
         GL_CHECK_ERROR(glMatrixMode(GL_PROJECTION));
-        GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&_projection)));
+        GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&projection)));
     }
 
-    void setMatrix(const glm::mat4& _matrix)
+    void setMatrix(const glm::mat4& matrix)
     {
-        glm::mat4 matrix{_matrix};
-        matrix[3] = glm::round(matrix[3]);
+        glm::mat4 newMatrix{matrix};
+        newMatrix[3] = glm::round(newMatrix[3]);
 
         GL_CHECK_ERROR(glMatrixMode(GL_MODELVIEW));
-        GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&matrix)));
+        GL_CHECK_ERROR(glLoadMatrixf(reinterpret_cast<const GLfloat*>(&newMatrix)));
     }
 
-    void setViewport(const Rect& _viewport)
+    void setViewport(const Rect& viewport)
     {
         // glViewport starts at the bottom left of the window.
-        GL_CHECK_ERROR(glViewport(_viewport.x, getWindowHeight() - _viewport.y - _viewport.h,
-                                  _viewport.w, _viewport.h));
+        GL_CHECK_ERROR(glViewport(viewport.x, getWindowHeight() - viewport.y - viewport.h,
+                                  viewport.w, viewport.h));
     }
 
-    void setScissor(const Rect& _scissor)
+    void setScissor(const Rect& scissor)
     {
-        if ((_scissor.x == 0) && (_scissor.y == 0) && (_scissor.w == 0) && (_scissor.h == 0)) {
+        if ((scissor.x == 0) && (scissor.y == 0) && (scissor.w == 0) && (scissor.h == 0)) {
             GL_CHECK_ERROR(glDisable(GL_SCISSOR_TEST));
         }
         else {
             // glScissor starts at the bottom left of the window.
-            GL_CHECK_ERROR(glScissor(_scissor.x, getWindowHeight() - _scissor.y - _scissor.h,
-                                     _scissor.w, _scissor.h));
+            GL_CHECK_ERROR(glScissor(scissor.x, getWindowHeight() - scissor.y - scissor.h,
+                                     scissor.w, scissor.h));
             GL_CHECK_ERROR(glEnable(GL_SCISSOR_TEST));
         }
     }
