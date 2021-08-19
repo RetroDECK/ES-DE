@@ -331,7 +331,7 @@ void DetailedGameListView::updateInfoPanel()
                 CollectionSystemsManager::get()->updateCollectionFolderMetadata(file->getSystem());
             if (mRandomGame) {
                 mThumbnail.setImage(mRandomGame->getThumbnailPath());
-                mMarquee.setImage(mRandomGame->getMarqueePath());
+                mMarquee.setImage(mRandomGame->getMarqueePath(), false, true);
                 mImage.setImage(mRandomGame->getImagePath());
             }
             else {
@@ -342,7 +342,7 @@ void DetailedGameListView::updateInfoPanel()
         }
         else {
             mThumbnail.setImage(file->getThumbnailPath());
-            mMarquee.setImage(file->getMarqueePath());
+            mMarquee.setImage(file->getMarqueePath(), false, true);
             mImage.setImage(file->getImagePath());
         }
 

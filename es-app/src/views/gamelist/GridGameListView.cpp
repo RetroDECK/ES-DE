@@ -404,7 +404,7 @@ void GridGameListView::updateInfoPanel()
         fadingOut = true;
     }
     else {
-        mMarquee.setImage(file->getMarqueePath());
+        mMarquee.setImage(file->getMarqueePath(), false, true);
 
         // Populate the gamelistInfo field which shows an icon if a folder has been entered
         // as well as the game count for the entire system (total and favorites separately).

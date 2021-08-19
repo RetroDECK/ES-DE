@@ -354,7 +354,7 @@ void VideoGameListView::updateInfoPanel()
                 CollectionSystemsManager::get()->updateCollectionFolderMetadata(file->getSystem());
             if (mRandomGame) {
                 mThumbnail.setImage(mRandomGame->getThumbnailPath());
-                mMarquee.setImage(mRandomGame->getMarqueePath());
+                mMarquee.setImage(mRandomGame->getMarqueePath(), false, true);
                 mVideo->setImage(mRandomGame->getImagePath());
                 // Always stop the video before setting a new video as it will otherwise continue
                 // to play if it has the same path (i.e. it is the same physical video file) as
@@ -376,7 +376,7 @@ void VideoGameListView::updateInfoPanel()
         }
         else {
             mThumbnail.setImage(file->getThumbnailPath());
-            mMarquee.setImage(file->getMarqueePath());
+            mMarquee.setImage(file->getMarqueePath(), false, true);
             mVideo->setImage(file->getImagePath());
             mVideo->onHide();
 
