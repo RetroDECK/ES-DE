@@ -179,8 +179,10 @@ void ComponentList::render(const glm::mat4& parentTrans)
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
-    Renderer::pushClipRect(glm::ivec2{static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)},
-                           glm::ivec2{static_cast<int>(dim.x), static_cast<int>(dim.y)});
+    Renderer::pushClipRect(
+        glm::ivec2{static_cast<int>(std::round(trans[3].x)),
+                   static_cast<int>(std::round(trans[3].y))},
+        glm::ivec2{static_cast<int>(std::round(dim.x)), static_cast<int>(std::round(dim.y))});
 
     // Scroll the camera.
     trans = glm::translate(trans, glm::vec3{0.0f, -mCameraOffset, 0.0f});
