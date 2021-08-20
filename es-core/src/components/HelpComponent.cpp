@@ -128,8 +128,19 @@ void HelpComponent::updateGrid()
         icon->setResize(0, height);
         icons.push_back(icon);
 
-        auto lbl = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(it->second),
-                                                   font, mStyle.textColor);
+        // Format label according to theme style.
+        std::string lblInput = it->second;
+        if (mStyle.textStyle == "lowercase") {
+            lblInput = Utils::String::toLower(lblInput);
+        }
+        else if (mStyle.textStyle == "camelcase") {
+            lblInput = Utils::String::toCamelCase(lblInput);
+        }
+        else {
+            lblInput = Utils::String::toUpper(lblInput);
+        }
+
+        auto lbl = std::make_shared<TextComponent>(mWindow, lblInput, font, mStyle.textColor);
         labels.push_back(lbl);
 
         width +=

@@ -26,6 +26,7 @@ struct HelpStyle {
     std::shared_ptr<Font> font;
     float entrySpacing;
     float iconTextSpacing;
+    std::string textStyle;
 
     HelpStyle(); // Default values.
     void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view);

@@ -20,6 +20,7 @@ HelpStyle::HelpStyle()
     textColor = 0x777777FF;
     entrySpacing = 16.0f;
     iconTextSpacing = 8.0f;
+    textStyle = "uppercase";
 
     if (FONT_SIZE_SMALL != 0)
         font = Font::get(FONT_SIZE_SMALL);
@@ -55,4 +56,7 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
 
     if (elem->has("iconTextSpacing"))
         iconTextSpacing = elem->get<float>("iconTextSpacing");
+
+    if (elem->has("textStyle"))
+        textStyle = elem->get<std::string>("textStyle");
 }
