@@ -541,6 +541,29 @@ namespace Utils
             return stringUpper;
         }
 
+        std::string toCamelCase(const std::string& stringArg)
+        {
+            std::string line = stringArg;
+            bool active = true;
+
+            for (int i = 0; line[i] != '\0'; i++) {
+                if (std::isalpha(line[i])) {
+                    if (active) {
+                        line[i] = Utils::String::toUpper(std::string(1, line[i]))[0];
+                        active = false;
+                    }
+                    else {
+                        line[i] = Utils::String::toLower(std::string(1, line[i]))[0];
+                    }
+                }
+                else if (line[i] == ' ') {
+                    active = true;
+                }
+            }
+
+            return line;
+        }
+
         std::string trim(const std::string& stringArg)
         {
             const size_t strBegin = stringArg.find_first_not_of(" \t");
