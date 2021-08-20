@@ -18,6 +18,8 @@ HelpStyle::HelpStyle()
     origin = glm::vec2{};
     iconColor = 0x777777FF;
     textColor = 0x777777FF;
+    entrySpacing = 16.0f;
+    iconTextSpacing = 8.0f;
 
     if (FONT_SIZE_SMALL != 0)
         font = Font::get(FONT_SIZE_SMALL);
@@ -47,4 +49,10 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
 
     if (elem->has("fontPath") || elem->has("fontSize"))
         font = Font::getFromTheme(elem, ThemeFlags::ALL, font);
+
+    if (elem->has("entrySpacing"))
+        entrySpacing = elem->get<float>("entrySpacing");
+
+    if (elem->has("iconTextSpacing"))
+        iconTextSpacing = elem->get<float>("iconTextSpacing");
 }

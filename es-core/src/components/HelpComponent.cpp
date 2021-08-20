@@ -16,9 +16,6 @@
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
 
-#define ICON_TEXT_SPACING 8.0f // Space between [icon] and [text] (px).
-#define ENTRY_SPACING 16.0f // Space between [text] and next [icon] (px).
-
 static std::map<std::string, std::string> sIconPathMap{};
 
 HelpComponent::HelpComponent(Window* window)
@@ -135,8 +132,9 @@ void HelpComponent::updateGrid()
                                                    font, mStyle.textColor);
         labels.push_back(lbl);
 
-        width += icon->getSize().x + lbl->getSize().x +
-                 ((ICON_TEXT_SPACING + ENTRY_SPACING) * Renderer::getScreenWidthModifier());
+        width +=
+            icon->getSize().x + lbl->getSize().x +
+            ((mStyle.iconTextSpacing + mStyle.entrySpacing) * Renderer::getScreenWidthModifier());
     }
 
     mGrid->setSize(width, height);
@@ -144,8 +142,8 @@ void HelpComponent::updateGrid()
     for (unsigned int i = 0; i < icons.size(); i++) {
         const int col = i * 4;
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
-        mGrid->setColWidthPerc(col + 1,
-                               (ICON_TEXT_SPACING * Renderer::getScreenWidthModifier()) / width);
+        mGrid->setColWidthPerc(
+            col + 1, (mStyle.iconTextSpacing * Renderer::getScreenWidthModifier()) / width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
 
         mGrid->setEntry(icons.at(i), glm::ivec2{col, 0}, false, false);
