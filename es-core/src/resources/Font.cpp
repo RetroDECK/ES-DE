@@ -225,6 +225,7 @@ std::vector<std::string> getFallbackFontPaths()
     // not really the correct location. (The application will crash if they are missing.)
     ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-Regular.ttf");
     ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
+    ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-Bold.ttf");
 
     // Vera sans Unicode.
     fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/fonts/DejaVuSans.ttf"));

@@ -33,6 +33,7 @@ class TextCache;
 
 #define FONT_PATH_LIGHT ":/fonts/Akrobat-Regular.ttf"
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
+#define FONT_PATH_BOLD ":/fonts/Akrobat-Bold.ttf"
 
 enum Alignment {
     ALIGN_LEFT,
