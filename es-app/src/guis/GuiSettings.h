@@ -22,7 +22,10 @@ public:
     virtual ~GuiSettings();
 
     void save();
-    void addRow(const ComponentListRow& row) { mMenu.addRow(row); }
+    void addRow(const ComponentListRow& row, bool setCursorHere = false)
+    {
+        mMenu.addRow(row, setCursorHere);
+    }
     void addWithLabel(const std::string& label, const std::shared_ptr<GuiComponent>& comp)
     {
         mMenu.addWithLabel(label, comp);
@@ -33,6 +36,11 @@ public:
                                   std::string defaultValue = "",
                                   bool isPassword = false);
     void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); }
+
+    glm::vec2 getMenuSize() { return mMenu.getSize(); }
+    void setMenuSize(glm::vec2 size) { mMenu.setSize(size); }
+    glm::vec3 getMenuPosition() { return mMenu.getPosition(); }
+    void setMenuPosition(glm::vec3 position) { mMenu.setPosition(position); }
 
     void setNeedsSaving(bool state = true) { mNeedsSaving = state; }
     void setNeedsReloadHelpPrompts() { mNeedsReloadHelpPrompts = true; }
