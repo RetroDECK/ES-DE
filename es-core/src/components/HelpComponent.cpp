@@ -124,14 +124,11 @@ void HelpComponent::updateGrid()
 
     // State variable indicating whether gui is dimmed.
     bool isDimmed = mWindow->isBackgroundDimmed();
-    LOG(LogError) << "updateGrid() called. dimmed =  \"" << isDimmed << "\"";
 
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); it++) {
         auto icon = std::make_shared<ImageComponent>(mWindow);
         icon->setImage(getIconTexture(it->first.c_str()));
         icon->setColorShift(isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor);
-        LOG(LogError) << "setColorShift() called. dimmed =  \""
-                      << (isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor) << "\"";
         icon->setResize(0, height);
         icons.push_back(icon);
 
