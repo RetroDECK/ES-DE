@@ -226,7 +226,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
       {"zIndex", FLOAT}}}};
 
 #define MINIMUM_THEME_FORMAT_VERSION 3
-#define CURRENT_THEME_FORMAT_VERSION 6
+#define CURRENT_THEME_FORMAT_VERSION 7
 
 // Helper.
 unsigned int getHexColor(const std::string& str)
