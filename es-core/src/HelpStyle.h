@@ -21,8 +21,10 @@ class ThemeData;
 struct HelpStyle {
     glm::vec2 position;
     glm::vec2 origin;
-    unsigned int iconColor;
     unsigned int textColor;
+    unsigned int textColorDimmed;
+    unsigned int iconColor;
+    unsigned int iconColorDimmed;
     std::shared_ptr<Font> font;
     float entrySpacing;
     float iconTextSpacing;

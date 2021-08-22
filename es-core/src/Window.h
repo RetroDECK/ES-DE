@@ -88,6 +88,7 @@ public:
     void removeGui(GuiComponent* gui);
     GuiComponent* peekGui();
     int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
+    bool isBackgroundDimmed();
 
     bool init();
     void deinit();

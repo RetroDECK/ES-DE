@@ -10,6 +10,7 @@
 
 #include "Log.h"
 #include "Settings.h"
+#include "Window.h"
 #include "components/ComponentGrid.h"
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
@@ -121,10 +122,16 @@ void HelpComponent::updateGrid()
     float width = 0;
     const float height = std::round(font->getLetterHeight() * 1.25f);
 
+    // State variable indicating whether gui is dimmed.
+    bool isDimmed = mWindow->isBackgroundDimmed();
+    LOG(LogError) << "updateGrid() called. dimmed =  \"" << isDimmed << "\"";
+
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); it++) {
         auto icon = std::make_shared<ImageComponent>(mWindow);
         icon->setImage(getIconTexture(it->first.c_str()));
-        icon->setColorShift(mStyle.iconColor);
+        icon->setColorShift(isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor);
+        LOG(LogError) << "setColorShift() called. dimmed =  \""
+                      << (isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor) << "\"";
         icon->setResize(0, height);
         icons.push_back(icon);
 
@@ -140,7 +147,8 @@ void HelpComponent::updateGrid()
             lblInput = Utils::String::toUpper(lblInput);
         }
 
-        auto lbl = std::make_shared<TextComponent>(mWindow, lblInput, font, mStyle.textColor);
+        auto lbl = std::make_shared<TextComponent>(
+            mWindow, lblInput, font, isDimmed ? mStyle.textColorDimmed : mStyle.textColor);
         labels.push_back(lbl);
 
         width +=
