@@ -38,6 +38,7 @@ public:
     // These functions are called from main().
     void invalidSystemsFileDialog();
     void noGamesDialog();
+    void invalidAlternativeEmulatorDialog();
 
     // Try to completely populate the GameListView map.
     // Caches things so there's no pauses during transitions.
@@ -127,6 +128,7 @@ public:
     static const std::string TICKMARK_CHAR;
     static const std::string CONTROLLER_CHAR;
     static const std::string FILTER_CHAR;
+    static const std::string GEAR_CHAR;
 
 private:
     ViewController(Window* window);

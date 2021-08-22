@@ -41,12 +41,14 @@ const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToStrin
 const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uF14A");
 const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uF11b");
 const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uF0b0");
+const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uF013");
 #else
 const std::string ViewController::FAVORITE_CHAR = "\uF005";
 const std::string ViewController::FOLDER_CHAR = "\uF07C";
 const std::string ViewController::TICKMARK_CHAR = "\uF14A";
 const std::string ViewController::CONTROLLER_CHAR = "\uF11b";
 const std::string ViewController::FILTER_CHAR = "\uF0b0";
+const std::string ViewController::GEAR_CHAR = "\uF013";
 #endif
 
 ViewController* ViewController::get()
@@ -191,6 +193,17 @@ void ViewController::noGamesDialog()
         true, false);
 
     mWindow->pushGui(mNoGamesMessageBox);
+}
+
+void ViewController::invalidAlternativeEmulatorDialog()
+{
+    mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                                   "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
+                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
+                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
+                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
+                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
+                                   "ENTRY UNDER THE 'OTHER SETTINGS' MENU"));
 }
 
 void ViewController::goToStart()

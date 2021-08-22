@@ -198,8 +198,28 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 };
 
                 std::string staticTextString = "Default value from es_systems.xml:";
-                std::string defaultLaunchCommand =
-                    scraperParams.system->getSystemEnvData()->mLaunchCommand;
+                std::string defaultLaunchCommand;
+
+                std::string alternativeEmulator = scraperParams.system->getAlternativeEmulator();
+                for (auto launchCommand :
+                     scraperParams.system->getSystemEnvData()->mLaunchCommands) {
+                    if (launchCommand.second == alternativeEmulator) {
+                        defaultLaunchCommand = launchCommand.first;
+                        break;
+                    }
+                }
+                if (!alternativeEmulator.empty() && defaultLaunchCommand.empty()) {
+                    LOG(LogWarning)
+                        << "The alternative emulator defined for system \""
+                        << scraperParams.system->getName()
+                        << "\" is invalid, falling back to the default command \""
+                        << scraperParams.system->getSystemEnvData()->mLaunchCommands.front().first
+                        << "\"";
+                }
+
+                if (defaultLaunchCommand.empty())
+                    defaultLaunchCommand =
+                        scraperParams.system->getSystemEnvData()->mLaunchCommands.front().first;
 
                 row.makeAcceptInputHandler([this, title, staticTextString, defaultLaunchCommand, ed,
                                             updateVal, multiLine] {

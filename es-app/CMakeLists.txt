@@ -16,6 +16,7 @@ set(ES_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.h
 
         # GUIs
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.h
@@ -66,6 +67,7 @@ set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.cpp
 
         # GUIs
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.cpp

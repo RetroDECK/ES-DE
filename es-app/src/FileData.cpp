@@ -756,7 +756,22 @@ void FileData::launchGame(Window* window)
         command = metadata.get("launchcommand");
     }
     else {
-        command = mEnvData->mLaunchCommand;
+        std::string alternativeEmulator = getSystem()->getAlternativeEmulator();
+        for (auto launchCommand : mEnvData->mLaunchCommands) {
+            if (launchCommand.second == alternativeEmulator) {
+                command = launchCommand.first;
+                break;
+            }
+        }
+        if (!alternativeEmulator.empty() && command.empty()) {
+            LOG(LogWarning) << "The alternative emulator configured for system \""
+                            << getSystem()->getName()
+                            << "\" is invalid, falling back to the default command \""
+                            << getSystem()->getSystemEnvData()->mLaunchCommands.front().first << "\"";
+        }
+
+        if (command.empty())
+            command = mEnvData->mLaunchCommands.front().first;
     }
 
     std::string commandRaw = command;

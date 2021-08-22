@@ -223,7 +223,11 @@ private:
 
     HelpStyle mHelpStyle;
 
-    void open() { mWindow->pushGui(new OptionListPopup(mWindow, getHelpStyle(), this, mName)); }
+    void open()
+    {
+        // Open the list popup.
+        mWindow->pushGui(new OptionListPopup(mWindow, getHelpStyle(), this, mName));
+    }
 
     void onSelectedChanged()
     {

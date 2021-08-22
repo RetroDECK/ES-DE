@@ -73,7 +73,8 @@ CollectionSystemsManager::CollectionSystemsManager(Window* window)
     mCollectionEnvData->mStartPath = "";
     std::vector<std::string> exts;
     mCollectionEnvData->mSearchExtensions = exts;
-    mCollectionEnvData->mLaunchCommand = "";
+    std::vector<std::pair<std::string, std::string>> commands;
+    mCollectionEnvData->mLaunchCommands = commands;
     std::vector<PlatformIds::PlatformId> allPlatformIds;
     allPlatformIds.push_back(PlatformIds::PLATFORM_IGNORE);
     mCollectionEnvData->mPlatformIds = allPlatformIds;

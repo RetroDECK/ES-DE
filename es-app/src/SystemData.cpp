@@ -417,12 +417,26 @@ bool SystemData::loadConfig()
         std::string name;
         std::string fullname;
         std::string path;
-        std::string cmd;
         std::string themeFolder;
 
         name = system.child("name").text().get();
         fullname = system.child("fullname").text().get();
         path = system.child("path").text().get();
+
+        auto nameFindFunc = [&] {
+            for (auto system : sSystemVector) {
+                if (system->mName == name) {
+                    LOG(LogWarning) << "A system with the name \"" << name
+                                    << "\" has already been loaded, skipping duplicate entry";
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        // If the name is matching a system that has already been loaded, then skip the entry.
+        if (nameFindFunc())
+            continue;
 
         // If there is a %ROMPATH% variable set for the system, expand it. By doing this
         // it's possible to use either absolute ROM paths in es_systems.xml or to utilize
@@ -461,7 +475,41 @@ bool SystemData::loadConfig()
         // Convert extensions list from a string into a vector of strings.
         std::vector<std::string> extensions = readList(system.child("extension").text().get());
 
-        cmd = system.child("command").text().get();
+        // Load all launch command tags for the system and if there are multiple tags, then
+        // the label attribute needs to be set on all entries as it's a requirement for the
+        // alternative emulator logic.
+        std::vector<std::pair<std::string, std::string>> commands;
+        for (pugi::xml_node entry = system.child("command"); entry;
+             entry = entry.next_sibling("command")) {
+            if (!entry.attribute("label")) {
+                if (commands.size() == 1) {
+                    // The first command tag had a label but the second one doesn't.
+                    LOG(LogError)
+                        << "Missing mandatory label attribute for alternative emulator "
+                           "entry, only the default command tag will be processed for system \""
+                        << name << "\"";
+                    break;
+                }
+                else if (commands.size() > 1) {
+                    // At least two command tags had a label but this one doesn't.
+                    LOG(LogError)
+                        << "Missing mandatory label attribute for alternative emulator "
+                           "entry, no additional command tags will be processed for system \""
+                        << name << "\"";
+                    break;
+                }
+            }
+            else if (!commands.empty() && commands.back().second == "") {
+                // There are more than one command tags and the first tag did not have a label.
+                LOG(LogError)
+                    << "Missing mandatory label attribute for alternative emulator "
+                       "entry, only the default command tag will be processed for system \""
+                    << name << "\"";
+                break;
+            }
+            commands.push_back(
+                std::make_pair(entry.text().get(), entry.attribute("label").as_string()));
+        }
 
         // Platform ID list
         const std::string platformList =
@@ -504,7 +552,7 @@ bool SystemData::loadConfig()
                 << "A system in the es_systems.xml file has no name defined, skipping entry";
             continue;
         }
-        else if (fullname.empty() || path.empty() || extensions.empty() || cmd.empty()) {
+        else if (fullname.empty() || path.empty() || extensions.empty() || commands.empty()) {
             LOG(LogError) << "System \"" << name
                           << "\" is missing the fullname, path, "
                              "extension, or command tag, skipping entry";
@@ -526,7 +574,7 @@ bool SystemData::loadConfig()
         SystemEnvironmentData* envData = new SystemEnvironmentData;
         envData->mStartPath = path;
         envData->mSearchExtensions = extensions;
-        envData->mLaunchCommand = cmd;
+        envData->mLaunchCommands = commands;
         envData->mPlatformIds = platformIds;
 
         SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
@@ -679,7 +727,7 @@ bool SystemData::createSystemDirectories()
         std::string fullname;
         std::string path;
         std::string extensions;
-        std::string command;
+        std::vector<std::string> commands;
         std::string platform;
         std::string themeFolder;
         const std::string systemInfoFileName = "/systeminfo.txt";
@@ -690,7 +738,10 @@ bool SystemData::createSystemDirectories()
         fullname = system.child("fullname").text().get();
         path = system.child("path").text().get();
         extensions = system.child("extension").text().get();
-        command = system.child("command").text().get();
+        for (pugi::xml_node entry = system.child("command"); entry;
+             entry = entry.next_sibling("command")) {
+            commands.push_back(entry.text().get());
+        }
         platform = Utils::String::toLower(system.child("platform").text().get());
         themeFolder = system.child("theme").text().as_string(name.c_str());
 
@@ -757,7 +808,16 @@ bool SystemData::createSystemDirectories()
         systemInfoFile << "Supported file extensions:" << std::endl;
         systemInfoFile << extensions << std::endl << std::endl;
         systemInfoFile << "Launch command:" << std::endl;
-        systemInfoFile << command << std::endl << std::endl;
+        systemInfoFile << commands.front() << std::endl << std::endl;
+        // Alternative emulator configuration entries.
+        if (commands.size() > 1) {
+            systemInfoFile << (commands.size() == 2 ? "Alternative launch command:" :
+                                                      "Alternative launch commands:")
+                           << std::endl;
+            for (auto it = commands.cbegin() + 1; it != commands.cend(); it++)
+                systemInfoFile << (*it) << std::endl;
+            systemInfoFile << std::endl;
+        }
         systemInfoFile << "Platform (for scraping):" << std::endl;
         systemInfoFile << platform << std::endl << std::endl;
         systemInfoFile << "Theme folder:" << std::endl;

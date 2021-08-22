@@ -20,6 +20,7 @@
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
+#include "guis/GuiAlternativeEmulators.h"
 #include "guis/GuiCollectionSystemsOptions.h"
 #include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
@@ -771,6 +772,18 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
 void GuiMenu::openOtherOptions()
 {
     auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
+
+    // Alternative emulators GUI.
+    ComponentListRow alternativeEmulatorsRow;
+    alternativeEmulatorsRow.elements.clear();
+    alternativeEmulatorsRow.addElement(
+        std::make_shared<TextComponent>(mWindow, "ALTERNATIVE EMULATORS",
+                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+        true);
+    alternativeEmulatorsRow.addElement(makeArrow(mWindow), false);
+    alternativeEmulatorsRow.makeAcceptInputHandler(
+        std::bind([this] { mWindow->pushGui(new GuiAlternativeEmulators(mWindow)); }));
+    s->addRow(alternativeEmulatorsRow);
 
     // Game media directory.
     ComponentListRow rowMediaDir;

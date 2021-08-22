@@ -613,6 +613,16 @@ int main(int argc, char* argv[])
         }
     }
 
+    // Check if any of the enabled systems has an invalid alternative emulator entry,
+    // which means that a label is present in the gamelist.xml file which is not matching
+    // any command tag in es_systems.xml.
+    for (auto system : SystemData::sSystemVector) {
+        if (system->getAlternativeEmulator() == "<INVALID>") {
+            ViewController::get()->invalidAlternativeEmulatorDialog();
+            break;
+        }
+    }
+
     // Don't generate controller events while we're loading.
     SDL_GameControllerEventState(SDL_DISABLE);
 
