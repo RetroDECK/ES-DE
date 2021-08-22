@@ -86,7 +86,11 @@ GuiMenu::~GuiMenu()
     ViewController::get()->stopScrolling();
 }
 
-void GuiMenu::openScraperOptions() { mWindow->pushGui(new GuiScraperMenu(mWindow, "SCRAPER")); }
+void GuiMenu::openScraperOptions()
+{
+    // Open the scraper menu.
+    mWindow->pushGui(new GuiScraperMenu(mWindow, "SCRAPER"));
+}
 
 void GuiMenu::openUIOptions()
 {
@@ -372,6 +376,28 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Media viewer.
+    ComponentListRow media_viewer_row;
+    media_viewer_row.elements.clear();
+    media_viewer_row.addElement(std::make_shared<TextComponent>(mWindow, "MEDIA VIEWER SETTINGS",
+                                                                Font::get(FONT_SIZE_MEDIUM),
+                                                                0x777777FF),
+                                true);
+    media_viewer_row.addElement(makeArrow(mWindow), false);
+    media_viewer_row.makeAcceptInputHandler(std::bind(&GuiMenu::openMediaViewerOptions, this));
+    s->addRow(media_viewer_row);
+
+    // Screensaver.
+    ComponentListRow screensaver_row;
+    screensaver_row.elements.clear();
+    screensaver_row.addElement(std::make_shared<TextComponent>(mWindow, "SCREENSAVER SETTINGS",
+                                                               Font::get(FONT_SIZE_MEDIUM),
+                                                               0x777777FF),
+                               true);
+    screensaver_row.addElement(makeArrow(mWindow), false);
+    screensaver_row.makeAcceptInputHandler(std::bind(&GuiMenu::openScreensaverOptions, this));
+    s->addRow(screensaver_row);
+
 #if defined(USE_OPENGL_21)
     // Blur background when the menu is open.
     auto menu_blur_background = std::make_shared<SwitchComponent>(mWindow);
@@ -553,28 +579,6 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
         }
     });
-
-    // Media viewer.
-    ComponentListRow media_viewer_row;
-    media_viewer_row.elements.clear();
-    media_viewer_row.addElement(std::make_shared<TextComponent>(mWindow, "MEDIA VIEWER SETTINGS",
-                                                                Font::get(FONT_SIZE_MEDIUM),
-                                                                0x777777FF),
-                                true);
-    media_viewer_row.addElement(makeArrow(mWindow), false);
-    media_viewer_row.makeAcceptInputHandler(std::bind(&GuiMenu::openMediaViewerOptions, this));
-    s->addRow(media_viewer_row);
-
-    // Screensaver.
-    ComponentListRow screensaver_row;
-    screensaver_row.elements.clear();
-    screensaver_row.addElement(std::make_shared<TextComponent>(mWindow, "SCREENSAVER SETTINGS",
-                                                               Font::get(FONT_SIZE_MEDIUM),
-                                                               0x777777FF),
-                               true);
-    screensaver_row.addElement(makeArrow(mWindow), false);
-    screensaver_row.makeAcceptInputHandler(std::bind(&GuiMenu::openScreensaverOptions, this));
-    s->addRow(screensaver_row);
 
     mWindow->pushGui(s);
 }
@@ -768,6 +772,37 @@ void GuiMenu::openOtherOptions()
 {
     auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
+    // Game media directory.
+    ComponentListRow rowMediaDir;
+    auto media_directory = std::make_shared<TextComponent>(mWindow, "GAME MEDIA DIRECTORY",
+                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto bracketMediaDirectory = std::make_shared<ImageComponent>(mWindow);
+    bracketMediaDirectory->setImage(":/graphics/arrow.svg");
+    bracketMediaDirectory->setResize(
+        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+    rowMediaDir.addElement(media_directory, true);
+    rowMediaDir.addElement(bracketMediaDirectory, false);
+    std::string titleMediaDir = "ENTER GAME MEDIA DIRECTORY";
+    std::string mediaDirectoryStaticText = "Default directory:";
+    std::string defaultDirectoryText = "~/.emulationstation/downloaded_media/";
+    std::string initValueMediaDir = Settings::getInstance()->getString("MediaDirectory");
+    bool multiLineMediaDir = false;
+    auto updateValMediaDir = [this](const std::string& newVal) {
+        Settings::getInstance()->setString("MediaDirectory", newVal);
+        Settings::getInstance()->saveFile();
+        ViewController::get()->reloadAll();
+        mWindow->invalidateCachedBackground();
+    };
+    rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
+                                        defaultDirectoryText, initValueMediaDir, updateValMediaDir,
+                                        multiLineMediaDir] {
+        mWindow->pushGui(new GuiComplexTextEditPopup(
+            mWindow, getHelpStyle(), titleMediaDir, mediaDirectoryStaticText, defaultDirectoryText,
+            Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+            multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
+    });
+    s->addRow(rowMediaDir);
+
     // Maximum VRAM.
     auto max_vram = std::make_shared<SliderComponent>(mWindow, 80.f, 1024.f, 8.f, "MiB");
     max_vram->setValue(static_cast<float>(Settings::getInstance()->getInt("MaxVRAM")));
@@ -890,37 +925,6 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
-
-    // Game media directory.
-    ComponentListRow rowMediaDir;
-    auto media_directory = std::make_shared<TextComponent>(mWindow, "GAME MEDIA DIRECTORY",
-                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
-    auto bracketMediaDirectory = std::make_shared<ImageComponent>(mWindow);
-    bracketMediaDirectory->setImage(":/graphics/arrow.svg");
-    bracketMediaDirectory->setResize(
-        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
-    rowMediaDir.addElement(media_directory, true);
-    rowMediaDir.addElement(bracketMediaDirectory, false);
-    std::string titleMediaDir = "ENTER GAME MEDIA DIRECTORY";
-    std::string mediaDirectoryStaticText = "Default directory:";
-    std::string defaultDirectoryText = "~/.emulationstation/downloaded_media/";
-    std::string initValueMediaDir = Settings::getInstance()->getString("MediaDirectory");
-    bool multiLineMediaDir = false;
-    auto updateValMediaDir = [this](const std::string& newVal) {
-        Settings::getInstance()->setString("MediaDirectory", newVal);
-        Settings::getInstance()->saveFile();
-        ViewController::get()->reloadAll();
-        mWindow->invalidateCachedBackground();
-    };
-    rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
-                                        defaultDirectoryText, initValueMediaDir, updateValMediaDir,
-                                        multiLineMediaDir] {
-        mWindow->pushGui(new GuiComplexTextEditPopup(
-            mWindow, getHelpStyle(), titleMediaDir, mediaDirectoryStaticText, defaultDirectoryText,
-            Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
-            multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
-    });
-    s->addRow(rowMediaDir);
 
 #if defined(_WIN64)
     // Hide taskbar during the ES program session.

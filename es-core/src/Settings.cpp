@@ -142,21 +142,6 @@ void Settings::setDefaults()
     mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};
     mStringMap["MenuOpeningEffect"] = {"scale-up", "scale-up"};
     mStringMap["LaunchScreenDuration"] = {"normal", "normal"};
-    mBoolMap["MenuBlurBackground"] = {true, true};
-    mBoolMap["GamelistVideoPillarbox"] = {true, true};
-    mBoolMap["GamelistVideoScanlines"] = {false, false};
-    mBoolMap["FoldersOnTop"] = {true, true};
-    mBoolMap["FavoritesFirst"] = {true, true};
-    mBoolMap["FavoritesStar"] = {true, true};
-    mBoolMap["SpecialCharsASCII"] = {false, false};
-    mBoolMap["ListScrollOverlay"] = {false, false};
-    mBoolMap["FavoritesAddButton"] = {true, true};
-    mBoolMap["RandomAddButton"] = {false, false};
-    mBoolMap["GamelistFilters"] = {true, true};
-    mBoolMap["QuickSystemSelect"] = {true, true};
-    mBoolMap["ShowHelpPrompts"] = {true, true};
-    mBoolMap["PlayVideosImmediately"] = {false, false};
-    mBoolMap["EnableMenuKidMode"] = {false, false};
 
     // UI settings -> media viewer settings.
     mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
@@ -187,6 +172,22 @@ void Settings::setDefaults()
     mBoolMap["ScreensaverVideoScanlines"] = {true, true};
     mBoolMap["ScreensaverVideoBlur"] = {false, false};
 
+    mBoolMap["MenuBlurBackground"] = {true, true};
+    mBoolMap["GamelistVideoPillarbox"] = {true, true};
+    mBoolMap["GamelistVideoScanlines"] = {false, false};
+    mBoolMap["FoldersOnTop"] = {true, true};
+    mBoolMap["FavoritesFirst"] = {true, true};
+    mBoolMap["FavoritesStar"] = {true, true};
+    mBoolMap["SpecialCharsASCII"] = {false, false};
+    mBoolMap["ListScrollOverlay"] = {false, false};
+    mBoolMap["FavoritesAddButton"] = {true, true};
+    mBoolMap["RandomAddButton"] = {false, false};
+    mBoolMap["GamelistFilters"] = {true, true};
+    mBoolMap["QuickSystemSelect"] = {true, true};
+    mBoolMap["ShowHelpPrompts"] = {true, true};
+    mBoolMap["PlayVideosImmediately"] = {false, false};
+    mBoolMap["EnableMenuKidMode"] = {false, false};
+
     // Sound settings.
     mIntMap["SoundVolumeNavigation"] = {80, 80};
     mIntMap["SoundVolumeVideos"] = {100, 100};
@@ -207,7 +208,8 @@ void Settings::setDefaults()
     mBoolMap["UseCustomCollectionsSystem"] = {true, true};
     mBoolMap["CollectionShowSystemInfo"] = {true, true};
 
-// Other settings.
+    // Other settings.
+    mStringMap["MediaDirectory"] = {"", ""};
 #if defined(_RPI_)
     mIntMap["MaxVRAM"] = {80, 80};
 #else
@@ -234,7 +236,6 @@ void Settings::setDefaults()
 #if defined(_WIN64)
     mBoolMap["LaunchWorkaround"] = {true, true};
 #endif
-    mStringMap["MediaDirectory"] = {"", ""};
 #if !defined(_RPI_)
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
