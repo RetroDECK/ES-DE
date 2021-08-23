@@ -159,35 +159,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
       {"entrySpacing", FLOAT},
       {"iconTextSpacing", FLOAT},
       {"textStyle", STRING},
-      {"dpad_updown", PATH},
-      {"dpad_leftright", PATH},
-      {"dpad_all", PATH},
-      {"thumbstick_click", PATH},
-      {"button_l", PATH},
-      {"button_r", PATH},
-      {"button_lr", PATH},
-      {"button_a_SNES", PATH},
-      {"button_b_SNES", PATH},
-      {"button_x_SNEs", PATH},
-      {"button_y_SNES", PATH},
-      {"button_back_SNES", PATH},
-      {"button_start_SNES", PATH},
-      {"button_a_PS", PATH},
-      {"button_b_PS", PATH},
-      {"button_x_PS", PATH},
-      {"button_y_PS", PATH},
-      {"button_back_PS4", PATH},
-      {"button_start_PS4", PATH},
-      {"button_back_PS5", PATH},
-      {"button_start_PS5", PATH},
-      {"button_a_XBOX", PATH},
-      {"button_b_XBOX", PATH},
-      {"button_x_XBOX", PATH},
-      {"button_y_XBOX", PATH},
-      {"button_back_XBOX", PATH},
-      {"button_start_XBOX", PATH},
-      {"button_back_XBOX360", PATH},
-      {"button_start_XBOX360", PATH}}},
+      {"customButtonIcon", PATH}}},
     {"navigationsounds",
      {{"systembrowseSound", PATH},
       {"quicksysselectSound", PATH},
@@ -530,7 +502,21 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                         << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
                                                           "");
                 }
-                element.properties[node.name()] = path;
+
+                // Special parsing instruction for customButtonIcon -> save node as it's button
+                // attribute to prevent nodes overwriting each other.
+                if (strcmp(node.name(), "customButtonIcon") == 0) {
+                    const auto btn = node.attribute("button").as_string("");
+                    if (strcmp(btn, "") == 0) {
+                        LOG(LogError)
+                            << "<customButtonIcon> element requires the `button` property.";
+                    }
+                    else
+                        element.properties[btn] = path;
+                }
+                else
+                    element.properties[node.name()] = path;
+
                 break;
             }
             case COLOR: {
