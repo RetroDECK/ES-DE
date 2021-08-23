@@ -204,18 +204,14 @@ void HelpComponent::updateGrid()
         icon->setResize(0, height);
         icons.push_back(icon);
 
-        // Format label according to theme style.
+        // Apply text style and color from the theme to the label and add it to the label list.
         std::string lblInput = it->second;
-        if (mStyle.textStyle == "lowercase") {
+        if (mStyle.textStyle == "lowercase")
             lblInput = Utils::String::toLower(lblInput);
-        }
-        else if (mStyle.textStyle == "camelcase") {
+        else if (mStyle.textStyle == "camelcase")
             lblInput = Utils::String::toCamelCase(lblInput);
-        }
-        else {
+        else
             lblInput = Utils::String::toUpper(lblInput);
-        }
-
         auto lbl = std::make_shared<TextComponent>(
             mWindow, lblInput, font, isDimmed ? mStyle.textColorDimmed : mStyle.textColor);
         labels.push_back(lbl);
