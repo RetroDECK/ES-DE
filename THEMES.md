@@ -52,7 +52,7 @@ Here is a very simple theme that changes the description text's color:
 
 ```xml
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <view name="detailed">
         <text name="description">
             <color>00FF00</color>
@@ -72,7 +72,7 @@ Here is a very simple theme that changes the description text's color:
 Everything must be inside a `<theme>` tag.
 
 **The `<formatVersion>` tag *must* be specified**. This is the version of the theming system the theme was designed for.
-The current version is 7.
+The current version is 6.
 
 A *view* can be thought of as a particular "screen" within EmulationStation. Views are defined like this:
 
@@ -123,7 +123,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <view name="detailed">
         <text name="description">
             <fontPath>./all_themes/myfont.ttf</fontPath>
@@ -137,7 +137,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <include>./../all_themes.xml</include>
     <view name="detailed">
         <text name="description">
@@ -151,7 +151,7 @@ Is equivalent to this `snes/theme.xml`:
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <view name="detailed">
         <text name="description">
             <fontPath>./all_themes/myfont.ttf</fontPath>
@@ -171,7 +171,7 @@ Sometimes you want to apply the same properties to the same elements across mult
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <view name="basic, grid, system">
         <image name="logo">
             <path>./snes_art/snes_header.png</path>
@@ -189,7 +189,7 @@ This is equivalent to:
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <view name="basic">
         <image name="logo">
             <path>./snes_art/snes_header.png</path>
@@ -222,7 +222,7 @@ You can theme multiple elements *of the same type* simultaneously.  The `name` a
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <view name="detailed">
         <!-- Weird spaces/newline on purpose! -->
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
@@ -237,7 +237,7 @@ Which is equivalent to:
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <view name="detailed">
         <text name="md_lbl_rating">
             <color>48474D</color>
@@ -296,7 +296,7 @@ Example `navigationsounds.xml`, to be included from the main theme file:
 ```xml
 
 <theme>
-    <formatVersion>7</formatVersion>
+    <formatVersion>6</formatVersion>
     <feature supported="navigationsounds">
         <view name="all">
             <sound name="systembrowse">
@@ -861,47 +861,9 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
     - Where on the component `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
       the component exactly in the middle of the screen.
 * `textColor` - type: COLOR. Default is 777777FF.
-* `textColorDimmed` - type: COLOR. Default is 777777FF.
 * `iconColor` - type: COLOR. Default is 777777FF.
-* `iconColorDimmed` - type: COLOR. Default is 777777FF.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
-* `entrySpacing` - type: FLOAT. Default is 16.0f.
-    - Spacing in pixels between the help system components.
-* `iconTextSpacing` - type: FLOAT. Default is 8.0f.
-    - Spacing in pixels within a help system component between it's icon and text.
-* `textStyle` - type: STRING. Default is `uppercase`.
-    - The style of the text. Options: `uppercase`, `lowercase`, `camelcase`.
-* `dpad_updown` - type: PATH.
-* `dpad_leftright` - type: PATH.
-* `dpad_all` - type: PATH.
-* `thumbstick_click` - type: PATH.
-* `button_l` - type: PATH.
-* `button_r` - type: PATH.
-* `button_lr` - type: PATH.
-* `button_a_SNES` - type: PATH.
-* `button_b_SNES` - type: PATH.
-* `button_x_SNEs` - type: PATH.
-* `button_y_SNES` - type: PATH.
-* `button_back_SNES` - type: PATH.
-* `button_start_SNES` - type: PATH.
-* `button_a_PS` - type: PATH.
-* `button_b_PS` - type: PATH.
-* `button_x_PS` - type: PATH.
-* `button_y_PS` - type: PATH.
-* `button_back_PS4` - type: PATH.
-* `button_start_PS4` - type: PATH.
-* `button_back_PS5` - type: PATH.
-* `button_start_PS5` - type: PATH.
-* `button_a_XBOX` - type: PATH.
-* `button_b_XBOX` - type: PATH.
-* `button_x_XBOX` - type: PATH.
-* `button_y_XBOX` - type: PATH.
-* `button_back_XBOX` - type: PATH.
-* `button_start_XBOX` - type: PATH.
-* `button_back_XBOX360` - type: PATH.
-* `button_start_XBOX360` - type: PATH.
-    - All options starting with `button_`: Path to custom button icon.
 
 #### carousel
 

@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v1.2 (development version) - Themes
+# EmulationStation Desktop Edition (ES-DE) v1.3 (development version) - Themes
 
 **Note:** If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
 
@@ -53,8 +53,9 @@ Again, the `[CURRENT_THEME_SET]` value is set in the "UI Settings" menu.  If it 
 Here is a very simple theme that changes the description text's color:
 
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <view name="detailed">
         <text name="description">
             <color>00FF00</color>
@@ -73,11 +74,10 @@ Here is a very simple theme that changes the description text's color:
 
 Everything must be inside a `<theme>` tag.
 
-**The `<formatVersion>` tag *must* be specified**.  This is the version of the theming system the theme was designed for.  The current version is 6.
+**The `<formatVersion>` tag *must* be specified**. This is the version of the theming system the theme was designed for.
+The current version is 7.
 
-
-
-A *view* can be thought of as a particular "screen" within EmulationStation.  Views are defined like this:
+A *view* can be thought of as a particular "screen" within EmulationStation. Views are defined like this:
 
 ```xml
 <view name="ViewNameHere">
@@ -124,8 +124,9 @@ You can include theme files within theme files, similar to `#include` in C (thou
 
 `~/.emulationstation/all_themes.xml`:
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <view name="detailed">
         <text name="description">
             <fontPath>./all_themes/myfont.ttf</fontPath>
@@ -137,8 +138,9 @@ You can include theme files within theme files, similar to `#include` in C (thou
 
 `~/.emulationstation/snes/theme.xml`:
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <include>./../all_themes.xml</include>
     <view name="detailed">
         <text name="description">
@@ -150,8 +152,9 @@ You can include theme files within theme files, similar to `#include` in C (thou
 
 Is equivalent to this `snes/theme.xml`:
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <view name="detailed">
         <text name="description">
             <fontPath>./all_themes/myfont.ttf</fontPath>
@@ -169,8 +172,9 @@ Notice that properties that were not specified got merged (`<fontPath>`) and the
 Sometimes you want to apply the same properties to the same elements across multiple views.  The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas).  So, for example, to easily apply the same header to the basic, grid, and system views:
 
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <view name="basic, grid, system">
         <image name="logo">
             <path>./snes_art/snes_header.png</path>
@@ -186,8 +190,9 @@ Sometimes you want to apply the same properties to the same elements across mult
 
 This is equivalent to:
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <view name="basic">
         <image name="logo">
             <path>./snes_art/snes_header.png</path>
@@ -218,8 +223,9 @@ This is equivalent to:
 You can theme multiple elements *of the same type* simultaneously.  The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas), just like it does for views, as long as the elements have the same type.  This is useful if you want to, say, apply the same color to all the metadata labels:
 
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <view name="detailed">
         <!-- Weird spaces/newline on purpose! -->
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
@@ -232,8 +238,9 @@ You can theme multiple elements *of the same type* simultaneously.  The `name` a
 
 Which is equivalent to:
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <view name="detailed">
         <text name="md_lbl_rating">
             <color>48474D</color>
@@ -290,8 +297,9 @@ Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag not found, using fallback sou
 Example `navigationsounds.xml`, to be included from the main theme file:
 
 ```xml
+
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <feature supported="navigationsounds">
         <view name="all">
             <sound name="systembrowse">
@@ -851,13 +859,53 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 
 #### helpsystem
 
-* `pos` - type: NORMALIZED_PAIR.  Default is "0.012 0.9515"
+* `pos` - type: NORMALIZED_PAIR. Default is "0.012 0.9515"
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.
-* `textColor` - type: COLOR.  Default is 777777FF.
-* `iconColor` - type: COLOR.  Default is 777777FF.
+    - Where on the component `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
+      the component exactly in the middle of the screen.
+* `textColor` - type: COLOR. Default is 777777FF.
+* `textColorDimmed` - type: COLOR. Default is 777777FF.
+* `iconColor` - type: COLOR. Default is 777777FF.
+* `iconColorDimmed` - type: COLOR. Default is 777777FF.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
+* `entrySpacing` - type: FLOAT. Default is 16.0f.
+    - Spacing in pixels between the help system components.
+* `iconTextSpacing` - type: FLOAT. Default is 8.0f.
+    - Spacing in pixels within a help system component between it's icon and text.
+* `textStyle` - type: STRING. Default is `uppercase`.
+    - The style of the text. Options: `uppercase`, `lowercase`, `camelcase`.
+* `customButtonIcon` - type: PATH.
+    - A button icon override. Specify the button type in the attribute `button`. The available buttons are:
+      `dpad_updown`,
+      `dpad_leftright`,
+      `dpad_all`,
+      `thumbstick_click`,
+      `button_l`,
+      `button_r`,
+      `button_lr`,
+      `button_a_SNES`,
+      `button_b_SNES`,
+      `button_x_SNEs`,
+      `button_y_SNES`,
+      `button_back_SNES`,
+      `button_start_SNES`,
+      `button_a_PS`,
+      `button_b_PS`,
+      `button_x_PS`,
+      `button_y_PS`,
+      `button_back_PS4`,
+      `button_start_PS4`,
+      `button_back_PS5`,
+      `button_start_PS5`,
+      `button_a_XBOX`,
+      `button_b_XBOX`,
+      `button_x_XBOX`,
+      `button_y_XBOX`,
+      `button_back_XBOX`,
+      `button_start_XBOX`,
+      `button_back_XBOX360`,
+      `button_start_XBOX360`.
 
 #### carousel
 
