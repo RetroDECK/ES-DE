@@ -507,10 +507,9 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 // attribute to prevent nodes overwriting each other.
                 if (strcmp(node.name(), "customButtonIcon") == 0) {
                     const auto btn = node.attribute("button").as_string("");
-                    if (strcmp(btn, "") == 0) {
+                    if (strcmp(btn, "") == 0)
                         LOG(LogError)
                             << "<customButtonIcon> element requires the `button` property.";
-                    }
                     else
                         element.properties[btn] = path;
                 }
