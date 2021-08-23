@@ -552,13 +552,11 @@ namespace Utils
                         line[i] = Utils::String::toUpper(std::string(1, line[i]))[0];
                         active = false;
                     }
-                    else {
+                    else
                         line[i] = Utils::String::toLower(std::string(1, line[i]))[0];
-                    }
                 }
-                else if (line[i] == ' ') {
+                else if (line[i] == ' ')
                     active = true;
-                }
             }
 
             return line;
