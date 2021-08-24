@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -24,7 +24,7 @@
             <text>Transmission speed : 4500Mbit/s</text>
         </text>
         <text name="info8" extra="true">
-            <text>Co-CPU : RCP - SP/DP @ 62.5MHz </text>
+            <text>Co-CPU : RCP - SP/DP @ 62.5MHz</text>
         </text>
         <text name="info9" extra="true">
             <text>Sound  : Stereo 16Bit 48 kHz</text>

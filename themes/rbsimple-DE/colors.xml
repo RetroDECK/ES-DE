@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <feature supported="carousel">
         <view name="system">
@@ -28,18 +28,18 @@
     </view>
 
     <view name="basic, detailed, video, grid">
+        <helpsystem name="help">
+            <textColor>262626</textColor>
+            <iconColor>262626</iconColor>
+        </helpsystem>
         <image name="background" extra="true">
             <color>707070</color>
         </image>
         <!-- This block is only here to force the drawing of color bands before frames. -->
-        <image name="band1" extra="true">
-        </image>
-        <image name="band2" extra="true">
-        </image>
-        <image name="band3" extra="true">
-        </image>
-        <image name="band4" extra="true">
-        </image>
+        <image name="band1" extra="true"></image>
+        <image name="band2" extra="true"></image>
+        <image name="band3" extra="true"></image>
+        <image name="band4" extra="true"></image>
         <textlist name="gamelist">
             <selectorColor>262626</selectorColor>
             <selectedColor>9F9F9F</selectedColor>

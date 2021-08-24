@@ -1,13 +1,13 @@
 <!--
 Theme: Recalbox Simple for EmulationStation Desktop Edition (rbsimple-DE)
-version: 1.0
+version: 1.2
 author: Leon Styhre
 license: creative commons CC-BY-NC-SA
 based on: 'recalbox-multi' by the Recalbox community
 -->
 
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
     <include>./colors.xml</include>
     <include>./navigationsounds.xml</include>
 

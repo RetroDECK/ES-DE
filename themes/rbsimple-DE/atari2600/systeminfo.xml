@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -30,7 +30,7 @@
             <text>Sound : 2 channels of 1-bit monaural sound with 4-bit volume control</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 2kB - 32kB </text>
+            <text>Cart Size : 2kB - 32kB</text>
         </text>
     </view>
 </theme>

@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -15,7 +15,7 @@
             <text>Best-selling game : New Super Mario Bros.</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : 66 MHz ARM9 + 33MHz ARM7 </text>
+            <text>CPU : 66 MHz ARM9 + 33MHz ARM7</text>
         </text>
         <text name="info6" extra="true">
             <text>RAM : 4MB / VRAM: 656KB</text>

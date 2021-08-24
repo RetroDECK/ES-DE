@@ -1,7 +1,7 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
-<view name="system, basic, detailed, video, grid">
+    <view name="system, basic, detailed, video, grid">
         <image name="band1" extra="true">
             <color>F79226</color>
         </image>

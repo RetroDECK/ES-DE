@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -9,7 +9,7 @@
             <text>Year of Release : 1984</text>
         </text>
         <text name="info3" extra="true">
-            <text>OS : AMSDOS with Locomotive BASIC </text>
+            <text>OS : AMSDOS with Locomotive BASIC</text>
         </text>
         <text name="info4" extra="true">
             <text>CPU : Zilog Z80A @ 4 MHz</text>

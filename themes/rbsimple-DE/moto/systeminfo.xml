@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -15,7 +15,7 @@
             <text>RAM : 256kB, ROM : 80kB</text>
         </text>
         <text name="info5" extra="true">
-            <text>8 Display modes, palette of 4096 colors </text>
+            <text>8 Display modes, palette of 4096 colors</text>
         </text>
         <text name="info6" extra="true">
             <text>Low resolutions: 160 × 200 (16, 5 or 2 colors)</text>

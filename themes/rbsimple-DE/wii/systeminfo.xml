@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -21,7 +21,7 @@
             <text>RAM : 88 MB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Video : ATI "Hollywood" @ 243 MHz </text>
+            <text>Video : ATI "Hollywood" @ 243 MHz</text>
         </text>
         <text name="info8" extra="true">
             <text>Resolution : 480p (PAL/NTSC), 480i (PAL/NTSC) or 576i (PAL/SECAM)</text>
