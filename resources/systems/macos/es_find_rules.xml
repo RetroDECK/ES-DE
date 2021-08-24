@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for macOS -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="staticpath">
-      <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <!-- RetroArch >= v1.9.2 -->
-      <entry>~/Library/Application Support/RetroArch/cores</entry>
-      <!-- RetroArch < v1.9.2 -->
-      <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="staticpath">
+            <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <!-- RetroArch >= v1.9.2 -->
+            <entry>~/Library/Application Support/RetroArch/cores</entry>
+            <!-- RetroArch < v1.9.2 -->
+            <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
+        </rule>
+    </core>
 </ruleList>

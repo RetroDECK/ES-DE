@@ -1,46 +1,46 @@
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Windows -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="winregistrypath">
-      <!-- Check for an App Paths entry in the Windows Registry -->
-      <entry>retroarch.exe</entry>
-    </rule>
-    <rule type="systempath">
-      <!-- This requires that the user has manually updated the Path variable -->
-      <entry>retroarch.exe</entry>
-    </rule>
-    <rule type="staticpath">
-      <!-- Some reasonable installation locations as fallback -->
-      <entry>C:\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\RetroArch\retroarch.exe</entry>
-      <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
-      <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
-      <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
-      <!-- Portable installation -->
-      <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
-      <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
-      <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
-      <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
-    </rule>
-  </emulator>
-  <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu -->
-    <rule type="systempath">
-      <entry>yuzu.exe</entry>
-    </rule>
-    <rule type="staticpath">
-      <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-      <!-- Portable installation -->
-      <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-      <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <entry>%EMUPATH%\cores</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="winregistrypath">
+            <!-- Check for an App Paths entry in the Windows Registry -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <!-- This requires that the user has manually updated the Path variable -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Some reasonable installation locations as fallback -->
+            <entry>C:\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\RetroArch\retroarch.exe</entry>
+            <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <entry>%EMUPATH%\cores</entry>
+        </rule>
+    </core>
 </ruleList>
