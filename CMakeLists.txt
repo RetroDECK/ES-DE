@@ -1,3 +1,13 @@
+#  SPDX-License-Identifier: MIT
+#
+#  EmulationStation Desktop Edition
+#  CMakeLists.txt
+#
+#  Main CMake configuration file.
+#  Sets up the overall build environment including dependencies detection, build options,
+#  compiler and linker flags and preprocessor directives.
+#
+
 cmake_minimum_required(VERSION 3.13)
 if(APPLE)
     # Set this to the operating system version you're building on, and also update

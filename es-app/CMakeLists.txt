@@ -1,3 +1,12 @@
+#  SPDX-License-Identifier: MIT
+#
+#  EmulationStation Desktop Edition
+#  CMakeLists.txt (es-app)
+#
+#  CMake configuration for es-app.
+#  Also contains the application packaging configuration.
+#
+
 project("emulationstation-de")
 
 set(ES_HEADERS

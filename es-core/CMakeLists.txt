@@ -1,3 +1,11 @@
+#  SPDX-License-Identifier: MIT
+#
+#  EmulationStation Desktop Edition
+#  CMakeLists.txt (es-core)
+#
+#  CMake configuration for es-core.
+#
+
 project("core")
 
 set(CORE_HEADERS
