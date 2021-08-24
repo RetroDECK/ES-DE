@@ -5,6 +5,8 @@
 #  update_theme_formatversion.sh
 #
 #  Updates the format version of all the XML files in a theme set.
+#  This needs to be run from the theme directory, e.g.:
+#  cd themes/rbsimple-DE && ../../tools/update_theme_formatversion.sh 5 6
 #
 #  This script is only intended to be used on Linux systems.
 #
