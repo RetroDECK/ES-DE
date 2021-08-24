@@ -767,7 +767,8 @@ void FileData::launchGame(Window* window)
             LOG(LogWarning) << "The alternative emulator configured for system \""
                             << getSystem()->getName()
                             << "\" is invalid, falling back to the default command \""
-                            << getSystem()->getSystemEnvData()->mLaunchCommands.front().first << "\"";
+                            << getSystem()->getSystemEnvData()->mLaunchCommands.front().first
+                            << "\"";
         }
 
         if (command.empty())
