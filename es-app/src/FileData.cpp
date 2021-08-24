@@ -760,6 +760,9 @@ void FileData::launchGame(Window* window)
         for (auto launchCommand : mEnvData->mLaunchCommands) {
             if (launchCommand.second == alternativeEmulator) {
                 command = launchCommand.first;
+                LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
+                              << alternativeEmulator << "\""
+                              << " for system \"" << this->getSystem()->getName() << "\"";
                 break;
             }
         }
