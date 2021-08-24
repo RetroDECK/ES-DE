@@ -23,7 +23,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
     // Horizontal sizes for the system and label entries.
     float systemSizeX = mMenu.getSize().x / 3.27f;
-    float labelSizeX = mMenu.getSize().x / 1.53;
+    float labelSizeX = mMenu.getSize().x / 1.53f;
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); it++) {
