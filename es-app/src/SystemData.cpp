@@ -486,7 +486,7 @@ bool SystemData::loadConfig()
                     // The first command tag had a label but the second one doesn't.
                     LOG(LogError)
                         << "Missing mandatory label attribute for alternative emulator "
-                           "entry, only the default command tag will be processed for system \""
+                           "entry, only the first command tag will be processed for system \""
                         << name << "\"";
                     break;
                 }
@@ -503,7 +503,7 @@ bool SystemData::loadConfig()
                 // There are more than one command tags and the first tag did not have a label.
                 LOG(LogError)
                     << "Missing mandatory label attribute for alternative emulator "
-                       "entry, only the default command tag will be processed for system \""
+                       "entry, only the first command tag will be processed for system \""
                     << name << "\"";
                 break;
             }
