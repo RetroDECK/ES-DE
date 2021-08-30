@@ -29,6 +29,7 @@ void HelpComponent::assignIcons()
 {
     std::string controllerType = Settings::getInstance()->getString("InputControllerType");
 
+    std::map<std::string, std::string> sIconPathMapOld(sIconPathMap);
     sIconPathMap.clear();
 
     // These graphics files are common between all controller types.
@@ -113,6 +114,7 @@ void HelpComponent::assignIcons()
                                    mStyle.mCustomButtons.button_back_PS5;
     }
     else if (controllerType == "xbox360") {
+
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_XBOX.empty() ?
                                 ":/help/button_a_XBOX.svg" :
                                 mStyle.mCustomButtons.button_a_XBOX;
@@ -152,6 +154,19 @@ void HelpComponent::assignIcons()
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_XBOX.empty() ?
                                    ":/help/button_back_XBOX.svg" :
                                    mStyle.mCustomButtons.button_back_XBOX;
+    }
+
+    // Invalidate cache for icons that have changed.
+    auto it = sIconPathMap.begin();
+    while (it != sIconPathMap.end()) {
+        if (sIconPathMapOld.find(it->first) != sIconPathMapOld.end()) {
+            if (sIconPathMapOld[it->first] != sIconPathMap[it->first]) {
+                if (mIconCache.find(it->first) != mIconCache.end()) {
+                    mIconCache.erase(mIconCache.find(it->first));
+                }
+            }
+        }
+        it++;
     }
 }
 
@@ -249,6 +264,7 @@ std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
         LOG(LogError) << "Unknown help icon \"" << name << "\"";
         return nullptr;
     }
+
     if (!ResourceManager::getInstance()->fileExists(pathLookup->second)) {
         LOG(LogError) << "Couldn't load help icon \"" << name << "\" as the file \""
                       << pathLookup->second << "\" is missing";
