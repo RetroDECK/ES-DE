@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v1.3 (development version) - Themes
+# EmulationStation Desktop Edition (ES-DE) v1.2 (development version) - Themes
 
 **Note:** If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
 
@@ -869,9 +869,9 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 * `iconColorDimmed` - type: COLOR. Default is 777777FF.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
-* `entrySpacing` - type: FLOAT. Default is 16.0f.
+* `entrySpacing` - type: FLOAT. Default is 16.0.
     - Spacing in pixels between the help system components.
-* `iconTextSpacing` - type: FLOAT. Default is 8.0f.
+* `iconTextSpacing` - type: FLOAT. Default is 8.0.
     - Spacing in pixels within a help system component between it's icon and text.
 * `textStyle` - type: STRING. Default is `uppercase`.
     - The style of the text. Options: `uppercase`, `lowercase`, `camelcase`.
@@ -886,7 +886,7 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
       `button_lr`,
       `button_a_SNES`,
       `button_b_SNES`,
-      `button_x_SNEs`,
+      `button_x_SNES`,
       `button_y_SNES`,
       `button_back_SNES`,
       `button_start_SNES`,
