@@ -50,7 +50,7 @@ private:
     // Used internally whenever the resizing parameters or texture change.
     void resize();
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     virtual void updatePlayer() override;
 
     // This will run the frame processing in a separate thread.

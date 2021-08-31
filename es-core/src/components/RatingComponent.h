@@ -27,7 +27,7 @@ public:
     void setValue(const std::string& value) override;
 
     bool input(InputConfig* config, Input input) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void onSizeChanged() override;
 
@@ -48,8 +48,6 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    Vector2f mTargetSize;
-
     void updateVertices();
     void updateColors();
 

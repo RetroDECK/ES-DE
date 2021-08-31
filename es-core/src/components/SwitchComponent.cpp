@@ -42,9 +42,9 @@ bool SwitchComponent::input(InputConfig* config, Input input)
     return false;
 }
 
-void SwitchComponent::render(const Transform4x4f& parentTrans)
+void SwitchComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
     mImage.render(trans);
     renderChildren(trans);
 }

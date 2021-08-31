@@ -7,6 +7,10 @@
 //  Convert characters to Unicode, upper-/lowercase conversion, string formatting etc.
 //
 
+#if defined(_MSC_VER) // MSVC compiler.
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+#endif
+
 #include "utils/StringUtil.h"
 
 #include <algorithm>
@@ -153,8 +157,7 @@ namespace Utils
             (wchar_t)0xFF4B, (wchar_t)0xFF4C, (wchar_t)0xFF4D, (wchar_t)0xFF4E, (wchar_t)0xFF4F,
             (wchar_t)0xFF50, (wchar_t)0xFF51, (wchar_t)0xFF52, (wchar_t)0xFF53, (wchar_t)0xFF54,
             (wchar_t)0xFF55, (wchar_t)0xFF56, (wchar_t)0xFF57, (wchar_t)0xFF58, (wchar_t)0xFF59,
-            (wchar_t)0xFF5A
-        };
+            (wchar_t)0xFF5A};
 
         static wchar_t unicodeUppercase[] = {
             (wchar_t)0x0041, (wchar_t)0x0042, (wchar_t)0x0043, (wchar_t)0x0044, (wchar_t)0x0045,
@@ -290,8 +293,7 @@ namespace Utils
             (wchar_t)0xFF2B, (wchar_t)0xFF2C, (wchar_t)0xFF2D, (wchar_t)0xFF2E, (wchar_t)0xFF2F,
             (wchar_t)0xFF30, (wchar_t)0xFF31, (wchar_t)0xFF32, (wchar_t)0xFF33, (wchar_t)0xFF34,
             (wchar_t)0xFF35, (wchar_t)0xFF36, (wchar_t)0xFF37, (wchar_t)0xFF38, (wchar_t)0xFF39,
-            (wchar_t)0xFF3A
-        };
+            (wchar_t)0xFF3A};
 
         unsigned int chars2Unicode(const std::string& stringArg, size_t& cursor)
         {
@@ -539,6 +541,27 @@ namespace Utils
             return stringUpper;
         }
 
+        std::string toCamelCase(const std::string& stringArg)
+        {
+            std::string line = stringArg;
+            bool active = true;
+
+            for (int i = 0; line[i] != '\0'; i++) {
+                if (std::isalpha(line[i])) {
+                    if (active) {
+                        line[i] = Utils::String::toUpper(std::string(1, line[i]))[0];
+                        active = false;
+                    }
+                    else
+                        line[i] = Utils::String::toLower(std::string(1, line[i]))[0];
+                }
+                else if (line[i] == ' ')
+                    active = true;
+            }
+
+            return line;
+        }
+
         std::string trim(const std::string& stringArg)
         {
             const size_t strBegin = stringArg.find_first_not_of(" \t");
@@ -592,7 +615,7 @@ namespace Utils
 
         std::string removeParenthesis(const std::string& stringArg)
         {
-            static std::vector<char> remove = { '(', ')', '[', ']' };
+            static std::vector<char> remove = {'(', ')', '[', ']'};
             std::string stringRemove = stringArg;
             size_t start;
             size_t end;

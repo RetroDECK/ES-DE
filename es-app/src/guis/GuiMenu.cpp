@@ -20,6 +20,7 @@
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
+#include "guis/GuiAlternativeEmulators.h"
 #include "guis/GuiCollectionSystemsOptions.h"
 #include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
@@ -75,8 +76,7 @@ GuiMenu::GuiMenu(Window* window)
     addChild(&mMenu);
     addVersionInfo();
     setSize(mMenu.getSize());
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                Renderer::getScreenHeight() * 0.13f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
 }
 
 GuiMenu::~GuiMenu()
@@ -87,7 +87,11 @@ GuiMenu::~GuiMenu()
     ViewController::get()->stopScrolling();
 }
 
-void GuiMenu::openScraperOptions() { mWindow->pushGui(new GuiScraperMenu(mWindow, "SCRAPER")); }
+void GuiMenu::openScraperOptions()
+{
+    // Open the scraper menu.
+    mWindow->pushGui(new GuiScraperMenu(mWindow, "SCRAPER"));
+}
 
 void GuiMenu::openUIOptions()
 {
@@ -97,17 +101,16 @@ void GuiMenu::openUIOptions()
     auto startup_system = std::make_shared<OptionListComponent<std::string>>(
         mWindow, getHelpStyle(), "GAMELIST ON STARTUP", false);
     startup_system->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
-    float dotsSize = Font::get(FONT_SIZE_MEDIUM)->sizeText("...").x();
+    float dotsSize = Font::get(FONT_SIZE_MEDIUM)->sizeText("...").x;
     for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
          it++) {
         if ((*it)->getName() != "retropie") {
             // If required, abbreviate the system name so it doesn't overlap the setting name.
             std::string abbreviatedString =
-                Font::get(FONT_SIZE_MEDIUM)
-                    ->getTextMaxWidth((*it)->getFullName(), mSize.x() * 0.47f);
-            float sizeDifference = Font::get(FONT_SIZE_MEDIUM)->sizeText((*it)->getFullName()).x() -
-                                   Font::get(FONT_SIZE_MEDIUM)->sizeText(abbreviatedString).x();
-            if (sizeDifference > 0) {
+                Font::get(FONT_SIZE_MEDIUM)->getTextMaxWidth((*it)->getFullName(), mSize.x * 0.47f);
+            float sizeDifference = Font::get(FONT_SIZE_MEDIUM)->sizeText((*it)->getFullName()).x -
+                                   Font::get(FONT_SIZE_MEDIUM)->sizeText(abbreviatedString).x;
+            if (sizeDifference > 0.0f) {
                 // It doesn't make sense to abbreviate if the number of pixels removed by
                 // the abbreviation is less or equal to the size of the three dots that
                 // would be appended to the string.
@@ -374,6 +377,28 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Media viewer.
+    ComponentListRow media_viewer_row;
+    media_viewer_row.elements.clear();
+    media_viewer_row.addElement(std::make_shared<TextComponent>(mWindow, "MEDIA VIEWER SETTINGS",
+                                                                Font::get(FONT_SIZE_MEDIUM),
+                                                                0x777777FF),
+                                true);
+    media_viewer_row.addElement(makeArrow(mWindow), false);
+    media_viewer_row.makeAcceptInputHandler(std::bind(&GuiMenu::openMediaViewerOptions, this));
+    s->addRow(media_viewer_row);
+
+    // Screensaver.
+    ComponentListRow screensaver_row;
+    screensaver_row.elements.clear();
+    screensaver_row.addElement(std::make_shared<TextComponent>(mWindow, "SCREENSAVER SETTINGS",
+                                                               Font::get(FONT_SIZE_MEDIUM),
+                                                               0x777777FF),
+                               true);
+    screensaver_row.addElement(makeArrow(mWindow), false);
+    screensaver_row.makeAcceptInputHandler(std::bind(&GuiMenu::openScreensaverOptions, this));
+    s->addRow(screensaver_row);
+
 #if defined(USE_OPENGL_21)
     // Blur background when the menu is open.
     auto menu_blur_background = std::make_shared<SwitchComponent>(mWindow);
@@ -555,28 +580,6 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
         }
     });
-
-    // Media viewer.
-    ComponentListRow media_viewer_row;
-    media_viewer_row.elements.clear();
-    media_viewer_row.addElement(std::make_shared<TextComponent>(mWindow, "MEDIA VIEWER SETTINGS",
-                                                                Font::get(FONT_SIZE_MEDIUM),
-                                                                0x777777FF),
-                                true);
-    media_viewer_row.addElement(makeArrow(mWindow), false);
-    media_viewer_row.makeAcceptInputHandler(std::bind(&GuiMenu::openMediaViewerOptions, this));
-    s->addRow(media_viewer_row);
-
-    // Screensaver.
-    ComponentListRow screensaver_row;
-    screensaver_row.elements.clear();
-    screensaver_row.addElement(std::make_shared<TextComponent>(mWindow, "SCREENSAVER SETTINGS",
-                                                               Font::get(FONT_SIZE_MEDIUM),
-                                                               0x777777FF),
-                               true);
-    screensaver_row.addElement(makeArrow(mWindow), false);
-    screensaver_row.makeAcceptInputHandler(std::bind(&GuiMenu::openScreensaverOptions, this));
-    s->addRow(screensaver_row);
 
     mWindow->pushGui(s);
 }
@@ -770,6 +773,49 @@ void GuiMenu::openOtherOptions()
 {
     auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
+    // Alternative emulators GUI.
+    ComponentListRow alternativeEmulatorsRow;
+    alternativeEmulatorsRow.elements.clear();
+    alternativeEmulatorsRow.addElement(
+        std::make_shared<TextComponent>(mWindow, "ALTERNATIVE EMULATORS",
+                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+        true);
+    alternativeEmulatorsRow.addElement(makeArrow(mWindow), false);
+    alternativeEmulatorsRow.makeAcceptInputHandler(
+        std::bind([this] { mWindow->pushGui(new GuiAlternativeEmulators(mWindow)); }));
+    s->addRow(alternativeEmulatorsRow);
+
+    // Game media directory.
+    ComponentListRow rowMediaDir;
+    auto media_directory = std::make_shared<TextComponent>(mWindow, "GAME MEDIA DIRECTORY",
+                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto bracketMediaDirectory = std::make_shared<ImageComponent>(mWindow);
+    bracketMediaDirectory->setImage(":/graphics/arrow.svg");
+    bracketMediaDirectory->setResize(
+        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+    rowMediaDir.addElement(media_directory, true);
+    rowMediaDir.addElement(bracketMediaDirectory, false);
+    std::string titleMediaDir = "ENTER GAME MEDIA DIRECTORY";
+    std::string mediaDirectoryStaticText = "Default directory:";
+    std::string defaultDirectoryText = "~/.emulationstation/downloaded_media/";
+    std::string initValueMediaDir = Settings::getInstance()->getString("MediaDirectory");
+    bool multiLineMediaDir = false;
+    auto updateValMediaDir = [this](const std::string& newVal) {
+        Settings::getInstance()->setString("MediaDirectory", newVal);
+        Settings::getInstance()->saveFile();
+        ViewController::get()->reloadAll();
+        mWindow->invalidateCachedBackground();
+    };
+    rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
+                                        defaultDirectoryText, initValueMediaDir, updateValMediaDir,
+                                        multiLineMediaDir] {
+        mWindow->pushGui(new GuiComplexTextEditPopup(
+            mWindow, getHelpStyle(), titleMediaDir, mediaDirectoryStaticText, defaultDirectoryText,
+            Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+            multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
+    });
+    s->addRow(rowMediaDir);
+
     // Maximum VRAM.
     auto max_vram = std::make_shared<SliderComponent>(mWindow, 80.f, 1024.f, 8.f, "MiB");
     max_vram->setValue(static_cast<float>(Settings::getInstance()->getInt("MaxVRAM")));
@@ -892,36 +938,6 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
-
-    // Game media directory.
-    ComponentListRow rowMediaDir;
-    auto media_directory = std::make_shared<TextComponent>(mWindow, "GAME MEDIA DIRECTORY",
-                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
-    auto bracketMediaDirectory = std::make_shared<ImageComponent>(mWindow);
-    bracketMediaDirectory->setImage(":/graphics/arrow.svg");
-    bracketMediaDirectory->setResize(Vector2f(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
-    rowMediaDir.addElement(media_directory, true);
-    rowMediaDir.addElement(bracketMediaDirectory, false);
-    std::string titleMediaDir = "ENTER GAME MEDIA DIRECTORY";
-    std::string mediaDirectoryStaticText = "Default directory:";
-    std::string defaultDirectoryText = "~/.emulationstation/downloaded_media/";
-    std::string initValueMediaDir = Settings::getInstance()->getString("MediaDirectory");
-    bool multiLineMediaDir = false;
-    auto updateValMediaDir = [this](const std::string& newVal) {
-        Settings::getInstance()->setString("MediaDirectory", newVal);
-        Settings::getInstance()->saveFile();
-        ViewController::get()->reloadAll();
-        mWindow->invalidateCachedBackground();
-    };
-    rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
-                                        defaultDirectoryText, initValueMediaDir, updateValMediaDir,
-                                        multiLineMediaDir] {
-        mWindow->pushGui(new GuiComplexTextEditPopup(
-            mWindow, getHelpStyle(), titleMediaDir, mediaDirectoryStaticText, defaultDirectoryText,
-            Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
-            multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
-    });
-    s->addRow(rowMediaDir);
 
 #if defined(_WIN64)
     // Hide taskbar during the ES program session.
@@ -1259,8 +1275,8 @@ void GuiMenu::openCollectionSystemOptions()
 
 void GuiMenu::onSizeChanged()
 {
-    mVersion.setSize(mSize.x(), 0);
-    mVersion.setPosition(0, mSize.y() - mVersion.getSize().y());
+    mVersion.setSize(mSize.x, 0.0f);
+    mVersion.setPosition(0.0f, mSize.y - mVersion.getSize().y);
 }
 
 void GuiMenu::addEntry(const std::string& name,

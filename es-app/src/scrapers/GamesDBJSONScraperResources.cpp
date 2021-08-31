@@ -12,6 +12,10 @@
 //  gamesdb_publishers.json
 //
 
+#if defined(_MSC_VER) // MSVC compiler.
+#define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+#endif
+
 #include "scrapers/GamesDBJSONScraperResources.h"
 
 #include "Log.h"

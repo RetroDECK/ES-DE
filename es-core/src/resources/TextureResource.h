@@ -9,10 +9,9 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 #define ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 
-#include "math/Vector2f.h"
-#include "math/Vector2i.h"
 #include "resources/ResourceManager.h"
 #include "resources/TextureDataManager.h"
+#include "utils/MathUtil.h"
 
 #include <cmath>
 #include <set>
@@ -30,6 +29,7 @@ public:
                                                 bool tile = false,
                                                 bool forceLoad = false,
                                                 bool dynamic = true,
+                                                bool linearMagnify = false,
                                                 float scaleDuringLoad = 1.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
@@ -45,14 +45,14 @@ public:
     // situations. An alternative is to set a scaling factor directly when loading the texture
     // using get(), by using the scaleDuringLoad parameter (which also works for raster graphics).
     void rasterizeAt(size_t width, size_t height);
-    Vector2f getSourceImageSize() const { return mSourceSize; }
+    glm::vec2 getSourceImageSize() const { return mSourceSize; }
 
     virtual ~TextureResource();
 
     bool isInitialized() const { return true; }
     bool isTiled() const;
 
-    const Vector2i getSize() const { return mSize; }
+    const glm::ivec2 getSize() const { return mSize; }
     bool bind();
 
     // Returns an approximation of total VRAM used by textures (in bytes).
@@ -61,7 +61,11 @@ public:
     static size_t getTotalTextureSize();
 
 protected:
-    TextureResource(const std::string& path, bool tile, bool dynamic, float scaleDuringLoad);
+    TextureResource(const std::string& path,
+                    bool tile,
+                    bool dynamic,
+                    bool linearMagnify,
+                    float scaleDuringLoad);
     virtual void unload(std::shared_ptr<ResourceManager>& rm);
     virtual void reload(std::shared_ptr<ResourceManager>& rm);
 
@@ -73,8 +77,8 @@ private:
     // The texture data manager manages loading and unloading of filesystem based textures.
     static TextureDataManager sTextureDataManager;
 
-    Vector2i mSize;
-    Vector2f mSourceSize;
+    glm::ivec2 mSize;
+    glm::vec2 mSourceSize;
     bool mForceLoad;
 
     typedef std::pair<std::string, bool> TextureKeyType;

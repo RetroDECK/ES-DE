@@ -26,11 +26,11 @@ public:
                       const std::shared_ptr<Font>& font,
                       unsigned int color = 0x000000FF,
                       Alignment align = ALIGN_LEFT,
-                      Vector3f pos = Vector3f::Zero(),
-                      Vector2f size = Vector2f::Zero(),
+                      glm::vec3 pos = {},
+                      glm::vec2 size = {},
                       unsigned int bgcolor = 0x00000000);
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void setValue(const std::string& val) override;
     std::string getValue() const override;

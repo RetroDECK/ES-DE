@@ -68,8 +68,8 @@ MameNames::MameNames()
 
     for (pugi::xml_node gameNode = doc.child("game"); gameNode;
          gameNode = gameNode.next_sibling("game")) {
-        NamePair namePair = { gameNode.child("mamename").text().get(),
-                              gameNode.child("realname").text().get() };
+        NamePair namePair = {gameNode.child("mamename").text().get(),
+                             gameNode.child("realname").text().get()};
         mNamePairs.push_back(namePair);
     }
 

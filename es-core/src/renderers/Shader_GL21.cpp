@@ -114,7 +114,7 @@ namespace Renderer
         shaderDimValue = glGetUniformLocation(mProgramID, "dimValue");
     }
 
-    void Renderer::Shader::setModelViewProjectionMatrix(Transform4x4f mvpMatrix)
+    void Renderer::Shader::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
     {
         if (shaderMVPMatrix != -1)
             GL_CHECK_ERROR(glUniformMatrix4fv(shaderMVPMatrix, 1, GL_FALSE,
@@ -184,7 +184,7 @@ namespace Renderer
             glGetProgramInfoLog(programID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printProgramLog():\n"
+                LOG(LogDebug) << "Renderer_GL21::printProgramInfoLog():\n"
                               << std::string(infoLog.begin(), infoLog.end());
             }
         }
@@ -205,7 +205,7 @@ namespace Renderer
             glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printShaderLog(): Error in "
+                LOG(LogDebug) << "Renderer_GL21::printShaderInfoLog(): Error in "
                               << (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
                                                                    "FRAGMENT section:\n")
                               << std::string(infoLog.begin(), infoLog.end());

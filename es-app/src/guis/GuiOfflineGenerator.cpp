@@ -16,7 +16,7 @@
 GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileData*>& gameQueue)
     : GuiComponent(window)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(6, 13))
+    , mGrid(window, glm::ivec2{6, 13})
     , mGameQueue(gameQueue)
 {
     addChild(&mBackground);
@@ -38,100 +38,100 @@ GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileDa
     // Header.
     mTitle = std::make_shared<TextComponent>(mWindow, "MIXIMAGE OFFLINE GENERATOR",
                                              Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true, Vector2i(6, 1));
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{6, 1});
 
     mStatus = std::make_shared<TextComponent>(mWindow, "NOT STARTED", Font::get(FONT_SIZE_MEDIUM),
                                               0x777777FF, ALIGN_CENTER);
-    mGrid.setEntry(mStatus, Vector2i(0, 1), false, true, Vector2i(6, 1));
+    mGrid.setEntry(mStatus, glm::ivec2{0, 1}, false, true, glm::ivec2{6, 1});
 
     mGameCounter = std::make_shared<TextComponent>(
         mWindow,
         std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
             (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED",
         Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
-    mGrid.setEntry(mGameCounter, Vector2i(0, 2), false, true, Vector2i(6, 1));
+    mGrid.setEntry(mGameCounter, glm::ivec2{0, 2}, false, true, glm::ivec2{6, 1});
 
     // Spacer row with top border.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 3), false, false,
-                   Vector2i(6, 1), GridFlags::BORDER_TOP);
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 3}, false, false,
+                   glm::ivec2{6, 1}, GridFlags::BORDER_TOP);
 
     // Left spacer.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 4), false, false,
-                   Vector2i(1, 7));
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 4}, false, false,
+                   glm::ivec2{1, 7});
 
     // Generated label.
     mGeneratedLbl = std::make_shared<TextComponent>(
         mWindow, "Generated:", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mGeneratedLbl, Vector2i(1, 4), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mGeneratedLbl, glm::ivec2{1, 4}, false, true, glm::ivec2{1, 1});
 
     // Generated value/counter.
     mGeneratedVal =
         std::make_shared<TextComponent>(mWindow, std::to_string(mGamesProcessed),
                                         Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mGeneratedVal, Vector2i(2, 4), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mGeneratedVal, glm::ivec2{2, 4}, false, true, glm::ivec2{1, 1});
 
     // Overwritten label.
     mOverwrittenLbl = std::make_shared<TextComponent>(
         mWindow, "Overwritten:", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mOverwrittenLbl, Vector2i(1, 5), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mOverwrittenLbl, glm::ivec2{1, 5}, false, true, glm::ivec2{1, 1});
 
     // Overwritten value/counter.
     mOverwrittenVal =
         std::make_shared<TextComponent>(mWindow, std::to_string(mImagesOverwritten),
                                         Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mOverwrittenVal, Vector2i(2, 5), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mOverwrittenVal, glm::ivec2{2, 5}, false, true, glm::ivec2{1, 1});
 
     // Skipping label.
     mSkippedLbl = std::make_shared<TextComponent>(
         mWindow, "Skipped (existing):", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mSkippedLbl, Vector2i(1, 6), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mSkippedLbl, glm::ivec2{1, 6}, false, true, glm::ivec2{1, 1});
 
     // Skipping value/counter.
     mSkippedVal = std::make_shared<TextComponent>(
         mWindow, std::to_string(mGamesSkipped), Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mSkippedVal, Vector2i(2, 6), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mSkippedVal, glm::ivec2{2, 6}, false, true, glm::ivec2{1, 1});
 
     // Failed label.
     mFailedLbl = std::make_shared<TextComponent>(mWindow, "Failed:", Font::get(FONT_SIZE_SMALL),
                                                  0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mFailedLbl, Vector2i(1, 7), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mFailedLbl, glm::ivec2{1, 7}, false, true, glm::ivec2{1, 1});
 
     // Failed value/counter.
     mFailedVal = std::make_shared<TextComponent>(
         mWindow, std::to_string(mGamesFailed), Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mFailedVal, Vector2i(2, 7), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mFailedVal, glm::ivec2{2, 7}, false, true, glm::ivec2{1, 1});
 
     // Processing label.
     mProcessingLbl = std::make_shared<TextComponent>(
         mWindow, "Processing: ", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mProcessingLbl, Vector2i(3, 4), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mProcessingLbl, glm::ivec2{3, 4}, false, true, glm::ivec2{1, 1});
 
     // Processing value.
     mProcessingVal = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_SMALL),
                                                      0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mProcessingVal, Vector2i(4, 4), false, true, Vector2i(1, 1));
+    mGrid.setEntry(mProcessingVal, glm::ivec2{4, 4}, false, true, glm::ivec2{1, 1});
 
     // Spacer row.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(1, 8), false, false,
-                   Vector2i(4, 1));
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 8}, false, false,
+                   glm::ivec2{4, 1});
 
     // Last error message label.
     mLastErrorLbl = std::make_shared<TextComponent>(
         mWindow, "Last error message:", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mLastErrorLbl, Vector2i(1, 9), false, true, Vector2i(4, 1));
+    mGrid.setEntry(mLastErrorLbl, glm::ivec2{1, 9}, false, true, glm::ivec2{4, 1});
 
     // Last error message value.
     mLastErrorVal = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_SMALL),
                                                     0x888888FF, ALIGN_LEFT);
-    mGrid.setEntry(mLastErrorVal, Vector2i(1, 10), false, true, Vector2i(4, 1));
+    mGrid.setEntry(mLastErrorVal, glm::ivec2{1, 10}, false, true, glm::ivec2{4, 1});
 
     // Right spacer.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(5, 4), false, false,
-                   Vector2i(1, 7));
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{5, 4}, false, false,
+                   glm::ivec2{1, 7});
 
     // Spacer row with bottom border.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), Vector2i(0, 11), false, false,
-                   Vector2i(6, 1), GridFlags::BORDER_BOTTOM);
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 11}, false, false,
+                   glm::ivec2{6, 1}, GridFlags::BORDER_BOTTOM);
 
     // Buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
@@ -177,7 +177,7 @@ GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileDa
     buttons.push_back(mCloseButton);
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 12), true, false, Vector2i(6, 1));
+    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 12}, true, false, glm::ivec2{6, 1});
 
     // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 95% of the screen
     // width rather than the 85% allowed for wider displays.
@@ -185,8 +185,8 @@ GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileDa
         Renderer::getScreenWidth() * ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f);
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 GuiOfflineGenerator::~GuiOfflineGenerator()
@@ -203,13 +203,13 @@ GuiOfflineGenerator::~GuiOfflineGenerator()
 
 void GuiOfflineGenerator::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
     // Set row heights.
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y(), false);
-    mGrid.setRowHeightPerc(1, (mStatus->getFont()->getLetterHeight() + 2.0f) / mSize.y(), false);
-    mGrid.setRowHeightPerc(2, mGameCounter->getFont()->getHeight() * 1.75f / mSize.y(), false);
-    mGrid.setRowHeightPerc(3, (mStatus->getFont()->getLetterHeight() + 3.0f) / mSize.y(), false);
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y, false);
+    mGrid.setRowHeightPerc(1, (mStatus->getFont()->getLetterHeight() + 2.0f) / mSize.y, false);
+    mGrid.setRowHeightPerc(2, mGameCounter->getFont()->getHeight() * 1.75f / mSize.y, false);
+    mGrid.setRowHeightPerc(3, (mStatus->getFont()->getLetterHeight() + 3.0f) / mSize.y, false);
     mGrid.setRowHeightPerc(4, 0.07f, false);
     mGrid.setRowHeightPerc(5, 0.07f, false);
     mGrid.setRowHeightPerc(6, 0.07f, false);
@@ -217,7 +217,7 @@ void GuiOfflineGenerator::onSizeChanged()
     mGrid.setRowHeightPerc(8, 0.02f, false);
     mGrid.setRowHeightPerc(9, 0.07f, false);
     mGrid.setRowHeightPerc(10, 0.07f, false);
-    mGrid.setRowHeightPerc(12, mButtonGrid->getSize().y() / mSize.y(), false);
+    mGrid.setRowHeightPerc(12, mButtonGrid->getSize().y / mSize.y, false);
 
     // Set column widths.
     mGrid.setColWidthPerc(0, 0.03f);

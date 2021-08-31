@@ -11,7 +11,6 @@
 #include "FileData.h"
 #include "Log.h"
 #include "Settings.h"
-#include "math/Misc.h"
 #include "utils/StringUtil.h"
 #include "views/UIModeController.h"
 
@@ -37,15 +36,15 @@ FileFilterIndex::FileFilterIndex()
     // clang-format off
     FilterDataDecl filterDecls[] = {
         //type              //allKeys                //filteredBy         //filteredKeys                //primaryKey    //hasSecondaryKey   //secondaryKey  //menuLabel
-        { FAVORITES_FILTER, &mFavoritesIndexAllKeys, &mFilterByFavorites, &mFavoritesIndexFilteredKeys, "favorite",     false,              "",             "FAVORITES" },
-        { GENRE_FILTER,     &mGenreIndexAllKeys,     &mFilterByGenre,     &mGenreIndexFilteredKeys,     "genre",        true,               "genre",        "GENRE" },
-        { PLAYER_FILTER,    &mPlayersIndexAllKeys,   &mFilterByPlayers,   &mPlayersIndexFilteredKeys,   "players",      false,              "",             "PLAYERS" },
-        { PUBDEV_FILTER,    &mPubDevIndexAllKeys,    &mFilterByPubDev,    &mPubDevIndexFilteredKeys,    "developer",    true,               "publisher",    "PUBLISHER / DEVELOPER" },
-        { RATINGS_FILTER,   &mRatingsIndexAllKeys,   &mFilterByRatings,   &mRatingsIndexFilteredKeys,   "rating",       false,              "",             "RATING" },
-        { KIDGAME_FILTER,   &mKidGameIndexAllKeys,   &mFilterByKidGame,   &mKidGameIndexFilteredKeys,   "kidgame",      false,              "",             "KIDGAME" },
-        { COMPLETED_FILTER, &mCompletedIndexAllKeys, &mFilterByCompleted, &mCompletedIndexFilteredKeys, "completed",    false,              "",             "COMPLETED" },
-        { BROKEN_FILTER,    &mBrokenIndexAllKeys,    &mFilterByBroken,    &mBrokenIndexFilteredKeys,    "broken",       false,              "",             "BROKEN" },
-        { HIDDEN_FILTER,    &mHiddenIndexAllKeys,    &mFilterByHidden,    &mHiddenIndexFilteredKeys,    "hidden",       false,              "",             "HIDDEN" }
+        {FAVORITES_FILTER, &mFavoritesIndexAllKeys, &mFilterByFavorites, &mFavoritesIndexFilteredKeys, "favorite",     false,              "",             "FAVORITES"},
+        {GENRE_FILTER,     &mGenreIndexAllKeys,     &mFilterByGenre,     &mGenreIndexFilteredKeys,     "genre",        true,               "genre",        "GENRE"},
+        {PLAYER_FILTER,    &mPlayersIndexAllKeys,   &mFilterByPlayers,   &mPlayersIndexFilteredKeys,   "players",      false,              "",             "PLAYERS"},
+        {PUBDEV_FILTER,    &mPubDevIndexAllKeys,    &mFilterByPubDev,    &mPubDevIndexFilteredKeys,    "developer",    true,               "publisher",    "PUBLISHER / DEVELOPER"},
+        {RATINGS_FILTER,   &mRatingsIndexAllKeys,   &mFilterByRatings,   &mRatingsIndexFilteredKeys,   "rating",       false,              "",             "RATING"},
+        {KIDGAME_FILTER,   &mKidGameIndexAllKeys,   &mFilterByKidGame,   &mKidGameIndexFilteredKeys,   "kidgame",      false,              "",             "KIDGAME"},
+        {COMPLETED_FILTER, &mCompletedIndexAllKeys, &mFilterByCompleted, &mCompletedIndexFilteredKeys, "completed",    false,              "",             "COMPLETED"},
+        {BROKEN_FILTER,    &mBrokenIndexAllKeys,    &mFilterByBroken,    &mBrokenIndexFilteredKeys,    "broken",       false,              "",             "BROKEN"},
+        {HIDDEN_FILTER,    &mHiddenIndexAllKeys,    &mFilterByHidden,    &mHiddenIndexFilteredKeys,    "hidden",       false,              "",             "HIDDEN"}
     };
     // clang-format on
 
@@ -67,15 +66,15 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
     };
 
     IndexImportStructure indexStructDecls[] = {
-        { &mFavoritesIndexAllKeys, &(indexToImport->mFavoritesIndexAllKeys) },
-        { &mGenreIndexAllKeys, &(indexToImport->mGenreIndexAllKeys) },
-        { &mPlayersIndexAllKeys, &(indexToImport->mPlayersIndexAllKeys) },
-        { &mPubDevIndexAllKeys, &(indexToImport->mPubDevIndexAllKeys) },
-        { &mRatingsIndexAllKeys, &(indexToImport->mRatingsIndexAllKeys) },
-        { &mKidGameIndexAllKeys, &(indexToImport->mKidGameIndexAllKeys) },
-        { &mCompletedIndexAllKeys, &(indexToImport->mCompletedIndexAllKeys) },
-        { &mBrokenIndexAllKeys, &(indexToImport->mBrokenIndexAllKeys) },
-        { &mHiddenIndexAllKeys, &(indexToImport->mHiddenIndexAllKeys) },
+        {&mFavoritesIndexAllKeys, &(indexToImport->mFavoritesIndexAllKeys)},
+        {&mGenreIndexAllKeys, &(indexToImport->mGenreIndexAllKeys)},
+        {&mPlayersIndexAllKeys, &(indexToImport->mPlayersIndexAllKeys)},
+        {&mPubDevIndexAllKeys, &(indexToImport->mPubDevIndexAllKeys)},
+        {&mRatingsIndexAllKeys, &(indexToImport->mRatingsIndexAllKeys)},
+        {&mKidGameIndexAllKeys, &(indexToImport->mKidGameIndexAllKeys)},
+        {&mCompletedIndexAllKeys, &(indexToImport->mCompletedIndexAllKeys)},
+        {&mBrokenIndexAllKeys, &(indexToImport->mBrokenIndexAllKeys)},
+        {&mHiddenIndexAllKeys, &(indexToImport->mHiddenIndexAllKeys)},
     };
 
     std::vector<IndexImportStructure> indexImportDecl = std::vector<IndexImportStructure>(
@@ -304,7 +303,7 @@ void FileFilterIndex::setKidModeFilters()
 {
     if (UIModeController::getInstance()->isUIModeKid()) {
         mFilterByKidGame = true;
-        std::vector<std::string> val = { "TRUE" };
+        std::vector<std::string> val = {"TRUE"};
         setFilter(KIDGAME_FILTER, &val);
     }
 }
@@ -419,14 +418,13 @@ bool FileFilterIndex::isFiltered()
 
 bool FileFilterIndex::isKeyBeingFilteredBy(std::string key, FilterIndexType type)
 {
-    const FilterIndexType filterTypes[9] = { FAVORITES_FILTER, GENRE_FILTER,   PLAYER_FILTER,
-                                             PUBDEV_FILTER,    RATINGS_FILTER, KIDGAME_FILTER,
-                                             COMPLETED_FILTER, BROKEN_FILTER,  HIDDEN_FILTER };
+    const FilterIndexType filterTypes[9] = {FAVORITES_FILTER, GENRE_FILTER,   PLAYER_FILTER,
+                                            PUBDEV_FILTER,    RATINGS_FILTER, KIDGAME_FILTER,
+                                            COMPLETED_FILTER, BROKEN_FILTER,  HIDDEN_FILTER};
     std::vector<std::string> filterKeysList[9] = {
         mFavoritesIndexFilteredKeys, mGenreIndexFilteredKeys,   mPlayersIndexFilteredKeys,
         mPubDevIndexFilteredKeys,    mRatingsIndexFilteredKeys, mKidGameIndexFilteredKeys,
-        mCompletedIndexFilteredKeys, mBrokenIndexFilteredKeys,  mHiddenIndexFilteredKeys
-    };
+        mCompletedIndexFilteredKeys, mBrokenIndexFilteredKeys,  mHiddenIndexFilteredKeys};
 
     for (int i = 0; i < 9; i++) {
         if (filterTypes[i] == type) {

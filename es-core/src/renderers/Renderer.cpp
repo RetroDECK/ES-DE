@@ -12,8 +12,6 @@
 #include "Log.h"
 #include "Settings.h"
 #include "Shader_GL21.h"
-#include "math/Transform4x4f.h"
-#include "math/Vector2i.h"
 #include "resources/ResourceManager.h"
 
 #include <SDL2/SDL.h>
@@ -326,28 +324,19 @@ namespace Renderer
         if (!createWindow())
             return false;
 
-        Transform4x4f projection = Transform4x4f::Identity();
-        Rect viewport = Rect(0, 0, 0, 0);
+        glm::mat4 projection{getIdentity()};
+        Rect viewport{0, 0, 0, 0};
 
         switch (screenRotate) {
-            case 0: {
-                viewport.x = screenOffsetX;
-                viewport.y = screenOffsetY;
-                viewport.w = screenWidth;
-                viewport.h = screenHeight;
-                projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
-                                           static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                break;
-            }
             case 1: {
                 viewport.x = windowWidth - screenOffsetY - screenHeight;
                 viewport.y = screenOffsetX;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
-                projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
-                                           static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(90)), { 0, 0, 1 });
-                projection.translate({ 0, screenHeight * -1.0f, 0 });
+                projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
+                                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
+                projection = glm::rotate(projection, glm::radians(90.0f), {0.0f, 0.0f, 1.0f});
+                projection = glm::translate(projection, {0.0f, screenHeight * -1.0f, 0.0f});
                 break;
             }
             case 2: {
@@ -355,10 +344,11 @@ namespace Renderer
                 viewport.y = windowHeight - screenOffsetY - screenHeight;
                 viewport.w = screenWidth;
                 viewport.h = screenHeight;
-                projection.orthoProjection(0.0f, static_cast<float>(screenWidth),
-                                           static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(180)), { 0, 0, 1 });
-                projection.translate({ screenWidth * -1.0f, screenHeight * -1.0f, 0 });
+                projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
+                                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
+                projection = glm::rotate(projection, glm::radians(180.0f), {0.0f, 0.0f, 1.0f});
+                projection =
+                    glm::translate(projection, {screenWidth * -1.0f, screenHeight * -1.0f, 0.0f});
                 break;
             }
             case 3: {
@@ -366,10 +356,19 @@ namespace Renderer
                 viewport.y = windowHeight - screenOffsetX - screenWidth;
                 viewport.w = screenHeight;
                 viewport.h = screenWidth;
-                projection.orthoProjection(0.0f, static_cast<float>(screenHeight),
-                                           static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection.rotate(static_cast<float>(ES_DEG_TO_RAD(270)), { 0, 0, 1 });
-                projection.translate({ screenWidth * -1.0f, 0, 0 });
+                projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
+                                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
+                projection = glm::rotate(projection, glm::radians(270.0f), {0.0f, 0.0f, 1.0f});
+                projection = glm::translate(projection, {screenWidth * -1.0f, 0.0f, 0.0f});
+                break;
+            }
+            default: {
+                viewport.x = screenOffsetX;
+                viewport.y = screenOffsetY;
+                viewport.w = screenWidth;
+                viewport.h = screenHeight;
+                projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
+                                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
                 break;
             }
         }
@@ -393,9 +392,9 @@ namespace Renderer
         destroyWindow();
     }
 
-    void pushClipRect(const Vector2i& _pos, const Vector2i& _size)
+    void pushClipRect(const glm::ivec2& pos, const glm::ivec2& size)
     {
-        Rect box(_pos.x(), _pos.y(), _size.x(), _size.y());
+        Rect box(pos.x, pos.y, size.x, size.y);
 
         if (box.w == 0)
             box.w = screenWidth - box.x;
@@ -458,51 +457,51 @@ namespace Renderer
             setScissor(clipStack.top());
     }
 
-    void drawRect(const float _x,
-                  const float _y,
-                  const float _w,
-                  const float _h,
+    void drawRect(const float x,
+                  const float y,
+                  const float w,
+                  const float h,
                   const unsigned int _color,
                   const unsigned int _colorEnd,
                   bool horizontalGradient,
-                  const float _opacity,
-                  const Transform4x4f& _trans,
-                  const Blend::Factor _srcBlendFactor,
-                  const Blend::Factor _dstBlendFactor)
+                  const float opacity,
+                  const glm::mat4& trans,
+                  const Blend::Factor srcBlendFactor,
+                  const Blend::Factor dstBlendFactor)
     {
-        const unsigned int color = convertRGBAToABGR(_color);
-        const unsigned int colorEnd = convertRGBAToABGR(_colorEnd);
+        const unsigned int rColor = convertRGBAToABGR(_color);
+        const unsigned int rColorEnd = convertRGBAToABGR(_colorEnd);
         Vertex vertices[4];
 
-        float _wL = _w;
-        float _hL = _h;
+        float wL = w;
+        float hL = h;
 
         // If the width or height was scaled down to less than 1 pixel, then set it to
         // 1 pixel so that it will still render on lower resolutions.
-        if (_wL > 0.0f && _wL < 1.0f)
-            _wL = 1.0f;
-        if (_hL > 0.0f && _hL < 1.0f)
-            _hL = 1.0f;
+        if (wL > 0.0f && wL < 1.0f)
+            wL = 1.0f;
+        if (hL > 0.0f && hL < 1.0f)
+            hL = 1.0f;
 
         // clang-format off
-        vertices[0] = { { _x      , _y       }, { 0.0f, 0.0f }, color };
-        vertices[1] = { { _x      , _y + _hL }, { 0.0f, 0.0f }, horizontalGradient ? colorEnd : color };
-        vertices[2] = { { _x + _wL, _y       }, { 0.0f, 0.0f }, horizontalGradient ? color : colorEnd };
-        vertices[3] = { { _x + _wL, _y + _hL }, { 0.0f, 0.0f }, colorEnd };
+        vertices[0] = {{x,      y     }, {0.0f, 0.0f}, rColor};
+        vertices[1] = {{x,      y + hL}, {0.0f, 0.0f}, horizontalGradient ? rColorEnd : rColor};
+        vertices[2] = {{x + wL, y     }, {0.0f, 0.0f}, horizontalGradient ? rColor : rColorEnd};
+        vertices[3] = {{x + wL, y + hL}, {0.0f, 0.0f}, rColorEnd};
         // clang-format on
 
         // Round vertices.
         for (int i = 0; i < 4; i++)
-            vertices[i].pos.round();
+            vertices[i].pos = glm::round(vertices[i].pos);
 
-        if (_opacity < 1.0) {
+        if (opacity < 1.0) {
             vertices[0].shaders = SHADER_OPACITY;
-            vertices[0].opacity = _opacity;
+            vertices[0].opacity = opacity;
         }
         else {
             bindTexture(0);
         }
-        drawTriangleStrips(vertices, 4, _trans, _srcBlendFactor, _dstBlendFactor);
+        drawTriangleStrips(vertices, 4, trans, srcBlendFactor, dstBlendFactor);
     }
 
     unsigned int convertRGBAToABGR(const unsigned int _color)
@@ -542,7 +541,7 @@ namespace Renderer
             return nullptr;
     };
 
-    const Transform4x4f getProjectionMatrix() { return mProjectionMatrix; }
+    const glm::mat4 getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
     int getWindowWidth() { return windowWidth; }
     int getWindowHeight() { return windowHeight; }

@@ -21,7 +21,7 @@ public:
     GuiInfoPopup(Window* window, std::string message, int duration);
     ~GuiInfoPopup();
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
     void stop() override { mRunning = false; }
 
 private:

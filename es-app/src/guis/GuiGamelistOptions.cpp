@@ -240,8 +240,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
     // Center the menu.
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
-    mMenu.setPosition((mSize.x() - mMenu.getSize().x()) / 2.0f,
-                      (mSize.y() - mMenu.getSize().y()) / 2.0f);
+    mMenu.setPosition((mSize.x - mMenu.getSize().x) / 2.0f, (mSize.y - mMenu.getSize().y) / 2.0f);
 }
 
 GuiGamelistOptions::~GuiGamelistOptions()

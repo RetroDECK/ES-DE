@@ -212,7 +212,7 @@ const std::string FileData::getMediaDirectory()
 
 const std::string FileData::getMediafilePath(std::string subdirectory, std::string mediatype) const
 {
-    const std::vector<std::string> extList = { ".png", ".jpg" };
+    const std::vector<std::string> extList = {".png", ".jpg"};
     std::string subFolders;
 
     // Extract possible subfolders from the path.
@@ -287,7 +287,7 @@ const std::string FileData::getThumbnailPath() const
 
 const std::string FileData::getVideoPath() const
 {
-    const std::vector<std::string> extList = { ".avi", ".mkv", ".mov", ".mp4", ".wmv" };
+    const std::vector<std::string> extList = {".avi", ".mkv", ".mov", ".mp4", ".wmv"};
     std::string subFolders;
 
     // Extract possible subfolders from the path.
@@ -756,7 +756,22 @@ void FileData::launchGame(Window* window)
         command = metadata.get("launchcommand");
     }
     else {
-        command = mEnvData->mLaunchCommand;
+        std::string alternativeEmulator = getSystem()->getAlternativeEmulator();
+        for (auto launchCommand : mEnvData->mLaunchCommands) {
+            if (launchCommand.second == alternativeEmulator) {
+                command = launchCommand.first;
+                break;
+            }
+        }
+        if (!alternativeEmulator.empty() && command.empty()) {
+            LOG(LogWarning) << "The alternative emulator configured for system \""
+                            << getSystem()->getName()
+                            << "\" is invalid, falling back to the default command \""
+                            << getSystem()->getSystemEnvData()->mLaunchCommands.front().first << "\"";
+        }
+
+        if (command.empty())
+            command = mEnvData->mLaunchCommands.front().first;
     }
 
     std::string commandRaw = command;
@@ -1158,7 +1173,7 @@ std::string FileData::findEmulatorPath(std::string& command)
         HKEY registryKey;
         LSTATUS keyStatus = -1;
         LSTATUS pathStatus = -1;
-        char registryPath[1024] {};
+        char registryPath[1024]{};
         DWORD pathSize = 1024;
 
         // First look in HKEY_CURRENT_USER.

@@ -25,7 +25,7 @@ public:
     void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void onFocusGained() override;
     void onFocusLost() override;
@@ -52,9 +52,9 @@ private:
     void updateCursorRepeat(int deltaTime);
     void moveCursor(int amt);
 
-    bool isMultiline() { return (getSize().y() > mFont->getHeight() * 1.25f); }
-    Vector2f getTextAreaPos() const;
-    Vector2f getTextAreaSize() const;
+    bool isMultiline() { return (getSize().y > mFont->getHeight() * 1.25f); }
+    glm::vec2 getTextAreaPos() const;
+    glm::vec2 getTextAreaSize() const;
 
     std::string mText;
     std::string mTextOrig;
@@ -65,7 +65,7 @@ private:
     int mCursorRepeatTimer;
     int mCursorRepeatDir;
 
-    Vector2f mScrollOffset;
+    glm::vec2 mScrollOffset;
 
     NinePatchComponent mBox;
     float mResolutionAdjustment;

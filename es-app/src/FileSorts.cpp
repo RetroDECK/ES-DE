@@ -45,8 +45,7 @@ namespace FileSorts
         FileData::SortType(&compareTimesPlayedDescending, "times played, descending"),
 
         FileData::SortType(&compareSystem, "system, ascending"),
-        FileData::SortType(&compareSystemDescending, "system, descending")
-    };
+        FileData::SortType(&compareSystemDescending, "system, descending")};
 
     const std::vector<FileData::SortType> SortTypes(typesArr,
                                                     typesArr +

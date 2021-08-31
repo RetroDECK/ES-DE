@@ -107,7 +107,7 @@ const ResourceData ResourceManager::getFileData(const std::string& path) const
     }
 
     // If the file doesn't exist, return an "empty" ResourceData.
-    ResourceData data = { nullptr, 0 };
+    ResourceData data = {nullptr, 0};
     return data;
 }
 
@@ -128,7 +128,7 @@ ResourceData ResourceManager::loadFile(const std::string& path) const
     stream.read(reinterpret_cast<char*>(data.get()), size);
     stream.close();
 
-    ResourceData ret = { data, size };
+    ResourceData ret = {data, size};
     return ret;
 }
 

@@ -35,13 +35,10 @@ public:
                        unsigned int centerColor = 0xFFFFFFFF);
     virtual ~NinePatchComponent();
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
-    void onSizeChanged() override;
-
-    void fitTo(Vector2f size,
-               Vector3f position = Vector3f::Zero(),
-               Vector2f padding = Vector2f::Zero());
+    void onSizeChanged() override { buildVertices(); }
+    void fitTo(glm::vec2 size, glm::vec3 position = {}, glm::vec2 padding = {});
 
     void setImagePath(const std::string& path);
     // Apply a color shift to the "edge" parts of the ninepatch.
@@ -54,8 +51,8 @@ public:
                             const std::string& element,
                             unsigned int properties) override;
 
-    const Vector2f& getCornerSize() const { return mCornerSize; }
-    void setCornerSize(const Vector2f& size)
+    const glm::vec2& getCornerSize() const { return mCornerSize; }
+    void setCornerSize(const glm::vec2& size)
     {
         mCornerSize = size;
         buildVertices();
@@ -68,7 +65,7 @@ private:
     Renderer::Vertex* mVertices;
 
     std::string mPath;
-    Vector2f mCornerSize;
+    glm::vec2 mCornerSize;
     unsigned int mEdgeColor;
     unsigned int mCenterColor;
     std::shared_ptr<TextureResource> mTexture;

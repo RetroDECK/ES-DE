@@ -58,9 +58,7 @@ private:
     int mPassKeyCounter;
 
     // These are Xbox button names, so they may be different in pracise on non-Xbox controllers.
-    const std::vector<std::string> mInputVals = {
-        "up", "down", "left", "right", "a", "b", "x", "y"
-    };
+    const std::vector<std::string> mInputVals = {"up", "down", "left", "right", "a", "b", "x", "y"};
 };
 
 #endif // ES_APP_VIEWS_UI_MODE_CONTROLLER_H

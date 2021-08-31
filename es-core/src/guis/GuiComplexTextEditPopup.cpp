@@ -35,7 +35,7 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     : GuiComponent(window)
     , mHelpStyle(helpstyle)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 5))
+    , mGrid(window, glm::ivec2{1, 5})
     , mMultiLine(multiLine)
     , mInitValue(initValue)
     , mOkCallback(okCallback)
@@ -75,12 +75,12 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true);
-    mGrid.setEntry(mInfoString1, Vector2i(0, 1), false, true);
-    mGrid.setEntry(mInfoString2, Vector2i(0, 2), false, false);
-    mGrid.setEntry(mText, Vector2i(0, 3), true, false, Vector2i(1, 1),
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mInfoString1, glm::ivec2{0, 1}, false, true);
+    mGrid.setEntry(mInfoString2, glm::ivec2{0, 2}, false, false);
+    mGrid.setEntry(mText, glm::ivec2{0, 3}, true, false, glm::ivec2{1, 1},
                    GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 4), true, false);
+    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 4}, true, false);
     mGrid.setRowHeightPerc(1, 0.15f, true);
 
     float textHeight = mText->getFont()->getHeight();
@@ -91,27 +91,27 @@ GuiComplexTextEditPopup::GuiComplexTextEditPopup(
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float infoWidth = Math::clamp(0.70f * aspectValue, 0.60f, 0.85f) * Renderer::getScreenWidth();
-    float windowWidth = Math::clamp(0.75f * aspectValue, 0.65f, 0.90f) * Renderer::getScreenWidth();
+    float infoWidth = glm::clamp(0.70f * aspectValue, 0.60f, 0.85f) * Renderer::getScreenWidth();
+    float windowWidth = glm::clamp(0.75f * aspectValue, 0.65f, 0.90f) * Renderer::getScreenWidth();
 
     mText->setSize(0, textHeight);
     mInfoString2->setSize(infoWidth, mInfoString2->getFont()->getHeight());
 
-    setSize(windowWidth, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y() +
-                             mButtonGrid->getSize().y() * 1.85f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setSize(windowWidth, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y +
+                             mButtonGrid->getSize().y * 1.85f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
     mText->startEditing();
 }
 
 void GuiComplexTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
-    mText->setSize(mSize.x() - 40.0f, mText->getSize().y());
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mText->setSize(mSize.x - 40.0f, mText->getSize().y);
 
     // Update grid.
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(2, mButtonGrid->getSize().y() / mSize.y());
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y);
+    mGrid.setRowHeightPerc(2, mButtonGrid->getSize().y / mSize.y);
     mGrid.setSize(mSize);
 }
 

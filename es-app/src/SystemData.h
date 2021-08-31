@@ -27,7 +27,7 @@ class ThemeData;
 struct SystemEnvironmentData {
     std::string mStartPath;
     std::vector<std::string> mSearchExtensions;
-    std::string mLaunchCommand;
+    std::vector<std::pair<std::string, std::string>> mLaunchCommands;
     std::vector<PlatformIds::PlatformId> mPlatformIds;
 };
 
@@ -97,6 +97,9 @@ public:
     bool getScrapeFlag() { return mScrapeFlag; }
     void setScrapeFlag(bool scrapeflag) { mScrapeFlag = scrapeflag; }
 
+    std::string getAlternativeEmulator() { return mAlternativeEmulator; }
+    void setAlternativeEmulator(const std::string& command) { mAlternativeEmulator = command; }
+
     static void deleteSystems();
     // Loads the systems configuration file at getConfigPath() and creates the systems.
     static bool loadConfig();
@@ -153,6 +156,7 @@ private:
     std::string mName;
     std::string mFullName;
     SystemEnvironmentData* mEnvData;
+    std::string mAlternativeEmulator;
     std::string mThemeFolder;
     std::shared_ptr<ThemeData> mTheme;
 

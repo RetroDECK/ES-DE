@@ -97,161 +97,162 @@ void Settings::setDefaults()
     //
 
     // Scraper.
-    mStringMap["Scraper"] = { "screenscraper", "screenscraper" };
-    mBoolMap["ScraperUseAccountScreenScraper"] = { false, false };
-    mStringMap["ScraperUsernameScreenScraper"] = { "", "" };
-    mStringMap["ScraperPasswordScreenScraper"] = { "", "" };
+    mStringMap["Scraper"] = {"screenscraper", "screenscraper"};
+    mBoolMap["ScraperUseAccountScreenScraper"] = {false, false};
+    mStringMap["ScraperUsernameScreenScraper"] = {"", ""};
+    mStringMap["ScraperPasswordScreenScraper"] = {"", ""};
 
-    mBoolMap["ScrapeGameNames"] = { true, true };
-    mBoolMap["ScrapeRatings"] = { true, true };
-    mBoolMap["ScrapeMetadata"] = { true, true };
-    mBoolMap["ScrapeVideos"] = { true, true };
-    mBoolMap["ScrapeScreenshots"] = { true, true };
-    mBoolMap["ScrapeCovers"] = { true, true };
-    mBoolMap["ScrapeMarquees"] = { true, true };
-    mBoolMap["Scrape3DBoxes"] = { true, true };
+    mBoolMap["ScrapeGameNames"] = {true, true};
+    mBoolMap["ScrapeRatings"] = {true, true};
+    mBoolMap["ScrapeMetadata"] = {true, true};
+    mBoolMap["ScrapeVideos"] = {true, true};
+    mBoolMap["ScrapeScreenshots"] = {true, true};
+    mBoolMap["ScrapeCovers"] = {true, true};
+    mBoolMap["ScrapeMarquees"] = {true, true};
+    mBoolMap["Scrape3DBoxes"] = {true, true};
 
-    mStringMap["MiximageResolution"] = { "1280x960", "1280x960" };
-    mStringMap["MiximageScreenshotScaling"] = { "sharp", "sharp" };
-    mBoolMap["MiximageGenerate"] = { true, true };
-    mBoolMap["MiximageOverwrite"] = { true, true };
-    mBoolMap["MiximageRemoveLetterboxes"] = { true, true };
-    mBoolMap["MiximageRemovePillarboxes"] = { true, true };
-    mBoolMap["MiximageIncludeMarquee"] = { true, true };
-    mBoolMap["MiximageIncludeBox"] = { true, true };
-    mBoolMap["MiximageCoverFallback"] = { true, true };
+    mStringMap["MiximageResolution"] = {"1280x960", "1280x960"};
+    mStringMap["MiximageScreenshotScaling"] = {"sharp", "sharp"};
+    mBoolMap["MiximageGenerate"] = {true, true};
+    mBoolMap["MiximageOverwrite"] = {true, true};
+    mBoolMap["MiximageRemoveLetterboxes"] = {true, true};
+    mBoolMap["MiximageRemovePillarboxes"] = {true, true};
+    mBoolMap["MiximageIncludeMarquee"] = {true, true};
+    mBoolMap["MiximageIncludeBox"] = {true, true};
+    mBoolMap["MiximageCoverFallback"] = {true, true};
 
-    mStringMap["ScraperRegion"] = { "eu", "eu" };
-    mStringMap["ScraperLanguage"] = { "en", "en" };
-    mBoolMap["ScraperOverwriteData"] = { true, true };
-    mBoolMap["ScraperHaltOnInvalidMedia"] = { true, true };
-    mBoolMap["ScraperSearchMetadataName"] = { true, true };
-    mBoolMap["ScraperInteractive"] = { true, true };
-    mBoolMap["ScraperSemiautomatic"] = { true, true };
-    mBoolMap["ScraperRespectExclusions"] = { true, true };
-    mBoolMap["ScraperExcludeRecursively"] = { true, true };
-    mBoolMap["ScraperIncludeFolders"] = { false, false };
-    mBoolMap["ScraperRetryPeerVerification"] = { false, false };
+    mStringMap["ScraperRegion"] = {"eu", "eu"};
+    mStringMap["ScraperLanguage"] = {"en", "en"};
+    mBoolMap["ScraperOverwriteData"] = {true, true};
+    mBoolMap["ScraperHaltOnInvalidMedia"] = {true, true};
+    mBoolMap["ScraperSearchMetadataName"] = {true, true};
+    mBoolMap["ScraperInteractive"] = {true, true};
+    mBoolMap["ScraperSemiautomatic"] = {true, true};
+    mBoolMap["ScraperRespectExclusions"] = {true, true};
+    mBoolMap["ScraperExcludeRecursively"] = {true, true};
+    mBoolMap["ScraperIncludeFolders"] = {false, false};
+    mBoolMap["ScraperRetryPeerVerification"] = {false, false};
 
     // UI settings.
-    mStringMap["StartupSystem"] = { "", "" };
-    mStringMap["GamelistViewStyle"] = { "automatic", "automatic" };
-    mStringMap["TransitionStyle"] = { "slide", "slide" };
-    mStringMap["ThemeSet"] = { "rbsimple-DE", "rbsimple-DE" };
-    mStringMap["UIMode"] = { "full", "full" };
-    mStringMap["DefaultSortOrder"] = { "filename, ascending", "filename, ascending" };
-    mStringMap["MenuOpeningEffect"] = { "scale-up", "scale-up" };
-    mStringMap["LaunchScreenDuration"] = { "normal", "normal" };
-    mBoolMap["MenuBlurBackground"] = { true, true };
-    mBoolMap["GamelistVideoPillarbox"] = { true, true };
-    mBoolMap["GamelistVideoScanlines"] = { false, false };
-    mBoolMap["FoldersOnTop"] = { true, true };
-    mBoolMap["FavoritesFirst"] = { true, true };
-    mBoolMap["FavoritesStar"] = { true, true };
-    mBoolMap["SpecialCharsASCII"] = { false, false };
-    mBoolMap["ListScrollOverlay"] = { false, false };
-    mBoolMap["FavoritesAddButton"] = { true, true };
-    mBoolMap["RandomAddButton"] = { false, false };
-    mBoolMap["GamelistFilters"] = { true, true };
-    mBoolMap["QuickSystemSelect"] = { true, true };
-    mBoolMap["ShowHelpPrompts"] = { true, true };
-    mBoolMap["PlayVideosImmediately"] = { false, false };
-    mBoolMap["EnableMenuKidMode"] = { false, false };
+    mStringMap["StartupSystem"] = {"", ""};
+    mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
+    mStringMap["TransitionStyle"] = {"slide", "slide"};
+    mStringMap["ThemeSet"] = {"rbsimple-DE", "rbsimple-DE"};
+    mStringMap["UIMode"] = {"full", "full"};
+    mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};
+    mStringMap["MenuOpeningEffect"] = {"scale-up", "scale-up"};
+    mStringMap["LaunchScreenDuration"] = {"normal", "normal"};
 
     // UI settings -> media viewer settings.
-    mBoolMap["MediaViewerKeepVideoRunning"] = { true, true };
-    mBoolMap["MediaViewerStretchVideos"] = { false, false };
-    mBoolMap["MediaViewerVideoScanlines"] = { true, true };
-    mBoolMap["MediaViewerVideoBlur"] = { false, false };
-    mBoolMap["MediaViewerScreenshotScanlines"] = { true, true };
+    mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
+    mBoolMap["MediaViewerStretchVideos"] = {false, false};
+    mBoolMap["MediaViewerVideoScanlines"] = {true, true};
+    mBoolMap["MediaViewerVideoBlur"] = {false, false};
+    mBoolMap["MediaViewerScreenshotScanlines"] = {true, true};
 
     // UI settings -> screensaver settings.
-    mIntMap["ScreensaverTimer"] = { 5 * 60 * 1000, 5 * 60 * 1000 }; // 5 minutes.
-    mStringMap["ScreensaverType"] = { "video", "video" };
-    mBoolMap["ScreensaverControls"] = { true, true };
+    mIntMap["ScreensaverTimer"] = {5 * 60 * 1000, 5 * 60 * 1000}; // 5 minutes.
+    mStringMap["ScreensaverType"] = {"video", "video"};
+    mBoolMap["ScreensaverControls"] = {true, true};
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
-    mIntMap["ScreensaverSwapImageTimeout"] = { 10000, 10000 };
-    mBoolMap["ScreensaverStretchImages"] = { false, false };
-    mBoolMap["ScreensaverSlideshowGameInfo"] = { true, true };
-    mBoolMap["ScreensaverSlideshowScanlines"] = { true, true };
-    mBoolMap["ScreensaverSlideshowCustomImages"] = { false, false };
-    mBoolMap["ScreensaverSlideshowRecurse"] = { false, false };
-    mStringMap["ScreensaverSlideshowImageDir"] = { "~/.emulationstation/slideshow/custom_images",
-                                                   "~/.emulationstation/slideshow/custom_images" };
+    mIntMap["ScreensaverSwapImageTimeout"] = {10000, 10000};
+    mBoolMap["ScreensaverStretchImages"] = {false, false};
+    mBoolMap["ScreensaverSlideshowGameInfo"] = {true, true};
+    mBoolMap["ScreensaverSlideshowScanlines"] = {true, true};
+    mBoolMap["ScreensaverSlideshowCustomImages"] = {false, false};
+    mBoolMap["ScreensaverSlideshowRecurse"] = {false, false};
+    mStringMap["ScreensaverSlideshowImageDir"] = {"~/.emulationstation/slideshow/custom_images",
+                                                  "~/.emulationstation/slideshow/custom_images"};
 
     // UI settings -> screensaver settings -> video screensaver settings.
-    mIntMap["ScreensaverSwapVideoTimeout"] = { 0, 0 };
-    mBoolMap["ScreensaverStretchVideos"] = { false, false };
-    mBoolMap["ScreensaverVideoGameInfo"] = { true, true };
-    mBoolMap["ScreensaverVideoScanlines"] = { true, true };
-    mBoolMap["ScreensaverVideoBlur"] = { false, false };
+    mIntMap["ScreensaverSwapVideoTimeout"] = {0, 0};
+    mBoolMap["ScreensaverStretchVideos"] = {false, false};
+    mBoolMap["ScreensaverVideoGameInfo"] = {true, true};
+    mBoolMap["ScreensaverVideoScanlines"] = {true, true};
+    mBoolMap["ScreensaverVideoBlur"] = {false, false};
+
+    mBoolMap["MenuBlurBackground"] = {true, true};
+    mBoolMap["GamelistVideoPillarbox"] = {true, true};
+    mBoolMap["GamelistVideoScanlines"] = {false, false};
+    mBoolMap["FoldersOnTop"] = {true, true};
+    mBoolMap["FavoritesFirst"] = {true, true};
+    mBoolMap["FavoritesStar"] = {true, true};
+    mBoolMap["SpecialCharsASCII"] = {false, false};
+    mBoolMap["ListScrollOverlay"] = {false, false};
+    mBoolMap["FavoritesAddButton"] = {true, true};
+    mBoolMap["RandomAddButton"] = {false, false};
+    mBoolMap["GamelistFilters"] = {true, true};
+    mBoolMap["QuickSystemSelect"] = {true, true};
+    mBoolMap["ShowHelpPrompts"] = {true, true};
+    mBoolMap["PlayVideosImmediately"] = {false, false};
+    mBoolMap["EnableMenuKidMode"] = {false, false};
 
     // Sound settings.
-    mIntMap["SoundVolumeNavigation"] = { 80, 80 };
-    mIntMap["SoundVolumeVideos"] = { 100, 100 };
-    mBoolMap["GamelistVideoAudio"] = { true, true };
-    mBoolMap["MediaViewerVideoAudio"] = { true, true };
-    mBoolMap["ScreensaverVideoAudio"] = { false, false };
-    mBoolMap["NavigationSounds"] = { true, true };
+    mIntMap["SoundVolumeNavigation"] = {80, 80};
+    mIntMap["SoundVolumeVideos"] = {100, 100};
+    mBoolMap["GamelistVideoAudio"] = {true, true};
+    mBoolMap["MediaViewerVideoAudio"] = {true, true};
+    mBoolMap["ScreensaverVideoAudio"] = {false, false};
+    mBoolMap["NavigationSounds"] = {true, true};
 
     // Input device settings.
-    mStringMap["InputControllerType"] = { "xbox", "xbox" };
-    mBoolMap["InputOnlyFirstController"] = { false, false };
+    mStringMap["InputControllerType"] = {"xbox", "xbox"};
+    mBoolMap["InputOnlyFirstController"] = {false, false};
 
     // Game collection settings.
-    mStringMap["CollectionSystemsAuto"] = { "", "" };
-    mStringMap["CollectionSystemsCustom"] = { "", "" };
-    mBoolMap["FavFirstCustom"] = { false, false };
-    mBoolMap["FavStarCustom"] = { false, false };
-    mBoolMap["UseCustomCollectionsSystem"] = { true, true };
-    mBoolMap["CollectionShowSystemInfo"] = { true, true };
+    mStringMap["CollectionSystemsAuto"] = {"", ""};
+    mStringMap["CollectionSystemsCustom"] = {"", ""};
+    mBoolMap["FavFirstCustom"] = {false, false};
+    mBoolMap["FavStarCustom"] = {false, false};
+    mBoolMap["UseCustomCollectionsSystem"] = {true, true};
+    mBoolMap["CollectionShowSystemInfo"] = {true, true};
 
-// Other settings.
+    // Other settings.
+    mStringMap["MediaDirectory"] = {"", ""};
 #if defined(_RPI_)
-    mIntMap["MaxVRAM"] = { 80, 80 };
+    mIntMap["MaxVRAM"] = {80, 80};
 #else
-    mIntMap["MaxVRAM"] = { 256, 256 };
+    mIntMap["MaxVRAM"] = {256, 256};
 #endif
-    mIntMap["DisplayIndex"] = { 1, 1 };
+    mIntMap["DisplayIndex"] = {1, 1};
 #if defined(__unix__)
-    mStringMap["FullscreenMode"] = { "normal", "normal" };
+    mStringMap["FullscreenMode"] = {"normal", "normal"};
 #endif
 #if defined(BUILD_VLC_PLAYER)
 #if defined(_RPI_)
     // As the FFmpeg video player is not HW accelerated, use VLC as default on this weak device.
-    mStringMap["VideoPlayer"] = { "vlc", "vlc" };
+    mStringMap["VideoPlayer"] = {"vlc", "vlc"};
 #else
-    mStringMap["VideoPlayer"] = { "ffmpeg", "ffmpeg" };
+    mStringMap["VideoPlayer"] = {"ffmpeg", "ffmpeg"};
 #endif
 #endif
-    mStringMap["ExitButtonCombo"] = { "F4", "F4" };
-    mStringMap["SaveGamelistsMode"] = { "always", "always" };
+    mStringMap["ExitButtonCombo"] = {"F4", "F4"};
+    mStringMap["SaveGamelistsMode"] = {"always", "always"};
 #if defined(_WIN64)
-    mBoolMap["HideTaskbar"] = { false, false };
+    mBoolMap["HideTaskbar"] = {false, false};
 #endif
-    mBoolMap["RunInBackground"] = { false, false };
+    mBoolMap["RunInBackground"] = {false, false};
 #if defined(_WIN64)
-    mBoolMap["LaunchWorkaround"] = { true, true };
+    mBoolMap["LaunchWorkaround"] = {true, true};
 #endif
-    mStringMap["MediaDirectory"] = { "", "" };
 #if !defined(_RPI_)
-    mBoolMap["VideoHardwareDecoding"] = { false, false };
+    mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
-    mBoolMap["VideoUpscaleFrameRate"] = { false, false };
-    mBoolMap["LaunchCommandOverride"] = { true, true };
-    mBoolMap["ShowHiddenFiles"] = { true, true };
-    mBoolMap["ShowHiddenGames"] = { true, true };
-    mBoolMap["CustomEventScripts"] = { false, false };
-    mBoolMap["ParseGamelistOnly"] = { false, false };
+    mBoolMap["VideoUpscaleFrameRate"] = {false, false};
+    mBoolMap["LaunchCommandOverride"] = {true, true};
+    mBoolMap["ShowHiddenFiles"] = {true, true};
+    mBoolMap["ShowHiddenGames"] = {true, true};
+    mBoolMap["CustomEventScripts"] = {false, false};
+    mBoolMap["ParseGamelistOnly"] = {false, false};
 #if defined(__unix__)
-    mBoolMap["DisableComposition"] = { true, true };
+    mBoolMap["DisableComposition"] = {true, true};
 #endif
-    mBoolMap["DisplayGPUStatistics"] = { false, false };
+    mBoolMap["DisplayGPUStatistics"] = {false, false};
 // macOS requires root privileges to reboot and power off so it doesn't make much
 // sense to enable this setting and menu entry for that operating system.
 #if !defined(__APPLE__)
-    mBoolMap["ShowQuitMenu"] = { false, false };
+    mBoolMap["ShowQuitMenu"] = {false, false};
 #endif
 
     //
@@ -259,45 +260,45 @@ void Settings::setDefaults()
     //
 
     // Options listed using --help
-    mBoolMap["Debug"] = { false, false };
-    mBoolMap["ForceFull"] = { false, false };
-    mBoolMap["ForceKid"] = { false, false };
-    mBoolMap["ForceKiosk"] = { false, false };
-    mBoolMap["IgnoreGamelist"] = { false, false };
-    mBoolMap["SplashScreen"] = { true, true };
-    mBoolMap["VSync"] = { true, true };
+    mBoolMap["Debug"] = {false, false};
+    mBoolMap["ForceFull"] = {false, false};
+    mBoolMap["ForceKid"] = {false, false};
+    mBoolMap["ForceKiosk"] = {false, false};
+    mBoolMap["IgnoreGamelist"] = {false, false};
+    mBoolMap["SplashScreen"] = {true, true};
+    mBoolMap["VSync"] = {true, true};
 #if !defined(_WIN64)
-    mBoolMap["Windowed"] = { false, false };
+    mBoolMap["Windowed"] = {false, false};
 #endif
-    mIntMap["WindowWidth"] = { 0, 0 };
-    mIntMap["WindowHeight"] = { 0, 0 };
-    mIntMap["ScreenWidth"] = { 0, 0 };
+    mIntMap["WindowWidth"] = {0, 0};
+    mIntMap["WindowHeight"] = {0, 0};
+    mIntMap["ScreenWidth"] = {0, 0};
 
     // Undocumented options.
-    mIntMap["ScreenHeight"] = { 0, 0 };
-    mIntMap["ScreenOffsetX"] = { 0, 0 };
-    mIntMap["ScreenOffsetY"] = { 0, 0 };
-    mIntMap["ScreenRotate"] = { 0, 0 };
+    mIntMap["ScreenHeight"] = {0, 0};
+    mIntMap["ScreenOffsetX"] = {0, 0};
+    mIntMap["ScreenOffsetY"] = {0, 0};
+    mIntMap["ScreenRotate"] = {0, 0};
 
     //
     // Settings that can be changed in es_settings.xml
     // but that are not configurable via the GUI.
     //
 
-    mBoolMap["DebugSkipInputLogging"] = { false, false };
-    mStringMap["ROMDirectory"] = { "", "" };
-    mStringMap["UIMode_passkey"] = { "uuddlrlrba", "uuddlrlrba" };
+    mBoolMap["DebugSkipInputLogging"] = {false, false};
+    mStringMap["ROMDirectory"] = {"", ""};
+    mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
 
     //
     // Hardcoded or program-internal settings.
     //
 
-    mStringMap["ApplicationVersion"] = { "", "" };
-    mBoolMap["DebugGrid"] = { false, false };
-    mBoolMap["DebugText"] = { false, false };
-    mBoolMap["DebugImage"] = { false, false };
-    mBoolMap["SplashScreenProgress"] = { true, true };
-    mIntMap["ScraperFilter"] = { 0, 0 };
+    mStringMap["ApplicationVersion"] = {"", ""};
+    mBoolMap["DebugGrid"] = {false, false};
+    mBoolMap["DebugText"] = {false, false};
+    mBoolMap["DebugImage"] = {false, false};
+    mBoolMap["SplashScreenProgress"] = {true, true};
+    mIntMap["ScraperFilter"] = {0, 0};
 }
 
 template <typename K, typename V>

@@ -26,7 +26,6 @@ class HelpComponent;
 class ImageComponent;
 class InputConfig;
 class TextCache;
-class Transform4x4f;
 struct HelpStyle;
 
 class Window
@@ -77,7 +76,7 @@ public:
     class InfoPopup
     {
     public:
-        virtual void render(const Transform4x4f& parentTrans) = 0;
+        virtual void render(const glm::mat4& parentTrans) = 0;
         virtual void stop() = 0;
         virtual ~InfoPopup() {}
     };
@@ -89,6 +88,7 @@ public:
     void removeGui(GuiComponent* gui);
     GuiComponent* peekGui();
     int getGuiStackSize() { return static_cast<int>(mGuiStack.size()); }
+    bool isBackgroundDimmed();
 
     bool init();
     void deinit();
@@ -191,7 +191,6 @@ private:
     int mVideoPlayerCount;
     std::mutex mVideoCountMutex;
 
-    unsigned char mTopOpacity;
     float mTopScale;
     bool mRenderedHelpPrompts;
     bool mChangedThemeSet;

@@ -12,6 +12,11 @@
 
 * Added a menu option to change the application exit key combination
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
+* Replaced all built-in matrix and vector data types and functions with GLM library equivalents
+* Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
+* Added a function to generate MD5 hashes
+* Changed two clang-format rules related to braced lists and reformatted the codebase
+* Changed the language standard from C++14 to C++17
 
 ### Bug fixes
 
@@ -292,7 +297,5 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * There is an issue with launching games on Windows when using AMD and Intel GPUs. This causes the emulator to just output a blank screen. There is a workaround available for this which is enabled by default and that can be disabled via the menu option "AMD and Intel GPU game launch workaround". The drawback of this workaround is that a white instead of a black screen will be displayed when launching games. If using an Nvidia GPU, it should be safe to disable this option for a slightly better user experience. An alternative workaround is to enable the option "Run in background (while game is launched)".
 
 * On macOS Big Sur (and possibly other OS versions) when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting "Only accept input from first controller" in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
-
-* Some screen tearing can be seen in the upper part of the screen when using the slide transitions with certain graphics drivers and resolutions. This problem will hopefully be resolved in ES-DE v1.2 when moving to the GLM library.
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.

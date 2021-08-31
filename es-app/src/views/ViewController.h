@@ -38,6 +38,7 @@ public:
     // These functions are called from main().
     void invalidSystemsFileDialog();
     void noGamesDialog();
+    void invalidAlternativeEmulatorDialog();
 
     // Try to completely populate the GameListView map.
     // Caches things so there's no pauses during transitions.
@@ -78,7 +79,7 @@ public:
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     enum ViewMode {
         NOTHING, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
@@ -127,6 +128,7 @@ public:
     static const std::string TICKMARK_CHAR;
     static const std::string CONTROLLER_CHAR;
     static const std::string FILTER_CHAR;
+    static const std::string GEAR_CHAR;
 
 private:
     ViewController(Window* window);
@@ -152,7 +154,7 @@ private:
     FileData* mGameToLaunch;
     State mState;
 
-    Transform4x4f mCamera;
+    glm::mat4 mCamera;
     bool mSystemViewTransition;
     bool mWrappedViews;
     float mWrapPreviousPositionX;

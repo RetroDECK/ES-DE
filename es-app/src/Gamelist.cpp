@@ -117,11 +117,35 @@ void parseGamelist(SystemData* system)
         return;
     }
 
+    pugi::xml_node alternativeEmulator = doc.child("alternativeEmulator");
+    if (alternativeEmulator) {
+        std::string label = alternativeEmulator.child("label").text().get();
+        if (label != "") {
+            bool validLabel = false;
+            for (auto command : system->getSystemEnvData()->mLaunchCommands) {
+                if (command.second == label)
+                    validLabel = true;
+            }
+            if (validLabel) {
+                system->setAlternativeEmulator(label);
+                LOG(LogDebug) << "Gamelist::parseGamelist(): System \"" << system->getName()
+                              << "\" has a valid alternativeEmulator entry: \"" << label << "\"";
+            }
+            else {
+                system->setAlternativeEmulator("<INVALID>");
+                LOG(LogWarning) << "System \"" << system->getName()
+                                << "\" has an invalid alternativeEmulator entry that does "
+                                   "not match any command tag in es_systems.xml: \""
+                                << label << "\"";
+            }
+        }
+    }
+
     std::string relativeTo = system->getStartPath();
     bool showHiddenFiles = Settings::getInstance()->getBool("ShowHiddenFiles");
 
-    std::vector<std::string> tagList = { "game", "folder" };
-    FileType typeList[2] = { GAME, FOLDER };
+    std::vector<std::string> tagList = {"game", "folder"};
+    FileType typeList[2] = {GAME, FOLDER};
     for (int i = 0; i < 2; i++) {
         std::string tag = tagList[i];
         FileType type = typeList[i];
@@ -221,7 +245,7 @@ void addFileDataNode(pugi::xml_node& parent,
     }
 }
 
-void updateGamelist(SystemData* system)
+void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
 {
     // We do this by reading the XML again, adding changes and then writing them back,
     // because there might be information missing in our systemdata which we would otherwise
@@ -256,8 +280,39 @@ void updateGamelist(SystemData* system)
             LOG(LogError) << "Couldn't find <gameList> node in gamelist \"" << xmlReadPath << "\"";
             return;
         }
+        if (updateAlternativeEmulator) {
+            pugi::xml_node alternativeEmulator = doc.child("alternativeEmulator");
+
+            if (system->getAlternativeEmulator() != "") {
+                if (!alternativeEmulator) {
+                    doc.prepend_child("alternativeEmulator");
+                    alternativeEmulator = doc.child("alternativeEmulator");
+                }
+
+                pugi::xml_node label = alternativeEmulator.child("label");
+
+                if (label && system->getAlternativeEmulator() !=
+                                 alternativeEmulator.child("label").text().get()) {
+                    alternativeEmulator.remove_child(label);
+                    alternativeEmulator.prepend_child("label").text().set(
+                        system->getAlternativeEmulator().c_str());
+                }
+                else if (!label) {
+                    alternativeEmulator.prepend_child("label").text().set(
+                        system->getAlternativeEmulator().c_str());
+                }
+            }
+            else if (alternativeEmulator) {
+                doc.remove_child("alternativeEmulator");
+            }
+        }
     }
     else {
+        if (updateAlternativeEmulator && system->getAlternativeEmulator() != "") {
+            pugi::xml_node alternativeEmulator = doc.prepend_child("alternativeEmulator");
+            alternativeEmulator.prepend_child("label").text().set(
+                system->getAlternativeEmulator().c_str());
+        }
         // Set up an empty gamelist to append to.
         root = doc.append_child("gameList");
     }
@@ -312,15 +367,31 @@ void updateGamelist(SystemData* system)
         }
 
         // Now write the file.
-        if (numUpdated > 0) {
+        if (numUpdated > 0 || updateAlternativeEmulator) {
             // Make sure the folders leading up to this path exist (or the write will fail).
             std::string xmlWritePath(system->getGamelistPath(true));
             Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(xmlWritePath));
 
-            LOG(LogDebug) << "Gamelist::updateGamelist(): Added/updated " << numUpdated
-                          << (numUpdated == 1 ? " entity in \"" : " entities in \"") << xmlReadPath
-                          << "\"";
-
+            if (updateAlternativeEmulator) {
+                if (system->getAlternativeEmulator() == "") {
+                    LOG(LogDebug) << "Gamelist::updateGamelist(): Removed the "
+                                     "alternativeEmulator tag for system \""
+                                  << system->getName() << "\" as the default emulator \""
+                                  << system->getSystemEnvData()->mLaunchCommands.front().second
+                                  << "\" was selected";
+                }
+                else {
+                    LOG(LogDebug) << "Gamelist::updateGamelist(): "
+                                     "Added/updated the alternativeEmulator tag for system \""
+                                  << system->getName() << "\" to \""
+                                  << system->getAlternativeEmulator() << "\"";
+                }
+            }
+            if (numUpdated > 0) {
+                LOG(LogDebug) << "Gamelist::updateGamelist(): Added/updated " << numUpdated
+                              << (numUpdated == 1 ? " entity in \"" : " entities in \"")
+                              << xmlWritePath << "\"";
+            }
 #if defined(_WIN64)
             if (!doc.save_file(Utils::String::stringToWideString(xmlWritePath).c_str())) {
 #else

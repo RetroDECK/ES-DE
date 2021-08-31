@@ -10,7 +10,6 @@
 #define ES_CORE_COMPONENTS_IMAGE_COMPONENT_H
 
 #include "GuiComponent.h"
-#include "math/Vector2i.h"
 #include "renderers/Renderer.h"
 
 class TextureResource;
@@ -25,7 +24,7 @@ public:
 
     // Loads the image at the given filepath. Will tile if tile is true (retrieves texture
     // as tiling, creates vertices accordingly).
-    void setImage(std::string path, bool tile = false);
+    void setImage(std::string path, bool tile = false, bool linearMagnify = false);
     // Loads an image from memory.
     void setImage(const char* data, size_t length, bool tile = false);
     // Use an already existing texture.
@@ -39,18 +38,18 @@ public:
     // Can be set before or after an image is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     void setResize(float width, float height) override;
-    void setResize(const Vector2f& size) { setResize(size.x(), size.y()); }
+    void setResize(const glm::vec2& size) { setResize(size.x, size.y); }
 
     // Resize the image to be as large as possible but fit within a box of this size.
     // Can be set before or after an image is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(float width, float height);
-    void setMaxSize(const Vector2f& size) { setMaxSize(size.x(), size.y()); }
+    void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
 
     void setMinSize(float width, float height);
-    void setMinSize(const Vector2f& size) { setMinSize(size.x(), size.y()); }
+    void setMinSize(const glm::vec2& size) { setMinSize(size.x, size.y); }
 
-    Vector2f getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
+    glm::vec2 getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
 
     // Applied AFTER image positioning and sizing.
     // cropTop(0.2) will crop 20% of the top of the image.
@@ -83,14 +82,14 @@ public:
 
     // Returns the size of the current texture, or (0, 0) if none is loaded.
     // May be different than drawn size (use getSize() for that).
-    Vector2i getTextureSize() const;
+    glm::ivec2 getTextureSize() const;
 
-    Vector2f getSize() const override;
+    glm::vec2 getSize() const override;
 
     bool hasImage() { return static_cast<bool>(mTexture); }
     std::shared_ptr<TextureResource> getTexture() { return mTexture; }
 
-    void render(const Transform4x4f& parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,
@@ -100,7 +99,7 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    Vector2f mTargetSize;
+    glm::vec2 mTargetSize;
 
     bool mFlipX, mFlipY, mTargetIsMax, mTargetIsMin;
 
@@ -127,8 +126,8 @@ private:
     bool mDynamic;
     bool mRotateByTargetSize;
 
-    Vector2f mTopLeftCrop;
-    Vector2f mBottomRightCrop;
+    glm::vec2 mTopLeftCrop;
+    glm::vec2 mBottomRightCrop;
 };
 
 #endif // ES_CORE_COMPONENTS_IMAGE_COMPONENT_H

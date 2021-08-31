@@ -46,10 +46,10 @@ public:
         std::string getGameSearchUrl(const std::string gameName) const;
 
         // Access to the API.
-        const std::string API_DEV_U = { 15, 21, 39, 22, 42, 40 };
-        const std::string API_DEV_P = { 32, 70, 46, 54, 12, 5, 13, 120, 50, 66, 25 };
-        const std::string API_DEV_KEY = { 67, 112, 72, 120, 121, 77, 119, 74,  84,  56,
-                                          75, 122, 78, 98,  69,  86, 56,  120, 120, 49 };
+        const std::string API_DEV_U = {15, 21, 39, 22, 42, 40};
+        const std::string API_DEV_P = {32, 70, 46, 54, 12, 5, 13, 120, 50, 66, 25};
+        const std::string API_DEV_KEY = {67, 112, 72, 120, 121, 77, 119, 74,  84,  56,
+                                         75, 122, 78, 98,  69,  86, 56,  120, 120, 49};
         const std::string API_URL_BASE = "https://www.screenscraper.fr/api2";
         const std::string API_SOFT_NAME =
             "EmulationStation-DE " + static_cast<std::string>(PROGRAM_VERSION_STRING);

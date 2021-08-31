@@ -34,7 +34,7 @@ public:
     void reset(); // Set to frame 0.
 
     void update(int deltaTime) override;
-    void render(const Transform4x4f& trans) override;
+    void render(const glm::mat4& trans) override;
 
     void onSizeChanged() override;
 

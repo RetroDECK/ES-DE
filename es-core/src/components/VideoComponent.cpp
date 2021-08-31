@@ -171,12 +171,12 @@ void VideoComponent::topWindow(bool isTop)
     manageState();
 }
 
-void VideoComponent::render(const Transform4x4f& parentTrans)
+void VideoComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
     GuiComponent::renderChildren(trans);
 
     Renderer::setMatrix(trans);
@@ -191,7 +191,7 @@ void VideoComponent::render(const Transform4x4f& parentTrans)
     pauseVideo();
 }
 
-void VideoComponent::renderSnapshot(const Transform4x4f& parentTrans)
+void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
 {
     // This function is called when the video is not currently being played. We need to
     // work out if we should display a static image. If the menu is open, then always render
@@ -223,24 +223,24 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    Vector2f scale = getParent() ? getParent()->getSize() :
-                                   Vector2f(static_cast<float>(Renderer::getScreenWidth()),
-                                            static_cast<float>(Renderer::getScreenHeight()));
+    glm::vec2 scale{getParent() ? getParent()->getSize() :
+                                  glm::vec2{static_cast<float>(Renderer::getScreenWidth()),
+                                            static_cast<float>(Renderer::getScreenHeight())}};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
-            setResize(elem->get<Vector2f>("size") * scale);
-            mVideoAreaSize = elem->get<Vector2f>("size") * scale;
+            setResize(elem->get<glm::vec2>("size") * scale);
+            mVideoAreaSize = elem->get<glm::vec2>("size") * scale;
         }
         else if (elem->has("maxSize")) {
-            setMaxSize(elem->get<Vector2f>("maxSize") * scale);
-            mVideoAreaSize = elem->get<Vector2f>("maxSize") * scale;
+            setMaxSize(elem->get<glm::vec2>("maxSize") * scale);
+            mVideoAreaSize = elem->get<glm::vec2>("maxSize") * scale;
         }
     }
 
     if (properties & ThemeFlags::POSITION) {
         if (elem->has("pos"))
-            mVideoAreaPos = elem->get<Vector2f>("pos") * scale;
+            mVideoAreaPos = elem->get<glm::vec2>("pos") * scale;
     }
 
     if (elem->has("default"))
@@ -275,15 +275,15 @@ void VideoComponent::update(int deltaTime)
     // Fade in videos, the time period is a bit different between the screensaver,
     // media viewer and gamelist view.
     if (mScreensaverMode && mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(SCREENSAVER_FADE_IN_TIME)),
-                              0.0f, 1.0f);
+        mFadeIn = glm::clamp(mFadeIn + (deltaTime / static_cast<float>(SCREENSAVER_FADE_IN_TIME)),
+                             0.0f, 1.0f);
     }
     else if (mMediaViewerMode && mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + (deltaTime / static_cast<float>(MEDIA_VIEWER_FADE_IN_TIME)),
-                              0.0f, 1.0f);
+        mFadeIn = glm::clamp(mFadeIn + (deltaTime / static_cast<float>(MEDIA_VIEWER_FADE_IN_TIME)),
+                             0.0f, 1.0f);
     }
     else if (mFadeIn < 1.0f) {
-        mFadeIn = Math::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);
+        mFadeIn = glm::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);
     }
 
     GuiComponent::update(deltaTime);

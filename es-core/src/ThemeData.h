@@ -11,9 +11,8 @@
 #ifndef ES_CORE_THEME_DATA_H
 #define ES_CORE_THEME_DATA_H
 
-#include "math/Vector2f.h"
-#include "math/Vector4f.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/MathUtil.h"
 
 #include <deque>
 #include <map>
@@ -103,20 +102,20 @@ public:
         std::string type;
 
         struct Property {
-            void operator=(const Vector4f& value)
+            void operator=(const glm::vec4& value)
             {
                 r = value;
-                const Vector4f initVector = value;
-                v = Vector2f(initVector.x(), initVector.y());
+                const glm::vec4 initVector{value};
+                v = glm::vec2{initVector.x, initVector.y};
             }
-            void operator=(const Vector2f& value) { v = value; }
+            void operator=(const glm::vec2& value) { v = value; }
             void operator=(const std::string& value) { s = value; }
             void operator=(const unsigned int& value) { i = value; }
             void operator=(const float& value) { f = value; }
             void operator=(const bool& value) { b = value; }
 
-            Vector4f r;
-            Vector2f v;
+            glm::vec4 r;
+            glm::vec2 v;
             std::string s;
             unsigned int i;
             float f;
@@ -127,7 +126,7 @@ public:
 
         template <typename T> const T get(const std::string& prop) const
         {
-            if (std::is_same<T, Vector2f>::value)
+            if (std::is_same<T, glm::vec2>::value)
                 return *(const T*)&properties.at(prop).v;
             else if (std::is_same<T, std::string>::value)
                 return *(const T*)&properties.at(prop).s;
@@ -137,7 +136,7 @@ public:
                 return *(const T*)&properties.at(prop).f;
             else if (std::is_same<T, bool>::value)
                 return *(const T*)&properties.at(prop).b;
-            else if (std::is_same<T, Vector4f>::value)
+            else if (std::is_same<T, glm::vec4>::value)
                 return *(const T*)&properties.at(prop).r;
             return T();
         }

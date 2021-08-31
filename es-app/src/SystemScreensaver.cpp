@@ -248,19 +248,19 @@ void SystemScreensaver::renderScreensaver()
 
     if (mVideoScreensaver && screensaverType == "video") {
         // Render a black background below the video.
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                            static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
-            Transform4x4f transform = Transform4x4f::Identity();
-            mVideoScreensaver->render(transform);
+            glm::mat4 trans{Renderer::getIdentity()};
+            mVideoScreensaver->render(trans);
         }
     }
     else if (mImageScreensaver && screensaverType == "slideshow") {
         // Render a black background below the image.
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                            static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
@@ -268,15 +268,14 @@ void SystemScreensaver::renderScreensaver()
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
             if (mImageScreensaver->hasImage()) {
                 mImageScreensaver->setOpacity(255 - static_cast<unsigned char>(mOpacity * 255));
-
-                Transform4x4f transform = Transform4x4f::Identity();
-                mImageScreensaver->render(transform);
+                glm::mat4 trans{Renderer::getIdentity()};
+                mImageScreensaver->render(trans);
             }
         }
     }
 
     if (isScreensaverActive()) {
-        Renderer::setMatrix(Transform4x4f::Identity());
+        Renderer::setMatrix(Renderer::getIdentity());
         if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
             if (mHasMediaFiles) {
 #if defined(USE_OPENGL_21)
@@ -292,13 +291,13 @@ void SystemScreensaver::renderScreensaver()
                             0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                     }
                     mRectangleFadeIn =
-                        Math::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
+                        glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     if (mTextFadeIn > 50)
                         mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
                     if (mTextFadeIn < 255)
-                        mTextFadeIn = Math::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
+                        mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
                 }
             }
             else {
@@ -345,13 +344,13 @@ void SystemScreensaver::renderScreensaver()
                             0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
                     }
                     mRectangleFadeIn =
-                        Math::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
+                        glm::clamp(mRectangleFadeIn + 6 + mRectangleFadeIn / 20, 0, 170);
 
                     mGameOverlay.get()->setColor(0xFFFFFF00 | mTextFadeIn);
                     if (mTextFadeIn > 50)
                         mGameOverlayFont.at(0)->renderTextCache(mGameOverlay.get());
                     if (mTextFadeIn < 255)
-                        mTextFadeIn = Math::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
+                        mTextFadeIn = glm::clamp(mTextFadeIn + 2 + mTextFadeIn / 6, 0, 255);
                 }
             }
             else {
@@ -365,11 +364,11 @@ void SystemScreensaver::renderScreensaver()
             dimParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
             if (mDimValue > 0.4)
-                mDimValue = Math::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
+                mDimValue = glm::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
             dimParameters.fragmentSaturation = mSaturationAmount;
             Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
             if (mSaturationAmount > 0.0)
-                mSaturationAmount = Math::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
+                mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
 #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                                0x000000A0, 0x000000A0);
@@ -381,7 +380,7 @@ void SystemScreensaver::renderScreensaver()
             blackParameters.fragmentDimValue = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
             if (mDimValue > 0.0)
-                mDimValue = Math::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
+                mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
 #else
             Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                                0x000000FF, 0x000000FF);
@@ -515,7 +514,7 @@ void SystemScreensaver::pickRandomImage(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine { randDev() };
+        std::mt19937 engine{randDev()};
         std::uniform_int_distribution<int> uniform_dist(0,
                                                         static_cast<int>(mImageFiles.size()) - 1);
         index = uniform_dist(engine);
@@ -549,7 +548,7 @@ void SystemScreensaver::pickRandomVideo(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine { randDev() };
+        std::mt19937 engine{randDev()};
         std::uniform_int_distribution<int> uniform_dist(0,
                                                         static_cast<int>(mVideoFiles.size()) - 1);
         index = uniform_dist(engine);
@@ -577,7 +576,7 @@ void SystemScreensaver::pickRandomCustomImage(std::string& path)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine { randDev() };
+        std::mt19937 engine{randDev()};
         std::uniform_int_distribution<int> uniform_dist(
             0, static_cast<int>(mImageCustomFiles.size()) - 1);
         index = uniform_dist(engine);
@@ -609,18 +608,18 @@ void SystemScreensaver::generateOverlayInfo()
         mGameOverlayFont.at(0)->buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
 
     float textSizeX;
-    float textSizeY = mGameOverlayFont[0].get()->sizeText(overlayText).y();
+    float textSizeY = mGameOverlayFont[0].get()->sizeText(overlayText).y;
 
     // There is a weird issue with sizeText() where the X size value is returned
     // as too large if there are two rows in a string and the second row is longer
     // than the first row. Possibly it's the newline character that is somehow
     // injected in the size calculation. Regardless, this workaround is working
     // fine for the time being.
-    if (mGameOverlayFont[0].get()->sizeText(gameName).x() >
-        mGameOverlayFont[0].get()->sizeText(systemName).x())
-        textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x();
+    if (mGameOverlayFont[0].get()->sizeText(gameName).x >
+        mGameOverlayFont[0].get()->sizeText(systemName).x)
+        textSizeX = mGameOverlayFont[0].get()->sizeText(gameName).x;
     else
-        textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x();
+        textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x;
 
     float marginX = Renderer::getWindowWidth() * 0.01f;
 

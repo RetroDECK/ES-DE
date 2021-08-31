@@ -572,7 +572,7 @@ int main(int argc, char* argv[])
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
-    SDL_Event event {};
+    SDL_Event event{};
 
     if (!window.init()) {
         LOG(LogError) << "Window failed to initialize";
@@ -610,6 +610,16 @@ int main(int argc, char* argv[])
         }
         else if (loadSystemsStatus == NO_ROMS) {
             ViewController::get()->noGamesDialog();
+        }
+    }
+
+    // Check if any of the enabled systems has an invalid alternative emulator entry,
+    // which means that a label is present in the gamelist.xml file which is not matching
+    // any command tag in es_systems.xml.
+    for (auto system : SystemData::sSystemVector) {
+        if (system->getAlternativeEmulator() == "<INVALID>") {
+            ViewController::get()->invalidAlternativeEmulatorDialog();
+            break;
         }
     }
 

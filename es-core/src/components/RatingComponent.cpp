@@ -25,7 +25,7 @@ RatingComponent::RatingComponent(Window* window, bool colorizeChanges)
     mFilledTexture = TextureResource::get(":/graphics/star_filled.svg", true);
     mUnfilledTexture = TextureResource::get(":/graphics/star_unfilled.svg", true);
     mValue = 0.5f;
-    mSize = Vector2f(64.0f * NUM_RATING_STARS, 64.0f);
+    mSize = glm::vec2{64.0f * NUM_RATING_STARS, 64.0f};
     updateVertices();
     updateColors();
 }
@@ -96,13 +96,13 @@ void RatingComponent::setColorShift(unsigned int color)
 
 void RatingComponent::onSizeChanged()
 {
-    if (mSize.y() == 0)
-        mSize[1] = mSize.x() / NUM_RATING_STARS;
-    else if (mSize.x() == 0)
-        mSize[0] = mSize.y() * NUM_RATING_STARS;
+    if (mSize.y == 0.0f)
+        mSize.y = mSize.x / NUM_RATING_STARS;
+    else if (mSize.x == 0.0f)
+        mSize.x = mSize.y * NUM_RATING_STARS;
 
-    if (mSize.y() > 0) {
-        size_t heightPx = static_cast<size_t>(std::round(mSize.y()));
+    if (mSize.y > 0.0f) {
+        size_t heightPx = static_cast<size_t>(std::round(mSize.y));
         if (mFilledTexture)
             mFilledTexture->rasterizeAt(heightPx, heightPx);
         if (mUnfilledTexture)
@@ -115,21 +115,21 @@ void RatingComponent::onSizeChanged()
 void RatingComponent::updateVertices()
 {
     const float numStars = NUM_RATING_STARS;
-    const float h = getSize().y(); // Ss the same as a single star's width.
-    const float w = getSize().y() * mValue * numStars;
-    const float fw = getSize().y() * numStars;
+    const float h = getSize().y; // Ss the same as a single star's width.
+    const float w = getSize().y * mValue * numStars;
+    const float fw = getSize().y * numStars;
     const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
 
     // clang-format off
-    mVertices[0] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
-    mVertices[1] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
-    mVertices[2] = { { w,    0.0f }, { mValue * numStars, 1.0f }, color };
-    mVertices[3] = { { w,    h    }, { mValue * numStars, 0.0f }, color };
+    mVertices[0] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
+    mVertices[1] = {{0.0f, h   }, {0.0f,              0.0f}, color};
+    mVertices[2] = {{w,    0.0f}, {mValue * numStars, 1.0f}, color};
+    mVertices[3] = {{w,    h   }, {mValue * numStars, 0.0f}, color};
 
-    mVertices[4] = { { 0.0f, 0.0f }, { 0.0f,              1.0f }, color };
-    mVertices[5] = { { 0.0f, h    }, { 0.0f,              0.0f }, color };
-    mVertices[6] = { { fw,   0.0f }, { numStars,          1.0f }, color };
-    mVertices[7] = { { fw,   h    }, { numStars,          0.0f }, color };
+    mVertices[4] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
+    mVertices[5] = {{0.0f, h   }, {0.0f,              0.0f}, color};
+    mVertices[6] = {{fw,   0.0f}, {numStars,          1.0f}, color};
+    mVertices[7] = {{fw,   h   }, {numStars,          0.0f}, color};
     // clang-format on
 }
 
@@ -141,18 +141,18 @@ void RatingComponent::updateColors()
         mVertices[i].col = color;
 }
 
-void RatingComponent::render(const Transform4x4f& parentTrans)
+void RatingComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr)
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     Renderer::setMatrix(trans);
 
     if (mOpacity > 0) {
         if (Settings::getInstance()->getBool("DebugImage")) {
-            Renderer::drawRect(0.0f, 0.0f, mSize.y() * NUM_RATING_STARS, mSize.y(), 0xFF000033,
+            Renderer::drawRect(0.0f, 0.0f, mSize.y * NUM_RATING_STARS, mSize.y, 0xFF000033,
                                0xFF000033);
         }
 

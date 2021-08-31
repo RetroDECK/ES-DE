@@ -58,7 +58,7 @@ public:
             addChild(&mRightArrow);
         }
 
-        setSize(mLeftArrow.getSize().x() + mRightArrow.getSize().x(), font->getHeight());
+        setSize(mLeftArrow.getSize().x + mRightArrow.getSize().x, font->getHeight());
     }
 
     // Handles positioning/resizing of text and arrows.
@@ -67,19 +67,19 @@ public:
         mLeftArrow.setResize(0, mText.getFont()->getLetterHeight());
         mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
 
-        if (mSize.x() < (mLeftArrow.getSize().x() + mRightArrow.getSize().x())) {
+        if (mSize.x < (mLeftArrow.getSize().x + mRightArrow.getSize().x)) {
             LOG(LogWarning) << "OptionListComponent too narrow";
         }
 
-        mText.setSize(mSize.x() - mLeftArrow.getSize().x() - mRightArrow.getSize().x(),
+        mText.setSize(mSize.x - mLeftArrow.getSize().x - mRightArrow.getSize().x,
                       mText.getFont()->getHeight());
 
         // Position.
-        mLeftArrow.setPosition(0, (mSize.y() - mLeftArrow.getSize().y()) / 2);
-        mText.setPosition(mLeftArrow.getPosition().x() + mLeftArrow.getSize().x(),
-                          (mSize.y() - mText.getSize().y()) / 2);
-        mRightArrow.setPosition(mText.getPosition().x() + mText.getSize().x(),
-                                (mSize.y() - mRightArrow.getSize().y()) / 2);
+        mLeftArrow.setPosition(0.0f, (mSize.y - mLeftArrow.getSize().y) / 2.0f);
+        mText.setPosition(mLeftArrow.getPosition().x + mLeftArrow.getSize().x,
+                          (mSize.y - mText.getSize().y) / 2.0f);
+        mRightArrow.setPosition(mText.getPosition().x + mText.getSize().x,
+                                (mSize.y - mRightArrow.getSize().y) / 2.0f);
     }
 
     bool input(InputConfig* config, Input input) override
@@ -223,7 +223,11 @@ private:
 
     HelpStyle mHelpStyle;
 
-    void open() { mWindow->pushGui(new OptionListPopup(mWindow, getHelpStyle(), this, mName)); }
+    void open()
+    {
+        // Open the list popup.
+        mWindow->pushGui(new OptionListPopup(mWindow, getHelpStyle(), this, mName));
+    }
 
     void onSelectedChanged()
     {
@@ -232,10 +236,10 @@ private:
             std::stringstream ss;
             ss << getSelectedObjects().size() << " SELECTED";
             mText.setText(ss.str());
-            mText.setSize(0, mText.getSize().y());
-            setSize(mText.getSize().x() + mRightArrow.getSize().x() +
-                        24 * Renderer::getScreenWidthModifier(),
-                    mText.getSize().y());
+            mText.setSize(0, mText.getSize().y);
+            setSize(mText.getSize().x + mRightArrow.getSize().x +
+                        24.0f * Renderer::getScreenWidthModifier(),
+                    mText.getSize().y);
             if (mParent) // Hack since there's no "on child size changed" callback.
                 mParent->onSizeChanged();
         }
@@ -244,11 +248,10 @@ private:
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
                 if (it->selected) {
                     mText.setText(Utils::String::toUpper(it->name));
-                    mText.setSize(0, mText.getSize().y());
-                    setSize(mText.getSize().x() + mLeftArrow.getSize().x() +
-                                mRightArrow.getSize().x() +
+                    mText.setSize(0.0f, mText.getSize().y);
+                    setSize(mText.getSize().x + mLeftArrow.getSize().x + mRightArrow.getSize().x +
                                 24.0f * Renderer::getScreenWidthModifier(),
-                            mText.getSize().y());
+                            mText.getSize().y);
                     if (mParent) // Hack since there's no "on child size changed" callback.
                         mParent->onSizeChanged();
                     break;
@@ -356,7 +359,7 @@ private:
                 });
             }
 
-            mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x()) / 2.0f,
+            mMenu.setPosition((Renderer::getScreenWidth() - mMenu.getSize().x) / 2.0f,
                               Renderer::getScreenHeight() * 0.13f);
             addChild(&mMenu);
         }

@@ -32,7 +32,7 @@ ButtonComponent::ButtonComponent(Window* window,
 void ButtonComponent::onSizeChanged()
 {
     // Fit to mBox.
-    mBox.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBox.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 }
 
 bool ButtonComponent::input(InputConfig* config, Input input)
@@ -53,10 +53,10 @@ void ButtonComponent::setText(const std::string& text, const std::string& helpTe
 
     mTextCache = std::unique_ptr<TextCache>(mFont->buildTextCache(mText, 0, 0, getCurTextColor()));
 
-    float minWidth = mFont->sizeText("DELETE").x() + (12.0f * Renderer::getScreenWidthModifier());
-    setSize(std::max(mTextCache->metrics.size.x() + (12.0f * Renderer::getScreenWidthModifier()),
+    float minWidth = mFont->sizeText("DELETE").x + (12.0f * Renderer::getScreenWidthModifier());
+    setSize(std::max(mTextCache->metrics.size.x + (12.0f * Renderer::getScreenWidthModifier()),
                      minWidth),
-            mTextCache->metrics.size.y());
+            mTextCache->metrics.size.y);
 
     updateHelpPrompts();
 }
@@ -93,29 +93,29 @@ void ButtonComponent::updateImage()
     mBox.setImagePath(mFocused ? ":/graphics/button_filled.svg" : ":/graphics/button.svg");
 }
 
-void ButtonComponent::render(const Transform4x4f& parentTrans)
+void ButtonComponent::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     mBox.render(trans);
 
     if (mTextCache) {
-        Vector3f centerOffset((mSize.x() - mTextCache->metrics.size.x()) / 2.0f,
-                              (mSize.y() - mTextCache->metrics.size.y()) / 2.0f, 0);
-        trans = trans.translate(centerOffset);
+        glm::vec3 centerOffset{(mSize.x - mTextCache->metrics.size.x) / 2.0f,
+                               (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
+        trans = glm::translate(trans, centerOffset);
 
         if (Settings::getInstance()->getBool("DebugText")) {
-            Renderer::drawRect(centerOffset.x(), 0.0f, mTextCache->metrics.size.x(), mSize.y(),
+            Renderer::drawRect(centerOffset.x, 0.0f, mTextCache->metrics.size.x, mSize.y,
                                0x00000033, 0x00000033);
-            Renderer::drawRect(mBox.getPosition().x(), 0.0f, mBox.getSize().x(), mSize.y(),
-                               0x0000FF33, 0x0000FF33);
+            Renderer::drawRect(mBox.getPosition().x, 0.0f, mBox.getSize().x, mSize.y, 0x0000FF33,
+                               0x0000FF33);
         }
 
         Renderer::setMatrix(trans);
 
         mTextCache->setColor(getCurTextColor());
         mFont->renderTextCache(mTextCache.get());
-        trans = trans.translate(-centerOffset);
+        trans = glm::translate(trans, -centerOffset);
     }
 
     renderChildren(trans);

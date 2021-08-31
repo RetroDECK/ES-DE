@@ -25,7 +25,7 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
     : GuiComponent(window)
     , mHelpStyle(helpstyle)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, Vector2i(1, 3))
+    , mGrid(window, glm::ivec2{1, 3})
     , mMultiLine(multiLine)
     , mInitValue(initValue)
     , mOkCallback(okCallback)
@@ -53,10 +53,10 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mTitle, Vector2i(0, 0), false, true);
-    mGrid.setEntry(mText, Vector2i(0, 1), true, false, Vector2i(1, 1),
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mText, glm::ivec2{0, 1}, true, false, glm::ivec2{1, 1},
                    GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
-    mGrid.setEntry(mButtonGrid, Vector2i(0, 2), true, false);
+    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 2}, true, false);
 
     float textHeight = mText->getFont()->getHeight();
 
@@ -67,24 +67,24 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = Math::clamp(0.50f * aspectValue, 0.40f, 0.70f) * Renderer::getScreenWidth();
+    float width = glm::clamp(0.50f * aspectValue, 0.40f, 0.70f) * Renderer::getScreenWidth();
 
-    setSize(width, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y() +
-                       mButtonGrid->getSize().y() / 2.0f);
-    setPosition((Renderer::getScreenWidth() - mSize.x()) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y()) / 2.0f);
+    setSize(width, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y +
+                       mButtonGrid->getSize().y / 2.0f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
     mText->startEditing();
 }
 
 void GuiTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, Vector3f::Zero(), Vector2f(-32.0f, -32.0f));
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
-    mText->setSize(mSize.x() - 40, mText->getSize().y());
+    mText->setSize(mSize.x - 40.0f, mText->getSize().y);
 
     // Update grid.
-    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y());
-    mGrid.setRowHeightPerc(2, mButtonGrid->getSize().y() / mSize.y());
+    mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y);
+    mGrid.setRowHeightPerc(2, mButtonGrid->getSize().y / mSize.y);
     mGrid.setSize(mSize);
 }
 

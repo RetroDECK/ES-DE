@@ -56,6 +56,8 @@ public:
 
     // Define a factor for scaling the file when loading it (1.0f = no scaling).
     void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }
+    // Whether to use linear filtering when magnifying the texture.
+    void setLinearMagnify(bool setting) { mLinearMagnify = setting; }
 
     std::vector<unsigned char> getRawRGBAData() { return mDataRGBA; }
     std::string getTextureFilePath() { return mPath; }
@@ -73,6 +75,7 @@ private:
     float mSourceHeight;
     float mScaleDuringLoad;
     bool mScalable;
+    bool mLinearMagnify;
     bool mReloadable;
 };
 

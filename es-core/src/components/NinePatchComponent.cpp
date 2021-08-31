@@ -55,58 +55,58 @@ void NinePatchComponent::buildVertices()
     // (e.g. from 720p to 4K) will be within these boundaries though.
     float scaleFactor;
     if (Renderer::getScreenWidth() > Renderer::getScreenHeight())
-        scaleFactor = Math::clamp(Renderer::getScreenHeightModifier(), 0.4f, 3.0f);
+        scaleFactor = glm::clamp(Renderer::getScreenHeightModifier(), 0.4f, 3.0f);
     else
-        scaleFactor = Math::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
+        scaleFactor = glm::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
 
-    mTexture = TextureResource::get(mPath, false, false, true, scaleFactor);
+    mTexture = TextureResource::get(mPath, false, false, true, true, scaleFactor);
 
-    if (mTexture->getSize() == Vector2i::Zero()) {
+    if (mTexture->getSize() == glm::ivec2{}) {
         mVertices = nullptr;
         LOG(LogWarning) << "NinePatchComponent has no texture";
         return;
     }
 
-    Vector2f texSize;
     mVertices = new Renderer::Vertex[6 * 9];
 
-    texSize = Vector2f(static_cast<float>(mTexture->getSize().x()),
-                       static_cast<float>(mTexture->getSize().y()));
+    glm::vec2 texSize{static_cast<float>(mTexture->getSize().x),
+                      static_cast<float>(mTexture->getSize().y)};
 
-    // clang-format off
-    const float imgSizeX[3] = { mCornerSize.x(), mSize.x() - mCornerSize.x() * 2.0f, mCornerSize.x() };
-    const float imgSizeY[3] = { mCornerSize.y(), mSize.y() - mCornerSize.y() * 2.0f, mCornerSize.y() };
-    const float imgPosX[3] = { 0, imgSizeX[0], imgSizeX[0] + imgSizeX[1] };
-    const float imgPosY[3] = { 0, imgSizeY[0], imgSizeY[0] + imgSizeY[1] };
+    const float imgSizeX[3]{mCornerSize.x, mSize.x - mCornerSize.x * 2.0f, mCornerSize.x};
+    const float imgSizeY[3]{mCornerSize.y, mSize.y - mCornerSize.y * 2.0f, mCornerSize.y};
+    const float imgPosX[3]{0, imgSizeX[0], imgSizeX[0] + imgSizeX[1]};
+    const float imgPosY[3]{0, imgSizeY[0], imgSizeY[0] + imgSizeY[1]};
 
     // The "1 +" in posY and "-" in sizeY is to deal with texture coordinates having a bottom
     // left corner origin vs. verticies having a top left origin.
-    const float texSizeX[3] = {  mCornerSize.x() / texSize.x(),  (texSize.x() - mCornerSize.x() * 2.0f) / texSize.x(),  mCornerSize.x() / texSize.x() };
-    const float texSizeY[3] = { -mCornerSize.y() / texSize.y(), -(texSize.y() - mCornerSize.y() * 2.0f) / texSize.y(), -mCornerSize.y() / texSize.y() };
-    const float texPosX[3]  = {  0.0f,        texSizeX[0],        texSizeX[0] + texSizeX[1] };
-    const float texPosY[3]  = {  1.0f, 1.0f + texSizeY[0], 1.0f + texSizeY[0] + texSizeY[1] };
+    // clang-format off
+    const float texSizeX[3]{mCornerSize.x / texSize.x,  (texSize.x - mCornerSize.x * 2.0f) / texSize.x,  mCornerSize.x / texSize.x};
+    const float texSizeY[3]{-mCornerSize.y / texSize.y, -(texSize.y - mCornerSize.y * 2.0f) / texSize.y, -mCornerSize.y / texSize.y};
+
+    const float texPosX[3]{0.0f,        texSizeX[0],        texSizeX[0] + texSizeX[1]};
+    const float texPosY[3]{1.0f, 1.0f + texSizeY[0], 1.0f + texSizeY[0] + texSizeY[1]};
     // clang-format on
 
     int v = 0;
 
     for (int slice = 0; slice < 9; slice++) {
-        const int sliceX = slice % 3;
-        const int sliceY = slice / 3;
-        const Vector2f imgPos = Vector2f(imgPosX[sliceX], imgPosY[sliceY]);
-        const Vector2f imgSize = Vector2f(imgSizeX[sliceX], imgSizeY[sliceY]);
-        const Vector2f texPos = Vector2f(texPosX[sliceX], texPosY[sliceY]);
-        const Vector2f texSize = Vector2f(texSizeX[sliceX], texSizeY[sliceY]);
+        const int sliceX{slice % 3};
+        const int sliceY{slice / 3};
+        const glm::vec2 imgPos{imgPosX[sliceX], imgPosY[sliceY]};
+        const glm::vec2 imgSize{imgSizeX[sliceX], imgSizeY[sliceY]};
+        const glm::vec2 texPos{texPosX[sliceX], texPosY[sliceY]};
+        const glm::vec2 texSize{texSizeX[sliceX], texSizeY[sliceY]};
 
         // clang-format off
-        mVertices[v + 1] = { { imgPos.x()              , imgPos.y()               }, { texPos.x(),               texPos.y()               }, 0 };
-        mVertices[v + 2] = { { imgPos.x()              , imgPos.y() + imgSize.y() }, { texPos.x(),               texPos.y() + texSize.y() }, 0 };
-        mVertices[v + 3] = { { imgPos.x() + imgSize.x(), imgPos.y()               }, { texPos.x() + texSize.x(), texPos.y()               }, 0 };
-        mVertices[v + 4] = { { imgPos.x() + imgSize.x(), imgPos.y() + imgSize.y() }, { texPos.x() + texSize.x(), texPos.y() + texSize.y() }, 0 };
+        mVertices[v + 1] = {{imgPos.x            , imgPos.y            }, {texPos.x,             texPos.y            }, 0};
+        mVertices[v + 2] = {{imgPos.x            , imgPos.y + imgSize.y}, {texPos.x,             texPos.y + texSize.y}, 0};
+        mVertices[v + 3] = {{imgPos.x + imgSize.x, imgPos.y            }, {texPos.x + texSize.x, texPos.y            }, 0};
+        mVertices[v + 4] = {{imgPos.x + imgSize.x, imgPos.y + imgSize.y}, {texPos.x + texSize.x, texPos.y + texSize.y}, 0};
         // clang-format on
 
         // Round vertices.
         for (int i = 1; i < 5; i++)
-            mVertices[v + i].pos.round();
+            mVertices[v + i].pos = glm::round(mVertices[v + i].pos);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
         mVertices[v + 0] = mVertices[v + 1];
@@ -118,12 +118,12 @@ void NinePatchComponent::buildVertices()
     updateColors();
 }
 
-void NinePatchComponent::render(const Transform4x4f& parentTrans)
+void NinePatchComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
 
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
     if (mTexture && mVertices != nullptr) {
         Renderer::setMatrix(trans);
@@ -144,17 +144,15 @@ void NinePatchComponent::render(const Transform4x4f& parentTrans)
     renderChildren(trans);
 }
 
-void NinePatchComponent::onSizeChanged() { buildVertices(); }
-
-void NinePatchComponent::fitTo(Vector2f size, Vector3f position, Vector2f padding)
+void NinePatchComponent::fitTo(glm::vec2 size, glm::vec3 position, glm::vec2 padding)
 {
     size += padding;
-    position[0] -= padding.x() / 2.0f;
-    position[1] -= padding.y() / 2.0f;
+    position[0] -= padding.x / 2.0f;
+    position[1] -= padding.y / 2.0f;
 
     setSize(size + mCornerSize * 2.0f);
-    setPosition(position.x() + Math::lerp(-mCornerSize.x(), mCornerSize.x(), mOrigin.x()),
-                position.y() + Math::lerp(-mCornerSize.y(), mCornerSize.y(), mOrigin.y()));
+    setPosition(position.x + glm::mix(-mCornerSize.x, mCornerSize.x, mOrigin.x),
+                position.y + glm::mix(-mCornerSize.y, mCornerSize.y, mOrigin.y));
 }
 
 void NinePatchComponent::setImagePath(const std::string& path)

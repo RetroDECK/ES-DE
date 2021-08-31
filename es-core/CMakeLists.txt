@@ -22,6 +22,7 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/Animation.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/AnimationController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/LambdaAnimation.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/MoveCameraAnimation.h
 
         # GUI components
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.h
@@ -57,14 +58,6 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.h
 
-        # Math
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Transform4x4f.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector2f.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector2i.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector3f.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector4f.h
-
         # Renderers
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Shader_GL21.h
@@ -79,6 +72,7 @@ set(CORE_HEADERS
         # Utils
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.h
 )
@@ -134,14 +128,6 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.cpp
 
-        # Math
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Misc.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Transform4x4f.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector2f.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector2i.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector3f.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/Vector4f.cpp
-
         # Renderer
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer_GL21.cpp
@@ -158,6 +144,7 @@ set(CORE_SOURCES
         # Utils
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
 )

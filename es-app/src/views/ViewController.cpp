@@ -41,12 +41,14 @@ const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToStrin
 const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uF14A");
 const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uF11b");
 const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uF0b0");
+const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uF013");
 #else
 const std::string ViewController::FAVORITE_CHAR = "\uF005";
 const std::string ViewController::FOLDER_CHAR = "\uF07C";
 const std::string ViewController::TICKMARK_CHAR = "\uF14A";
 const std::string ViewController::CONTROLLER_CHAR = "\uF11b";
 const std::string ViewController::FILTER_CHAR = "\uF0b0";
+const std::string ViewController::GEAR_CHAR = "\uF013";
 #endif
 
 ViewController* ViewController::get()
@@ -66,7 +68,7 @@ ViewController::ViewController(Window* window)
     , mCurrentView(nullptr)
     , mPreviousView(nullptr)
     , mSkipView(nullptr)
-    , mCamera(Transform4x4f::Identity())
+    , mCamera(Renderer::getIdentity())
     , mSystemViewTransition(false)
     , mWrappedViews(false)
     , mFadeOpacity(0)
@@ -193,6 +195,17 @@ void ViewController::noGamesDialog()
     mWindow->pushGui(mNoGamesMessageBox);
 }
 
+void ViewController::invalidAlternativeEmulatorDialog()
+{
+    mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                                   "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
+                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
+                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
+                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
+                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
+                                   "ENTRY UNDER THE 'OTHER SETTINGS' MENU"));
+}
+
 void ViewController::goToStart()
 {
     // If the system view does not exist, then create it. We do this here as it would
@@ -234,8 +247,8 @@ void ViewController::ReloadAndGoToStart()
 bool ViewController::isCameraMoving()
 {
     if (mCurrentView) {
-        if (mCamera.r3().x() - -mCurrentView->getPosition().x() != 0 ||
-            mCamera.r3().y() - -mCurrentView->getPosition().y() != 0)
+        if (mCamera[3].x - -mCurrentView->getPosition().x != 0.0f ||
+            mCamera[3].y - -mCurrentView->getPosition().y != 0.0f)
             return true;
     }
     return false;
@@ -245,8 +258,8 @@ void ViewController::cancelViewTransitions()
 {
     if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
         if (isCameraMoving()) {
-            mCamera.r3().x() = -mCurrentView->getPosition().x();
-            mCamera.r3().y() = -mCurrentView->getPosition().y();
+            mCamera[3].x = -mCurrentView->getPosition().x;
+            mCamera[3].y = -mCurrentView->getPosition().y;
             stopAllAnimations();
         }
         // mSkipView is used when skipping through the gamelists in quick succession.
@@ -285,8 +298,8 @@ int ViewController::getSystemId(SystemData* system)
 void ViewController::restoreViewPosition()
 {
     if (mPreviousView) {
-        Vector3f restorePosition = mPreviousView->getPosition();
-        restorePosition.x() = mWrapPreviousPositionX;
+        glm::vec3 restorePosition{mPreviousView->getPosition()};
+        restorePosition.x = mWrapPreviousPositionX;
         mPreviousView->setPosition(restorePosition);
         mWrapPreviousPositionX = 0;
         mWrappedViews = false;
@@ -320,7 +333,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
     auto systemList = getSystemListView();
     systemList->setPosition(getSystemId(system) * static_cast<float>(Renderer::getScreenWidth()),
-                            systemList->getPosition().y());
+                            systemList->getPosition().y);
 
     systemList->goToSystem(system, false);
     mCurrentView = systemList;
@@ -328,21 +341,21 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
     // Application startup animation.
     if (applicationStartup) {
-        mCamera.translation() = -mCurrentView->getPosition();
+        mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
             if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
                 getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
-                mCamera.translation().y() += Renderer::getScreenHeight();
+                mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
             else
-                mCamera.translation().x() -= Renderer::getScreenWidth();
+                mCamera[3].x -= static_cast<float>(Renderer::getScreenWidth());
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
             if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
                 getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
-                mCamera.translation().y() += Renderer::getScreenHeight();
+                mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
             else
-                mCamera.translation().x() += Renderer::getScreenWidth();
+                mCamera[3].x += static_cast<float>(Renderer::getScreenWidth());
         }
         else {
             updateHelpPrompts();
@@ -444,13 +457,13 @@ void ViewController::goToGameList(SystemData* system)
     if (mState.viewing == SYSTEM_SELECT) {
         // Move the system list.
         auto sysList = getSystemListView();
-        float offsetX = sysList->getPosition().x();
+        float offsetX = sysList->getPosition().x;
         int sysId = getSystemId(system);
 
         sysList->setPosition(sysId * static_cast<float>(Renderer::getScreenWidth()),
-                             sysList->getPosition().y());
-        offsetX = sysList->getPosition().x() - offsetX;
-        mCamera.translation().x() -= offsetX;
+                             sysList->getPosition().y);
+        offsetX = sysList->getPosition().x - offsetX;
+        mCamera[3].x -= offsetX;
     }
 
     // If we are wrapping around, either from the first to last system, or the other way
@@ -458,30 +471,30 @@ void ViewController::goToGameList(SystemData* system)
     // movements will be correct. This is accomplished by simply offsetting the X position
     // with the position of the first or last system plus the screen width.
     if (wrapFirstToLast) {
-        Vector3f currentPosition = mCurrentView->getPosition();
-        mWrapPreviousPositionX = currentPosition.x();
-        float offsetX = getGameListView(system)->getPosition().x();
+        glm::vec3 currentPosition{mCurrentView->getPosition()};
+        mWrapPreviousPositionX = currentPosition.x;
+        float offsetX{getGameListView(system)->getPosition().x};
         // This is needed to move the camera in the correct direction if there are only two systems.
         if (SystemData::sSystemVector.size() == 2 && mNextSystem)
             offsetX -= Renderer::getScreenWidth();
         else
             offsetX += Renderer::getScreenWidth();
-        currentPosition.x() = offsetX;
+        currentPosition.x = offsetX;
         mCurrentView->setPosition(currentPosition);
-        mCamera.translation().x() -= offsetX;
+        mCamera[3].x -= offsetX;
         mWrappedViews = true;
     }
     else if (wrapLastToFirst) {
-        Vector3f currentPosition = mCurrentView->getPosition();
-        mWrapPreviousPositionX = currentPosition.x();
-        float offsetX = getGameListView(system)->getPosition().x();
+        glm::vec3 currentPosition{mCurrentView->getPosition()};
+        mWrapPreviousPositionX = currentPosition.x;
+        float offsetX{getGameListView(system)->getPosition().x};
         if (SystemData::sSystemVector.size() == 2 && !mNextSystem)
             offsetX += Renderer::getScreenWidth();
         else
             offsetX -= Renderer::getScreenWidth();
-        currentPosition.x() = offsetX;
+        currentPosition.x = offsetX;
         mCurrentView->setPosition(currentPosition);
-        mCamera.translation().x() = -offsetX;
+        mCamera[3].x = -offsetX;
         mWrappedViews = true;
     }
 
@@ -489,13 +502,13 @@ void ViewController::goToGameList(SystemData* system)
 
     // Application startup animation, if starting in a gamelist rather than in the system view.
     if (mState.viewing == NOTHING) {
-        mCamera.translation() = -mCurrentView->getPosition();
+        mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
-            mCamera.translation().y() -= Renderer::getScreenHeight();
+            mCamera[3].y -= static_cast<float>(Renderer::getScreenHeight());
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
-            mCamera.translation().y() += Renderer::getScreenHeight() * 2;
+            mCamera[3].y += static_cast<float>(Renderer::getScreenHeight() * 2);
         }
         else {
             updateHelpPrompts();
@@ -528,21 +541,23 @@ void ViewController::playViewTransition(bool instant)
 {
     mCancelledTransition = false;
 
-    Vector3f target(Vector3f::Zero());
+    glm::vec3 target{};
     if (mCurrentView)
         target = mCurrentView->getPosition();
 
     // No need to animate, we're not going anywhere (probably due to goToNextGamelist()
     // or goToPrevGamelist() being called when there's only 1 system).
-    if (target == -mCamera.translation() && !isAnimationPlaying(0))
+    if (target == static_cast<glm::vec3>(-mCamera[3]) && !isAnimationPlaying(0))
         return;
 
-    std::string transition_style = Settings::getInstance()->getString("TransitionStyle");
+    std::string transition_style{Settings::getInstance()->getString("TransitionStyle")};
 
     if (instant || transition_style == "instant") {
         setAnimation(new LambdaAnimation(
             [this, target](float /*t*/) {
-                this->mCamera.translation() = -target;
+                this->mCamera[3].x = -target.x;
+                this->mCamera[3].y = -target.y;
+                this->mCamera[3].z = -target.z;
                 if (mPreviousView)
                     mPreviousView->onHide();
             },
@@ -559,7 +574,7 @@ void ViewController::playViewTransition(bool instant)
             // Without this, a (much shorter) fade transition would still play as
             // finishedCallback is calling this function.
             if (!mCancelledTransition)
-                mFadeOpacity = Math::lerp(0.0f, 1.0f, t);
+                mFadeOpacity = glm::mix(0.0f, 1.0f, t);
         };
 
         auto fadeCallback = [this]() {
@@ -571,14 +586,16 @@ void ViewController::playViewTransition(bool instant)
         const static int FADE_WAIT = 200; // Time to wait between in/out.
         setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), 0,
                      [this, fadeFunc, fadeCallback, target] {
-                         this->mCamera.translation() = -target;
+                         this->mCamera[3].x = -target.x;
+                         this->mCamera[3].y = -target.y;
+                         this->mCamera[3].z = -target.z;
                          updateHelpPrompts();
                          setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), FADE_WAIT,
                                       fadeCallback, true);
                      });
 
         // Fast-forward animation if we're partway faded.
-        if (target == -mCamera.translation()) {
+        if (target == static_cast<glm::vec3>(-mCamera[3])) {
             // Not changing screens, so cancel the first half entirely.
             advanceAnimation(0, FADE_DURATION);
             advanceAnimation(0, FADE_WAIT);
@@ -848,16 +865,16 @@ void ViewController::update(int deltaTime)
     }
 }
 
-void ViewController::render(const Transform4x4f& parentTrans)
+void ViewController::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = mCamera * parentTrans;
-    Transform4x4f transInverse;
-    transInverse.invert(trans);
+    glm::mat4 trans{mCamera * parentTrans};
+    glm::mat4 transInverse{glm::inverse(trans)};
 
     // Camera position, position + size.
-    Vector3f viewStart = transInverse.translation();
-    Vector3f viewEnd = transInverse * Vector3f(static_cast<float>(Renderer::getScreenWidth()),
-                                               static_cast<float>(Renderer::getScreenHeight(), 0));
+    glm::vec3 viewStart{transInverse[3]};
+    glm::vec3 viewEnd{std::fabs(trans[3].x) + static_cast<float>(Renderer::getScreenWidth()),
+                      std::fabs(trans[3].y) + static_cast<float>(Renderer::getScreenHeight()),
+                      0.0f};
 
     // Keep track of UI mode changes.
     UIModeController::getInstance()->monitorUIMode();
@@ -872,12 +889,12 @@ void ViewController::render(const Transform4x4f& parentTrans)
         // Same thing as for the system view, limit the rendering only to what needs to be drawn.
         if (it->second == mCurrentView || (it->second == mPreviousView && isCameraMoving())) {
             // Clipping.
-            Vector3f guiStart = it->second->getPosition();
-            Vector3f guiEnd = it->second->getPosition() +
-                              Vector3f(it->second->getSize().x(), it->second->getSize().y(), 0);
+            glm::vec3 guiStart{it->second->getPosition()};
+            glm::vec3 guiEnd{it->second->getPosition() +
+                             glm::vec3{it->second->getSize().x, it->second->getSize().y, 0.0f}};
 
-            if (guiEnd.x() >= viewStart.x() && guiEnd.y() >= viewStart.y() &&
-                guiStart.x() <= viewEnd.x() && guiStart.y() <= viewEnd.y())
+            if (guiEnd.x >= viewStart.x && guiEnd.y >= viewStart.y && guiStart.x <= viewEnd.x &&
+                guiStart.y <= viewEnd.y)
                 it->second->render(trans);
         }
     }
@@ -1000,7 +1017,7 @@ void ViewController::reloadAll()
         SystemData* system = mState.getSystem();
         mSystemListView->goToSystem(system, false);
         mCurrentView = mSystemListView;
-        mCamera.r3().x() = 0;
+        mCamera[3].x = 0.0f;
     }
     else {
         goToSystemView(SystemData::sSystemVector.front(), false);

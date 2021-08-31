@@ -60,17 +60,17 @@ HelpStyle IGameListView::getHelpStyle()
     return style;
 }
 
-void IGameListView::render(const Transform4x4f& parentTrans)
+void IGameListView::render(const glm::mat4& parentTrans)
 {
-    Transform4x4f trans = parentTrans * getTransform();
+    glm::mat4 trans{parentTrans * getTransform()};
 
-    float scaleX = trans.r0().x();
-    float scaleY = trans.r1().y();
+    float scaleX = trans[0].x;
+    float scaleY = trans[1].y;
 
-    Vector2i pos(static_cast<int>(std::round(trans.translation()[0])),
-                 static_cast<int>(std::round(trans.translation()[1])));
-    Vector2i size(static_cast<int>(std::round(mSize.x() * scaleX)),
-                  static_cast<int>(std::round(mSize.y() * scaleY)));
+    glm::ivec2 pos{static_cast<int>(std::round(trans[3].x)),
+                   static_cast<int>(std::round(trans[3].y))};
+    glm::ivec2 size{static_cast<int>(std::round(mSize.x * scaleX)),
+                    static_cast<int>(std::round(mSize.y * scaleY))};
 
     Renderer::pushClipRect(pos, size);
     renderChildren(trans);

@@ -21,181 +21,184 @@
 #include <algorithm>
 #include <pugixml.hpp>
 
-std::vector<std::string> ThemeData::sSupportedViews { { "all" },      { "system" }, { "basic" },
-                                                      { "detailed" }, { "grid" },   { "video" } };
-std::vector<std::string> ThemeData::sSupportedFeatures {
-    { "navigationsounds" }, { "video" }, { "carousel" }, { "z-index" }, { "visible" }
-};
+std::vector<std::string> ThemeData::sSupportedViews{{"all"},      {"system"}, {"basic"},
+                                                    {"detailed"}, {"grid"},   {"video"}};
+std::vector<std::string> ThemeData::sSupportedFeatures{
+    {"navigationsounds"}, {"video"}, {"carousel"}, {"z-index"}, {"visible"}};
 
-std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
-    ThemeData::sElementMap {
-        { "image",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "maxSize", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "rotation", FLOAT },
-            { "rotationOrigin", NORMALIZED_PAIR },
-            { "path", PATH },
-            { "default", PATH },
-            { "tile", BOOLEAN },
-            { "color", COLOR },
-            { "colorEnd", COLOR },
-            { "gradientType", STRING },
-            { "visible", BOOLEAN },
-            { "zIndex", FLOAT } } },
-        { "imagegrid",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "margin", NORMALIZED_PAIR },
-            { "padding", NORMALIZED_RECT },
-            { "autoLayout", NORMALIZED_PAIR },
-            { "autoLayoutSelectedZoom", FLOAT },
-            { "gameImage", PATH },
-            { "folderImage", PATH },
-            { "imageSource", STRING },
-            { "scrollDirection", STRING },
-            { "centerSelection", BOOLEAN },
-            { "scrollLoop", BOOLEAN },
-            { "animate", BOOLEAN },
-            { "zIndex", FLOAT } } },
-        { "gridtile",
-          { { "size", NORMALIZED_PAIR },
-            { "padding", NORMALIZED_PAIR },
-            { "imageColor", COLOR },
-            { "backgroundImage", PATH },
-            { "backgroundCornerSize", NORMALIZED_PAIR },
-            { "backgroundColor", COLOR },
-            { "backgroundCenterColor", COLOR },
-            { "backgroundEdgeColor", COLOR } } },
-        { "text",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "rotation", FLOAT },
-            { "rotationOrigin", NORMALIZED_PAIR },
-            { "text", STRING },
-            { "backgroundColor", COLOR },
-            { "fontPath", PATH },
-            { "fontSize", FLOAT },
-            { "color", COLOR },
-            { "alignment", STRING },
-            { "forceUppercase", BOOLEAN },
-            { "lineSpacing", FLOAT },
-            { "value", STRING },
-            { "visible", BOOLEAN },
-            { "zIndex", FLOAT } } },
-        { "textlist",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "selectorHeight", FLOAT },
-            { "selectorOffsetY", FLOAT },
-            { "selectorColor", COLOR },
-            { "selectorColorEnd", COLOR },
-            { "selectorGradientType", STRING },
-            { "selectorImagePath", PATH },
-            { "selectorImageTile", BOOLEAN },
-            { "selectedColor", COLOR },
-            { "primaryColor", COLOR },
-            { "secondaryColor", COLOR },
-            { "fontPath", PATH },
-            { "fontSize", FLOAT },
-            { "scrollSound", PATH }, // For backward compatibility with old themes.
-            { "alignment", STRING },
-            { "horizontalMargin", FLOAT },
-            { "forceUppercase", BOOLEAN },
-            { "lineSpacing", FLOAT },
-            { "zIndex", FLOAT } } },
-        { "container",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "visible", BOOLEAN },
-            { "zIndex", FLOAT } } },
-        { "ninepatch",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "path", PATH },
-            { "visible", BOOLEAN },
-            { "zIndex", FLOAT } } },
-        { "datetime",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "rotation", FLOAT },
-            { "rotationOrigin", NORMALIZED_PAIR },
-            { "backgroundColor", COLOR },
-            { "fontPath", PATH },
-            { "fontSize", FLOAT },
-            { "color", COLOR },
-            { "alignment", STRING },
-            { "forceUppercase", BOOLEAN },
-            { "lineSpacing", FLOAT },
-            { "value", STRING },
-            { "format", STRING },
-            { "displayRelative", BOOLEAN },
-            { "visible", BOOLEAN },
-            { "zIndex", FLOAT } } },
-        { "rating",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "rotation", FLOAT },
-            { "rotationOrigin", NORMALIZED_PAIR },
-            { "color", COLOR },
-            { "filledPath", PATH },
-            { "unfilledPath", PATH },
-            { "visible", BOOLEAN },
-            { "zIndex", FLOAT } } },
-        { "sound", { { "path", PATH } } },
-        { "helpsystem",
-          { { "pos", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "textColor", COLOR },
-            { "iconColor", COLOR },
-            { "fontPath", PATH },
-            { "fontSize", FLOAT } } },
-        { "navigationsounds",
-          { { "systembrowseSound", PATH },
-            { "quicksysselectSound", PATH },
-            { "selectSound", PATH },
-            { "backSound", PATH },
-            { "scrollSound", PATH },
-            { "favoriteSound", PATH },
-            { "launchSound", PATH } } },
-        { "video",
-          { { "pos", NORMALIZED_PAIR },
-            { "size", NORMALIZED_PAIR },
-            { "maxSize", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "rotation", FLOAT },
-            { "rotationOrigin", NORMALIZED_PAIR },
-            { "default", PATH },
-            { "delay", FLOAT },
-            { "visible", BOOLEAN },
-            { "zIndex", FLOAT },
-            { "showSnapshotNoVideo", BOOLEAN },
-            { "showSnapshotDelay", BOOLEAN } } },
-        { "carousel",
-          { { "type", STRING },
-            { "size", NORMALIZED_PAIR },
-            { "pos", NORMALIZED_PAIR },
-            { "origin", NORMALIZED_PAIR },
-            { "color", COLOR },
-            { "colorEnd", COLOR },
-            { "gradientType", STRING },
-            { "logoScale", FLOAT },
-            { "logoRotation", FLOAT },
-            { "logoRotationOrigin", NORMALIZED_PAIR },
-            { "logoSize", NORMALIZED_PAIR },
-            { "logoAlignment", STRING },
-            { "maxLogoCount", FLOAT },
-            { "zIndex", FLOAT } } }
-    };
+std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> ThemeData::sElementMap{
+    {"image",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"maxSize", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"rotation", FLOAT},
+      {"rotationOrigin", NORMALIZED_PAIR},
+      {"path", PATH},
+      {"default", PATH},
+      {"tile", BOOLEAN},
+      {"color", COLOR},
+      {"colorEnd", COLOR},
+      {"gradientType", STRING},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"imagegrid",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"margin", NORMALIZED_PAIR},
+      {"padding", NORMALIZED_RECT},
+      {"autoLayout", NORMALIZED_PAIR},
+      {"autoLayoutSelectedZoom", FLOAT},
+      {"gameImage", PATH},
+      {"folderImage", PATH},
+      {"imageSource", STRING},
+      {"scrollDirection", STRING},
+      {"centerSelection", BOOLEAN},
+      {"scrollLoop", BOOLEAN},
+      {"animate", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"gridtile",
+     {{"size", NORMALIZED_PAIR},
+      {"padding", NORMALIZED_PAIR},
+      {"imageColor", COLOR},
+      {"backgroundImage", PATH},
+      {"backgroundCornerSize", NORMALIZED_PAIR},
+      {"backgroundColor", COLOR},
+      {"backgroundCenterColor", COLOR},
+      {"backgroundEdgeColor", COLOR}}},
+    {"text",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"rotation", FLOAT},
+      {"rotationOrigin", NORMALIZED_PAIR},
+      {"text", STRING},
+      {"backgroundColor", COLOR},
+      {"fontPath", PATH},
+      {"fontSize", FLOAT},
+      {"color", COLOR},
+      {"alignment", STRING},
+      {"forceUppercase", BOOLEAN},
+      {"lineSpacing", FLOAT},
+      {"value", STRING},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"textlist",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"selectorHeight", FLOAT},
+      {"selectorOffsetY", FLOAT},
+      {"selectorColor", COLOR},
+      {"selectorColorEnd", COLOR},
+      {"selectorGradientType", STRING},
+      {"selectorImagePath", PATH},
+      {"selectorImageTile", BOOLEAN},
+      {"selectedColor", COLOR},
+      {"primaryColor", COLOR},
+      {"secondaryColor", COLOR},
+      {"fontPath", PATH},
+      {"fontSize", FLOAT},
+      {"scrollSound", PATH}, // For backward compatibility with old themes.
+      {"alignment", STRING},
+      {"horizontalMargin", FLOAT},
+      {"forceUppercase", BOOLEAN},
+      {"lineSpacing", FLOAT},
+      {"zIndex", FLOAT}}},
+    {"container",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"ninepatch",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"path", PATH},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"datetime",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"rotation", FLOAT},
+      {"rotationOrigin", NORMALIZED_PAIR},
+      {"backgroundColor", COLOR},
+      {"fontPath", PATH},
+      {"fontSize", FLOAT},
+      {"color", COLOR},
+      {"alignment", STRING},
+      {"forceUppercase", BOOLEAN},
+      {"lineSpacing", FLOAT},
+      {"value", STRING},
+      {"format", STRING},
+      {"displayRelative", BOOLEAN},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"rating",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"rotation", FLOAT},
+      {"rotationOrigin", NORMALIZED_PAIR},
+      {"color", COLOR},
+      {"filledPath", PATH},
+      {"unfilledPath", PATH},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"sound", {{"path", PATH}}},
+    {"helpsystem",
+     {{"pos", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"textColor", COLOR},
+      {"textColorDimmed", COLOR},
+      {"iconColor", COLOR},
+      {"iconColorDimmed", COLOR},
+      {"fontPath", PATH},
+      {"fontSize", FLOAT},
+      {"entrySpacing", FLOAT},
+      {"iconTextSpacing", FLOAT},
+      {"textStyle", STRING},
+      {"customButtonIcon", PATH}}},
+    {"navigationsounds",
+     {{"systembrowseSound", PATH},
+      {"quicksysselectSound", PATH},
+      {"selectSound", PATH},
+      {"backSound", PATH},
+      {"scrollSound", PATH},
+      {"favoriteSound", PATH},
+      {"launchSound", PATH}}},
+    {"video",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"maxSize", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"rotation", FLOAT},
+      {"rotationOrigin", NORMALIZED_PAIR},
+      {"default", PATH},
+      {"delay", FLOAT},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT},
+      {"showSnapshotNoVideo", BOOLEAN},
+      {"showSnapshotDelay", BOOLEAN}}},
+    {"carousel",
+     {{"type", STRING},
+      {"size", NORMALIZED_PAIR},
+      {"pos", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"color", COLOR},
+      {"colorEnd", COLOR},
+      {"gradientType", STRING},
+      {"logoScale", FLOAT},
+      {"logoRotation", FLOAT},
+      {"logoRotationOrigin", NORMALIZED_PAIR},
+      {"logoSize", NORMALIZED_PAIR},
+      {"logoAlignment", STRING},
+      {"maxLogoCount", FLOAT},
+      {"zIndex", FLOAT}}}};
 
 #define MINIMUM_THEME_FORMAT_VERSION 3
-#define CURRENT_THEME_FORMAT_VERSION 6
+#define CURRENT_THEME_FORMAT_VERSION 7
 
 // Helper.
 unsigned int getHexColor(const std::string& str)
@@ -450,20 +453,20 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         switch (typeIt->second) {
             case NORMALIZED_RECT: {
-                Vector4f val;
+                glm::vec4 val;
 
                 auto splits = Utils::String::delimitedStringToVector(str, " ");
                 if (splits.size() == 2) {
-                    val = Vector4f(static_cast<float>(atof(splits.at(0).c_str())),
-                                   static_cast<float>(atof(splits.at(1).c_str())),
-                                   static_cast<float>(atof(splits.at(0).c_str())),
-                                   static_cast<float>(atof(splits.at(1).c_str())));
+                    val = glm::vec4{static_cast<float>(atof(splits.at(0).c_str())),
+                                    static_cast<float>(atof(splits.at(1).c_str())),
+                                    static_cast<float>(atof(splits.at(0).c_str())),
+                                    static_cast<float>(atof(splits.at(1).c_str()))};
                 }
                 else if (splits.size() == 4) {
-                    val = Vector4f(static_cast<float>(atof(splits.at(0).c_str())),
-                                   static_cast<float>(atof(splits.at(1).c_str())),
-                                   static_cast<float>(atof(splits.at(2).c_str())),
-                                   static_cast<float>(atof(splits.at(3).c_str())));
+                    val = glm::vec4{static_cast<float>(atof(splits.at(0).c_str())),
+                                    static_cast<float>(atof(splits.at(1).c_str())),
+                                    static_cast<float>(atof(splits.at(2).c_str())),
+                                    static_cast<float>(atof(splits.at(3).c_str()))};
                 }
 
                 element.properties[node.name()] = val;
@@ -475,11 +478,11 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                     throw error << "invalid normalized pair (property \"" << node.name()
                                 << "\", value \"" << str.c_str() << "\")";
 
-                std::string first = str.substr(0, divider);
-                std::string second = str.substr(divider, std::string::npos);
+                std::string first{str.substr(0, divider)};
+                std::string second{str.substr(divider, std::string::npos)};
 
-                Vector2f val(static_cast<float>(atof(first.c_str())),
-                             static_cast<float>(atof(second.c_str())));
+                glm::vec2 val{static_cast<float>(atof(first.c_str())),
+                              static_cast<float>(atof(second.c_str()))};
 
                 element.properties[node.name()] = val;
                 break;
@@ -499,7 +502,20 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                         << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
                                                           "");
                 }
-                element.properties[node.name()] = path;
+
+                // Special parsing instruction for customButtonIcon -> save node as it's button
+                // attribute to prevent nodes overwriting each other.
+                if (strcmp(node.name(), "customButtonIcon") == 0) {
+                    const auto btn = node.attribute("button").as_string("");
+                    if (strcmp(btn, "") == 0)
+                        LOG(LogError)
+                            << "<customButtonIcon> element requires the `button` property.";
+                    else
+                        element.properties[btn] = path;
+                }
+                else
+                    element.properties[node.name()] = path;
+
                 break;
             }
             case COLOR: {
@@ -602,7 +618,7 @@ std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData
                 comp = new TextComponent(window);
 
             if (comp) {
-                comp->setDefaultZIndex(10);
+                comp->setDefaultZIndex(10.0f);
                 comp->applyTheme(theme, view, *it, ThemeFlags::ALL);
                 comps.push_back(comp);
             }
@@ -643,7 +659,7 @@ std::map<std::string, ThemeSet> ThemeData::getThemeSets()
         for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); it++) {
             if (Utils::FileSystem::isDirectory(*it)) {
-                ThemeSet set = { *it };
+                ThemeSet set = {*it};
                 sets[set.getName()] = set;
             }
         }

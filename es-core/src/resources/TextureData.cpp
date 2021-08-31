@@ -13,7 +13,6 @@
 
 #include "ImageIO.h"
 #include "Log.h"
-#include "math/Misc.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
 
@@ -29,6 +28,7 @@ TextureData::TextureData(bool tile)
     , mDataRGBA({})
     , mScaleDuringLoad(1.0f)
     , mScalable(false)
+    , mLinearMagnify(false)
     , mWidth(0)
     , mHeight(0)
     , mSourceWidth(0.0f)
@@ -197,9 +197,10 @@ bool TextureData::uploadAndBind()
             return false;
 
         // Upload texture.
-        mTextureID = Renderer::createTexture(
-            Renderer::Texture::RGBA, true, mTile, static_cast<const unsigned int>(mWidth),
-            static_cast<const unsigned int>(mHeight), mDataRGBA.data());
+        mTextureID =
+            Renderer::createTexture(Renderer::Texture::RGBA, true, mLinearMagnify, mTile,
+                                    static_cast<const unsigned int>(mWidth),
+                                    static_cast<const unsigned int>(mHeight), mDataRGBA.data());
     }
     return true;
 }

@@ -19,9 +19,9 @@ BasicGameListView::BasicGameListView(Window* window, FileData* root)
     : ISimpleGameListView(window, root)
     , mList(window)
 {
-    mList.setSize(mSize.x(), mSize.y() * 0.8f);
-    mList.setPosition(0, mSize.y() * 0.2f);
-    mList.setDefaultZIndex(20);
+    mList.setSize(mSize.x, mSize.y * 0.8f);
+    mList.setPosition(0.0f, mSize.y * 0.2f);
+    mList.setDefaultZIndex(20.0f);
     addChild(&mList);
 
     populateList(root->getChildrenListToDisplay(), root);
@@ -286,8 +286,6 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
     if (Settings::getInstance()->getBool("QuickSystemSelect") &&
         SystemData::sSystemVector.size() > 1)
         prompts.push_back(HelpPrompt("left/right", "system"));
-
-    prompts.push_back(HelpPrompt("up/down", "choose"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::get()->getState().viewing == ViewController::GAME_LIST)
