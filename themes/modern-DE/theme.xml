@@ -8,7 +8,7 @@ based on:       Switch Theme by Lilbud
 -->
 
 <theme>
-	<formatVersion>6</formatVersion>
+	<formatVersion>7</formatVersion>
 
 	<!--Choose Aspect Ratio (16_9, 4_3)-->
 	<include>./settings/16_9.xml</include>
@@ -51,6 +51,14 @@ based on:       Switch Theme by Lilbud
 			<origin>1 0</origin>
 			<fontPath>./assets/fonts/nswitchui.ttf</fontPath>
 			<fontSize>0.035f</fontSize>
+			<entrySpacing>16</entrySpacing>
+			<iconTextSpacing>8</iconTextSpacing>
+			<textStyle>camelcase</textStyle>
+			<iconColor>0000ffff</iconColor>
+			<iconColorDimmed>ff0000ff</iconColorDimmed>
+			<textColorDimmed>00ff00ff</textColorDimmed>
+			<customButtonIcon button="button_start_XBOX360">:/help/button_start_SNES.svg</customButtonIcon>
+			<customButtonIcon button="button_back_XBOX360">:/help/button_back_SNES.svg</customButtonIcon>
 		</helpsystem>
 
 		<image name="background" extra="true">
