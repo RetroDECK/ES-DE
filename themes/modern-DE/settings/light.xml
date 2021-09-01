@@ -8,50 +8,47 @@ based on:       Switch Theme for Launchbox by Grila
 -->
 
 <theme>
-	<formatVersion>4</formatVersion>
-	
-		<!-- Color Variables -->
+	<formatVersion>7</formatVersion>
+
+	<!-- Color Variables -->
 	<variables>
-		
 		<backgroundColor>d9d9d9</backgroundColor>
- 
+		<backgroundColor2>e2e2e2</backgroundColor2>
 		<mainColor>334ff0</mainColor>
 		<secondaryColor>222222</secondaryColor>
 		<systemColor>3aa5ab</systemColor>
- 
 	</variables>
-		
-		<view name="system">
-	
+
+	<!-- system specific styles -->
+	<view name="system">
 		<text name="system_name_1" extra="true">
 			<color>${systemColor}</color>
 		</text>
-		
 		<image name="arrowblock" extra="true">
 			<color>${systemColor}</color>
 		</image>
-		
 	</view>
-		
-	<view name="system, basic, detailed, video">
 
+	<!-- generic styles -->
+	<view name="system, basic, detailed, video, grid">
 		<helpsystem name="help">
-			<textColor>22222200</textColor>
 			<iconColor>222222ff</iconColor>
+			<textColor>222222ff</textColor>
+			<iconColorDimmed>222222ff</iconColorDimmed>
+			<textColorDimmed>222222ff</textColorDimmed>
 		</helpsystem>
-
 		<image name="background">
 			<color>${backgroundColor}</color>
 		</image>
-		
 		<image name="topline, bottomline" extra="true">
 			<color>${secondaryColor}</color>
 		</image>
-		
 		<image name="gamelistbuttons, systembuttons" extra="true">
 			<color>${secondaryColor}</color>
 		</image>
-	
+		<rating name="md_rating">
+			<unfilledPath>./assets/light/star-unfilled.svg</unfilledPath>
+		</rating>
 	</view>
 	
 	<view name="detailed, video">
@@ -78,30 +75,40 @@ based on:       Switch Theme for Launchbox by Grila
 		
 		<text name="system_name_1" extra="true">
 			<color>${secondaryColor}</color>
-		</text>	
-		
+		</text>
+
 	</view>
-	
+
 	<view name="basic">
-		
 		<textlist name="gamelist">
 			<selectedColor>${mainColor}</selectedColor>
 			<primaryColor>${secondaryColor}</primaryColor>
 			<secondaryColor>${secondaryColor}</secondaryColor>
 			<selectorColor>00000000</selectorColor>
-		</textlist>	
-	
+		</textlist>
 	</view>
 
-<feature supported="carousel">
-  
-  <view name="system">
+	<view name="grid">
+		<image name="md_background" extra="true">
+			<color>${backgroundColor2}</color>
+		</image>
+		<image name="md_background_grad_top" extra="true">
+			<path>./assets/light/gradient.png</path>
+		</image>
+		<image name="md_background_grad_bottom" extra="true">
+			<path>./assets/light/gradient.png</path>
+		</image>
+	</view>
 
-	<text name="systemInfo">
-      <color>${systemColor}</color>
-	</text>
+	<feature supported="carousel">
 
-  </view>
+		<view name="system">
+
+			<text name="systemInfo">
+				<color>${systemColor}</color>
+			</text>
+
+		</view>
 
 </feature>
  
