@@ -17,16 +17,15 @@ based on:       Switch Theme by Lilbud
 	<include>./settings/light.xml</include>
 
 	<variables>
-		<mainFont>./assets/Oxygen-Regular.ttf</mainFont>
+		<mainFont>./assets/fonts/nswitchui.ttf</mainFont>
 	</variables>
 	<include>./navigationsounds.xml</include>
 
+	<!-- system specific styles -->
 	<view name="system">
-		
 		<image name="logo">
 			<path>./art/${system.theme}.jpg</path>
 		</image>
-		
 		<text name="system_name_1" extra="true">
 			<text>${system.fullName}</text>
 			<forceUppercase>0</forceUppercase>
@@ -37,30 +36,25 @@ based on:       Switch Theme by Lilbud
 			<alignment>left</alignment>
 			<fontPath>${mainFont}</fontPath>
 		</text>
-		
 		<image name="arrowblock" extra="true">
 			<pos>0.03 0.22</pos>
 			<path>./assets/arrow_block.svg</path>
-		</image>	
-	
+		</image>
 	</view>
-    <view name="system, basic, detailed, video">
 
+	<!-- generic styles -->
+	<view name="system, basic, detailed, video, grid">
 		<helpsystem name="help">
 			<pos>0.96 0.935</pos>
 			<origin>1 0</origin>
 			<fontPath>./assets/fonts/nswitchui.ttf</fontPath>
 			<fontSize>0.035f</fontSize>
-			<entrySpacing>16</entrySpacing>
-			<iconTextSpacing>8</iconTextSpacing>
+			<entrySpacing>48</entrySpacing>
+			<iconTextSpacing>12</iconTextSpacing>
 			<textStyle>camelcase</textStyle>
-			<iconColor>0000ffff</iconColor>
-			<iconColorDimmed>ff0000ff</iconColorDimmed>
-			<textColorDimmed>00ff00ff</textColorDimmed>
 			<customButtonIcon button="button_start_XBOX360">:/help/button_start_SNES.svg</customButtonIcon>
 			<customButtonIcon button="button_back_XBOX360">:/help/button_back_SNES.svg</customButtonIcon>
 		</helpsystem>
-
 		<image name="background" extra="true">
 			<pos>0 0</pos>
 			<tile>true</tile>
@@ -69,7 +63,6 @@ based on:       Switch Theme by Lilbud
 			<path>./assets/box.png</path>
 			<zIndex>-100</zIndex>
 		</image>
-		
 		<image name="bottomline" extra="true">
 			<pos>0.5 0.9</pos>
 			<tile>false</tile>
@@ -77,18 +70,19 @@ based on:       Switch Theme by Lilbud
 			<size>0.938 0.001</size>
 			<path>./assets/box.png</path>
 		</image>
-	
+		<rating name="md_rating">
+			<filledPath>./assets/star-filled.svg</filledPath>
+			<unfilledPath>./assets/light/star-unfilled.svg</unfilledPath>
+		</rating>
 	</view>
+
 	<view name="basic, detailed, video">
-		
 		<textlist name="gamelist">
 			<fontPath>${mainFont}</fontPath>
 			<fontSize>0.028</fontSize>
 			<horizontalMargin>0.01</horizontalMargin>
 			<lineSpacing>2.3</lineSpacing>
-		</textlist>	
-		
-		
+		</textlist>
 		<text name="system_name_1" extra="true">
 			<text>${system.fullName}</text>
 			<forceUppercase>0</forceUppercase>
@@ -98,13 +92,11 @@ based on:       Switch Theme by Lilbud
 			<alignment>left</alignment>
 			<fontPath>${mainFont}</fontPath>
 		</text>
-		
 		<image name="logo">
 			<color>00000000</color>
 			<path>./assets/box.png</path>
 			<pos>1 1</pos>
 		</image>
-		
 		<image name="topline" extra="true">
 			<pos>0.5 0.13</pos>
 			<tile>false</tile>
@@ -112,27 +104,22 @@ based on:       Switch Theme by Lilbud
 			<size>0.938 0.001</size>
 			<path>./assets/box.png</path>
 		</image>
-		
 		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_developer, md_genre, md_players, md_playcount, md_releasedate, md_description" extra="true">
 			<forceUppercase>0</forceUppercase>
 			<fontSize>0.028</fontSize>
 			<fontPath>${mainFont}</fontPath>
 		</text>
-		
 		<datetime name="md_releasedate">
 			<forceUppercase>0</forceUppercase>
 			<fontPath>${mainFont}</fontPath>
 			<fontSize>0.028</fontSize>
 		</datetime>
-		
 		<text name="md_lbl_lastplayed, md_lbl_publisher, md_publsher, md_lbl_rating, md_lbl_playcount, md_playcount">
 			<pos>1 1</pos>
 		</text>
-
-
 	</view>
+
 	<view name="detailed, video">
-		
 		<textlist name="gamelist">
 			<pos>0.04 0.182</pos>
 			<size>0.31 0.682</size>
@@ -140,55 +127,191 @@ based on:       Switch Theme by Lilbud
 			<selectorImagePath>./assets/selector.png</selectorImagePath>
 			<selectorHeight>0.06</selectorHeight>
 			<selectorOffsetY>-0.008</selectorOffsetY>
-		</textlist>	
-		
+		</textlist>
 		<text name="md_description">
 			<forceUppercase>0</forceUppercase>
 			<fontSize>0.025</fontSize>
 			<size>0.309 0.336</size>
 			<pos>0.657 0.387</pos>
 		</text>
-		
 		<rating name="md_rating">
 			<pos>0.657 0.747</pos>
 			<size>0.27 0</size>
 		</rating>
-
         <image name="md_broken">
 			<pos>0.966 0.240</pos>
 			<maxSize>0.05 0.05</maxSize>
 			<origin>1 1</origin>
 		</image>
-	
 	</view>
+
 	<view name="basic">
-		
 		<textlist name="gamelist">
 			<pos>0.04 0.182</pos>
 			<size>0.924 0.682</size>
 			<alignment>center</alignment>
-		</textlist>	
-
+		</textlist>
 	</view>
+
 	<view name="detailed">
-		
 		<image name="md_image">
 			<pos>0.360 0.180</pos>
 			<maxSize>0.277 0.615</maxSize>
 			<origin>0 0</origin>
 		</image>
-	
 	</view>
-	
-<feature supported="carousel">
-  
-  <view name="system">
 
-    <carousel name="systemcarousel">
-      <type>horizontal</type>
-      <pos>0 0.3</pos> 
-      <size>1 .4</size> 
-      <color>00000000</color>
+	<view name="grid">
+		<text name="system_name_1" extra="true">
+			<text>${system.fullName}</text>
+			<forceUppercase>0</forceUppercase>
+			<size>0.743 0.031</size>
+			<pos>0.034 0.065</pos>
+			<fontSize>0.03</fontSize>
+			<alignment>left</alignment>
+			<fontPath>${mainFont}</fontPath>
+		</text>
+		<image name="logo">
+			<color>00000000</color>
+			<path>./assets/box.png</path>
+			<pos>1 1</pos>
+		</image>
+		<image name="topline" extra="true">
+			<pos>0.5 0.13</pos>
+			<tile>false</tile>
+			<origin>0.5 0.5</origin>
+			<size>0.938 0.001</size>
+			<path>./assets/box.png</path>
+		</image>
+
+		<!-- games panel -->
+		<imagegrid name="gamegrid">
+			<pos>0.06 0.218</pos>
+			<size>0.63 594</size>
+			<margin>0.006 0.006</margin>
+			<padding>0 0</padding>
+			<autoLayoutSelectedZoom>1</autoLayoutSelectedZoom>
+			<imageSource>screenshot</imageSource>
+		</imagegrid>
+		<gridtile name="default">
+			<size>0.205 0.250</size>
+			<padding>8 8</padding>
+			<backgroundCornerSize>1 1</backgroundCornerSize>
+			<backgroundColor>00000000</backgroundColor>
+		</gridtile>
+		<gridtile name="selected">
+			<size>0.205 0.250</size>
+			<padding>8 8</padding>
+			<backgroundCornerSize>8 8</backgroundCornerSize>
+			<backgroundCenterColor>23caca</backgroundCenterColor>
+			<backgroundEdgeColor>23caca</backgroundEdgeColor>
+		</gridtile>
+
+		<!-- metadata panel (right) -->
+		<image name="md_background" extra="true">
+			<pos>0.725 0.20</pos>
+			<tile>false</tile>
+			<origin>0 0</origin>
+			<size>0.275 0.63</size>
+			<path>./assets/box.png</path>
+		</image>
+		<image name="md_background_grad_top" extra="true">
+			<pos>0.725 0.131</pos>
+			<tile>false</tile>
+			<origin>0 0</origin>
+			<size>0.275 0.07</size>
+			<rotation>180</rotation>
+			<path>./assets/light/gradient.png</path>
+		</image>
+		<image name="md_background_grad_bottom" extra="true">
+			<pos>0.725 0.83</pos>
+			<tile>false</tile>
+			<origin>0 0</origin>
+			<size>0.275 0.07</size>
+			<path>./assets/light/gradient.png</path>
+		</image>
+		<text name="md_description">
+			<lineSpacing>1.2</lineSpacing>
+			<pos>0.75 0.21</pos>
+			<size>0.219 0.275</size>
+			<fontSize>0.03</fontSize>
+		</text>
+		<text name="md_lbl_publisher">
+			<pos>0.75 0.532</pos>
+			<size>0.10625 0.02</size>
+			<fontSize>0.02</fontSize>
+		</text>
+		<text name="md_publisher">
+			<pos>0.75 0.552</pos>
+			<size>0.10625 0.03</size>
+			<fontSize>0.03</fontSize>
+		</text>
+		<text name="md_lbl_developer">
+			<pos>0.8578 0.532</pos>
+			<size>0.10625 0.02</size>
+			<fontSize>0.02</fontSize>
+		</text>
+		<text name="md_developer">
+			<pos>0.8578 0.552</pos>
+			<size>0.10625 0.03</size>
+			<fontSize>0.03</fontSize>
+		</text>
+		<text name="md_lbl_releasedate">
+			<pos>0.75 0.608</pos>
+			<size>0.10625 0.02</size>
+			<fontSize>0.02</fontSize>
+		</text>
+		<datetime name="md_releasedate">
+			<pos>0.75 0.628</pos>
+			<size>0.10625 0.03</size>
+			<fontSize>0.03</fontSize>
+		</datetime>
+		<text name="md_lbl_players">
+			<pos>0.8578 0.608</pos>
+			<size>0.10625 0.02</size>
+			<fontSize>0.02</fontSize>
+		</text>
+		<text name="md_players">
+			<pos>0.8578 0.628</pos>
+			<size>0.10625 0.03</size>
+			<fontSize>0.03</fontSize>
+		</text>
+		<text name="md_lbl_genre">
+			<pos>0.75 0.684</pos>
+			<size>0.10625 0.02</size>
+			<fontSize>0.02</fontSize>
+		</text>
+		<text name="md_genre">
+			<pos>0.75 0.704</pos>
+			<size>0.10625 0.03</size>
+			<fontSize>0.03</fontSize>
+		</text>
+		<text name="md_lbl_rating">
+			<pos>0.75 0.760</pos>
+			<size>0.10625 0.02</size>
+			<fontSize>0.02</fontSize>
+		</text>
+		<rating name="md_rating">
+			<pos>0.75 0.780</pos>
+			<size>0.04 0.03</size>
+		</rating>
+		<text name="md_lbl_lastplayed, md_lbl_playcount">
+			<pos>1 1</pos>
+		</text>
+		<datetime name="md_lastplayed, md_playcount">
+			<pos>1 1</pos>
+		</datetime>
+	</view>
+
+	<feature supported="carousel">
+
+		<view name="system">
+
+			<carousel name="systemcarousel">
+				<type>horizontal</type>
+				<pos>0 0.3</pos>
+				<size>1 .4</size>
+				<color>00000000</color>
       <logoScale>1</logoScale>
       <logoSize>0.234 0.397</logoSize>
       <maxLogoCount>3.5</maxLogoCount>
