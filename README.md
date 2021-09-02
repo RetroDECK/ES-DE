@@ -8,9 +8,6 @@ Web site:\
 YouTube channel with installation instruction videos:\
 [https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
 
-Twitter:\
-[https://twitter.com/ESDE_Frontend](https://twitter.com/ESDE_Frontend)
-
 Discord server:\
 [https://discord.gg/3jmbRXFe](https://discord.gg/EVVX4DqWAP)
 
@@ -44,7 +41,8 @@ The latest version is 1.1.0 (released 2021-08-10)
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
 | Debian DEB package  | Ubuntu 20.04 to 21.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892301/download)|
 | Fedora RPM package  | Fedora Workstation 33, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892436/download)|
-| Debian DEB package  | Raspberry Pi OS (Raspian) - preview release             | ARM          | [emulationstation-de-1.1.0-preview-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892276/download)|
+| Debian DEB package  | Raspberry Pi OS (Raspian) - preview release             | ARM 32-bit   | [emulationstation-de-1.1.0-preview-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892276/download)|
+| Debian DEB package  | Raspberry Pi OS (Raspian) - preview release             | ARM 64-bit   | [emulationstation-de-1.1.0-preview-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/16221679/download)|
 | macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892342/download)|
 | Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892429/download)|
 
