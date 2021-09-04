@@ -10,7 +10,7 @@
 
 ### Detailed list of changes
 
-* Added alternative emulator support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
+* Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
 * Added a menu option to change the application exit key combination
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"

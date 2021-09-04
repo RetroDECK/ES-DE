@@ -122,7 +122,7 @@ Note that neither the systeminfo.txt files or the systems.txt file are needed to
 
 There will be a lot of directories created if using the es_systems.xml file bundled with the installation, so it may be a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them later if more systems should be added. For example a directory named _DISABLED could be created inside the ROMs folder (i.e. ~/ROMs/_DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the application startup time as ES-DE would otherwise need to scan for game files for all these systems.
 
-![alt text](images/current/es-de_ui_easy_setup.png "ES-DE Easy Setup")
+![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
@@ -175,7 +175,7 @@ Depending on the theme, the system navigation carousel can be either horizontal 
 
 The game systems are sorted by their full names, as defined in the es_systems.xml file.
 
-![alt text](images/current/es-de_system_view.png "ES-DE System View")
+![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view** is the default starting point for the application, it's here that you browse through your game systems._
 
 
@@ -193,10 +193,10 @@ In addition to the styles just described, there is a **Grid** view style as well
 
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated as 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
-![alt text](images/current/es-de_gamelist_view.png "ES-DE Gamelist View")
+![alt text](images/es-de_gamelist_view.png "ES-DE Gamelist View")
 _The **Gamelist view** is where you browse the games for a specific system._
 
-![alt text](images/current/es-de_basic_view_style.png "ES-DE Basic View Style")
+![alt text](images/es-de_basic_view_style.png "ES-DE Basic View Style")
 _Here's an example of what the Basic view style looks like. Needless to say, ES-DE is not intended to be used like this. After scraping some game media for the system, the view style will automatically change to Detailed or Video (assuming the Automatic view style option has been selected)._
 
 
@@ -219,7 +219,7 @@ The application can also be forced into any of the three modes via the command l
 
 There is a help system available throughout the application that provides an overview of the possible actions and buttons that can be used. But some general actions are never shown, such as the ability to quick jump in gamelists, menus and text input fields using the shoulder and trigger buttons. It's also possible to disable the help system using a menu option for a somewhat cleaner look.
 
-![alt text](images/current/es-de_folder_support.png "ES-DE Help System")
+![alt text](images/es-de_folder_support.png "ES-DE Help System")
 _The help system is displayed at the bottom of the screen, showing the various actions currently available._
 
 
@@ -621,7 +621,7 @@ The **Multi-language** support includes translated game genres and game descript
 
 There are two approaches to scraping, either for a single game from the metadata editor, or for many games and systems using the multi-scraper.
 
-![alt text](images/current/es-de_scraper_running.png "ES-DE Scraper Running")
+![alt text](images/es-de_scraper_running.png "ES-DE Scraper Running")
 _Here's an example of the multi-scraper running in interactive mode, asking the user to make a selection from the multiple matching games returned by the scraper service._
 
 ### Single-game scraper
@@ -702,7 +702,7 @@ It's possible to change the game media directory location from within ES-DE, for
 
 This menu can be accessed from both the system view and gamelist view. It contains the scraper, application settings and various tools such as the input configurator and the miximage generator. Settings are saved when navigating back from any menu screen, assuming at least one setting was changed. Pressing the application exit key (F4 by default) will also save any pending changes.
 
-![alt text](images/current/es-de_main_menu.png "ES-DE Main Menu")
+![alt text](images/es-de_main_menu.png "ES-DE Main Menu")
 _The ES-DE main menu._
 
 Following is a breakdown of the main menu entries.
@@ -711,7 +711,7 @@ Following is a breakdown of the main menu entries.
 
 Contains the various options for the scraper, which is used to download metadata, images and videos for your games.
 
-![alt text](images/current/es-de_scraper_settings.png "ES-DE Scraper Settings")
+![alt text](images/es-de_scraper_settings.png "ES-DE Scraper Settings")
 _Some of the scraper settings._
 
 **Scrape from**
@@ -1169,7 +1169,7 @@ These are mostly technical settings.
 
 Using this interface it's possible to select alternative emulators to use per game system, which requires that these alternatives have been defined in the es_systems.xml file. Note that only systems that you have currently populated will be listed. To change to an alternative emulator, you simply select a system from the list and choose which alternative to use from the presented options. If you select an alternative emulator and later remove its corresponding entry from the es_systems.xml file, an error message will be shown on application startup telling you to review your invalid emulator selection. Games will still launch, but the default emulator will be used in this case. How to clear an invalid entry should be self-explanatory once you access the interface. It's also possible to set alternative emulators per game using the metadata editor. If this is done, it will take precedence and override the system-wide emulator selection for the specific game.
 
-![alt text](images/current/es-de_alternative_emulators.png "ES-DE Scraper Settings")
+![alt text](images/es-de_alternative_emulators.png "ES-DE Scraper Settings")
 _The alternative emulators interface._
 
 **Game media directory**
@@ -1281,7 +1281,7 @@ This menu is opened from the gamelist view, and can't be accessed from the syste
 
 You open the menu using the **Back** button, and by pressing **B** or selecting the **Apply** button any settings such as letter jumping using the quick selector or sorting changes are applied. If you instead press the Back button again or select the **Cancel** button, the menu is closed without applying any changes.
 
-![alt text](images/current/es-de_game_options_menu.png "ES-DE Game Options Menu")
+![alt text](images/es-de_game_options_menu.png "ES-DE Game Options Menu")
 _The game options menu as laid out when opening it from within a custom collection, which adds the menu entry to add or remove games from the collection._
 
 Here's a summary of the menu entries:
@@ -1313,7 +1313,7 @@ The secondary sorting is always in ascending filename order.
 
 Choosing this entry opens a separate screen where it's possible to apply a filter to the gamelist. The filter is persistent throughout the program session, or until it's manually reset. The option to reset all filters is shown on the same screen.
 
-![alt text](images/current/es-de_gamelist_filters.png "ES-DE Gamelist Filters")
+![alt text](images/es-de_gamelist_filters.png "ES-DE Gamelist Filters")
 _The gamelist filter screen, accessed from the game options menu._
 
 The following filters can be applied:
@@ -1361,7 +1361,7 @@ This opens the metadata editor for the currently selected game file or folder.
 
 In the metadata editor, you can modify the metadata, scrape for game info and media files, clear the entry which will delete all metadata and game media files, or delete the entire game which also removes its file on the filesystem. When manually modifying a value, it will change color from gray to blue, and if the scraper has changed a value, it will change to red. When leaving the metadata editor you will be asked whether you want to save any settings done manually or by the scraper.
 
-![alt text](images/current/es-de_metadata_editor.png "ES-DE Metadata Editor")
+![alt text](images/es-de_metadata_editor.png "ES-DE Metadata Editor")
 _The metadata editor._
 
 ### Metadata entries
@@ -1492,7 +1492,7 @@ For the video and slideshow screensavers, an overlay can be enabled via the scre
 
 If the Video screensaver has been selected and there are no videos available, a fallback to the Dim screensaver will take place. The same is true for the Slideshow screensaver if no game images are available.
 
-![alt text](images/current/es-de_screensaver.png "ES-DE Screensaver")
+![alt text](images/es-de_screensaver.png "ES-DE Screensaver")
 _An example of what the video screensaver looks like._
 
 ## Game collections
@@ -1533,10 +1533,10 @@ When you are done adding games, you can either open the main menu and go to **Ga
 
 You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing **Add/remove games to this game collection**.
 
-![alt text](images/current/es-de_custom_collections.png "ES-DE Custom Collections")
+![alt text](images/es-de_custom_collections.png "ES-DE Custom Collections")
 _Example of custom collections, here configured as genres._
 
-![alt text](images/current/es-de_custom_collections_editing.png "ES-DE Custom Collections")
+![alt text](images/es-de_custom_collections_editing.png "ES-DE Custom Collections")
 _When editing a custom collection, a tick symbol will be displayed for any game that is already part of the collection._
 
 
@@ -1596,7 +1596,7 @@ https://gitlab.com/recalbox/recalbox-themes
 
 https://wiki.batocera.org/themes
 
-![alt text](images/current/es-de_ui_theme_support.png "ES-DE Theme Support")
+![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _An example of a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme applied to ES-DE._
 
 
