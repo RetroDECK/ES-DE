@@ -236,6 +236,13 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.873 0.212</pos>
             <alignment>right</alignment>
         </text>
+        <badges name="md_badges">
+            <pos>0.873 0.212</pos>
+            <size>0.1 0.3</size>
+            <origin>0 0</origin>
+            <direction>row</direction>
+            <slots>favorite completed kids broken</slots>
+        </badges>
         <!-- This block prevents additional elements from interfering when mixing layouts. -->
         <image name="backframe4" extra="false"></image>
     </view>
