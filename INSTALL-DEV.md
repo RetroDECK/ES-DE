@@ -1174,11 +1174,11 @@ In some instances you may want to avoid getting code formatted, and you can acco
 ```c++
 // clang-format off
 CollectionSystemDecl systemDecls[] = {
-//  Type                  Name                Long name       Theme folder           isCustom
-    { AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false },
-    { AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false },
-    { AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false },
-    { CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true  }
+//  Type                 Name                Long name       Theme folder           isCustom
+    {AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false},
+    {AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false},
+    {AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false},
+    {CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true }
 };
 // clang-format on
 ```
@@ -1415,8 +1415,6 @@ Keep in mind that you have to set up your emulators separately from ES-DE as the
 
 Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic described later in this document removes the need for most of the legacy options, but they are still supported for special configurations and for backward compatibility with old configuration files.
 
-For a real system entry there can of course not be multiple entries for the same tag such as the multiple \<command\> entries listed here.
-
 ```xml
 <?xml version="1.0"?>
 <!-- This is the ES-DE game systems configuration file. -->
@@ -1424,7 +1422,9 @@ For a real system entry there can of course not be multiple entries for the same
     <!-- Any tag not explicitly described as optional in the description is mandatory.
     If omitting a mandatory tag, ES-DE will skip the system entry during startup. -->
     <system>
-        <!-- A short name, used internally. -->
+        <!-- A short name. Although there can be multiple identical <name> tags in the file, upon successful loading of a system,
+        any succeeding entries with identical <name> tags will be skipped. Multiple identical name tags is only required for very
+        special situations so it's normally recommended to keep this tag unique.-->
         <name>snes</name>
 
         <!-- The full system name, used for sorting the systems, for selecting the systems to multi-scrape etc. -->
@@ -1436,13 +1436,21 @@ For a real system entry there can of course not be multiple entries for the same
         <path>%ROMPATH%/snes</path>
 
         <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t").
-        You must include the period at the start of the extension and it's also case sensitive. -->
+        The extensions are case sensitive and they must begin with a dot. -->
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
-        <!-- The command executed when a game is launched. A few special variables are replaced if found for a command tag (see below).
+        <!-- The command executed when a game is launched. Various variables are replaced if found for a command tag as explained below.
         This example for Unix uses the %EMULATOR_ and %CORE_ variables which utilize the find rules defined in the es_find_rules.xml
         file. This is the recommended way to configure the launch command. -->
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
+
+        <!-- It's possible to define alternative emulators by adding additional command tags for a system. When doing this,
+        the "label" attribute is mandatory for all tags. It's these labels that will be shown in the user interface when
+        selecting the alternative emulators either system-wide or per game. The first row will be the default emulator. -->
+        <command label="Nestopia UE (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
+        <command label="FCEUmm (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
+        <command label="Mesen (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
+        <command label="QuickNES (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
 
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
         the snes9x_libretro core, If there are spaces in the path or file name, you must enclose them in quotation marks, such as
@@ -1518,35 +1526,37 @@ The following variables are expanded for the `command` tag:
 Here are some additional real world examples of system entries, the first one for Unix:
 
 ```xml
-  <system>
+<system>
     <name>dos</name>
     <fullname>DOS (PC)</fullname>
     <path>%ROMPATH%/dos</path>
     <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+    <command label="DOSBox-core (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+    <command label="DOSBox-Pure (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+    <command label="DOSBox-SVN (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
     <platform>dos</platform>
     <theme>dos</theme>
-  </system>
+</system>
 ```
 
 Then one for macOS:
 
 ```xml
-  <system>
-    <name>nes</name>
-    <fullname>Nintendo Entertainment System</fullname>
-    <path>%ROMPATH%/nes</path>
-    <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.dylib %ROM%</command>
-    <platform>nes</platform>
-    <theme>nes</theme>
-  </system>
+<system>
+    <name>n64</name>
+    <fullname>Nintendo 64</fullname>
+    <path>%ROMPATH%/n64</path>
+    <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
+    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
+    <platform>n64</platform>
+    <theme>n64</theme>
+</system>
 ```
 
 And finally one for Windows:
 
 ```xml
-  <system>
+<system>
     <name>sega32x</name>
     <fullname>Sega Mega Drive 32X</fullname>
     <path>%ROMPATH%\sega32x</path>
@@ -1554,7 +1564,7 @@ And finally one for Windows:
     <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
     <platform>sega32x</platform>
     <theme>sega32x</theme>
-  </system>
+</system>
 ```
 
 ## es_find_rules.xml
@@ -1568,53 +1578,53 @@ Here's an example es_find_rules.xml file for Unix:
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Unix -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="systempath">
-      <entry>retroarch</entry>
-      <entry>org.libretro.RetroArch</entry>
-      <entry>RetroArch-Linux-x86_64.AppImage</entry>
-    </rule>
-    <rule type="staticpath">
-      <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
-      <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
-      <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
-      <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
-    </rule>
-  </emulator>
-  <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu -->
-    <rule type="systempath">
-      <entry>yuzu</entry>
-      <entry>org.yuzu_emu.yuzu</entry>
-      <entry>yuzu.AppImage</entry>
-    </rule>
-    <rule type="staticpath">
-      <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-      <entry>~/Applications/yuzu.AppImage</entry>
-      <entry>~/.local/bin/yuzu.AppImage</entry>
-      <entry>~/bin/yuzu.AppImage</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <!-- Snap package -->
-      <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
-      <!-- Flatpak package -->
-      <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
-      <!-- AppImage and compiled from source -->
-      <entry>~/.config/retroarch/cores</entry>
-      <!-- Ubuntu and Linux Mint repository -->
-      <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
-      <!-- Fedora repository -->
-      <entry>/usr/lib64/libretro</entry>
-      <!-- Manjaro repository -->
-      <entry>/usr/lib/libretro</entry>
-      <!-- FreeBSD and OpenBSD repository -->
-      <entry>/usr/local/lib/libretro</entry>
-      <!-- NetBSD repository -->
-      <entry>/usr/pkg/lib/libretro</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="systempath">
+            <entry>retroarch</entry>
+            <entry>org.libretro.RetroArch</entry>
+            <entry>RetroArch-Linux-x86_64.AppImage</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+            <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
+            <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
+            <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu</entry>
+            <entry>org.yuzu_emu.yuzu</entry>
+            <entry>yuzu.AppImage</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/Applications/yuzu.AppImage</entry>
+            <entry>~/.local/bin/yuzu.AppImage</entry>
+            <entry>~/bin/yuzu.AppImage</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <!-- Snap package -->
+            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
+            <!-- Flatpak package -->
+            <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+            <!-- AppImage and compiled from source -->
+            <entry>~/.config/retroarch/cores</entry>
+            <!-- Ubuntu and Linux Mint repository -->
+            <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
+            <!-- Fedora repository -->
+            <entry>/usr/lib64/libretro</entry>
+            <!-- Manjaro repository -->
+            <entry>/usr/lib/libretro</entry>
+            <!-- FreeBSD and OpenBSD repository -->
+            <entry>/usr/local/lib/libretro</entry>
+            <!-- NetBSD repository -->
+            <entry>/usr/pkg/lib/libretro</entry>
+        </rule>
+    </core>
 </ruleList>
 ```
 
@@ -1655,19 +1665,19 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for macOS -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="staticpath">
-      <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <!-- RetroArch >= v1.9.2 -->
-      <entry>~/Library/Application Support/RetroArch/cores</entry>
-      <!-- RetroArch < v1.9.2 -->
-      <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="staticpath">
+            <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <!-- RetroArch >= v1.9.2 -->
+            <entry>~/Library/Application Support/RetroArch/cores</entry>
+            <!-- RetroArch < v1.9.2 -->
+            <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
+        </rule>
+    </core>
 </ruleList>
 ```
 
@@ -1675,48 +1685,48 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Windows -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="winregistrypath">
-      <!-- Check for an App Paths entry in the Windows Registry -->
-      <entry>retroarch.exe</entry>
-    </rule>
-    <rule type="systempath">
-      <!-- This requires that the user has manually updated the Path variable -->
-      <entry>retroarch.exe</entry>
-    </rule>
-    <rule type="staticpath">
-      <!-- Some reasonable installation locations as fallback -->
-      <entry>C:\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\RetroArch\retroarch.exe</entry>
-      <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
-      <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
-      <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
-      <!-- Portable installation -->
-      <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
-      <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
-      <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
-      <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
-    </rule>
-  </emulator>
-  <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu -->
-    <rule type="systempath">
-      <entry>yuzu.exe</entry>
-    </rule>
-    <rule type="staticpath">
-      <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-      <!-- Portable installation -->
-      <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-      <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <entry>%EMUPATH%\cores</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="winregistrypath">
+            <!-- Check for an App Paths entry in the Windows Registry -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <!-- This requires that the user has manually updated the Path variable -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Some reasonable installation locations as fallback -->
+            <entry>C:\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\RetroArch\retroarch.exe</entry>
+            <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <entry>%EMUPATH%\cores</entry>
+        </rule>
+    </core>
 </ruleList>
 ```
 
@@ -1807,8 +1817,8 @@ There are two basic categories of metadata, `game` and `folders` and the metdata
 * `nogamecount` - bool, indicates whether the game should be excluded from the game counter and the automatic and custom collections
 * `nomultiscrape` - bool, indicates whether the game should be excluded from the multi-scraper
 * `hidemetadata` - bool, indicates whether to hide most of the metadata fields when displaying the game in the gamelist view
-* `launchcommand` - string, overrides the emulator and core settings on a per-game basis
 * `playcount` - integer, the number of times this game has been played
+* `altemulator` - string, overrides the emulator/launch command on a per game basis
 * `lastplayed` - statistic, datetime, the last date and time this game was played
 
 For folders, most of the fields are identical although some are removed. In the list below, the fields with identical function compared to the game files described above have been left without a description.

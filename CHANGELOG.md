@@ -10,7 +10,15 @@
 
 ### Detailed list of changes
 
+* Added alternative emulator support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
 * Added a menu option to change the application exit key combination
+* Removed the "Choose" entry from the help prompts in the gamelist view
+* Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
+* Added support for upscaling bitmap images using linear filtering
+* Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
+* Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
+* Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
+* Bundled the bold font version of Fontfabric Akrobat
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
@@ -19,6 +27,10 @@
 * Changed the language standard from C++14 to C++17
 
 ### Bug fixes
+
+* When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
+* With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
+* When the last row of a menu had its text color changed, this color was completely desaturated when navigating to a button below the list
 
 ## Version 1.1.0
 
