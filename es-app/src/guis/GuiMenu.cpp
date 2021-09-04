@@ -1021,16 +1021,17 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-    // Allow overriding of the launch command per game (the option to disable this is
-    // intended primarily for testing purposes).
-    auto launchcommand_override = std::make_shared<SwitchComponent>(mWindow);
-    launchcommand_override->setState(Settings::getInstance()->getBool("LaunchCommandOverride"));
-    s->addWithLabel("PER GAME LAUNCH COMMAND OVERRIDE", launchcommand_override);
-    s->addSaveFunc([launchcommand_override, s] {
-        if (launchcommand_override->getState() !=
-            Settings::getInstance()->getBool("LaunchCommandOverride")) {
-            Settings::getInstance()->setBool("LaunchCommandOverride",
-                                             launchcommand_override->getState());
+    // Whether to enable alternative emulators per game (the option to disable this is intended
+    // primarily for testing purposes).
+    auto alternativeEmulatorPerGame = std::make_shared<SwitchComponent>(mWindow);
+    alternativeEmulatorPerGame->setState(
+        Settings::getInstance()->getBool("AlternativeEmulatorPerGame"));
+    s->addWithLabel("ENABLE ALTERNATIVE EMULATORS PER GAME", alternativeEmulatorPerGame);
+    s->addSaveFunc([alternativeEmulatorPerGame, s] {
+        if (alternativeEmulatorPerGame->getState() !=
+            Settings::getInstance()->getBool("AlternativeEmulatorPerGame")) {
+            Settings::getInstance()->setBool("AlternativeEmulatorPerGame",
+                                             alternativeEmulatorPerGame->getState());
             s->setNeedsSaving();
         }
     });

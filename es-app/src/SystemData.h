@@ -99,6 +99,7 @@ public:
 
     std::string getAlternativeEmulator() { return mAlternativeEmulator; }
     void setAlternativeEmulator(const std::string& command) { mAlternativeEmulator = command; }
+    std::string getLaunchCommandFromLabel(const std::string& label);
 
     static void deleteSystems();
     // Loads the systems configuration file at getConfigPath() and creates the systems.

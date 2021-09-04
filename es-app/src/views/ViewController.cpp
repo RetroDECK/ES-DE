@@ -205,7 +205,7 @@ void ViewController::invalidAlternativeEmulatorDialog()
                                    "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
                                    "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
                                    "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
-                                   "ENTRY UNDER THE 'OTHER SETTINGS' MENU"));
+                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU"));
 }
 
 void ViewController::goToStart()

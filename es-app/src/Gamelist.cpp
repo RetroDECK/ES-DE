@@ -132,7 +132,7 @@ void parseGamelist(SystemData* system)
                               << "\" has a valid alternativeEmulator entry: \"" << label << "\"";
             }
             else {
-                system->setAlternativeEmulator("<INVALID>");
+                system->setAlternativeEmulator("<INVALID>" + label);
                 LOG(LogWarning) << "System \"" << system->getName()
                                 << "\" has an invalid alternativeEmulator entry that does "
                                    "not match any command tag in es_systems.xml: \""

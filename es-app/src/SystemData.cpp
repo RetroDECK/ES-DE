@@ -501,10 +501,9 @@ bool SystemData::loadConfig()
             }
             else if (!commands.empty() && commands.back().second == "") {
                 // There are more than one command tags and the first tag did not have a label.
-                LOG(LogError)
-                    << "Missing mandatory label attribute for alternative emulator "
-                       "entry, only the first command tag will be processed for system \""
-                    << name << "\"";
+                LOG(LogError) << "Missing mandatory label attribute for alternative emulator "
+                                 "entry, only the first command tag will be processed for system \""
+                              << name << "\"";
                 break;
             }
             commands.push_back(
@@ -613,6 +612,18 @@ bool SystemData::loadConfig()
         CollectionSystemsManager::get()->loadCollectionSystems();
 
     return false;
+}
+
+std::string SystemData::getLaunchCommandFromLabel(const std::string& label)
+{
+    auto commandIter = std::find_if(
+        mEnvData->mLaunchCommands.cbegin(), mEnvData->mLaunchCommands.cend(),
+        [label](std::pair<std::string, std::string> command) { return (command.second == label); });
+
+    if (commandIter != mEnvData->mLaunchCommands.cend())
+        return (*commandIter).first;
+
+    return "";
 }
 
 void SystemData::deleteSystems()

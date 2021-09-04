@@ -49,6 +49,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     , mClearGameFunc(clearGameFunc)
     , mDeleteGameFunc(deleteGameFunc)
     , mMediaFilesUpdated(false)
+    , mInvalidEmulatorEntry(false)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -99,9 +100,9 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         if (iter->isStatistic)
             continue;
 
-        // Don't show the launch command override entry if this option has been disabled.
-        if (!Settings::getInstance()->getBool("LaunchCommandOverride") &&
-            iter->type == MD_LAUNCHCOMMAND) {
+        // Don't show the alternative emulator entry if the corresponding option has been disabled.
+        if (!Settings::getInstance()->getBool("AlternativeEmulatorPerGame") &&
+            iter->type == MD_ALT_EMULATOR) {
             ed = std::make_shared<TextComponent>(
                 window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
             assert(ed);
@@ -170,7 +171,9 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                               std::placeholders::_2);
                 break;
             }
-            case MD_LAUNCHCOMMAND: {
+            case MD_ALT_EMULATOR: {
+                mInvalidEmulatorEntry = false;
+
                 ed = std::make_shared<TextComponent>(window, "",
                                                      Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
                                                      0x777777FF, ALIGN_RIGHT);
@@ -189,44 +192,124 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 const std::string title = iter->displayPrompt;
 
                 // OK callback (apply new value to ed).
-                auto updateVal = [ed, originalValue](const std::string& newVal) {
+                auto updateVal = [this, ed, originalValue](const std::string& newVal) {
                     ed->setValue(newVal);
-                    if (newVal == originalValue)
+                    if (newVal == originalValue) {
                         ed->setColor(DEFAULT_TEXTCOLOR);
-                    else
+                    }
+                    else {
                         ed->setColor(TEXTCOLOR_USERMARKED);
+                        mInvalidEmulatorEntry = false;
+                    }
                 };
 
-                std::string staticTextString = "Default value from es_systems.xml:";
-                std::string defaultLaunchCommand;
-
-                std::string alternativeEmulator = scraperParams.system->getAlternativeEmulator();
-                for (auto launchCommand :
-                     scraperParams.system->getSystemEnvData()->mLaunchCommands) {
-                    if (launchCommand.second == alternativeEmulator) {
-                        defaultLaunchCommand = launchCommand.first;
-                        break;
-                    }
-                }
-                if (!alternativeEmulator.empty() && defaultLaunchCommand.empty()) {
+                if (originalValue != "" &&
+                    scraperParams.system->getLaunchCommandFromLabel(originalValue) == "") {
                     LOG(LogWarning)
-                        << "The alternative emulator defined for system \""
-                        << scraperParams.system->getName()
-                        << "\" is invalid, falling back to the default command \""
-                        << scraperParams.system->getSystemEnvData()->mLaunchCommands.front().first
-                        << "\"";
+                        << "GuiMetaDataEd: Invalid alternative emulator \"" << originalValue
+                        << "\" configured for game \"" << mScraperParams.game->getName() << "\"";
+                    mInvalidEmulatorEntry = true;
                 }
 
-                if (defaultLaunchCommand.empty())
-                    defaultLaunchCommand =
-                        scraperParams.system->getSystemEnvData()->mLaunchCommands.front().first;
+                if (scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1) {
+                    lbl->setOpacity(DISABLED_OPACITY);
+                    bracket->setOpacity(DISABLED_OPACITY);
+                }
 
-                row.makeAcceptInputHandler([this, title, staticTextString, defaultLaunchCommand, ed,
-                                            updateVal, multiLine] {
-                    mWindow->pushGui(new GuiComplexTextEditPopup(
-                        mWindow, getHelpStyle(), title, staticTextString, defaultLaunchCommand,
-                        ed->getValue(), updateVal, multiLine, "APPLY", "APPLY CHANGES?"));
-                });
+                if (mInvalidEmulatorEntry ||
+                    scraperParams.system->getSystemEnvData()->mLaunchCommands.size() > 1) {
+                    row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal] {
+                        auto s = new GuiSettings(mWindow, title);
+
+                        if (!mInvalidEmulatorEntry && ed->getValue() == "" &&
+                            scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1)
+                            return;
+
+                        std::vector<std::pair<std::string, std::string>> launchCommands =
+                            scraperParams.system->getSystemEnvData()->mLaunchCommands;
+
+                        if (ed->getValue() != "" && mInvalidEmulatorEntry)
+                            launchCommands.push_back(std::make_pair("", "<CLEAR INVALID ENTRY>"));
+                        else if (ed->getValue() != "")
+                            launchCommands.push_back(std::make_pair("", "<CLEAR ENTRY>"));
+
+                        for (auto entry : launchCommands) {
+                            std::string selectedLabel = ed->getValue();
+                            std::string label;
+                            ComponentListRow row;
+
+                            if (entry.second == "")
+                                continue;
+                            else
+                                label = entry.second;
+
+                            std::shared_ptr<TextComponent> labelText =
+                                std::make_shared<TextComponent>(mWindow, label,
+                                                                Font::get(FONT_SIZE_MEDIUM),
+                                                                0x777777FF, ALIGN_CENTER);
+
+                            if (scraperParams.system->getAlternativeEmulator() == "" &&
+                                scraperParams.system->getSystemEnvData()
+                                        ->mLaunchCommands.front()
+                                        .second == label)
+                                labelText->setValue(labelText->getValue().append(" [SYSTEM-WIDE]"));
+
+                            if (scraperParams.system->getAlternativeEmulator() == label)
+                                labelText->setValue(labelText->getValue().append(" [SYSTEM-WIDE]"));
+
+                            row.addElement(labelText, true);
+                            row.makeAcceptInputHandler(
+                                [this, s, updateVal, entry, selectedLabel, launchCommands] {
+                                    if (entry.second == launchCommands.back().second &&
+                                        launchCommands.back().first == "") {
+                                        updateVal("");
+                                    }
+                                    else if (entry.second != selectedLabel) {
+                                        updateVal(entry.second);
+                                    }
+                                    mInvalidEmulatorEntry = false;
+                                    delete s;
+                                });
+
+                            // This transparent bracket is only added to generate the correct help
+                            // prompts.
+                            auto bracket = std::make_shared<ImageComponent>(mWindow);
+                            bracket->setImage(":/graphics/arrow.svg");
+                            bracket->setOpacity(0);
+                            bracket->setSize(bracket->getSize() / 3.0f);
+                            row.addElement(bracket, false);
+
+                            // Select the row that corresponds to the selected label.
+                            if (selectedLabel == label)
+                                s->addRow(row, true);
+                            else
+                                s->addRow(row, false);
+                        }
+
+                        // Adjust the width depending on the aspect ratio of the screen, to make the
+                        // screen look somewhat coherent regardless of screen type. The 1.778 aspect
+                        // ratio value is the 16:9 reference.
+                        float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+
+                        float maxWidthModifier = glm::clamp(0.70f * aspectValue, 0.50f, 0.92f);
+                        float maxWidth =
+                            static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
+
+                        s->setMenuSize(glm::vec2{maxWidth, s->getMenuSize().y});
+
+                        auto menuSize = s->getMenuSize();
+                        auto menuPos = s->getMenuPosition();
+
+                        s->setMenuPosition(glm::vec3{(s->getSize().x - menuSize.x) / 2.0f,
+                                                     (s->getSize().y - menuSize.y) / 3.0f,
+                                                     menuPos.z});
+                        mWindow->pushGui(s);
+                    });
+                }
+                else {
+                    lbl->setOpacity(DISABLED_OPACITY);
+                    bracket->setOpacity(DISABLED_OPACITY);
+                }
                 break;
             }
             case MD_MULTILINE_STRING:
@@ -292,7 +375,12 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
         assert(ed);
         mList->addRow(row);
-        ed->setValue(mMetaData->get(iter->key));
+
+        if (iter->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry == true)
+            ed->setValue(ViewController::EXCLAMATION_CHAR + " INVALID ENTRY ");
+        else
+            ed->setValue(mMetaData->get(iter->key));
+
         mEditors.push_back(ed);
     }
 
@@ -435,6 +523,9 @@ void GuiMetaDataEd::save()
         if (mMetaDataDecl.at(i).isStatistic)
             continue;
 
+        if (mMetaDataDecl.at(i).key == "altemulator" && mInvalidEmulatorEntry == true)
+            continue;
+
         if (!showHiddenGames && mMetaDataDecl.at(i).key == "hidden" &&
             mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
@@ -575,6 +666,9 @@ void GuiMetaDataEd::close()
         const std::string& key = mMetaDataDecl.at(i).key;
         std::string mMetaDataValue = mMetaData->get(key);
         std::string mEditorsValue = mEditors.at(i)->getValue();
+
+        if (key == "altemulator" && mInvalidEmulatorEntry == true)
+            continue;
 
         if (mMetaDataValue != mEditorsValue) {
             metadataUpdated = true;

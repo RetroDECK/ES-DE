@@ -748,35 +748,40 @@ void FileData::launchGame(Window* window)
     LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
 
     std::string command = "";
+    std::string alternativeEmulator = getSystem()->getAlternativeEmulator();
 
-    // Check if there is a launch command override for the game
-    // and the corresponding option to use it has been set.
-    if (Settings::getInstance()->getBool("LaunchCommandOverride") &&
-        !metadata.get("launchcommand").empty()) {
-        command = metadata.get("launchcommand");
+    // Check if there is a game-specific alternative emulator configured.
+    // This takes precedence over any system-wide alternative emulator configuration.
+    if (Settings::getInstance()->getBool("AlternativeEmulatorPerGame") &&
+        !metadata.get("altemulator").empty()) {
+        command = getSystem()->getLaunchCommandFromLabel(metadata.get("altemulator"));
+        if (command == "") {
+            LOG(LogWarning) << "Invalid alternative emulator \"" << metadata.get("altemulator")
+                            << "\" configured for game";
+        }
+        else {
+            LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
+                          << metadata.get("altemulator") << "\" as configured for the game";
+        }
     }
-    else {
-        std::string alternativeEmulator = getSystem()->getAlternativeEmulator();
-        for (auto launchCommand : mEnvData->mLaunchCommands) {
-            if (launchCommand.second == alternativeEmulator) {
-                command = launchCommand.first;
-                LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
-                              << alternativeEmulator << "\""
-                              << " for system \"" << this->getSystem()->getName() << "\"";
-                break;
-            }
-        }
-        if (!alternativeEmulator.empty() && command.empty()) {
-            LOG(LogWarning) << "The alternative emulator configured for system \""
-                            << getSystem()->getName()
-                            << "\" is invalid, falling back to the default command \""
-                            << getSystem()->getSystemEnvData()->mLaunchCommands.front().first
-                            << "\"";
-        }
 
-        if (command.empty())
-            command = mEnvData->mLaunchCommands.front().first;
+    // Check if there is a system-wide alternative emulator configured.
+    if (command == "" && alternativeEmulator != "") {
+        command = getSystem()->getLaunchCommandFromLabel(alternativeEmulator);
+        if (command == "") {
+            LOG(LogWarning) << "Invalid alternative emulator \""
+                            << alternativeEmulator.substr(9, alternativeEmulator.length() - 9)
+                            << "\" configured for system \"" << getSystem()->getName() << "\"";
+        }
+        else {
+            LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
+                          << getSystem()->getAlternativeEmulator() << "\""
+                          << " as configured for system \"" << this->getSystem()->getName() << "\"";
+        }
     }
+
+    if (command.empty())
+        command = mEnvData->mLaunchCommands.front().first;
 
     std::string commandRaw = command;
 

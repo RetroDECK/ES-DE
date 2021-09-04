@@ -617,7 +617,7 @@ int main(int argc, char* argv[])
     // which means that a label is present in the gamelist.xml file which is not matching
     // any command tag in es_systems.xml.
     for (auto system : SystemData::sSystemVector) {
-        if (system->getAlternativeEmulator() == "<INVALID>") {
+        if (system->getAlternativeEmulator().substr(0, 9) == "<INVALID>") {
             ViewController::get()->invalidAlternativeEmulatorDialog();
             break;
         }

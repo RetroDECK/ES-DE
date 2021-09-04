@@ -240,7 +240,7 @@ void Settings::setDefaults()
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
     mBoolMap["VideoUpscaleFrameRate"] = {false, false};
-    mBoolMap["LaunchCommandOverride"] = {true, true};
+    mBoolMap["AlternativeEmulatorPerGame"] = {true, true};
     mBoolMap["ShowHiddenFiles"] = {true, true};
     mBoolMap["ShowHiddenGames"] = {true, true};
     mBoolMap["CustomEventScripts"] = {false, false};
