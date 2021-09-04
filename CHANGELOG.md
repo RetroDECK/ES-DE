@@ -12,6 +12,7 @@
 
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
 * Added a menu option to change the application exit key combination
+* Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
 * Added support for upscaling bitmap images using linear filtering

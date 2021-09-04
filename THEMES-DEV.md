@@ -864,9 +864,9 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
     - Where on the component `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
       the component exactly in the middle of the screen.
 * `textColor` - type: COLOR. Default is 777777FF.
-* `textColorDimmed` - type: COLOR. Default is 777777FF.
+* `textColorDimmed` - type: COLOR. Default is the same value as textColor.
 * `iconColor` - type: COLOR. Default is 777777FF.
-* `iconColorDimmed` - type: COLOR. Default is 777777FF.
+* `iconColorDimmed` - type: COLOR. Default is the same value as iconColor.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
 * `entrySpacing` - type: FLOAT. Default is 16.0.
