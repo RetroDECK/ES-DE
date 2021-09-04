@@ -151,9 +151,15 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
      {{"pos", NORMALIZED_PAIR},
       {"origin", NORMALIZED_PAIR},
       {"textColor", COLOR},
+      {"textColorDimmed", COLOR},
       {"iconColor", COLOR},
+      {"iconColorDimmed", COLOR},
       {"fontPath", PATH},
-      {"fontSize", FLOAT}}},
+      {"fontSize", FLOAT},
+      {"entrySpacing", FLOAT},
+      {"iconTextSpacing", FLOAT},
+      {"textStyle", STRING},
+      {"customButtonIcon", PATH}}},
     {"navigationsounds",
      {{"systembrowseSound", PATH},
       {"quicksysselectSound", PATH},
@@ -192,7 +198,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
       {"zIndex", FLOAT}}}};
 
 #define MINIMUM_THEME_FORMAT_VERSION 3
-#define CURRENT_THEME_FORMAT_VERSION 6
+#define CURRENT_THEME_FORMAT_VERSION 7
 
 // Helper.
 unsigned int getHexColor(const std::string& str)
@@ -496,7 +502,20 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                         << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
                                                           "");
                 }
-                element.properties[node.name()] = path;
+
+                // Special parsing instruction for customButtonIcon -> save node as it's button
+                // attribute to prevent nodes overwriting each other.
+                if (strcmp(node.name(), "customButtonIcon") == 0) {
+                    const auto btn = node.attribute("button").as_string("");
+                    if (strcmp(btn, "") == 0)
+                        LOG(LogError)
+                            << "<customButtonIcon> element requires the `button` property.";
+                    else
+                        element.properties[btn] = path;
+                }
+                else
+                    element.properties[node.name()] = path;
+
                 break;
             }
             case COLOR: {

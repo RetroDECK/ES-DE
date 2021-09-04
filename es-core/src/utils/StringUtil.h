@@ -26,6 +26,7 @@ namespace Utils
         size_t moveCursor(const std::string& stringArg, const size_t cursor, const int amount);
         std::string toLower(const std::string& stringArg);
         std::string toUpper(const std::string& stringArg);
+        std::string toCamelCase(const std::string& stringArg);
         std::string trim(const std::string& stringArg);
         std::string replace(const std::string& stringArg,
                             const std::string& replace,

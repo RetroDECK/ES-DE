@@ -71,19 +71,17 @@ Here is a very simple theme that changes the description text's color:
 
 Everything must be inside a `<theme>` tag.
 
-**The `<formatVersion>` tag *must* be specified**.  This is the version of the theming system the theme was designed for.  The current version is 6.
+**The `<formatVersion>` tag *must* be specified**. This is the version of the theming system the theme was designed for.
+The current version is 6.
 
-
-
-A *view* can be thought of as a particular "screen" within EmulationStation.  Views are defined like this:
+A *view* can be thought of as a particular "screen" within EmulationStation. Views are defined like this:
 
 ```xml
+
 <view name="ViewNameHere">
     ... define elements here ...
 </view>
 ```
-
-
 
 An *element* is a particular visual element, such as an image or a piece of text.  You can either modify an element that already exists for a particular view (as is done in the "description" example), like this:
 
@@ -122,6 +120,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 
 `~/.emulationstation/all_themes.xml`:
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <view name="detailed">
@@ -135,6 +134,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 
 `~/.emulationstation/snes/theme.xml`:
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <include>./../all_themes.xml</include>
@@ -148,6 +148,7 @@ You can include theme files within theme files, similar to `#include` in C (thou
 
 Is equivalent to this `snes/theme.xml`:
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <view name="detailed">
@@ -167,6 +168,7 @@ Notice that properties that were not specified got merged (`<fontPath>`) and the
 Sometimes you want to apply the same properties to the same elements across multiple views.  The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas).  So, for example, to easily apply the same header to the basic, grid, and system views:
 
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <view name="basic, grid, system">
@@ -184,6 +186,7 @@ Sometimes you want to apply the same properties to the same elements across mult
 
 This is equivalent to:
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <view name="basic">
@@ -216,6 +219,7 @@ This is equivalent to:
 You can theme multiple elements *of the same type* simultaneously.  The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas), just like it does for views, as long as the elements have the same type.  This is useful if you want to, say, apply the same color to all the metadata labels:
 
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <view name="detailed">
@@ -230,6 +234,7 @@ You can theme multiple elements *of the same type* simultaneously.  The `name` a
 
 Which is equivalent to:
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <view name="detailed">
@@ -288,6 +293,7 @@ Jul 12 11:28:58 Debug:  Sound::getFromTheme(): Tag not found, using fallback sou
 Example `navigationsounds.xml`, to be included from the main theme file:
 
 ```xml
+
 <theme>
     <formatVersion>6</formatVersion>
     <feature supported="navigationsounds">
@@ -849,11 +855,12 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
 
 #### helpsystem
 
-* `pos` - type: NORMALIZED_PAIR.  Default is "0.012 0.9515"
+* `pos` - type: NORMALIZED_PAIR. Default is "0.012 0.9515"
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.
-* `textColor` - type: COLOR.  Default is 777777FF.
-* `iconColor` - type: COLOR.  Default is 777777FF.
+    - Where on the component `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
+      the component exactly in the middle of the screen.
+* `textColor` - type: COLOR. Default is 777777FF.
+* `iconColor` - type: COLOR. Default is 777777FF.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
 

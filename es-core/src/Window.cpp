@@ -359,6 +359,11 @@ void Window::update(int deltaTime)
         mScreensaver->update(deltaTime);
 }
 
+bool Window::isBackgroundDimmed()
+{
+    return !mGuiStack.empty() && (mGuiStack.front() != mGuiStack.back() || mRenderLaunchScreen);
+}
+
 void Window::render()
 {
     glm::mat4 trans{Renderer::getIdentity()};
@@ -366,7 +371,7 @@ void Window::render()
     mRenderedHelpPrompts = false;
 
     // Draw only bottom and top of GuiStack (if they are different).
-    if (mGuiStack.size()) {
+    if (!mGuiStack.empty()) {
         auto& bottom = mGuiStack.front();
         auto& top = mGuiStack.back();
 
@@ -408,7 +413,7 @@ void Window::render()
                 unsigned char* processedTexture =
                     new unsigned char[Renderer::getScreenWidth() * Renderer::getScreenHeight() * 4];
 
-                // Defocus the background using multiple passes of gaussian blur, with the number
+                // De-focus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
                 Renderer::shaderParameters backgroundParameters;
 
