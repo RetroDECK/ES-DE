@@ -242,6 +242,10 @@ based on: 'recalbox-multi' by the Recalbox community
             <origin>0 0</origin>
             <direction>row</direction>
             <slots>favorite completed kids broken</slots>
+            <customBadgeIcon badge="favorite">:/graphics/star_filled.svg</customBadgeIcon>
+            <customBadgeIcon badge="completed">:/graphics/star_filled.svg</customBadgeIcon>
+            <customBadgeIcon badge="kids">:/graphics/star_filled.svg</customBadgeIcon>
+            <customBadgeIcon badge="broken">:/graphics/star_filled.svg</customBadgeIcon>
         </badges>
         <!-- This block prevents additional elements from interfering when mixing layouts. -->
         <image name="backframe4" extra="false"></image>
