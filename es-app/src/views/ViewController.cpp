@@ -36,19 +36,21 @@
 ViewController* ViewController::sInstance = nullptr;
 
 #if defined(_MSC_VER) // MSVC compiler.
-const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uF005");
-const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uF07C");
-const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uF14A");
-const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uF11b");
-const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uF0b0");
-const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uF013");
+const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uf11b");
+const std::string ViewController::EXCLAMATION_CHAR = Utils::String::wideStringToString(L"\uf06a");
+const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uf005");
+const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uf0b0");
+const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uf07C");
+const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uf013");
+const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uf14A");
 #else
-const std::string ViewController::FAVORITE_CHAR = "\uF005";
-const std::string ViewController::FOLDER_CHAR = "\uF07C";
-const std::string ViewController::TICKMARK_CHAR = "\uF14A";
-const std::string ViewController::CONTROLLER_CHAR = "\uF11b";
-const std::string ViewController::FILTER_CHAR = "\uF0b0";
-const std::string ViewController::GEAR_CHAR = "\uF013";
+const std::string ViewController::CONTROLLER_CHAR = "\uf11b";
+const std::string ViewController::EXCLAMATION_CHAR = "\uf06a";
+const std::string ViewController::FAVORITE_CHAR = "\uf005";
+const std::string ViewController::FILTER_CHAR = "\uf0b0";
+const std::string ViewController::FOLDER_CHAR = "\uf07C";
+const std::string ViewController::GEAR_CHAR = "\uf013";
+const std::string ViewController::TICKMARK_CHAR = "\uf14a";
 #endif
 
 ViewController* ViewController::get()

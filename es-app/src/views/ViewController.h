@@ -123,12 +123,14 @@ public:
     // Whether to run in the background while a game is launched.
     bool runInBackground(SystemData* system);
 
-    static const std::string FAVORITE_CHAR;
-    static const std::string FOLDER_CHAR;
-    static const std::string TICKMARK_CHAR;
+    // Font Awesome symbols.
     static const std::string CONTROLLER_CHAR;
+    static const std::string EXCLAMATION_CHAR;
+    static const std::string FAVORITE_CHAR;
     static const std::string FILTER_CHAR;
+    static const std::string FOLDER_CHAR;
     static const std::string GEAR_CHAR;
+    static const std::string TICKMARK_CHAR;
 
 private:
     ViewController(Window* window);
