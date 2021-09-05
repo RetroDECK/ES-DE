@@ -241,11 +241,16 @@ based on: 'recalbox-multi' by the Recalbox community
             <size>0.1 0.3</size>
             <origin>0 0</origin>
             <direction>row</direction>
-            <slots>favorite completed kids broken</slots>
-            <customBadgeIcon badge="favorite">:/graphics/star_filled.svg</customBadgeIcon>
-            <customBadgeIcon badge="completed">:/graphics/star_filled.svg</customBadgeIcon>
-            <customBadgeIcon badge="kids">:/graphics/star_filled.svg</customBadgeIcon>
-            <customBadgeIcon badge="broken">:/graphics/star_filled.svg</customBadgeIcon>
+            <wrap>wrap</wrap> <!-- wrap | nowrap | wrap-reverse -->
+            <justifyContent>start
+            </justifyContent> <!-- start | end | center | space-between | space-around | space-evenly -->
+            <align>start</align> <!-- start | end | center | stretch -->
+            <margin>20 10</margin>
+            <slots>favorite completed kidgame broken</slots>
+            <customBadgeIcon badge="favorite">:/graphics/badge_favorite.png</customBadgeIcon>
+            <customBadgeIcon badge="completed">:/graphics/badge_completed.png</customBadgeIcon>
+            <customBadgeIcon badge="kidgame">:/graphics/badge_kidgame.png</customBadgeIcon>
+            <customBadgeIcon badge="broken">:/graphics/badge_broken.png</customBadgeIcon>
         </badges>
         <!-- This block prevents additional elements from interfering when mixing layouts. -->
         <image name="backframe4" extra="false"></image>

@@ -32,6 +32,7 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     , mLblPlayers(window)
     , mLblLastPlayed(window)
     , mLblPlayCount(window)
+    , mBadges(window)
     , mRating(window)
     , mReleaseDate(window)
     , mDeveloper(window)
@@ -75,6 +76,7 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     addChild(&mImage);
 
     // Metadata labels + values.
+    addChild(&mBadges);
     mLblRating.setText("Rating: ");
     addChild(&mLblRating);
     addChild(&mRating);

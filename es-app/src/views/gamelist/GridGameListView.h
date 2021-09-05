@@ -9,6 +9,7 @@
 #ifndef ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
 
+#include "components/BadgesComponent.h"
 #include "components/DateTimeComponent.h"
 #include "components/ImageGridComponent.h"
 #include "components/RatingComponent.h"
@@ -85,6 +86,7 @@ private:
     TextComponent mLblLastPlayed;
     TextComponent mLblPlayCount;
 
+    BadgesComponent mBadges;
     ImageComponent mMarquee;
     ImageComponent mImage;
     RatingComponent mRating;
