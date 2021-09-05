@@ -95,7 +95,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
         row.addElement(labelText, false);
         row.makeAcceptInputHandler([this, it, labelText] {
-            if (labelText->getValue() == "<REMOVED ENTRY>")
+            if (labelText->getValue() == "<CLEARED ENTRY>")
                 return;
             selectorWindow(*it);
         });
@@ -175,7 +175,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 
                 if (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second) {
                     if (system->getSystemEnvData()->mLaunchCommands.front().second == "") {
-                        updateMenu(system->getName(), "<REMOVED ENTRY>",
+                        updateMenu(system->getName(), "<CLEARED ENTRY>",
                                    (entry.second ==
                                     system->getSystemEnvData()->mLaunchCommands.front().second));
                     }

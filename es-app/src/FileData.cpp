@@ -761,7 +761,8 @@ void FileData::launchGame(Window* window)
         }
         else {
             LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
-                          << metadata.get("altemulator") << "\" as configured for the game";
+                          << metadata.get("altemulator")
+                          << "\" as configured for the specific game";
         }
     }
 
