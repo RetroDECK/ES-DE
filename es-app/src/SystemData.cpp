@@ -738,7 +738,7 @@ bool SystemData::createSystemDirectories()
         pugi::xml_document doc;
 #if defined(_WIN64)
         pugi::xml_parse_result res =
-            doc.load_file(Utils::String::stringToWideString(configPath).c_str());
+            doc.load_file(Utils::String::stringToWideString(configPaths.front()).c_str());
 #else
         pugi::xml_parse_result res = doc.load_file(configPaths.front().c_str());
 #endif
