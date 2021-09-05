@@ -102,9 +102,9 @@ public:
     std::string getLaunchCommandFromLabel(const std::string& label);
 
     static void deleteSystems();
-    // Loads the systems configuration file at getConfigPath() and creates the systems.
+    // Loads the systems configuration file(s) at getConfigPath() and creates the systems.
     static bool loadConfig();
-    static std::string getConfigPath(bool legacyWarning);
+    static std::vector<std::string> getConfigPath(bool legacyWarning);
 
     // Generates the game system directories and information files based on es_systems.xml.
     static bool createSystemDirectories();

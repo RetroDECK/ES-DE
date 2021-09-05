@@ -387,219 +387,245 @@ bool SystemData::loadConfig()
 
     LOG(LogInfo) << "Populating game systems...";
 
-    std::string path = getConfigPath(true);
+    std::vector<std::string> configPaths = getConfigPath(true);
     const std::string rompath = FileData::getROMDirectory();
 
-    LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
+    bool onlyProcessCustomFile = false;
 
-    pugi::xml_document doc;
+    for (auto path : configPaths) {
+        // If the loadExclusive tag is present in the custom es_systems.xml file, then skip
+        // processing of the bundled configuration file.
+        if (onlyProcessCustomFile)
+            break;
+
+        LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
+
+        pugi::xml_document doc;
 #if defined(_WIN64)
-    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+        pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
 #else
-    pugi::xml_parse_result res = doc.load_file(path.c_str());
+        pugi::xml_parse_result res = doc.load_file(path.c_str());
 #endif
 
-    if (!res) {
-        LOG(LogError) << "Couldn't parse es_systems.xml: " << res.description();
-        return true;
-    }
+        if (!res) {
+            LOG(LogError) << "Couldn't parse es_systems.xml: " << res.description();
+            return true;
+        }
 
-    // Actually read the file.
-    pugi::xml_node systemList = doc.child("systemList");
-
-    if (!systemList) {
-        LOG(LogError) << "es_systems.xml is missing the <systemList> tag";
-        return true;
-    }
-
-    for (pugi::xml_node system = systemList.child("system"); system;
-         system = system.next_sibling("system")) {
-        std::string name;
-        std::string fullname;
-        std::string path;
-        std::string themeFolder;
-
-        name = system.child("name").text().get();
-        fullname = system.child("fullname").text().get();
-        path = system.child("path").text().get();
-
-        auto nameFindFunc = [&] {
-            for (auto system : sSystemVector) {
-                if (system->mName == name) {
-                    LOG(LogWarning) << "A system with the name \"" << name
-                                    << "\" has already been loaded, skipping duplicate entry";
-                    return true;
-                }
+        pugi::xml_node loadExclusive = doc.child("loadExclusive");
+        if (loadExclusive) {
+            if (path == configPaths.front() && configPaths.size() > 1) {
+                LOG(LogInfo) << "Only loading custom file as the <loadExclusive> tag is present";
+                onlyProcessCustomFile = true;
             }
-            return false;
-        };
+            else {
+                LOG(LogWarning) << "A <loadExclusive> tag is present in the bundled es_systems.xml "
+                                   "file, ignoring it as this is only supposed to be used for the "
+                                   "custom es_systems.xml file";
+            }
+        }
 
-        // If the name is matching a system that has already been loaded, then skip the entry.
-        if (nameFindFunc())
-            continue;
+        // Actually read the file.
+        pugi::xml_node systemList = doc.child("systemList");
 
-        // If there is a %ROMPATH% variable set for the system, expand it. By doing this
-        // it's possible to use either absolute ROM paths in es_systems.xml or to utilize
-        // the ROM path configured as ROMDirectory in es_settings.xml. If it's set to ""
-        // in this configuration file, the default hardcoded path $HOME/ROMs/ will be used.
-        path = Utils::String::replace(path, "%ROMPATH%", rompath);
+        if (!systemList) {
+            LOG(LogError) << "es_systems.xml is missing the <systemList> tag";
+            return true;
+        }
+
+        for (pugi::xml_node system = systemList.child("system"); system;
+             system = system.next_sibling("system")) {
+            std::string name;
+            std::string fullname;
+            std::string path;
+            std::string themeFolder;
+
+            name = system.child("name").text().get();
+            fullname = system.child("fullname").text().get();
+            path = system.child("path").text().get();
+
+            auto nameFindFunc = [&] {
+                for (auto system : sSystemVector) {
+                    if (system->mName == name) {
+                        LOG(LogWarning) << "A system with the name \"" << name
+                                        << "\" has already been loaded, skipping duplicate entry";
+                        return true;
+                    }
+                }
+                return false;
+            };
+
+            // If the name is matching a system that has already been loaded, then skip the entry.
+            if (nameFindFunc())
+                continue;
+
+            // If there is a %ROMPATH% variable set for the system, expand it. By doing this
+            // it's possible to use either absolute ROM paths in es_systems.xml or to utilize
+            // the ROM path configured as ROMDirectory in es_settings.xml. If it's set to ""
+            // in this configuration file, the default hardcoded path $HOME/ROMs/ will be used.
+            path = Utils::String::replace(path, "%ROMPATH%", rompath);
 #if defined(_WIN64)
-        path = Utils::String::replace(path, "\\", "/");
+            path = Utils::String::replace(path, "\\", "/");
 #endif
-        path = Utils::String::replace(path, "//", "/");
+            path = Utils::String::replace(path, "//", "/");
 
-        // Check that the ROM directory for the system is valid or otherwise abort the processing.
-        if (!Utils::FileSystem::exists(path)) {
-            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
-                          << "\" as the defined ROM directory \"" << path << "\" does not exist";
-            continue;
-        }
-        if (!Utils::FileSystem::isDirectory(path)) {
-            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
-                          << "\" as the defined ROM directory \"" << path
-                          << "\" is not actually a directory";
-            continue;
-        }
-        if (Utils::FileSystem::isSymlink(path)) {
-            // Make sure that the symlink is not pointing to somewhere higher in the hierarchy
-            // as that would lead to an infite loop, meaning the application would never start.
-            std::string resolvedRompath = Utils::FileSystem::getCanonicalPath(rompath);
-            if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
-                LOG(LogWarning) << "Skipping system \"" << name
-                                << "\" as the defined ROM directory \"" << path
-                                << "\" is an infinitely recursive symlink";
+            // Check that the ROM directory for the system is valid or otherwise abort the
+            // processing.
+            if (!Utils::FileSystem::exists(path)) {
+                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+                              << "\" as the defined ROM directory \"" << path
+                              << "\" does not exist";
                 continue;
             }
-        }
+            if (!Utils::FileSystem::isDirectory(path)) {
+                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+                              << "\" as the defined ROM directory \"" << path
+                              << "\" is not actually a directory";
+                continue;
+            }
+            if (Utils::FileSystem::isSymlink(path)) {
+                // Make sure that the symlink is not pointing to somewhere higher in the hierarchy
+                // as that would lead to an infite loop, meaning the application would never start.
+                std::string resolvedRompath = Utils::FileSystem::getCanonicalPath(rompath);
+                if (resolvedRompath.find(Utils::FileSystem::getCanonicalPath(path)) == 0) {
+                    LOG(LogWarning)
+                        << "Skipping system \"" << name << "\" as the defined ROM directory \""
+                        << path << "\" is an infinitely recursive symlink";
+                    continue;
+                }
+            }
 
-        // Convert extensions list from a string into a vector of strings.
-        std::vector<std::string> extensions = readList(system.child("extension").text().get());
+            // Convert extensions list from a string into a vector of strings.
+            std::vector<std::string> extensions = readList(system.child("extension").text().get());
 
-        // Load all launch command tags for the system and if there are multiple tags, then
-        // the label attribute needs to be set on all entries as it's a requirement for the
-        // alternative emulator logic.
-        std::vector<std::pair<std::string, std::string>> commands;
-        for (pugi::xml_node entry = system.child("command"); entry;
-             entry = entry.next_sibling("command")) {
-            if (!entry.attribute("label")) {
-                if (commands.size() == 1) {
-                    // The first command tag had a label but the second one doesn't.
+            // Load all launch command tags for the system and if there are multiple tags, then
+            // the label attribute needs to be set on all entries as it's a requirement for the
+            // alternative emulator logic.
+            std::vector<std::pair<std::string, std::string>> commands;
+            for (pugi::xml_node entry = system.child("command"); entry;
+                 entry = entry.next_sibling("command")) {
+                if (!entry.attribute("label")) {
+                    if (commands.size() == 1) {
+                        // The first command tag had a label but the second one doesn't.
+                        LOG(LogError)
+                            << "Missing mandatory label attribute for alternative emulator "
+                               "entry, only the first command tag will be processed for system \""
+                            << name << "\"";
+                        break;
+                    }
+                    else if (commands.size() > 1) {
+                        // At least two command tags had a label but this one doesn't.
+                        LOG(LogError)
+                            << "Missing mandatory label attribute for alternative emulator "
+                               "entry, no additional command tags will be processed for system \""
+                            << name << "\"";
+                        break;
+                    }
+                }
+                else if (!commands.empty() && commands.back().second == "") {
+                    // There are more than one command tags and the first tag did not have a label.
                     LOG(LogError)
                         << "Missing mandatory label attribute for alternative emulator "
                            "entry, only the first command tag will be processed for system \""
                         << name << "\"";
                     break;
                 }
-                else if (commands.size() > 1) {
-                    // At least two command tags had a label but this one doesn't.
-                    LOG(LogError)
-                        << "Missing mandatory label attribute for alternative emulator "
-                           "entry, no additional command tags will be processed for system \""
-                        << name << "\"";
+                commands.push_back(
+                    std::make_pair(entry.text().get(), entry.attribute("label").as_string()));
+            }
+
+            // Platform ID list
+            const std::string platformList =
+                Utils::String::toLower(system.child("platform").text().get());
+
+            if (platformList == "") {
+                LOG(LogWarning) << "No platform defined for system \"" << name
+                                << "\", scraper searches will be inaccurate";
+            }
+
+            std::vector<std::string> platformStrs = readList(platformList);
+            std::vector<PlatformIds::PlatformId> platformIds;
+            for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
+                std::string str = *it;
+                PlatformIds::PlatformId platformId = PlatformIds::getPlatformId(str);
+
+                if (platformId == PlatformIds::PLATFORM_IGNORE) {
+                    // When platform is PLATFORM_IGNORE, do not allow other platforms.
+                    platformIds.clear();
+                    platformIds.push_back(platformId);
                     break;
                 }
-            }
-            else if (!commands.empty() && commands.back().second == "") {
-                // There are more than one command tags and the first tag did not have a label.
-                LOG(LogError) << "Missing mandatory label attribute for alternative emulator "
-                                 "entry, only the first command tag will be processed for system \""
-                              << name << "\"";
-                break;
-            }
-            commands.push_back(
-                std::make_pair(entry.text().get(), entry.attribute("label").as_string()));
-        }
 
-        // Platform ID list
-        const std::string platformList =
-            Utils::String::toLower(system.child("platform").text().get());
-
-        if (platformList == "") {
-            LOG(LogWarning) << "No platform defined for system \"" << name
-                            << "\", scraper searches will be inaccurate";
-        }
-
-        std::vector<std::string> platformStrs = readList(platformList);
-        std::vector<PlatformIds::PlatformId> platformIds;
-        for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
-            std::string str = *it;
-            PlatformIds::PlatformId platformId = PlatformIds::getPlatformId(str);
-
-            if (platformId == PlatformIds::PLATFORM_IGNORE) {
-                // When platform is PLATFORM_IGNORE, do not allow other platforms.
-                platformIds.clear();
-                platformIds.push_back(platformId);
-                break;
+                // If there's a platform entry defined but it does not match the list of supported
+                // platforms, then generate a warning.
+                if (str != "" && platformId == PlatformIds::PLATFORM_UNKNOWN)
+                    LOG(LogWarning) << "Unknown platform \"" << str << "\" defined for system \""
+                                    << name << "\", scraper searches will be inaccurate";
+                else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
+                    platformIds.push_back(platformId);
             }
 
-            // If there's a platform entry defined but it does not match the list of supported
-            // platforms, then generate a warning.
-            if (str != "" && platformId == PlatformIds::PLATFORM_UNKNOWN)
-                LOG(LogWarning) << "Unknown platform \"" << str << "\" defined for system \""
-                                << name << "\", scraper searches will be inaccurate";
-            else if (platformId != PlatformIds::PLATFORM_UNKNOWN)
-                platformIds.push_back(platformId);
-        }
+            // Theme folder.
+            themeFolder = system.child("theme").text().as_string(name.c_str());
 
-        // Theme folder.
-        themeFolder = system.child("theme").text().as_string(name.c_str());
+            // Validate.
 
-        // Validate.
+            if (name.empty()) {
+                LOG(LogError)
+                    << "A system in the es_systems.xml file has no name defined, skipping entry";
+                continue;
+            }
+            else if (fullname.empty() || path.empty() || extensions.empty() || commands.empty()) {
+                LOG(LogError) << "System \"" << name
+                              << "\" is missing the fullname, path, "
+                                 "extension, or command tag, skipping entry";
+                continue;
+            }
 
-        if (name.empty()) {
-            LOG(LogError)
-                << "A system in the es_systems.xml file has no name defined, skipping entry";
-            continue;
-        }
-        else if (fullname.empty() || path.empty() || extensions.empty() || commands.empty()) {
-            LOG(LogError) << "System \"" << name
-                          << "\" is missing the fullname, path, "
-                             "extension, or command tag, skipping entry";
-            continue;
-        }
-
-        // Convert path to generic directory seperators.
-        path = Utils::FileSystem::getGenericPath(path);
+            // Convert path to generic directory seperators.
+            path = Utils::FileSystem::getGenericPath(path);
 
 #if defined(_WIN64)
-        if (!Settings::getInstance()->getBool("ShowHiddenFiles") &&
-            Utils::FileSystem::isHidden(path)) {
-            LOG(LogWarning) << "Skipping hidden ROM folder \"" << path << "\"";
-            continue;
-        }
+            if (!Settings::getInstance()->getBool("ShowHiddenFiles") &&
+                Utils::FileSystem::isHidden(path)) {
+                LOG(LogWarning) << "Skipping hidden ROM folder \"" << path << "\"";
+                continue;
+            }
 #endif
 
-        // Create the system runtime environment data.
-        SystemEnvironmentData* envData = new SystemEnvironmentData;
-        envData->mStartPath = path;
-        envData->mSearchExtensions = extensions;
-        envData->mLaunchCommands = commands;
-        envData->mPlatformIds = platformIds;
+            // Create the system runtime environment data.
+            SystemEnvironmentData* envData = new SystemEnvironmentData;
+            envData->mStartPath = path;
+            envData->mSearchExtensions = extensions;
+            envData->mLaunchCommands = commands;
+            envData->mPlatformIds = platformIds;
 
-        SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
-        bool onlyHidden = false;
+            SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
+            bool onlyHidden = false;
 
-        // If the option to show hidden games has been disabled, then check whether all
-        // games for the system are hidden. That will flag the system as empty.
-        if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
-            std::vector<FileData*> recursiveGames = newSys->getRootFolder()->getChildrenRecursive();
-            onlyHidden = true;
-            for (auto it = recursiveGames.cbegin(); it != recursiveGames.cend(); it++) {
-                if ((*it)->getType() != FOLDER) {
-                    onlyHidden = (*it)->getHidden();
-                    if (!onlyHidden)
-                        break;
+            // If the option to show hidden games has been disabled, then check whether all
+            // games for the system are hidden. That will flag the system as empty.
+            if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
+                std::vector<FileData*> recursiveGames =
+                    newSys->getRootFolder()->getChildrenRecursive();
+                onlyHidden = true;
+                for (auto it = recursiveGames.cbegin(); it != recursiveGames.cend(); it++) {
+                    if ((*it)->getType() != FOLDER) {
+                        onlyHidden = (*it)->getHidden();
+                        if (!onlyHidden)
+                            break;
+                    }
                 }
             }
-        }
 
-        if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
-            LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
-                          << "\" as no files matched any of the defined file extensions";
-            delete newSys;
-        }
-        else {
-            sSystemVector.push_back(newSys);
+            if (newSys->getRootFolder()->getChildrenByFilename().size() == 0 || onlyHidden) {
+                LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+                              << "\" as no files matched any of the defined file extensions";
+                delete newSys;
+            }
+            else {
+                sSystemVector.push_back(newSys);
+            }
         }
     }
 
@@ -634,8 +660,10 @@ void SystemData::deleteSystems()
     sSystemVector.clear();
 }
 
-std::string SystemData::getConfigPath(bool legacyWarning)
+std::vector<std::string> SystemData::getConfigPath(bool legacyWarning)
 {
+    std::vector<std::string> paths;
+
     if (legacyWarning) {
         std::string legacyConfigFile =
             Utils::FileSystem::getHomePath() + "/.emulationstation/es_systems.cfg";
@@ -662,7 +690,7 @@ std::string SystemData::getConfigPath(bool legacyWarning)
 
     if (Utils::FileSystem::exists(path)) {
         LOG(LogInfo) << "Found custom systems configuration file";
-        return path;
+        paths.push_back(path);
     }
 
 #if defined(_WIN64)
@@ -674,18 +702,16 @@ std::string SystemData::getConfigPath(bool legacyWarning)
     path = ResourceManager::getInstance()->getResourcePath(":/systems/unix/es_systems.xml", true);
 #endif
 
-    return path;
+    paths.push_back(path);
+    return paths;
 }
 
 bool SystemData::createSystemDirectories()
 {
-    std::string path = getConfigPath(false);
+    std::vector<std::string> configPaths = getConfigPath(true);
     const std::string rompath = FileData::getROMDirectory();
 
-    if (!Utils::FileSystem::exists(path)) {
-        LOG(LogInfo) << "Systems configuration file does not exist, aborting";
-        return true;
-    }
+    bool onlyProcessCustomFile = false;
 
     LOG(LogInfo) << "Generating ROM directory structure...";
 
@@ -706,144 +732,187 @@ bool SystemData::createSystemDirectories()
         LOG(LogInfo) << "Base ROM directory \"" << rompath << "\" already exists";
     }
 
-    LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
-
-    pugi::xml_document doc;
+    if (configPaths.size() > 1) {
+        // If the loadExclusive tag is present in the custom es_systems.xml file, then skip
+        // processing of the bundled configuration file.
+        pugi::xml_document doc;
 #if defined(_WIN64)
-    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+        pugi::xml_parse_result res =
+            doc.load_file(Utils::String::stringToWideString(configPath).c_str());
 #else
-    pugi::xml_parse_result res = doc.load_file(path.c_str());
+        pugi::xml_parse_result res = doc.load_file(configPaths.front().c_str());
 #endif
-
-    if (!res) {
-        LOG(LogError) << "Couldn't parse es_systems.xml";
-        LOG(LogError) << res.description();
-        return true;
-    }
-
-    // Actually read the file.
-    pugi::xml_node systemList = doc.child("systemList");
-
-    if (!systemList) {
-        LOG(LogError) << "es_systems.xml is missing the <systemList> tag";
-        return true;
-    }
-
-    std::vector<std::string> systemsVector;
-
-    for (pugi::xml_node system = systemList.child("system"); system;
-         system = system.next_sibling("system")) {
-        std::string systemDir;
-        std::string name;
-        std::string fullname;
-        std::string path;
-        std::string extensions;
-        std::vector<std::string> commands;
-        std::string platform;
-        std::string themeFolder;
-        const std::string systemInfoFileName = "/systeminfo.txt";
-        bool replaceInfoFile = false;
-        std::ofstream systemInfoFile;
-
-        name = system.child("name").text().get();
-        fullname = system.child("fullname").text().get();
-        path = system.child("path").text().get();
-        extensions = system.child("extension").text().get();
-        for (pugi::xml_node entry = system.child("command"); entry;
-             entry = entry.next_sibling("command")) {
-            commands.push_back(entry.text().get());
+        if (res) {
+            pugi::xml_node loadExclusive = doc.child("loadExclusive");
+            if (loadExclusive)
+                onlyProcessCustomFile = true;
         }
-        platform = Utils::String::toLower(system.child("platform").text().get());
-        themeFolder = system.child("theme").text().as_string(name.c_str());
+    }
 
-        // Check that the %ROMPATH% variable is actually used for the path element.
-        // If not, skip the system.
-        if (path.find("%ROMPATH%") != 0) {
-            LOG(LogWarning) << "The path element for system \"" << name
-                            << "\" does not "
-                               "utilize the %ROMPATH% variable, skipping entry";
+    // Process the custom es_systems.xml file after the bundled file, as any systems with identical
+    // <path> tags will be overwritten by the last occurrence.
+    std::reverse(configPaths.begin(), configPaths.end());
+
+    std::vector<std::pair<std::string, std::string>> systemsVector;
+
+    for (auto configPath : configPaths) {
+        // If the loadExclusive tag is present.
+        if (onlyProcessCustomFile && configPath == configPaths.front())
             continue;
-        }
-        else {
-            systemDir = path.substr(9, path.size() - 9);
-        }
 
-        // Trim any leading directory separator characters.
-        systemDir.erase(systemDir.begin(),
-                        std::find_if(systemDir.begin(), systemDir.end(),
-                                     [](char c) { return c != '/' && c != '\\'; }));
+        LOG(LogInfo) << "Parsing systems configuration file \"" << configPath << "\"...";
 
-        if (!Utils::FileSystem::exists(rompath + systemDir)) {
-            if (!Utils::FileSystem::createDirectory(rompath + systemDir)) {
-                LOG(LogError) << "Couldn't create system directory \"" << systemDir
-                              << "\", permission problems or disk full?";
-                return true;
-            }
-            else {
-                LOG(LogInfo) << "Created system directory \"" << systemDir << "\"";
-            }
-        }
-        else {
-            LOG(LogInfo) << "System directory \"" << systemDir << "\" already exists";
-        }
-
-        if (Utils::FileSystem::exists(rompath + systemDir + systemInfoFileName))
-            replaceInfoFile = true;
-        else
-            replaceInfoFile = false;
-
-        if (replaceInfoFile) {
-            if (Utils::FileSystem::removeFile(rompath + systemDir + systemInfoFileName))
-                return true;
-        }
-
+        pugi::xml_document doc;
 #if defined(_WIN64)
-        systemInfoFile.open(
-            Utils::String::stringToWideString(rompath + systemDir + systemInfoFileName).c_str());
+        pugi::xml_parse_result res =
+            doc.load_file(Utils::String::stringToWideString(configPath).c_str());
 #else
-        systemInfoFile.open(rompath + systemDir + systemInfoFileName);
+        pugi::xml_parse_result res = doc.load_file(configPath.c_str());
 #endif
 
-        if (systemInfoFile.fail()) {
-            LOG(LogError) << "Couldn't create system information file \""
-                          << rompath + systemDir + systemInfoFileName
-                          << "\", permission problems or disk full?";
-            systemInfoFile.close();
+        if (!res) {
+            LOG(LogError) << "Couldn't parse es_systems.xml";
+            LOG(LogError) << res.description();
             return true;
         }
 
-        systemInfoFile << "System name:" << std::endl;
-        systemInfoFile << name << std::endl << std::endl;
-        systemInfoFile << "Full system name:" << std::endl;
-        systemInfoFile << fullname << std::endl << std::endl;
-        systemInfoFile << "Supported file extensions:" << std::endl;
-        systemInfoFile << extensions << std::endl << std::endl;
-        systemInfoFile << "Launch command:" << std::endl;
-        systemInfoFile << commands.front() << std::endl << std::endl;
-        // Alternative emulator configuration entries.
-        if (commands.size() > 1) {
-            systemInfoFile << (commands.size() == 2 ? "Alternative launch command:" :
-                                                      "Alternative launch commands:")
-                           << std::endl;
-            for (auto it = commands.cbegin() + 1; it != commands.cend(); it++)
-                systemInfoFile << (*it) << std::endl;
-            systemInfoFile << std::endl;
-        }
-        systemInfoFile << "Platform (for scraping):" << std::endl;
-        systemInfoFile << platform << std::endl << std::endl;
-        systemInfoFile << "Theme folder:" << std::endl;
-        systemInfoFile << themeFolder << std::endl;
-        systemInfoFile.close();
+        // Actually read the file.
+        pugi::xml_node systemList = doc.child("systemList");
 
-        systemsVector.push_back(systemDir + ": " + fullname);
-
-        if (replaceInfoFile) {
-            LOG(LogInfo) << "Replaced existing system information file \""
-                         << rompath + systemDir + systemInfoFileName << "\"";
+        if (!systemList) {
+            LOG(LogError) << "es_systems.xml is missing the <systemList> tag";
+            return true;
         }
-        else {
-            LOG(LogInfo) << "Created system information file \""
-                         << rompath + systemDir + systemInfoFileName << "\"";
+
+        for (pugi::xml_node system = systemList.child("system"); system;
+             system = system.next_sibling("system")) {
+            std::string systemDir;
+            std::string name;
+            std::string fullname;
+            std::string path;
+            std::string extensions;
+            std::vector<std::string> commands;
+            std::string platform;
+            std::string themeFolder;
+            const std::string systemInfoFileName = "/systeminfo.txt";
+            bool replaceInfoFile = false;
+            std::ofstream systemInfoFile;
+
+            name = system.child("name").text().get();
+            fullname = system.child("fullname").text().get();
+            path = system.child("path").text().get();
+            extensions = system.child("extension").text().get();
+            for (pugi::xml_node entry = system.child("command"); entry;
+                 entry = entry.next_sibling("command")) {
+                commands.push_back(entry.text().get());
+            }
+            platform = Utils::String::toLower(system.child("platform").text().get());
+            themeFolder = system.child("theme").text().as_string(name.c_str());
+
+            // Check that the %ROMPATH% variable is actually used for the path element.
+            // If not, skip the system.
+            if (path.find("%ROMPATH%") != 0) {
+                LOG(LogWarning) << "The path element for system \"" << name
+                                << "\" does not "
+                                   "utilize the %ROMPATH% variable, skipping entry";
+                continue;
+            }
+            else {
+                systemDir = path.substr(9, path.size() - 9);
+            }
+
+            // Trim any leading directory separator characters.
+            systemDir.erase(systemDir.begin(),
+                            std::find_if(systemDir.begin(), systemDir.end(),
+                                         [](char c) { return c != '/' && c != '\\'; }));
+
+            if (!Utils::FileSystem::exists(rompath + systemDir)) {
+                if (!Utils::FileSystem::createDirectory(rompath + systemDir)) {
+                    LOG(LogError) << "Couldn't create system directory \"" << systemDir
+                                  << "\", permission problems or disk full?";
+                    return true;
+                }
+                else {
+                    LOG(LogInfo) << "Created system directory \"" << systemDir << "\"";
+                }
+            }
+            else {
+                LOG(LogInfo) << "System directory \"" << systemDir << "\" already exists";
+            }
+
+            if (Utils::FileSystem::exists(rompath + systemDir + systemInfoFileName))
+                replaceInfoFile = true;
+            else
+                replaceInfoFile = false;
+
+            if (replaceInfoFile) {
+                if (Utils::FileSystem::removeFile(rompath + systemDir + systemInfoFileName))
+                    return true;
+            }
+
+#if defined(_WIN64)
+            systemInfoFile.open(
+                Utils::String::stringToWideString(rompath + systemDir + systemInfoFileName)
+                    .c_str());
+#else
+            systemInfoFile.open(rompath + systemDir + systemInfoFileName);
+#endif
+
+            if (systemInfoFile.fail()) {
+                LOG(LogError) << "Couldn't create system information file \""
+                              << rompath + systemDir + systemInfoFileName
+                              << "\", permission problems or disk full?";
+                systemInfoFile.close();
+                return true;
+            }
+
+            systemInfoFile << "System name:" << std::endl;
+            if (configPaths.size() != 1 && configPath == configPaths.back())
+                systemInfoFile << name << " (custom system)" << std::endl << std::endl;
+            else
+                systemInfoFile << name << std::endl << std::endl;
+            systemInfoFile << "Full system name:" << std::endl;
+            systemInfoFile << fullname << std::endl << std::endl;
+            systemInfoFile << "Supported file extensions:" << std::endl;
+            systemInfoFile << extensions << std::endl << std::endl;
+            systemInfoFile << "Launch command:" << std::endl;
+            systemInfoFile << commands.front() << std::endl << std::endl;
+            // Alternative emulator configuration entries.
+            if (commands.size() > 1) {
+                systemInfoFile << (commands.size() == 2 ? "Alternative launch command:" :
+                                                          "Alternative launch commands:")
+                               << std::endl;
+                for (auto it = commands.cbegin() + 1; it != commands.cend(); it++)
+                    systemInfoFile << (*it) << std::endl;
+                systemInfoFile << std::endl;
+            }
+            systemInfoFile << "Platform (for scraping):" << std::endl;
+            systemInfoFile << platform << std::endl << std::endl;
+            systemInfoFile << "Theme folder:" << std::endl;
+            systemInfoFile << themeFolder << std::endl;
+            systemInfoFile.close();
+
+            auto systemIter = std::find_if(systemsVector.cbegin(), systemsVector.cend(),
+                                           [systemDir](std::pair<std::string, std::string> system) {
+                                               return system.first == systemDir;
+                                           });
+
+            if (systemIter != systemsVector.cend())
+                systemsVector.erase(systemIter);
+
+            if (configPaths.size() != 1 && configPath == configPaths.back())
+                systemsVector.push_back(std::make_pair(systemDir + " (custom system)", fullname));
+            else
+                systemsVector.push_back(std::make_pair(systemDir, fullname));
+
+            if (replaceInfoFile) {
+                LOG(LogInfo) << "Replaced existing system information file \""
+                             << rompath + systemDir + systemInfoFileName << "\"";
+            }
+            else {
+                LOG(LogInfo) << "Created system information file \""
+                             << rompath + systemDir + systemInfoFileName << "\"";
+            }
         }
     }
 
@@ -870,8 +939,10 @@ bool SystemData::createSystemDirectories()
                 systemsFileSuccess = false;
             }
             else {
-                for (std::string systemEntry : systemsVector) {
-                    systemsFile << systemEntry << std::endl;
+                std::sort(systemsVector.begin(), systemsVector.end());
+                for (auto systemEntry : systemsVector) {
+                    systemsFile << systemEntry.first.append(": ").append(systemEntry.second)
+                                << std::endl;
                 }
                 systemsFile.close();
             }
