@@ -11,6 +11,7 @@
 ### Detailed list of changes
 
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
+* Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added a menu option to change the application exit key combination
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Removed the "Choose" entry from the help prompts in the gamelist view
