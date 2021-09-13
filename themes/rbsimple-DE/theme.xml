@@ -237,15 +237,17 @@ based on: 'recalbox-multi' by the Recalbox community
             <alignment>right</alignment>
         </text>
         <badges name="md_badges">
-            <pos>0.873 0.212</pos>
-            <size>0.1 0.3</size>
+            <pos>0.8125 0.65</pos>
             <origin>0 0</origin>
+
+            <!-- flexbox properties -->
             <direction>row</direction>
-            <wrap>wrap</wrap> <!-- wrap | nowrap | wrap-reverse -->
-            <justifyContent>start
-            </justifyContent> <!-- start | end | center | space-between | space-around | space-evenly -->
-            <align>start</align> <!-- start | end | center | stretch -->
-            <margin>20 10</margin>
+            <align>start</align>
+            <itemsPerLine>2</itemsPerLine>
+            <itemMargin>10 5</itemMargin>
+            <itemWidth>.05</itemWidth>
+
+            <!-- badges properties -->
             <slots>favorite completed kidgame broken</slots>
             <customBadgeIcon badge="favorite">:/graphics/badge_favorite.png</customBadgeIcon>
             <customBadgeIcon badge="completed">:/graphics/badge_completed.png</customBadgeIcon>

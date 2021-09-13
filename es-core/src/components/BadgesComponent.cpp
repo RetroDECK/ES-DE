@@ -14,10 +14,10 @@
 #include "resources/TextureResource.h"
 
 BadgesComponent::BadgesComponent(Window* window)
-    : FlexboxComponent(window, NUM_SLOTS)
+    : FlexboxComponent(window)
 {
     // Define the slots.
-    setSlots({SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN});
+    mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN};
 
     mBadgeIcons = std::map<std::string, std::string>();
     mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.png";
@@ -39,21 +39,12 @@ BadgesComponent::BadgesComponent(Window* window)
     ImageComponent mImageBroken = ImageComponent(window);
     mImageBroken.setImage(mBadgeIcons[SLOT_BROKEN], false, false);
     mImageComponents.insert({SLOT_BROKEN, mImageBroken});
-
-    // TODO: Should be dependent on the direction property.
-    mSize = glm::vec2{64.0f * NUM_SLOTS, 64.0f};
-
-    // Trigger initial layout computation.
-    onSizeChanged();
 }
 
 void BadgesComponent::setValue(const std::string& value)
 {
-    std::vector<std::string> slots = {};
-
+    mChildren.clear();
     if (!value.empty()) {
-        // Interpret the value and iteratively fill slots. The value is a space separated list of
-        // strings.
         std::string temp;
         std::istringstream ss(value);
         while (std::getline(ss, temp, ' ')) {
@@ -61,19 +52,17 @@ void BadgesComponent::setValue(const std::string& value)
                   temp == SLOT_BROKEN))
                 LOG(LogError) << "Badge slot '" << temp << "' is invalid.";
             else
-                slots.push_back(temp);
+                mChildren.push_back(&mImageComponents.find(temp)->second);
         }
     }
 
-    setSlots(slots);
     onSizeChanged();
 }
 
 std::string BadgesComponent::getValue() const
 {
-    const std::vector<std::string> slots = getSlots();
     std::stringstream ss;
-    for (auto& slot : slots)
+    for (auto& slot : mSlots)
         ss << slot << ' ';
     std::string r = ss.str();
     r.pop_back();
@@ -92,8 +81,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         return;
 
     bool imgChanged = false;
-    const std::vector<std::string> slots = getSlots();
-    for (auto& slot : slots) {
+    for (auto& slot : mSlots) {
         if (properties & PATH && elem->has(slot)) {
             mBadgeIcons[slot] = elem->get<std::string>(slot);
             mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot]);
