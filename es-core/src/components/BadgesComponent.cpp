@@ -20,10 +20,10 @@ BadgesComponent::BadgesComponent(Window* window)
     mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN};
 
     mBadgeIcons = std::map<std::string, std::string>();
-    mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.png";
-    mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.png";
-    mBadgeIcons[SLOT_KIDS] = ":/graphics/badge_kidgame.png";
-    mBadgeIcons[SLOT_BROKEN] = ":/graphics/badge_broken.png";
+    mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
+    mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
+    mBadgeIcons[SLOT_KIDS] = ":/graphics/badge_kidgame.svg";
+    mBadgeIcons[SLOT_BROKEN] = ":/graphics/badge_broken.svg";
 
     // Create the child ImageComponent for every badge.
     mImageComponents = std::map<std::string, ImageComponent>();
