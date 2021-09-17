@@ -29,7 +29,6 @@
 #include "Sound.h"
 #include "SystemData.h"
 #include "SystemScreensaver.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiLaunchScreen.h"
 #include "guis/GuiMsgBox.h"
