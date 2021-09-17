@@ -188,11 +188,12 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
                 "NO",
                 [this] {
                     delete this;
-                    return false;
+                    return true;
                 }));
         }
         else {
             delete this;
+            return true;
         }
     }
 
