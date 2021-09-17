@@ -657,8 +657,10 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
                                                                "b",
                                                                "x",
                                                                "y",
-                                                               "l",
                                                                "r",
+                                                               "l",
+                                                               "rt",
+                                                               "lt",
                                                                "start",
                                                                "back"};
                   int i = 0;

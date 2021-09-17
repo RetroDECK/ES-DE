@@ -89,6 +89,10 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         mCustomButtons.button_r = elem->get<std::string>("button_r");
     if (elem->has("button_lr"))
         mCustomButtons.button_lr = elem->get<std::string>("button_lr");
+    if (elem->has("button_lt"))
+        mCustomButtons.button_lt = elem->get<std::string>("button_lt");
+    if (elem->has("button_rt"))
+        mCustomButtons.button_rt = elem->get<std::string>("button_rt");
 
     // SNES.
     if (elem->has("button_a_SNES"))
