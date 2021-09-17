@@ -20,7 +20,7 @@
 MetaDataDecl gameDecls[] = {
 // key,           type,                default,           statistic, name in GuiMetaDataEd,        prompt in GuiMetaDataEd,            shouldScrape
 {"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
-{"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter sort name",                  false},
+{"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter sortname",                   false},
 {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
 {"rating",        MD_RATING,           "0",               false,     "rating",                     "enter rating",                     true},
 {"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",               "enter release date",               true},
