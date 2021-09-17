@@ -61,6 +61,7 @@ private:
     bool mFocused;
     bool mEditing;
     unsigned int mCursor; // Cursor position in characters.
+    int mBlinkTime;
 
     int mCursorRepeatTimer;
     int mCursorRepeatDir;
@@ -68,7 +69,6 @@ private:
     glm::vec2 mScrollOffset;
 
     NinePatchComponent mBox;
-    float mResolutionAdjustment;
 
     std::shared_ptr<Font> mFont;
     std::unique_ptr<TextCache> mTextCache;

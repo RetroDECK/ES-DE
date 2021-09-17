@@ -10,25 +10,27 @@
 
 #include "utils/StringUtil.h"
 
-#define TEXT_PADDING_HORIZ 10.0f
+#define TEXT_PADDING_HORIZ 12.0f
 #define TEXT_PADDING_VERT 2.0f
 
 #define CURSOR_REPEAT_START_DELAY 500
 #define CURSOR_REPEAT_SPEED 28 // Lower is faster.
 
+#define BLINKTIME 1000
+
 TextEditComponent::TextEditComponent(Window* window)
-    : GuiComponent(window)
-    , mBox(window, ":/graphics/textinput.svg")
-    , mFocused(false)
-    , mScrollOffset(0.0f, 0.0f)
-    , mCursor(0)
-    , mEditing(false)
-    , mFont(Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT))
-    , mCursorRepeatDir(0)
+    : GuiComponent{window}
+    , mBox{window, ":/graphics/textinput.svg"}
+    , mFocused{false}
+    , mScrollOffset{0.0f, 0.0f}
+    , mCursor{0}
+    , mEditing{false}
+    , mFont{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
+    , mCursorRepeatDir{0}
+    , mBlinkTime{0}
 {
     addChild(&mBox);
     onFocusLost();
-    mResolutionAdjustment = -(34.0f * Renderer::getScreenWidthModifier() - 34.0f);
     setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()));
 }
 
@@ -36,6 +38,7 @@ void TextEditComponent::onFocusGained()
 {
     mFocused = true;
     mBox.setImagePath(":/graphics/textinput_focused.svg");
+    startEditing();
 }
 
 void TextEditComponent::onFocusLost()
@@ -46,9 +49,9 @@ void TextEditComponent::onFocusLost()
 
 void TextEditComponent::onSizeChanged()
 {
-    mBox.fitTo(mSize, glm::vec3{},
-               glm::vec2{-34.0f + mResolutionAdjustment,
-                         -32.0f - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())});
+    mBox.fitTo(
+        mSize, glm::vec3{},
+        glm::vec2{-34.0f, -32.0f - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())});
     onTextChanged(); // Wrap point probably changed.
 }
 
@@ -62,6 +65,7 @@ void TextEditComponent::setValue(const std::string& val)
 void TextEditComponent::textInput(const std::string& text)
 {
     if (mEditing) {
+        mBlinkTime = 0;
         mCursorRepeatDir = 0;
         if (text[0] == '\b') {
             if (mCursor > 0) {
@@ -82,17 +86,17 @@ void TextEditComponent::textInput(const std::string& text)
 
 void TextEditComponent::startEditing()
 {
-    if (!isMultiline())
-        setCursor(mText.size());
     SDL_StartTextInput();
     mEditing = true;
     updateHelpPrompts();
+    mBlinkTime = BLINKTIME / 6;
 }
 
 void TextEditComponent::stopEditing()
 {
     SDL_StopTextInput();
     mEditing = false;
+    mCursorRepeatDir = 0;
     updateHelpPrompts();
 }
 
@@ -141,40 +145,32 @@ bool TextEditComponent::input(InputConfig* config, Input input)
             return true;
         }
 
-        // Done editing (accept changes).
-        if ((config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_ESCAPE) ||
-            (config->getDeviceId() != DEVICE_KEYBOARD &&
-             (config->isMappedTo("a", input) || config->isMappedTo("b", input)))) {
-            mTextOrig = mText;
-            stopEditing();
-            return true;
-        }
-        else if (cursor_left || cursor_right) {
+        if (cursor_left || cursor_right) {
+            mBlinkTime = 0;
             mCursorRepeatDir = cursor_left ? -1 : 1;
             mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);
             moveCursor(mCursorRepeatDir);
         }
-        else if (cursor_up) {
-            // TODO
-        }
+        // Stop editing and let the button down event be captured by the parent component.
         else if (cursor_down) {
-            // TODO
+            stopEditing();
+            return false;
         }
         else if (shoulder_left || shoulder_right) {
+            mBlinkTime = 0;
             mCursorRepeatDir = shoulder_left ? -10 : 10;
             mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);
             moveCursor(mCursorRepeatDir);
         }
         // Jump to beginning of text.
         else if (trigger_left) {
+            mBlinkTime = 0;
             setCursor(0);
         }
         // Jump to end of text.
         else if (trigger_right) {
+            mBlinkTime = 0;
             setCursor(mText.length());
-        }
-        else if (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedTo("y", input)) {
-            textInput("\b");
         }
         else if (config->getDeviceId() == DEVICE_KEYBOARD) {
             switch (input.id) {
@@ -207,6 +203,10 @@ void TextEditComponent::update(int deltaTime)
 {
     updateCursorRepeat(deltaTime);
     GuiComponent::update(deltaTime);
+
+    mBlinkTime += deltaTime;
+    if (mBlinkTime >= BLINKTIME)
+        mBlinkTime = 0;
 }
 
 void TextEditComponent::updateCursorRepeat(int deltaTime)
@@ -216,6 +216,7 @@ void TextEditComponent::updateCursorRepeat(int deltaTime)
 
     mCursorRepeatTimer += deltaTime;
     while (mCursorRepeatTimer >= CURSOR_REPEAT_SPEED) {
+        mBlinkTime = 0;
         moveCursor(mCursorRepeatDir);
         mCursorRepeatTimer -= CURSOR_REPEAT_SPEED;
     }
@@ -298,34 +299,39 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
     Renderer::popClipRect();
 
     // Draw cursor.
-    if (mEditing) {
-        glm::vec2 cursorPos;
-        if (isMultiline()) {
-            cursorPos = mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor);
-        }
-        else {
-            cursorPos = mFont->sizeText(mText.substr(0, mCursor));
-            cursorPos[1] = 0;
-        }
+    glm::vec2 cursorPos;
+    if (isMultiline()) {
+        cursorPos = mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor);
+    }
+    else {
+        cursorPos = mFont->sizeText(mText.substr(0, mCursor));
+        cursorPos[1] = 0;
+    }
 
-        float cursorHeight = mFont->getHeight() * 0.8f;
+    float cursorHeight = mFont->getHeight() * 0.8f;
+
+    if (!mEditing) {
         Renderer::drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
-                           2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x000000FF,
-                           0x000000FF);
+                           2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0xC7C7C7FF,
+                           0xC7C7C7FF);
+    }
+
+    if (mEditing && mBlinkTime < BLINKTIME / 2) {
+        Renderer::drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+                           2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x777777FF,
+                           0x777777FF);
     }
 }
 
 glm::vec2 TextEditComponent::getTextAreaPos() const
 {
-    return glm::vec2{
-        (-mResolutionAdjustment + (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier())) / 2.0f,
-        (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f};
+    return glm::vec2{(TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()) / 2.0f,
+                     (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f};
 }
 
 glm::vec2 TextEditComponent::getTextAreaSize() const
 {
-    return glm::vec2{mSize.x + mResolutionAdjustment -
-                         (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()),
+    return glm::vec2{mSize.x - (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()),
                      mSize.y - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())};
 }
 
@@ -333,10 +339,10 @@ std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
     if (mEditing) {
-        prompts.push_back(HelpPrompt("up/down/left/right", "move cursor"));
-        prompts.push_back(HelpPrompt("y", "backspace"));
-        prompts.push_back(HelpPrompt("a", "accept changes"));
-        prompts.push_back(HelpPrompt("b", "accept changes"));
+        prompts.push_back(HelpPrompt("lt", "first"));
+        prompts.push_back(HelpPrompt("rt", "last"));
+        prompts.push_back(HelpPrompt("left/right", "move cursor"));
+        prompts.push_back(HelpPrompt("b", "back"));
     }
     else {
         prompts.push_back(HelpPrompt("a", "edit"));
