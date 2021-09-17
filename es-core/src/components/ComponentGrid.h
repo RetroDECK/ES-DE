@@ -46,6 +46,11 @@ public:
                   unsigned int border = GridFlags::BORDER_NONE,
                   GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
 
+    void setPastBoundaryCallback(const std::function<bool(InputConfig* config, Input input)>& func)
+    {
+        mPastBoundaryCallback = func;
+    }
+
     void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -65,6 +70,8 @@ public:
     void setRowHeightPerc(int row, float height, bool update = true);
 
     bool moveCursor(glm::ivec2 dir);
+    // Pass -1 for xPos or yPos to keep its axis cursor position.
+    void moveCursorTo(int xPos, int yPos, bool selectLeftCell = false);
     void setCursorTo(const std::shared_ptr<GuiComponent>& comp);
 
     std::shared_ptr<GuiComponent> getSelectedComponent()
@@ -125,6 +132,8 @@ private:
     glm::ivec2 mGridSize;
     std::vector<GridEntry> mCells;
     glm::ivec2 mCursor;
+
+    std::function<bool(InputConfig* config, Input input)> mPastBoundaryCallback;
 
     float* mRowHeights;
     float* mColWidths;

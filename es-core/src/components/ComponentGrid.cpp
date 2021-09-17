@@ -252,19 +252,24 @@ bool ComponentGrid::input(InputConfig* config, Input input)
     if (!input.value)
         return false;
 
+    bool withinBoundary = false;
+
     if (config->isMappedLike("down", input))
-        return moveCursor(glm::ivec2{0, 1});
+        withinBoundary = moveCursor(glm::ivec2{0, 1});
 
     if (config->isMappedLike("up", input))
-        return moveCursor(glm::ivec2{0, -1});
+        withinBoundary = moveCursor(glm::ivec2{0, -1});
 
     if (config->isMappedLike("left", input))
-        return moveCursor(glm::ivec2{-1, 0});
+        withinBoundary = moveCursor(glm::ivec2{-1, 0});
 
     if (config->isMappedLike("right", input))
-        return moveCursor(glm::ivec2{1, 0});
+        withinBoundary = moveCursor(glm::ivec2{1, 0});
 
-    return false;
+    if (!withinBoundary && mPastBoundaryCallback)
+        return mPastBoundaryCallback(config, input);
+
+    return withinBoundary;
 }
 
 void ComponentGrid::resetCursor()
@@ -290,6 +295,34 @@ bool ComponentGrid::moveCursor(glm::ivec2 dir)
     const GridEntry* currentCursorEntry = getCellAt(mCursor);
     glm::ivec2 searchAxis(dir.x == 0, dir.y == 0);
 
+    // Logic to handle entries that span several cells.
+    if (currentCursorEntry->dim.x > 1) {
+        if (dir.x < 0 && currentCursorEntry->pos.x == 0 && mCursor.x > currentCursorEntry->pos.x) {
+            onCursorMoved(mCursor, glm::ivec2{0, mCursor.y});
+            mCursor.x = 0;
+            return false;
+        }
+
+        if (dir.x > 0 && currentCursorEntry->pos.x + currentCursorEntry->dim.x == mGridSize.x &&
+            mCursor.x < currentCursorEntry->pos.x + currentCursorEntry->dim.x - 1) {
+            onCursorMoved(mCursor, glm::ivec2{mGridSize.x - 1, mCursor.y});
+            mCursor.x = mGridSize.x - 1;
+            return false;
+        }
+
+        if (dir.x > 0 && mCursor.x != currentCursorEntry->pos.x + currentCursorEntry->dim.x - 1)
+            dir.x = currentCursorEntry->dim.x - (mCursor.x - currentCursorEntry->pos.x);
+        else if (dir.x < 0 && mCursor.x != currentCursorEntry->pos.x)
+            dir.x = -(mCursor.x - currentCursorEntry->pos.x + 1);
+    }
+
+    if (currentCursorEntry->dim.y > 1) {
+        if (dir.y > 0 && mCursor.y != currentCursorEntry->pos.y + currentCursorEntry->dim.y - 1)
+            dir.y = currentCursorEntry->dim.y - (mCursor.y - currentCursorEntry->pos.y);
+        else if (dir.y < 0 && mCursor.y != currentCursorEntry->pos.y)
+            dir.y = -(mCursor.y - currentCursorEntry->pos.y + 1);
+    }
+
     while (mCursor.x >= 0 && mCursor.y >= 0 && mCursor.x < mGridSize.x && mCursor.y < mGridSize.y) {
         mCursor = mCursor + dir;
         glm::ivec2 curDirPos{mCursor};
@@ -299,6 +332,13 @@ bool ComponentGrid::moveCursor(glm::ivec2 dir)
         while (mCursor.x < mGridSize.x && mCursor.y < mGridSize.y && mCursor.x >= 0 &&
                mCursor.y >= 0) {
             cursorEntry = getCellAt(mCursor);
+
+            // Multi-cell entries.
+            if (dir.x < 0 && cursorEntry->dim.x > 1)
+                mCursor.x = getCellAt(origCursor)->pos.x - cursorEntry->dim.x;
+            if (dir.y < 0 && cursorEntry->dim.y > 1)
+                mCursor.y = getCellAt(origCursor)->pos.y - cursorEntry->dim.y;
+
             if (cursorEntry && cursorEntry->canFocus && cursorEntry != currentCursorEntry) {
                 onCursorMoved(origCursor, mCursor);
                 return true;
@@ -324,6 +364,24 @@ bool ComponentGrid::moveCursor(glm::ivec2 dir)
     // Failed to find another focusable element in this direction.
     mCursor = origCursor;
     return false;
+}
+
+void ComponentGrid::moveCursorTo(int xPos, int yPos, bool selectLeftCell)
+{
+    const glm::ivec2 origCursor{mCursor};
+
+    if (xPos != -1)
+        mCursor.x = xPos;
+    if (yPos != -1)
+        mCursor.y = yPos;
+
+    const GridEntry* currentCursorEntry = getCellAt(mCursor);
+
+    // If requested, select the leftmost cell of entries wider than 1 cell.
+    if (selectLeftCell && mCursor.x > currentCursorEntry->pos.x)
+        mCursor.x = currentCursorEntry->pos.x;
+
+    onCursorMoved(origCursor, mCursor);
 }
 
 void ComponentGrid::onFocusLost()
