@@ -16,6 +16,7 @@
 #include "SystemData.h"
 #include "Window.h"
 #include "components/HelpComponent.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGameListView.h"
@@ -193,15 +194,30 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         }
     };
 
-    row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
-        // Never display the value if it's a password, instead set it to blank.
-        if (isPassword)
-            mWindow->pushGui(
-                new GuiTextEditPopup(mWindow, getHelpStyle(), label, "", updateVal, false));
-        else
-            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, ed->getValue(),
-                                                  updateVal, false));
-    });
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
+            // Never display the value if it's a password, instead set it to blank.
+            if (isPassword)
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    mWindow, getHelpStyle(), label, "", updateVal, false, "SAVE", "SAVE CHANGES?"));
+            else
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), label,
+                                                              ed->getValue(), updateVal, false,
+                                                              "SAVE", "SAVE CHANGES?"));
+        });
+    }
+    else {
+        row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
+            if (isPassword)
+                mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, "", updateVal,
+                                                      false, "SAVE", "SAVE CHANGES?"));
+            else
+                mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
+                                                      ed->getValue(), updateVal, false, "SAVE",
+                                                      "SAVE CHANGES?"));
+        });
+    }
+
     assert(ed);
     addRow(row);
 

@@ -15,7 +15,6 @@
 
 #include "FileData.h"
 #include "GuiComponent.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiMsgBox.h"
 #include "renderers/Renderer.h"
 

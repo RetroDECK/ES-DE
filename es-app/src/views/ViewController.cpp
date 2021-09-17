@@ -26,6 +26,8 @@
 #include "animations/MoveCameraAnimation.h"
 #include "guis/GuiInfoPopup.h"
 #include "guis/GuiMenu.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
+#include "guis/GuiTextEditPopup.h"
 #include "views/SystemView.h"
 #include "views/UIModeController.h"
 #include "views/gamelist/DetailedGameListView.h"
@@ -135,26 +137,52 @@ void ViewController::noGamesDialog()
 #else
             currentROMDirectory = FileData::getROMDirectory();
 #endif
-
-            mWindow->pushGui(new GuiComplexTextEditPopup(
-                mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH",
-                "Currently configured path:", currentROMDirectory, currentROMDirectory,
-                [this](const std::string& newROMDirectory) {
-                    Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
-                    Settings::getInstance()->saveFile();
+            if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    [this](const std::string& newROMDirectory) {
+                        Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                        Settings::getInstance()->saveFile();
 #if defined(_WIN64)
-                    mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+                        mRomDirectory =
+                            Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
 #else
-                    mRomDirectory = FileData::getROMDirectory();
+                        mRomDirectory = FileData::getROMDirectory();
 #endif
-                    mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                    mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-                                                   "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                                                   "THE APPLICATION TO RESCAN THE SYSTEMS",
-                                                   "OK", nullptr, "", nullptr, "", nullptr, true));
-                },
-                false, "SAVE", "SAVE CHANGES?", "LOAD CURRENT", "LOAD CURRENTLY CONFIGURED VALUE",
-                "CLEAR", "CLEAR (LEAVE BLANK TO RESET TO DEFAULT DIRECTORY)", false));
+                        mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                                                       "ROM DIRECTORY SETTING SAVED, RESTART\n"
+                                                       "THE APPLICATION TO RESCAN THE SYSTEMS",
+                                                       "OK", nullptr, "", nullptr, "", nullptr,
+                                                       true));
+                    },
+                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
+                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
+                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
+            }
+            else {
+                mWindow->pushGui(new GuiTextEditPopup(
+                    mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    [this](const std::string& newROMDirectory) {
+                        Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                        Settings::getInstance()->saveFile();
+#if defined(_WIN64)
+                        mRomDirectory =
+                            Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+#else
+                        mRomDirectory = FileData::getROMDirectory();
+#endif
+                        mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                                                       "ROM DIRECTORY SETTING SAVED, RESTART\n"
+                                                       "THE APPLICATION TO RESCAN THE SYSTEMS",
+                                                       "OK", nullptr, "", nullptr, "", nullptr,
+                                                       true));
+                    },
+                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
+                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
+                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
+            }
         },
         "CREATE DIRECTORIES",
         [this] {

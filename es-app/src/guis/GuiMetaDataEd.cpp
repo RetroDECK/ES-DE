@@ -23,9 +23,9 @@
 #include "components/RatingComponent.h"
 #include "components/SwitchComponent.h"
 #include "components/TextComponent.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiGameScraper.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
@@ -364,11 +364,20 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                     }
                 };
 
-                row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
-                    mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
-                                                          ed->getValue(), updateVal, multiLine,
-                                                          "APPLY", "APPLY CHANGES?"));
-                });
+                if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+                    row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
+                        mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                            mWindow, getHelpStyle(), title, ed->getValue(), updateVal, multiLine,
+                            "apply", "APPLY CHANGES?", "", ""));
+                    });
+                }
+                else {
+                    row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
+                        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
+                                                              ed->getValue(), updateVal, multiLine,
+                                                              "APPLY", "APPLY CHANGES?"));
+                    });
+                }
                 break;
             }
         }

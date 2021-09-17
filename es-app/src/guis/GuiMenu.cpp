@@ -22,12 +22,13 @@
 #include "components/SwitchComponent.h"
 #include "guis/GuiAlternativeEmulators.h"
 #include "guis/GuiCollectionSystemsOptions.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
+#include "guis/GuiTextEditPopup.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGameListView.h"
@@ -509,6 +510,18 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Enable virtual (on-screen) keyboard.
+    auto virtual_keyboard = std::make_shared<SwitchComponent>(mWindow);
+    virtual_keyboard->setState(Settings::getInstance()->getBool("VirtualKeyboard"));
+    s->addWithLabel("ENABLE VIRTUAL KEYBOARD", virtual_keyboard);
+    s->addSaveFunc([virtual_keyboard, s] {
+        if (virtual_keyboard->getState() != Settings::getInstance()->getBool("VirtualKeyboard")) {
+            Settings::getInstance()->setBool("VirtualKeyboard", virtual_keyboard->getState());
+            s->setNeedsSaving();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
     // Enable the 'Y' button for tagging games as favorites.
     auto favorites_add_button = std::make_shared<SwitchComponent>(mWindow);
     favorites_add_button->setState(Settings::getInstance()->getBool("FavoritesAddButton"));
@@ -809,10 +822,20 @@ void GuiMenu::openOtherOptions()
     rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
                                         defaultDirectoryText, initValueMediaDir, updateValMediaDir,
                                         multiLineMediaDir] {
-        mWindow->pushGui(new GuiComplexTextEditPopup(
-            mWindow, getHelpStyle(), titleMediaDir, mediaDirectoryStaticText, defaultDirectoryText,
-            Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
-            multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
+        if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                mWindow, getHelpStyle(), titleMediaDir,
+                Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+                multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
+                defaultDirectoryText, "load default directory"));
+        }
+        else {
+            mWindow->pushGui(new GuiTextEditPopup(
+                mWindow, getHelpStyle(), titleMediaDir,
+                Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+                multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
+                defaultDirectoryText, "load default directory"));
+        }
     });
     s->addRow(rowMediaDir);
 

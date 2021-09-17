@@ -12,6 +12,7 @@
 
 #include "SystemData.h"
 #include "components/OptionListComponent.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
@@ -118,11 +119,20 @@ void GuiGamelistFilter::addFiltersToMenu()
         mFilterIndex->setTextFilter(Utils::String::toUpper(newVal));
     };
 
-    row.makeAcceptInputHandler([this, updateVal] {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "TEXT FILTER (GAME NAME)",
-                                              mTextFilterField->getValue(), updateVal, false, "OK",
-                                              "APPLY CHANGES?"));
-    });
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        row.makeAcceptInputHandler([this, updateVal] {
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                mWindow, getHelpStyle(), "TEXT FILTER (GAME NAME)", mTextFilterField->getValue(),
+                updateVal, false, "OK", "APPLY CHANGES?"));
+        });
+    }
+    else {
+        row.makeAcceptInputHandler([this, updateVal] {
+            mWindow->pushGui(new GuiTextEditPopup(
+                mWindow, getHelpStyle(), "TEXT FILTER (GAME NAME)", mTextFilterField->getValue(),
+                updateVal, false, "OK", "APPLY CHANGES?"));
+        });
+    }
 
     mMenu.addRow(row);
 

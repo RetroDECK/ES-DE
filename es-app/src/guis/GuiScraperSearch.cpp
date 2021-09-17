@@ -29,6 +29,7 @@
 #include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
@@ -808,8 +809,16 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         searchString = params.nameOverride;
     }
 
-    mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH", searchString,
-                                          searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
+                                                      searchString, searchForFunc, false, "SEARCH",
+                                                      "SEARCH USING REFINED NAME?"));
+    }
+    else {
+        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
+                                              searchString, searchForFunc, false, "SEARCH",
+                                              "SEARCH USING REFINED NAME?"));
+    }
 }
 
 bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
