@@ -11,20 +11,26 @@
 ### Detailed list of changes
 
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
+* Added a virtual keyboard partly based on code from batocera-emulationstation
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added a menu option to change the application exit key combination
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
+* Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
 * Added support for upscaling bitmap images using linear filtering
 * Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
 * Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
+* Added a blinking cursor to TextEditComponent
+* Added support for a new type of "flat style" button to ButtonComponent
+* Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
 * Added a function to generate MD5 hashes
+* Moved the "complex" mode functionality from GuiComplexTextEditPopup into GuiTextEditPopup and removed the source files for the former
 * Changed two clang-format rules related to braced lists and reformatted the codebase
 * Changed the language standard from C++14 to C++17
 
@@ -32,6 +38,8 @@
 
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
+* Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions
+* The "sortname" window header was incorrectly spelled when editing this type of entry in the metadata editor
 * When the last row of a menu had its text color changed, this color was completely desaturated when navigating to a button below the list
 
 ## Version 1.1.0

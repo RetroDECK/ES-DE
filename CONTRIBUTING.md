@@ -31,8 +31,8 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
 * Improved full-screen support, removing the temporary full-screen hacks
-* On-screen keyboard
-* Support for the Raspberry Pi 4 with OpenGL ES 2.0 and GLSL shaders (Raspberry Pi OS)
+* Virtual (on-screen) keyboard
+* Support for the Raspberry Pi 4 (Raspberry Pi OS)
 * Add GLM library dependency for matrix and vector operations, decommission the built-in functions
 * Add to more Linux repositories, BSD ports collections etc.
 * Flatpak and Snap releases on Linux
@@ -40,8 +40,9 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.3
 
 * Localization/multi-language support
-* Overhaul of the theme handling, adding capabilities and improving compatibility with Recalbox and Batocera themes
-* Scrapping the Grid view style and adding a general grid/wall component instead
+* New theme engine with generalized views (only System and Gamelist) and theme variants support
+* Add multiple new gamelist components (wheels, wall/grid etc.)
+* Move existing theme logic to legacy support, only to be used for backwards compatibility
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 

@@ -884,6 +884,8 @@ EmulationStation borrows the concept of "nine patches" from Android (or "9-Slice
       `button_l`,
       `button_r`,
       `button_lr`,
+      `button_lt`,
+      `button_rt`,
       `button_a_SNES`,
       `button_b_SNES`,
       `button_x_SNES`,

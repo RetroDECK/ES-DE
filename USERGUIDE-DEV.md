@@ -132,9 +132,11 @@ _This is the dialog shown if no game files were found. It lets you configure the
 
 The game systems configuration file `es_systems.xml` is located in the ES-DE resources directory which is part of the application installation. As such this file is not intended to be modified directly. If system customizations are required, a separate es_systems.xml file should instead be placed in the `custom_systems` folder in the ES-DE home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`.
 
-Although it's possible to make a copy of the bundled configuration file, to modify it and then place it in this directory, that is not how the system customization is designed to be done. Instead the intention is that the file in the custom_systems directory complements the bundled configuration. This means that only systems that are to be  modified should be included. For example you may want to replace the emulator launch command, modify the full name or change the supported file extensions for a single system. In this case it wouldn't make sense to copy the complete bundled file and just apply these minor modifications. As well, future updates to ES-DE may contain changes to existing emulator entries which would then not be utilized as the custom configuration file takes precedence over the bundled file.
+Although it's possible to make a copy of the bundled configuration file, to modify it and then place it in this directory, that is not how the system customization is designed to be done. Instead the intention is that the file in the custom_systems directory complements the bundled configuration, meaning only systems that are to be  modified should be included.
 
-It's also possible to skip the loading of the bundled es_systems.xml file and only use the file in custom_systems, although this will probably rarely be needed. The instructions for how to accomplish this as well as how to customize the es_systems.xml file can be found in [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml).
+For example you may want to replace the emulator launch command, modify the full name or change the supported file extensions for a single system. In this case it wouldn't make sense to copy the complete bundled file and just apply these minor modifications, instead an es_systems.xml file only containing the configuration for that single system should be placed in the custom_systems directory.
+
+The instructions for how to customize the es_systems.xml file can be found in [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml). There you can also find an example of a custom file that you can copy into ~/.emulationstation/custom_systems/ and modify as required.
 
 
 ## Migrating from other EmulationStation forks
@@ -951,6 +953,10 @@ There are some special characters in ES-DE such as the favorites star, the folde
 **Enable quick list scrolling overlay**
 
 With this option enabled, there will be an overlay displayed when scrolling the gamelists quickly, i.e. when holding down the _Up_, _Down_, _Left shoulder_ or _Right shoulder_ buttons for some time. The overlay will darken the background slightly and display the first two characters of the game names. If the game is a favorite and the setting to sort favorites above non-favorites has been enabled, a star will be shown instead.
+
+**Enable virtual keyboard**
+
+This enables a virtual (on-screen) keyboard that can be used at various places throughout the application to input text and numbers using a controller. The Shift and Alt keys can be toggled individually or combined together to access many special characters. The general use of the virtual keyboard should hopefully be self-explanatory,
 
 **Enable toggle favorites button**
 
