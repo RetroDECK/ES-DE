@@ -220,7 +220,7 @@ void GuiLaunchScreen::update(int deltaTime)
         mScaleUp = glm::clamp(mScaleUp + 0.07f, 0.0f, 1.0f);
 }
 
-void GuiLaunchScreen::render()
+void GuiLaunchScreen::render(const glm::mat4& /*parentTrans*/)
 {
     // Scale up animation.
     if (mScaleUp < 1.0f)

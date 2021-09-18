@@ -42,6 +42,7 @@ public:
     using IList<TextListData, T>::size;
     using IList<TextListData, T>::isScrolling;
     using IList<TextListData, T>::stopScrolling;
+    using GuiComponent::setColor;
 
     TextListComponent(Window* window);
 

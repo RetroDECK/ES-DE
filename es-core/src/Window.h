@@ -61,7 +61,7 @@ public:
         virtual void showPrevious() = 0;
 
         virtual void update(int deltaTime) = 0;
-        virtual void render() = 0;
+        virtual void render(const glm::mat4& parentTrans) = 0;
     };
 
     class GuiLaunchScreen
@@ -70,7 +70,7 @@ public:
         virtual void displayLaunchScreen(FileData* game) = 0;
         virtual void closeLaunchScreen() = 0;
         virtual void update(int deltaTime) = 0;
-        virtual void render() = 0;
+        virtual void render(const glm::mat4& parentTrans) = 0;
     };
 
     class InfoPopup

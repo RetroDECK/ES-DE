@@ -561,10 +561,10 @@ void Window::render()
     }
 
     if (mRenderMediaViewer)
-        mMediaViewer->render();
+        mMediaViewer->render(trans);
 
     if (mRenderLaunchScreen)
-        mLaunchScreen->render();
+        mLaunchScreen->render(trans);
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
         Renderer::setMatrix(Renderer::getIdentity());

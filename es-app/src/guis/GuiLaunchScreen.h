@@ -30,7 +30,7 @@ public:
     void onSizeChanged() override;
 
     virtual void update(int deltaTime) override;
-    virtual void render() override;
+    virtual void render(const glm::mat4& parentTrans) override;
 
 private:
     Window* mWindow;

@@ -81,7 +81,7 @@ void MediaViewer::update(int deltaTime)
         mVideo->update(deltaTime);
 }
 
-void MediaViewer::render()
+void MediaViewer::render(const glm::mat4& /*parentTrans*/)
 {
     glm::mat4 trans{Renderer::getIdentity()};
     Renderer::setMatrix(trans);
