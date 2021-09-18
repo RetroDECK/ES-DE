@@ -22,10 +22,10 @@ GuiGameScraper::GuiGameScraper(Window* window,
                                ScraperSearchParams params,
                                std::function<void(const ScraperSearchResult&)> doneFunc)
     : GuiComponent(window)
+    , mClose(false)
     , mGrid(window, glm::ivec2{1, 7})
     , mBox(window, ":/graphics/frame.svg")
     , mSearchParams(params)
-    , mClose(false)
 {
     addChild(&mBox);
     addChild(&mGrid);

@@ -260,8 +260,8 @@ namespace Utils
         std::string getPreferredPath(const std::string& path)
         {
             std::string preferredPath = path;
-            size_t offset = std::string::npos;
 #if defined(_WIN64)
+            size_t offset = std::string::npos;
             // Convert '/' to '\\'
             while ((offset = preferredPath.find('/')) != std::string::npos)
                 preferredPath.replace(offset, 1, "\\");

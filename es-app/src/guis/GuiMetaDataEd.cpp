@@ -40,9 +40,9 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
     : GuiComponent(window)
-    , mScraperParams(scraperParams)
     , mBackground(window, ":/graphics/frame.svg")
     , mGrid(window, glm::ivec2{1, 3})
+    , mScraperParams(scraperParams)
     , mMetaDataDecl(mdd)
     , mMetaData(md)
     , mSavedCallback(saveCallback)
@@ -188,7 +188,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
-                bool multiLine = false;
                 const std::string title = iter->displayPrompt;
 
                 // OK callback (apply new value to ed).

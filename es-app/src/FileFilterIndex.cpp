@@ -279,7 +279,7 @@ void FileFilterIndex::setTextFilter(std::string textFilter)
         mFilterByText = false;
     else
         mFilterByText = true;
-};
+}
 
 void FileFilterIndex::clearAllFilters()
 {

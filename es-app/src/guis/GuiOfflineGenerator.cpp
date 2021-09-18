@@ -15,9 +15,9 @@
 
 GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileData*>& gameQueue)
     : GuiComponent(window)
+    , mGameQueue(gameQueue)
     , mBackground(window, ":/graphics/frame.svg")
     , mGrid(window, glm::ivec2{6, 13})
-    , mGameQueue(gameQueue)
 {
     addChild(&mBackground);
     addChild(&mGrid);

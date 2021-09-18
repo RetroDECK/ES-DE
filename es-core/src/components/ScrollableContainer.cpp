@@ -16,13 +16,13 @@
 
 ScrollableContainer::ScrollableContainer(Window* window)
     : GuiComponent(window)
+    , mScrollPos({})
+    , mScrollDir({})
+    , mFontSize(0.0f)
     , mAutoScrollDelay(0)
     , mAutoScrollSpeed(0)
     , mAutoScrollAccumulator(0)
-    , mScrollPos(0, 0)
-    , mScrollDir(0, 0)
     , mAutoScrollResetAccumulator(0)
-    , mFontSize(0.0f)
 {
     // Set the modifier to get equivalent scrolling speed regardless of screen resolution.
     mResolutionModifier = Renderer::getScreenHeightModifier();

@@ -34,8 +34,8 @@ public:
 
 private:
     Window* mWindow;
-    ComponentGrid* mGrid;
     NinePatchComponent mBackground;
+    ComponentGrid* mGrid;
 
     std::shared_ptr<TextComponent> mTitle;
     std::shared_ptr<TextComponent> mGameName;

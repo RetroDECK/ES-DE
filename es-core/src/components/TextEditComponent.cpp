@@ -20,14 +20,14 @@
 
 TextEditComponent::TextEditComponent(Window* window)
     : GuiComponent{window}
-    , mBox{window, ":/graphics/textinput.svg"}
     , mFocused{false}
-    , mScrollOffset{0.0f, 0.0f}
-    , mCursor{0}
     , mEditing{false}
-    , mFont{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
-    , mCursorRepeatDir{0}
+    , mCursor{0}
     , mBlinkTime{0}
+    , mCursorRepeatDir{0}
+    , mScrollOffset{0.0f, 0.0f}
+    , mBox{window, ":/graphics/textinput.svg"}
+    , mFont{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
 {
     addChild(&mBox);
     onFocusLost();

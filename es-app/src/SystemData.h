@@ -149,17 +149,18 @@ public:
     void setupSystemSortType(FileData* mRootFolder);
 
 private:
-    bool mIsCollectionSystem;
-    bool mIsCustomCollectionSystem;
-    bool mIsGroupedCustomCollectionSystem;
-    bool mIsGameSystem;
-    bool mScrapeFlag; // Only used by scraper GUI to remember which systems to scrape.
     std::string mName;
     std::string mFullName;
     SystemEnvironmentData* mEnvData;
     std::string mAlternativeEmulator;
     std::string mThemeFolder;
     std::shared_ptr<ThemeData> mTheme;
+
+    bool mIsCollectionSystem;
+    bool mIsCustomCollectionSystem;
+    bool mIsGroupedCustomCollectionSystem;
+    bool mIsGameSystem;
+    bool mScrapeFlag; // Only used by scraper GUI to remember which systems to scrape.
 
     bool populateFolder(FileData* folder);
     void indexAllGameFilters(const FileData* folder);

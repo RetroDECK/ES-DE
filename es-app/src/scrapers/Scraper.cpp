@@ -373,11 +373,11 @@ MediaDownloadHandle::MediaDownloadHandle(const std::string& url,
                                          const std::string& mediaType,
                                          const bool resizeFile,
                                          bool& savedNewMedia)
-    : mSavePath(path)
+    : mReq(new HttpReq(url))
+    , mSavePath(path)
     , mExistingMediaFile(existingMediaPath)
     , mMediaType(mediaType)
     , mResizeFile(resizeFile)
-    , mReq(new HttpReq(url))
 {
     mSavedNewMediaPtr = &savedNewMedia;
 }

@@ -16,10 +16,10 @@
 
 GuiLaunchScreen::GuiLaunchScreen(Window* window)
     : GuiComponent(window)
+    , mWindow(window)
     , mBackground(window, ":/graphics/frame.svg")
     , mGrid(nullptr)
     , mMarquee(nullptr)
-    , mWindow(window)
 {
     addChild(&mBackground);
     mWindow->setLaunchScreen(this);
@@ -169,7 +169,6 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 
         mMarquee->setOrigin(0.5f, 0.5f);
         glm::vec3 currentPos{mMarquee->getPosition()};
-        glm::vec2 currentSize{mMarquee->getSize()};
 
         // Position the image in the middle of row four.
         currentPos.x = mSize.x / 2.0f;

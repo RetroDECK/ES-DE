@@ -17,11 +17,11 @@ NinePatchComponent::NinePatchComponent(Window* window,
                                        unsigned int edgeColor,
                                        unsigned int centerColor)
     : GuiComponent(window)
+    , mVertices(nullptr)
+    , mPath(path)
     , mCornerSize(16.0f, 16.0f)
     , mEdgeColor(edgeColor)
     , mCenterColor(centerColor)
-    , mPath(path)
-    , mVertices(nullptr)
 {
     if (!mPath.empty())
         buildVertices();

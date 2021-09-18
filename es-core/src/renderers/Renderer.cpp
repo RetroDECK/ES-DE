@@ -539,7 +539,7 @@ namespace Renderer
             return sShaderProgramVector[index - 1];
         else
             return nullptr;
-    };
+    }
 
     const glm::mat4 getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }

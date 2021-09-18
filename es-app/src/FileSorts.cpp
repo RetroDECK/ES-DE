@@ -234,4 +234,4 @@ namespace FileSorts
         return system1.compare(system2) > 0;
     }
 
-}; // namespace FileSorts
+} // namespace FileSorts

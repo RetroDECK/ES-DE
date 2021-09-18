@@ -20,9 +20,9 @@ DateTimeEditComponent::DateTimeEditComponent(Window* window, bool alignRight, Di
     , mRelativeUpdateAccumulator(0)
     , mColor(0x777777FF)
     , mFont(Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT))
+    , mAlignRight(alignRight)
     , mUppercase(false)
     , mAutoSize(true)
-    , mAlignRight(alignRight)
 {
     updateTextCache();
 }

@@ -18,7 +18,6 @@
 #include <fstream>
 
 auto array_deleter = [](unsigned char* p) { delete[] p; };
-auto nop_deleter = [](unsigned char* /*p*/) {};
 
 std::shared_ptr<ResourceManager> ResourceManager::sInstance = nullptr;
 

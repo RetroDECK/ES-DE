@@ -414,7 +414,7 @@ void Settings::loadFile()
     }
 
 // Parameters for the macro defined above.
-SETTINGS_GETSET(bool, mBoolMap, getBool, getDefaultBool, setBool);
-SETTINGS_GETSET(int, mIntMap, getInt, getDefaultInt, setInt);
-SETTINGS_GETSET(float, mFloatMap, getFloat, getDefaultFloat, setFloat);
-SETTINGS_GETSET(const std::string&, mStringMap, getString, getDefaultString, setString);
+SETTINGS_GETSET(bool, mBoolMap, getBool, getDefaultBool, setBool)
+SETTINGS_GETSET(int, mIntMap, getInt, getDefaultInt, setInt)
+SETTINGS_GETSET(float, mFloatMap, getFloat, getDefaultFloat, setFloat)
+SETTINGS_GETSET(const std::string&, mStringMap, getString, getDefaultString, setString)

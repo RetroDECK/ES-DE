@@ -69,9 +69,11 @@ void ViewController::init(Window* window)
 
 ViewController::ViewController(Window* window)
     : GuiComponent(window)
+    , mNoGamesMessageBox(nullptr)
     , mCurrentView(nullptr)
     , mPreviousView(nullptr)
     , mSkipView(nullptr)
+    , mGameToLaunch(nullptr)
     , mCamera(Renderer::getIdentity())
     , mSystemViewTransition(false)
     , mWrappedViews(false)
@@ -79,8 +81,6 @@ ViewController::ViewController(Window* window)
     , mCancelledTransition(false)
     , mLockInput(false)
     , mNextSystem(false)
-    , mGameToLaunch(nullptr)
-    , mNoGamesMessageBox(nullptr)
 {
     mState.viewing = NOTHING;
     mState.viewstyle = AUTOMATIC;

@@ -27,7 +27,7 @@ namespace GridFlags
         BORDER_LEFT = 4,
         BORDER_RIGHT = 8
     };
-}; // namespace GridFlags
+} // namespace GridFlags
 
 // Provides basic layout of components in an X*Y grid.
 class ComponentGrid : public GuiComponent

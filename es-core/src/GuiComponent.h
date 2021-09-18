@@ -234,6 +234,11 @@ protected:
     void updateSelf(int deltaTime); // Updates animations.
     void updateChildren(int deltaTime); // Updates animations.
 
+    Window* mWindow;
+
+    GuiComponent* mParent;
+    std::vector<GuiComponent*> mChildren;
+
     unsigned char mOpacity;
     unsigned int mColor;
     float mSaturation;
@@ -242,11 +247,6 @@ protected:
     unsigned int mColorShiftEnd;
     unsigned int mColorOriginalValue;
     unsigned int mColorChangedValue;
-
-    Window* mWindow;
-
-    GuiComponent* mParent;
-    std::vector<GuiComponent*> mChildren;
 
     glm::vec3 mPosition;
     glm::vec2 mOrigin;

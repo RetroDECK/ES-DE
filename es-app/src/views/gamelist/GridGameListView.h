@@ -76,6 +76,9 @@ private:
     void initMDLabels();
     void initMDValues();
 
+    ImageComponent mMarquee;
+    ImageComponent mImage;
+
     TextComponent mLblRating;
     TextComponent mLblReleaseDate;
     TextComponent mLblDeveloper;
@@ -85,8 +88,6 @@ private:
     TextComponent mLblLastPlayed;
     TextComponent mLblPlayCount;
 
-    ImageComponent mMarquee;
-    ImageComponent mImage;
     RatingComponent mRating;
     DateTimeComponent mReleaseDate;
     TextComponent mDeveloper;

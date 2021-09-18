@@ -158,31 +158,31 @@ private:
     HelpComponent* mHelp;
     ImageComponent* mBackgroundOverlay;
     unsigned char mBackgroundOverlayOpacity;
-    Screensaver* mScreensaver;
-    InfoPopup* mInfoPopup;
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;
     std::unique_ptr<TextCache> mFrameDataText;
 
+    Screensaver* mScreensaver;
     MediaViewer* mMediaViewer;
-    bool mRenderMediaViewer;
-
     GuiLaunchScreen* mLaunchScreen;
-    bool mRenderLaunchScreen;
+    InfoPopup* mInfoPopup;
 
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;
     unsigned char mListScrollOpacity;
 
-    bool mNormalizeNextUpdate;
     int mFrameTimeElapsed;
     int mFrameCountElapsed;
     int mAverageDeltaTime;
-    bool mAllowSleep;
-    bool mSleeping;
     unsigned int mTimeSinceLastInput;
 
+    bool mNormalizeNextUpdate;
+    bool mAllowSleep;
+    bool mSleeping;
+
     bool mRenderScreensaver;
+    bool mRenderMediaViewer;
+    bool mRenderLaunchScreen;
     bool mGameLaunchedState;
     bool mAllowTextScrolling;
     bool mCachedBackground;

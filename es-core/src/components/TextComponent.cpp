@@ -15,16 +15,16 @@
 TextComponent::TextComponent(Window* window)
     : GuiComponent(window)
     , mFont(Font::get(FONT_SIZE_MEDIUM))
-    , mUppercase(false)
     , mColor(0x000000FF)
+    , mBgColor(0)
+    , mMargin(0.0f)
+    , mRenderBackground(false)
+    , mUppercase(false)
     , mAutoCalcExtent(true, true)
     , mHorizontalAlignment(ALIGN_LEFT)
     , mVerticalAlignment(ALIGN_CENTER)
     , mLineSpacing(1.5f)
     , mNoTopMargin(false)
-    , mBgColor(0)
-    , mMargin(0.0f)
-    , mRenderBackground(false)
 {
 }
 
@@ -39,16 +39,16 @@ TextComponent::TextComponent(Window* window,
                              float margin)
     : GuiComponent(window)
     , mFont(nullptr)
-    , mUppercase(false)
     , mColor(0x000000FF)
+    , mBgColor(0)
+    , mMargin(margin)
+    , mRenderBackground(false)
+    , mUppercase(false)
     , mAutoCalcExtent(true, true)
     , mHorizontalAlignment(align)
     , mVerticalAlignment(ALIGN_CENTER)
     , mLineSpacing(1.5f)
     , mNoTopMargin(false)
-    , mBgColor(0)
-    , mMargin(margin)
-    , mRenderBackground(false)
 {
     setFont(font);
     setColor(color);

@@ -34,8 +34,8 @@ libvlc_instance_t* VideoVlcComponent::mVLC = nullptr;
 
 VideoVlcComponent::VideoVlcComponent(Window* window)
     : VideoComponent(window)
-    , mMediaPlayer(nullptr)
     , mMedia(nullptr)
+    , mMediaPlayer(nullptr)
     , mContext({})
     , mHasSetAudioVolume(false)
 {

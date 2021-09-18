@@ -27,8 +27,8 @@
 
 GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
     : GuiComponent(window)
-    , mSystem(system)
     , mMenu(window, "OPTIONS")
+    , mSystem(system)
     , mFiltersChanged(false)
     , mCancelled(false)
     , mIsCustomCollection(false)

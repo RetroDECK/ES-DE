@@ -89,17 +89,17 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     const std::string& clearBtnHelpText,
     const std::string& cancelBtnHelpText)
     : GuiComponent{window}
+    , mBackground{window, ":/graphics/frame.svg"}
+    , mGrid{window, glm::ivec2{1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
     , mHelpStyle{helpstyle}
     , mInitValue{initValue}
-    , mOkCallback{okCallback}
-    , mMultiLine{multiLine}
     , mAcceptBtnHelpText{acceptBtnHelpText}
     , mSaveConfirmationText{saveConfirmationText}
     , mLoadBtnHelpText{loadBtnHelpText}
     , mClearBtnHelpText{clearBtnHelpText}
     , mCancelBtnHelpText{cancelBtnHelpText}
-    , mBackground{window, ":/graphics/frame.svg"}
-    , mGrid{window, glm::ivec2{1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
+    , mOkCallback{okCallback}
+    , mMultiLine{multiLine}
     , mComplexMode{(infoString != "" && defaultValue != "")}
     , mDeleteRepeat{false}
     , mShift{false}
@@ -346,7 +346,7 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
 
     // Pressing back (or the escape key if using keyboard input) closes us.
     if ((config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_ESCAPE) ||
-        (!keyboardBackspace && config->isMappedTo("b", input)) && input.value) {
+        (!keyboardBackspace && input.value && config->isMappedTo("b", input))) {
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(

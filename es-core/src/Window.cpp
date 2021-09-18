@@ -30,13 +30,14 @@ Window::Window()
     , mMediaViewer(nullptr)
     , mLaunchScreen(nullptr)
     , mInfoPopup(nullptr)
-    , mNormalizeNextUpdate(false)
+    , mListScrollOpacity(0)
     , mFrameTimeElapsed(0)
     , mFrameCountElapsed(0)
     , mAverageDeltaTime(10)
+    , mTimeSinceLastInput(0)
+    , mNormalizeNextUpdate(false)
     , mAllowSleep(true)
     , mSleeping(false)
-    , mTimeSinceLastInput(0)
     , mRenderScreensaver(false)
     , mRenderMediaViewer(false)
     , mRenderLaunchScreen(false)
@@ -46,7 +47,6 @@ Window::Window()
     , mInvalidatedCachedBackground(false)
     , mVideoPlayerCount(0)
     , mTopScale(0.5)
-    , mListScrollOpacity(0)
     , mChangedThemeSet(false)
 {
     mHelp = new HelpComponent(this);
@@ -792,7 +792,7 @@ int Window::getVideoPlayerCount()
     videoPlayerCount = mVideoPlayerCount;
     mVideoCountMutex.unlock();
     return videoPlayerCount;
-};
+}
 
 void Window::setLaunchedGame()
 {

@@ -40,12 +40,12 @@
 GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int scrapeCount)
     : GuiComponent(window)
     , mGrid(window, glm::ivec2{4, 3})
-    , mBusyAnim(window)
     , mSearchType(type)
     , mScrapeCount(scrapeCount)
-    , mScrapeRatings(false)
     , mRefinedSearch(false)
     , mFoundGame(false)
+    , mScrapeRatings(false)
+    , mBusyAnim(window)
 {
     addChild(&mGrid);
 

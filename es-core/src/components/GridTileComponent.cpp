@@ -315,7 +315,7 @@ std::shared_ptr<TextureResource> GridTileComponent::getTexture()
         return mImage->getTexture();
 
     return nullptr;
-};
+}
 
 void GridTileComponent::forceSize(glm::vec2 size, float selectedZoom)
 {

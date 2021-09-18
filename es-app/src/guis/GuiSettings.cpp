@@ -24,6 +24,7 @@
 GuiSettings::GuiSettings(Window* window, std::string title)
     : GuiComponent(window)
     , mMenu(window, title)
+    , mGoToSystem(nullptr)
     , mNeedsSaving(false)
     , mNeedsReloadHelpPrompts(false)
     , mNeedsCollectionsUpdate(false)
@@ -35,7 +36,6 @@ GuiSettings::GuiSettings(Window* window, std::string title)
     , mNeedsGoToSystem(false)
     , mNeedsGoToGroupedCollections(false)
     , mInvalidateCachedBackground(false)
-    , mGoToSystem(nullptr)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });

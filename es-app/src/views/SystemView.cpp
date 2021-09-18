@@ -28,10 +28,10 @@ const int logoBuffersRight[] = {1, 2, 5};
 
 SystemView::SystemView(Window* window)
     : IList<SystemViewData, SystemData*>(window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP)
+    , mSystemInfo(window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER)
     , mPreviousScrollVelocity(0)
     , mUpdatedGameCount(false)
     , mViewNeedsReload(true)
-    , mSystemInfo(window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER)
 {
     mCamOffset = 0;
     mExtrasCamOffset = 0;
@@ -182,7 +182,6 @@ void SystemView::goToSystem(SystemData* system, bool animate)
 bool SystemView::input(InputConfig* config, Input input)
 {
     auto it = SystemData::sSystemVector.cbegin();
-    const std::shared_ptr<ThemeData>& theme = (*it)->getTheme();
 
     if (input.value != 0) {
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&

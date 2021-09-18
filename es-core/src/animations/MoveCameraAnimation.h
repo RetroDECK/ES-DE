@@ -17,8 +17,8 @@ class MoveCameraAnimation : public Animation
 public:
     MoveCameraAnimation(glm::mat4& camera, const glm::vec3& target)
         : mCameraStart(camera)
-        , mTarget(target)
         , cameraPosition(camera)
+        , mTarget(target)
     {
     }
 
