@@ -664,10 +664,10 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
                                                                "lt",
                                                                "start",
                                                                "back"};
-                  size_t i = 0;
+                  int i = 0;
                   int aVal = 0;
                   int bVal = 0;
-                  while (i < map.size()) {
+                  while (i < static_cast<int>(map.size())) {
                       if (a.first == map[i])
                           aVal = i;
                       if (b.first == map[i])
