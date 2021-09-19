@@ -125,7 +125,7 @@ pkg_add vlc
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
 
-RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the master branch:
+RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the latest available code from the master branch:
 
 ```
 git clone https://github.com/Tencent/rapidjson.git
@@ -872,12 +872,12 @@ make
 
 [RapidJSON](http://rapidjson.org)
 
-For RapidJSON you don't need to compile, you just need the include files:
+For RapidJSON you don't need to compile anything, you just need the include files.
+
+At the time of writing, the latest release v1.1.0 generates some compiler warnings on Windows, but this can be avoided by using the latest available code from the master branch:
 
 ```
 git clone git://github.com/Tencent/rapidjson.git
-cd rapidjson
-git checkout v1.1.0
 ```
 
 
