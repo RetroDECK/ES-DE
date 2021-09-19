@@ -337,6 +337,12 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
         return true;
     }
 
+    // Pressing a key stops the navigation repeat, i.e. the cursor stops at the selected key.
+    if (config->isMappedTo("a", input) && input.value && !mText->isEditing()) {
+        mNavigationRepeatDirX = 0;
+        mNavigationRepeatDirY = 0;
+    }
+
     // If the keyboard has been configured with backspace as the back button (which is the default
     // configuration) then ignore this key if we're currently editing or otherwise it would be
     // impossible to erase characters using this key.
