@@ -490,9 +490,11 @@ void GridGameListView::updateInfoPanel()
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
             (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
-            auto func = [comp](float t) {
-                // TEMPORARY - This does not seem to work, needs to be reviewed later.
-                //    comp->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
+
+            // TEMPORARY - This does not seem to work, needs to be reviewed later.
+            // auto func = [comp](float t) {
+            auto func = [](float t) {
+                // comp->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
             };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }

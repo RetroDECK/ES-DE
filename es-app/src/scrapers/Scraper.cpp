@@ -327,7 +327,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             mFuncs.push_back(ResolvePair(downloadMediaAsync(it->fileURL, filePath,
                                                             it->existingMediaFile, it->subDirectory,
                                                             it->resizeFile, mResult.savedNewMedia),
-                                         [this, filePath] {}));
+                                         [filePath] {}));
         }
     }
 }

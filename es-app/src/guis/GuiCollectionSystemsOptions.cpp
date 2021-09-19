@@ -283,7 +283,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                         CollectionSystemsManager::get()->deleteCustomCollection(name);
                         return true;
                     },
-                    "NO", [this] { return false; }));
+                    "NO", [] { return false; }));
             };
             row.makeAcceptInputHandler(deleteCollectionCall);
             auto customCollection = std::make_shared<TextComponent>(

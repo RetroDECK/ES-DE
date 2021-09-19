@@ -25,6 +25,7 @@ namespace Renderer
 {
     static std::stack<Rect> clipStack;
     static SDL_Window* sdlWindow = nullptr;
+    static glm::mat4 mProjectionMatrix;
     static int windowWidth = 0;
     static int windowHeight = 0;
     static int screenWidth = 0;

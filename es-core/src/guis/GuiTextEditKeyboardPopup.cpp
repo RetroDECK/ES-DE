@@ -104,7 +104,6 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     , mDeleteRepeat{false}
     , mShift{false}
     , mAlt{false}
-    , mAltShift{false}
     , mDeleteRepeatTimer{0}
     , mNavigationRepeatTimer{0}
     , mNavigationRepeatDirX{0}

@@ -218,13 +218,13 @@ void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData
                "Theme set does not include navigation sound support, using fallback sounds";
     }
 
-    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "systembrowse")));
-    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "quicksysselect")));
-    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "select")));
-    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "back")));
-    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "scroll")));
-    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "favorite")));
-    navigationSounds.push_back(std::move(Sound::getFromTheme(theme, "all", "launch")));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowse"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselect"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "select"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "back"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scroll"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favorite"));
+    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launch"));
 }
 
 void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)

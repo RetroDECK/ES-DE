@@ -184,7 +184,7 @@ void MediaViewer::findMedia()
 
 void MediaViewer::showNext()
 {
-    if (mHasImages && mCurrentImageIndex != mImageFiles.size() - 1)
+    if (mHasImages && mCurrentImageIndex != static_cast<int>(mImageFiles.size()) - 1)
         NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
 
     bool showedVideo = false;
@@ -205,7 +205,7 @@ void MediaViewer::showNext()
 
     if ((mVideo || showedVideo) && !mDisplayingImage)
         mCurrentImageIndex = 0;
-    else if (mImageFiles.size() > mCurrentImageIndex + 1)
+    else if (static_cast<int>(mImageFiles.size()) > mCurrentImageIndex + 1)
         mCurrentImageIndex++;
 
     if (mVideo)
@@ -281,7 +281,7 @@ void MediaViewer::showImage(int index)
 
     mDisplayingImage = true;
 
-    if (!mImageFiles.empty() && mImageFiles.size() >= index) {
+    if (!mImageFiles.empty() && static_cast<int>(mImageFiles.size()) >= index) {
         mImage = new ImageComponent(mWindow, false, false);
         mImage->setImage(mImageFiles[index]);
         mImage->setOrigin(0.5f, 0.5f);

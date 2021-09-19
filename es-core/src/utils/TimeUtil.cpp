@@ -18,7 +18,7 @@ namespace Utils
         DateTime::DateTime()
         {
             mTime = 0;
-            mTimeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1};
+            mTimeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0};
             mIsoString = "00000000T000000";
         }
 
@@ -83,7 +83,7 @@ namespace Utils
         {
             const char* s = string.c_str();
             const char* f = format.c_str();
-            tm timeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1};
+            tm timeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0};
             size_t parsedChars = 0;
 
             if (string == "19700101T010000")
@@ -231,7 +231,7 @@ namespace Utils
 
         int daysInMonth(const int year, const int month)
         {
-            tm timeStruct = {0, 0, 0, 0, month, year - 1900, 0, 0, -1};
+            tm timeStruct = {0, 0, 0, 0, month, year - 1900, 0, 0, -1, 0, 0};
             mktime(&timeStruct);
 
             return timeStruct.tm_mday;
@@ -239,7 +239,7 @@ namespace Utils
 
         int daysInYear(const int year)
         {
-            tm timeStruct = {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1};
+            tm timeStruct = {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1, 0, 0};
             mktime(&timeStruct);
 
             return timeStruct.tm_yday + 1;

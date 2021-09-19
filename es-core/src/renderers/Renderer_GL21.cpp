@@ -456,7 +456,7 @@ namespace Renderer
 
         GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
 
-        for (int i = 0; i < shaderList.size(); i++) {
+        for (size_t i = 0; i < shaderList.size(); i++) {
             vertices[0].shaders = shaderList[i];
             int shaderPasses = 1;
             // For the blur shaders there is an optional variable to set the number of passes

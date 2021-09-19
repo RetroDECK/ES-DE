@@ -181,8 +181,6 @@ void SystemView::goToSystem(SystemData* system, bool animate)
 
 bool SystemView::input(InputConfig* config, Input input)
 {
-    auto it = SystemData::sSystemVector.cbegin();
-
     if (input.value != 0) {
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {

@@ -77,7 +77,7 @@ void ImageComponent::resize()
                 // This will be mTargetSize.x. We can't exceed it, nor be lower than it.
                 mSize.x *= resizeScale.x;
                 // We need to make sure we're not creating an image larger than max size.
-                mSize.y = std::min(floorf(mSize.y *= resizeScale.x), mTargetSize.y);
+                mSize.y = std::min(floorf(mSize.y * resizeScale.x), mTargetSize.y);
             }
             else {
                 // This will be mTargetSize.y(). We can't exceed it.

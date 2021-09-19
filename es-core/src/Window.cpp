@@ -51,6 +51,7 @@ Window::Window()
 {
     mHelp = new HelpComponent(this);
     mBackgroundOverlay = new ImageComponent(this);
+    mBackgroundOverlayOpacity = 0;
 }
 
 Window::~Window()
@@ -663,7 +664,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
                                                                "lt",
                                                                "start",
                                                                "back"};
-                  int i = 0;
+                  size_t i = 0;
                   int aVal = 0;
                   int bVal = 0;
                   while (i < map.size()) {

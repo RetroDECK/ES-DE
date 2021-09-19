@@ -100,7 +100,6 @@ private:
     bool mDeleteRepeat;
     bool mShift;
     bool mAlt;
-    bool mAltShift;
 
     int mHorizontalKeyCount;
     int mDeleteRepeatTimer;

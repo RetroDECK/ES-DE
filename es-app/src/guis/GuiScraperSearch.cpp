@@ -471,7 +471,7 @@ void GuiScraperSearch::updateInfoPane()
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size())
         i = 0;
 
-    if (i != -1 && static_cast<int>(mScraperResults.size() > i)) {
+    if (i != -1 && static_cast<int>(mScraperResults.size()) > i) {
         ScraperSearchResult& res = mScraperResults.at(i);
 
         mResultName->setText(Utils::String::toUpper(res.mdl.get("name")));

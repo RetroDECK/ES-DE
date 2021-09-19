@@ -183,7 +183,7 @@ bool TextEditComponent::input(InputConfig* config, Input input)
                     break;
                 }
                 case SDLK_DELETE: {
-                    if (mCursor < mText.length()) {
+                    if (mCursor < static_cast<int>(mText.length())) {
                         // Fake as Backspace one char to the right.
                         moveCursor(1);
                         textInput("\b");
@@ -245,7 +245,7 @@ void TextEditComponent::onTextChanged()
         mFont->buildTextCache(wrappedText, 0.0f, 0.0f, 0x77777700 | getOpacity()));
 
     if (mCursor > static_cast<int>(mText.length()))
-        mCursor = static_cast<unsigned int>(mText.length());
+        mCursor = static_cast<int>(mText.length());
 }
 
 void TextEditComponent::onCursorChanged()

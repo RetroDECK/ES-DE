@@ -1331,7 +1331,7 @@ void GuiMenu::close(bool closeAllWindows)
     }
     else {
         Window* window = mWindow;
-        closeFunc = [window, this] {
+        closeFunc = [window] {
             while (window->peekGui() != ViewController::get())
                 delete window->peekGui();
         };

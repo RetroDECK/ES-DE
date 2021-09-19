@@ -190,7 +190,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
     bool drawAll;
-    for (unsigned int i = 0; i < mEntries.size(); i++) {
+    for (size_t i = 0; i < mEntries.size(); i++) {
         auto& entry = mEntries.at(i);
         drawAll = !mFocused || i != static_cast<unsigned int>(mCursor);
         for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
@@ -198,7 +198,8 @@ void ComponentList::render(const glm::mat4& parentTrans)
                 // For the row where the cursor is at, we want to remove any hue from the
                 // font or image before inverting, as it would otherwise lead to an ugly
                 // inverted color (e.g. red inverting to a green hue).
-                if (mFocused && i == mCursor && it->component->getValue() != "") {
+                if (mFocused && i == static_cast<size_t>(mCursor) &&
+                    it->component->getValue() != "") {
                     // Check if we're dealing with text or an image component.
                     bool isTextComponent = true;
                     unsigned int origColor = it->component->getColor();

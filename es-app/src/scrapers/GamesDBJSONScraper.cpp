@@ -443,7 +443,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         // Find how many more requests we can make before the scraper
         // request allowance counter is reset.
         if (doc.HasMember("remaining_monthly_allowance") && doc.HasMember("extra_allowance")) {
-            for (auto i = 0; i < results.size(); i++) {
+            for (size_t i = 0; i < results.size(); i++) {
                 results[i].scraperRequestAllowance =
                     doc["remaining_monthly_allowance"].GetInt() + doc["extra_allowance"].GetInt();
             }

@@ -60,7 +60,7 @@ private:
     std::string mTextOrig;
     bool mFocused;
     bool mEditing;
-    unsigned int mCursor; // Cursor position in characters.
+    int mCursor; // Cursor position in characters.
     int mBlinkTime;
 
     int mCursorRepeatTimer;

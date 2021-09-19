@@ -223,7 +223,7 @@ const std::string FileData::getMediafilePath(std::string subdirectory, std::stri
                                  subFolders + "/" + getDisplayName();
 
     // Look for an image file in the media directory.
-    for (int i = 0; i < extList.size(); i++) {
+    for (size_t i = 0; i < extList.size(); i++) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -298,7 +298,7 @@ const std::string FileData::getVideoPath() const
         getMediaDirectory() + mSystemName + "/videos" + subFolders + "/" + getDisplayName();
 
     // Look for media in the media directory.
-    for (int i = 0; i < extList.size(); i++) {
+    for (size_t i = 0; i < extList.size(); i++) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;

@@ -115,8 +115,6 @@ private:
     std::vector<std::string> mCompletedIndexFilteredKeys;
     std::vector<std::string> mBrokenIndexFilteredKeys;
     std::vector<std::string> mHiddenIndexFilteredKeys;
-
-    FileData* mRootFolder;
 };
 
 #endif // ES_APP_FILE_FILTER_INDEX_H
