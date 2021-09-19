@@ -346,9 +346,9 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
                 out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
             }
             else {
-                for (auto it = subChildren.cbegin(); it != subChildren.cend(); it++) {
-                    if ((*it)->getCountAsGame())
-                        out.push_back(*it);
+                for (auto it2 = subChildren.cbegin(); it2 != subChildren.cend(); it2++) {
+                    if ((*it2)->getCountAsGame())
+                        out.push_back(*it2);
                 }
             }
         }

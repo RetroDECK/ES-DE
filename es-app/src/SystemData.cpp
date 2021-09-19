@@ -392,19 +392,20 @@ bool SystemData::loadConfig()
 
     bool onlyProcessCustomFile = false;
 
-    for (auto path : configPaths) {
+    for (auto configPath : configPaths) {
         // If the loadExclusive tag is present in the custom es_systems.xml file, then skip
         // processing of the bundled configuration file.
         if (onlyProcessCustomFile)
             break;
 
-        LOG(LogInfo) << "Parsing systems configuration file \"" << path << "\"...";
+        LOG(LogInfo) << "Parsing systems configuration file \"" << configPath << "\"...";
 
         pugi::xml_document doc;
 #if defined(_WIN64)
-        pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+        pugi::xml_parse_result res =
+            doc.load_file(Utils::String::stringToWideString(configPath).c_str());
 #else
-        pugi::xml_parse_result res = doc.load_file(path.c_str());
+        pugi::xml_parse_result res = doc.load_file(configPath.c_str());
 #endif
 
         if (!res) {
@@ -414,7 +415,7 @@ bool SystemData::loadConfig()
 
         pugi::xml_node loadExclusive = doc.child("loadExclusive");
         if (loadExclusive) {
-            if (path == configPaths.front() && configPaths.size() > 1) {
+            if (configPath == configPaths.front() && configPaths.size() > 1) {
                 LOG(LogInfo) << "Only loading custom file as the <loadExclusive> tag is present";
                 onlyProcessCustomFile = true;
             }
@@ -1234,21 +1235,21 @@ void SystemData::onMetaDataSavePoint()
     writeMetaData();
 }
 
-void SystemData::setupSystemSortType(FileData* mRootFolder)
+void SystemData::setupSystemSortType(FileData* rootFolder)
 {
     // If DefaultSortOrder is set to something, check that it is actually a valid value.
     if (Settings::getInstance()->getString("DefaultSortOrder") != "") {
         for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
             if (FileSorts::SortTypes.at(i).description ==
                 Settings::getInstance()->getString("DefaultSortOrder")) {
-                mRootFolder->setSortTypeString(
+                rootFolder->setSortTypeString(
                     Settings::getInstance()->getString("DefaultSortOrder"));
                 break;
             }
         }
     }
     // If no valid sort type was defined in the configuration file, set to default sorting.
-    if (mRootFolder->getSortTypeString() == "")
-        mRootFolder->setSortTypeString(
+    if (rootFolder->getSortTypeString() == "")
+        rootFolder->setSortTypeString(
             Settings::getInstance()->getDefaultString("DefaultSortOrder"));
 }

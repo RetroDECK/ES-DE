@@ -674,7 +674,6 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 rootFolder->getChildrenByFilename();
             bool found = children.find(key) != children.cend();
             FileFilterIndex* fileIndex = sysData->getIndex();
-            std::string name = sysData->getName();
 
             SystemData* systemViewToUpdate = getSystemToView(sysData);
 

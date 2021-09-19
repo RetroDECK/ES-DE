@@ -146,7 +146,7 @@ public:
     void onMetaDataSavePoint();
     void writeMetaData();
 
-    void setupSystemSortType(FileData* mRootFolder);
+    void setupSystemSortType(FileData* rootFolder);
 
 private:
     std::string mName;

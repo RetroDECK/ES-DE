@@ -147,9 +147,6 @@ void GuiGamelistFilter::addFiltersToMenu()
         std::string menuLabel = (*it).menuLabel; // Text to show in menu.
         std::shared_ptr<OptionListComponent<std::string>> optionList;
 
-        // Add filters (with first one selected).
-        ComponentListRow row;
-
         // Add genres.
         optionList = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
                                                                         menuLabel, true);

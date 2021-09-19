@@ -95,13 +95,13 @@ void NinePatchComponent::buildVertices()
         const glm::vec2 imgPos{imgPosX[sliceX], imgPosY[sliceY]};
         const glm::vec2 imgSize{imgSizeX[sliceX], imgSizeY[sliceY]};
         const glm::vec2 texPos{texPosX[sliceX], texPosY[sliceY]};
-        const glm::vec2 texSize{texSizeX[sliceX], texSizeY[sliceY]};
+        const glm::vec2 texSizeSlice{texSizeX[sliceX], texSizeY[sliceY]};
 
         // clang-format off
-        mVertices[v + 1] = {{imgPos.x            , imgPos.y            }, {texPos.x,             texPos.y            }, 0};
-        mVertices[v + 2] = {{imgPos.x            , imgPos.y + imgSize.y}, {texPos.x,             texPos.y + texSize.y}, 0};
-        mVertices[v + 3] = {{imgPos.x + imgSize.x, imgPos.y            }, {texPos.x + texSize.x, texPos.y            }, 0};
-        mVertices[v + 4] = {{imgPos.x + imgSize.x, imgPos.y + imgSize.y}, {texPos.x + texSize.x, texPos.y + texSize.y}, 0};
+        mVertices[v + 1] = {{imgPos.x            , imgPos.y            }, {texPos.x,                  texPos.y                 }, 0};
+        mVertices[v + 2] = {{imgPos.x            , imgPos.y + imgSize.y}, {texPos.x,                  texPos.y + texSizeSlice.y}, 0};
+        mVertices[v + 3] = {{imgPos.x + imgSize.x, imgPos.y            }, {texPos.x + texSizeSlice.x, texPos.y                 }, 0};
+        mVertices[v + 4] = {{imgPos.x + imgSize.x, imgPos.y + imgSize.y}, {texPos.x + texSizeSlice.x, texPos.y + texSizeSlice.y}, 0};
         // clang-format on
 
         // Round vertices.
