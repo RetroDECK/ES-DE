@@ -131,9 +131,10 @@ void VolumeControl::init()
                 // Retrieve endpoint volume.
                 defaultDevice->Activate(__uuidof(IAudioEndpointVolume), CLSCTX_INPROC_SERVER,
                                         nullptr, reinterpret_cast<LPVOID*>(&endpointVolume));
-                if (endpointVolume == nullptr)
+                if (endpointVolume == nullptr) {
                     LOG(LogError) << "VolumeControl::init(): "
                                      "Failed to get default audio endpoint volume!";
+                }
                 // Release default device. we don't need it anymore.
                 defaultDevice->Release();
             }
@@ -245,8 +246,9 @@ void VolumeControl::setVolume(int volume)
         float floatVolume = 0.0f; // 0-1
         if (volume > 0)
             floatVolume = static_cast<float>(volume) / 100.0f;
-        if (endpointVolume->SetMasterVolumeLevelScalar(floatVolume, nullptr) != S_OK)
+        if (endpointVolume->SetMasterVolumeLevelScalar(floatVolume, nullptr) != S_OK) {
             LOG(LogError) << "VolumeControl::setVolume(): Failed to set master volume";
+        }
     }
 #endif
 }

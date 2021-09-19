@@ -132,7 +132,7 @@ bool parseArgs(int argc, char* argv[])
 #if defined(_WIN64)
     // Print any command line output to the console.
     if (argc > 1)
-        win64ConsoleType consoleType = outputToConsole(false);
+        outputToConsole(false);
 #endif
 
     std::string portableFilePath = Utils::FileSystem::getExePath() + "/portable.txt";
