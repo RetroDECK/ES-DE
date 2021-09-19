@@ -28,7 +28,6 @@
 #define DEFAULT_MARGIN_X 10.0f
 #define DEFAULT_MARGIN_Y 10.0f
 #define DEFAULT_ITEM_SIZE_X 64.0f
-#define DEFAULT_ITEM_SIZE_Y 64.0f
 
 class TextureResource;
 

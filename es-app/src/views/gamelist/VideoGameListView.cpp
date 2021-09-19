@@ -450,10 +450,10 @@ void VideoGameListView::updateInfoPanel()
 
         // Generate badges slots value based on the game metadata.
         std::stringstream ss;
-        ss << (file->metadata.get("favorite").compare("true") ? "favorite " : "");
-        ss << (file->metadata.get("completed").compare("true") ? "completed " : "");
-        ss << (file->metadata.get("kidgame").compare("true") ? "kidgame " : "");
-        ss << (file->metadata.get("broken").compare("true") ? "broken " : "");
+        ss << (file->metadata.get("favorite").compare("true") ? "" : "favorite ");
+        ss << (file->metadata.get("completed").compare("true") ? "" : "completed ");
+        ss << (file->metadata.get("kidgame").compare("true") ? "" : "kidgame ");
+        ss << (file->metadata.get("broken").compare("true") ? "" : "broken ");
         std::string slots = ss.str();
         if (!slots.empty())
             slots.pop_back();
