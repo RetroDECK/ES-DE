@@ -61,6 +61,12 @@ bool ComponentList::input(InputConfig* config, Input input)
     if (size() == 0)
         return false;
 
+    if (input.value &&
+        (config->isMappedTo("a", input) || config->isMappedLike("lefttrigger", input) ||
+         config->isMappedLike("righttrigger", input))) {
+        stopScrolling();
+    }
+
     // Give it to the current row's input handler.
     if (mEntries.at(mCursor).data.input_handler) {
         if (mEntries.at(mCursor).data.input_handler(config, input))
