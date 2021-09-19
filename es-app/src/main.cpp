@@ -636,10 +636,10 @@ int main(int argc, char* argv[])
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
             window.pushGui(new GuiDetectDevice(&window, false, true,
-                                               [] { ViewController::get()->goToStart(); }));
+                                               [] { ViewController::get()->goToStart(true); }));
         }
         else {
-            ViewController::get()->goToStart();
+            ViewController::get()->goToStart(true);
         }
     }
 

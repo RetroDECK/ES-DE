@@ -236,7 +236,7 @@ void ViewController::invalidAlternativeEmulatorDialog()
                                    "INTERFACE IN THE 'OTHER SETTINGS' MENU"));
 }
 
-void ViewController::goToStart()
+void ViewController::goToStart(bool playTransition)
 {
     // If the system view does not exist, then create it. We do this here as it would
     // otherwise not be done if jumping directly into a specific game system on startup.
@@ -250,6 +250,8 @@ void ViewController::goToStart()
              it != SystemData::sSystemVector.cend(); it++) {
             if ((*it)->getName() == requestedSystem) {
                 goToGameList(*it);
+                if (!playTransition)
+                    cancelViewTransitions();
                 return;
             }
         }
@@ -624,7 +626,7 @@ void ViewController::playViewTransition(bool instant)
                                       fadeCallback, true);
                      });
 
-        // Fast-forward animation if we're partway faded.
+        // Fast-forward animation if we're partially faded.
         if (target == static_cast<glm::vec3>(-mCamera[3])) {
             // Not changing screens, so cancel the first half entirely.
             advanceAnimation(0, FADE_DURATION);

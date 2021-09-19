@@ -60,7 +60,7 @@ public:
     void goToGameList(SystemData* system);
     void goToSystemView(SystemData* system, bool playTransition);
     void goToSystem(SystemData* system, bool animate);
-    void goToStart();
+    void goToStart(bool playTransition);
     void ReloadAndGoToStart();
 
     // Functions to make the GUI behave properly.

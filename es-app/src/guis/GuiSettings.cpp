@@ -97,7 +97,7 @@ void GuiSettings::save()
         ViewController::get()->reloadAll();
 
     if (mNeedsGoToStart)
-        ViewController::get()->goToStart();
+        ViewController::get()->goToStart(true);
 
     if (mNeedsGoToSystem)
         ViewController::get()->goToSystem(mGoToSystem, false);
@@ -124,7 +124,7 @@ void GuiSettings::save()
         // the safe side.
         if (state.getSystem()->isCollection() &&
             state.getSystem()->getThemeFolder() != "custom-collections") {
-            ViewController::get()->goToStart();
+            ViewController::get()->goToStart(false);
             ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
             // We don't want to invalidate the cached background when there has been a collection
             // systen change as that may show a black screen in some circumstances.
@@ -134,7 +134,7 @@ void GuiSettings::save()
         // system view).
         if (std::find(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(),
                       state.getSystem()) == SystemData::sSystemVector.end()) {
-            ViewController::get()->goToStart();
+            ViewController::get()->goToStart(false);
             return;
         }
     }
