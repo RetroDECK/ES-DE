@@ -217,20 +217,30 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 if (mInvalidEmulatorEntry ||
                     scraperParams.system->getSystemEnvData()->mLaunchCommands.size() > 1) {
-                    row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal] {
-                        auto s = new GuiSettings(mWindow, title);
+                    row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal,
+                                                originalValue] {
+                        GuiSettings* s = nullptr;
 
-                        if (!mInvalidEmulatorEntry && ed->getValue() == "" &&
-                            scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1)
+                        bool singleEntry =
+                            scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1;
+
+                        if (mInvalidEmulatorEntry && singleEntry)
+                            s = new GuiSettings(mWindow, "CLEAR INVALID ENTRY");
+                        else
+                            s = new GuiSettings(mWindow, title);
+
+                        if (!mInvalidEmulatorEntry && ed->getValue() == "" && singleEntry)
                             return;
 
                         std::vector<std::pair<std::string, std::string>> launchCommands =
                             scraperParams.system->getSystemEnvData()->mLaunchCommands;
 
-                        if (ed->getValue() != "" && mInvalidEmulatorEntry)
-                            launchCommands.push_back(std::make_pair("", "<CLEAR INVALID ENTRY>"));
+                        if (ed->getValue() != "" && mInvalidEmulatorEntry && singleEntry)
+                            launchCommands.push_back(std::make_pair(
+                                "", ViewController::EXCLAMATION_CHAR + " " + originalValue));
                         else if (ed->getValue() != "")
-                            launchCommands.push_back(std::make_pair("", "<CLEAR ENTRY>"));
+                            launchCommands.push_back(std::make_pair(
+                                "", ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY"));
 
                         for (auto entry : launchCommands) {
                             std::string selectedLabel = ed->getValue();
@@ -385,7 +395,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         mList->addRow(row);
 
         if (iter->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry == true)
-            ed->setValue(ViewController::EXCLAMATION_CHAR + " INVALID ENTRY ");
+            ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
         else
             ed->setValue(mMetaData->get(iter->key));
 

@@ -95,7 +95,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
         row.addElement(labelText, false);
         row.makeAcceptInputHandler([this, it, labelText] {
-            if (labelText->getValue() == "<CLEARED ENTRY>")
+            if (labelText->getValue() == ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY")
                 return;
             selectorWindow(*it);
         });
@@ -154,7 +154,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
         ComponentListRow row;
 
         if (entry.second == "")
-            label = "<CLEAR INVALID ENTRY>";
+            label = ViewController::CROSSEDCIRCLE_CHAR + " CLEAR INVALID ENTRY";
         else
             label = entry.second;
 
@@ -175,7 +175,8 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 
                 if (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second) {
                     if (system->getSystemEnvData()->mLaunchCommands.front().second == "") {
-                        updateMenu(system->getName(), "<CLEARED ENTRY>",
+                        updateMenu(system->getName(),
+                                   ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY",
                                    (entry.second ==
                                     system->getSystemEnvData()->mLaunchCommands.front().second));
                     }

@@ -39,6 +39,7 @@ ViewController* ViewController::sInstance = nullptr;
 
 #if defined(_MSC_VER) // MSVC compiler.
 const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uf11b");
+const std::string ViewController::CROSSEDCIRCLE_CHAR = Utils::String::wideStringToString(L"\uf05e");
 const std::string ViewController::EXCLAMATION_CHAR = Utils::String::wideStringToString(L"\uf06a");
 const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uf005");
 const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uf0b0");
@@ -47,6 +48,7 @@ const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(
 const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uf14A");
 #else
 const std::string ViewController::CONTROLLER_CHAR = "\uf11b";
+const std::string ViewController::CROSSEDCIRCLE_CHAR = "\uf05e";
 const std::string ViewController::EXCLAMATION_CHAR = "\uf06a";
 const std::string ViewController::FAVORITE_CHAR = "\uf005";
 const std::string ViewController::FILTER_CHAR = "\uf0b0";

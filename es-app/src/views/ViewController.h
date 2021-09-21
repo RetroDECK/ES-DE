@@ -124,6 +124,7 @@ public:
 
     // Font Awesome symbols.
     static const std::string CONTROLLER_CHAR;
+    static const std::string CROSSEDCIRCLE_CHAR;
     static const std::string EXCLAMATION_CHAR;
     static const std::string FAVORITE_CHAR;
     static const std::string FILTER_CHAR;
