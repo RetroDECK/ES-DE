@@ -554,6 +554,15 @@ std::string CollectionSystemsManager::getValidNewCollectionName(std::string inNa
 {
     std::string name = inName;
 
+    // Trim leading and trailing whitespaces.
+    name.erase(name.begin(), std::find_if(name.begin(), name.end(), [](char c) {
+                   return !std::isspace(static_cast<unsigned char>(c));
+               }));
+    name.erase(std::find_if(name.rbegin(), name.rend(),
+                            [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
+                   .base(),
+               name.end());
+
     if (index == 0) {
         size_t remove = std::string::npos;
         // Get valid name.
