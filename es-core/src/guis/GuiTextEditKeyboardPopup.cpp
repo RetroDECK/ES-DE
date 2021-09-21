@@ -7,7 +7,6 @@
 //  Has a default mode and a complex mode, both with various options passed as arguments.
 //
 
-#define KEYBOARD_WIDTH Renderer::getScreenWidth() * 0.78f
 #define KEYBOARD_HEIGHT Renderer::getScreenHeight() * 0.60f
 
 #define KEYBOARD_PADDINGX (Renderer::getScreenWidth() * 0.02f)
