@@ -385,6 +385,14 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                     parentRootFolder->sort(parentRootFolder->getSortTypeFromString(
                                                parentRootFolder->getSortTypeString()),
                                            mFavoritesSorting);
+                    GuiInfoPopup* s = new GuiInfoPopup(
+                        mWindow,
+                        "DISABLED '" +
+                            Utils::String::toUpper(
+                                Utils::String::removeParenthesis(file->getName())) +
+                            "' IN '" + Utils::String::toUpper(sysData.system->getName()) + "'",
+                        4000);
+                    mWindow->setInfoPopup(s);
                 }
                 else {
                     ViewController::get()->getGameListView(curSys).get()->remove(collectionEntry,
