@@ -31,18 +31,22 @@
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
 * Added a function to generate MD5 hashes
 * Moved the "complex" mode functionality from GuiComplexTextEditPopup into GuiTextEditPopup and removed the source files for the former
-* Increased the warning level for LLVM/Clang and GCC by adding -Wall, -Wpedantic and some additional flags
+* Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags
 * Fixed a lot of compiler warnings introduced by the -Wall and -Wpedantic flags
 * Changed the language standard from C++14 to C++17
-* Increased the minimal required compiler version to 5.0.0 for LLVM/Clang and 7.1 for GCC
+* Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
 * Changed two clang-format rules related to braced lists and reformatted the codebase
 
 ### Bug fixes
 
+* Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviours
+* Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
+* Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
 * When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
+* When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
 * Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions
 * The "sortname" window header was incorrectly spelled when editing this type of entry in the metadata editor
 * When the last row of a menu had its text color changed, this color was completely desaturated when navigating to a button below the list

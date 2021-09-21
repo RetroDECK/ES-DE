@@ -377,7 +377,7 @@ The platform name for the Commodore 64 is `c64`, so the following structure woul
 ~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
-It's highly recommended to create `.m3u` playlist files for multi-disk images as this normally automates disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
+It's highly recommended to create `.m3u` playlist files for multi-disc images as this normally automates disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
 The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
@@ -432,7 +432,7 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf` or `.hdz` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
-An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disk images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disk images as described earlier.
+An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described earlier.
 
 Here's an example of what the file structure could look like:
 
@@ -872,7 +872,7 @@ If this setting is enabled and a folder has its flag set to be excluded from the
 
 **Scrape actual folders** _(Multi-scraper only)_
 
-Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS games or any multi-disk games where there is a folder for each individual game.
+Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS games or any multi-disc games where there is a folder for each individual game.
 
 **Auto-retry on peer verification errors** _(ScreenScraper only)_
 
@@ -956,7 +956,7 @@ With this option enabled, there will be an overlay displayed when scrolling the 
 
 **Enable virtual keyboard**
 
-This enables a virtual (on-screen) keyboard that can be used at various places throughout the application to input text and numbers using a controller. The Shift and Alt keys can be toggled individually or combined together to access many special characters. The general use of the virtual keyboard should hopefully be self-explanatory,
+This enables a virtual (on-screen) keyboard that can be used at various places throughout the application to input text and numbers using a controller. The Shift and Alt keys can be toggled individually or combined together to access many special characters. The general use of the virtual keyboard should hopefully be self-explanatory.
 
 **Enable toggle favorites button**
 
@@ -1242,7 +1242,7 @@ If this option is disabled, hidden files and folders within the ROMs directory t
 
 **Show hidden games (requires restart)**
 
-You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disk games where you may only want to show the .m3u playlists and not the individual game files. By disabling this option these files will not be processed at all when ES-DE starts up. If you enable the option you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden.
+You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disc games where you may only want to show the .m3u playlists and not the individual game files. By disabling this option these files will not be processed at all when ES-DE starts up. If you enable the option you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden.
 
 **Enable custom event scripts**
 
@@ -1430,7 +1430,7 @@ A flag to mark whether the game is suitable for children. This will be applied a
 
 **Hidden**
 
-A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts and unnecessary binaries or to hide the actual game files for multi-disk games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games has not been enabled, then the opacity of the text will be lowered significantly to make it clear that it's a hidden entry.
+A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts and unnecessary binaries or to hide the actual game files for multi-disc games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games has not been enabled, then the opacity of the text will be lowered significantly to make it clear that it's a hidden entry.
 
 **Broken/not working**
 
@@ -1438,15 +1438,15 @@ A flag to indicate whether the game is broken. Useful for MAME games for instanc
 
 **Exclude from game counter** _(files only)_
 
-A flag to indicate whether the game should be excluded from being counted. If this is set for a game, it will not be included in the game counter shown per system on the system view, and it will not be included in the system information field in the gamelist view. As well, it will be excluded from all automatic and custom collections. This option is quite useful for multi-file games such as multi-disk Amiga or Commodore 64 games, or for DOS games where you want to exclude setup programs and similar but still need them available in ES-DE and therefore can't hide them. Files that have this flag set will have a lower opacity in the gamelists, making them easy to spot.
+A flag to indicate whether the game should be excluded from being counted. If this is set for a game, it will not be included in the game counter shown per system on the system view, and it will not be included in the system information field in the gamelist view. As well, it will be excluded from all automatic and custom collections. This option is quite useful for multi-file games such as multi-disc Amiga or Commodore 64 games, or for DOS games where you want to exclude setup programs and similar but still need them available in ES-DE and therefore can't hide them. Files that have this flag set will have a lower opacity in the gamelists, making them easy to spot.
 
 **Exclude from multi-scraper**
 
-Whether to exclude the file from the multi-scraper. This is quite useful in order to avoid scraping all the disks for multi-disk games for example. There is an option in the scraper settings to ignore this flag, but by default the multi-scraper will respect it.
+Whether to exclude the file from the multi-scraper. This is quite useful in order to avoid scraping all the disks for multi-disc games for example. There is an option in the scraper settings to ignore this flag, but by default the multi-scraper will respect it.
 
 **Hide metadata fields**
 
-This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disk, Cartridges etc.) and for setup programs and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disk games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's also possible to display game images and videos with this setting enabled.
+This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disc, Cartridges etc.) and for setup programs and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disc games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's also possible to display game images and videos with this setting enabled.
 
 **Times played** _(files only)_
 
@@ -1644,17 +1644,21 @@ Sometimes the name of the console is (more or less) the same for multiple region
 
 For the **Full name** column, text inside square brackets [] are comments and not part of the actual game system name.
 
-The **Default emulator** column lists the primary emulator as configured in es_systems.xml. Any system marked with an asterisk (*) in this column requires additional system/BIOS ROMs to run, as should be explained in the emulator documentation.
+The **Default emulator** column lists the primary emulator as configured in es_systems.xml. Any system marked with an asterisk (*) in this column requires additional system/BIOS ROMs to run, as should be explained by the emulator documentation. Good starting points for such documentation are [https://docs.libretro.com](https://docs.libretro.com) and [https://docs.libretro.com/library/bios](https://docs.libretro.com/library/bios)
 
 The **Alternative emulators** column lists additional emulators configured in es_systems.xml that can be selected per system and per game, as explained earlier in this guide. Note that not all of these emulators may be available on all operating systems.
 
-For additional details regarding which game file extensions are supported per system, refer to the es_systems.xml files [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml). Normally the extensions setup in these files should cover everything that the emulators support.
+For additional details regarding which game file extensions are supported per system, refer to the es_systems.xml files [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml). Normally the extensions setup in these files should cover everything that the emulators support. Note that for systems that have alternative emulators defined, the list of extensions is a combination of what is supported by all the emulators. This approach is necessary as you want to be able to see all games for each system while potentially testing and switching between different emulators, either system-wide or on a per game basis.
 
 If you generated the ROMs directory structure when first starting ES-DE, the systeminfo.txt files located in each game system directory will also contain the information about the emulator core and supported file extensions.
+
+For CD-based systems it's generally recommended to use CHD files (extension .chd) as this saves space due to compression compared to BIN/CUE, IMG, ISO etc. The CHD format is also supported by most emulators. You can convert to CHD from various formats using the MAME `chdman` utility, for example `chdman createcd -i mygame.iso -o mygame.chd`. Sometimes chdman has issues converting from the IMG and BIN formats, and in this case it's possible to first convert to ISO using `ccd2iso`, such as `ccd2iso mygame.img mygame.iso`.
 
 MAME emulation is a bit special as the choice of emulator depends on which ROM set you're using. It's recommended to go for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore the `arcade` system is configured to use _MAME - Current (RetroArch)_ by default, which as the name implies will be the latest available MAME version. But if you have a really slow computer you may want to use another ROM set such as the popular 0.78. In this case, you can either select _MAME 2003-Plus (RetroArch)_ as an alternative emulator, or you can use the `mame` system which comes configured with this emulator as the default. There are more MAME versions available as alternative emulators, as you can see in the table below.
 
 There are also other MAME forks and derivates available such as MAME4ALL, AdvanceMAME, FinalBurn Alpha and FinalBurn Neo but it's beyond the scope of this document to describe those in detail. For more information, refer to the [RetroPie arcade documentation](https://retropie.org.uk/docs/Arcade) which has a good overview of the various MAME alternatives.
+
+In general .zip or .7z files are recommended for smaller-sized games like those from older systems (assuming the emulator supports it). But for CD-based systems it's not a good approach as uncompressing the larger CD images takes quite some time, leading to slow game launches. As explained above, converting CD images to CHD files is a better solution for achieving file compression while still enjoying fast game launches.
 
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
@@ -1663,9 +1667,9 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | 3do                   | 3DO                                            |                                   |                                   |                                      |
 | 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next (RetroArch) on Unix and Windows, ParaLLEl N64 (RetroArch) on macOS | ParaLLEl N64 (RetroArch) |                                      |
 | ags                   | Adventure Game Studio game engine              |                                   |                                   |                                      |
-| amiga                 | Commodore Amiga                                | P-UAE (RetroArch)*                |                                   | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
-| amiga600              | Commodore Amiga 600                            | P-UAE (RetroArch)*                |                                   | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
-| amiga1200             | Commodore Amiga 1200                           | P-UAE (RetroArch)*                |                                   | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disk, or in separate folder with .m3u playlist if multi-disk |
+| amiga                 | Commodore Amiga                                | P-UAE (RetroArch)*                |                                   | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
+| amiga600              | Commodore Amiga 600                            | P-UAE (RetroArch)*                |                                   | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
+| amiga1200             | Commodore Amiga 1200                           | P-UAE (RetroArch)*                |                                   | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
 | amigacd32             | Commodore Amiga CD32                           |                                   |                                   |                                      |
 | amstradcpc            | Amstrad CPC                                    |                                   |                                   |                                      |
 | apple2                | Apple II                                       |                                   |                                   |                                      |
@@ -1683,7 +1687,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | atarixe               | Atari XE                                       |                                   |                                   |                                      |
 | atomiswave            | Atomiswave                                     |                                   |                                   |                                      |
 | bbcmicro              | BBC Micro                                      |                                   |                                   |                                      |
-| c64                   | Commodore 64                                   | VICE x64sc, accurate (RetroArch)  |                                   | Single disk, tape or cartridge image in root folder and/or multi-disk images in separate folder |
+| c64                   | Commodore 64                                   | VICE x64sc, accurate (RetroArch)  |                                   | Single disk, tape or cartridge image in root folder and/or multi-disc images in separate folder |
 | cavestory             | Cave Story (NXEngine)                          |                                   |                                   |                                      |
 | cdtv                  | Commodore CDTV                                 |                                   |                                   |                                      |
 | chailove              | ChaiLove game engine                           |                                   |                                   |                                      |
@@ -1756,7 +1760,7 @@ Consider the table below a work in progress as it's obvioulsy not fully populate
 | ps4                   | Sony PlayStation 4                             |                                   |                                   |                                      |
 | psp                   | Sony PlayStation Portable                      |                                   |                                   |                                      |
 | psvita                | Sony PlayStation Vita                          |                                   |                                   |                                      |
-| psx                   | Sony PlayStation                               |                                   |                                   |                                      |
+| psx                   | Sony PlayStation                               | Beetle PSX (RetroArch)*           | Beetle PSX HW (RetroArch), PCSX ReARMed (RetroArch), DuckStation (RetroArch) | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games  |
 | residualvm            | ResidualVM game engine                         |                                   |                                   |                                      |
 | samcoupe              | SAM Coupé                                      |                                   |                                   |                                      |
 | satellaview           | Nintendo Satellaview                           |                                   |                                   |                                      |
