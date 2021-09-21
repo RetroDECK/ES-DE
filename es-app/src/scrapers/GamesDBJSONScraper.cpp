@@ -158,6 +158,18 @@ void thegamesdb_generate_json_scraper_requests(
                     cleanName = params.game->getCleanName();
             }
         }
+
+        // Trim leading and trailing whitespaces.
+        cleanName.erase(cleanName.begin(),
+                        std::find_if(cleanName.begin(), cleanName.end(), [](char c) {
+                            return !std::isspace(static_cast<unsigned char>(c));
+                        }));
+        cleanName.erase(
+            std::find_if(cleanName.rbegin(), cleanName.rend(),
+                         [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
+                .base(),
+            cleanName.end());
+
         path += "/Games/ByGameName?" + apiKey +
                 "&fields=players,publishers,genres,overview,last_updated,rating,"
                 "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=" +
