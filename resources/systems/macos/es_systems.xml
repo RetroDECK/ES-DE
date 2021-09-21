@@ -885,8 +885,11 @@
         <name>psx</name>
         <fullname>Sony PlayStation</fullname>
         <path>%ROMPATH%/psx</path>
-        <extension>.cue .CUE .toc .TOC .m3u .M3U .ccd .CCD .exe .EXE .pbp .PBP .chd .CHD .cbn .CBN .img .IMG .iso .ISO .mdf .MDF .z .Z .znx .ZNX .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_psx_libretro.dylib %ROM%</command>
+        <extension>.bin .BIN .cbn .CBN .ccd .CCD .chd .CHD .cue .CUE .ecm .ECM .exe .EXE .img .IMG .iso .ISO .m3u .M3U .mdf .MDF .mds .MDS .pbp .PBP .psexe .PSEXE .psf .PSF .toc .TOC .z .Z .znx .ZNX .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle PSX (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_psx_libretro.dylib %ROM%</command>
+        <command label="Beetle PSX HW (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_psx_hw_libretro.dylib %ROM%</command>
+        <command label="PCSX ReARMed (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx_rearmed_libretro.dylib %ROM%</command>
+        <command label="DuckStation (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/duckstation_libretro.dylib %ROM%</command>
         <platform>psx</platform>
         <theme>psx</theme>
     </system>
