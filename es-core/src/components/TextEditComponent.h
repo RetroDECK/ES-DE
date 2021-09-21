@@ -33,7 +33,7 @@ public:
     void onSizeChanged() override;
 
     void setValue(const std::string& val) override;
-    std::string getValue() const override { return mText; }
+    std::string getValue() const override;
 
     void startEditing();
     void stopEditing();

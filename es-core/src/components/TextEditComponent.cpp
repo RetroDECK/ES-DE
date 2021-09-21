@@ -84,6 +84,22 @@ void TextEditComponent::textInput(const std::string& text)
     onCursorChanged();
 }
 
+std::string TextEditComponent::getValue() const
+{
+    if (mText.empty())
+        return "";
+
+    // If mText only contains whitespace characters, then return an empty string.
+    if (std::find_if(mText.cbegin(), mText.cend(), [](char c) {
+            return !std::isspace(static_cast<unsigned char>(c));
+        }) == mText.cend()) {
+        return "";
+    }
+    else {
+        return mText;
+    }
+}
+
 void TextEditComponent::startEditing()
 {
     SDL_StartTextInput();
