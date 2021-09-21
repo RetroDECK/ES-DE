@@ -151,7 +151,7 @@ namespace Renderer
 
 #if defined(__unix__)
         // Disabling desktop composition can lead to better framerates and a more fluid user
-        // interface, but with some drivers it can cause strange behaviours when returning to
+        // interface, but with some drivers it can cause strange behaviors when returning to
         // the desktop.
         if (Settings::getInstance()->getBool("DisableComposition"))
             SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "1");

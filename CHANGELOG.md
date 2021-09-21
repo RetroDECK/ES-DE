@@ -39,7 +39,7 @@
 
 ### Bug fixes
 
-* Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviours
+* Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
