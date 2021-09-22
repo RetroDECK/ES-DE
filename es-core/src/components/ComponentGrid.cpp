@@ -334,14 +334,16 @@ bool ComponentGrid::moveCursor(glm::ivec2 dir)
             cursorEntry = getCellAt(mCursor);
 
             // Multi-cell entries.
-            if (dir.x < 0 && cursorEntry->dim.x > 1)
-                mCursor.x = getCellAt(origCursor)->pos.x - cursorEntry->dim.x;
-            if (dir.y < 0 && cursorEntry->dim.y > 1)
-                mCursor.y = getCellAt(origCursor)->pos.y - cursorEntry->dim.y;
+            if (cursorEntry != nullptr) {
+                if (dir.x < 0 && cursorEntry->dim.x > 1)
+                    mCursor.x = getCellAt(origCursor)->pos.x - cursorEntry->dim.x;
+                if (dir.y < 0 && cursorEntry->dim.y > 1)
+                    mCursor.y = getCellAt(origCursor)->pos.y - cursorEntry->dim.y;
 
-            if (cursorEntry && cursorEntry->canFocus && cursorEntry != currentCursorEntry) {
-                onCursorMoved(origCursor, mCursor);
-                return true;
+                if (cursorEntry->canFocus && cursorEntry != currentCursorEntry) {
+                    onCursorMoved(origCursor, mCursor);
+                    return true;
+                }
             }
             mCursor += searchAxis;
         }
