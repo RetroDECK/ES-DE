@@ -117,7 +117,8 @@
         <fullname>Atari 2600</fullname>
         <path>%ROMPATH%/atari2600</path>
         <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella_libretro.dylib %ROM%</command>
+        <command label="Stella (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella_libretro.dylib %ROM%</command>
+        <command label="Stella 2014 (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/stella2014_libretro.dylib %ROM%</command>
         <platform>atari2600</platform>
         <theme>atari2600</theme>
     </system>
@@ -427,8 +428,11 @@
         <name>genesis</name>
         <fullname>Sega Genesis</fullname>
         <path>%ROMPATH%/genesis</path>
-        <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.dylib %ROM%</command>
+        <extension>.68k .68K .bin .BIN .bms .BMS .chd .CHD .cue .CUE .gen .GEN .gg .GG .iso .ISO .m3u .M3U .md .MD .mdx .MDX .sg .SG .sgd .SGD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <command label="Genesis Plus GX (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.dylib %ROM%</command>
+        <command label="Genesis Plus GX Wide (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.dylib %ROM%</command>
+        <command label="PicoDrive (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
+        <command label="BlastEm (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.dylib %ROM%</command>
         <platform>genesis</platform>
         <theme>genesis</theme>
     </system>
@@ -547,8 +551,11 @@
         <name>megadrive</name>
         <fullname>Sega Mega Drive</fullname>
         <path>%ROMPATH%/megadrive</path>
-        <extension>.mdx .MDX .md .MD .smd .SMD .gen .GEN .bin .BIN .cue .CUE .iso .ISO .sms .SMS .gg .GG .sg .SG .68k .68K .chd .CHD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.dylib %ROM%</command>
+        <extension>.68k .68K .bin .BIN .bms .BMS .chd .CHD .cue .CUE .gen .GEN .gg .GG .iso .ISO .m3u .M3U .md .MD .mdx .MDX .sg .SG .sgd .SGD .smd .SMD .sms .SMS .7z .7Z .zip .ZIP</extension>
+        <command label="Genesis Plus GX (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.dylib %ROM%</command>
+        <command label="Genesis Plus GX Wide (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.dylib %ROM%</command>
+        <command label="PicoDrive (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
+        <command label="BlastEm (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.dylib %ROM%</command>
         <platform>megadrive</platform>
         <theme>megadrive</theme>
     </system>
@@ -996,8 +1003,12 @@
         <name>snes</name>
         <fullname>Nintendo SNES (Super Nintendo)</fullname>
         <path>%ROMPATH%/snes</path>
-        <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
+        <extension>.bin .BIN .bml .BML .bs .BS .bsx .BSX .dx2 .DX2 .fig .FIG .gd3 .GD3 .gd7 .GD7 .mgd .MGD .sfc .SFC .smc .SMC .st .ST .swc .SWC .7z .7Z .zip .ZIP</extension>
+        <command label="Snes9x - Current (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
+        <command label="Snes9x 2010 (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.dylib %ROM%</command>
+        <command label="bsnes (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.dylib %ROM%</command>
+        <command label="bsnes-mercury Accuracy (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.dylib %ROM%</command>
+        <command label="Mesen-S (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.dylib %ROM%</command>
         <platform>snes</platform>
         <theme>snes</theme>
     </system>
@@ -1005,8 +1016,12 @@
         <name>snesna</name>
         <fullname>Nintendo SNES (Super Nintendo)</fullname>
         <path>%ROMPATH%/snesna</path>
-        <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
+        <extension>.bin .BIN .bml .BML .bs .BS .bsx .BSX .dx2 .DX2 .fig .FIG .gd3 .GD3 .gd7 .GD7 .mgd .MGD .sfc .SFC .smc .SMC .st .ST .swc .SWC .7z .7Z .zip .ZIP</extension>
+        <command label="Snes9x - Current (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
+        <command label="Snes9x 2010 (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.dylib %ROM%</command>
+        <command label="bsnes (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.dylib %ROM%</command>
+        <command label="bsnes-mercury Accuracy (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.dylib %ROM%</command>
+        <command label="Mesen-S (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.dylib %ROM%</command>
         <platform>snes</platform>
         <theme>snesna</theme>
     </system>
