@@ -542,7 +542,7 @@ void GuiScraperSearch::updateInfoPane()
 bool GuiScraperSearch::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("a", input) && input.value != 0) {
-        if (mBlockAccept)
+        if (mBlockAccept || mScraperResults.empty())
             return true;
     }
 
