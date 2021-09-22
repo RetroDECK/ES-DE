@@ -81,6 +81,10 @@ public:
     void onSizeChanged() override;
 
     void unsetRefinedSearch() { mRefinedSearch = false; }
+    bool getRefinedSearch() { return mRefinedSearch; }
+    bool getFoundGame() { return mFoundGame; }
+    const std::string& getNameOverride() { return mLastSearch.nameOverride; }
+
     void onFocusGained() override { mGrid.onFocusGained(); }
     void onFocusLost() override { mGrid.onFocusLost(); }
 

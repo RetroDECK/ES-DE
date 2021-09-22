@@ -324,6 +324,7 @@ void GuiScraperSearch::search(const ScraperSearchParams& params)
     mBlockAccept = true;
     mAcceptedResult = false;
     mMiximageResult = false;
+    mFoundGame = false;
     mScrapeResult = {};
 
     mResultList->clear();
@@ -545,13 +546,25 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
             return true;
     }
 
-    // Refine the search, unless the result has already been accepted or we're in semi-automatic
-    // mode and there are less than 2 search results.
+    // Check whether we should allow a refine of the game name.
     if (!mAcceptedResult && config->isMappedTo("y", input) && input.value != 0) {
-        if (mSearchType != ACCEPT_SINGLE_MATCHES ||
-            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)) {
+        bool allowRefine = false;
+
+        // Previously refined.
+        if (mRefinedSearch)
+            allowRefine = true;
+        // Interactive mode and "Auto-accept single game matches" not enabled.
+        else if (mSearchType != ACCEPT_SINGLE_MATCHES)
+            allowRefine = true;
+        // Interactive mode with "Auto-accept single game matches" enabled and more than one result.
+        else if (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)
+            allowRefine = true;
+        // Dito but there were no games found, or the search has not been completed.
+        else if (mSearchType == ACCEPT_SINGLE_MATCHES && !mFoundGame)
+            allowRefine = true;
+
+        if (allowRefine)
             openInputScreen(mLastSearch);
-        }
     }
 
     // Skip game, unless the result has already been accepted.
