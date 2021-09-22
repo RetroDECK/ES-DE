@@ -235,6 +235,7 @@ void GuiScraperMulti::skip()
     mSearchQueue.pop();
     mCurrentGame++;
     mTotalSkipped++;
+    mSearchComp->decreaseScrapeCount();
     mSearchComp->unsetRefinedSearch();
     doNextSearch();
 }
