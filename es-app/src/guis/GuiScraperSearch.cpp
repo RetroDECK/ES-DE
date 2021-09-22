@@ -567,8 +567,9 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
             openInputScreen(mLastSearch);
     }
 
-    // Skip game, unless the result has already been accepted.
-    if (!mAcceptedResult && config->isMappedTo("x", input) && input.value)
+    // If multi-scraping, skip game unless the result has already been accepted.
+    if (mSkipCallback != nullptr && !mAcceptedResult && // Line break.
+        config->isMappedTo("x", input) && input.value)
         mSkipCallback();
 
     return GuiComponent::input(config, input);
@@ -932,7 +933,11 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
     std::vector<HelpPrompt> prompts;
 
     prompts.push_back(HelpPrompt("y", "refine search"));
-    prompts.push_back(HelpPrompt("x", "skip"));
+
+    // Only show the skip prompt during multi-scraping.
+    if (mSkipCallback != nullptr)
+        prompts.push_back(HelpPrompt("x", "skip"));
+
     if (mFoundGame && (mRefinedSearch || mSearchType != ACCEPT_SINGLE_MATCHES ||
                        (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)))
         prompts.push_back(HelpPrompt("a", "accept result"));
