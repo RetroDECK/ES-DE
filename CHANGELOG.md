@@ -39,6 +39,9 @@
 
 ### Bug fixes
 
+* When multi-scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
+* When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* When multi-scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
