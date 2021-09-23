@@ -8,6 +8,10 @@
 //  remove files etc.
 //
 
+#if !defined(__APPLE__)
+#define _FILE_OFFSET_BITS 64
+#endif
+
 #if defined(__APPLE__)
 #define _DARWIN_USE_64_BIT_INODE
 #endif
