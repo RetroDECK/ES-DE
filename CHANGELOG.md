@@ -23,6 +23,7 @@
 * Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
 * Added a blinking cursor to TextEditComponent
+* Changed the filter description "Text filter (game name)" to "Game name"
 * Added support for a new type of "flat style" button to ButtonComponent
 * Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
@@ -40,11 +41,14 @@
 ### Bug fixes
 
 * When multi-scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
-* When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* When multi-scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
 * When multi-scraping in interactive mode, "No games found" results could be accepted using the "A" button
+* When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
+* Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
+* Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
 * When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
