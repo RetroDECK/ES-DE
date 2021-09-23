@@ -1447,10 +1447,10 @@ Below is an overview of the file layout with various examples. For the command t
         <!-- It's possible to define alternative emulators by adding additional command tags for a system. When doing this,
         the "label" attribute is mandatory for all tags. It's these labels that will be shown in the user interface when
         selecting the alternative emulators either system-wide or per game. The first row will be the default emulator. -->
-        <command label="Nestopia UE (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
-        <command label="FCEUmm (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
-        <command label="Mesen (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
-        <command label="QuickNES (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
+        <command label="Nestopia UE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
+        <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
+        <command label="Mesen">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
+        <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
 
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
         the snes9x_libretro core, If there are spaces in the path or file name, you must enclose them in quotation marks, such as
@@ -1531,9 +1531,9 @@ Here are some additional real world examples of system entries, the first one fo
     <fullname>DOS (PC)</fullname>
     <path>%ROMPATH%/dos</path>
     <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command label="DOSBox-core (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
-    <command label="DOSBox-Pure (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
-    <command label="DOSBox-SVN (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
+    <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+    <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+    <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
     <platform>dos</platform>
     <theme>dos</theme>
 </system>
@@ -1557,13 +1557,14 @@ And finally one for Windows:
 
 ```xml
 <system>
-    <name>sega32x</name>
-    <fullname>Sega Mega Drive 32X</fullname>
-    <path>%ROMPATH%\sega32x</path>
-    <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
-    <platform>sega32x</platform>
-    <theme>sega32x</theme>
+    <name>pcengine</name>
+    <fullname>NEC PC Engine</fullname>
+    <path>%ROMPATH%\pcengine</path>
+    <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
+    <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_libretro.dll %ROM%</command>
+    <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_fast_libretro.dll %ROM%</command>
+    <platform>pcengine</platform>
+    <theme>pcengine</theme>
 </system>
 ```
 
