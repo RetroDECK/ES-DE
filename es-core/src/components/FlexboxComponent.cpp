@@ -66,7 +66,7 @@ void FlexboxComponent::onSizeChanged() {
 
 void FlexboxComponent::computeLayout()
 {
-    // Start placing items in the top-left;
+    // Start placing items in the top-left.
     float anchorX = 0;
     float anchorY = 0;
     float anchorOriginX = 0;
@@ -93,17 +93,27 @@ void FlexboxComponent::computeLayout()
         maxItemSize = {std::max(maxItemSize.x, newSize.x), std::max(maxItemSize.y, newSize.y)};
     }
 
-    // Pre-compute layout parameters;
+    // Pre-compute layout parameters.
     int n = mChildren.size();
-    int nLines = std::max(1, (int)std::ceil(n / std::max(1, (int)mItemsPerLine)));
+    int nLines = std::max(1, (int) std::ceil(n / std::max(1, (int) mItemsPerLine)));
     float lineWidth =
-        (mDirection == "row" ? (maxItemSize.y + mItemMargin.y) : (maxItemSize.x + mItemMargin.x));
+            (mDirection == "row" ? (maxItemSize.y + mItemMargin.y) : (maxItemSize.x + mItemMargin.x));
     float anchorXStart = anchorX;
     float anchorYStart = anchorY;
 
+    // Compute total container size.
+    glm::vec2 totalSize = {mItemMargin.x, mItemMargin.y};
+    if (mDirection == "row") {
+        totalSize.x += (mItemMargin.x + mItemWidth) * mItemsPerLine;
+        totalSize.y += (mItemMargin.y + maxItemSize.y) * nLines;
+    } else {
+        totalSize.x += (mItemMargin.x + mItemWidth) * nLines;
+        totalSize.y += (mItemMargin.y + maxItemSize.y) * mItemsPerLine;
+    }
+
     // Iterate through the children.
     for (int i = 0; i < n; i++) {
-        GuiComponent* child = mChildren[i];
+        GuiComponent *child = mChildren[i];
         auto size = child->getSize();
 
         // Top-left anchor position.
@@ -118,20 +128,24 @@ void FlexboxComponent::computeLayout()
         if (mAlign == ITEM_ALIGN_END) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) : 0;
-        }
-        else if (mAlign == ITEM_ALIGN_CENTER) {
+        } else if (mAlign == ITEM_ALIGN_CENTER) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) / 2 : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) / 2 : 0;
-        }
-        else if (mAlign == ITEM_ALIGN_STRETCH && mDirection == "row") {
+        } else if (mAlign == ITEM_ALIGN_STRETCH && mDirection == "row") {
             child->setSize(child->getSize().x, maxItemSize.y);
         }
+
+        // Apply origin.
+        if (mOrigin.x > 0 && mOrigin.x <= 1)
+            x -= mOrigin.x * totalSize.x;
+        if (mOrigin.y > 0 && mOrigin.y <= 1)
+            y -= mOrigin.y * totalSize.y;
 
         // Store final item position.
         child->setPosition(getPosition().x + x, getPosition().y + y);
 
         // Translate anchor.
-        if ((i + 1) % std::max(1, (int)mItemsPerLine) != 0) {
+        if ((i + 1) % std::max(1, (int) mItemsPerLine) != 0) {
             // Translate on same line.
             anchorX += (size.x + mItemMargin.x) * directionLine.x;
             anchorY += (size.y + mItemMargin.y) * directionLine.y;
