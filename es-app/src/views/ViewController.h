@@ -15,7 +15,6 @@
 
 #include "FileData.h"
 #include "GuiComponent.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiMsgBox.h"
 #include "renderers/Renderer.h"
 
@@ -61,7 +60,7 @@ public:
     void goToGameList(SystemData* system);
     void goToSystemView(SystemData* system, bool playTransition);
     void goToSystem(SystemData* system, bool animate);
-    void goToStart();
+    void goToStart(bool playTransition);
     void ReloadAndGoToStart();
 
     // Functions to make the GUI behave properly.
@@ -125,11 +124,13 @@ public:
 
     // Font Awesome symbols.
     static const std::string CONTROLLER_CHAR;
+    static const std::string CROSSEDCIRCLE_CHAR;
     static const std::string EXCLAMATION_CHAR;
     static const std::string FAVORITE_CHAR;
     static const std::string FILTER_CHAR;
     static const std::string FOLDER_CHAR;
     static const std::string GEAR_CHAR;
+    static const std::string KEYBOARD_CHAR;
     static const std::string TICKMARK_CHAR;
 
 private:

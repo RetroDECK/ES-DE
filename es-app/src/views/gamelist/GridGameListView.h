@@ -68,14 +68,19 @@ protected:
 
     ImageGridComponent<FileData*> mGrid;
     // Points to the first game in the list, i.e. the first entry which is of the type 'GAME'.
-    FileData* firstGameEntry;
+    FileData *firstGameEntry;
 
 private:
     void updateInfoPanel();
-    const std::string getImagePath(FileData* file);
+
+    const std::string getImagePath(FileData *file);
 
     void initMDLabels();
+
     void initMDValues();
+
+    ImageComponent mMarquee;
+    ImageComponent mImage;
 
     TextComponent mLblRating;
     TextComponent mLblReleaseDate;
@@ -87,8 +92,6 @@ private:
     TextComponent mLblPlayCount;
 
     BadgesComponent mBadges;
-    ImageComponent mMarquee;
-    ImageComponent mImage;
     RatingComponent mRating;
     DateTimeComponent mReleaseDate;
     TextComponent mDeveloper;

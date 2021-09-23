@@ -8,7 +8,9 @@
 //  remove files etc.
 //
 
+#if !defined(__APPLE__)
 #define _FILE_OFFSET_BITS 64
+#endif
 
 #if defined(__APPLE__)
 #define _DARWIN_USE_64_BIT_INODE
@@ -260,8 +262,8 @@ namespace Utils
         std::string getPreferredPath(const std::string& path)
         {
             std::string preferredPath = path;
-            size_t offset = std::string::npos;
 #if defined(_WIN64)
+            size_t offset = std::string::npos;
             // Convert '/' to '\\'
             while ((offset = preferredPath.find('/')) != std::string::npos)
                 preferredPath.replace(offset, 1, "\\");

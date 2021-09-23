@@ -16,6 +16,7 @@
 #include "SystemData.h"
 #include "Window.h"
 #include "components/HelpComponent.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGameListView.h"
@@ -23,6 +24,7 @@
 GuiSettings::GuiSettings(Window* window, std::string title)
     : GuiComponent(window)
     , mMenu(window, title)
+    , mGoToSystem(nullptr)
     , mNeedsSaving(false)
     , mNeedsReloadHelpPrompts(false)
     , mNeedsCollectionsUpdate(false)
@@ -34,7 +36,6 @@ GuiSettings::GuiSettings(Window* window, std::string title)
     , mNeedsGoToSystem(false)
     , mNeedsGoToGroupedCollections(false)
     , mInvalidateCachedBackground(false)
-    , mGoToSystem(nullptr)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -96,7 +97,7 @@ void GuiSettings::save()
         ViewController::get()->reloadAll();
 
     if (mNeedsGoToStart)
-        ViewController::get()->goToStart();
+        ViewController::get()->goToStart(true);
 
     if (mNeedsGoToSystem)
         ViewController::get()->goToSystem(mGoToSystem, false);
@@ -123,7 +124,7 @@ void GuiSettings::save()
         // the safe side.
         if (state.getSystem()->isCollection() &&
             state.getSystem()->getThemeFolder() != "custom-collections") {
-            ViewController::get()->goToStart();
+            ViewController::get()->goToStart(false);
             ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
             // We don't want to invalidate the cached background when there has been a collection
             // systen change as that may show a black screen in some circumstances.
@@ -133,7 +134,7 @@ void GuiSettings::save()
         // system view).
         if (std::find(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(),
                       state.getSystem()) == SystemData::sSystemVector.end()) {
-            ViewController::get()->goToStart();
+            ViewController::get()->goToStart(false);
             return;
         }
     }
@@ -193,15 +194,30 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         }
     };
 
-    row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
-        // Never display the value if it's a password, instead set it to blank.
-        if (isPassword)
-            mWindow->pushGui(
-                new GuiTextEditPopup(mWindow, getHelpStyle(), label, "", updateVal, false));
-        else
-            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, ed->getValue(),
-                                                  updateVal, false));
-    });
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
+            // Never display the value if it's a password, instead set it to blank.
+            if (isPassword)
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    mWindow, getHelpStyle(), label, "", updateVal, false, "SAVE", "SAVE CHANGES?"));
+            else
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), label,
+                                                              ed->getValue(), updateVal, false,
+                                                              "SAVE", "SAVE CHANGES?"));
+        });
+    }
+    else {
+        row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
+            if (isPassword)
+                mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, "", updateVal,
+                                                      false, "SAVE", "SAVE CHANGES?"));
+            else
+                mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
+                                                      ed->getValue(), updateVal, false, "SAVE",
+                                                      "SAVE CHANGES?"));
+        });
+    }
+
     assert(ed);
     addRow(row);
 

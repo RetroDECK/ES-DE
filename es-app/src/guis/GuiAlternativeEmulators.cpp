@@ -25,6 +25,9 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
     float systemSizeX = mMenu.getSize().x / 3.27f;
     float labelSizeX = mMenu.getSize().x / 1.53f;
 
+    if (Renderer::getScreenHeightModifier() > 1.0f)
+        labelSizeX += 8.0f * Renderer::getScreenHeightModifier();
+
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); it++) {
 
@@ -95,7 +98,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
         row.addElement(labelText, false);
         row.makeAcceptInputHandler([this, it, labelText] {
-            if (labelText->getValue() == "<REMOVED ENTRY>")
+            if (labelText->getValue() == ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY")
                 return;
             selectorWindow(*it);
         });
@@ -154,7 +157,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
         ComponentListRow row;
 
         if (entry.second == "")
-            label = "<CLEAR INVALID ENTRY>";
+            label = ViewController::CROSSEDCIRCLE_CHAR + " CLEAR INVALID ENTRY";
         else
             label = entry.second;
 
@@ -175,7 +178,8 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 
                 if (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second) {
                     if (system->getSystemEnvData()->mLaunchCommands.front().second == "") {
-                        updateMenu(system->getName(), "<REMOVED ENTRY>",
+                        updateMenu(system->getName(),
+                                   ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY",
                                    (entry.second ==
                                     system->getSystemEnvData()->mLaunchCommands.front().second));
                     }

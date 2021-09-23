@@ -18,9 +18,6 @@
 
 DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     : BasicGameListView(window, root)
-    , mDescContainer(window)
-    , mDescription(window)
-    , mGamelistInfo(window)
     , mThumbnail(window)
     , mMarquee(window)
     , mImage(window)
@@ -42,6 +39,9 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     , mLastPlayed(window)
     , mPlayCount(window)
     , mName(window)
+    , mDescContainer(window)
+    , mDescription(window)
+    , mGamelistInfo(window)
     , mLastUpdated(nullptr)
 {
     const float padding = 0.01f;

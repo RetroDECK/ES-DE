@@ -411,7 +411,7 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
                     return false;
 
             // The event filtering below is required as some controllers send button presses
-            // starting with the state 0 when using the D-pad. I consider this invalid behaviour
+            // starting with the state 0 when using the D-pad. I consider this invalid behavior
             // and the more popular controllers such as those from Microsoft and Sony do not show
             // this strange behavior.
             int buttonState =

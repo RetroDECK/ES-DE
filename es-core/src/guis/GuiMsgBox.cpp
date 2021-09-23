@@ -26,9 +26,9 @@ GuiMsgBox::GuiMsgBox(Window* window,
                      bool disableBackButton,
                      bool deleteOnButtonPress)
     : GuiComponent(window)
-    , mHelpStyle(helpstyle)
     , mBackground(window, ":/graphics/frame.svg")
     , mGrid(window, glm::ivec2{1, 2})
+    , mHelpStyle(helpstyle)
     , mDisableBackButton(disableBackButton)
     , mDeleteOnButtonPress(deleteOnButtonPress)
 {

@@ -22,8 +22,10 @@
             <color>262626</color>
         </text>
         <helpsystem name="help">
-            <textColor>A6A6A6</textColor>
-            <iconColor>A6A6A6</iconColor>
+            <textColor>C6C6C6</textColor>
+            <iconColor>C6C6C6</iconColor>
+            <textColorDimmed>B6B6B6</textColorDimmed>
+            <iconColorDimmed>B6B6B6</iconColorDimmed>
         </helpsystem>
     </view>
 

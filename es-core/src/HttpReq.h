@@ -79,8 +79,8 @@ private:
 
     static CURLM* s_multi_handle;
 
-    CURL* mHandle;
     Status mStatus;
+    CURL* mHandle;
 
     std::stringstream mContent;
     std::string mErrorMsg;

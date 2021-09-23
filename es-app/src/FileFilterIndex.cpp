@@ -21,6 +21,7 @@
 
 FileFilterIndex::FileFilterIndex()
     : mFilterByText(false)
+    , mTextRemoveSystem(false)
     , mFilterByFavorites(false)
     , mFilterByGenre(false)
     , mFilterByPlayers(false)
@@ -35,7 +36,7 @@ FileFilterIndex::FileFilterIndex()
 
     // clang-format off
     FilterDataDecl filterDecls[] = {
-        //type              //allKeys                //filteredBy         //filteredKeys                //primaryKey    //hasSecondaryKey   //secondaryKey  //menuLabel
+        //type             //allKeys                //filteredBy         //filteredKeys                //primaryKey    //hasSecondaryKey   //secondaryKey  //menuLabel
         {FAVORITES_FILTER, &mFavoritesIndexAllKeys, &mFilterByFavorites, &mFavoritesIndexFilteredKeys, "favorite",     false,              "",             "FAVORITES"},
         {GENRE_FILTER,     &mGenreIndexAllKeys,     &mFilterByGenre,     &mGenreIndexFilteredKeys,     "genre",        true,               "genre",        "GENRE"},
         {PLAYER_FILTER,    &mPlayersIndexAllKeys,   &mFilterByPlayers,   &mPlayersIndexFilteredKeys,   "players",      false,              "",             "PLAYERS"},
@@ -279,7 +280,7 @@ void FileFilterIndex::setTextFilter(std::string textFilter)
         mFilterByText = false;
     else
         mFilterByText = true;
-};
+}
 
 void FileFilterIndex::clearAllFilters()
 {
@@ -359,14 +360,21 @@ bool FileFilterIndex::showFile(FileData* game)
     bool keepGoing = false;
 
     // Name filters take precedence over all other filters, so if there is no match for
-    // the game name, then always return false.
-    if (mTextFilter != "" &&
-        !(Utils::String::toUpper(game->getName()).find(mTextFilter) != std::string::npos)) {
+    // the game name, then always return false. If we're in a collection system and the option
+    // to show the system name has been enabled, then exclude the system name that is encapsulated
+    // in [] from the search string.
+    if (mTextFilter != "" && mTextRemoveSystem &&
+        !(Utils::String::toUpper(game->getName().substr(0, game->getName().find_last_of("[")))
+              .find(mTextFilter) != std::string::npos)) {
         return false;
     }
-    else if (mTextFilter != "") {
-        nameMatch = true;
+    else if (mTextFilter != "" &&
+             !(Utils::String::toUpper(game->getName()).find(mTextFilter) != std::string::npos)) {
+        return false;
     }
+
+    if (mTextFilter != "")
+        nameMatch = true;
 
     for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
          it != filterDataDecl.cend(); it++) {

@@ -19,13 +19,16 @@ class TextCache;
 class SliderComponent : public GuiComponent
 {
 public:
+    using GuiComponent::getValue;
+    using GuiComponent::setValue;
+
     // Minimum value (far left of the slider), maximum value (far right of the slider),
     // increment size (how much pressing L/R moves by), unit to display (optional).
     SliderComponent(
         Window* window, float min, float max, float increment, const std::string& suffix = "");
 
-    void setValue(float val);
-    float getValue();
+    void setValue(float value);
+    float getValue() { return mValue; }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;

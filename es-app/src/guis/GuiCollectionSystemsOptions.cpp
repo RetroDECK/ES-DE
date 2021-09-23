@@ -14,6 +14,7 @@
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiSettings.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
@@ -208,10 +209,21 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
         window->removeGui(topGui);
         createCustomCollection(name);
     };
-    row.makeAcceptInputHandler([this, createCollectionCall] {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name", "",
-                                              createCollectionCall, false, "SAVE"));
-    });
+
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        row.makeAcceptInputHandler([this, createCollectionCall] {
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                mWindow, getHelpStyle(), "New Collection Name", "", createCollectionCall, false,
+                "CREATE", "CREATE COLLECTION?"));
+        });
+    }
+    else {
+        row.makeAcceptInputHandler([this, createCollectionCall] {
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name",
+                                                  "", createCollectionCall, false, "CREATE",
+                                                  "CREATE COLLECTION?"));
+        });
+    }
     addRow(row);
 
     // Delete custom collection.
@@ -271,7 +283,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                         CollectionSystemsManager::get()->deleteCustomCollection(name);
                         return true;
                     },
-                    "NO", [this] { return false; }));
+                    "NO", [] { return false; }));
             };
             row.makeAcceptInputHandler(deleteCollectionCall);
             auto customCollection = std::make_shared<TextComponent>(

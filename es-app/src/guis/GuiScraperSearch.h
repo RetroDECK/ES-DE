@@ -69,7 +69,6 @@ public:
     }
     void setCancelCallback(const std::function<void()>& cancelCallback)
     {
-        mScrapeCount -= 1;
         mCancelCallback = cancelCallback;
     }
 
@@ -80,7 +79,16 @@ public:
     HelpStyle getHelpStyle() override;
     void onSizeChanged() override;
 
+    void decreaseScrapeCount()
+    {
+        if (mScrapeCount > 0)
+            mScrapeCount--;
+    }
     void unsetRefinedSearch() { mRefinedSearch = false; }
+    bool getRefinedSearch() { return mRefinedSearch; }
+    bool getFoundGame() { return mFoundGame; }
+    const std::string& getNameOverride() { return mLastSearch.nameOverride; }
+
     void onFocusGained() override { mGrid.onFocusGained(); }
     void onFocusLost() override { mGrid.onFocusLost(); }
 

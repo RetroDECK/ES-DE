@@ -39,8 +39,8 @@ private:
 
     ImageComponent mThumbnail;
     ImageComponent mMarquee;
-    VideoComponent* mVideo;
     ImageComponent mImage;
+    VideoComponent* mVideo;
 
     TextComponent mLblRating;
     TextComponent mLblReleaseDate;

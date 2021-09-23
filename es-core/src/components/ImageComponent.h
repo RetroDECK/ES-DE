@@ -101,7 +101,10 @@ public:
 private:
     glm::vec2 mTargetSize;
 
-    bool mFlipX, mFlipY, mTargetIsMax, mTargetIsMin;
+    bool mFlipX;
+    bool mFlipY;
+    bool mTargetIsMax;
+    bool mTargetIsMin;
 
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
     // Used internally whenever the resizing parameters or texture change.

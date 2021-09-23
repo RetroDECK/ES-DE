@@ -27,7 +27,7 @@ namespace GridFlags
         BORDER_LEFT = 4,
         BORDER_RIGHT = 8
     };
-}; // namespace GridFlags
+} // namespace GridFlags
 
 // Provides basic layout of components in an X*Y grid.
 class ComponentGrid : public GuiComponent
@@ -45,6 +45,11 @@ public:
                   const glm::ivec2& size = glm::ivec2{1, 1},
                   unsigned int border = GridFlags::BORDER_NONE,
                   GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
+
+    void setPastBoundaryCallback(const std::function<bool(InputConfig* config, Input input)>& func)
+    {
+        mPastBoundaryCallback = func;
+    }
 
     void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;
@@ -65,6 +70,8 @@ public:
     void setRowHeightPerc(int row, float height, bool update = true);
 
     bool moveCursor(glm::ivec2 dir);
+    // Pass -1 for xPos or yPos to keep its axis cursor position.
+    void moveCursorTo(int xPos, int yPos, bool selectLeftCell = false);
     void setCursorTo(const std::shared_ptr<GuiComponent>& comp);
 
     std::shared_ptr<GuiComponent> getSelectedComponent()
@@ -125,6 +132,8 @@ private:
     glm::ivec2 mGridSize;
     std::vector<GridEntry> mCells;
     glm::ivec2 mCursor;
+
+    std::function<bool(InputConfig* config, Input input)> mPastBoundaryCallback;
 
     float* mRowHeights;
     float* mColWidths;

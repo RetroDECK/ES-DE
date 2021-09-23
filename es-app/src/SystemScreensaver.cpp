@@ -440,10 +440,10 @@ void SystemScreensaver::generateImageList()
             continue;
 
         std::vector<FileData*> allFiles = (*it)->getRootFolder()->getFilesRecursive(GAME, true);
-        for (auto it = allFiles.begin(); it != allFiles.end(); it++) {
-            std::string imagePath = (*it)->getImagePath();
+        for (auto it2 = allFiles.begin(); it2 != allFiles.end(); it2++) {
+            std::string imagePath = (*it2)->getImagePath();
             if (imagePath != "")
-                mImageFiles.push_back((*it));
+                mImageFiles.push_back((*it2));
         }
     }
 }
@@ -457,10 +457,10 @@ void SystemScreensaver::generateVideoList()
             continue;
 
         std::vector<FileData*> allFiles = (*it)->getRootFolder()->getFilesRecursive(GAME, true);
-        for (auto it = allFiles.begin(); it != allFiles.end(); it++) {
-            std::string videoPath = (*it)->getVideoPath();
+        for (auto it2 = allFiles.begin(); it2 != allFiles.end(); it2++) {
+            std::string videoPath = (*it2)->getVideoPath();
             if (videoPath != "")
-                mVideoFiles.push_back((*it));
+                mVideoFiles.push_back((*it2));
         }
     }
 }

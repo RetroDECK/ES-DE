@@ -137,7 +137,7 @@ public:
     const UserData& getNext() const
     {
         // If there is a next entry, then return it, otherwise return the current entry.
-        if (mCursor + 1 < mEntries.size())
+        if (mCursor + 1 < static_cast<int>(mEntries.size()))
             return mEntries.at(mCursor + 1).object;
         else
             return mEntries.at(mCursor).object;

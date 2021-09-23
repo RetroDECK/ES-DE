@@ -125,7 +125,7 @@ pkg_add vlc
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
 
-RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the master branch:
+RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the latest available code from the master branch:
 
 ```
 git clone https://github.com/Tencent/rapidjson.git
@@ -872,12 +872,12 @@ make
 
 [RapidJSON](http://rapidjson.org)
 
-For RapidJSON you don't need to compile, you just need the include files:
+For RapidJSON you don't need to compile anything, you just need the include files.
+
+At the time of writing, the latest release v1.1.0 generates some compiler warnings on Windows, but this can be avoided by using the latest available code from the master branch:
 
 ```
 git clone git://github.com/Tencent/rapidjson.git
-cd rapidjson
-git checkout v1.1.0
 ```
 
 
@@ -1399,15 +1399,15 @@ For the following options, the es_settings.xml file is immediately updated/saved
 
 ## es_systems.xml
 
-The es_systems.xml file contains the system configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
+The es_systems.xml file contains the game systems configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
 
-ES-DE ships with a comprehensive `es_systems.xml` configuration file and normally you shouldn't need to modify this. However there may be special circumstances such as wanting to use alternative emulators for some game systems or perhaps you need to add additional systems altogether.
+ES-DE ships with a comprehensive `es_systems.xml` file and most users will probably never need to make any customizations. But there may be special circumstances such as wanting to use different emulators for some game systems or perhaps to add additional systems altogether.
 
-To make a customized version of the systems configuration file, it first needs to be copied to `~/.emulationstation/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden using the --home command line option.)
+To accomplish this, ES-DE supports customizations via a separate es_systems.xml file that is to be placed in the `custom_systems` folder in the application home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden via the --home command line option.)
+
+This custom file functionality is designed to be complementary to the bundled es_systems.xml file, meaning you should only add entries to the custom configuration file for game systems that you actually want to add or override. So to for example customize a single system, this file should only contain a single `<system>` tag. The structure of the custom file is identical to the bundled file with the exception of an additional optional tag named `<loadExclusive/>`. If this is placed in the custom es_systems.xml file, ES-DE will not load the bundled file. This is normally not recommended and should only be used for special situations. At the end of this section you can find an example of a custom es_systems.xml file.
 
 The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
-
-Note that when copying the bundled es_systems.xml file to ~/.emulationstation/custom_systems/, it will completely replace the default file processing. So when upgrading to future ES-DE versions, any modifications such as additional game systems will not be enabled until the customized configuration file has been manually updated.
 
 It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
 
@@ -1424,7 +1424,7 @@ Below is an overview of the file layout with various examples. For the command t
     <system>
         <!-- A short name. Although there can be multiple identical <name> tags in the file, upon successful loading of a system,
         any succeeding entries with identical <name> tags will be skipped. Multiple identical name tags is only required for very
-        special situations so it's normally recommended to keep this tag unique.-->
+        special situations so it's normally recommended to keep this tag unique. -->
         <name>snes</name>
 
         <!-- The full system name, used for sorting the systems, for selecting the systems to multi-scrape etc. -->
@@ -1447,10 +1447,10 @@ Below is an overview of the file layout with various examples. For the command t
         <!-- It's possible to define alternative emulators by adding additional command tags for a system. When doing this,
         the "label" attribute is mandatory for all tags. It's these labels that will be shown in the user interface when
         selecting the alternative emulators either system-wide or per game. The first row will be the default emulator. -->
-        <command label="Nestopia UE (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
-        <command label="FCEUmm (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
-        <command label="Mesen (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
-        <command label="QuickNES (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
+        <command label="Nestopia UE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
+        <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
+        <command label="Mesen">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
+        <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
 
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
         the snes9x_libretro core, If there are spaces in the path or file name, you must enclose them in quotation marks, such as
@@ -1531,9 +1531,9 @@ Here are some additional real world examples of system entries, the first one fo
     <fullname>DOS (PC)</fullname>
     <path>%ROMPATH%/dos</path>
     <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command label="DOSBox-core (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
-    <command label="DOSBox-Pure (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
-    <command label="DOSBox-SVN (RetroArch)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
+    <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+    <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+    <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
     <platform>dos</platform>
     <theme>dos</theme>
 </system>
@@ -1557,14 +1557,51 @@ And finally one for Windows:
 
 ```xml
 <system>
-    <name>sega32x</name>
-    <fullname>Sega Mega Drive 32X</fullname>
-    <path>%ROMPATH%\sega32x</path>
-    <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
-    <platform>sega32x</platform>
-    <theme>sega32x</theme>
+    <name>pcengine</name>
+    <fullname>NEC PC Engine</fullname>
+    <path>%ROMPATH%\pcengine</path>
+    <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
+    <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_libretro.dll %ROM%</command>
+    <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_fast_libretro.dll %ROM%</command>
+    <platform>pcengine</platform>
+    <theme>pcengine</theme>
 </system>
+```
+
+As well, here's an example for Unix of a custom es_systems.xml file placed in ~/.emulationstation/custom_systems/ that overrides a single game system from the bundled configuration file:
+```xml
+<?xml version="1.0"?>
+<!-- This is a custom ES-DE game systems configuration file for Unix -->
+<systemList>
+    <system>
+        <name>nes</name>
+        <fullname>Nintendo Entertainment System</fullname>
+        <path>%ROMPATH%/nes</path>
+        <extension>.nes .NES .zip .ZIP</extension>
+        <command>/usr/games/fceux %ROM%</command>
+        <platform>nes</platform>
+        <theme>nes</theme>
+    </system>
+</systemList>
+```
+
+If adding the `<loadExclusive/>` tag to the file, the bundled es_systems.xml file will not be processed. For this example it wouldn't be a very good idea as NES would then be the only platform that could be used in ES-DE.
+
+```xml
+<?xml version="1.0"?>
+<!-- This is a custom ES-DE game systems configuration file for Unix -->
+<loadExclusive/>
+<systemList>
+    <system>
+        <name>nes</name>
+        <fullname>Nintendo Entertainment System</fullname>
+        <path>%ROMPATH%/nes</path>
+        <extension>.nes .NES .zip .ZIP</extension>
+        <command>/usr/games/fceux %ROM%</command>
+        <platform>nes</platform>
+        <theme>nes</theme>
+    </system>
+</systemList>
 ```
 
 ## es_find_rules.xml

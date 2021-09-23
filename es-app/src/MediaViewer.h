@@ -20,11 +20,11 @@ public:
     MediaViewer(Window* window);
     virtual ~MediaViewer();
 
-    virtual bool startMediaViewer(FileData* game);
-    virtual void stopMediaViewer();
+    virtual bool startMediaViewer(FileData* game) override;
+    virtual void stopMediaViewer() override;
 
-    virtual void update(int deltaTime);
-    virtual void render();
+    virtual void update(int deltaTime) override;
+    virtual void render(const glm::mat4& parentTrans) override;
 
 private:
     void initiateViewer();
@@ -33,8 +33,8 @@ private:
     void playVideo();
     void showImage(int index);
 
-    virtual void showNext();
-    virtual void showPrevious();
+    virtual void showNext() override;
+    virtual void showPrevious() override;
 
     Window* mWindow;
     FileData* mGame;

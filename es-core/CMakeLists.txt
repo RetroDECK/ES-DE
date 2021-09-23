@@ -62,10 +62,10 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.h
 
         # GUIs
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditKeyboardPopup.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.h
 
         # Renderers
@@ -85,7 +85,7 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.h
-)
+        )
 
 set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/AudioManager.cpp
@@ -134,10 +134,10 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.cpp
 
         # GUIs
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditKeyboardPopup.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.cpp
 
         # Renderer
@@ -159,7 +159,7 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
-)
+        )
 
 include_directories(${COMMON_INCLUDE_DIRS})
 add_library(es-core STATIC ${CORE_SOURCES} ${CORE_HEADERS})

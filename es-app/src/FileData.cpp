@@ -33,16 +33,15 @@ FileData::FileData(FileType type,
                    const std::string& path,
                    SystemEnvironmentData* envData,
                    SystemData* system)
-    : mType(type)
-    , mPath(path)
-    , mSystem(system)
-    , mEnvData(envData)
+    : metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
     , mSourceFileData(nullptr)
     , mParent(nullptr)
+    , mType(type)
+    , mPath(path)
+    , mEnvData(envData)
+    , mSystem(system)
     , mOnlyFolders(false)
     , mDeletionFlag(false)
-    // Metadata is set in the constructor.
-    , metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
 {
     // Metadata needs at least a name field (since that's what getName() will return).
     if (metadata.get("name").empty()) {
@@ -224,7 +223,7 @@ const std::string FileData::getMediafilePath(std::string subdirectory, std::stri
                                  subFolders + "/" + getDisplayName();
 
     // Look for an image file in the media directory.
-    for (int i = 0; i < extList.size(); i++) {
+    for (size_t i = 0; i < extList.size(); i++) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -299,7 +298,7 @@ const std::string FileData::getVideoPath() const
         getMediaDirectory() + mSystemName + "/videos" + subFolders + "/" + getDisplayName();
 
     // Look for media in the media directory.
-    for (int i = 0; i < extList.size(); i++) {
+    for (size_t i = 0; i < extList.size(); i++) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -347,9 +346,9 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
                 out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
             }
             else {
-                for (auto it = subChildren.cbegin(); it != subChildren.cend(); it++) {
-                    if ((*it)->getCountAsGame())
-                        out.push_back(*it);
+                for (auto it2 = subChildren.cbegin(); it2 != subChildren.cend(); it2++) {
+                    if ((*it2)->getCountAsGame())
+                        out.push_back(*it2);
                 }
             }
         }
@@ -747,36 +746,49 @@ void FileData::launchGame(Window* window)
 {
     LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
 
+    SystemData* gameSystem = nullptr;
     std::string command = "";
-    std::string alternativeEmulator = getSystem()->getAlternativeEmulator();
+    std::string alternativeEmulator;
+
+    if (mSystem->isCollection())
+        gameSystem = SystemData::getSystemByName(mSystemName);
+    else
+        gameSystem = mSystem;
+
+    // This is just a precaution as getSystemByName() should always return a valid result.
+    if (gameSystem == nullptr)
+        gameSystem = mSystem;
+
+    alternativeEmulator = gameSystem->getAlternativeEmulator();
 
     // Check if there is a game-specific alternative emulator configured.
     // This takes precedence over any system-wide alternative emulator configuration.
     if (Settings::getInstance()->getBool("AlternativeEmulatorPerGame") &&
         !metadata.get("altemulator").empty()) {
-        command = getSystem()->getLaunchCommandFromLabel(metadata.get("altemulator"));
+        command = gameSystem->getLaunchCommandFromLabel(metadata.get("altemulator"));
         if (command == "") {
             LOG(LogWarning) << "Invalid alternative emulator \"" << metadata.get("altemulator")
                             << "\" configured for game";
         }
         else {
             LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
-                          << metadata.get("altemulator") << "\" as configured for the game";
+                          << metadata.get("altemulator")
+                          << "\" as configured for the specific game";
         }
     }
 
     // Check if there is a system-wide alternative emulator configured.
     if (command == "" && alternativeEmulator != "") {
-        command = getSystem()->getLaunchCommandFromLabel(alternativeEmulator);
+        command = gameSystem->getLaunchCommandFromLabel(alternativeEmulator);
         if (command == "") {
             LOG(LogWarning) << "Invalid alternative emulator \""
                             << alternativeEmulator.substr(9, alternativeEmulator.length() - 9)
-                            << "\" configured for system \"" << getSystem()->getName() << "\"";
+                            << "\" configured for system \"" << gameSystem->getName() << "\"";
         }
         else {
             LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
-                          << getSystem()->getAlternativeEmulator() << "\""
-                          << " as configured for system \"" << this->getSystem()->getName() << "\"";
+                          << gameSystem->getAlternativeEmulator() << "\""
+                          << " as configured for system \"" << gameSystem->getName() << "\"";
         }
     }
 
@@ -1341,10 +1353,10 @@ void CollectionFileData::refreshMetadata()
 const std::string& CollectionFileData::getName()
 {
     if (mDirty) {
-        mCollectionFileName =
-            Utils::String::removeParenthesis(mSourceFileData->metadata.get("name"));
-        mCollectionFileName +=
-            " [" + Utils::String::toUpper(mSourceFileData->getSystem()->getName()) + "]";
+        mCollectionFileName = mSourceFileData->metadata.get("name");
+        mCollectionFileName.append(" [")
+            .append(Utils::String::toUpper(mSourceFileData->getSystem()->getName()))
+            .append("]");
         mDirty = false;
     }
 

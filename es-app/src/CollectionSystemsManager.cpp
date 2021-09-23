@@ -385,6 +385,14 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                     parentRootFolder->sort(parentRootFolder->getSortTypeFromString(
                                                parentRootFolder->getSortTypeString()),
                                            mFavoritesSorting);
+                    GuiInfoPopup* s = new GuiInfoPopup(
+                        mWindow,
+                        "DISABLED '" +
+                            Utils::String::toUpper(
+                                Utils::String::removeParenthesis(file->getName())) +
+                            "' IN '" + Utils::String::toUpper(sysData.system->getName()) + "'",
+                        4000);
+                    mWindow->setInfoPopup(s);
                 }
                 else {
                     ViewController::get()->getGameListView(curSys).get()->remove(collectionEntry,
@@ -546,6 +554,15 @@ std::string CollectionSystemsManager::getValidNewCollectionName(std::string inNa
 {
     std::string name = inName;
 
+    // Trim leading and trailing whitespaces.
+    name.erase(name.begin(), std::find_if(name.begin(), name.end(), [](char c) {
+                   return !std::isspace(static_cast<unsigned char>(c));
+               }));
+    name.erase(std::find_if(name.rbegin(), name.rend(),
+                            [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
+                   .base(),
+               name.end());
+
     if (index == 0) {
         size_t remove = std::string::npos;
         // Get valid name.
@@ -674,7 +691,6 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 rootFolder->getChildrenByFilename();
             bool found = children.find(key) != children.cend();
             FileFilterIndex* fileIndex = sysData->getIndex();
-            std::string name = sysData->getName();
 
             SystemData* systemViewToUpdate = getSystemToView(sysData);
 
@@ -1320,33 +1336,41 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
 std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig()
 {
     std::vector<std::string> systems;
-    std::string path = SystemData::getConfigPath(false);
+    std::vector<std::string> configPaths = SystemData::getConfigPath(false);
 
-    if (!Utils::FileSystem::exists(path))
-        return systems;
+    // Here we don't honor the <loadExclusive> tag which may be present in the custom es_systems.xml
+    // file under ~/.emulationstation/custom_systems as we really want to include all the themes
+    // supported by ES-DE. Otherwise a user may accidentally create a custom collection that
+    // corresponds to a supported theme.
+    for (auto path : configPaths) {
+        if (!Utils::FileSystem::exists(path))
+            return systems;
 
-    pugi::xml_document doc;
+        pugi::xml_document doc;
 #if defined(_WIN64)
-    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+        pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
 #else
-    pugi::xml_parse_result res = doc.load_file(path.c_str());
+        pugi::xml_parse_result res = doc.load_file(path.c_str());
 #endif
 
-    if (!res)
-        return systems;
+        if (!res)
+            return systems;
 
-    // Actually read the file.
-    pugi::xml_node systemList = doc.child("systemList");
+        // Actually read the file.
+        pugi::xml_node systemList = doc.child("systemList");
 
-    if (!systemList)
-        return systems;
+        if (!systemList)
+            return systems;
 
-    for (pugi::xml_node system = systemList.child("system"); system;
-         system = system.next_sibling("system")) {
-        // Theme folder.
-        std::string themeFolder = system.child("theme").text().get();
-        systems.push_back(themeFolder);
+        for (pugi::xml_node system = systemList.child("system"); system;
+             system = system.next_sibling("system")) {
+            // Theme folder.
+            std::string themeFolder = system.child("theme").text().get();
+            if (std::find(systems.cbegin(), systems.cend(), themeFolder) == systems.cend())
+                systems.push_back(themeFolder);
+        }
     }
+
     std::sort(systems.begin(), systems.end());
     return systems;
 }

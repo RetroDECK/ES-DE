@@ -108,6 +108,8 @@ private:
 
 protected:
     Window* mWindow;
+    ImageComponent mStaticImage;
+
     unsigned mVideoWidth;
     unsigned mVideoHeight;
     glm::vec2 mTargetSize;
@@ -115,7 +117,6 @@ protected:
     glm::vec2 mVideoAreaSize;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
-    ImageComponent mStaticImage;
 
     std::string mVideoPath;
     std::string mPlayingVideoPath;

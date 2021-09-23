@@ -29,7 +29,6 @@
 #include "Sound.h"
 #include "SystemData.h"
 #include "SystemScreensaver.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiLaunchScreen.h"
 #include "guis/GuiMsgBox.h"
@@ -133,7 +132,7 @@ bool parseArgs(int argc, char* argv[])
 #if defined(_WIN64)
     // Print any command line output to the console.
     if (argc > 1)
-        win64ConsoleType consoleType = outputToConsole(false);
+        outputToConsole(false);
 #endif
 
     std::string portableFilePath = Utils::FileSystem::getExePath() + "/portable.txt";
@@ -637,10 +636,10 @@ int main(int argc, char* argv[])
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
             window.pushGui(new GuiDetectDevice(&window, false, true,
-                                               [] { ViewController::get()->goToStart(); }));
+                                               [] { ViewController::get()->goToStart(true); }));
         }
         else {
-            ViewController::get()->goToStart();
+            ViewController::get()->goToStart(true);
         }
     }
 

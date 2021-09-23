@@ -30,12 +30,12 @@ public:
     void onSizeChanged() override;
 
     virtual void update(int deltaTime) override;
-    virtual void render() override;
+    virtual void render(const glm::mat4& parentTrans) override;
 
 private:
     Window* mWindow;
-    ComponentGrid* mGrid;
     NinePatchComponent mBackground;
+    ComponentGrid* mGrid;
 
     std::shared_ptr<TextComponent> mTitle;
     std::shared_ptr<TextComponent> mGameName;

@@ -15,24 +15,85 @@
 ButtonComponent::ButtonComponent(Window* window,
                                  const std::string& text,
                                  const std::string& helpText,
-                                 const std::function<void()>& func)
-    : GuiComponent(window)
-    , mBox(window, ":/graphics/button.svg")
-    , mFont(Font::get(FONT_SIZE_MEDIUM))
-    , mFocused(false)
-    , mEnabled(true)
-    , mTextColorFocused(0xFFFFFFFF)
-    , mTextColorUnfocused(0x777777FF)
+                                 const std::function<void()>& func,
+                                 bool upperCase,
+                                 bool flatStyle)
+    : GuiComponent{window}
+    , mBox{window, ":/graphics/button.svg"}
+    , mFont{Font::get(FONT_SIZE_MEDIUM)}
+    , mPadding{{}}
+    , mFocused{false}
+    , mEnabled{true}
+    , mFlatStyle{flatStyle}
+    , mTextColorFocused{0xFFFFFFFF}
+    , mTextColorUnfocused{0x777777FF}
+    , mFlatColorFocused{0x878787FF}
+    , mFlatColorUnfocused{0x60606025}
+
 {
     setPressedFunc(func);
-    setText(text, helpText);
-    updateImage();
+    setText(text, helpText, upperCase);
+
+    if (!mFlatStyle)
+        updateImage();
 }
 
 void ButtonComponent::onSizeChanged()
 {
-    // Fit to mBox.
-    mBox.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    if (mFlatStyle)
+        return;
+
+    auto cornerSize = mBox.getCornerSize();
+
+    mBox.fitTo(glm::vec2{mSize.x - mPadding.x - mPadding.z, mSize.y - mPadding.y - mPadding.w},
+               glm::vec3{mPadding.x, mPadding.y, 0.0f},
+               glm::vec2{-cornerSize.x * 2.0f, -cornerSize.y * 2.0f});
+}
+
+void ButtonComponent::onFocusGained()
+{
+    mFocused = true;
+    if (!mFlatStyle)
+        updateImage();
+}
+
+void ButtonComponent::onFocusLost()
+{
+    mFocused = false;
+    if (!mFlatStyle)
+        updateImage();
+}
+
+void ButtonComponent::setText(const std::string& text, const std::string& helpText, bool upperCase)
+{
+    mText = upperCase ? Utils::String::toUpper(text) : text;
+    mHelpText = helpText;
+
+    mTextCache =
+        std::unique_ptr<TextCache>(mFont->buildTextCache(mText, 0.0f, 0.0f, getCurTextColor()));
+
+    float minWidth = mFont->sizeText("DELETE").x + (12.0f * Renderer::getScreenWidthModifier());
+    setSize(std::max(mTextCache->metrics.size.x + (12.0f * Renderer::getScreenWidthModifier()),
+                     minWidth),
+            mTextCache->metrics.size.y);
+
+    updateHelpPrompts();
+}
+
+void ButtonComponent::setEnabled(bool state)
+{
+    mEnabled = state;
+    if (!mFlatStyle)
+        updateImage();
+}
+
+void ButtonComponent::setPadding(const glm::vec4 padding)
+{
+    if (mPadding == padding)
+        return;
+
+    mPadding = padding;
+    onSizeChanged();
 }
 
 bool ButtonComponent::input(InputConfig* config, Input input)
@@ -46,58 +107,27 @@ bool ButtonComponent::input(InputConfig* config, Input input)
     return GuiComponent::input(config, input);
 }
 
-void ButtonComponent::setText(const std::string& text, const std::string& helpText)
-{
-    mText = Utils::String::toUpper(text);
-    mHelpText = helpText;
-
-    mTextCache = std::unique_ptr<TextCache>(mFont->buildTextCache(mText, 0, 0, getCurTextColor()));
-
-    float minWidth = mFont->sizeText("DELETE").x + (12.0f * Renderer::getScreenWidthModifier());
-    setSize(std::max(mTextCache->metrics.size.x + (12.0f * Renderer::getScreenWidthModifier()),
-                     minWidth),
-            mTextCache->metrics.size.y);
-
-    updateHelpPrompts();
-}
-
-void ButtonComponent::onFocusGained()
-{
-    mFocused = true;
-    updateImage();
-}
-
-void ButtonComponent::onFocusLost()
-{
-    mFocused = false;
-    updateImage();
-}
-
-void ButtonComponent::setEnabled(bool state)
-{
-    mEnabled = state;
-    updateImage();
-}
-
-void ButtonComponent::updateImage()
-{
-    if (!mEnabled || !mPressedFunc) {
-        mBox.setImagePath(":/graphics/button_filled.svg");
-        mBox.setCenterColor(0x770000FF);
-        mBox.setEdgeColor(0x770000FF);
-        return;
-    }
-
-    mBox.setCenterColor(0xFFFFFFFF);
-    mBox.setEdgeColor(0xFFFFFFFF);
-    mBox.setImagePath(mFocused ? ":/graphics/button_filled.svg" : ":/graphics/button.svg");
-}
-
 void ButtonComponent::render(const glm::mat4& parentTrans)
 {
     glm::mat4 trans{parentTrans * getTransform()};
 
-    mBox.render(trans);
+    if (mFlatStyle) {
+        if (mFocused) {
+            Renderer::setMatrix(trans);
+            Renderer::drawRect(mPadding.x, mPadding.y, mSize.x - mPadding.x - mPadding.z,
+                               mSize.y - mPadding.y - mPadding.w, mFlatColorFocused,
+                               mFlatColorFocused);
+        }
+        else {
+            Renderer::setMatrix(trans);
+            Renderer::drawRect(mPadding.x, mPadding.y, mSize.x - mPadding.x - mPadding.z,
+                               mSize.y - mPadding.y - mPadding.w, mFlatColorUnfocused,
+                               mFlatColorUnfocused);
+        }
+    }
+    else {
+        mBox.render(trans);
+    }
 
     if (mTextCache) {
         glm::vec3 centerOffset{(mSize.x - mTextCache->metrics.size.x) / 2.0f,
@@ -121,6 +151,13 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
     renderChildren(trans);
 }
 
+std::vector<HelpPrompt> ButtonComponent::getHelpPrompts()
+{
+    std::vector<HelpPrompt> prompts;
+    prompts.push_back(HelpPrompt("a", mHelpText.empty() ? mText.c_str() : mHelpText.c_str()));
+    return prompts;
+}
+
 unsigned int ButtonComponent::getCurTextColor() const
 {
     if (!mFocused)
@@ -129,9 +166,16 @@ unsigned int ButtonComponent::getCurTextColor() const
         return mTextColorFocused;
 }
 
-std::vector<HelpPrompt> ButtonComponent::getHelpPrompts()
+void ButtonComponent::updateImage()
 {
-    std::vector<HelpPrompt> prompts;
-    prompts.push_back(HelpPrompt("a", mHelpText.empty() ? mText.c_str() : mHelpText.c_str()));
-    return prompts;
+    if (!mEnabled || !mPressedFunc) {
+        mBox.setImagePath(":/graphics/button_filled.svg");
+        mBox.setCenterColor(0x770000FF);
+        mBox.setEdgeColor(0x770000FF);
+        return;
+    }
+
+    mBox.setCenterColor(0xFFFFFFFF);
+    mBox.setEdgeColor(0xFFFFFFFF);
+    mBox.setImagePath(mFocused ? ":/graphics/button_filled.svg" : ":/graphics/button.svg");
 }

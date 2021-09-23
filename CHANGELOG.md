@@ -11,25 +11,51 @@
 ### Detailed list of changes
 
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
+* Added a virtual keyboard partly based on code from batocera-emulationstation
+* Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added a menu option to change the application exit key combination
+* Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
+* Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
 * Added support for upscaling bitmap images using linear filtering
 * Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
 * Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
+* Added a blinking cursor to TextEditComponent
+* Changed the filter description "Text filter (game name)" to "Game name"
+* Added support for a new type of "flat style" button to ButtonComponent
+* Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
 * Added a function to generate MD5 hashes
-* Changed two clang-format rules related to braced lists and reformatted the codebase
+* Moved the "complex" mode functionality from GuiComplexTextEditPopup into GuiTextEditPopup and removed the source files for the former
+* Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags
+* Fixed a lot of compiler warnings introduced by the -Wall and -Wpedantic flags
 * Changed the language standard from C++14 to C++17
+* Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
+* Changed two clang-format rules related to braced lists and reformatted the codebase
 
 ### Bug fixes
 
+* When multi-scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
+* When multi-scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
+* When multi-scraping in interactive mode, "No games found" results could be accepted using the "A" button
+* When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
+* Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
+* Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
+* Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
+* Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
+* When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
+* Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
+* When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
+* Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions
+* The "sortname" window header was incorrectly spelled when editing this type of entry in the metadata editor
 * When the last row of a menu had its text color changed, this color was completely desaturated when navigating to a button below the list
 
 ## Version 1.1.0

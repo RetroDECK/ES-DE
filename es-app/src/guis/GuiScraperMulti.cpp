@@ -79,13 +79,36 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     if (mApproveResults) {
         buttons.push_back(
             std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH", "refine search", [&] {
-                // Refine the search, unless the result has already been accepted or we're in
-                // semi-automatic mode and there are less than 2 search results.
-                if (!mSearchComp->getAcceptedResult() &&
-                    !(mSearchComp->getSearchType() == GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
-                      mSearchComp->getScraperResultsSize() < 2)) {
-                    mSearchComp->openInputScreen(mSearchQueue.front());
-                    mGrid.resetCursor();
+                // Check whether we should allow a refine of the game name.
+                if (!mSearchComp->getAcceptedResult()) {
+                    bool allowRefine = false;
+
+                    // Previously refined.
+                    if (mSearchComp->getRefinedSearch())
+                        allowRefine = true;
+                    // Interactive mode and "Auto-accept single game matches" not enabled.
+                    else if (mSearchComp->getSearchType() !=
+                             GuiScraperSearch::ACCEPT_SINGLE_MATCHES)
+                        allowRefine = true;
+                    // Interactive mode with "Auto-accept single game matches" enabled and more
+                    // than one result.
+                    else if (mSearchComp->getSearchType() ==
+                                 GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                             mSearchComp->getScraperResultsSize() > 1)
+                        allowRefine = true;
+                    // Dito but there were no games found, or the search has not been completed.
+                    else if (mSearchComp->getSearchType() ==
+                                 GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                             !mSearchComp->getFoundGame())
+                        allowRefine = true;
+
+                    if (allowRefine) {
+                        // Copy any search refine that may have been previously entered by opening
+                        // the input screen using the "Y" button shortcut.
+                        mSearchQueue.front().nameOverride = mSearchComp->getNameOverride();
+                        mSearchComp->openInputScreen(mSearchQueue.front());
+                        mGrid.resetCursor();
+                    }
                 }
             }));
 
@@ -212,6 +235,7 @@ void GuiScraperMulti::skip()
     mSearchQueue.pop();
     mCurrentGame++;
     mTotalSkipped++;
+    mSearchComp->decreaseScrapeCount();
     mSearchComp->unsetRefinedSearch();
     doNextSearch();
 }

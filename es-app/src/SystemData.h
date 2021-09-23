@@ -102,9 +102,9 @@ public:
     std::string getLaunchCommandFromLabel(const std::string& label);
 
     static void deleteSystems();
-    // Loads the systems configuration file at getConfigPath() and creates the systems.
+    // Loads the systems configuration file(s) at getConfigPath() and creates the systems.
     static bool loadConfig();
-    static std::string getConfigPath(bool legacyWarning);
+    static std::vector<std::string> getConfigPath(bool legacyWarning);
 
     // Generates the game system directories and information files based on es_systems.xml.
     static bool createSystemDirectories();
@@ -131,6 +131,7 @@ public:
 
     bool isVisible();
 
+    static SystemData* getSystemByName(const std::string& systemName);
     SystemData* getNext() const;
     SystemData* getPrev() const;
     static SystemData* getRandomSystem(const SystemData* currentSystem);
@@ -146,20 +147,21 @@ public:
     void onMetaDataSavePoint();
     void writeMetaData();
 
-    void setupSystemSortType(FileData* mRootFolder);
+    void setupSystemSortType(FileData* rootFolder);
 
 private:
-    bool mIsCollectionSystem;
-    bool mIsCustomCollectionSystem;
-    bool mIsGroupedCustomCollectionSystem;
-    bool mIsGameSystem;
-    bool mScrapeFlag; // Only used by scraper GUI to remember which systems to scrape.
     std::string mName;
     std::string mFullName;
     SystemEnvironmentData* mEnvData;
     std::string mAlternativeEmulator;
     std::string mThemeFolder;
     std::shared_ptr<ThemeData> mTheme;
+
+    bool mIsCollectionSystem;
+    bool mIsCustomCollectionSystem;
+    bool mIsGroupedCustomCollectionSystem;
+    bool mIsGameSystem;
+    bool mScrapeFlag; // Only used by scraper GUI to remember which systems to scrape.
 
     bool populateFolder(FileData* folder);
     void indexAllGameFilters(const FileData* folder);

@@ -68,7 +68,6 @@ private:
     Input mHeldInput;
     int mHeldTime;
     int mHeldInputId;
-    bool mSkipAxis;
 };
 
 #endif // ES_CORE_GUIS_GUI_INPUT_CONFIG_H
