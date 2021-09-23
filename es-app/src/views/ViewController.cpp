@@ -45,6 +45,7 @@ const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToStr
 const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uf0b0");
 const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uf07C");
 const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uf013");
+const std::string ViewController::KEYBOARD_CHAR = Utils::String::wideStringToString(L"\uf11c");
 const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uf14A");
 #else
 const std::string ViewController::CONTROLLER_CHAR = "\uf11b";
@@ -54,6 +55,7 @@ const std::string ViewController::FAVORITE_CHAR = "\uf005";
 const std::string ViewController::FILTER_CHAR = "\uf0b0";
 const std::string ViewController::FOLDER_CHAR = "\uf07C";
 const std::string ViewController::GEAR_CHAR = "\uf013";
+const std::string ViewController::KEYBOARD_CHAR = "\uf11c";
 const std::string ViewController::TICKMARK_CHAR = "\uf14a";
 #endif
 

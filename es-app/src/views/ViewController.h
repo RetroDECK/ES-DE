@@ -130,6 +130,7 @@ public:
     static const std::string FILTER_CHAR;
     static const std::string FOLDER_CHAR;
     static const std::string GEAR_CHAR;
+    static const std::string KEYBOARD_CHAR;
     static const std::string TICKMARK_CHAR;
 
 private:
