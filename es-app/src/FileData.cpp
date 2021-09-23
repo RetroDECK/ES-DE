@@ -1353,10 +1353,10 @@ void CollectionFileData::refreshMetadata()
 const std::string& CollectionFileData::getName()
 {
     if (mDirty) {
-        mCollectionFileName =
-            Utils::String::removeParenthesis(mSourceFileData->metadata.get("name"));
-        mCollectionFileName +=
-            " [" + Utils::String::toUpper(mSourceFileData->getSystem()->getName()) + "]";
+        mCollectionFileName = mSourceFileData->metadata.get("name");
+        mCollectionFileName.append(" [")
+            .append(Utils::String::toUpper(mSourceFileData->getSystem()->getName()))
+            .append("]");
         mDirty = false;
     }
 
