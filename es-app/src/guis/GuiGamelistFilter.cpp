@@ -36,6 +36,15 @@ void GuiGamelistFilter::initializeMenu()
     // Get filters from system.
     mFilterIndex = mSystem->getIndex();
 
+    // If this is a collection and system names are shown per game, then let FileFilterIndex
+    // know about this so the system names will not be included in game name text searches.
+    if (ViewController::get()->getState().getSystem()->isCollection()) {
+        if (Settings::getInstance()->getBool("CollectionShowSystemInfo"))
+            mFilterIndex->setTextRemoveSystem(true);
+        else
+            mFilterIndex->setTextRemoveSystem(false);
+    }
+
     ComponentListRow row;
 
     // Show filtered menu.

@@ -59,6 +59,7 @@ public:
     bool isFiltered();
     bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
     std::vector<FilterDataDecl>& getFilterDataDecls() { return filterDataDecl; }
+    void setTextRemoveSystem(bool status) { mTextRemoveSystem = status; }
 
     void importIndex(FileFilterIndex* indexToImport);
     void resetIndex();
@@ -85,6 +86,7 @@ private:
 
     std::string mTextFilter;
     bool mFilterByText;
+    bool mTextRemoveSystem;
 
     bool mFilterByFavorites;
     bool mFilterByGenre;
