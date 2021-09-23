@@ -25,6 +25,9 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
     float systemSizeX = mMenu.getSize().x / 3.27f;
     float labelSizeX = mMenu.getSize().x / 1.53f;
 
+    if (Renderer::getScreenHeightModifier() > 1.0f)
+        labelSizeX += 8.0f * Renderer::getScreenHeightModifier();
+
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); it++) {
 
