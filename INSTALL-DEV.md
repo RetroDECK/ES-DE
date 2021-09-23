@@ -125,7 +125,9 @@ pkg_add vlc
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
 
-RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the latest available code from the master branch:
+RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the
+time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the latest available code
+from the master branch:
 
 ```
 git clone https://github.com/Tencent/rapidjson.git
@@ -865,6 +867,7 @@ nmake
 ```
 
 MinGW:
+
 ```
 cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
 make
@@ -874,13 +877,12 @@ make
 
 For RapidJSON you don't need to compile anything, you just need the include files.
 
-At the time of writing, the latest release v1.1.0 generates some compiler warnings on Windows, but this can be avoided by using the latest available code from the master branch:
+At the time of writing, the latest release v1.1.0 generates some compiler warnings on Windows, but this can be avoided
+by using the latest available code from the master branch:
 
 ```
 git clone git://github.com/Tencent/rapidjson.git
 ```
-
-
 
 **Clone the ES-DE repository:**
 
@@ -1396,24 +1398,44 @@ For the following options, the es_settings.xml file is immediately updated/saved
 --show-hidden-games
 ```
 
-
 ## es_systems.xml
 
-The es_systems.xml file contains the game systems configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
+The es_systems.xml file contains the game systems configuration data for ES-DE, written in XML format. This defines the
+system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for
+scraping) and the theme to use.
 
-ES-DE ships with a comprehensive `es_systems.xml` file and most users will probably never need to make any customizations. But there may be special circumstances such as wanting to use different emulators for some game systems or perhaps to add additional systems altogether.
+ES-DE ships with a comprehensive `es_systems.xml` file and most users will probably never need to make any
+customizations. But there may be special circumstances such as wanting to use different emulators for some game systems
+or perhaps to add additional systems altogether.
 
-To accomplish this, ES-DE supports customizations via a separate es_systems.xml file that is to be placed in the `custom_systems` folder in the application home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden via the --home command line option.)
+To accomplish this, ES-DE supports customizations via a separate es_systems.xml file that is to be placed in
+the `custom_systems` folder in the application home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`
+. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden via
+the --home command line option.)
 
-This custom file functionality is designed to be complementary to the bundled es_systems.xml file, meaning you should only add entries to the custom configuration file for game systems that you actually want to add or override. So to for example customize a single system, this file should only contain a single `<system>` tag. The structure of the custom file is identical to the bundled file with the exception of an additional optional tag named `<loadExclusive/>`. If this is placed in the custom es_systems.xml file, ES-DE will not load the bundled file. This is normally not recommended and should only be used for special situations. At the end of this section you can find an example of a custom es_systems.xml file.
+This custom file functionality is designed to be complementary to the bundled es_systems.xml file, meaning you should
+only add entries to the custom configuration file for game systems that you actually want to add or override. So to for
+example customize a single system, this file should only contain a single `<system>` tag. The structure of the custom
+file is identical to the bundled file with the exception of an additional optional tag named `<loadExclusive/>`. If this
+is placed in the custom es_systems.xml file, ES-DE will not load the bundled file. This is normally not recommended and
+should only be used for special situations. At the end of this section you can find an example of a custom
+es_systems.xml file.
 
-The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
+The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For
+example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on
+Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on
+macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location
+may differ from these examples of course, depending on where ES-DE has been installed.
 
-It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
+It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the
+application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
 
-Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
+Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your
+emulator environment is properly configured.
 
-Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic described later in this document removes the need for most of the legacy options, but they are still supported for special configurations and for backward compatibility with old configuration files.
+Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic
+described later in this document removes the need for most of the legacy options, but they are still supported for
+special configurations and for backward compatibility with old configuration files.
 
 ```xml
 <?xml version="1.0"?>
@@ -1568,7 +1590,9 @@ And finally one for Windows:
 </system>
 ```
 
-As well, here's an example for Unix of a custom es_systems.xml file placed in ~/.emulationstation/custom_systems/ that overrides a single game system from the bundled configuration file:
+As well, here's an example for Unix of a custom es_systems.xml file placed in ~/.emulationstation/custom_systems/ that
+overrides a single game system from the bundled configuration file:
+
 ```xml
 <?xml version="1.0"?>
 <!-- This is a custom ES-DE game systems configuration file for Unix -->
@@ -1585,7 +1609,8 @@ As well, here's an example for Unix of a custom es_systems.xml file placed in ~/
 </systemList>
 ```
 
-If adding the `<loadExclusive/>` tag to the file, the bundled es_systems.xml file will not be processed. For this example it wouldn't be a very good idea as NES would then be the only platform that could be used in ES-DE.
+If adding the `<loadExclusive/>` tag to the file, the bundled es_systems.xml file will not be processed. For this
+example it wouldn't be a very good idea as NES would then be the only platform that could be used in ES-DE.
 
 ```xml
 <?xml version="1.0"?>
@@ -1608,9 +1633,11 @@ If adding the `<loadExclusive/>` tag to the file, the bundled es_systems.xml fil
 
 This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.
 
-The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
+The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy
+can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
 
 Here's an example es_find_rules.xml file for Unix:
+
 ```xml
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Unix -->

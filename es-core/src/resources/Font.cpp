@@ -562,18 +562,18 @@ float Font::getNewlineStartOffset(const std::string& text,
             endChar = static_cast<int>(text.find('\n', charStart));
             return (xLen - sizeText(text.substr(charStart,
                                                 static_cast<size_t>(endChar) != std::string::npos ?
-                                                    endChar - charStart :
-                                                    endChar))
-                               .x) /
+                                                endChar - charStart :
+                                                endChar))
+                    .x) /
                    2.0f;
         }
         case ALIGN_RIGHT: {
             int endChar = static_cast<int>(text.find('\n', charStart));
             return xLen - (sizeText(text.substr(charStart,
                                                 static_cast<size_t>(endChar) != std::string::npos ?
-                                                    endChar - charStart :
-                                                    endChar))
-                               .x);
+                                                endChar - charStart :
+                                                endChar))
+                    .x);
         }
         default:
             return 0;

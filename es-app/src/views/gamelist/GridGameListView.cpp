@@ -20,31 +20,12 @@
 #define FADE_IN_TIME 650
 
 GridGameListView::GridGameListView(Window* window, FileData* root)
-    : ISimpleGameListView(window, root)
-    , mGrid(window)
-    , mMarquee(window)
-    , mImage(window)
-    , mLblRating(window)
-    , mLblReleaseDate(window)
-    , mLblDeveloper(window)
-    , mLblPublisher(window)
-    , mLblGenre(window)
-    , mLblPlayers(window)
-    , mLblLastPlayed(window)
-    , mLblPlayCount(window)
-    , mBadges(window)
-    , mRating(window)
-    , mReleaseDate(window)
-    , mDeveloper(window)
-    , mPublisher(window)
-    , mGenre(window)
-    , mPlayers(window)
-    , mLastPlayed(window)
-    , mPlayCount(window)
-    , mName(window)
-    , mDescContainer(window)
-    , mDescription(window)
-    , mGamelistInfo(window)
+    : ISimpleGameListView(window, root), mGrid(window), mMarquee(window), mImage(window), mLblRating(window),
+      mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), mLblGenre(window), mLblPlayers(window),
+      mLblLastPlayed(window), mLblPlayCount(window), mBadges(window), mRating(window), mReleaseDate(window),
+      mDeveloper(window),
+      mPublisher(window), mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window), mName(window),
+      mDescContainer(window), mDescription(window), mGamelistInfo(window)
 {
     const float padding = 0.01f;
 

@@ -24,43 +24,45 @@ FlexboxComponent::FlexboxComponent(Window* window)
     // Initialize item margins.
     mItemMargin = glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y};
 
-    // Calculate flexbox layout.
-    computeLayout();
+    // Layout validity
+    mLayoutValid = false;
 }
 
 // Getters/Setters for rendering options.
 void FlexboxComponent::setDirection(std::string value)
 {
     mDirection = value;
-    computeLayout();
+    mLayoutValid = false;
 }
 std::string FlexboxComponent::getDirection() { return mDirection; }
 void FlexboxComponent::setAlign(std::string value)
 {
     mAlign = value;
-    computeLayout();
+    mLayoutValid = false;
 }
 std::string FlexboxComponent::getAlign() { return mAlign; }
 void FlexboxComponent::setItemsPerLine(unsigned int value)
 {
     mItemsPerLine = value;
-    computeLayout();
+    mLayoutValid = false;
 }
 unsigned int FlexboxComponent::getItemsPerLine() { return mItemsPerLine; }
 void FlexboxComponent::setItemMargin(glm::vec2 value)
 {
     mItemMargin = value;
-    computeLayout();
+    mLayoutValid = false;
 }
 glm::vec2 FlexboxComponent::getItemMargin() { return mItemMargin; }
 void FlexboxComponent::setItemWidth(float value)
 {
     mItemWidth = value;
-    computeLayout();
+    mLayoutValid = false;
 }
 float FlexboxComponent::getItemWidth() { return mItemWidth; }
 
-void FlexboxComponent::onSizeChanged() { computeLayout(); }
+void FlexboxComponent::onSizeChanged() {
+    mLayoutValid = false;
+}
 
 void FlexboxComponent::computeLayout()
 {
@@ -139,19 +141,22 @@ void FlexboxComponent::computeLayout()
             if (directionRow.x == 0) {
                 anchorY += lineWidth * directionRow.y;
                 anchorX = anchorXStart;
-            }
-            else {
+            } else {
                 anchorX += lineWidth * directionRow.x;
                 anchorY = anchorYStart;
             }
         }
     }
+
+    mLayoutValid = true;
 }
 
-void FlexboxComponent::render(const glm::mat4& parentTrans)
-{
+void FlexboxComponent::render(const glm::mat4& parentTrans) {
     if (!isVisible())
         return;
+
+    if (!mLayoutValid)
+        computeLayout();
 
     renderChildren(parentTrans);
 }
@@ -189,8 +194,8 @@ void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     GuiComponent::applyTheme(theme, view, element, properties);
 
-    // Trigger layout computation.
-    onSizeChanged();
+    // Layout no longer valid.
+    mLayoutValid = false;
 }
 
 std::vector<HelpPrompt> FlexboxComponent::getHelpPrompts()

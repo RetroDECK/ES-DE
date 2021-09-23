@@ -14,12 +14,9 @@
 #include "components/TextComponent.h"
 #include "utils/StringUtil.h"
 
-GuiLaunchScreen::GuiLaunchScreen(Window* window)
-    : GuiComponent(window)
-    , mWindow(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(nullptr)
-    , mMarquee(nullptr)
+GuiLaunchScreen::GuiLaunchScreen(Window *window)
+        : GuiComponent(window), mWindow(window), mBackground(window, ":/graphics/frame.svg"), mGrid(nullptr),
+          mMarquee(nullptr)
 {
     addChild(&mBackground);
     mWindow->setLaunchScreen(this);
@@ -220,8 +217,7 @@ void GuiLaunchScreen::update(int deltaTime)
         mScaleUp = glm::clamp(mScaleUp + 0.07f, 0.0f, 1.0f);
 }
 
-void GuiLaunchScreen::render(const glm::mat4& /*parentTrans*/)
-{
+void GuiLaunchScreen::render(const glm::mat4 & /*parentTrans*/) {
     // Scale up animation.
     if (mScaleUp < 1.0f)
         setScale(mScaleUp);

@@ -245,7 +245,7 @@ const ComponentGrid::GridEntry* ComponentGrid::getCellAt(int x, int y) const
 
 bool ComponentGrid::input(InputConfig* config, Input input)
 {
-    const GridEntry* cursorEntry = getCellAt(mCursor);
+    const GridEntry *cursorEntry = getCellAt(mCursor);
     if (cursorEntry && cursorEntry->component->input(config, input))
         return true;
 
@@ -287,12 +287,11 @@ void ComponentGrid::resetCursor()
     }
 }
 
-bool ComponentGrid::moveCursor(glm::ivec2 dir)
-{
+bool ComponentGrid::moveCursor(glm::ivec2 dir) {
     assert(dir.x || dir.y);
 
     const glm::ivec2 origCursor{mCursor};
-    const GridEntry* currentCursorEntry = getCellAt(mCursor);
+    const GridEntry *currentCursorEntry = getCellAt(mCursor);
     glm::ivec2 searchAxis(dir.x == 0, dir.y == 0);
 
     // Logic to handle entries that span several cells.
@@ -326,7 +325,7 @@ bool ComponentGrid::moveCursor(glm::ivec2 dir)
     while (mCursor.x >= 0 && mCursor.y >= 0 && mCursor.x < mGridSize.x && mCursor.y < mGridSize.y) {
         mCursor = mCursor + dir;
         glm::ivec2 curDirPos{mCursor};
-        const GridEntry* cursorEntry;
+        const GridEntry *cursorEntry;
 
         // Spread out on search axis+
         while (mCursor.x < mGridSize.x && mCursor.y < mGridSize.y && mCursor.x >= 0 &&
@@ -368,8 +367,7 @@ bool ComponentGrid::moveCursor(glm::ivec2 dir)
     return false;
 }
 
-void ComponentGrid::moveCursorTo(int xPos, int yPos, bool selectLeftCell)
-{
+void ComponentGrid::moveCursorTo(int xPos, int yPos, bool selectLeftCell) {
     const glm::ivec2 origCursor{mCursor};
 
     if (xPos != -1)
@@ -377,7 +375,7 @@ void ComponentGrid::moveCursorTo(int xPos, int yPos, bool selectLeftCell)
     if (yPos != -1)
         mCursor.y = yPos;
 
-    const GridEntry* currentCursorEntry = getCellAt(mCursor);
+    const GridEntry *currentCursorEntry = getCellAt(mCursor);
 
     // If requested, select the leftmost cell of entries wider than 1 cell.
     if (selectLeftCell && mCursor.x > currentCursorEntry->pos.x)
@@ -386,16 +384,14 @@ void ComponentGrid::moveCursorTo(int xPos, int yPos, bool selectLeftCell)
     onCursorMoved(origCursor, mCursor);
 }
 
-void ComponentGrid::onFocusLost()
-{
-    const GridEntry* cursorEntry = getCellAt(mCursor);
+void ComponentGrid::onFocusLost() {
+    const GridEntry *cursorEntry = getCellAt(mCursor);
     if (cursorEntry)
         cursorEntry->component->onFocusLost();
 }
 
-void ComponentGrid::onFocusGained()
-{
-    const GridEntry* cursorEntry = getCellAt(mCursor);
+void ComponentGrid::onFocusGained() {
+    const GridEntry *cursorEntry = getCellAt(mCursor);
     if (cursorEntry)
         cursorEntry->component->onFocusGained();
 }

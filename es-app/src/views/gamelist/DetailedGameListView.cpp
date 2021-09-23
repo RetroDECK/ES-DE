@@ -17,32 +17,12 @@
 #define FADE_IN_TIME 650
 
 DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
-    : BasicGameListView(window, root)
-    , mThumbnail(window)
-    , mMarquee(window)
-    , mImage(window)
-    , mLblRating(window)
-    , mLblReleaseDate(window)
-    , mLblDeveloper(window)
-    , mLblPublisher(window)
-    , mLblGenre(window)
-    , mLblPlayers(window)
-    , mLblLastPlayed(window)
-    , mLblPlayCount(window)
-    , mBadges(window)
-    , mRating(window)
-    , mReleaseDate(window)
-    , mDeveloper(window)
-    , mPublisher(window)
-    , mGenre(window)
-    , mPlayers(window)
-    , mLastPlayed(window)
-    , mPlayCount(window)
-    , mName(window)
-    , mDescContainer(window)
-    , mDescription(window)
-    , mGamelistInfo(window)
-    , mLastUpdated(nullptr)
+    : BasicGameListView(window, root), mThumbnail(window), mMarquee(window), mImage(window), mLblRating(window),
+      mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), mLblGenre(window), mLblPlayers(window),
+      mLblLastPlayed(window), mLblPlayCount(window), mBadges(window), mRating(window), mReleaseDate(window),
+      mDeveloper(window),
+      mPublisher(window), mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window), mName(window),
+      mDescContainer(window), mDescription(window), mGamelistInfo(window), mLastUpdated(nullptr)
 {
     const float padding = 0.01f;
 

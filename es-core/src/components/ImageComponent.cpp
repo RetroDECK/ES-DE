@@ -27,23 +27,11 @@ glm::vec2 ImageComponent::getSize() const
     return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
 }
 
-ImageComponent::ImageComponent(Window* window, bool forceLoad, bool dynamic)
-    : GuiComponent(window)
-    , mTargetSize({})
-    , mFlipX(false)
-    , mFlipY(false)
-    , mTargetIsMax(false)
-    , mTargetIsMin(false)
-    , mColorShift(0xFFFFFFFF)
-    , mColorShiftEnd(0xFFFFFFFF)
-    , mColorGradientHorizontal(true)
-    , mFadeOpacity(0)
-    , mFading(false)
-    , mForceLoad(forceLoad)
-    , mDynamic(dynamic)
-    , mRotateByTargetSize(false)
-    , mTopLeftCrop({})
-    , mBottomRightCrop(1.0f, 1.0f)
+ImageComponent::ImageComponent(Window *window, bool forceLoad, bool dynamic)
+        : GuiComponent(window), mTargetSize({}), mFlipX(false), mFlipY(false), mTargetIsMax(false), mTargetIsMin(false),
+          mColorShift(0xFFFFFFFF), mColorShiftEnd(0xFFFFFFFF), mColorGradientHorizontal(true), mFadeOpacity(0),
+          mFading(false), mForceLoad(forceLoad), mDynamic(dynamic), mRotateByTargetSize(false), mTopLeftCrop({}),
+          mBottomRightCrop(1.0f, 1.0f)
 {
     updateColors();
 }

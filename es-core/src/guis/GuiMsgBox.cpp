@@ -15,22 +15,18 @@
 #define HORIZONTAL_PADDING_PX 20.0f
 
 GuiMsgBox::GuiMsgBox(Window* window,
-                     const HelpStyle& helpstyle,
-                     const std::string& text,
-                     const std::string& name1,
-                     const std::function<void()>& func1,
-                     const std::string& name2,
-                     const std::function<void()>& func2,
-                     const std::string& name3,
-                     const std::function<void()>& func3,
+                     const HelpStyle &helpstyle,
+                     const std::string &text,
+                     const std::string &name1,
+                     const std::function<void()> &func1,
+                     const std::string &name2,
+                     const std::function<void()> &func2,
+                     const std::string &name3,
+                     const std::function<void()> &func3,
                      bool disableBackButton,
                      bool deleteOnButtonPress)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2{1, 2})
-    , mHelpStyle(helpstyle)
-    , mDisableBackButton(disableBackButton)
-    , mDeleteOnButtonPress(deleteOnButtonPress)
+        : GuiComponent(window), mBackground(window, ":/graphics/frame.svg"), mGrid(window, glm::ivec2{1, 2}),
+          mHelpStyle(helpstyle), mDisableBackButton(disableBackButton), mDeleteOnButtonPress(deleteOnButtonPress)
 {
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.

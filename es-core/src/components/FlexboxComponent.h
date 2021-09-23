@@ -66,6 +66,7 @@ private:
     unsigned int mItemsPerLine;
     glm::vec2 mItemMargin;
     float mItemWidth;
+    bool mLayoutValid;
 };
 
 #endif // ES_APP_COMPONENTS_FLEXBOX_COMPONENT_H

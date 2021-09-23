@@ -147,8 +147,7 @@ void thegamesdb_generate_json_scraper_requests(
             // using this regardless of whether the entry is an arcade game.
             if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
                 cleanName = Utils::String::removeParenthesis(params.game->metadata.get("name"));
-            }
-            else {
+            } else {
                 // If not searching based on the metadata name, then check whether it's an
                 // arcade game and if so expand to the full game name. This is required as
                 // TheGamesDB has issues with searching using the short MAME names.
@@ -165,10 +164,10 @@ void thegamesdb_generate_json_scraper_requests(
                             return !std::isspace(static_cast<unsigned char>(c));
                         }));
         cleanName.erase(
-            std::find_if(cleanName.rbegin(), cleanName.rend(),
-                         [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
-                .base(),
-            cleanName.end());
+                std::find_if(cleanName.rbegin(), cleanName.rend(),
+                             [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
+                        .base(),
+                cleanName.end());
 
         path += "/Games/ByGameName?" + apiKey +
                 "&fields=players,publishers,genres,overview,last_updated,rating,"
@@ -457,7 +456,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         if (doc.HasMember("remaining_monthly_allowance") && doc.HasMember("extra_allowance")) {
             for (size_t i = 0; i < results.size(); i++) {
                 results[i].scraperRequestAllowance =
-                    doc["remaining_monthly_allowance"].GetInt() + doc["extra_allowance"].GetInt();
+                        doc["remaining_monthly_allowance"].GetInt() + doc["extra_allowance"].GetInt();
             }
             LOG(LogDebug) << "TheGamesDBJSONRequest::process(): "
                              "Remaining monthly scraping allowance: "

@@ -25,15 +25,9 @@
 #include "views/ViewController.h"
 #include "views/gamelist/IGameListView.h"
 
-GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
-    : GuiComponent(window)
-    , mMenu(window, "OPTIONS")
-    , mSystem(system)
-    , mFiltersChanged(false)
-    , mCancelled(false)
-    , mIsCustomCollection(false)
-    , mIsCustomCollectionGroup(false)
-    , mCustomCollectionSystem(nullptr)
+GuiGamelistOptions::GuiGamelistOptions(Window *window, SystemData *system)
+        : GuiComponent(window), mMenu(window, "OPTIONS"), mSystem(system), mFiltersChanged(false), mCancelled(false),
+          mIsCustomCollection(false), mIsCustomCollectionGroup(false), mCustomCollectionSystem(nullptr)
 {
     addChild(&mMenu);
 

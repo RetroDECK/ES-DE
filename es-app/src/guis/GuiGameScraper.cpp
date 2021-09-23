@@ -18,14 +18,11 @@
 #include "components/TextComponent.h"
 #include "views/ViewController.h"
 
-GuiGameScraper::GuiGameScraper(Window* window,
+GuiGameScraper::GuiGameScraper(Window *window,
                                ScraperSearchParams params,
-                               std::function<void(const ScraperSearchResult&)> doneFunc)
-    : GuiComponent(window)
-    , mClose(false)
-    , mGrid(window, glm::ivec2{1, 7})
-    , mBox(window, ":/graphics/frame.svg")
-    , mSearchParams(params)
+                               std::function<void(const ScraperSearchResult &)> doneFunc)
+        : GuiComponent(window), mClose(false), mGrid(window, glm::ivec2{1, 7}), mBox(window, ":/graphics/frame.svg"),
+          mSearchParams(params)
 {
     addChild(&mBox);
     addChild(&mGrid);

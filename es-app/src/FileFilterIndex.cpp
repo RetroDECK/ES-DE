@@ -20,23 +20,15 @@
 #define INCLUDE_UNKNOWN false;
 
 FileFilterIndex::FileFilterIndex()
-    : mFilterByText(false)
-    , mTextRemoveSystem(false)
-    , mFilterByFavorites(false)
-    , mFilterByGenre(false)
-    , mFilterByPlayers(false)
-    , mFilterByPubDev(false)
-    , mFilterByRatings(false)
-    , mFilterByKidGame(false)
-    , mFilterByCompleted(false)
-    , mFilterByBroken(false)
-    , mFilterByHidden(false)
+        : mFilterByText(false), mTextRemoveSystem(false), mFilterByFavorites(false), mFilterByGenre(false),
+          mFilterByPlayers(false), mFilterByPubDev(false), mFilterByRatings(false), mFilterByKidGame(false),
+          mFilterByCompleted(false), mFilterByBroken(false), mFilterByHidden(false)
 {
     clearAllFilters();
 
     // clang-format off
     FilterDataDecl filterDecls[] = {
-        //type             //allKeys                //filteredBy         //filteredKeys                //primaryKey    //hasSecondaryKey   //secondaryKey  //menuLabel
+            //type             //allKeys                //filteredBy         //filteredKeys                //primaryKey    //hasSecondaryKey   //secondaryKey  //menuLabel
         {FAVORITES_FILTER, &mFavoritesIndexAllKeys, &mFilterByFavorites, &mFavoritesIndexFilteredKeys, "favorite",     false,              "",             "FAVORITES"},
         {GENRE_FILTER,     &mGenreIndexAllKeys,     &mFilterByGenre,     &mGenreIndexFilteredKeys,     "genre",        true,               "genre",        "GENRE"},
         {PLAYER_FILTER,    &mPlayersIndexAllKeys,   &mFilterByPlayers,   &mPlayersIndexFilteredKeys,   "players",      false,              "",             "PLAYERS"},
@@ -365,11 +357,10 @@ bool FileFilterIndex::showFile(FileData* game)
     // in [] from the search string.
     if (mTextFilter != "" && mTextRemoveSystem &&
         !(Utils::String::toUpper(game->getName().substr(0, game->getName().find_last_of("[")))
-              .find(mTextFilter) != std::string::npos)) {
+                  .find(mTextFilter) != std::string::npos)) {
         return false;
-    }
-    else if (mTextFilter != "" &&
-             !(Utils::String::toUpper(game->getName()).find(mTextFilter) != std::string::npos)) {
+    } else if (mTextFilter != "" &&
+               !(Utils::String::toUpper(game->getName()).find(mTextFilter) != std::string::npos)) {
         return false;
     }
 
@@ -381,8 +372,7 @@ bool FileFilterIndex::showFile(FileData* game)
         FilterDataDecl filterData = (*it);
         if (filterData.primaryKey == "kidgame" && UIModeController::getInstance()->isUIModeKid()) {
             return (getIndexableKey(game, filterData.type, false) != "FALSE");
-        }
-        else if (*(filterData.filteredByRef)) {
+        } else if (*(filterData.filteredByRef)) {
             // Try to find a match.
             std::string key = getIndexableKey(game, filterData.type, false);
             keepGoing = isKeyBeingFilteredBy(key, filterData.type);

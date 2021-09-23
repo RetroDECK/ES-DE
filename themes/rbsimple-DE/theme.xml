@@ -238,7 +238,7 @@ based on: 'recalbox-multi' by the Recalbox community
         </text>
         <badges name="md_badges">
             <pos>0.8125 0.65</pos>
-            <origin>0 0</origin>
+            <origin>0.5 0.5</origin>
 
             <!-- flexbox properties -->
             <direction>row</direction>
