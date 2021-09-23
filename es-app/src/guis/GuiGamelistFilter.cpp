@@ -89,9 +89,9 @@ void GuiGamelistFilter::addFiltersToMenu()
 {
     ComponentListRow row;
 
-    auto lbl =
-        std::make_shared<TextComponent>(mWindow, Utils::String::toUpper("TEXT FILTER (GAME NAME)"),
-                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto lbl = std::make_shared<TextComponent>(
+        mWindow, Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
+        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     mTextFilterField = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
                                                        0x777777FF, ALIGN_RIGHT);
@@ -121,16 +121,16 @@ void GuiGamelistFilter::addFiltersToMenu()
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
         row.makeAcceptInputHandler([this, updateVal] {
-            mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                mWindow, getHelpStyle(), "TEXT FILTER (GAME NAME)", mTextFilterField->getValue(),
-                updateVal, false, "OK", "APPLY CHANGES?"));
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), "GAME NAME",
+                                                          mTextFilterField->getValue(), updateVal,
+                                                          false, "OK", "APPLY CHANGES?"));
         });
     }
     else {
         row.makeAcceptInputHandler([this, updateVal] {
-            mWindow->pushGui(new GuiTextEditPopup(
-                mWindow, getHelpStyle(), "TEXT FILTER (GAME NAME)", mTextFilterField->getValue(),
-                updateVal, false, "OK", "APPLY CHANGES?"));
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "GAME NAME",
+                                                  mTextFilterField->getValue(), updateVal, false,
+                                                  "OK", "APPLY CHANGES?"));
         });
     }
 
