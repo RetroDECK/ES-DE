@@ -131,6 +131,7 @@ public:
 
     bool isVisible();
 
+    static SystemData* getSystemByName(const std::string& systemName);
     SystemData* getNext() const;
     SystemData* getPrev() const;
     static SystemData* getRandomSystem(const SystemData* currentSystem);

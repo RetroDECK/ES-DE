@@ -746,14 +746,26 @@ void FileData::launchGame(Window* window)
 {
     LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
 
+    SystemData* gameSystem = nullptr;
     std::string command = "";
-    std::string alternativeEmulator = getSystem()->getAlternativeEmulator();
+    std::string alternativeEmulator;
+
+    if (mSystem->isCollection())
+        gameSystem = SystemData::getSystemByName(mSystemName);
+    else
+        gameSystem = mSystem;
+
+    // This is just a precaution as getSystemByName() should always return a valid result.
+    if (gameSystem == nullptr)
+        gameSystem = mSystem;
+
+    alternativeEmulator = gameSystem->getAlternativeEmulator();
 
     // Check if there is a game-specific alternative emulator configured.
     // This takes precedence over any system-wide alternative emulator configuration.
     if (Settings::getInstance()->getBool("AlternativeEmulatorPerGame") &&
         !metadata.get("altemulator").empty()) {
-        command = getSystem()->getLaunchCommandFromLabel(metadata.get("altemulator"));
+        command = gameSystem->getLaunchCommandFromLabel(metadata.get("altemulator"));
         if (command == "") {
             LOG(LogWarning) << "Invalid alternative emulator \"" << metadata.get("altemulator")
                             << "\" configured for game";
@@ -767,16 +779,16 @@ void FileData::launchGame(Window* window)
 
     // Check if there is a system-wide alternative emulator configured.
     if (command == "" && alternativeEmulator != "") {
-        command = getSystem()->getLaunchCommandFromLabel(alternativeEmulator);
+        command = gameSystem->getLaunchCommandFromLabel(alternativeEmulator);
         if (command == "") {
             LOG(LogWarning) << "Invalid alternative emulator \""
                             << alternativeEmulator.substr(9, alternativeEmulator.length() - 9)
-                            << "\" configured for system \"" << getSystem()->getName() << "\"";
+                            << "\" configured for system \"" << gameSystem->getName() << "\"";
         }
         else {
             LOG(LogDebug) << "FileData::launchGame(): Using alternative emulator \""
-                          << getSystem()->getAlternativeEmulator() << "\""
-                          << " as configured for system \"" << this->getSystem()->getName() << "\"";
+                          << gameSystem->getAlternativeEmulator() << "\""
+                          << " as configured for system \"" << gameSystem->getName() << "\"";
         }
     }
 

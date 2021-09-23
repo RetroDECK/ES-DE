@@ -969,6 +969,16 @@ bool SystemData::isVisible()
     return true;
 }
 
+SystemData* SystemData::getSystemByName(const std::string& systemName)
+{
+    for (auto it : sSystemVector) {
+        if ((*it).getName() == systemName)
+            return it;
+    }
+
+    return nullptr;
+}
+
 SystemData* SystemData::getNext() const
 {
     std::vector<SystemData*>::const_iterator it = getIterator();
