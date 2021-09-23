@@ -248,7 +248,6 @@ void VideoGameListView::initMDValues()
     mGenre.setFont(defaultFont);
     mPlayers.setFont(defaultFont);
 
-    // TODO: Set appropriate default height.
     mBadges.setSize(defaultFont->getHeight() * 5.0f, static_cast<float>(defaultFont->getHeight()));
 
     mLastPlayed.setFont(defaultFont);

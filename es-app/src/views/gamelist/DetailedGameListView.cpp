@@ -56,7 +56,6 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     addChild(&mImage);
 
     // Metadata labels + values.
-    addChild(&mBadges);
     mLblRating.setText("Rating: ");
     addChild(&mLblRating);
     addChild(&mRating);
@@ -75,6 +74,7 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     mLblPlayers.setText("Players: ");
     addChild(&mLblPlayers);
     addChild(&mPlayers);
+    addChild(&mBadges);
     mLblLastPlayed.setText("Last played: ");
     addChild(&mLblLastPlayed);
     mLastPlayed.setDisplayRelative(true);
@@ -111,8 +111,7 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     initMDValues();
 }
 
-void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
-{
+void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme) {
     BasicGameListView::onThemeChanged(theme);
 
     using namespace ThemeFlags;
@@ -122,24 +121,26 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
                         POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mImage.applyTheme(theme, getName(), "md_image",
                       POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+    mBadges.applyTheme(theme, getName(), "md_badges",
+                       POSITION | ThemeFlags::SIZE | Z_INDEX | DIRECTION | VISIBLE);
     mName.applyTheme(theme, getName(), "md_name", ALL);
 
     initMDLabels();
-    std::vector<TextComponent*> labels = getMDLabels();
+    std::vector<TextComponent *> labels = getMDLabels();
     assert(labels.size() == 8);
     std::vector<std::string> lblElements = {
-        "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer",  "md_lbl_publisher",
-        "md_lbl_genre",  "md_lbl_players",     "md_lbl_lastplayed", "md_lbl_playcount"};
+            "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher",
+            "md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"};
 
     for (unsigned int i = 0; i < labels.size(); i++)
         labels[i]->applyTheme(theme, getName(), lblElements[i], ALL);
 
     initMDValues();
-    std::vector<GuiComponent*> values = getMDValues();
-    assert(values.size() == 8);
-    std::vector<std::string> valElements = {"md_rating",     "md_releasedate", "md_developer",
-                                            "md_publisher",  "md_genre",       "md_players",
-                                            "md_lastplayed", "md_playcount"};
+    std::vector<GuiComponent *> values = getMDValues();
+    assert(values.size() == 9);
+    std::vector<std::string> valElements = {"md_rating", "md_releasedate", "md_developer",
+                                            "md_publisher", "md_genre", "md_players",
+                                            "md_badges", "md_lastplayed", "md_playcount"};
 
     for (unsigned int i = 0; i < values.size(); i++)
         values[i]->applyTheme(theme, getName(), valElements[i], ALL ^ ThemeFlags::TEXT);
@@ -205,6 +206,8 @@ void DetailedGameListView::initMDValues()
     mPlayers.setFont(defaultFont);
     mLastPlayed.setFont(defaultFont);
     mPlayCount.setFont(defaultFont);
+
+    mBadges.setSize(defaultFont->getHeight() * 5.0f, static_cast<float>(defaultFont->getHeight()));
 
     float bottom = 0.0f;
 
@@ -275,6 +278,7 @@ void DetailedGameListView::updateInfoPanel()
         mGenre.setVisible(false);
         mLblPlayers.setVisible(false);
         mPlayers.setVisible(false);
+        mBadges.setVisible(false);
         mLblLastPlayed.setVisible(false);
         mLastPlayed.setVisible(false);
         mLblPlayCount.setVisible(false);
@@ -293,6 +297,7 @@ void DetailedGameListView::updateInfoPanel()
         mGenre.setVisible(true);
         mLblPlayers.setVisible(true);
         mPlayers.setVisible(true);
+        mBadges.setVisible(true);
         mLblLastPlayed.setVisible(true);
         mLastPlayed.setVisible(true);
         mLblPlayCount.setVisible(true);
@@ -379,6 +384,18 @@ void DetailedGameListView::updateInfoPanel()
         mPublisher.setValue(file->metadata.get("publisher"));
         mGenre.setValue(file->metadata.get("genre"));
         mPlayers.setValue(file->metadata.get("players"));
+
+        // Generate badges slots value based on the game metadata.
+        std::stringstream ss;
+        ss << (file->metadata.get("favorite").compare("true") ? "" : "favorite ");
+        ss << (file->metadata.get("completed").compare("true") ? "" : "completed ");
+        ss << (file->metadata.get("kidgame").compare("true") ? "" : "kidgame ");
+        ss << (file->metadata.get("broken").compare("true") ? "" : "broken ");
+        std::string slots = ss.str();
+        if (!slots.empty())
+            slots.pop_back();
+        mBadges.setValue(slots);
+
         mName.setValue(file->metadata.get("name"));
 
         if (file->getType() == GAME) {
@@ -386,8 +403,7 @@ void DetailedGameListView::updateInfoPanel()
                 mLastPlayed.setValue(file->metadata.get("lastplayed"));
                 mPlayCount.setValue(file->metadata.get("playcount"));
             }
-        }
-        else if (file->getType() == FOLDER) {
+        } else if (file->getType() == FOLDER) {
             if (!hideMetaDataFields) {
                 mLastPlayed.setValue(file->metadata.get("lastplayed"));
                 mLblPlayCount.setVisible(false);
@@ -449,6 +465,7 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
     ret.push_back(&mPublisher);
     ret.push_back(&mGenre);
     ret.push_back(&mPlayers);
+    ret.push_back(&mBadges);
     ret.push_back(&mLastPlayed);
     ret.push_back(&mPlayCount);
     return ret;
