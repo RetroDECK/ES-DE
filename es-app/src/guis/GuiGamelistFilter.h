@@ -25,7 +25,8 @@ public:
                       SystemData* system,
                       std::function<void(bool)> filtersChangedCallback);
 
-    ~GuiGamelistFilter();
+    ~GuiGamelistFilter() { mFilterOptions.clear(); }
+
     bool input(InputConfig* config, Input input) override;
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
