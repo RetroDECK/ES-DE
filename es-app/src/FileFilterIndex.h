@@ -21,16 +21,16 @@ class FileData;
 
 enum FilterIndexType {
     NONE,
-    FAVORITES_FILTER,
-    GENRE_FILTER,
-    PLAYER_FILTER,
+    RATINGS_FILTER,
     DEVELOPER_FILTER,
     PUBLISHER_FILTER,
-    RATINGS_FILTER,
-    KIDGAME_FILTER,
+    GENRE_FILTER,
+    PLAYER_FILTER,
+    FAVORITES_FILTER,
     COMPLETED_FILTER,
-    BROKEN_FILTER,
+    KIDGAME_FILTER,
     HIDDEN_FILTER,
+    BROKEN_FILTER,
     ALTEMULATOR_FILTER
 };
 
@@ -72,16 +72,16 @@ private:
     std::vector<FilterDataDecl> filterDataDecl;
     std::string getIndexableKey(FileData* game, FilterIndexType type, bool getSecondary);
 
-    void manageFavoritesEntryInIndex(FileData* game, bool remove = false);
-    void manageGenreEntryInIndex(FileData* game, bool remove = false);
-    void managePlayerEntryInIndex(FileData* game, bool remove = false);
+    void manageRatingsEntryInIndex(FileData* game, bool remove = false);
     void manageDeveloperEntryInIndex(FileData* game, bool remove = false);
     void managePublisherEntryInIndex(FileData* game, bool remove = false);
-    void manageRatingsEntryInIndex(FileData* game, bool remove = false);
-    void manageKidGameEntryInIndex(FileData* game, bool remove = false);
+    void manageGenreEntryInIndex(FileData* game, bool remove = false);
+    void managePlayerEntryInIndex(FileData* game, bool remove = false);
+    void manageFavoritesEntryInIndex(FileData* game, bool remove = false);
     void manageCompletedEntryInIndex(FileData* game, bool remove = false);
-    void manageBrokenEntryInIndex(FileData* game, bool remove = false);
+    void manageKidGameEntryInIndex(FileData* game, bool remove = false);
     void manageHiddenEntryInIndex(FileData* game, bool remove = false);
+    void manageBrokenEntryInIndex(FileData* game, bool remove = false);
     void manageAltemulatorEntryInIndex(FileData* game, bool remove = false);
 
     void manageIndexEntry(std::map<std::string, int>* index, std::string key, bool remove);
@@ -92,40 +92,40 @@ private:
     bool mFilterByText;
     bool mTextRemoveSystem;
 
-    bool mFilterByFavorites;
-    bool mFilterByGenre;
-    bool mFilterByPlayers;
+    bool mFilterByRatings;
     bool mFilterByDeveloper;
     bool mFilterByPublisher;
-    bool mFilterByRatings;
-    bool mFilterByKidGame;
+    bool mFilterByGenre;
+    bool mFilterByPlayers;
+    bool mFilterByFavorites;
     bool mFilterByCompleted;
-    bool mFilterByBroken;
+    bool mFilterByKidGame;
     bool mFilterByHidden;
+    bool mFilterByBroken;
     bool mFilterByAltemulator;
 
-    std::map<std::string, int> mFavoritesIndexAllKeys;
-    std::map<std::string, int> mGenreIndexAllKeys;
-    std::map<std::string, int> mPlayersIndexAllKeys;
+    std::map<std::string, int> mRatingsIndexAllKeys;
     std::map<std::string, int> mDeveloperIndexAllKeys;
     std::map<std::string, int> mPublisherIndexAllKeys;
-    std::map<std::string, int> mRatingsIndexAllKeys;
-    std::map<std::string, int> mKidGameIndexAllKeys;
+    std::map<std::string, int> mGenreIndexAllKeys;
+    std::map<std::string, int> mPlayersIndexAllKeys;
+    std::map<std::string, int> mFavoritesIndexAllKeys;
     std::map<std::string, int> mCompletedIndexAllKeys;
-    std::map<std::string, int> mBrokenIndexAllKeys;
+    std::map<std::string, int> mKidGameIndexAllKeys;
     std::map<std::string, int> mHiddenIndexAllKeys;
+    std::map<std::string, int> mBrokenIndexAllKeys;
     std::map<std::string, int> mAltemulatorIndexAllKeys;
 
-    std::vector<std::string> mFavoritesIndexFilteredKeys;
-    std::vector<std::string> mGenreIndexFilteredKeys;
-    std::vector<std::string> mPlayersIndexFilteredKeys;
+    std::vector<std::string> mRatingsIndexFilteredKeys;
     std::vector<std::string> mDeveloperIndexFilteredKeys;
     std::vector<std::string> mPublisherIndexFilteredKeys;
-    std::vector<std::string> mRatingsIndexFilteredKeys;
-    std::vector<std::string> mKidGameIndexFilteredKeys;
+    std::vector<std::string> mGenreIndexFilteredKeys;
+    std::vector<std::string> mPlayersIndexFilteredKeys;
+    std::vector<std::string> mFavoritesIndexFilteredKeys;
     std::vector<std::string> mCompletedIndexFilteredKeys;
-    std::vector<std::string> mBrokenIndexFilteredKeys;
+    std::vector<std::string> mKidGameIndexFilteredKeys;
     std::vector<std::string> mHiddenIndexFilteredKeys;
+    std::vector<std::string> mBrokenIndexFilteredKeys;
     std::vector<std::string> mAltemulatorIndexFilteredKeys;
 };
 
