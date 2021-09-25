@@ -65,6 +65,7 @@ public:
                    const std::function<void()>& callback);
 
     void setTitle(std::string title, const std::shared_ptr<Font>& font);
+    std::shared_ptr<ComponentList> getList() { return mList; }
 
     void setCursorToFirstListEntry() { mList->moveCursor(-mList->getCursorId()); }
     void setCursorToList() { mGrid.setCursorTo(mList); }

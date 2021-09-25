@@ -27,10 +27,14 @@ public:
     OptionListComponent(Window* window,
                         const HelpStyle& helpstyle,
                         const std::string& name,
-                        bool multiSelect = false)
+                        bool multiSelect = false,
+                        bool multiExclusiveSelect = false,
+                        bool multiShowTotal = false)
         : GuiComponent(window)
         , mHelpStyle(helpstyle)
         , mMultiSelect(multiSelect)
+        , mMultiExclusiveSelect(multiExclusiveSelect)
+        , mMultiShowTotal(multiShowTotal)
         , mName(name)
         , mText(window)
         , mLeftArrow(window)
@@ -212,6 +216,8 @@ public:
         return 0;
     }
 
+    void setOverrideMultiText(const std::string& text) { mOverrideMultiText = text; }
+
     HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
@@ -234,7 +240,15 @@ private:
         if (mMultiSelect) {
             // Display the selected entry.
             std::stringstream ss;
-            ss << getSelectedObjects().size() << " SELECTED";
+
+            // For special situations, allow the "selected" text to be overridden to a custom value.
+            if (mOverrideMultiText != "")
+                ss << mOverrideMultiText;
+            else if (mMultiShowTotal)
+                ss << getSelectedObjects().size() << " (OF " << mEntries.size() << ") SELECTED";
+            else
+                ss << getSelectedObjects().size() << " SELECTED";
+
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y);
             setSize(mText.getSize().x + mRightArrow.getSize().x +
@@ -271,6 +285,9 @@ private:
     }
 
     bool mMultiSelect;
+    bool mMultiExclusiveSelect;
+    bool mMultiShowTotal;
+    std::string mOverrideMultiText;
 
     std::string mName;
     TextComponent mText;
@@ -295,14 +312,33 @@ private:
             auto font = Font::get(FONT_SIZE_MEDIUM);
             ComponentListRow row;
 
+            bool hasSelectedRow = false;
+
+            // If the exclusive selection flag has been set, i.e. only a single row can be selected
+            // at a time, then make sure to gray out and disable any non-selected rows.
+            if (mParent->mMultiExclusiveSelect) {
+                for (auto entry : mParent->mEntries) {
+                    if (entry.selected == true) {
+                        hasSelectedRow = true;
+                        break;
+                    }
+                }
+            }
+
             // For selecting all/none.
-            std::vector<ImageComponent*> checkboxes;
+            std::vector<ImageComponent*> checkBoxes;
+            std::vector<TextComponent*> textEntries;
 
             for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); it++) {
                 row.elements.clear();
-                row.addElement(std::make_shared<TextComponent>(
-                                   mWindow, Utils::String::toUpper(it->name), font, 0x777777FF),
-                               true);
+                auto textComponent = std::make_shared<TextComponent>(
+                    mWindow, Utils::String::toUpper(it->name), font, 0x777777FF);
+                row.addElement(textComponent, true);
+
+                if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected) {
+                    textComponent.get()->setOpacity(DISABLED_OPACITY);
+                    textComponent.get()->setEnabled(false);
+                }
 
                 OptionListData& e = *it;
 
@@ -313,16 +349,53 @@ private:
                     checkbox->setResize(0, font->getLetterHeight());
                     row.addElement(checkbox, false);
 
+                    if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected)
+                        checkbox.get()->setOpacity(DISABLED_OPACITY);
+
                     // Input handler.
                     // Update checkbox state and selected value.
                     row.makeAcceptInputHandler([this, &e, checkbox] {
+                        auto list = mMenu.getList();
+                        int cursorId = list->getCursorId();
+                        bool isEnabled = list->getChild(cursorId * 2)->getEnabled();
+
+                        if (mParent->mMultiExclusiveSelect && !isEnabled)
+                            return;
+
                         e.selected = !e.selected;
                         checkbox->setImage(e.selected ? CHECKED_PATH : UNCHECKED_PATH);
                         mParent->onSelectedChanged();
+
+                        // When selecting a row and the exclusive selection flag has been set,
+                        // gray out and disable all other rows.
+                        if (mParent->mMultiExclusiveSelect) {
+                            for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
+
+                                bool isSelected = mParent->mEntries[cursorId].selected;
+
+                                for (unsigned int i = 0; i < list->getChildCount(); i += 2) {
+                                    if (i == static_cast<unsigned int>(cursorId) * 2)
+                                        continue;
+                                    if (isSelected) {
+                                        mEnabled = false;
+                                        list->getChild(i)->setEnabled(false);
+                                        list->getChild(i)->setOpacity(DISABLED_OPACITY);
+                                        list->getChild(i + 1)->setOpacity(DISABLED_OPACITY);
+                                    }
+                                    else {
+                                        mEnabled = true;
+                                        list->getChild(i)->setEnabled(true);
+                                        list->getChild(i)->setOpacity(255);
+                                        list->getChild(i + 1)->setOpacity(255);
+                                    }
+                                }
+                            }
+                        }
                     });
 
                     // For selecting all/none.
-                    checkboxes.push_back(checkbox.get());
+                    checkBoxes.push_back(checkbox.get());
+                    textEntries.push_back(textComponent.get());
                 }
                 else {
                     // Input handler for non-multiselect.
@@ -342,18 +415,25 @@ private:
             mMenu.addButton("BACK", "back", [this] { delete this; });
 
             if (mParent->mMultiSelect) {
-                mMenu.addButton("SELECT ALL", "select all", [this, checkboxes] {
-                    for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
-                        mParent->mEntries.at(i).selected = true;
-                        checkboxes.at(i)->setImage(CHECKED_PATH);
-                    }
-                    mParent->onSelectedChanged();
-                });
+                if (!mParent->mMultiExclusiveSelect) {
+                    mMenu.addButton("SELECT ALL", "select all", [this, checkBoxes] {
+                        for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
+                            mParent->mEntries.at(i).selected = true;
+                            checkBoxes.at(i)->setImage(CHECKED_PATH);
+                        }
+                        mParent->onSelectedChanged();
+                    });
+                }
 
-                mMenu.addButton("SELECT NONE", "select none", [this, checkboxes] {
+                mMenu.addButton("SELECT NONE", "select none", [this, checkBoxes, textEntries] {
                     for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
                         mParent->mEntries.at(i).selected = false;
-                        checkboxes.at(i)->setImage(UNCHECKED_PATH);
+                        checkBoxes.at(i)->setImage(UNCHECKED_PATH);
+                        if (mParent->mMultiExclusiveSelect) {
+                            checkBoxes.at(i)->setOpacity(255);
+                            textEntries.at(i)->setOpacity(255);
+                            textEntries.at(i)->setEnabled(true);
+                        }
                     }
                     mParent->onSelectedChanged();
                 });
