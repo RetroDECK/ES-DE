@@ -13,6 +13,7 @@
 #include "Settings.h"
 #include "utils/StringUtil.h"
 #include "views/UIModeController.h"
+#include "views/ViewController.h"
 
 #include <cmath>
 
@@ -222,9 +223,16 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
             break;
     }
     key = Utils::String::trim(key);
-    if (key.empty() || (type == RATINGS_FILTER && key == "0 STARS")) {
+
+    // Add a dummy value in case there is no metadata defined so we can filter based on this.
+    if ((type == GENRE_FILTER || type == PLAYER_FILTER || type == PUBDEV_FILTER) &&
+        Utils::String::toUpper(key) == UNKNOWN_LABEL)
+        key = ViewController::CROSSEDCIRCLE_CHAR + " UNKNOWN";
+    else if (type == ALTEMULATOR_FILTER && key.empty())
+        key = ViewController::CROSSEDCIRCLE_CHAR + " NONE DEFINED";
+    else if (key.empty() || (type == RATINGS_FILTER && key == "0 STARS"))
         key = UNKNOWN_LABEL;
-    }
+
     return key;
 }
 
