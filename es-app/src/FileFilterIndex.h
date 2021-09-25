@@ -24,7 +24,8 @@ enum FilterIndexType {
     FAVORITES_FILTER,
     GENRE_FILTER,
     PLAYER_FILTER,
-    PUBDEV_FILTER,
+    DEVELOPER_FILTER,
+    PUBLISHER_FILTER,
     RATINGS_FILTER,
     KIDGAME_FILTER,
     COMPLETED_FILTER,
@@ -74,7 +75,8 @@ private:
     void manageFavoritesEntryInIndex(FileData* game, bool remove = false);
     void manageGenreEntryInIndex(FileData* game, bool remove = false);
     void managePlayerEntryInIndex(FileData* game, bool remove = false);
-    void managePubDevEntryInIndex(FileData* game, bool remove = false);
+    void manageDeveloperEntryInIndex(FileData* game, bool remove = false);
+    void managePublisherEntryInIndex(FileData* game, bool remove = false);
     void manageRatingsEntryInIndex(FileData* game, bool remove = false);
     void manageKidGameEntryInIndex(FileData* game, bool remove = false);
     void manageCompletedEntryInIndex(FileData* game, bool remove = false);
@@ -93,7 +95,8 @@ private:
     bool mFilterByFavorites;
     bool mFilterByGenre;
     bool mFilterByPlayers;
-    bool mFilterByPubDev;
+    bool mFilterByDeveloper;
+    bool mFilterByPublisher;
     bool mFilterByRatings;
     bool mFilterByKidGame;
     bool mFilterByCompleted;
@@ -104,7 +107,8 @@ private:
     std::map<std::string, int> mFavoritesIndexAllKeys;
     std::map<std::string, int> mGenreIndexAllKeys;
     std::map<std::string, int> mPlayersIndexAllKeys;
-    std::map<std::string, int> mPubDevIndexAllKeys;
+    std::map<std::string, int> mDeveloperIndexAllKeys;
+    std::map<std::string, int> mPublisherIndexAllKeys;
     std::map<std::string, int> mRatingsIndexAllKeys;
     std::map<std::string, int> mKidGameIndexAllKeys;
     std::map<std::string, int> mCompletedIndexAllKeys;
@@ -115,7 +119,8 @@ private:
     std::vector<std::string> mFavoritesIndexFilteredKeys;
     std::vector<std::string> mGenreIndexFilteredKeys;
     std::vector<std::string> mPlayersIndexFilteredKeys;
-    std::vector<std::string> mPubDevIndexFilteredKeys;
+    std::vector<std::string> mDeveloperIndexFilteredKeys;
+    std::vector<std::string> mPublisherIndexFilteredKeys;
     std::vector<std::string> mRatingsIndexFilteredKeys;
     std::vector<std::string> mKidGameIndexFilteredKeys;
     std::vector<std::string> mCompletedIndexFilteredKeys;
