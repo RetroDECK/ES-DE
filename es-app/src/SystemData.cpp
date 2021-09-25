@@ -178,12 +178,14 @@ void FindRules::loadFindRules()
 
 SystemData::SystemData(const std::string& name,
                        const std::string& fullName,
+                       const std::string& sortName,
                        SystemEnvironmentData* envData,
                        const std::string& themeFolder,
                        bool CollectionSystem,
                        bool CustomCollectionSystem)
     : mName(name)
     , mFullName(fullName)
+    , mSortName(sortName)
     , mEnvData(envData)
     , mThemeFolder(themeFolder)
     , mIsCollectionSystem(CollectionSystem)
@@ -438,11 +440,13 @@ bool SystemData::loadConfig()
              system = system.next_sibling("system")) {
             std::string name;
             std::string fullname;
+            std::string sortName;
             std::string path;
             std::string themeFolder;
 
             name = system.child("name").text().get();
             fullname = system.child("fullname").text().get();
+            sortName = system.child("systemsortname").text().get();
             path = system.child("path").text().get();
 
             auto nameFindFunc = [&] {
@@ -583,6 +587,15 @@ bool SystemData::loadConfig()
                 continue;
             }
 
+            if (sortName == "") {
+                sortName = fullname;
+            }
+            else {
+                LOG(LogDebug) << "SystemData::loadConfig(): System \"" << name
+                              << "\" has a <systemsortname> tag set, sorting as \"" << sortName
+                              << "\" instead of \"" << fullname << "\"";
+            }
+
             // Convert path to generic directory seperators.
             path = Utils::FileSystem::getGenericPath(path);
 
@@ -601,7 +614,7 @@ bool SystemData::loadConfig()
             envData->mLaunchCommands = commands;
             envData->mPlatformIds = platformIds;
 
-            SystemData* newSys = new SystemData(name, fullname, envData, themeFolder);
+            SystemData* newSys = new SystemData(name, fullname, sortName, envData, themeFolder);
             bool onlyHidden = false;
 
             // If the option to show hidden games has been disabled, then check whether all
@@ -630,9 +643,9 @@ bool SystemData::loadConfig()
         }
     }
 
-    // Sort systems by their full names.
+    // Sort systems by sortName, which will normally be the same as the full name.
     std::sort(std::begin(sSystemVector), std::end(sSystemVector),
-              [](SystemData* a, SystemData* b) { return a->getFullName() < b->getFullName(); });
+              [](SystemData* a, SystemData* b) { return a->getSortName() < b->getSortName(); });
 
     // Don't load any collections if there are no systems available.
     if (sSystemVector.size() > 0)

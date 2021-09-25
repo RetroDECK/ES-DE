@@ -925,7 +925,7 @@ SystemData* CollectionSystemsManager::addNewCustomCollection(std::string name)
     CollectionSystemDecl decl = mCollectionSystemDeclsIndex[myCollectionsName];
     decl.themeFolder = name;
     decl.name = name;
-    decl.longName = name;
+    decl.fullName = name;
 
     return createNewCollectionEntry(name, decl, true, true);
 }
@@ -1113,7 +1113,7 @@ SystemData* CollectionSystemsManager::createNewCollectionEntry(std::string name,
                                                                bool index,
                                                                bool custom)
 {
-    SystemData* newSys = new SystemData(name, sysDecl.longName, mCollectionEnvData,
+    SystemData* newSys = new SystemData(name, sysDecl.fullName, "", mCollectionEnvData,
                                         sysDecl.themeFolder, true, custom);
 
     CollectionSystemData newCollectionData;

@@ -52,7 +52,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              autoSystems.cbegin();
          it != autoSystems.cend(); it++)
-        collection_systems_auto->add(it->second.decl.longName, it->second.decl.name,
+        collection_systems_auto->add(it->second.decl.fullName, it->second.decl.name,
                                      it->second.isEnabled);
     addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
     addSaveFunc([this, autoSystems] {
@@ -101,7 +101,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              customSystems.cbegin();
          it != customSystems.cend(); it++)
-        collection_systems_custom->add(it->second.decl.longName, it->second.decl.name,
+        collection_systems_custom->add(it->second.decl.fullName, it->second.decl.name,
                                        it->second.isEnabled);
 
     addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);

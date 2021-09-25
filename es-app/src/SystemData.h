@@ -62,6 +62,7 @@ class SystemData
 public:
     SystemData(const std::string& name,
                const std::string& fullName,
+               const std::string& sortName,
                SystemEnvironmentData* envData,
                const std::string& themeFolder,
                bool CollectionSystem = false,
@@ -72,6 +73,7 @@ public:
     FileData* getRootFolder() const { return mRootFolder; }
     const std::string& getName() const { return mName; }
     const std::string& getFullName() const { return mFullName; }
+    const std::string& getSortName() const { return mSortName; }
     const std::string& getStartPath() const { return mEnvData->mStartPath; }
     const std::vector<std::string>& getExtensions() const { return mEnvData->mSearchExtensions; }
     const std::string& getThemeFolder() const { return mThemeFolder; }
@@ -152,6 +154,7 @@ public:
 private:
     std::string mName;
     std::string mFullName;
+    std::string mSortName;
     SystemEnvironmentData* mEnvData;
     std::string mAlternativeEmulator;
     std::string mThemeFolder;
