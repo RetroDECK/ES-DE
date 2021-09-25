@@ -409,7 +409,7 @@ private:
                 }
 
                 // Also set cursor to this row if we're not multi-select and this row is selected.
-                mMenu.addRow(row, (!mParent->mMultiSelect && it->selected));
+                mMenu.addRow(row, (!mParent->mMultiSelect && it->selected), false);
             }
 
             mMenu.addButton("BACK", "back", [this] { delete this; });

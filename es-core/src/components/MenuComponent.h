@@ -39,10 +39,11 @@ public:
 
     void setNeedsSaving() { mNeedsSaving = true; }
 
-    void addRow(const ComponentListRow& row, bool setCursorHere = false)
+    void addRow(const ComponentListRow& row, bool setCursorHere = false, bool updateRowSize = true)
     {
         mList->addRow(row, setCursorHere);
-        updateSize();
+        if (updateRowSize)
+            updateSize();
     }
 
     void addWithLabel(const std::string& label,
