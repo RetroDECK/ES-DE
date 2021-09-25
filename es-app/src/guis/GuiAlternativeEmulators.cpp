@@ -23,14 +23,17 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
     // Horizontal sizes for the system and label entries.
     float systemSizeX = mMenu.getSize().x / 3.27f;
-    float labelSizeX = mMenu.getSize().x / 1.53;
+    float labelSizeX = mMenu.getSize().x / 1.53f;
+
+    if (Renderer::getScreenHeightModifier() > 1.0f)
+        labelSizeX += 8.0f * Renderer::getScreenHeightModifier();
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); it++) {
 
         // Only include systems that have at least two command entries, unless the system
         // has an invalid entry.
-        if ((*it)->getAlternativeEmulator() != "<INVALID>" &&
+        if ((*it)->getAlternativeEmulator().substr(0, 9) != "<INVALID>" &&
             (*it)->getSystemEnvData()->mLaunchCommands.size() < 2)
             continue;
 
@@ -68,7 +71,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
         bool invalidEntry = false;
 
         if (label.empty()) {
-            label = "<INVALID ENTRY>";
+            label = ViewController::EXCLAMATION_CHAR + " INVALID ENTRY";
             invalidEntry = true;
         }
 
@@ -94,7 +97,11 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
         labelText->setSize(labelSizeX, labelText->getSize().y);
 
         row.addElement(labelText, false);
-        row.makeAcceptInputHandler([this, it] { selectorWindow(*it); });
+        row.makeAcceptInputHandler([this, it, labelText] {
+            if (labelText->getValue() == ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY")
+                return;
+            selectorWindow(*it);
+        });
 
         mMenu.addRow(row);
         mHasSystems = true;
@@ -104,9 +111,9 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
     // es_systems.xml.
     if (!mHasSystems) {
         ComponentListRow row;
-        std::shared_ptr<TextComponent> systemText =
-            std::make_shared<TextComponent>(mWindow, "<NO ALTERNATIVE EMULATORS DEFINED>",
-                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+        std::shared_ptr<TextComponent> systemText = std::make_shared<TextComponent>(
+            mWindow, ViewController::EXCLAMATION_CHAR + " NO ALTERNATIVE EMULATORS DEFINED",
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
         row.addElement(systemText, true);
         mMenu.addRow(row);
     }
@@ -150,12 +157,15 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
         ComponentListRow row;
 
         if (entry.second == "")
-            label = "<REMOVE INVALID ENTRY>";
+            label = ViewController::CROSSEDCIRCLE_CHAR + " CLEAR INVALID ENTRY";
         else
             label = entry.second;
 
         std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
             mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+
+        if (system->getSystemEnvData()->mLaunchCommands.front().second == label)
+            labelText->setValue(labelText->getValue().append(" [DEFAULT]"));
 
         row.addElement(labelText, true);
         row.makeAcceptInputHandler([this, s, system, labelText, entry, selectedLabel] {
@@ -165,9 +175,26 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
                 else
                     system->setAlternativeEmulator(entry.second);
                 updateGamelist(system, true);
-                updateMenu(
-                    system->getName(), labelText->getValue(),
-                    (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second));
+
+                if (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second) {
+                    if (system->getSystemEnvData()->mLaunchCommands.front().second == "") {
+                        updateMenu(system->getName(),
+                                   ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY",
+                                   (entry.second ==
+                                    system->getSystemEnvData()->mLaunchCommands.front().second));
+                    }
+                    else {
+                        updateMenu(system->getName(),
+                                   system->getSystemEnvData()->mLaunchCommands.front().second,
+                                   (entry.second ==
+                                    system->getSystemEnvData()->mLaunchCommands.front().second));
+                    }
+                }
+                else {
+                    updateMenu(system->getName(), labelText->getValue(),
+                               (entry.second ==
+                                system->getSystemEnvData()->mLaunchCommands.front().second));
+                }
             }
             delete s;
         });

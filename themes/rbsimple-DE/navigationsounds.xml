@@ -1,10 +1,10 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <feature supported="navigationsounds">
         <view name="all">
             <sound name="systembrowse">
-                  <path>./core/sounds/systembrowse.wav</path>
+                <path>./core/sounds/systembrowse.wav</path>
             </sound>
             <sound name="quicksysselect">
                 <path>./core/sounds/quicksysselect.wav</path>

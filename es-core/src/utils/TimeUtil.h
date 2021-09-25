@@ -20,7 +20,7 @@ namespace Utils
 {
     namespace Time
     {
-        static int DEFAULT_TIMEVALUE = 0;
+        constexpr static int DEFAULT_TIMEVALUE = 0;
 
         class DateTime
         {

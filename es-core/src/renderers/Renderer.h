@@ -48,13 +48,15 @@ namespace Renderer
 
     static std::vector<Shader*> sShaderProgramVector;
     static GLuint shaderFBO;
-    static glm::mat4 mProjectionMatrix;
+    // This is simply to get rid of a GCC false positive -Wunused-variable compiler warning.
+    static GLuint shaderFBODummy = shaderFBO;
+
     static constexpr glm::mat4 getIdentity() { return glm::mat4{1.0f}; }
 
 #if !defined(NDEBUG)
 #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
 
-    static void _GLCheckError(const std::string& _funcName)
+    static inline void _GLCheckError(const std::string& _funcName)
     {
         const GLenum errorCode = glGetError();
 
@@ -162,7 +164,7 @@ namespace Renderer
                               const Renderer::shaderParameters& parameters = shaderParameters(),
                               unsigned char* textureRGBA = nullptr);
 
-    static unsigned int getWindowFlags() { return SDL_WINDOW_OPENGL; }
+    static inline unsigned int getWindowFlags() { return SDL_WINDOW_OPENGL; }
 
     void setupWindow();
     bool createContext();

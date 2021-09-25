@@ -33,7 +33,7 @@ public:
     void onSizeChanged() override;
 
     void setValue(const std::string& val) override;
-    std::string getValue() const override { return mText; }
+    std::string getValue() const override;
 
     void startEditing();
     void stopEditing();
@@ -60,7 +60,8 @@ private:
     std::string mTextOrig;
     bool mFocused;
     bool mEditing;
-    unsigned int mCursor; // Cursor position in characters.
+    int mCursor; // Cursor position in characters.
+    int mBlinkTime;
 
     int mCursorRepeatTimer;
     int mCursorRepeatDir;
@@ -68,7 +69,6 @@ private:
     glm::vec2 mScrollOffset;
 
     NinePatchComponent mBox;
-    float mResolutionAdjustment;
 
     std::shared_ptr<Font> mFont;
     std::unique_ptr<TextCache> mTextCache;

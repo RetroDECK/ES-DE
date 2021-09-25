@@ -22,12 +22,13 @@
 #include "components/SwitchComponent.h"
 #include "guis/GuiAlternativeEmulators.h"
 #include "guis/GuiCollectionSystemsOptions.h"
-#include "guis/GuiComplexTextEditPopup.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
+#include "guis/GuiTextEditPopup.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGameListView.h"
@@ -35,10 +36,8 @@
 #include <SDL2/SDL_events.h>
 #include <algorithm>
 
-GuiMenu::GuiMenu(Window* window)
-    : GuiComponent(window)
-    , mMenu(window, "MAIN MENU")
-    , mVersion(window)
+GuiMenu::GuiMenu(Window *window)
+        : GuiComponent(window), mMenu(window, "MAIN MENU"), mVersion(window)
 {
     bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 
@@ -509,6 +508,18 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Enable virtual (on-screen) keyboard.
+    auto virtual_keyboard = std::make_shared<SwitchComponent>(mWindow);
+    virtual_keyboard->setState(Settings::getInstance()->getBool("VirtualKeyboard"));
+    s->addWithLabel("ENABLE VIRTUAL KEYBOARD", virtual_keyboard);
+    s->addSaveFunc([virtual_keyboard, s] {
+        if (virtual_keyboard->getState() != Settings::getInstance()->getBool("VirtualKeyboard")) {
+            Settings::getInstance()->setBool("VirtualKeyboard", virtual_keyboard->getState());
+            s->setNeedsSaving();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
     // Enable the 'Y' button for tagging games as favorites.
     auto favorites_add_button = std::make_shared<SwitchComponent>(mWindow);
     favorites_add_button->setState(Settings::getInstance()->getBool("FavoritesAddButton"));
@@ -809,10 +820,19 @@ void GuiMenu::openOtherOptions()
     rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
                                         defaultDirectoryText, initValueMediaDir, updateValMediaDir,
                                         multiLineMediaDir] {
-        mWindow->pushGui(new GuiComplexTextEditPopup(
-            mWindow, getHelpStyle(), titleMediaDir, mediaDirectoryStaticText, defaultDirectoryText,
-            Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
-            multiLineMediaDir, "SAVE", "SAVE CHANGES?"));
+        if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    mWindow, getHelpStyle(), titleMediaDir,
+                    Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+                    multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
+                    defaultDirectoryText, "load default directory"));
+        } else {
+            mWindow->pushGui(new GuiTextEditPopup(
+                    mWindow, getHelpStyle(), titleMediaDir,
+                    Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+                    multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
+                    defaultDirectoryText, "load default directory"));
+        }
     });
     s->addRow(rowMediaDir);
 
@@ -1021,16 +1041,17 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-    // Allow overriding of the launch command per game (the option to disable this is
-    // intended primarily for testing purposes).
-    auto launchcommand_override = std::make_shared<SwitchComponent>(mWindow);
-    launchcommand_override->setState(Settings::getInstance()->getBool("LaunchCommandOverride"));
-    s->addWithLabel("PER GAME LAUNCH COMMAND OVERRIDE", launchcommand_override);
-    s->addSaveFunc([launchcommand_override, s] {
-        if (launchcommand_override->getState() !=
-            Settings::getInstance()->getBool("LaunchCommandOverride")) {
-            Settings::getInstance()->setBool("LaunchCommandOverride",
-                                             launchcommand_override->getState());
+    // Whether to enable alternative emulators per game (the option to disable this is intended
+    // primarily for testing purposes).
+    auto alternativeEmulatorPerGame = std::make_shared<SwitchComponent>(mWindow);
+    alternativeEmulatorPerGame->setState(
+        Settings::getInstance()->getBool("AlternativeEmulatorPerGame"));
+    s->addWithLabel("ENABLE ALTERNATIVE EMULATORS PER GAME", alternativeEmulatorPerGame);
+    s->addSaveFunc([alternativeEmulatorPerGame, s] {
+        if (alternativeEmulatorPerGame->getState() !=
+            Settings::getInstance()->getBool("AlternativeEmulatorPerGame")) {
+            Settings::getInstance()->setBool("AlternativeEmulatorPerGame",
+                                             alternativeEmulatorPerGame->getState());
             s->setNeedsSaving();
         }
     });
@@ -1307,7 +1328,7 @@ void GuiMenu::close(bool closeAllWindows)
     }
     else {
         Window* window = mWindow;
-        closeFunc = [window, this] {
+        closeFunc = [window] {
             while (window->peekGui() != ViewController::get())
                 delete window->peekGui();
         };

@@ -29,6 +29,7 @@
 #include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
@@ -36,15 +37,9 @@
 
 #define FAILED_VERIFICATION_RETRIES 8
 
-GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int scrapeCount)
-    : GuiComponent(window)
-    , mGrid(window, glm::ivec2{4, 3})
-    , mBusyAnim(window)
-    , mSearchType(type)
-    , mScrapeCount(scrapeCount)
-    , mScrapeRatings(false)
-    , mRefinedSearch(false)
-    , mFoundGame(false)
+GuiScraperSearch::GuiScraperSearch(Window *window, SearchType type, unsigned int scrapeCount)
+        : GuiComponent(window), mGrid(window, glm::ivec2{4, 3}), mSearchType(type), mScrapeCount(scrapeCount),
+          mRefinedSearch(false), mFoundGame(false), mScrapeRatings(false), mBusyAnim(window)
 {
     addChild(&mGrid);
 
@@ -323,6 +318,7 @@ void GuiScraperSearch::search(const ScraperSearchParams& params)
     mBlockAccept = true;
     mAcceptedResult = false;
     mMiximageResult = false;
+    mFoundGame = false;
     mScrapeResult = {};
 
     mResultList->clear();
@@ -470,15 +466,15 @@ void GuiScraperSearch::updateInfoPane()
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size())
         i = 0;
 
-    if (i != -1 && static_cast<int>(mScraperResults.size() > i)) {
-        ScraperSearchResult& res = mScraperResults.at(i);
+    if (i != -1 && static_cast<int>(mScraperResults.size()) > i) {
+        ScraperSearchResult &res = mScraperResults.at(i);
 
         mResultName->setText(Utils::String::toUpper(res.mdl.get("name")));
         mResultDesc->setText(Utils::String::toUpper(res.mdl.get("desc")));
         mDescContainer->reset();
 
         mResultThumbnail->setImage("");
-        const std::string& thumb = res.screenshotUrl.empty() ? res.coverUrl : res.screenshotUrl;
+        const std::string &thumb = res.screenshotUrl.empty() ? res.coverUrl : res.screenshotUrl;
         mScraperResults[i].thumbnailImageUrl = thumb;
 
         // Cache the thumbnail image in mScraperResults so that we don't need to download
@@ -540,21 +536,34 @@ void GuiScraperSearch::updateInfoPane()
 bool GuiScraperSearch::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("a", input) && input.value != 0) {
-        if (mBlockAccept)
+        if (mBlockAccept || mScraperResults.empty())
             return true;
     }
 
-    // Refine the search, unless the result has already been accepted or we're in semi-automatic
-    // mode and there are less than 2 search results.
+    // Check whether we should allow a refine of the game name.
     if (!mAcceptedResult && config->isMappedTo("y", input) && input.value != 0) {
-        if (mSearchType != ACCEPT_SINGLE_MATCHES ||
-            (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)) {
+        bool allowRefine = false;
+
+        // Previously refined.
+        if (mRefinedSearch)
+            allowRefine = true;
+            // Interactive mode and "Auto-accept single game matches" not enabled.
+        else if (mSearchType != ACCEPT_SINGLE_MATCHES)
+            allowRefine = true;
+            // Interactive mode with "Auto-accept single game matches" enabled and more than one result.
+        else if (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)
+            allowRefine = true;
+            // Dito but there were no games found, or the search has not been completed.
+        else if (mSearchType == ACCEPT_SINGLE_MATCHES && !mFoundGame)
+            allowRefine = true;
+
+        if (allowRefine)
             openInputScreen(mLastSearch);
-        }
     }
 
-    // Skip game, unless the result has already been accepted.
-    if (!mAcceptedResult && mScrapeCount > 1 && config->isMappedTo("x", input) && input.value != 0)
+    // If multi-scraping, skip game unless the result has already been accepted.
+    if (mSkipCallback != nullptr && !mAcceptedResult && // Line break.
+        config->isMappedTo("x", input) && input.value)
         mSkipCallback();
 
     return GuiComponent::input(config, input);
@@ -575,6 +584,7 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
 
 void GuiScraperSearch::returnResult(ScraperSearchResult result)
 {
+
     mBlockAccept = true;
     mAcceptedResult = true;
 
@@ -774,9 +784,17 @@ void GuiScraperSearch::updateThumbnail()
     }
 }
 
-void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
-{
-    auto searchForFunc = [&](const std::string& name) {
+void GuiScraperSearch::openInputScreen(ScraperSearchParams &params) {
+    auto searchForFunc = [&](std::string name) {
+        // Trim leading and trailing whitespaces.
+        name.erase(name.begin(), std::find_if(name.begin(), name.end(), [](char c) {
+            return !std::isspace(static_cast<unsigned char>(c));
+        }));
+        name.erase(std::find_if(name.rbegin(), name.rend(),
+                                [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
+                           .base(),
+                   name.end());
+
         stop();
         mRefinedSearch = true;
         params.nameOverride = name;
@@ -792,8 +810,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         // regardless of whether the entry is an arcade game and TheGamesDB is used.
         if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
             searchString = Utils::String::removeParenthesis(params.game->metadata.get("name"));
-        }
-        else {
+        } else {
             // If searching based on the actual file name, then expand to the full game name
             // in case the scraper is set to TheGamesDB and it's an arcade game. This is
             // required as TheGamesDB does not support searches using the short MAME names.
@@ -803,13 +820,19 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
             else
                 searchString = params.game->getCleanName();
         }
-    }
-    else {
+    } else {
         searchString = params.nameOverride;
     }
 
-    mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH", searchString,
-                                          searchForFunc, false, "SEARCH", "APPLY CHANGES?"));
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
+                                                      searchString, searchForFunc, false, "SEARCH",
+                                                      "SEARCH USING REFINED NAME?"));
+    } else {
+        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "REFINE SEARCH",
+                                              searchString, searchForFunc, false, "SEARCH",
+                                              "SEARCH USING REFINED NAME?"));
+    }
 }
 
 bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
@@ -895,13 +918,15 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
     return metadataUpdated;
 }
 
-std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
-{
+std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts() {
     std::vector<HelpPrompt> prompts;
 
     prompts.push_back(HelpPrompt("y", "refine search"));
-    if (mScrapeCount > 1)
+
+    // Only show the skip prompt during multi-scraping.
+    if (mSkipCallback != nullptr)
         prompts.push_back(HelpPrompt("x", "skip"));
+
     if (mFoundGame && (mRefinedSearch || mSearchType != ACCEPT_SINGLE_MATCHES ||
                        (mSearchType == ACCEPT_SINGLE_MATCHES && mScraperResults.size() > 1)))
         prompts.push_back(HelpPrompt("a", "accept result"));

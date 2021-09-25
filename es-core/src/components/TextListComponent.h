@@ -42,6 +42,7 @@ public:
     using IList<TextListData, T>::size;
     using IList<TextListData, T>::isScrolling;
     using IList<TextListData, T>::stopScrolling;
+    using GuiComponent::setColor;
 
     TextListComponent(Window* window);
 
@@ -61,7 +62,11 @@ public:
         ALIGN_RIGHT
     };
 
-    void setAlignment(Alignment align) { mAlignment = align; }
+    void setAlignment(Alignment align)
+    {
+        // Set alignment.
+        mAlignment = align;
+    }
 
     void setCursorChangedCallback(const std::function<void(CursorState state)>& func)
     {

@@ -44,9 +44,9 @@ VideoFFmpegComponent::VideoFFmpegComponent(Window* window)
     , mAFilterGraph(nullptr)
     , mAFilterInputs(nullptr)
     , mAFilterOutputs(nullptr)
-    , mVideoTimeBase(0.0l)
     , mVideoTargetQueueSize(0)
     , mAudioTargetQueueSize(0)
+    , mVideoTimeBase(0.0l)
     , mAccumulatedTime(0)
     , mStartTimeAccumulation(false)
     , mDecodedFrame(false)
@@ -529,8 +529,9 @@ void VideoFFmpegComponent::readFrames()
         return;
 
     if (mVideoCodecContext && mFormatContext) {
-        if (mVideoFrameQueue.size() < mVideoTargetQueueSize ||
-            (mAudioStreamIndex >= 0 && mAudioFrameQueue.size() < mAudioTargetQueueSize)) {
+        if (static_cast<int>(mVideoFrameQueue.size()) < mVideoTargetQueueSize ||
+            (mAudioStreamIndex >= 0 &&
+             static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize)) {
             while ((readFrameReturn = av_read_frame(mFormatContext, mPacket)) >= 0) {
                 if (mPacket->stream_index == mVideoStreamIndex) {
                     if (!avcodec_send_packet(mVideoCodecContext, mPacket) &&

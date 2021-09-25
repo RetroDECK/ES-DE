@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -15,7 +15,7 @@
             <text>Best-selling game : GTA Liberty City Stories</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : 32-bit MIPS RS4000 running at 333 Mhz </text>
+            <text>CPU : 32-bit MIPS RS4000 running at 333 Mhz</text>
         </text>
         <text name="info6" extra="true">
             <text>RAM : 32 Mbits</text>
@@ -34,4 +34,3 @@
         </text>
     </view>
 </theme>
-

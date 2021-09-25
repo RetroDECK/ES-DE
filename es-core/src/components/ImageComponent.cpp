@@ -27,23 +27,11 @@ glm::vec2 ImageComponent::getSize() const
     return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
 }
 
-ImageComponent::ImageComponent(Window* window, bool forceLoad, bool dynamic)
-    : GuiComponent(window)
-    , mTargetIsMax(false)
-    , mTargetIsMin(false)
-    , mFlipX(false)
-    , mFlipY(false)
-    , mTargetSize(0, 0)
-    , mColorShift(0xFFFFFFFF)
-    , mColorShiftEnd(0xFFFFFFFF)
-    , mColorGradientHorizontal(true)
-    , mForceLoad(forceLoad)
-    , mDynamic(dynamic)
-    , mFadeOpacity(0)
-    , mFading(false)
-    , mRotateByTargetSize(false)
-    , mTopLeftCrop(0.0f, 0.0f)
-    , mBottomRightCrop(1.0f, 1.0f)
+ImageComponent::ImageComponent(Window *window, bool forceLoad, bool dynamic)
+        : GuiComponent(window), mTargetSize({}), mFlipX(false), mFlipY(false), mTargetIsMax(false), mTargetIsMin(false),
+          mColorShift(0xFFFFFFFF), mColorShiftEnd(0xFFFFFFFF), mColorGradientHorizontal(true), mFadeOpacity(0),
+          mFading(false), mForceLoad(forceLoad), mDynamic(dynamic), mRotateByTargetSize(false), mTopLeftCrop({}),
+          mBottomRightCrop(1.0f, 1.0f)
 {
     updateColors();
 }
@@ -77,7 +65,7 @@ void ImageComponent::resize()
                 // This will be mTargetSize.x. We can't exceed it, nor be lower than it.
                 mSize.x *= resizeScale.x;
                 // We need to make sure we're not creating an image larger than max size.
-                mSize.y = std::min(floorf(mSize.y *= resizeScale.x), mTargetSize.y);
+                mSize.y = std::min(floorf(mSize.y * resizeScale.x), mTargetSize.y);
             }
             else {
                 // This will be mTargetSize.y(). We can't exceed it.

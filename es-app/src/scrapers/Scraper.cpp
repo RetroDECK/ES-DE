@@ -327,7 +327,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
             mFuncs.push_back(ResolvePair(downloadMediaAsync(it->fileURL, filePath,
                                                             it->existingMediaFile, it->subDirectory,
                                                             it->resizeFile, mResult.savedNewMedia),
-                                         [this, filePath] {}));
+                                         [filePath] {}));
         }
     }
 }
@@ -373,11 +373,11 @@ MediaDownloadHandle::MediaDownloadHandle(const std::string& url,
                                          const std::string& mediaType,
                                          const bool resizeFile,
                                          bool& savedNewMedia)
-    : mSavePath(path)
+    : mReq(new HttpReq(url))
+    , mSavePath(path)
     , mExistingMediaFile(existingMediaPath)
     , mMediaType(mediaType)
     , mResizeFile(resizeFile)
-    , mReq(new HttpReq(url))
 {
     mSavedNewMediaPtr = &savedNewMedia;
 }

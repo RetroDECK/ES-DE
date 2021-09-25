@@ -146,6 +146,18 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
       {"unfilledPath", PATH},
       {"visible", BOOLEAN},
       {"zIndex", FLOAT}}},
+    {"badges",
+     {{"pos", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"direction", STRING},
+      {"align", STRING},
+      {"itemsPerLine", FLOAT},
+      {"itemMargin", NORMALIZED_PAIR},
+      {"itemWidth", FLOAT},
+      {"slots", STRING},
+      {"customBadgeIcon", PATH},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
     {"sound", {{"path", PATH}}},
     {"helpsystem",
      {{"pos", NORMALIZED_PAIR},
@@ -503,13 +515,20 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                                                           "");
                 }
 
-                // Special parsing instruction for customButtonIcon -> save node as it's button
-                // attribute to prevent nodes overwriting each other.
+                // Special parsing instruction for recurring options.
+                // Store as it's attribute to prevent nodes overwriting each other.
                 if (strcmp(node.name(), "customButtonIcon") == 0) {
                     const auto btn = node.attribute("button").as_string("");
                     if (strcmp(btn, "") == 0)
                         LOG(LogError)
                             << "<customButtonIcon> element requires the `button` property.";
+                    else
+                        element.properties[btn] = path;
+                }
+                else if (strcmp(node.name(), "customBadgeIcon") == 0) {
+                    const auto btn = node.attribute("badge").as_string("");
+                    if (strcmp(btn, "") == 0)
+                        LOG(LogError) << "<customBadgeIcon> element requires the `badge` property.";
                     else
                         element.properties[btn] = path;
                 }

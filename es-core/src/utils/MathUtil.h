@@ -34,7 +34,7 @@ namespace Utils
                      const float scrollLength);
 
         // The MD5 functions are derived from the RSA Data Security, Inc. MD5 Message-Digest
-        // Algorithm. Based on this code: https://github.com/yaoyao-cn/md5/blob/master/md5.cpp
+        // Algorithm.
         std::string md5Hash(const std::string& data);
         void md5Update(const unsigned char* buf,
                        unsigned int length,

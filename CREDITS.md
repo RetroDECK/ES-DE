@@ -11,8 +11,6 @@ https://retropie.org.uk
 Leon Styhre (Desktop Edition fork, based on the RetroPie version) \
 https://gitlab.com/leonstyhre/emulationstation-de
 
-The shader code for blur_horizontal.glsl, blur_vertical_glsl and scanlines.glsl has been borrowed from the [RetroArch](https://www.retroarch.com) project.
-
 
 # UI Art & Design
 
@@ -62,6 +60,16 @@ https://rapidjson.org
 SDL \
 https://www.libsdl.org
 
+# Code
+
+Some code (like the virtual keyboard) was borrowed from Batocera.linux \
+https://batocera.org
+
+The MD5 hash functions were adapted from code by the BZFlag project \
+https://www.bzflag.org
+
+A few of the GLSL shaders were borrowed from the RetroArch project \
+https://www.retroarch.com
 
 # Resources
 

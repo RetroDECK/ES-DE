@@ -1,5 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
+    <formatVersion>7</formatVersion>
 
     <view name="system">
         <text name="info1" extra="true">
@@ -24,7 +24,7 @@
             <text>Video : VDP1 (sprite/texture and polygons), VDP2 (backgrounds)</text>
         </text>
         <text name="info8" extra="true">
-                <text>Resolution : 320x224 to 704x224, 16.77 million colors</text>
+            <text>Resolution : 320x224 to 704x224, 16.77 million colors</text>
         </text>
         <text name="info9" extra="true">
             <text>Sound : Motorola 68EC000, Yamaha FH1 YMF292, 32 channels</text>

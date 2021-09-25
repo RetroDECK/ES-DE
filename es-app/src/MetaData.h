@@ -32,7 +32,7 @@ enum MetaDataType {
 
     // Specialized types.
     MD_MULTILINE_STRING,
-    MD_LAUNCHCOMMAND,
+    MD_ALT_EMULATOR,
     MD_PATH,
     MD_RATING,
     MD_DATE,

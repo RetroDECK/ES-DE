@@ -394,7 +394,7 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
 
     bool direction = mCursor >= mLastCursor;
     int diff = direction ? mCursor - mLastCursor : mLastCursor - mCursor;
-    if (isScrollLoop() && diff == mEntries.size() - 1)
+    if (isScrollLoop() && diff == static_cast<int>(mEntries.size()) - 1)
         direction = !direction;
 
     int oldStart = mStartPosition;
@@ -426,18 +426,18 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
         std::shared_ptr<GridTileComponent> newTile = nullptr;
 
         int oldIdx = mLastCursor - mStartPosition + (dimOpposite * EXTRAITEMS);
-        if (oldIdx >= 0 && oldIdx < mTiles.size())
+        if (oldIdx >= 0 && oldIdx < static_cast<int>(mTiles.size()))
             oldTile = mTiles[oldIdx];
 
         int newIdx = mCursor - mStartPosition + (dimOpposite * EXTRAITEMS);
         if (isScrollLoop()) {
             if (newIdx < 0)
                 newIdx += static_cast<int>(mEntries.size());
-            else if (newIdx >= mTiles.size())
+            else if (newIdx >= static_cast<int>(mTiles.size()))
                 newIdx -= static_cast<int>(mEntries.size());
         }
 
-        if (newIdx >= 0 && newIdx < mTiles.size())
+        if (newIdx >= 0 && newIdx < static_cast<int>(mTiles.size()))
             newTile = mTiles[newIdx];
 
         for (auto it = mTiles.begin(); it != mTiles.end(); it++) {
@@ -670,7 +670,7 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos,
                 int dif = mCursor - tilePos;
                 int idx = mLastCursor - dif;
 
-                if (idx < 0 || idx >= mTiles.size())
+                if (idx < 0 || idx >= static_cast<int>(mTiles.size()))
                     idx = 0;
 
                 glm::vec3 pos{mTiles.at(idx)->getBackgroundPosition()};
@@ -720,8 +720,10 @@ template <typename T> bool ImageGridComponent<T>::isScrollLoop()
     if (!mScrollLoop)
         return false;
     if (isVertical())
-        return (mGridDimension.x * (mGridDimension.y - 2 * EXTRAITEMS)) <= mEntries.size();
-    return (mGridDimension.y * (mGridDimension.x - 2 * EXTRAITEMS)) <= mEntries.size();
+        return (mGridDimension.x * (mGridDimension.y - 2 * EXTRAITEMS)) <=
+               static_cast<int>(mEntries.size());
+    return (mGridDimension.y * (mGridDimension.x - 2 * EXTRAITEMS)) <=
+           static_cast<int>(mEntries.size());
 }
 
 #endif // ES_CORE_COMPONENTS_IMAGE_GRID_COMPONENT_H

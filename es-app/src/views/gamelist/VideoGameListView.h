@@ -9,6 +9,7 @@
 #ifndef ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
 
+#include "components/BadgesComponent.h"
 #include "components/DateTimeComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
@@ -38,8 +39,8 @@ private:
 
     ImageComponent mThumbnail;
     ImageComponent mMarquee;
-    VideoComponent* mVideo;
     ImageComponent mImage;
+    VideoComponent* mVideo;
 
     TextComponent mLblRating;
     TextComponent mLblReleaseDate;
@@ -50,6 +51,7 @@ private:
     TextComponent mLblLastPlayed;
     TextComponent mLblPlayCount;
 
+    BadgesComponent mBadges;
     RatingComponent mRating;
     DateTimeComponent mReleaseDate;
     TextComponent mDeveloper;

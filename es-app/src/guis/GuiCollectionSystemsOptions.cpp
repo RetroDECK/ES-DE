@@ -14,6 +14,7 @@
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiSettings.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
@@ -199,29 +200,39 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
         glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     row.addElement(newCollection, true);
     row.addElement(bracketNewCollection, false);
-    auto createCollectionCall = [this](const std::string& newVal) {
+    auto createCollectionCall = [this](const std::string &newVal) {
         std::string name = newVal;
         // We need to store the first GUI and remove it, as it'll be deleted
         // by the actual GUI.
-        Window* window = mWindow;
-        GuiComponent* topGui = window->peekGui();
+        Window *window = mWindow;
+        GuiComponent *topGui = window->peekGui();
         window->removeGui(topGui);
         createCustomCollection(name);
     };
-    row.makeAcceptInputHandler([this, createCollectionCall] {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name", "",
-                                              createCollectionCall, false, "SAVE"));
-    });
+
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        row.makeAcceptInputHandler([this, createCollectionCall] {
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    mWindow, getHelpStyle(), "New Collection Name", "", createCollectionCall, false,
+                    "CREATE", "CREATE COLLECTION?"));
+        });
+    } else {
+        row.makeAcceptInputHandler([this, createCollectionCall] {
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name",
+                                                  "", createCollectionCall, false, "CREATE",
+                                                  "CREATE COLLECTION?"));
+        });
+    }
     addRow(row);
 
     // Delete custom collection.
     row.elements.clear();
     auto deleteCollection = std::make_shared<TextComponent>(
-        mWindow, "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+            mWindow, "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     auto bracketDeleteCollection = std::make_shared<ImageComponent>(mWindow);
     bracketDeleteCollection->setImage(":/graphics/arrow.svg");
     bracketDeleteCollection->setResize(
-        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+            glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     row.addElement(deleteCollection, true);
     row.addElement(bracketDeleteCollection, false);
     row.makeAcceptInputHandler([this, customSystems] {
@@ -271,7 +282,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                         CollectionSystemsManager::get()->deleteCustomCollection(name);
                         return true;
                     },
-                    "NO", [this] { return false; }));
+                    "NO", [] { return false; }));
             };
             row.makeAcceptInputHandler(deleteCollectionCall);
             auto customCollection = std::make_shared<TextComponent>(

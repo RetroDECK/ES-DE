@@ -15,10 +15,12 @@
 #include <pugixml.hpp>
 
 // clang-format off
+// The statistic entries must be placed at the bottom or otherwise there will be problems with
+// saving the values in GuiMetaDataEd.
 MetaDataDecl gameDecls[] = {
 // key,           type,                default,           statistic, name in GuiMetaDataEd,        prompt in GuiMetaDataEd,            shouldScrape
 {"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
-{"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter sort name",                  false},
+{"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter sortname",                   false},
 {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
 {"rating",        MD_RATING,           "0",               false,     "rating",                     "enter rating",                     true},
 {"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",               "enter release date",               true},
@@ -34,9 +36,8 @@ MetaDataDecl gameDecls[] = {
 {"nogamecount",   MD_BOOL,             "false",           false,     "exclude from game counter",  "enter don't count as game off/on", false},
 {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper", "enter no multi-scrape off/on",     false},
 {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",       "enter hide metadata off/on",       false},
-{"launchcommand", MD_LAUNCHCOMMAND,    "",                false,     "launch command",             "enter game launch command "
-                                                                                                   "(emulator override)",              false},
 {"playcount",     MD_INT,              "0",               false,     "times played",               "enter number of times played",     false},
+{"altemulator",   MD_ALT_EMULATOR,     "",                false,     "alternative emulator",       "select alternative emulator",      false},
 {"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
 };
 

@@ -147,6 +147,9 @@ CECInput::CECInput()
         mlibCEC = nullptr;
         return;
     }
+#else
+    // This is simply to get rid of a Clang -Wunused-private-field compiler warning.
+    mlibCEC = nullptr;
 #endif // HAVE_LIBCEC
 }
 

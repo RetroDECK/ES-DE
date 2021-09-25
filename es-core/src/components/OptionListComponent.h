@@ -288,9 +288,9 @@ private:
                         OptionListComponent<T>* parent,
                         const std::string& title)
             : GuiComponent(window)
-            , mHelpStyle(helpstyle)
             , mMenu(window, title.c_str())
             , mParent(parent)
+            , mHelpStyle(helpstyle)
         {
             auto font = Font::get(FONT_SIZE_MEDIUM);
             ComponentListRow row;

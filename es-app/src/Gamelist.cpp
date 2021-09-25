@@ -132,7 +132,7 @@ void parseGamelist(SystemData* system)
                               << "\" has a valid alternativeEmulator entry: \"" << label << "\"";
             }
             else {
-                system->setAlternativeEmulator("<INVALID>");
+                system->setAlternativeEmulator("<INVALID>" + label);
                 LOG(LogWarning) << "System \"" << system->getName()
                                 << "\" has an invalid alternativeEmulator entry that does "
                                    "not match any command tag in es_systems.xml: \""
@@ -258,6 +258,7 @@ void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
     pugi::xml_document doc;
     pugi::xml_node root;
     std::string xmlReadPath = system->getGamelistPath(false);
+    bool hasAlternativeEmulatorTag = false;
 
     if (Utils::FileSystem::exists(xmlReadPath)) {
         // Parse an existing file first.
@@ -282,6 +283,9 @@ void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
         }
         if (updateAlternativeEmulator) {
             pugi::xml_node alternativeEmulator = doc.child("alternativeEmulator");
+
+            if (alternativeEmulator)
+                hasAlternativeEmulatorTag = true;
 
             if (system->getAlternativeEmulator() != "") {
                 if (!alternativeEmulator) {
@@ -373,14 +377,14 @@ void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
             Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(xmlWritePath));
 
             if (updateAlternativeEmulator) {
-                if (system->getAlternativeEmulator() == "") {
+                if (hasAlternativeEmulatorTag && system->getAlternativeEmulator() == "") {
                     LOG(LogDebug) << "Gamelist::updateGamelist(): Removed the "
                                      "alternativeEmulator tag for system \""
                                   << system->getName() << "\" as the default emulator \""
                                   << system->getSystemEnvData()->mLaunchCommands.front().second
                                   << "\" was selected";
                 }
-                else {
+                else if (system->getAlternativeEmulator() != "") {
                     LOG(LogDebug) << "Gamelist::updateGamelist(): "
                                      "Added/updated the alternativeEmulator tag for system \""
                                   << system->getName() << "\" to \""

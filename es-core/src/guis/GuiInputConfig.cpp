@@ -180,8 +180,8 @@ GuiInputConfig::GuiInputConfig(Window* window,
         delete this;
     };
 
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "OK", "ok",
-                                                        [this, okFunction] { okFunction(); }));
+    buttons.push_back(
+            std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [okFunction] { okFunction(); }));
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
     mGrid.setEntry(mButtonGrid, glm::ivec2{0, 6}, true, false);

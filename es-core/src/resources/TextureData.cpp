@@ -26,13 +26,13 @@ TextureData::TextureData(bool tile)
     : mTile(tile)
     , mTextureID(0)
     , mDataRGBA({})
-    , mScaleDuringLoad(1.0f)
-    , mScalable(false)
-    , mLinearMagnify(false)
     , mWidth(0)
     , mHeight(0)
     , mSourceWidth(0.0f)
     , mSourceHeight(0.0f)
+    , mScaleDuringLoad(1.0f)
+    , mScalable(false)
+    , mLinearMagnify(false)
 {
 }
 

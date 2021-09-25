@@ -125,7 +125,9 @@ pkg_add vlc
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
 
-RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the master branch:
+RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the
+time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the latest available code
+from the master branch:
 
 ```
 git clone https://github.com/Tencent/rapidjson.git
@@ -865,6 +867,7 @@ nmake
 ```
 
 MinGW:
+
 ```
 cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
 make
@@ -872,15 +875,14 @@ make
 
 [RapidJSON](http://rapidjson.org)
 
-For RapidJSON you don't need to compile, you just need the include files:
+For RapidJSON you don't need to compile anything, you just need the include files.
+
+At the time of writing, the latest release v1.1.0 generates some compiler warnings on Windows, but this can be avoided
+by using the latest available code from the master branch:
 
 ```
 git clone git://github.com/Tencent/rapidjson.git
-cd rapidjson
-git checkout v1.1.0
 ```
-
-
 
 **Clone the ES-DE repository:**
 
@@ -1174,11 +1176,11 @@ In some instances you may want to avoid getting code formatted, and you can acco
 ```c++
 // clang-format off
 CollectionSystemDecl systemDecls[] = {
-//  Type                  Name                Long name       Theme folder           isCustom
-    { AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false },
-    { AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false },
-    { AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false },
-    { CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true  }
+//  Type                 Name                Long name       Theme folder           isCustom
+    {AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false},
+    {AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false},
+    {AUTO_FAVORITES,     "favorites",        "favorites",    "auto-favorites",      false},
+    {CUSTOM_COLLECTION,  myCollectionsName,  "collections",  "custom-collections",  true }
 };
 // clang-format on
 ```
@@ -1396,26 +1398,44 @@ For the following options, the es_settings.xml file is immediately updated/saved
 --show-hidden-games
 ```
 
-
 ## es_systems.xml
 
-The es_systems.xml file contains the system configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.
+The es_systems.xml file contains the game systems configuration data for ES-DE, written in XML format. This defines the
+system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for
+scraping) and the theme to use.
 
-ES-DE ships with a comprehensive `es_systems.xml` configuration file and normally you shouldn't need to modify this. However there may be special circumstances such as wanting to use alternative emulators for some game systems or perhaps you need to add additional systems altogether.
+ES-DE ships with a comprehensive `es_systems.xml` file and most users will probably never need to make any
+customizations. But there may be special circumstances such as wanting to use different emulators for some game systems
+or perhaps to add additional systems altogether.
 
-To make a customized version of the systems configuration file, it first needs to be copied to `~/.emulationstation/custom_systems/es_systems.xml`. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden using the --home command line option.)
+To accomplish this, ES-DE supports customizations via a separate es_systems.xml file that is to be placed in
+the `custom_systems` folder in the application home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`
+. (The tilde symbol `~` translates to `$HOME` on Unix and macOS, and to `%HOMEPATH%` on Windows unless overridden via
+the --home command line option.)
 
-The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
+This custom file functionality is designed to be complementary to the bundled es_systems.xml file, meaning you should
+only add entries to the custom configuration file for game systems that you actually want to add or override. So to for
+example customize a single system, this file should only contain a single `<system>` tag. The structure of the custom
+file is identical to the bundled file with the exception of an additional optional tag named `<loadExclusive/>`. If this
+is placed in the custom es_systems.xml file, ES-DE will not load the bundled file. This is normally not recommended and
+should only be used for special situations. At the end of this section you can find an example of a custom
+es_systems.xml file.
 
-Note that when copying the bundled es_systems.xml file to ~/.emulationstation/custom_systems/, it will completely replace the default file processing. So when upgrading to future ES-DE versions, any modifications such as additional game systems will not be enabled until the customized configuration file has been manually updated.
+The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For
+example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on
+Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on
+macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location
+may differ from these examples of course, depending on where ES-DE has been installed.
 
-It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
+It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the
+application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
 
-Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
+Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your
+emulator environment is properly configured.
 
-Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic described later in this document removes the need for most of the legacy options, but they are still supported for special configurations and for backward compatibility with old configuration files.
-
-For a real system entry there can of course not be multiple entries for the same tag such as the multiple \<command\> entries listed here.
+Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic
+described later in this document removes the need for most of the legacy options, but they are still supported for
+special configurations and for backward compatibility with old configuration files.
 
 ```xml
 <?xml version="1.0"?>
@@ -1424,7 +1444,9 @@ For a real system entry there can of course not be multiple entries for the same
     <!-- Any tag not explicitly described as optional in the description is mandatory.
     If omitting a mandatory tag, ES-DE will skip the system entry during startup. -->
     <system>
-        <!-- A short name, used internally. -->
+        <!-- A short name. Although there can be multiple identical <name> tags in the file, upon successful loading of a system,
+        any succeeding entries with identical <name> tags will be skipped. Multiple identical name tags is only required for very
+        special situations so it's normally recommended to keep this tag unique. -->
         <name>snes</name>
 
         <!-- The full system name, used for sorting the systems, for selecting the systems to multi-scrape etc. -->
@@ -1436,13 +1458,21 @@ For a real system entry there can of course not be multiple entries for the same
         <path>%ROMPATH%/snes</path>
 
         <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t").
-        You must include the period at the start of the extension and it's also case sensitive. -->
+        The extensions are case sensitive and they must begin with a dot. -->
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
-        <!-- The command executed when a game is launched. A few special variables are replaced if found for a command tag (see below).
+        <!-- The command executed when a game is launched. Various variables are replaced if found for a command tag as explained below.
         This example for Unix uses the %EMULATOR_ and %CORE_ variables which utilize the find rules defined in the es_find_rules.xml
         file. This is the recommended way to configure the launch command. -->
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
+
+        <!-- It's possible to define alternative emulators by adding additional command tags for a system. When doing this,
+        the "label" attribute is mandatory for all tags. It's these labels that will be shown in the user interface when
+        selecting the alternative emulators either system-wide or per game. The first row will be the default emulator. -->
+        <command label="Nestopia UE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
+        <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
+        <command label="Mesen">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
+        <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
 
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
         the snes9x_libretro core, If there are spaces in the path or file name, you must enclose them in quotation marks, such as
@@ -1518,103 +1548,147 @@ The following variables are expanded for the `command` tag:
 Here are some additional real world examples of system entries, the first one for Unix:
 
 ```xml
-  <system>
+<system>
     <name>dos</name>
     <fullname>DOS (PC)</fullname>
     <path>%ROMPATH%/dos</path>
     <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+    <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+    <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
+    <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
     <platform>dos</platform>
     <theme>dos</theme>
-  </system>
+</system>
 ```
 
 Then one for macOS:
 
 ```xml
-  <system>
-    <name>nes</name>
-    <fullname>Nintendo Entertainment System</fullname>
-    <path>%ROMPATH%/nes</path>
-    <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.dylib %ROM%</command>
-    <platform>nes</platform>
-    <theme>nes</theme>
-  </system>
+<system>
+    <name>n64</name>
+    <fullname>Nintendo 64</fullname>
+    <path>%ROMPATH%/n64</path>
+    <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
+    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
+    <platform>n64</platform>
+    <theme>n64</theme>
+</system>
 ```
 
 And finally one for Windows:
 
 ```xml
-  <system>
-    <name>sega32x</name>
-    <fullname>Sega Mega Drive 32X</fullname>
-    <path>%ROMPATH%\sega32x</path>
-    <extension>.bin .BIN .gen .GEN .smd .SMD .md .MD .32x .32X .cue .CUE .iso .ISO .sms .SMS .68k .68K .7z .7Z .zip .ZIP</extension>
-    <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
-    <platform>sega32x</platform>
-    <theme>sega32x</theme>
-  </system>
+<system>
+    <name>pcengine</name>
+    <fullname>NEC PC Engine</fullname>
+    <path>%ROMPATH%\pcengine</path>
+    <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
+    <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_libretro.dll %ROM%</command>
+    <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_pce_fast_libretro.dll %ROM%</command>
+    <platform>pcengine</platform>
+    <theme>pcengine</theme>
+</system>
+```
+
+As well, here's an example for Unix of a custom es_systems.xml file placed in ~/.emulationstation/custom_systems/ that
+overrides a single game system from the bundled configuration file:
+
+```xml
+<?xml version="1.0"?>
+<!-- This is a custom ES-DE game systems configuration file for Unix -->
+<systemList>
+    <system>
+        <name>nes</name>
+        <fullname>Nintendo Entertainment System</fullname>
+        <path>%ROMPATH%/nes</path>
+        <extension>.nes .NES .zip .ZIP</extension>
+        <command>/usr/games/fceux %ROM%</command>
+        <platform>nes</platform>
+        <theme>nes</theme>
+    </system>
+</systemList>
+```
+
+If adding the `<loadExclusive/>` tag to the file, the bundled es_systems.xml file will not be processed. For this
+example it wouldn't be a very good idea as NES would then be the only platform that could be used in ES-DE.
+
+```xml
+<?xml version="1.0"?>
+<!-- This is a custom ES-DE game systems configuration file for Unix -->
+<loadExclusive/>
+<systemList>
+    <system>
+        <name>nes</name>
+        <fullname>Nintendo Entertainment System</fullname>
+        <path>%ROMPATH%/nes</path>
+        <extension>.nes .NES .zip .ZIP</extension>
+        <command>/usr/games/fceux %ROM%</command>
+        <platform>nes</platform>
+        <theme>nes</theme>
+    </system>
+</systemList>
 ```
 
 ## es_find_rules.xml
 
 This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.
 
-The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
+The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy
+can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
 
 Here's an example es_find_rules.xml file for Unix:
+
 ```xml
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Unix -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="systempath">
-      <entry>retroarch</entry>
-      <entry>org.libretro.RetroArch</entry>
-      <entry>RetroArch-Linux-x86_64.AppImage</entry>
-    </rule>
-    <rule type="staticpath">
-      <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
-      <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
-      <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
-      <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
-    </rule>
-  </emulator>
-  <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu -->
-    <rule type="systempath">
-      <entry>yuzu</entry>
-      <entry>org.yuzu_emu.yuzu</entry>
-      <entry>yuzu.AppImage</entry>
-    </rule>
-    <rule type="staticpath">
-      <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-      <entry>~/Applications/yuzu.AppImage</entry>
-      <entry>~/.local/bin/yuzu.AppImage</entry>
-      <entry>~/bin/yuzu.AppImage</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <!-- Snap package -->
-      <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
-      <!-- Flatpak package -->
-      <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
-      <!-- AppImage and compiled from source -->
-      <entry>~/.config/retroarch/cores</entry>
-      <!-- Ubuntu and Linux Mint repository -->
-      <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
-      <!-- Fedora repository -->
-      <entry>/usr/lib64/libretro</entry>
-      <!-- Manjaro repository -->
-      <entry>/usr/lib/libretro</entry>
-      <!-- FreeBSD and OpenBSD repository -->
-      <entry>/usr/local/lib/libretro</entry>
-      <!-- NetBSD repository -->
-      <entry>/usr/pkg/lib/libretro</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="systempath">
+            <entry>retroarch</entry>
+            <entry>org.libretro.RetroArch</entry>
+            <entry>RetroArch-Linux-x86_64.AppImage</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+            <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
+            <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
+            <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu</entry>
+            <entry>org.yuzu_emu.yuzu</entry>
+            <entry>yuzu.AppImage</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/Applications/yuzu.AppImage</entry>
+            <entry>~/.local/bin/yuzu.AppImage</entry>
+            <entry>~/bin/yuzu.AppImage</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <!-- Snap package -->
+            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
+            <!-- Flatpak package -->
+            <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+            <!-- AppImage and compiled from source -->
+            <entry>~/.config/retroarch/cores</entry>
+            <!-- Ubuntu and Linux Mint repository -->
+            <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
+            <!-- Fedora repository -->
+            <entry>/usr/lib64/libretro</entry>
+            <!-- Manjaro repository -->
+            <entry>/usr/lib/libretro</entry>
+            <!-- FreeBSD and OpenBSD repository -->
+            <entry>/usr/local/lib/libretro</entry>
+            <!-- NetBSD repository -->
+            <entry>/usr/pkg/lib/libretro</entry>
+        </rule>
+    </core>
 </ruleList>
 ```
 
@@ -1655,19 +1729,19 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for macOS -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="staticpath">
-      <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <!-- RetroArch >= v1.9.2 -->
-      <entry>~/Library/Application Support/RetroArch/cores</entry>
-      <!-- RetroArch < v1.9.2 -->
-      <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="staticpath">
+            <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <!-- RetroArch >= v1.9.2 -->
+            <entry>~/Library/Application Support/RetroArch/cores</entry>
+            <!-- RetroArch < v1.9.2 -->
+            <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
+        </rule>
+    </core>
 </ruleList>
 ```
 
@@ -1675,48 +1749,48 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Windows -->
 <ruleList>
-  <emulator name="RETROARCH">
-    <rule type="winregistrypath">
-      <!-- Check for an App Paths entry in the Windows Registry -->
-      <entry>retroarch.exe</entry>
-    </rule>
-    <rule type="systempath">
-      <!-- This requires that the user has manually updated the Path variable -->
-      <entry>retroarch.exe</entry>
-    </rule>
-    <rule type="staticpath">
-      <!-- Some reasonable installation locations as fallback -->
-      <entry>C:\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\RetroArch\retroarch.exe</entry>
-      <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
-      <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
-      <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
-      <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
-      <!-- Portable installation -->
-      <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
-      <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
-      <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
-      <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
-    </rule>
-  </emulator>
-  <emulator name="YUZU">
-    <!-- Nintendo Switch emulator Yuzu -->
-    <rule type="systempath">
-      <entry>yuzu.exe</entry>
-    </rule>
-    <rule type="staticpath">
-      <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-      <!-- Portable installation -->
-      <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-      <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-    </rule>
-  </emulator>
-  <core name="RETROARCH">
-    <rule type="corepath">
-      <entry>%EMUPATH%\cores</entry>
-    </rule>
-  </core>
+    <emulator name="RETROARCH">
+        <rule type="winregistrypath">
+            <!-- Check for an App Paths entry in the Windows Registry -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <!-- This requires that the user has manually updated the Path variable -->
+            <entry>retroarch.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Some reasonable installation locations as fallback -->
+            <entry>C:\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\RetroArch\retroarch.exe</entry>
+            <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
+            <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+        </rule>
+    </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <entry>%EMUPATH%\cores</entry>
+        </rule>
+    </core>
 </ruleList>
 ```
 
@@ -1807,8 +1881,8 @@ There are two basic categories of metadata, `game` and `folders` and the metdata
 * `nogamecount` - bool, indicates whether the game should be excluded from the game counter and the automatic and custom collections
 * `nomultiscrape` - bool, indicates whether the game should be excluded from the multi-scraper
 * `hidemetadata` - bool, indicates whether to hide most of the metadata fields when displaying the game in the gamelist view
-* `launchcommand` - string, overrides the emulator and core settings on a per-game basis
 * `playcount` - integer, the number of times this game has been played
+* `altemulator` - string, overrides the emulator/launch command on a per game basis
 * `lastplayed` - statistic, datetime, the last date and time this game was played
 
 For folders, most of the fields are identical although some are removed. In the list below, the fields with identical function compared to the game files described above have been left without a description.

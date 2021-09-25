@@ -12,6 +12,7 @@
 
 #include "SystemData.h"
 #include "components/OptionListComponent.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
@@ -28,12 +29,20 @@ GuiGamelistFilter::GuiGamelistFilter(Window* window,
     initializeMenu();
 }
 
-void GuiGamelistFilter::initializeMenu()
-{
+void GuiGamelistFilter::initializeMenu() {
     addChild(&mMenu);
 
     // Get filters from system.
     mFilterIndex = mSystem->getIndex();
+
+    // If this is a collection and system names are shown per game, then let FileFilterIndex
+    // know about this so the system names will not be included in game name text searches.
+    if (ViewController::get()->getState().getSystem()->isCollection()) {
+        if (Settings::getInstance()->getBool("CollectionShowSystemInfo"))
+            mFilterIndex->setTextRemoveSystem(true);
+        else
+            mFilterIndex->setTextRemoveSystem(false);
+    }
 
     ComponentListRow row;
 
@@ -84,13 +93,12 @@ void GuiGamelistFilter::resetAllFilters()
 
 GuiGamelistFilter::~GuiGamelistFilter() { mFilterOptions.clear(); }
 
-void GuiGamelistFilter::addFiltersToMenu()
-{
+void GuiGamelistFilter::addFiltersToMenu() {
     ComponentListRow row;
 
-    auto lbl =
-        std::make_shared<TextComponent>(mWindow, Utils::String::toUpper("TEXT FILTER (GAME NAME)"),
-                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto lbl = std::make_shared<TextComponent>(
+            mWindow, Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     mTextFilterField = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
                                                        0x777777FF, ALIGN_RIGHT);
@@ -113,16 +121,24 @@ void GuiGamelistFilter::addFiltersToMenu()
     }
 
     // Callback function.
-    auto updateVal = [this](const std::string& newVal) {
+    auto updateVal = [this](const std::string &newVal) {
         mTextFilterField->setValue(Utils::String::toUpper(newVal));
         mFilterIndex->setTextFilter(Utils::String::toUpper(newVal));
     };
 
-    row.makeAcceptInputHandler([this, updateVal] {
-        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "TEXT FILTER (GAME NAME)",
-                                              mTextFilterField->getValue(), updateVal, false, "OK",
-                                              "APPLY CHANGES?"));
-    });
+    if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+        row.makeAcceptInputHandler([this, updateVal] {
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), "GAME NAME",
+                                                          mTextFilterField->getValue(), updateVal,
+                                                          false, "OK", "APPLY CHANGES?"));
+        });
+    } else {
+        row.makeAcceptInputHandler([this, updateVal] {
+            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "GAME NAME",
+                                                  mTextFilterField->getValue(), updateVal, false,
+                                                  "OK", "APPLY CHANGES?"));
+        });
+    }
 
     mMenu.addRow(row);
 
@@ -136,9 +152,6 @@ void GuiGamelistFilter::addFiltersToMenu()
         std::map<std::string, int>* allKeys = (*it).allIndexKeys;
         std::string menuLabel = (*it).menuLabel; // Text to show in menu.
         std::shared_ptr<OptionListComponent<std::string>> optionList;
-
-        // Add filters (with first one selected).
-        ComponentListRow row;
 
         // Add genres.
         optionList = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),

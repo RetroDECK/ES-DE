@@ -26,6 +26,8 @@
 #include "animations/MoveCameraAnimation.h"
 #include "guis/GuiInfoPopup.h"
 #include "guis/GuiMenu.h"
+#include "guis/GuiTextEditKeyboardPopup.h"
+#include "guis/GuiTextEditPopup.h"
 #include "views/SystemView.h"
 #include "views/UIModeController.h"
 #include "views/gamelist/DetailedGameListView.h"
@@ -36,19 +38,25 @@
 ViewController* ViewController::sInstance = nullptr;
 
 #if defined(_MSC_VER) // MSVC compiler.
-const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uF005");
-const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uF07C");
-const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uF14A");
-const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uF11b");
-const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uF0b0");
-const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uF013");
+const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uf11b");
+const std::string ViewController::CROSSEDCIRCLE_CHAR = Utils::String::wideStringToString(L"\uf05e");
+const std::string ViewController::EXCLAMATION_CHAR = Utils::String::wideStringToString(L"\uf06a");
+const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uf005");
+const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uf0b0");
+const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uf07C");
+const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uf013");
+const std::string ViewController::KEYBOARD_CHAR = Utils::String::wideStringToString(L"\uf11c");
+const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uf14A");
 #else
-const std::string ViewController::FAVORITE_CHAR = "\uF005";
-const std::string ViewController::FOLDER_CHAR = "\uF07C";
-const std::string ViewController::TICKMARK_CHAR = "\uF14A";
-const std::string ViewController::CONTROLLER_CHAR = "\uF11b";
-const std::string ViewController::FILTER_CHAR = "\uF0b0";
-const std::string ViewController::GEAR_CHAR = "\uF013";
+const std::string ViewController::CONTROLLER_CHAR = "\uf11b";
+const std::string ViewController::CROSSEDCIRCLE_CHAR = "\uf05e";
+const std::string ViewController::EXCLAMATION_CHAR = "\uf06a";
+const std::string ViewController::FAVORITE_CHAR = "\uf005";
+const std::string ViewController::FILTER_CHAR = "\uf0b0";
+const std::string ViewController::FOLDER_CHAR = "\uf07C";
+const std::string ViewController::GEAR_CHAR = "\uf013";
+const std::string ViewController::KEYBOARD_CHAR = "\uf11c";
+const std::string ViewController::TICKMARK_CHAR = "\uf14a";
 #endif
 
 ViewController* ViewController::get()
@@ -65,9 +73,11 @@ void ViewController::init(Window* window)
 
 ViewController::ViewController(Window* window)
     : GuiComponent(window)
+    , mNoGamesMessageBox(nullptr)
     , mCurrentView(nullptr)
     , mPreviousView(nullptr)
     , mSkipView(nullptr)
+    , mGameToLaunch(nullptr)
     , mCamera(Renderer::getIdentity())
     , mSystemViewTransition(false)
     , mWrappedViews(false)
@@ -75,8 +85,6 @@ ViewController::ViewController(Window* window)
     , mCancelledTransition(false)
     , mLockInput(false)
     , mNextSystem(false)
-    , mGameToLaunch(nullptr)
-    , mNoGamesMessageBox(nullptr)
 {
     mState.viewing = NOTHING;
     mState.viewstyle = AUTOMATIC;
@@ -133,26 +141,52 @@ void ViewController::noGamesDialog()
 #else
             currentROMDirectory = FileData::getROMDirectory();
 #endif
-
-            mWindow->pushGui(new GuiComplexTextEditPopup(
-                mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH",
-                "Currently configured path:", currentROMDirectory, currentROMDirectory,
-                [this](const std::string& newROMDirectory) {
-                    Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
-                    Settings::getInstance()->saveFile();
+            if (Settings::getInstance()->getBool("VirtualKeyboard")) {
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    [this](const std::string& newROMDirectory) {
+                        Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                        Settings::getInstance()->saveFile();
 #if defined(_WIN64)
-                    mRomDirectory = Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+                        mRomDirectory =
+                            Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
 #else
-                    mRomDirectory = FileData::getROMDirectory();
+                        mRomDirectory = FileData::getROMDirectory();
 #endif
-                    mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                    mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
-                                                   "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                                                   "THE APPLICATION TO RESCAN THE SYSTEMS",
-                                                   "OK", nullptr, "", nullptr, "", nullptr, true));
-                },
-                false, "SAVE", "SAVE CHANGES?", "LOAD CURRENT", "LOAD CURRENTLY CONFIGURED VALUE",
-                "CLEAR", "CLEAR (LEAVE BLANK TO RESET TO DEFAULT DIRECTORY)", false));
+                        mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                                                       "ROM DIRECTORY SETTING SAVED, RESTART\n"
+                                                       "THE APPLICATION TO RESCAN THE SYSTEMS",
+                                                       "OK", nullptr, "", nullptr, "", nullptr,
+                                                       true));
+                    },
+                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
+                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
+                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
+            }
+            else {
+                mWindow->pushGui(new GuiTextEditPopup(
+                    mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    [this](const std::string& newROMDirectory) {
+                        Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                        Settings::getInstance()->saveFile();
+#if defined(_WIN64)
+                        mRomDirectory =
+                            Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+#else
+                        mRomDirectory = FileData::getROMDirectory();
+#endif
+                        mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                                                       "ROM DIRECTORY SETTING SAVED, RESTART\n"
+                                                       "THE APPLICATION TO RESCAN THE SYSTEMS",
+                                                       "OK", nullptr, "", nullptr, "", nullptr,
+                                                       true));
+                    },
+                    false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
+                    currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
+                    "CLEAR (LEAVE BLANK TO RESET TO DEFAULT PATH)"));
+            }
         },
         "CREATE DIRECTORIES",
         [this] {
@@ -203,10 +237,10 @@ void ViewController::invalidAlternativeEmulatorDialog()
                                    "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
                                    "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
                                    "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
-                                   "ENTRY UNDER THE 'OTHER SETTINGS' MENU"));
+                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU"));
 }
 
-void ViewController::goToStart()
+void ViewController::goToStart(bool playTransition)
 {
     // If the system view does not exist, then create it. We do this here as it would
     // otherwise not be done if jumping directly into a specific game system on startup.
@@ -220,6 +254,8 @@ void ViewController::goToStart()
              it != SystemData::sSystemVector.cend(); it++) {
             if ((*it)->getName() == requestedSystem) {
                 goToGameList(*it);
+                if (!playTransition)
+                    cancelViewTransitions();
                 return;
             }
         }
@@ -594,7 +630,7 @@ void ViewController::playViewTransition(bool instant)
                                       fadeCallback, true);
                      });
 
-        // Fast-forward animation if we're partway faded.
+        // Fast-forward animation if we're partially faded.
         if (target == static_cast<glm::vec3>(-mCamera[3])) {
             // Not changing screens, so cancel the first half entirely.
             advanceAnimation(0, FADE_DURATION);

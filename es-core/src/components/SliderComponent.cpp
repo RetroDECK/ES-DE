@@ -110,8 +110,6 @@ void SliderComponent::setValue(float value)
     onValueChanged();
 }
 
-float SliderComponent::getValue() { return mValue; }
-
 void SliderComponent::onSizeChanged()
 {
     if (!mSuffix.empty())

@@ -15,6 +15,7 @@
 #include "MetaData.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
+#include "guis/GuiSettings.h"
 #include "scrapers/Scraper.h"
 
 class ComponentList;
@@ -64,6 +65,7 @@ private:
     std::function<void()> mDeleteGameFunc;
 
     bool mMediaFilesUpdated;
+    bool mInvalidEmulatorEntry;
 };
 
 #endif // ES_APP_GUIS_GUI_META_DATA_ED_H

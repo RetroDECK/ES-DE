@@ -37,32 +37,36 @@ void HelpComponent::assignIcons()
                                   ":/help/dpad_updown.svg" :
                                   mStyle.mCustomButtons.dpad_updown;
     sIconPathMap["left/right"] = mStyle.mCustomButtons.dpad_leftright.empty() ?
-                                     ":/help/dpad_leftright.svg" :
-                                     mStyle.mCustomButtons.dpad_leftright;
+                                 ":/help/dpad_leftright.svg" :
+                                 mStyle.mCustomButtons.dpad_leftright;
     sIconPathMap["up/down/left/right"] = mStyle.mCustomButtons.dpad_all.empty() ?
-                                             ":/help/dpad_all.svg" :
-                                             mStyle.mCustomButtons.dpad_all;
+                                         ":/help/dpad_all.svg" :
+                                         mStyle.mCustomButtons.dpad_all;
     sIconPathMap["thumbstickclick"] = mStyle.mCustomButtons.thumbstick_click.empty() ?
-                                          ":/help/thumbstick_click.svg" :
-                                          mStyle.mCustomButtons.thumbstick_click;
+                                      ":/help/thumbstick_click.svg" :
+                                      mStyle.mCustomButtons.thumbstick_click;
     sIconPathMap["l"] = mStyle.mCustomButtons.button_l.empty() ? ":/help/button_l.svg" :
-                                                                 mStyle.mCustomButtons.button_l;
+                        mStyle.mCustomButtons.button_l;
     sIconPathMap["r"] = mStyle.mCustomButtons.button_r.empty() ? ":/help/button_r.svg" :
-                                                                 mStyle.mCustomButtons.button_r;
+                        mStyle.mCustomButtons.button_r;
     sIconPathMap["lr"] = mStyle.mCustomButtons.button_lr.empty() ? ":/help/button_lr.svg" :
-                                                                   mStyle.mCustomButtons.button_lr;
+                         mStyle.mCustomButtons.button_lr;
+    sIconPathMap["lt"] = mStyle.mCustomButtons.button_lt.empty() ? ":/help/button_lt.svg" :
+                         mStyle.mCustomButtons.button_lt;
+    sIconPathMap["rt"] = mStyle.mCustomButtons.button_rt.empty() ? ":/help/button_rt.svg" :
+                         mStyle.mCustomButtons.button_rt;
 
     // These graphics files are custom per controller type.
     if (controllerType == "snes") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_SNES.empty() ?
-                                ":/help/button_a_SNES.svg" :
-                                mStyle.mCustomButtons.button_a_SNES;
+                            ":/help/button_a_SNES.svg" :
+                            mStyle.mCustomButtons.button_a_SNES;
         sIconPathMap["b"] = mStyle.mCustomButtons.button_b_SNES.empty() ?
-                                ":/help/button_b_SNES.svg" :
-                                mStyle.mCustomButtons.button_b_SNES;
+                            ":/help/button_b_SNES.svg" :
+                            mStyle.mCustomButtons.button_b_SNES;
         sIconPathMap["x"] = mStyle.mCustomButtons.button_x_SNES.empty() ?
-                                ":/help/button_x_SNES.svg" :
-                                mStyle.mCustomButtons.button_x_SNES;
+                            ":/help/button_x_SNES.svg" :
+                            mStyle.mCustomButtons.button_x_SNES;
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_SNES.empty() ?
                                 ":/help/button_y_SNES.svg" :
                                 mStyle.mCustomButtons.button_y_SNES;

@@ -18,7 +18,11 @@ namespace Utils
         DateTime::DateTime()
         {
             mTime = 0;
+#if defined(_WIN64)
             mTimeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1};
+#else
+            mTimeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0};
+#endif
             mIsoString = "00000000T000000";
         }
 
@@ -83,7 +87,11 @@ namespace Utils
         {
             const char* s = string.c_str();
             const char* f = format.c_str();
+#if defined(_WIN64)
             tm timeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1};
+#else
+            tm timeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0};
+#endif
             size_t parsedChars = 0;
 
             if (string == "19700101T010000")
@@ -231,7 +239,11 @@ namespace Utils
 
         int daysInMonth(const int year, const int month)
         {
+#if defined(_WIN64)
             tm timeStruct = {0, 0, 0, 0, month, year - 1900, 0, 0, -1};
+#else
+            tm timeStruct = {0, 0, 0, 0, month, year - 1900, 0, 0, -1, 0, 0};
+#endif
             mktime(&timeStruct);
 
             return timeStruct.tm_mday;
@@ -239,7 +251,11 @@ namespace Utils
 
         int daysInYear(const int year)
         {
+#if defined(_WIN64)
             tm timeStruct = {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1};
+#else
+            tm timeStruct = {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1, 0, 0};
+#endif
             mktime(&timeStruct);
 
             return timeStruct.tm_yday + 1;

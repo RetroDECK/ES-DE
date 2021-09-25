@@ -14,12 +14,9 @@
 #include "components/TextComponent.h"
 #include "utils/StringUtil.h"
 
-GuiLaunchScreen::GuiLaunchScreen(Window* window)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(nullptr)
-    , mMarquee(nullptr)
-    , mWindow(window)
+GuiLaunchScreen::GuiLaunchScreen(Window *window)
+        : GuiComponent(window), mWindow(window), mBackground(window, ":/graphics/frame.svg"), mGrid(nullptr),
+          mMarquee(nullptr)
 {
     addChild(&mBackground);
     mWindow->setLaunchScreen(this);
@@ -169,7 +166,6 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 
         mMarquee->setOrigin(0.5f, 0.5f);
         glm::vec3 currentPos{mMarquee->getPosition()};
-        glm::vec2 currentSize{mMarquee->getSize()};
 
         // Position the image in the middle of row four.
         currentPos.x = mSize.x / 2.0f;
@@ -221,8 +217,7 @@ void GuiLaunchScreen::update(int deltaTime)
         mScaleUp = glm::clamp(mScaleUp + 0.07f, 0.0f, 1.0f);
 }
 
-void GuiLaunchScreen::render()
-{
+void GuiLaunchScreen::render(const glm::mat4 & /*parentTrans*/) {
     // Scale up animation.
     if (mScaleUp < 1.0f)
         setScale(mScaleUp);

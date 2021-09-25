@@ -1,3 +1,11 @@
+#  SPDX-License-Identifier: MIT
+#
+#  EmulationStation Desktop Edition
+#  CMakeLists.txt (es-core)
+#
+#  CMake configuration for es-core.
+#
+
 project("core")
 
 set(CORE_HEADERS
@@ -26,12 +34,14 @@ set(CORE_HEADERS
 
         # GUI components
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgesComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentGrid.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentList.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeEditComponent.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/FlexboxComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/IList.h
@@ -52,10 +62,10 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.h
 
         # GUIs
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditKeyboardPopup.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.h
 
         # Renderers
@@ -75,7 +85,7 @@ set(CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.h
-)
+        )
 
 set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/AudioManager.cpp
@@ -100,12 +110,14 @@ set(CORE_SOURCES
 
         # GUI components
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgesComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentGrid.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentList.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeEditComponent.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/components/FlexboxComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.cpp
@@ -122,10 +134,10 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.cpp
 
         # GUIs
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiComplexTextEditPopup.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditKeyboardPopup.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditPopup.cpp
 
         # Renderer
@@ -147,7 +159,7 @@ set(CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
-)
+        )
 
 include_directories(${COMMON_INCLUDE_DIRS})
 add_library(es-core STATIC ${CORE_SOURCES} ${CORE_HEADERS})

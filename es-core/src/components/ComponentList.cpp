@@ -61,15 +61,20 @@ bool ComponentList::input(InputConfig* config, Input input)
     if (size() == 0)
         return false;
 
+    if (input.value &&
+        (config->isMappedTo("a", input) || config->isMappedLike("lefttrigger", input) ||
+         config->isMappedLike("righttrigger", input))) {
+        stopScrolling();
+    }
+
     // Give it to the current row's input handler.
     if (mEntries.at(mCursor).data.input_handler) {
         if (mEntries.at(mCursor).data.input_handler(config, input))
             return true;
-    }
-    else {
+    } else {
         // No input handler assigned, do the default, which is to give it
         // to the rightmost element in the row.
-        auto& row = mEntries.at(mCursor).data;
+        auto &row = mEntries.at(mCursor).data;
         if (row.elements.size()) {
             if (row.elements.back().component->input(config, input))
                 return true;
@@ -190,15 +195,16 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
     bool drawAll;
-    for (unsigned int i = 0; i < mEntries.size(); i++) {
-        auto& entry = mEntries.at(i);
+    for (size_t i = 0; i < mEntries.size(); i++) {
+        auto &entry = mEntries.at(i);
         drawAll = !mFocused || i != static_cast<unsigned int>(mCursor);
         for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
             if (drawAll || it->invert_when_selected) {
                 // For the row where the cursor is at, we want to remove any hue from the
                 // font or image before inverting, as it would otherwise lead to an ugly
                 // inverted color (e.g. red inverting to a green hue).
-                if (i == mCursor && it->component->getValue() != "") {
+                if (mFocused && i == static_cast<size_t>(mCursor) &&
+                    it->component->getValue() != "") {
                     // Check if we're dealing with text or an image component.
                     bool isTextComponent = true;
                     unsigned int origColor = it->component->getColor();

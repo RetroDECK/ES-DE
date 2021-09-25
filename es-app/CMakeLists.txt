@@ -1,3 +1,12 @@
+#  SPDX-License-Identifier: MIT
+#
+#  EmulationStation Desktop Edition
+#  CMakeLists.txt (es-app)
+#
+#  CMake configuration for es-app.
+#  Also contains the application packaging configuration.
+#
+
 project("emulationstation-de")
 
 set(ES_HEADERS
@@ -49,7 +58,7 @@ set(ES_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h
-)
+        )
 
 set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.cpp
@@ -100,7 +109,7 @@ set(ES_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.cpp
-)
+        )
 
 if(WIN32)
     LIST(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation.rc)
@@ -125,27 +134,55 @@ endif()
 # Setup for installation and package generation.
 if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
-    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        install(FILES ../avcodec-58.dll ../avfilter-7.dll ../avformat-58.dll ../avutil-56.dll
-                ../postproc-55.dll ../swresample-3.dll ../swscale-5.dll ../FreeImage.dll
-                ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll ../freetype.dll
-                ../pugixml.dll ../libssl-1_1-x64.dll ../SDL2.dll ../MSVCP140.dll ../VCOMP140.DLL
-                ../VCRUNTIME140.dll ../VCRUNTIME140_1.dll DESTINATION .)
-        if(VLC_PLAYER)
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        install(FILES ../avcodec-58.dll
+                ../avfilter-7.dll
+                ../avformat-58.dll
+                ../avutil-56.dll
+                ../postproc-55.dll
+                ../swresample-3.dll
+                ../swscale-5.dll
+                ../FreeImage.dll
+                ../freetype.dll
+                ../glew32.dll
+                ../libcrypto-1_1-x64.dll
+                ../libcurl-x64.dll
+                ../libssl-1_1-x64.dll
+                ../MSVCP140.dll
+                ../pugixml.dll
+                ../SDL2.dll
+                ../VCOMP140.DLL
+                ../VCRUNTIME140.dll
+                ../VCRUNTIME140_1.dll
+                DESTINATION .)
+        if (VLC_PLAYER)
             install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
-        endif()
-    else()
-        install(FILES ../avcodec-58.dll ../avfilter-7.dll ../avformat-58.dll ../avutil-56.dll
-                ../postproc-55.dll ../swresample-3.dll ../swscale-5.dll ../FreeImage.dll
-                ../glew32.dll ../libcrypto-1_1-x64.dll ../libcurl-x64.dll ../libfreetype.dll
-                ../libpugixml.dll ../libssl-1_1-x64.dll ../SDL2.dll ../vcomp140.dll DESTINATION .)
-        if(VLC_PLAYER)
+        endif ()
+    else ()
+        install(FILES ../avcodec-58.dll
+                ../avfilter-7.dll
+                ../avformat-58.dll
+                ../avutil-56.dll
+                ../postproc-55.dll
+                ../swresample-3.dll
+                ../swscale-5.dll
+                ../FreeImage.dll
+                ../glew32.dll
+                ../libcrypto-1_1-x64.dll
+                ../libcurl-x64.dll
+                ../libfreetype.dll
+                ../libpugixml.dll
+                ../libssl-1_1-x64.dll
+                ../SDL2.dll
+                ../vcomp140.dll
+                DESTINATION .)
+        if (VLC_PLAYER)
             install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
-        endif()
-    endif()
-    if(VLC_PLAYER)
+        endif ()
+    endif ()
+    if (VLC_PLAYER)
         install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
-    endif()
+    endif ()
     install(FILES ../LICENSE DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION .)
@@ -157,12 +194,9 @@ elseif(APPLE)
     # So an extra 'Resources' directory was added to the CMAKE_INSTALL_PREFIX variable as well
     # to compensate for this. It's a bad solution to the problem and there must surely be a
     # better way to fix this.
-    install(TARGETS EmulationStation RUNTIME
-            DESTINATION ../MacOS)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns
-            DESTINATION ../Resources)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist
-            DESTINATION .. RENAME Info.plist)
+    install(TARGETS EmulationStation RUNTIME DESTINATION ../MacOS)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns DESTINATION ../Resources)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist DESTINATION .. RENAME Info.plist)
 
     # Another hack/workaround. I have not been able to find any way whatsover to force the
     # linker to use rpaths for all shared libraries instead of absolute paths. So instead
@@ -183,8 +217,8 @@ elseif(APPLE)
             -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
             -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
             $<TARGET_FILE:EmulationStation>)
-    set(APPLE_DYLIB_PERMISSIONS
-            OWNER_WRITE OWNER_READ OWNER_EXECUTE
+
+    set(APPLE_DYLIB_PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE
             GROUP_READ GROUP_EXECUTE
             WORLD_READ WORLD_EXECUTE)
 
@@ -212,32 +246,29 @@ elseif(APPLE)
             PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
             PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    if(VLC_PLAYER)
+
+    if (VLC_PLAYER)
         install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
                 PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
                 DESTINATION ../MacOS)
-    endif()
-    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
-            DESTINATION ../Resources)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
-            DESTINATION ../Resources)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
-                   DESTINATION ../Resources)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
-            DESTINATION ../Resources)
-else()
-    install(TARGETS emulationstation RUNTIME
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-    if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    endif ()
+
+    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION ../Resources)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION ../Resources)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION ../Resources)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION ../Resources)
+else ()
+    install(TARGETS emulationstation RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+    if (CMAKE_SYSTEM_NAME MATCHES "Linux")
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
                 DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)
-    else()
+    else ()
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
                 DESTINATION ${CMAKE_INSTALL_PREFIX}/man/man6)
-    endif()
+    endif ()
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.desktop
@@ -286,13 +317,13 @@ endif()
 # Settings per operating system and generator type.
 if(APPLE)
     set(CPACK_GENERATOR "Bundle")
-    if(${CMAKE_OSX_DEPLOYMENT_TARGET} VERSION_LESS 10.14)
+    if (CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
         set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}_legacy")
         set(CPACK_DMG_VOLUME_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}_legacy")
-    else()
+    else ()
         set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}")
         set(CPACK_DMG_VOLUME_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}")
-    endif()
+    endif ()
     set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns")
     set(CPACK_DMG_DS_STORE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_DS_Store")
     set(CPACK_BUNDLE_NAME "EmulationStation Desktop Edition")
@@ -300,9 +331,9 @@ if(APPLE)
     set(CPACK_BUNDLE_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist")
     if(MACOS_CODESIGN_IDENTITY)
         set(CPACK_BUNDLE_APPLE_CERT_APP "Developer ID Application: ${MACOS_CODESIGN_IDENTITY}")
-        if(${CMAKE_OSX_DEPLOYMENT_TARGET} VERSION_GREATER 10.13)
+        if (CMAKE_OSX_DEPLOYMENT_TARGET VERSION_GREATER 10.13)
             set(CPACK_BUNDLE_APPLE_CODESIGN_PARAMETER "--deep --force --options runtime")
-        endif()
+        endif ()
     endif()
 elseif(WIN32)
     set(CPACK_GENERATOR "NSIS")
@@ -323,9 +354,9 @@ elseif(WIN32)
 else()
     set(CPACK_PACKAGE_INSTALL_DIRECTORY "emulationstation_${CMAKE_PACKAGE_VERSION}")
     set(CPACK_PACKAGE_EXECUTABLES "emulationstation" "emulationstation")
-    if("${LINUX_CPACK_GENERATOR}" STREQUAL "DEB")
+    if (LINUX_CPACK_GENERATOR STREQUAL "DEB")
         set(CPACK_GENERATOR "DEB")
-    endif()
+    endif ()
     set(CPACK_DEBIAN_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.deb")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Leon Styhre <leon@leonstyhre.com>")
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://es-de.org")
@@ -335,9 +366,9 @@ else()
         set(CPACK_DEBIAN_PACKAGE_DEPENDS "vlc")
     endif()
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-    if("${LINUX_CPACK_GENERATOR}" STREQUAL "RPM")
+    if (LINUX_CPACK_GENERATOR STREQUAL "RPM")
         set(CPACK_GENERATOR "RPM")
-    endif()
+    endif ()
     set(CPACK_RPM_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.rpm")
     set(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
     set(CPACK_RPM_PACKAGE_LICENSE "MIT")

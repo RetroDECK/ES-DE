@@ -48,21 +48,37 @@ class FileFilterIndex
 public:
     FileFilterIndex();
     ~FileFilterIndex();
-    void addToIndex(FileData* game);
-    void removeFromIndex(FileData* game);
-    void setFilter(FilterIndexType type, std::vector<std::string>* values);
-    void setTextFilter(std::string textFilter);
-    std::string getTextFilter() { return mTextFilter; }
-    void clearAllFilters();
-    void debugPrintIndexes();
-    bool showFile(FileData* game);
-    bool isFiltered();
-    bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
-    std::vector<FilterDataDecl>& getFilterDataDecls() { return filterDataDecl; }
 
-    void importIndex(FileFilterIndex* indexToImport);
+    void addToIndex(FileData *game);
+
+    void removeFromIndex(FileData *game);
+
+    void setFilter(FilterIndexType type, std::vector<std::string> *values);
+
+    void setTextFilter(std::string textFilter);
+
+    std::string getTextFilter() { return mTextFilter; }
+
+    void clearAllFilters();
+
+    void debugPrintIndexes();
+
+    bool showFile(FileData *game);
+
+    bool isFiltered();
+
+    bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
+
+    std::vector<FilterDataDecl> &getFilterDataDecls() { return filterDataDecl; }
+
+    void setTextRemoveSystem(bool status) { mTextRemoveSystem = status; }
+
+    void importIndex(FileFilterIndex *indexToImport);
+
     void resetIndex();
+
     void resetFilters();
+
     void setKidModeFilters();
 
 private:
@@ -85,6 +101,7 @@ private:
 
     std::string mTextFilter;
     bool mFilterByText;
+    bool mTextRemoveSystem;
 
     bool mFilterByFavorites;
     bool mFilterByGenre;
@@ -115,8 +132,6 @@ private:
     std::vector<std::string> mCompletedIndexFilteredKeys;
     std::vector<std::string> mBrokenIndexFilteredKeys;
     std::vector<std::string> mHiddenIndexFilteredKeys;
-
-    FileData* mRootFolder;
 };
 
 #endif // ES_APP_FILE_FILTER_INDEX_H

@@ -25,6 +25,7 @@ namespace Renderer
 {
     static std::stack<Rect> clipStack;
     static SDL_Window* sdlWindow = nullptr;
+    static glm::mat4 mProjectionMatrix;
     static int windowWidth = 0;
     static int windowHeight = 0;
     static int screenWidth = 0;
@@ -150,7 +151,7 @@ namespace Renderer
 
 #if defined(__unix__)
         // Disabling desktop composition can lead to better framerates and a more fluid user
-        // interface, but with some drivers it can cause strange behaviours when returning to
+        // interface, but with some drivers it can cause strange behaviors when returning to
         // the desktop.
         if (Settings::getInstance()->getBool("DisableComposition"))
             SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "1");
@@ -539,7 +540,7 @@ namespace Renderer
             return sShaderProgramVector[index - 1];
         else
             return nullptr;
-    };
+    }
 
     const glm::mat4 getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
