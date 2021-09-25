@@ -211,7 +211,24 @@ based on:       Switch Theme by Lilbud
 		<datetime name="md_lastplayed, md_playcount">
 			<pos>1 1</pos>
 		</datetime>
+		<badges name="md_badges">
+			<pos>0.8453 0.704</pos>
+			<origin>0 0</origin>
 
+			<!-- flexbox properties -->
+			<direction>row</direction>
+			<align>center</align>
+			<itemsPerLine>4</itemsPerLine>
+			<itemMargin>0 0</itemMargin>
+			<itemWidth>.02</itemWidth>
+
+			<!-- badges properties -->
+			<slots>favorite kidgame broken completed</slots>
+			<customBadgeIcon badge="favorite">./assets/favorite.svg</customBadgeIcon>
+			<customBadgeIcon badge="completed">./assets/completed.svg</customBadgeIcon>
+			<customBadgeIcon badge="kidgame">./assets/kidgame.svg</customBadgeIcon>
+			<customBadgeIcon badge="broken">./assets/broken.svg</customBadgeIcon>
+		</badges>
 	</view>
 
 	<view name="basic">
