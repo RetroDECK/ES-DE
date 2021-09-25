@@ -29,7 +29,8 @@ enum FilterIndexType {
     KIDGAME_FILTER,
     COMPLETED_FILTER,
     BROKEN_FILTER,
-    HIDDEN_FILTER
+    HIDDEN_FILTER,
+    ALTEMULATOR_FILTER
 };
 
 struct FilterDataDecl {
@@ -79,6 +80,7 @@ private:
     void manageCompletedEntryInIndex(FileData* game, bool remove = false);
     void manageBrokenEntryInIndex(FileData* game, bool remove = false);
     void manageHiddenEntryInIndex(FileData* game, bool remove = false);
+    void manageAltemulatorEntryInIndex(FileData* game, bool remove = false);
 
     void manageIndexEntry(std::map<std::string, int>* index, std::string key, bool remove);
 
@@ -97,6 +99,7 @@ private:
     bool mFilterByCompleted;
     bool mFilterByBroken;
     bool mFilterByHidden;
+    bool mFilterByAltemulator;
 
     std::map<std::string, int> mFavoritesIndexAllKeys;
     std::map<std::string, int> mGenreIndexAllKeys;
@@ -107,6 +110,7 @@ private:
     std::map<std::string, int> mCompletedIndexAllKeys;
     std::map<std::string, int> mBrokenIndexAllKeys;
     std::map<std::string, int> mHiddenIndexAllKeys;
+    std::map<std::string, int> mAltemulatorIndexAllKeys;
 
     std::vector<std::string> mFavoritesIndexFilteredKeys;
     std::vector<std::string> mGenreIndexFilteredKeys;
@@ -117,6 +121,7 @@ private:
     std::vector<std::string> mCompletedIndexFilteredKeys;
     std::vector<std::string> mBrokenIndexFilteredKeys;
     std::vector<std::string> mHiddenIndexFilteredKeys;
+    std::vector<std::string> mAltemulatorIndexFilteredKeys;
 };
 
 #endif // ES_APP_FILE_FILTER_INDEX_H
