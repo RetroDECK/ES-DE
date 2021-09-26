@@ -20,6 +20,7 @@
 #define SLOT_COMPLETED "completed"
 #define SLOT_KIDS "kidgame"
 #define SLOT_BROKEN "broken"
+#define SLOT_ALTERNATIVE_EMULATOR "altemu"
 
 class TextureResource;
 
