@@ -28,7 +28,6 @@ class BadgesComponent : public FlexboxComponent
 {
 public:
     BadgesComponent(Window *window);
-
     ~BadgesComponent() noexcept;
 
     std::string getValue() const override;
@@ -46,6 +45,7 @@ private:
     static const std::vector<std::string> mSlots;
     static std::map<std::string, std::string> mBadgeIcons;
     static std::map<std::string, ImageComponent> mImageComponents;
+    static std::vector<BadgesComponent *> mInstances;
 };
 
 #endif // ES_APP_COMPONENTS_BADGES_COMPONENT_H
