@@ -42,7 +42,7 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    static const std::vector<std::string> mSlots;
+    static std::vector<std::string> mSlots;
     std::map<std::string, std::string> mBadgeIcons;
     std::map<std::string, ImageComponent> mImageComponents;
 };

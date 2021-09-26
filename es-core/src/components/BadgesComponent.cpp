@@ -14,8 +14,8 @@
 #include "resources/TextureResource.h"
 
 // Available slot definitions.
-const std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN,
-                                                          SLOT_ALTERNATIVE_EMULATOR};
+std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN,
+                                                    SLOT_ALTERNATIVE_EMULATOR};
 
 BadgesComponent::BadgesComponent(Window *window)
         : FlexboxComponent(window) {
@@ -63,7 +63,7 @@ void BadgesComponent::setValue(const std::string &value) {
             if (!(temp == SLOT_FAVORITE || temp == SLOT_COMPLETED || temp == SLOT_KIDS ||
                   temp == SLOT_BROKEN || temp == SLOT_ALTERNATIVE_EMULATOR))
                 LOG(LogError) << "Badge slot '" << temp << "' is invalid.";
-            else
+            else if (std::find(mSlots.begin(), mSlots.end(), temp) != mSlots.end())
                 mChildren.push_back(&mImageComponents.find(temp)->second);
         }
     }
@@ -101,8 +101,21 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (elem->has("slots"))
-        setValue(elem->get<std::string>("slots"));
+    if (elem->has("slots")) {
+        auto value = elem->get<std::string>("slots");
+        mSlots = {};
+        if (!value.empty()) {
+            std::string temp;
+            std::istringstream ss(value);
+            while (std::getline(ss, temp, ' ')) {
+                if (!(temp == SLOT_FAVORITE || temp == SLOT_COMPLETED || temp == SLOT_KIDS ||
+                      temp == SLOT_BROKEN || temp == SLOT_ALTERNATIVE_EMULATOR))
+                    LOG(LogError) << "Badge slot '" << temp << "' is invalid.";
+                else
+                    mSlots.push_back(temp);
+            }
+        }
+    }
 
     // Apply theme on the flexbox component parent.
     FlexboxComponent::applyTheme(theme, view, element, properties);

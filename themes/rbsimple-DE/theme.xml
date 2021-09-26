@@ -248,7 +248,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <itemWidth>.035</itemWidth>
 
             <!-- badges properties -->
-            <slots>favorite completed kidgame broken</slots>
+            <slots>favorite completed kidgame broken altemu</slots>
             <customBadgeIcon badge="favorite">:/graphics/badge_favorite.svg</customBadgeIcon>
             <customBadgeIcon badge="completed">:/graphics/badge_completed.svg</customBadgeIcon>
             <customBadgeIcon badge="kidgame">:/graphics/badge_kidgame.svg</customBadgeIcon>
