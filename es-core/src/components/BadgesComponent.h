@@ -43,9 +43,9 @@ public:
 
 private:
     static const std::vector<std::string> mSlots;
-    static std::map<std::string, std::string> mBadgeIcons;
-    static std::map<std::string, ImageComponent> mImageComponents;
-    static std::vector<BadgesComponent *> mInstances;
+    std::map<std::string, std::string> mBadgeIcons;
+    std::map<std::string, ImageComponent> mImageComponents;
+    //static std::vector<BadgesComponent *> mInstances;
 };
 
 #endif // ES_APP_COMPONENTS_BADGES_COMPONENT_H
