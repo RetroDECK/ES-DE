@@ -30,19 +30,19 @@ public:
 
     std::string getValue() const override;
     // Should be a list of strings.
-    void setValue(const std::string& value) override;
+    void setValue(const std::string &value) override;
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
-                            const std::string& view,
-                            const std::string& element,
+    virtual void applyTheme(const std::shared_ptr<ThemeData> &theme,
+                            const std::string &view,
+                            const std::string &element,
                             unsigned int properties) override;
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    std::vector<std::string> mSlots;
-    std::map<std::string, std::string> mBadgeIcons;
-    std::map<std::string, ImageComponent> mImageComponents;
+    static const std::vector<std::string> mSlots;
+    static std::map<std::string, std::string> mBadgeIcons;
+    static std::map<std::string, ImageComponent> mImageComponents;
 };
 
 #endif // ES_APP_COMPONENTS_BADGES_COMPONENT_H

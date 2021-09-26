@@ -13,32 +13,37 @@
 #include "ThemeData.h"
 #include "resources/TextureResource.h"
 
-BadgesComponent::BadgesComponent(Window* window)
-    : FlexboxComponent(window)
-{
-    // Define the slots.
-    mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN};
+// Available slot definitions.
+const std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN};
+std::map<std::string, std::string> BadgesComponent::mBadgeIcons = std::map<std::string, std::string>();
+std::map<std::string, ImageComponent> BadgesComponent::mImageComponents = std::map<std::string, ImageComponent>();
 
-    mBadgeIcons = std::map<std::string, std::string>();
-    mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
-    mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
-    mBadgeIcons[SLOT_KIDS] = ":/graphics/badge_kidgame.svg";
-    mBadgeIcons[SLOT_BROKEN] = ":/graphics/badge_broken.svg";
+BadgesComponent::BadgesComponent(Window *window)
+        : FlexboxComponent(window) {
+    if (mBadgeIcons.empty()) {
+        mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
+        mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
+        mBadgeIcons[SLOT_KIDS] = ":/graphics/badge_kidgame.svg";
+        mBadgeIcons[SLOT_BROKEN] = ":/graphics/badge_broken.svg";
+    }
+
 
     // Create the child ImageComponent for every badge.
-    mImageComponents = std::map<std::string, ImageComponent>();
-    ImageComponent mImageFavorite = ImageComponent(window);
-    mImageFavorite.setImage(mBadgeIcons[SLOT_FAVORITE], false, false);
-    mImageComponents.insert({SLOT_FAVORITE, mImageFavorite});
-    ImageComponent mImageCompleted = ImageComponent(window);
-    mImageCompleted.setImage(mBadgeIcons[SLOT_COMPLETED], false, false);
-    mImageComponents.insert({SLOT_COMPLETED, mImageCompleted});
-    ImageComponent mImageKids = ImageComponent(window);
-    mImageKids.setImage(mBadgeIcons[SLOT_KIDS], false, false);
-    mImageComponents.insert({SLOT_KIDS, mImageKids});
-    ImageComponent mImageBroken = ImageComponent(window);
-    mImageBroken.setImage(mBadgeIcons[SLOT_BROKEN], false, false);
-    mImageComponents.insert({SLOT_BROKEN, mImageBroken});
+    if (mImageComponents.empty()) {
+        ImageComponent mImageFavorite = ImageComponent(window);
+        mImageFavorite.setImage(mBadgeIcons[SLOT_FAVORITE], false, true);
+        mImageComponents.insert({SLOT_FAVORITE, mImageFavorite});
+        ImageComponent mImageCompleted = ImageComponent(window);
+        mImageCompleted.setImage(mBadgeIcons[SLOT_COMPLETED], false, true);
+        mImageComponents.insert({SLOT_COMPLETED, mImageCompleted});
+        ImageComponent mImageKids = ImageComponent(window);
+        mImageKids.setImage(mBadgeIcons[SLOT_KIDS], false, true);
+        mImageComponents.insert({SLOT_KIDS, mImageKids});
+        ImageComponent mImageBroken = ImageComponent(window);
+        mImageBroken.setImage(mBadgeIcons[SLOT_BROKEN], false, true);
+        mImageComponents.insert({SLOT_BROKEN, mImageBroken});
+    }
+
 }
 
 void BadgesComponent::setValue(const std::string& value)
@@ -84,7 +89,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     for (auto& slot : mSlots) {
         if (properties & PATH && elem->has(slot)) {
             mBadgeIcons[slot] = elem->get<std::string>(slot);
-            mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot]);
+            mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot], false, true);
             imgChanged = true;
         }
     }
