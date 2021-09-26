@@ -220,14 +220,15 @@ based on:       Switch Theme by Lilbud
 			<align>start</align>
 			<itemsPerLine>4</itemsPerLine>
 			<itemMargin>0 5</itemMargin>
-			<itemWidth>.055</itemWidth>
+			<itemWidth>.059</itemWidth>
 
 			<!-- badges properties -->
-			<slots>favorite kidgame broken completed</slots>
+			<slots>favorite kidgame broken completed altemu</slots>
 			<customBadgeIcon badge="favorite">./assets/favorite.svg</customBadgeIcon>
 			<customBadgeIcon badge="completed">./assets/completed.svg</customBadgeIcon>
 			<customBadgeIcon badge="kidgame">./assets/kidgame.svg</customBadgeIcon>
 			<customBadgeIcon badge="broken">./assets/broken.svg</customBadgeIcon>
+			<customBadgeIcon badge="altemu">./assets/altemu.svg</customBadgeIcon>
 		</badges>
 	</view>
 
