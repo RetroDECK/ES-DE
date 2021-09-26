@@ -622,7 +622,8 @@
         <fullname>MSX</fullname>
         <path>%ROMPATH%/msx</path>
         <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
         <platform>msx</platform>
         <theme>msx</theme>
     </system>
@@ -631,7 +632,8 @@
         <fullname>MSX1</fullname>
         <path>%ROMPATH%/msx1</path>
         <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
         <platform>msx</platform>
         <theme>msx1</theme>
     </system>
@@ -640,7 +642,8 @@
         <fullname>MSX2</fullname>
         <path>%ROMPATH%/msx2</path>
         <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
         <platform>msx2</platform>
         <theme>msx2</theme>
     </system>
