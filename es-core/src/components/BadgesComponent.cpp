@@ -14,7 +14,8 @@
 #include "resources/TextureResource.h"
 
 // Available slot definitions.
-const std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN};
+const std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN,
+                                                          SLOT_ALTERNATIVE_EMULATOR};
 std::map<std::string, std::string> BadgesComponent::mBadgeIcons = std::map<std::string, std::string>();
 std::map<std::string, ImageComponent> BadgesComponent::mImageComponents = std::map<std::string, ImageComponent>();
 
@@ -25,6 +26,7 @@ BadgesComponent::BadgesComponent(Window *window)
         mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
         mBadgeIcons[SLOT_KIDS] = ":/graphics/badge_kidgame.svg";
         mBadgeIcons[SLOT_BROKEN] = ":/graphics/badge_broken.svg";
+        mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR] = ":/graphics/badge_altemu.svg";
     }
 
 
@@ -42,19 +44,26 @@ BadgesComponent::BadgesComponent(Window *window)
         ImageComponent mImageBroken = ImageComponent(window);
         mImageBroken.setImage(mBadgeIcons[SLOT_BROKEN], false, true);
         mImageComponents.insert({SLOT_BROKEN, mImageBroken});
+        ImageComponent mImageAltEmu = ImageComponent(window);
+        mImageAltEmu.setImage(mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR], false, true);
+        mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmu});
     }
-
 }
 
-void BadgesComponent::setValue(const std::string& value)
-{
+BadgesComponent::~BadgesComponent() {
+    mBadgeIcons.clear();
+    mImageComponents.clear();
+}
+
+
+void BadgesComponent::setValue(const std::string &value) {
     mChildren.clear();
     if (!value.empty()) {
         std::string temp;
         std::istringstream ss(value);
         while (std::getline(ss, temp, ' ')) {
             if (!(temp == SLOT_FAVORITE || temp == SLOT_COMPLETED || temp == SLOT_KIDS ||
-                  temp == SLOT_BROKEN))
+                  temp == SLOT_BROKEN || temp == SLOT_ALTERNATIVE_EMULATOR))
                 LOG(LogError) << "Badge slot '" << temp << "' is invalid.";
             else
                 mChildren.push_back(&mImageComponents.find(temp)->second);

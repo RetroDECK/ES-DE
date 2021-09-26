@@ -20,13 +20,16 @@
 #define SLOT_COMPLETED "completed"
 #define SLOT_KIDS "kidgame"
 #define SLOT_BROKEN "broken"
+#define SLOT_ALTERNATIVE_EMULATOR "altemu"
 
 class TextureResource;
 
 class BadgesComponent : public FlexboxComponent
 {
 public:
-    BadgesComponent(Window* window);
+    BadgesComponent(Window *window);
+
+    ~BadgesComponent() noexcept;
 
     std::string getValue() const override;
     // Should be a list of strings.
