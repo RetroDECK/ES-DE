@@ -244,7 +244,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <direction>row</direction>
             <align>start</align>
             <itemsPerLine>2</itemsPerLine>
-            <itemMargin>10 5</itemMargin>
+            <itemMargin>5 5</itemMargin>
             <itemWidth>.035</itemWidth>
 
             <!-- badges properties -->
