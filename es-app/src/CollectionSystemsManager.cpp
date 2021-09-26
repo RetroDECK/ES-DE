@@ -692,6 +692,7 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 adding = false;
                 // If we found it, we need to remove it.
                 FileData* collectionEntry = children.at(key);
+                fileIndex->removeFromIndex(collectionEntry);
                 ViewController::get()
                     ->getGameListView(systemViewToUpdate)
                     .get()
