@@ -51,13 +51,13 @@ private:
     TextComponent mLblLastPlayed;
     TextComponent mLblPlayCount;
 
-    BadgesComponent mBadges;
     RatingComponent mRating;
     DateTimeComponent mReleaseDate;
     TextComponent mDeveloper;
     TextComponent mPublisher;
     TextComponent mGenre;
     TextComponent mPlayers;
+    BadgesComponent mBadges;
     DateTimeComponent mLastPlayed;
     TextComponent mPlayCount;
     TextComponent mName;

@@ -121,8 +121,6 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
                         POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mImage.applyTheme(theme, getName(), "md_image",
                       POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
-    mBadges.applyTheme(theme, getName(), "md_badges",
-                       POSITION | ThemeFlags::SIZE | Z_INDEX | DIRECTION | VISIBLE);
     mName.applyTheme(theme, getName(), "md_name", ALL);
 
     initMDLabels();
