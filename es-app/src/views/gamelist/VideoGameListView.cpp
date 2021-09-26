@@ -164,8 +164,6 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mVideo->applyTheme(theme, getName(), "md_video",
                        POSITION | ThemeFlags::SIZE | ThemeFlags::DELAY | Z_INDEX | ROTATION |
                            VISIBLE);
-    mBadges.applyTheme(theme, getName(), "md_badges",
-                       POSITION | ThemeFlags::SIZE | Z_INDEX | DIRECTION | VISIBLE);
     mName.applyTheme(theme, getName(), "md_name", ALL);
 
     initMDLabels();
