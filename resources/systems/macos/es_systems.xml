@@ -665,7 +665,8 @@
         <fullname>Nintendo 3DS</fullname>
         <path>%ROMPATH%/n3ds</path>
         <extension>.3ds .3DS .3dsx .3DSX .app .APP .axf .AXF .cci .CCI .cxi .CXI .elf .ELF .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra_libretro.dylib %ROM%</command>
+        <command label="Citra">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra_libretro.dylib %ROM%</command>
+        <command label="Citra 2018">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/citra2018_libretro.dylib %ROM%</command>
         <platform>n3ds</platform>
         <theme>n3ds</theme>
     </system>
@@ -700,8 +701,10 @@
         <name>nds</name>
         <fullname>Nintendo DS</fullname>
         <path>%ROMPATH%/nds</path>
-        <extension>.nds .NDS .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.dylib %ROM%</command>
+        <extension>.bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
+        <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume_libretro.dylib %ROM%</command>
+        <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.dylib %ROM%</command>
+        <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.dylib %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>
