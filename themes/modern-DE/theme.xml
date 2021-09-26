@@ -219,7 +219,7 @@ based on:       Switch Theme by Lilbud
 			<direction>column</direction>
 			<align>start</align>
 			<itemsPerLine>4</itemsPerLine>
-			<itemMargin>0 5</itemMargin>
+			<itemMargin>25 5</itemMargin>
 			<itemWidth>.059</itemWidth>
 
 			<!-- badges properties -->
