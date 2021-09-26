@@ -1236,7 +1236,7 @@
     </system>
     <system>
         <name>videopac</name>
-        <fullname>Philips Videopac G7000 (Magnavox Odyssey2)</fullname>
+        <fullname>Philips Videopac G7000</fullname>
         <path>%ROMPATH%/videopac</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/o2em_libretro.dylib %ROM%</command>
