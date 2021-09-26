@@ -68,8 +68,9 @@
         <name>amstradcpc</name>
         <fullname>Amstrad CPC</fullname>
         <path>%ROMPATH%/amstradcpc</path>
-        <extension>.dsk .DSK .sna .SNA .tap .TAR .cdt .CDT .voc .VOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/cap32_libretro.dylib %ROM%</command>
+        <extension>.cdt .CDT .cpr .CPR .dsk .DSK .kcr .KCR .m3u .M3U .sna .SNA .tap .TAR .voc .VOC .7z .7Z .zip .ZIP</extension>
+        <command label="Caprice32">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/cap32_libretro.dylib %ROM%</command>
+        <command label="CrocoDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/crocods_libretro.dylib %ROM%</command>
         <platform>amstradcpc</platform>
         <theme>amstradcpc</theme>
     </system>
@@ -174,7 +175,8 @@
         <fullname>Atari Lynx</fullname>
         <path>%ROMPATH%/atarilynx</path>
         <extension>.lnx .LNX .o .O .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_lynx_libretro.dylib %ROM%</command>
+        <command label="Handy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/handy_libretro.dylib %ROM%</command>
+        <command label="Beetle Lynx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_lynx_libretro.dylib %ROM%</command>
         <platform>atarilynx</platform>
         <theme>atarilynx</theme>
     </system>
@@ -752,7 +754,8 @@
         <fullname>SNK Neo Geo Pocket</fullname>
         <path>%ROMPATH%/ngp</path>
         <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
+        <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
+        <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.dylib %ROM%</command>
         <platform>ngp</platform>
         <theme>ngp</theme>
     </system>
@@ -761,7 +764,8 @@
         <fullname>SNK Neo Geo Pocket Color</fullname>
         <path>%ROMPATH%/ngpc</path>
         <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
+        <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
+        <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.dylib %ROM%</command>
         <platform>ngpc</platform>
         <theme>ngpc</theme>
     </system>
@@ -826,7 +830,8 @@
         <fullname>NEC PC-9800 series</fullname>
         <path>%ROMPATH%/pc98</path>
         <extension>.2hd .2HD .88d .88D .98d .98D .d88 .D88 .d98 .D98 .cmd .CMD .dup .DUP .fdd .FDD .fdi .FDI .hdd .HDD .hdi .HDI .hdm .HDM .hdn .HDN .nhd .NHD .tfd .TFD .thd .THD . xdf .XDF .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/np2kai_libretro.dylib %ROM%</command>
+        <command label="Neko Project II Kai">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/np2kai_libretro.dylib %ROM%</command>
+        <command label="Neko Project II">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nekop2_libretro.dylib %ROM%</command>
         <platform>pc98</platform>
         <theme>pc98</theme>
     </system>
@@ -965,8 +970,9 @@
         <name>saturn</name>
         <fullname>Sega Saturn</fullname>
         <path>%ROMPATH%/saturn</path>
-        <extension>.ccd .CCD .chd .CHD .cue .CUE .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.dylib %ROM%</command>
+        <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .mds .MDS .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.dylib %ROM%</command>
+        <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.dylib %ROM%</command>
         <platform>saturn</platform>
         <theme>saturn</theme>
     </system>
@@ -974,8 +980,9 @@
         <name>saturnjp</name>
         <fullname>Sega Saturn</fullname>
         <path>%ROMPATH%/saturnjp</path>
-        <extension>.ccd .CCD .chd .CHD .cue .CUE .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.dylib %ROM%</command>
+        <extension>.bin .BIN .ccd .CCD .chd .CHD .cue .CUE .iso .ISO .mds .MDS .toc .TOC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <command label="Beetle Saturn">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_saturn_libretro.dylib %ROM%</command>
+        <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.dylib %ROM%</command>
         <platform>saturn</platform>
         <theme>saturnjp</theme>
     </system>
