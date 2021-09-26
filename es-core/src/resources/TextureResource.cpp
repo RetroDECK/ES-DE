@@ -143,12 +143,13 @@ bool TextureResource::bind()
     }
 }
 
-std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
+std::shared_ptr<TextureResource> TextureResource::get(const std::string &path,
                                                       bool tile,
                                                       bool forceLoad,
                                                       bool dynamic,
                                                       bool linearMagnify,
-                                                      float scaleDuringLoad)
+                                                      float scaleDuringLoad,
+                                                      bool cacheImage)
 {
     std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
 
@@ -176,7 +177,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     std::shared_ptr<TextureData> data = sTextureDataManager.get(tex.get());
 
     // Is it an SVG?
-    if (key.first.substr(key.first.size() - 4, std::string::npos) != ".svg") {
+    if (key.first.substr(key.first.size() - 4, std::string::npos) != ".svg" || cacheImage) {
         // Probably not. Add it to our map. We don't add SVGs because 2 SVGs might be
         // rasterized at different sizes.
         sTextureMap[key] = std::weak_ptr<TextureResource>(tex);
