@@ -18,6 +18,7 @@ const std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_CO
                                                           SLOT_ALTERNATIVE_EMULATOR};
 std::map<std::string, std::string> BadgesComponent::mBadgeIcons = std::map<std::string, std::string>();
 std::map<std::string, ImageComponent> BadgesComponent::mImageComponents = std::map<std::string, ImageComponent>();
+std::vector<BadgesComponent *> BadgesComponent::mInstances = {};
 
 BadgesComponent::BadgesComponent(Window *window)
         : FlexboxComponent(window) {
@@ -48,12 +49,19 @@ BadgesComponent::BadgesComponent(Window *window)
         mImageAltEmu.setImage(mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR], false, true);
         mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmu});
     }
+
+    mInstances.push_back(this);
 }
 
-BadgesComponent::~BadgesComponent() {
-    mChildren.clear();
-    mBadgeIcons.clear();
-    mImageComponents.clear();
+BadgesComponent::~BadgesComponent() noexcept {
+    for (GuiComponent *c: mChildren)
+        c->clearChildren();
+    clearChildren();
+    mInstances.erase(std::remove(mInstances.begin(), mInstances.end(), this), mInstances.end());
+    if (mInstances.empty()) {
+        mBadgeIcons.clear();
+        mImageComponents.clear();
+    }
 }
 
 
