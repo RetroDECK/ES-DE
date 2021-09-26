@@ -27,7 +27,9 @@ class TextureResource;
 class BadgesComponent : public FlexboxComponent
 {
 public:
-    BadgesComponent(Window* window);
+    BadgesComponent(Window *window);
+
+    ~BadgesComponent() noexcept;
 
     std::string getValue() const override;
     // Should be a list of strings.

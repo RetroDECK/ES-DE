@@ -48,11 +48,15 @@ BadgesComponent::BadgesComponent(Window *window)
         mImageAltEmu.setImage(mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR], false, true);
         mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmu});
     }
-
 }
 
-void BadgesComponent::setValue(const std::string& value)
-{
+BadgesComponent::~BadgesComponent() {
+    mBadgeIcons.clear();
+    mImageComponents.clear();
+}
+
+
+void BadgesComponent::setValue(const std::string &value) {
     mChildren.clear();
     if (!value.empty()) {
         std::string temp;
