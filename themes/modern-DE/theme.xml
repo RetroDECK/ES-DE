@@ -142,8 +142,8 @@ based on:       Switch Theme by Lilbud
 		<text name="md_description">
 			<forceUppercase>0</forceUppercase>
 			<lineSpacing>1.2</lineSpacing>
-			<pos>0.70 0.21</pos>
-			<size>0.269 0.275</size>
+			<pos>0.70 0.1745</pos>
+			<size>0.269 0.3105</size>
 			<fontSize>0.03</fontSize>
 		</text>
 		<text name="md_lbl_publisher">
@@ -212,15 +212,15 @@ based on:       Switch Theme by Lilbud
 			<pos>1 1</pos>
 		</datetime>
 		<badges name="md_badges">
-			<pos>0.8453 0.704</pos>
+			<pos>0.8423 0.69</pos>
 			<origin>0 0</origin>
 
 			<!-- flexbox properties -->
-			<direction>row</direction>
-			<align>center</align>
+			<direction>column</direction>
+			<align>start</align>
 			<itemsPerLine>4</itemsPerLine>
-			<itemMargin>0 0</itemMargin>
-			<itemWidth>.02</itemWidth>
+			<itemMargin>0 5</itemMargin>
+			<itemWidth>.055</itemWidth>
 
 			<!-- badges properties -->
 			<slots>favorite kidgame broken completed</slots>

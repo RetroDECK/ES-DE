@@ -65,7 +65,7 @@ based on:       Switch Theme for Launchbox by Grila
 			<unfilledPath>./../assets/light/unfilled_rating.svg</unfilledPath>
 		</rating>
 		
-		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_developer, md_publisher, md_genre, md_players, md_playcount, md_releasedate, md_description">
+		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_lbl_rating, md_developer, md_publisher, md_genre, md_players, md_playcount, md_releasedate, md_description">
 			<color>${secondaryColor}</color>
 		</text>	
 	
