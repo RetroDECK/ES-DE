@@ -1409,7 +1409,7 @@ This custom file functionality is designed to be complementary to the bundled es
 
 The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
 
-It doesn't matter in which order you define the systems as they will be sorted by the full system name inside the application, but it's still probably a good idea to add them in alphabetical order to make the file easier to maintain.
+It doesn't matter in which order you define the systems as they will be sorted by the `<fullname>` tag or by the optional `<systemsortname>` tag when displayed inside the application. But it's still a good idea to add the systems in alphabetical order to make the configuration file easier to maintain.
 
 Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
 
@@ -1430,6 +1430,12 @@ Below is an overview of the file layout with various examples. For the command t
         <!-- The full system name, used for sorting the systems, for selecting the systems to multi-scrape etc. -->
         <fullname>Nintendo SNES (Super Nintendo)</fullname>
 
+        <!-- By default the systems are sorted by their full names, but this can be overridden by setting the optional
+        <systemsortname> tag to an arbitrary value. As far as sorting is concerned, the effect will be identical to
+        changing the <fullname> tag. Apart for system sorting, this tag has no effect and its actual value will not
+        be displayed anywhere within the appliction. -->
+        <systemsortname>Super Nintendo</systemsortname>
+
         <!-- The path to look for ROMs in. '~' will be expanded to $HOME or %HOMEPATH%, depending on the operating system.
         The optional %ROMPATH% variable will expand to the path defined in the setting ROMDirectory in es_settings.xml.
         All subdirectories (and non-recursive links) will be included. -->
@@ -1444,13 +1450,15 @@ Below is an overview of the file layout with various examples. For the command t
         file. This is the recommended way to configure the launch command. -->
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
 
-        <!-- It's possible to define alternative emulators by adding additional command tags for a system. When doing this,
-        the "label" attribute is mandatory for all tags. It's these labels that will be shown in the user interface when
-        selecting the alternative emulators either system-wide or per game. The first row will be the default emulator. -->
-        <command label="Nestopia UE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
-        <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
-        <command label="Mesen">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
-        <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
+        <!-- It's possible to define alternative emulators by adding additional command tags for a system. When doing this, the
+        "label" attribute is mandatory for all tags. It's these labels that will be shown in the user interface when selecting the
+        alternative emulator either system-wide or per game. The first row will be the default emulator. -->
+        <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
+        <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.so %ROM%</command>
+        <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.so %ROM%</command>
+        <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supafaust_libretro.so %ROM%</command>
+        <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
 
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
         the snes9x_libretro core, If there are spaces in the path or file name, you must enclose them in quotation marks, such as
@@ -1600,6 +1608,36 @@ If adding the `<loadExclusive/>` tag to the file, the bundled es_systems.xml fil
         <command>/usr/games/fceux %ROM%</command>
         <platform>nes</platform>
         <theme>nes</theme>
+    </system>
+</systemList>
+```
+
+Here is yet another example with the addition of the `snes` system where some file extensions and alternative emulator entries have been removed, and the full name and sorting have been modified.
+
+```xml
+<?xml version="1.0"?>
+<!-- This is a custom ES-DE game systems configuration file for Unix -->
+<systemList>
+    <system>
+        <name>nes</name>
+        <fullname>Nintendo Entertainment System</fullname>
+        <path>%ROMPATH%/nes</path>
+        <extension>.nes .NES .zip .ZIP</extension>
+        <command>/usr/games/fceux %ROM%</command>
+        <platform>nes</platform>
+        <theme>nes</theme>
+    </system>
+    <system>
+        <name>snes</name>
+        <fullname>Super Nintendo</fullname>
+        <systemsortname>Nintendo SNES (Super Nintendo)</systemsortname>
+        <path>%ROMPATH%/snes</path>
+        <extension>.smc .SMC .sfc .SFC .swc .SWC .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
+        <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
+        <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.so %ROM%</command>
+        <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <platform>snes</platform>
+        <theme>snes</theme>
     </system>
 </systemList>
 ```

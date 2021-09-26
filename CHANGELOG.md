@@ -11,8 +11,14 @@
 ### Detailed list of changes
 
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
+* Populated the bundled es_systems.xml files with alternative emulator entries for must RetroArch cores
 * Added a virtual keyboard partly based on code from batocera-emulationstation
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
+* Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
+* Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
+* Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
+* Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
+* Added a filter for "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
 * Added a menu option to change the application exit key combination
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Added support for using the left and right trigger buttons in the help prompts
@@ -24,6 +30,8 @@
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
 * Added a blinking cursor to TextEditComponent
 * Changed the filter description "Text filter (game name)" to "Game name"
+* Added support for multi-select total count and exclusive multi-select to OptionListComponent
+* Achieved a massive speed improvement for OptionListComponent by not resizing each added MenuComponent row (most notable in the filter GUI)
 * Added support for a new type of "flat style" button to ButtonComponent
 * Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
@@ -32,6 +40,7 @@
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
 * Added a function to generate MD5 hashes
 * Moved the "complex" mode functionality from GuiComplexTextEditPopup into GuiTextEditPopup and removed the source files for the former
+* Replaced the String::Utils::trim function with better code and removed some inline text trimming throughout the application
 * Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags
 * Fixed a lot of compiler warnings introduced by the -Wall and -Wpedantic flags
 * Changed the language standard from C++14 to C++17
@@ -44,6 +53,7 @@
 * When multi-scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
 * When multi-scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* Removing games from custom collections did not remove their filter index entries
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
@@ -333,7 +343,5 @@ Many bugs have been fixed, and numerous features that were only partially implem
 **The issues below are relevant for ES-DE v1.1.0**
 
 * There is an issue with launching games on Windows when using AMD and Intel GPUs. This causes the emulator to just output a blank screen. There is a workaround available for this which is enabled by default and that can be disabled via the menu option "AMD and Intel GPU game launch workaround". The drawback of this workaround is that a white instead of a black screen will be displayed when launching games. If using an Nvidia GPU, it should be safe to disable this option for a slightly better user experience. An alternative workaround is to enable the option "Run in background (while game is launched)".
-
-* On macOS Big Sur (and possibly other OS versions) when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting "Only accept input from first controller" in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.
