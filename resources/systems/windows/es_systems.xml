@@ -403,8 +403,13 @@
         <name>gb</name>
         <fullname>Nintendo Game Boy</fullname>
         <path>%ROMPATH%\gb</path>
-        <extension>.sfc .SFC .smc .SMC .gb .GB .gbc .GBC .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\bsnes_libretro.dll %ROM%</command>
+        <extension>.bs .BS .cgb .CGB .dmg .DMG .gb .GB .gbc .GBC .sgb .SGB .sfc .SFC .smc .SMC .7z .7Z .zip .ZIP</extension>
+        <command label="SameBoy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\sameboy_libretro.dll %ROM%</command>
+        <command label="Gambatte">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gambatte_libretro.dll %ROM%</command>
+        <command label="Gearboy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gearboy_libretro.dll %ROM%</command>
+        <command label="TGB Dual">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\tgbdual_libretro.dll %ROM%</command>
+        <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen-s_libretro.dll %ROM%</command>
+        <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\bsnes_libretro.dll %ROM%</command>
         <platform>gb</platform>
         <theme>gb</theme>
     </system>
@@ -412,8 +417,11 @@
         <name>gba</name>
         <fullname>Nintendo Game Boy Advance</fullname>
         <path>%ROMPATH%\gba</path>
-        <extension>.gba .GBA .agb .AGB .bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_gba_libretro.dll %ROM%</command>
+        <extension>.agb .AGB .bin .BIN .cgb .CGB .dmg .DMG .gb .GB .gba .GBA .gbc .GBC .sgb .SGB .7z .7Z .zip .ZIP</extension>
+        <command label="mGBA">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mgba_libretro.dll %ROM%</command>
+        <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vbam_next_libretro.dll %ROM%</command>
+        <command label="VBA Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\vba_next_libretro.dll %ROM%</command>
+        <command label="gpSP">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gpsp_libretro.dll %ROM%</command>
         <platform>gba</platform>
         <theme>gba</theme>
     </system>
@@ -421,8 +429,13 @@
         <name>gbc</name>
         <fullname>Nintendo Game Boy Color</fullname>
         <path>%ROMPATH%\gbc</path>
-        <extension>.sfc .SFC .smc .SMC .gb .GB .gbc .GBC .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\bsnes_libretro.dll %ROM%</command>
+        <extension>.bs .BS .cgb .CGB .dmg .DMG .gb .GB .gbc .GBC .sgb .SGB .sfc .SFC .smc .SMC .7z .7Z .zip .ZIP</extension>
+        <command label="SameBoy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\sameboy_libretro.dll %ROM%</command>
+        <command label="Gambatte">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gambatte_libretro.dll %ROM%</command>
+        <command label="Gearboy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gearboy_libretro.dll %ROM%</command>
+        <command label="TGB Dual">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\tgbdual_libretro.dll %ROM%</command>
+        <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen-s_libretro.dll %ROM%</command>
+        <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\bsnes_libretro.dll %ROM%</command>
         <platform>gbc</platform>
         <theme>gbc</theme>
     </system>
