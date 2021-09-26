@@ -87,7 +87,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     bool imgChanged = false;
     for (auto& slot : mSlots) {
-        if (properties & PATH && elem->has(slot)) {
+        if (properties & PATH && elem->has(slot) && mBadgeIcons[slot] != elem->get<std::string>(slot)) {
             mBadgeIcons[slot] = elem->get<std::string>(slot);
             mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot], false, true);
             imgChanged = true;
