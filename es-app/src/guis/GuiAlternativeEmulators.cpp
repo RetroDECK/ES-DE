@@ -118,14 +118,8 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
         mMenu.addRow(row);
     }
 
-    float width =
-        static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() * 1.05f),
-                                    static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
-
     setSize(mMenu.getSize());
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
-
-    mMenu.setSize(width, Renderer::getScreenHeight() * 0.76f);
 }
 
 void GuiAlternativeEmulators::updateMenu(const std::string& systemName,
@@ -162,7 +156,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
             label = entry.second;
 
         std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
-            mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+            mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_LEFT);
 
         if (system->getSystemEnvData()->mLaunchCommands.front().second == label)
             labelText->setValue(labelText->getValue().append(" [DEFAULT]"));
@@ -213,21 +207,37 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
             s->addRow(row, false);
     }
 
-    // Adjust the width depending on the aspect ratio of the screen, to make the screen look
+    // Set a maximum width depending on the aspect ratio of the screen, to make the screen look
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
     // reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-
-    float maxWidthModifier = glm::clamp(0.70f * aspectValue, 0.50f, 0.92f);
+    float maxWidthModifier = glm::clamp(0.72f * aspectValue, 0.50f, 0.92f);
     float maxWidth = static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
 
-    s->setMenuSize(glm::vec2{maxWidth, s->getMenuSize().y});
+    // Set the width of the selector window to the menu width, unless the system full name is
+    // too large to fit. If so, allow the size to be exceeded up to the maximum size calculated
+    // above.
+    float systemTextWidth =
+        Font::get(FONT_SIZE_LARGE)->sizeText(Utils::String::toUpper(system->getFullName())).x *
+        1.05f;
+
+    float width = 0.0f;
+    float menuWidth = mMenu.getSize().x;
+
+    if (systemTextWidth <= menuWidth)
+        width = menuWidth;
+    else if (systemTextWidth > maxWidth)
+        width = maxWidth;
+    else
+        width = systemTextWidth;
+
+    s->setMenuSize(glm::vec2{width, s->getMenuSize().y});
 
     auto menuSize = s->getMenuSize();
     auto menuPos = s->getMenuPosition();
 
-    s->setMenuPosition(glm::vec3{(s->getSize().x - menuSize.x) / 2.0f,
-                                 (s->getSize().y - menuSize.y) / 3.0f, menuPos.z});
+    s->setMenuPosition(glm::vec3{(s->getSize().x - menuSize.x) / 2.0f, menuPos.y, menuPos.z});
+
     mWindow->pushGui(s);
 }
 
