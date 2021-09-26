@@ -51,8 +51,7 @@ BadgesComponent::BadgesComponent(Window *window)
 }
 
 BadgesComponent::~BadgesComponent() {
-    mBadgeIcons.clear();
-    mImageComponents.clear();
+    mChildren.clear();
 }
 
 
