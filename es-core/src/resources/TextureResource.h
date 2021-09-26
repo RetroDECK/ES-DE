@@ -31,7 +31,7 @@ public:
                                                 bool dynamic = true,
                                                 bool linearMagnify = false,
                                                 float scaleDuringLoad = 1.0f,
-                                                bool cacheSVG = false);
+                                                bool cacheImage = false);
 
     void initFromPixels(const unsigned char *dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);

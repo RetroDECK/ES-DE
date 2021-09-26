@@ -49,6 +49,8 @@ BadgesComponent::~BadgesComponent() noexcept {
     for (GuiComponent *c: mChildren)
         c->clearChildren();
     clearChildren();
+    mBadgeIcons.clear();
+    mImageComponents.clear();
 }
 
 
