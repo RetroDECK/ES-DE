@@ -72,11 +72,9 @@ protected:
 
 private:
     void updateInfoPanel();
-
     const std::string getImagePath(FileData* file);
 
     void initMDLabels();
-
     void initMDValues();
 
     ImageComponent mMarquee;

@@ -18,20 +18,15 @@ class ImageComponent : public GuiComponent
 {
 public:
     ImageComponent(Window* window, bool forceLoad = false, bool dynamic = true);
-    virtual ~ImageComponent() {};
+    virtual ~ImageComponent() {}
 
     void setDefaultImage(std::string path) { mDefaultPath = path; }
 
     // Loads the image at the given filepath. Will tile if tile is true (retrieves texture
     // as tiling, creates vertices accordingly).
-    void setImage(std::string path,
-                  bool tile = false,
-                  bool linearMagnify = false,
-                  bool cacheSVG = false);
-
+    void setImage(std::string path, bool tile = false, bool linearMagnify = false);
     // Loads an image from memory.
     void setImage(const char* data, size_t length, bool tile = false);
-
     // Use an already existing texture.
     void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
 

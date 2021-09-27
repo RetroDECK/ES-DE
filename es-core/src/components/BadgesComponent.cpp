@@ -30,19 +30,19 @@ BadgesComponent::BadgesComponent(Window* window)
 
     mImageComponents = std::map<std::string, ImageComponent>();
     ImageComponent mImageFavorite = ImageComponent(window);
-    mImageFavorite.setImage(mBadgeIcons[SLOT_FAVORITE], false, true, true);
+    mImageFavorite.setImage(mBadgeIcons[SLOT_FAVORITE], false, true);
     mImageComponents.insert({SLOT_FAVORITE, mImageFavorite});
     ImageComponent mImageCompleted = ImageComponent(window);
-    mImageCompleted.setImage(mBadgeIcons[SLOT_COMPLETED], false, true, true);
+    mImageCompleted.setImage(mBadgeIcons[SLOT_COMPLETED], false, true);
     mImageComponents.insert({SLOT_COMPLETED, mImageCompleted});
     ImageComponent mImageKids = ImageComponent(window);
-    mImageKids.setImage(mBadgeIcons[SLOT_KIDS], false, true, true);
+    mImageKids.setImage(mBadgeIcons[SLOT_KIDS], false, true);
     mImageComponents.insert({SLOT_KIDS, mImageKids});
     ImageComponent mImageBroken = ImageComponent(window);
-    mImageBroken.setImage(mBadgeIcons[SLOT_BROKEN], false, true, true);
+    mImageBroken.setImage(mBadgeIcons[SLOT_BROKEN], false, true);
     mImageComponents.insert({SLOT_BROKEN, mImageBroken});
     ImageComponent mImageAltEmu = ImageComponent(window);
-    mImageAltEmu.setImage(mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR], false, true, true);
+    mImageAltEmu.setImage(mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR], false, true);
     mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmu});
 }
 
@@ -99,7 +99,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (properties & PATH && elem->has(slot) &&
             mBadgeIcons[slot] != elem->get<std::string>(slot)) {
             mBadgeIcons[slot] = elem->get<std::string>(slot);
-            mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot], false, true, true);
+            mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot], false, true);
             imgChanged = true;
         }
     }
