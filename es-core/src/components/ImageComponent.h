@@ -33,7 +33,7 @@ public:
     void setImage(const char* data, size_t length, bool tile = false);
 
     // Use an already existing texture.
-    void setImage(const std::shared_ptr<TextureResource>& texture);
+    void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
 
     void onSizeChanged() override { updateVertices(); }
 

@@ -124,6 +124,19 @@ There will be a lot of directories created if using the es_systems.xml file bund
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
+## Specific notes for macOS
+
+On macOS, the first time you launch a game from within ES-DE, the operating system will present you with a security option with the following description:
+
+`"EmulationStation Desktop Edition" would like to access files in your Documents folder.`
+
+If you don't allow this, you will not be able to place system BIOS ROMs in the RetroArch default system directory `~/Documents/RetroArch/system` even if you've already given RetroArch access to this folder. This is so because RetroArch runs as a subprocess to ES-DE and therefore inherits the security settings from the parent application. Attempting to launch a game without enabling the access will simply display an error message in the emulator that the BIOS files are missing. This of course only applies to emulators that require BIOS ROMs, all other games should work fine regardless of this security setting.
+
+If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
+
+Another issue on macOS 11 Big Sur (and possibly other OS versions) is that when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
+
+
 ## Customizing the systems configuration file
 
 The `es_systems.xml` file is located in the ES-DE resources directory which is part of the application installation. As such this file is not intended to be modified directly. If a customized file is needed, this should instead be placed in the `custom_systems` folder in the ES-DE home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`. You can find information on the file structure and how to adapt the configuration in the [INSTALL.md](INSTALL.md#es_systemsxml) document.

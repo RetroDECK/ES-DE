@@ -171,10 +171,11 @@ void ImageComponent::setImage(const char* data, size_t length, bool tile)
     resize();
 }
 
-void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture)
+void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture)
 {
     mTexture = texture;
-    resize();
+    if (resizeTexture)
+        resize();
 }
 
 void ImageComponent::setResize(float width, float height)

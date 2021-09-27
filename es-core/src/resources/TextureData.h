@@ -9,6 +9,8 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_DATA_H
 #define ES_CORE_RESOURCES_TEXTURE_DATA_H
 
+#include "utils/MathUtil.h"
+
 #include <cmath>
 #include <mutex>
 #include <string>
@@ -53,6 +55,7 @@ public:
     float sourceWidth();
     float sourceHeight();
     void setSourceSize(float width, float height);
+    glm::vec2 getSize() { return glm::vec2{mWidth, mHeight}; }
 
     // Define a factor for scaling the file when loading it (1.0f = no scaling).
     void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }

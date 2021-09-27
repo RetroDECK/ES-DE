@@ -160,15 +160,7 @@ void thegamesdb_generate_json_scraper_requests(
         }
 
         // Trim leading and trailing whitespaces.
-        cleanName.erase(cleanName.begin(),
-                        std::find_if(cleanName.begin(), cleanName.end(), [](char c) {
-                            return !std::isspace(static_cast<unsigned char>(c));
-                        }));
-        cleanName.erase(
-            std::find_if(cleanName.rbegin(), cleanName.rend(),
-                         [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
-                .base(),
-            cleanName.end());
+        cleanName = Utils::String::trim(cleanName);
 
         path += "/Games/ByGameName?" + apiKey +
                 "&fields=players,publishers,genres,overview,last_updated,rating,"

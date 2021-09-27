@@ -73,37 +73,17 @@ There's not really much to say about these operating systems, just install ES-DE
 
 Upon first startup, ES-DE will create its `~/.emulationstation` home directory.
 
-On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows
-C:\Users\\<username\>\\.emulationstation\
+On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username\>\\.emulationstation\
 
-**Note:** As of ES-DE v1.1 there is no internationalization support, which means that the application will always
-require the physical rather than the localized path to your home directory. For instance on macOS configured for the
-Swedish language /Users/myusername will be the physical path but /Användare/myusername is the localized path that is
-actually shown in the user interface. The same is true on Windows where the directories would be C:\Users\myusername and
-C:\Användare\myusername respectively. If attempting to enter the localized path for any directory-related setting, ES-DE
-will not be able to find it. But it's always possible to use the tilde `~` symbol when referring to your home directory,
-which ES-DE will expand to the physical location regardless of what language you have configured for your operating
-system. If you're using an English-localized system, this whole point is irrelevant as the physical and localized paths
-are then identical.
+**Note:** As of ES-DE v1.1 there is no internationalization support, which means that the application will always require the physical rather than the localized path to your home directory. For instance on macOS configured for the Swedish language /Users/myusername will be the physical path but /Användare/myusername is the localized path that is actually shown in the user interface. The same is true on Windows where the directories would be C:\Users\myusername and C:\Användare\myusername respectively. If attempting to enter the localized path for any directory-related setting, ES-DE will not be able to find it. But it's always possible to use the tilde `~` symbol when referring to your home directory, which ES-DE will expand to the physical location regardless of what language you have configured for your operating system. If you're using an English-localized system, this whole point is irrelevant as the physical and localized paths are then identical.
 
-It's possible to override the home directory path using the --home command line option, but this is normally required
-only for very special situations so we can safely ignore that option for now.
+It's possible to override the home directory path using the --home command line option, but this is normally required only for very special situations so we can safely ignore that option for now.
 
-Also on first startup the configuration file `es_settings.xml` will be generated in the ES-DE home directory, containing
-all the application settings at their default values. Following this, a file named `es_systems.xml` will be loaded from
-the resources directory (which is part of the ES-DE installation). This file contains the game system definitions
-including which emulator to use per platform. For some systems there are also alternative emulators defined which can be
-applied system-wide or per game. How that works is explained later in this guide. A customized systems configuration
-file can also be used, as described in the next section.
+Also on first startup the configuration file `es_settings.xml` will be generated in the ES-DE home directory, containing all the application settings at their default values. Following this, a file named `es_systems.xml` will be loaded from the resources directory (which is part of the ES-DE installation). This file contains the game system definitions including which emulator to use per platform. For some systems there are also alternative emulators defined which can be applied system-wide or per game. How that works is explained later in this guide. A customized systems configuration file can also be used, as described in the next section.
 
-There's an application log file created in the ES-DE home directory named `es_log.txt`, please refer to this in case of
-any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides
-even more detailed information.
+There's an application log file created in the ES-DE home directory named `es_log.txt`, please refer to this in case of any issues as it should hopefully provide information on what went wrong. Starting ES-DE with the --debug flag provides even more detailed information.
 
-After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are
-no game files, a dialog will be shown explaining that you need to install your game files into your ROMs directory. You
-will also be given a choice to change that ROMs directory path if you don't want to use the default one. As well you
-have the option to generate the complete game systems directory structure based on information in es_systems.xml.
+After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROMs directory. You will also be given a choice to change that ROMs directory path if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.xml.
 
 When generating the directory structure, a file named systeminfo.txt will be created in each game system folder which will provide you with some information about the system. Here's an example for the _gc_ system as seen on macOS:
 ```
@@ -126,11 +106,9 @@ Theme folder:
 gc
 ```
 
-The primary use of this file is to see which RetroArch core the system needs, which you will have to install manually
-from inside the RetroArch user interface. Also the supported file extensions can be quite useful to know.
+The primary use of this file is to see which RetroArch core the system needs, which you will have to install manually from inside the RetroArch user interface. Also the supported file extensions can be quite useful to know.
 
-In addition to this, a file named systems.txt will be created in the root of the ROMs directory which shows the mapping
-between the directory names and the full system names.
+In addition to this, a file named systems.txt will be created in the root of the ROMs directory which shows the mapping between the directory names and the full system names.
 
 For example:
 
@@ -140,59 +118,44 @@ genesis: Sega Genesis
 gx4000: Amstrad GX4000
 ```
 
-If a custom es_systems.xml file is present in ~/.emulationstation/custom_systems/ any entries from this file will have
-their names trailed by the text _(custom system)_. So if the GameCube system in the example above would be present in
-the custom systems configuration file, the system would be shown as `gc (custom system)` instead of simply `gc`. This is
-only applicable for the systems.txt and systeminfo.txt files, the trailing text is not applied or used anywhere else in
-the application.
+If a custom es_systems.xml file is present in ~/.emulationstation/custom_systems/ any entries from this file will have their names trailed by the text _(custom system)_. So if the GameCube system in the example above would be present in the custom systems configuration file, the system would be shown as `gc (custom system)` instead of simply `gc`. This is only applicable for the systems.txt and systeminfo.txt files, the trailing text is not applied or used anywhere else in the application.
 
-Note that neither the systeminfo.txt files or the systems.txt file are needed to run ES-DE, they're only generated as a
-convenience to help with the setup.
+Note that neither the systeminfo.txt files or the systems.txt file are needed to run ES-DE, they're only generated as a convenience to help with the setup.
 
-There will be a lot of directories created if using the es_systems.xml file bundled with the installation, so it may be
-a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them
-later if more systems should be added. For example a directory named _DISABLED could be created inside the ROMs folder (
-i.e. ~/ROMs/_DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the
-application startup time as ES-DE would otherwise need to scan for game files for all these systems.
+There will be a lot of directories created if using the es_systems.xml file bundled with the installation, so it may be a good idea to remove the ones you don't need. It's recommended to move them to another location to be able to use them later if more systems should be added. For example a directory named _DISABLED could be created inside the ROMs folder (i.e. ~/ROMs/_DISABLED) and all game system directories you don't need could be moved there. Doing this reduces the application startup time as ES-DE would otherwise need to scan for game files for all these systems.
 
 ![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
-_This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use
-the default one, and you can also generate the game systems directory structure. Note that the directory is the physical
-path, and that your operating system may present this as a localized path if you are using a language other than
-English._
+_This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
+
+
+## Specific notes for macOS
+
+On macOS, the first time you launch a game from within ES-DE, the operating system will present you with a security option with the following description:
+
+`"EmulationStation Desktop Edition" would like to access files in your Documents folder.`
+
+If you don't allow this, you will not be able to place system BIOS ROMs in the RetroArch default system directory `~/Documents/RetroArch/system` even if you've already given RetroArch access to this folder. This is so because RetroArch runs as a subprocess to ES-DE and therefore inherits the security settings from the parent application. Attempting to launch a game without enabling the access will simply display an error message in the emulator that the BIOS files are missing. This of course only applies to emulators that require BIOS ROMs, all other games should work fine regardless of this security setting.
+
+If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
+
+Another issue on macOS 11 Big Sur (and possibly other OS versions) is that when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
 
 ## Game system customizations
 
-The game systems configuration file `es_systems.xml` is located in the ES-DE resources directory which is part of the
-application installation. As such this file is not intended to be modified directly. If system customizations are
-required, a separate es_systems.xml file should instead be placed in the `custom_systems` folder in the ES-DE home
-directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`.
+The game systems configuration file `es_systems.xml` is located in the ES-DE resources directory which is part of the application installation. As such this file is not intended to be modified directly. If system customizations are required, a separate es_systems.xml file should instead be placed in the `custom_systems` folder in the ES-DE home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`.
 
-Although it's possible to make a copy of the bundled configuration file, to modify it and then place it in this
-directory, that is not how the system customization is designed to be done. Instead the intention is that the file in
-the custom_systems directory complements the bundled configuration, meaning only systems that are to be modified should
-be included.
+Although it's possible to make a copy of the bundled configuration file, to modify it and then place it in this directory, that is not how the system customization is designed to be done. Instead the intention is that the file in the custom_systems directory complements the bundled configuration, meaning only systems that are to be  modified should be included.
 
-For example you may want to replace the emulator launch command, modify the full name or change the supported file
-extensions for a single system. In this case it wouldn't make sense to copy the complete bundled file and just apply
-these minor modifications, instead an es_systems.xml file only containing the configuration for that single system
-should be placed in the custom_systems directory.
+For example you may want to replace the emulator launch command, modify the full name or change the supported file extensions for a single system. In this case it wouldn't make sense to copy the complete bundled file and just apply these minor modifications, instead an es_systems.xml file only containing the configuration for that single system should be placed in the custom_systems directory.
 
-The instructions for how to customize the es_systems.xml file can be found
-in [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml). There you can also find an example of a custom file that you can copy
-into ~/.emulationstation/custom_systems/ and modify as required.
+The instructions for how to customize the es_systems.xml file can be found in [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml). There you can also find some examples of custom files that you can copy into ~/.emulationstation/custom_systems/ and modify as required.
+
 
 ## Migrating from other EmulationStation forks
 
 **IMPORTANT!!! IMPORTANT!!! IMPORTANT!!!**
 
-ES-DE is designed to be backward compatible to a certain degree, that is, it should be able to read data from
-other/previous EmulationStation versions such as the RetroPie fork. But the opposite is not true and it's a one-way
-ticket for your gamelist.xml files and your custom collection files when migrating to ES-DE as they will be modified in
-ways that previous ES versions will see as data loss. For instance ES-DE does not use image tags inside the gamelist.xml
-files to find game media but instead matches the media to the names of the game/ROM files. So it will not save any such
-tags back to the gamelist files during updates, effectively removing the display of the game media if the files are
-opened in another ES fork.
+ES-DE is designed to be backward compatible to a certain degree, that is, it should be able to read data from other/previous EmulationStation versions such as the RetroPie fork. But the opposite is not true and it's a one-way ticket for your gamelist.xml files and your custom collection files when migrating to ES-DE as they will be modified in ways that previous ES versions will see as data loss. For instance ES-DE does not use image tags inside the gamelist.xml files to find game media but instead matches the media to the names of the game/ROM files. So it will not save any such tags back to the gamelist files during updates, effectively removing the display of the game media if the files are opened in another ES fork.
 
 Due to this, always make backups of at least the following directories before testing ES-DE for the first time:
 
@@ -228,9 +191,9 @@ If you experience double button presses with your DualShock 4 controller on macO
 
 When starting ES-DE with the default settings, you will see the System view first. From here you can navigate your game systems and enter their respective gamelists.
 
-Depending on the theme, the system navigation carousel can be either horizontal or vertical. The default theme rbsimple-DE provides horizontal navigation, i.e. you browse your systems by scrolling left or right.
+Depending on the theme, the system navigation carousel can be horizontal, vertical or displayed as a wheel. The default theme rbsimple-DE provides horizontal navigation, i.e. you browse your systems by scrolling left or right.
 
-The game systems are sorted by their full names, as defined in the es_systems.xml file.
+The game systems are sorted by their full names by default, as defined in the es_systems.xml file. It's however possible to set a custom sortname per system, as explained in the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) document.
 
 ![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view** is the default starting point for the application, it's here that you browse through your game systems._
@@ -426,8 +389,7 @@ The platform name for the Commodore 64 is `c64`, so the following structure woul
 ~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
 ```
 
-It's highly recommended to create `.m3u` playlist files for multi-disc images as this normally automates disk swapping
-in the emulator. It's then this .m3u file that should be selected for launching the game.
+It's highly recommended to create `.m3u` playlist files for multi-disc images as this normally automates disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
 
 The .m3u file simply contains a list of the game files, for example in the case of Last Ninja 2.m3u:
 
@@ -480,13 +442,9 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 #### Commodore Amiga
 
-There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard
-disk images in `.hdf` or `.hdz` format, meaning there will be a single file per game. This makes it just as easy to play
-Amiga games as any console with game ROMs.
+There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf` or `.hdz` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
-An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can
-either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate
-folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described earlier.
+An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described earlier.
 
 Here's an example of what the file structure could look like:
 
@@ -926,8 +884,7 @@ If this setting is enabled and a folder has its flag set to be excluded from the
 
 **Scrape actual folders** _(Multi-scraper only)_
 
-Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS games or any
-multi-disc games where there is a folder for each individual game.
+Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS games or any multi-disc games where there is a folder for each individual game.
 
 **Auto-retry on peer verification errors** _(ScreenScraper only)_
 
@@ -999,50 +956,27 @@ Whether to sort your favorite games above your other games in the gamelists.
 
 **Add star markings to favorite games**
 
-With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. It's
-strongly recommended to keep this setting enabled if the option to sort favorite games above non-favorites has been
-enabled. If not, favorite games would be sorted on top of the gamelist with no visual indication that they are
-favorites, which would be quite confusing.
+With this setting enabled, there is a star symbol added at the beginning of the game name in the gamelist views. It's strongly recommended to keep this setting enabled if the option to sort favorite games above non-favorites has been enabled. If not, favorite games would be sorted on top of the gamelist with no visual indication that they are favorites, which would be quite confusing.
 
 **Use plain ASCII for special gamelist characters**
 
-There are some special characters in ES-DE such as the favorites star, the folder icon and the tickmark (seen when
-editing custom collections) that are displayed using symbols from the bundled Font Awesome. This normally looks
-perfectly fine, but on some specific theme sets with very pixelated fonts such
-as [es-themes-snes-mini](https://github.com/ruckage/es-theme-snes-mini)
-and [es-themes-workbench](https://github.com/ehettervik/es-theme-workbench) these symbols look terrible. For such
-themes, this option is available, which will use plain ASCII characters instead of the Font Awesome symbols. For the
-favorites an asterisk `*` will be used, for folders a hash sign `#` will be used and for the tickmark an exclamation
-mark `!` will be used. This only applies to the gamelist view, in all other places in the application the Font Awesome
-symbols are retained. Make sure to disable this option if not using such a pixelated theme as it looks equally terrible
-to enable this option on themes where it's not supposed to be used.
+There are some special characters in ES-DE such as the favorites star, the folder icon and the tickmark (seen when editing custom collections) that are displayed using symbols from the bundled Font Awesome. This normally looks perfectly fine, but on some specific theme sets with very pixelated fonts such as [es-themes-snes-mini](https://github.com/ruckage/es-theme-snes-mini) and [es-themes-workbench](https://github.com/ehettervik/es-theme-workbench) these symbols look terrible. For such themes, this option is available, which will use plain ASCII characters instead of the Font Awesome symbols. For the favorites an asterisk `*` will be used, for folders a hash sign `#` will be used and for the tickmark an exclamation mark `!` will be used. This only applies to the gamelist view, in all other places in the application the Font Awesome symbols are retained. Make sure to disable this option if not using such a pixelated theme as it looks equally terrible to enable this option on themes where it's not supposed to be used.
 
 **Enable quick list scrolling overlay**
 
-With this option enabled, there will be an overlay displayed when scrolling the gamelists quickly, i.e. when holding
-down the _Up_, _Down_, _Left shoulder_ or _Right shoulder_ buttons for some time. The overlay will darken the background
-slightly and display the first two characters of the game names. If the game is a favorite and the setting to sort
-favorites above non-favorites has been enabled, a star will be shown instead.
+With this option enabled, there will be an overlay displayed when scrolling the gamelists quickly, i.e. when holding down the _Up_, _Down_, _Left shoulder_ or _Right shoulder_ buttons for some time. The overlay will darken the background slightly and display the first two characters of the game names. If the game is a favorite and the setting to sort favorites above non-favorites has been enabled, a star will be shown instead.
 
 **Enable virtual keyboard**
 
-This enables a virtual (on-screen) keyboard that can be used at various places throughout the application to input text
-and numbers using a controller. The Shift and Alt keys can be toggled individually or combined together to access many
-special characters. The general use of the virtual keyboard should hopefully be self-explanatory.
+This enables a virtual (on-screen) keyboard that can be used at various places throughout the application to input text and numbers using a controller. The Shift and Alt keys can be toggled individually or combined together to access many special characters. The general use of the virtual keyboard should hopefully be self-explanatory.
 
 **Enable toggle favorites button**
 
-This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times,
-it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As
-such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as
-favorite using the metadata editor when this setting is disabled. The option does not affect the use of the _Y_ button
-to add or remove games when editing custom collections.
+This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. The option does not affect the use of the _Y_ button to add or remove games when editing custom collections.
 
 **Enable random system or game button**
 
-This enables or disables the ability to jump to a random system or game. It's mapped to the thumbstick click button,
-either the left or right thumbstick will work. The help prompts will also visually indicate whether this option is
-enabled or not.
+This enables or disables the ability to jump to a random system or game. It's mapped to the thumbstick click button, either the left or right thumbstick will work. The help prompts will also visually indicate whether this option is enabled or not.
 
 **Enable gamelist filters**
 
@@ -1320,11 +1254,7 @@ If this option is disabled, hidden files and folders within the ROMs directory t
 
 **Show hidden games (requires restart)**
 
-You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want
-to see some batch files and executables inside ES-DE, or for multi-disc games where you may only want to show the .m3u
-playlists and not the individual game files. By disabling this option these files will not be processed at all when
-ES-DE starts up. If you enable the option you will see the files, but their name entries will be almost transparent in
-the gamelist view to visually indicate that they are hidden.
+You can mark games as hidden in the metadata editor, which is useful for instance for DOS games where you may not want to see some batch files and executables inside ES-DE, or for multi-disc games where you may only want to show the .m3u playlists and not the individual game files. By disabling this option these files will not be processed at all when ES-DE starts up. If you enable the option you will see the files, but their name entries will be almost transparent in the gamelist view to visually indicate that they are hidden.
 
 **Enable custom event scripts**
 
@@ -1414,32 +1344,31 @@ The following filters can be applied:
 
 **Game name**
 
-**Favorites**
+**Rating**
+
+**Developer**
+
+**Publisher**
 
 **Genre**
 
 **Players**
 
-**Publisher / Developer**
-
-**Rating**
-
-**Kidgame**
+**Favorite**
 
 **Completed**
 
+**Kidgame**
+
+**Hidden** _If the "Show hidden games" option is enabled_
+
 **Broken**
 
-**Hidden**
+**Alternative emulator**
 
-With the exception of the game name text filter, all available filter values are assembled from metadata from the actual
-gamelist, so if there for instance are no games marked as completed, the Completed filter will only have the selectable
-option False, i.e. True will be missing.
+With the exception of the game name text filter, all available filter values are assembled from metadata from the actual gamelist, so if there is no data to filter for the specific field, the text _Nothing to filter_ will be displayed. This for example happens for the _Completed_ filter if there are no games marked as having been completed in the current gamelist.
 
-Be aware that although folders can have most of the metadata values set, the filters are only applied to files (this is
-also true for the game name text filter). So if you for example set a filter to only display your favorite games, any
-folder that contains a favorite game will be displayed, and other folders which are themselves marked as favorites but
-that do not contain any favorite games will be hidden.
+Be aware that although folders can have most of the metadata values set, the filters are only applied to files (this is also true for the game name text filter). So if you for example set a filter to only display your favorite games, any folder that contains a favorite game will be displayed, and other folders which are themselves marked as favorites but that do not contain any favorite games will be hidden.
 
 The filters are always applied for the complete game system, including all folder content.
 
@@ -1517,11 +1446,7 @@ A flag to mark whether the game is suitable for children. This will be applied a
 
 **Hidden**
 
-A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not
-be shown. Useful for example for DOS games to hide batch scripts and unnecessary binaries or to hide the actual game
-files for multi-disc games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games
-has not been enabled, then the opacity of the text will be lowered significantly to make it clear that it's a hidden
-entry.
+A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts and unnecessary binaries or to hide the actual game files for multi-disc games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games has not been enabled, then the opacity of the text will be lowered significantly to make it clear that it's a hidden entry.
 
 **Broken/not working**
 
@@ -1529,27 +1454,15 @@ A flag to indicate whether the game is broken. Useful for MAME games for instanc
 
 **Exclude from game counter** _(files only)_
 
-A flag to indicate whether the game should be excluded from being counted. If this is set for a game, it will not be
-included in the game counter shown per system on the system view, and it will not be included in the system information
-field in the gamelist view. As well, it will be excluded from all automatic and custom collections. This option is quite
-useful for multi-file games such as multi-disc Amiga or Commodore 64 games, or for DOS games where you want to exclude
-setup programs and similar but still need them available in ES-DE and therefore can't hide them. Files that have this
-flag set will have a lower opacity in the gamelists, making them easy to spot.
+A flag to indicate whether the game should be excluded from being counted. If this is set for a game, it will not be included in the game counter shown per system on the system view, and it will not be included in the system information field in the gamelist view. As well, it will be excluded from all automatic and custom collections. This option is quite useful for multi-file games such as multi-disc Amiga or Commodore 64 games, or for DOS games where you want to exclude setup programs and similar but still need them available in ES-DE and therefore can't hide them. Files that have this flag set will have a lower opacity in the gamelists, making them easy to spot.
 
 **Exclude from multi-scraper**
 
-Whether to exclude the file from the multi-scraper. This is quite useful in order to avoid scraping all the disks for
-multi-disc games for example. There is an option in the scraper settings to ignore this flag, but by default the
-multi-scraper will respect it.
+Whether to exclude the file from the multi-scraper. This is quite useful in order to avoid scraping all the disks for multi-disc games for example. There is an option in the scraper settings to ignore this flag, but by default the multi-scraper will respect it.
 
 **Hide metadata fields**
 
-This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for
-situations such as general folders (Multi-disc, Cartridges etc.) and for setup programs and similar (e.g. SETUP.EXE or
-INSTALL.BAT for DOS games). It could also be used on the game files for multi-disc games where perhaps only the .m3u
-playlist should have any metadata values. The only fields shown with this option enabled are the game name and
-description. Using the description it's possible to write some comments regarding the file or folder, should you want
-to. It's also possible to display game images and videos with this setting enabled.
+This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disc, Cartridges etc.) and for setup programs and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disc games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's also possible to display game images and videos with this setting enabled.
 
 **Times played** _(files only)_
 
@@ -1735,82 +1648,35 @@ Refer to the [INSTALL-DEV.md](INSTALL-DEV.md#command-line-options) document for 
 
 ## Supported game systems
 
-**Note:** The following list is what the default es_systems.xml files and the rbsimple-DE theme supports. This theme set
-is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported.
-ES-DE will still work but the game system will unthemed which looks very ugly.
+**Note:** The following list is what the default es_systems.xml files and the rbsimple-DE theme supports. This theme set is very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. ES-DE will still work but the game system will unthemed which looks very ugly.
 
-Note as well that the list and corresponding es_systems.xml templates may not reflect what is readily available for all
-supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead
-of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite
-crippled.
+Note as well that the list and corresponding es_systems.xml templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
 
-The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64`
-or `~/ROMs/megadrive`.
+The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
 
-Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega
-Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _
-genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the
-corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although
-that can of course be customized in the es_systems.xml file if you wish.
+Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be customized in the es_systems.xml file if you wish.
 
-Sometimes the name of the console is (more or less) the same for multiple regions, and in those cases the region has
-been added as a suffix to the game system name. For instance `na` for North America has been added to `snes` (Super
-Nintendo) giving the system name `snesna`. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only
-affects the theme and theme graphics.
+Sometimes the name of the console is (more or less) the same for multiple regions, and in those cases the region has been added as a suffix to the game system name. For instance `na` for North America has been added to `snes` (Super Nintendo) giving the system name `snesna`. The same goes for Japan, as in `megacd` and `megacdjp`. Again, this only affects the theme and theme graphics.
 
 For the **Full name** column, text inside square brackets [] are comments and not part of the actual system name.
 
-The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between
-Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If
-not all of the three platforms are specified it means that the system is not available on the missing platforms. For
-example Lutris which is only avaialable on Unix is marked with only a _[U]_. Unless explicitly marked as **(
-Standalone)**, each emulator is a RetroArch core.
+The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If not all of the three platforms are specified it means that the system is not available on the missing platforms. For example Lutris which is only avaialable on Unix is marked with only a _[U]_. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core.
 
-The **Alternative emulators** column lists additional emulators configured in es_systems.xml that can be selected per
-system and per game, as explained earlier in this guide. This does not necessarily include everything in existence, as
-for some platforms there are a lot of emulators to choose from. In those cases the included emulators is a curated
-selection. In the same manner as the _Default emulator_ column, differences between Unix, macOS and Windows are marked
-using square brackets. Unless explicitly marked as **(Standalone)**, echo emulator is a RetroArch core.
+The **Alternative emulators** column lists additional emulators configured in es_systems.xml that can be selected per system and per game, as explained earlier in this guide. This does not necessarily include everything in existence, as for some platforms there are a lot of emulators to choose from. In those cases the included emulators is a curated selection. In the same manner as the _Default emulator_ column, differences between Unix, macOS and Windows are marked using square brackets. Unless explicitly marked as **(Standalone)**, echo emulator is a RetroArch core.
 
-The **Needs BIOS** column indicates if additional BIOS/system ROMs are required, as should be explained by the emulator
-documentation. Good starting points for such documentation are [https://docs.libretro.com](https://docs.libretro.com)
-and [https://docs.libretro.com/library/bios](https://docs.libretro.com/library/bios)
+The **Needs BIOS** column indicates if additional BIOS/system ROMs are required, as should be explained by the emulator documentation. Good starting points for such documentation are [https://docs.libretro.com](https://docs.libretro.com) and [https://docs.libretro.com/library/bios](https://docs.libretro.com/library/bios)
 
-For additional details regarding which game file extensions are supported per system, refer to the es_systems.xml
-files [unix/es_systems.xml](resources/systems/unix/es_systems.xml)
-, [macos/es_systems.xml](resources/systems/macos/es_systems.xml)
-and [windows/es_systems.xml](resources/systems/windows/es_systems.xml). Normally the extensions setup in these files
-should cover everything that the emulators support. Note that for systems that have alternative emulators defined, the
-list of extensions is a combination of what is supported by all the emulators. This approach is necessary as you want to
-be able to see all games for each system while potentially testing and switching between different emulators, either
-system-wide or on a per game basis.
+For additional details regarding which game file extensions are supported per system, refer to the es_systems.xml files [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml). Normally the extensions setup in these files should cover everything that the emulators support. Note that for systems that have alternative emulators defined, the list of extensions is a combination of what is supported by all the emulators. This approach is necessary as you want to be able to see all games for each system while potentially testing and switching between different emulators, either system-wide or on a per game basis.
 
-If you generated the ROMs directory structure when first starting ES-DE, the systeminfo.txt files located in each game
-system directory will also contain the information about the emulator core and supported file extensions.
+If you generated the ROMs directory structure when first starting ES-DE, the systeminfo.txt files located in each game system directory will also contain the information about the emulator core and supported file extensions.
 
-For CD-based systems it's generally recommended to use CHD files (extension .chd) as this saves space due to compression
-compared to BIN/CUE, IMG, ISO etc. The CHD format is also supported by most emulators. You can convert to CHD from
-various formats using the MAME `chdman` utility, for example `chdman createcd -i mygame.iso -o mygame.chd`. Sometimes
-chdman has issues converting from the IMG and BIN formats, and in this case it's possible to first convert to ISO
-using `ccd2iso`, such as `ccd2iso mygame.img mygame.iso`.
+For CD-based systems it's generally recommended to use CHD files (extension .chd) as this saves space due to compression compared to BIN/CUE, IMG, ISO etc. The CHD format is also supported by most emulators. You can convert to CHD from various formats using the MAME `chdman` utility, for example `chdman createcd -i mygame.iso -o mygame.chd`. Sometimes chdman has issues converting from the IMG and BIN formats, and in this case it's possible to first convert to ISO using `ccd2iso`, such as `ccd2iso mygame.img mygame.iso`.
 
-MAME emulation is a bit special as the choice of emulator depends on which ROM set you're using. It's recommended to go
-for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore
-the `arcade` system is configured to use _MAME - Current_ by default, which as the name implies will be the latest
-available MAME version. But if you have a really slow computer you may want to use another ROM set such as the popular
-0.78. In this case, you can either select _MAME 2003-Plus_ as an alternative emulator, or you can use the `mame` system
-which comes configured with this emulator as the default. There are more MAME versions available as alternative
-emulators, as you can see in the table below.
+MAME emulation is a bit special as the choice of emulator depends on which ROM set you're using. It's recommended to go for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore the `arcade` system is configured to use _MAME - Current_ by default, which as the name implies will be the latest available MAME version. But if you have a really slow computer you may want to use another ROM set such as the popular 0.78. In this case, you can either select _MAME 2003-Plus_ as an alternative emulator, or you can use the `mame` system which comes configured with this emulator as the default. There are more MAME versions available as alternative emulators, as you can see in the table below.
 
-There are also other MAME forks and derivates available such as MAME4ALL, AdvanceMAME, FinalBurn Alpha and FinalBurn Neo
-but it's beyond the scope of this document to describe those in detail. For more information, refer to
-the [RetroPie arcade documentation](https://retropie.org.uk/docs/Arcade) which has a good overview of the various MAME
-alternatives.
+There are also other MAME forks and derivates available such as MAME4ALL, AdvanceMAME, FinalBurn Alpha and FinalBurn Neo but it's beyond the scope of this document to describe those in detail. For more information, refer to the [RetroPie arcade documentation](https://retropie.org.uk/docs/Arcade) which has a good overview of the various MAME alternatives.
 
-In general .zip or .7z files are recommended for smaller-sized games like those from older systems (assuming the
-emulator supports it). But for CD-based systems it's not a good approach as uncompressing the larger CD images takes
-quite some time, leading to slow game launches. As explained above, converting CD images to CHD files is a better
-solution for achieving file compression while still enjoying fast game launches.
+In general .zip or .7z files are recommended for smaller-sized games like those from older systems (assuming the emulator supports it). But for CD-based systems it's not a good approach as uncompressing the larger CD images takes quite some time, leading to slow game launches. As explained above, converting CD images to CHD files is a better solution for achieving file compression while still enjoying fast game launches.
 
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
@@ -1822,13 +1688,13 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
 | 3do                   | 3DO                                            | 4DO                               |                                   |              |                                      |
-| 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW]         |              |                                      |
+| 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW]        |              |                                      |
 | ags                   | Adventure Game Studio game engine              |                                   |                                   |              |                                      |
 | amiga                 | Commodore Amiga                                | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
 | amiga600              | Commodore Amiga 600                            | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
 | amiga1200             | Commodore Amiga 1200                           | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              |                                   |              |                                      |
-| amstradcpc            | Amstrad CPC                                    | Caprice32                         |                                   |              |                                      |
+| amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           |              |                                      |
 | apple2                | Apple II                                       |                                   |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     |                                   |                                   |              |                                      |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2000,<br>MAME 2003-Plus,<br>MAME 2010,<br>FinalBurn Neo,<br>FB Alpha 2012 | Depends      | Single archive file following MAME name standard in root folder |
@@ -1839,12 +1705,12 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | atari800              | Atari 800                                      | Atari800                          |                                   |              |                                      |
 | atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    |                                   |              |                                      |
 | atarijaguarcd         | Atari Jaguar CD                                | Virtual Jaguar                    |                                   |              |                                      |
-| atarilynx             | Atari Lynx                                     | Beetle Lynx                       |                                   |              |                                      |
+| atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx                       |              |                                      |
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            |                                   |              |                                      |
 | atarixe               | Atari XE                                       | Atari800                          |                                   |              |                                      |
 | atomiswave            | Atomiswave                                     | Flycast                           |                                   |              |                                      |
 | bbcmicro              | BBC Micro                                      |                                   |                                   |              |                                      |
-| c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single disk, tape r cartridge image in root folder and/or multi-disc images in separate folder |
+| c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single disk, tape or cartridge image in root folder and/or multi-disc images in separate folder |
 | cavestory             | Cave Story (NXEngine)                          | NXEngine                          |                                   |              |                                      |
 | cdtv                  | Commodore CDTV                                 |                                   |                                   |              |                                      |
 | chailove              | ChaiLove game engine                           | ChaiLove                          |                                   |              |                                      |
@@ -1862,52 +1728,51 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
 | fds                   | Nintendo Famicom Disk System                   | Nestopia UE                       |                                   | Yes          | Single archive or ROM file in root folder |
 | gameandwatch          | Nintendo Game and Watch                        | GW                                |                                   |              |                                      |
-| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   |                                   |              |                                      |
-| gb                    | Nintendo Game Boy                              | bsnes                             |                                   |              |                                      |
-| gba                   | Nintendo Game Boy Advance                      | Beetle GBA                        |                                   |              |                                      |
-| gbc                   | Nintendo Game Boy Color                        | bsnes                             |                                   |              |                                      |
+| gamegear              | Sega Game Gear                                 | Gearsystem                        | SMS Plus GX,<br>Genesis Plus GX,<br>Genesis Plus GX Wide |              |                                      |
+| gb                    | Nintendo Game Boy                              | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes |              |                                      |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP       |              |                                      |
+| gbc                   | Nintendo Game Boy Color                        | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes |              |                                      |
 | gc                    | Nintendo GameCube                              | Dolphin                           |                                   |              |                                      |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 |                                   |                                   |              |                                      |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
 | kodi                  | Kodi home theatre software                     | N/A                               |                                   | No           |                                      |
-| lutris                | Lutris open gaming platform                    | Lutris application **(
-Standalone)** [U] |                                   | No           | Shell script in root folder          |
+| lutris                | Lutris open gaming platform                    | Lutris application **(Standalone)** [U] |                             | No           | Shell script in root folder          |
 | lutro                 | Lutro game engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                |                                   |                                   |              |                                      |
 | mame                  | Multiple Arcade Machine Emulator               | MAME 2003-Plus                    | MAME 2000,<br>MAME 2010,<br>MAME - Current,<br>FinalBurn Neo,<br>FB Alpha 2012 | Depends      | Single archive file following MAME name standard in root folder |
 | mame-advmame          | AdvanceMAME                                    |                                   |                                   | Depends      | Single archive file following MAME name standard in root folder |
 | mame-mame4all         | MAME4ALL                                       |                                   |                                   | Depends      | Single archive file following MAME name standard in root folder |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive | No           | Single archive or ROM file in root folder |
-| megacd                | Sega Mega-CD                                   | Genesis Plus GX                   |                                   |              |                                      |
-| megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   |                                   |              |                                      |
+| megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive |              |                                      |
+| megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive |              |                                      |
 | megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | No           | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
 | moonlight             | Moonlight game streaming                       |                                   |                                   |              |                                      |
 | moto                  | Thomson MO/TO series                           | Theodore                          |                                   |              |                                      |
-| msx                   | MSX                                            | blueMSX                           |                                   |              |                                      |
-| msx1                  | MSX1                                           | blueMSX                           |                                   |              |                                      |
-| msx2                  | MSX2                                           | blueMSX                           |                                   |              |                                      |
+| msx                   | MSX                                            | blueMSX                           | fMSX                              |              |                                      |
+| msx1                  | MSX1                                           | blueMSX                           | fMSX                              |              |                                      |
+| msx2                  | MSX2                                           | blueMSX                           | fMSX                              |              |                                      |
 | msxturbor             | MSX Turbo R                                    | blueMSX                           |                                   |              |                                      |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
 | naomi                 | Sega NAOMI                                     | Flycast                           |                                   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           |                                   |              |                                      |
-| n3ds                  | Nintendo 3DS                                   | Citra                             |                                   |              |                                      |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW] | No           | Single archive or ROM file in root folder |
-| nds                   | Nintendo DS                                    | melonDS                           |                                   |              |                                      |
+| n3ds                  | Nintendo 3DS                                   | Citra [UW]                        | Citra 2018 [UW]                   |              |                                      |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW]        | No           | Single archive or ROM file in root folder |
+| nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>melonDS          |              |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
-| nes                   | Nintendo Entertainment System                  | Nestopia UE                       | FCEUmm,<br>Mesen,<br>QuickNES       | No           | Single archive or ROM file in root folder |
-| ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     |                                   |              |                                      |
-| ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     |                                   |              |                                      |
+| nes                   | Nintendo Entertainment System                  | Nestopia UE                       | FCEUmm,<br>Mesen,<br>QuickNES     | No           | Single archive or ROM file in root folder |
+| ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE                              |              |                                      |
+| ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE                              |              |                                      |
 | odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |
 | openbor               | OpenBOR game engine                            |                                   |                                   |              |                                      |
 | oric                  | Tangerine Computer Systems Oric                |                                   |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
-| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN         | No           | In separate folder (one folder per game, with complete file structure retained) |
+| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN        | No           | In separate folder (one folder per game, with complete file structure retained) |
 | pc88                  | NEC PC-8800 series                             | QUASI88                           |                                   |              |                                      |
-| pc98                  | NEC PC-9800 series                             | Neko Project II Kai               |                                   |              |                                      |
+| pc98                  | NEC PC-9800 series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST                   | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   |              |                                      |
@@ -1921,26 +1786,24 @@ Standalone)** [U] |                                   | No           | Shell scr
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>DuckStation | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
 | residualvm            | ResidualVM game engine                         |                                   |                                   |              |                                      |
 | samcoupe              | SAM Coupé                                      | SimCoupe                          |                                   |              |                                      |
-| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  |                                   |              |                                      |
-| saturn                | Sega Saturn                                    | Beetle Saturn                     |                                   |              |                                      |
-| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     |                                   |              |                                      |
+| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
+| saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
+| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
 | scummvm               | ScummVM game engine                            | ScummVM                           |                                   | No           | In separate folder (one folder per game, with complete file structure retained) |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
-| segacd                | Sega CD                                        | Genesis Plus GX                   |                                   |              |                                      |
-| sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   |                                   |              |                                      |
+| segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive |              |                                      |
+| sg-1000               | Sega SG-1000                                   | Gearsystem                        | Genesis Plus GX,<br>Genesis Plus GX Wide,<br>blueMSX |              |                                      |
 | snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | solarus               | Solarus game engine                            |                                   |                                   |              |                                      |
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
-| steam                 | Valve Steam                                    | Steam application **(
-Standalone)** |                                   | No           | Shell script/batch file in root folder |
+| steam                 | Valve Steam                                    | Steam application **(Standalone)** |                                  | No           | Shell script/batch file in root folder |
 | stratagus             | Stratagus game engine                          |                                   |                                   |              |                                      |
-| sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  |                                   |              |                                      |
+| sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE                        |              |                                      |
-| switch                | Nintendo Switch                                | Yuzu **(
-Standalone)** [UW]        |                                   | Yes          |                                      |
+| switch                | Nintendo Switch                                | Yuzu **(Standalone)** [UW]        |                                   | Yes          |                                      |
 | tanodragon            | Tano Dragon                                    |                                   |                                   |              |                                      |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST                   | Yes          |                                      |
@@ -1950,7 +1813,7 @@ Standalone)** [UW]        |                                   | Yes          |  
 | trs-80                | Tandy TRS-80                                   |                                   |                                   |              |                                      |
 | uzebox                | Uzebox                                         | Uzem                              |                                   |              |                                      |
 | vectrex               | Vectrex                                        | vecx                              |                                   |              |                                      |
-| videopac              | Philips Videopac G7000 (Magnavox Odyssey2)     | O2EM                              |                                   |              |                                      |
+| videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   |              |                                      |
 | wii                   | Nintendo Wii                                   | Dolphin                           |                                   |              |                                      |
 | wiiu                  | Nintendo Wii U                                 |                                   |                                   |              |                                      |
@@ -1962,5 +1825,4 @@ Standalone)** [UW]        |                                   | Yes          |  
 | xbox360               | Microsoft Xbox 360                             |                                   |                                   |              |                                      |
 | zmachine              | Infocom Z-machine                              |                                   |                                   |              |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
-| zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              |                                   |              |                                      |              | Amstrad GX4000                                 |                                   |                                   |              |                                      |
-
+| zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              |                                   |              |                                      |

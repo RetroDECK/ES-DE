@@ -218,7 +218,7 @@ void HelpComponent::updateGrid()
 
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); it++) {
         auto icon = std::make_shared<ImageComponent>(mWindow);
-        icon->setImage(getIconTexture(it->first.c_str()));
+        icon->setImage(getIconTexture(it->first.c_str()), false);
         icon->setColorShift(isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor);
         icon->setResize(0, height);
         icons.push_back(icon);

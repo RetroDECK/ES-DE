@@ -39,10 +39,11 @@ public:
 
     void setNeedsSaving() { mNeedsSaving = true; }
 
-    void addRow(const ComponentListRow& row, bool setCursorHere = false)
+    void addRow(const ComponentListRow& row, bool setCursorHere = false, bool updateRowSize = true)
     {
         mList->addRow(row, setCursorHere);
-        updateSize();
+        if (updateRowSize)
+            updateSize();
     }
 
     void addWithLabel(const std::string& label,
@@ -65,6 +66,7 @@ public:
                    const std::function<void()>& callback);
 
     void setTitle(std::string title, const std::shared_ptr<Font>& font);
+    std::shared_ptr<ComponentList> getList() { return mList; }
 
     void setCursorToFirstListEntry() { mList->moveCursor(-mList->getCursorId()); }
     void setCursorToList() { mGrid.setCursorTo(mList); }

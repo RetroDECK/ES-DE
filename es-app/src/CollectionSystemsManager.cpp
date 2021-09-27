@@ -555,13 +555,7 @@ std::string CollectionSystemsManager::getValidNewCollectionName(std::string inNa
     std::string name = inName;
 
     // Trim leading and trailing whitespaces.
-    name.erase(name.begin(), std::find_if(name.begin(), name.end(), [](char c) {
-                   return !std::isspace(static_cast<unsigned char>(c));
-               }));
-    name.erase(std::find_if(name.rbegin(), name.rend(),
-                            [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
-                   .base(),
-               name.end());
+    name = Utils::String::trim(name);
 
     if (index == 0) {
         size_t remove = std::string::npos;
@@ -698,6 +692,7 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 adding = false;
                 // If we found it, we need to remove it.
                 FileData* collectionEntry = children.at(key);
+                fileIndex->removeFromIndex(collectionEntry);
                 ViewController::get()
                     ->getGameListView(systemViewToUpdate)
                     .get()
@@ -925,7 +920,7 @@ SystemData* CollectionSystemsManager::addNewCustomCollection(std::string name)
     CollectionSystemDecl decl = mCollectionSystemDeclsIndex[myCollectionsName];
     decl.themeFolder = name;
     decl.name = name;
-    decl.longName = name;
+    decl.fullName = name;
 
     return createNewCollectionEntry(name, decl, true, true);
 }
@@ -1113,7 +1108,7 @@ SystemData* CollectionSystemsManager::createNewCollectionEntry(std::string name,
                                                                bool index,
                                                                bool custom)
 {
-    SystemData* newSys = new SystemData(name, sysDecl.longName, mCollectionEnvData,
+    SystemData* newSys = new SystemData(name, sysDecl.fullName, "", mCollectionEnvData,
                                         sysDecl.themeFolder, true, custom);
 
     CollectionSystemData newCollectionData;

@@ -72,8 +72,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         mSourceHeight = svgImage->height;
     }
 
-    mWidth = static_cast<size_t>(std::round(mSourceWidth * mScaleDuringLoad));
-    mHeight = static_cast<size_t>(std::round(mSourceHeight * mScaleDuringLoad));
+    mWidth = static_cast<size_t>(floorf(floorf(mSourceWidth) * mScaleDuringLoad));
+    mHeight = static_cast<size_t>(floorf(floorf(mSourceHeight) * mScaleDuringLoad));
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.

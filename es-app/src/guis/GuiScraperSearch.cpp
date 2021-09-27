@@ -794,14 +794,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
 {
     auto searchForFunc = [&](std::string name) {
         // Trim leading and trailing whitespaces.
-        name.erase(name.begin(), std::find_if(name.begin(), name.end(), [](char c) {
-                       return !std::isspace(static_cast<unsigned char>(c));
-                   }));
-        name.erase(std::find_if(name.rbegin(), name.rend(),
-                                [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
-                       .base(),
-                   name.end());
-
+        name = Utils::String::trim(name);
         stop();
         mRefinedSearch = true;
         params.nameOverride = name;
