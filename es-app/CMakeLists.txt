@@ -10,106 +10,106 @@
 project("emulationstation-de")
 
 set(ES_HEADERS
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/EmulationStation.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/MediaViewer.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/MiximageGenerator.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/EmulationStation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MediaViewer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MiximageGenerator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.h
 
-        # GUIs
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiLaunchScreen.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMediaViewerOptions.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScreensaverOptions.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.h
+    # GUIs
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiLaunchScreen.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMediaViewerOptions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScreensaverOptions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.h
 
-        # Scrapers
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraperResources.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.h
+    # Scrapers
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraperResources.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.h
 
-        # Views
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/BasicGameListView.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/DetailedGameListView.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/GridGameListView.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGameListView.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGameListView.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGameListView.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h
-        )
+    # Views
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/BasicGameListView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/DetailedGameListView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/GridGameListView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGameListView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGameListView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGameListView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h
+)
 
 set(ES_SOURCES
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/MediaViewer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/MiximageGenerator.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSorts.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Gamelist.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MediaViewer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MiximageGenerator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemScreensaver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.cpp
 
-        # GUIs
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiLaunchScreen.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMediaViewerOptions.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScreensaverOptions.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.cpp
+    # GUIs
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistFilter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGamelistOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiGameScraper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiLaunchScreen.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMenu.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMediaViewerOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMetaDataEd.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiOfflineGenerator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMenu.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperMulti.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScraperSearch.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiScreensaverOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiSettings.cpp
 
-        # Scrapers
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraperResources.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.cpp
+    # Scrapers
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/GamesDBJSONScraperResources.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/Scraper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.cpp
 
-        # Views
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/BasicGameListView.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/DetailedGameListView.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/GridGameListView.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGameListView.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGameListView.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGameListView.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.cpp
-        )
+    # Views
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/BasicGameListView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/DetailedGameListView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/GridGameListView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGameListView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGameListView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGameListView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.cpp
+)
 
 if(WIN32)
     LIST(APPEND ES_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation.rc)
@@ -134,55 +134,55 @@ endif()
 # Setup for installation and package generation.
 if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         install(FILES ../avcodec-58.dll
-                ../avfilter-7.dll
-                ../avformat-58.dll
-                ../avutil-56.dll
-                ../postproc-55.dll
-                ../swresample-3.dll
-                ../swscale-5.dll
-                ../FreeImage.dll
-                ../freetype.dll
-                ../glew32.dll
-                ../libcrypto-1_1-x64.dll
-                ../libcurl-x64.dll
-                ../libssl-1_1-x64.dll
-                ../MSVCP140.dll
-                ../pugixml.dll
-                ../SDL2.dll
-                ../VCOMP140.DLL
-                ../VCRUNTIME140.dll
-                ../VCRUNTIME140_1.dll
-                DESTINATION .)
-        if (VLC_PLAYER)
+                      ../avfilter-7.dll
+                      ../avformat-58.dll
+                      ../avutil-56.dll
+                      ../postproc-55.dll
+                      ../swresample-3.dll
+                      ../swscale-5.dll
+                      ../FreeImage.dll
+                      ../freetype.dll
+                      ../glew32.dll
+                      ../libcrypto-1_1-x64.dll
+                      ../libcurl-x64.dll
+                      ../libssl-1_1-x64.dll
+                      ../MSVCP140.dll
+                      ../pugixml.dll
+                      ../SDL2.dll
+                      ../VCOMP140.DLL
+                      ../VCRUNTIME140.dll
+                      ../VCRUNTIME140_1.dll
+                      DESTINATION .)
+        if(VLC_PLAYER)
             install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
-        endif ()
-    else ()
+        endif()
+    else()
         install(FILES ../avcodec-58.dll
-                ../avfilter-7.dll
-                ../avformat-58.dll
-                ../avutil-56.dll
-                ../postproc-55.dll
-                ../swresample-3.dll
-                ../swscale-5.dll
-                ../FreeImage.dll
-                ../glew32.dll
-                ../libcrypto-1_1-x64.dll
-                ../libcurl-x64.dll
-                ../libfreetype.dll
-                ../libpugixml.dll
-                ../libssl-1_1-x64.dll
-                ../SDL2.dll
-                ../vcomp140.dll
-                DESTINATION .)
-        if (VLC_PLAYER)
+                      ../avfilter-7.dll
+                      ../avformat-58.dll
+                      ../avutil-56.dll
+                      ../postproc-55.dll
+                      ../swresample-3.dll
+                      ../swscale-5.dll
+                      ../FreeImage.dll
+                      ../glew32.dll
+                      ../libcrypto-1_1-x64.dll
+                      ../libcurl-x64.dll
+                      ../libfreetype.dll
+                      ../libpugixml.dll
+                      ../libssl-1_1-x64.dll
+                      ../SDL2.dll
+                      ../vcomp140.dll
+                      DESTINATION .)
+        if(VLC_PLAYER)
             install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
-        endif ()
-    endif ()
-    if (VLC_PLAYER)
+        endif()
+    endif()
+    if(VLC_PLAYER)
         install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
-    endif ()
+    endif()
     install(FILES ../LICENSE DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION .)
@@ -206,81 +206,81 @@ elseif(APPLE)
     # on your system (e.g. if using libSDL2-2.1.0.dylib instead of libSDL2-2.0.0.dylib).
     # This problem definitely needs to be resolved properly at a later date.
     add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
-            -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib
-            -change /usr/local/lib/libavfilter.7.dylib @rpath/libavfilter.7.dylib
-            -change /usr/local/lib/libavformat.58.dylib @rpath/libavformat.58.dylib
-            -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib
-            -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib
-            -change /usr/local/lib/libswscale.5.dylib @rpath/libswscale.5.dylib
-            -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
-            -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
-            -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
-            -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
-            $<TARGET_FILE:EmulationStation>)
+                       -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib
+                       -change /usr/local/lib/libavfilter.7.dylib @rpath/libavfilter.7.dylib
+                       -change /usr/local/lib/libavformat.58.dylib @rpath/libavformat.58.dylib
+                       -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib
+                       -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib
+                       -change /usr/local/lib/libswscale.5.dylib @rpath/libswscale.5.dylib
+                       -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
+                       -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
+                       -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
+                       -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
+                       $<TARGET_FILE:EmulationStation>)
 
     set(APPLE_DYLIB_PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE
-            GROUP_READ GROUP_EXECUTE
-            WORLD_READ WORLD_EXECUTE)
+                                GROUP_READ GROUP_EXECUTE
+                                WORLD_READ WORLD_EXECUTE)
 
     install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.58.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.7.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libavformat.58.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libavutil.56.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.55.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libswresample.3.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libswscale.5.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfdk-aac.2.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libpng16.16.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
 
-    if (VLC_PLAYER)
+    if(VLC_PLAYER)
         install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
-                PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
         install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
-                DESTINATION ../MacOS)
-    endif ()
+            DESTINATION ../MacOS)
+    endif()
 
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION ../Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION ../Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION ../Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION ../Resources)
-else ()
+else()
     install(TARGETS emulationstation RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-    if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    if(CMAKE_SYSTEM_NAME MATCHES "Linux")
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
-                DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)
-    else ()
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)
+    else()
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
-                DESTINATION ${CMAKE_INSTALL_PREFIX}/man/man6)
-    endif ()
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/man/man6)
+    endif()
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.desktop
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.svg
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
 endif()
 
 include(InstallRequiredSystemLibraries)
@@ -317,13 +317,13 @@ endif()
 # Settings per operating system and generator type.
 if(APPLE)
     set(CPACK_GENERATOR "Bundle")
-    if (CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
+    if(CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
         set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}_legacy")
         set(CPACK_DMG_VOLUME_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}_legacy")
-    else ()
+    else()
         set(CPACK_PACKAGE_FILE_NAME "EmulationStation-DE-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}")
         set(CPACK_DMG_VOLUME_NAME "EmulationStation Desktop Edition ${CPACK_PACKAGE_VERSION}")
-    endif ()
+    endif()
     set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns")
     set(CPACK_DMG_DS_STORE "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_DS_Store")
     set(CPACK_BUNDLE_NAME "EmulationStation Desktop Edition")
@@ -331,9 +331,9 @@ if(APPLE)
     set(CPACK_BUNDLE_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist")
     if(MACOS_CODESIGN_IDENTITY)
         set(CPACK_BUNDLE_APPLE_CERT_APP "Developer ID Application: ${MACOS_CODESIGN_IDENTITY}")
-        if (CMAKE_OSX_DEPLOYMENT_TARGET VERSION_GREATER 10.13)
+        if(CMAKE_OSX_DEPLOYMENT_TARGET VERSION_GREATER 10.13)
             set(CPACK_BUNDLE_APPLE_CODESIGN_PARAMETER "--deep --force --options runtime")
-        endif ()
+        endif()
     endif()
 elseif(WIN32)
     set(CPACK_GENERATOR "NSIS")
@@ -354,9 +354,9 @@ elseif(WIN32)
 else()
     set(CPACK_PACKAGE_INSTALL_DIRECTORY "emulationstation_${CMAKE_PACKAGE_VERSION}")
     set(CPACK_PACKAGE_EXECUTABLES "emulationstation" "emulationstation")
-    if (LINUX_CPACK_GENERATOR STREQUAL "DEB")
+    if(LINUX_CPACK_GENERATOR STREQUAL "DEB")
         set(CPACK_GENERATOR "DEB")
-    endif ()
+    endif()
     set(CPACK_DEBIAN_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.deb")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Leon Styhre <leon@leonstyhre.com>")
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://es-de.org")
@@ -366,9 +366,9 @@ else()
         set(CPACK_DEBIAN_PACKAGE_DEPENDS "vlc")
     endif()
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-    if (LINUX_CPACK_GENERATOR STREQUAL "RPM")
+    if(LINUX_CPACK_GENERATOR STREQUAL "RPM")
         set(CPACK_GENERATOR "RPM")
-    endif ()
+    endif()
     set(CPACK_RPM_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.rpm")
     set(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
     set(CPACK_RPM_PACKAGE_LICENSE "MIT")

@@ -34,7 +34,6 @@ class ComponentGrid : public GuiComponent
 {
 public:
     ComponentGrid(Window* window, const glm::ivec2& gridDimensions);
-
     virtual ~ComponentGrid();
 
     bool removeEntry(const std::shared_ptr<GuiComponent>& comp);
@@ -53,35 +52,26 @@ public:
     }
 
     void textInput(const std::string& text) override;
-
     bool input(InputConfig* config, Input input) override;
-
     void update(int deltaTime) override;
-
     void render(const glm::mat4& parentTrans) override;
-
     void onSizeChanged() override;
 
     void resetCursor();
-
     bool cursorValid();
 
     float getColWidth(int col);
-
     float getRowHeight(int row);
 
     // If update is false, will not call an onSizeChanged() which triggers
     // a (potentially costly) repositioning + resizing of every element.
     void setColWidthPerc(int col, float width, bool update = true);
-
     // Dito.
     void setRowHeightPerc(int row, float height, bool update = true);
 
     bool moveCursor(glm::ivec2 dir);
-
     // Pass -1 for xPos or yPos to keep its axis cursor position.
     void moveCursorTo(int xPos, int yPos, bool selectLeftCell = false);
-
     void setCursorTo(const std::shared_ptr<GuiComponent>& comp);
 
     std::shared_ptr<GuiComponent> getSelectedComponent()
@@ -94,7 +84,6 @@ public:
     }
 
     void onFocusLost() override;
-
     void onFocusGained() override;
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
@@ -133,13 +122,10 @@ private:
 
     // Update position and size.
     void updateCellComponent(const GridEntry& cell);
-
     void updateSeparators();
 
     void onCursorMoved(glm::ivec2 from, glm::ivec2 to);
-
     const GridEntry* getCellAt(int x, int y) const;
-
     const GridEntry* getCellAt(const glm::ivec2& pos) const { return getCellAt(pos.x, pos.y); }
 
     std::vector<std::vector<float>> mSeparators;

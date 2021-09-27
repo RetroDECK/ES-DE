@@ -60,6 +60,7 @@ https://rapidjson.org
 SDL \
 https://www.libsdl.org
 
+
 # Code
 
 Some code (like the virtual keyboard) was borrowed from Batocera.linux \
@@ -70,6 +71,7 @@ https://www.bzflag.org
 
 A few of the GLSL shaders were borrowed from the RetroArch project \
 https://www.retroarch.com
+
 
 # Resources
 

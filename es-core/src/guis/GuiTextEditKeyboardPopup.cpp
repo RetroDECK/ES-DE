@@ -39,38 +39,38 @@
 #include "utils/StringUtil.h"
 
 // clang-format off
-std::vector<std::vector<const char *>> kbBaseUS{
-        {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-",  "=",   "DEL"},
-        {"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_",  "+",   "DEL"},
-        {"¡", "²", "³", "¤", "€", "¼", "½", "¾", "‘", "’", "¥",  "×",   "DEL"},
-        {"¹", "",  "",  "£", "",  "",  "",  "",  "",  "",  "",   "÷",   "DEL"},
+std::vector<std::vector<const char*>> kbBaseUS{
+    {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "DEL"},
+    {"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "DEL"},
+    {"¡", "²", "³", "¤", "€", "¼", "½", "¾", "‘", "’", "¥", "×", "DEL"},
+    {"¹", "",  "",  "£", "",  "",  "",  "",  "",  "",  "",  "÷", "DEL"},
 
-        {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[",  "]",   "OK"},
-        {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{",  "}",   "OK"},
-        {"ä", "å", "é", "®", "þ", "ü", "ú", "í", "ó", "ö", "«",  "»",   "OK"},
-        {"Ä", "Å", "É", "",  "Þ", "Ü", "Ú", "Í", "Ó", "Ö", "",   "",    "OK"},
+    {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "OK"},
+    {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "OK"},
+    {"ä", "å", "é", "®", "þ", "ü", "ú", "í", "ó", "ö", "«", "»", "OK"},
+    {"Ä", "Å", "É", "",  "Þ", "Ü", "Ú", "Í", "Ó", "Ö", "",  "",  "OK"},
 
-        {"a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'",  "\\",  "-rowspan-"},
-        {"A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "|",   "-rowspan-"},
-        {"á", "ß", "ð", "",  "",  "",  "",  "",  "ø", "¶", "´",  "¬",   "-rowspan-"},
-        {"Á", "§", "Ð", "",  "",  "",  "",  "",  "Ø", "°", "¨",  "¦",   "-rowspan-"},
+    {"a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "\\", "-rowspan-"},
+    {"A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "|", "-rowspan-"},
+    {"á", "ß", "ð", "",  "",  "",  "",  "",  "ø", "¶", "´",  "¬", "-rowspan-"},
+    {"Á", "§", "Ð", "",  "",  "",  "",  "",  "Ø", "°", "¨",  "¦", "-rowspan-"},
 
-        {"`", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/",  "ALT", "-colspan-"},
-        {"~", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?",  "ALT", "-colspan-"},
-        {"",  "æ", "",  "©", "",  "",  "ñ", "µ", "ç", "",  "¿",  "ALT", "-colspan-"},
-        {"",  "Æ", "",  "¢", "",  "",  "Ñ", "Μ", "Ç", "",  "",   "ALT", "-colspan-"}};
+    {"`", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "ALT", "-colspan-"},
+    {"~", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", "ALT", "-colspan-"},
+    {"",  "æ", "",  "©", "",  "",  "ñ", "µ", "ç", "",  "¿", "ALT", "-colspan-"},
+    {"",  "Æ", "",  "¢", "",  "",  "Ñ", "Μ", "Ç", "",  "",  "ALT", "-colspan-"}};
 
-std::vector<std::vector<const char *>> kbLastRowNormal{
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"}};
+std::vector<std::vector<const char*>> kbLastRowNormal{
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"}};
 
-std::vector<std::vector<const char *>> kbLastRowLoad{
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
-        {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"}};
+std::vector<std::vector<const char*>> kbLastRowLoad{
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
+    {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"}};
 // clang-format on
 
 GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(

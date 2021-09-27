@@ -29,6 +29,7 @@ ButtonComponent::ButtonComponent(Window* window,
     , mTextColorUnfocused{0x777777FF}
     , mFlatColorFocused{0x878787FF}
     , mFlatColorUnfocused{0x60606025}
+
 {
     setPressedFunc(func);
     setText(text, helpText, upperCase);

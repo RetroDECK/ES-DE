@@ -33,13 +33,10 @@ public:
                              const std::string& cancelBtnHelpText = "DISCARD CHANGES");
 
     void onSizeChanged() override;
-
     bool input(InputConfig* config, Input input) override;
-
     void update(int deltaTime) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-
     HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
@@ -51,7 +48,6 @@ private:
         const std::string shiftedKey;
         const std::string altedKey;
         const std::string altshiftedKey;
-
         KeyboardButton(const std::shared_ptr<ButtonComponent> b,
                        const std::string& k,
                        const std::string& sk,
@@ -65,20 +61,16 @@ private:
     };
 
     void updateDeleteRepeat(int deltaTime);
-
     void updateNavigationRepeat(int deltaTime);
 
     void shiftKeys();
-
     void altKeys();
-
     void altShiftKeys();
 
     std::shared_ptr<ButtonComponent> makeButton(const std::string& key,
                                                 const std::string& shiftedKey,
                                                 const std::string& altedKey,
                                                 const std::string& altshiftedKey);
-
     std::vector<KeyboardButton> mKeyboardButtons;
 
     std::shared_ptr<ButtonComponent> mShiftButton;

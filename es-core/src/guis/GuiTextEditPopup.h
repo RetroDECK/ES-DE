@@ -33,13 +33,10 @@ public:
                      const std::string& cancelBtnHelpText = "DISCARD CHANGES");
 
     void onSizeChanged() override;
-
     bool input(InputConfig* config, Input input) override;
-
     void update(int deltaTime) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-
     HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:

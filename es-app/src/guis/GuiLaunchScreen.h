@@ -22,17 +22,14 @@ class GuiLaunchScreen : public Window::GuiLaunchScreen, GuiComponent
 {
 public:
     GuiLaunchScreen(Window* window);
-
     virtual ~GuiLaunchScreen();
 
     virtual void displayLaunchScreen(FileData* game) override;
-
     virtual void closeLaunchScreen() override;
 
     void onSizeChanged() override;
 
     virtual void update(int deltaTime) override;
-
     virtual void render(const glm::mat4& parentTrans) override;
 
 private:

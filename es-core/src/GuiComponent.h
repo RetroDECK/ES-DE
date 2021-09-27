@@ -38,7 +38,6 @@ class GuiComponent
 {
 public:
     GuiComponent(Window* window);
-
     virtual ~GuiComponent();
 
     virtual void textInput(const std::string& text);
@@ -232,7 +231,6 @@ public:
 
 protected:
     void renderChildren(const glm::mat4& transform) const;
-
     void updateSelf(int deltaTime); // Updates animations.
     void updateChildren(int deltaTime); // Updates animations.
 
