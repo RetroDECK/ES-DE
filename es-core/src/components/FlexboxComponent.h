@@ -7,8 +7,8 @@
 //  Used by gamelist views.
 //
 
-#ifndef ES_APP_COMPONENTS_FLEXBOX_COMPONENT_H
-#define ES_APP_COMPONENTS_FLEXBOX_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_FLEXBOX_COMPONENT_H
+#define ES_CORE_COMPONENTS_FLEXBOX_COMPONENT_H
 
 #include "GuiComponent.h"
 #include "renderers/Renderer.h"
@@ -69,4 +69,4 @@ private:
     bool mLayoutValid;
 };
 
-#endif // ES_APP_COMPONENTS_FLEXBOX_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_FLEXBOX_COMPONENT_H

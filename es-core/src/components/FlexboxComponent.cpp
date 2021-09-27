@@ -71,8 +71,8 @@ void FlexboxComponent::computeLayout()
     float anchorOriginY = 0;
 
     // Translation directions when placing items.
-    glm::vec2 directionLine = {1, 0};
-    glm::vec2 directionRow = {0, 1};
+    glm::ivec2 directionLine = {1, 0};
+    glm::ivec2 directionRow = {0, 1};
 
     // Change direction.
     if (mDirection == DIRECTION_COLUMN) {
@@ -89,6 +89,7 @@ void FlexboxComponent::computeLayout()
         glm::vec2 newSize = {mItemWidth, oldSize.y * (mItemWidth / oldSize.x)};
         i->setSize(newSize);
         maxItemSize = {std::max(maxItemSize.x, newSize.x), std::max(maxItemSize.y, newSize.y)};
+        i->setResize(maxItemSize.x, maxItemSize.y);
     }
 
     // Pre-compute layout parameters.

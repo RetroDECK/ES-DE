@@ -243,16 +243,17 @@ based on: 'recalbox-multi' by the Recalbox community
             <!-- flexbox properties -->
             <direction>row</direction>
             <align>start</align>
-            <itemsPerLine>2</itemsPerLine>
+            <itemsPerLine>3</itemsPerLine>
             <itemMargin>5 5</itemMargin>
             <itemWidth>.035</itemWidth>
 
             <!-- badges properties -->
-            <slots>favorite completed kidgame broken altemu</slots>
+            <slots>favorite completed kidgame broken altemulator</slots>
             <customBadgeIcon badge="favorite">:/graphics/badge_favorite.svg</customBadgeIcon>
             <customBadgeIcon badge="completed">:/graphics/badge_completed.svg</customBadgeIcon>
             <customBadgeIcon badge="kidgame">:/graphics/badge_kidgame.svg</customBadgeIcon>
             <customBadgeIcon badge="broken">:/graphics/badge_broken.svg</customBadgeIcon>
+            <customBadgeIcon badge="altemulator">:/graphics/badge_altemulator.svg</customBadgeIcon>
         </badges>
         <!-- This block prevents additional elements from interfering when mixing layouts. -->
         <image name="backframe4" extra="false"></image>

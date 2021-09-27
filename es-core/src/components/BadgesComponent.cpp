@@ -20,30 +20,22 @@ std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETE
 BadgesComponent::BadgesComponent(Window* window)
     : FlexboxComponent(window)
 {
-
-    mBadgeIcons = std::map<std::string, std::string>();
     mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
     mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
     mBadgeIcons[SLOT_KIDS] = ":/graphics/badge_kidgame.svg";
     mBadgeIcons[SLOT_BROKEN] = ":/graphics/badge_broken.svg";
-    mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR] = ":/graphics/badge_altemu.svg";
+    mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR] = ":/graphics/badge_altemulator.svg";
 
-    mImageComponents = std::map<std::string, ImageComponent>();
     ImageComponent mImageFavorite = ImageComponent(window);
-    mImageFavorite.setImage(mBadgeIcons[SLOT_FAVORITE], false, true);
     mImageComponents.insert({SLOT_FAVORITE, mImageFavorite});
     ImageComponent mImageCompleted = ImageComponent(window);
-    mImageCompleted.setImage(mBadgeIcons[SLOT_COMPLETED], false, true);
     mImageComponents.insert({SLOT_COMPLETED, mImageCompleted});
     ImageComponent mImageKids = ImageComponent(window);
-    mImageKids.setImage(mBadgeIcons[SLOT_KIDS], false, true);
     mImageComponents.insert({SLOT_KIDS, mImageKids});
     ImageComponent mImageBroken = ImageComponent(window);
-    mImageBroken.setImage(mBadgeIcons[SLOT_BROKEN], false, true);
     mImageComponents.insert({SLOT_BROKEN, mImageBroken});
-    ImageComponent mImageAltEmu = ImageComponent(window);
-    mImageAltEmu.setImage(mBadgeIcons[SLOT_ALTERNATIVE_EMULATOR], false, true);
-    mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmu});
+    ImageComponent mImageAltEmulator = ImageComponent(window);
+    mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmulator});
 }
 
 BadgesComponent::~BadgesComponent()
@@ -94,13 +86,14 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    bool imgChanged = false;
     for (auto& slot : mSlots) {
-        if (properties & PATH && elem->has(slot) &&
-            mBadgeIcons[slot] != elem->get<std::string>(slot)) {
+        if (properties & PATH && elem->has(slot)) {
             mBadgeIcons[slot] = elem->get<std::string>(slot);
-            mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot], false, true);
-            imgChanged = true;
+            mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot]);
+        }
+        else {
+            mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot]);
+            std::string teststring;
         }
     }
 
@@ -123,12 +116,5 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Apply theme on the flexbox component parent.
     FlexboxComponent::applyTheme(theme, view, element, properties);
 
-    if (imgChanged)
-        onSizeChanged();
-}
-
-std::vector<HelpPrompt> BadgesComponent::getHelpPrompts()
-{
-    std::vector<HelpPrompt> prompts;
-    return prompts;
+    onSizeChanged();
 }

@@ -7,8 +7,8 @@
 //  Used by gamelist views.
 //
 
-#ifndef ES_APP_COMPONENTS_BADGES_COMPONENT_H
-#define ES_APP_COMPONENTS_BADGES_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_BADGES_COMPONENT_H
+#define ES_CORE_COMPONENTS_BADGES_COMPONENT_H
 
 #include "FlexboxComponent.h"
 #include "GuiComponent.h"
@@ -20,7 +20,7 @@
 #define SLOT_COMPLETED "completed"
 #define SLOT_KIDS "kidgame"
 #define SLOT_BROKEN "broken"
-#define SLOT_ALTERNATIVE_EMULATOR "altemu"
+#define SLOT_ALTERNATIVE_EMULATOR "altemulator"
 
 class TextureResource;
 
@@ -29,6 +29,8 @@ class BadgesComponent : public FlexboxComponent
 public:
     BadgesComponent(Window* window);
     ~BadgesComponent();
+
+    static std::shared_ptr<BadgesComponent>& getInstance();
 
     std::string getValue() const override;
     // Should be a list of strings.
@@ -39,12 +41,10 @@ public:
                             const std::string& element,
                             unsigned int properties) override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
-
 private:
     static std::vector<std::string> mSlots;
     std::map<std::string, std::string> mBadgeIcons;
     std::map<std::string, ImageComponent> mImageComponents;
 };
 
-#endif // ES_APP_COMPONENTS_BADGES_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_BADGES_COMPONENT_H
