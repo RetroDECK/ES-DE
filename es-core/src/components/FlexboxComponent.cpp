@@ -60,9 +60,7 @@ void FlexboxComponent::setItemWidth(float value)
 }
 float FlexboxComponent::getItemWidth() { return mItemWidth; }
 
-void FlexboxComponent::onSizeChanged() {
-    mLayoutValid = false;
-}
+void FlexboxComponent::onSizeChanged() { mLayoutValid = false; }
 
 void FlexboxComponent::computeLayout()
 {
@@ -95,9 +93,9 @@ void FlexboxComponent::computeLayout()
 
     // Pre-compute layout parameters.
     int n = mChildren.size();
-    int nLines = std::max(1, (int) std::ceil(n / std::max(1, (int) mItemsPerLine)));
+    int nLines = std::max(1, (int)std::ceil(n / std::max(1, (int)mItemsPerLine)));
     float lineWidth =
-            (mDirection == "row" ? (maxItemSize.y + mItemMargin.y) : (maxItemSize.x + mItemMargin.x));
+        (mDirection == "row" ? (maxItemSize.y + mItemMargin.y) : (maxItemSize.x + mItemMargin.x));
     float anchorXStart = anchorX;
     float anchorYStart = anchorY;
 
@@ -106,14 +104,15 @@ void FlexboxComponent::computeLayout()
     if (mDirection == "row") {
         totalSize.x += (mItemMargin.x + mItemWidth) * mItemsPerLine;
         totalSize.y += (mItemMargin.y + maxItemSize.y) * nLines;
-    } else {
+    }
+    else {
         totalSize.x += (mItemMargin.x + mItemWidth) * nLines;
         totalSize.y += (mItemMargin.y + maxItemSize.y) * mItemsPerLine;
     }
 
     // Iterate through the children.
     for (int i = 0; i < n; i++) {
-        GuiComponent *child = mChildren[i];
+        GuiComponent* child = mChildren[i];
         auto size = child->getSize();
 
         // Top-left anchor position.
@@ -132,10 +131,12 @@ void FlexboxComponent::computeLayout()
         if (mAlign == ITEM_ALIGN_END) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) : 0;
-        } else if (mAlign == ITEM_ALIGN_CENTER) {
+        }
+        else if (mAlign == ITEM_ALIGN_CENTER) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) / 2 : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) / 2 : 0;
-        } else if (mAlign == ITEM_ALIGN_STRETCH && mDirection == "row") {
+        }
+        else if (mAlign == ITEM_ALIGN_STRETCH && mDirection == "row") {
             child->setSize(child->getSize().x, maxItemSize.y);
         }
 
@@ -149,7 +150,7 @@ void FlexboxComponent::computeLayout()
         child->setPosition(getPosition().x + x, getPosition().y + y);
 
         // Translate anchor.
-        if ((i + 1) % std::max(1, (int) mItemsPerLine) != 0) {
+        if ((i + 1) % std::max(1, (int)mItemsPerLine) != 0) {
             // Translate on same line.
             anchorX += (size.x + mItemMargin.x) * directionLine.x;
             anchorY += (size.y + mItemMargin.y) * directionLine.y;
@@ -159,7 +160,8 @@ void FlexboxComponent::computeLayout()
             if (directionRow.x == 0) {
                 anchorY += lineWidth * directionRow.y;
                 anchorX = anchorXStart;
-            } else {
+            }
+            else {
                 anchorX += lineWidth * directionRow.x;
                 anchorY = anchorYStart;
             }
@@ -169,7 +171,8 @@ void FlexboxComponent::computeLayout()
     mLayoutValid = true;
 }
 
-void FlexboxComponent::render(const glm::mat4& parentTrans) {
+void FlexboxComponent::render(const glm::mat4& parentTrans)
+{
     if (!isVisible())
         return;
 

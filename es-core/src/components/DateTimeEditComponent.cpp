@@ -12,10 +12,17 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 
-DateTimeEditComponent::DateTimeEditComponent(Window *window, bool alignRight, DisplayMode dispMode)
-        : GuiComponent(window), mEditing(false), mEditIndex(0), mDisplayMode(dispMode), mRelativeUpdateAccumulator(0),
-          mColor(0x777777FF), mFont(Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT)), mAlignRight(alignRight),
-          mUppercase(false), mAutoSize(true)
+DateTimeEditComponent::DateTimeEditComponent(Window* window, bool alignRight, DisplayMode dispMode)
+    : GuiComponent(window)
+    , mEditing(false)
+    , mEditIndex(0)
+    , mDisplayMode(dispMode)
+    , mRelativeUpdateAccumulator(0)
+    , mColor(0x777777FF)
+    , mFont(Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT))
+    , mAlignRight(alignRight)
+    , mUppercase(false)
+    , mAutoSize(true)
 {
     updateTextCache();
 }

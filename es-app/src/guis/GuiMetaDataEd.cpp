@@ -31,18 +31,25 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
-GuiMetaDataEd::GuiMetaDataEd(Window *window,
-                             MetaDataList *md,
-                             const std::vector<MetaDataDecl> &mdd,
+GuiMetaDataEd::GuiMetaDataEd(Window* window,
+                             MetaDataList* md,
+                             const std::vector<MetaDataDecl>& mdd,
                              ScraperSearchParams scraperParams,
-                             const std::string & /*header*/,
+                             const std::string& /*header*/,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
-        : GuiComponent(window), mBackground(window, ":/graphics/frame.svg"), mGrid(window, glm::ivec2{1, 3}),
-          mScraperParams(scraperParams), mMetaDataDecl(mdd), mMetaData(md), mSavedCallback(saveCallback),
-          mClearGameFunc(clearGameFunc), mDeleteGameFunc(deleteGameFunc), mMediaFilesUpdated(false),
-          mInvalidEmulatorEntry(false)
+    : GuiComponent(window)
+    , mBackground(window, ":/graphics/frame.svg")
+    , mGrid(window, glm::ivec2{1, 3})
+    , mScraperParams(scraperParams)
+    , mMetaDataDecl(mdd)
+    , mMetaData(md)
+    , mSavedCallback(saveCallback)
+    , mClearGameFunc(clearGameFunc)
+    , mDeleteGameFunc(deleteGameFunc)
+    , mMediaFilesUpdated(false)
+    , mInvalidEmulatorEntry(false)
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -211,11 +218,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window *window,
                 if (mInvalidEmulatorEntry ||
                     scraperParams.system->getSystemEnvData()->mLaunchCommands.size() > 1) {
                     row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal,
-                                                       originalValue] {
-                        GuiSettings *s = nullptr;
+                                                originalValue] {
+                        GuiSettings* s = nullptr;
 
                         bool singleEntry =
-                                scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1;
+                            scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1;
 
                         if (mInvalidEmulatorEntry && singleEntry)
                             s = new GuiSettings(mWindow, "CLEAR INVALID ENTRY");
@@ -226,16 +233,16 @@ GuiMetaDataEd::GuiMetaDataEd(Window *window,
                             return;
 
                         std::vector<std::pair<std::string, std::string>> launchCommands =
-                                scraperParams.system->getSystemEnvData()->mLaunchCommands;
+                            scraperParams.system->getSystemEnvData()->mLaunchCommands;
 
                         if (ed->getValue() != "" && mInvalidEmulatorEntry && singleEntry)
                             launchCommands.push_back(std::make_pair(
-                                    "", ViewController::EXCLAMATION_CHAR + " " + originalValue));
+                                "", ViewController::EXCLAMATION_CHAR + " " + originalValue));
                         else if (ed->getValue() != "")
                             launchCommands.push_back(std::make_pair(
-                                    "", ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY"));
+                                "", ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY"));
 
-                        for (auto entry: launchCommands) {
+                        for (auto entry : launchCommands) {
                             std::string selectedLabel = ed->getValue();
                             std::string label;
                             ComponentListRow row;
@@ -356,7 +363,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window *window,
                             ed->setColor(DEFAULT_TEXTCOLOR);
                         else
                             ed->setColor(TEXTCOLOR_USERMARKED);
-                    } else {
+                    }
+                    else {
                         ed->setValue(newVal);
                         if (newVal == originalValue)
                             ed->setColor(DEFAULT_TEXTCOLOR);
@@ -368,10 +376,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window *window,
                 if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                     row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
                         mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                                mWindow, getHelpStyle(), title, ed->getValue(), updateVal, multiLine,
-                                "apply", "APPLY CHANGES?", "", ""));
+                            mWindow, getHelpStyle(), title, ed->getValue(), updateVal, multiLine,
+                            "apply", "APPLY CHANGES?", "", ""));
                     });
-                } else {
+                }
+                else {
                     row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
                         mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
                                                               ed->getValue(), updateVal, multiLine,

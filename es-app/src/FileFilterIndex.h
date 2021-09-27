@@ -49,11 +49,11 @@ public:
     FileFilterIndex();
     ~FileFilterIndex();
 
-    void addToIndex(FileData *game);
+    void addToIndex(FileData* game);
 
-    void removeFromIndex(FileData *game);
+    void removeFromIndex(FileData* game);
 
-    void setFilter(FilterIndexType type, std::vector<std::string> *values);
+    void setFilter(FilterIndexType type, std::vector<std::string>* values);
 
     void setTextFilter(std::string textFilter);
 
@@ -63,17 +63,17 @@ public:
 
     void debugPrintIndexes();
 
-    bool showFile(FileData *game);
+    bool showFile(FileData* game);
 
     bool isFiltered();
 
     bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
 
-    std::vector<FilterDataDecl> &getFilterDataDecls() { return filterDataDecl; }
+    std::vector<FilterDataDecl>& getFilterDataDecls() { return filterDataDecl; }
 
     void setTextRemoveSystem(bool status) { mTextRemoveSystem = status; }
 
-    void importIndex(FileFilterIndex *indexToImport);
+    void importIndex(FileFilterIndex* indexToImport);
 
     void resetIndex();
 

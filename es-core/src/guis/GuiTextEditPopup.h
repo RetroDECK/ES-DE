@@ -15,25 +15,26 @@
 #include "components/ComponentGrid.h"
 #include "components/TextEditComponent.h"
 
-class GuiTextEditPopup : public GuiComponent {
+class GuiTextEditPopup : public GuiComponent
+{
 public:
-    GuiTextEditPopup(Window *window,
-                     const HelpStyle &helpstyle,
-                     const std::string &title,
-                     const std::string &initValue,
-                     const std::function<void(const std::string &)> &okCallback,
+    GuiTextEditPopup(Window* window,
+                     const HelpStyle& helpstyle,
+                     const std::string& title,
+                     const std::string& initValue,
+                     const std::function<void(const std::string&)>& okCallback,
                      bool multiLine,
-                     const std::string &acceptBtnText = "OK",
-                     const std::string &saveConfirmationText = "SAVE CHANGES?",
-                     const std::string &infoString = "",
-                     const std::string &defaultValue = "",
-                     const std::string &loadBtnHelpText = "LOAD DEFAULT",
-                     const std::string &clearBtnHelpText = "CLEAR",
-                     const std::string &cancelBtnHelpText = "DISCARD CHANGES");
+                     const std::string& acceptBtnText = "OK",
+                     const std::string& saveConfirmationText = "SAVE CHANGES?",
+                     const std::string& infoString = "",
+                     const std::string& defaultValue = "",
+                     const std::string& loadBtnHelpText = "LOAD DEFAULT",
+                     const std::string& clearBtnHelpText = "CLEAR",
+                     const std::string& cancelBtnHelpText = "DISCARD CHANGES");
 
     void onSizeChanged() override;
 
-    bool input(InputConfig *config, Input input) override;
+    bool input(InputConfig* config, Input input) override;
 
     void update(int deltaTime) override;
 
@@ -61,7 +62,7 @@ private:
     std::string mClearBtnHelpText;
     std::string mCancelBtnHelpText;
 
-    std::function<void(const std::string &)> mOkCallback;
+    std::function<void(const std::string&)> mOkCallback;
 
     bool mMultiLine;
     bool mComplexMode;

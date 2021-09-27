@@ -27,11 +27,23 @@ glm::vec2 ImageComponent::getSize() const
     return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
 }
 
-ImageComponent::ImageComponent(Window *window, bool forceLoad, bool dynamic)
-        : GuiComponent(window), mTargetSize({}), mFlipX(false), mFlipY(false), mTargetIsMax(false), mTargetIsMin(false),
-          mColorShift(0xFFFFFFFF), mColorShiftEnd(0xFFFFFFFF), mColorGradientHorizontal(true), mFadeOpacity(0),
-          mFading(false), mForceLoad(forceLoad), mDynamic(dynamic), mRotateByTargetSize(false), mTopLeftCrop({}),
-          mBottomRightCrop(1.0f, 1.0f)
+ImageComponent::ImageComponent(Window* window, bool forceLoad, bool dynamic)
+    : GuiComponent(window)
+    , mTargetSize({})
+    , mFlipX(false)
+    , mFlipY(false)
+    , mTargetIsMax(false)
+    , mTargetIsMin(false)
+    , mColorShift(0xFFFFFFFF)
+    , mColorShiftEnd(0xFFFFFFFF)
+    , mColorGradientHorizontal(true)
+    , mFadeOpacity(0)
+    , mFading(false)
+    , mForceLoad(forceLoad)
+    , mDynamic(dynamic)
+    , mRotateByTargetSize(false)
+    , mTopLeftCrop({})
+    , mBottomRightCrop(1.0f, 1.0f)
 {
     updateColors();
 }
@@ -126,7 +138,8 @@ void ImageComponent::resize()
     onSizeChanged();
 }
 
-void ImageComponent::setImage(std::string path, bool tile, bool linearMagnify, bool cacheImage) {
+void ImageComponent::setImage(std::string path, bool tile, bool linearMagnify, bool cacheImage)
+{
     // Always load bundled graphic resources statically, unless mForceLoad has been set.
     // This eliminates annoying texture pop-in problems that would otherwise occur.
     if (!mForceLoad && (path[0] == ':') && (path[1] == '/')) {
@@ -137,11 +150,12 @@ void ImageComponent::setImage(std::string path, bool tile, bool linearMagnify, b
         if (mDefaultPath.empty() || !ResourceManager::getInstance()->fileExists(mDefaultPath))
             mTexture.reset();
         else
-            mTexture =
-                    TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic, linearMagnify, 1.0f, cacheImage);
+            mTexture = TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic, linearMagnify,
+                                            1.0f, cacheImage);
     }
     else {
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, linearMagnify, 1.0f, cacheImage);
+        mTexture =
+            TextureResource::get(path, tile, mForceLoad, mDynamic, linearMagnify, 1.0f, cacheImage);
     }
 
     resize();

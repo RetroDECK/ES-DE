@@ -143,7 +143,7 @@ bool TextureResource::bind()
     }
 }
 
-std::shared_ptr<TextureResource> TextureResource::get(const std::string &path,
+std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
                                                       bool tile,
                                                       bool forceLoad,
                                                       bool dynamic,

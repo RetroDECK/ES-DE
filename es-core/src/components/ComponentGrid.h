@@ -30,33 +30,35 @@ namespace GridFlags
 } // namespace GridFlags
 
 // Provides basic layout of components in an X*Y grid.
-class ComponentGrid : public GuiComponent {
+class ComponentGrid : public GuiComponent
+{
 public:
-    ComponentGrid(Window *window, const glm::ivec2 &gridDimensions);
+    ComponentGrid(Window* window, const glm::ivec2& gridDimensions);
 
     virtual ~ComponentGrid();
 
-    bool removeEntry(const std::shared_ptr<GuiComponent> &comp);
+    bool removeEntry(const std::shared_ptr<GuiComponent>& comp);
 
-    void setEntry(const std::shared_ptr<GuiComponent> &comp,
-                  const glm::ivec2 &pos,
+    void setEntry(const std::shared_ptr<GuiComponent>& comp,
+                  const glm::ivec2& pos,
                   bool canFocus,
                   bool resize = true,
-                  const glm::ivec2 &size = glm::ivec2{1, 1},
+                  const glm::ivec2& size = glm::ivec2{1, 1},
                   unsigned int border = GridFlags::BORDER_NONE,
                   GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
 
-    void setPastBoundaryCallback(const std::function<bool(InputConfig *config, Input input)> &func) {
+    void setPastBoundaryCallback(const std::function<bool(InputConfig* config, Input input)>& func)
+    {
         mPastBoundaryCallback = func;
     }
 
-    void textInput(const std::string &text) override;
+    void textInput(const std::string& text) override;
 
-    bool input(InputConfig *config, Input input) override;
+    bool input(InputConfig* config, Input input) override;
 
     void update(int deltaTime) override;
 
-    void render(const glm::mat4 &parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     void onSizeChanged() override;
 
@@ -80,10 +82,11 @@ public:
     // Pass -1 for xPos or yPos to keep its axis cursor position.
     void moveCursorTo(int xPos, int yPos, bool selectLeftCell = false);
 
-    void setCursorTo(const std::shared_ptr<GuiComponent> &comp);
+    void setCursorTo(const std::shared_ptr<GuiComponent>& comp);
 
-    std::shared_ptr<GuiComponent> getSelectedComponent() {
-        const GridEntry *e = getCellAt(mCursor);
+    std::shared_ptr<GuiComponent> getSelectedComponent()
+    {
+        const GridEntry* e = getCellAt(mCursor);
         if (e)
             return e->component;
         else
@@ -129,25 +132,25 @@ private:
     };
 
     // Update position and size.
-    void updateCellComponent(const GridEntry &cell);
+    void updateCellComponent(const GridEntry& cell);
 
     void updateSeparators();
 
     void onCursorMoved(glm::ivec2 from, glm::ivec2 to);
 
-    const GridEntry *getCellAt(int x, int y) const;
+    const GridEntry* getCellAt(int x, int y) const;
 
-    const GridEntry *getCellAt(const glm::ivec2 &pos) const { return getCellAt(pos.x, pos.y); }
+    const GridEntry* getCellAt(const glm::ivec2& pos) const { return getCellAt(pos.x, pos.y); }
 
     std::vector<std::vector<float>> mSeparators;
     glm::ivec2 mGridSize;
     std::vector<GridEntry> mCells;
     glm::ivec2 mCursor;
 
-    std::function<bool(InputConfig *config, Input input)> mPastBoundaryCallback;
+    std::function<bool(InputConfig* config, Input input)> mPastBoundaryCallback;
 
-    float *mRowHeights;
-    float *mColWidths;
+    float* mRowHeights;
+    float* mColWidths;
 };
 
 #endif // ES_CORE_COMPONENTS_COMPONENT_GRID_H

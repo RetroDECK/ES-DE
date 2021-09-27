@@ -36,8 +36,10 @@
 #include <SDL2/SDL_events.h>
 #include <algorithm>
 
-GuiMenu::GuiMenu(Window *window)
-        : GuiComponent(window), mMenu(window, "MAIN MENU"), mVersion(window)
+GuiMenu::GuiMenu(Window* window)
+    : GuiComponent(window)
+    , mMenu(window, "MAIN MENU")
+    , mVersion(window)
 {
     bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 
@@ -822,16 +824,17 @@ void GuiMenu::openOtherOptions()
                                         multiLineMediaDir] {
         if (Settings::getInstance()->getBool("VirtualKeyboard")) {
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    mWindow, getHelpStyle(), titleMediaDir,
-                    Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
-                    multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
-                    defaultDirectoryText, "load default directory"));
-        } else {
+                mWindow, getHelpStyle(), titleMediaDir,
+                Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+                multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
+                defaultDirectoryText, "load default directory"));
+        }
+        else {
             mWindow->pushGui(new GuiTextEditPopup(
-                    mWindow, getHelpStyle(), titleMediaDir,
-                    Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
-                    multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
-                    defaultDirectoryText, "load default directory"));
+                mWindow, getHelpStyle(), titleMediaDir,
+                Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+                multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
+                defaultDirectoryText, "load default directory"));
         }
     });
     s->addRow(rowMediaDir);

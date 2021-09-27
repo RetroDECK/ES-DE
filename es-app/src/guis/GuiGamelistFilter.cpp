@@ -29,7 +29,8 @@ GuiGamelistFilter::GuiGamelistFilter(Window* window,
     initializeMenu();
 }
 
-void GuiGamelistFilter::initializeMenu() {
+void GuiGamelistFilter::initializeMenu()
+{
     addChild(&mMenu);
 
     // Get filters from system.
@@ -93,12 +94,13 @@ void GuiGamelistFilter::resetAllFilters()
 
 GuiGamelistFilter::~GuiGamelistFilter() { mFilterOptions.clear(); }
 
-void GuiGamelistFilter::addFiltersToMenu() {
+void GuiGamelistFilter::addFiltersToMenu()
+{
     ComponentListRow row;
 
     auto lbl = std::make_shared<TextComponent>(
-            mWindow, Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        mWindow, Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
+        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     mTextFilterField = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
                                                        0x777777FF, ALIGN_RIGHT);
@@ -121,7 +123,7 @@ void GuiGamelistFilter::addFiltersToMenu() {
     }
 
     // Callback function.
-    auto updateVal = [this](const std::string &newVal) {
+    auto updateVal = [this](const std::string& newVal) {
         mTextFilterField->setValue(Utils::String::toUpper(newVal));
         mFilterIndex->setTextFilter(Utils::String::toUpper(newVal));
     };
@@ -132,7 +134,8 @@ void GuiGamelistFilter::addFiltersToMenu() {
                                                           mTextFilterField->getValue(), updateVal,
                                                           false, "OK", "APPLY CHANGES?"));
         });
-    } else {
+    }
+    else {
         row.makeAcceptInputHandler([this, updateVal] {
             mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "GAME NAME",
                                                   mTextFilterField->getValue(), updateVal, false,

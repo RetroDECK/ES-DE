@@ -20,7 +20,7 @@ class VideoComponent;
 class VideoGameListView : public BasicGameListView
 {
 public:
-    VideoGameListView(Window *window, FileData *root);
+    VideoGameListView(Window* window, FileData* root);
 
     virtual ~VideoGameListView() noexcept;
 

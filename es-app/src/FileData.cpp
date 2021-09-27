@@ -30,11 +30,18 @@
 #include <assert.h>
 
 FileData::FileData(FileType type,
-                   const std::string &path,
-                   SystemEnvironmentData *envData,
-                   SystemData *system)
-        : metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA), mSourceFileData(nullptr), mParent(nullptr),
-          mType(type), mPath(path), mEnvData(envData), mSystem(system), mOnlyFolders(false), mDeletionFlag(false)
+                   const std::string& path,
+                   SystemEnvironmentData* envData,
+                   SystemData* system)
+    : metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
+    , mSourceFileData(nullptr)
+    , mParent(nullptr)
+    , mType(type)
+    , mPath(path)
+    , mEnvData(envData)
+    , mSystem(system)
+    , mOnlyFolders(false)
+    , mDeletionFlag(false)
 {
     // Metadata needs at least a name field (since that's what getName() will return).
     if (metadata.get("name").empty()) {
@@ -735,10 +742,11 @@ FileData::SortType FileData::getSortTypeFromString(std::string desc)
     return FileSorts::SortTypes.at(0);
 }
 
-void FileData::launchGame(Window *window) {
+void FileData::launchGame(Window* window)
+{
     LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
 
-    SystemData *gameSystem = nullptr;
+    SystemData* gameSystem = nullptr;
     std::string command = "";
     std::string alternativeEmulator;
 
@@ -1347,8 +1355,8 @@ const std::string& CollectionFileData::getName()
     if (mDirty) {
         mCollectionFileName = mSourceFileData->metadata.get("name");
         mCollectionFileName.append(" [")
-                .append(Utils::String::toUpper(mSourceFileData->getSystem()->getName()))
-                .append("]");
+            .append(Utils::String::toUpper(mSourceFileData->getSystem()->getName()))
+            .append("]");
         mDirty = false;
     }
 

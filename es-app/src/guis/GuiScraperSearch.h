@@ -64,19 +64,21 @@ public:
         mAcceptCallback = acceptCallback;
     }
 
-    void setSkipCallback(const std::function<void()> &skipCallback) {
+    void setSkipCallback(const std::function<void()>& skipCallback)
+    {
         mSkipCallback = skipCallback;
     }
 
-    void setCancelCallback(const std::function<void()> &cancelCallback) {
+    void setCancelCallback(const std::function<void()>& cancelCallback)
+    {
         mCancelCallback = cancelCallback;
     }
 
-    bool input(InputConfig *config, Input input) override;
+    bool input(InputConfig* config, Input input) override;
 
     void update(int deltaTime) override;
 
-    void render(const glm::mat4 &parentTrans) override;
+    void render(const glm::mat4& parentTrans) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
 
@@ -84,7 +86,8 @@ public:
 
     void onSizeChanged() override;
 
-    void decreaseScrapeCount() {
+    void decreaseScrapeCount()
+    {
         if (mScrapeCount > 0)
             mScrapeCount--;
     }
@@ -95,7 +98,7 @@ public:
 
     bool getFoundGame() { return mFoundGame; }
 
-    const std::string &getNameOverride() { return mLastSearch.nameOverride; }
+    const std::string& getNameOverride() { return mLastSearch.nameOverride; }
 
     void onFocusGained() override { mGrid.onFocusGained(); }
 

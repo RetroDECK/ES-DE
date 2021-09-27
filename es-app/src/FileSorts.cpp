@@ -227,7 +227,8 @@ namespace FileSorts
         return system1.compare(system2) < 0;
     }
 
-    bool compareSystemDescending(const FileData *file1, const FileData *file2) {
+    bool compareSystemDescending(const FileData* file1, const FileData* file2)
+    {
         std::string system1 = Utils::String::toUpper(file1->getSystemName());
         std::string system2 = Utils::String::toUpper(file2->getSystemName());
         return system1.compare(system2) > 0;

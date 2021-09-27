@@ -377,21 +377,21 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 // If the countasgame flag has been set to false, then remove the game.
                 if (curSys->isGroupedCustomCollection()) {
                     ViewController::get()
-                            ->getGameListView(curSys->getRootFolder()->getParent()->getSystem())
-                            .get()
-                            ->remove(collectionEntry, false);
-                    FileData *parentRootFolder =
-                            rootFolder->getParent()->getSystem()->getRootFolder();
+                        ->getGameListView(curSys->getRootFolder()->getParent()->getSystem())
+                        .get()
+                        ->remove(collectionEntry, false);
+                    FileData* parentRootFolder =
+                        rootFolder->getParent()->getSystem()->getRootFolder();
                     parentRootFolder->sort(parentRootFolder->getSortTypeFromString(
-                                                   parentRootFolder->getSortTypeString()),
+                                               parentRootFolder->getSortTypeString()),
                                            mFavoritesSorting);
-                    GuiInfoPopup *s = new GuiInfoPopup(
-                            mWindow,
-                            "DISABLED '" +
+                    GuiInfoPopup* s = new GuiInfoPopup(
+                        mWindow,
+                        "DISABLED '" +
                             Utils::String::toUpper(
-                                    Utils::String::removeParenthesis(file->getName())) +
+                                Utils::String::removeParenthesis(file->getName())) +
                             "' IN '" + Utils::String::toUpper(sysData.system->getName()) + "'",
-                            4000);
+                        4000);
                     mWindow->setInfoPopup(s);
                 }
                 else {
@@ -550,26 +550,28 @@ bool CollectionSystemsManager::isThemeCustomCollectionCompatible(
     return true;
 }
 
-std::string CollectionSystemsManager::getValidNewCollectionName(std::string inName, int index) {
+std::string CollectionSystemsManager::getValidNewCollectionName(std::string inName, int index)
+{
     std::string name = inName;
 
     // Trim leading and trailing whitespaces.
     name.erase(name.begin(), std::find_if(name.begin(), name.end(), [](char c) {
-        return !std::isspace(static_cast<unsigned char>(c));
-    }));
+                   return !std::isspace(static_cast<unsigned char>(c));
+               }));
     name.erase(std::find_if(name.rbegin(), name.rend(),
                             [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
-                       .base(),
+                   .base(),
                name.end());
 
     if (index == 0) {
         size_t remove = std::string::npos;
         // Get valid name.
         while ((remove = name.find_first_not_of(
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-[]()' ")) !=
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-[]()' ")) !=
                std::string::npos)
             name.erase(remove, 1);
-    } else {
+    }
+    else {
         name += " (" + std::to_string(index) + ")";
     }
 
@@ -1331,7 +1333,8 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
     }
 }
 
-std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig() {
+std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig()
+{
     std::vector<std::string> systems;
     std::vector<std::string> configPaths = SystemData::getConfigPath(false);
 
@@ -1339,7 +1342,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig() {
     // file under ~/.emulationstation/custom_systems as we really want to include all the themes
     // supported by ES-DE. Otherwise a user may accidentally create a custom collection that
     // corresponds to a supported theme.
-    for (auto path: configPaths) {
+    for (auto path : configPaths) {
         if (!Utils::FileSystem::exists(path))
             return systems;
 

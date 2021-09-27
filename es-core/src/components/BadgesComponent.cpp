@@ -14,11 +14,12 @@
 #include "resources/TextureResource.h"
 
 // Available slot definitions.
-std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS, SLOT_BROKEN,
-                                                    SLOT_ALTERNATIVE_EMULATOR};
+std::vector<std::string> BadgesComponent::mSlots = {SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDS,
+                                                    SLOT_BROKEN, SLOT_ALTERNATIVE_EMULATOR};
 
-BadgesComponent::BadgesComponent(Window *window)
-        : FlexboxComponent(window) {
+BadgesComponent::BadgesComponent(Window* window)
+    : FlexboxComponent(window)
+{
 
     mBadgeIcons = std::map<std::string, std::string>();
     mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
@@ -45,16 +46,17 @@ BadgesComponent::BadgesComponent(Window *window)
     mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmu});
 }
 
-BadgesComponent::~BadgesComponent() noexcept {
-    for (GuiComponent *c: mChildren)
+BadgesComponent::~BadgesComponent() noexcept
+{
+    for (GuiComponent* c : mChildren)
         c->clearChildren();
     clearChildren();
     mBadgeIcons.clear();
     mImageComponents.clear();
 }
 
-
-void BadgesComponent::setValue(const std::string &value) {
+void BadgesComponent::setValue(const std::string& value)
+{
     mChildren.clear();
     if (!value.empty()) {
         std::string temp;
@@ -94,7 +96,8 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     bool imgChanged = false;
     for (auto& slot : mSlots) {
-        if (properties & PATH && elem->has(slot) && mBadgeIcons[slot] != elem->get<std::string>(slot)) {
+        if (properties & PATH && elem->has(slot) &&
+            mBadgeIcons[slot] != elem->get<std::string>(slot)) {
             mBadgeIcons[slot] = elem->get<std::string>(slot);
             mImageComponents.find(slot)->second.setImage(mBadgeIcons[slot], false, true, true);
             imgChanged = true;

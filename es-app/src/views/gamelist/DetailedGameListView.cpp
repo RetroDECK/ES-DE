@@ -17,12 +17,32 @@
 #define FADE_IN_TIME 650
 
 DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
-    : BasicGameListView(window, root), mThumbnail(window), mMarquee(window), mImage(window), mLblRating(window),
-      mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), mLblGenre(window), mLblPlayers(window),
-      mLblLastPlayed(window), mLblPlayCount(window), mBadges(window), mRating(window), mReleaseDate(window),
-      mDeveloper(window),
-      mPublisher(window), mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window), mName(window),
-      mDescContainer(window), mDescription(window), mGamelistInfo(window), mLastUpdated(nullptr)
+    : BasicGameListView(window, root)
+    , mThumbnail(window)
+    , mMarquee(window)
+    , mImage(window)
+    , mLblRating(window)
+    , mLblReleaseDate(window)
+    , mLblDeveloper(window)
+    , mLblPublisher(window)
+    , mLblGenre(window)
+    , mLblPlayers(window)
+    , mLblLastPlayed(window)
+    , mLblPlayCount(window)
+    , mBadges(window)
+    , mRating(window)
+    , mReleaseDate(window)
+    , mDeveloper(window)
+    , mPublisher(window)
+    , mGenre(window)
+    , mPlayers(window)
+    , mLastPlayed(window)
+    , mPlayCount(window)
+    , mName(window)
+    , mDescContainer(window)
+    , mDescription(window)
+    , mGamelistInfo(window)
+    , mLastUpdated(nullptr)
 {
     const float padding = 0.01f;
 
@@ -111,7 +131,8 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     initMDValues();
 }
 
-void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme) {
+void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
+{
     BasicGameListView::onThemeChanged(theme);
 
     using namespace ThemeFlags;
@@ -124,21 +145,21 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
     mName.applyTheme(theme, getName(), "md_name", ALL);
 
     initMDLabels();
-    std::vector<TextComponent *> labels = getMDLabels();
+    std::vector<TextComponent*> labels = getMDLabels();
     assert(labels.size() == 8);
     std::vector<std::string> lblElements = {
-            "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher",
-            "md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"};
+        "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer",  "md_lbl_publisher",
+        "md_lbl_genre",  "md_lbl_players",     "md_lbl_lastplayed", "md_lbl_playcount"};
 
     for (unsigned int i = 0; i < labels.size(); i++)
         labels[i]->applyTheme(theme, getName(), lblElements[i], ALL);
 
     initMDValues();
-    std::vector<GuiComponent *> values = getMDValues();
+    std::vector<GuiComponent*> values = getMDValues();
     assert(values.size() == 9);
-    std::vector<std::string> valElements = {"md_rating", "md_releasedate", "md_developer",
-                                            "md_publisher", "md_genre", "md_players",
-                                            "md_badges", "md_lastplayed", "md_playcount"};
+    std::vector<std::string> valElements = {"md_rating",    "md_releasedate", "md_developer",
+                                            "md_publisher", "md_genre",       "md_players",
+                                            "md_badges",    "md_lastplayed",  "md_playcount"};
 
     for (unsigned int i = 0; i < values.size(); i++)
         values[i]->applyTheme(theme, getName(), valElements[i], ALL ^ ThemeFlags::TEXT);
@@ -402,7 +423,8 @@ void DetailedGameListView::updateInfoPanel()
                 mLastPlayed.setValue(file->metadata.get("lastplayed"));
                 mPlayCount.setValue(file->metadata.get("playcount"));
             }
-        } else if (file->getType() == FOLDER) {
+        }
+        else if (file->getType() == FOLDER) {
             if (!hideMetaDataFields) {
                 mLastPlayed.setValue(file->metadata.get("lastplayed"));
                 mLblPlayCount.setVisible(false);

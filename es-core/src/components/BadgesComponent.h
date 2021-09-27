@@ -27,16 +27,16 @@ class TextureResource;
 class BadgesComponent : public FlexboxComponent
 {
 public:
-    BadgesComponent(Window *window);
+    BadgesComponent(Window* window);
     ~BadgesComponent() noexcept;
 
     std::string getValue() const override;
     // Should be a list of strings.
-    void setValue(const std::string &value) override;
+    void setValue(const std::string& value) override;
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData> &theme,
-                            const std::string &view,
-                            const std::string &element,
+    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                            const std::string& view,
+                            const std::string& element,
                             unsigned int properties) override;
 
     virtual std::vector<HelpPrompt> getHelpPrompts() override;

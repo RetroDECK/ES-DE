@@ -15,25 +15,35 @@
 #include "components/MenuComponent.h"
 #include "guis/GuiMsgBox.h"
 
-GuiTextEditPopup::GuiTextEditPopup(Window *window,
-                                   const HelpStyle &helpstyle,
-                                   const std::string &title,
-                                   const std::string &initValue,
-                                   const std::function<void(const std::string &)> &okCallback,
+GuiTextEditPopup::GuiTextEditPopup(Window* window,
+                                   const HelpStyle& helpstyle,
+                                   const std::string& title,
+                                   const std::string& initValue,
+                                   const std::function<void(const std::string&)>& okCallback,
                                    bool multiLine,
-                                   const std::string &acceptBtnText,
-                                   const std::string &saveConfirmationText,
-                                   const std::string &infoString,
-                                   const std::string &defaultValue,
-                                   const std::string &loadBtnHelpText,
-                                   const std::string &clearBtnHelpText,
-                                   const std::string &cancelBtnHelpText)
-        : GuiComponent{window}, mBackground{window, ":/graphics/frame.svg"},
-          mGrid{window, glm::ivec2{1, (infoString != "" && defaultValue != "" ? 5 : 3)}}, mHelpStyle{helpstyle},
-          mInitValue{initValue}, mAcceptBtnText{acceptBtnText}, mSaveConfirmationText{saveConfirmationText},
-          mLoadBtnHelpText{loadBtnHelpText}, mClearBtnHelpText{clearBtnHelpText}, mCancelBtnHelpText{cancelBtnHelpText},
-          mOkCallback{okCallback}, mMultiLine{multiLine}, mComplexMode{(infoString != "" && defaultValue != "")},
-          mDeleteRepeat{false}, mDeleteRepeatTimer{0} {
+                                   const std::string& acceptBtnText,
+                                   const std::string& saveConfirmationText,
+                                   const std::string& infoString,
+                                   const std::string& defaultValue,
+                                   const std::string& loadBtnHelpText,
+                                   const std::string& clearBtnHelpText,
+                                   const std::string& cancelBtnHelpText)
+    : GuiComponent{window}
+    , mBackground{window, ":/graphics/frame.svg"}
+    , mGrid{window, glm::ivec2{1, (infoString != "" && defaultValue != "" ? 5 : 3)}}
+    , mHelpStyle{helpstyle}
+    , mInitValue{initValue}
+    , mAcceptBtnText{acceptBtnText}
+    , mSaveConfirmationText{saveConfirmationText}
+    , mLoadBtnHelpText{loadBtnHelpText}
+    , mClearBtnHelpText{clearBtnHelpText}
+    , mCancelBtnHelpText{cancelBtnHelpText}
+    , mOkCallback{okCallback}
+    , mMultiLine{multiLine}
+    , mComplexMode{(infoString != "" && defaultValue != "")}
+    , mDeleteRepeat{false}
+    , mDeleteRepeatTimer{0}
+{
     addChild(&mBackground);
     addChild(&mGrid);
 
@@ -42,9 +52,9 @@ GuiTextEditPopup::GuiTextEditPopup(Window *window,
 
     if (mComplexMode) {
         mInfoString = std::make_shared<TextComponent>(
-                mWindow, infoString, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
+            mWindow, infoString, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
         mDefaultValue = std::make_shared<TextComponent>(
-                mWindow, defaultValue, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
+            mWindow, defaultValue, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
     }
 
     mText = std::make_shared<TextEditComponent>(mWindow);
@@ -58,11 +68,11 @@ GuiTextEditPopup::GuiTextEditPopup(Window *window,
                                                         }));
     if (mComplexMode) {
         buttons.push_back(std::make_shared<ButtonComponent>(
-                mWindow, "load", loadBtnHelpText, [this, defaultValue] {
-                    mText->setValue(defaultValue);
-                    mText->setCursor(0);
-                    mText->setCursor(defaultValue.size());
-                }));
+            mWindow, "load", loadBtnHelpText, [this, defaultValue] {
+                mText->setValue(defaultValue);
+                mText->setCursor(0);
+                mText->setCursor(defaultValue.size());
+            }));
     }
 
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "clear", clearBtnHelpText,
@@ -99,21 +109,22 @@ GuiTextEditPopup::GuiTextEditPopup(Window *window,
 
     if (mComplexMode) {
         float infoWidth =
-                glm::clamp(0.70f * aspectValue, 0.34f, 0.85f) * Renderer::getScreenWidth();
+            glm::clamp(0.70f * aspectValue, 0.34f, 0.85f) * Renderer::getScreenWidth();
         float windowWidth =
-                glm::clamp(0.75f * aspectValue, 0.40f, 0.90f) * Renderer::getScreenWidth();
+            glm::clamp(0.75f * aspectValue, 0.40f, 0.90f) * Renderer::getScreenWidth();
 
         mDefaultValue->setSize(infoWidth, mDefaultValue->getFont()->getHeight());
 
         setSize(windowWidth, mTitle->getFont()->getHeight() + textHeight +
-                             mButtonGrid->getSize().y + mButtonGrid->getSize().y * 1.85f);
+                                 mButtonGrid->getSize().y + mButtonGrid->getSize().y * 1.85f);
         setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
                     (Renderer::getScreenHeight() - mSize.y) / 2.0f);
-    } else {
+    }
+    else {
         float width = glm::clamp(0.54f * aspectValue, 0.20f, 0.70f) * Renderer::getScreenWidth();
 
         setSize(width, mTitle->getFont()->getHeight() + textHeight + mButtonGrid->getSize().y +
-                       mButtonGrid->getSize().y / 2.0f);
+                           mButtonGrid->getSize().y / 2.0f);
         setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
                     (Renderer::getScreenHeight() - mSize.y) / 2.0f);
     }
@@ -124,7 +135,8 @@ GuiTextEditPopup::GuiTextEditPopup(Window *window,
     mText->startEditing();
 }
 
-void GuiTextEditPopup::onSizeChanged() {
+void GuiTextEditPopup::onSizeChanged()
+{
     mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
     mText->setSize(mSize.x - 40.0f * Renderer::getScreenHeightModifier(), mText->getSize().y);
 
@@ -138,7 +150,8 @@ void GuiTextEditPopup::onSizeChanged() {
     mGrid.setSize(mSize);
 }
 
-bool GuiTextEditPopup::input(InputConfig *config, Input input) {
+bool GuiTextEditPopup::input(InputConfig* config, Input input)
+{
     // Enter key (main key or via numpad) accepts the changes.
     if (config->getDeviceId() == DEVICE_KEYBOARD && mText->isEditing() && !mMultiLine &&
         input.value && (input.id == SDLK_RETURN || input.id == SDLK_KP_ENTER)) {
@@ -146,7 +159,7 @@ bool GuiTextEditPopup::input(InputConfig *config, Input input) {
         delete this;
         return true;
     }
-        // Dito for the A button if using a controller.
+    // Dito for the A button if using a controller.
     else if (config->getDeviceId() != DEVICE_KEYBOARD && mText->isEditing() &&
              config->isMappedTo("a", input) && input.value) {
         this->mOkCallback(mText->getValue());
@@ -166,18 +179,19 @@ bool GuiTextEditPopup::input(InputConfig *config, Input input) {
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                    mWindow, mHelpStyle, mSaveConfirmationText, "YES",
-                    [this] {
-                        this->mOkCallback(mText->getValue());
-                        delete this;
-                        return true;
-                    },
-                    "NO",
-                    [this] {
-                        delete this;
-                        return true;
-                    }));
-        } else {
+                mWindow, mHelpStyle, mSaveConfirmationText, "YES",
+                [this] {
+                    this->mOkCallback(mText->getValue());
+                    delete this;
+                    return true;
+                },
+                "NO",
+                [this] {
+                    delete this;
+                    return true;
+                }));
+        }
+        else {
             delete this;
             return true;
         }
@@ -202,7 +216,8 @@ bool GuiTextEditPopup::input(InputConfig *config, Input input) {
 
             if (!editing)
                 mText->stopEditing();
-        } else {
+        }
+        else {
             mDeleteRepeat = false;
         }
         return true;
@@ -228,12 +243,14 @@ bool GuiTextEditPopup::input(InputConfig *config, Input input) {
     return false;
 }
 
-void GuiTextEditPopup::update(int deltaTime) {
+void GuiTextEditPopup::update(int deltaTime)
+{
     updateDeleteRepeat(deltaTime);
     GuiComponent::update(deltaTime);
 }
 
-std::vector<HelpPrompt> GuiTextEditPopup::getHelpPrompts() {
+std::vector<HelpPrompt> GuiTextEditPopup::getHelpPrompts()
+{
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
 
     if (mText->isEditing())
@@ -245,7 +262,8 @@ std::vector<HelpPrompt> GuiTextEditPopup::getHelpPrompts() {
     return prompts;
 }
 
-void GuiTextEditPopup::updateDeleteRepeat(int deltaTime) {
+void GuiTextEditPopup::updateDeleteRepeat(int deltaTime)
+{
     if (!mDeleteRepeat)
         return;
 
