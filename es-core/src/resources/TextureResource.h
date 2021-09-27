@@ -49,7 +49,7 @@ public:
     void rasterizeAt(size_t width, size_t height);
     glm::vec2 getSourceImageSize() const { return mSourceSize; }
 
-    virtual ~TextureResource() noexcept;
+    virtual ~TextureResource();
 
     bool isInitialized() const { return true; }
     bool isTiled() const;

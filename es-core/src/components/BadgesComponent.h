@@ -28,7 +28,7 @@ class BadgesComponent : public FlexboxComponent
 {
 public:
     BadgesComponent(Window* window);
-    ~BadgesComponent() noexcept;
+    ~BadgesComponent();
 
     std::string getValue() const override;
     // Should be a list of strings.

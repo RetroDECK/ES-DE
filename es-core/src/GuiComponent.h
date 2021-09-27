@@ -39,7 +39,7 @@ class GuiComponent
 public:
     GuiComponent(Window* window);
 
-    virtual ~GuiComponent() noexcept;
+    virtual ~GuiComponent();
 
     virtual void textInput(const std::string& text);
 

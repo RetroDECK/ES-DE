@@ -18,8 +18,7 @@ class ImageComponent : public GuiComponent
 {
 public:
     ImageComponent(Window* window, bool forceLoad = false, bool dynamic = true);
-
-    virtual ~ImageComponent() noexcept {};
+    virtual ~ImageComponent() {};
 
     void setDefaultImage(std::string path) { mDefaultPath = path; }
 

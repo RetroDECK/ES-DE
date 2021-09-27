@@ -46,7 +46,7 @@ BadgesComponent::BadgesComponent(Window* window)
     mImageComponents.insert({SLOT_ALTERNATIVE_EMULATOR, mImageAltEmu});
 }
 
-BadgesComponent::~BadgesComponent() noexcept
+BadgesComponent::~BadgesComponent()
 {
     for (GuiComponent* c : mChildren)
         c->clearChildren();

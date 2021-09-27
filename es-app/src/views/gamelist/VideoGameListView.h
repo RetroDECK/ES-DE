@@ -21,8 +21,7 @@ class VideoGameListView : public BasicGameListView
 {
 public:
     VideoGameListView(Window* window, FileData* root);
-
-    virtual ~VideoGameListView() noexcept;
+    virtual ~VideoGameListView();
 
     virtual void onShow() override;
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
