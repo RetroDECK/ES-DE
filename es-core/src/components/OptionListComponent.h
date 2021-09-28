@@ -156,12 +156,14 @@ public:
         e.selected = selected;
 
         mEntries.push_back(e);
-        onSelectedChanged();
+
+        if (selected)
+            onSelectedChanged();
     }
 
     bool selectEntry(unsigned int entry)
     {
-        if (entry > mEntries.size()) {
+        if (mEntries.empty() || entry > mEntries.size()) {
             return false;
         }
         else {
@@ -258,6 +260,10 @@ private:
                 mParent->onSizeChanged();
         }
         else {
+            // Make a size update so the text for the first entry is properly aligned.
+            if (mText.getSize().x > 0.0f && mText.getSize().y > 0.0f)
+                setSize(mText.getSize());
+
             // Display the selected entry and left/right option arrows.
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
                 if (it->selected) {

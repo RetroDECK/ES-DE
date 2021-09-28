@@ -138,7 +138,7 @@ void ComponentGrid::updateCellComponent(const GridEntry& cell)
     for (int y = cell.pos.y; y < cell.pos.y + cell.dim.y; y++)
         size.y += getRowHeight(y);
 
-    if (cell.resize)
+    if (cell.resize && size != glm::vec2{} && cell.component->getSize() != size)
         cell.component->setSize(size);
 
     // Find top left corner.
