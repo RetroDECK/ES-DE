@@ -128,9 +128,9 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
             for (unsigned int i = 0; i < numSortTypes; i++) {
                 const FileData::SortType& sort = FileSorts::SortTypes.at(i);
                 if (sort.description == sortType)
-                    mListSort->add(sort.description, &sort, 1);
+                    mListSort->add(sort.description, &sort, true);
                 else
-                    mListSort->add(sort.description, &sort, 0);
+                    mListSort->add(sort.description, &sort, false);
             }
             // Don't show the sort type option if the gamelist type is recent/last played.
             if (system->getName() != "recent")

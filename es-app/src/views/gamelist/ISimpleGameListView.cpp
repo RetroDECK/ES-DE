@@ -27,7 +27,7 @@ ISimpleGameListView::ISimpleGameListView(Window* window, FileData* root)
     , mBackground(window)
     , mRandomGame(nullptr)
 {
-    mHeaderText.setText("Logo Text");
+    mHeaderText.setText("Logo Text", false);
     mHeaderText.setSize(mSize.x, 0.0f);
     mHeaderText.setPosition(0.0f, 0.0f);
     mHeaderText.setHorizontalAlignment(ALIGN_CENTER);
