@@ -44,6 +44,7 @@ public:
     void setHorizontalAlignment(Alignment align);
     void setVerticalAlignment(Alignment align) { mVerticalAlignment = align; }
     void setLineSpacing(float spacing);
+    float getLineSpacing() override { return mLineSpacing; }
     void setNoTopMargin(bool margin);
     void setBackgroundColor(unsigned int color);
     void setRenderBackground(bool render) { mRenderBackground = render; }

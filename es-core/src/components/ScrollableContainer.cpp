@@ -3,8 +3,8 @@
 //  EmulationStation Desktop Edition
 //  ScrollableContainer.cpp
 //
-//  Area containing scrollable information, for example the game description
-//  text container in the detailed, video and grid views.
+//  Component containing scrollable information, used for the game
+//  description text in the scraper and gamelist views.
 //
 
 #include "components/ScrollableContainer.h"
@@ -15,26 +15,18 @@
 #include "resources/Font.h"
 
 ScrollableContainer::ScrollableContainer(Window* window)
-    : GuiComponent(window)
-    , mScrollPos({})
-    , mScrollDir({})
-    , mFontSize(0.0f)
-    , mAutoScrollDelay(0)
-    , mAutoScrollSpeed(0)
-    , mAutoScrollAccumulator(0)
-    , mAutoScrollResetAccumulator(0)
+    : GuiComponent{window}
+    , mScrollPos{0.0f, 0.0f}
+    , mScrollDir{0.0f, 0.0f}
+    , mAutoScrollDelay{0}
+    , mAutoScrollSpeed{0}
+    , mAutoScrollAccumulator{0}
+    , mAutoScrollResetAccumulator{0}
+    , mAdjustedAutoScrollSpeed{0}
+    , mUpdatedSize{false}
 {
     // Set the modifier to get equivalent scrolling speed regardless of screen resolution.
     mResolutionModifier = Renderer::getScreenHeightModifier();
-    mSmallFontSize = static_cast<float>(Font::get(FONT_SIZE_SMALL)->getSize());
-
-    // For narrower aspect ratios than 16:9 there is a need to set an additional compensation
-    // to get somehow consistent scrolling speeds.
-    float aspectCompensation = static_cast<float>(Renderer::getScreenHeight()) /
-                                   static_cast<float>(Renderer::getScreenWidth()) -
-                               0.5625f;
-    if (aspectCompensation > 0)
-        mResolutionModifier += aspectCompensation * 4.0f;
 
     mAutoScrollResetDelayConstant = AUTO_SCROLL_RESET_DELAY;
     mAutoScrollDelayConstant = AUTO_SCROLL_DELAY;
@@ -46,9 +38,6 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
     if (autoScroll) {
         mScrollDir = glm::vec2{0.0f, 1.0f};
         mAutoScrollDelay = static_cast<int>(mAutoScrollDelayConstant);
-        mAutoScrollSpeed = mAutoScrollSpeedConstant;
-        mAutoScrollSpeed =
-            static_cast<int>(static_cast<float>(mAutoScrollSpeedConstant) / mResolutionModifier);
         reset();
     }
     else {
@@ -61,11 +50,11 @@ void ScrollableContainer::setAutoScroll(bool autoScroll)
 
 void ScrollableContainer::setScrollParameters(float autoScrollDelayConstant,
                                               float autoScrollResetDelayConstant,
-                                              int autoScrollSpeedConstant)
+                                              float autoScrollSpeedConstant)
 {
-    mAutoScrollResetDelayConstant = autoScrollResetDelayConstant;
-    mAutoScrollDelayConstant = autoScrollDelayConstant;
-    mAutoScrollSpeedConstant = autoScrollSpeedConstant;
+    mAutoScrollResetDelayConstant = glm::clamp(autoScrollResetDelayConstant, 1000.0f, 10000.0f);
+    mAutoScrollDelayConstant = glm::clamp(autoScrollDelayConstant, 1000.0f, 10000.0f);
+    mAutoScrollSpeedConstant = AUTO_SCROLL_SPEED / glm::clamp(autoScrollSpeedConstant, 0.1f, 10.0f);
 }
 
 void ScrollableContainer::reset()
@@ -86,27 +75,48 @@ void ScrollableContainer::update(int deltaTime)
         return;
     }
 
-    const glm::vec2 contentSize{getContentSize()};
-    int adjustedAutoScrollSpeed = mAutoScrollSpeed;
+    const glm::vec2 contentSize{mChildren.front()->getSize()};
+    float rowModifier{1.0f};
 
-    // Adjust the scrolling speed based on the width of the container.
-    float widthModifier = contentSize.x / static_cast<float>(Renderer::getScreenWidth());
-    adjustedAutoScrollSpeed = static_cast<int>(adjustedAutoScrollSpeed * widthModifier);
+    float lineSpacing{mChildren.front()->getLineSpacing()};
+    float combinedHeight{mChildren.front()->getFont()->getHeight(lineSpacing)};
 
-    // Also adjust the scrolling speed based on the size of the font.
-    float fontSizeModifier = mSmallFontSize / mFontSize;
-    adjustedAutoScrollSpeed =
-        static_cast<int>(adjustedAutoScrollSpeed * fontSizeModifier * fontSizeModifier);
+    // Resize container to font height boundary to avoid rendering a fraction of the last line.
+    if (!mUpdatedSize && contentSize.y > mSize.y) {
+        float numLines{mSize.y / combinedHeight};
+        mSize.y = floorf(numLines) * combinedHeight;
+        mUpdatedSize = true;
+    }
+    else if (mUpdatedSize) {
+        // If there are less than 8 lines of text, accelerate the scrolling further.
+        float lines{mSize.y / combinedHeight};
+        if (lines < 8.0f)
+            rowModifier = lines / 8.0f;
+    }
 
-    if (adjustedAutoScrollSpeed < 0)
-        adjustedAutoScrollSpeed = 1;
+    if (!mAdjustedAutoScrollSpeed) {
+        float fontSize{static_cast<float>(mChildren.front()->getFont()->getSize())};
+        float width{contentSize.x / (fontSize * 1.3f)};
 
-    if (adjustedAutoScrollSpeed != 0) {
+        // Keep speed adjustments within reason.
+        float speedModifier{glm::clamp(width, 10.0f, 40.0f)};
+
+        speedModifier *= mAutoScrollSpeedConstant;
+        speedModifier /= mResolutionModifier;
+        mAdjustedAutoScrollSpeed = speedModifier;
+    }
+
+    if (mAdjustedAutoScrollSpeed < 0)
+        mAdjustedAutoScrollSpeed = 1;
+
+    if (mAdjustedAutoScrollSpeed != 0) {
         mAutoScrollAccumulator += deltaTime;
-        while (mAutoScrollAccumulator >= adjustedAutoScrollSpeed) {
+        while (mAutoScrollAccumulator >=
+               static_cast<int>(rowModifier * static_cast<float>(mAdjustedAutoScrollSpeed))) {
             if (contentSize.y > mSize.y)
                 mScrollPos += mScrollDir;
-            mAutoScrollAccumulator -= adjustedAutoScrollSpeed;
+            mAutoScrollAccumulator -=
+                static_cast<int>(rowModifier * static_cast<float>(mAdjustedAutoScrollSpeed));
         }
     }
 
@@ -170,21 +180,4 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
 
     GuiComponent::renderChildren(trans);
     Renderer::popClipRect();
-}
-
-glm::vec2 ScrollableContainer::getContentSize()
-{
-    glm::vec2 max{};
-    for (unsigned int i = 0; i < mChildren.size(); i++) {
-        glm::vec2 pos{mChildren.at(i)->getPosition().x, mChildren.at(i)->getPosition().y};
-        glm::vec2 bottomRight{mChildren.at(i)->getSize() + pos};
-        if (bottomRight.x > max.x)
-            max.x = bottomRight.x;
-        if (bottomRight.y > max.y)
-            max.y = bottomRight.y;
-        if (!mFontSize)
-            mFontSize = static_cast<float>(mChildren.at(i)->getFont()->getSize());
-    }
-
-    return max;
 }
