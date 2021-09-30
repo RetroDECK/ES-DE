@@ -47,7 +47,7 @@ The directory structure of our example theme set could look something like the f
 
 The theme set approach makes it easy for users to install different themes and choose between them from the _UI Settings_ menu.
 
-There are two places ES-DE can load theme sets from:
+There are two places that ES-DE can load theme sets from:
 * `[HOME]/.emulationstation/themes/[THEME_SET]/`
 * `[INSTALLATION PATH]/themes/[THEME_SET]/`
 
@@ -58,7 +58,7 @@ If a theme set with the same name exists in both locations, the one in the home 
 
 ## Simple example
 
-Here is a very simple theme that changes the description text's color:
+Here is a very simple theme that changes the color of the game description text:
 
 ```xml
 <theme>
@@ -79,7 +79,7 @@ Here is a very simple theme that changes the description text's color:
 
 ## How it works
 
-Everything must be contained within a `<theme>` tag.
+All configuration must be contained within a `<theme>` tag pair.
 
 The `<formatVersion>` tag **must** be specified. This is the version of the theming system the theme was designed for.
 The current version is 7.
@@ -92,7 +92,7 @@ A _view_ can be thought of as a particular "screen" within ES-DE. Views are defi
 </view>
 ```
 
-An *element* is a particular visual element, such as an image or a piece of text.  You can either modify an element that already exists for a particular view, as was done for the "description" example:
+An *element* is a particular visual element, such as an image or a piece of text.  You can modify an element that already exists for a particular view, as was done for the "description" example:
 
 ```xml
 <elementTypeHere name="ExistingElementNameHere">
@@ -108,7 +108,7 @@ Or you can create your own elements by adding `extra="true"`, as was done for th
 </elementTypeHere>
 ```
 
-"Extra" elements will be drawn in the order they are defined (so make sure to define backgrounds first).  In what order they get drawn relative to the pre-existing elements depends on the view.  Make sure "extra" element names do not clash with existing element names. An easy way to protect against this is to just start all your extra element names with a prefix such as "e_".
+"Extra" elements will be drawn in the order they are defined (so make sure to define backgrounds first). In what order they get drawn relative to the pre-existing elements depends on the view. Make sure "extra" element names do not clash with existing element names. An easy way to protect against this is to start all your extra element names with a prefix such as "e_".
 
 
 
@@ -123,7 +123,7 @@ Or you can create your own elements by adding `extra="true"`, as was done for th
 
 If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. If on Unix you can also pass the `--windowed` and `--resolution` flags to avoid having the application window fill the entire screen. On macOS and Windows you only need to pass the `--resolution` flag to accomplish this. By doing so, you can read error messages directly in the terminal window without having to open the log file.  You can also reload the current gamelist view and system view with `Ctrl-R` if the `--debug` flag has been set.
 
-### The `<include>` tag
+### The \<include\> tag
 
 You can include theme files within theme files, for example:
 
@@ -170,7 +170,7 @@ The above is equivalent to the following:
 </theme>
 ```
 
-Note that properties can get merged. In the above example the `<color>` tag from `fonts.xml` got overwritten by the equivalent tag in `snes/theme.xml`. This happens because that tag was effectively declared after the first `<color>` tag. Also be aware that the included file still needed the `<formatVersion>` tag.
+Note that properties can get merged. In the above example the `<color>` tag from `fonts.xml` got overwritten by the equivalent tag in `snes/theme.xml`. This happens because that tag was effectively declared after the first `<color>` tag. Be aware that the included file also needs the `<formatVersion>` tag.
 
 
 ### Theming multiple views simultaneously
@@ -193,7 +193,7 @@ Sometimes you want to apply the same properties to the same elements across mult
 </theme>
 ```
 
-This is equivalent to:
+The above is equivalent to:
 
 ```xml
 <theme>
@@ -276,7 +276,7 @@ Navigation sounds are configured globally per theme set, so it needs to be defin
 It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`).
 There are seven different navigation sounds that can be configured. The names as well as the element structure should be self-explanatory based
 on the example below.
-Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sounds are provided by the theme set, ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sound files while using the bundled ES-DE sounds for the other samples.
+Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sounds are provided by the theme, ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
 
 Example debug output:
 ```
@@ -320,9 +320,9 @@ Example `navigationsounds.xml`, to be included from the main theme file:
 </theme>
 ```
 
-### Element rendering order with zIndex
+### Element rendering order using zIndex
 
-You can change the order in which elements are rendered by setting their `zIndex` values. All elements have a default zIndex value so you only need to define it for the elements you wish to override. Elements will be rendered in order from smallest zIndex value to largest.
+You can change the order in which elements are rendered by setting their `zIndex` values. All elements have a default value so you only need to define it for the ones you wish to explicitly change. Elements will be rendered in order from smallest to largest values.
 
 Below are the default zIndex values per element type:
 
@@ -380,7 +380,7 @@ System variables are system specific and are derived from the values in es_syste
 * `system.fullName`
 * `system.theme`
 
-#### Theme Defined Variables
+#### Theme defined variables
 Variables can also be defined in the theme.
 ```
 <variables>
@@ -404,7 +404,7 @@ or to specify only a portion of the value of a theme property:
 
 ## Reference
 
-### Views, their elements, and themeable properties:
+### Views, their elements, and themeable properties
 
 #### system
 * `helpsystem name="help"` - ALL
@@ -447,8 +447,8 @@ or to specify only a portion of the value of a theme property:
 * `text name="gamelistInfo"` - ALL
     - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
-* Metadata
-    * Labels
+- Metadata
+    - Labels
         * `text name="md_lbl_rating"` - ALL
         * `text name="md_lbl_releasedate"` - ALL
         * `text name="md_lbl_developer"` - ALL
@@ -459,8 +459,7 @@ or to specify only a portion of the value of a theme property:
         * `text name="md_lbl_playcount"` - ALL
 
     * Values
-        * All values will follow to the right of their labels if a position isn't specified.
-
+        - _All values will follow to the right of their labels if a position isn't specified._
         * `image name="md_image"` - POSITION | SIZE | Z_INDEX
             - Path is the "image" metadata for the currently selected game.
         * `rating name="md_rating"` - ALL
@@ -484,6 +483,7 @@ or to specify only a portion of the value of a theme property:
         * `text name="md_name"` - ALL
             - The "name" metadata (the game name). Unlike the others metadata fields, the name is positioned offscreen by default
 
+
 #### video
 * `helpsystem name="help"` - ALL
     - The help system style for this view.
@@ -498,8 +498,8 @@ or to specify only a portion of the value of a theme property:
 * `text name="gamelistInfo"` - ALL
     - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
-* Metadata
-    * Labels
+- Metadata
+    - Labels
         * `text name="md_lbl_rating"` - ALL
         * `text name="md_lbl_releasedate"` - ALL
         * `text name="md_lbl_developer"` - ALL
@@ -510,8 +510,7 @@ or to specify only a portion of the value of a theme property:
         * `text name="md_lbl_playcount"` - ALL
 
     * Values
-        * All values will follow to the right of their labels if a position isn't specified.
-
+        - _All values will follow to the right of their labels if a position isn't specified._
         * `image name="md_image"` - POSITION | SIZE | Z_INDEX
             - Path is the "image" metadata for the currently selected game.
         * `image name="md_marquee"` - POSITION | SIZE | Z_INDEX
@@ -558,8 +557,8 @@ or to specify only a portion of the value of a theme property:
 * `text name="gamelistInfo"` - ALL
     - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
-* Metadata
-    * Labels
+- Metadata
+    - Labels
         * `text name="md_lbl_rating"` - ALL
         * `text name="md_lbl_releasedate"` - ALL
         * `text name="md_lbl_developer"` - ALL
@@ -570,8 +569,7 @@ or to specify only a portion of the value of a theme property:
         * `text name="md_lbl_playcount"` - ALL
 
     * Values
-        * All values will follow to the right of their labels if a position isn't specified.
-
+        - _All values will follow to the right of their labels if a position isn't specified._
         * `rating name="md_rating"` - ALL
             - The "rating" metadata.
         * `datetime name="md_releasedate"` - ALL
@@ -594,7 +592,7 @@ or to specify only a portion of the value of a theme property:
             - The "name" metadata (the game name). Unlike the others metadata fields, the name is positioned offscreen by default
 
 
-### Types of properties:
+### Types of properties
 
 * NORMALIZED_PAIR - two decimals, in the range [0..1], delimited by a space.  For example, `0.25 0.5`.  Most commonly used for position (x and y coordinates) and size (width and height).
 * NORMALIZED_RECT - four decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5 0.10 0.30`.  Most commonly used for padding to store top, left, bottom and right coordinates.
@@ -605,7 +603,7 @@ or to specify only a portion of the value of a theme property:
 * STRING - a string of text.
 
 
-### Types of elements and their properties:
+### Types of elements and their properties
 
 Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type.  They are normalized in terms of their "parent" object's size; 99% of the time, this is just the size of the screen.  In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down).  `pos` almost always refers to the top left corner of your element.  You *can* use numbers outside of the [0..1] range if you want to place an element partially or completely off-screen.
 
@@ -942,7 +940,7 @@ The help system is a special element that displays a context-sensitive list of a
 
 ## Example theme sets
 
-To see some examples of EmulationStation themes, the following resources are recommended:
+To see some example EmulationStation themes, the following resources are recommended:
 
 https://aloshi.com/emulationstation#themes
 
