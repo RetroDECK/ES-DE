@@ -103,7 +103,7 @@ void ScrollableContainer::update(int deltaTime)
 
         speedModifier *= mAutoScrollSpeedConstant;
         speedModifier /= mResolutionModifier;
-        mAdjustedAutoScrollSpeed = speedModifier;
+        mAdjustedAutoScrollSpeed = static_cast<int>(speedModifier);
     }
 
     if (mAdjustedAutoScrollSpeed < 0)
