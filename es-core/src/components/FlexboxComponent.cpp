@@ -38,7 +38,7 @@ void FlexboxComponent::computeLayout()
     glm::ivec2 directionRow = {0, 1};
 
     // Change direction.
-    if (mDirection == Direction::row) {
+    if (mDirection == Direction::column) {
         directionLine = {0, 1};
         directionRow = {1, 0};
     }
