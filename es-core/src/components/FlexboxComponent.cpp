@@ -121,14 +121,6 @@ void FlexboxComponent::computeLayout()
         float x = anchorX - anchorOriginX * size.x;
         float y = anchorY - anchorOriginY * size.y;
 
-        // Apply item margin.
-        /*if ((mDirection == "row" && i % std::max(1, (int) mItemsPerLine) != 0) ||
-            (mDirection == "column" && i >= (int) mItemsPerLine))
-            x += mItemMargin.x * (directionLine.x >= 0.0f ? 1.0f : -1.0f);
-        if ((mDirection == "column" && i % std::max(1, (int) mItemsPerLine) != 0) ||
-            (mDirection == "row" && i >= (int) mItemsPerLine))
-            y += mItemMargin.y * (directionLine.y >= 0.0f ? 1.0f : -1.0f);*/
-
         // Apply alignment
         if (mAlign == ITEM_ALIGN_END) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) : 0;
