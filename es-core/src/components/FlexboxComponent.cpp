@@ -9,6 +9,7 @@
 
 #include "components/FlexboxComponent.h"
 #include <numeric>
+#include <utility>
 
 #include "Settings.h"
 #include "ThemeData.h"
@@ -31,13 +32,13 @@ FlexboxComponent::FlexboxComponent(Window* window)
 // Getters/Setters for rendering options.
 void FlexboxComponent::setDirection(std::string value)
 {
-    mDirection = value;
+    mDirection = std::move(value);
     mLayoutValid = false;
 }
 std::string FlexboxComponent::getDirection() { return mDirection; }
 void FlexboxComponent::setAlign(std::string value)
 {
-    mAlign = value;
+    mAlign = std::move(value);
     mLayoutValid = false;
 }
 std::string FlexboxComponent::getAlign() { return mAlign; }
