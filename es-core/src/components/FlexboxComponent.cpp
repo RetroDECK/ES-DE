@@ -10,7 +10,6 @@
 #include "components/FlexboxComponent.h"
 #include <numeric>
 #include <utility>
-
 #include "Settings.h"
 #include "ThemeData.h"
 #include "resources/TextureResource.h"
@@ -20,46 +19,11 @@ FlexboxComponent::FlexboxComponent(Window* window)
     , mDirection(DEFAULT_DIRECTION)
     , mAlign(DEFAULT_ALIGN)
     , mItemsPerLine(DEFAULT_ITEMS_PER_LINE)
+    , mItemMargin({DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y})
     , mItemWidth(DEFAULT_ITEM_SIZE_X)
+    , mLayoutValid(false)
 {
-    // Initialize item margins.
-    mItemMargin = glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y};
-
-    // Layout validity
-    mLayoutValid = false;
 }
-
-// Getters/Setters for rendering options.
-void FlexboxComponent::setDirection(std::string value)
-{
-    mDirection = std::move(value);
-    mLayoutValid = false;
-}
-std::string FlexboxComponent::getDirection() { return mDirection; }
-void FlexboxComponent::setAlign(std::string value)
-{
-    mAlign = std::move(value);
-    mLayoutValid = false;
-}
-std::string FlexboxComponent::getAlign() { return mAlign; }
-void FlexboxComponent::setItemsPerLine(unsigned int value)
-{
-    mItemsPerLine = value;
-    mLayoutValid = false;
-}
-unsigned int FlexboxComponent::getItemsPerLine() { return mItemsPerLine; }
-void FlexboxComponent::setItemMargin(glm::vec2 value)
-{
-    mItemMargin = value;
-    mLayoutValid = false;
-}
-glm::vec2 FlexboxComponent::getItemMargin() { return mItemMargin; }
-void FlexboxComponent::setItemWidth(float value)
-{
-    mItemWidth = value;
-    mLayoutValid = false;
-}
-float FlexboxComponent::getItemWidth() { return mItemWidth; }
 
 void FlexboxComponent::onSizeChanged() { mLayoutValid = false; }
 
@@ -76,7 +40,7 @@ void FlexboxComponent::computeLayout()
     glm::ivec2 directionRow = {0, 1};
 
     // Change direction.
-    if (mDirection == DIRECTION_COLUMN) {
+    if (mDirection == Direction::row) {
         directionLine = {0, 1};
         directionRow = {1, 0};
     }
@@ -97,14 +61,14 @@ void FlexboxComponent::computeLayout()
     int n = mChildren.size();
     int nLines =
         std::max(1, static_cast<int>(std::ceil(n / std::max(1, static_cast<int>(mItemsPerLine)))));
-    float lineWidth =
-        (mDirection == "row" ? (maxItemSize.y + mItemMargin.y) : (maxItemSize.x + mItemMargin.x));
+    float lineWidth = (mDirection == Direction::row ? (maxItemSize.y + mItemMargin.y) :
+                                                      (maxItemSize.x + mItemMargin.x));
     float anchorXStart = anchorX;
     float anchorYStart = anchorY;
 
     // Compute total container size.
     glm::vec2 totalSize = {-mItemMargin.x, -mItemMargin.y};
-    if (mDirection == "row") {
+    if (mDirection == Direction::row) {
         totalSize.x += (mItemMargin.x + mItemWidth) * mItemsPerLine;
         totalSize.y += (mItemMargin.y + maxItemSize.y) * nLines;
     }
@@ -123,15 +87,15 @@ void FlexboxComponent::computeLayout()
         float y = anchorY - anchorOriginY * size.y;
 
         // Apply alignment
-        if (mAlign == ITEM_ALIGN_END) {
+        if (mAlign == Align::end) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) : 0;
         }
-        else if (mAlign == ITEM_ALIGN_CENTER) {
+        else if (mAlign == Align::center) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) / 2 : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) / 2 : 0;
         }
-        else if (mAlign == ITEM_ALIGN_STRETCH && mDirection == "row") {
+        else if (mAlign == Align::stretch && mDirection == Direction::row) {
             child->setSize(child->getSize().x, maxItemSize.y);
         }
 
@@ -194,10 +158,15 @@ void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         return;
 
     if (properties & DIRECTION && elem->has("direction"))
-        mDirection = elem->get<std::string>("direction");
+        mDirection =
+            elem->get<std::string>("direction") == "row" ? Direction::row : Direction::column;
 
-    if (elem->has("align"))
-        mAlign = elem->get<std::string>("align");
+    if (elem->has("align")) {
+        const auto a = elem->get<std::string>("align");
+        mAlign = (a == "start" ?
+                      Align::start :
+                      (a == "end" ? Align::end : (a == "center" ? Align::center : Align::stretch)));
+    }
 
     if (elem->has("itemsPerLine"))
         mItemsPerLine = elem->get<float>("itemsPerLine");

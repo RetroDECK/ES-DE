@@ -13,40 +13,53 @@
 #include "GuiComponent.h"
 #include "renderers/Renderer.h"
 
-// Definitions for the option values.
-#define DIRECTION_ROW "row"
-#define DIRECTION_COLUMN "column"
-#define ITEM_ALIGN_START "start"
-#define ITEM_ALIGN_END "end"
-#define ITEM_ALIGN_CENTER "center"
-#define ITEM_ALIGN_STRETCH "stretch"
-
 // Default values.
-#define DEFAULT_DIRECTION DIRECTION_ROW
-#define DEFAULT_ALIGN ITEM_ALIGN_CENTER
+#define DEFAULT_DIRECTION Direction::row
+#define DEFAULT_ALIGN Align::center
 #define DEFAULT_ITEMS_PER_LINE 4
 #define DEFAULT_MARGIN_X 10.0f
 #define DEFAULT_MARGIN_Y 10.0f
 #define DEFAULT_ITEM_SIZE_X 64.0f
 
-class TextureResource;
-
 class FlexboxComponent : public GuiComponent
 {
 public:
-    FlexboxComponent(Window* window);
+    enum class Direction : char { row, column };
+    enum class Align : char { start, end, center, stretch };
+
+    explicit FlexboxComponent(Window* window);
 
     // Getters/Setters for rendering options.
-    void setDirection(std::string value);
-    std::string getDirection();
-    void setAlign(std::string value);
-    std::string getAlign();
-    void setItemsPerLine(unsigned int value);
-    unsigned int getItemsPerLine();
-    void setItemMargin(glm::vec2 value);
-    glm::vec2 getItemMargin();
-    void setItemWidth(float value);
-    float getItemWidth();
+    [[nodiscard]] Direction getDirection() const { return mDirection; };
+    void setDirection(Direction value)
+    {
+        mDirection = value;
+        mLayoutValid = false;
+    };
+    [[nodiscard]] Align getAlign() const { return mAlign; };
+    void setAlign(Align value)
+    {
+        mAlign = value;
+        mLayoutValid = false;
+    };
+    [[nodiscard]] unsigned int getItemsPerLine() const { return mItemsPerLine; };
+    void setItemsPerLine(unsigned int value)
+    {
+        mItemsPerLine = value;
+        mLayoutValid = false;
+    };
+    [[nodiscard]] glm::vec2 getItemMargin() const { return mItemMargin; };
+    void setItemMargin(glm::vec2 value)
+    {
+        mItemMargin = value;
+        mLayoutValid = false;
+    };
+    [[nodiscard]] float getItemWidth() const { return mItemWidth; };
+    void setItemWidth(float value)
+    {
+        mItemWidth = value;
+        mLayoutValid = false;
+    };
 
     void onSizeChanged() override;
     void render(const glm::mat4& parentTrans) override;
@@ -61,8 +74,8 @@ private:
     void computeLayout();
 
     // Rendering options.
-    std::string mDirection;
-    std::string mAlign;
+    Direction mDirection;
+    Align mAlign;
     unsigned int mItemsPerLine;
     glm::vec2 mItemMargin;
     float mItemWidth;
