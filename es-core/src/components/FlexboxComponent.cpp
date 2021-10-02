@@ -95,7 +95,8 @@ void FlexboxComponent::computeLayout()
 
     // Pre-compute layout parameters.
     int n = mChildren.size();
-    int nLines = std::max(1, (int)std::ceil(n / std::max(1, (int)mItemsPerLine)));
+    int nLines =
+        std::max(1, static_cast<int>(std::ceil(n / std::max(1, static_cast<int>(mItemsPerLine)))));
     float lineWidth =
         (mDirection == "row" ? (maxItemSize.y + mItemMargin.y) : (maxItemSize.x + mItemMargin.x));
     float anchorXStart = anchorX;
@@ -144,7 +145,7 @@ void FlexboxComponent::computeLayout()
         child->setPosition(getPosition().x + x, getPosition().y + y);
 
         // Translate anchor.
-        if ((i + 1) % std::max(1, (int)mItemsPerLine) != 0) {
+        if ((i + 1) % std::max(1, static_cast<int>(mItemsPerLine)) != 0) {
             // Translate on same line.
             anchorX += (size.x + mItemMargin.x) * directionLine.x;
             anchorY += (size.y + mItemMargin.y) * directionLine.y;
