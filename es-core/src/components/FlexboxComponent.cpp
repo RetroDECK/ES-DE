@@ -8,8 +8,6 @@
 //
 
 #include "components/FlexboxComponent.h"
-#include <numeric>
-#include <utility>
 #include "Settings.h"
 #include "ThemeData.h"
 #include "resources/TextureResource.h"
