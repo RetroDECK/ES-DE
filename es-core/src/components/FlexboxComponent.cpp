@@ -173,7 +173,7 @@ void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mItemMargin = elem->get<glm::vec2>("itemMargin");
 
     if (elem->has("itemWidth"))
-        mItemWidth = elem->get<float>("itemWidth") * scale.x;
+        mItemWidth = floorf(elem->get<float>("itemWidth") * scale.x);
 
     GuiComponent::applyTheme(theme, view, element, properties);
 
