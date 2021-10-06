@@ -709,6 +709,7 @@ void Window::startScreensaver()
             (*it)->onScreensaverActivate();
 
         stopInfoPopup();
+        setAllowTextScrolling(false);
         mScreensaver->startScreensaver(true);
         mRenderScreensaver = true;
     }
@@ -719,6 +720,7 @@ bool Window::stopScreensaver()
     if (mScreensaver && mRenderScreensaver) {
         mScreensaver->stopScreensaver();
         mRenderScreensaver = false;
+        setAllowTextScrolling(true);
 
         // Tell the GUI components the screensaver has stopped.
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
@@ -743,15 +745,19 @@ void Window::renderScreensaver()
 void Window::startMediaViewer(FileData* game)
 {
     if (mMediaViewer) {
-        if (mMediaViewer->startMediaViewer(game))
+        if (mMediaViewer->startMediaViewer(game)) {
+            setAllowTextScrolling(false);
             mRenderMediaViewer = true;
+        }
     }
 }
 
 void Window::stopMediaViewer()
 {
-    if (mMediaViewer)
+    if (mMediaViewer) {
         mMediaViewer->stopMediaViewer();
+        setAllowTextScrolling(true);
+    }
 
     mRenderMediaViewer = false;
 }

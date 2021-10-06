@@ -1120,8 +1120,10 @@ void FileData::launchGame(Window* window)
 
     Scripting::fireEvent("game-end", romPath, getSourceFileData()->metadata.get("name"));
 
-    // Re-enable the text scrolling that was disabled in ViewController on game launch.
-    window->setAllowTextScrolling(true);
+    // Unless we're running in the background while the game is launched, re-enable the text
+    // scrolling that was disabled in ViewController.
+    if (!ViewController::get()->runInBackground(mSystem))
+        window->setAllowTextScrolling(true);
 
     // Update number of times the game has been launched.
     FileData* gameToUpdate = getSourceFileData();

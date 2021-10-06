@@ -849,9 +849,12 @@ bool ViewController::input(InputConfig* config, Input input)
     // background while a game is launched. If we're in this state and then register some
     // input, it means that the user is back in ES-DE. Therefore unset the game launch flag
     // and update all the GUI components. This will re-enable the video player and let the
-    // screensaver start on schedule again.
-    if (mWindow->getGameLaunchedState())
+    // screensaver start on schedule again. Also re-enable scrolling for TextListComponent
+    // and ScrollableContainer.
+    if (mWindow->getGameLaunchedState()) {
+        mWindow->setAllowTextScrolling(true);
         mWindow->unsetLaunchedGame();
+    }
 
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&
