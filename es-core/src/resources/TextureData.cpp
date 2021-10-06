@@ -16,8 +16,9 @@
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
 
-#include <nanosvg.h>
-#include <nanosvgrast.h>
+#include "nanosvg.h"
+#include "nanosvgrast.h"
+
 #include <string.h>
 
 #define DPI 96

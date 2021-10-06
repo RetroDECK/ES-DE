@@ -23,11 +23,12 @@
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 
+#include "rapidjson/document.h"
+#include "rapidjson/error/en.h"
+
 #include <exception>
 #include <map>
 #include <pugixml.hpp>
-#include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
 
 using namespace PlatformIds;
 using namespace rapidjson;
