@@ -27,7 +27,7 @@ There are some dependencies that need to be fulfilled in order to build ES-DE. T
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev rapidjson-dev libasound2-dev libgl1-mesa-dev
+sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev
 ```
 
 If building with the optional VLC video player, the following packages are also needed:
@@ -39,7 +39,7 @@ sudo apt-get install vlc libvlc-dev
 
 Use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel rapidjson-devel alsa-lib-devel mesa-libGL-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
 ```
 
 If building with the VLC video player, add the RPM Fusion repository.
@@ -56,7 +56,7 @@ sudo dnf install vlc vlc-devel
 Use pacman to install all the required packages:
 
 ```
-sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml rapidjson
+sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml
 ```
 
 If building with the optional VLC video player, the following package is also needed:
@@ -70,7 +70,7 @@ Note: The Raspberry Pi 4 is the minimum recommended model to use with ES-DE. As 
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libcurl4-gnutls-dev libpugixml-dev rapidjson-dev
+sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libcurl4-gnutls-dev libpugixml-dev
 ```
 
 If building with the optional VLC video player, the following packages are also needed:
@@ -87,7 +87,7 @@ sudo apt-get install libcec-dev libp8-platform-dev
 
 Use pkg to install the dependencies:
 ```
-pkg install git pkgconf cmake sdl2 ffmpeg freeimage pugixml rapidjson
+pkg install git pkgconf cmake sdl2 ffmpeg freeimage pugixml
 ```
 
 If building with the optional VLC video player, the following package is also needed:
@@ -101,7 +101,7 @@ Clang/LLVM and cURL should already be included in the base OS installation.
 
 Use pkgin to install the dependencies:
 ```
-pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml rapidjson
+pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml
 ```
 
 If building with the optional VLC video player, the following package is also needed:
@@ -124,16 +124,6 @@ pkg_add vlc
 ```
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
-
-RapidJSON is not part of the OpenBSD ports/package collection as of v6.8, so you need to compile it yourself. At the time of writing, the latest release v1.1.0 does not compile on OpenBSD, so you need to use the latest available code from the master branch:
-
-```
-git clone https://github.com/Tencent/rapidjson.git
-cd rapidjson
-cmake .
-make
-make install
-```
 
 Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
@@ -440,7 +430,7 @@ Be aware that Homebrew can be really slow, especially when it compiles packages 
 Install the required tools and dependencies:
 
 ```
-brew install clang-format cmake pkg-config nasm fdk-aac libvpx sdl2 freeimage freetype pugixml rapidjson
+brew install clang-format cmake pkg-config nasm fdk-aac libvpx sdl2 freeimage freetype pugixml
 ```
 
 If building with the optional VLC video player, then run this as well:
@@ -870,18 +860,6 @@ cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
 make
 ```
 
-[RapidJSON](http://rapidjson.org)
-
-For RapidJSON you don't need to compile anything, you just need the include files.
-
-At the time of writing, the latest release v1.1.0 generates some compiler warnings on Windows, but this can be avoided by using the latest available code from the master branch:
-
-```
-git clone git://github.com/Tencent/rapidjson.git
-```
-
-
-
 **Clone the ES-DE repository:**
 
 This works the same as on Unix or macOS, just run the following:
@@ -903,7 +881,7 @@ As there is no standardized include directory structure in Windows, you need to 
 
 Make a directory in your build environment tree, for instance under `C:\Programming\include`
 
-Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml, RapidJSON, SDL2 and optionally VLC to this directory.
+Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml, SDL2 and optionally VLC to this directory.
 
 You may need to create the SDL2 directory manually and copy the header files there.
 
@@ -924,7 +902,6 @@ libavformat/
 libavutil/
 pugiconfig.hpp
 pugixml.hpp
-rapidjson/
 SDL2/
 vlc/            (only if building with the VLC video player)
 ```

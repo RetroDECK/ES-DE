@@ -23,6 +23,7 @@
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
+* Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
 * Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
@@ -38,6 +39,7 @@
 * Added support for a new type of "flat style" button to ButtonComponent
 * Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
+* Added RapidJSON as a Git subtree
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
@@ -59,6 +61,8 @@
 * When scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
+* If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
+* The line spacing for TextListComponent was incorrectly calculated for some resolutions such as 2560x1440
 * Removing games from custom collections did not remove their filter index entries
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
