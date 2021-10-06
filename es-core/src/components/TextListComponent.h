@@ -170,11 +170,19 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     int startEntry{0};
     float y{0.0f};
 
-    const float entrySize{std::max(font->getHeight(1.0), static_cast<float>(font->getSize())) *
-                          mLineSpacing};
+    const float entrySize{std::max(floorf(font->getHeight(1.0f)),
+                                   floorf(static_cast<float>(font->getSize())) * mLineSpacing)};
+    const float lineSpacingHeight{floorf(font->getHeight(mLineSpacing) - font->getHeight(1.0f))};
+
+    // This extra vertical margin is technically incorrect, but it adds a little extra leeway
+    // to avoid removing the last row on some older theme sets. There was a sizing bug in the
+    // RetroPie fork of EmulationStation and some theme authors set sizes that are just slightly
+    // too small for the last row to show up when the sizing calculation is done correctly.
+    const float extraMargin{(Renderer::getScreenHeightModifier() >= 1.0f ? 3.0f : 0.0f)};
 
     // Number of entries that can fit on the screen simultaneously.
-    int screenCount = static_cast<int>(mSize.y / entrySize + 0.5f);
+    int screenCount{
+        static_cast<int>(floorf((mSize.y + lineSpacingHeight / 2.0f + extraMargin) / entrySize))};
 
     if (size() >= screenCount) {
         startEntry = mCursor - screenCount / 2;
