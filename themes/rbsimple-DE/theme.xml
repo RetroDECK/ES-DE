@@ -225,7 +225,7 @@ based on: 'recalbox-multi' by the Recalbox community
         </text>
         <textlist name="gamelist">
             <pos>0.025 0.201</pos>
-            <size>0.39 0.71</size>
+            <size>0.39 0.711</size>
             <alignment>left</alignment>
             <horizontalMargin>0.01</horizontalMargin>
         </textlist>
