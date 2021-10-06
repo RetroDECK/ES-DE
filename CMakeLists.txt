@@ -90,7 +90,6 @@ if(NOT WIN32)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
     find_package(Pugixml REQUIRED)
-    find_package(RapidJSON REQUIRED)
     find_package(SDL2 REQUIRED)
     if(VLC_PLAYER)
         find_package(VLC REQUIRED)
@@ -243,11 +242,11 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${FreeImage_INCLUDE_DIRS}
                         ${FREETYPE_INCLUDE_DIRS}
                         ${PUGIXML_INCLUDE_DIRS}
-                        ${RAPIDJSON_INCLUDE_DIRS}
                         ${SDL2_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/glm
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
+                        ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
 if(VLC_PLAYER)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
