@@ -27,7 +27,7 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "ThemeData.h"
-#include "guis/GuiInfoPopup.h"
+#include "Window.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
@@ -385,14 +385,12 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                     parentRootFolder->sort(parentRootFolder->getSortTypeFromString(
                                                parentRootFolder->getSortTypeString()),
                                            mFavoritesSorting);
-                    GuiInfoPopup* s = new GuiInfoPopup(
-                        mWindow,
+                    mWindow->queueInfoPopup(
                         "DISABLED '" +
                             Utils::String::toUpper(
                                 Utils::String::removeParenthesis(file->getName())) +
                             "' IN '" + Utils::String::toUpper(sysData.system->getName()) + "'",
                         4000);
-                    mWindow->setInfoPopup(s);
                 }
                 else {
                     ViewController::get()->getGameListView(curSys).get()->remove(collectionEntry,
@@ -621,24 +619,18 @@ void CollectionSystemsManager::setEditMode(std::string collectionName, bool show
     mEditingCollectionSystemData = sysData;
 
     if (showPopup) {
-        GuiInfoPopup* s = new GuiInfoPopup(mWindow,
-                                           "EDITING '" + Utils::String::toUpper(collectionName) +
-                                               "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'",
-                                           10000);
-
-        mWindow->setInfoPopup(s);
+        mWindow->queueInfoPopup("EDITING '" + Utils::String::toUpper(collectionName) +
+                                    "' COLLECTION, ADD/REMOVE GAMES WITH 'Y'",
+                                10000);
     }
 }
 
 void CollectionSystemsManager::exitEditMode(bool showPopup)
 {
     if (showPopup) {
-        GuiInfoPopup* s = new GuiInfoPopup(
-            mWindow,
-            "FINISHED EDITING '" + Utils::String::toUpper(mEditingCollection) + "' COLLECTION",
-            4000);
-
-        mWindow->setInfoPopup(s);
+        mWindow->queueInfoPopup("FINISHED EDITING '" + Utils::String::toUpper(mEditingCollection) +
+                                    "' COLLECTION",
+                                4000);
     }
 
     mIsEditingCustom = false;
@@ -669,7 +661,6 @@ bool CollectionSystemsManager::inCustomCollection(const std::string& collectionN
 bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
 {
     if (file->getType() == GAME) {
-        GuiInfoPopup* s;
         bool adding = true;
         std::string name = file->getName();
         std::string sysName = mEditingCollection;
@@ -743,20 +734,17 @@ bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                     mAutoCollectionSystemsData["favorites"].system);
         }
         if (adding) {
-            s = new GuiInfoPopup(
-                mWindow,
+            mWindow->queueInfoPopup(
                 "ADDED '" + Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
                     "' TO '" + Utils::String::toUpper(sysName) + "'",
                 4000);
         }
         else {
-            s = new GuiInfoPopup(
-                mWindow,
+            mWindow->queueInfoPopup(
                 "REMOVED '" + Utils::String::toUpper(Utils::String::removeParenthesis(name)) +
                     "' FROM '" + Utils::String::toUpper(sysName) + "'",
                 4000);
         }
-        mWindow->setInfoPopup(s);
         return true;
     }
     return false;
@@ -952,9 +940,8 @@ void CollectionSystemsManager::deleteCustomCollection(std::string collectionName
                          "configuration file '"
                       << configFile << "'.";
 
-        GuiInfoPopup* s = new GuiInfoPopup(
-            mWindow, "DELETED COLLECTION '" + Utils::String::toUpper(collectionName) + "'", 5000);
-        mWindow->setInfoPopup(s);
+        mWindow->queueInfoPopup(
+            "DELETED COLLECTION '" + Utils::String::toUpper(collectionName) + "'", 5000);
     }
     else {
         LOG(LogError) << "Attempted to delete custom collection '" + collectionName + "' " +

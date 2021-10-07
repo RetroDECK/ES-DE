@@ -11,6 +11,7 @@
 
 #include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
+#include "guis/GuiInfoPopup.h"
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
@@ -337,6 +338,24 @@ void Window::update(int deltaTime)
     }
 
     mTimeSinceLastInput += deltaTime;
+
+    // If there is a popup notification queued, then display it.
+    if (mInfoPopupQueue.size() > 0) {
+        bool popupIsRunning = false;
+
+        // If uncommenting the following, new popups will not be displayed until the one
+        // currently shown has reached its display duration. This will be used later when
+        // support for multiple GuiInfoPopup notifications is implemented.
+        //        if (mInfoPopup != nullptr && mInfoPopup->isRunning())
+        //            popupIsRunning = true;
+
+        if (!popupIsRunning) {
+            delete mInfoPopup;
+            mInfoPopup = new GuiInfoPopup(this, mInfoPopupQueue.front().first,
+                                          mInfoPopupQueue.front().second);
+            mInfoPopupQueue.pop();
+        }
+    }
 
     if (peekGui())
         peekGui()->update(deltaTime);
@@ -689,16 +708,13 @@ void Window::reloadHelpPrompts()
     }
 }
 
-void Window::setInfoPopup(InfoPopup* infoPopup)
-{
-    delete mInfoPopup;
-    mInfoPopup = infoPopup;
-}
-
 void Window::stopInfoPopup()
 {
     if (mInfoPopup)
         mInfoPopup->stop();
+
+    if (mInfoPopupQueue.size() > 0)
+        std::queue<std::pair<std::string, int>>().swap(mInfoPopupQueue);
 }
 
 void Window::startScreensaver()

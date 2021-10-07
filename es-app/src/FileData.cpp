@@ -20,7 +20,6 @@
 #include "Scripting.h"
 #include "SystemData.h"
 #include "Window.h"
-#include "guis/GuiInfoPopup.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
@@ -856,9 +855,8 @@ void FileData::launchGame(Window* window)
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
-        GuiInfoPopup* s = new GuiInfoPopup(
-            window, "ERROR: MISSING EMULATOR CONFIGURATION FOR '" + emulatorEntry + "'", 6000);
-        window->setInfoPopup(s);
+        window->queueInfoPopup("ERROR: MISSING EMULATOR CONFIGURATION FOR '" + emulatorEntry + "'",
+                               6000);
         return;
     }
     else if (binaryPath.empty()) {
@@ -866,11 +864,8 @@ void FileData::launchGame(Window* window)
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
-        GuiInfoPopup* s = new GuiInfoPopup(window,
-                                           "ERROR: COULDN'T FIND EMULATOR, HAS IT "
-                                           "BEEN PROPERLY INSTALLED?",
-                                           6000);
-        window->setInfoPopup(s);
+        window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?",
+                               6000);
         return;
     }
     else {
@@ -914,12 +909,10 @@ void FileData::launchGame(Window* window)
                 LOG(LogError) << "Raw emulator launch command:";
                 LOG(LogError) << commandRaw;
 
-                GuiInfoPopup* s = new GuiInfoPopup(
-                    window,
+                window->queueInfoPopup(
                     "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
                         Utils::String::toUpper(Utils::FileSystem::getFileName(coreFile)) + "'",
                     6000);
-                window->setInfoPopup(s);
                 return;
             }
             else {
@@ -937,11 +930,7 @@ void FileData::launchGame(Window* window)
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
-            GuiInfoPopup* s = new GuiInfoPopup(window,
-                                               "ERROR: INVALID ENTRY IN SYSTEMS "
-                                               "CONFIGURATION FILE",
-                                               6000);
-            window->setInfoPopup(s);
+            window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
             return;
         }
     }
@@ -953,9 +942,7 @@ void FileData::launchGame(Window* window)
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
-        GuiInfoPopup* s = new GuiInfoPopup(
-            window, "ERROR: MISSING CORE CONFIGURATION FOR '" + coreEntry + "'", 6000);
-        window->setInfoPopup(s);
+        window->queueInfoPopup("ERROR: MISSING CORE CONFIGURATION FOR '" + coreEntry + "'", 6000);
         return;
     }
 
@@ -1024,11 +1011,7 @@ void FileData::launchGame(Window* window)
             LOG(LogError) << "Raw emulator launch command:";
             LOG(LogError) << commandRaw;
 
-            GuiInfoPopup* s = new GuiInfoPopup(window,
-                                               "ERROR: INVALID ENTRY IN SYSTEMS "
-                                               "CONFIGURATION FILE",
-                                               6000);
-            window->setInfoPopup(s);
+            window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
             return;
         }
     }
@@ -1041,12 +1024,10 @@ void FileData::launchGame(Window* window)
             << "Tried to find the core file using these paths as defined by es_find_rules.xml:";
         LOG(LogError) << Utils::String::vectorToDelimitedString(emulatorCorePaths, ", ");
 
-        GuiInfoPopup* s =
-            new GuiInfoPopup(window,
-                             "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
-                                 Utils::String::toUpper(coreName.substr(0, coreName.size()) + "'"),
-                             6000);
-        window->setInfoPopup(s);
+        window->queueInfoPopup(
+            "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
+                Utils::String::toUpper(coreName.substr(0, coreName.size()) + "'"),
+            6000);
         return;
     }
 
@@ -1087,12 +1068,10 @@ void FileData::launchGame(Window* window)
     if (returnValue != 0) {
         LOG(LogWarning) << "...launch terminated with nonzero return value " << returnValue;
 
-        GuiInfoPopup* s = new GuiInfoPopup(
-            window,
-            "ERROR LAUNCHING GAME '" + Utils::String::toUpper(metadata.get("name")) +
-                "' (ERROR CODE " + Utils::String::toUpper(std::to_string(returnValue) + ")"),
-            6000);
-        window->setInfoPopup(s);
+        window->queueInfoPopup("ERROR LAUNCHING GAME '" +
+                                   Utils::String::toUpper(metadata.get("name")) + "' (ERROR CODE " +
+                                   Utils::String::toUpper(std::to_string(returnValue) + ")"),
+                               6000);
     }
     else {
         // Stop showing the game launch notification.

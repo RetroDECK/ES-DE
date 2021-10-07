@@ -13,7 +13,7 @@
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
-#include "guis/GuiInfoPopup.h"
+#include "Window.h"
 #include "utils/StringUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
@@ -273,18 +273,13 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                 getCursor()->getParent()->getPath() == "collections") {
                 NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
-                GuiInfoPopup* s;
-                s = new GuiInfoPopup(mWindow, "CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS",
-                                     4000);
-                mWindow->setInfoPopup(s);
+                mWindow->queueInfoPopup("CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS", 4000);
             }
             // Notify the user if attempting to add a placeholder to a custom collection.
             if (CollectionSystemsManager::get()->isEditing() &&
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() == PLACEHOLDER) {
                 NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
-                GuiInfoPopup* s;
-                s = new GuiInfoPopup(mWindow, "CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS", 4000);
-                mWindow->setInfoPopup(s);
+                mWindow->queueInfoPopup("CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS", 4000);
             }
             else if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                      getCursor()->getParent()->getPath() != "collections") {
@@ -394,17 +389,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 // so it makes more sense to handle it here than to add the function to
                 // CollectionSystemsManager.
                 if (entryToUpdate->getType() == FOLDER) {
-                    GuiInfoPopup* s;
                     if (isEditing) {
-                        s = new GuiInfoPopup(mWindow, "CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS",
-                                             4000);
+                        mWindow->queueInfoPopup("CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS", 4000);
                     }
                     else {
                         MetaDataList* md = &entryToUpdate->getSourceFileData()->metadata;
                         if (md->get("favorite") == "false") {
                             md->set("favorite", "true");
-                            s = new GuiInfoPopup(
-                                mWindow,
+                            mWindow->queueInfoPopup(
                                 "MARKED FOLDER '" +
                                     Utils::String::toUpper(Utils::String::removeParenthesis(
                                         entryToUpdate->getName())) +
@@ -413,8 +405,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                         }
                         else {
                             md->set("favorite", "false");
-                            s = new GuiInfoPopup(
-                                mWindow,
+                            mWindow->queueInfoPopup(
                                 "REMOVED FAVORITE MARKING FOR FOLDER '" +
                                     Utils::String::toUpper(Utils::String::removeParenthesis(
                                         entryToUpdate->getName())) +
@@ -423,7 +414,6 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                         }
                     }
 
-                    mWindow->setInfoPopup(s);
                     entryToUpdate->getSourceFileData()->getSystem()->onMetaDataSavePoint();
 
                     getCursor()->getParent()->sort(
@@ -445,11 +435,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     return true;
                 }
                 else if (isEditing && entryToUpdate->metadata.get("nogamecount") == "true") {
-                    GuiInfoPopup* s = new GuiInfoPopup(mWindow,
-                                                       "CAN'T ADD ENTRIES THAT ARE NOT COUNTED "
-                                                       "AS GAMES TO CUSTOM COLLECTIONS",
-                                                       4000);
-                    mWindow->setInfoPopup(s);
+                    mWindow->queueInfoPopup("CAN'T ADD ENTRIES THAT ARE NOT COUNTED "
+                                            "AS GAMES TO CUSTOM COLLECTIONS",
+                                            4000);
                 }
                 else if (CollectionSystemsManager::get()->toggleGameInCollection(entryToUpdate)) {
                     // As the toggling of the game destroyed this object, we need to get the view

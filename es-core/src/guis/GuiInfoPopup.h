@@ -15,14 +15,15 @@
 class ComponentGrid;
 class NinePatchComponent;
 
-class GuiInfoPopup : public GuiComponent, public Window::InfoPopup
+class GuiInfoPopup : public GuiComponent
 {
 public:
     GuiInfoPopup(Window* window, std::string message, int duration);
     ~GuiInfoPopup();
 
-    void render(const glm::mat4& parentTrans) override;
-    void stop() override { mRunning = false; }
+    void render(const glm::mat4& parentTrans);
+    void stop() { mRunning = false; }
+    bool isRunning() { return mRunning; }
 
 private:
     bool updateState();
