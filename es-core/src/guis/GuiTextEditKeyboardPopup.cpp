@@ -133,9 +133,6 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     mText = std::make_shared<TextEditComponent>(mWindow);
     mText->setValue(initValue);
 
-    if (!multiLine)
-        mText->setCursor(initValue.size());
-
     // Header.
     mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
 
@@ -289,6 +286,9 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
         setPosition((static_cast<float>(Renderer::getScreenWidth()) - mSize.x) / 2.0f,
                     (static_cast<float>(Renderer::getScreenHeight()) - mSize.y) / 2.0f);
     }
+
+    if (!multiLine)
+        mText->setCursor(initValue.size());
 }
 
 void GuiTextEditKeyboardPopup::onSizeChanged()

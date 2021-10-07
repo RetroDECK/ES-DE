@@ -102,7 +102,7 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
     if (multiLine)
         textHeight *= 6.0f;
 
-    mText->setSize(0, textHeight);
+    mText->setSize(0.0f, textHeight);
 
     // Adapt width to the geometry of the display. The 1.778 aspect ratio is the 16:9 reference.
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
