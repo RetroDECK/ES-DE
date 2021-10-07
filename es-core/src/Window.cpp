@@ -563,12 +563,12 @@ void Window::render()
             startScreensaver();
     }
 
+    if (mInfoPopup)
+        mInfoPopup->render(trans);
+
     // Always call the screensaver render function regardless of whether the screensaver is active
     // or not because it may perform a fade on transition.
     renderScreensaver();
-
-    if (!mRenderScreensaver && mInfoPopup)
-        mInfoPopup->render(trans);
 
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
         if (!isProcessing() && mAllowSleep && (!mScreensaver)) {
@@ -724,7 +724,6 @@ void Window::startScreensaver()
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
             (*it)->onScreensaverActivate();
 
-        stopInfoPopup();
         setAllowTextScrolling(false);
         mScreensaver->startScreensaver(true);
         mRenderScreensaver = true;
