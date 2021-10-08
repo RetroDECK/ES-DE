@@ -28,14 +28,15 @@ public:
                           bool alignRight = false,
                           DisplayMode dispMode = DISP_DATE);
 
+    void onSizeChanged() override;
+
     void setValue(const std::string& val) override;
     std::string getValue() const override { return mTime; }
+    unsigned int getColor() const override { return mColor; }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
-    unsigned int getColor() const override { return mColor; }
     void render(const glm::mat4& parentTrans) override;
-    void onSizeChanged() override;
 
     // Set how the point in time will be displayed:
     //  * DISP_DATE - only display the date.
@@ -57,19 +58,14 @@ public:
     // Force text to be uppercase when in DISP_RELATIVE_TO_NOW mode.
     void setUppercase(bool uppercase);
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
-                            const std::string& view,
-                            const std::string& element,
-                            unsigned int properties) override;
-
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
     std::shared_ptr<Font> getFont() const override;
-
     std::string getDisplayString(DisplayMode mode) const;
     DisplayMode getCurrentDisplayMode() const { return mDisplayMode; }
 
+    void changeDate();
     void updateTextCache();
 
     Utils::Time::DateTime mTime;
@@ -79,6 +75,8 @@ private:
     int mEditIndex;
     DisplayMode mDisplayMode;
 
+    int mKeyRepeatDir;
+    int mKeyRepeatTimer;
     int mRelativeUpdateAccumulator;
 
     std::unique_ptr<TextCache> mTextCache;
