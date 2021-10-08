@@ -143,10 +143,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 ed->setSize(0.0f, height);
                 row.addElement(ed, false, true);
 
-                auto ratingSpacer = std::make_shared<GuiComponent>(mWindow);
-                ratingSpacer->setSize(Renderer::getScreenWidth() * 0.001f, 0.0f);
-                row.addElement(ratingSpacer, false);
-
                 // Pass input to the actual RatingComponent instead of the spacer.
                 row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
                                               std::placeholders::_2);
@@ -161,10 +157,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 ed->setOriginalColor(DEFAULT_TEXTCOLOR);
                 ed->setChangedColor(TEXTCOLOR_USERMARKED);
                 row.addElement(ed, false);
-
-                auto dateSpacer = std::make_shared<GuiComponent>(mWindow);
-                dateSpacer->setSize(Renderer::getScreenWidth() * 0.0035f, 0.0f);
-                row.addElement(dateSpacer, false);
 
                 // Pass input to the actual DateTimeEditComponent instead of the spacer.
                 row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
