@@ -10,6 +10,9 @@
 #ifndef ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 #define ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 
+#define OPTIONLIST_REPEAT_START_DELAY 650
+#define OPTIONLIST_REPEAT_SPEED 250 // Lower is faster.
+
 #define CHECKED_PATH ":/graphics/checkbox_checked.svg"
 #define UNCHECKED_PATH ":/graphics/checkbox_unchecked.svg"
 
@@ -30,17 +33,22 @@ public:
                         bool multiSelect = false,
                         bool multiExclusiveSelect = false,
                         bool multiShowTotal = false)
-        : GuiComponent(window)
-        , mHelpStyle(helpstyle)
-        , mMultiSelect(multiSelect)
-        , mMultiExclusiveSelect(multiExclusiveSelect)
-        , mMultiShowTotal(multiShowTotal)
-        , mName(name)
-        , mText(window)
-        , mLeftArrow(window)
-        , mRightArrow(window)
+        : GuiComponent{window}
+        , mHelpStyle{helpstyle}
+        , mMultiSelect{multiSelect}
+        , mMultiExclusiveSelect{multiExclusiveSelect}
+        , mMultiShowTotal{multiShowTotal}
+        , mKeyRepeat{false}
+        , mKeyRepeatDir{0}
+        , mKeyRepeatTimer{0}
+        , mKeyRepeatStartDelay{OPTIONLIST_REPEAT_START_DELAY}
+        , mKeyRepeatSpeed{OPTIONLIST_REPEAT_SPEED}
+        , mName{name}
+        , mText{window}
+        , mLeftArrow{window}
+        , mRightArrow{window}
     {
-        auto font = Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT);
+        auto font{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
         mText.setFont(font);
         mText.setColor(0x777777FF);
         mText.setHorizontalAlignment(ALIGN_CENTER);
@@ -88,16 +96,21 @@ public:
 
     bool input(InputConfig* config, Input input) override
     {
-        if (input.value != 0) {
-            if (config->isMappedTo("a", input)) {
-                // Ignore input if the component has been disabled.
-                if (!mEnabled)
-                    return true;
-                open();
+        if (config->isMappedTo("a", input) && input.value) {
+            // Ignore input if the component has been disabled.
+            if (!mEnabled)
                 return true;
-            }
-            if (!mMultiSelect) {
-                if (config->isMappedLike("left", input)) {
+            mKeyRepeatDir = 0;
+            open();
+            return true;
+        }
+        if (!mMultiSelect) {
+            if (config->isMappedLike("left", input)) {
+                if (input.value) {
+                    if (mKeyRepeat) {
+                        mKeyRepeatDir = -1;
+                        mKeyRepeatTimer = -(mKeyRepeatStartDelay - mKeyRepeatSpeed);
+                    }
                     // Ignore input if the component has been disabled.
                     if (!mEnabled)
                         return true;
@@ -112,7 +125,16 @@ public:
                     onSelectedChanged();
                     return true;
                 }
-                else if (config->isMappedLike("right", input)) {
+                else {
+                    mKeyRepeatDir = 0;
+                }
+            }
+            else if (config->isMappedLike("right", input)) {
+                if (input.value) {
+                    if (mKeyRepeat) {
+                        mKeyRepeatDir = 1;
+                        mKeyRepeatTimer = -(mKeyRepeatStartDelay - mKeyRepeatSpeed);
+                    }
                     // Ignore input if the component has been disabled.
                     if (!mEnabled)
                         return true;
@@ -124,6 +146,12 @@ public:
                     onSelectedChanged();
                     return true;
                 }
+                else {
+                    mKeyRepeatDir = 0;
+                }
+            }
+            else if (input.value) {
+                mKeyRepeatDir = 0;
             }
         }
         return GuiComponent::input(config, input);
@@ -219,6 +247,37 @@ public:
     }
 
     void setOverrideMultiText(const std::string& text) { mOverrideMultiText = text; }
+    void setKeyRepeat(bool state) { mKeyRepeat = state; }
+
+    void update(int deltaTime) override
+    {
+        if (mKeyRepeat && mKeyRepeatDir != 0) {
+            mKeyRepeatTimer += deltaTime;
+            while (mKeyRepeatTimer >= mKeyRepeatSpeed) {
+                if (mKeyRepeatDir == -1) {
+                    // Move selection to previous.
+                    unsigned int i = getSelectedId();
+                    int next = static_cast<int>(i) - 1;
+                    if (next < 0)
+                        next += static_cast<int>(mEntries.size());
+                    mEntries.at(i).selected = false;
+                    mEntries.at(next).selected = true;
+                    onSelectedChanged();
+                }
+                else {
+                    // Move selection to next.
+                    unsigned int i = getSelectedId();
+                    int next = (i + 1) % mEntries.size();
+                    mEntries.at(i).selected = false;
+                    mEntries.at(next).selected = true;
+                    onSelectedChanged();
+                }
+                mKeyRepeatTimer -= mKeyRepeatSpeed;
+            }
+        }
+
+        GuiComponent::update(deltaTime);
+    }
 
     HelpStyle getHelpStyle() override { return mHelpStyle; }
 
@@ -292,9 +351,16 @@ private:
     bool mMultiSelect;
     bool mMultiExclusiveSelect;
     bool mMultiShowTotal;
-    std::string mOverrideMultiText;
+    bool mKeyRepeat;
 
+    int mKeyRepeatDir;
+    int mKeyRepeatTimer;
+    int mKeyRepeatStartDelay;
+    int mKeyRepeatSpeed;
+
+    std::string mOverrideMultiText;
     std::string mName;
+
     TextComponent mText;
     ImageComponent mLeftArrow;
     ImageComponent mRightArrow;
