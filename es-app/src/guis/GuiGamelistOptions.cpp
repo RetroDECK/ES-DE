@@ -99,6 +99,10 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         mJumpToLetterList =
             std::make_shared<LetterList>(mWindow, getHelpStyle(), "JUMP TO...", false);
 
+        // Enable key repeat so that the left or right button can be held to cycle through
+        // the letters.
+        mJumpToLetterList->setKeyRepeat(true);
+
         // Populate the quick selector.
         for (unsigned int i = 0; i < mFirstLetterIndex.size(); i++) {
             mJumpToLetterList->add(mFirstLetterIndex[i], mFirstLetterIndex[i], 0);
@@ -132,6 +136,11 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
                 else
                     mListSort->add(sort.description, &sort, false);
             }
+
+            // Enable key repeat so that the left or right button can be held to cycle through
+            // the sort options.
+            mListSort->setKeyRepeat(true);
+
             // Don't show the sort type option if the gamelist type is recent/last played.
             if (system->getName() != "recent")
                 mMenu.addWithLabel("SORT GAMES BY", mListSort);
