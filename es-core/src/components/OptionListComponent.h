@@ -185,8 +185,7 @@ public:
 
         mEntries.push_back(e);
 
-        if (selected)
-            onSelectedChanged();
+        onSelectedChanged();
     }
 
     bool selectEntry(unsigned int entry)
@@ -327,9 +326,6 @@ private:
                 mParent->onSizeChanged();
         }
         else {
-            // Make a size update so the text for the first entry is properly aligned.
-            setSize(mLeftArrow.getSize() + mRightArrow.getSize());
-
             // Display the selected entry and left/right option arrows.
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
                 if (it->selected) {
@@ -344,6 +340,7 @@ private:
                 }
             }
         }
+        onSizeChanged();
     }
 
     std::vector<HelpPrompt> getHelpPrompts() override
