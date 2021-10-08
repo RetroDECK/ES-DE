@@ -247,7 +247,15 @@ public:
     }
 
     void setOverrideMultiText(const std::string& text) { mOverrideMultiText = text; }
-    void setKeyRepeat(bool state) { mKeyRepeat = state; }
+
+    void setKeyRepeat(bool state,
+                      int delay = OPTIONLIST_REPEAT_START_DELAY,
+                      int speed = OPTIONLIST_REPEAT_SPEED)
+    {
+        mKeyRepeat = state;
+        mKeyRepeatStartDelay = delay;
+        mKeyRepeatSpeed = speed;
+    }
 
     void update(int deltaTime) override
     {

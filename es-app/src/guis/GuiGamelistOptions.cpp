@@ -101,7 +101,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
 
         // Enable key repeat so that the left or right button can be held to cycle through
         // the letters.
-        mJumpToLetterList->setKeyRepeat(true);
+        mJumpToLetterList->setKeyRepeat(true, 650, 200);
 
         // Populate the quick selector.
         for (unsigned int i = 0; i < mFirstLetterIndex.size(); i++) {
@@ -139,7 +139,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
 
             // Enable key repeat so that the left or right button can be held to cycle through
             // the sort options.
-            mListSort->setKeyRepeat(true);
+            mListSort->setKeyRepeat(true, 650, 400);
 
             // Don't show the sort type option if the gamelist type is recent/last played.
             if (system->getName() != "recent")
