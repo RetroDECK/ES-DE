@@ -24,6 +24,7 @@
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
 * Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
+* Added notification popups when plugging in or removing controllers
 * Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
@@ -34,8 +35,12 @@
 * Added a blinking cursor to TextEditComponent
 * Changed the filter description "Text filter (game name)" to "Game name"
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
+* Added support for key repeat to OptionListComponent, making it possible to cycle through the options by holding the left or right button
+* Added key repeat for the "Jump to" and "Sort games by" selectors on the game options menu
+* Added key repeat when editing the "Release date" entry in the metadata editor (DateTimeEditComponent)
 * Achieved a massive speed improvement for OptionListComponent by not resizing each added MenuComponent row (most notable in the filter GUI)
 * Made multiple optimizations to the GUI components by removing lots of unnecessary function calls for sizing, placement, opacity changes etc.
+* Simplified the logic for info popups and prepared the code for the future "multiple popups" feature
 * Added support for a new type of "flat style" button to ButtonComponent
 * Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
@@ -69,6 +74,8 @@
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
 * Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
 * Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
+* Help prompts were missing for the "Rating" and "Release date" fields in the metadata editor
+* There was some strange behavior in DateTimeEditComponent when changing the date all the way down to 1970-01-01
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
 * When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
