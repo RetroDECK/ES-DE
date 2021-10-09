@@ -678,8 +678,22 @@ std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
     std::map<std::string, ThemeSet>::const_iterator set =
         themeSets.find(Settings::getInstance()->getString("ThemeSet"));
     if (set == themeSets.cend()) {
-        // Currently configured theme set is missing, so just pick the first available set.
-        set = themeSets.cbegin();
+        // Currently configured theme set is missing, attempt to load the default theme set
+        // rbsimple-DE instead, and if that's also missing then pick the first available set.
+        bool defaultSetFound = true;
+
+        set = themeSets.find("rbsimple-DE");
+
+        if (set == themeSets.cend()) {
+            set = themeSets.cbegin();
+            defaultSetFound = false;
+        }
+
+        LOG(LogWarning) << "Configured theme set \""
+                        << Settings::getInstance()->getString("ThemeSet")
+                        << "\" does not exist, loading" << (defaultSetFound ? " default " : " ")
+                        << "theme set \"" << set->first << "\" instead";
+
         Settings::getInstance()->setString("ThemeSet", set->first);
     }
 
