@@ -17,9 +17,9 @@
 #define DEFAULT_DIRECTION Direction::row
 #define DEFAULT_ALIGN Align::center
 #define DEFAULT_ITEMS_PER_LINE 4
+#define DEFAULT_LINES 1
 #define DEFAULT_MARGIN_X 10.0f
 #define DEFAULT_MARGIN_Y 10.0f
-#define DEFAULT_ITEM_SIZE_X 64.0f
 
 class FlexboxComponent : public GuiComponent
 {
@@ -30,12 +30,6 @@ public:
     explicit FlexboxComponent(Window* window);
 
     // Getters/Setters for rendering options.
-    [[nodiscard]] Direction getDirection() const { return mDirection; };
-    void setDirection(Direction value)
-    {
-        mDirection = value;
-        mLayoutValid = false;
-    };
     [[nodiscard]] Align getAlign() const { return mAlign; };
     void setAlign(Align value)
     {
@@ -48,16 +42,16 @@ public:
         mItemsPerLine = value;
         mLayoutValid = false;
     };
+    [[nodiscard]] unsigned int getLines() const { return mLines; };
+    void setLines(unsigned int value)
+    {
+        mLines = value;
+        mLayoutValid = false;
+    };
     [[nodiscard]] glm::vec2 getItemMargin() const { return mItemMargin; };
     void setItemMargin(glm::vec2 value)
     {
         mItemMargin = value;
-        mLayoutValid = false;
-    };
-    [[nodiscard]] float getItemWidth() const { return mItemWidth; };
-    void setItemWidth(float value)
-    {
-        mItemWidth = value;
         mLayoutValid = false;
     };
 
@@ -77,8 +71,8 @@ private:
     Direction mDirection;
     Align mAlign;
     unsigned int mItemsPerLine;
+    unsigned int mLines;
     glm::vec2 mItemMargin;
-    float mItemWidth;
     bool mLayoutValid;
 };
 

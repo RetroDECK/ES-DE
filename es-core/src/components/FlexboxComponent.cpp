@@ -17,8 +17,8 @@ FlexboxComponent::FlexboxComponent(Window* window)
     , mDirection(DEFAULT_DIRECTION)
     , mAlign(DEFAULT_ALIGN)
     , mItemsPerLine(DEFAULT_ITEMS_PER_LINE)
+    , mLines(DEFAULT_LINES)
     , mItemMargin({DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y})
-    , mItemWidth(DEFAULT_ITEM_SIZE_X)
     , mLayoutValid(false)
 {
 }
@@ -43,40 +43,37 @@ void FlexboxComponent::computeLayout()
         directionRow = {1, 0};
     }
 
-    // Set children sizes.
-    glm::vec2 maxItemSize = {0.0f, 0.0f};
+    // Compute children maximal dimensions.
+    // direction == row
+    // maxItemSize = { ((mMaxSize.x - mItemMargin.x) / mItemsPerLine) - mItemMargin.x,  ((mMaxSize.y
+    // - mItemMargin.y) / mLines) - mItemMargin.y};
+    glm::vec2 grid;
+    if (mDirection == Direction::row)
+        grid = {mItemsPerLine, mLines};
+    else
+        grid = {mLines, mItemsPerLine};
+    glm::vec2 maxItemSize = ((mSize - mItemMargin) / grid) - mItemMargin;
+
+    // Set final children dimensions.
     for (auto i : mChildren) {
         auto oldSize = i->getSize();
         if (oldSize.x == 0)
-            oldSize.x = DEFAULT_ITEM_SIZE_X;
-        glm::vec2 newSize = {mItemWidth, oldSize.y * (mItemWidth / oldSize.x)};
+            oldSize.x = maxItemSize.x;
+        glm::vec2 sizeMaxX = {maxItemSize.x, oldSize.y * (maxItemSize.x / oldSize.x)};
+        glm::vec2 sizeMaxY = {oldSize.x * (maxItemSize.y / oldSize.y), maxItemSize.y};
+        glm::vec2 newSize =
+            sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
         i->setSize(newSize);
-        maxItemSize = {std::max(maxItemSize.x, newSize.x), std::max(maxItemSize.y, newSize.y)};
-        i->setResize(maxItemSize.x, maxItemSize.y);
     }
 
     // Pre-compute layout parameters.
-    int n = mChildren.size();
-    int nLines =
-        std::max(1, static_cast<int>(std::ceil(n / std::max(1, static_cast<int>(mItemsPerLine)))));
     float lineWidth = (mDirection == Direction::row ? (maxItemSize.y + mItemMargin.y) :
                                                       (maxItemSize.x + mItemMargin.x));
     float anchorXStart = anchorX;
     float anchorYStart = anchorY;
 
-    // Compute total container size.
-    glm::vec2 totalSize = {-mItemMargin.x, -mItemMargin.y};
-    if (mDirection == Direction::row) {
-        totalSize.x += (mItemMargin.x + mItemWidth) * mItemsPerLine;
-        totalSize.y += (mItemMargin.y + maxItemSize.y) * nLines;
-    }
-    else {
-        totalSize.x += (mItemMargin.x + mItemWidth) * nLines;
-        totalSize.y += (mItemMargin.y + maxItemSize.y) * mItemsPerLine;
-    }
-
     // Iterate through the children.
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < static_cast<int>(mChildren.size()); i++) {
         GuiComponent* child = mChildren[i];
         auto size = child->getSize();
 
@@ -99,9 +96,9 @@ void FlexboxComponent::computeLayout()
 
         // Apply origin.
         if (mOrigin.x > 0 && mOrigin.x <= 1)
-            x -= mOrigin.x * totalSize.x;
+            x -= mOrigin.x * mSize.x;
         if (mOrigin.y > 0 && mOrigin.y <= 1)
-            y -= mOrigin.y * totalSize.y;
+            y -= mOrigin.y * mSize.y;
 
         // Store final item position.
         child->setPosition(getPosition().x + x, getPosition().y + y);
@@ -169,11 +166,11 @@ void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("itemsPerLine"))
         mItemsPerLine = elem->get<float>("itemsPerLine");
 
-    if (elem->has("itemMargin"))
-        mItemMargin = elem->get<glm::vec2>("itemMargin");
+    if (elem->has("lines"))
+        mLines = elem->get<float>("lines");
 
-    if (elem->has("itemWidth"))
-        mItemWidth = floorf(elem->get<float>("itemWidth") * scale.x);
+    if (elem->has("itemMargin"))
+        mItemMargin = elem->get<glm::vec2>("itemMargin") * scale;
 
     GuiComponent::applyTheme(theme, view, element, properties);
 
