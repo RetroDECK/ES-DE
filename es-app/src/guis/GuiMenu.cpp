@@ -102,31 +102,15 @@ void GuiMenu::openUIOptions()
     auto startup_system = std::make_shared<OptionListComponent<std::string>>(
         mWindow, getHelpStyle(), "GAMELIST ON STARTUP", false);
     startup_system->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
-    float dotsSize = Font::get(FONT_SIZE_MEDIUM)->sizeText("...").x;
-    for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
-         it++) {
+    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+         it != SystemData::sSystemVector.cend(); it++) {
         if ((*it)->getName() != "retropie") {
             // If required, abbreviate the system name so it doesn't overlap the setting name.
-            std::string abbreviatedString =
-                Font::get(FONT_SIZE_MEDIUM)->getTextMaxWidth((*it)->getFullName(), mSize.x * 0.47f);
-            float sizeDifference = Font::get(FONT_SIZE_MEDIUM)->sizeText((*it)->getFullName()).x -
-                                   Font::get(FONT_SIZE_MEDIUM)->sizeText(abbreviatedString).x;
-            if (sizeDifference > 0.0f) {
-                // It doesn't make sense to abbreviate if the number of pixels removed by
-                // the abbreviation is less or equal to the size of the three dots that
-                // would be appended to the string.
-                if (sizeDifference <= dotsSize) {
-                    abbreviatedString = (*it)->getFullName();
-                }
-                else {
-                    if (abbreviatedString.back() == ' ')
-                        abbreviatedString.pop_back();
-                    abbreviatedString += "...";
-                }
-            }
-            startup_system->add(abbreviatedString, (*it)->getName(),
+            float maxNameLength = mSize.x * 0.55f;
+            startup_system->add((*it)->getFullName(), (*it)->getName(),
                                 Settings::getInstance()->getString("StartupSystem") ==
-                                    (*it)->getName());
+                                    (*it)->getName(),
+                                maxNameLength);
         }
     }
     s->addWithLabel("GAMELIST ON STARTUP", startup_system);
@@ -190,8 +174,11 @@ void GuiMenu::openUIOptions()
             selectedSet = themeSets.cbegin();
         auto theme_set = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
                                                                             "THEME SET", false);
-        for (auto it = themeSets.cbegin(); it != themeSets.cend(); it++)
-            theme_set->add(it->first, it->first, it == selectedSet);
+        for (auto it = themeSets.cbegin(); it != themeSets.cend(); it++) {
+            // If required, abbreviate the theme set name so it doesn't overlap the setting name.
+            float maxNameLength = mSize.x * 0.62f;
+            theme_set->add(it->first, it->first, it == selectedSet, maxNameLength);
+        }
         s->addWithLabel("THEME SET", theme_set);
         s->addSaveFunc([this, theme_set, s] {
             if (theme_set->getSelected() != Settings::getInstance()->getString("ThemeSet")) {
