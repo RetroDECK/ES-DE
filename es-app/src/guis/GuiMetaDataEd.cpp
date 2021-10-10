@@ -258,9 +258,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                 label = entry.second;
 
                             std::shared_ptr<TextComponent> labelText =
-                                std::make_shared<TextComponent>(mWindow, label,
-                                                                Font::get(FONT_SIZE_MEDIUM),
-                                                                0x777777FF, ALIGN_CENTER);
+                                std::make_shared<TextComponent>(
+                                    mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
                             if (scraperParams.system->getAlternativeEmulator() == "" &&
                                 scraperParams.system->getSystemEnvData()
@@ -305,7 +304,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                         // ratio value is the 16:9 reference.
                         float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
 
-                        float maxWidthModifier = glm::clamp(0.70f * aspectValue, 0.50f, 0.92f);
+                        float maxWidthModifier = glm::clamp(0.64f * aspectValue, 0.42f, 0.92f);
                         float maxWidth =
                             static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
 
