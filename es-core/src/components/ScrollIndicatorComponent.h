@@ -87,24 +87,6 @@ public:
                     scrollUp->setOpacity(0);
                 }
 
-                if (downFadeIn) {
-                    auto downFadeInFunc = [scrollDown](float t) {
-                        scrollDown->setOpacity(
-                            static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
-                    };
-                    scrollDown->setAnimation(new LambdaAnimation(downFadeInFunc, fadeInTime), 0,
-                                             nullptr, false);
-                }
-
-                if (downFadeOut) {
-                    auto downFadeOutFunc = [scrollDown](float t) {
-                        scrollDown->setOpacity(
-                            static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
-                    };
-                    scrollDown->setAnimation(new LambdaAnimation(downFadeOutFunc, fadeInTime), 0,
-                                             nullptr, true);
-                }
-
                 if (upFadeIn) {
                     auto upFadeInFunc = [scrollUp](float t) {
                         scrollUp->setOpacity(
@@ -121,6 +103,24 @@ public:
                     };
                     scrollUp->setAnimation(new LambdaAnimation(upFadeOutFunc, fadeInTime), 0,
                                            nullptr, true);
+                }
+
+                if (downFadeIn) {
+                    auto downFadeInFunc = [scrollDown](float t) {
+                        scrollDown->setOpacity(
+                            static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
+                    };
+                    scrollDown->setAnimation(new LambdaAnimation(downFadeInFunc, fadeInTime), 0,
+                                             nullptr, false);
+                }
+
+                if (downFadeOut) {
+                    auto downFadeOutFunc = [scrollDown](float t) {
+                        scrollDown->setOpacity(
+                            static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
+                    };
+                    scrollDown->setAnimation(new LambdaAnimation(downFadeOutFunc, fadeInTime), 0,
+                                             nullptr, true);
                 }
 
                 mPreviousScrollState = state;
