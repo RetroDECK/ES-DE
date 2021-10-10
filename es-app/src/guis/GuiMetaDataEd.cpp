@@ -43,7 +43,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              std::function<void()> deleteGameFunc)
     : GuiComponent{window}
     , mBackground{window, ":/graphics/frame.svg"}
-    , mGrid{window, glm::ivec2{1, 5}}
+    , mGrid{window, glm::ivec2{3, 6}}
     , mScraperParams{scraperParams}
     , mMetaDataDecl{mdd}
     , mMetaData{md}
@@ -58,6 +58,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{3, 2});
 
     // Extract possible subfolders from the path.
     std::string folderPath =
@@ -82,11 +83,24 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3{}, glm::vec2{}, 0x00000000,
         0.05f);
 
-    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
-    mGrid.setEntry(mSubtitle, glm::ivec2{0, 1}, false, true);
+    mGrid.setEntry(mSubtitle, glm::ivec2{0, 2}, false, true, glm::ivec2{3, 1});
 
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 3}, true, true);
+    mGrid.setEntry(mList, glm::ivec2{0, 4}, true, true, glm::ivec2{3, 1});
+
+    // Set up scroll indicators.
+    mScrollUp = std::make_shared<ImageComponent>(mWindow);
+    mScrollDown = std::make_shared<ImageComponent>(mWindow);
+    mScrollIndicator = std::make_shared<ScrollIndicatorComponent>(mList, mScrollUp, mScrollDown);
+
+    mScrollUp->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollUp->setOrigin(0.0f, -0.35f);
+
+    mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollDown->setOrigin(0.0f, 0.35f);
+
+    mGrid.setEntry(mScrollUp, glm::ivec2{2, 0}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2{2, 1}, false, false, glm::ivec2{1, 1});
 
     // Populate list.
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
@@ -463,7 +477,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     }
 
     mButtons = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtons, glm::ivec2{0, 4}, true, false);
+    mGrid.setEntry(mButtons, glm::ivec2{0, 5}, true, false, glm::ivec2{3, 1});
 
     // Resize + center.
     float width =
@@ -481,10 +495,14 @@ void GuiMetaDataEd::onSizeChanged()
 {
     const float titleSubtitleSpacing = mSize.y * 0.03f;
 
-    mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y);
-    mGrid.setRowHeightPerc(1, titleSubtitleSpacing / mSize.y);
-    mGrid.setRowHeightPerc(2, (titleSubtitleSpacing * 1.2f) / mSize.y);
-    mGrid.setRowHeightPerc(3, ((mList->getRowHeight(0) * 10.0f) + 2.0f) / mSize.y);
+    mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(1, TITLE_HEIGHT / mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(2, titleSubtitleSpacing / mSize.y);
+    mGrid.setRowHeightPerc(3, (titleSubtitleSpacing * 1.2f) / mSize.y);
+    mGrid.setRowHeightPerc(4, ((mList->getRowHeight(0) * 10.0f) + 2.0f) / mSize.y);
+
+    mGrid.setColWidthPerc(0, 0.08f);
+    mGrid.setColWidthPerc(2, 0.08f);
 
     mGrid.setSize(mSize);
     mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});

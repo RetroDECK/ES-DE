@@ -509,6 +509,18 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Enable menu scroll indicators.
+    auto scroll_indicators = std::make_shared<SwitchComponent>(mWindow);
+    scroll_indicators->setState(Settings::getInstance()->getBool("ScrollIndicators"));
+    s->addWithLabel("ENABLE MENU SCROLL INDICATORS", scroll_indicators);
+    s->addSaveFunc([scroll_indicators, s] {
+        if (scroll_indicators->getState() != Settings::getInstance()->getBool("ScrollIndicators")) {
+            Settings::getInstance()->setBool("ScrollIndicators", scroll_indicators->getState());
+            s->setNeedsSaving();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
     // Enable the 'Y' button for tagging games as favorites.
     auto favorites_add_button = std::make_shared<SwitchComponent>(mWindow);
     favorites_add_button->setState(Settings::getInstance()->getBool("FavoritesAddButton"));

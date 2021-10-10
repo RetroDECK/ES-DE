@@ -11,17 +11,19 @@
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
 ComponentList::ComponentList(Window* window)
-    : IList<ComponentListRow, void*>(window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP)
+    : IList<ComponentListRow, void*>{window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP}
+    , mFocused{false}
+    , mSetupCompleted{false}
+    , mBottomCameraOffset{false}
+    , mSelectorBarOffset{0.0f}
+    , mCameraOffset{0.0f}
+    , mScrollIndicatorStatus{SCROLL_NONE}
 {
     // Adjust the padding relative to the aspect ratio and screen resolution to make it look
     // coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    float aspectValue{1.778f / Renderer::getScreenAspectRatio()};
     mHorizontalPadding =
         TOTAL_HORIZONTAL_PADDING_PX * aspectValue * Renderer::getScreenWidthModifier();
-
-    mSelectorBarOffset = 0.0f;
-    mCameraOffset = 0.0f;
-    mFocused = false;
 }
 
 void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
@@ -113,6 +115,35 @@ bool ComponentList::input(InputConfig* config, Input input)
 
 void ComponentList::update(int deltaTime)
 {
+    const float totalHeight = getTotalRowHeight();
+
+    // Scroll indicator logic, used by ScrollIndicatorComponent.
+    bool scrollIndicatorChanged = false;
+
+    if (totalHeight > mSize.y) {
+        if (mCameraOffset == 0) {
+            if (mScrollIndicatorStatus != SCROLL_DOWN) {
+                mScrollIndicatorStatus = SCROLL_DOWN;
+                scrollIndicatorChanged = true;
+            }
+        }
+        else if (mBottomCameraOffset) {
+            if (mScrollIndicatorStatus != SCROLL_UP) {
+                mScrollIndicatorStatus = SCROLL_UP;
+                scrollIndicatorChanged = true;
+            }
+        }
+        else if (mCameraOffset > 0) {
+            if (mScrollIndicatorStatus != SCROLL_UP_DOWN) {
+                mScrollIndicatorStatus = SCROLL_UP_DOWN;
+                scrollIndicatorChanged = true;
+            }
+        }
+    }
+
+    if (scrollIndicatorChanged == true && mScrollIndicatorChangedCallback != nullptr)
+        mScrollIndicatorChangedCallback(mScrollIndicatorStatus);
+
     listUpdate(deltaTime);
 
     if (size()) {
@@ -125,6 +156,8 @@ void ComponentList::update(int deltaTime)
 
 void ComponentList::onCursorChanged(const CursorState& state)
 {
+    mSetupCompleted = true;
+
     // Update the selector bar position.
     // In the future this might be animated.
     mSelectorBarOffset = 0;
@@ -149,6 +182,8 @@ void ComponentList::onCursorChanged(const CursorState& state)
 
 void ComponentList::updateCameraOffset()
 {
+    float oldCameraOffset = mCameraOffset;
+
     // Move the camera to scroll.
     const float totalHeight = getTotalRowHeight();
     if (totalHeight > mSize.y) {
@@ -160,10 +195,16 @@ void ComponentList::updateCameraOffset()
         unsigned int i = 0;
         while (mCameraOffset < target && i < mEntries.size()) {
             mCameraOffset += getRowHeight(mEntries.at(i).data);
-            if (mCameraOffset > totalHeight - mSize.y)
+            if (mCameraOffset > totalHeight - mSize.y) {
+                if (mSetupCompleted && mCameraOffset != oldCameraOffset)
+                    mBottomCameraOffset = true;
                 break;
+            }
             i++;
         }
+
+        if (mCameraOffset < oldCameraOffset)
+            mBottomCameraOffset = false;
 
         if (mCameraOffset < 0.0f)
             mCameraOffset = 0.0f;

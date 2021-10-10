@@ -181,6 +181,7 @@ void Settings::setDefaults()
     mBoolMap["SpecialCharsASCII"] = {false, false};
     mBoolMap["ListScrollOverlay"] = {false, false};
     mBoolMap["VirtualKeyboard"] = {true, true};
+    mBoolMap["ScrollIndicators"] = {true, true};
     mBoolMap["FavoritesAddButton"] = {true, true};
     mBoolMap["RandomAddButton"] = {false, false};
     mBoolMap["GamelistFilters"] = {true, true};
