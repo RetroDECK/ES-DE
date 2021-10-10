@@ -500,8 +500,8 @@ void GuiMetaDataEd::onSizeChanged()
     mGrid.setRowHeightPerc(3, (titleSubtitleSpacing * 1.2f) / mSize.y);
     mGrid.setRowHeightPerc(4, ((mList->getRowHeight(0) * 10.0f) + 2.0f) / mSize.y);
 
-    mGrid.setColWidthPerc(0, 0.08f);
-    mGrid.setColWidthPerc(2, 0.08f);
+    mGrid.setColWidthPerc(0, 0.07f);
+    mGrid.setColWidthPerc(2, 0.07f);
 
     mGrid.setSize(mSize);
     mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});

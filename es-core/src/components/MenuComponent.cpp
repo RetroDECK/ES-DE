@@ -127,8 +127,8 @@ void MenuComponent::onSizeChanged()
     mGrid.setRowHeightPerc(1, TITLE_HEIGHT / mSize.y / 2.0f);
     mGrid.setRowHeightPerc(3, getButtonGridHeight() / mSize.y);
 
-    mGrid.setColWidthPerc(0, 0.08f);
-    mGrid.setColWidthPerc(2, 0.08f);
+    mGrid.setColWidthPerc(0, 0.07f);
+    mGrid.setColWidthPerc(2, 0.07f);
 
     mGrid.setSize(mSize);
 }
