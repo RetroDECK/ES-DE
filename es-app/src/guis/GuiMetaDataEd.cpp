@@ -31,6 +31,8 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
+#define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.060f)
+
 GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              MetaDataList* md,
                              const std::vector<MetaDataDecl>& mdd,
@@ -39,22 +41,20 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2{1, 3})
-    , mScraperParams(scraperParams)
-    , mMetaDataDecl(mdd)
-    , mMetaData(md)
-    , mSavedCallback(saveCallback)
-    , mClearGameFunc(clearGameFunc)
-    , mDeleteGameFunc(deleteGameFunc)
-    , mMediaFilesUpdated(false)
-    , mInvalidEmulatorEntry(false)
+    : GuiComponent{window}
+    , mBackground{window, ":/graphics/frame.svg"}
+    , mGrid{window, glm::ivec2{1, 5}}
+    , mScraperParams{scraperParams}
+    , mMetaDataDecl{mdd}
+    , mMetaData{md}
+    , mSavedCallback{saveCallback}
+    , mClearGameFunc{clearGameFunc}
+    , mDeleteGameFunc{deleteGameFunc}
+    , mMediaFilesUpdated{false}
+    , mInvalidEmulatorEntry{false}
 {
     addChild(&mBackground);
     addChild(&mGrid);
-
-    mHeaderGrid = std::make_shared<ComponentGrid>(mWindow, glm::ivec2{1, 5});
 
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
@@ -81,13 +81,12 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
         Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3{}, glm::vec2{}, 0x00000000,
         0.05f);
-    mHeaderGrid->setEntry(mTitle, glm::ivec2{0, 1}, false, true);
-    mHeaderGrid->setEntry(mSubtitle, glm::ivec2{0, 3}, false, true);
 
-    mGrid.setEntry(mHeaderGrid, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mSubtitle, glm::ivec2{0, 1}, false, true);
 
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 1}, true, true);
+    mGrid.setEntry(mList, glm::ivec2{0, 3}, true, true);
 
     // Populate list.
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
@@ -464,58 +463,34 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     }
 
     mButtons = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtons, glm::ivec2{0, 2}, true, false);
+    mGrid.setEntry(mButtons, glm::ivec2{0, 4}, true, false);
 
     // Resize + center.
     float width =
         static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() * 1.05f),
                                     static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
-    setSize(width, Renderer::getScreenHeight() * 0.83f);
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+
+    // Set height explicitly to ten rows for the component list.
+    float height = mList->getRowHeight(0) * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
+                   mButtons->getSize().y;
+
+    setSize(width, height);
 }
 
 void GuiMetaDataEd::onSizeChanged()
 {
-    mGrid.setSize(mSize);
-
-    const float titleHeight = mTitle->getFont()->getLetterHeight();
-    const float subtitleHeight = mSubtitle->getFont()->getLetterHeight();
     const float titleSubtitleSpacing = mSize.y * 0.03f;
 
-    mGrid.setRowHeightPerc(
-        0, (titleHeight + titleSubtitleSpacing + subtitleHeight + TITLE_VERT_PADDING) / mSize.y);
-    mGrid.setRowHeightPerc(2, mButtons->getSize().y / mSize.y);
+    mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y);
+    mGrid.setRowHeightPerc(1, titleSubtitleSpacing / mSize.y);
+    mGrid.setRowHeightPerc(2, (titleSubtitleSpacing * 1.2f) / mSize.y);
+    mGrid.setRowHeightPerc(3, ((mList->getRowHeight(0) * 10.0f) + 2.0f) / mSize.y);
 
-    // Snap list size to the row height to prevent a fraction of a row from being displayed.
-    float listHeight = 0.0f;
-    float listSize = mList->getSize().y;
-    int i = 0;
-    while (i < mList->size()) {
-        // Add the separator height to the row height so that it also gets properly rendered.
-        float rowHeight = mList->getRowHeight(i) + Renderer::getScreenHeightModifier();
-        if (listHeight + rowHeight < listSize)
-            listHeight += rowHeight;
-        else
-            break;
-        i++;
-    }
+    mGrid.setSize(mSize);
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
-    // Adjust the size of the list and window.
-    float heightAdjustment = listSize - listHeight;
-    mList->setSize(mList->getSize().x, listHeight);
-    glm::vec2 newWindowSize{mSize};
-    newWindowSize.y -= heightAdjustment;
-    mBackground.fitTo(newWindowSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
-
-    // Move the buttons up as well to make the layout align correctly after the resize.
-    glm::vec3 newButtonPos{mButtons->getPosition()};
-    newButtonPos.y -= heightAdjustment;
-    mButtons->setPosition(newButtonPos);
-
-    mHeaderGrid->setRowHeightPerc(1, titleHeight / mHeaderGrid->getSize().y);
-    mHeaderGrid->setRowHeightPerc(2, titleSubtitleSpacing / mHeaderGrid->getSize().y);
-    mHeaderGrid->setRowHeightPerc(3, subtitleHeight / mHeaderGrid->getSize().y);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 void GuiMetaDataEd::save()
@@ -552,9 +527,9 @@ void GuiMetaDataEd::save()
 
     // If hidden games are not shown and the hide flag was set for the entry, then write the
     // metadata immediately regardless of the SaveGamelistsMode setting. Otherwise the file
-    // will never be written as the game will be filtered from the gamelist. This solution is not
-    // really good as the gamelist will be written twice, but it's a very special and hopefully
-    // rare situation.
+    // will never be written as the game will be filtered from the gamelist. This solution is
+    // not really good as the gamelist will be written twice, but it's a very special and
+    // hopefully rare situation.
     if (hideGameWhileHidden)
         updateGamelist(mScraperParams.system);
 
