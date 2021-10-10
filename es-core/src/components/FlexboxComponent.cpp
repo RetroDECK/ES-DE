@@ -44,15 +44,12 @@ void FlexboxComponent::computeLayout()
     }
 
     // Compute children maximal dimensions.
-    // direction == row
-    // maxItemSize = { ((mMaxSize.x - mItemMargin.x) / mItemsPerLine) - mItemMargin.x,  ((mMaxSize.y
-    // - mItemMargin.y) / mLines) - mItemMargin.y};
     glm::vec2 grid;
     if (mDirection == Direction::row)
         grid = {mItemsPerLine, mLines};
     else
         grid = {mLines, mItemsPerLine};
-    glm::vec2 maxItemSize = ((mSize - mItemMargin) / grid) - mItemMargin;
+    glm::vec2 maxItemSize = (mSize + mItemMargin - grid * mItemMargin) / grid;
 
     // Set final children dimensions.
     for (auto i : mChildren) {
@@ -61,8 +58,13 @@ void FlexboxComponent::computeLayout()
             oldSize.x = maxItemSize.x;
         glm::vec2 sizeMaxX = {maxItemSize.x, oldSize.y * (maxItemSize.x / oldSize.x)};
         glm::vec2 sizeMaxY = {oldSize.x * (maxItemSize.y / oldSize.y), maxItemSize.y};
-        glm::vec2 newSize =
-            sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
+        glm::vec2 newSize;
+        if (sizeMaxX.y > maxItemSize.y)
+            newSize = sizeMaxY;
+        else if (sizeMaxY.x > maxItemSize.x)
+            newSize = sizeMaxX;
+        else
+            newSize = sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
         i->setSize(newSize);
     }
 
@@ -106,17 +108,17 @@ void FlexboxComponent::computeLayout()
         // Translate anchor.
         if ((i + 1) % std::max(1, static_cast<int>(mItemsPerLine)) != 0) {
             // Translate on same line.
-            anchorX += (size.x + mItemMargin.x) * directionLine.x;
-            anchorY += (size.y + mItemMargin.y) * directionLine.y;
+            anchorX += (size.x + mItemMargin.x) * static_cast<float>(directionLine.x);
+            anchorY += (size.y + mItemMargin.y) * static_cast<float>(directionLine.y);
         }
         else {
             // Translate to first position of next line.
             if (directionRow.x == 0) {
-                anchorY += lineWidth * directionRow.y;
+                anchorY += lineWidth * static_cast<float>(directionRow.y);
                 anchorX = anchorXStart;
             }
             else {
-                anchorX += lineWidth * directionRow.x;
+                anchorX += lineWidth * static_cast<float>(directionRow.x);
                 anchorY = anchorYStart;
             }
         }

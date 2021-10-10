@@ -238,13 +238,13 @@ based on: 'recalbox-multi' by the Recalbox community
         </text>
         <badges name="md_badges">
             <pos>0.8125 0.675</pos>
-            <size>0.1 0.2</size>
+            <size>0.15 0.21</size>
             <origin>0 0</origin>
             <direction>row</direction>
             <align>start</align>
             <itemsPerLine>3</itemsPerLine>
             <lines>2</lines>
-            <itemMargin>0.005 0.005</itemMargin>
+            <itemMargin>0.0028125 0.005</itemMargin>
             <slots>favorite completed kidgame broken altemulator</slots>
         </badges>
         <!-- This block prevents additional elements from interfering when mixing layouts. -->
