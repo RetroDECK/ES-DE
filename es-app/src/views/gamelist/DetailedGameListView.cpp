@@ -404,17 +404,19 @@ void DetailedGameListView::updateInfoPanel()
         mGenre.setValue(file->metadata.get("genre"));
         mPlayers.setValue(file->metadata.get("players"));
 
-        // Generate badges slots value based on the game metadata.
-        std::stringstream ss;
-        ss << (file->metadata.get("favorite").compare("true") ? "" : "favorite ");
-        ss << (file->metadata.get("completed").compare("true") ? "" : "completed ");
-        ss << (file->metadata.get("kidgame").compare("true") ? "" : "kidgame ");
-        ss << (file->metadata.get("broken").compare("true") ? "" : "broken ");
-        ss << (file->metadata.get("altemulator").compare("") ? "altemulator " : "");
-        std::string slots = ss.str();
-        if (!slots.empty())
-            slots.pop_back();
-        mBadges.setValue(slots);
+        // Populate the badge slots based on game metadata.
+        std::vector<std::string> badgeSlots;
+        for (auto badge : mBadges.getBadgeTypes()) {
+            if (badge == "altemulator") {
+                if (file->metadata.get(badge).compare("") != 0)
+                    badgeSlots.push_back(badge);
+            }
+            else {
+                if (file->metadata.get(badge).compare("true") == 0)
+                    badgeSlots.push_back(badge);
+            }
+        }
+        mBadges.setBadges(badgeSlots);
 
         mName.setValue(file->metadata.get("name"));
 
