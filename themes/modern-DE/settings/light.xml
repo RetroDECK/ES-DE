@@ -47,6 +47,18 @@ based on:       Switch Theme by Lilbud
 		<image name="arrowblock" extra="true">
 			<color>${systemColor}</color>
 		</image>
+		<image name="selection_bottom" extra="true">
+			<color>${highlightColor}</color>
+		</image>
+		<image name="selection_left" extra="true">
+			<color>${highlightColor}</color>
+		</image>
+		<image name="selection_top" extra="true">
+			<color>${highlightColor}</color>
+		</image>
+		<image name="selection_right" extra="true">
+			<color>${highlightColor}</color>
+		</image>
 	</view>
 
 	<!-- gamelist specific styles -->

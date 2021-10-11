@@ -57,6 +57,9 @@ based on:       Switch Theme by Lilbud
 		<image name="logo">
 			<path>./art/${system.theme}.jpg</path>
 		</image>
+		<carousel name="systemcarousel">
+			<color>00000000</color>
+		</carousel>
 		<text name="system_name_1" extra="true">
 			<text>${system.fullName}</text>
 			<forceUppercase>0</forceUppercase>
@@ -70,6 +73,31 @@ based on:       Switch Theme by Lilbud
 		<image name="arrowblock" extra="true">
 			<pos>0.03 0.22</pos>
 			<path>./assets/arrow_block.svg</path>
+		</image>
+		<!-- debug: blue selection box -->
+		<image name="selection_bottom" extra="true">
+			<tile>false</tile>
+			<origin>0.5 0.5</origin>
+			<path>./assets/box.png</path>
+			<zIndex>70</zIndex>
+		</image>
+		<image name="selection_top" extra="true">
+			<tile>false</tile>
+			<origin>0.5 0.5</origin>
+			<path>./assets/box.png</path>
+			<zIndex>70</zIndex>
+		</image>
+		<image name="selection_left" extra="true">
+			<tile>false</tile>
+			<origin>0.5 0.5</origin>
+			<path>./assets/box.png</path>
+			<zIndex>70</zIndex>
+		</image>
+		<image name="selection_right" extra="true">
+			<tile>false</tile>
+			<origin>0.5 0.5</origin>
+			<path>./assets/box.png</path>
+			<zIndex>70</zIndex>
 		</image>
 	</view>
 
