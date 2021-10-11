@@ -1,23 +1,43 @@
 <!--
-theme name:		Switch
-version:		3.0
-author:			Lilbud
-email:			bvw20002010@gmail.com
+theme name:		Modern-DE
+version:		4.0
+author:			Sophia Hadash
+email:			s.hadash2@protonmail.com
 license:		creative commons CC-BY-NC-SA
-based on:       Switch Theme for Launchbox by Grila
+based on:       Switch Theme by Lilbud
 -->
 
 <theme>
 	<formatVersion>7</formatVersion>
 
-	<!-- Color Variables -->
+	<!-- color variables -->
 	<variables>
 		<backgroundColor>d9d9d9</backgroundColor>
 		<backgroundColor2>e2e2e2</backgroundColor2>
 		<mainColor>334ff0</mainColor>
+		<highlightColor>23caca</highlightColor>
 		<secondaryColor>222222</secondaryColor>
 		<systemColor>3aa5ab</systemColor>
 	</variables>
+
+	<!-- generic styles -->
+	<view name="system, basic, detailed, video, grid">
+		<helpsystem name="help">
+			<iconColor>${secondaryColor}</iconColor>
+			<textColor>${secondaryColor}</textColor>
+			<iconColorDimmed>${secondaryColor}</iconColorDimmed>
+			<textColorDimmed>${secondaryColor}</textColorDimmed>
+		</helpsystem>
+		<image name="background">
+			<color>${backgroundColor}</color>
+		</image>
+		<image name="topline, bottomline" extra="true">
+			<color>${secondaryColor}</color>
+		</image>
+		<rating name="md_rating">
+			<unfilledPath>./assets/light/star-unfilled.svg</unfilledPath>
+		</rating>
+	</view>
 
 	<!-- system specific styles -->
 	<view name="system">
@@ -29,56 +49,7 @@ based on:       Switch Theme for Launchbox by Grila
 		</image>
 	</view>
 
-	<!-- generic styles -->
-	<view name="system, basic, detailed, video, grid">
-		<helpsystem name="help">
-			<iconColor>222222ff</iconColor>
-			<textColor>222222ff</textColor>
-			<iconColorDimmed>222222ff</iconColorDimmed>
-			<textColorDimmed>222222ff</textColorDimmed>
-		</helpsystem>
-		<image name="background">
-			<color>${backgroundColor}</color>
-		</image>
-		<image name="topline, bottomline" extra="true">
-			<color>${secondaryColor}</color>
-		</image>
-		<image name="gamelistbuttons, systembuttons" extra="true">
-			<color>${secondaryColor}</color>
-		</image>
-		<rating name="md_rating">
-			<unfilledPath>./assets/light/star-unfilled.svg</unfilledPath>
-		</rating>
-	</view>
-	
-	<view name="detailed, video">
-		
-		<textlist name="gamelist">
-			<selectedColor>${mainColor}</selectedColor>
-			<primaryColor>${secondaryColor}</primaryColor>
-			<secondaryColor>${secondaryColor}</secondaryColor>
-			<selectorColor>${mainColor}</selectorColor>
-		</textlist>	
-		
-		<rating name="md_rating">
-			<filledPath>./../assets/light/filled_rating.svg</filledPath>
-			<unfilledPath>./../assets/light/unfilled_rating.svg</unfilledPath>
-		</rating>
-		
-		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_lbl_rating, md_developer, md_publisher, md_genre, md_players, md_playcount, md_releasedate, md_description">
-			<color>${secondaryColor}</color>
-		</text>	
-	
-	</view>
-	
-	<view name="basic, detailed, video">
-		
-		<text name="system_name_1" extra="true">
-			<color>${secondaryColor}</color>
-		</text>
-
-	</view>
-
+	<!-- gamelist specific styles -->
 	<view name="basic">
 		<textlist name="gamelist">
 			<selectedColor>${mainColor}</selectedColor>
@@ -87,7 +58,38 @@ based on:       Switch Theme for Launchbox by Grila
 			<selectorColor>00000000</selectorColor>
 		</textlist>
 	</view>
-
+	<view name="grid">
+		<gridtile name="default">
+			<backgroundColor>00000000</backgroundColor>
+		</gridtile>
+		<gridtile name="selected">
+			<backgroundCenterColor>${highlightColor}</backgroundCenterColor>
+			<backgroundEdgeColor>${highlightColor}</backgroundEdgeColor>
+		</gridtile>
+	</view>
+	<view name="basic, detailed, video">
+		<text name="system_name_1" extra="true">
+			<color>${secondaryColor}</color>
+		</text>
+	</view>
+	<view name="detailed, video">
+		<textlist name="gamelist">
+			<selectedColor>${mainColor}</selectedColor>
+			<primaryColor>${secondaryColor}</primaryColor>
+			<secondaryColor>${secondaryColor}</secondaryColor>
+			<selectorColor>${mainColor}</selectorColor>
+		</textlist>
+		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_lbl_rating, md_developer, md_publisher, md_genre, md_players, md_playcount, md_releasedate, md_description">
+			<color>${secondaryColor}</color>
+		</text>
+		<badges name="md_badges">
+			<customBadgeIcon badge="favorite">./assets/light/favorite.svg</customBadgeIcon>
+			<customBadgeIcon badge="completed">./assets/light/completed.svg</customBadgeIcon>
+			<customBadgeIcon badge="kidgame">./assets/light/kidgame.svg</customBadgeIcon>
+			<customBadgeIcon badge="broken">./assets/light/broken.svg</customBadgeIcon>
+			<customBadgeIcon badge="altemu">./assets/light/altemu.svg</customBadgeIcon>
+		</badges>
+	</view>
 	<view name="detailed, video, grid">
 		<image name="md_background" extra="true">
 			<color>${backgroundColor2}</color>
@@ -100,16 +102,16 @@ based on:       Switch Theme for Launchbox by Grila
 		</image>
 	</view>
 
+	<!-- carousel feature -->
 	<feature supported="carousel">
-
 		<view name="system">
-
+			<carousel name="systemcarousel">
+				<color>00000000</color>
+			</carousel>
 			<text name="systemInfo">
+				<backgroundColor>dddddd00</backgroundColor>
 				<color>${systemColor}</color>
 			</text>
-
 		</view>
-
-</feature>
- 
+	</feature>
 </theme>
