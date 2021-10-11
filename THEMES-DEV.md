@@ -362,8 +362,10 @@ Below are the default zIndex values per element type:
         * `text name="md_description"`
         * `text name="md_name"`
 * System Logo/Text - 50
-    * `text name="logoText"`
     * `image name="logo"`
+    * `text name="logoText"`
+    * `image name="logoPlaceholderImage"`
+    * `text name="logoPlaceholderText"`
 * Gamelist information - 50
     * `text name="gamelistInfo"`
 
@@ -407,17 +409,26 @@ or to specify only a portion of the value of a theme property:
 ### Views, their elements, and themeable properties
 
 #### system
+
 * `helpsystem name="help"` - ALL
     - The help system style for this view.
-* `carousel name="systemcarousel"` -ALL
+* `carousel name="systemcarousel"` - ALL
     - The system logo carousel
 * `image name="logo"` - PATH | COLOR
     - A logo image, to be displayed in the system logo carousel.
+* `image name="logoPlaceholderImage"` - ALL
+    - A logo image, to be displayed system name in the system logo carousel when no logo is available. Set the position
+      to `0.5 0.5` to center the image.
+* `text name="logoPlaceholderText"` - ALL
+    - Logo text, to be displayed system name in the system logo carousel when no logo is available. The logo text is
+      displayed on top of `logoPlaceholderImage`. Set the position to `0.5 0.5` to center the text.
 * `text name="logoText"` - FONT_PATH | COLOR | FORCE_UPPERCASE | LINE_SPACING | TEXT
-    - A logo text, to be displayed system name in the system logo carousel when no logo is available.
+    - **Deprecated:** A logo text, to be displayed system name in the system logo carousel when no logo is available.
+      Ignored when `logoPlaceholderImage` or `logoPlaceholderText` are set.
 * `text name="systemInfo"` - ALL
     - Displays details of the system currently selected in the carousel.
-* You can use extra elements (elements with `extra="true"`) to add your own backgrounds, etc.  They will be displayed behind the carousel, and scroll relative to the carousel.
+* You can use extra elements (elements with `extra="true"`) to add your own backgrounds, etc. They will be displayed
+  behind the carousel, and scroll relative to the carousel.
 
 
 #### basic
