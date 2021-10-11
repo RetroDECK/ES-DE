@@ -12,7 +12,8 @@
 // Disable the CImg display capabilities.
 #define cimg_display 0
 
-#include <CImg.h>
+#include "CImg.h"
+
 #include <vector>
 
 namespace Utils

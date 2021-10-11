@@ -112,7 +112,7 @@ void InputManager::init()
             numJoysticks--;
 
     for (int i = 0; i < numJoysticks; i++)
-        addControllerByDeviceIndex(i);
+        addControllerByDeviceIndex(nullptr, i);
 
     SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
     SDL_USER_CECBUTTONUP = SDL_USER_CECBUTTONDOWN + 1;
@@ -482,11 +482,11 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             break;
         }
         case SDL_CONTROLLERDEVICEADDED: {
-            addControllerByDeviceIndex(event.cdevice.which);
+            addControllerByDeviceIndex(window, event.cdevice.which);
             return true;
         }
         case SDL_CONTROLLERDEVICEREMOVED: {
-            removeControllerByJoystickID(event.cdevice.which);
+            removeControllerByJoystickID(window, event.cdevice.which);
             return false;
         }
     }
@@ -621,7 +621,7 @@ void InputManager::loadDefaultControllerConfig(SDL_JoystickID deviceIndex)
     // clang-format on
 }
 
-void InputManager::addControllerByDeviceIndex(int deviceIndex)
+void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
 {
     // Open joystick and add it to our list.
     SDL_GameController* controller = SDL_GameControllerOpen(deviceIndex);
@@ -652,6 +652,14 @@ void InputManager::addControllerByDeviceIndex(int deviceIndex)
                      << ", instance ID: " << joyID << ", device index: " << deviceIndex << ")";
     }
 
+    if (window != nullptr) {
+        window->queueInfoPopup(
+            "ADDED INPUT DEVICE '" +
+                Utils::String::toUpper(std::string(SDL_GameControllerName(mControllers[joyID]))) +
+                "'",
+            4000);
+    }
+
     int numAxes = SDL_JoystickNumAxes(joy);
     int numButtons = SDL_JoystickNumButtons(joy);
 
@@ -662,7 +670,7 @@ void InputManager::addControllerByDeviceIndex(int deviceIndex)
         mPrevButtonValues[std::make_pair(joyID, button)] = -1;
 }
 
-void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
+void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID joyID)
 {
     assert(joyID != -1);
 
@@ -672,6 +680,14 @@ void InputManager::removeControllerByJoystickID(SDL_JoystickID joyID)
 
     LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID])
                  << "\" (GUID: " << guid << ", instance ID: " << joyID << ")";
+
+    if (window != nullptr) {
+        window->queueInfoPopup(
+            "REMOVED INPUT DEVICE '" +
+                Utils::String::toUpper(std::string(SDL_GameControllerName(mControllers[joyID]))) +
+                "'",
+            4000);
+    }
 
     // Delete mPrevAxisValues for the device.
     int axisEntries = static_cast<int>(mPrevAxisValues.size());

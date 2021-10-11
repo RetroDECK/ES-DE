@@ -52,6 +52,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/OptionListComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScrollableContainer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ScrollIndicatorComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SliderComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/SwitchComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextComponent.h
@@ -63,6 +64,7 @@ set(CORE_HEADERS
 
     # GUIs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditKeyboardPopup.h
@@ -135,6 +137,7 @@ set(CORE_SOURCES
 
     # GUIs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInfoPopup.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiInputConfig.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiMsgBox.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiTextEditKeyboardPopup.cpp

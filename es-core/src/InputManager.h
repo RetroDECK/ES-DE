@@ -61,8 +61,8 @@ private:
     void loadDefaultKBConfig();
     void loadDefaultControllerConfig(SDL_JoystickID deviceIndex);
 
-    void addControllerByDeviceIndex(int deviceIndex);
-    void removeControllerByJoystickID(SDL_JoystickID joyID);
+    void addControllerByDeviceIndex(Window* window, int deviceIndex);
+    void removeControllerByJoystickID(Window* window, SDL_JoystickID joyID);
 
     static InputManager* sInstance;
     static const int DEADZONE_TRIGGERS = 18000;

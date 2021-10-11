@@ -8,7 +8,7 @@
 //  remove files etc.
 //
 
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
 #define _FILE_OFFSET_BITS 64
 #endif
 

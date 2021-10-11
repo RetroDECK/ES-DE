@@ -11,6 +11,7 @@
 
 #include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
+#include "guis/GuiInfoPopup.h"
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
@@ -338,6 +339,24 @@ void Window::update(int deltaTime)
 
     mTimeSinceLastInput += deltaTime;
 
+    // If there is a popup notification queued, then display it.
+    if (mInfoPopupQueue.size() > 0) {
+        bool popupIsRunning = false;
+
+        // If uncommenting the following, new popups will not be displayed until the one
+        // currently shown has reached its display duration. This will be used later when
+        // support for multiple GuiInfoPopup notifications is implemented.
+        //        if (mInfoPopup != nullptr && mInfoPopup->isRunning())
+        //            popupIsRunning = true;
+
+        if (!popupIsRunning) {
+            delete mInfoPopup;
+            mInfoPopup = new GuiInfoPopup(this, mInfoPopupQueue.front().first,
+                                          mInfoPopupQueue.front().second);
+            mInfoPopupQueue.pop();
+        }
+    }
+
     if (peekGui())
         peekGui()->update(deltaTime);
 
@@ -544,12 +563,12 @@ void Window::render()
             startScreensaver();
     }
 
+    if (mInfoPopup)
+        mInfoPopup->render(trans);
+
     // Always call the screensaver render function regardless of whether the screensaver is active
     // or not because it may perform a fade on transition.
     renderScreensaver();
-
-    if (!mRenderScreensaver && mInfoPopup)
-        mInfoPopup->render(trans);
 
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
         if (!isProcessing() && mAllowSleep && (!mScreensaver)) {
@@ -689,16 +708,13 @@ void Window::reloadHelpPrompts()
     }
 }
 
-void Window::setInfoPopup(InfoPopup* infoPopup)
-{
-    delete mInfoPopup;
-    mInfoPopup = infoPopup;
-}
-
 void Window::stopInfoPopup()
 {
     if (mInfoPopup)
         mInfoPopup->stop();
+
+    if (mInfoPopupQueue.size() > 0)
+        std::queue<std::pair<std::string, int>>().swap(mInfoPopupQueue);
 }
 
 void Window::startScreensaver()
@@ -708,7 +724,7 @@ void Window::startScreensaver()
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
             (*it)->onScreensaverActivate();
 
-        stopInfoPopup();
+        setAllowTextScrolling(false);
         mScreensaver->startScreensaver(true);
         mRenderScreensaver = true;
     }
@@ -719,6 +735,7 @@ bool Window::stopScreensaver()
     if (mScreensaver && mRenderScreensaver) {
         mScreensaver->stopScreensaver();
         mRenderScreensaver = false;
+        setAllowTextScrolling(true);
 
         // Tell the GUI components the screensaver has stopped.
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
@@ -743,15 +760,19 @@ void Window::renderScreensaver()
 void Window::startMediaViewer(FileData* game)
 {
     if (mMediaViewer) {
-        if (mMediaViewer->startMediaViewer(game))
+        if (mMediaViewer->startMediaViewer(game)) {
+            setAllowTextScrolling(false);
             mRenderMediaViewer = true;
+        }
     }
 }
 
 void Window::stopMediaViewer()
 {
-    if (mMediaViewer)
+    if (mMediaViewer) {
         mMediaViewer->stopMediaViewer();
+        setAllowTextScrolling(true);
+    }
 
     mRenderMediaViewer = false;
 }

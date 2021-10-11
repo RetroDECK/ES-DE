@@ -24,7 +24,6 @@
 #include "animations/Animation.h"
 #include "animations/LambdaAnimation.h"
 #include "animations/MoveCameraAnimation.h"
-#include "guis/GuiInfoPopup.h"
 #include "guis/GuiMenu.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
@@ -700,10 +699,8 @@ void ViewController::launch(FileData* game)
     if (durationString == "disabled") {
         // If the game launch screen has been set as disabled, show a simple info popup
         // notification instead.
-        GuiInfoPopup* s = new GuiInfoPopup(
-            mWindow, "LAUNCHING GAME '" + Utils::String::toUpper(game->metadata.get("name") + "'"),
-            10000);
-        mWindow->setInfoPopup(s);
+        mWindow->queueInfoPopup(
+            "LAUNCHING GAME '" + Utils::String::toUpper(game->metadata.get("name") + "'"), 10000);
         duration = 1700;
     }
     else if (durationString == "brief") {
@@ -849,9 +846,12 @@ bool ViewController::input(InputConfig* config, Input input)
     // background while a game is launched. If we're in this state and then register some
     // input, it means that the user is back in ES-DE. Therefore unset the game launch flag
     // and update all the GUI components. This will re-enable the video player and let the
-    // screensaver start on schedule again.
-    if (mWindow->getGameLaunchedState())
+    // screensaver start on schedule again. Also re-enable scrolling for TextListComponent
+    // and ScrollableContainer.
+    if (mWindow->getGameLaunchedState()) {
+        mWindow->setAllowTextScrolling(true);
         mWindow->unsetLaunchedGame();
+    }
 
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&

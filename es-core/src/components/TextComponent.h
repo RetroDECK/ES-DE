@@ -38,12 +38,13 @@ public:
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);
     void onSizeChanged() override;
-    void setText(const std::string& text);
+    void setText(const std::string& text, bool update = true);
     void setHiddenText(const std::string& text) { mHiddenText = text; }
     void setColor(unsigned int color) override;
     void setHorizontalAlignment(Alignment align);
-    void setVerticalAlignment(Alignment align);
+    void setVerticalAlignment(Alignment align) { mVerticalAlignment = align; }
     void setLineSpacing(float spacing);
+    float getLineSpacing() override { return mLineSpacing; }
     void setNoTopMargin(bool margin);
     void setBackgroundColor(unsigned int color);
     void setRenderBackground(bool render) { mRenderBackground = render; }

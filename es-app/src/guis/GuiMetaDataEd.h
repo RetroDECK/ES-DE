@@ -15,6 +15,7 @@
 #include "MetaData.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
+#include "components/ScrollIndicatorComponent.h"
 #include "guis/GuiSettings.h"
 #include "scrapers/Scraper.h"
 
@@ -49,6 +50,9 @@ private:
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;
+    std::shared_ptr<ImageComponent> mScrollUp;
+    std::shared_ptr<ImageComponent> mScrollDown;
+    std::shared_ptr<ScrollIndicatorComponent> mScrollIndicator;
     std::shared_ptr<TextComponent> mSubtitle;
     std::shared_ptr<ComponentGrid> mHeaderGrid;
     std::shared_ptr<ComponentList> mList;

@@ -12,12 +12,11 @@
 #include "components/ComponentGrid.h"
 #include "components/ComponentList.h"
 #include "components/NinePatchComponent.h"
+#include "components/ScrollIndicatorComponent.h"
 #include "components/TextComponent.h"
 #include "utils/StringUtil.h"
 
 #include <cmath>
-
-#define TITLE_VERT_PADDING (Renderer::getScreenHeight() * 0.0637f)
 
 class ButtonComponent;
 class ImageComponent;
@@ -87,6 +86,9 @@ private:
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;
+    std::shared_ptr<ImageComponent> mScrollUp;
+    std::shared_ptr<ImageComponent> mScrollDown;
+    std::shared_ptr<ScrollIndicatorComponent> mScrollIndicator;
     std::shared_ptr<ComponentList> mList;
     std::shared_ptr<ComponentGrid> mButtonGrid;
     std::vector<std::shared_ptr<ButtonComponent>> mButtons;

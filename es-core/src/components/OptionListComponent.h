@@ -10,6 +10,9 @@
 #ifndef ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 #define ES_CORE_COMPONENTS_OPTION_LIST_COMPONENT_H
 
+#define OPTIONLIST_REPEAT_START_DELAY 650
+#define OPTIONLIST_REPEAT_SPEED 250 // Lower is faster.
+
 #define CHECKED_PATH ":/graphics/checkbox_checked.svg"
 #define UNCHECKED_PATH ":/graphics/checkbox_unchecked.svg"
 
@@ -30,17 +33,22 @@ public:
                         bool multiSelect = false,
                         bool multiExclusiveSelect = false,
                         bool multiShowTotal = false)
-        : GuiComponent(window)
-        , mHelpStyle(helpstyle)
-        , mMultiSelect(multiSelect)
-        , mMultiExclusiveSelect(multiExclusiveSelect)
-        , mMultiShowTotal(multiShowTotal)
-        , mName(name)
-        , mText(window)
-        , mLeftArrow(window)
-        , mRightArrow(window)
+        : GuiComponent{window}
+        , mHelpStyle{helpstyle}
+        , mMultiSelect{multiSelect}
+        , mMultiExclusiveSelect{multiExclusiveSelect}
+        , mMultiShowTotal{multiShowTotal}
+        , mKeyRepeat{false}
+        , mKeyRepeatDir{0}
+        , mKeyRepeatTimer{0}
+        , mKeyRepeatStartDelay{OPTIONLIST_REPEAT_START_DELAY}
+        , mKeyRepeatSpeed{OPTIONLIST_REPEAT_SPEED}
+        , mName{name}
+        , mText{window}
+        , mLeftArrow{window}
+        , mRightArrow{window}
     {
-        auto font = Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT);
+        auto font{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
         mText.setFont(font);
         mText.setColor(0x777777FF);
         mText.setHorizontalAlignment(ALIGN_CENTER);
@@ -88,16 +96,21 @@ public:
 
     bool input(InputConfig* config, Input input) override
     {
-        if (input.value != 0) {
-            if (config->isMappedTo("a", input)) {
-                // Ignore input if the component has been disabled.
-                if (!mEnabled)
-                    return true;
-                open();
+        if (config->isMappedTo("a", input) && input.value) {
+            // Ignore input if the component has been disabled.
+            if (!mEnabled)
                 return true;
-            }
-            if (!mMultiSelect) {
-                if (config->isMappedLike("left", input)) {
+            mKeyRepeatDir = 0;
+            open();
+            return true;
+        }
+        if (!mMultiSelect) {
+            if (config->isMappedLike("left", input)) {
+                if (input.value) {
+                    if (mKeyRepeat) {
+                        mKeyRepeatDir = -1;
+                        mKeyRepeatTimer = -(mKeyRepeatStartDelay - mKeyRepeatSpeed);
+                    }
                     // Ignore input if the component has been disabled.
                     if (!mEnabled)
                         return true;
@@ -112,7 +125,16 @@ public:
                     onSelectedChanged();
                     return true;
                 }
-                else if (config->isMappedLike("right", input)) {
+                else {
+                    mKeyRepeatDir = 0;
+                }
+            }
+            else if (config->isMappedLike("right", input)) {
+                if (input.value) {
+                    if (mKeyRepeat) {
+                        mKeyRepeatDir = 1;
+                        mKeyRepeatTimer = -(mKeyRepeatStartDelay - mKeyRepeatSpeed);
+                    }
                     // Ignore input if the component has been disabled.
                     if (!mEnabled)
                         return true;
@@ -124,6 +146,12 @@ public:
                     onSelectedChanged();
                     return true;
                 }
+                else {
+                    mKeyRepeatDir = 0;
+                }
+            }
+            else if (input.value) {
+                mKeyRepeatDir = 0;
             }
         }
         return GuiComponent::input(config, input);
@@ -148,20 +176,22 @@ public:
         return selected.at(0);
     }
 
-    void add(const std::string& name, const T& obj, bool selected)
+    void add(const std::string& name, const T& obj, bool selected, float maxNameLength = 0.0f)
     {
         OptionListData e;
         e.name = name;
         e.object = obj;
         e.selected = selected;
+        e.maxNameLength = maxNameLength;
 
         mEntries.push_back(e);
+
         onSelectedChanged();
     }
 
     bool selectEntry(unsigned int entry)
     {
-        if (entry > mEntries.size()) {
+        if (mEntries.empty() || entry > mEntries.size()) {
             return false;
         }
         else {
@@ -218,6 +248,45 @@ public:
 
     void setOverrideMultiText(const std::string& text) { mOverrideMultiText = text; }
 
+    void setKeyRepeat(bool state,
+                      int delay = OPTIONLIST_REPEAT_START_DELAY,
+                      int speed = OPTIONLIST_REPEAT_SPEED)
+    {
+        mKeyRepeat = state;
+        mKeyRepeatStartDelay = delay;
+        mKeyRepeatSpeed = speed;
+    }
+
+    void update(int deltaTime) override
+    {
+        if (mKeyRepeat && mKeyRepeatDir != 0) {
+            mKeyRepeatTimer += deltaTime;
+            while (mKeyRepeatTimer >= mKeyRepeatSpeed) {
+                if (mKeyRepeatDir == -1) {
+                    // Move selection to previous.
+                    unsigned int i = getSelectedId();
+                    int next = static_cast<int>(i) - 1;
+                    if (next < 0)
+                        next += static_cast<int>(mEntries.size());
+                    mEntries.at(i).selected = false;
+                    mEntries.at(next).selected = true;
+                    onSelectedChanged();
+                }
+                else {
+                    // Move selection to next.
+                    unsigned int i = getSelectedId();
+                    int next = (i + 1) % mEntries.size();
+                    mEntries.at(i).selected = false;
+                    mEntries.at(next).selected = true;
+                    onSelectedChanged();
+                }
+                mKeyRepeatTimer -= mKeyRepeatSpeed;
+            }
+        }
+
+        GuiComponent::update(deltaTime);
+    }
+
     HelpStyle getHelpStyle() override { return mHelpStyle; }
 
 private:
@@ -225,6 +294,7 @@ private:
         std::string name;
         T object;
         bool selected;
+        float maxNameLength;
     };
 
     HelpStyle mHelpStyle;
@@ -261,7 +331,37 @@ private:
             // Display the selected entry and left/right option arrows.
             for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
                 if (it->selected) {
-                    mText.setText(Utils::String::toUpper(it->name));
+                    if (it->maxNameLength > 0.0f &&
+                        Font::get(FONT_SIZE_MEDIUM)->sizeText(Utils::String::toUpper(it->name)).x >
+                            it->maxNameLength) {
+                        // A maximum length parameter has been passed and the "name" size surpasses
+                        // this value, so abbreviate the string inside the arrows.
+                        auto font = Font::get(FONT_SIZE_MEDIUM);
+                        // Calculate with an extra dot to give some leeway.
+                        float dotsSize = font->sizeText("....").x;
+                        std::string abbreviatedString = font->getTextMaxWidth(
+                            Utils::String::toUpper(it->name), it->maxNameLength);
+                        float sizeDifference = font->sizeText(Utils::String::toUpper(it->name)).x -
+                                               font->sizeText(abbreviatedString).x;
+                        if (sizeDifference > 0.0f) {
+                            // It doesn't make sense to abbreviate if the number of pixels removed
+                            // by the abbreviation is less or equal to the size of the three dots
+                            // that would be appended to the string.
+                            if (sizeDifference <= dotsSize) {
+                                abbreviatedString = it->name;
+                            }
+                            else {
+                                if (abbreviatedString.back() == ' ')
+                                    abbreviatedString.pop_back();
+                                abbreviatedString += "...";
+                            }
+                        }
+                        mText.setText(Utils::String::toUpper(abbreviatedString));
+                    }
+                    else {
+                        mText.setText(Utils::String::toUpper(it->name));
+                    }
+
                     mText.setSize(0.0f, mText.getSize().y);
                     setSize(mText.getSize().x + mLeftArrow.getSize().x + mRightArrow.getSize().x +
                                 24.0f * Renderer::getScreenWidthModifier(),
@@ -272,6 +372,7 @@ private:
                 }
             }
         }
+        onSizeChanged();
     }
 
     std::vector<HelpPrompt> getHelpPrompts() override
@@ -287,9 +388,16 @@ private:
     bool mMultiSelect;
     bool mMultiExclusiveSelect;
     bool mMultiShowTotal;
-    std::string mOverrideMultiText;
+    bool mKeyRepeat;
 
+    int mKeyRepeatDir;
+    int mKeyRepeatTimer;
+    int mKeyRepeatStartDelay;
+    int mKeyRepeatSpeed;
+
+    std::string mOverrideMultiText;
     std::string mName;
+
     TextComponent mText;
     ImageComponent mLeftArrow;
     ImageComponent mRightArrow;

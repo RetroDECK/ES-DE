@@ -95,18 +95,27 @@ void GuiComponent::renderChildren(const glm::mat4& transform) const
 
 void GuiComponent::setPosition(float x, float y, float z)
 {
+    if (mPosition.x == x && mPosition.y == y && mPosition.z == z)
+        return;
+
     mPosition = glm::vec3{x, y, z};
     onPositionChanged();
 }
 
 void GuiComponent::setOrigin(float x, float y)
 {
+    if (mOrigin.x == x && mOrigin.y == y)
+        return;
+
     mOrigin = glm::vec2{x, y};
     onOriginChanged();
 }
 
 void GuiComponent::setSize(float w, float h)
 {
+    if (mSize.x == w && mSize.y == h)
+        return;
+
     mSize = glm::vec2{w, h};
     onSizeChanged();
 }
@@ -166,6 +175,9 @@ int GuiComponent::getChildIndex() const
 
 void GuiComponent::setOpacity(unsigned char opacity)
 {
+    if (mOpacity == opacity)
+        return;
+
     mOpacity = opacity;
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++)
         (*it)->setOpacity(opacity);

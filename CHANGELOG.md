@@ -11,8 +11,8 @@
 ### Detailed list of changes
 
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
-* Populated the bundled es_systems.xml files with alternative emulator entries for must RetroArch cores
-* Added a virtual keyboard partly based on code from batocera-emulationstation
+* Populated the bundled es_systems.xml files with alternative emulator entries for most RetroArch cores
+* Added a virtual keyboard, partly based on code from batocera-emulationstation
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
@@ -20,7 +20,11 @@
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
 * Added a filter for "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
 * Added a menu option to change the application exit key combination
+* Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
+* Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
+* Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
+* Added notification popups when plugging in or removing controllers
 * Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
@@ -31,14 +35,21 @@
 * Added a blinking cursor to TextEditComponent
 * Changed the filter description "Text filter (game name)" to "Game name"
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
+* Added support for key repeat to OptionListComponent, making it possible to cycle through the options by holding the left or right button
+* Added key repeat for the "Jump to" and "Sort games by" selectors on the game options menu
+* Added key repeat when editing the "Release date" entry in the metadata editor (DateTimeEditComponent)
 * Achieved a massive speed improvement for OptionListComponent by not resizing each added MenuComponent row (most notable in the filter GUI)
+* Made multiple optimizations to the GUI components by removing lots of unnecessary function calls for sizing, placement, opacity changes etc.
+* Simplified the logic for info popups and prepared the code for the future "multiple popups" feature
 * Added support for a new type of "flat style" button to ButtonComponent
 * Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
+* Added RapidJSON as a Git subtree
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
 * Added a function to generate MD5 hashes
+* Made an optimization for SVG graphics to avoid a lot of unnecessary re-rasterizations
 * Moved the "complex" mode functionality from GuiComplexTextEditPopup into GuiTextEditPopup and removed the source files for the former
 * Replaced the String::Utils::trim function with better code and removed some inline text trimming throughout the application
 * Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags
@@ -49,16 +60,22 @@
 
 ### Bug fixes
 
-* When multi-scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
-* When multi-scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
-* When multi-scraping in interactive mode, "No games found" results could be accepted using the "A" button
+* Setting a really small font size in a theme would crash the application
+* When scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
+* When scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
+* When scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
+* If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
+* The line spacing for TextListComponent was incorrectly calculated for some resolutions such as 2560x1440
 * Removing games from custom collections did not remove their filter index entries
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
 * Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
 * Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
+* Help prompts were missing for the "Rating" and "Release date" fields in the metadata editor
+* There was some strange behavior in DateTimeEditComponent when changing the date all the way down to 1970-01-01
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
 * When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size

@@ -21,11 +21,12 @@
 #include "Log.h"
 #include "utils/FileSystemUtil.h"
 
+#include "rapidjson/document.h"
+#include "rapidjson/error/en.h"
+
 #include <chrono>
 #include <fstream>
 #include <memory>
-#include <rapidjson/document.h>
-#include <rapidjson/error/en.h>
 #include <thread>
 
 using namespace rapidjson;

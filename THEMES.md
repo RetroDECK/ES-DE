@@ -40,7 +40,7 @@ There are two places ES-DE can load theme sets from:
 An example installation path would be: \
 `/usr/share/emulationstation/themes/[CURRENT_THEME_SET]/[SYSTEM_THEME]/theme.xml`
 
-`[SYSTEM_THEME]` is the `<theme>` tag for the system, as defined in `es_systems.cfg`.  If the `<theme>` tag is not set, ES-DE will use the system's `<name>`.
+`[SYSTEM_THEME]` is the `<theme>` tag for the system, as defined in `es_systems.xml`.  If the `<theme>` tag is not set, ES-DE will use the system's `<name>`.
 
 If both files happen to exist, ES-DE will pick the first one (the one located in the home directory).
 
@@ -74,7 +74,7 @@ Everything must be inside a `<theme>` tag.
 **The `<formatVersion>` tag *must* be specified**. This is the version of the theming system the theme was designed for.
 The current version is 6.
 
-A *view* can be thought of as a particular "screen" within EmulationStation. Views are defined like this:
+A *view* can be thought of as a particular "screen" within ES-DE. Views are defined like this:
 
 ```xml
 
@@ -112,7 +112,7 @@ Or, you can create your own elements by adding `extra="true"` (as is done in the
 
 # Advanced Features
 
-It is recommended that if you are writing a theme you launch EmulationStation with the `--debug` and `--windowed` switches.  This way you can read error messages without having to check the log file.  You can also reload the current gamelist view and system view with `Ctrl-R` if `--debug` is specified.
+It is recommended that if you are writing a theme you launch ES-DE with the `--debug` and `--windowed` switches.  This way you can read error messages without having to check the log file.  You can also reload the current gamelist view and system view with `Ctrl-R` if `--debug` is specified.
 
 ### The `<include>` tag
 
@@ -279,7 +279,7 @@ The navigation sounds are configured globally per theme set, so it needs to be d
 It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`).
 There are seven different navigation sounds that can be configured. The names as well as the element structure should be self-explanatory based
 on the example below.
-Starting EmulationStation with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sound is provided by the theme, ES-DE will use the bundled navigation sound file as a fallback. This is done per sound, so the theme could provide for example one or two custom sound files while using the bundled ES-DE sounds for the other samples.
+Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sound is provided by the theme, ES-DE will use the bundled navigation sound file as a fallback. This is done per sound, so the theme could provide for example one or two custom sound files while using the bundled ES-DE sounds for the other samples.
 
 Example debug output:
 ```
@@ -375,7 +375,7 @@ Theme variables can be used to simplify theme construction.  There are 2 types o
 
 #### System Variables
 
-System variables are system specific and are derived from the values in es_systems.cfg.
+System variables are system specific and are derived from the values in es_systems.xml.
 * `system.name`
 * `system.fullName`
 * `system.theme`
@@ -793,7 +793,7 @@ Can be created as an extra.
 * `zIndex` - type: FLOAT.
     - z-index value for component.  Components will be rendered in order of z-index value from low to high.
 
-EmulationStation borrows the concept of "nine patches" from Android (or "9-Slices"). Currently the implementation is very simple and hard-coded to only use 48x48px images (16x16px for each "patch"). Check the `data/resources` directory for some examples (button.png, frame.png).
+ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Currently the implementation is very simple and hard-coded to only use 48x48px images (16x16px for each "patch"). Check the `data/resources` directory for some examples (button.png, frame.png).
 
 #### rating
 

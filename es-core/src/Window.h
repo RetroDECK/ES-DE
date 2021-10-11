@@ -18,10 +18,12 @@
 
 #include <memory>
 #include <mutex>
+#include <queue>
 
 class FileData;
 class Font;
 class GuiComponent;
+class GuiInfoPopup;
 class HelpComponent;
 class ImageComponent;
 class InputConfig;
@@ -73,14 +75,6 @@ public:
         virtual void render(const glm::mat4& parentTrans) = 0;
     };
 
-    class InfoPopup
-    {
-    public:
-        virtual void render(const glm::mat4& parentTrans) = 0;
-        virtual void stop() = 0;
-        virtual ~InfoPopup() {}
-    };
-
     Window();
     ~Window();
 
@@ -113,7 +107,11 @@ public:
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
     void reloadHelpPrompts();
 
-    void setInfoPopup(InfoPopup* infoPopup);
+    // GuiInfoPopup notifications.
+    void queueInfoPopup(const std::string& message, const int& duration)
+    {
+        mInfoPopupQueue.emplace(std::make_pair(message, duration));
+    }
     void stopInfoPopup();
 
     void startScreensaver();
@@ -165,7 +163,9 @@ private:
     Screensaver* mScreensaver;
     MediaViewer* mMediaViewer;
     GuiLaunchScreen* mLaunchScreen;
-    InfoPopup* mInfoPopup;
+    GuiInfoPopup* mInfoPopup;
+
+    std::queue<std::pair<std::string, int>> mInfoPopupQueue;
 
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;

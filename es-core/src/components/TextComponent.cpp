@@ -53,7 +53,7 @@ TextComponent::TextComponent(Window* window,
     setFont(font);
     setColor(color);
     setBackgroundColor(bgcolor);
-    setText(text);
+    setText(text, false);
     setPosition(pos);
     setSize(size);
 }
@@ -66,6 +66,9 @@ void TextComponent::onSizeChanged()
 
 void TextComponent::setFont(const std::shared_ptr<Font>& font)
 {
+    if (mFont == font)
+        return;
+
     mFont = font;
     onTextChanged();
 }
@@ -103,10 +106,15 @@ void TextComponent::setOpacity(unsigned char opacity)
     GuiComponent::setOpacity(opacity);
 }
 
-void TextComponent::setText(const std::string& text)
+void TextComponent::setText(const std::string& text, bool update)
 {
+    if (mText == text)
+        return;
+
     mText = text;
-    onTextChanged();
+
+    if (update)
+        onTextChanged();
 }
 
 void TextComponent::setUppercase(bool uppercase)
@@ -261,8 +269,6 @@ void TextComponent::setHorizontalAlignment(Alignment align)
     mHorizontalAlignment = align;
     onTextChanged();
 }
-
-void TextComponent::setVerticalAlignment(Alignment align) { mVerticalAlignment = align; }
 
 void TextComponent::setLineSpacing(float spacing)
 {

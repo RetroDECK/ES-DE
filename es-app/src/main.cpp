@@ -232,7 +232,7 @@ bool parseArgs(int argc, char* argv[])
             }
             int width = atoi(argv[i + 1]);
             int height = atoi(argv[i + 2]);
-            if (width < 640 || height < 480 || width > 7680 || height > 4320 ||
+            if (width < 224 || height < 224 || width > 7680 || height > 4320 ||
                 height < width / 4 || width < height / 2) {
                 std::cerr << "Error: Unsupported resolution " << width << "x" << height
                           << " supplied.\n";

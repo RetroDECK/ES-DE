@@ -141,6 +141,7 @@ private:
         virtual ~FontFace();
     };
 
+    // Completely recreate the texture data for all textures based on mGlyphs information.
     void rebuildTextures();
     void unloadTextures();
 
@@ -152,7 +153,7 @@ private:
 
     std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
     FT_Face getFaceForChar(unsigned int id);
-    void clearFaceCache();
+    void clearFaceCache() { mFaceCache.clear(); }
 
     struct Glyph {
         FontTexture* texture;
@@ -170,7 +171,7 @@ private:
 
     int mMaxGlyphHeight;
 
-    const int mSize;
+    int mSize;
     const std::string mPath;
 
     float getNewlineStartOffset(const std::string& text,

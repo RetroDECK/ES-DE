@@ -114,7 +114,7 @@ CECInput::CECInput()
     callbacks.keyPress = &onKeyPress;
     callbacks.logMessage = &onLogMessage;
 
-    sprintf(config.strDeviceName, "RetroPie ES");
+    sprintf(config.strDeviceName, "ES-DE");
     config.clientVersion = CEC::LIBCEC_VERSION_CURRENT;
     config.bActivateSource = 0;
     config.callbacks = &callbacks;

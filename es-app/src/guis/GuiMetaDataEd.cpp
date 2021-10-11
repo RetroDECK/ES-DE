@@ -31,6 +31,8 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
+#define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.060f)
+
 GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              MetaDataList* md,
                              const std::vector<MetaDataDecl>& mdd,
@@ -39,25 +41,24 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2{1, 3})
-    , mScraperParams(scraperParams)
-    , mMetaDataDecl(mdd)
-    , mMetaData(md)
-    , mSavedCallback(saveCallback)
-    , mClearGameFunc(clearGameFunc)
-    , mDeleteGameFunc(deleteGameFunc)
-    , mMediaFilesUpdated(false)
-    , mInvalidEmulatorEntry(false)
+    : GuiComponent{window}
+    , mBackground{window, ":/graphics/frame.svg"}
+    , mGrid{window, glm::ivec2{3, 6}}
+    , mScraperParams{scraperParams}
+    , mMetaDataDecl{mdd}
+    , mMetaData{md}
+    , mSavedCallback{saveCallback}
+    , mClearGameFunc{clearGameFunc}
+    , mDeleteGameFunc{deleteGameFunc}
+    , mMediaFilesUpdated{false}
+    , mInvalidEmulatorEntry{false}
 {
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mHeaderGrid = std::make_shared<ComponentGrid>(mWindow, glm::ivec2{1, 5});
-
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{3, 2});
 
     // Extract possible subfolders from the path.
     std::string folderPath =
@@ -81,13 +82,25 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
         Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3{}, glm::vec2{}, 0x00000000,
         0.05f);
-    mHeaderGrid->setEntry(mTitle, glm::ivec2{0, 1}, false, true);
-    mHeaderGrid->setEntry(mSubtitle, glm::ivec2{0, 3}, false, true);
 
-    mGrid.setEntry(mHeaderGrid, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mSubtitle, glm::ivec2{0, 2}, false, true, glm::ivec2{3, 1});
 
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 1}, true, true);
+    mGrid.setEntry(mList, glm::ivec2{0, 4}, true, true, glm::ivec2{3, 1});
+
+    // Set up scroll indicators.
+    mScrollUp = std::make_shared<ImageComponent>(mWindow);
+    mScrollDown = std::make_shared<ImageComponent>(mWindow);
+    mScrollIndicator = std::make_shared<ScrollIndicatorComponent>(mList, mScrollUp, mScrollDown);
+
+    mScrollUp->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollUp->setOrigin(0.0f, -0.35f);
+
+    mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollDown->setOrigin(0.0f, 0.35f);
+
+    mGrid.setEntry(mScrollUp, glm::ivec2{2, 0}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2{2, 1}, false, false, glm::ivec2{1, 1});
 
     // Populate list.
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
@@ -143,10 +156,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 ed->setSize(0.0f, height);
                 row.addElement(ed, false, true);
 
-                auto ratingSpacer = std::make_shared<GuiComponent>(mWindow);
-                ratingSpacer->setSize(Renderer::getScreenWidth() * 0.001f, 0.0f);
-                row.addElement(ratingSpacer, false);
-
                 // Pass input to the actual RatingComponent instead of the spacer.
                 row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
                                               std::placeholders::_2);
@@ -161,10 +170,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 ed->setOriginalColor(DEFAULT_TEXTCOLOR);
                 ed->setChangedColor(TEXTCOLOR_USERMARKED);
                 row.addElement(ed, false);
-
-                auto dateSpacer = std::make_shared<GuiComponent>(mWindow);
-                dateSpacer->setSize(Renderer::getScreenWidth() * 0.0035f, 0.0f);
-                row.addElement(dateSpacer, false);
 
                 // Pass input to the actual DateTimeEditComponent instead of the spacer.
                 row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
@@ -253,9 +258,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                 label = entry.second;
 
                             std::shared_ptr<TextComponent> labelText =
-                                std::make_shared<TextComponent>(mWindow, label,
-                                                                Font::get(FONT_SIZE_MEDIUM),
-                                                                0x777777FF, ALIGN_CENTER);
+                                std::make_shared<TextComponent>(
+                                    mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
                             if (scraperParams.system->getAlternativeEmulator() == "" &&
                                 scraperParams.system->getSystemEnvData()
@@ -300,7 +304,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                         // ratio value is the 16:9 reference.
                         float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
 
-                        float maxWidthModifier = glm::clamp(0.70f * aspectValue, 0.50f, 0.92f);
+                        float maxWidthModifier = glm::clamp(0.64f * aspectValue, 0.42f, 0.92f);
                         float maxWidth =
                             static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
 
@@ -472,58 +476,38 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     }
 
     mButtons = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtons, glm::ivec2{0, 2}, true, false);
+    mGrid.setEntry(mButtons, glm::ivec2{0, 5}, true, false, glm::ivec2{3, 1});
 
     // Resize + center.
     float width =
         static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() * 1.05f),
                                     static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
-    setSize(width, Renderer::getScreenHeight() * 0.83f);
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+
+    // Set height explicitly to ten rows for the component list.
+    float height = mList->getRowHeight(0) * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
+                   mButtons->getSize().y;
+
+    setSize(width, height);
 }
 
 void GuiMetaDataEd::onSizeChanged()
 {
-    mGrid.setSize(mSize);
-
-    const float titleHeight = mTitle->getFont()->getLetterHeight();
-    const float subtitleHeight = mSubtitle->getFont()->getLetterHeight();
     const float titleSubtitleSpacing = mSize.y * 0.03f;
 
-    mGrid.setRowHeightPerc(
-        0, (titleHeight + titleSubtitleSpacing + subtitleHeight + TITLE_VERT_PADDING) / mSize.y);
-    mGrid.setRowHeightPerc(2, mButtons->getSize().y / mSize.y);
+    mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(1, TITLE_HEIGHT / mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(2, titleSubtitleSpacing / mSize.y);
+    mGrid.setRowHeightPerc(3, (titleSubtitleSpacing * 1.2f) / mSize.y);
+    mGrid.setRowHeightPerc(4, ((mList->getRowHeight(0) * 10.0f) + 2.0f) / mSize.y);
 
-    // Snap list size to the row height to prevent a fraction of a row from being displayed.
-    float listHeight = 0.0f;
-    float listSize = mList->getSize().y;
-    int i = 0;
-    while (i < mList->size()) {
-        // Add the separator height to the row height so that it also gets properly rendered.
-        float rowHeight = mList->getRowHeight(i) + Renderer::getScreenHeightModifier();
-        if (listHeight + rowHeight < listSize)
-            listHeight += rowHeight;
-        else
-            break;
-        i++;
-    }
+    mGrid.setColWidthPerc(0, 0.07f);
+    mGrid.setColWidthPerc(2, 0.07f);
 
-    // Adjust the size of the list and window.
-    float heightAdjustment = listSize - listHeight;
-    mList->setSize(mList->getSize().x, listHeight);
-    glm::vec2 newWindowSize{mSize};
-    newWindowSize.y -= heightAdjustment;
-    mBackground.fitTo(newWindowSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mGrid.setSize(mSize);
+    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
-    // Move the buttons up as well to make the layout align correctly after the resize.
-    glm::vec3 newButtonPos{mButtons->getPosition()};
-    newButtonPos.y -= heightAdjustment;
-    mButtons->setPosition(newButtonPos);
-
-    mHeaderGrid->setRowHeightPerc(1, titleHeight / mHeaderGrid->getSize().y);
-    mHeaderGrid->setRowHeightPerc(2, titleSubtitleSpacing / mHeaderGrid->getSize().y);
-    mHeaderGrid->setRowHeightPerc(3, subtitleHeight / mHeaderGrid->getSize().y);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }
 
 void GuiMetaDataEd::save()
@@ -560,9 +544,9 @@ void GuiMetaDataEd::save()
 
     // If hidden games are not shown and the hide flag was set for the entry, then write the
     // metadata immediately regardless of the SaveGamelistsMode setting. Otherwise the file
-    // will never be written as the game will be filtered from the gamelist. This solution is not
-    // really good as the gamelist will be written twice, but it's a very special and hopefully
-    // rare situation.
+    // will never be written as the game will be filtered from the gamelist. This solution is
+    // not really good as the gamelist will be written twice, but it's a very special and
+    // hopefully rare situation.
     if (hideGameWhileHidden)
         updateGamelist(mScraperParams.system);
 

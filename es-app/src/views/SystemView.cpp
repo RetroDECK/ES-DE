@@ -68,6 +68,10 @@ void SystemView::populate()
             e.name = (*it)->getName();
             e.object = *it;
 
+            // Component offset.
+            glm::vec3 offsetLogo = {0.0f, 0.0f, 0.0f};
+            glm::vec3 offsetLogoPlaceholderText = {0.0f, 0.0f, 0.0f};
+
             // Make logo.
             const ThemeData::ThemeElement* logoElem = theme->getElement("system", "logo", "image");
             if (logoElem) {
@@ -84,25 +88,83 @@ void SystemView::populate()
                     e.data.logo = std::shared_ptr<GuiComponent>(logo);
                 }
             }
-            if (!e.data.logo) {
-                // No logo in theme; use text.
-                TextComponent* text =
-                    new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
-                                      0x000000FF, ALIGN_CENTER);
-                text->setSize(mCarousel.logoSize * mCarousel.logoScale);
-                text->applyTheme((*it)->getTheme(), "system", "logoText",
-                                 ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
-                                     ThemeFlags::FORCE_UPPERCASE | ThemeFlags::LINE_SPACING |
-                                     ThemeFlags::TEXT);
-                e.data.logo = std::shared_ptr<GuiComponent>(text);
 
-                if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
-                    text->setHorizontalAlignment(mCarousel.logoAlignment);
-                    text->setVerticalAlignment(ALIGN_CENTER);
+            if (!e.data.logo) {
+                // No logo in theme; use placeholder.
+
+                glm::vec2 resolution = glm::vec2{static_cast<float>(Renderer::getScreenWidth()),
+                                                 static_cast<float>(Renderer::getScreenHeight())};
+                glm::vec3 center = {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
+                glm::vec2 scale{getParent() ? getParent()->getSize() : resolution};
+
+                // Placeholder Image.
+                const ThemeData::ThemeElement* logoElem =
+                    theme->getElement("system", "logoPlaceholderImage", "image");
+                if (logoElem) {
+                    auto path = logoElem->get<std::string>("path");
+                    std::string defaultPath =
+                        logoElem->has("default") ? logoElem->get<std::string>("default") : "";
+                    if ((!path.empty() && ResourceManager::getInstance()->fileExists(path)) ||
+                        (!defaultPath.empty() &&
+                         ResourceManager::getInstance()->fileExists(defaultPath))) {
+                        ImageComponent* logo = new ImageComponent(mWindow, false, false);
+                        logo->applyTheme(theme, "system", "logoPlaceholderImage", ThemeFlags::ALL);
+                        if (!logoElem->has("size"))
+                            logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
+                        offsetLogo = logo->getPosition() - center;
+                        logo->setRotateByTargetSize(true);
+                        e.data.logo = std::shared_ptr<GuiComponent>(logo);
+                    }
+                }
+
+                // Placeholder Text.
+                const ThemeData::ThemeElement* logoPlaceholderText =
+                    theme->getElement("system", "logoPlaceholderText", "text");
+                if (logoPlaceholderText) {
+                    // Element 'logoPlaceholderText' found in theme: place text
+                    auto* text =
+                        new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
+                                          0x000000FF, ALIGN_CENTER);
+                    text->setSize(mCarousel.logoSize * mCarousel.logoScale);
+                    if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
+                        text->setHorizontalAlignment(mCarousel.logoAlignment);
+                        text->setVerticalAlignment(ALIGN_CENTER);
+                    }
+                    else {
+                        text->setHorizontalAlignment(ALIGN_CENTER);
+                        text->setVerticalAlignment(mCarousel.logoAlignment);
+                    }
+                    text->applyTheme((*it)->getTheme(), "system", "logoPlaceholderText",
+                                     ThemeFlags::ALL);
+                    if (!e.data.logo) {
+                        e.data.logo = std::shared_ptr<GuiComponent>(text);
+                        offsetLogo = text->getPosition() - center;
+                    }
+                    else {
+                        e.data.logoPlaceholderText = std::shared_ptr<GuiComponent>(text);
+                        offsetLogoPlaceholderText = text->getPosition() - center;
+                    }
                 }
                 else {
-                    text->setHorizontalAlignment(ALIGN_CENTER);
-                    text->setVerticalAlignment(mCarousel.logoAlignment);
+                    // Fallback to legacy centered placeholder text.
+                    TextComponent* text =
+                        new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
+                                          0x000000FF, ALIGN_CENTER);
+                    text->setSize(mCarousel.logoSize * mCarousel.logoScale);
+                    text->applyTheme((*it)->getTheme(), "system", "logoText",
+                                     ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE |
+                                         ThemeFlags::COLOR | ThemeFlags::FORCE_UPPERCASE |
+                                         ThemeFlags::LINE_SPACING | ThemeFlags::TEXT);
+                    e.data.logo = std::shared_ptr<GuiComponent>(text);
+
+                    if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
+                        text->setHorizontalAlignment(mCarousel.logoAlignment);
+                        text->setVerticalAlignment(ALIGN_CENTER);
+                    }
+                    else {
+                        text->setHorizontalAlignment(ALIGN_CENTER);
+                        text->setVerticalAlignment(mCarousel.logoAlignment);
+                    }
                 }
             }
 
@@ -124,7 +186,11 @@ void SystemView::populate()
             }
 
             glm::vec2 denormalized{mCarousel.logoSize * e.data.logo->getOrigin()};
-            e.data.logo->setPosition(denormalized.x, denormalized.y, 0.0f);
+            glm::vec3 v = {denormalized.x, denormalized.y, 0.0f};
+            e.data.logo->setPosition(v + offsetLogo);
+            if (e.data.logoPlaceholderText)
+                e.data.logoPlaceholderText->setPosition(
+                    v + offsetLogoPlaceholderText); // e.data.logo->getPosition() +
 
             // Make background extras.
             e.data.backgroundExtras = ThemeData::makeExtras((*it)->getTheme(), "system", mWindow);
@@ -590,6 +656,17 @@ void SystemView::renderCarousel(const glm::mat4& trans)
         comp->setScale(scale);
         comp->setOpacity(static_cast<unsigned char>(opacity));
         comp->render(logoTrans);
+
+        if (mEntries.at(index).data.logoPlaceholderText) {
+            const std::shared_ptr<GuiComponent>& comp = mEntries.at(index).data.logoPlaceholderText;
+            if (mCarousel.type == VERTICAL_WHEEL || mCarousel.type == HORIZONTAL_WHEEL) {
+                comp->setRotationDegrees(mCarousel.logoRotation * distance);
+                comp->setRotationOrigin(mCarousel.logoRotationOrigin);
+            }
+            comp->setScale(scale);
+            comp->setOpacity(static_cast<unsigned char>(opacity));
+            comp->render(logoTrans);
+        }
     }
     Renderer::popClipRect();
 }

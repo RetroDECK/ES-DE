@@ -79,7 +79,14 @@ Font::Font(int size, const std::string& path)
     : mSize(size)
     , mPath(path)
 {
-    assert(mSize > 0);
+    if (mSize < 9) {
+        mSize = 9;
+        LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
+    }
+    else if (mSize > Renderer::getScreenHeight()) {
+        mSize = Renderer::getScreenHeight();
+        LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
+    }
 
     mMaxGlyphHeight = 0;
 
@@ -274,8 +281,6 @@ FT_Face Font::getFaceForChar(unsigned int id)
     return mFaceCache.cbegin()->second->face;
 }
 
-void Font::clearFaceCache() { mFaceCache.clear(); }
-
 Font::Glyph* Font::getGlyph(unsigned int id)
 {
     // Is it already loaded?
@@ -339,7 +344,6 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     return &glyph;
 }
 
-// Completely recreate the texture data for all textures based on mGlyphs information.
 void Font::rebuildTextures()
 {
     // Recreate OpenGL textures.
@@ -441,7 +445,6 @@ float Font::getLetterHeight()
     return glyph->texSize.y * glyph->texture->textureSize.y;
 }
 
-// Breaks up a normal string with newlines to make it fit xLen.
 std::string Font::wrapText(std::string text, float xLen)
 {
     std::string out;
@@ -665,8 +668,6 @@ TextCache* Font::buildTextCache(const std::string& text,
         // Advance.
         x += glyph->advance.x;
     }
-
-    // TextCache::CacheMetrics metrics = { sizeText(text, lineSpacing) };
 
     TextCache* cache = new TextCache();
     cache->vertexLists.resize(vertMap.size());

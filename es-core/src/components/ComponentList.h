@@ -61,6 +61,13 @@ class ComponentList : public IList<ComponentListRow, void*>
 public:
     ComponentList(Window* window);
 
+    enum ScrollIndicator {
+        SCROLL_NONE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        SCROLL_UP,
+        SCROLL_UP_DOWN,
+        SCROLL_DOWN
+    };
+
     void addRow(const ComponentListRow& row, bool setCursorHere = false);
 
     void textInput(const std::string& text) override;
@@ -87,12 +94,19 @@ public:
     {
         return mCursorChangedCallback;
     }
+    void setScrollIndicatorChangedCallback(
+        const std::function<void(ScrollIndicator state)>& callback)
+    {
+        mScrollIndicatorChangedCallback = callback;
+    }
 
 protected:
     void onCursorChanged(const CursorState& state) override;
 
 private:
     bool mFocused;
+    bool mSetupCompleted;
+    bool mBottomCameraOffset;
 
     void updateCameraOffset();
     void updateElementPosition(const ComponentListRow& row);
@@ -105,6 +119,9 @@ private:
     float mCameraOffset;
 
     std::function<void(CursorState state)> mCursorChangedCallback;
+    std::function<void(ScrollIndicator state)> mScrollIndicatorChangedCallback;
+
+    ScrollIndicator mScrollIndicatorStatus;
 };
 
 #endif // ES_CORE_COMPONENTS_COMPONENT_LIST_H

@@ -10,9 +10,10 @@
 #ifndef ES_CORE_UTILS_MATH_UTIL_H
 #define ES_CORE_UTILS_MATH_UTIL_H
 
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/trigonometric.hpp>
+#include "glm/ext/matrix_clip_space.hpp"
+#include "glm/ext/matrix_transform.hpp"
+#include "glm/trigonometric.hpp"
+
 #include <string>
 
 namespace Utils

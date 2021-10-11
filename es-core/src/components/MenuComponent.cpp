@@ -14,14 +14,14 @@
 #define BUTTON_GRID_VERT_PADDING 32.0f
 #define BUTTON_GRID_HORIZ_PADDING 10.0f
 
-#define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + TITLE_VERT_PADDING)
+#define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f)
 
 MenuComponent::MenuComponent(Window* window,
                              std::string title,
                              const std::shared_ptr<Font>& titleFont)
     : GuiComponent(window)
     , mBackground(window)
-    , mGrid(window, glm::ivec2{1, 3})
+    , mGrid(window, glm::ivec2{3, 4})
     , mNeedsSaving(false)
 {
     addChild(&mBackground);
@@ -34,11 +34,25 @@ MenuComponent::MenuComponent(Window* window,
     mTitle->setHorizontalAlignment(ALIGN_CENTER);
     mTitle->setColor(0x555555FF);
     setTitle(title, titleFont);
-    mGrid.setEntry(mTitle, glm::ivec2{}, false);
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{3, 2});
 
     // Set up list which will never change (externally, anyway).
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 1}, true);
+    mGrid.setEntry(mList, glm::ivec2{0, 2}, true, true, glm::ivec2{3, 1});
+
+    // Set up scroll indicators.
+    mScrollUp = std::make_shared<ImageComponent>(mWindow);
+    mScrollDown = std::make_shared<ImageComponent>(mWindow);
+    mScrollIndicator = std::make_shared<ScrollIndicatorComponent>(mList, mScrollUp, mScrollDown);
+
+    mScrollUp->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollUp->setOrigin(0.0f, -0.35f);
+
+    mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollDown->setOrigin(0.0f, 0.35f);
+
+    mGrid.setEntry(mScrollUp, glm::ivec2{2, 0}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2{2, 1}, false, false, glm::ivec2{1, 1});
 
     updateGrid();
     updateSize();
@@ -109,8 +123,12 @@ void MenuComponent::onSizeChanged()
     mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
     // Update grid row/column sizes.
-    mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y);
-    mGrid.setRowHeightPerc(2, getButtonGridHeight() / mSize.y);
+    mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(1, TITLE_HEIGHT / mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(3, getButtonGridHeight() / mSize.y);
+
+    mGrid.setColWidthPerc(0, 0.07f);
+    mGrid.setColWidthPerc(2, 0.07f);
 
     mGrid.setSize(mSize);
 }
@@ -134,7 +152,7 @@ void MenuComponent::updateGrid()
 
     if (mButtons.size()) {
         mButtonGrid = makeButtonGrid(mWindow, mButtons);
-        mGrid.setEntry(mButtonGrid, glm::ivec2{0, 2}, true, false);
+        mGrid.setEntry(mButtonGrid, glm::ivec2{0, 3}, true, false, glm::ivec2{3, 1});
     }
 }
 
