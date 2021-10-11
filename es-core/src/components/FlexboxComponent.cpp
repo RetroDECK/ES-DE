@@ -7,35 +7,41 @@
 //  Used by gamelist views.
 //
 
-#include "components/FlexboxComponent.h"
-#include "Settings.h"
-#include "ThemeData.h"
-#include "resources/TextureResource.h"
+#define DEFAULT_DIRECTION Direction::row
+#define DEFAULT_ALIGN Align::center
+#define DEFAULT_ITEMS_PER_LINE 4
+#define DEFAULT_LINES 1
+#define DEFAULT_MARGIN_X 10.0f
+#define DEFAULT_MARGIN_Y 10.0f
 
-FlexboxComponent::FlexboxComponent(Window* window)
-    : GuiComponent(window)
-    , mDirection(DEFAULT_DIRECTION)
-    , mAlign(DEFAULT_ALIGN)
-    , mItemsPerLine(DEFAULT_ITEMS_PER_LINE)
-    , mLines(DEFAULT_LINES)
-    , mItemMargin({DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y})
-    , mLayoutValid(false)
+#include "components/FlexboxComponent.h"
+
+#include "ThemeData.h"
+
+FlexboxComponent::FlexboxComponent(Window* window,
+                                   std::vector<std::pair<std::string, ImageComponent>>& images)
+    : GuiComponent{window}
+    , mDirection{DEFAULT_DIRECTION}
+    , mAlign{DEFAULT_ALIGN}
+    , mImages(images)
+    , mItemsPerLine{DEFAULT_ITEMS_PER_LINE}
+    , mLines{DEFAULT_LINES}
+    , mItemMargin{glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y}}
+    , mLayoutValid{false}
 {
 }
-
-void FlexboxComponent::onSizeChanged() { mLayoutValid = false; }
 
 void FlexboxComponent::computeLayout()
 {
     // Start placing items in the top-left.
-    float anchorX = 0;
-    float anchorY = 0;
-    float anchorOriginX = 0;
-    float anchorOriginY = 0;
+    float anchorX{0.0f};
+    float anchorY{0.0f};
+    float anchorOriginX{0.0f};
+    float anchorOriginY{0.0f};
 
     // Translation directions when placing items.
-    glm::ivec2 directionLine = {1, 0};
-    glm::ivec2 directionRow = {0, 1};
+    glm::ivec2 directionLine{1, 0};
+    glm::ivec2 directionRow{0, 1};
 
     // Change direction.
     if (mDirection == Direction::column) {
@@ -43,21 +49,23 @@ void FlexboxComponent::computeLayout()
         directionRow = {1, 0};
     }
 
-    // Compute children maximal dimensions.
+    // Compute maximum image dimensions.
     glm::vec2 grid;
     if (mDirection == Direction::row)
         grid = {mItemsPerLine, mLines};
     else
         grid = {mLines, mItemsPerLine};
-    glm::vec2 maxItemSize = (mSize + mItemMargin - grid * mItemMargin) / grid;
+    glm::vec2 maxItemSize{(mSize + mItemMargin - grid * mItemMargin) / grid};
 
-    // Set final children dimensions.
-    for (auto i : mChildren) {
-        auto oldSize = i->getSize();
+    // Set final image dimensions.
+    for (auto& image : mImages) {
+        if (!image.second.isVisible())
+            continue;
+        auto oldSize{image.second.getSize()};
         if (oldSize.x == 0)
             oldSize.x = maxItemSize.x;
-        glm::vec2 sizeMaxX = {maxItemSize.x, oldSize.y * (maxItemSize.x / oldSize.x)};
-        glm::vec2 sizeMaxY = {oldSize.x * (maxItemSize.y / oldSize.y), maxItemSize.y};
+        glm::vec2 sizeMaxX{maxItemSize.x, oldSize.y * (maxItemSize.x / oldSize.x)};
+        glm::vec2 sizeMaxY{oldSize.x * (maxItemSize.y / oldSize.y), maxItemSize.y};
         glm::vec2 newSize;
         if (sizeMaxX.y > maxItemSize.y)
             newSize = sizeMaxY;
@@ -65,23 +73,27 @@ void FlexboxComponent::computeLayout()
             newSize = sizeMaxX;
         else
             newSize = sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
-        i->setSize(newSize);
+        image.second.setResize(newSize.x, newSize.y);
     }
 
     // Pre-compute layout parameters.
     float lineWidth = (mDirection == Direction::row ? (maxItemSize.y + mItemMargin.y) :
                                                       (maxItemSize.x + mItemMargin.x));
-    float anchorXStart = anchorX;
-    float anchorYStart = anchorY;
+    float anchorXStart{anchorX};
+    float anchorYStart{anchorY};
 
-    // Iterate through the children.
-    for (int i = 0; i < static_cast<int>(mChildren.size()); i++) {
-        GuiComponent* child = mChildren[i];
-        auto size = child->getSize();
+    int i = 0;
+
+    // Iterate through the images.
+    for (auto& image : mImages) {
+        if (!image.second.isVisible())
+            continue;
+
+        auto size{image.second.getSize()};
 
         // Top-left anchor position.
-        float x = anchorX - anchorOriginX * size.x;
-        float y = anchorY - anchorOriginY * size.y;
+        float x{anchorX - anchorOriginX * size.x};
+        float y{anchorY - anchorOriginY * size.y};
 
         // Apply alignment
         if (mAlign == Align::end) {
@@ -93,7 +105,7 @@ void FlexboxComponent::computeLayout()
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) / 2 : 0;
         }
         else if (mAlign == Align::stretch && mDirection == Direction::row) {
-            child->setSize(child->getSize().x, maxItemSize.y);
+            image.second.setSize(image.second.getSize().x, maxItemSize.y);
         }
 
         // Apply origin.
@@ -103,10 +115,10 @@ void FlexboxComponent::computeLayout()
             y -= mOrigin.y * mSize.y;
 
         // Store final item position.
-        child->setPosition(getPosition().x + x, getPosition().y + y);
+        image.second.setPosition(getPosition().x + x, getPosition().y + y);
 
         // Translate anchor.
-        if ((i + 1) % std::max(1, static_cast<int>(mItemsPerLine)) != 0) {
+        if ((i++ + 1) % std::max(1, static_cast<int>(mItemsPerLine)) != 0) {
             // Translate on same line.
             anchorX += (size.x + mItemMargin.x) * static_cast<float>(directionLine.x);
             anchorY += (size.y + mItemMargin.y) * static_cast<float>(directionLine.y);
@@ -135,7 +147,8 @@ void FlexboxComponent::render(const glm::mat4& parentTrans)
     if (!mLayoutValid)
         computeLayout();
 
-    renderChildren(parentTrans);
+    for (auto& image : mImages)
+        image.second.render(parentTrans);
 }
 
 void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -149,7 +162,6 @@ void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                   glm::vec2{static_cast<float>(Renderer::getScreenWidth()),
                                             static_cast<float>(Renderer::getScreenHeight())}};
 
-    // TODO: How to do this without explicit 'badges' property?
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "badges");
     if (!elem)
         return;
@@ -178,10 +190,4 @@ void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     // Layout no longer valid.
     mLayoutValid = false;
-}
-
-std::vector<HelpPrompt> FlexboxComponent::getHelpPrompts()
-{
-    std::vector<HelpPrompt> prompts;
-    return prompts;
 }
