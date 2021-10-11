@@ -12,11 +12,12 @@ based on:       Switch Theme by Lilbud
 	
 	<!-- color variables -->
 	<variables>
-		<backgroundColor>2d2d2d</backgroundColor>
-		<backgroundColor2>242424</backgroundColor2>
-		<mainColor>15c49e</mainColor>
-		<highlightColor>23caca</highlightColor>
-		<secondaryColor>fefefe</secondaryColor>
+		<backgroundColor>323232</backgroundColor>
+		<backgroundColor2>2d2d2d</backgroundColor2>
+		<mainColor>0afdca</mainColor>
+		<highlightColor>82f0ff</highlightColor>
+		<secondaryColor>f4f4f4</secondaryColor>
+		<tertiaryColor>858585</tertiaryColor>
 		<systemColor>3aa5ab</systemColor>
 	</variables>
 
@@ -32,10 +33,10 @@ based on:       Switch Theme by Lilbud
 			<color>${backgroundColor}</color>
 		</image>
 		<image name="topline, bottomline" extra="true">
-			<color>${secondaryColor}</color>
+			<color>${tertiaryColor}</color>
 		</image>
 		<rating name="md_rating">
-			<unfilledPath>./assets/dark/star-unfilled.svg</unfilledPath>
+			<unfilledPath>./../assets/dark/star-unfilled.svg</unfilledPath>
 		</rating>
 	</view>
 
@@ -80,15 +81,18 @@ based on:       Switch Theme by Lilbud
 			<secondaryColor>${secondaryColor}</secondaryColor>
 			<selectorColor>${mainColor}</selectorColor>
 		</textlist>
-		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_developer, md_genre, md_players, md_playcount, md_releasedate, md_description">
+		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_lbl_rating">
+			<color>${tertiaryColor}</color>
+		</text>
+		<text name="md_developer, md_publisher, md_genre, md_players, md_playcount, md_releasedate, md_description">
 			<color>${secondaryColor}</color>
 		</text>
 		<badges name="md_badges">
-			<customBadgeIcon badge="favorite">./assets/dark/favorite.svg</customBadgeIcon>
-			<customBadgeIcon badge="completed">./assets/dark/completed.svg</customBadgeIcon>
-			<customBadgeIcon badge="kidgame">./assets/dark/kidgame.svg</customBadgeIcon>
-			<customBadgeIcon badge="broken">./assets/dark/broken.svg</customBadgeIcon>
-			<customBadgeIcon badge="altemu">./assets/dark/altemu.svg</customBadgeIcon>
+			<customBadgeIcon badge="favorite">./../assets/dark/badges/favorite.svg</customBadgeIcon>
+			<customBadgeIcon badge="completed">./../assets/dark/badges/completed.svg</customBadgeIcon>
+			<customBadgeIcon badge="kidgame">./../assets/dark/badges/kidgame.svg</customBadgeIcon>
+			<customBadgeIcon badge="broken">./../assets/dark/badges/broken.svg</customBadgeIcon>
+			<customBadgeIcon badge="altemulator">./../assets/dark/badges/altemulator.svg</customBadgeIcon>
 		</badges>
 	</view>
 	<view name="detailed, video, grid">
@@ -96,10 +100,10 @@ based on:       Switch Theme by Lilbud
 			<color>${backgroundColor2}</color>
 		</image>
 		<image name="md_background_grad_top" extra="true">
-			<path>./assets/dark/gradient.png</path>
+			<path>./../assets/dark/gradient.png</path>
 		</image>
 		<image name="md_background_grad_bottom" extra="true">
-			<path>./assets/dark/gradient.png</path>
+			<path>./../assets/dark/gradient.png</path>
 		</image>
 	</view>
 

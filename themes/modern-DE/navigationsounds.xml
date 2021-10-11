@@ -1,6 +1,5 @@
 <theme>
-    <formatVersion>6</formatVersion>
-
+    <formatVersion>7</formatVersion>
     <feature supported="navigationsounds">
         <view name="all">
             <sound name="systembrowse">

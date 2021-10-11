@@ -9,6 +9,6 @@ based on:       Switch Theme by Lilbud
 
 <theme>
     <formatVersion>7</formatVersion>
-    <include>../../settings/light.xml</include>
-    <include>../../settings/16_9.xml</include>
+    <include>./../../settings/light.xml</include>
+    <include>./../../settings/16_9.xml</include>
 </theme>

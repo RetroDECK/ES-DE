@@ -35,7 +35,7 @@ based on:       Switch Theme by Lilbud
 			<color>${secondaryColor}</color>
 		</image>
 		<rating name="md_rating">
-			<unfilledPath>./assets/light/star-unfilled.svg</unfilledPath>
+			<unfilledPath>./../assets/light/star-unfilled.svg</unfilledPath>
 		</rating>
 	</view>
 
@@ -83,11 +83,11 @@ based on:       Switch Theme by Lilbud
 			<color>${secondaryColor}</color>
 		</text>
 		<badges name="md_badges">
-			<customBadgeIcon badge="favorite">./assets/light/favorite.svg</customBadgeIcon>
-			<customBadgeIcon badge="completed">./assets/light/completed.svg</customBadgeIcon>
-			<customBadgeIcon badge="kidgame">./assets/light/kidgame.svg</customBadgeIcon>
-			<customBadgeIcon badge="broken">./assets/light/broken.svg</customBadgeIcon>
-			<customBadgeIcon badge="altemu">./assets/light/altemu.svg</customBadgeIcon>
+			<customBadgeIcon badge="favorite">./../assets/light/badges/favorite.svg</customBadgeIcon>
+			<customBadgeIcon badge="completed">./../assets/light/badges/completed.svg</customBadgeIcon>
+			<customBadgeIcon badge="kidgame">./../assets/light/badges/kidgame.svg</customBadgeIcon>
+			<customBadgeIcon badge="broken">./../assets/light/badges/broken.svg</customBadgeIcon>
+			<customBadgeIcon badge="altemulator">./../assets/light/badges/altemulator.svg</customBadgeIcon>
 		</badges>
 	</view>
 	<view name="detailed, video, grid">
@@ -95,10 +95,10 @@ based on:       Switch Theme by Lilbud
 			<color>${backgroundColor2}</color>
 		</image>
 		<image name="md_background_grad_top" extra="true">
-			<path>./assets/light/gradient.png</path>
+			<path>./../assets/light/gradient.png</path>
 		</image>
 		<image name="md_background_grad_bottom" extra="true">
-			<path>./assets/light/gradient.png</path>
+			<path>./../assets/light/gradient.png</path>
 		</image>
 	</view>
 

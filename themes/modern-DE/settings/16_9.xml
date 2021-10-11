@@ -51,6 +51,11 @@ based on:       Switch Theme by Lilbud
 		<datetime name="md_lastplayed">
 			<pos>1 1</pos>
 		</datetime>
+		<badges name="md_badges">
+			<itemsPerLine>4</itemsPerLine>
+			<lines>2</lines>
+			<itemMargin>0.0028125 0.005</itemMargin>
+		</badges>
 	</view>
 </theme>
 		
