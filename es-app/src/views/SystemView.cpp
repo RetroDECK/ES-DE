@@ -118,25 +118,54 @@ void SystemView::populate()
                 }
 
                 // Placeholder Text.
-                auto* text =
-                    new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
-                                      0x000000FF, ALIGN_CENTER);
-                text->setSize(mCarousel.logoSize * mCarousel.logoScale);
-                if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
-                    text->setHorizontalAlignment(mCarousel.logoAlignment);
-                    text->setVerticalAlignment(ALIGN_CENTER);
+                const ThemeData::ThemeElement* logoPlaceholderText =
+                    theme->getElement("system", "logoPlaceholderText", "text");
+                if (logoPlaceholderText) {
+                    // Element 'logoPlaceholderText' found in theme: place text
+                    auto* text =
+                        new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
+                                          0x000000FF, ALIGN_CENTER);
+                    text->setSize(mCarousel.logoSize * mCarousel.logoScale);
+                    if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
+                        text->setHorizontalAlignment(mCarousel.logoAlignment);
+                        text->setVerticalAlignment(ALIGN_CENTER);
+                    }
+                    else {
+                        text->setHorizontalAlignment(ALIGN_CENTER);
+                        text->setVerticalAlignment(mCarousel.logoAlignment);
+                    }
+                    text->applyTheme((*it)->getTheme(), "system", "logoPlaceholderText",
+                                     ThemeFlags::ALL);
+                    if (!e.data.logo) {
+                        e.data.logo = std::shared_ptr<GuiComponent>(text);
+                        offsetLogo = text->getPosition() - center;
+                    }
+                    else {
+                        e.data.logoPlaceholderText = std::shared_ptr<GuiComponent>(text);
+                        offsetLogoPlaceholderText = text->getPosition() - center;
+                    }
                 }
                 else {
-                    text->setHorizontalAlignment(ALIGN_CENTER);
-                    text->setVerticalAlignment(mCarousel.logoAlignment);
-                }
-                text->applyTheme((*it)->getTheme(), "system", "logoPlaceholderText",
-                                 ThemeFlags::ALL);
-                offsetLogoPlaceholderText = text->getPosition() - center;
-                if (!e.data.logo)
+                    // Fallback to legacy centered placeholder text.
+                    TextComponent* text =
+                        new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
+                                          0x000000FF, ALIGN_CENTER);
+                    text->setSize(mCarousel.logoSize * mCarousel.logoScale);
+                    text->applyTheme((*it)->getTheme(), "system", "logoText",
+                                     ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE |
+                                         ThemeFlags::COLOR | ThemeFlags::FORCE_UPPERCASE |
+                                         ThemeFlags::LINE_SPACING | ThemeFlags::TEXT);
                     e.data.logo = std::shared_ptr<GuiComponent>(text);
-                else
-                    e.data.logoPlaceholderText = std::shared_ptr<GuiComponent>(text);
+
+                    if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
+                        text->setHorizontalAlignment(mCarousel.logoAlignment);
+                        text->setVerticalAlignment(ALIGN_CENTER);
+                    }
+                    else {
+                        text->setHorizontalAlignment(ALIGN_CENTER);
+                        text->setVerticalAlignment(mCarousel.logoAlignment);
+                    }
+                }
             }
 
             if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
