@@ -25,7 +25,7 @@ based on:       Switch Theme by Lilbud
 			<pos>0.96 0.935</pos>
 			<origin>1 0</origin>
 			<fontPath>${mainFont}</fontPath>
-			<fontSize>0.035f</fontSize>
+			<fontSize>0.035</fontSize>
 			<entrySpacing>48</entrySpacing>
 			<iconTextSpacing>12</iconTextSpacing>
 			<textStyle>camelcase</textStyle>
@@ -57,6 +57,22 @@ based on:       Switch Theme by Lilbud
 		<image name="logo">
 			<path>./art/${system.theme}.jpg</path>
 		</image>
+		<image name="logoPlaceholderImage">
+			<pos>0.5 0.5</pos>
+			<size>0.225 0.3975</size>
+			<color>505050</color>
+			<path>./assets/box.png</path>
+		</image>
+		<text name="logoPlaceholderText">
+			<pos>0.5 0.5</pos>
+			<origin>0.5 0.5</origin>
+			<size>0.225 0.3975</size>
+			<fontSize>0.035</fontSize>
+			<fontPath>${mainFont}</fontPath>
+			<color>f4f4f4</color>
+			<forceUppercase>false</forceUppercase>
+			<text>${system.fullName}</text>
+		</text>
 		<carousel name="systemcarousel">
 			<color>00000000</color>
 		</carousel>
