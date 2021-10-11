@@ -80,7 +80,7 @@ private:
     static CURLM* s_multi_handle;
 
     Status mStatus;
-    CURL *mHandle;
+    CURL* mHandle;
 
     std::stringstream mContent;
     std::string mErrorMsg;

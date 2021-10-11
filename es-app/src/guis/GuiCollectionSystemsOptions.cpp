@@ -52,7 +52,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              autoSystems.cbegin();
          it != autoSystems.cend(); it++)
-        collection_systems_auto->add(it->second.decl.longName, it->second.decl.name,
+        collection_systems_auto->add(it->second.decl.fullName, it->second.decl.name,
                                      it->second.isEnabled);
     addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
     addSaveFunc([this, autoSystems] {
@@ -101,7 +101,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              customSystems.cbegin();
          it != customSystems.cend(); it++)
-        collection_systems_custom->add(it->second.decl.longName, it->second.decl.name,
+        collection_systems_custom->add(it->second.decl.fullName, it->second.decl.name,
                                        it->second.isEnabled);
 
     addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
@@ -200,12 +200,12 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
         glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     row.addElement(newCollection, true);
     row.addElement(bracketNewCollection, false);
-    auto createCollectionCall = [this](const std::string &newVal) {
+    auto createCollectionCall = [this](const std::string& newVal) {
         std::string name = newVal;
         // We need to store the first GUI and remove it, as it'll be deleted
         // by the actual GUI.
-        Window *window = mWindow;
-        GuiComponent *topGui = window->peekGui();
+        Window* window = mWindow;
+        GuiComponent* topGui = window->peekGui();
         window->removeGui(topGui);
         createCustomCollection(name);
     };
@@ -213,10 +213,11 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
         row.makeAcceptInputHandler([this, createCollectionCall] {
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    mWindow, getHelpStyle(), "New Collection Name", "", createCollectionCall, false,
-                    "CREATE", "CREATE COLLECTION?"));
+                mWindow, getHelpStyle(), "New Collection Name", "", createCollectionCall, false,
+                "CREATE", "CREATE COLLECTION?"));
         });
-    } else {
+    }
+    else {
         row.makeAcceptInputHandler([this, createCollectionCall] {
             mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "New Collection Name",
                                                   "", createCollectionCall, false, "CREATE",
@@ -228,11 +229,11 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     // Delete custom collection.
     row.elements.clear();
     auto deleteCollection = std::make_shared<TextComponent>(
-            mWindow, "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        mWindow, "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     auto bracketDeleteCollection = std::make_shared<ImageComponent>(mWindow);
     bracketDeleteCollection->setImage(":/graphics/arrow.svg");
     bracketDeleteCollection->setResize(
-            glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     row.addElement(deleteCollection, true);
     row.addElement(bracketDeleteCollection, false);
     row.makeAcceptInputHandler([this, customSystems] {

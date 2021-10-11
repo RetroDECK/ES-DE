@@ -71,10 +71,11 @@ bool ComponentList::input(InputConfig* config, Input input)
     if (mEntries.at(mCursor).data.input_handler) {
         if (mEntries.at(mCursor).data.input_handler(config, input))
             return true;
-    } else {
+    }
+    else {
         // No input handler assigned, do the default, which is to give it
         // to the rightmost element in the row.
-        auto &row = mEntries.at(mCursor).data;
+        auto& row = mEntries.at(mCursor).data;
         if (row.elements.size()) {
             if (row.elements.back().component->input(config, input))
                 return true;
@@ -196,7 +197,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     std::vector<GuiComponent*> drawAfterCursor;
     bool drawAll;
     for (size_t i = 0; i < mEntries.size(); i++) {
-        auto &entry = mEntries.at(i);
+        auto& entry = mEntries.at(i);
         drawAll = !mFocused || i != static_cast<unsigned int>(mCursor);
         for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
             if (drawAll || it->invert_when_selected) {

@@ -86,19 +86,19 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
                     // Previously refined.
                     if (mSearchComp->getRefinedSearch())
                         allowRefine = true;
-                        // Interactive mode and "Auto-accept single game matches" not enabled.
+                    // Interactive mode and "Auto-accept single game matches" not enabled.
                     else if (mSearchComp->getSearchType() !=
                              GuiScraperSearch::ACCEPT_SINGLE_MATCHES)
                         allowRefine = true;
-                        // Interactive mode with "Auto-accept single game matches" enabled and more
-                        // than one result.
+                    // Interactive mode with "Auto-accept single game matches" enabled and more
+                    // than one result.
                     else if (mSearchComp->getSearchType() ==
-                             GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                                 GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
                              mSearchComp->getScraperResultsSize() > 1)
                         allowRefine = true;
-                        // Dito but there were no games found, or the search has not been completed.
+                    // Dito but there were no games found, or the search has not been completed.
                     else if (mSearchComp->getSearchType() ==
-                             GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                                 GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
                              !mSearchComp->getFoundGame())
                         allowRefine = true;
 

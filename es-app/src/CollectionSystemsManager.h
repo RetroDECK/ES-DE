@@ -43,7 +43,7 @@ enum CollectionSystemType {
 struct CollectionSystemDecl {
     CollectionSystemType type;
     std::string name;
-    std::string longName;
+    std::string fullName;
     std::string themeFolder;
     bool isCustom;
 };

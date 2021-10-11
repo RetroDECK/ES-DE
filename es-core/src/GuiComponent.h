@@ -37,9 +37,8 @@ class Window;
 class GuiComponent
 {
 public:
-    GuiComponent(Window *window);
-
-    virtual ~GuiComponent() noexcept;
+    GuiComponent(Window* window);
+    virtual ~GuiComponent();
 
     virtual void textInput(const std::string& text);
 
@@ -231,15 +230,14 @@ public:
     const static unsigned char MAX_ANIMATIONS = 4;
 
 protected:
-    void renderChildren(const glm::mat4 &transform) const;
-
+    void renderChildren(const glm::mat4& transform) const;
     void updateSelf(int deltaTime); // Updates animations.
     void updateChildren(int deltaTime); // Updates animations.
 
-    Window *mWindow;
+    Window* mWindow;
 
-    GuiComponent *mParent;
-    std::vector<GuiComponent *> mChildren;
+    GuiComponent* mParent;
+    std::vector<GuiComponent*> mChildren;
 
     unsigned char mOpacity;
     unsigned int mColor;

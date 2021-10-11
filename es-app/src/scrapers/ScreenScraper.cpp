@@ -553,15 +553,7 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
     bool singleSearch = false;
 
     // Trim leading and trailing whitespaces.
-    searchName.erase(searchName.begin(),
-                     std::find_if(searchName.begin(), searchName.end(), [](char c) {
-                         return !std::isspace(static_cast<unsigned char>(c));
-                     }));
-    searchName.erase(
-        std::find_if(searchName.rbegin(), searchName.rend(),
-                     [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
-            .base(),
-        searchName.end());
+    searchName = Utils::String::trim(searchName);
 
     // If only whitespaces were entered as the search string, then search using a random string
     // that will not return any results. This is a quick and dirty way to avoid french error

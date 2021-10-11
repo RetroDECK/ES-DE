@@ -143,13 +143,12 @@ bool TextureResource::bind()
     }
 }
 
-std::shared_ptr<TextureResource> TextureResource::get(const std::string &path,
+std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
                                                       bool tile,
                                                       bool forceLoad,
                                                       bool dynamic,
                                                       bool linearMagnify,
-                                                      float scaleDuringLoad,
-                                                      bool cacheImage)
+                                                      float scaleDuringLoad)
 {
     std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
 
@@ -177,7 +176,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string &path,
     std::shared_ptr<TextureData> data = sTextureDataManager.get(tex.get());
 
     // Is it an SVG?
-    if (key.first.substr(key.first.size() - 4, std::string::npos) != ".svg" || cacheImage) {
+    if (key.first.substr(key.first.size() - 4, std::string::npos) != ".svg") {
         // Probably not. Add it to our map. We don't add SVGs because 2 SVGs might be
         // rasterized at different sizes.
         sTextureMap[key] = std::weak_ptr<TextureResource>(tex);
@@ -195,9 +194,14 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string &path,
     return tex;
 }
 
-// For scalable source images in textures we want to set the resolution to rasterize at.
 void TextureResource::rasterizeAt(size_t width, size_t height)
 {
+    if (mTextureData != nullptr) {
+        glm::vec2 textureSize = mTextureData.get()->getSize();
+        if (textureSize.x == width && textureSize.y == height)
+            return;
+    }
+
     std::shared_ptr<TextureData> data;
     if (mTextureData != nullptr)
         data = mTextureData;

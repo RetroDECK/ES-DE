@@ -564,13 +564,20 @@ namespace Utils
 
         std::string trim(const std::string& stringArg)
         {
-            const size_t strBegin = stringArg.find_first_not_of(" \t");
-            const size_t strEnd = stringArg.find_last_not_of(" \t");
+            std::string trimString = stringArg;
 
-            if (strBegin == std::string::npos)
-                return "";
+            // Trim leading and trailing whitespaces.
+            trimString.erase(trimString.begin(),
+                             std::find_if(trimString.begin(), trimString.end(), [](char c) {
+                                 return !std::isspace(static_cast<unsigned char>(c));
+                             }));
+            trimString.erase(
+                std::find_if(trimString.rbegin(), trimString.rend(),
+                             [](char c) { return !std::isspace(static_cast<unsigned char>(c)); })
+                    .base(),
+                trimString.end());
 
-            return stringArg.substr(strBegin, strEnd - strBegin + 1);
+            return trimString;
         }
 
         std::string replace(const std::string& stringArg,

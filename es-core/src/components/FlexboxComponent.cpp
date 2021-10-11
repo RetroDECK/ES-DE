@@ -8,8 +8,6 @@
 //
 
 #include "components/FlexboxComponent.h"
-#include <numeric>
-
 #include "Settings.h"
 #include "ThemeData.h"
 #include "resources/TextureResource.h"
@@ -19,50 +17,13 @@ FlexboxComponent::FlexboxComponent(Window* window)
     , mDirection(DEFAULT_DIRECTION)
     , mAlign(DEFAULT_ALIGN)
     , mItemsPerLine(DEFAULT_ITEMS_PER_LINE)
-    , mItemWidth(DEFAULT_ITEM_SIZE_X)
+    , mLines(DEFAULT_LINES)
+    , mItemMargin({DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y})
+    , mLayoutValid(false)
 {
-    // Initialize item margins.
-    mItemMargin = glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y};
-
-    // Layout validity
-    mLayoutValid = false;
 }
 
-// Getters/Setters for rendering options.
-void FlexboxComponent::setDirection(std::string value)
-{
-    mDirection = value;
-    mLayoutValid = false;
-}
-std::string FlexboxComponent::getDirection() { return mDirection; }
-void FlexboxComponent::setAlign(std::string value)
-{
-    mAlign = value;
-    mLayoutValid = false;
-}
-std::string FlexboxComponent::getAlign() { return mAlign; }
-void FlexboxComponent::setItemsPerLine(unsigned int value)
-{
-    mItemsPerLine = value;
-    mLayoutValid = false;
-}
-unsigned int FlexboxComponent::getItemsPerLine() { return mItemsPerLine; }
-void FlexboxComponent::setItemMargin(glm::vec2 value)
-{
-    mItemMargin = value;
-    mLayoutValid = false;
-}
-glm::vec2 FlexboxComponent::getItemMargin() { return mItemMargin; }
-void FlexboxComponent::setItemWidth(float value)
-{
-    mItemWidth = value;
-    mLayoutValid = false;
-}
-float FlexboxComponent::getItemWidth() { return mItemWidth; }
-
-void FlexboxComponent::onSizeChanged() {
-    mLayoutValid = false;
-}
+void FlexboxComponent::onSizeChanged() { mLayoutValid = false; }
 
 void FlexboxComponent::computeLayout()
 {
@@ -73,94 +34,91 @@ void FlexboxComponent::computeLayout()
     float anchorOriginY = 0;
 
     // Translation directions when placing items.
-    glm::vec2 directionLine = {1, 0};
-    glm::vec2 directionRow = {0, 1};
+    glm::ivec2 directionLine = {1, 0};
+    glm::ivec2 directionRow = {0, 1};
 
     // Change direction.
-    if (mDirection == DIRECTION_COLUMN) {
+    if (mDirection == Direction::column) {
         directionLine = {0, 1};
         directionRow = {1, 0};
     }
 
-    // Set children sizes.
-    glm::vec2 maxItemSize = {0.0f, 0.0f};
+    // Compute children maximal dimensions.
+    glm::vec2 grid;
+    if (mDirection == Direction::row)
+        grid = {mItemsPerLine, mLines};
+    else
+        grid = {mLines, mItemsPerLine};
+    glm::vec2 maxItemSize = (mSize + mItemMargin - grid * mItemMargin) / grid;
+
+    // Set final children dimensions.
     for (auto i : mChildren) {
         auto oldSize = i->getSize();
         if (oldSize.x == 0)
-            oldSize.x = DEFAULT_ITEM_SIZE_X;
-        glm::vec2 newSize = {mItemWidth, oldSize.y * (mItemWidth / oldSize.x)};
+            oldSize.x = maxItemSize.x;
+        glm::vec2 sizeMaxX = {maxItemSize.x, oldSize.y * (maxItemSize.x / oldSize.x)};
+        glm::vec2 sizeMaxY = {oldSize.x * (maxItemSize.y / oldSize.y), maxItemSize.y};
+        glm::vec2 newSize;
+        if (sizeMaxX.y > maxItemSize.y)
+            newSize = sizeMaxY;
+        else if (sizeMaxY.x > maxItemSize.x)
+            newSize = sizeMaxX;
+        else
+            newSize = sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
         i->setSize(newSize);
-        maxItemSize = {std::max(maxItemSize.x, newSize.x), std::max(maxItemSize.y, newSize.y)};
     }
 
     // Pre-compute layout parameters.
-    int n = mChildren.size();
-    int nLines = std::max(1, (int) std::ceil(n / std::max(1, (int) mItemsPerLine)));
-    float lineWidth =
-            (mDirection == "row" ? (maxItemSize.y + mItemMargin.y) : (maxItemSize.x + mItemMargin.x));
+    float lineWidth = (mDirection == Direction::row ? (maxItemSize.y + mItemMargin.y) :
+                                                      (maxItemSize.x + mItemMargin.x));
     float anchorXStart = anchorX;
     float anchorYStart = anchorY;
 
-    // Compute total container size.
-    glm::vec2 totalSize = {-mItemMargin.x, -mItemMargin.y};
-    if (mDirection == "row") {
-        totalSize.x += (mItemMargin.x + mItemWidth) * mItemsPerLine;
-        totalSize.y += (mItemMargin.y + maxItemSize.y) * nLines;
-    } else {
-        totalSize.x += (mItemMargin.x + mItemWidth) * nLines;
-        totalSize.y += (mItemMargin.y + maxItemSize.y) * mItemsPerLine;
-    }
-
     // Iterate through the children.
-    for (int i = 0; i < n; i++) {
-        GuiComponent *child = mChildren[i];
+    for (int i = 0; i < static_cast<int>(mChildren.size()); i++) {
+        GuiComponent* child = mChildren[i];
         auto size = child->getSize();
 
         // Top-left anchor position.
         float x = anchorX - anchorOriginX * size.x;
         float y = anchorY - anchorOriginY * size.y;
 
-        // Apply item margin.
-        /*if ((mDirection == "row" && i % std::max(1, (int) mItemsPerLine) != 0) ||
-            (mDirection == "column" && i >= (int) mItemsPerLine))
-            x += mItemMargin.x * (directionLine.x >= 0.0f ? 1.0f : -1.0f);
-        if ((mDirection == "column" && i % std::max(1, (int) mItemsPerLine) != 0) ||
-            (mDirection == "row" && i >= (int) mItemsPerLine))
-            y += mItemMargin.y * (directionLine.y >= 0.0f ? 1.0f : -1.0f);*/
-
         // Apply alignment
-        if (mAlign == ITEM_ALIGN_END) {
+        if (mAlign == Align::end) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) : 0;
-        } else if (mAlign == ITEM_ALIGN_CENTER) {
+        }
+        else if (mAlign == Align::center) {
             x += directionLine.x == 0 ? (maxItemSize.x - size.x) / 2 : 0;
             y += directionLine.y == 0 ? (maxItemSize.y - size.y) / 2 : 0;
-        } else if (mAlign == ITEM_ALIGN_STRETCH && mDirection == "row") {
+        }
+        else if (mAlign == Align::stretch && mDirection == Direction::row) {
             child->setSize(child->getSize().x, maxItemSize.y);
         }
 
         // Apply origin.
         if (mOrigin.x > 0 && mOrigin.x <= 1)
-            x -= mOrigin.x * totalSize.x;
+            x -= mOrigin.x * mSize.x;
         if (mOrigin.y > 0 && mOrigin.y <= 1)
-            y -= mOrigin.y * totalSize.y;
+            y -= mOrigin.y * mSize.y;
 
         // Store final item position.
         child->setPosition(getPosition().x + x, getPosition().y + y);
 
         // Translate anchor.
-        if ((i + 1) % std::max(1, (int) mItemsPerLine) != 0) {
+        if ((i + 1) % std::max(1, static_cast<int>(mItemsPerLine)) != 0) {
             // Translate on same line.
-            anchorX += (size.x + mItemMargin.x) * directionLine.x;
-            anchorY += (size.y + mItemMargin.y) * directionLine.y;
+            anchorX += (size.x + mItemMargin.x) * static_cast<float>(directionLine.x);
+            anchorY += (size.y + mItemMargin.y) * static_cast<float>(directionLine.y);
         }
         else {
             // Translate to first position of next line.
             if (directionRow.x == 0) {
-                anchorY += lineWidth * directionRow.y;
+                anchorY += lineWidth * static_cast<float>(directionRow.y);
                 anchorX = anchorXStart;
-            } else {
-                anchorX += lineWidth * directionRow.x;
+            }
+            else {
+                anchorX += lineWidth * static_cast<float>(directionRow.x);
                 anchorY = anchorYStart;
             }
         }
@@ -169,7 +127,8 @@ void FlexboxComponent::computeLayout()
     mLayoutValid = true;
 }
 
-void FlexboxComponent::render(const glm::mat4& parentTrans) {
+void FlexboxComponent::render(const glm::mat4& parentTrans)
+{
     if (!isVisible())
         return;
 
@@ -196,19 +155,24 @@ void FlexboxComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         return;
 
     if (properties & DIRECTION && elem->has("direction"))
-        mDirection = elem->get<std::string>("direction");
+        mDirection =
+            elem->get<std::string>("direction") == "row" ? Direction::row : Direction::column;
 
-    if (elem->has("align"))
-        mAlign = elem->get<std::string>("align");
+    if (elem->has("align")) {
+        const auto a = elem->get<std::string>("align");
+        mAlign = (a == "start" ?
+                      Align::start :
+                      (a == "end" ? Align::end : (a == "center" ? Align::center : Align::stretch)));
+    }
 
     if (elem->has("itemsPerLine"))
         mItemsPerLine = elem->get<float>("itemsPerLine");
 
-    if (elem->has("itemMargin"))
-        mItemMargin = elem->get<glm::vec2>("itemMargin");
+    if (elem->has("lines"))
+        mLines = elem->get<float>("lines");
 
-    if (elem->has("itemWidth"))
-        mItemWidth = elem->get<float>("itemWidth") * scale.x;
+    if (elem->has("itemMargin"))
+        mItemMargin = elem->get<glm::vec2>("itemMargin") * scale;
 
     GuiComponent::applyTheme(theme, view, element, properties);
 

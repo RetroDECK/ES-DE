@@ -16,11 +16,22 @@
 
 #include <algorithm>
 
-GuiComponent::GuiComponent(Window *window)
-        : mWindow(window), mParent(nullptr), mOpacity(255), mColor(0), mSaturation(1.0f), mColorShift(0),
-          mColorShiftEnd(0),
-          mPosition({}), mOrigin({}), mRotationOrigin(0.5f, 0.5f), mSize({}), mIsProcessing(false), mVisible(true),
-          mEnabled(true), mTransform(Renderer::getIdentity())
+GuiComponent::GuiComponent(Window* window)
+    : mWindow(window)
+    , mParent(nullptr)
+    , mOpacity(255)
+    , mColor(0)
+    , mSaturation(1.0f)
+    , mColorShift(0)
+    , mColorShiftEnd(0)
+    , mPosition({})
+    , mOrigin({})
+    , mRotationOrigin(0.5f, 0.5f)
+    , mSize({})
+    , mIsProcessing(false)
+    , mVisible(true)
+    , mEnabled(true)
+    , mTransform(Renderer::getIdentity())
 {
     for (unsigned char i = 0; i < MAX_ANIMATIONS; i++)
         mAnimationMap[i] = nullptr;

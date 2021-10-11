@@ -21,7 +21,7 @@ GuiGamelistFilter::GuiGamelistFilter(Window* window,
                                      SystemData* system,
                                      std::function<void(bool)> filterChangedCallback)
     : GuiComponent(window)
-    , mMenu(window, "FILTER GAMELIST BY")
+    , mMenu(window, "FILTER GAMELIST")
     , mSystem(system)
     , mFiltersChangedCallback(filterChangedCallback)
     , mFiltersChanged(false)
@@ -29,7 +29,8 @@ GuiGamelistFilter::GuiGamelistFilter(Window* window,
     initializeMenu();
 }
 
-void GuiGamelistFilter::initializeMenu() {
+void GuiGamelistFilter::initializeMenu()
+{
     addChild(&mMenu);
 
     // Get filters from system.
@@ -91,14 +92,13 @@ void GuiGamelistFilter::resetAllFilters()
     mFiltersChanged = true;
 }
 
-GuiGamelistFilter::~GuiGamelistFilter() { mFilterOptions.clear(); }
-
-void GuiGamelistFilter::addFiltersToMenu() {
+void GuiGamelistFilter::addFiltersToMenu()
+{
     ComponentListRow row;
 
     auto lbl = std::make_shared<TextComponent>(
-            mWindow, Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        mWindow, Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
+        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     mTextFilterField = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
                                                        0x777777FF, ALIGN_RIGHT);
@@ -121,7 +121,7 @@ void GuiGamelistFilter::addFiltersToMenu() {
     }
 
     // Callback function.
-    auto updateVal = [this](const std::string &newVal) {
+    auto updateVal = [this](const std::string& newVal) {
         mTextFilterField->setValue(Utils::String::toUpper(newVal));
         mFilterIndex->setTextFilter(Utils::String::toUpper(newVal));
     };
@@ -132,7 +132,8 @@ void GuiGamelistFilter::addFiltersToMenu() {
                                                           mTextFilterField->getValue(), updateVal,
                                                           false, "OK", "APPLY CHANGES?"));
         });
-    } else {
+    }
+    else {
         row.makeAcceptInputHandler([this, updateVal] {
             mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "GAME NAME",
                                                   mTextFilterField->getValue(), updateVal, false,
@@ -148,18 +149,49 @@ void GuiGamelistFilter::addFiltersToMenu() {
          it != decls.cend(); it++) {
         FilterIndexType type = (*it).type; // Type of filter.
 
-        // All possible filters for this type.
         std::map<std::string, int>* allKeys = (*it).allIndexKeys;
+
+        bool exclusiveSelect = false;
+
+        if (type == FAVORITES_FILTER || type == KIDGAME_FILTER || type == COMPLETED_FILTER ||
+            type == BROKEN_FILTER)
+            exclusiveSelect = true;
+
+        // Don't display the hidden games filter if we're actually hiding these games.
+        if (type == HIDDEN_FILTER) {
+            if (Settings::getInstance()->getBool("ShowHiddenGames"))
+                exclusiveSelect = true;
+            else
+                continue;
+        }
+
         std::string menuLabel = (*it).menuLabel; // Text to show in menu.
         std::shared_ptr<OptionListComponent<std::string>> optionList;
 
-        // Add genres.
-        optionList = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
-                                                                        menuLabel, true);
+        // For bool values, make the selection exclusive so that both True and False can't be
+        // selected at the same time. This should be changed to a SwitchComponent at some point.
+        if (exclusiveSelect)
+            optionList = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
+                                                                            menuLabel, true, true);
+        else
+            optionList = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
+                                                                            menuLabel, true, false);
+
+        // Still display fields that can't be filtered in the menu, but notify the user and set
+        // the OptionListComponent as disabled.
+        if (allKeys->size() == 1 || allKeys->empty()) {
+            optionList->setEnabled(false);
+            optionList->setOpacity(DISABLED_OPACITY);
+            optionList->setOverrideMultiText("NOTHING TO FILTER");
+        }
+
         for (auto it : *allKeys)
             optionList->add(it.first, it.first, mFilterIndex->isKeyBeingFilteredBy(it.first, type));
-        if (allKeys->size() > 0)
-            mMenu.addWithLabel(menuLabel, optionList);
+
+        if (allKeys->size() == 0)
+            optionList->add("", "", false);
+
+        mMenu.addWithLabel(menuLabel, optionList);
 
         mFilterOptions[type] = optionList;
     }

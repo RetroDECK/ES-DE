@@ -21,11 +21,21 @@
 #include "views/ViewController.h"
 #include "views/gamelist/IGameListView.h"
 
-GuiSettings::GuiSettings(Window *window, std::string title)
-        : GuiComponent(window), mMenu(window, title), mGoToSystem(nullptr), mNeedsSaving(false),
-          mNeedsReloadHelpPrompts(false), mNeedsCollectionsUpdate(false), mNeedsSorting(false),
-          mNeedsSortingCollections(false), mNeedsResetFilters(false), mNeedsReloading(false), mNeedsGoToStart(false),
-          mNeedsGoToSystem(false), mNeedsGoToGroupedCollections(false), mInvalidateCachedBackground(false)
+GuiSettings::GuiSettings(Window* window, std::string title)
+    : GuiComponent(window)
+    , mMenu(window, title)
+    , mGoToSystem(nullptr)
+    , mNeedsSaving(false)
+    , mNeedsReloadHelpPrompts(false)
+    , mNeedsCollectionsUpdate(false)
+    , mNeedsSorting(false)
+    , mNeedsSortingCollections(false)
+    , mNeedsResetFilters(false)
+    , mNeedsReloading(false)
+    , mNeedsGoToStart(false)
+    , mNeedsGoToSystem(false)
+    , mNeedsGoToGroupedCollections(false)
+    , mInvalidateCachedBackground(false)
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -174,10 +184,12 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         else if (isPassword && newVal == "") {
             ed->setValue("");
             ed->setHiddenValue("");
-        } else if (isPassword) {
+        }
+        else if (isPassword) {
             ed->setValue("********");
             ed->setHiddenValue(newVal);
-        } else {
+        }
+        else {
             ed->setValue(newVal);
         }
     };
@@ -187,13 +199,14 @@ void GuiSettings::addEditableTextComponent(const std::string label,
             // Never display the value if it's a password, instead set it to blank.
             if (isPassword)
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                        mWindow, getHelpStyle(), label, "", updateVal, false, "SAVE", "SAVE CHANGES?"));
+                    mWindow, getHelpStyle(), label, "", updateVal, false, "SAVE", "SAVE CHANGES?"));
             else
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), label,
                                                               ed->getValue(), updateVal, false,
                                                               "SAVE", "SAVE CHANGES?"));
         });
-    } else {
+    }
+    else {
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             if (isPassword)
                 mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, "", updateVal,
