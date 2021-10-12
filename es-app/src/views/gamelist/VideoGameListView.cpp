@@ -45,6 +45,7 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
     , mLastPlayed(window)
     , mPlayCount(window)
     , mName(window)
+    , mBadges(window)
     , mDescContainer(window)
     , mDescription(window)
     , mGamelistInfo(window)
@@ -118,6 +119,13 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
     addChild(&mLblPlayCount);
     addChild(&mPlayCount);
 
+    // Badges.
+    addChild(&mBadges);
+    mBadges.setOrigin(0.0f, 0.0f);
+    mBadges.setPosition(mSize.x * 0.8f, mSize.y * 0.7f);
+    mBadges.setSize(mSize.x * 0.15, mSize.y * 0.2f);
+    mBadges.setDefaultZIndex(50.0f);
+
     mName.setPosition(mSize.x, mSize.y);
     mName.setDefaultZIndex(40.0f);
     mName.setColor(0xAAAAAAFF);
@@ -163,6 +171,7 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                        POSITION | ThemeFlags::SIZE | ThemeFlags::DELAY | Z_INDEX | ROTATION |
                            VISIBLE);
     mName.applyTheme(theme, getName(), "md_name", ALL);
+    mBadges.applyTheme(theme, getName(), "md_badges", ALL);
 
     initMDLabels();
     std::vector<TextComponent*> labels = getMDLabels();
@@ -319,6 +328,7 @@ void VideoGameListView::updateInfoPanel()
         mLastPlayed.setVisible(false);
         mLblPlayCount.setVisible(false);
         mPlayCount.setVisible(false);
+        mBadges.setVisible(false);
     }
     else {
         mLblRating.setVisible(true);
@@ -337,6 +347,7 @@ void VideoGameListView::updateInfoPanel()
         mLastPlayed.setVisible(true);
         mLblPlayCount.setVisible(true);
         mPlayCount.setVisible(true);
+        mBadges.setVisible(true);
     }
 
     bool fadingOut = false;
@@ -437,6 +448,21 @@ void VideoGameListView::updateInfoPanel()
         mPublisher.setValue(file->metadata.get("publisher"));
         mGenre.setValue(file->metadata.get("genre"));
         mPlayers.setValue(file->metadata.get("players"));
+
+        // Populate the badge slots based on game metadata.
+        std::vector<std::string> badgeSlots;
+        for (auto badge : mBadges.getBadgeTypes()) {
+            if (badge == "altemulator") {
+                if (file->metadata.get(badge).compare("") != 0)
+                    badgeSlots.push_back(badge);
+            }
+            else {
+                if (file->metadata.get(badge).compare("true") == 0)
+                    badgeSlots.push_back(badge);
+            }
+        }
+        mBadges.setBadges(badgeSlots);
+
         mName.setValue(file->metadata.get("name"));
 
         if (file->getType() == GAME) {
@@ -462,6 +488,7 @@ void VideoGameListView::updateInfoPanel()
     comps.push_back(mVideo);
     comps.push_back(&mDescription);
     comps.push_back(&mName);
+    comps.push_back(&mBadges);
     std::vector<TextComponent*> labels = getMDLabels();
     comps.insert(comps.cend(), labels.cbegin(), labels.cend());
 

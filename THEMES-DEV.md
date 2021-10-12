@@ -366,6 +366,8 @@ Below are the default zIndex values per element type:
     * `image name="logo"`
 * Gamelist information - 50
     * `text name="gamelistInfo"`
+* Badges - 50
+    * `badges name="md_badges"`
 
 ### Theme variables
 
@@ -474,6 +476,8 @@ or to specify only a portion of the value of a theme property:
             - The "genre" metadata.
         * `text name="md_players"` - ALL
             - The "players" metadata (number of players the game supports).
+        * `badges name="md_badges"` - ALL
+            - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
             - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
@@ -529,6 +533,8 @@ or to specify only a portion of the value of a theme property:
             - The "genre" metadata.
         * `text name="md_players"` - ALL
             - The "players" metadata (number of players the game supports).
+        * `badges name="md_badges"` - ALL
+            - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
             - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
@@ -582,6 +588,8 @@ or to specify only a portion of the value of a theme property:
             - The "genre" metadata.
         * `text name="md_players"` - ALL
             - The "players" metadata (number of players the game supports).
+        * `badges name="md_badges"` - ALL
+            - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
             - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
@@ -899,6 +907,47 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
       `button_start_XBOX`,
       `button_back_XBOX360`,
       `button_start_XBOX360`.
+
+#### badges
+
+* `pos` - type: NORMALIZED_PAIR.
+* `size` - type: NORMALIZED_PAIR.
+    - Possible combinations:
+    - `w h` - Dimensions of the badges container. The badges will be scaled to fit within these dimensions.
+* `origin` - type: NORMALIZED_PAIR.
+    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+* `rotation` - type: FLOAT.
+    - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+* `rotationOrigin` - type: NORMALIZED_PAIR.
+    - Point around which the image will be rotated. Defaults to `0.5 0.5`.
+* `itemsPerRow` - type: FLOAT.
+    - Number of badges that fit on a row. When more badges are available a new row will be started.
+* `rows` - type: FLOAT.
+    - The number of rows available.
+* `itemPlacement` - type: STRING.
+    - Valid values are "top", "center", "bottom", or "stretch". Controls vertical alignment of each badge if images of different heights are used. "Stretch" will stretch the badge to the full height.
+* `itemMargin` - type: NORMALIZED_PAIR.
+    - The margins between badges. Possible combinations:
+    - `x y` - horizontal and vertical margins.
+* `slots` - type: STRING.
+    - The badge types that should be displayed. Should be specified as a list of strings separated by spaces. The order will be followed when placing badges on the screen.
+    - Available badges are:
+    - "favorite": Will be shown when the game is marked as favorite.
+    - "completed": Will be shown when the game is marked as completed.
+    - "kidgame": Will be shown when the game is marked as a kids game.
+    - "broken": Will be shown when the game is marked as broken.
+    - "altemulator": Will be shown when an alternative emulator is setup for the game.
+* `customBadgeIcon` - type: PATH.
+    - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are:
+      `favorite`,
+      `completed`,
+      `kidgame`,
+      `broken`,
+      `altemulator`
+* `visible` - type: BOOLEAN.
+    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+* `zIndex` - type: FLOAT.
+    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
 
 #### carousel
 

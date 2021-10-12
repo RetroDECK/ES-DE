@@ -1,0 +1,168 @@
+//  SPDX-License-Identifier: MIT
+//
+//  EmulationStation Desktop Edition
+//  FlexboxComponent.cpp
+//
+//  Flexbox layout component.
+//
+
+#define DEFAULT_DIRECTION "row"
+#define DEFAULT_ALIGNMENT "left"
+#define DEFAULT_ITEMS_PER_LINE 4
+#define DEFAULT_LINES 2
+#define DEFAULT_ITEM_PLACEMENT "center"
+#define DEFAULT_MARGIN_X 10.0f
+#define DEFAULT_MARGIN_Y 10.0f
+
+#include "components/FlexboxComponent.h"
+
+#include "Settings.h"
+#include "ThemeData.h"
+
+FlexboxComponent::FlexboxComponent(Window* window,
+                                   std::vector<std::pair<std::string, ImageComponent>>& images)
+    : GuiComponent{window}
+    , mImages(images)
+    , mDirection{DEFAULT_DIRECTION}
+    , mAlignment{DEFAULT_ALIGNMENT}
+    , mItemsPerLine{DEFAULT_ITEMS_PER_LINE}
+    , mLines{DEFAULT_LINES}
+    , mItemPlacement{DEFAULT_ITEM_PLACEMENT}
+    , mItemMargin{glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y}}
+    , mLayoutValid{false}
+{
+}
+
+void FlexboxComponent::computeLayout()
+{
+    // Start placing items in the top-left.
+    float anchorX{0.0f};
+    float anchorY{0.0f};
+
+    // Translation directions when placing items.
+    glm::vec2 directionLine{1, 0};
+    glm::vec2 directionRow{0, 1};
+
+    // Change direction.
+    if (mDirection == "column") {
+        directionLine = {0, 1};
+        directionRow = {1, 0};
+    }
+
+    // Compute maximum image dimensions.
+    glm::vec2 grid;
+    if (mDirection == "row")
+        grid = {mItemsPerLine, mLines};
+    else
+        grid = {mLines, mItemsPerLine};
+    glm::vec2 maxItemSize{(mSize + mItemMargin - grid * mItemMargin) / grid};
+
+    if (grid.x * grid.y < static_cast<float>(mImages.size())) {
+        LOG(LogWarning) << "FlexboxComponent: Invalid theme configuration, the number of badges "
+                           "exceeds the product of <lines> times <itemsPerLine>";
+    }
+
+    // Set final image dimensions.
+    for (auto& image : mImages) {
+        if (!image.second.isVisible())
+            continue;
+        auto oldSize{image.second.getSize()};
+        if (oldSize.x == 0)
+            oldSize.x = maxItemSize.x;
+        glm::vec2 sizeMaxX{maxItemSize.x, oldSize.y * (maxItemSize.x / oldSize.x)};
+        glm::vec2 sizeMaxY{oldSize.x * (maxItemSize.y / oldSize.y), maxItemSize.y};
+        glm::vec2 newSize;
+        if (sizeMaxX.y > maxItemSize.y)
+            newSize = sizeMaxY;
+        else if (sizeMaxY.x > maxItemSize.x)
+            newSize = sizeMaxX;
+        else
+            newSize = sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
+        image.second.setResize(newSize.x, newSize.y);
+    }
+
+    // Pre-compute layout parameters.
+    float anchorXStart{anchorX};
+    float anchorYStart{anchorY};
+
+    int i = 0;
+
+    // Iterate through the images.
+    for (auto& image : mImages) {
+        if (!image.second.isVisible())
+            continue;
+
+        auto size{image.second.getSize()};
+
+        // Top-left anchor position.
+        float x{anchorX};
+        float y{anchorY};
+
+        // Apply alignment.
+        if (mItemPlacement == "end") {
+            x += directionLine.x == 0 ? (maxItemSize.x - size.x) : 0;
+            y += directionLine.y == 0 ? (maxItemSize.y - size.y) : 0;
+        }
+        else if (mItemPlacement == "center") {
+            x += directionLine.x == 0 ? (maxItemSize.x - size.x) / 2 : 0;
+            y += directionLine.y == 0 ? (maxItemSize.y - size.y) / 2 : 0;
+        }
+        else if (mItemPlacement == "stretch" && mDirection == "row") {
+            image.second.setSize(image.second.getSize().x, maxItemSize.y);
+        }
+
+        // TODO: Doesn't work correctly.
+        // Apply overall container alignment.
+        if (mAlignment == "right")
+            x += (mSize.x - size.x * grid.x) - mItemMargin.x;
+
+        // Store final item position.
+        image.second.setPosition(x, y);
+
+        // Translate anchor.
+        if ((i++ + 1) % std::max(1, static_cast<int>(mItemsPerLine)) != 0) {
+            // Translate on same line.
+            anchorX += (size.x + mItemMargin.x) * static_cast<float>(directionLine.x);
+            anchorY += (size.y + mItemMargin.y) * static_cast<float>(directionLine.y);
+        }
+        else {
+            // Translate to first position of next line.
+            if (directionRow.x == 0) {
+                anchorY += size.y + mItemMargin.y;
+                anchorX = anchorXStart;
+            }
+            else {
+                anchorX += size.x + mItemMargin.x;
+                anchorY = anchorYStart;
+            }
+        }
+    }
+
+    mLayoutValid = true;
+}
+
+void FlexboxComponent::render(const glm::mat4& parentTrans)
+{
+    if (!isVisible())
+        return;
+
+    if (!mLayoutValid)
+        computeLayout();
+
+    glm::mat4 trans{parentTrans * getTransform()};
+    Renderer::setMatrix(trans);
+
+    if (Settings::getInstance()->getBool("DebugImage"))
+        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+
+    for (auto& image : mImages) {
+        if (mOpacity == 255) {
+            image.second.render(trans);
+        }
+        else {
+            image.second.setOpacity(mOpacity);
+            image.second.render(trans);
+            image.second.setOpacity(255);
+        }
+    }
+}

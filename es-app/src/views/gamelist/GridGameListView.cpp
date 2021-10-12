@@ -32,6 +32,7 @@ GridGameListView::GridGameListView(Window* window, FileData* root)
     , mLblPlayers(window)
     , mLblLastPlayed(window)
     , mLblPlayCount(window)
+    , mBadges(window)
     , mRating(window)
     , mReleaseDate(window)
     , mDeveloper(window)
@@ -55,6 +56,7 @@ GridGameListView::GridGameListView(Window* window, FileData* root)
     populateList(root->getChildrenListToDisplay(), root);
 
     // Metadata labels + values.
+    addChild(&mBadges);
     mLblRating.setText("Rating: ", false);
     addChild(&mLblRating);
     addChild(&mRating);
