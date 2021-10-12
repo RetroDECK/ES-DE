@@ -30,7 +30,6 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 * Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
-* Improved full-screen support, removing the temporary full-screen hacks
 * Virtual (on-screen) keyboard
 * Support for the Raspberry Pi 4 (Raspberry Pi OS)
 * Add GLM library dependency for matrix and vector operations, decommission the built-in functions
@@ -39,21 +38,22 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.3
 
-* Localization/multi-language support
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
 * Add multiple new gamelist components (wheels, wall/grid etc.)
 * Move existing theme logic to legacy support, only to be used for backwards compatibility
+* Improve full-screen support and make game launching more seamless, remove the temporary full-screen hacks
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
-* Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
+* Improve text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
 #### v1.4
 
+* Localization/multi-language support
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
 * Scrollbar component for the gamelist view which can be used by the themes
 * Web proxy support for the scraper
 * Add "time played" counter per game, similar to how it works in Steam
 * Preload all built-in resources and never clear them from the cache
-* Improved multi-threading
+* Improve multi-threading
 
 #### v1.5
 

@@ -970,6 +970,10 @@ With this option enabled, there will be an overlay displayed when scrolling the 
 
 This enables a virtual (on-screen) keyboard that can be used at various places throughout the application to input text and numbers using a controller. The Shift and Alt keys can be toggled individually or combined together to access many special characters. The general use of the virtual keyboard should hopefully be self-explanatory.
 
+**Enable menu scroll indicators**
+
+With this option enabled, "up and down" scroll indicators will be displayed in the upper right corner of menus (including the metadata editor) if there are more entries available than can be shown on the screen at the same time. These indicators will change dynamically as the list is scrolled. If the setting is disabled, a simplified static indicator will be displayed instead.
+
 **Enable toggle favorites button**
 
 This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. The option does not affect the use of the _Y_ button to add or remove games when editing custom collections.
