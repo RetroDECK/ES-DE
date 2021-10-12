@@ -179,11 +179,6 @@ std::vector<HelpPrompt> GuiMsgBox::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
 
-    // If there is only one button, then remove the "Choose" help symbol
-    // as there is no way to make a choice.
-    if (mButtons.size() == 1)
-        prompts.pop_back();
-
     if (!mDisableBackButton)
         prompts.push_back(HelpPrompt("b", "Back"));
 
