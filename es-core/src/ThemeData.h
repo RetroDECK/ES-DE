@@ -54,7 +54,6 @@ namespace ThemeFlags
         Z_INDEX = 8192,
         ROTATION = 16384,
         VISIBLE = 32768,
-        DIRECTION = 65536,
         ALL = 0xFFFFFFFF
     };
 }

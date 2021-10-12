@@ -57,10 +57,10 @@ private:
     TextComponent mPublisher;
     TextComponent mGenre;
     TextComponent mPlayers;
-    BadgesComponent mBadges;
     DateTimeComponent mLastPlayed;
     TextComponent mPlayCount;
     TextComponent mName;
+    BadgesComponent mBadges;
 
     std::vector<TextComponent*> getMDLabels();
     std::vector<GuiComponent*> getMDValues();
