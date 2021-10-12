@@ -68,7 +68,7 @@ void SystemView::populate()
             e.name = (*it)->getName();
             e.object = *it;
 
-            // Component offset.
+            // Component offset. Used for positioning placeholders.
             glm::vec3 offsetLogo = {0.0f, 0.0f, 0.0f};
             glm::vec3 offsetLogoPlaceholderText = {0.0f, 0.0f, 0.0f};
 
@@ -89,13 +89,12 @@ void SystemView::populate()
                 }
             }
 
+            // No logo available? Make placeholder.
             if (!e.data.logo) {
-                // No logo in theme; use placeholder.
 
                 glm::vec2 resolution = glm::vec2{static_cast<float>(Renderer::getScreenWidth()),
                                                  static_cast<float>(Renderer::getScreenHeight())};
                 glm::vec3 center = {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
-                glm::vec2 scale{getParent() ? getParent()->getSize() : resolution};
 
                 // Placeholder Image.
                 const ThemeData::ThemeElement* logoElem =
@@ -190,7 +189,7 @@ void SystemView::populate()
             e.data.logo->setPosition(v + offsetLogo);
             if (e.data.logoPlaceholderText)
                 e.data.logoPlaceholderText->setPosition(
-                    v + offsetLogoPlaceholderText); // e.data.logo->getPosition() +
+                    v + offsetLogoPlaceholderText);
 
             // Make background extras.
             e.data.backgroundExtras = ThemeData::makeExtras((*it)->getTheme(), "system", mWindow);
