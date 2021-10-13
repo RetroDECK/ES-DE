@@ -15,10 +15,10 @@
 class FlexboxComponent : public GuiComponent
 {
 public:
-    explicit FlexboxComponent(Window* window,
-                              std::vector<std::pair<std::string, ImageComponent>>& images);
+    FlexboxComponent(Window* window, std::vector<std::pair<std::string, ImageComponent>>& images);
 
     // Getters/setters for the layout.
+    std::string getDirection() const { return mDirection; }
     void setDirection(const std::string& direction)
     {
         assert(direction == "row" || direction == "column");

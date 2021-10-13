@@ -138,11 +138,11 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("itemMargin")) {
         const glm::vec2 itemMargin = elem->get<glm::vec2>("itemMargin");
-        if (itemMargin.x < 0.0f || itemMargin.x > 100.0f || itemMargin.y < 0.0f ||
-            itemMargin.y > 100.0f) {
+        if (itemMargin.x < 0.0f || itemMargin.x > 0.2f || itemMargin.y < 0.0f ||
+            itemMargin.y > 0.2f) {
             LOG(LogWarning)
                 << "BadgesComponent: Invalid theme configuration, <itemMargin> set to \""
-                << itemMargin.x << "x" << itemMargin.y << "\"";
+                << itemMargin.x << " " << itemMargin.y << "\"";
         }
         else {
             mFlexboxComponent.setItemMargin(itemMargin);

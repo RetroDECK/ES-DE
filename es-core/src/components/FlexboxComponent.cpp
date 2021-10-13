@@ -11,8 +11,8 @@
 #define DEFAULT_ITEMS_PER_LINE 4
 #define DEFAULT_LINES 2
 #define DEFAULT_ITEM_PLACEMENT "center"
-#define DEFAULT_MARGIN_X 10.0f
-#define DEFAULT_MARGIN_Y 10.0f
+#define DEFAULT_MARGIN_X std::roundf(0.01f * Renderer::getScreenWidth())
+#define DEFAULT_MARGIN_Y std::roundf(0.01f * Renderer::getScreenHeight())
 
 #include "components/FlexboxComponent.h"
 
@@ -33,6 +33,32 @@ FlexboxComponent::FlexboxComponent(Window* window,
 {
 }
 
+void FlexboxComponent::render(const glm::mat4& parentTrans)
+{
+    if (!isVisible())
+        return;
+
+    if (!mLayoutValid)
+        computeLayout();
+
+    glm::mat4 trans{parentTrans * getTransform()};
+    Renderer::setMatrix(trans);
+
+    if (Settings::getInstance()->getBool("DebugImage"))
+        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+
+    for (auto& image : mImages) {
+        if (mOpacity == 255) {
+            image.second.render(trans);
+        }
+        else {
+            image.second.setOpacity(mOpacity);
+            image.second.render(trans);
+            image.second.setOpacity(255);
+        }
+    }
+}
+
 void FlexboxComponent::computeLayout()
 {
     // Start placing items in the top-left.
@@ -49,18 +75,34 @@ void FlexboxComponent::computeLayout()
         directionRow = {1, 0};
     }
 
+    // If we're not clamping itemMargin to a reasonable value, all kinds of weird rendering
+    // issues could occur.
+    mItemMargin.x = glm::clamp(mItemMargin.x, 0.0f, mSize.x / 2.0f);
+    mItemMargin.y = glm::clamp(mItemMargin.y, 0.0f, mSize.y / 2.0f);
+
+    // Also keep the size within reason.
+    mSize.x = glm::clamp(mSize.x, static_cast<float>(Renderer::getScreenWidth()) * 0.03f,
+                         static_cast<float>(Renderer::getScreenWidth()));
+    mSize.y = glm::clamp(mSize.y, static_cast<float>(Renderer::getScreenHeight()) * 0.03f,
+                         static_cast<float>(Renderer::getScreenHeight()));
+
     // Compute maximum image dimensions.
     glm::vec2 grid;
     if (mDirection == "row")
         grid = {mItemsPerLine, mLines};
     else
         grid = {mLines, mItemsPerLine};
+
     glm::vec2 maxItemSize{(mSize + mItemMargin - grid * mItemMargin) / grid};
+    maxItemSize.x = floorf(maxItemSize.x);
+    maxItemSize.y = floorf(maxItemSize.y);
 
     if (grid.x * grid.y < static_cast<float>(mImages.size())) {
         LOG(LogWarning) << "FlexboxComponent: Invalid theme configuration, the number of badges "
                            "exceeds the product of <lines> times <itemsPerLine>";
     }
+
+    glm::vec2 sizeChange{0.0f, 0.0f};
 
     // Set final image dimensions.
     for (auto& image : mImages) {
@@ -78,8 +120,21 @@ void FlexboxComponent::computeLayout()
             newSize = sizeMaxX;
         else
             newSize = sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
-        image.second.setResize(newSize.x, newSize.y);
+
+        if (image.second.getSize() != newSize)
+            image.second.setResize(newSize.x, newSize.y);
+
+        // In case maxItemSize needs to be updated.
+        if (newSize.x != sizeChange.x)
+            sizeChange.x = newSize.x;
+        if (newSize.y != sizeChange.y)
+            sizeChange.y = newSize.y;
     }
+
+    if (maxItemSize.x != sizeChange.x)
+        maxItemSize.x = sizeChange.x;
+    if (maxItemSize.y != sizeChange.y)
+        maxItemSize.y = sizeChange.y;
 
     // Pre-compute layout parameters.
     float anchorXStart{anchorX};
@@ -139,30 +194,4 @@ void FlexboxComponent::computeLayout()
     }
 
     mLayoutValid = true;
-}
-
-void FlexboxComponent::render(const glm::mat4& parentTrans)
-{
-    if (!isVisible())
-        return;
-
-    if (!mLayoutValid)
-        computeLayout();
-
-    glm::mat4 trans{parentTrans * getTransform()};
-    Renderer::setMatrix(trans);
-
-    if (Settings::getInstance()->getBool("DebugImage"))
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
-
-    for (auto& image : mImages) {
-        if (mOpacity == 255) {
-            image.second.render(trans);
-        }
-        else {
-            image.second.setOpacity(mOpacity);
-            image.second.render(trans);
-            image.second.setOpacity(255);
-        }
-    }
 }
