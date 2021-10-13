@@ -633,7 +633,7 @@ Can be created as an extra.
 * `rotation` - type: FLOAT.
     - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the image will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the image will be rotated. Default is `0.5 0.5`.
 * `path` - type: PATH.
     - Path to the image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `default` - type: PATH.
@@ -707,7 +707,7 @@ Can be created as an extra.
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the text will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `delay` - type: FLOAT.  Default is false.
     - Delay in seconds before video will start playing.
 * `default` - type: PATH.
@@ -736,7 +736,7 @@ Can be created as an extra.
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the text will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `text` - type: STRING.
 * `color` - type: COLOR.
 * `backgroundColor` - type: COLOR;
@@ -808,7 +808,7 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 * `rotation` - type: FLOAT.
     - angle in degrees that the rating should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the rating will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the rating will be rotated. Default is `0.5 0.5`.
 * `filledPath` - type: PATH.
     - Path to the "filled star" image.  Image must be square (width equals height).
 * `unfilledPath` - type: PATH.
@@ -832,7 +832,7 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the text will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `color` - type: COLOR.
 * `backgroundColor` - type: COLOR;
 * `fontPath` - type: PATH.
@@ -913,41 +913,35 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 * `pos` - type: NORMALIZED_PAIR.
 * `size` - type: NORMALIZED_PAIR.
     - Possible combinations:
-    - `w h` - Dimensions of the badges container. The badges will be scaled to fit within these dimensions.
+    - `w h` - Dimensions of the badges container. The badges will be scaled to fit within these dimensions. Minimum value per axis is `0.03`, maximum value is `1.0`. Default is `0.15 0.20`.
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied. Default is `0 0`.
 * `rotation` - type: FLOAT.
-    - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Default is `0`.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the image will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the image will be rotated. Default is `0.5 0.5`.
 * `itemsPerRow` - type: FLOAT.
-    - Number of badges that fit on a row. When more badges are available a new row will be started.
+    - Number of badges that fit on a row. When more badges are available a new row will be started. Default is `4`.
 * `rows` - type: FLOAT.
-    - The number of rows available.
+    - The number of rows available. Default is `2`.
 * `itemPlacement` - type: STRING.
-    - Valid values are "top", "center", "bottom", or "stretch". Controls vertical alignment of each badge if images of different heights are used. "Stretch" will stretch the badge to the full height.
+    - Valid values are "top", "center", "bottom", or "stretch". Controls vertical alignment of each badge if images of different heights are used. "Stretch" will stretch the badge to the full height. Default is `center`.
 * `itemMargin` - type: NORMALIZED_PAIR.
     - The margins between badges. Possible combinations:
-    - `x y` - horizontal and vertical margins.
+    - `x y` - horizontal and vertical margins. Minimum value per axis is `0`, maximum value is `0.2`. Default is `0.01`.
 * `slots` - type: STRING.
-    - The badge types that should be displayed. Should be specified as a list of strings separated by spaces. The order will be followed when placing badges on the screen.
-    - Available badges are:
-    - "favorite": Will be shown when the game is marked as favorite.
-    - "completed": Will be shown when the game is marked as completed.
-    - "kidgame": Will be shown when the game is marked as a kids game.
-    - "broken": Will be shown when the game is marked as broken.
-    - "altemulator": Will be shown when an alternative emulator is setup for the game.
+    - The badge types that should be displayed. Should be specified as a list of strings separated by spaces. The order will be followed when placing badges on the screen. Available badges are:
+    - `favorite`: Will be shown when the game is marked as favorite.
+    - `completed`: Will be shown when the game is marked as completed.
+    - `kidgame`: Will be shown when the game is marked as a kids game.
+    - `broken`: Will be shown when the game is marked as broken.
+    - `altemulator`: Will be shown when an alternative emulator is setup for the game.
 * `customBadgeIcon` - type: PATH.
-    - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are:
-      `favorite`,
-      `completed`,
-      `kidgame`,
-      `broken`,
-      `altemulator`
+    - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
 * `visible` - type: BOOLEAN.
     - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+    - z-index value for component.  Components will be rendered in order of z-index value from low to high. Default is `50`.
 
 #### carousel
 
@@ -971,7 +965,7 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
     - Default is 7.5
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
 * `logoRotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the logos will be rotated. Defaults to `-5 0.5`.
+    - Point around which the logos will be rotated. Default is `-5 0.5`.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
 * `logoAlignment` - type: STRING.
     - Sets the alignment of the logos relative to the carousel.

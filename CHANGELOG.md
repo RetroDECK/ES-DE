@@ -42,6 +42,7 @@
 * Added support for key repeat to OptionListComponent, making it possible to cycle through the options by holding the left or right button
 * Added key repeat for the "Jump to" and "Sort games by" selectors on the game options menu
 * Added key repeat when editing the "Release date" entry in the metadata editor (DateTimeEditComponent)
+* Added support for setting the Kidgame metadata flag for folders (which will only affect the badges)
 * Achieved a massive speed improvement for OptionListComponent by not resizing each added MenuComponent row (most notable in the filter GUI)
 * Made multiple optimizations to the GUI components by removing lots of unnecessary function calls for sizing, placement, opacity changes etc.
 * Simplified the logic for info popups and prepared the code for the future "multiple popups" feature
