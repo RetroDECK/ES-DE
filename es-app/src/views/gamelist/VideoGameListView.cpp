@@ -123,7 +123,7 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
     addChild(&mBadges);
     mBadges.setOrigin(0.0f, 0.0f);
     mBadges.setPosition(mSize.x * 0.8f, mSize.y * 0.7f);
-    mBadges.setSize(mSize.x * 0.15, mSize.y * 0.2f);
+    mBadges.setSize(mSize.x * 0.15f, mSize.y * 0.2f);
     mBadges.setDefaultZIndex(50.0f);
 
     mName.setPosition(mSize.x, mSize.y);
