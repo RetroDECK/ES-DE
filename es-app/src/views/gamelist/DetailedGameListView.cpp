@@ -29,7 +29,6 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     , mLblPlayers(window)
     , mLblLastPlayed(window)
     , mLblPlayCount(window)
-    , mBadges(window)
     , mRating(window)
     , mReleaseDate(window)
     , mDeveloper(window)
@@ -39,6 +38,7 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     , mLastPlayed(window)
     , mPlayCount(window)
     , mName(window)
+    , mBadges(window)
     , mDescContainer(window)
     , mDescription(window)
     , mGamelistInfo(window)
@@ -76,32 +76,38 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     addChild(&mImage);
 
     // Metadata labels + values.
-    mLblRating.setText("Rating: ");
+    mLblRating.setText("Rating: ", false);
     addChild(&mLblRating);
     addChild(&mRating);
-    mLblReleaseDate.setText("Released: ");
+    mLblReleaseDate.setText("Released: ", false);
     addChild(&mLblReleaseDate);
     addChild(&mReleaseDate);
-    mLblDeveloper.setText("Developer: ");
+    mLblDeveloper.setText("Developer: ", false);
     addChild(&mLblDeveloper);
     addChild(&mDeveloper);
-    mLblPublisher.setText("Publisher: ");
+    mLblPublisher.setText("Publisher: ", false);
     addChild(&mLblPublisher);
     addChild(&mPublisher);
-    mLblGenre.setText("Genre: ");
+    mLblGenre.setText("Genre: ", false);
     addChild(&mLblGenre);
     addChild(&mGenre);
-    mLblPlayers.setText("Players: ");
+    mLblPlayers.setText("Players: ", false);
     addChild(&mLblPlayers);
     addChild(&mPlayers);
-    addChild(&mBadges);
-    mLblLastPlayed.setText("Last played: ");
+    mLblLastPlayed.setText("Last played: ", false);
     addChild(&mLblLastPlayed);
     mLastPlayed.setDisplayRelative(true);
     addChild(&mLastPlayed);
-    mLblPlayCount.setText("Times played: ");
+    mLblPlayCount.setText("Times played: ", false);
     addChild(&mLblPlayCount);
     addChild(&mPlayCount);
+
+    // Badges.
+    addChild(&mBadges);
+    mBadges.setOrigin(0.0f, 0.0f);
+    mBadges.setPosition(mSize.x * 0.8f, mSize.y * 0.7f);
+    mBadges.setSize(mSize.x * 0.15f, mSize.y * 0.2f);
+    mBadges.setDefaultZIndex(50.0f);
 
     mName.setPosition(mSize.x, mSize.y);
     mName.setDefaultZIndex(40.0f);
@@ -143,6 +149,7 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
     mImage.applyTheme(theme, getName(), "md_image",
                       POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mName.applyTheme(theme, getName(), "md_name", ALL);
+    mBadges.applyTheme(theme, getName(), "md_badges", ALL);
 
     initMDLabels();
     std::vector<TextComponent*> labels = getMDLabels();
@@ -156,10 +163,10 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 
     initMDValues();
     std::vector<GuiComponent*> values = getMDValues();
-    assert(values.size() == 9);
-    std::vector<std::string> valElements = {"md_rating",    "md_releasedate", "md_developer",
-                                            "md_publisher", "md_genre",       "md_players",
-                                            "md_badges",    "md_lastplayed",  "md_playcount"};
+    assert(values.size() == 8);
+    std::vector<std::string> valElements = {"md_rating",     "md_releasedate", "md_developer",
+                                            "md_publisher",  "md_genre",       "md_players",
+                                            "md_lastplayed", "md_playcount"};
 
     for (unsigned int i = 0; i < values.size(); i++)
         values[i]->applyTheme(theme, getName(), valElements[i], ALL ^ ThemeFlags::TEXT);
@@ -225,8 +232,6 @@ void DetailedGameListView::initMDValues()
     mPlayers.setFont(defaultFont);
     mLastPlayed.setFont(defaultFont);
     mPlayCount.setFont(defaultFont);
-
-    mBadges.setSize(defaultFont->getHeight() * 5.0f, static_cast<float>(defaultFont->getHeight()));
 
     float bottom = 0.0f;
 
@@ -297,11 +302,11 @@ void DetailedGameListView::updateInfoPanel()
         mGenre.setVisible(false);
         mLblPlayers.setVisible(false);
         mPlayers.setVisible(false);
-        mBadges.setVisible(false);
         mLblLastPlayed.setVisible(false);
         mLastPlayed.setVisible(false);
         mLblPlayCount.setVisible(false);
         mPlayCount.setVisible(false);
+        mBadges.setVisible(false);
     }
     else {
         mLblRating.setVisible(true);
@@ -316,11 +321,11 @@ void DetailedGameListView::updateInfoPanel()
         mGenre.setVisible(true);
         mLblPlayers.setVisible(true);
         mPlayers.setVisible(true);
-        mBadges.setVisible(true);
         mLblLastPlayed.setVisible(true);
         mLastPlayed.setVisible(true);
         mLblPlayCount.setVisible(true);
         mPlayCount.setVisible(true);
+        mBadges.setVisible(true);
     }
 
     bool fadingOut = false;
@@ -443,6 +448,7 @@ void DetailedGameListView::updateInfoPanel()
     comps.push_back(&mImage);
     comps.push_back(&mDescription);
     comps.push_back(&mName);
+    comps.push_back(&mBadges);
     std::vector<TextComponent*> labels = getMDLabels();
     comps.insert(comps.cend(), labels.cbegin(), labels.cend());
 
@@ -488,7 +494,6 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
     ret.push_back(&mPublisher);
     ret.push_back(&mGenre);
     ret.push_back(&mPlayers);
-    ret.push_back(&mBadges);
     ret.push_back(&mLastPlayed);
     ret.push_back(&mPlayCount);
     return ret;

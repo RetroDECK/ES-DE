@@ -248,6 +248,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                 "", ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY"));
 
                         for (auto entry : launchCommands) {
+                            if (mInvalidEmulatorEntry && singleEntry &&
+                                entry.second !=
+                                    ViewController::EXCLAMATION_CHAR + " " + originalValue)
+                                continue;
+
                             std::string selectedLabel = ed->getValue();
                             std::string label;
                             ComponentListRow row;

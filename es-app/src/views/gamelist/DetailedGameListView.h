@@ -47,7 +47,6 @@ private:
     TextComponent mLblLastPlayed;
     TextComponent mLblPlayCount;
 
-    BadgesComponent mBadges;
     RatingComponent mRating;
     DateTimeComponent mReleaseDate;
     TextComponent mDeveloper;
@@ -57,6 +56,7 @@ private:
     DateTimeComponent mLastPlayed;
     TextComponent mPlayCount;
     TextComponent mName;
+    BadgesComponent mBadges;
 
     std::vector<TextComponent*> getMDLabels();
     std::vector<GuiComponent*> getMDValues();

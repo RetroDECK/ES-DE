@@ -52,7 +52,8 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
                 // If before it wasn't risky but now there's a risk of problems, show warning.
                 mWindow->pushGui(new GuiMsgBox(
                     mWindow, getHelpStyle(),
-                    "THE 'VIDEO' SCREENSAVER SHOWS\nVIDEOS FROM YOUR GAMELISTS\n\n"
+                    "THE 'VIDEO' SCREENSAVER SHOWS\n"
+                    "VIDEOS FROM YOUR GAMELISTS\n\n"
                     "IF YOU DO NOT HAVE ANY VIDEOS, THE\n"
                     "SCREENSAVER WILL DEFAULT TO 'DIM'",
                     "OK", [] { return; }, "", nullptr, "", nullptr));

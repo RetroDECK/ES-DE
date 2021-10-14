@@ -42,21 +42,22 @@ MetaDataDecl gameDecls[] = {
 };
 
 MetaDataDecl folderDecls[] = {
-{"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
-{"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
-{"rating",        MD_RATING,           "0",               false,     "rating",                     "enter rating",                     true},
-{"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",               "enter release date",               true},
-{"developer",     MD_STRING,           "unknown",         false,     "developer",                  "enter developer",                  true},
-{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                  "enter publisher",                  true},
-{"genre",         MD_STRING,           "unknown",         false,     "genre",                      "enter genre",                      true},
-{"players",       MD_STRING,           "unknown",         false,     "players",                    "enter number of players",          true},
-{"favorite",      MD_BOOL,             "false",           false,     "favorite",                   "enter favorite off/on",            false},
-{"completed",     MD_BOOL,             "false",           false,     "completed",                  "enter completed off/on",           false},
-{"hidden",        MD_BOOL,             "false",           false,     "hidden",                     "enter hidden off/on",              false},
-{"broken",        MD_BOOL,             "false",           false,     "broken/not working",         "enter broken off/on",              false},
-{"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper", "enter no multi-scrape off/on",     false},
-{"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",       "enter hide metadata off/on",       false},
-{"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
+{"name",          MD_STRING,           "",                false,     "name",                          "enter name",                       true},
+{"desc",          MD_MULTILINE_STRING, "",                false,     "description",                   "enter description",                true},
+{"rating",        MD_RATING,           "0",               false,     "rating",                        "enter rating",                     true},
+{"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",                  "enter release date",               true},
+{"developer",     MD_STRING,           "unknown",         false,     "developer",                     "enter developer",                  true},
+{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                     "enter publisher",                  true},
+{"genre",         MD_STRING,           "unknown",         false,     "genre",                         "enter genre",                      true},
+{"players",       MD_STRING,           "unknown",         false,     "players",                       "enter number of players",          true},
+{"favorite",      MD_BOOL,             "false",           false,     "favorite",                      "enter favorite off/on",            false},
+{"completed",     MD_BOOL,             "false",           false,     "completed",                     "enter completed off/on",           false},
+{"kidgame",       MD_BOOL,             "false",           false,     "kidgame (only affects badges)", "enter kidgame off/on",             false},
+{"hidden",        MD_BOOL,             "false",           false,     "hidden",                        "enter hidden off/on",              false},
+{"broken",        MD_BOOL,             "false",           false,     "broken/not working",            "enter broken off/on",              false},
+{"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper",    "enter no multi-scrape off/on",     false},
+{"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",          "enter hide metadata off/on",       false},
+{"lastplayed",    MD_TIME,             "0",               true,      "last played",                   "enter last played date",           false}
 };
 // clang-format on
 

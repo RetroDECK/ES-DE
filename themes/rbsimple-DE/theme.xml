@@ -240,10 +240,9 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.8125 0.675</pos>
             <size>0.15 0.21</size>
             <origin>0 0</origin>
-            <direction>row</direction>
-            <align>start</align>
-            <itemsPerLine>3</itemsPerLine>
-            <lines>2</lines>
+            <alignment>left</alignment>
+            <itemsPerRow>3</itemsPerRow>
+            <rows>2</rows>
             <itemMargin>0.0028125 0.005</itemMargin>
             <slots>favorite completed kidgame broken altemulator</slots>
         </badges>

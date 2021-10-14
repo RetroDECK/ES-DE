@@ -213,6 +213,8 @@ In addition to the styles just described, there is a **Grid** view style as well
 
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated as 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
+Another feature which requires theme support is **Badges**, which is a set of icons displaying the status for various metadata fields. The currently supported badge types are _favorite, completed, kidgame, broken_ and _alternative emulator_. If any of the first four metadata fields have been set for a game, their corresponding badges will be displayed, and if an alternative emulator has been selected for the specific game, that badge will be shown. Setting an alternative emulator system-wide will not display this badge as it's only intended to indicate game-specific overrides.
+
 ![alt text](images/es-de_gamelist_view.png "ES-DE Gamelist View")
 _The **Gamelist view** is where you browse the games for a specific system._
 
@@ -970,6 +972,10 @@ With this option enabled, there will be an overlay displayed when scrolling the 
 
 This enables a virtual (on-screen) keyboard that can be used at various places throughout the application to input text and numbers using a controller. The Shift and Alt keys can be toggled individually or combined together to access many special characters. The general use of the virtual keyboard should hopefully be self-explanatory.
 
+**Enable menu scroll indicators**
+
+With this option enabled, "up and down" scroll indicators will be displayed in the upper right corner of menus (including the metadata editor) if there are more entries available than can be shown on the screen at the same time. These indicators will change dynamically as the list is scrolled. If the setting is disabled, a simplified static indicator will be displayed instead.
+
 **Enable toggle favorites button**
 
 This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. The option does not affect the use of the _Y_ button to add or remove games when editing custom collections.
@@ -1440,9 +1446,9 @@ A flag to indicate whether this is a favorite game. This flag can also be set di
 
 A flag to indicate whether you have completed the game.
 
-**Kidgame** _(files only)_
+**Kidgame**
 
-A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES-DE in _Kid_ mode.
+A flag to mark whether the game is suitable for children. This will be applied as a filter when starting ES-DE in _Kid_ mode. Although it's possible to also set this flag for folders, this will **not** affect the actual files inside those folders. It will instead only be used to display the Kidgame badge for the folders themselves.
 
 **Hidden**
 
@@ -1462,7 +1468,7 @@ Whether to exclude the file from the multi-scraper. This is quite useful in orde
 
 **Hide metadata fields**
 
-This option will hide most metadata fields in the gamelist view. The intention is to be able to hide the fields for situations such as general folders (Multi-disc, Cartridges etc.) and for setup programs and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disc games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's also possible to display game images and videos with this setting enabled.
+This option will hide most metadata fields as well as any badges. The intention is to be able to hide the fields for situations such as general folders (Multi-disc, Cartridges etc.) and for setup programs and similar (e.g. SETUP.EXE or INSTALL.BAT for DOS games). It could also be used on the game files for multi-disc games where perhaps only the .m3u playlist should have any metadata values. The only fields shown with this option enabled are the game name and description. Using the description it's possible to write some comments regarding the file or folder, should you want to. It's also possible to display game images and videos with this setting enabled.
 
 **Times played** _(files only)_
 

@@ -13,8 +13,10 @@
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
 * Populated the bundled es_systems.xml files with alternative emulator entries for most RetroArch cores
 * Added a virtual keyboard, partly based on code from batocera-emulationstation
+* Added badges that indicate favorite/completed/broken games as well as games suitable for children and those with a selected alternative emulator
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
+* Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
@@ -25,6 +27,7 @@
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
 * Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
 * Added notification popups when plugging in or removing controllers
+* Changed to loading the default theme set rbsimple-DE instead of the first available theme if the currently configured theme is missing
 * Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
@@ -35,9 +38,11 @@
 * Added a blinking cursor to TextEditComponent
 * Changed the filter description "Text filter (game name)" to "Game name"
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
+* Added support for a maximum name length to OptionListComponent (non-multiselect only) with an abbreviation of the name if it exceeds this value
 * Added support for key repeat to OptionListComponent, making it possible to cycle through the options by holding the left or right button
 * Added key repeat for the "Jump to" and "Sort games by" selectors on the game options menu
 * Added key repeat when editing the "Release date" entry in the metadata editor (DateTimeEditComponent)
+* Added support for setting the Kidgame metadata flag for folders (which will only affect the badges)
 * Achieved a massive speed improvement for OptionListComponent by not resizing each added MenuComponent row (most notable in the filter GUI)
 * Made multiple optimizations to the GUI components by removing lots of unnecessary function calls for sizing, placement, opacity changes etc.
 * Simplified the logic for info popups and prepared the code for the future "multiple popups" feature
@@ -74,14 +79,19 @@
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
 * Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
 * Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
+* Fixed multiple issues where ComponentGrid would display incorrect help prompts
 * Help prompts were missing for the "Rating" and "Release date" fields in the metadata editor
 * There was some strange behavior in DateTimeEditComponent when changing the date all the way down to 1970-01-01
 * When navigating menus, the separator lines and menu components did not align properly and moved up and down slightly
+* Under some circumstances and at some screen resolutions, the last menu separator line would not get rendered (still an issue at extreme resolutions like 320x240)
 * When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
+* If there was an abbreviated full system name for the "Gamelist on startup" option, that abbreviation would also get displayed when opening the selector window
+* Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
 * Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions
+* The sizing of the metadata editor was strange, which was clearly visible when activating the Ctrl+G debug mode
 * The "sortname" window header was incorrectly spelled when editing this type of entry in the metadata editor
 * When the last row of a menu had its text color changed, this color was completely desaturated when navigating to a button below the list
 
