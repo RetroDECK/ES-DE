@@ -21,7 +21,7 @@ MenuComponent::MenuComponent(Window* window,
                              const std::shared_ptr<Font>& titleFont)
     : GuiComponent(window)
     , mBackground(window)
-    , mGrid(window, glm::ivec2{3, 4})
+    , mGrid(window, glm::ivec2{2, 4})
     , mNeedsSaving(false)
 {
     addChild(&mBackground);
@@ -34,11 +34,11 @@ MenuComponent::MenuComponent(Window* window,
     mTitle->setHorizontalAlignment(ALIGN_CENTER);
     mTitle->setColor(0x555555FF);
     setTitle(title, titleFont);
-    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{3, 2});
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{2, 2});
 
     // Set up list which will never change (externally, anyway).
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 2}, true, true, glm::ivec2{3, 1});
+    mGrid.setEntry(mList, glm::ivec2{0, 2}, true, true, glm::ivec2{2, 1});
 
     // Set up scroll indicators.
     mScrollUp = std::make_shared<ImageComponent>(mWindow);
@@ -51,8 +51,8 @@ MenuComponent::MenuComponent(Window* window,
     mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
     mScrollDown->setOrigin(0.0f, 0.35f);
 
-    mGrid.setEntry(mScrollUp, glm::ivec2{2, 0}, false, false, glm::ivec2{1, 1});
-    mGrid.setEntry(mScrollDown, glm::ivec2{2, 1}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollUp, glm::ivec2{1, 0}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2{1, 1}, false, false, glm::ivec2{1, 1});
 
     updateGrid();
     updateSize();
@@ -127,8 +127,7 @@ void MenuComponent::onSizeChanged()
     mGrid.setRowHeightPerc(1, TITLE_HEIGHT / mSize.y / 2.0f);
     mGrid.setRowHeightPerc(3, getButtonGridHeight() / mSize.y);
 
-    mGrid.setColWidthPerc(0, 0.07f);
-    mGrid.setColWidthPerc(2, 0.07f);
+    mGrid.setColWidthPerc(1, 0.055f);
 
     mGrid.setSize(mSize);
 }
@@ -152,7 +151,7 @@ void MenuComponent::updateGrid()
 
     if (mButtons.size()) {
         mButtonGrid = makeButtonGrid(mWindow, mButtons);
-        mGrid.setEntry(mButtonGrid, glm::ivec2{0, 3}, true, false, glm::ivec2{3, 1});
+        mGrid.setEntry(mButtonGrid, glm::ivec2{0, 3}, true, false, glm::ivec2{2, 1});
     }
 }
 
