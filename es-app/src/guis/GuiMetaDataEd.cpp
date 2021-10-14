@@ -43,7 +43,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              std::function<void()> deleteGameFunc)
     : GuiComponent{window}
     , mBackground{window, ":/graphics/frame.svg"}
-    , mGrid{window, glm::ivec2{3, 6}}
+    , mGrid{window, glm::ivec2{2, 6}}
     , mScraperParams{scraperParams}
     , mMetaDataDecl{mdd}
     , mMetaData{md}
@@ -58,7 +58,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{3, 2});
+    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{2, 2});
 
     // Extract possible subfolders from the path.
     std::string folderPath =
@@ -83,10 +83,10 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3{}, glm::vec2{}, 0x00000000,
         0.05f);
 
-    mGrid.setEntry(mSubtitle, glm::ivec2{0, 2}, false, true, glm::ivec2{3, 1});
+    mGrid.setEntry(mSubtitle, glm::ivec2{0, 2}, false, true, glm::ivec2{2, 1});
 
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 4}, true, true, glm::ivec2{3, 1});
+    mGrid.setEntry(mList, glm::ivec2{0, 4}, true, true, glm::ivec2{2, 1});
 
     // Set up scroll indicators.
     mScrollUp = std::make_shared<ImageComponent>(mWindow);
@@ -99,8 +99,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
     mScrollDown->setOrigin(0.0f, 0.35f);
 
-    mGrid.setEntry(mScrollUp, glm::ivec2{2, 0}, false, false, glm::ivec2{1, 1});
-    mGrid.setEntry(mScrollDown, glm::ivec2{2, 1}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollUp, glm::ivec2{1, 0}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2{1, 1}, false, false, glm::ivec2{1, 1});
 
     // Populate list.
     for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
@@ -265,6 +265,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                             std::shared_ptr<TextComponent> labelText =
                                 std::make_shared<TextComponent>(
                                     mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                            labelText->setSelectable(true);
 
                             if (scraperParams.system->getAlternativeEmulator() == "" &&
                                 scraperParams.system->getSystemEnvData()
@@ -288,14 +289,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                     mInvalidEmulatorEntry = false;
                                     delete s;
                                 });
-
-                            // This transparent bracket is only added to generate the correct help
-                            // prompts.
-                            auto bracket = std::make_shared<ImageComponent>(mWindow);
-                            bracket->setImage(":/graphics/arrow.svg");
-                            bracket->setOpacity(0);
-                            bracket->setSize(bracket->getSize() / 3.0f);
-                            row.addElement(bracket, false);
 
                             // Select the row that corresponds to the selected label.
                             if (selectedLabel == label)
@@ -481,7 +474,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     }
 
     mButtons = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtons, glm::ivec2{0, 5}, true, false, glm::ivec2{3, 1});
+    mGrid.setEntry(mButtons, glm::ivec2{0, 5}, true, false, glm::ivec2{2, 1});
 
     // Resize + center.
     float width =
@@ -505,8 +498,7 @@ void GuiMetaDataEd::onSizeChanged()
     mGrid.setRowHeightPerc(3, (titleSubtitleSpacing * 1.2f) / mSize.y);
     mGrid.setRowHeightPerc(4, ((mList->getRowHeight(0) * 10.0f) + 2.0f) / mSize.y);
 
-    mGrid.setColWidthPerc(0, 0.07f);
-    mGrid.setColWidthPerc(2, 0.07f);
+    mGrid.setColWidthPerc(1, 0.055f);
 
     mGrid.setSize(mSize);
     mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
