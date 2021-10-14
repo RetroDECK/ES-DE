@@ -1207,11 +1207,6 @@ void GuiMenu::openQuitMenu()
         Window* window = mWindow;
         HelpStyle style = getHelpStyle();
 
-        // This transparent bracket is only neeeded to generate the correct help prompts.
-        auto bracket = std::make_shared<ImageComponent>(mWindow);
-        bracket->setImage(":/graphics/arrow.svg");
-        bracket->setOpacity(0);
-
         ComponentListRow row;
 
         row.makeAcceptInputHandler([window, this] {
@@ -1224,10 +1219,10 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-                       true);
-        row.addElement(bracket, false);
+        auto quitText = std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION",
+                                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        quitText->setSelectable(true);
+        row.addElement(quitText, true);
         s->addRow(row);
 
         row.elements.clear();
@@ -1243,10 +1238,10 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        row.addElement(std::make_shared<TextComponent>(window, "REBOOT SYSTEM",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-                       true);
-        row.addElement(bracket, false);
+        auto rebootText = std::make_shared<TextComponent>(window, "REBOOT SYSTEM",
+                                                          Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        rebootText->setSelectable(true);
+        row.addElement(rebootText, true);
         s->addRow(row);
 
         row.elements.clear();
@@ -1262,10 +1257,10 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        row.addElement(std::make_shared<TextComponent>(window, "POWER OFF SYSTEM",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-                       true);
-        row.addElement(bracket, false);
+        auto powerOffText = std::make_shared<TextComponent>(
+            window, "POWER OFF SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        powerOffText->setSelectable(true);
+        row.addElement(powerOffText, true);
         s->addRow(row);
 
         mWindow->pushGui(s);
