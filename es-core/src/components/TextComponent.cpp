@@ -13,18 +13,19 @@
 #include "utils/StringUtil.h"
 
 TextComponent::TextComponent(Window* window)
-    : GuiComponent(window)
-    , mFont(Font::get(FONT_SIZE_MEDIUM))
-    , mColor(0x000000FF)
-    , mBgColor(0)
-    , mMargin(0.0f)
-    , mRenderBackground(false)
-    , mUppercase(false)
-    , mAutoCalcExtent(true, true)
-    , mHorizontalAlignment(ALIGN_LEFT)
-    , mVerticalAlignment(ALIGN_CENTER)
-    , mLineSpacing(1.5f)
-    , mNoTopMargin(false)
+    : GuiComponent{window}
+    , mFont{Font::get(FONT_SIZE_MEDIUM)}
+    , mColor{0x000000FF}
+    , mBgColor{0}
+    , mMargin{0.0f}
+    , mRenderBackground{false}
+    , mUppercase{false}
+    , mAutoCalcExtent{1, 1}
+    , mHorizontalAlignment{ALIGN_LEFT}
+    , mVerticalAlignment{ALIGN_CENTER}
+    , mLineSpacing{1.5f}
+    , mNoTopMargin{false}
+    , mSelectable{false}
 {
 }
 
@@ -37,18 +38,19 @@ TextComponent::TextComponent(Window* window,
                              glm::vec2 size,
                              unsigned int bgcolor,
                              float margin)
-    : GuiComponent(window)
-    , mFont(nullptr)
-    , mColor(0x000000FF)
-    , mBgColor(0)
-    , mMargin(margin)
-    , mRenderBackground(false)
-    , mUppercase(false)
-    , mAutoCalcExtent(true, true)
-    , mHorizontalAlignment(align)
-    , mVerticalAlignment(ALIGN_CENTER)
-    , mLineSpacing(1.5f)
-    , mNoTopMargin(false)
+    : GuiComponent{window}
+    , mFont{nullptr}
+    , mColor{0x000000FF}
+    , mBgColor{0}
+    , mMargin{margin}
+    , mRenderBackground{false}
+    , mUppercase{false}
+    , mAutoCalcExtent{1, 1}
+    , mHorizontalAlignment{align}
+    , mVerticalAlignment{ALIGN_CENTER}
+    , mLineSpacing{1.5f}
+    , mNoTopMargin{false}
+    , mSelectable{false}
 {
     setFont(font);
     setColor(color);
@@ -280,6 +282,14 @@ void TextComponent::setNoTopMargin(bool margin)
 {
     mNoTopMargin = margin;
     onTextChanged();
+}
+
+std::vector<HelpPrompt> TextComponent::getHelpPrompts()
+{
+    std::vector<HelpPrompt> prompts;
+    if (mSelectable)
+        prompts.push_back(HelpPrompt("a", "select"));
+    return prompts;
 }
 
 void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,

@@ -60,10 +60,14 @@ public:
     unsigned char getOpacity() const override { return mColor & 0x000000FF; }
     void setOpacity(unsigned char opacity) override;
 
+    void setSelectable(bool status) { mSelectable = status; }
+
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,
                             const std::string& element,
                             unsigned int properties) override;
+
+    virtual std::vector<HelpPrompt> getHelpPrompts() override;
 
     unsigned int getColor() const override { return mColor; }
     std::shared_ptr<Font> getFont() const override { return mFont; }
@@ -95,6 +99,7 @@ private:
     Alignment mVerticalAlignment;
     float mLineSpacing;
     bool mNoTopMargin;
+    bool mSelectable;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H
