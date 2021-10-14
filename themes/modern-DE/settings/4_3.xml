@@ -23,21 +23,28 @@ based on:       Switch Theme by Lilbud
 
 	<!-- system specific styles -->
 	<view name="system">
+		<image name="logoPlaceholderImage">
+			<size>0.235 0.313</size>
+		</image>
+		<text name="logoPlaceholderText">
+			<size>0.18 0.32</size>
+			<fontSize>0.035</fontSize>
+		</text>
 		<image name="selection_bottom" extra="true">
-			<pos>0.5 0.7025</pos>
-			<size>0.23 0.003</size>
+			<pos>0.5 0.66</pos>
+			<size>0.24 0.003</size>
 		</image>
 		<image name="selection_top" extra="true">
-			<pos>0.5 0.2975</pos>
-			<size>0.23 0.003</size>
+			<pos>0.5 0.34</pos>
+			<size>0.24 0.003</size>
 		</image>
 		<image name="selection_left" extra="true">
-			<pos>0.385 0.5</pos>
-			<size>0.0016875 0.408</size>
+			<pos>0.38 0.5</pos>
+			<size>0.0016875 0.3208</size>
 		</image>
 		<image name="selection_right" extra="true">
-			<pos>0.615 0.5</pos>
-			<size>0.0016875 0.408</size>
+			<pos>0.620 0.5</pos>
+			<size>0.0016875 0.3208</size>
 		</image>
 	</view>
 
@@ -73,8 +80,8 @@ based on:       Switch Theme by Lilbud
 			<pos>1 1</pos>
 		</datetime>
 		<badges name="md_badges">
-			<itemsPerLine>5</itemsPerLine>
-			<lines>1</lines>
+			<itemsPerRow>1</itemsPerRow>
+			<rows>5</rows>
 			<itemMargin>0.005 0.00375</itemMargin>
 		</badges>
 	</view>

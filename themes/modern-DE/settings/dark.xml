@@ -19,6 +19,7 @@ based on:       Switch Theme by Lilbud
 		<secondaryColor>f4f4f4</secondaryColor>
 		<tertiaryColor>858585</tertiaryColor>
 		<systemColor>3aa5ab</systemColor>
+		<placeholderColor>505050</placeholderColor>
 	</variables>
 
 	<!-- generic styles -->
@@ -29,6 +30,9 @@ based on:       Switch Theme by Lilbud
 			<iconColorDimmed>${secondaryColor}</iconColorDimmed>
 			<textColorDimmed>${secondaryColor}</textColorDimmed>
 		</helpsystem>
+		<text name="logoPlaceholderText">
+			<color>${secondaryColor}</color>
+		</text>
 		<image name="background">
 			<color>${backgroundColor}</color>
 		</image>
@@ -42,6 +46,9 @@ based on:       Switch Theme by Lilbud
 
 	<!-- system specific styles -->
 	<view name="system">
+		<image name="logoPlaceholderImage">
+			<color>${placeholderColor}</color>
+		</image>
 		<text name="system_name_1" extra="true">
 			<color>${mainColor}</color>
 		</text>

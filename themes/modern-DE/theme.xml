@@ -11,7 +11,7 @@ based on:       Switch Theme by Lilbud
 	<formatVersion>7</formatVersion>
 
 	<!-- includes (hard-coded variant until v1.3) -->
-	<include>./variants/dark16_9/default.xml</include>
+	<include>./variants/dark4_3/default.xml</include>
 	<include>./navigationsounds.xml</include>
 
 	<!-- variables -->
@@ -59,17 +59,12 @@ based on:       Switch Theme by Lilbud
 		</image>
 		<image name="logoPlaceholderImage">
 			<pos>0.5 0.5</pos>
-			<size>0.225 0.3975</size>
-			<color>505050</color>
 			<path>./assets/box.png</path>
 		</image>
 		<text name="logoPlaceholderText">
 			<pos>0.5 0.5</pos>
 			<origin>0.5 0.5</origin>
-			<size>0.18 0.32</size>
-			<fontSize>0.035</fontSize>
 			<fontPath>${mainFont}</fontPath>
-			<color>f4f4f4</color>
 			<forceUppercase>false</forceUppercase>
 			<text>${system.fullName}</text>
 		</text>
@@ -435,8 +430,7 @@ based on:       Switch Theme by Lilbud
 			<pos>0.8423 0.69</pos>
 			<size>0.1267 0.17335978655</size>
 			<origin>0 0</origin>
-			<direction>column</direction>
-			<align>start</align>
+			<itemPlacement>top</itemPlacement>
 			<slots>favorite kidgame broken completed altemulator</slots>
 		</badges>
 	</view>

@@ -23,6 +23,13 @@ based on:       Switch Theme by Lilbud
 
 	<!-- system specific styles -->
 	<view name="system">
+		<image name="logoPlaceholderImage">
+			<size>0.225 0.3975</size>
+		</image>
+		<text name="logoPlaceholderText">
+			<size>0.18 0.32</size>
+			<fontSize>0.035</fontSize>
+		</text>
 		<image name="selection_bottom" extra="true">
 			<pos>0.5 0.7025</pos>
 			<size>0.23 0.003</size>
@@ -72,8 +79,8 @@ based on:       Switch Theme by Lilbud
 			<pos>1 1</pos>
 		</datetime>
 		<badges name="md_badges">
-			<itemsPerLine>4</itemsPerLine>
-			<lines>2</lines>
+			<itemsPerRow>2</itemsPerRow>
+			<rows>3</rows>
 			<itemMargin>0.0028125 0.005</itemMargin>
 		</badges>
 	</view>
