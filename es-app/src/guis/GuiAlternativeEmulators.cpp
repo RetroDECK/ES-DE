@@ -39,13 +39,6 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
         ComponentListRow row;
 
-        // This transparent bracket is only added to generate a left margin.
-        auto bracket = std::make_shared<ImageComponent>(mWindow);
-        bracket->setImage(":/graphics/arrow.svg");
-        bracket->setOpacity(0);
-        bracket->setSize(bracket->getSize() / 3.0f);
-        row.addElement(bracket, false);
-
         std::string name = (*it)->getName();
         std::shared_ptr<TextComponent> systemText =
             std::make_shared<TextComponent>(mWindow, name, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
@@ -94,7 +87,9 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
             labelText->setColor(TEXTCOLOR_SCRAPERMARKED);
 
         mCommandRows[name] = labelText;
-        labelText->setSize(labelSizeX, labelText->getSize().y);
+        labelText->setSize(mMenu.getSize().x - systemSizeX -
+                               20.0f * Renderer::getScreenHeightModifier(),
+                           systemText->getSize().y);
 
         row.addElement(labelText, false);
         row.makeAcceptInputHandler([this, it, labelText] {
@@ -157,6 +152,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 
         std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
             mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_LEFT);
+        labelText->setSelectable(true);
 
         if (system->getSystemEnvData()->mLaunchCommands.front().second == label)
             labelText->setValue(labelText->getValue().append(" [DEFAULT]"));
@@ -192,13 +188,6 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
             }
             delete s;
         });
-
-        // This transparent bracket is only added to generate the correct help prompts.
-        auto bracket = std::make_shared<ImageComponent>(mWindow);
-        bracket->setImage(":/graphics/arrow.svg");
-        bracket->setOpacity(0);
-        bracket->setSize(bracket->getSize() / 3.0f);
-        row.addElement(bracket, false);
 
         // Select the row that corresponds to the selected label.
         if (selectedLabel == label)
