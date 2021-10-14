@@ -12,6 +12,11 @@ based on:       Switch Theme by Lilbud
 
 	<!-- generic styles -->
 	<view name="system, basic, detailed, video">
+		<helpsystem name="help">
+			<fontSize>0.035</fontSize>
+			<entrySpacing>48</entrySpacing>
+			<iconTextSpacing>12</iconTextSpacing>
+		</helpsystem>
 		<image name="arrowblock" extra="true">
 			<size>0.023 0.047</size>
 		</image>

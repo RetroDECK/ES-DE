@@ -25,9 +25,6 @@ based on:       Switch Theme by Lilbud
 			<pos>0.96 0.935</pos>
 			<origin>1 0</origin>
 			<fontPath>${mainFont}</fontPath>
-			<fontSize>0.035</fontSize>
-			<entrySpacing>48</entrySpacing>
-			<iconTextSpacing>12</iconTextSpacing>
 			<textStyle>camelcase</textStyle>
 			<customButtonIcon button="button_start_XBOX360">:/help/button_start_SNES.svg</customButtonIcon>
 			<customButtonIcon button="button_back_XBOX360">:/help/button_back_SNES.svg</customButtonIcon>
