@@ -177,12 +177,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                 row.makeAcceptInputHandler(createCollectionCall);
                 auto themeFolder = std::make_shared<TextComponent>(
                     mWindow, Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+                themeFolder->setSelectable(true);
                 row.addElement(themeFolder, true);
-                // This transparent bracket is only added to generate the correct help prompts.
-                auto bracket = std::make_shared<ImageComponent>(mWindow);
-                bracket->setImage(":/graphics/arrow.svg");
-                bracket->setOpacity(0);
-                row.addElement(bracket, false);
                 ss->addRow(row);
             }
             mWindow->pushGui(ss);
@@ -287,15 +283,17 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
             };
             row.makeAcceptInputHandler(deleteCollectionCall);
             auto customCollection = std::make_shared<TextComponent>(
-                mWindow, Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+                mWindow, Utils::String::toUpper(name), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+            customCollection->setSelectable(true);
             row.addElement(customCollection, true);
-            // This transparent bracket is only added generate the correct help prompts.
-            auto bracket = std::make_shared<ImageComponent>(mWindow);
-            bracket->setImage(":/graphics/arrow.svg");
-            bracket->setOpacity(0);
-            row.addElement(bracket, false);
             ss->addRow(row);
         }
+        // Make the menu slightly wider to fit the scroll indicators.
+        glm::vec2 menuSize{ss->getMenuSize()};
+        glm::vec3 menuPos{ss->getMenuPosition()};
+        ss->setMenuSize(glm::vec2{menuSize.x * 1.08f, menuSize.y});
+        menuPos.x = static_cast<float>((Renderer::getScreenWidth()) - ss->getMenuSize().x) / 2.0f;
+        ss->setMenuPosition(menuPos);
         mWindow->pushGui(ss);
     });
     addRow(row);
