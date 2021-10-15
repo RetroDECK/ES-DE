@@ -201,9 +201,10 @@ void FlexboxComponent::computeLayout()
             if (!image.second.isVisible())
                 continue;
             if (line == mLines)
-                image.second.setPosition(image.second.getPosition().x +
-                                             (maxItemSize.x + mItemMargin.x) * n,
-                                         image.second.getPosition().y);
+                image.second.setPosition(
+                    image.second.getPosition().x +
+                        floorf((maxItemSize.x + mItemMargin.x) * static_cast<float>(n)),
+                    image.second.getPosition().y);
             if ((i++ + 1) % std::max(1, static_cast<int>(mItemsPerLine)) == 0)
                 line++;
         }
