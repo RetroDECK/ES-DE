@@ -402,7 +402,8 @@ void SystemView::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans{getTransform() * parentTrans};
 
-    renderExtras(trans, INT16_MIN, INT16_MAX);
+    // Render the extras that are below the carousel.
+    renderExtras(trans, INT16_MIN, mCarousel.zIndex);
 
     // Fade the screen if we're using fade transitions and we're currently transitioning.
     // This basically renders a black rectangle on top of the currently visible extras
@@ -412,6 +413,9 @@ void SystemView::render(const glm::mat4& parentTrans)
 
     // Always render the carousel on top so that it's not faded.
     renderCarousel(trans);
+
+    // Render the rest of the extras.
+    renderExtras(trans, mCarousel.zIndex, INT16_MAX);
 }
 
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
