@@ -224,7 +224,7 @@ void GuiScraperSearch::onSizeChanged()
                                 mResultDesc->getFont()->getHeight() * 3.0f);
     else
         mDescContainer->setSize(mGrid.getColWidth(4) * thumbnailCellScale,
-                                mResultDesc->getFont()->getHeight() * 6.0f);
+                                mResultDesc->getFont()->getHeight() * 8.0f);
 
     // Make description text wrap at edge of container.
     mResultDesc->setSize(mDescContainer->getSize().x, 0.0f);
