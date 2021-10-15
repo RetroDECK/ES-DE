@@ -71,6 +71,10 @@ public:
     {
         mCancelCallback = cancelCallback;
     }
+    void setRefineCallback(const std::function<void()>& refineCallback)
+    {
+        mRefineCallback = refineCallback;
+    }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -91,6 +95,8 @@ public:
 
     void onFocusGained() override { mGrid.onFocusGained(); }
     void onFocusLost() override { mGrid.onFocusLost(); }
+
+    std::shared_ptr<ComponentList>& getResultList() { return mResultList; }
 
 private:
     void updateViewStyle();
@@ -152,6 +158,7 @@ private:
     std::function<void(const ScraperSearchResult&)> mAcceptCallback;
     std::function<void()> mSkipCallback;
     std::function<void()> mCancelCallback;
+    std::function<void()> mRefineCallback;
     unsigned int mScrapeCount;
     bool mRefinedSearch;
     bool mBlockAccept;

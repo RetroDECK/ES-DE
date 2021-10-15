@@ -39,7 +39,7 @@
 
 GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int scrapeCount)
     : GuiComponent(window)
-    , mGrid(window, glm::ivec2{4, 3})
+    , mGrid(window, glm::ivec2{5, 3})
     , mSearchType(type)
     , mScrapeCount(scrapeCount)
     , mRefinedSearch(false)
@@ -88,14 +88,11 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>(mWindow);
     mMD_ReleaseDate->setColor(mdColor);
     mMD_ReleaseDate->setUppercase(true);
-    mMD_Developer = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-                                                    glm::vec3{}, glm::vec2{}, 0x00000000, 0.02f);
-    mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-                                                    glm::vec3{}, glm::vec2{}, 0x00000000, 0.02f);
-    mMD_Genre = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3{},
-                                                glm::vec2{}, 0x00000000, 0.02f);
-    mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT,
-                                                  glm::vec3{}, glm::vec2{}, 0x00000000, 0.02f);
+    mMD_Developer = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT);
+    mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT);
+    mMD_Genre =
+        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3{});
+    mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT);
     mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
     if (Settings::getInstance()->getString("Scraper") != "thegamesdb")
@@ -193,45 +190,47 @@ void GuiScraperSearch::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.25f);
 
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
-        mGrid.setColWidthPerc(2, 0.25f);
+        mGrid.setColWidthPerc(2, 0.33f);
     else
-        mGrid.setColWidthPerc(2, 0.28f);
+        mGrid.setColWidthPerc(2, 0.30f);
 
     // Row heights.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) // Show name.
         mGrid.setRowHeightPerc(0, (mResultName->getFont()->getHeight() * 1.6f) /
                                       mGrid.getSize().y); // Result name.
     else
-        mGrid.setRowHeightPerc(0, 0.0825f); // Hide name but do padding.
+        mGrid.setRowHeightPerc(0, 0.0725f); // Hide name but do padding.
 
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
         mGrid.setRowHeightPerc(2, 0.2f);
     else
         mGrid.setRowHeightPerc(1, 0.505f);
 
-    const float boxartCellScale = 0.9f;
+    const float thumbnailCellScale = 0.93f;
 
     // Limit thumbnail size using setMaxHeight - we do this instead of letting mGrid
     // call setSize because it maintains the aspect ratio.
     // We also pad a little so it doesn't rub up against the metadata labels.
-    mResultThumbnail->setMaxSize(mGrid.getColWidth(1) * boxartCellScale, mGrid.getRowHeight(1));
+    mResultThumbnail->setMaxSize(mGrid.getColWidth(1) * thumbnailCellScale, mGrid.getRowHeight(1));
 
     // Metadata.
     resizeMetadata();
 
+    // Small vertical spacer between the metadata fields and the result list.
+    mGrid.setColWidthPerc(3, 0.004f);
+
     if (mSearchType != ALWAYS_ACCEPT_FIRST_RESULT)
-        mDescContainer->setSize(mGrid.getColWidth(1) * boxartCellScale + mGrid.getColWidth(2),
+        mDescContainer->setSize(mGrid.getColWidth(1) * thumbnailCellScale + mGrid.getColWidth(2),
                                 mResultDesc->getFont()->getHeight() * 3.0f);
     else
-        mDescContainer->setSize(mGrid.getColWidth(3) * boxartCellScale,
+        mDescContainer->setSize(mGrid.getColWidth(4) * thumbnailCellScale,
                                 mResultDesc->getFont()->getHeight() * 6.0f);
 
     // Make description text wrap at edge of container.
     mResultDesc->setSize(mDescContainer->getSize().x, 0.0f);
 
     // Set the width of mResultName to the cell width so that text abbreviation will work correctly.
-    glm::vec2 resultNameSize{mResultName->getSize()};
-    mResultName->setSize(mGrid.getColWidth(3), resultNameSize.y);
+    mResultName->setSize(mGrid.getColWidth(1) + mGrid.getColWidth(2), mResultName->getSize().y);
 
     mGrid.onSizeChanged();
     mBusyAnim.setSize(mSize);
@@ -289,30 +288,30 @@ void GuiScraperSearch::updateViewStyle()
     // Add them back depending on search type.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
         // Show name.
-        mGrid.setEntry(mResultName, glm::ivec2{1, 0}, false, false, glm::ivec2{2, 1},
+        mGrid.setEntry(mResultName, glm::ivec2{1, 0}, false, false, glm::ivec2{3, 1},
                        GridFlags::BORDER_TOP);
 
         // Need a border on the bottom left.
         mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 2}, false, false,
-                       glm::ivec2{3, 1}, GridFlags::BORDER_BOTTOM);
+                       glm::ivec2{4, 1}, GridFlags::BORDER_BOTTOM);
 
         // Show description on the right.
-        mGrid.setEntry(mDescContainer, glm::ivec2{3, 0}, false, false, glm::ivec2{1, 3},
-                       GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+        mGrid.setEntry(mDescContainer, glm::ivec2{4, 0}, false, false, glm::ivec2{1, 3},
+                       GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM | GridFlags::BORDER_LEFT);
         // Make description text wrap at edge of container.
         mResultDesc->setSize(mDescContainer->getSize().x, 0.0f);
     }
     else {
         // Fake row where name would be.
         mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 0}, false, true,
-                       glm::ivec2{2, 1}, GridFlags::BORDER_TOP);
+                       glm::ivec2{3, 1}, GridFlags::BORDER_TOP);
 
         // Show result list on the right.
-        mGrid.setEntry(mResultList, glm::ivec2{3, 0}, true, true, glm::ivec2{1, 3},
+        mGrid.setEntry(mResultList, glm::ivec2{4, 0}, true, true, glm::ivec2{1, 3},
                        GridFlags::BORDER_LEFT | GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
         // Show description under image/info.
-        mGrid.setEntry(mDescContainer, glm::ivec2{1, 2}, false, false, glm::ivec2{2, 1},
+        mGrid.setEntry(mDescContainer, glm::ivec2{1, 2}, false, false, glm::ivec2{3, 1},
                        GridFlags::BORDER_BOTTOM);
         // Make description text wrap at edge of container.
         mResultDesc->setSize(mDescContainer->getSize().x, 0);
@@ -798,6 +797,8 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         stop();
         mRefinedSearch = true;
         params.nameOverride = name;
+        if (mRefineCallback != nullptr)
+            mRefineCallback();
         search(params);
     };
 

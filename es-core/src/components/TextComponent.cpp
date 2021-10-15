@@ -17,7 +17,6 @@ TextComponent::TextComponent(Window* window)
     , mFont{Font::get(FONT_SIZE_MEDIUM)}
     , mColor{0x000000FF}
     , mBgColor{0}
-    , mMargin{0.0f}
     , mRenderBackground{false}
     , mUppercase{false}
     , mAutoCalcExtent{1, 1}
@@ -36,13 +35,11 @@ TextComponent::TextComponent(Window* window,
                              Alignment align,
                              glm::vec3 pos,
                              glm::vec2 size,
-                             unsigned int bgcolor,
-                             float margin)
+                             unsigned int bgcolor)
     : GuiComponent{window}
     , mFont{nullptr}
     , mColor{0x000000FF}
     , mBgColor{0}
-    , mMargin{margin}
     , mRenderBackground{false}
     , mUppercase{false}
     , mAutoCalcExtent{1, 1}
@@ -238,12 +235,12 @@ void TextComponent::onTextChanged()
         // Abbreviate text.
         const std::string abbrev = "...";
         glm::vec2 abbrevSize{f->sizeText(abbrev)};
-        // mMargin adds a margin around the text if it's abbreviated.
-        float marginAdjustedSize = mSize.x - (mSize.x * mMargin);
 
-        while (text.size() && size.x + abbrevSize.x > marginAdjustedSize) {
+        while (text.size() && size.x + abbrevSize.x > mSize.x) {
             size_t newSize = Utils::String::prevCursor(text, text.size());
             text.erase(newSize, text.size() - newSize);
+            if (!text.empty() && text.back() == ' ')
+                text.pop_back();
             size = f->sizeText(text);
         }
 

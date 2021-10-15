@@ -32,8 +32,7 @@ public:
                   Alignment align = ALIGN_LEFT,
                   glm::vec3 pos = {},
                   glm::vec2 size = {},
-                  unsigned int bgcolor = 0x00000000,
-                  float margin = 0.0f);
+                  unsigned int bgcolor = 0x00000000);
 
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);
@@ -89,7 +88,6 @@ private:
     unsigned int mBgColor;
     unsigned char mColorOpacity;
     unsigned char mBgColorOpacity;
-    float mMargin;
     bool mRenderBackground;
 
     bool mUppercase;

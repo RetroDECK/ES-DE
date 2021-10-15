@@ -86,6 +86,13 @@ public:
     float getTotalRowHeight() const;
     float getRowHeight(int row) const { return getRowHeight(mEntries.at(row).data); }
 
+    void resetScrollIndicatorStatus()
+    {
+        mScrollIndicatorStatus = SCROLL_NONE;
+        if (mScrollIndicatorChangedCallback != nullptr)
+            mScrollIndicatorChangedCallback(mScrollIndicatorStatus);
+    }
+
     void setCursorChangedCallback(const std::function<void(CursorState state)>& callback)
     {
         mCursorChangedCallback = callback;

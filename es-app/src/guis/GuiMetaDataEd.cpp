@@ -80,8 +80,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         folderPath + Utils::FileSystem::getFileName(scraperParams.game->getPath()) + " [" +
             Utils::String::toUpper(scraperParams.system->getName()) + "]" +
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
-        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER, glm::vec3{}, glm::vec2{}, 0x00000000,
-        0.05f);
+        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
 
     mGrid.setEntry(mSubtitle, glm::ivec2{0, 2}, false, true, glm::ivec2{2, 1});
 
@@ -505,6 +504,11 @@ void GuiMetaDataEd::onSizeChanged()
 
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
                 (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+
+    // Add some extra margins to the file/folder name.
+    const float newSizeX = mSize.x * 0.96f;
+    mSubtitle->setSize(newSizeX, mSubtitle->getSize().y);
+    mSubtitle->setPosition((mSize.x - newSizeX) / 2.0f, mSubtitle->getPosition().y);
 }
 
 void GuiMetaDataEd::save()
