@@ -166,10 +166,9 @@ void FlexboxComponent::computeLayout()
             image.second.setSize(image.second.getSize().x, maxItemSize.y);
         }
 
-        // TODO: Doesn't work correctly.
         // Apply overall container alignment.
         if (mAlignment == "right")
-            x += (mSize.x - size.x * grid.x) - mItemMargin.x;
+            x += (mSize.x - maxItemSize.x * grid.x - (grid.x - 1) * mItemMargin.x);
 
         // Store final item position.
         image.second.setPosition(x, y);
@@ -190,6 +189,23 @@ void FlexboxComponent::computeLayout()
                 anchorX += size.x + mItemMargin.x;
                 anchorY = anchorYStart;
             }
+        }
+    }
+
+    // Apply right-align
+    if (mAlignment == "right") {
+        unsigned int n = mItemsPerLine - (--i + 1) % std::max(1, static_cast<int>(mItemsPerLine));
+        i = 0;
+        unsigned int line = 1;
+        for (auto& image : mImages) {
+            if (!image.second.isVisible())
+                continue;
+            if (line == mLines)
+                image.second.setPosition(image.second.getPosition().x +
+                                             (maxItemSize.x + mItemMargin.x) * n,
+                                         image.second.getPosition().y);
+            if ((i++ + 1) % std::max(1, static_cast<int>(mItemsPerLine)) == 0)
+                line++;
         }
     }
 
