@@ -194,7 +194,8 @@ void FlexboxComponent::computeLayout()
 
     // Apply right-align
     if (mAlignment == "right") {
-        unsigned int n = mItemsPerLine - (--i + 1) % std::max(1, static_cast<int>(mItemsPerLine));
+        unsigned int m = i % std::max(1, static_cast<int>(mItemsPerLine));
+        unsigned int n = m > 0 ? mItemsPerLine - m : m;
         i = 0;
         unsigned int line = 1;
         for (auto& image : mImages) {
