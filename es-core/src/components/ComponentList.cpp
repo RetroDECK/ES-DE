@@ -15,6 +15,7 @@ ComponentList::ComponentList(Window* window)
     , mFocused{false}
     , mSetupCompleted{false}
     , mBottomCameraOffset{false}
+    , mSingleRowScroll{false}
     , mSelectorBarOffset{0.0f}
     , mCameraOffset{0.0f}
     , mScrollIndicatorStatus{SCROLL_NONE}
@@ -63,6 +64,8 @@ bool ComponentList::input(InputConfig* config, Input input)
     if (size() == 0)
         return false;
 
+    mSingleRowScroll = false;
+
     if (input.value &&
         (config->isMappedTo("a", input) || config->isMappedLike("lefttrigger", input) ||
          config->isMappedLike("righttrigger", input))) {
@@ -86,9 +89,11 @@ bool ComponentList::input(InputConfig* config, Input input)
 
     // Input handler didn't consume the input - try to scroll.
     if (config->isMappedLike("up", input)) {
+        mSingleRowScroll = true;
         return listInput(input.value != 0 ? -1 : 0);
     }
     else if (config->isMappedLike("down", input)) {
+        mSingleRowScroll = true;
         return listInput(input.value != 0 ? 1 : 0);
     }
     else if (config->isMappedLike("leftshoulder", input)) {
@@ -142,7 +147,7 @@ void ComponentList::update(int deltaTime)
     }
 
     if (scrollIndicatorChanged == true && mScrollIndicatorChangedCallback != nullptr)
-        mScrollIndicatorChangedCallback(mScrollIndicatorStatus);
+        mScrollIndicatorChangedCallback(mScrollIndicatorStatus, mSingleRowScroll);
 
     listUpdate(deltaTime);
 

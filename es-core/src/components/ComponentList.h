@@ -90,7 +90,7 @@ public:
     {
         mScrollIndicatorStatus = SCROLL_NONE;
         if (mScrollIndicatorChangedCallback != nullptr)
-            mScrollIndicatorChangedCallback(mScrollIndicatorStatus);
+            mScrollIndicatorChangedCallback(mScrollIndicatorStatus, false);
     }
 
     void setCursorChangedCallback(const std::function<void(CursorState state)>& callback)
@@ -102,7 +102,7 @@ public:
         return mCursorChangedCallback;
     }
     void setScrollIndicatorChangedCallback(
-        const std::function<void(ScrollIndicator state)>& callback)
+        const std::function<void(ScrollIndicator state, bool singleRowScroll)>& callback)
     {
         mScrollIndicatorChangedCallback = callback;
     }
@@ -114,6 +114,7 @@ private:
     bool mFocused;
     bool mSetupCompleted;
     bool mBottomCameraOffset;
+    bool mSingleRowScroll;
 
     void updateCameraOffset();
     void updateElementPosition(const ComponentListRow& row);
@@ -126,7 +127,8 @@ private:
     float mCameraOffset;
 
     std::function<void(CursorState state)> mCursorChangedCallback;
-    std::function<void(ScrollIndicator state)> mScrollIndicatorChangedCallback;
+    std::function<void(ScrollIndicator state, bool singleRowScroll)>
+        mScrollIndicatorChangedCallback;
 
     ScrollIndicator mScrollIndicatorStatus;
 };
