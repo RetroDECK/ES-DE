@@ -306,13 +306,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                             static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
 
                         s->setMenuSize(glm::vec2{maxWidth, s->getMenuSize().y});
-
-                        auto menuSize = s->getMenuSize();
-                        auto menuPos = s->getMenuPosition();
-
-                        s->setMenuPosition(glm::vec3{(s->getSize().x - menuSize.x) / 2.0f,
-                                                     (s->getSize().y - menuSize.y) / 3.0f,
-                                                     menuPos.z});
+                        s->setMenuPosition(glm::vec3{(s->getSize().x - maxWidth) / 2.0f,
+                                                     mPosition.y, mPosition.z});
                         mWindow->pushGui(s);
                     });
                 }
