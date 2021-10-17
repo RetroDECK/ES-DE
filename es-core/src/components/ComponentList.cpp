@@ -208,7 +208,9 @@ void ComponentList::updateCameraOffset()
             i++;
         }
 
-        if (mCameraOffset < oldCameraOffset)
+        if (mCameraOffset < oldCameraOffset &&
+            (oldCameraOffset > mSelectorBarOffset ||
+             mScrollIndicatorStatus != ComponentList::SCROLL_NONE))
             mBottomCameraOffset = false;
 
         if (mCameraOffset < 0.0f)
