@@ -130,9 +130,9 @@ void ImageComponent::resize()
         }
     }
 
-    mSize.x = floorf(mSize.x);
-    mSize.y = floorf(mSize.y);
-    // mSize.y() should already be rounded.
+    mSize.x = ceilf(mSize.x);
+    mSize.y = ceilf(mSize.y);
+
     mTexture->rasterizeAt(static_cast<size_t>(mSize.x), static_cast<size_t>(mSize.y));
 
     onSizeChanged();
