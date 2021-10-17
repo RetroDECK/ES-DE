@@ -122,7 +122,7 @@ void FlexboxComponent::computeLayout()
             newSize = sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
 
         if (image.second.getSize() != newSize)
-            image.second.setResize(newSize.x, newSize.y);
+            image.second.setResize(std::round(newSize.x), std::round(newSize.y));
 
         // In case maxItemSize needs to be updated.
         if (newSize.x != sizeChange.x)
@@ -132,9 +132,9 @@ void FlexboxComponent::computeLayout()
     }
 
     if (maxItemSize.x != sizeChange.x)
-        maxItemSize.x = sizeChange.x;
+        maxItemSize.x = std::round(sizeChange.x);
     if (maxItemSize.y != sizeChange.y)
-        maxItemSize.y = sizeChange.y;
+        maxItemSize.y = std::round(sizeChange.y);
 
     // Pre-compute layout parameters.
     float anchorXStart{anchorX};
@@ -166,10 +166,9 @@ void FlexboxComponent::computeLayout()
             image.second.setSize(image.second.getSize().x, maxItemSize.y);
         }
 
-        // TODO: Doesn't work correctly.
         // Apply overall container alignment.
         if (mAlignment == "right")
-            x += (mSize.x - size.x * grid.x) - mItemMargin.x;
+            x += (mSize.x - maxItemSize.x * grid.x - (grid.x - 1) * mItemMargin.x);
 
         // Store final item position.
         image.second.setPosition(x, y);
@@ -190,6 +189,22 @@ void FlexboxComponent::computeLayout()
                 anchorX += size.x + mItemMargin.x;
                 anchorY = anchorYStart;
             }
+        }
+    }
+
+    // Apply right-align to the images on the last row, if needed.
+    if (mAlignment == "right") {
+        std::vector<ImageComponent*> imagesToAlign;
+        for (auto& image : mImages) {
+            if (!image.second.isVisible())
+                continue;
+            // Only include images on the last row.
+            if (image.second.getPosition().y == anchorY)
+                imagesToAlign.push_back(&image.second);
+        }
+        for (auto& moveImage : imagesToAlign) {
+            float offset = (maxItemSize.x + mItemMargin.x) * (grid.x - imagesToAlign.size());
+            moveImage->setPosition(moveImage->getPosition().x + offset, moveImage->getPosition().y);
         }
     }
 
