@@ -223,8 +223,10 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
     Renderer::pushClipRect(
-        glm::ivec2{static_cast<int>(trans[3].x + mHorizontalMargin), static_cast<int>(trans[3].y)},
-        glm::ivec2{static_cast<int>(dim.x - mHorizontalMargin * 2.0f), static_cast<int>(dim.y)});
+        glm::ivec2{static_cast<int>(std::round(trans[3].x + mHorizontalMargin)),
+                   static_cast<int>(std::round(trans[3].y))},
+        glm::ivec2{static_cast<int>(std::round(dim.x - mHorizontalMargin * 2.0f)),
+                   static_cast<int>(std::round(dim.y))});
 
     for (int i = startEntry; i < listCutoff; i++) {
         typename IList<TextListData, T>::Entry& entry = mEntries.at(static_cast<unsigned int>(i));
