@@ -61,7 +61,7 @@ GuiMenu::GuiMenu(Window* window)
     if (isFullUI)
         addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
 
-    // TEMPORARY - disabled for now, will be used in the future.
+    // TEMPORARY: Disabled for now, will be used in the future.
     //    if (isFullUI)
     //        addEntry("UTILITIES", 0x777777FF, true, [this] {
     //                openUtilitiesMenu(); });
@@ -600,8 +600,8 @@ void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings(mWindow, "SOUND SETTINGS");
 
-// TEMPORARY - Hide the volume slider on macOS and BSD Unix until the volume control logic
-// has been implemented for these operating systems.
+// TODO: Hide the volume slider on macOS and BSD Unix until the volume control logic has been
+// implemented for these operating systems.
 #if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
     // System volume.
     auto system_volume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
