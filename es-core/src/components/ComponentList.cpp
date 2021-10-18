@@ -8,6 +8,8 @@
 
 #include "components/ComponentList.h"
 
+#include "resources/Font.h"
+
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
 ComponentList::ComponentList(Window* window)
@@ -18,6 +20,11 @@ ComponentList::ComponentList(Window* window)
     , mSingleRowScroll{false}
     , mSelectorBarOffset{0.0f}
     , mCameraOffset{0.0f}
+    , mLoopRows{false}
+    , mLoopScroll{false}
+    , mLoopOffset{0}
+    , mLoopOffset2{0}
+    , mLoopTime{0}
     , mScrollIndicatorStatus{SCROLL_NONE}
 {
     // Adjust the padding relative to the aspect ratio and screen resolution to make it look
@@ -120,6 +127,12 @@ bool ComponentList::input(InputConfig* config, Input input)
 
 void ComponentList::update(int deltaTime)
 {
+    if (!mFocused && mLoopRows) {
+        mLoopOffset = 0;
+        mLoopOffset2 = 0;
+        mLoopTime = 0;
+    }
+
     const float totalHeight = getTotalRowHeight();
 
     // Scroll indicator logic, used by ScrollIndicatorComponent.
@@ -152,16 +165,51 @@ void ComponentList::update(int deltaTime)
     listUpdate(deltaTime);
 
     if (size()) {
+        float rowWidth{0.0f};
+
         // Update our currently selected row.
         for (auto it = mEntries.at(mCursor).data.elements.cbegin();
-             it != mEntries.at(mCursor).data.elements.cend(); it++)
+             it != mEntries.at(mCursor).data.elements.cend(); it++) {
             it->component->update(deltaTime);
+            rowWidth += it->component->getSize().x;
+        }
+
+        if (mLoopRows && rowWidth + mHorizontalPadding / 2.0f > mSize.x) {
+            // Loop the text.
+            const float speed{
+                Font::get(FONT_SIZE_MEDIUM)->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
+            const float delay{1300.0f};
+            const float scrollLength{rowWidth};
+            const float returnLength{speed * 1.5f};
+            const float scrollTime{(scrollLength * 1000.0f) / speed};
+            const float returnTime{(returnLength * 1000.0f) / speed};
+            const int maxTime{static_cast<int>(delay + scrollTime + returnTime)};
+
+            mLoopTime += deltaTime;
+            while (mLoopTime > maxTime)
+                mLoopTime -= maxTime;
+
+            mLoopOffset = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
+                                                             static_cast<float>(mLoopTime),
+                                                             scrollLength + returnLength));
+
+            if (mLoopOffset > (scrollLength - (mSize.x - returnLength)))
+                mLoopOffset2 = static_cast<int>(mLoopOffset - (scrollLength + returnLength));
+            else if (mLoopOffset2 < 0)
+                mLoopOffset2 = 0;
+        }
     }
 }
 
 void ComponentList::onCursorChanged(const CursorState& state)
 {
     mSetupCompleted = true;
+
+    if (mLoopRows) {
+        mLoopOffset = 0;
+        mLoopOffset2 = 0;
+        mLoopTime = 0;
+    }
 
     // Update the selector bar position.
     // In the future this might be animated.
@@ -233,22 +281,47 @@ void ComponentList::render(const glm::mat4& parentTrans)
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
-    Renderer::pushClipRect(
-        glm::ivec2{static_cast<int>(std::round(trans[3].x)),
-                   static_cast<int>(std::round(trans[3].y))},
-        glm::ivec2{static_cast<int>(std::round(dim.x)), static_cast<int>(std::round(dim.y))});
+    const int clipRectPosX{static_cast<int>(std::round(trans[3].x))};
+    const int clipRectPosY{static_cast<int>(std::round(trans[3].y))};
+    const int clipRectSizeX{static_cast<int>(std::round(dim.x))};
+    const int clipRectSizeY{static_cast<int>(std::round(dim.y))};
+
+    Renderer::pushClipRect(glm::ivec2{clipRectPosX, clipRectPosY},
+                           glm::ivec2{clipRectSizeX, clipRectSizeY});
 
     // Scroll the camera.
     trans = glm::translate(trans, glm::vec3{0.0f, -mCameraOffset, 0.0f});
+
+    glm::mat4 loopTrans{trans};
 
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
     bool drawAll;
     for (size_t i = 0; i < mEntries.size(); i++) {
+
+        if (mLoopRows && mFocused && mLoopOffset > 0) {
+            loopTrans =
+                glm::translate(trans, glm::vec3{static_cast<float>(-mLoopOffset), 0.0f, 0.0f});
+        }
+
         auto& entry = mEntries.at(i);
         drawAll = !mFocused || i != static_cast<unsigned int>(mCursor);
         for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
             if (drawAll || it->invert_when_selected) {
+                auto renderLoopFunc = [&]() {
+                    // Needed to avoid flickering when returning to the start position.
+                    if (mLoopOffset == 0 && mLoopOffset2 == 0)
+                        mLoopScroll = false;
+                    it->component->render(loopTrans);
+                    // Render row again if text is moved far enough for it to repeat.
+                    if (mLoopOffset2 < 0 || mLoopScroll) {
+                        mLoopScroll = true;
+                        loopTrans = glm::translate(
+                            trans, glm::vec3{static_cast<float>(-mLoopOffset2), 0.0f, 0.0f});
+                        it->component->render(loopTrans);
+                    }
+                };
+
                 // For the row where the cursor is at, we want to remove any hue from the
                 // font or image before inverting, as it would otherwise lead to an ugly
                 // inverted color (e.g. red inverting to a green hue).
@@ -267,15 +340,14 @@ void ComponentList::render(const glm::mat4& parentTrans)
                     unsigned char byteBlue = origColor >> 8 & 0xFF;
                     // If it's neutral, just proceed with normal rendering.
                     if (byteRed == byteGreen && byteGreen == byteBlue) {
-                        it->component->render(trans);
+                        renderLoopFunc();
                     }
                     else {
                         if (isTextComponent)
                             it->component->setColor(DEFAULT_INVERTED_TEXTCOLOR);
                         else
                             it->component->setColorShift(DEFAULT_INVERTED_IMAGECOLOR);
-
-                        it->component->render(trans);
+                        renderLoopFunc();
                         // Revert to the original color after rendering.
                         if (isTextComponent)
                             it->component->setColor(origColor);

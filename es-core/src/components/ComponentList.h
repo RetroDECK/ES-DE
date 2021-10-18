@@ -86,6 +86,15 @@ public:
     float getTotalRowHeight() const;
     float getRowHeight(int row) const { return getRowHeight(mEntries.at(row).data); }
 
+    // Horizontal looping for row content that doesn't fit on-screen.
+    void setLoopRows(bool state) { mLoopRows = state; }
+    void stopLooping()
+    {
+        mLoopOffset = 0;
+        mLoopOffset2 = 0;
+        mLoopTime = 0;
+    }
+
     void resetScrollIndicatorStatus()
     {
         mScrollIndicatorStatus = SCROLL_NONE;
@@ -125,6 +134,12 @@ private:
     float mHorizontalPadding;
     float mSelectorBarOffset;
     float mCameraOffset;
+
+    bool mLoopRows;
+    bool mLoopScroll;
+    int mLoopOffset;
+    int mLoopOffset2;
+    int mLoopTime;
 
     std::function<void(CursorState state)> mCursorChangedCallback;
     std::function<void(ScrollIndicator state, bool singleRowScroll)>
