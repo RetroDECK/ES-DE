@@ -178,7 +178,7 @@ void ComponentList::update(int deltaTime)
             // Loop the text.
             const float speed{
                 Font::get(FONT_SIZE_MEDIUM)->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
-            const float delay{1300.0f};
+            const float delay{1500.0f};
             const float scrollLength{rowWidth};
             const float returnLength{speed * 1.5f};
             const float scrollTime{(scrollLength * 1000.0f) / speed};
