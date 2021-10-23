@@ -11,7 +11,7 @@ based on:       Switch Theme by Lilbud
 	<formatVersion>7</formatVersion>
 
 	<!-- includes (hard-coded variant until v1.3) -->
-	<include>./variants/dark16_9/default.xml</include>
+	<include>./variants/light16_9/default.xml</include>
 	<include>./navigationsounds.xml</include>
 
 	<!-- variables -->
@@ -26,8 +26,8 @@ based on:       Switch Theme by Lilbud
 			<origin>1 0</origin>
 			<fontPath>${mainFont}</fontPath>
 			<textStyle>camelcase</textStyle>
-			<customButtonIcon button="button_start_XBOX360">:/help/button_start_SNES.svg</customButtonIcon>
-			<customButtonIcon button="button_back_XBOX360">:/help/button_back_SNES.svg</customButtonIcon>
+			<customButtonIcon button="button_start_XBOX360">:/graphics/help/button_start_SNES.svg</customButtonIcon>
+			<customButtonIcon button="button_back_XBOX360">:/graphics/help/button_back_SNES.svg</customButtonIcon>
 		</helpsystem>
 		<image name="background" extra="true">
 			<pos>0 0</pos>
@@ -428,8 +428,9 @@ based on:       Switch Theme by Lilbud
 			<pos>0.8423 0.69</pos>
 			<size>0.1267 0.17335978655</size>
 			<origin>0 0</origin>
-			<itemPlacement>top</itemPlacement>
-			<slots>favorite kidgame broken completed altemulator</slots>
+			<slots>controller favorite kidgame broken completed altemulator</slots>
+			<controllerPos>0.165 0.5</controllerPos>
+			<controllerSize>0.2</controllerSize>
 		</badges>
 	</view>
 
