@@ -237,8 +237,8 @@ based on: 'recalbox-multi' by the Recalbox community
             <alignment>right</alignment>
         </text>
         <badges name="md_badges">
-            <pos>0.8125 0.675</pos>
-            <size>0.15 0.21</size>
+            <pos>0.815 0.675</pos>
+            <size>0.13 0.1635</size>
             <origin>0 0</origin>
             <alignment>left</alignment>
             <itemsPerRow>3</itemsPerRow>

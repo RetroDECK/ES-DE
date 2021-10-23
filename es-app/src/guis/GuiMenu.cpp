@@ -61,7 +61,7 @@ GuiMenu::GuiMenu(Window* window)
     if (isFullUI)
         addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
 
-    // TEMPORARY - disabled for now, will be used in the future.
+    // TEMPORARY: Disabled for now, will be used in the future.
     //    if (isFullUI)
     //        addEntry("UTILITIES", 0x777777FF, true, [this] {
     //                openUtilitiesMenu(); });
@@ -600,8 +600,8 @@ void GuiMenu::openSoundOptions()
 {
     auto s = new GuiSettings(mWindow, "SOUND SETTINGS");
 
-// TEMPORARY - Hide the volume slider on macOS and BSD Unix until the volume control logic
-// has been implemented for these operating systems.
+// TODO: Hide the volume slider on macOS and BSD Unix until the volume control logic has been
+// implemented for these operating systems.
 #if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
     // System volume.
     auto system_volume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
@@ -1207,11 +1207,6 @@ void GuiMenu::openQuitMenu()
         Window* window = mWindow;
         HelpStyle style = getHelpStyle();
 
-        // This transparent bracket is only neeeded to generate the correct help prompts.
-        auto bracket = std::make_shared<ImageComponent>(mWindow);
-        bracket->setImage(":/graphics/arrow.svg");
-        bracket->setOpacity(0);
-
         ComponentListRow row;
 
         row.makeAcceptInputHandler([window, this] {
@@ -1224,10 +1219,10 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        row.addElement(std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-                       true);
-        row.addElement(bracket, false);
+        auto quitText = std::make_shared<TextComponent>(window, "QUIT EMULATIONSTATION",
+                                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        quitText->setSelectable(true);
+        row.addElement(quitText, true);
         s->addRow(row);
 
         row.elements.clear();
@@ -1243,10 +1238,10 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        row.addElement(std::make_shared<TextComponent>(window, "REBOOT SYSTEM",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-                       true);
-        row.addElement(bracket, false);
+        auto rebootText = std::make_shared<TextComponent>(window, "REBOOT SYSTEM",
+                                                          Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        rebootText->setSelectable(true);
+        row.addElement(rebootText, true);
         s->addRow(row);
 
         row.elements.clear();
@@ -1262,10 +1257,10 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        row.addElement(std::make_shared<TextComponent>(window, "POWER OFF SYSTEM",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-                       true);
-        row.addElement(bracket, false);
+        auto powerOffText = std::make_shared<TextComponent>(
+            window, "POWER OFF SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        powerOffText->setSelectable(true);
+        row.addElement(powerOffText, true);
         s->addRow(row);
 
         mWindow->pushGui(s);

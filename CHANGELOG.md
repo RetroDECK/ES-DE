@@ -17,6 +17,8 @@
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
+* Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
+* Added horizontal scrolling of long game names to the scraper GUIs
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
@@ -25,18 +27,22 @@
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
+* Decreased the amount of text that ScrollableContainer renders above and below the starting position as content is scrolled
 * Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
 * Added notification popups when plugging in or removing controllers
 * Changed to loading the default theme set rbsimple-DE instead of the first available theme if the currently configured theme is missing
 * Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
+* Replaced a number of help prompt hacks with proper solutions
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
+* Changed the font size for the custom collection deletion screen to the same size as for all other menus
 * Added support for upscaling bitmap images using linear filtering
 * Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
 * Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
 * Added a blinking cursor to TextEditComponent
 * Changed the filter description "Text filter (game name)" to "Game name"
+* Removed a margin hack from TextComponent and if abbreviated strings end with a space character, that space is now removed
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
 * Added support for a maximum name length to OptionListComponent (non-multiselect only) with an abbreviation of the name if it exceeds this value
 * Added support for key repeat to OptionListComponent, making it possible to cycle through the options by holding the left or right button
@@ -70,6 +76,7 @@
 * When scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
 * When scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
 * The line spacing for TextListComponent was incorrectly calculated for some resolutions such as 2560x1440
@@ -86,6 +93,7 @@
 * Under some circumstances and at some screen resolutions, the last menu separator line would not get rendered (still an issue at extreme resolutions like 320x240)
 * When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
+* The custom collection deletion screen had incorrect row heights when running at lower resolutions such as 1280x720
 * If there was an abbreviated full system name for the "Gamelist on startup" option, that abbreviation would also get displayed when opening the selector window
 * Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set

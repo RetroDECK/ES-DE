@@ -13,6 +13,7 @@
 
 #include "GuiComponent.h"
 #include "components/NinePatchComponent.h"
+#include "components/ScrollIndicatorComponent.h"
 #include "guis/GuiScraperSearch.h"
 
 class GuiGameScraper : public GuiComponent
@@ -38,9 +39,13 @@ private:
     NinePatchComponent mBox;
 
     std::shared_ptr<TextComponent> mGameName;
+    std::shared_ptr<ImageComponent> mScrollUp;
+    std::shared_ptr<ImageComponent> mScrollDown;
+    std::shared_ptr<ScrollIndicatorComponent> mScrollIndicator;
     std::shared_ptr<TextComponent> mSystemName;
     std::shared_ptr<GuiScraperSearch> mSearch;
     std::shared_ptr<ComponentGrid> mButtonGrid;
+    std::shared_ptr<ComponentList> mResultList;
 
     ScraperSearchParams mSearchParams;
 

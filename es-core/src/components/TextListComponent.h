@@ -24,7 +24,7 @@ struct TextListData {
     std::shared_ptr<TextCache> textCache;
 };
 
-// A graphical list. Supports multiple colors for rows and scrolling.
+// A scrollable text list supporting multiple row colors.
 template <typename T> class TextListComponent : public IList<TextListData, T>
 {
 protected:
@@ -108,10 +108,10 @@ protected:
     virtual void onCursorChanged(const CursorState& state) override;
 
 private:
-    int mMarqueeOffset;
-    int mMarqueeOffset2;
-    int mMarqueeTime;
-    bool mMarqueeScroll;
+    int mLoopOffset;
+    int mLoopOffset2;
+    int mLoopTime;
+    bool mLoopScroll;
 
     Alignment mAlignment;
     float mHorizontalMargin;
@@ -138,10 +138,10 @@ TextListComponent<T>::TextListComponent(Window* window)
     : IList<TextListData, T>(window)
     , mSelectorImage(window)
 {
-    mMarqueeOffset = 0;
-    mMarqueeOffset2 = 0;
-    mMarqueeTime = 0;
-    mMarqueeScroll = false;
+    mLoopOffset = 0;
+    mLoopOffset2 = 0;
+    mLoopTime = 0;
+    mLoopScroll = false;
 
     mHorizontalMargin = 0.0f;
     mAlignment = ALIGN_CENTER;
@@ -223,8 +223,10 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
     Renderer::pushClipRect(
-        glm::ivec2{static_cast<int>(trans[3].x + mHorizontalMargin), static_cast<int>(trans[3].y)},
-        glm::ivec2{static_cast<int>(dim.x - mHorizontalMargin * 2.0f), static_cast<int>(dim.y)});
+        glm::ivec2{static_cast<int>(std::round(trans[3].x + mHorizontalMargin)),
+                   static_cast<int>(std::round(trans[3].y))},
+        glm::ivec2{static_cast<int>(std::round(dim.x - mHorizontalMargin * 2.0f)),
+                   static_cast<int>(std::round(dim.y))});
 
     for (int i = startEntry; i < listCutoff; i++) {
         typename IList<TextListData, T>::Entry& entry = mEntries.at(static_cast<unsigned int>(i));
@@ -271,26 +273,26 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         // Render text.
         glm::mat4 drawTrans{trans};
 
-        // Currently selected item text might be scrolling.
-        if (mCursor == i && mMarqueeOffset > 0)
+        // Currently selected item text might be looping.
+        if (mCursor == i && mLoopOffset > 0)
             drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3{static_cast<float>(mMarqueeOffset), 0.0f, 0.0f});
+                drawTrans, offset - glm::vec3{static_cast<float>(mLoopOffset), 0.0f, 0.0f});
         else
             drawTrans = glm::translate(drawTrans, offset);
 
         // Needed to avoid flickering when returning to the start position.
-        if (mMarqueeOffset == 0 && mMarqueeOffset2 == 0)
-            mMarqueeScroll = false;
+        if (mLoopOffset == 0 && mLoopOffset2 == 0)
+            mLoopScroll = false;
 
         Renderer::setMatrix(drawTrans);
         font->renderTextCache(entry.data.textCache.get());
 
-        // Render currently selected row again if marquee is scrolled far enough for it to repeat.
-        if ((mCursor == i && mMarqueeOffset2 < 0) || (mCursor == i && mMarqueeScroll)) {
-            mMarqueeScroll = true;
+        // Render currently selected row again if text is moved far enough for it to repeat.
+        if ((mCursor == i && mLoopOffset2 < 0) || (mCursor == i && mLoopScroll)) {
+            mLoopScroll = true;
             drawTrans = trans;
             drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3{static_cast<float>(mMarqueeOffset2), 0.0f, 0.0f});
+                drawTrans, offset - glm::vec3{static_cast<float>(mLoopOffset2), 0.0f, 0.0f});
             Renderer::setMatrix(drawTrans);
             font->renderTextCache(entry.data.textCache.get());
         }
@@ -353,11 +355,11 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
         stopScrolling();
 
     if (!isScrolling() && size() > 0) {
-        // Always reset the marquee offsets.
-        mMarqueeOffset = 0;
-        mMarqueeOffset2 = 0;
+        // Always reset the loop offsets.
+        mLoopOffset = 0;
+        mLoopOffset2 = 0;
 
-        // If we're not scrolling and this object's text exceeds our size, then marquee it.
+        // If we're not scrolling and this object's text exceeds our size, then loop it.
         const float textLength = mFont
                                      ->sizeText(Utils::String::toUpper(
                                          mEntries.at(static_cast<unsigned int>(mCursor)).name))
@@ -374,16 +376,16 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
             const float returnTime = (returnLength * 1000.0f) / speed;
             const int maxTime = static_cast<int>(delay + scrollTime + returnTime);
 
-            mMarqueeTime += deltaTime;
-            while (mMarqueeTime > maxTime)
-                mMarqueeTime -= maxTime;
+            mLoopTime += deltaTime;
+            while (mLoopTime > maxTime)
+                mLoopTime -= maxTime;
 
-            mMarqueeOffset = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
-                                                                static_cast<float>(mMarqueeTime),
-                                                                scrollLength + returnLength));
+            mLoopOffset = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
+                                                             static_cast<float>(mLoopTime),
+                                                             scrollLength + returnLength));
 
-            if (mMarqueeOffset > (scrollLength - (limit - returnLength)))
-                mMarqueeOffset2 = static_cast<int>(mMarqueeOffset - (scrollLength + returnLength));
+            if (mLoopOffset > (scrollLength - (limit - returnLength)))
+                mLoopOffset2 = static_cast<int>(mLoopOffset - (scrollLength + returnLength));
         }
     }
 
@@ -405,9 +407,9 @@ void TextListComponent<T>::add(const std::string& name, const T& obj, unsigned i
 
 template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)
 {
-    mMarqueeOffset = 0;
-    mMarqueeOffset2 = 0;
-    mMarqueeTime = 0;
+    mLoopOffset = 0;
+    mLoopOffset2 = 0;
+    mLoopTime = 0;
 
     if (mCursorChangedCallback)
         mCursorChangedCallback(state);

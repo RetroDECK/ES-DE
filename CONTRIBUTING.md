@@ -48,6 +48,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 #### v1.4
 
 * Localization/multi-language support
+* Reorganize the menus, possibly adding basic/advanced modes
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
 * Scrollbar component for the gamelist view which can be used by the themes
 * Web proxy support for the scraper

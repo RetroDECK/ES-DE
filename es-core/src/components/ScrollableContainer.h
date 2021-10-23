@@ -44,6 +44,7 @@ private:
     float mAutoScrollDelayConstant;
     float mAutoScrollSpeedConstant;
     float mResolutionModifier;
+    float mClipSpacing;
 
     int mAutoScrollDelay;
     int mAutoScrollSpeed;

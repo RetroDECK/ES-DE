@@ -73,8 +73,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         mSourceHeight = svgImage->height;
     }
 
-    mWidth = static_cast<size_t>(floorf(floorf(mSourceWidth) * mScaleDuringLoad));
-    mHeight = static_cast<size_t>(floorf(floorf(mSourceHeight) * mScaleDuringLoad));
+    mWidth = static_cast<int>(std::round(mSourceWidth * mScaleDuringLoad));
+    mHeight = static_cast<int>(std::round(mSourceHeight * mScaleDuringLoad));
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.
@@ -92,9 +92,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     NSVGrasterizer* rast = nsvgCreateRasterizer();
 
-    nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, tempVector.data(),
-                  static_cast<int>(mWidth), static_cast<int>(mHeight),
-                  static_cast<int>(mWidth) * 4);
+    nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, tempVector.data(), mWidth,
+                  mHeight, mWidth * 4);
 
     // This is important in order to avoid memory leaks.
     nsvgDeleteRasterizer(rast);
@@ -148,8 +147,8 @@ bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size
     mDataRGBA.reserve(width * height * 4);
     mDataRGBA.insert(mDataRGBA.begin(), dataRGBA, dataRGBA + (width * height * 4));
 
-    mWidth = width;
-    mHeight = height;
+    mWidth = static_cast<int>(width);
+    mHeight = static_cast<int>(height);
     return true;
 }
 

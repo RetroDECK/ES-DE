@@ -13,18 +13,18 @@
 #include "utils/StringUtil.h"
 
 TextComponent::TextComponent(Window* window)
-    : GuiComponent(window)
-    , mFont(Font::get(FONT_SIZE_MEDIUM))
-    , mColor(0x000000FF)
-    , mBgColor(0)
-    , mMargin(0.0f)
-    , mRenderBackground(false)
-    , mUppercase(false)
-    , mAutoCalcExtent(true, true)
-    , mHorizontalAlignment(ALIGN_LEFT)
-    , mVerticalAlignment(ALIGN_CENTER)
-    , mLineSpacing(1.5f)
-    , mNoTopMargin(false)
+    : GuiComponent{window}
+    , mFont{Font::get(FONT_SIZE_MEDIUM)}
+    , mColor{0x000000FF}
+    , mBgColor{0}
+    , mRenderBackground{false}
+    , mUppercase{false}
+    , mAutoCalcExtent{1, 1}
+    , mHorizontalAlignment{ALIGN_LEFT}
+    , mVerticalAlignment{ALIGN_CENTER}
+    , mLineSpacing{1.5f}
+    , mNoTopMargin{false}
+    , mSelectable{false}
 {
 }
 
@@ -35,20 +35,19 @@ TextComponent::TextComponent(Window* window,
                              Alignment align,
                              glm::vec3 pos,
                              glm::vec2 size,
-                             unsigned int bgcolor,
-                             float margin)
-    : GuiComponent(window)
-    , mFont(nullptr)
-    , mColor(0x000000FF)
-    , mBgColor(0)
-    , mMargin(margin)
-    , mRenderBackground(false)
-    , mUppercase(false)
-    , mAutoCalcExtent(true, true)
-    , mHorizontalAlignment(align)
-    , mVerticalAlignment(ALIGN_CENTER)
-    , mLineSpacing(1.5f)
-    , mNoTopMargin(false)
+                             unsigned int bgcolor)
+    : GuiComponent{window}
+    , mFont{nullptr}
+    , mColor{0x000000FF}
+    , mBgColor{0}
+    , mRenderBackground{false}
+    , mUppercase{false}
+    , mAutoCalcExtent{1, 1}
+    , mHorizontalAlignment{align}
+    , mVerticalAlignment{ALIGN_CENTER}
+    , mLineSpacing{1.5f}
+    , mNoTopMargin{false}
+    , mSelectable{false}
 {
     setFont(font);
     setColor(color);
@@ -236,12 +235,12 @@ void TextComponent::onTextChanged()
         // Abbreviate text.
         const std::string abbrev = "...";
         glm::vec2 abbrevSize{f->sizeText(abbrev)};
-        // mMargin adds a margin around the text if it's abbreviated.
-        float marginAdjustedSize = mSize.x - (mSize.x * mMargin);
 
-        while (text.size() && size.x + abbrevSize.x > marginAdjustedSize) {
+        while (text.size() && size.x + abbrevSize.x > mSize.x) {
             size_t newSize = Utils::String::prevCursor(text, text.size());
             text.erase(newSize, text.size() - newSize);
+            if (!text.empty() && text.back() == ' ')
+                text.pop_back();
             size = f->sizeText(text);
         }
 
@@ -280,6 +279,14 @@ void TextComponent::setNoTopMargin(bool margin)
 {
     mNoTopMargin = margin;
     onTextChanged();
+}
+
+std::vector<HelpPrompt> TextComponent::getHelpPrompts()
+{
+    std::vector<HelpPrompt> prompts;
+    if (mSelectable)
+        prompts.push_back(HelpPrompt("a", "select"));
+    return prompts;
 }
 
 void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
