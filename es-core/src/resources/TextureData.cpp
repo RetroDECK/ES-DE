@@ -147,8 +147,8 @@ bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size
     mDataRGBA.reserve(width * height * 4);
     mDataRGBA.insert(mDataRGBA.begin(), dataRGBA, dataRGBA + (width * height * 4));
 
-    mWidth = width;
-    mHeight = height;
+    mWidth = static_cast<int>(width);
+    mHeight = static_cast<int>(height);
     return true;
 }
 
