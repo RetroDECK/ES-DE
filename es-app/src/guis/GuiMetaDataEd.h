@@ -61,7 +61,7 @@ private:
 
     ScraperSearchParams mScraperParams;
 
-    std::vector<GameControllers> mGameControllers;
+    std::vector<GameControllers> mControllerBadges;
     std::vector<std::shared_ptr<GuiComponent>> mEditors;
 
     std::vector<MetaDataDecl> mMetaDataDecl;
