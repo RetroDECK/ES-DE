@@ -47,6 +47,7 @@ struct SystemViewCarousel {
     int maxLogoCount; // Number of logos shown on the carousel.
     glm::vec2 logoSize;
     float zIndex;
+    bool legacyZIndexMode;
 };
 
 class SystemView : public IList<SystemViewData, SystemData*>

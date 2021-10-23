@@ -402,20 +402,35 @@ void SystemView::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans{getTransform() * parentTrans};
 
-    // Render the extras that are below the carousel.
-    renderExtras(trans, INT16_MIN, mCarousel.zIndex);
+    if (mCarousel.legacyZIndexMode) {
+        // Render all extras.
+        renderExtras(trans, INT16_MIN, INT16_MAX);
 
-    // Fade the screen if we're using fade transitions and we're currently transitioning.
-    // This basically renders a black rectangle on top of the currently visible extras
-    // (and beneath the carousel and help prompts).
-    if (mExtrasFadeOpacity)
-        renderFade(trans);
+        // Fade the screen if we're using fade transitions and we're currently transitioning.
+        // This basically renders a black rectangle on top of the currently visible extras
+        // (and beneath the carousel and help prompts).
+        if (mExtrasFadeOpacity)
+            renderFade(trans);
 
-    // Always render the carousel on top so that it's not faded.
-    renderCarousel(trans);
+        // Always render the carousel on top so that it's not faded.
+        renderCarousel(trans);
+    }
+    else {
+        // Render the extras that are below the carousel.
+        renderExtras(trans, INT16_MIN, mCarousel.zIndex);
 
-    // Render the rest of the extras.
-    renderExtras(trans, mCarousel.zIndex, INT16_MAX);
+        // Fade the screen if we're using fade transitions and we're currently transitioning.
+        // This basically renders a black rectangle on top of the currently visible extras
+        // (and beneath the carousel and help prompts).
+        if (mExtrasFadeOpacity)
+            renderFade(trans);
+
+        // Render the carousel.
+        renderCarousel(trans);
+
+        // Render the rest of the extras.
+        renderExtras(trans, mCarousel.zIndex, INT16_MAX);
+    }
 }
 
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
@@ -733,5 +748,12 @@ void SystemView::getCarouselFromTheme(const ThemeData::ThemeElement* elem)
             mCarousel.logoAlignment = ALIGN_BOTTOM;
         else
             mCarousel.logoAlignment = ALIGN_CENTER;
+    }
+    if (elem->has("legacyZIndexMode")) {
+        mCarousel.legacyZIndexMode =
+            elem->get<std::string>("legacyZIndexMode").compare("true") == 0 ? true : false;
+    }
+    else {
+        mCarousel.legacyZIndexMode = true;
     }
 }
