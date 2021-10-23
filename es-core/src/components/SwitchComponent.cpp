@@ -49,6 +49,16 @@ void SwitchComponent::render(const glm::mat4& parentTrans)
     renderChildren(trans);
 }
 
+void SwitchComponent::setResize(float width, float height)
+{
+    // Reposition the switch after resizing to make it centered.
+    const glm::vec2 oldSize = mImage.getSize();
+    mImage.setResize(width, height);
+    const float xDiff = oldSize.x - mImage.getSize().x;
+    const float yDiff = oldSize.y - mImage.getSize().y;
+    mImage.setPosition(mImage.getPosition().x + xDiff, mImage.getPosition().y + yDiff / 2.0f);
+}
+
 void SwitchComponent::setState(bool state)
 {
     mState = state;
