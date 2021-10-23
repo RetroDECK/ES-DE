@@ -416,7 +416,7 @@ void DetailedGameListView::updateInfoPanel()
             badgeInfo.badgeType = badge;
             if (badge == "controller") {
                 if (file->metadata.get("controller").compare("") != 0) {
-                    badgeInfo.controllerType = file->metadata.get("controller");
+                    badgeInfo.gameController = file->metadata.get("controller");
                     badgeSlots.push_back(badgeInfo);
                 }
             }

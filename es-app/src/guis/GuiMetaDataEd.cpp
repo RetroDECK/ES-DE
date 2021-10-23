@@ -53,11 +53,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     , mMediaFilesUpdated{false}
     , mInvalidEmulatorEntry{false}
 {
-    mControllerTypes = BadgesComponent::getControllerTypes();
+    mGameControllers = BadgesComponent::getGameControllers();
 
     // Remove the last "unknown" controller entry.
-    if (mControllerTypes.size() > 1)
-        mControllerTypes.pop_back();
+    if (mGameControllers.size() > 1)
+        mGameControllers.pop_back();
 
     addChild(&mBackground);
     addChild(&mGrid);
@@ -210,7 +210,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                             originalValue] {
                     GuiSettings* s = new GuiSettings(mWindow, title);
 
-                    for (auto controllerType : mControllerTypes) {
+                    for (auto controller : mGameControllers) {
                         std::string selectedLabel = ed->getValue();
                         std::string label;
                         ComponentListRow row;
@@ -218,14 +218,14 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                         std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
                             mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
                         labelText->setSelectable(true);
-                        labelText->setValue(controllerType.displayName);
+                        labelText->setValue(controller.displayName);
 
-                        label = controllerType.displayName;
+                        label = controller.displayName;
 
                         row.addElement(labelText, true);
 
-                        row.makeAcceptInputHandler([s, updateVal, controllerType] {
-                            updateVal(controllerType.displayName);
+                        row.makeAcceptInputHandler([s, updateVal, controller] {
+                            updateVal(controller.displayName);
                             delete s;
                         });
 

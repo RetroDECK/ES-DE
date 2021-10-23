@@ -20,12 +20,12 @@
 #include "ThemeData.h"
 #include "utils/StringUtil.h"
 
-std::vector<ControllerTypes> BadgesComponent::sControllerTypes;
+std::vector<GameControllers> BadgesComponent::sGameControllers;
 
 // clang-format off
 
 // The "unknown" controller entry has to be placed last.
-ControllerTypes sControllerDefinitions [] = {
+GameControllers sControllerDefinitions [] = {
     // shortName                      displayName                           fileName
     {"gamepad_generic",               "Gamepad (Generic)",                  ":/graphics/controllers/gamepad_generic.svg"},
     {"gamepad_xbox",                  "Gamepad (Xbox)",                     ":/graphics/controllers/gamepad_xbox.svg"},
@@ -70,11 +70,11 @@ BadgesComponent::BadgesComponent(Window* window)
     mBadgeIcons[SLOT_ALTEMULATOR] = ":/graphics/badge_altemulator.svg";
 }
 
-void BadgesComponent::populateControllerTypes()
+void BadgesComponent::populateGameControllers()
 {
-    sControllerTypes.clear();
-    for (auto type : sControllerDefinitions)
-        sControllerTypes.push_back(type);
+    sGameControllers.clear();
+    for (auto controller : sControllerDefinitions)
+        sGameControllers.push_back(controller);
 }
 
 void BadgesComponent::setBadges(const std::vector<BadgeInfo>& badges)
@@ -97,19 +97,19 @@ void BadgesComponent::setBadges(const std::vector<BadgeInfo>& badges)
 
         if (it != mFlexboxItems.end()) {
             it->visible = true;
-            if (badge.controllerType != "" &&
-                badge.controllerType != it->overlayImage.getTexture()->getTextureFilePath()) {
+            if (badge.gameController != "" &&
+                badge.gameController != it->overlayImage.getTexture()->getTextureFilePath()) {
 
-                auto it2 = std::find_if(sControllerTypes.begin(), sControllerTypes.end(),
-                                        [badge](ControllerTypes controllerType) {
-                                            return controllerType.shortName == badge.controllerType;
+                auto it2 = std::find_if(sGameControllers.begin(), sGameControllers.end(),
+                                        [badge](GameControllers gameController) {
+                                            return gameController.shortName == badge.gameController;
                                         });
 
-                if (it2 != sControllerTypes.cend()) {
+                if (it2 != sGameControllers.cend()) {
                     it->overlayImage.setImage((*it2).fileName);
                 }
-                else if (badge.controllerType != "")
-                    it->overlayImage.setImage(sControllerTypes.back().fileName);
+                else if (badge.gameController != "")
+                    it->overlayImage.setImage(sGameControllers.back().fileName);
             }
         }
     }
@@ -126,11 +126,11 @@ void BadgesComponent::setBadges(const std::vector<BadgeInfo>& badges)
 
 const std::string BadgesComponent::getShortName(const std::string& displayName)
 {
-    auto it = std::find_if(sControllerTypes.begin(), sControllerTypes.end(),
-                           [displayName](ControllerTypes controllerType) {
-                               return controllerType.displayName == displayName;
+    auto it = std::find_if(sGameControllers.begin(), sGameControllers.end(),
+                           [displayName](GameControllers gameController) {
+                               return gameController.displayName == displayName;
                            });
-    if (it != sControllerTypes.end())
+    if (it != sGameControllers.end())
         return (*it).shortName;
     else
         return "unknown";
@@ -138,11 +138,11 @@ const std::string BadgesComponent::getShortName(const std::string& displayName)
 
 const std::string BadgesComponent::getDisplayName(const std::string& shortName)
 {
-    auto it = std::find_if(sControllerTypes.begin(), sControllerTypes.end(),
-                           [shortName](ControllerTypes controllerType) {
-                               return controllerType.shortName == shortName;
+    auto it = std::find_if(sGameControllers.begin(), sGameControllers.end(),
+                           [shortName](GameControllers gameController) {
+                               return gameController.shortName == shortName;
                            });
-    if (it != sControllerTypes.end())
+    if (it != sGameControllers.end())
         return (*it).displayName;
     else
         return "unknown";
@@ -168,7 +168,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                  const std::string& element,
                                  unsigned int properties)
 {
-    populateControllerTypes();
+    populateGameControllers();
 
     using namespace ThemeFlags;
 
@@ -280,9 +280,9 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
         }
 
-        for (auto& controllerType : sControllerTypes) {
-            if (properties & PATH && elem->has(controllerType.shortName))
-                controllerType.fileName = elem->get<std::string>(controllerType.shortName);
+        for (auto& gameController : sGameControllers) {
+            if (properties & PATH && elem->has(gameController.shortName))
+                gameController.fileName = elem->get<std::string>(gameController.shortName);
         }
 
         GuiComponent::applyTheme(theme, view, element, properties);

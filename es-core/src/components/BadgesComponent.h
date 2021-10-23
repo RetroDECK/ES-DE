@@ -13,7 +13,7 @@
 #include "FlexboxComponent.h"
 #include "GuiComponent.h"
 
-struct ControllerTypes {
+struct GameControllers {
     std::string shortName;
     std::string displayName;
     std::string fileName;
@@ -26,17 +26,17 @@ public:
 
     struct BadgeInfo {
         std::string badgeType;
-        std::string controllerType;
+        std::string gameController;
     };
 
-    static void populateControllerTypes();
+    static void populateGameControllers();
     std::vector<std::string> getBadgeTypes() { return mBadgeTypes; }
     void setBadges(const std::vector<BadgeInfo>& badges);
-    static const std::vector<ControllerTypes>& getControllerTypes()
+    static const std::vector<GameControllers>& getGameControllers()
     {
-        if (sControllerTypes.empty())
-            populateControllerTypes();
-        return sControllerTypes;
+        if (sGameControllers.empty())
+            populateGameControllers();
+        return sGameControllers;
     }
 
     static const std::string getShortName(const std::string& displayName);
@@ -51,7 +51,7 @@ public:
                             unsigned int properties) override;
 
 private:
-    static std::vector<ControllerTypes> sControllerTypes;
+    static std::vector<GameControllers> sGameControllers;
 
     std::vector<FlexboxComponent::FlexboxItem> mFlexboxItems;
     FlexboxComponent mFlexboxComponent;
