@@ -13,13 +13,34 @@
 #include "FlexboxComponent.h"
 #include "GuiComponent.h"
 
+struct ControllerTypes {
+    std::string shortName;
+    std::string displayName;
+    std::string fileName;
+};
+
 class BadgesComponent : public GuiComponent
 {
 public:
     BadgesComponent(Window* window);
 
+    struct BadgeInfo {
+        std::string badgeType;
+        std::string controllerType;
+    };
+
+    static void populateControllerTypes();
     std::vector<std::string> getBadgeTypes() { return mBadgeTypes; }
-    void setBadges(const std::vector<std::string>& badges);
+    void setBadges(const std::vector<BadgeInfo>& badges);
+    static const std::vector<ControllerTypes>& getControllerTypes()
+    {
+        if (sControllerTypes.empty())
+            populateControllerTypes();
+        return sControllerTypes;
+    }
+
+    static const std::string getShortName(const std::string& displayName);
+    static const std::string getDisplayName(const std::string& shortName);
 
     void render(const glm::mat4& parentTrans) override;
     void onSizeChanged() override { mFlexboxComponent.onSizeChanged(); }
@@ -30,11 +51,13 @@ public:
                             unsigned int properties) override;
 
 private:
+    static std::vector<ControllerTypes> sControllerTypes;
+
+    std::vector<FlexboxComponent::FlexboxItem> mFlexboxItems;
     FlexboxComponent mFlexboxComponent;
 
     std::vector<std::string> mBadgeTypes;
     std::map<std::string, std::string> mBadgeIcons;
-    std::vector<std::pair<std::string, ImageComponent>> mBadgeImages;
 };
 
 #endif // ES_CORE_COMPONENTS_BADGES_COMPONENT_H

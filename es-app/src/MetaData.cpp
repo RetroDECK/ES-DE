@@ -37,6 +37,7 @@ MetaDataDecl gameDecls[] = {
 {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper", "enter no multi-scrape off/on",     false},
 {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",       "enter hide metadata off/on",       false},
 {"playcount",     MD_INT,              "0",               false,     "times played",               "enter number of times played",     false},
+{"controller",    MD_CONTROLLER,       "",                false,     "controller type",            "select controller type",           false},
 {"altemulator",   MD_ALT_EMULATOR,     "",                false,     "alternative emulator",       "select alternative emulator",      false},
 {"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
 };
@@ -57,6 +58,7 @@ MetaDataDecl folderDecls[] = {
 {"broken",        MD_BOOL,             "false",           false,     "broken/not working",            "enter broken off/on",              false},
 {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper",    "enter no multi-scrape off/on",     false},
 {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",          "enter hide metadata off/on",       false},
+{"controller",    MD_CONTROLLER,       "",                false,     "controller type",               "select controller type",           false},
 {"lastplayed",    MD_TIME,             "0",               true,      "last played",                   "enter last played date",           false}
 };
 // clang-format on

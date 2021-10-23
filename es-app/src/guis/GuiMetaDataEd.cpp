@@ -53,6 +53,12 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     , mMediaFilesUpdated{false}
     , mInvalidEmulatorEntry{false}
 {
+    mControllerTypes = BadgesComponent::getControllerTypes();
+
+    // Remove the last "unknown" controller entry.
+    if (mControllerTypes.size() > 1)
+        mControllerTypes.pop_back();
+
     addChild(&mBackground);
     addChild(&mGrid);
 
@@ -137,8 +143,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 ed = std::make_shared<SwitchComponent>(window);
                 // Make the switches slightly smaller.
                 glm::vec2 switchSize{ed->getSize() * 0.9f};
-                ed->setResize(switchSize.x, switchSize.y);
-                ed->setOrigin(-0.05f, -0.09f);
+                ed->setResize(ceilf(switchSize.x), switchSize.y);
 
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
                 row.addElement(ed, false, true);
@@ -173,6 +178,89 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 // Pass input to the actual DateTimeEditComponent instead of the spacer.
                 row.input_handler = std::bind(&GuiComponent::input, ed.get(), std::placeholders::_1,
                                               std::placeholders::_2);
+                break;
+            }
+            case MD_CONTROLLER: {
+                ed = std::make_shared<TextComponent>(window, "",
+                                                     Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                     0x777777FF, ALIGN_RIGHT);
+                row.addElement(ed, true);
+
+                auto spacer = std::make_shared<GuiComponent>(mWindow);
+                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
+                row.addElement(spacer, false);
+
+                auto bracket = std::make_shared<ImageComponent>(mWindow);
+                bracket->setImage(":/graphics/arrow.svg");
+                bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
+                row.addElement(bracket, false);
+
+                const std::string title = iter->displayPrompt;
+
+                // OK callback (apply new value to ed).
+                auto updateVal = [ed, originalValue](const std::string& newVal) {
+                    ed->setValue(newVal);
+                    if (newVal == BadgesComponent::getDisplayName(originalValue))
+                        ed->setColor(DEFAULT_TEXTCOLOR);
+                    else
+                        ed->setColor(TEXTCOLOR_USERMARKED);
+                };
+
+                row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal,
+                                            originalValue] {
+                    GuiSettings* s = new GuiSettings(mWindow, title);
+
+                    for (auto controllerType : mControllerTypes) {
+                        std::string selectedLabel = ed->getValue();
+                        std::string label;
+                        ComponentListRow row;
+
+                        std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
+                            mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                        labelText->setSelectable(true);
+                        labelText->setValue(controllerType.displayName);
+
+                        label = controllerType.displayName;
+
+                        row.addElement(labelText, true);
+
+                        row.makeAcceptInputHandler([s, updateVal, controllerType] {
+                            updateVal(controllerType.displayName);
+                            delete s;
+                        });
+
+                        // Select the row that corresponds to the selected label.
+                        if (selectedLabel == label)
+                            s->addRow(row, true);
+                        else
+                            s->addRow(row, false);
+                    }
+
+                    // If a value is set, then display "Clear entry" as the last entry.
+                    if (ed->getValue() != "") {
+                        ComponentListRow row;
+                        std::shared_ptr<TextComponent> clearText = std::make_shared<TextComponent>(
+                            mWindow, ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
+                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                        clearText->setSelectable(true);
+                        row.addElement(clearText, true);
+                        row.makeAcceptInputHandler([s, ed] {
+                            ed->setValue("");
+                            delete s;
+                        });
+                        s->addRow(row, false);
+                    }
+
+                    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+                    float maxWidthModifier = glm::clamp(0.64f * aspectValue, 0.42f, 0.92f);
+                    float maxWidth =
+                        static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
+
+                    s->setMenuSize(glm::vec2{maxWidth, s->getMenuSize().y});
+                    s->setMenuPosition(
+                        glm::vec3{(s->getSize().x - maxWidth) / 2.0f, mPosition.y, mPosition.z});
+                    mWindow->pushGui(s);
+                });
                 break;
             }
             case MD_ALT_EMULATOR: {
@@ -296,11 +384,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                 s->addRow(row, false);
                         }
 
-                        // Adjust the width depending on the aspect ratio of the screen, to make the
-                        // screen look somewhat coherent regardless of screen type. The 1.778 aspect
-                        // ratio value is the 16:9 reference.
                         float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-
                         float maxWidthModifier = glm::clamp(0.64f * aspectValue, 0.42f, 0.92f);
                         float maxWidth =
                             static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
@@ -390,10 +474,19 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         assert(ed);
         mList->addRow(row);
 
-        if (iter->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry == true)
+        if (iter->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry == true) {
             ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
-        else
+        }
+        else if (iter->type == MD_CONTROLLER && mMetaData->get(iter->key) != "") {
+            std::string displayName = BadgesComponent::getDisplayName(mMetaData->get(iter->key));
+            if (displayName != "unknown")
+                ed->setValue(displayName);
+            else
+                ed->setValue(ViewController::EXCLAMATION_CHAR + " " + mMetaData->get(iter->key));
+        }
+        else {
             ed->setValue(mMetaData->get(iter->key));
+        }
 
         mEditors.push_back(ed);
     }
@@ -523,6 +616,13 @@ void GuiMetaDataEd::save()
 
         if (mMetaDataDecl.at(i).key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
+
+        if (mMetaDataDecl.at(i).key == "controller" && mEditors.at(i)->getValue() != "") {
+            std::string shortName = BadgesComponent::getShortName(mEditors.at(i)->getValue());
+            if (shortName != "unknown")
+                mMetaData->set(mMetaDataDecl.at(i).key, shortName);
+            continue;
+        }
 
         if (!showHiddenGames && mMetaDataDecl.at(i).key == "hidden" &&
             mEditors.at(i)->getValue() != mMetaData->get("hidden"))
@@ -667,6 +767,12 @@ void GuiMetaDataEd::close()
 
         if (key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
+
+        if (mMetaDataDecl.at(i).key == "controller" && mEditors.at(i)->getValue() != "") {
+            std::string shortName = BadgesComponent::getShortName(mEditors.at(i)->getValue());
+            if (shortName == "unknown" || mMetaDataValue == shortName)
+                continue;
+        }
 
         if (mMetaDataValue != mEditorsValue) {
             metadataUpdated = true;

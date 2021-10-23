@@ -32,6 +32,7 @@ enum MetaDataType {
 
     // Specialized types.
     MD_MULTILINE_STRING,
+    MD_CONTROLLER,
     MD_ALT_EMULATOR,
     MD_PATH,
     MD_RATING,
