@@ -201,67 +201,67 @@ void GuiInputConfig::populateConfigList()
     std::string controllerType = Settings::getInstance()->getString("InputControllerType");
 
     // clang-format off
-    sGuiInputConfigList[0] = {"Up",    false, "D-PAD UP",    ":/help/dpad_up.svg"};
-    sGuiInputConfigList[1] = {"Down",  false, "D-PAD DOWN",  ":/help/dpad_down.svg"};
-    sGuiInputConfigList[2] = {"Left",  false, "D-PAD LEFT",  ":/help/dpad_left.svg"};
-    sGuiInputConfigList[3] = {"Right", false, "D-PAD RIGHT", ":/help/dpad_right.svg"};
+    sGuiInputConfigList[0] = {"Up",    false, "D-PAD UP",    ":/graphics/help/dpad_up.svg"};
+    sGuiInputConfigList[1] = {"Down",  false, "D-PAD DOWN",  ":/graphics/help/dpad_down.svg"};
+    sGuiInputConfigList[2] = {"Left",  false, "D-PAD LEFT",  ":/graphics/help/dpad_left.svg"};
+    sGuiInputConfigList[3] = {"Right", false, "D-PAD RIGHT", ":/graphics/help/dpad_right.svg"};
 
     if (controllerType == "snes") {
-        sGuiInputConfigList[4] = {"Back",  false, "SELECT",    ":/help/button_back_SNES.svg"};
-        sGuiInputConfigList[5] = {"Start", false, "START",     ":/help/button_start_SNES.svg"};
-        sGuiInputConfigList[6] = {"A",     false, "B",         ":/help/mbuttons_a_SNES.svg"};
-        sGuiInputConfigList[7] = {"B",     false, "A",         ":/help/mbuttons_b_SNES.svg"};
-        sGuiInputConfigList[8] = {"X",     true,  "Y",         ":/help/mbuttons_x_SNES.svg"};
-        sGuiInputConfigList[9] = {"Y",     true,  "X",         ":/help/mbuttons_y_SNES.svg"};
+        sGuiInputConfigList[4] = {"Back",  false, "SELECT",    ":/graphics/help/button_back_SNES.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "START",     ":/graphics/help/button_start_SNES.svg"};
+        sGuiInputConfigList[6] = {"A",     false, "B",         ":/graphics/help/mbuttons_a_SNES.svg"};
+        sGuiInputConfigList[7] = {"B",     false, "A",         ":/graphics/help/mbuttons_b_SNES.svg"};
+        sGuiInputConfigList[8] = {"X",     true,  "Y",         ":/graphics/help/mbuttons_x_SNES.svg"};
+        sGuiInputConfigList[9] = {"Y",     true,  "X",         ":/graphics/help/mbuttons_y_SNES.svg"};
     }
     else if (controllerType == "ps4") {
-        sGuiInputConfigList[4] = {"Back",  false, "SHARE",     ":/help/button_back_PS4.svg"};
-        sGuiInputConfigList[5] = {"Start", false, "OPTIONS",   ":/help/button_start_PS4.svg"};
-        sGuiInputConfigList[6] = {"A",     false, "CROSS",     ":/help/mbuttons_a_PS.svg"};
-        sGuiInputConfigList[7] = {"B",     false, "CIRCLE",    ":/help/mbuttons_b_PS.svg"};
-        sGuiInputConfigList[8] = {"X",     true,  "SQUARE",    ":/help/mbuttons_x_PS.svg"};
-        sGuiInputConfigList[9] = {"Y",     true,  "TRIANGLE",  ":/help/mbuttons_y_PS.svg"};
+        sGuiInputConfigList[4] = {"Back",  false, "SHARE",     ":/graphics/help/button_back_PS4.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "OPTIONS",   ":/graphics/help/button_start_PS4.svg"};
+        sGuiInputConfigList[6] = {"A",     false, "CROSS",     ":/graphics/help/mbuttons_a_PS.svg"};
+        sGuiInputConfigList[7] = {"B",     false, "CIRCLE",    ":/graphics/help/mbuttons_b_PS.svg"};
+        sGuiInputConfigList[8] = {"X",     true,  "SQUARE",    ":/graphics/help/mbuttons_x_PS.svg"};
+        sGuiInputConfigList[9] = {"Y",     true,  "TRIANGLE",  ":/graphics/help/mbuttons_y_PS.svg"};
     }
     else if (controllerType == "ps5") {
-        sGuiInputConfigList[4] = {"Back",  false, "CREATE",    ":/help/button_back_PS5.svg"};
-        sGuiInputConfigList[5] = {"Start", false, "OPTIONS",   ":/help/button_start_PS5.svg"};
-        sGuiInputConfigList[6] = {"A",     false, "CROSS",     ":/help/mbuttons_a_PS.svg"};
-        sGuiInputConfigList[7] = {"B",     false, "CIRCLE",    ":/help/mbuttons_b_PS.svg"};
-        sGuiInputConfigList[8] = {"X",     true,  "SQUARE",    ":/help/mbuttons_x_PS.svg"};
-        sGuiInputConfigList[9] = {"Y",     true,  "TRIANGLE",  ":/help/mbuttons_y_PS.svg"};
+        sGuiInputConfigList[4] = {"Back",  false, "CREATE",    ":/graphics/help/button_back_PS5.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "OPTIONS",   ":/graphics/help/button_start_PS5.svg"};
+        sGuiInputConfigList[6] = {"A",     false, "CROSS",     ":/graphics/help/mbuttons_a_PS.svg"};
+        sGuiInputConfigList[7] = {"B",     false, "CIRCLE",    ":/graphics/help/mbuttons_b_PS.svg"};
+        sGuiInputConfigList[8] = {"X",     true,  "SQUARE",    ":/graphics/help/mbuttons_x_PS.svg"};
+        sGuiInputConfigList[9] = {"Y",     true,  "TRIANGLE",  ":/graphics/help/mbuttons_y_PS.svg"};
     }
     else if (controllerType == "xbox360") {
-        sGuiInputConfigList[4] = {"Back",  false, "BACK",      ":/help/button_back_XBOX360.svg"};
-        sGuiInputConfigList[5] = {"Start", false, "START",     ":/help/button_start_XBOX360.svg"};
-        sGuiInputConfigList[6] = {"A",     false, "A",         ":/help/mbuttons_a_XBOX.svg"};
-        sGuiInputConfigList[7] = {"B",     false, "B",         ":/help/mbuttons_b_XBOX.svg"};
-        sGuiInputConfigList[8] = {"X",     true,  "X",         ":/help/mbuttons_x_XBOX.svg"};
-        sGuiInputConfigList[9] = {"Y",     true,  "Y",         ":/help/mbuttons_y_XBOX.svg"};
+        sGuiInputConfigList[4] = {"Back",  false, "BACK",      ":/graphics/help/button_back_XBOX360.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "START",     ":/graphics/help/button_start_XBOX360.svg"};
+        sGuiInputConfigList[6] = {"A",     false, "A",         ":/graphics/help/mbuttons_a_XBOX.svg"};
+        sGuiInputConfigList[7] = {"B",     false, "B",         ":/graphics/help/mbuttons_b_XBOX.svg"};
+        sGuiInputConfigList[8] = {"X",     true,  "X",         ":/graphics/help/mbuttons_x_XBOX.svg"};
+        sGuiInputConfigList[9] = {"Y",     true,  "Y",         ":/graphics/help/mbuttons_y_XBOX.svg"};
     }
     else {
         // Xbox One and later.
-        sGuiInputConfigList[4] = {"Back",  false, "VIEW", ":/help/button_back_XBOX.svg"};
-        sGuiInputConfigList[5] = {"Start", false, "MENU", ":/help/button_start_XBOX.svg"};
-        sGuiInputConfigList[6] = {"A",     false, "A",    ":/help/mbuttons_a_XBOX.svg"};
-        sGuiInputConfigList[7] = {"B",     false, "B",    ":/help/mbuttons_b_XBOX.svg"};
-        sGuiInputConfigList[8] = {"X",     true,  "X",    ":/help/mbuttons_x_XBOX.svg"};
-        sGuiInputConfigList[9] = {"Y",     true,  "Y",    ":/help/mbuttons_y_XBOX.svg"};
+        sGuiInputConfigList[4] = {"Back",  false, "VIEW", ":/graphics/help/button_back_XBOX.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "MENU", ":/graphics/help/button_start_XBOX.svg"};
+        sGuiInputConfigList[6] = {"A",     false, "A",    ":/graphics/help/mbuttons_a_XBOX.svg"};
+        sGuiInputConfigList[7] = {"B",     false, "B",    ":/graphics/help/mbuttons_b_XBOX.svg"};
+        sGuiInputConfigList[8] = {"X",     true,  "X",    ":/graphics/help/mbuttons_x_XBOX.svg"};
+        sGuiInputConfigList[9] = {"Y",     true,  "Y",    ":/graphics/help/mbuttons_y_XBOX.svg"};
     }
 
-    sGuiInputConfigList[10] = {"LeftShoulder",         true, "LEFT SHOULDER",          ":/help/button_l.svg"};
-    sGuiInputConfigList[11] = {"RightShoulder",        true, "RIGHT SHOULDER",         ":/help/button_r.svg"};
-    sGuiInputConfigList[12] = {"LeftTrigger",          true, "LEFT TRIGGER",           ":/help/button_lt.svg"};
-    sGuiInputConfigList[13] = {"RightTrigger",         true, "RIGHT TRIGGER",          ":/help/button_rt.svg"};
-    sGuiInputConfigList[14] = {"LeftThumbstickUp",     true, "LEFT THUMBSTICK UP",     ":/help/thumbstick_up.svg"};
-    sGuiInputConfigList[15] = {"LeftThumbstickDown",   true, "LEFT THUMBSTICK DOWN",   ":/help/thumbstick_down.svg"};
-    sGuiInputConfigList[16] = {"LeftThumbstickLeft",   true, "LEFT THUMBSTICK LEFT",   ":/help/thumbstick_left.svg"};
-    sGuiInputConfigList[17] = {"LeftThumbstickRight",  true, "LEFT THUMBSTICK RIGHT",  ":/help/thumbstick_right.svg"};
-    sGuiInputConfigList[18] = {"LeftThumbstickClick",  true, "LEFT THUMBSTICK CLICK",  ":/help/thumbstick_click.svg"};
-    sGuiInputConfigList[19] = {"RightThumbstickUp",    true, "RIGHT THUMBSTICK UP",    ":/help/thumbstick_up.svg"};
-    sGuiInputConfigList[20] = {"RightThumbstickDown",  true, "RIGHT THUMBSTICK DOWN",  ":/help/thumbstick_down.svg"};
-    sGuiInputConfigList[21] = {"RightThumbstickLeft",  true, "RIGHT THUMBSTICK LEFT",  ":/help/thumbstick_left.svg"};
-    sGuiInputConfigList[22] = {"RightThumbstickRight", true, "RIGHT THUMBSTICK RIGHT", ":/help/thumbstick_right.svg"};
-    sGuiInputConfigList[23] = {"RightThumbstickClick", true, "RIGHT THUMBSTICK CLICK", ":/help/thumbstick_click.svg"};
+    sGuiInputConfigList[10] = {"LeftShoulder",         true, "LEFT SHOULDER",          ":/graphics/help/button_l.svg"};
+    sGuiInputConfigList[11] = {"RightShoulder",        true, "RIGHT SHOULDER",         ":/graphics/help/button_r.svg"};
+    sGuiInputConfigList[12] = {"LeftTrigger",          true, "LEFT TRIGGER",           ":/graphics/help/button_lt.svg"};
+    sGuiInputConfigList[13] = {"RightTrigger",         true, "RIGHT TRIGGER",          ":/graphics/help/button_rt.svg"};
+    sGuiInputConfigList[14] = {"LeftThumbstickUp",     true, "LEFT THUMBSTICK UP",     ":/graphics/help/thumbstick_up.svg"};
+    sGuiInputConfigList[15] = {"LeftThumbstickDown",   true, "LEFT THUMBSTICK DOWN",   ":/graphics/help/thumbstick_down.svg"};
+    sGuiInputConfigList[16] = {"LeftThumbstickLeft",   true, "LEFT THUMBSTICK LEFT",   ":/graphics/help/thumbstick_left.svg"};
+    sGuiInputConfigList[17] = {"LeftThumbstickRight",  true, "LEFT THUMBSTICK RIGHT",  ":/graphics/help/thumbstick_right.svg"};
+    sGuiInputConfigList[18] = {"LeftThumbstickClick",  true, "LEFT THUMBSTICK CLICK",  ":/graphics/help/thumbstick_click.svg"};
+    sGuiInputConfigList[19] = {"RightThumbstickUp",    true, "RIGHT THUMBSTICK UP",    ":/graphics/help/thumbstick_up.svg"};
+    sGuiInputConfigList[20] = {"RightThumbstickDown",  true, "RIGHT THUMBSTICK DOWN",  ":/graphics/help/thumbstick_down.svg"};
+    sGuiInputConfigList[21] = {"RightThumbstickLeft",  true, "RIGHT THUMBSTICK LEFT",  ":/graphics/help/thumbstick_left.svg"};
+    sGuiInputConfigList[22] = {"RightThumbstickRight", true, "RIGHT THUMBSTICK RIGHT", ":/graphics/help/thumbstick_right.svg"};
+    sGuiInputConfigList[23] = {"RightThumbstickClick", true, "RIGHT THUMBSTICK CLICK", ":/graphics/help/thumbstick_click.svg"};
     // clang-format on
 }
 
