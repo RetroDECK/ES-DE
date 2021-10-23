@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  BadgesComponent.cpp
+//  BadgeComponent.cpp
 //
 //  Game badges icons.
 //  Used by the gamelist views.
@@ -14,13 +14,13 @@
 #define SLOT_CONTROLLER "controller"
 #define SLOT_ALTEMULATOR "altemulator"
 
-#include "components/BadgesComponent.h"
+#include "components/BadgeComponent.h"
 
 #include "Log.h"
 #include "ThemeData.h"
 #include "utils/StringUtil.h"
 
-std::vector<GameControllers> BadgesComponent::sGameControllers;
+std::vector<GameControllers> BadgeComponent::sGameControllers;
 
 // clang-format off
 
@@ -55,7 +55,7 @@ GameControllers sControllerDefinitions [] = {
 
 // clang-format on
 
-BadgesComponent::BadgesComponent(Window* window)
+BadgeComponent::BadgeComponent(Window* window)
     : GuiComponent{window}
     , mFlexboxItems{}
     , mFlexboxComponent{window, mFlexboxItems}
@@ -70,14 +70,14 @@ BadgesComponent::BadgesComponent(Window* window)
     mBadgeIcons[SLOT_ALTEMULATOR] = ":/graphics/badge_altemulator.svg";
 }
 
-void BadgesComponent::populateGameControllers()
+void BadgeComponent::populateGameControllers()
 {
     sGameControllers.clear();
     for (auto controller : sControllerDefinitions)
         sGameControllers.push_back(controller);
 }
 
-void BadgesComponent::setBadges(const std::vector<BadgeInfo>& badges)
+void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
 {
     std::map<std::string, bool> prevVisibility;
     std::map<std::string, std::string> prevPlayers;
@@ -124,7 +124,7 @@ void BadgesComponent::setBadges(const std::vector<BadgeInfo>& badges)
     }
 }
 
-const std::string BadgesComponent::getShortName(const std::string& displayName)
+const std::string BadgeComponent::getShortName(const std::string& displayName)
 {
     auto it = std::find_if(sGameControllers.begin(), sGameControllers.end(),
                            [displayName](GameControllers gameController) {
@@ -136,7 +136,7 @@ const std::string BadgesComponent::getShortName(const std::string& displayName)
         return "unknown";
 }
 
-const std::string BadgesComponent::getDisplayName(const std::string& shortName)
+const std::string BadgeComponent::getDisplayName(const std::string& shortName)
 {
     auto it = std::find_if(sGameControllers.begin(), sGameControllers.end(),
                            [shortName](GameControllers gameController) {
@@ -148,7 +148,7 @@ const std::string BadgesComponent::getDisplayName(const std::string& shortName)
         return "unknown";
 }
 
-void BadgesComponent::render(const glm::mat4& parentTrans)
+void BadgeComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
@@ -163,10 +163,10 @@ void BadgesComponent::render(const glm::mat4& parentTrans)
     }
 }
 
-void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-                                 const std::string& view,
-                                 const std::string& element,
-                                 unsigned int properties)
+void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                                const std::string& view,
+                                const std::string& element,
+                                unsigned int properties)
 {
     populateGameControllers();
 
@@ -179,7 +179,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("alignment")) {
         const std::string alignment{elem->get<std::string>("alignment")};
         if (alignment != "left" && alignment != "right") {
-            LOG(LogWarning) << "BadgesComponent: Invalid theme configuration, <alignment> set to \""
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <alignment> set to \""
                             << alignment << "\"";
         }
         else {
@@ -191,7 +191,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const float itemsPerRow{elem->get<float>("itemsPerRow")};
         if (itemsPerRow < 1.0f || itemsPerRow > 10.0f) {
             LOG(LogWarning)
-                << "BadgesComponent: Invalid theme configuration, <itemsPerRow> set to \""
+                << "BadgeComponent: Invalid theme configuration, <itemsPerRow> set to \""
                 << itemsPerRow << "\"";
         }
         else {
@@ -202,7 +202,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("rows")) {
         const float rows{elem->get<float>("rows")};
         if (rows < 1.0f || rows > 10.0f) {
-            LOG(LogWarning) << "BadgesComponent: Invalid theme configuration, <rows> set to \""
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <rows> set to \""
                             << rows << "\"";
         }
         else {
@@ -215,9 +215,8 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if ((itemMargin.x != -1.0 && itemMargin.y != -1.0) &&
             (itemMargin.x < 0.0f || itemMargin.x > 0.2f || itemMargin.y < 0.0f ||
              itemMargin.y > 0.2f)) {
-            LOG(LogWarning)
-                << "BadgesComponent: Invalid theme configuration, <itemMargin> set to \""
-                << itemMargin.x << " " << itemMargin.y << "\"";
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <itemMargin> set to \""
+                            << itemMargin.x << " " << itemMargin.y << "\"";
         }
         else {
             mFlexboxComponent.setItemMargin(itemMargin);
@@ -229,7 +228,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (controllerPos.x < -1.0f || controllerPos.x > 2.0f || controllerPos.y < -1.0f ||
             controllerPos.y > 2.0f) {
             LOG(LogWarning)
-                << "BadgesComponent: Invalid theme configuration, <controllerPos> set to \""
+                << "BadgeComponent: Invalid theme configuration, <controllerPos> set to \""
                 << controllerPos.x << " " << controllerPos.y << "\"";
         }
         else {
@@ -241,7 +240,7 @@ void BadgesComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const float controllerSize = elem->get<float>("controllerSize");
         if (controllerSize < 0.1f || controllerSize > 2.0f) {
             LOG(LogWarning)
-                << "BadgesComponent: Invalid theme configuration, <controllerSize> set to \""
+                << "BadgeComponent: Invalid theme configuration, <controllerSize> set to \""
                 << controllerSize << "\"";
         }
         else {

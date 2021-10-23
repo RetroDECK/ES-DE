@@ -13,7 +13,7 @@
 
 #include "GuiComponent.h"
 #include "MetaData.h"
-#include "components/BadgesComponent.h"
+#include "components/BadgeComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"

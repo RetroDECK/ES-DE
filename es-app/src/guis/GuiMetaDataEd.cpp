@@ -53,7 +53,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     , mMediaFilesUpdated{false}
     , mInvalidEmulatorEntry{false}
 {
-    mGameControllers = BadgesComponent::getGameControllers();
+    mGameControllers = BadgeComponent::getGameControllers();
 
     // Remove the last "unknown" controller entry.
     if (mGameControllers.size() > 1)
@@ -200,7 +200,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 // OK callback (apply new value to ed).
                 auto updateVal = [ed, originalValue](const std::string& newVal) {
                     ed->setValue(newVal);
-                    if (newVal == BadgesComponent::getDisplayName(originalValue))
+                    if (newVal == BadgeComponent::getDisplayName(originalValue))
                         ed->setColor(DEFAULT_TEXTCOLOR);
                     else
                         ed->setColor(TEXTCOLOR_USERMARKED);
@@ -478,7 +478,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
         }
         else if (iter->type == MD_CONTROLLER && mMetaData->get(iter->key) != "") {
-            std::string displayName = BadgesComponent::getDisplayName(mMetaData->get(iter->key));
+            std::string displayName = BadgeComponent::getDisplayName(mMetaData->get(iter->key));
             if (displayName != "unknown")
                 ed->setValue(displayName);
             else
@@ -618,7 +618,7 @@ void GuiMetaDataEd::save()
             continue;
 
         if (mMetaDataDecl.at(i).key == "controller" && mEditors.at(i)->getValue() != "") {
-            std::string shortName = BadgesComponent::getShortName(mEditors.at(i)->getValue());
+            std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
             if (shortName != "unknown")
                 mMetaData->set(mMetaDataDecl.at(i).key, shortName);
             continue;
@@ -769,7 +769,7 @@ void GuiMetaDataEd::close()
             continue;
 
         if (mMetaDataDecl.at(i).key == "controller" && mEditors.at(i)->getValue() != "") {
-            std::string shortName = BadgesComponent::getShortName(mEditors.at(i)->getValue());
+            std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
             if (shortName == "unknown" || mMetaDataValue == shortName)
                 continue;
         }

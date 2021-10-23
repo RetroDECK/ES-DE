@@ -410,9 +410,9 @@ void DetailedGameListView::updateInfoPanel()
         mPlayers.setValue(file->metadata.get("players"));
 
         // Populate the badge slots based on game metadata.
-        std::vector<BadgesComponent::BadgeInfo> badgeSlots;
+        std::vector<BadgeComponent::BadgeInfo> badgeSlots;
         for (auto badge : mBadges.getBadgeTypes()) {
-            BadgesComponent::BadgeInfo badgeInfo;
+            BadgeComponent::BadgeInfo badgeInfo;
             badgeInfo.badgeType = badge;
             if (badge == "controller") {
                 if (file->metadata.get("controller").compare("") != 0) {

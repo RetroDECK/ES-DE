@@ -1,14 +1,14 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  BadgesComponent.h
+//  BadgeComponent.h
 //
 //  Game badges icons.
 //  Used by the gamelist views.
 //
 
-#ifndef ES_CORE_COMPONENTS_BADGES_COMPONENT_H
-#define ES_CORE_COMPONENTS_BADGES_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_BADGE_COMPONENT_H
+#define ES_CORE_COMPONENTS_BADGE_COMPONENT_H
 
 #include "FlexboxComponent.h"
 #include "GuiComponent.h"
@@ -19,10 +19,10 @@ struct GameControllers {
     std::string fileName;
 };
 
-class BadgesComponent : public GuiComponent
+class BadgeComponent : public GuiComponent
 {
 public:
-    BadgesComponent(Window* window);
+    BadgeComponent(Window* window);
 
     struct BadgeInfo {
         std::string badgeType;
@@ -60,4 +60,4 @@ private:
     std::map<std::string, std::string> mBadgeIcons;
 };
 
-#endif // ES_CORE_COMPONENTS_BADGES_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_BADGE_COMPONENT_H
