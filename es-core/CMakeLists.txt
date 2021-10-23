@@ -34,7 +34,7 @@ set(CORE_HEADERS
 
     # GUI components
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgesComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgeComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentGrid.h
@@ -112,7 +112,7 @@ set(CORE_SOURCES
 
     # GUI components
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgesComponent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgeComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ButtonComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ComponentGrid.cpp
