@@ -123,9 +123,9 @@ void ImageComponent::resize()
 
     // Make sure sub-pixel values are not rounded to zero.
     if (mSize.x < 1.0f)
-        mSize.x = ceilf(mSize.x);
+        mSize.x = 1.0f;
     if (mSize.y < 1.0f)
-        mSize.y = ceilf(mSize.y);
+        mSize.y = 1.0f;
 
     mTexture->rasterizeAt(mSize.x, mSize.y);
 
