@@ -44,7 +44,7 @@ public:
     // It does unload and re-rasterize the texture though which may cause flickering in some
     // situations. An alternative is to set a scaling factor directly when loading the texture
     // using get(), by using the scaleDuringLoad parameter (which also works for raster graphics).
-    void rasterizeAt(size_t width, size_t height);
+    void rasterizeAt(float width, float height);
     glm::vec2 getSourceImageSize() const { return mSourceSize; }
 
     virtual ~TextureResource();

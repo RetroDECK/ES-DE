@@ -72,8 +72,8 @@ private:
     std::string mPath;
     unsigned int mTextureID;
     std::vector<unsigned char> mDataRGBA;
-    size_t mWidth;
-    size_t mHeight;
+    int mWidth;
+    int mHeight;
     float mSourceWidth;
     float mSourceHeight;
     float mScaleDuringLoad;

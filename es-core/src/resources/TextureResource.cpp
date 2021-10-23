@@ -194,7 +194,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     return tex;
 }
 
-void TextureResource::rasterizeAt(size_t width, size_t height)
+void TextureResource::rasterizeAt(float width, float height)
 {
     if (mTextureData != nullptr) {
         glm::vec2 textureSize = mTextureData.get()->getSize();
