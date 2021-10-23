@@ -14,7 +14,7 @@
 * Populated the bundled es_systems.xml files with alternative emulator entries for most RetroArch cores
 * Added a virtual keyboard, partly based on code from batocera-emulationstation
 * Added badges that indicate favorite/completed/broken games as well as games suitable for children and those with a selected alternative emulator
-* Added controller types, selectable via the metadata editor and displayed as a controller badge
+* Added game-specific controller images that are selectable via the metadata editor and displayed as a controller badge
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen

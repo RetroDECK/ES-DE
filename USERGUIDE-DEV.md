@@ -215,7 +215,7 @@ In addition to the styles just described, there is a **Grid** view style as well
 
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated as 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
-Another feature which requires theme support is **Badges**, which is a set of icons displaying the status for various metadata fields. The currently supported badge types are _favorite, completed, kidgame, broken, controller_ and _alternative emulator_. If any of the first four metadata fields have been set for a game, their corresponding badges will be displayed. If a controller type has been selected for the game, the corresponding controller icon will be shown on the controller badge, and if an alternative emulator has been selected for the specific game, that badge will be shown. Setting an alternative emulator system-wide will not display this badge as it's only intended to indicate game-specific overrides.
+Another feature which requires theme support is **Badges**, which is a set of icons displaying the status for various metadata fields. The currently supported badge types are _favorite, completed, kidgame, broken, controller_ and _alternative emulator_. If any of the first four metadata fields have been set for a game, their corresponding badges will be displayed. If a game-specific controller has been selected, the corresponding controller icon will be shown on the controller badge, and if an alternative emulator has been selected for the specific game, that badge will be shown. Setting an alternative emulator system-wide will not display this badge as it's only intended to indicate game-specific overrides.
 
 ![alt text](images/es-de_gamelist_view.png "ES-DE Gamelist View")
 _The **Gamelist view** is where you browse the games for a specific system._
@@ -1476,9 +1476,9 @@ This option will hide most metadata fields as well as any badges. The intention 
 
 A statistics counter that tracks how many times you have played the game. You normally don't need to touch this, but if you want to, the possibility is there.
 
-**Controller type**
+**Controller**
 
-Contains a list of controller types that are built into ES-DE. The selected controller will be displayed as a badge if the current theme set support badges. This functionality is only cosmetic and will not affect the actual emulators.
+Contains a list of controller images that are built into ES-DE. The selected controller will be displayed as a badge if the current theme set support badges. This functionality is only cosmetic and will not affect the actual emulators, and it will not affect the controller input for ES-DE itself.
 
 **Alternative emulator** _(files only)_
 
