@@ -15,15 +15,16 @@
 
 SliderComponent::SliderComponent(
     Window* window, float min, float max, float increment, const std::string& suffix)
-    : GuiComponent(window)
-    , mMin(min)
-    , mMax(max)
-    , mSingleIncrement(increment)
-    , mMoveRate(0)
-    , mKnob(window)
-    , mSuffix(suffix)
+    : GuiComponent{window}
+    , mMin{min}
+    , mMax{max}
+    , mSingleIncrement{increment}
+    , mMoveRate{0.0f}
+    , mBarHeight{0.0f}
+    , mKnob{window}
+    , mSuffix{suffix}
 {
-    assert((min - max) != 0);
+    assert((min - max) != 0.0f);
 
     // Some sane default value.
     mValue = (max + min) / 2.0f;
@@ -41,7 +42,7 @@ bool SliderComponent::input(InputConfig* config, Input input)
             if (input.value)
                 setValue(mValue - mSingleIncrement);
 
-            mMoveRate = input.value ? -mSingleIncrement : 0;
+            mMoveRate = input.value ? -mSingleIncrement : 0.0f;
             mMoveAccumulator = -MOVE_REPEAT_DELAY;
             return true;
         }
@@ -49,13 +50,13 @@ bool SliderComponent::input(InputConfig* config, Input input)
             if (input.value)
                 setValue(mValue + mSingleIncrement);
 
-            mMoveRate = input.value ? mSingleIncrement : 0;
+            mMoveRate = input.value ? mSingleIncrement : 0.0f;
             mMoveAccumulator = -MOVE_REPEAT_DELAY;
             return true;
         }
     }
     else {
-        mMoveRate = 0;
+        mMoveRate = 0.0f;
     }
 
     return GuiComponent::input(config, input);
@@ -88,10 +89,9 @@ void SliderComponent::render(const glm::mat4& parentTrans)
                      mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
                      0.0f)};
 
-    // Render line.
-    const float lineWidth{2.0f * Renderer::getScreenHeightModifier()};
-    Renderer::drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - lineWidth / 2.0f, width,
-                       lineWidth, 0x777777FF, 0x777777FF);
+    // Render bar.
+    Renderer::drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - mBarHeight / 2.0f, width,
+                       mBarHeight, 0x777777FF, 0x777777FF);
 
     // Render knob.
     mKnob.render(trans);
@@ -143,14 +143,28 @@ void SliderComponent::onValueChanged()
         mValueCache->metrics.size.x = textSize.x; // Fudge the width.
     }
 
-    // Update knob position/size.
-    mKnob.setResize(0, mSize.y * 0.7f);
-    float lineLength =
+    mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
+
+    float barLength =
         mSize.x - mKnob.getSize().x -
         (mValueCache ? mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
                        0.0f);
 
-    mKnob.setPosition(((mValue - mMin / 2.0f) / mMax) * lineLength + mKnob.getSize().x / 2.0f,
+    int barHeight = static_cast<int>(std::round(2.0f * Renderer::getScreenHeightModifier()));
+
+    // For very low resolutions, make sure the bar height is not rounded to zero.
+    if (barHeight == 0)
+        barHeight = 1;
+
+    // Resize the knob one pixel if necessary to keep the bar centered.
+    if (barHeight % 2 == 0 && static_cast<int>(mKnob.getSize().y) % 2 != 0)
+        mKnob.setResize(mKnob.getSize().x - 1.0f, mKnob.getSize().y - 1.0f);
+    else if (barHeight == 1 && static_cast<int>(mKnob.getSize().y) % 2 == 0)
+        mKnob.setResize(mKnob.getSize().x - 1.0f, mKnob.getSize().y - 1);
+
+    mBarHeight = static_cast<float>(barHeight);
+
+    mKnob.setPosition(((mValue - mMin / 2.0f) / mMax) * barLength + mKnob.getSize().x / 2.0f,
                       mSize.y / 2.0f);
 }
 
