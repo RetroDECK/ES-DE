@@ -67,6 +67,7 @@ based on:       Switch Theme by Lilbud
 		</text>
 		<carousel name="systemcarousel">
 			<color>00000000</color>
+			<legacyZIndexMode>false</legacyZIndexMode>
 		</carousel>
 		<text name="system_name_1" extra="true">
 			<text>${system.fullName}</text>
