@@ -14,6 +14,7 @@
 * Populated the bundled es_systems.xml files with alternative emulator entries for most RetroArch cores
 * Added a virtual keyboard, partly based on code from batocera-emulationstation
 * Added badges that indicate favorite/completed/broken games as well as games suitable for children and those with a selected alternative emulator
+* Added controller types, selectable via the metadata editor and displayed as a controller badge
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
@@ -80,6 +81,7 @@
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
 * The line spacing for TextListComponent was incorrectly calculated for some resolutions such as 2560x1440
+* Fixed multiple issues with scaling of images which lead to various inconsistencies and sometimes cut-off graphics
 * Removing games from custom collections did not remove their filter index entries
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
@@ -98,6 +100,8 @@
 * Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
+* SliderComponent did not properly align the knob and bar vertically
+* Resizing in SwitchComponent did not reposition the image properly leading to a non-centered image
 * Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions
 * The sizing of the metadata editor was strange, which was clearly visible when activating the Ctrl+G debug mode
 * The "sortname" window header was incorrectly spelled when editing this type of entry in the metadata editor
