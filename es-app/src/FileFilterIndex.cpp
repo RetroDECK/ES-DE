@@ -33,6 +33,7 @@ FileFilterIndex::FileFilterIndex()
     , mFilterByKidGame(false)
     , mFilterByHidden(false)
     , mFilterByBroken(false)
+    , mFilterByController(false)
     , mFilterByAltemulator(false)
 {
     clearAllFilters();
@@ -50,6 +51,7 @@ FileFilterIndex::FileFilterIndex()
         {KIDGAME_FILTER,     &mKidGameIndexAllKeys,     &mFilterByKidGame,     &mKidGameIndexFilteredKeys,     "kidgame",      false,              "",             "KIDGAME"},
         {HIDDEN_FILTER,      &mHiddenIndexAllKeys,      &mFilterByHidden,      &mHiddenIndexFilteredKeys,      "hidden",       false,              "",             "HIDDEN"},
         {BROKEN_FILTER,      &mBrokenIndexAllKeys,      &mFilterByBroken,      &mBrokenIndexFilteredKeys,      "broken",       false,              "",             "BROKEN"},
+        {CONTROLLER_FILTER,  &mControllerIndexAllKeys,  &mFilterByController,  &mControllerIndexFilteredKeys,  "controller",   false,              "",             "CONTROLLER BADGE"},
         {ALTEMULATOR_FILTER, &mAltemulatorIndexAllKeys, &mFilterByAltemulator, &mAltemulatorIndexFilteredKeys, "altemulator",  false,              "",             "ALTERNATIVE EMULATOR"}
     };
     // clang-format on
@@ -82,6 +84,7 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
         {&mKidGameIndexAllKeys, &(indexToImport->mKidGameIndexAllKeys)},
         {&mHiddenIndexAllKeys, &(indexToImport->mHiddenIndexAllKeys)},
         {&mBrokenIndexAllKeys, &(indexToImport->mBrokenIndexAllKeys)},
+        {&mControllerIndexAllKeys, &(indexToImport->mControllerIndexAllKeys)},
         {&mAltemulatorIndexAllKeys, &(indexToImport->mAltemulatorIndexAllKeys)},
     };
 
@@ -119,6 +122,7 @@ void FileFilterIndex::resetIndex()
     clearIndex(mKidGameIndexAllKeys);
     clearIndex(mHiddenIndexAllKeys);
     clearIndex(mBrokenIndexAllKeys);
+    clearIndex(mControllerIndexAllKeys);
     clearIndex(mAltemulatorIndexAllKeys);
 }
 
@@ -215,6 +219,12 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
             key = Utils::String::toUpper(game->metadata.get("broken"));
             break;
         }
+        case CONTROLLER_FILTER: {
+            if (getSecondary)
+                break;
+            key = Utils::String::toUpper(game->metadata.get("controller"));
+            break;
+        }
         case ALTEMULATOR_FILTER: {
             if (getSecondary)
                 break;
@@ -231,8 +241,8 @@ std::string FileFilterIndex::getIndexableKey(FileData* game,
          type == PUBLISHER_FILTER) &&
         Utils::String::toUpper(key) == UNKNOWN_LABEL)
         key = ViewController::CROSSEDCIRCLE_CHAR + " UNKNOWN";
-    else if (type == ALTEMULATOR_FILTER && key.empty())
-        key = ViewController::CROSSEDCIRCLE_CHAR + " NONE DEFINED";
+    else if ((type == CONTROLLER_FILTER || type == ALTEMULATOR_FILTER) && key.empty())
+        key = ViewController::CROSSEDCIRCLE_CHAR + " NONE SELECTED";
     else if (key.empty() || (type == RATINGS_FILTER && key == "0 STARS"))
         key = UNKNOWN_LABEL;
 
@@ -251,6 +261,7 @@ void FileFilterIndex::addToIndex(FileData* game)
     manageKidGameEntryInIndex(game);
     manageHiddenEntryInIndex(game);
     manageBrokenEntryInIndex(game);
+    manageControllerEntryInIndex(game);
     manageAltemulatorEntryInIndex(game);
 }
 
@@ -266,6 +277,7 @@ void FileFilterIndex::removeFromIndex(FileData* game)
     manageKidGameEntryInIndex(game, true);
     manageHiddenEntryInIndex(game, true);
     manageBrokenEntryInIndex(game, true);
+    manageControllerEntryInIndex(game, true);
     manageAltemulatorEntryInIndex(game, true);
 }
 
@@ -365,6 +377,9 @@ void FileFilterIndex::debugPrintIndexes()
     for (auto x : mBrokenIndexAllKeys) {
         LOG(LogInfo) << "Broken Index: " << x.first << ": " << x.second;
     }
+    for (auto x : mControllerIndexAllKeys) {
+        LOG(LogInfo) << "Controller Index: " << x.first << ": " << x.second;
+    }
     for (auto x : mAltemulatorIndexAllKeys) {
         LOG(LogInfo) << "Altemulator Index: " << x.first << ": " << x.second;
     }
@@ -444,28 +459,29 @@ bool FileFilterIndex::isFiltered()
     if (UIModeController::getInstance()->isUIModeKid()) {
         return (mFilterByText || mFilterByRatings || mFilterByDeveloper || mFilterByPublisher ||
                 mFilterByGenre || mFilterByPlayers || mFilterByFavorites || mFilterByCompleted ||
-                mFilterByHidden || mFilterByBroken || mFilterByAltemulator);
+                mFilterByHidden || mFilterByBroken || mFilterByController || mFilterByAltemulator);
     }
     else {
         return (mFilterByText || mFilterByRatings || mFilterByDeveloper || mFilterByPublisher ||
                 mFilterByGenre || mFilterByPlayers || mFilterByFavorites || mFilterByCompleted ||
-                mFilterByKidGame || mFilterByHidden || mFilterByBroken || mFilterByAltemulator);
+                mFilterByKidGame || mFilterByHidden || mFilterByBroken || mFilterByController ||
+                mFilterByAltemulator);
     }
 }
 
 bool FileFilterIndex::isKeyBeingFilteredBy(std::string key, FilterIndexType type)
 {
-    const FilterIndexType filterTypes[11] = {RATINGS_FILTER,   DEVELOPER_FILTER,  PUBLISHER_FILTER,
-                                             GENRE_FILTER,     PLAYER_FILTER,     FAVORITES_FILTER,
-                                             COMPLETED_FILTER, KIDGAME_FILTER,    HIDDEN_FILTER,
-                                             BROKEN_FILTER,    ALTEMULATOR_FILTER};
-    std::vector<std::string> filterKeysList[11] = {
+    const FilterIndexType filterTypes[12] = {
+        RATINGS_FILTER, DEVELOPER_FILTER, PUBLISHER_FILTER,  GENRE_FILTER,
+        PLAYER_FILTER,  FAVORITES_FILTER, COMPLETED_FILTER,  KIDGAME_FILTER,
+        HIDDEN_FILTER,  BROKEN_FILTER,    CONTROLLER_FILTER, ALTEMULATOR_FILTER};
+    std::vector<std::string> filterKeysList[12] = {
         mRatingsIndexFilteredKeys,   mDeveloperIndexFilteredKeys,  mPublisherIndexFilteredKeys,
         mGenreIndexFilteredKeys,     mPlayersIndexFilteredKeys,    mFavoritesIndexFilteredKeys,
         mCompletedIndexFilteredKeys, mKidGameIndexFilteredKeys,    mHiddenIndexFilteredKeys,
-        mBrokenIndexFilteredKeys,    mAltemulatorIndexFilteredKeys};
+        mBrokenIndexFilteredKeys,    mControllerIndexFilteredKeys, mAltemulatorIndexFilteredKeys};
 
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 12; i++) {
         if (filterTypes[i] == type) {
             for (std::vector<std::string>::const_iterator it = filterKeysList[i].cbegin();
                  it != filterKeysList[i].cend(); it++) {
@@ -609,6 +625,12 @@ void FileFilterIndex::manageBrokenEntryInIndex(FileData* game, bool remove)
         return;
 
     manageIndexEntry(&mBrokenIndexAllKeys, key, remove);
+}
+
+void FileFilterIndex::manageControllerEntryInIndex(FileData* game, bool remove)
+{
+    std::string key = getIndexableKey(game, CONTROLLER_FILTER, false);
+    manageIndexEntry(&mControllerIndexAllKeys, key, remove);
 }
 
 void FileFilterIndex::manageAltemulatorEntryInIndex(FileData* game, bool remove)

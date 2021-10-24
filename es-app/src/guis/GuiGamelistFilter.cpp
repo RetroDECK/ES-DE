@@ -11,9 +11,11 @@
 #include "guis/GuiGamelistFilter.h"
 
 #include "SystemData.h"
+#include "components/BadgeComponent.h"
 #include "components/OptionListComponent.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "utils/StringUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 
@@ -185,8 +187,21 @@ void GuiGamelistFilter::addFiltersToMenu()
             optionList->setOverrideMultiText("NOTHING TO FILTER");
         }
 
-        for (auto it : *allKeys)
-            optionList->add(it.first, it.first, mFilterIndex->isKeyBeingFilteredBy(it.first, type));
+        if (type == CONTROLLER_FILTER) {
+            for (auto it : *allKeys) {
+                std::string displayName =
+                    BadgeComponent::getDisplayName(Utils::String::toLower(it.first));
+                if (displayName == "unknown")
+                    displayName = it.first;
+                optionList->add(displayName, it.first,
+                                mFilterIndex->isKeyBeingFilteredBy(it.first, type));
+            }
+        }
+        else {
+            for (auto it : *allKeys)
+                optionList->add(it.first, it.first,
+                                mFilterIndex->isKeyBeingFilteredBy(it.first, type));
+        }
 
         if (allKeys->size() == 0)
             optionList->add("", "", false);
