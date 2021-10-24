@@ -81,14 +81,22 @@ void SliderComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans{parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
-    // Render suffix.
-    if (mValueCache)
-        mFont->renderTextCache(mValueCache.get());
+    if (Settings::getInstance()->getBool("DebugText")) {
+        Renderer::drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f, mTextCache->metrics.size.x,
+                           mSize.y, 0x0000FF33, 0x0000FF33);
+        Renderer::drawRect(
+            mSize.x - mTextCache->metrics.size.x, (mSize.y - mTextCache->metrics.size.y) / 2.0f,
+            mTextCache->metrics.size.x, mTextCache->metrics.size.y, 0x0000FF33, 0x0000FF33);
+    }
 
     float width{mSize.x - mKnob.getSize().x -
-                (mValueCache ?
-                     mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
+                (mTextCache ?
+                     mTextCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
                      0.0f)};
+
+    // Render suffix.
+    if (mTextCache)
+        mFont->renderTextCache(mTextCache.get());
 
     // Render bar.
     Renderer::drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - mBarHeight / 2.0f, width,
@@ -139,17 +147,17 @@ void SliderComponent::onValueChanged()
         const std::string max = ss.str();
 
         glm::vec2 textSize = mFont->sizeText(max);
-        mValueCache = std::shared_ptr<TextCache>(mFont->buildTextCache(
+        mTextCache = std::shared_ptr<TextCache>(mFont->buildTextCache(
             val, mSize.x - textSize.x, (mSize.y - textSize.y) / 2.0f, 0x777777FF));
-        mValueCache->metrics.size.x = textSize.x; // Fudge the width.
+        mTextCache->metrics.size.x = textSize.x; // Fudge the width.
     }
 
     mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
 
     float barLength =
         mSize.x - mKnob.getSize().x -
-        (mValueCache ? mValueCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
-                       0.0f);
+        (mTextCache ? mTextCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
+                      0.0f);
 
     int barHeight = static_cast<int>(std::round(2.0f * Renderer::getScreenHeightModifier()));
 
