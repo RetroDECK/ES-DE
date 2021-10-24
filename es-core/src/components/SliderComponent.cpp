@@ -8,6 +8,7 @@
 
 #include "components/SliderComponent.h"
 
+#include "Window.h"
 #include "resources/Font.h"
 
 #define MOVE_REPEAT_DELAY 500
@@ -32,7 +33,7 @@ SliderComponent::SliderComponent(
     mKnob.setOrigin(0.5f, 0.5f);
     mKnob.setImage(":/graphics/slider_knob.svg");
 
-    setSize(Renderer::getScreenWidth() * 0.15f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
+    setSize(window->peekGui()->getSize().x * 0.26f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
 }
 
 bool SliderComponent::input(InputConfig* config, Input input)
