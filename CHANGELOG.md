@@ -56,6 +56,8 @@
 * Added support for a new type of "flat style" button to ButtonComponent
 * Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
+* Moved the resources/help directory to resources/graphics/help
+* Removed the unused graphics files resources/graphics/fav_add.svg and resources/graphics/fav_remove.svg
 * Added RapidJSON as a Git subtree
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
@@ -100,6 +102,7 @@
 * Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
+* SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
 * Resizing in SwitchComponent did not reposition the image properly leading to a non-centered image
 * Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions
