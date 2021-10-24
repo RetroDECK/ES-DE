@@ -17,6 +17,7 @@
 
 GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& title)
     : GuiSettings(window, title)
+    , mWindow(window)
 {
     // Screensaver timer.
     auto screensaver_timer = std::make_shared<SliderComponent>(mWindow, 0.0f, 30.0f, 1.0f, "m");
@@ -95,6 +96,8 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
     row.makeAcceptInputHandler(
         std::bind(&GuiScreensaverOptions::openVideoScreensaverOptions, this));
     addRow(row);
+
+    setSize(getMenuSize());
 }
 
 void GuiScreensaverOptions::openSlideshowScreensaverOptions()
@@ -206,6 +209,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
         }
     });
 
+    s->setSize(mSize);
     mWindow->pushGui(s);
 }
 
@@ -287,5 +291,6 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
     });
 #endif
 
+    s->setSize(mSize);
     mWindow->pushGui(s);
 }

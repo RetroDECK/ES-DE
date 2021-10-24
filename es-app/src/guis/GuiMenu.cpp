@@ -593,6 +593,7 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    s->setSize(mSize);
     mWindow->pushGui(s);
 }
 
@@ -700,6 +701,7 @@ void GuiMenu::openSoundOptions()
         });
     }
 
+    s->setSize(mSize);
     mWindow->pushGui(s);
 }
 
@@ -756,6 +758,7 @@ void GuiMenu::openInputDeviceOptions()
     configure_input_row.makeAcceptInputHandler(std::bind(&GuiMenu::openConfigInput, this, s));
     s->addRow(configure_input_row);
 
+    s->setSize(mSize);
     mWindow->pushGui(s);
 }
 
@@ -1180,12 +1183,14 @@ void GuiMenu::openOtherOptions()
     run_in_background->setCallback(launchWorkaroundToggleFunc);
 #endif
 
+    s->setSize(mSize);
     mWindow->pushGui(s);
 }
 
 void GuiMenu::openUtilitiesMenu()
 {
     auto s = new GuiSettings(mWindow, "UTILITIES");
+    s->setSize(mSize);
     mWindow->pushGui(s);
 }
 
@@ -1263,6 +1268,7 @@ void GuiMenu::openQuitMenu()
         row.addElement(powerOffText, true);
         s->addRow(row);
 
+        s->setSize(mSize);
         mWindow->pushGui(s);
     }
 }

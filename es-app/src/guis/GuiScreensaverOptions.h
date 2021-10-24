@@ -18,6 +18,8 @@ public:
     GuiScreensaverOptions(Window* window, const std::string& title);
 
 private:
+    Window* mWindow;
+
     void openSlideshowScreensaverOptions();
     void openVideoScreensaverOptions();
 };
