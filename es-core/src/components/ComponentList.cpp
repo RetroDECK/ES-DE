@@ -249,8 +249,16 @@ void ComponentList::updateCameraOffset()
         while (mCameraOffset < target && i < mEntries.size()) {
             mCameraOffset += getRowHeight(mEntries.at(i).data);
             if (mCameraOffset > totalHeight - mSize.y) {
-                if (mSetupCompleted && mCameraOffset != oldCameraOffset)
-                    mBottomCameraOffset = true;
+                if (mSetupCompleted) {
+                    if (mScrollIndicatorStatus == ComponentList::SCROLL_NONE &&
+                        oldCameraOffset == 0.0f)
+                        break;
+                    if (mScrollIndicatorStatus != ComponentList::SCROLL_NONE &&
+                        oldCameraOffset == 0.0f)
+                        mBottomCameraOffset = true;
+                    else if (mCameraOffset != oldCameraOffset)
+                        mBottomCameraOffset = true;
+                }
                 break;
             }
             i++;
