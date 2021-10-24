@@ -82,11 +82,11 @@ void SliderComponent::render(const glm::mat4& parentTrans)
     Renderer::setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugText")) {
-        Renderer::drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f, mTextCache->metrics.size.x,
-                           mSize.y, 0x0000FF33, 0x0000FF33);
         Renderer::drawRect(
             mSize.x - mTextCache->metrics.size.x, (mSize.y - mTextCache->metrics.size.y) / 2.0f,
             mTextCache->metrics.size.x, mTextCache->metrics.size.y, 0x0000FF33, 0x0000FF33);
+        Renderer::drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f, mTextCache->metrics.size.x,
+                           mSize.y, 0x00000033, 0x00000033);
     }
 
     float width{mSize.x - mKnob.getSize().x -
