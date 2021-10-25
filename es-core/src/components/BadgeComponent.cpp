@@ -187,26 +187,37 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (elem->has("itemsPerRow")) {
-        const float itemsPerRow{elem->get<float>("itemsPerRow")};
-        if (itemsPerRow < 1.0f || itemsPerRow > 10.0f) {
-            LOG(LogWarning)
-                << "BadgeComponent: Invalid theme configuration, <itemsPerRow> set to \""
-                << itemsPerRow << "\"";
+    if (elem->has("direction")) {
+        const std::string direction{elem->get<std::string>("direction")};
+        if (direction != "row" && direction != "column") {
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <direction> set to \""
+                            << direction << "\"";
         }
         else {
-            mFlexboxComponent.setItemsPerLine(static_cast<unsigned int>(itemsPerRow));
+            mFlexboxComponent.setDirection(direction);
         }
     }
 
-    if (elem->has("rows")) {
-        const float rows{elem->get<float>("rows")};
-        if (rows < 1.0f || rows > 10.0f) {
-            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <rows> set to \""
-                            << rows << "\"";
+    if (elem->has("lines")) {
+        const float lines{elem->get<float>("lines")};
+        if (lines < 1.0f || lines > 10.0f) {
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <lines> set to \""
+                            << lines << "\"";
         }
         else {
-            mFlexboxComponent.setLines(static_cast<unsigned int>(rows));
+            mFlexboxComponent.setLines(static_cast<unsigned int>(lines));
+        }
+    }
+
+    if (elem->has("itemsPerLine")) {
+        const float itemsPerLine{elem->get<float>("itemsPerLine")};
+        if (itemsPerLine < 1.0f || itemsPerLine > 10.0f) {
+            LOG(LogWarning)
+                << "BadgeComponent: Invalid theme configuration, <itemsPerLine> set to \""
+                << itemsPerLine << "\"";
+        }
+        else {
+            mFlexboxComponent.setItemsPerLine(static_cast<unsigned int>(itemsPerLine));
         }
     }
 
