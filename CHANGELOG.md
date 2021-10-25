@@ -23,14 +23,16 @@
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
-* Added a filter for "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
+* Added filters for "Alternative emulator" and "Controller badges" and sorted the filters in the same order as the metadata editor fields
 * Added a menu option to change the application exit key combination
+* Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
 * Decreased the amount of text that ScrollableContainer renders above and below the starting position as content is scrolled
 * Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
 * Added notification popups when plugging in or removing controllers
+* Made large optimizations to the SVG rendering which reduces application startup time dramatically when many systems are populated
 * Changed to loading the default theme set rbsimple-DE instead of the first available theme if the currently configured theme is missing
 * Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view

@@ -1252,6 +1252,10 @@ Enabling this option offloads video decoding to the GPU. Whether this actually i
 
 With this option enabled, videos with lower frame rates than 60 FPS, such as 24 and 30 will get upscaled to 60 FPS. This results in slightly smoother playback for some videos. There is a small performance hit from this option, so on weaker machines it may be necessary to disable it for fluent video playback. This setting has no effect when using the VLC video player. If the VLC video player is not included in the ES-DE build, the "(FFmpeg)" text is omitted from the setting name.
 
+**Preload gamelists on startup**
+
+When this option is enabled, all gamelists will be loaded on application startup. This will increase the startup time slightly and lead to a higher initial memory utilization, but navigation will be smoother the first time a gamelist is entered. The improvement is especially noticeable when the _slide_ transition style has been selected.
+
 **Enable alternative emulators per game**
 
 If enabled, you will be able to select alternative emulators per game using the metadata editor. It's only recommended to disable this option for testing purposes.
