@@ -109,7 +109,8 @@ private:
     bool mTargetIsMin;
 
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
-    // Used internally whenever the resizing parameters or texture change.
+    // Used internally whenever the resizing parameters or texture change. This function also
+    // initiates the SVG rasterization.
     void resize();
 
     Renderer::Vertex mVertices[4];

@@ -8,16 +8,20 @@
 
 #include "resources/TextureResource.h"
 
-#include "resources/TextureData.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 TextureDataManager TextureResource::sTextureDataManager;
 std::map<TextureResource::TextureKeyType, std::weak_ptr<TextureResource>>
     TextureResource::sTextureMap;
 std::set<TextureResource*> TextureResource::sAllTextures;
 
-TextureResource::TextureResource(
-    const std::string& path, bool tile, bool dynamic, bool linearMagnify, float scaleDuringLoad)
+TextureResource::TextureResource(const std::string& path,
+                                 bool tile,
+                                 bool dynamic,
+                                 bool linearMagnify,
+                                 bool alwaysRasterize,
+                                 float scaleDuringLoad)
     : mTextureData(nullptr)
     , mForceLoad(false)
 {
@@ -32,6 +36,7 @@ TextureResource::TextureResource(
             if (scaleDuringLoad != 1.0f)
                 data->setScaleDuringLoad(scaleDuringLoad);
             data->setLinearMagnify(linearMagnify);
+            data->setAlwaysRasterize(alwaysRasterize);
             // Force the texture manager to load it using a blocking load.
             sTextureDataManager.load(data, true);
         }
@@ -42,6 +47,7 @@ TextureResource::TextureResource(
             if (scaleDuringLoad != 1.0f)
                 data->setScaleDuringLoad(scaleDuringLoad);
             data->setLinearMagnify(linearMagnify);
+            data->setAlwaysRasterize(alwaysRasterize);
             // Load it so we can read the width/height.
             data->load();
         }
@@ -148,6 +154,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
                                                       bool forceLoad,
                                                       bool dynamic,
                                                       bool linearMagnify,
+                                                      bool alwaysRasterize,
                                                       float scaleDuringLoad)
 {
     std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
@@ -155,7 +162,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(path);
     if (canonicalPath.empty()) {
         std::shared_ptr<TextureResource> tex(
-            new TextureResource("", tile, false, linearMagnify, scaleDuringLoad));
+            new TextureResource("", tile, false, linearMagnify, alwaysRasterize, scaleDuringLoad));
         // Make sure we get properly deinitialized even though we do nothing on reinitialization.
         rm->addReloadable(tex);
         return tex;
@@ -171,12 +178,13 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
 
     // Need to create it.
     std::shared_ptr<TextureResource> tex;
-    tex = std::shared_ptr<TextureResource>(
-        new TextureResource(key.first, tile, dynamic, linearMagnify, scaleDuringLoad));
+    tex = std::shared_ptr<TextureResource>(new TextureResource(
+        key.first, tile, dynamic, linearMagnify, alwaysRasterize, scaleDuringLoad));
     std::shared_ptr<TextureData> data = sTextureDataManager.get(tex.get());
 
     // Is it an SVG?
-    if (key.first.substr(key.first.size() - 4, std::string::npos) != ".svg") {
+    if (Utils::String::toLower(key.first.substr(key.first.size() - 4, std::string::npos)) !=
+        ".svg") {
         // Probably not. Add it to our map. We don't add SVGs because 2 SVGs might be
         // rasterized at different sizes.
         sTextureMap[key] = std::weak_ptr<TextureResource>(tex);
