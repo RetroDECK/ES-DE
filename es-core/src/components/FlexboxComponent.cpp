@@ -24,8 +24,8 @@ FlexboxComponent::FlexboxComponent(Window* window, std::vector<FlexboxItem>& ite
     , mItems(items)
     , mDirection{DEFAULT_DIRECTION}
     , mAlignment{DEFAULT_ALIGNMENT}
-    , mItemsPerLine{DEFAULT_ITEMS_PER_LINE}
     , mLines{DEFAULT_LINES}
+    , mItemsPerLine{DEFAULT_ITEMS_PER_LINE}
     , mItemPlacement{DEFAULT_ITEM_PLACEMENT}
     , mItemMargin{glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y}}
     , mOverlayPosition{0.5f, 0.5f}
@@ -86,8 +86,6 @@ void FlexboxComponent::setItemMargin(glm::vec2 value)
 
 void FlexboxComponent::computeLayout()
 {
-    // TODO: There is no right-alignment support for column mode.
-
     // If we're not clamping itemMargin to a reasonable value, all kinds of weird rendering
     // issues could occur.
     mItemMargin.x = glm::clamp(mItemMargin.x, 0.0f, mSize.x / 2.0f);
@@ -107,7 +105,13 @@ void FlexboxComponent::computeLayout()
         mItemsPerLine = static_cast<unsigned int>(mItems.size());
     }
 
-    glm::vec2 grid{mItemsPerLine, mLines};
+    glm::vec2 grid{};
+
+    if (mDirection == "row")
+        grid = {mItemsPerLine, mLines};
+    else
+        grid = {mLines, mItemsPerLine};
+
     glm::vec2 maxItemSize{(mSize + mItemMargin - grid * mItemMargin) / grid};
 
     float rowHeight{0.0f};
@@ -146,11 +150,11 @@ void FlexboxComponent::computeLayout()
 
     maxItemSize = glm::round(maxItemSize);
 
-    bool alignRight{mAlignment == "right" && mDirection == "row"};
+    bool alignRight{mAlignment == "right"};
     float alignRightComp{0.0f};
 
     // If right-aligning, move the overall container contents during grid setup.
-    if (alignRight)
+    if (alignRight && mDirection == "row")
         alignRightComp =
             std::round(mSize.x - ((maxItemSize.x + mItemMargin.x) * grid.x) + mItemMargin.x);
 
@@ -166,11 +170,19 @@ void FlexboxComponent::computeLayout()
             }
         }
     }
-    else { // Column mode.
+    else if (mDirection == "column" && !alignRight) {
+        for (int x = 0; x < grid.x; x++) {
+            for (int y = 0; y < grid.y; y++) {
+                itemPositions.push_back(glm::vec2{(x * (maxItemSize.x + mItemMargin.x)),
+                                                  y * (rowHeight + mItemMargin.y)});
+            }
+        }
+    }
+    else { // Right-aligned.
         for (int x = 0; x < grid.x; x++) {
             for (int y = 0; y < grid.y; y++) {
                 itemPositions.push_back(
-                    glm::vec2{(x * (maxItemSize.x + mItemMargin.x) + alignRightComp),
+                    glm::vec2{(mSize.x - (x * (maxItemSize.x + mItemMargin.x)) - maxItemSize.x),
                               y * (rowHeight + mItemMargin.y)});
             }
         }
@@ -185,7 +197,7 @@ void FlexboxComponent::computeLayout()
         if (!item.visible)
             continue;
 
-        if (pos > 0) {
+        if (mDirection == "row" && pos > 0) {
             if (itemPositions[pos - 1].y < itemPositions[pos].y) {
                 lastY = itemPositions[pos].y;
                 itemsOnLastRow = 0;
@@ -225,8 +237,8 @@ void FlexboxComponent::computeLayout()
         pos++;
     }
 
-    // Apply right-align to the items (only works in row mode).
-    if (alignRight) {
+    // Apply right-align to the items if we're using row mode.
+    if (alignRight && mDirection == "row") {
         for (auto& item : mItems) {
             if (!item.visible)
                 continue;

@@ -28,6 +28,8 @@ public:
     virtual std::string getName() const override { return "video"; }
     virtual void launch(FileData* game) override;
 
+    virtual void preloadGamelist() override { updateInfoPanel(); }
+
 protected:
     virtual void update(int deltaTime) override;
 

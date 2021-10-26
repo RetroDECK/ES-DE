@@ -53,11 +53,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     , mMediaFilesUpdated{false}
     , mInvalidEmulatorEntry{false}
 {
-    mGameControllers = BadgeComponent::getGameControllers();
+    mControllerBadges = BadgeComponent::getGameControllers();
 
     // Remove the last "unknown" controller entry.
-    if (mGameControllers.size() > 1)
-        mGameControllers.pop_back();
+    if (mControllerBadges.size() > 1)
+        mControllerBadges.pop_back();
 
     addChild(&mBackground);
     addChild(&mGrid);
@@ -206,11 +206,10 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                         ed->setColor(TEXTCOLOR_USERMARKED);
                 };
 
-                row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal,
-                                            originalValue] {
+                row.makeAcceptInputHandler([this, title, ed, updateVal] {
                     GuiSettings* s = new GuiSettings(mWindow, title);
 
-                    for (auto controller : mGameControllers) {
+                    for (auto controller : mControllerBadges) {
                         std::string selectedLabel = ed->getValue();
                         std::string label;
                         ComponentListRow row;

@@ -30,8 +30,6 @@ public:
     // Use an already existing texture.
     void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
 
-    void setForceLoad(bool status) { mForceLoad = status; }
-
     void onSizeChanged() override { updateVertices(); }
 
     // Resize the image to fit this size. If one axis is zero, scale that axis to maintain
@@ -109,7 +107,8 @@ private:
     bool mTargetIsMin;
 
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
-    // Used internally whenever the resizing parameters or texture change.
+    // Used internally whenever the resizing parameters or texture change. This function also
+    // initiates the SVG rasterization.
     void resize();
 
     Renderer::Vertex mVertices[4];

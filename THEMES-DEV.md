@@ -921,7 +921,7 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 
 #### badges
 
-It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course). Overall it's a very good idea to keep the image dimensions small. This is especially true for SVG graphics as rasterization will otherwise take a long time which will slow down application startup and gamelist navigation.
+It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course).
 
 * `pos` - type: NORMALIZED_PAIR.
 * `size` - type: NORMALIZED_PAIR.
@@ -933,10 +933,12 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Default is `0`.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the image will be rotated. Default is `0.5 0.5`.
-* `itemsPerRow` - type: FLOAT.
-    - Number of badges that fit on a row. When more badges are available a new row will be started. Default is `4`.
-* `rows` - type: FLOAT.
-    - The number of rows available. Default is `2`.
+* `direction` - type: STRING.
+    - Valid values are "row" or "column". Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction. Default is `row`.
+* `lines` - type: FLOAT.
+    - The number of lines available. Default is `2`.
+* `itemsPerLine` - type: FLOAT.
+    - Number of badges that fit on a line. When more badges are available a new line will be started. Default is `4`.
 * `itemMargin` - type: NORMALIZED_PAIR.
     - The margins between badges. Possible combinations:
     - `x y` - horizontal and vertical margins. Minimum value per axis is `0`, maximum value is `0.2`. Default is `0.01 0.01`. If one of the axis is set to `-1` the margin of the other axis (in pixels) will be used, which makes it possible to get identical spacing between all items regardless of screen aspect ratio.

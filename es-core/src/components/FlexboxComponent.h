@@ -44,17 +44,17 @@ public:
         mLayoutValid = false;
     }
 
-    unsigned int getItemsPerLine() const { return mItemsPerLine; }
-    void setItemsPerLine(unsigned int value)
-    {
-        mItemsPerLine = value;
-        mLayoutValid = false;
-    }
-
     unsigned int getLines() const { return mLines; }
     void setLines(unsigned int value)
     {
         mLines = value;
+        mLayoutValid = false;
+    }
+
+    unsigned int getItemsPerLine() const { return mItemsPerLine; }
+    void setItemsPerLine(unsigned int value)
+    {
+        mItemsPerLine = value;
         mLayoutValid = false;
     }
 
@@ -87,8 +87,8 @@ private:
     // Layout options.
     std::string mDirection;
     std::string mAlignment;
-    unsigned int mItemsPerLine;
     unsigned int mLines;
+    unsigned int mItemsPerLine;
     std::string mItemPlacement;
     glm::vec2 mItemMargin;
 

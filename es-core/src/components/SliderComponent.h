@@ -52,7 +52,7 @@ private:
 
     std::string mSuffix;
     std::shared_ptr<Font> mFont;
-    std::shared_ptr<TextCache> mValueCache;
+    std::shared_ptr<TextCache> mTextCache;
 };
 
 #endif // ES_CORE_COMPONENTS_SLIDER_COMPONENT_H

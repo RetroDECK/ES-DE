@@ -24,16 +24,18 @@
 #define DPI 96
 
 TextureData::TextureData(bool tile)
-    : mTile(tile)
-    , mTextureID(0)
+    : mTile{tile}
+    , mTextureID{0}
     , mDataRGBA({})
-    , mWidth(0)
-    , mHeight(0)
-    , mSourceWidth(0.0f)
-    , mSourceHeight(0.0f)
-    , mScaleDuringLoad(1.0f)
-    , mScalable(false)
-    , mLinearMagnify(false)
+    , mWidth{0}
+    , mHeight{0}
+    , mSourceWidth{0.0f}
+    , mSourceHeight{0.0f}
+    , mScaleDuringLoad{1.0f}
+    , mScalable{false}
+    , mLinearMagnify{false}
+    , mForceRasterization{false}
+    , mPendingRasterization{false}
 {
 }
 
@@ -54,23 +56,28 @@ void TextureData::initFromPath(const std::string& path)
 bool TextureData::initSVGFromMemory(const std::string& fileData)
 {
     // If already initialized then don't process it again.
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock{mMutex};
 
     if (!mDataRGBA.empty())
         return true;
 
-    NSVGimage* svgImage = nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI);
+    NSVGimage* svgImage{nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI)};
 
     if (!svgImage) {
         LOG(LogError) << "Couldn't parse SVG image";
         return false;
     }
 
-    // We want to rasterize this texture at a specific resolution. If the source size
-    // variables are set then use them, otherwise get them from the parsed file.
-    if ((mSourceWidth == 0.0f) && (mSourceHeight == 0.0f)) {
-        mSourceWidth = svgImage->width;
-        mSourceHeight = svgImage->height;
+    bool rasterize{true};
+
+    // If there is no image size defined yet, then don't rasterize unless mForceRasterization has
+    // been set (this is only used by NinePatchComponent to avoid flickering menus).
+    if (mSourceWidth == 0.0f && mSourceHeight == 0.0f) {
+        if (!mForceRasterization)
+            rasterize = false;
+        // Set a small temporary size that maintains the image aspect ratio.
+        mSourceWidth = 64.0f;
+        mSourceHeight = 64.0f * (svgImage->height / svgImage->width);
     }
 
     mWidth = static_cast<int>(std::round(mSourceWidth * mScaleDuringLoad));
@@ -87,22 +94,30 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
             std::round((static_cast<float>(mWidth) / svgImage->width) * svgImage->height));
     }
 
-    std::vector<unsigned char> tempVector;
-    tempVector.reserve(mWidth * mHeight * 4);
+    if (rasterize) {
+        std::vector<unsigned char> tempVector;
+        tempVector.reserve(mWidth * mHeight * 4);
 
-    NSVGrasterizer* rast = nsvgCreateRasterizer();
+        NSVGrasterizer* rast = nsvgCreateRasterizer();
 
-    nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, tempVector.data(), mWidth,
-                  mHeight, mWidth * 4);
+        nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, tempVector.data(), mWidth,
+                      mHeight, mWidth * 4);
 
-    // This is important in order to avoid memory leaks.
-    nsvgDeleteRasterizer(rast);
+        nsvgDeleteRasterizer(rast);
+
+        mDataRGBA.insert(mDataRGBA.begin(), tempVector.data(),
+                         tempVector.data() + (mWidth * mHeight * 4));
+
+        ImageIO::flipPixelsVert(mDataRGBA.data(), mWidth, mHeight);
+        mPendingRasterization = false;
+    }
+    else {
+        // TODO: Fix this properly instead of using the single byte texture workaround.
+        mDataRGBA.push_back(0);
+        mPendingRasterization = true;
+    }
+
     nsvgDelete(svgImage);
-
-    mDataRGBA.insert(mDataRGBA.begin(), tempVector.data(),
-                     tempVector.data() + (mWidth * mHeight * 4));
-
-    ImageIO::flipPixelsVert(mDataRGBA.data(), mWidth, mHeight);
 
     return true;
 }

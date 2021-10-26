@@ -25,6 +25,8 @@ public:
     virtual std::string getName() const override { return "detailed"; }
     virtual void launch(FileData* game) override;
 
+    virtual void preloadGamelist() override { updateInfoPanel(); }
+
 protected:
     virtual void update(int deltaTime) override;
 

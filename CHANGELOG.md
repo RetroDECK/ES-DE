@@ -23,14 +23,16 @@
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
-* Added a filter for "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
+* Added filters for "Alternative emulator" and "Controller badges" and sorted the filters in the same order as the metadata editor fields
 * Added a menu option to change the application exit key combination
+* Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
 * Decreased the amount of text that ScrollableContainer renders above and below the starting position as content is scrolled
 * Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
 * Added notification popups when plugging in or removing controllers
+* Made large optimizations to the SVG rendering which reduces application startup time dramatically when many systems are populated
 * Changed to loading the default theme set rbsimple-DE instead of the first available theme if the currently configured theme is missing
 * Added support for using the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
@@ -56,6 +58,8 @@
 * Added support for a new type of "flat style" button to ButtonComponent
 * Added support for correctly navigating arbitrarily sized ComponentGrid entries, i.e. those spanning multiple cells
 * Bundled the bold font version of Fontfabric Akrobat
+* Moved the resources/help directory to resources/graphics/help
+* Removed the unused graphics files resources/graphics/fav_add.svg and resources/graphics/fav_remove.svg
 * Added RapidJSON as a Git subtree
 * Added the GLM (OpenGL Mathematics) library as a Git subtree
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
@@ -100,6 +104,7 @@
 * Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
+* SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
 * Resizing in SwitchComponent did not reposition the image properly leading to a non-centered image
 * Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions

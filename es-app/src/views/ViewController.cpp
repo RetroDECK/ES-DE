@@ -961,7 +961,11 @@ void ViewController::preload()
                 std::to_string(systemCount) + ")");
         }
         (*it)->getIndex()->resetFilters();
-        getGameListView(*it);
+
+        if (Settings::getInstance()->getBool("PreloadGamelists"))
+            getGameListView(*it)->preloadGamelist();
+        else
+            getGameListView(*it);
     }
 
     // Load navigation sounds, either from the theme if it supports it, or otherwise from
