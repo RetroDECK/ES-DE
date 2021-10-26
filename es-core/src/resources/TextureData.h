@@ -67,7 +67,7 @@ public:
     // Has the image been loaded but not yet been rasterized as the size was not known?
     bool getPendingRasterization() { return mPendingRasterization; }
 
-    std::vector<unsigned char> getRawRGBAData() { return mDataRGBA; }
+    std::vector<unsigned char>& getRawRGBAData() { return mDataRGBA; }
     std::string getTextureFilePath() { return mPath; }
     bool tiled() { return mTile; }
 
