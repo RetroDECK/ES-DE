@@ -20,7 +20,7 @@ TextureResource::TextureResource(const std::string& path,
                                  bool tile,
                                  bool dynamic,
                                  bool linearMagnify,
-                                 bool alwaysRasterize,
+                                 bool forceRasterization,
                                  float scaleDuringLoad)
     : mTextureData(nullptr)
     , mForceLoad(false)
@@ -36,7 +36,7 @@ TextureResource::TextureResource(const std::string& path,
             if (scaleDuringLoad != 1.0f)
                 data->setScaleDuringLoad(scaleDuringLoad);
             data->setLinearMagnify(linearMagnify);
-            data->setAlwaysRasterize(alwaysRasterize);
+            data->setForceRasterization(forceRasterization);
             // Force the texture manager to load it using a blocking load.
             sTextureDataManager.load(data, true);
         }
@@ -47,7 +47,7 @@ TextureResource::TextureResource(const std::string& path,
             if (scaleDuringLoad != 1.0f)
                 data->setScaleDuringLoad(scaleDuringLoad);
             data->setLinearMagnify(linearMagnify);
-            data->setAlwaysRasterize(alwaysRasterize);
+            data->setForceRasterization(forceRasterization);
             // Load it so we can read the width/height.
             data->load();
         }
@@ -154,15 +154,15 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
                                                       bool forceLoad,
                                                       bool dynamic,
                                                       bool linearMagnify,
-                                                      bool alwaysRasterize,
+                                                      bool forceRasterization,
                                                       float scaleDuringLoad)
 {
     std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
 
     const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(path);
     if (canonicalPath.empty()) {
-        std::shared_ptr<TextureResource> tex(
-            new TextureResource("", tile, false, linearMagnify, alwaysRasterize, scaleDuringLoad));
+        std::shared_ptr<TextureResource> tex(new TextureResource(
+            "", tile, false, linearMagnify, forceRasterization, scaleDuringLoad));
         // Make sure we get properly deinitialized even though we do nothing on reinitialization.
         rm->addReloadable(tex);
         return tex;
@@ -179,7 +179,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     // Need to create it.
     std::shared_ptr<TextureResource> tex;
     tex = std::shared_ptr<TextureResource>(new TextureResource(
-        key.first, tile, dynamic, linearMagnify, alwaysRasterize, scaleDuringLoad));
+        key.first, tile, dynamic, linearMagnify, forceRasterization, scaleDuringLoad));
     std::shared_ptr<TextureData> data = sTextureDataManager.get(tex.get());
 
     // Is it an SVG?
@@ -217,7 +217,7 @@ void TextureResource::rasterizeAt(float width, float height)
         data = sTextureDataManager.get(this);
     mSourceSize = glm::vec2{static_cast<float>(width), static_cast<float>(height)};
     data->setSourceSize(static_cast<float>(width), static_cast<float>(height));
-    if (mForceLoad || (mTextureData != nullptr))
+    if (mForceLoad || mTextureData != nullptr)
         data->load();
 }
 

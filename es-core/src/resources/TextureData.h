@@ -62,7 +62,7 @@ public:
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool setting) { mLinearMagnify = setting; }
     // Whether to rasterize the image even if a size has not been set yet.
-    void setAlwaysRasterize(bool setting) { mAlwaysRasterize = setting; }
+    void setForceRasterization(bool setting) { mForceRasterization = setting; }
 
     // Has the image been loaded but not yet been rasterized as the size was not known?
     bool getPendingRasterization() { return mPendingRasterization; }
@@ -85,7 +85,7 @@ private:
     bool mScalable;
     bool mLinearMagnify;
     bool mReloadable;
-    bool mAlwaysRasterize;
+    bool mForceRasterization;
     bool mPendingRasterization;
 };
 

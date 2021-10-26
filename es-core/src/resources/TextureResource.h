@@ -31,7 +31,7 @@ public:
                                                 bool forceLoad = false,
                                                 bool dynamic = true,
                                                 bool linearMagnify = false,
-                                                bool alwaysRasterize = false,
+                                                bool forceRasterization = false,
                                                 float scaleDuringLoad = 1.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
@@ -41,7 +41,10 @@ public:
     std::vector<unsigned char> getRawRGBAData();
 
     // Has the image been loaded but not yet been rasterized as the size was not known?
-    bool getPendingRasterization() { return mTextureData->getPendingRasterization(); }
+    bool getPendingRasterization()
+    {
+        return (mTextureData != nullptr ? mTextureData->getPendingRasterization() : false);
+    }
 
     std::string getTextureFilePath();
 
@@ -54,7 +57,6 @@ public:
 
     virtual ~TextureResource();
 
-    bool isInitialized() const { return true; }
     bool isTiled() const;
 
     const glm::ivec2 getSize() const { return mSize; }
@@ -70,7 +72,7 @@ protected:
                     bool tile,
                     bool dynamic,
                     bool linearMagnify,
-                    bool alwaysRasterize,
+                    bool forceRasterization,
                     float scaleDuringLoad);
     virtual void unload(std::shared_ptr<ResourceManager>& rm);
     virtual void reload(std::shared_ptr<ResourceManager>& rm);

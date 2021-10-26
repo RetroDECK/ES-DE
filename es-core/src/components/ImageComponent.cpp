@@ -333,7 +333,7 @@ void ImageComponent::setSaturation(float saturation)
 
 void ImageComponent::updateVertices()
 {
-    if (!mTexture || !mTexture->isInitialized())
+    if (!mTexture)
         return;
 
     // We go through this mess to make sure everything is properly rounded.
@@ -398,7 +398,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
         }
         // An image with zero size would normally indicate a corrupt image file.
-        if (mTexture->isInitialized() && mTexture->getSize() != glm::ivec2{}) {
+        if (mTexture->getSize() != glm::ivec2{}) {
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just

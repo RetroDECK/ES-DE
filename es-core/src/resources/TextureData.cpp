@@ -34,7 +34,7 @@ TextureData::TextureData(bool tile)
     , mScaleDuringLoad{1.0f}
     , mScalable{false}
     , mLinearMagnify{false}
-    , mAlwaysRasterize{false}
+    , mForceRasterization{false}
     , mPendingRasterization{false}
 {
 }
@@ -70,10 +70,10 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     bool rasterize{true};
 
-    // If there is no image size defined yet, then don't rasterize unless mAlwaysRasterize has
+    // If there is no image size defined yet, then don't rasterize unless mForceRasterization has
     // been set (this is only used by NinePatchComponent to avoid flickering menus).
     if (mSourceWidth == 0.0f && mSourceHeight == 0.0f) {
-        if (!mAlwaysRasterize)
+        if (!mForceRasterization)
             rasterize = false;
         // Set a small temporary size that maintains the image aspect ratio.
         mSourceWidth = 64.0f;
