@@ -24,7 +24,9 @@
 #include <algorithm>
 #include <iomanip>
 
+#if defined(USE_OPENGL_21)
 #define CLOCK_BACKGROUND_CREATION false
+#endif
 
 Window::Window()
     : mScreensaver(nullptr)
