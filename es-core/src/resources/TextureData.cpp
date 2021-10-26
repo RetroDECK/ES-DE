@@ -75,9 +75,9 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     if (mSourceWidth == 0.0f && mSourceHeight == 0.0f) {
         if (!mAlwaysRasterize)
             rasterize = false;
-
-        mSourceWidth = svgImage->width;
-        mSourceHeight = svgImage->height;
+        // Set a small temporary size that maintains the image aspect ratio.
+        mSourceWidth = 64.0f;
+        mSourceHeight = 64.0f * (svgImage->height / svgImage->width);
     }
 
     mWidth = static_cast<int>(std::round(mSourceWidth * mScaleDuringLoad));
