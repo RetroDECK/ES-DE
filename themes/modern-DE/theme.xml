@@ -11,7 +11,7 @@ based on:       Switch Theme by Lilbud
 	<formatVersion>7</formatVersion>
 
 	<!-- includes (hard-coded variant until v1.3) -->
-	<include>./variants/light16_9/default.xml</include>
+	<include>./variants/light4_3/default.xml</include>
 	<include>./navigationsounds.xml</include>
 
 	<!-- variables -->
@@ -428,6 +428,7 @@ based on:       Switch Theme by Lilbud
 			<pos>0.8423 0.69</pos>
 			<size>0.1267 0.17335978655</size>
 			<origin>0 0</origin>
+			<direction>column</direction>
 			<slots>controller favorite kidgame broken completed altemulator</slots>
 			<controllerPos>0.165 0.5</controllerPos>
 			<controllerSize>0.2</controllerSize>

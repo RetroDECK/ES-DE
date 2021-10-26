@@ -84,8 +84,8 @@ based on:       Switch Theme by Lilbud
 			<pos>1 1</pos>
 		</datetime>
 		<badges name="md_badges">
-			<itemsPerRow>2</itemsPerRow>
-			<rows>3</rows>
+			<itemsPerLine>4</itemsPerLine>
+			<lines>2</lines>
 			<itemMargin>0.0028125 0.005</itemMargin>
 		</badges>
 	</view>

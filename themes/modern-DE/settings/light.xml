@@ -102,6 +102,7 @@ based on:       Switch Theme by Lilbud
 			<color>${secondaryColor}</color>
 		</text>
 		<badges name="md_badges">
+			<!-- // clang-format off -->
 			<customBadgeIcon badge="favorite">./../assets/light/badges/favorite.svg</customBadgeIcon>
 			<customBadgeIcon badge="completed">./../assets/light/badges/completed.svg</customBadgeIcon>
 			<customBadgeIcon badge="kidgame">./../assets/light/badges/kidgame.svg</customBadgeIcon>
@@ -160,6 +161,7 @@ based on:       Switch Theme by Lilbud
 			<customControllerIcon controller="joycon_pair_nintendo">./../assets/light/controllers/joycon-pair.svg
 			</customControllerIcon>
 			<customControllerIcon controller="unknown">./../assets/light/controllers/generic.svg</customControllerIcon>
+			<!-- // clang-format on -->
 		</badges>
 	</view>
 	<view name="detailed, video, grid">
