@@ -277,8 +277,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 FlexboxComponent::FlexboxItem item;
                 item.label = slot;
 
-                ImageComponent badgeImage{mWindow};
-                badgeImage.setForceLoad(true);
+                ImageComponent badgeImage{mWindow, false, false};
                 badgeImage.setImage(mBadgeIcons[slot]);
                 item.baseImage = badgeImage;
                 item.overlayImage = ImageComponent{mWindow};
