@@ -61,8 +61,13 @@ public:
     void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool setting) { mLinearMagnify = setting; }
+    // Whether to rasterize the image even if a size has not been set yet.
+    void setForceRasterization(bool setting) { mForceRasterization = setting; }
 
-    std::vector<unsigned char> getRawRGBAData() { return mDataRGBA; }
+    // Has the image been loaded but not yet been rasterized as the size was not known?
+    bool getPendingRasterization() { return mPendingRasterization; }
+
+    std::vector<unsigned char>& getRawRGBAData() { return mDataRGBA; }
     std::string getTextureFilePath() { return mPath; }
     bool tiled() { return mTile; }
 
@@ -72,14 +77,16 @@ private:
     std::string mPath;
     unsigned int mTextureID;
     std::vector<unsigned char> mDataRGBA;
-    size_t mWidth;
-    size_t mHeight;
+    int mWidth;
+    int mHeight;
     float mSourceWidth;
     float mSourceHeight;
     float mScaleDuringLoad;
     bool mScalable;
     bool mLinearMagnify;
     bool mReloadable;
+    bool mForceRasterization;
+    bool mPendingRasterization;
 };
 
 #endif // ES_CORE_RESOURCES_TEXTURE_DATA_H

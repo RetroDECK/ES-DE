@@ -368,6 +368,8 @@ Below are the default zIndex values per element type:
     * `text name="logoPlaceholderText"`
 * Gamelist information - 50
     * `text name="gamelistInfo"`
+* Badges - 50
+    * `badges name="md_badges"`
 
 ### Theme variables
 
@@ -485,6 +487,8 @@ or to specify only a portion of the value of a theme property:
             - The "genre" metadata.
         * `text name="md_players"` - ALL
             - The "players" metadata (number of players the game supports).
+        * `badges name="md_badges"` - ALL
+            - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
             - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
@@ -540,6 +544,8 @@ or to specify only a portion of the value of a theme property:
             - The "genre" metadata.
         * `text name="md_players"` - ALL
             - The "players" metadata (number of players the game supports).
+        * `badges name="md_badges"` - ALL
+            - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
             - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
@@ -593,6 +599,8 @@ or to specify only a portion of the value of a theme property:
             - The "genre" metadata.
         * `text name="md_players"` - ALL
             - The "players" metadata (number of players the game supports).
+        * `badges name="md_badges"` - ALL
+            - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
             - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
@@ -636,7 +644,7 @@ Can be created as an extra.
 * `rotation` - type: FLOAT.
     - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the image will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the image will be rotated. Default is `0.5 0.5`.
 * `path` - type: PATH.
     - Path to the image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `default` - type: PATH.
@@ -710,7 +718,7 @@ Can be created as an extra.
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the text will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `delay` - type: FLOAT.  Default is false.
     - Delay in seconds before video will start playing.
 * `default` - type: PATH.
@@ -739,7 +747,7 @@ Can be created as an extra.
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the text will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `text` - type: STRING.
 * `color` - type: COLOR.
 * `backgroundColor` - type: COLOR;
@@ -811,7 +819,7 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 * `rotation` - type: FLOAT.
     - angle in degrees that the rating should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the rating will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the rating will be rotated. Default is `0.5 0.5`.
 * `filledPath` - type: PATH.
     - Path to the "filled star" image.  Image must be square (width equals height).
 * `unfilledPath` - type: PATH.
@@ -835,7 +843,7 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 * `rotation` - type: FLOAT.
     - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the text will be rotated. Defaults to `0.5 0.5`.
+    - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `color` - type: COLOR.
 * `backgroundColor` - type: COLOR;
 * `fontPath` - type: PATH.
@@ -911,6 +919,51 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
       `button_back_XBOX360`,
       `button_start_XBOX360`.
 
+#### badges
+
+It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course).
+
+* `pos` - type: NORMALIZED_PAIR.
+* `size` - type: NORMALIZED_PAIR.
+    - Possible combinations:
+    - `w h` - Dimensions of the badges container. The badges will be scaled to fit within these dimensions. Minimum value per axis is `0.03`, maximum value is `1.0`. Default is `0.15 0.20`.
+* `origin` - type: NORMALIZED_PAIR.
+    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied. Default is `0 0`.
+* `rotation` - type: FLOAT.
+    - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Default is `0`.
+* `rotationOrigin` - type: NORMALIZED_PAIR.
+    - Point around which the image will be rotated. Default is `0.5 0.5`.
+* `direction` - type: STRING.
+    - Valid values are "row" or "column". Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction. Default is `row`.
+* `lines` - type: FLOAT.
+    - The number of lines available. Default is `2`.
+* `itemsPerLine` - type: FLOAT.
+    - Number of badges that fit on a line. When more badges are available a new line will be started. Default is `4`.
+* `itemMargin` - type: NORMALIZED_PAIR.
+    - The margins between badges. Possible combinations:
+    - `x y` - horizontal and vertical margins. Minimum value per axis is `0`, maximum value is `0.2`. Default is `0.01 0.01`. If one of the axis is set to `-1` the margin of the other axis (in pixels) will be used, which makes it possible to get identical spacing between all items regardless of screen aspect ratio.
+* `slots` - type: STRING.
+    - The badge types that should be displayed. Should be specified as a list of strings delimited by any characters of `\t\r\n ,` - that is, whitespace and commas. The order will be followed when placing badges on the screen. Available badges are:
+    - `favorite`: Will be shown when the game is marked as favorite.
+    - `completed`: Will be shown when the game is marked as completed.
+    - `kidgame`: Will be shown when the game is marked as a kids game.
+    - `broken`: Will be shown when the game is marked as broken.
+    - `controller`: Will be shown and overlaid by the corresponding controller icon if a controller type has been selected for the game using the metadata editor.
+    - `altemulator`: Will be shown when an alternative emulator is setup for the game.
+* `controllerPos` - type: NORMALIZED_PAIR.
+    - The position of the controller icon relative to the parent `controller` badge. Minimum value per axis is `-1.0`, maximum value is `2.0`. Default is `0.5 0.5` which centers the controller icon on the badge.
+* `controllerSize` - type: FLOAT.
+    - The size of the controller icon relative to the parent `controller` badge. Minimum value is `0.1`, maximum value is `2.0`. Setting the value to `1.0` sizes the controller icon to the same width as the parent badge. The image aspect ratio is always maintained.
+* `customBadgeIcon` - type: PATH.
+    - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
+* `customControllerIcon` - type: PATH.
+    - A controller icon override. Specify the controller type in the attribute `controller`. These are the available types:
+    - `gamepad_generic`, `gamepad_xbox`, `gamepad_playstation`, `gamepad_nintendo_nes`, `gamepad_nintendo_snes`, `gamepad_nintendo_64`, `joystick_generic`, `joystick_arcade_2_buttons`, `joystick_arcade_3_buttons`, `joystick_arcade_4_buttons`, `joystick_arcade_6_buttons`, `trackball_generic`, `lightgun_generic`, `lightgun_nintendo`, `keyboard_generic`, `mouse_generic`, `mouse_amiga`, `keyboard_mouse_generic`, `steering_wheel_generic`, `wii_remote_nintendo`, `wii_remote_nunchuck_nintendo`, `joycon_left_or_right_nintendo`, `joycon_pair_nintendo`, `unknown`.
+* `visible` - type: BOOLEAN.
+    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+* `zIndex` - type: FLOAT.
+    - z-index value for component.  Components will be rendered in order of z-index value from low to high. Default is `50`.
+
 #### carousel
 
 * `type` - type: STRING.
@@ -933,7 +986,7 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
     - Default is 7.5
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
 * `logoRotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the logos will be rotated. Defaults to `-5 0.5`.
+    - Point around which the logos will be rotated. Default is `-5 0.5`.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
 * `logoAlignment` - type: STRING.
     - Sets the alignment of the logos relative to the carousel.

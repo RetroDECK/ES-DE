@@ -146,6 +146,24 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
       {"unfilledPath", PATH},
       {"visible", BOOLEAN},
       {"zIndex", FLOAT}}},
+    {"badges",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"rotation", FLOAT},
+      {"rotationOrigin", NORMALIZED_PAIR},
+      {"alignment", STRING},
+      {"direction", STRING},
+      {"lines", FLOAT},
+      {"itemsPerLine", FLOAT},
+      {"itemMargin", NORMALIZED_PAIR},
+      {"slots", STRING},
+      {"controllerPos", NORMALIZED_PAIR},
+      {"controllerSize", FLOAT},
+      {"customBadgeIcon", PATH},
+      {"customControllerIcon", PATH},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
     {"sound", {{"path", PATH}}},
     {"helpsystem",
      {{"pos", NORMALIZED_PAIR},
@@ -503,15 +521,30 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                                                           "");
                 }
 
-                // Special parsing instruction for customButtonIcon -> save node as it's button
-                // attribute to prevent nodes overwriting each other.
+                // Special parsing instruction for recurring options.
+                // Store as its attribute to prevent nodes overwriting each other.
                 if (strcmp(node.name(), "customButtonIcon") == 0) {
-                    const auto btn = node.attribute("button").as_string("");
-                    if (strcmp(btn, "") == 0)
+                    const auto button = node.attribute("button").as_string("");
+                    if (strcmp(button, "") == 0)
                         LOG(LogError)
                             << "<customButtonIcon> element requires the `button` property.";
                     else
-                        element.properties[btn] = path;
+                        element.properties[button] = path;
+                }
+                else if (strcmp(node.name(), "customBadgeIcon") == 0) {
+                    const auto badge = node.attribute("badge").as_string("");
+                    if (strcmp(badge, "") == 0)
+                        LOG(LogError) << "<customBadgeIcon> element requires the `badge` property.";
+                    else
+                        element.properties[badge] = path;
+                }
+                else if (strcmp(node.name(), "customControllerIcon") == 0) {
+                    const auto controller = node.attribute("controller").as_string("");
+                    if (strcmp(controller, "") == 0)
+                        LOG(LogError)
+                            << "<customControllerIcon> element requires the `controller` property.";
+                    else
+                        element.properties[controller] = path;
                 }
                 else
                     element.properties[node.name()] = path;

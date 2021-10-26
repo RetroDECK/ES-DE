@@ -76,8 +76,12 @@ public:
     // Handles positioning/resizing of text and arrows.
     void onSizeChanged() override
     {
-        mLeftArrow.setResize(0, mText.getFont()->getLetterHeight());
-        mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
+        if (mText.getFont()->getLetterHeight() != mLeftArrow.getSize().y ||
+            mLeftArrow.getTexture()->getPendingRasterization())
+            mLeftArrow.setResize(0, mText.getFont()->getLetterHeight());
+        if (mText.getFont()->getLetterHeight() != mRightArrow.getSize().y ||
+            mRightArrow.getTexture()->getPendingRasterization())
+            mRightArrow.setResize(0, mText.getFont()->getLetterHeight());
 
         if (mSize.x < (mLeftArrow.getSize().x + mRightArrow.getSize().x)) {
             LOG(LogWarning) << "OptionListComponent too narrow";

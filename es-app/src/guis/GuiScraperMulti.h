@@ -16,6 +16,7 @@
 #include "MetaData.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
+#include "components/ScrollIndicatorComponent.h"
 #include "scrapers/Scraper.h"
 
 class GuiScraperSearch;
@@ -45,10 +46,14 @@ private:
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mTitle;
+    std::shared_ptr<ImageComponent> mScrollUp;
+    std::shared_ptr<ImageComponent> mScrollDown;
+    std::shared_ptr<ScrollIndicatorComponent> mScrollIndicator;
     std::shared_ptr<TextComponent> mSystem;
     std::shared_ptr<TextComponent> mSubtitle;
     std::shared_ptr<GuiScraperSearch> mSearchComp;
     std::shared_ptr<ComponentGrid> mButtonGrid;
+    std::shared_ptr<ComponentList> mResultList;
 
     std::queue<ScraperSearchParams> mSearchQueue;
     std::vector<MetaDataDecl> mMetaDataDecl;

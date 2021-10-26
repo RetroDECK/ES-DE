@@ -18,6 +18,7 @@ ScrollableContainer::ScrollableContainer(Window* window)
     : GuiComponent{window}
     , mScrollPos{0.0f, 0.0f}
     , mScrollDir{0.0f, 0.0f}
+    , mClipSpacing{0.0f}
     , mAutoScrollDelay{0}
     , mAutoScrollSpeed{0}
     , mAutoScrollAccumulator{0}
@@ -80,6 +81,13 @@ void ScrollableContainer::update(int deltaTime)
 
     float lineSpacing{mChildren.front()->getLineSpacing()};
     float combinedHeight{mChildren.front()->getFont()->getHeight(lineSpacing)};
+
+    // Calculate the spacing which will be used to clip the container.
+    if (lineSpacing > 1.2f && mClipSpacing == 0.0f) {
+        const float minimumSpacing = mChildren.front()->getFont()->getHeight(1.2f);
+        const float currentSpacing = mChildren.front()->getFont()->getHeight(lineSpacing);
+        mClipSpacing = std::round((currentSpacing - minimumSpacing) / 2.0f);
+    }
 
     // Resize container to font height boundary to avoid rendering a fraction of the last line.
     if (!mUpdatedSize && contentSize.y > mSize.y) {
@@ -170,8 +178,13 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
     dimScaled.x = std::fabs(trans[3].x + mSize.x);
     dimScaled.y = std::fabs(trans[3].y + mSize.y);
 
-    glm::ivec2 clipDim{static_cast<int>(dimScaled.x - trans[3].x),
-                       static_cast<int>(dimScaled.y - trans[3].y)};
+    glm::ivec2 clipDim{static_cast<int>(ceilf(dimScaled.x - trans[3].x)),
+                       static_cast<int>(ceilf(dimScaled.y - trans[3].y))};
+
+    // By effectively clipping the upper and lower boundaries of the container we mostly avoid
+    // scrolling outside the vertical starting and ending positions.
+    clipPos.y += static_cast<int>(mClipSpacing);
+    clipDim.y -= static_cast<int>(mClipSpacing);
 
     Renderer::pushClipRect(clipPos, clipDim);
 

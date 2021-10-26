@@ -474,22 +474,42 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
     if (e)
         prompts = e->component->getHelpPrompts();
 
-    bool canScrollVert = mGridSize.y > 1;
-    bool canScrollHoriz = mGridSize.x > 1;
-    for (auto it = prompts.cbegin(); it != prompts.cend(); it++) {
-        if (it->first == "up/down/left/right") {
-            canScrollHoriz = false;
-            canScrollVert = false;
-            break;
+    bool canScrollVert = false;
+
+    // If the currently selected cell does not fill the entire Y axis, then check if the cells
+    // above or below are actually focusable as otherwise they should not affect the help prompts.
+    if (mGridSize.y > 1 && e->dim.y < mGridSize.y) {
+        if (e->pos.y - e->dim.y >= 0) {
+            const GridEntry* cell = getCellAt(glm::ivec2{e->pos.x, e->pos.y - e->dim.y});
+            if (cell != nullptr && cell->canFocus)
+                canScrollVert = true;
         }
-        else if (it->first == "up/down") {
-            canScrollVert = false;
-        }
-        else if (it->first == "left/right") {
-            canScrollHoriz = false;
+        if (e->pos.y + e->dim.y < mGridSize.y) {
+            const GridEntry* cell = getCellAt(glm::ivec2{e->pos.x, e->pos.y + e->dim.y});
+            if (cell != nullptr && cell->canFocus)
+                canScrollVert = true;
         }
     }
 
+    // There is currently no situation in the application where unfocusable cells are located
+    // next to each other horizontally, so this code is good enough. If this changes in the
+    // future, code similar to the the vertical cell handling above needs to be added.
+    bool canScrollHoriz = (mGridSize.x > 1 && e->dim.x < mGridSize.x);
+
+    // Check existing capabilities as indicated by the help prompts, and if the prompts should
+    // be combined into "up/down/left/right" then also remove the single-axis prompts.
+    if (!prompts.empty() && prompts.back() == HelpPrompt("up/down", "choose")) {
+        canScrollVert = true;
+        if (canScrollHoriz && canScrollVert)
+            prompts.pop_back();
+    }
+    else if (!prompts.empty() && prompts.back() == HelpPrompt("left/right", "choose")) {
+        canScrollHoriz = true;
+        if (canScrollHoriz && canScrollVert)
+            prompts.pop_back();
+    }
+
+    // Any duplicates will be removed in Window::setHelpPrompts()
     if (canScrollHoriz && canScrollVert)
         prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
     else if (canScrollHoriz)

@@ -86,6 +86,22 @@ public:
     float getTotalRowHeight() const;
     float getRowHeight(int row) const { return getRowHeight(mEntries.at(row).data); }
 
+    // Horizontal looping for row content that doesn't fit on-screen.
+    void setLoopRows(bool state) { mLoopRows = state; }
+    void stopLooping()
+    {
+        mLoopOffset = 0;
+        mLoopOffset2 = 0;
+        mLoopTime = 0;
+    }
+
+    void resetScrollIndicatorStatus()
+    {
+        mScrollIndicatorStatus = SCROLL_NONE;
+        if (mScrollIndicatorChangedCallback != nullptr)
+            mScrollIndicatorChangedCallback(mScrollIndicatorStatus, false);
+    }
+
     void setCursorChangedCallback(const std::function<void(CursorState state)>& callback)
     {
         mCursorChangedCallback = callback;
@@ -95,7 +111,7 @@ public:
         return mCursorChangedCallback;
     }
     void setScrollIndicatorChangedCallback(
-        const std::function<void(ScrollIndicator state)>& callback)
+        const std::function<void(ScrollIndicator state, bool singleRowScroll)>& callback)
     {
         mScrollIndicatorChangedCallback = callback;
     }
@@ -107,6 +123,7 @@ private:
     bool mFocused;
     bool mSetupCompleted;
     bool mBottomCameraOffset;
+    bool mSingleRowScroll;
 
     void updateCameraOffset();
     void updateElementPosition(const ComponentListRow& row);
@@ -118,8 +135,15 @@ private:
     float mSelectorBarOffset;
     float mCameraOffset;
 
+    bool mLoopRows;
+    bool mLoopScroll;
+    int mLoopOffset;
+    int mLoopOffset2;
+    int mLoopTime;
+
     std::function<void(CursorState state)> mCursorChangedCallback;
-    std::function<void(ScrollIndicator state)> mScrollIndicatorChangedCallback;
+    std::function<void(ScrollIndicator state, bool singleRowScroll)>
+        mScrollIndicatorChangedCallback;
 
     ScrollIndicator mScrollIndicatorStatus;
 };

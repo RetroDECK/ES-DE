@@ -71,6 +71,7 @@ void SwitchComponent::setValue(const std::string& statestring)
 void SwitchComponent::onStateChanged()
 {
     mImage.setImage(mState ? ":/graphics/on.svg" : ":/graphics/off.svg");
+    mImage.setResize(mSize);
 
     // Change the color of the switch to reflect the changes.
     if (mState == mOriginalValue)

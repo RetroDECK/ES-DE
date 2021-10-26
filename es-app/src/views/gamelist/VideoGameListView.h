@@ -9,6 +9,7 @@
 #ifndef ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
 
+#include "components/BadgeComponent.h"
 #include "components/DateTimeComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
@@ -26,6 +27,8 @@ public:
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
     virtual std::string getName() const override { return "video"; }
     virtual void launch(FileData* game) override;
+
+    virtual void preloadGamelist() override { updateInfoPanel(); }
 
 protected:
     virtual void update(int deltaTime) override;
@@ -59,6 +62,7 @@ private:
     DateTimeComponent mLastPlayed;
     TextComponent mPlayCount;
     TextComponent mName;
+    BadgeComponent mBadges;
 
     std::vector<TextComponent*> getMDLabels();
     std::vector<GuiComponent*> getMDValues();

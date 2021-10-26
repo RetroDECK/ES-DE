@@ -63,11 +63,8 @@ void ImageComponent::resize()
     else {
         // SVG rasterization is determined by height and rasterization is done in terms of pixels.
         // If rounding is off enough in the rasterization step (for images with extreme aspect
-        // ratios), it can cause cutoff when the aspect ratio breaks.
-        // So we always make sure the resultant height is an integer to make sure cutoff doesn't
-        // happen, and scale width from that (you'll see this scattered throughout the function).
-        // It's important to use floorf rather than round for this, as we never want to round up
-        // since that can lead to the cutoff just described.
+        // ratios), it can cause cutoff when the aspect ratio breaks. So we always make sure to
+        // round accordingly to avoid such issues.
         if (mTargetIsMax) {
             mSize = textureSize;
 
@@ -77,13 +74,11 @@ void ImageComponent::resize()
                 // This will be mTargetSize.x. We can't exceed it, nor be lower than it.
                 mSize.x *= resizeScale.x;
                 // We need to make sure we're not creating an image larger than max size.
-                mSize.y = std::min(floorf(mSize.y * resizeScale.x), mTargetSize.y);
+                mSize.y = floorf(std::min(mSize.y * resizeScale.x, mTargetSize.y));
             }
             else {
                 // This will be mTargetSize.y(). We can't exceed it.
-                mSize.y = floorf(mSize.y * resizeScale.y);
-                // For SVG rasterization, always calculate width from rounded height (see comment
-                // above). We need to make sure we're not creating an image larger than max size.
+                mSize.y *= resizeScale.y;
                 mSize.x = std::min((mSize.y / textureSize.y) * textureSize.x, mTargetSize.x);
             }
         }
@@ -106,9 +101,7 @@ void ImageComponent::resize()
                 float cropPercent = (mSize.x - mTargetSize.x) / (mSize.x * 2.0f);
                 crop(cropPercent, 0.0f, cropPercent, 0.0f);
             }
-            // For SVG rasterization, always calculate width from rounded height (see comment
-            // above). We need to make sure we're not creating an image smaller than min size.
-            mSize.y = std::max(floorf(mSize.y), mTargetSize.y);
+            mSize.y = std::max(mSize.y, mTargetSize.y);
             mSize.x = std::max((mSize.y / textureSize.y) * textureSize.x, mTargetSize.x);
         }
         else {
@@ -117,23 +110,24 @@ void ImageComponent::resize()
             mSize = mTargetSize == glm::vec2{} ? textureSize : mTargetSize;
 
             // If only one component is set, we resize in a way that maintains aspect ratio.
-            // For SVG rasterization, we always calculate width from rounded height (see
-            // comment above).
             if (!mTargetSize.x && mTargetSize.y) {
-                mSize.y = floorf(mTargetSize.y);
+                mSize.y = mTargetSize.y;
                 mSize.x = (mSize.y / textureSize.y) * textureSize.x;
             }
             else if (mTargetSize.x && !mTargetSize.y) {
-                mSize.y = floorf((mTargetSize.x / textureSize.x) * textureSize.y);
+                mSize.y = (mTargetSize.x / textureSize.x) * textureSize.y;
                 mSize.x = (mSize.y / textureSize.y) * textureSize.x;
             }
         }
     }
 
-    mSize.x = floorf(mSize.x);
-    mSize.y = floorf(mSize.y);
-    // mSize.y() should already be rounded.
-    mTexture->rasterizeAt(static_cast<size_t>(mSize.x), static_cast<size_t>(mSize.y));
+    // Make sure sub-pixel values are not rounded to zero.
+    if (mSize.x < 1.0f)
+        mSize.x = 1.0f;
+    if (mSize.y < 1.0f)
+        mSize.y = 1.0f;
+
+    mTexture->rasterizeAt(mSize.x, mSize.y);
 
     onSizeChanged();
 }
@@ -339,7 +333,7 @@ void ImageComponent::setSaturation(float saturation)
 
 void ImageComponent::updateVertices()
 {
-    if (!mTexture || !mTexture->isInitialized())
+    if (!mTexture)
         return;
 
     // We go through this mess to make sure everything is properly rounded.
@@ -404,7 +398,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
         }
         // An image with zero size would normally indicate a corrupt image file.
-        if (mTexture->isInitialized() && mTexture->getSize() != glm::ivec2{}) {
+        if (mTexture->getSize() != glm::ivec2{}) {
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just

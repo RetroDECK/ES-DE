@@ -32,6 +32,7 @@ GridGameListView::GridGameListView(Window* window, FileData* root)
     , mLblPlayers(window)
     , mLblLastPlayed(window)
     , mLblPlayCount(window)
+    , mBadges(window)
     , mRating(window)
     , mReleaseDate(window)
     , mDeveloper(window)
@@ -55,6 +56,7 @@ GridGameListView::GridGameListView(Window* window, FileData* root)
     populateList(root->getChildrenListToDisplay(), root);
 
     // Metadata labels + values.
+    addChild(&mBadges);
     mLblRating.setText("Rating: ", false);
     addChild(&mLblRating);
     addChild(&mRating);
@@ -491,7 +493,7 @@ void GridGameListView::updateInfoPanel()
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
             (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
 
-            // TEMPORARY - This does not seem to work, needs to be reviewed later.
+            // TODO: This does not seem to work, needs to be reviewed later.
             // auto func = [comp](float t) {
             auto func = [](float t) {
                 // comp->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));

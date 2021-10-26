@@ -59,7 +59,7 @@ void NinePatchComponent::buildVertices()
     else
         scaleFactor = glm::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
 
-    mTexture = TextureResource::get(mPath, false, false, true, true, scaleFactor);
+    mTexture = TextureResource::get(mPath, false, false, false, true, true, scaleFactor);
 
     if (mTexture->getSize() == glm::ivec2{}) {
         mVertices = nullptr;

@@ -10,6 +10,7 @@
 #define ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
 
 #include "resources/ResourceManager.h"
+#include "resources/TextureData.h"
 #include "resources/TextureDataManager.h"
 #include "utils/MathUtil.h"
 
@@ -30,6 +31,7 @@ public:
                                                 bool forceLoad = false,
                                                 bool dynamic = true,
                                                 bool linearMagnify = false,
+                                                bool forceRasterization = false,
                                                 float scaleDuringLoad = 1.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
@@ -38,18 +40,23 @@ public:
     // Returns the raw pixel values.
     std::vector<unsigned char> getRawRGBAData();
 
+    // Has the image been loaded but not yet been rasterized as the size was not known?
+    bool getPendingRasterization()
+    {
+        return (mTextureData != nullptr ? mTextureData->getPendingRasterization() : false);
+    }
+
     std::string getTextureFilePath();
 
     // For SVG graphics this function effectively rescales the image to the defined size.
     // It does unload and re-rasterize the texture though which may cause flickering in some
     // situations. An alternative is to set a scaling factor directly when loading the texture
     // using get(), by using the scaleDuringLoad parameter (which also works for raster graphics).
-    void rasterizeAt(size_t width, size_t height);
+    void rasterizeAt(float width, float height);
     glm::vec2 getSourceImageSize() const { return mSourceSize; }
 
     virtual ~TextureResource();
 
-    bool isInitialized() const { return true; }
     bool isTiled() const;
 
     const glm::ivec2 getSize() const { return mSize; }
@@ -65,6 +72,7 @@ protected:
                     bool tile,
                     bool dynamic,
                     bool linearMagnify,
+                    bool forceRasterization,
                     float scaleDuringLoad);
     virtual void unload(std::shared_ptr<ResourceManager>& rm);
     virtual void reload(std::shared_ptr<ResourceManager>& rm);
