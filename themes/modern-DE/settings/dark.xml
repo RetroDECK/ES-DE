@@ -100,6 +100,9 @@ based on:       Switch Theme by Lilbud
 			<secondaryColor>${secondaryColor}</secondaryColor>
 			<selectorColor>${mainColor}</selectorColor>
 		</textlist>
+		<text name="gamelistInfo">
+			<color>${tertiaryColor}</color>
+		</text>
 		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_lbl_rating">
 			<color>${tertiaryColor}</color>
 		</text>
@@ -112,6 +115,7 @@ based on:       Switch Theme by Lilbud
 			<customBadgeIcon badge="kidgame">./../assets/dark/badges/kidgame.svg</customBadgeIcon>
 			<customBadgeIcon badge="broken">./../assets/dark/badges/broken.svg</customBadgeIcon>
 			<customBadgeIcon badge="altemulator">./../assets/dark/badges/altemulator.svg</customBadgeIcon>
+			<customBadgeIcon badge="controller">./../assets/dark/badges/controller.svg</customBadgeIcon>
 		</badges>
 	</view>
 	<view name="detailed, video, grid">

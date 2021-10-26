@@ -11,7 +11,7 @@ based on:       Switch Theme by Lilbud
 	<formatVersion>7</formatVersion>
 
 	<!-- includes (hard-coded variant until v1.3) -->
-	<include>./variants/light16_9/default.xml</include>
+	<include>./variants/dark21_9/default.xml</include>
 	<include>./navigationsounds.xml</include>
 
 	<!-- variables -->
@@ -330,6 +330,15 @@ based on:       Switch Theme by Lilbud
 			<selectorHeight>0.06</selectorHeight>
 			<selectorOffsetY>-0.008</selectorOffsetY>
 		</textlist>
+		<text name="gamelistInfo">
+			<forceUppercase>0</forceUppercase>
+			<size>0.2 0.031</size>
+			<origin>1 0</origin>
+			<pos>0.966 0.065</pos>
+			<fontSize>0.03</fontSize>
+			<alignment>right</alignment>
+			<fontPath>${mainFont}</fontPath>
+		</text>
 
 		<!-- metadata panel (right) -->
 		<image name="md_background" extra="true">
@@ -432,6 +441,32 @@ based on:       Switch Theme by Lilbud
 			<slots>controller favorite kidgame broken completed altemulator</slots>
 			<controllerPos>0.165 0.5</controllerPos>
 			<controllerSize>0.2</controllerSize>
+			<!-- // clang-format off -->
+			<customControllerIcon controller="gamepad_generic">./assets/controllers/generic.svg</customControllerIcon>
+			<customControllerIcon controller="gamepad_xbox">./assets/controllers/xbox.svg</customControllerIcon>
+			<customControllerIcon controller="gamepad_playstation">./assets/controllers/dualshock4.svg</customControllerIcon>
+			<customControllerIcon controller="gamepad_nintendo_nes">./assets/controllers/classic.svg</customControllerIcon>
+			<customControllerIcon controller="gamepad_nintendo_snes">./assets/controllers/classic.svg</customControllerIcon>
+			<customControllerIcon controller="gamepad_nintendo_64">./assets/controllers/n64.svg</customControllerIcon>
+			<customControllerIcon controller="joystick_generic">./assets/controllers/joystick.svg</customControllerIcon>
+			<customControllerIcon controller="joystick_arcade_2_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
+			<customControllerIcon controller="joystick_arcade_3_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
+			<customControllerIcon controller="joystick_arcade_4_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
+			<customControllerIcon controller="joystick_arcade_6_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
+			<customControllerIcon controller="trackball_generic">./assets/controllers/trackball.svg</customControllerIcon>
+			<customControllerIcon controller="lightgun_generic">./assets/controllers/gun.svg</customControllerIcon>
+			<customControllerIcon controller="lightgun_nintendo">./assets/controllers/gun.svg</customControllerIcon>
+			<customControllerIcon controller="keyboard_generic">./assets/controllers/keyboard.svg</customControllerIcon>
+			<customControllerIcon controller="mouse_generic">./assets/controllers/mouse.svg</customControllerIcon>
+			<customControllerIcon controller="mouse_amiga">./assets/controllers/mouse.svg</customControllerIcon>
+			<customControllerIcon controller="keyboard_mouse_generic">./assets/controllers/keyboard-mouse.svg</customControllerIcon>
+			<customControllerIcon controller="steering_wheel_generic">./assets/controllers/wheel.svg</customControllerIcon>
+			<customControllerIcon controller="wii_remote_nintendo">./assets/controllers/wiimote.svg</customControllerIcon>
+			<customControllerIcon controller="wii_remote_nunchuck_nintendo">./assets/controllers/wiimote-nunchuck.svg</customControllerIcon>
+			<customControllerIcon controller="joycon_left_or_right_nintendo">./assets/controllers/joycon-left.svg</customControllerIcon>
+			<customControllerIcon controller="joycon_pair_nintendo">./assets/controllers/joycon-pair.svg</customControllerIcon>
+			<customControllerIcon controller="unknown">./assets/controllers/generic.svg</customControllerIcon>
+			<!-- // clang-format on -->
 		</badges>
 	</view>
 
@@ -444,7 +479,6 @@ based on:       Switch Theme by Lilbud
 				<size>1 .4</size>
 				<logoScale>1</logoScale>
 				<logoSize>0.234 0.397</logoSize>
-				<maxLogoCount>3.5</maxLogoCount>
 			</carousel>
 			<text name="systemInfo">
 				<forceUppercase>0</forceUppercase>

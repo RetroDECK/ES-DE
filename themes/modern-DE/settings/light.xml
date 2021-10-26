@@ -102,38 +102,12 @@ based on:       Switch Theme by Lilbud
 			<color>${secondaryColor}</color>
 		</text>
 		<badges name="md_badges">
-			<!-- // clang-format off -->
 			<customBadgeIcon badge="favorite">./../assets/light/badges/favorite.svg</customBadgeIcon>
 			<customBadgeIcon badge="completed">./../assets/light/badges/completed.svg</customBadgeIcon>
 			<customBadgeIcon badge="kidgame">./../assets/light/badges/kidgame.svg</customBadgeIcon>
 			<customBadgeIcon badge="broken">./../assets/light/badges/broken.svg</customBadgeIcon>
 			<customBadgeIcon badge="altemulator">./../assets/light/badges/altemulator.svg</customBadgeIcon>
 			<customBadgeIcon badge="controller">./../assets/light/badges/controller.svg</customBadgeIcon>
-			<customControllerIcon controller="gamepad_generic">./../assets/light/controllers/generic.svg</customControllerIcon>
-			<customControllerIcon controller="gamepad_xbox">./../assets/light/controllers/xbox.svg</customControllerIcon>
-			<customControllerIcon controller="gamepad_playstation">./../assets/light/controllers/dualshock4.svg</customControllerIcon>
-			<customControllerIcon controller="gamepad_nintendo_nes">./../assets/light/controllers/classic.svg</customControllerIcon>
-			<customControllerIcon controller="gamepad_nintendo_snes">./../assets/light/controllers/classic.svg</customControllerIcon>
-			<customControllerIcon controller="gamepad_nintendo_64">./../assets/light/controllers/n64.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_generic">./../assets/light/controllers/joystick.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_2_buttons">./../assets/light/controllers/joystick-arcade.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_3_buttons">./../assets/light/controllers/joystick-arcade.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_4_buttons">./../assets/light/controllers/joystick-arcade.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_6_buttons">./../assets/light/controllers/joystick-arcade.svg</customControllerIcon>
-			<!--<customControllerIcon controller="trackball_generic">./../assets/light/controllers/</customControllerIcon>-->
-			<customControllerIcon controller="lightgun_generic">./../assets/light/controllers/gun.svg</customControllerIcon>
-			<customControllerIcon controller="lightgun_nintendo">./../assets/light/controllers/gun.svg</customControllerIcon>
-			<customControllerIcon controller="keyboard_generic">./../assets/light/controllers/keyboard.svg</customControllerIcon>
-			<customControllerIcon controller="mouse_generic">./../assets/light/controllers/mouse.svg</customControllerIcon>
-			<customControllerIcon controller="mouse_amiga">./../assets/light/controllers/mouse.svg</customControllerIcon>
-			<customControllerIcon controller="keyboard_mouse_generic">./../assets/light/controllers/keyboard-mouse.svg</customControllerIcon>
-			<customControllerIcon controller="steering_wheel_generic">./../assets/light/controllers/wheel.svg</customControllerIcon>
-			<customControllerIcon controller="wii_remote_nintendo">./../assets/light/controllers/wiimote.svg</customControllerIcon>
-			<customControllerIcon controller="wii_remote_nunchuck_nintendo">./../assets/light/controllers/wiimote-nunchuck.svg</customControllerIcon>
-			<customControllerIcon controller="joycon_left_or_right_nintendo">./../assets/light/controllers/joycon-left.svg</customControllerIcon>
-			<customControllerIcon controller="joycon_pair_nintendo">./../assets/light/controllers/joycon-pair.svg</customControllerIcon>
-			<customControllerIcon controller="unknown">./../assets/light/controllers/generic.svg</customControllerIcon>
-			<!-- // clang-format on -->
 		</badges>
 	</view>
 	<view name="detailed, video, grid">

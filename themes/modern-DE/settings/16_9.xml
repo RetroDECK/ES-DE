@@ -89,4 +89,11 @@ based on:       Switch Theme by Lilbud
 			<itemMargin>0.0028125 0.005</itemMargin>
 		</badges>
 	</view>
+	<feature supported="carousel">
+		<view name="system">
+			<carousel name="systemcarousel">
+				<maxLogoCount>3.5</maxLogoCount>
+			</carousel>
+		</view>
+	</feature>
 </theme>
