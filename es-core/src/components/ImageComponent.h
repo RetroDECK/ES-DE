@@ -30,8 +30,6 @@ public:
     // Use an already existing texture.
     void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
 
-    void setForceLoad(bool status) { mForceLoad = status; }
-
     void onSizeChanged() override { updateVertices(); }
 
     // Resize the image to fit this size. If one axis is zero, scale that axis to maintain
