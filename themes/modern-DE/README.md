@@ -1,33 +1,47 @@
-# Nintendo Switch Theme for RetroPie
-Over the last few days I have been working on this theme further. I updated all the icons a few days ago and decided to update the rest of the theme. 
+# Modern-DE Theme for Emulationstation Desktop Edition
 
-(Pictures Below)
+The modern theme is a new theme for es-de that supports most latest features such as badges and controllers. The theme
+is meant to offer a modern look for es-de. The theme is designed with theme variants in mind (v1.3).
 
-There are many changes in this newest version, including:
+We support 6 variants:
 
-- The Switch Theme no longer has two separate versions. As of this update, the light and dark variants have now been combined into one theme. The colors are toggleable via the theme.xml file. 
-- You now have the option to switch between Playstation and Xbox buttons. (Also toggleable via the theme.xml) 
-- The theme now supports 4:3 aspect ratio (Theme.xml)
-- Colors updated to match system
-- Selector bar has been added. Slim line next to selected game name. 
-- Marquee is now centered under video
+- 4:3 dark
+- 4:3 light
+- 16:9 dark
+- 16:9 light
+- 21:9 dark
+- 21:9 light
 
-Another big thing is the slimming down of the theme. Between the combination of light and dark colors and compression on the tiles, the whole theme is now under 5mb! Also, the memory needed is shrunken as well. You can get away with as little as 20mb of VRAM. Good news to those with full game sets and videos!
+The variant that is to be used can be selected by changing line 14 of `theme.xml`. This will be made accessible through
+the user interface in future updates, specifically v1.3:
 
-Pictures
+```{xml}
+<include>./variants/dark21_9/default.xml</include>
+```
 
-System View - Light and Dark
+# Based on
 
-![https://snag.gy/I2vYSK.jpg](https://snag.gy/I2vYSK.jpg)
+The theme is based on '[es-theme-switch](https://github.com/lilbud/es-theme-switch)' by lilbud.
 
-PS & Xbox Buttons
+# Changes
 
-![](https://snag.gy/Q62Z9q.jpg)
+The following changes to the theme are made:
 
-4:3 System View
+- support for 4:3, 16:9, 21:9 resolutions
+- graphics for all es-de supported systems
+- placeholder styling for unknown systems
+- badges icons (broken, favorite, etc...)
+- controller icons
+- new font
+- restyled rightmost metadata panel
+- new rating icons
 
-![](https://snag.gy/lPzaud.jpg)
+# Pictures
 
-4:3 Gamelist
-
-![](https://snag.gy/BbDfx8.jpg)
+![](https://gitlab.com/leonstyhre/emulationstation-de/uploads/8859cd1f6ebf5653b6eb12b4f5171ecc/image.png)
+![](https://gitlab.com/leonstyhre/emulationstation-de/uploads/920a19cf845cb65f98db4cee5158a26f/image.png)
+![](https://gitlab.com/leonstyhre/emulationstation-de/uploads/f3d7ac00964e92252bea000043c1cab5/image.png)
+![](https://gitlab.com/leonstyhre/emulationstation-de/uploads/7f317ad1dff31e0c2dd21e4d1930613d/image.png)
+![](https://gitlab.com/leonstyhre/emulationstation-de/uploads/6a87a0d94898cfe060b028e29f148147/image.png)
+![](https://gitlab.com/leonstyhre/emulationstation-de/uploads/6862b35b9142888f983d86fea65d5411/image.png)
+![](https://gitlab.com/leonstyhre/emulationstation-de/uploads/36994f94784ff12c0ea48520544ed4fb/image.png)
