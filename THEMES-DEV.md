@@ -977,6 +977,8 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
     - Default is 3
 * `zIndex` - type: FLOAT.
     - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+* `legacyZIndexMode` - type: BOOLEAN
+    - If true, the carousel will ignore zIndex and always render on top of other components.
 
 The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
 
