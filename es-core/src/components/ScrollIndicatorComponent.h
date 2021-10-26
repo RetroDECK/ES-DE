@@ -34,7 +34,7 @@ public:
             // If the scroll indicators setting is disabled, then show a permanent down arrow
             // symbol when the component list contains more entries than can fit on screen.
             componentList.get()->setScrollIndicatorChangedCallback(
-                [scrollUp, scrollDown](ComponentList::ScrollIndicator state) {
+                [scrollUp, scrollDown](ComponentList::ScrollIndicator state, bool singleRowScroll) {
                     if (state == ComponentList::SCROLL_UP ||
                         state == ComponentList::SCROLL_UP_DOWN ||
                         state == ComponentList::SCROLL_DOWN) {
@@ -46,8 +46,9 @@ public:
             // If the scroll indicator setting is enabled, then also show the up and up/down
             // combination and switch between these as the list is scrolled.
             componentList.get()->setScrollIndicatorChangedCallback(
-                [this, scrollUp, scrollDown](ComponentList::ScrollIndicator state) {
-                    float fadeInTime{FADE_IN_TIME};
+                [this, scrollUp, scrollDown](ComponentList::ScrollIndicator state,
+                                             bool singleRowScroll) {
+                    float fadeTime{FADE_IN_TIME};
 
                     bool upFadeIn = false;
                     bool upFadeOut = false;
@@ -68,7 +69,7 @@ public:
                     else if (state == ComponentList::SCROLL_UP &&
                              mPreviousScrollState == ComponentList::SCROLL_DOWN) {
                         upFadeIn = true;
-                        fadeInTime *= 1.5f;
+                        fadeTime *= 2.0f;
                         scrollDown->setOpacity(0);
                     }
                     else if (state == ComponentList::SCROLL_UP_DOWN &&
@@ -95,9 +96,14 @@ public:
                     else if (state == ComponentList::SCROLL_DOWN &&
                              mPreviousScrollState == ComponentList::SCROLL_UP) {
                         downFadeIn = true;
-                        fadeInTime *= 1.5f;
+                        fadeTime *= 2.0f;
                         scrollUp->setOpacity(0);
                     }
+
+                    // If jumping more than one row using the shoulder or trigger buttons, then
+                    // don't fade the indicators.
+                    if (!singleRowScroll)
+                        fadeTime = 0.0f;
 
                     if (upFadeIn) {
                         auto upFadeInFunc = [scrollUp](float t) {
@@ -105,7 +111,7 @@ public:
                                 static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
                         };
                         scrollUp->setAnimation(
-                            new LambdaAnimation(upFadeInFunc, static_cast<int>(fadeInTime)), 0,
+                            new LambdaAnimation(upFadeInFunc, static_cast<int>(fadeTime)), 0,
                             nullptr, false);
                     }
 
@@ -115,7 +121,7 @@ public:
                                 static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
                         };
                         scrollUp->setAnimation(
-                            new LambdaAnimation(upFadeOutFunc, static_cast<int>(fadeInTime)), 0,
+                            new LambdaAnimation(upFadeOutFunc, static_cast<int>(fadeTime)), 0,
                             nullptr, true);
                     }
 
@@ -125,7 +131,7 @@ public:
                                 static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
                         };
                         scrollDown->setAnimation(
-                            new LambdaAnimation(downFadeInFunc, static_cast<int>(fadeInTime)), 0,
+                            new LambdaAnimation(downFadeInFunc, static_cast<int>(fadeTime)), 0,
                             nullptr, false);
                     }
 
@@ -135,7 +141,7 @@ public:
                                 static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
                         };
                         scrollDown->setAnimation(
-                            new LambdaAnimation(downFadeOutFunc, static_cast<int>(fadeInTime)), 0,
+                            new LambdaAnimation(downFadeOutFunc, static_cast<int>(fadeTime)), 0,
                             nullptr, true);
                     }
 

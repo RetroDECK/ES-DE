@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.4483451"
-     inkscape:cx="-60.233009"
-     inkscape:cy="71.400581"
+     inkscape:zoom="11.584182"
+     inkscape:cx="-13.360205"
+     inkscape:cy="53.651595"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -79,14 +79,15 @@
     </g>
     <g
        id="g20"
-       transform="matrix(0.10079384,0,0,0.0816046,-2.2531965e-4,271.54688)">
+       transform="matrix(0.10079384,0,0,0.0816046,-2.2531965e-4,271.54688)"
+       style="fill:#000000;fill-opacity:1">
       <rect
          x="7.7007999"
          y="7.7174001"
          width="194.89999"
          height="279.22"
          id="rect18"
-         style="stroke-width:0.26458001" />
+         style="stroke-width:0.26458001;fill:#000000;fill-opacity:1" />
     </g>
     <rect
        style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.02649944"

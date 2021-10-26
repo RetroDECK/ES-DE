@@ -19,16 +19,17 @@
 #include "Settings.h"
 #include "ThemeData.h"
 
-FlexboxComponent::FlexboxComponent(Window* window,
-                                   std::vector<std::pair<std::string, ImageComponent>>& images)
+FlexboxComponent::FlexboxComponent(Window* window, std::vector<FlexboxItem>& items)
     : GuiComponent{window}
-    , mImages(images)
+    , mItems(items)
     , mDirection{DEFAULT_DIRECTION}
     , mAlignment{DEFAULT_ALIGNMENT}
-    , mItemsPerLine{DEFAULT_ITEMS_PER_LINE}
     , mLines{DEFAULT_LINES}
+    , mItemsPerLine{DEFAULT_ITEMS_PER_LINE}
     , mItemPlacement{DEFAULT_ITEM_PLACEMENT}
     , mItemMargin{glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y}}
+    , mOverlayPosition{0.5f, 0.5f}
+    , mOverlaySize{0.5f}
     , mLayoutValid{false}
 {
 }
@@ -45,36 +46,46 @@ void FlexboxComponent::render(const glm::mat4& parentTrans)
     Renderer::setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugImage"))
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+        Renderer::drawRect(0.0f, 0.0f, ceilf(mSize.x), ceilf(mSize.y), 0xFF000033, 0xFF000033);
 
-    for (auto& image : mImages) {
+    for (auto& item : mItems) {
+        if (!item.visible)
+            continue;
         if (mOpacity == 255) {
-            image.second.render(trans);
+            item.baseImage.render(trans);
+            if (item.overlayImage.getTexture() != nullptr)
+                item.overlayImage.render(trans);
         }
         else {
-            image.second.setOpacity(mOpacity);
-            image.second.render(trans);
-            image.second.setOpacity(255);
+            item.baseImage.setOpacity(mOpacity);
+            item.baseImage.render(trans);
+            item.baseImage.setOpacity(255);
+            if (item.overlayImage.getTexture() != nullptr) {
+                item.overlayImage.setOpacity(mOpacity);
+                item.overlayImage.render(trans);
+                item.overlayImage.setOpacity(255);
+            }
         }
     }
 }
 
+void FlexboxComponent::setItemMargin(glm::vec2 value)
+{
+    if (value.x == -1.0f)
+        mItemMargin.x = std::roundf(value.y * Renderer::getScreenHeight());
+    else
+        mItemMargin.x = std::roundf(value.x * Renderer::getScreenWidth());
+
+    if (value.y == -1.0f)
+        mItemMargin.y = std::roundf(value.x * Renderer::getScreenWidth());
+    else
+        mItemMargin.y = std::roundf(value.y * Renderer::getScreenHeight());
+
+    mLayoutValid = false;
+}
+
 void FlexboxComponent::computeLayout()
 {
-    // Start placing items in the top-left.
-    float anchorX{0.0f};
-    float anchorY{0.0f};
-
-    // Translation directions when placing items.
-    glm::vec2 directionLine{1, 0};
-    glm::vec2 directionRow{0, 1};
-
-    // Change direction.
-    if (mDirection == "column") {
-        directionLine = {0, 1};
-        directionRow = {1, 0};
-    }
-
     // If we're not clamping itemMargin to a reasonable value, all kinds of weird rendering
     // issues could occur.
     mItemMargin.x = glm::clamp(mItemMargin.x, 0.0f, mSize.x / 2.0f);
@@ -86,109 +97,159 @@ void FlexboxComponent::computeLayout()
     mSize.y = glm::clamp(mSize.y, static_cast<float>(Renderer::getScreenHeight()) * 0.03f,
                          static_cast<float>(Renderer::getScreenHeight()));
 
-    // Compute maximum image dimensions.
-    glm::vec2 grid;
+    if (mItemsPerLine * mLines < mItems.size()) {
+        LOG(LogWarning)
+            << "FlexboxComponent: Invalid theme configuration, the number of badges"
+               " exceeds the product of <lines> times <itemsPerLine>, setting <itemsPerLine> to "
+            << mItems.size();
+        mItemsPerLine = static_cast<unsigned int>(mItems.size());
+    }
+
+    glm::vec2 grid{};
+
     if (mDirection == "row")
         grid = {mItemsPerLine, mLines};
     else
         grid = {mLines, mItemsPerLine};
 
     glm::vec2 maxItemSize{(mSize + mItemMargin - grid * mItemMargin) / grid};
-    maxItemSize.x = floorf(maxItemSize.x);
-    maxItemSize.y = floorf(maxItemSize.y);
 
-    if (grid.x * grid.y < static_cast<float>(mImages.size())) {
-        LOG(LogWarning) << "FlexboxComponent: Invalid theme configuration, the number of badges "
-                           "exceeds the product of <lines> times <itemsPerLine>";
-    }
+    float rowHeight{0.0f};
+    bool firstItem{true};
 
-    glm::vec2 sizeChange{0.0f, 0.0f};
-
-    // Set final image dimensions.
-    for (auto& image : mImages) {
-        if (!image.second.isVisible())
-            continue;
-        auto oldSize{image.second.getSize()};
-        if (oldSize.x == 0)
-            oldSize.x = maxItemSize.x;
-        glm::vec2 sizeMaxX{maxItemSize.x, oldSize.y * (maxItemSize.x / oldSize.x)};
-        glm::vec2 sizeMaxY{oldSize.x * (maxItemSize.y / oldSize.y), maxItemSize.y};
-        glm::vec2 newSize;
-        if (sizeMaxX.y > maxItemSize.y)
-            newSize = sizeMaxY;
-        else if (sizeMaxY.x > maxItemSize.x)
-            newSize = sizeMaxX;
-        else
-            newSize = sizeMaxX.x * sizeMaxX.y >= sizeMaxY.x * sizeMaxY.y ? sizeMaxX : sizeMaxY;
-
-        if (image.second.getSize() != newSize)
-            image.second.setResize(newSize.x, newSize.y);
-
-        // In case maxItemSize needs to be updated.
-        if (newSize.x != sizeChange.x)
-            sizeChange.x = newSize.x;
-        if (newSize.y != sizeChange.y)
-            sizeChange.y = newSize.y;
-    }
-
-    if (maxItemSize.x != sizeChange.x)
-        maxItemSize.x = sizeChange.x;
-    if (maxItemSize.y != sizeChange.y)
-        maxItemSize.y = sizeChange.y;
-
-    // Pre-compute layout parameters.
-    float anchorXStart{anchorX};
-    float anchorYStart{anchorY};
-
-    int i = 0;
-
-    // Iterate through the images.
-    for (auto& image : mImages) {
-        if (!image.second.isVisible())
+    // Calculate maximum item dimensions.
+    for (auto& item : mItems) {
+        if (!item.visible)
             continue;
 
-        auto size{image.second.getSize()};
+        glm::vec2 sizeDiff{item.baseImage.getSize() / maxItemSize};
 
-        // Top-left anchor position.
-        float x{anchorX};
-        float y{anchorY};
-
-        // Apply alignment.
-        if (mItemPlacement == "end") {
-            x += directionLine.x == 0 ? (maxItemSize.x - size.x) : 0;
-            y += directionLine.y == 0 ? (maxItemSize.y - size.y) : 0;
-        }
-        else if (mItemPlacement == "center") {
-            x += directionLine.x == 0 ? (maxItemSize.x - size.x) / 2 : 0;
-            y += directionLine.y == 0 ? (maxItemSize.y - size.y) / 2 : 0;
-        }
-        else if (mItemPlacement == "stretch" && mDirection == "row") {
-            image.second.setSize(image.second.getSize().x, maxItemSize.y);
-        }
-
-        // TODO: Doesn't work correctly.
-        // Apply overall container alignment.
-        if (mAlignment == "right")
-            x += (mSize.x - size.x * grid.x) - mItemMargin.x;
-
-        // Store final item position.
-        image.second.setPosition(x, y);
-
-        // Translate anchor.
-        if ((i++ + 1) % std::max(1, static_cast<int>(mItemsPerLine)) != 0) {
-            // Translate on same line.
-            anchorX += (size.x + mItemMargin.x) * static_cast<float>(directionLine.x);
-            anchorY += (size.y + mItemMargin.y) * static_cast<float>(directionLine.y);
+        // The first item dictates the maximum width for the rest.
+        if (firstItem) {
+            maxItemSize.x = (item.baseImage.getSize() / std::max(sizeDiff.x, sizeDiff.y)).x;
+            sizeDiff = item.baseImage.getSize() / maxItemSize;
+            item.baseImage.setSize((item.baseImage.getSize() / std::max(sizeDiff.x, sizeDiff.y)));
+            firstItem = false;
         }
         else {
-            // Translate to first position of next line.
-            if (directionRow.x == 0) {
-                anchorY += size.y + mItemMargin.y;
-                anchorX = anchorXStart;
+            item.baseImage.setSize((item.baseImage.getSize() / std::max(sizeDiff.x, sizeDiff.y)));
+        }
+
+        if (item.baseImage.getSize().y > rowHeight)
+            rowHeight = item.baseImage.getSize().y;
+    }
+
+    // Update the maximum item height.
+    maxItemSize.y = 0.0f;
+    for (auto& item : mItems) {
+        if (!item.visible)
+            continue;
+        if (item.baseImage.getSize().y > maxItemSize.y)
+            maxItemSize.y = item.baseImage.getSize().y;
+    }
+
+    maxItemSize = glm::round(maxItemSize);
+
+    bool alignRight{mAlignment == "right"};
+    float alignRightComp{0.0f};
+
+    // If right-aligning, move the overall container contents during grid setup.
+    if (alignRight && mDirection == "row")
+        alignRightComp =
+            std::round(mSize.x - ((maxItemSize.x + mItemMargin.x) * grid.x) + mItemMargin.x);
+
+    std::vector<glm::vec2> itemPositions;
+
+    // Lay out the grid.
+    if (mDirection == "row") {
+        for (int y = 0; y < grid.y; y++) {
+            for (int x = 0; x < grid.x; x++) {
+                itemPositions.push_back(
+                    glm::vec2{(x * (maxItemSize.x + mItemMargin.x) + alignRightComp),
+                              y * (rowHeight + mItemMargin.y)});
             }
-            else {
-                anchorX += size.x + mItemMargin.x;
-                anchorY = anchorYStart;
+        }
+    }
+    else if (mDirection == "column" && !alignRight) {
+        for (int x = 0; x < grid.x; x++) {
+            for (int y = 0; y < grid.y; y++) {
+                itemPositions.push_back(glm::vec2{(x * (maxItemSize.x + mItemMargin.x)),
+                                                  y * (rowHeight + mItemMargin.y)});
+            }
+        }
+    }
+    else { // Right-aligned.
+        for (int x = 0; x < grid.x; x++) {
+            for (int y = 0; y < grid.y; y++) {
+                itemPositions.push_back(
+                    glm::vec2{(mSize.x - (x * (maxItemSize.x + mItemMargin.x)) - maxItemSize.x),
+                              y * (rowHeight + mItemMargin.y)});
+            }
+        }
+    }
+
+    int pos{0};
+    float lastY{0.0f};
+    float itemsOnLastRow{0};
+
+    // Position items on the grid.
+    for (auto& item : mItems) {
+        if (!item.visible)
+            continue;
+
+        if (mDirection == "row" && pos > 0) {
+            if (itemPositions[pos - 1].y < itemPositions[pos].y) {
+                lastY = itemPositions[pos].y;
+                itemsOnLastRow = 0;
+            }
+        }
+
+        float verticalOffset{0.0f};
+
+        // For any items that do not fill the maximum height, position these either on
+        // top/start (implicit), center or bottom/end.
+        if (item.baseImage.getSize().y < maxItemSize.y) {
+            if (mItemPlacement == "center") {
+                verticalOffset = std::floor((maxItemSize.y - item.baseImage.getSize().y) / 2.0f);
+            }
+            else if (mItemPlacement == "end") {
+                verticalOffset = maxItemSize.y - item.baseImage.getSize().y;
+            }
+        }
+
+        item.baseImage.setPosition(itemPositions[pos].x, itemPositions[pos].y + verticalOffset,
+                                   0.0f);
+
+        // Optional overlay image.
+        if (item.overlayImage.getTexture() != nullptr) {
+            item.overlayImage.setResize(item.baseImage.getSize().x * mOverlaySize, 0.0f);
+            item.overlayImage.setPosition(
+                item.baseImage.getPosition().x + (item.baseImage.getSize().x * mOverlayPosition.x) -
+                    item.overlayImage.getSize().x / 2.0f,
+                item.baseImage.getPosition().y + (item.baseImage.getSize().y * mOverlayPosition.y) -
+                    item.overlayImage.getSize().y / 2.0f);
+        }
+
+        // This rasterizes the SVG images so they look nice and smooth.
+        item.baseImage.setResize(item.baseImage.getSize());
+
+        itemsOnLastRow++;
+        pos++;
+    }
+
+    // Apply right-align to the items if we're using row mode.
+    if (alignRight && mDirection == "row") {
+        for (auto& item : mItems) {
+            if (!item.visible)
+                continue;
+            glm::vec3 currPos{item.baseImage.getPosition()};
+            if (currPos.y == lastY) {
+                const float offset{(grid.x - itemsOnLastRow) * (maxItemSize.x + mItemMargin.x)};
+                item.baseImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
+                if (item.overlayImage.getTexture() != nullptr) {
+                    currPos = item.overlayImage.getPosition();
+                    item.overlayImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
+                }
             }
         }
     }

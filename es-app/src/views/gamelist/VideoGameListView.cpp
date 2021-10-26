@@ -121,7 +121,7 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
 
     // Badges.
     addChild(&mBadges);
-    mBadges.setOrigin(0.0f, 0.0f);
+    mBadges.setOrigin(0.5f, 0.5f);
     mBadges.setPosition(mSize.x * 0.8f, mSize.y * 0.7f);
     mBadges.setSize(mSize.x * 0.15f, mSize.y * 0.2f);
     mBadges.setDefaultZIndex(50.0f);
@@ -450,15 +450,23 @@ void VideoGameListView::updateInfoPanel()
         mPlayers.setValue(file->metadata.get("players"));
 
         // Populate the badge slots based on game metadata.
-        std::vector<std::string> badgeSlots;
+        std::vector<BadgeComponent::BadgeInfo> badgeSlots;
         for (auto badge : mBadges.getBadgeTypes()) {
-            if (badge == "altemulator") {
+            BadgeComponent::BadgeInfo badgeInfo;
+            badgeInfo.badgeType = badge;
+            if (badge == "controller") {
+                if (file->metadata.get("controller").compare("") != 0) {
+                    badgeInfo.gameController = file->metadata.get("controller");
+                    badgeSlots.push_back(badgeInfo);
+                }
+            }
+            else if (badge == "altemulator") {
                 if (file->metadata.get(badge).compare("") != 0)
-                    badgeSlots.push_back(badge);
+                    badgeSlots.push_back(badgeInfo);
             }
             else {
                 if (file->metadata.get(badge).compare("true") == 0)
-                    badgeSlots.push_back(badge);
+                    badgeSlots.push_back(badgeInfo);
             }
         }
         mBadges.setBadges(badgeSlots);

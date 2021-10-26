@@ -327,6 +327,7 @@ void GuiScraperSearch::search(const ScraperSearchParams& params)
     mScrapeResult = {};
 
     mResultList->clear();
+    mResultList->setLoopRows(false);
     mScraperResults.clear();
     mMDRetrieveURLsHandle.reset();
     mThumbnailReqMap.clear();
@@ -355,6 +356,7 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
     mResultList->clear();
 
     mScraperResults = results;
+    mResultList->setLoopRows(true);
 
     auto font = Font::get(FONT_SIZE_MEDIUM);
     unsigned int color = 0x777777FF;
@@ -389,7 +391,7 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
             row.addElement(
                 std::make_shared<TextComponent>(
                     mWindow, Utils::String::toUpper(results.at(i).mdl.get("name")), font, color),
-                true);
+                false);
             row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
             mResultList->addRow(row);
         }
@@ -562,8 +564,10 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
         else if (mSearchType == ACCEPT_SINGLE_MATCHES && !mFoundGame)
             allowRefine = true;
 
-        if (allowRefine)
+        if (allowRefine) {
+            mResultList->stopLooping();
             openInputScreen(mLastSearch);
+        }
     }
 
     // If multi-scraping, skip game unless the result has already been accepted.
@@ -589,6 +593,7 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
 
 void GuiScraperSearch::returnResult(ScraperSearchResult result)
 {
+    mResultList->setLoopRows(false);
 
     mBlockAccept = true;
     mAcceptedResult = true;

@@ -13,6 +13,7 @@
 
 #include "GuiComponent.h"
 #include "MetaData.h"
+#include "components/BadgeComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
@@ -60,6 +61,7 @@ private:
 
     ScraperSearchParams mScraperParams;
 
+    std::vector<GameControllers> mControllerBadges;
     std::vector<std::shared_ptr<GuiComponent>> mEditors;
 
     std::vector<MetaDataDecl> mMetaDataDecl;

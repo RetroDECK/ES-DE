@@ -102,11 +102,10 @@ void RatingComponent::onSizeChanged()
         mSize.x = mSize.y * NUM_RATING_STARS;
 
     if (mSize.y > 0.0f) {
-        size_t heightPx = static_cast<size_t>(std::round(mSize.y));
         if (mFilledTexture)
-            mFilledTexture->rasterizeAt(heightPx, heightPx);
+            mFilledTexture->rasterizeAt(mSize.y, mSize.y);
         if (mUnfilledTexture)
-            mUnfilledTexture->rasterizeAt(heightPx, heightPx);
+            mUnfilledTexture->rasterizeAt(mSize.y, mSize.y);
     }
 
     updateVertices();

@@ -47,17 +47,18 @@ This plan is under constant review so expect it to change from time to time. Sti
 
 #### v1.4
 
+* Bulk metadata editor
 * Localization/multi-language support
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
+* Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
 * Scrollbar component for the gamelist view which can be used by the themes
 * Web proxy support for the scraper
 * Add "time played" counter per game, similar to how it works in Steam
-* Preload all built-in resources and never clear them from the cache
 * Improve multi-threading
 
 #### v1.5
 
-* Bulk metadata editor
+* Reorganize the menus, possibly adding basic/advanced modes
 * Simple file browsing component
 * Improve the performance of the GLSL shader code
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.

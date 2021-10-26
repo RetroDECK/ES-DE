@@ -237,14 +237,17 @@ based on: 'recalbox-multi' by the Recalbox community
             <alignment>right</alignment>
         </text>
         <badges name="md_badges">
-            <pos>0.815 0.675</pos>
+            <pos>0.880 0.757</pos>
             <size>0.13 0.1635</size>
-            <origin>0 0</origin>
+            <origin>0.5 0.5</origin>
             <alignment>left</alignment>
-            <itemsPerRow>3</itemsPerRow>
-            <rows>2</rows>
-            <itemMargin>0.0028125 0.005</itemMargin>
-            <slots>favorite completed kidgame broken altemulator</slots>
+            <direction>row</direction>
+            <lines>2</lines>
+            <itemsPerLine>3</itemsPerLine>
+            <controllerPos>0.5 0.572</controllerPos>
+            <controllerSize>0.81</controllerSize>
+            <itemMargin>-1.0 0.005</itemMargin>
+            <slots>favorite, completed, kidgame, broken, controller, altemulator</slots>
         </badges>
         <!-- This block prevents additional elements from interfering when mixing layouts. -->
         <image name="backframe4" extra="false"></image>

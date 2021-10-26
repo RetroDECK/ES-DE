@@ -1870,6 +1870,7 @@ There are two basic categories of metadata, `game` and `folders` and the metdata
 * `nomultiscrape` - bool, indicates whether the game should be excluded from the multi-scraper
 * `hidemetadata` - bool, indicates whether to hide most of the metadata fields when displaying the game in the gamelist view
 * `playcount` - integer, the number of times this game has been played
+* `controller` - string, used to display controller badges
 * `altemulator` - string, overrides the emulator/launch command on a per game basis
 * `lastplayed` - statistic, datetime, the last date and time this game was played
 
@@ -1891,6 +1892,7 @@ For folders, most of the fields are identical although some are removed. In the 
 * `broken`
 * `nomultiscrape`
 * `hidemetadata`
+* `controller`
 * `lastplayed` - statistic, for folders this is inherited by the latest game file launched inside the folder.
 
 **Additional gamelist.xml information:**

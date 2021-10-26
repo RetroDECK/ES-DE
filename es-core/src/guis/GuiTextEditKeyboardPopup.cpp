@@ -567,8 +567,8 @@ void GuiTextEditKeyboardPopup::shiftKeys()
     mShift = !mShift;
 
     if (mShift) {
-        mShiftButton->setFlatColorFocused(0xFF2222FF);
-        mShiftButton->setFlatColorUnfocused(0xFF2222FF);
+        mShiftButton->setFlatColorFocused(0xF26767FF);
+        mShiftButton->setFlatColorUnfocused(0xF26767FF);
     }
     else {
         mShiftButton->setFlatColorFocused(0x878787FF);
@@ -600,8 +600,8 @@ void GuiTextEditKeyboardPopup::altKeys()
     mAlt = !mAlt;
 
     if (mAlt) {
-        mAltButton->setFlatColorFocused(0xFF2222FF);
-        mAltButton->setFlatColorUnfocused(0xFF2222FF);
+        mAltButton->setFlatColorFocused(0xF26767FF);
+        mAltButton->setFlatColorUnfocused(0xF26767FF);
     }
     else {
         mAltButton->setFlatColorFocused(0x878787FF);

@@ -242,6 +242,7 @@ void Settings::setDefaults()
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
     mBoolMap["VideoUpscaleFrameRate"] = {false, false};
+    mBoolMap["PreloadGamelists"] = {true, true};
     mBoolMap["AlternativeEmulatorPerGame"] = {true, true};
     mBoolMap["ShowHiddenFiles"] = {true, true};
     mBoolMap["ShowHiddenGames"] = {true, true};
