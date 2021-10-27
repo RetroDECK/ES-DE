@@ -249,6 +249,28 @@ void GuiScraperMenu::openContentOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
+    // Scrape controllers (arcade systems only).
+    auto scrapeControllers = std::make_shared<SwitchComponent>(mWindow);
+    scrapeControllers->setState(Settings::getInstance()->getBool("ScrapeControllers"));
+    s->addWithLabel("SCRAPE CONTROLLERS (ARCADE SYSTEMS ONLY)", scrapeControllers);
+    s->addSaveFunc([scrapeControllers, s] {
+        if (scrapeControllers->getState() !=
+            Settings::getInstance()->getBool("ScrapeControllers")) {
+            Settings::getInstance()->setBool("ScrapeControllers", scrapeControllers->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Controllers are not supported by TheGamesDB, so gray out the option if this scraper is
+    // selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrapeControllers->setEnabled(false);
+        scrapeControllers->setOpacity(DISABLED_OPACITY);
+        scrapeControllers->getParent()
+            ->getChild(scrapeControllers->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Scrape other metadata.
     auto scrape_metadata = std::make_shared<SwitchComponent>(mWindow);
     scrape_metadata->setState(Settings::getInstance()->getBool("ScrapeMetadata"));
@@ -842,6 +864,11 @@ void GuiScraperMenu::start()
         }
         if (scraperService == "screenscraper" &&
             Settings::getInstance()->getBool("ScrapeRatings")) {
+            contentToScrape = true;
+            break;
+        }
+        if (scraperService == "screenscraper" &&
+            Settings::getInstance()->getBool("ScrapeControllers")) {
             contentToScrape = true;
             break;
         }

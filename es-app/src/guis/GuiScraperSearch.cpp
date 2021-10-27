@@ -873,13 +873,17 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
         const std::string& key = mMetaDataDecl.at(i).key;
 
         // Skip element if the setting to not scrape metadata has been set,
-        // unless its type is rating or name.
+        // unless its type is rating, controller or name.
         if (!Settings::getInstance()->getBool("ScrapeMetadata") &&
-            (key != "rating" && key != "name"))
+            (key != "rating" && key != "controller" && key != "name"))
             continue;
 
-        // Skip saving of rating if the corresponding option has been set to false.
+        // Skip saving of rating metadata if the corresponding option has been set to false.
         if (key == "rating" && !Settings::getInstance()->getBool("ScrapeRatings"))
+            continue;
+
+        // Skip saving of controller metadata if the corresponding option has been set to false.
+        if (key == "controller" && !Settings::getInstance()->getBool("ScrapeControllers"))
             continue;
 
         // Skip saving of game name if the corresponding option has been set to false.

@@ -104,6 +104,7 @@ void Settings::setDefaults()
 
     mBoolMap["ScrapeGameNames"] = {true, true};
     mBoolMap["ScrapeRatings"] = {true, true};
+    mBoolMap["ScrapeControllers"] = {true, true};
     mBoolMap["ScrapeMetadata"] = {true, true};
     mBoolMap["ScrapeVideos"] = {true, true};
     mBoolMap["ScrapeScreenshots"] = {true, true};

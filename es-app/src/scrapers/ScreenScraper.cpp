@@ -426,6 +426,97 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                           << result.mdl.get("players");
         }
 
+        // Controller (only for the Arcade and SNK Neo Geo systems).
+        pugi::xml_node system = game.child("systeme");
+        int platformID = system.attribute("parentid").as_int();
+
+        if (platformID == 75 || platformID == 142) {
+            std::string controller = Utils::String::toLower(game.child("controles").text().get());
+            if (!controller.empty()) {
+                std::string controllerDescription = "Other";
+                // Place the steering wheel entry first as some games support both joysticks and
+                // and steering wheels and it's likely more interesting to capture the steering
+                // wheel option in this case.
+                if (controller.find("steering wheel") != std::string::npos ||
+                    controller.find("paddle") != std::string::npos ||
+                    controller.find("pedal") != std::string::npos) {
+                    result.mdl.set("controller", "steering_wheel_generic");
+                    controllerDescription = "Steering wheel";
+                }
+                else if (controller.find("control type=\"joy") != std::string::npos ||
+                         controller.find("joystick") != std::string::npos) {
+                    std::string buttonEntry;
+                    std::string buttonCount;
+                    if (controller.find("p1numbuttons=") != std::string::npos)
+                        buttonEntry = controller.substr(controller.find("p1numbuttons=") + 13, 4);
+                    else if (controller.find("buttons=") != std::string::npos)
+                        buttonEntry = controller.substr(controller.find("buttons=") + 8, 5);
+
+                    bool foundDigit = false;
+                    for (unsigned char character : buttonEntry) {
+                        if (std::isdigit(character)) {
+                            buttonCount.push_back(character);
+                            foundDigit = true;
+                        }
+                        else if (foundDigit == true) {
+                            break;
+                        }
+                    }
+
+                    if (buttonCount == "0") {
+                        result.mdl.set("controller", "joystick_arcade_no_buttons");
+                        controllerDescription = "Joystick (no buttons)";
+                    }
+                    else if (buttonCount == "1") {
+                        result.mdl.set("controller", "joystick_arcade_1_button");
+                        controllerDescription = "Joystick (1 button)";
+                    }
+                    else if (buttonCount == "2") {
+                        result.mdl.set("controller", "joystick_arcade_2_buttons");
+                        controllerDescription = "Joystick (2 buttons)";
+                    }
+                    else if (buttonCount == "3") {
+                        result.mdl.set("controller", "joystick_arcade_3_buttons");
+                        controllerDescription = "Joystick (3 buttons)";
+                    }
+                    else if (buttonCount == "4") {
+                        result.mdl.set("controller", "joystick_arcade_4_buttons");
+                        controllerDescription = "Joystick (4 buttons)";
+                    }
+                    else if (buttonCount == "5") {
+                        result.mdl.set("controller", "joystick_arcade_5_buttons");
+                        controllerDescription = "Joystick (5 buttons)";
+                    }
+                    else if (buttonCount == "6") {
+                        result.mdl.set("controller", "joystick_arcade_6_buttons");
+                        controllerDescription = "Joystick (6 buttons)";
+                    }
+                    else {
+                        controllerDescription = "Joystick (other)";
+                    }
+                }
+                else if (controller.find("spinner") != std::string::npos) {
+                    result.mdl.set("controller", "spinner_generic");
+                    controllerDescription = "Spinner";
+                }
+                else if (controller.find("trackball") != std::string::npos) {
+                    result.mdl.set("controller", "trackball_generic");
+                    controllerDescription = "Trackball";
+                }
+                else if (controller.find("gun") != std::string::npos) {
+                    result.mdl.set("controller", "lightgun_generic");
+                    controllerDescription = "Lightgun";
+                }
+                else if (controller.find("stick") != std::string::npos) {
+                    result.mdl.set("controller", "flight_stick_generic");
+                    controllerDescription = "Flight stick";
+                }
+
+                LOG(LogDebug) << "ScreenScraperRequest::processGame(): Controller: "
+                              << controllerDescription;
+            }
+        }
+
         // Media super-node.
         pugi::xml_node media_list = game.child("medias");
 
