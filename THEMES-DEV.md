@@ -947,7 +947,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
 * `customControllerIcon` - type: PATH.
     - A controller icon override. Specify the controller type in the attribute `controller`. These are the available types:
-    - `gamepad_generic`, `gamepad_xbox`, `gamepad_playstation`, `gamepad_nintendo_nes`, `gamepad_nintendo_snes`, `gamepad_nintendo_64`, `joystick_generic`, `joystick_arcade_2_buttons`, `joystick_arcade_3_buttons`, `joystick_arcade_4_buttons`, `joystick_arcade_6_buttons`, `trackball_generic`, `lightgun_generic`, `lightgun_nintendo`, `keyboard_generic`, `mouse_generic`, `mouse_amiga`, `keyboard_mouse_generic`, `steering_wheel_generic`, `wii_remote_nintendo`, `wii_remote_nunchuck_nintendo`, `joycon_left_or_right_nintendo`, `joycon_pair_nintendo`, `unknown`.
+    - `gamepad_generic`, `gamepad_xbox`, `gamepad_playstation`, `gamepad_nintendo_nes`, `gamepad_nintendo_snes`, `gamepad_nintendo_64`, `joystick_generic`, `joystick_arcade_no_buttons`, `joystick_arcade_1_button`, `joystick_arcade_2_buttons`, `joystick_arcade_3_buttons`, `joystick_arcade_4_buttons`, `joystick_arcade_5_buttons`, `joystick_arcade_6_buttons`, `flight_stick_generic`, `spinner_generic`, `trackball_generic`, `lightgun_generic`, `lightgun_nintendo`, `keyboard_generic`, `mouse_generic`, `mouse_amiga`, `keyboard_and_mouse_generic`, `steering_wheel_generic`, `wii_remote_nintendo`, `wii_remote_and_nunchuk_nintendo`, `joycon_left_or_right_nintendo`, `joycon_pair_nintendo`, `unknown`.
 * `visible` - type: BOOLEAN.
     - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
@@ -988,7 +988,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
 * `zIndex` - type: FLOAT.
     - z-index value for component.  Components will be rendered in order of z-index value from low to high.
 * `legacyZIndexMode` - type: BOOLEAN
-    - If true, the carousel will ignore zIndex and always render on top of other components.
+    - If true, the carousel will ignore zIndex and always render on top of other components. Default is `true`.
 
 The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
 

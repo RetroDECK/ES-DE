@@ -626,18 +626,19 @@ ES-DE supports the two scrapers [ScreenScraper.fr](https://www.screenscraper.fr)
 
 Here's an overview of what's supported when using these scrapers:
 
-| Media type or option     | ScreenScraper | TheGamesDB |
-| :----------------------- | :-----------: | :--------: |
-| Region (EU/JP/US/WOR)    | Yes           | No         |
-| Multi-language           | Yes           | No         |
-| Game names               | Yes           | Yes        |
-| Ratings                  | Yes           | No         |
-| Other game metadata      | Yes           | Yes        |
-| Videos                   | Yes           | No         |
-| Screenshots              | Yes           | Yes        |
-| Box covers (2D)          | Yes           | Yes        |
-| Marquees/wheels          | Yes           | Yes        |
-| 3D boxes                 | Yes           | No         |
+| Media type or option              | ScreenScraper | TheGamesDB |
+| :-------------------------------- | :-----------: | :--------: |
+| Region (EU/JP/US/WOR)             | Yes           | No         |
+| Multi-language                    | Yes           | No         |
+| Game names                        | Yes           | Yes        |
+| Ratings                           | Yes           | No         |
+| Controllers (arcade systems only) | Yes           | No         |
+| Other game metadata               | Yes           | Yes        |
+| Videos                            | Yes           | No         |
+| Screenshots                       | Yes           | Yes        |
+| Box covers (2D)                   | Yes           | Yes        |
+| Marquees/wheels                   | Yes           | Yes        |
+| 3D boxes                          | Yes           | No         |
 
 The category **Other game metadata** includes Description, Release date, Developer, Publisher, Genre and Players.
 
@@ -777,6 +778,10 @@ Whether to scrape the names of the games. This does not affect the actual files 
 **Scrape ratings** _(ScreenScraper only)_
 
 Downloads game ratings.
+
+**Scrape controllers (arcade systems only)** _(ScreenScraper only)_
+
+Scrapes controller metadata which is used to set the correct controller badge. This is only available for MAME arcade games, for systems such as _arcade_, _mame_, _neogeo_, _fba_ etc. This is so because ScreenScraper does not seem to provide controller information for other platforms. The type of controllers that are scraped are _joystick_ (separated into entries from no buttons up to 6 buttons), _steering wheel_, _flight stick_, _spinner_, _trackball_ and _lightgun_.
 
 **Scrape other metadata**
 
@@ -1376,7 +1381,7 @@ The following filters can be applied:
 
 **Broken**
 
-**Controller badge**
+**Controller**
 
 **Alternative emulator**
 
@@ -1482,7 +1487,7 @@ This option will hide most metadata fields as well as any badges. The intention 
 
 A statistics counter that tracks how many times you have played the game. You normally don't need to touch this, but if you want to, the possibility is there.
 
-**Controller badge**
+**Controller**
 
 This entry provides a selection of controller icons that are built into ES-DE (although the theme set can override the actual graphics files). The selected icon will be displayed as a badge if the current theme set support badges. This functionality is only cosmetic and will not affect the actual emulators.
 

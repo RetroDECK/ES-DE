@@ -14,16 +14,17 @@
 * Populated the bundled es_systems.xml files with alternative emulator entries for most RetroArch cores
 * Added a virtual keyboard, partly based on code from batocera-emulationstation
 * Added badges that indicate favorite/completed/broken games as well as games suitable for children and those with a selected alternative emulator
-* Added game-specific controller images that are selectable via the metadata editor and displayed as a controller badge
+* Added game-specific controllers that are selectable via the metadata editor and displayed as a controller badge
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
+* Added scraping of controller metadata (only for ScreenScraper and only for arcade systems)
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
 * Added horizontal scrolling of long game names to the scraper GUIs
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
-* Added filters for "Alternative emulator" and "Controller badges" and sorted the filters in the same order as the metadata editor fields
+* Added filters for "Controller" and "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
 * Added a menu option to change the application exit key combination
 * Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
@@ -81,6 +82,7 @@
 * When scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
 * When scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* The multi-scraper did not update the filter index
 * Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
@@ -104,6 +106,7 @@
 * Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
+* When running really low on texture memory, the menu texture would not get rendered correctly
 * SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
 * Resizing in SwitchComponent did not reposition the image properly leading to a non-centered image
