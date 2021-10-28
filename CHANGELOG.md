@@ -15,12 +15,15 @@
 * Added a virtual keyboard, partly based on code from batocera-emulationstation
 * Added badges that indicate favorite/completed/broken games as well as games suitable for children and those with a selected alternative emulator
 * Added game-specific controllers that are selectable via the metadata editor and displayed as a controller badge
+* Added scraping of title screens, box back covers and physical media images
+* Updated the media viewer to display title screens and box back cover images
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
 * Added scraping of controller metadata (only for ScreenScraper and only for arcade systems)
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
 * Added horizontal scrolling of long game names to the scraper GUIs
+* Removed the "Scrape" text prefix from the scraper content settings
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
