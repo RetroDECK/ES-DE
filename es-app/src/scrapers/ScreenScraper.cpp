@@ -524,15 +524,24 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             // 3D box.
             processMedia(result, media_list, ssConfig.media_3dbox, result.box3DUrl,
                          result.box3DFormat, region);
-            // Cover.
+            // Box back cover.
+            processMedia(result, media_list, ssConfig.media_backcover, result.backcoverUrl,
+                         result.backcoverFormat, region);
+            // Box cover.
             processMedia(result, media_list, ssConfig.media_cover, result.coverUrl,
                          result.coverFormat, region);
             // Marquee (wheel).
             processMedia(result, media_list, ssConfig.media_marquee, result.marqueeUrl,
                          result.marqueeFormat, region);
+            // Physical media.
+            processMedia(result, media_list, ssConfig.media_physicalmedia, result.physicalmediaUrl,
+                         result.physicalmediaFormat, region);
             // Screenshot.
             processMedia(result, media_list, ssConfig.media_screenshot, result.screenshotUrl,
                          result.screenshotFormat, region);
+            // Title screen.
+            processMedia(result, media_list, ssConfig.media_titlescreen, result.titlescreenUrl,
+                         result.titlescreenFormat, region);
             // Video.
             processMedia(result, media_list, ssConfig.media_video, result.videoUrl,
                          result.videoFormat, region);

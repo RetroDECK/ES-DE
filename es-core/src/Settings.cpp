@@ -108,9 +108,12 @@ void Settings::setDefaults()
     mBoolMap["ScrapeMetadata"] = {true, true};
     mBoolMap["ScrapeVideos"] = {true, true};
     mBoolMap["ScrapeScreenshots"] = {true, true};
+    mBoolMap["ScrapeTitleScreens"] = {true, true};
     mBoolMap["ScrapeCovers"] = {true, true};
+    mBoolMap["ScrapeBackCovers"] = {true, true};
     mBoolMap["ScrapeMarquees"] = {true, true};
     mBoolMap["Scrape3DBoxes"] = {true, true};
+    mBoolMap["ScrapePhysicalMedia"] = {true, true};
 
     mStringMap["MiximageResolution"] = {"1280x960", "1280x960"};
     mStringMap["MiximageScreenshotScaling"] = {"sharp", "sharp"};

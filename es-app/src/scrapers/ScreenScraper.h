@@ -71,9 +71,12 @@ public:
         //
 
         std::string media_3dbox = "box-3D";
+        std::string media_backcover = "box-2D-back";
         std::string media_cover = "box-2D";
         std::string media_marquee = "wheel";
+        std::string media_physicalmedia = "support-2D";
         std::string media_screenshot = "ss";
+        std::string media_titlescreen = "sstitle";
         std::string media_video = "video";
 
         bool isArcadeSystem;

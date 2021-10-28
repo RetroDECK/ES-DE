@@ -60,13 +60,16 @@ public:
     const bool getHasFoldersFlag() { return mHasFolders; }
     static const std::string getROMDirectory();
     static const std::string getMediaDirectory();
-    const std::string getMediafilePath(std::string subdirectory, std::string mediatype) const;
+    const std::string getMediafilePath(std::string subdirectory) const;
     const std::string getImagePath() const;
     const std::string get3DBoxPath() const;
+    const std::string getBackCoverPath() const;
     const std::string getCoverPath() const;
     const std::string getMarqueePath() const;
+    const std::string getPhysicalMediaPath() const;
     const std::string getMiximagePath() const;
     const std::string getScreenshotPath() const;
+    const std::string getTitleScreenPath() const;
     const std::string getThumbnailPath() const;
     const std::string getVideoPath() const;
 

@@ -185,11 +185,27 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
+    if (Settings::getInstance()->getBool("ScrapeBackCovers") && result.backcoverUrl != "") {
+        mediaFileInfo.fileURL = result.backcoverUrl;
+        mediaFileInfo.fileFormat = result.backcoverFormat;
+        mediaFileInfo.subDirectory = "backcovers";
+        mediaFileInfo.existingMediaFile = search.game->getBackCoverPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
     if (Settings::getInstance()->getBool("ScrapeCovers") && result.coverUrl != "") {
         mediaFileInfo.fileURL = result.coverUrl;
         mediaFileInfo.fileFormat = result.coverFormat;
         mediaFileInfo.subDirectory = "covers";
         mediaFileInfo.existingMediaFile = search.game->getCoverPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
+    if (Settings::getInstance()->getBool("ScrapePhysicalMedia") && result.physicalmediaUrl != "") {
+        mediaFileInfo.fileURL = result.physicalmediaUrl;
+        mediaFileInfo.fileFormat = result.physicalmediaFormat;
+        mediaFileInfo.subDirectory = "physicalmedia";
+        mediaFileInfo.existingMediaFile = search.game->getPhysicalMediaPath();
         mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
@@ -206,6 +222,14 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.fileFormat = result.screenshotFormat;
         mediaFileInfo.subDirectory = "screenshots";
         mediaFileInfo.existingMediaFile = search.game->getScreenshotPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
+    if (Settings::getInstance()->getBool("ScrapeTitleScreens") && result.titlescreenUrl != "") {
+        mediaFileInfo.fileURL = result.titlescreenUrl;
+        mediaFileInfo.fileFormat = result.titlescreenFormat;
+        mediaFileInfo.subDirectory = "titlescreens";
+        mediaFileInfo.existingMediaFile = search.game->getTitleScreenPath();
         mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
@@ -400,6 +424,56 @@ void MediaDownloadHandle::update()
         return;
 
     // Download is done, save it to disk.
+
+    // There's an incredibly annoying issue where some box back covers at ScreenScraper only contain
+    // a single color, like pure black or more commonly pure green. The hack below checks if the
+    // same pixel value is set throughout the image and if so skips the file saving. This is not
+    // very efficient but these images are not technically corrupt so the actual pixel values need
+    // to be read and compared.
+    if (Settings::getInstance()->getString("Scraper") == "screenscraper" &&
+        mMediaType == "backcovers") {
+        bool emptyImage = false;
+        FREE_IMAGE_FORMAT imageFormat = FIF_UNKNOWN;
+        std::string imageData = mReq->getContent();
+        FIMEMORY* memoryStream = FreeImage_OpenMemory(reinterpret_cast<BYTE*>(&imageData.at(0)),
+                                                      static_cast<DWORD>(imageData.size()));
+        imageFormat = FreeImage_GetFileTypeFromMemory(memoryStream, 0);
+
+        if (imageFormat != FIF_UNKNOWN) {
+            emptyImage = true;
+
+            FIBITMAP* tempImage = FreeImage_LoadFromMemory(imageFormat, memoryStream);
+            RGBQUAD firstPixel;
+            RGBQUAD currPixel;
+
+            FreeImage_GetPixelColor(tempImage, 0, 0, &firstPixel);
+
+            for (unsigned int x = 0; x < FreeImage_GetWidth(tempImage); x++) {
+                if (!emptyImage)
+                    break;
+                for (unsigned int y = 0; y < FreeImage_GetHeight(tempImage); y++) {
+                    FreeImage_GetPixelColor(tempImage, x, y, &currPixel);
+                    if (currPixel.rgbBlue != firstPixel.rgbBlue ||
+                        currPixel.rgbGreen != firstPixel.rgbGreen ||
+                        currPixel.rgbRed != firstPixel.rgbRed) {
+                        emptyImage = false;
+                        break;
+                    }
+                }
+            }
+
+            FreeImage_Unload(tempImage);
+        }
+        FreeImage_CloseMemory(memoryStream);
+
+        if (emptyImage) {
+            LOG(LogWarning) << "ScreenScraper: Image does not seem to contain any data, not saving "
+                               "it to disk: \""
+                            << mSavePath << "\"";
+            setStatus(ASYNC_DONE);
+            return;
+        }
+    }
 
     // This is just a temporary workaround to avoid saving media files to disk that are
     // actually just containing error messages from the scraper service. The proper solution

@@ -678,9 +678,12 @@ void GuiScraperSearch::update(int deltaTime)
                 for (unsigned int i = 0; i < results_scrape.size(); i++) {
                     if (results_scrape[i].gameID == it->gameID) {
                         results_scrape[i].box3DUrl = it->box3DUrl;
+                        results_scrape[i].backcoverUrl = it->backcoverUrl;
                         results_scrape[i].coverUrl = it->coverUrl;
                         results_scrape[i].marqueeUrl = it->marqueeUrl;
                         results_scrape[i].screenshotUrl = it->screenshotUrl;
+                        results_scrape[i].titlescreenUrl = it->titlescreenUrl;
+                        results_scrape[i].physicalmediaUrl = it->physicalmediaUrl;
                         results_scrape[i].videoUrl = it->videoUrl;
                         results_scrape[i].scraperRequestAllowance = it->scraperRequestAllowance;
                         results_scrape[i].mediaURLFetch = COMPLETED;

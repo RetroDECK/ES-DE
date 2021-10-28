@@ -378,6 +378,7 @@ void processMediaURLs(const Value& images,
         result.coverUrl = "";
         result.marqueeUrl = "";
         result.screenshotUrl = "";
+        result.titlescreenUrl = "";
 
         // Quite excessive testing for valid values, but you never know what the server has
         // returned and we don't want to crash the program due to malformed data.
@@ -399,6 +400,9 @@ void processMediaURLs(const Value& images,
                 if (mediatype == "screenshot")
                     if (gameMedia[i]["filename"].IsString())
                         result.screenshotUrl = base_url + gameMedia[i]["filename"].GetString();
+                if (mediatype == "titlescreen")
+                    if (gameMedia[i]["filename"].IsString())
+                        result.titlescreenUrl = base_url + gameMedia[i]["filename"].GetString();
             }
         }
         result.mediaURLFetch = COMPLETED;
