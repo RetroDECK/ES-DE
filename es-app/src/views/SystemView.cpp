@@ -686,6 +686,7 @@ void SystemView::getDefaultElements(void)
     mCarousel.logoSize.y = 0.155f * mSize.y;
     mCarousel.maxLogoCount = 3;
     mCarousel.zIndex = 40.0f;
+    mCarousel.legacyZIndexMode = true;
 
     // System info bar.
     mSystemInfo.setSize(mSize.x, mSystemInfo.getFont()->getLetterHeight() * 2.2f);
