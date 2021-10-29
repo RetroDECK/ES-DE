@@ -31,8 +31,7 @@ public:
                                                 bool forceLoad = false,
                                                 bool dynamic = true,
                                                 bool linearMagnify = false,
-                                                bool forceRasterization = false,
-                                                float scaleDuringLoad = 1.0f);
+                                                bool forceRasterization = false);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
     static void manualUnload(std::string path, bool tile);
@@ -48,10 +47,6 @@ public:
 
     std::string getTextureFilePath();
 
-    // For SVG graphics this function effectively rescales the image to the defined size.
-    // It does unload and re-rasterize the texture though which may cause flickering in some
-    // situations. An alternative is to set a scaling factor directly when loading the texture
-    // using get(), by using the scaleDuringLoad parameter (which also works for raster graphics).
     void rasterizeAt(float width, float height);
     glm::vec2 getSourceImageSize() const { return mSourceSize; }
 
@@ -72,8 +67,7 @@ protected:
                     bool tile,
                     bool dynamic,
                     bool linearMagnify,
-                    bool forceRasterization,
-                    float scaleDuringLoad);
+                    bool forceRasterization);
     virtual void unload(std::shared_ptr<ResourceManager>& rm);
     virtual void reload(std::shared_ptr<ResourceManager>& rm);
 
