@@ -211,8 +211,8 @@ void TextureResource::rasterizeAt(float width, float height)
     if (mForceLoad || mTextureData != nullptr)
         data->load();
 
-    mSize.x = width;
-    mSize.y = height;
+    mSize.x = static_cast<int>(width);
+    mSize.y = static_cast<int>(height);
 }
 
 size_t TextureResource::getTotalMemUsage()
