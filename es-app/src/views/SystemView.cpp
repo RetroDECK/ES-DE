@@ -501,9 +501,10 @@ void SystemView::renderCarousel(const glm::mat4& trans)
                                              mCarousel.origin.y * mCarousel.size.y * -1.0f, 0.0f});
 
     glm::vec2 clipPos{carouselTrans[3].x, carouselTrans[3].y};
-    Renderer::pushClipRect(
-        glm::ivec2{static_cast<int>(clipPos.x), static_cast<int>(clipPos.y)},
-        glm::ivec2{static_cast<int>(mCarousel.size.x), static_cast<int>(mCarousel.size.y)});
+    Renderer::pushClipRect(glm::ivec2{static_cast<int>(std::round(clipPos.x)),
+                                      static_cast<int>(std::round(clipPos.y))},
+                           glm::ivec2{static_cast<int>(std::round(mCarousel.size.x)),
+                                      static_cast<int>(std::round(mCarousel.size.y))});
 
     Renderer::setMatrix(carouselTrans);
     Renderer::drawRect(0.0f, 0.0f, mCarousel.size.x, mCarousel.size.y, mCarousel.color,
