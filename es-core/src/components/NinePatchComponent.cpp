@@ -54,7 +54,9 @@ void NinePatchComponent::buildVertices()
         delete[] mVertices;
 
     // Scale the corner size relative to the screen resolution.
-    glm::vec2 relCornerSize = glm::round(mCornerSize * Renderer::getScreenHeightModifier());
+    glm::vec2 relCornerSize = glm::round(
+        mCornerSize *
+        ((Renderer::getScreenHeightModifier() + Renderer::getScreenWidthModifier()) / 2.0f));
 
     mTexture = TextureResource::get(mPath, false, false, false);
     glm::vec2 texSize = relCornerSize * 3.0f;
