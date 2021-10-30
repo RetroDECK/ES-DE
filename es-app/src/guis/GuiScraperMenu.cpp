@@ -461,6 +461,48 @@ void GuiScraperMenu::openMiximageOptions()
         }
     });
 
+    // Box/cover size.
+    auto miximageBoxSize = std::make_shared<OptionListComponent<std::string>>(
+        mWindow, getHelpStyle(), "BOX SIZE", false);
+    std::string selectedBoxSize = Settings::getInstance()->getString("MiximageBoxSize");
+    miximageBoxSize->add("small", "small", selectedBoxSize == "small");
+    miximageBoxSize->add("medium", "medium", selectedBoxSize == "medium");
+    miximageBoxSize->add("large", "large", selectedBoxSize == "large");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the box size to "medium" in this case.
+    if (miximageBoxSize->getSelectedObjects().size() == 0)
+        miximageBoxSize->selectEntry(0);
+    s->addWithLabel("BOX SIZE", miximageBoxSize);
+    s->addSaveFunc([miximageBoxSize, s] {
+        if (miximageBoxSize->getSelected() !=
+            Settings::getInstance()->getString("MiximageBoxSize")) {
+            Settings::getInstance()->setString("MiximageBoxSize", miximageBoxSize->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Physical media size.
+    auto miximagePhysicalMediaSize = std::make_shared<OptionListComponent<std::string>>(
+        mWindow, getHelpStyle(), "PHYSICAL MEDIA SIZE", false);
+    std::string selectedPhysicalMediaSize =
+        Settings::getInstance()->getString("MiximagePhysicalMediaSize");
+    miximagePhysicalMediaSize->add("small", "small", selectedPhysicalMediaSize == "small");
+    miximagePhysicalMediaSize->add("medium", "medium", selectedPhysicalMediaSize == "medium");
+    miximagePhysicalMediaSize->add("large", "large", selectedPhysicalMediaSize == "large");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the physical media size to "medium" in this case.
+    if (miximagePhysicalMediaSize->getSelectedObjects().size() == 0)
+        miximagePhysicalMediaSize->selectEntry(0);
+    s->addWithLabel("PHYSICAL MEDIA SIZE", miximagePhysicalMediaSize);
+    s->addSaveFunc([miximagePhysicalMediaSize, s] {
+        if (miximagePhysicalMediaSize->getSelected() !=
+            Settings::getInstance()->getString("MiximagePhysicalMediaSize")) {
+            Settings::getInstance()->setString("MiximagePhysicalMediaSize",
+                                               miximagePhysicalMediaSize->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
     // Whether to generate miximages when scraping.
     auto miximage_generate = std::make_shared<SwitchComponent>(mWindow);
     miximage_generate->setState(Settings::getInstance()->getBool("MiximageGenerate"));
@@ -510,6 +552,20 @@ void GuiScraperMenu::openMiximageOptions()
         }
     });
 
+    // Whether to rotate horizontally oriented boxes.
+    auto miximageRotateBoxes = std::make_shared<SwitchComponent>(mWindow);
+    miximageRotateBoxes->setState(
+        Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes"));
+    s->addWithLabel("ROTATE HORIZONTALLY ORIENTED BOXES", miximageRotateBoxes);
+    s->addSaveFunc([miximageRotateBoxes, s] {
+        if (miximageRotateBoxes->getState() !=
+            Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes")) {
+            Settings::getInstance()->setBool("MiximageRotateHorizontalBoxes",
+                                             miximageRotateBoxes->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Whether to include marquee images.
     auto miximage_marquee = std::make_shared<SwitchComponent>(mWindow);
     miximage_marquee->setState(Settings::getInstance()->getBool("MiximageIncludeMarquee"));
@@ -543,6 +599,20 @@ void GuiScraperMenu::openMiximageOptions()
             Settings::getInstance()->getBool("MiximageCoverFallback")) {
             Settings::getInstance()->setBool("MiximageCoverFallback",
                                              miximage_cover_fallback->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to include physical media images.
+    auto miximagePhysicalMedia = std::make_shared<SwitchComponent>(mWindow);
+    miximagePhysicalMedia->setState(
+        Settings::getInstance()->getBool("MiximageIncludePhysicalMedia"));
+    s->addWithLabel("INCLUDE PHYSICAL MEDIA IMAGE", miximagePhysicalMedia);
+    s->addSaveFunc([miximagePhysicalMedia, s] {
+        if (miximagePhysicalMedia->getState() !=
+            Settings::getInstance()->getBool("MiximageIncludePhysicalMedia")) {
+            Settings::getInstance()->setBool("MiximageIncludePhysicalMedia",
+                                             miximagePhysicalMedia->getState());
             s->setNeedsSaving();
         }
     });

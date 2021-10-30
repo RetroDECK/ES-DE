@@ -17,13 +17,14 @@
 #include <chrono>
 
 MiximageGenerator::MiximageGenerator(FileData* game, std::string& resultMessage)
-    : mGame(game)
-    , mResultMessage(resultMessage)
-    , mWidth(1280)
-    , mHeight(960)
-    , mMarquee(false)
-    , mBox3D(false)
-    , mCover(false)
+    : mGame{game}
+    , mResultMessage{resultMessage}
+    , mWidth{1280}
+    , mHeight{960}
+    , mMarquee{false}
+    , mBox3D{false}
+    , mCover{false}
+    , mPhysicalMedia{false}
 {
 }
 
@@ -79,6 +80,16 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
         }
     }
 
+    if (Settings::getInstance()->getBool("MiximageIncludePhysicalMedia")) {
+        if ((mPhysicalMediaPath = mGame->getPhysicalMediaPath()) != "") {
+            mPhysicalMedia = true;
+        }
+        else {
+            LOG(LogDebug)
+                << "MiximageGenerator::MiximageGenerator(): No physical media image found";
+        }
+    }
+
     const auto startTime = std::chrono::system_clock::now();
 
     if (generateImage()) {
@@ -106,6 +117,7 @@ bool MiximageGenerator::generateImage()
     FIBITMAP* screenshotFile = nullptr;
     FIBITMAP* marqueeFile = nullptr;
     FIBITMAP* boxFile = nullptr;
+    FIBITMAP* physicalMediaFile = nullptr;
 
     unsigned int fileWidth = 0;
     unsigned int fileHeight = 0;
@@ -269,6 +281,46 @@ bool MiximageGenerator::generateImage()
         }
     }
 
+    if (mPhysicalMedia) {
+#if defined(_WIN64)
+        fileFormat =
+            FreeImage_GetFileTypeU(Utils::String::stringToWideString(mPhysicalMediaPath).c_str());
+#else
+        fileFormat = FreeImage_GetFileType(mPhysicalMediaPath.c_str());
+#endif
+
+        if (fileFormat == FIF_UNKNOWN)
+#if defined(_WIN64)
+            fileFormat = FreeImage_GetFIFFromFilenameU(
+                Utils::String::stringToWideString(mPhysicalMediaPath).c_str());
+#else
+            fileFormat = FreeImage_GetFIFFromFilename(mPhysicalMediaPath.c_str());
+#endif
+
+        if (fileFormat == FIF_UNKNOWN) {
+            LOG(LogDebug) << "Physical media in unknown format, skipping image";
+            mPhysicalMedia = false;
+        }
+
+        if (!FreeImage_FIFSupportsReading(fileFormat)) {
+            LOG(LogDebug) << "Physical media file format not supported, skipping image";
+            mPhysicalMedia = false;
+        }
+        else {
+#if defined(_WIN64)
+            physicalMediaFile = FreeImage_LoadU(
+                fileFormat, Utils::String::stringToWideString(mPhysicalMediaPath).c_str());
+#else
+            physicalMediaFile = FreeImage_Load(fileFormat, mPhysicalMediaPath.c_str());
+#endif
+            if (!physicalMediaFile) {
+                LOG(LogError) << "Couldn't load physical media image, corrupt file?";
+                mMessage = "Error loading physical media image, corrupt file?";
+                mPhysicalMedia = false;
+            }
+        }
+    }
+
     unsigned int resolutionMultiplier = 0;
 
     if (Settings::getInstance()->getString("MiximageResolution") == "640x480") {
@@ -295,12 +347,44 @@ bool MiximageGenerator::generateImage()
     // These sizes are increased slightly when adding the drop shadow.
     const unsigned int marqueeTargetWidth = 310 * resolutionMultiplier;
     const unsigned int marqueeTargetHeight = 230 * resolutionMultiplier;
-    const unsigned int boxTargetWidth = 330 * resolutionMultiplier;
-    const unsigned int boxTargetHeight = 300 * resolutionMultiplier;
-    const unsigned int coverTargetWidth = 250 * resolutionMultiplier;
+    unsigned int boxTargetWidth = 0;
+    unsigned int boxTargetHeight = 0;
+    unsigned int coverTargetWidth = 0;
+    unsigned int physicalMediaTargetWidth = 0;
+    unsigned int physicalMediaTargetHeight = 0;
+
+    if (Settings::getInstance()->getString("MiximageBoxSize") == "small") {
+        boxTargetWidth = 264 * resolutionMultiplier;
+        boxTargetHeight = 254 * resolutionMultiplier;
+        coverTargetWidth = 212 * resolutionMultiplier;
+    }
+    else if (Settings::getInstance()->getString("MiximageBoxSize") == "large") {
+        boxTargetWidth = 372 * resolutionMultiplier;
+        boxTargetHeight = 360 * resolutionMultiplier;
+        coverTargetWidth = 300 * resolutionMultiplier;
+    }
+    else { // Medium size.
+        boxTargetWidth = 310 * resolutionMultiplier;
+        boxTargetHeight = 300 * resolutionMultiplier;
+        coverTargetWidth = 250 * resolutionMultiplier;
+    }
+
+    if (Settings::getInstance()->getString("MiximagePhysicalMediaSize") == "small") {
+        physicalMediaTargetWidth = 120 * resolutionMultiplier;
+        physicalMediaTargetHeight = 96 * resolutionMultiplier;
+    }
+    else if (Settings::getInstance()->getString("MiximagePhysicalMediaSize") == "large") {
+        physicalMediaTargetWidth = 196 * resolutionMultiplier;
+        physicalMediaTargetHeight = 156 * resolutionMultiplier;
+    }
+    else { // Medium size.
+        physicalMediaTargetWidth = 150 * resolutionMultiplier;
+        physicalMediaTargetHeight = 120 * resolutionMultiplier;
+    }
 
     const unsigned int marqueeShadowSize = 6 * resolutionMultiplier;
     const unsigned int boxShadowSize = 6 * resolutionMultiplier;
+    const unsigned int physicalMediaShadowSize = 6 * resolutionMultiplier;
 
     if (FreeImage_GetBPP(screenshotFile) != 32) {
         FIBITMAP* screenshotTemp = FreeImage_ConvertTo32Bits(screenshotFile);
@@ -354,6 +438,9 @@ bool MiximageGenerator::generateImage()
     int xPosBox = 0;
     int yPosBox = 0;
 
+    int xPosPhysicalMedia = 0;
+    int yPosPhysicalMedia = 0;
+
     CImg<unsigned char> canvasImage(mWidth, mHeight, 1, 4, 0);
 
     CImg<unsigned char> marqueeImage;
@@ -363,6 +450,10 @@ bool MiximageGenerator::generateImage()
     CImg<unsigned char> boxImage;
     CImg<unsigned char> boxImageRGB;
     CImg<unsigned char> boxImageAlpha;
+
+    CImg<unsigned char> physicalMediaImage;
+    CImg<unsigned char> physicalMediaImageRGB;
+    CImg<unsigned char> physicalMediaImageAlpha;
 
     CImg<unsigned char> frameImage(mWidth, mHeight, 1, 4, 0);
 
@@ -433,6 +524,12 @@ bool MiximageGenerator::generateImage()
         Utils::CImg::convertRGBAToCImg(boxVector, boxImage);
         Utils::CImg::removeTransparentPadding(boxImage);
 
+        float sizeRatio =
+            static_cast<float>(boxImage.width()) / static_cast<float>(boxImage.height());
+
+        if (sizeRatio > 1.14f && Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes"))
+            boxImage.rotate(90.0f);
+
         float scaleFactor =
             static_cast<float>(boxTargetHeight) / static_cast<float>(boxImage.height());
         unsigned int width = static_cast<int>(static_cast<float>(boxImage.width()) * scaleFactor);
@@ -466,8 +563,60 @@ bool MiximageGenerator::generateImage()
         boxImageAlpha = CImg<unsigned char>(boxImage.get_shared_channel(3));
     }
 
+    if (mPhysicalMedia) {
+        if (FreeImage_GetBPP(physicalMediaFile) != 32) {
+            FIBITMAP* physicalMediaTemp = FreeImage_ConvertTo32Bits(physicalMediaFile);
+            FreeImage_Unload(physicalMediaFile);
+            physicalMediaFile = physicalMediaTemp;
+        }
+
+        fileWidth = FreeImage_GetWidth(physicalMediaFile);
+        fileHeight = FreeImage_GetHeight(physicalMediaFile);
+        filePitch = FreeImage_GetPitch(physicalMediaFile);
+
+        std::vector<unsigned char> physicalMediaVector(fileWidth * fileHeight * 4);
+
+        FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&physicalMediaVector.at(0)),
+                                   physicalMediaFile, filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN,
+                                   FI_RGBA_BLUE, 1);
+
+        physicalMediaImage = CImg<unsigned char>(FreeImage_GetWidth(physicalMediaFile),
+                                                 FreeImage_GetHeight(physicalMediaFile), 1, 4, 0);
+
+        Utils::CImg::convertRGBAToCImg(physicalMediaVector, physicalMediaImage);
+        Utils::CImg::removeTransparentPadding(physicalMediaImage);
+
+        // Make sure the image size is not exceeding either the target width or height.
+        float scaleFactorX = static_cast<float>(physicalMediaTargetWidth) /
+                             static_cast<float>(physicalMediaImage.width());
+        float scaleFactorY = static_cast<float>(physicalMediaTargetHeight) /
+                             static_cast<float>(physicalMediaImage.height());
+        float scaleFactor = std::min(scaleFactorX, scaleFactorY);
+
+        unsigned int width =
+            static_cast<int>(static_cast<float>(physicalMediaImage.width()) * scaleFactor);
+        unsigned int height =
+            static_cast<int>(static_cast<float>(physicalMediaImage.height()) * scaleFactor);
+
+        // We use Lanczos3 which is the highest quality resampling method available.
+        physicalMediaImage.resize(width, height, 1, 4, 6);
+
+        // Add a drop shadow using 4 iterations of box blur.
+        Utils::CImg::addDropShadow(physicalMediaImage, physicalMediaShadowSize, 0.6f, 4);
+
+        // Place it to the right of the 3D box or cover with a small margin in between.
+        xPosPhysicalMedia = xPosBox + boxImage.width() + 12 * resolutionMultiplier;
+        yPosPhysicalMedia = canvasImage.height() - physicalMediaImage.height();
+
+        // Only RGB channels for the image.
+        physicalMediaImageRGB = CImg<unsigned char>(physicalMediaImage.get_shared_channels(0, 2));
+        // Only alpha channel for the image.
+        physicalMediaImageAlpha = CImg<unsigned char>(physicalMediaImage.get_shared_channel(3));
+    }
+
     CImg<unsigned char> frameImageAlpha(frameImage.get_shared_channel(3));
     frameImageAlpha.draw_image(xPosBox, yPosBox, boxImageAlpha);
+    frameImageAlpha.draw_image(xPosPhysicalMedia, yPosPhysicalMedia, physicalMediaImageAlpha);
     frameImageAlpha.draw_image(xPosMarquee, yPosMarquee, marqueeImageAlpha);
 
     // Set a frame color based on an average of the screenshot contents.
@@ -515,6 +664,10 @@ bool MiximageGenerator::generateImage()
     if (mBox3D || mCover)
         canvasImage.draw_image(xPosBox, yPosBox, boxImageRGB, boxImageAlpha, 1, 255);
 
+    if (mPhysicalMedia)
+        canvasImage.draw_image(xPosPhysicalMedia, yPosPhysicalMedia, physicalMediaImageRGB,
+                               physicalMediaImageAlpha, 1, 255);
+
     std::vector<unsigned char> canvasVector;
 
     // Convert the image from CImg internal format.
@@ -540,6 +693,7 @@ bool MiximageGenerator::generateImage()
     FreeImage_Unload(screenshotFile);
     FreeImage_Unload(marqueeFile);
     FreeImage_Unload(boxFile);
+    FreeImage_Unload(physicalMediaFile);
     FreeImage_Unload(mixImage);
 
     // Success.
@@ -645,7 +799,7 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
     frameColor[3] = 255;
 }
 
-std::string MiximageGenerator::getSavePath()
+std::string MiximageGenerator::getSavePath() const
 {
     const std::string name = Utils::FileSystem::getStem(mGame->getPath());
     std::string subFolders;

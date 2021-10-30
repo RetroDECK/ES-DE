@@ -117,13 +117,17 @@ void Settings::setDefaults()
 
     mStringMap["MiximageResolution"] = {"1280x960", "1280x960"};
     mStringMap["MiximageScreenshotScaling"] = {"sharp", "sharp"};
+    mStringMap["MiximageBoxSize"] = {"medium", "medium"};
+    mStringMap["MiximagePhysicalMediaSize"] = {"medium", "medium"};
     mBoolMap["MiximageGenerate"] = {true, true};
     mBoolMap["MiximageOverwrite"] = {true, true};
     mBoolMap["MiximageRemoveLetterboxes"] = {true, true};
     mBoolMap["MiximageRemovePillarboxes"] = {true, true};
+    mBoolMap["MiximageRotateHorizontalBoxes"] = {true, true};
     mBoolMap["MiximageIncludeMarquee"] = {true, true};
     mBoolMap["MiximageIncludeBox"] = {true, true};
     mBoolMap["MiximageCoverFallback"] = {true, true};
+    mBoolMap["MiximageIncludePhysicalMedia"] = {true, true};
 
     mStringMap["ScraperRegion"] = {"eu", "eu"};
     mStringMap["ScraperLanguage"] = {"en", "en"};
