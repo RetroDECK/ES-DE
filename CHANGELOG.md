@@ -17,6 +17,9 @@
 * Added game-specific controllers that are selectable via the metadata editor and displayed as a controller badge
 * Added scraping of title screens, box back covers and physical media images
 * Updated the media viewer to display title screens and box back cover images
+* Added physical media images to the generated miximages
+* Added an option to rotate horizontally oriented game boxes when generating miximages
+* Added size options (small/medium/large) for the boxes/covers and physical media images when generating miximages
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
@@ -110,6 +113,7 @@
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
 * When running really low on texture memory, the menu texture would not get rendered correctly
+* There was a tiny and randomly occuring gap between the system carousel and systemInfo bar during slide transitions between the System and Gamelist views
 * SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
 * Resizing in SwitchComponent did not reposition the image properly leading to a non-centered image

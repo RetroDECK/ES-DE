@@ -841,6 +841,14 @@ It's possible to select betweeen the 1280x960, 1920x1440 and 640x480 resolutions
 
 The _sharp_ scaling method uses nearest-neighbor interpolation which retains sharp pixels and looks better for most low-resolution retro games. The _smooth_ scaling method uses the Lanczos algorithm and produces smoother pixels. This may look better on some more modern games at higher resolutions. If unsure, use the _sharp_ method.
 
+**Box size**
+
+The size of the 3D game box, or the cover image if there is no 3D box and the _Use cover image if 3D box is missing_ setting has been enabled. The available options are _medium, small_ and _large_.
+
+**Physical media size**
+
+The size of the physical media image. The available options are _medium, small_ and _large_.
+
 **Generate miximages when scraping**
 
 Enables or disables the miximage generator when scraping. Applies to both the single-game scraper and the multi-scraper.
@@ -857,6 +865,10 @@ With this option enabled, any horizontal pure black areas at the top and bottom 
 
 With this option enabled, any vertical pure black areas at the left and right sides of the screenshots are automatically cropped.
 
+**Rotate horizontally oriented boxes**
+
+Some consoles such as Super Nintendo have game boxes with the cover printed horizontally rather than using the more common vertical format. If enabling this setting, those images will be rotated 90 degrees so they stand up like the box images for most other systems.
+
 **Incude marquee image**
 
 Whether to include the marquee (wheel) image in the composite miximage.
@@ -868,6 +880,10 @@ Whether to include the box image in the composite miximage. If a 3D box exists f
 **Use cover image if 3D box is missing**
 
 Whether to use the 2D box cover as fallback if the 3D box image is missing for the game.
+
+**Include physical media image**
+
+Whether to include the image of the physical media used to distribute the game, for example a cartridge, diskette, tape, CD-ROM etc.
 
 **Offline generator**
 
