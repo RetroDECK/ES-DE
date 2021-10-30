@@ -425,11 +425,10 @@ void MediaDownloadHandle::update()
 
     // Download is done, save it to disk.
 
-    // There's an incredibly annoying issue where some box back covers at ScreenScraper only contain
-    // a single color, like pure black or more commonly pure green. The hack below checks if the
-    // same pixel value is set throughout the image and if so skips the file saving. This is not
-    // very efficient but these images are not technically corrupt so the actual pixel values need
-    // to be read and compared.
+    // There are multiple issues with box back covers at ScreenScraper. Some only contain a single
+    // color like pure black or more commonly pure green, and some are mostly transparent with just
+    // a few black lines at the bottom. The following code attempts to detect such broken images
+    // and skip them so they're not saved to disk.
     if (Settings::getInstance()->getString("Scraper") == "screenscraper" &&
         mMediaType == "backcovers") {
         bool emptyImage = false;
@@ -446,22 +445,42 @@ void MediaDownloadHandle::update()
             RGBQUAD firstPixel;
             RGBQUAD currPixel;
 
-            FreeImage_GetPixelColor(tempImage, 0, 0, &firstPixel);
+            unsigned int width = FreeImage_GetWidth(tempImage);
+            unsigned int height = FreeImage_GetHeight(tempImage);
 
-            for (unsigned int x = 0; x < FreeImage_GetWidth(tempImage); x++) {
-                if (!emptyImage)
-                    break;
-                for (unsigned int y = 0; y < FreeImage_GetHeight(tempImage); y++) {
-                    FreeImage_GetPixelColor(tempImage, x, y, &currPixel);
-                    if (currPixel.rgbBlue != firstPixel.rgbBlue ||
-                        currPixel.rgbGreen != firstPixel.rgbGreen ||
-                        currPixel.rgbRed != firstPixel.rgbRed) {
-                        emptyImage = false;
+            // Skip really small images as they're obviously not valid.
+            if (width < 50) {
+                emptyImage = true;
+            }
+            else if (height < 50) {
+                emptyImage = true;
+            }
+            else {
+                // Remove the alpha channel which will convert fully transparent pixels to black.
+                if (FreeImage_GetBPP(tempImage) != 24) {
+                    FIBITMAP* convertImage = FreeImage_ConvertTo24Bits(tempImage);
+                    FreeImage_Unload(tempImage);
+                    tempImage = convertImage;
+                }
+
+                // Skip the first line as this can apparently lead to false positives.
+                FreeImage_GetPixelColor(tempImage, 0, 1, &firstPixel);
+
+                for (unsigned int x = 0; x < width; x++) {
+                    if (!emptyImage)
                         break;
+                    // Skip the last line as well.
+                    for (unsigned int y = 1; y < height - 1; y++) {
+                        FreeImage_GetPixelColor(tempImage, x, y, &currPixel);
+                        if (currPixel.rgbBlue != firstPixel.rgbBlue ||
+                            currPixel.rgbGreen != firstPixel.rgbGreen ||
+                            currPixel.rgbRed != firstPixel.rgbRed) {
+                            emptyImage = false;
+                            break;
+                        }
                     }
                 }
             }
-
             FreeImage_Unload(tempImage);
         }
         FreeImage_CloseMemory(memoryStream);
