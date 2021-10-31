@@ -605,7 +605,7 @@ bool MiximageGenerator::generateImage()
         Utils::CImg::addDropShadow(physicalMediaImage, physicalMediaShadowSize, 0.6f, 4);
 
         // Place it to the right of the 3D box or cover with a small margin in between.
-        xPosPhysicalMedia = xPosBox + boxImage.width() + 12 * resolutionMultiplier;
+        xPosPhysicalMedia = xPosBox + boxImage.width() + 16 * resolutionMultiplier;
         yPosPhysicalMedia = canvasImage.height() - physicalMediaImage.height();
 
         // Only RGB channels for the image.
