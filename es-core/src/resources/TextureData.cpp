@@ -63,7 +63,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     NSVGimage* svgImage{nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI)};
 
-    if (!svgImage) {
+    if (!svgImage || svgImage->width == 0 || svgImage->height == 0) {
         LOG(LogError) << "Couldn't parse SVG image";
         return false;
     }
