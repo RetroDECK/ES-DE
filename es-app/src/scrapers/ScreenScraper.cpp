@@ -49,6 +49,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
     {COLECOVISION, 48},
     {COMMODORE_64, 66},
     {COMMODORE_CDTV, 129},
+    {COMMODORE_VIC20, 73},
     {DAPHNE, 49},
     {INTELLIVISION, 115},
     {GAMEENGINE_LUTRO, 206},

@@ -116,6 +116,7 @@ namespace PlatformIds
         "trs-80",               // Tandy TRS-80
         "uzebox",               // Uzebox
         "vectrex",              // Vectrex
+        "vic20",                // Commodore VIC-20
         "videopac",             // Philips Videopac G7000 (Magnavox Odyssey2)
         "virtualboy",           // Nintendo Virtual Boy
         "wii",                  // Nintendo Wii

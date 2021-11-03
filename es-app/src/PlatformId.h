@@ -115,6 +115,7 @@ namespace PlatformIds
         TANDY_TRS80,
         UZEBOX,
         VECTREX,
+        COMMODORE_VIC20,
         PHILIPS_VIDEOPAC,
         NINTENDO_VIRTUAL_BOY,
         NINTENDO_WII,
