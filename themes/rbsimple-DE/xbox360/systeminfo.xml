@@ -3,7 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Microsoft Xbox 360</text>
+            <text>Manufacturer : Microsoft</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>Year of Release : 2005</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>Units sold : 84 million</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>CPU : 3.2 GHz PowerPC Tri-Core Xenon</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>RAM : 512MB unified GDDR3 @ 700 MHz + 10MB eDRAM cache</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>GPU : 500 MHz ATI/AMD Xenos</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>Resolution : 480i, 480p, 720p, 1080i, 1080p</text>
+        </text>
+        <text name="info8" extra="true">
+            <text>Sound : Stereo LPCM, Dolby Digital 5.1</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>Media : DVD, Compact Disc</text>
         </text>
     </view>
 </theme>
