@@ -21,6 +21,7 @@ namespace PlatformIds
         COMMODORE_AMIGA,
         COMMODORE_AMIGA_CD32,
         AMSTRAD_CPC,
+        GOOGLE_ANDROID,
         APPLE_II,
         APPLE_IIGS,
         ARCADE,

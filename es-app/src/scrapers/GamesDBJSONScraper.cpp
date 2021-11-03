@@ -61,6 +61,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
     {DAPHNE, "23"},
     {INTELLIVISION, "32"},
     {APPLE_MACINTOSH, "37"},
+    {GOOGLE_ANDROID, "4916"},
     {MICROSOFT_XBOX, "14"},
     {MICROSOFT_XBOX_360, "15"},
     {MOONLIGHT, "1"},

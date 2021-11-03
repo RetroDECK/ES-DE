@@ -54,6 +54,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
     {INTELLIVISION, 115},
     {GAMEENGINE_LUTRO, 206},
     {APPLE_MACINTOSH, 146},
+    {GOOGLE_ANDROID, 63},
     {MICROSOFT_XBOX, 32},
     {MICROSOFT_XBOX_360, 33},
     {MOONLIGHT, 138},

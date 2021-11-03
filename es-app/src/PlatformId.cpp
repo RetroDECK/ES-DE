@@ -22,6 +22,7 @@ namespace PlatformIds
         "amiga",                // Commodore Amiga
         "amigacd32",            // Commodore Amiga CD32
         "amstradcpc",           // Amstrad CPC
+        "android",              // Google Android
         "apple2",               // Apple II
         "apple2gs",             // Apple IIGS
         "arcade",               // Arcade

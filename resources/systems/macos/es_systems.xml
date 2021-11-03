@@ -75,6 +75,15 @@
         <theme>amstradcpc</theme>
     </system>
     <system>
+        <name>android</name>
+        <fullname>Google Android</fullname>
+        <path>%ROMPATH%/android</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>android</platform>
+        <theme>android</theme>
+    </system>
+    <system>
         <name>apple2</name>
         <fullname>Apple II</fullname>
         <path>%ROMPATH%/apple2</path>
