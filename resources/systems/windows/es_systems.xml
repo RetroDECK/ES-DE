@@ -240,6 +240,15 @@
         <theme>cavestory</theme>
     </system>
     <system>
+        <name>cdimono1</name>
+        <fullname>Philips CD-i</fullname>
+        <path>%ROMPATH%\cdimono1</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>cdimono1</platform>
+        <theme>cdimono1</theme>
+    </system>
+    <system>
         <name>cdtv</name>
         <fullname>Commodore CDTV</fullname>
         <path>%ROMPATH%\cdtv</path>

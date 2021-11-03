@@ -87,6 +87,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
     {PC, 135},
     {VALVE_STEAM, 135},
     {NEC_PCFX, 72},
+    {PHILIPS_CDI, 133},
     {GAMEENGINE_OPENBOR, 214},
     {TANGERINE_ORIC, 131},
     {GAMEENGINE_SCUMMVM, 123},

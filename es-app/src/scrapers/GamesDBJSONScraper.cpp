@@ -93,6 +93,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
     {PC, "1"},
     {VALVE_STEAM, "1"},
     {NEC_PCFX, "4930"},
+    {PHILIPS_CDI, "4917"},
     {SEGA_32X, "33"},
     {SEGA_CD, "21"},
     {SEGA_DREAMCAST, "16"},
