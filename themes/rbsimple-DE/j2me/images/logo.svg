@@ -21,7 +21,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,9 +40,9 @@
      inkscape:window-height="2065"
      id="namedview10"
      showgrid="false"
-     inkscape:zoom="4.9052771"
-     inkscape:cx="0.70412085"
-     inkscape:cy="31.053068"
+     inkscape:zoom="12.234785"
+     inkscape:cx="54.116181"
+     inkscape:cy="22.059058"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -66,7 +66,7 @@
      aria-label="Micro Edition"
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.20037651px;line-height:1.25;font-family:KacstArt;-inkscape-font-specification:'KacstArt Bold';letter-spacing:0px;word-spacing:0px;fill:#f58219;fill-opacity:1;stroke:none;stroke-width:0.90004706"
      id="text4755-3-0"
-     transform="translate(0.522753,0.30579272)">
+     transform="translate(0.522753,0.79619775)">
     <path
        d="m 58.327775,39.195915 v -3.002501 q 0,-0.101958 0,-0.203916 0.0035,-0.101959 0.03516,-0.875437 -0.249623,0.945753 -0.36916,1.318428 l -0.893016,2.763426 H 56.36244 l -0.893016,-2.763426 -0.376191,-1.318428 q 0.04219,0.815668 0.04219,1.079353 v 3.002501 h -0.921142 v -4.953774 h 1.388745 l 0.885984,2.770457 0.07735,0.267201 0.168758,0.664488 0.221496,-0.794573 0.910595,-2.907573 h 1.381713 v 4.953774 z"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:KacstArt;-inkscape-font-specification:'KacstArt Bold';fill:#f58219;fill-opacity:1;stroke-width:0.90004706"
