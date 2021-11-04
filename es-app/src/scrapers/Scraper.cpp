@@ -41,7 +41,9 @@ std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParam
     }
     else {
         LOG(LogDebug) << "Scraper::startScraperSearch(): Scraping system \""
-                      << params.system->getName() << "\", game file \""
+                      << params.system->getName()
+                      << (params.game->getType() == FOLDER ? "\", folder \"" :
+                                                             "\", game file \"")
                       << params.game->getFileName() << "\"";
         scraper_request_funcs.at(name)(params, handle->mRequestQueue, handle->mResults);
     }
