@@ -1188,6 +1188,15 @@
         <theme>switch</theme>
     </system>
     <system>
+        <name>symbian</name>
+        <fullname>Symbian</fullname>
+        <path>%ROMPATH%/symbian</path>
+        <extension>.jar .JAR .7z .7Z .zip .ZIP</extension>
+        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/squirreljme_libretro.so %ROM%</command>
+        <platform>android</platform>
+        <theme>symbian</theme>
+    </system>
+    <system>
         <name>tanodragon</name>
         <fullname>Tano Dragon</fullname>
         <path>%ROMPATH%/tanodragon</path>

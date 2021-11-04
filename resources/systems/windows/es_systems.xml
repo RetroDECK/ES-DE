@@ -506,7 +506,7 @@
         <fullname>Java 2 Micro Edition (J2ME)</fullname>
         <path>%ROMPATH%\j2me</path>
         <extension>.jar .JAR .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/squirreljme_libretro.dll %ROM%</command>
+        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\squirreljme_libretro.dll %ROM%</command>
         <platform>android</platform>
         <theme>j2me</theme>
     </system>
@@ -1186,6 +1186,15 @@
         <command label="Yuzu (Standalone)">%EMULATOR_YUZU% %ROM%</command>
         <platform>switch</platform>
         <theme>switch</theme>
+    </system>
+    <system>
+        <name>symbian</name>
+        <fullname>Symbian</fullname>
+        <path>%ROMPATH%\symbian</path>
+        <extension>.jar .JAR .7z .7Z .zip .ZIP</extension>
+        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\squirreljme_libretro.dll %ROM%</command>
+        <platform>android</platform>
+        <theme>symbian</theme>
     </system>
     <system>
         <name>tanodragon</name>
