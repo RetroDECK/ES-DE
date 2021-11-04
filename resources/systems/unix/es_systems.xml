@@ -359,6 +359,15 @@
         <theme>dreamcast</theme>
     </system>
     <system>
+        <name>epic</name>
+        <fullname>Epic Games Store</fullname>
+        <path>%ROMPATH%/epic</path>
+        <extension>.sh</extension>
+        <command>bash %ROM%</command>
+        <platform>pc</platform>
+        <theme>epic</theme>
+    </system>
+    <system>
         <name>famicom</name>
         <fullname>Nintendo Family Computer</fullname>
         <path>%ROMPATH%/famicom</path>
