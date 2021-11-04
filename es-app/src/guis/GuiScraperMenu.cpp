@@ -636,7 +636,7 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
 {
     if (mSystems->getSelectedObjects().empty()) {
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                                       "THE MIXIMAGE GENERATOR USES THE SAME SYSTEM\n"
+                                       "THE OFFLINE GENERATOR USES THE SAME SYSTEM\n"
                                        "SELECTIONS AS THE SCRAPER, SO PLEASE SELECT\n"
                                        "AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"));
         return;
