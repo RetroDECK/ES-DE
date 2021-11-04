@@ -1033,6 +1033,8 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
 
 void ViewController::reloadAll()
 {
+    cancelViewTransitions();
+
     // Clear all GameListViews.
     std::map<SystemData*, FileData*> cursorMap;
     for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++)
