@@ -608,6 +608,11 @@ void SystemView::renderCarousel(const glm::mat4& trans)
             comp->setRotationOrigin(mCarousel.logoRotationOrigin);
         }
         comp->setScale(scale);
+        // Partial workaround for single-pixel alignment issues at some resolutions and with
+        // some logos.
+        comp->setSize(comp->getSize().x, std::ceil(comp->getSize().y));
+        comp->setPosition(comp->getPosition().x, std::round(comp->getPosition().y));
+
         comp->setOpacity(static_cast<unsigned char>(opacity));
         comp->render(logoTrans);
     }
