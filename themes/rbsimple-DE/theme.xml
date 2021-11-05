@@ -21,6 +21,13 @@ based on: 'recalbox-multi' by the Recalbox community
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.035</fontSize>
             </text>
+            <text name="logoPlaceholderText">
+                <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+                <fontSize>0.035</fontSize>
+                <color>000000FF</color>
+                <pos>0 0</pos>
+                <size>.2 .2</size>
+            </text>
         </view>
     </feature>
 
