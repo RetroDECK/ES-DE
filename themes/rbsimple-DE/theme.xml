@@ -22,11 +22,12 @@ based on: 'recalbox-multi' by the Recalbox community
                 <fontSize>0.035</fontSize>
             </text>
             <text name="logoPlaceholderText">
+                <pos>0.5 0.5</pos>
+                <origin>0.5 0.5</origin>
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.035</fontSize>
                 <color>000000FF</color>
-                <pos>0 0</pos>
-                <size>.2 .2</size>
+                <text>${system.fullName}</text>
             </text>
         </view>
     </feature>
