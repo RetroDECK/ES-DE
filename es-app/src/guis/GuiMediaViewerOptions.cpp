@@ -66,11 +66,11 @@ GuiMediaViewerOptions::GuiMediaViewerOptions(Window* window, const std::string& 
         }
     });
 
-    // Render scanlines for screenshots using a shader.
+    // Render scanlines for screenshots and title screens using a shader.
     auto screenshot_scanlines = std::make_shared<SwitchComponent>(mWindow);
     screenshot_scanlines->setState(
         Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"));
-    addWithLabel("RENDER SCANLINES FOR SCREENSHOTS", screenshot_scanlines);
+    addWithLabel("RENDER SCANLINES FOR SCREENSHOTS AND TITLES", screenshot_scanlines);
     addSaveFunc([screenshot_scanlines, this] {
         if (screenshot_scanlines->getState() !=
             Settings::getInstance()->getBool("MediaViewerScreenshotScanlines")) {

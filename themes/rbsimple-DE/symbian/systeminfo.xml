@@ -1,0 +1,24 @@
+<theme>
+    <formatVersion>7</formatVersion>
+
+    <view name="system">
+        <text name="info1" extra="true">
+            <text>The Symbian operating system was the dominant</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>platform for early mobile devices, including</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>smartphones of the era.</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>Due to the popularity of Symbian, there are many</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>games available, primarily developed using</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>Java 2 Platform, Micro Edition (J2ME).</text>
+        </text>
+    </view>
+</theme>

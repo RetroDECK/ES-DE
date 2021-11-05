@@ -41,7 +41,9 @@ std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParam
     }
     else {
         LOG(LogDebug) << "Scraper::startScraperSearch(): Scraping system \""
-                      << params.system->getName() << "\", game file \""
+                      << params.system->getName()
+                      << (params.game->getType() == FOLDER ? "\", folder \"" :
+                                                             "\", game file \"")
                       << params.game->getFileName() << "\"";
         scraper_request_funcs.at(name)(params, handle->mRequestQueue, handle->mResults);
     }
@@ -185,11 +187,27 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
+    if (Settings::getInstance()->getBool("ScrapeBackCovers") && result.backcoverUrl != "") {
+        mediaFileInfo.fileURL = result.backcoverUrl;
+        mediaFileInfo.fileFormat = result.backcoverFormat;
+        mediaFileInfo.subDirectory = "backcovers";
+        mediaFileInfo.existingMediaFile = search.game->getBackCoverPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
     if (Settings::getInstance()->getBool("ScrapeCovers") && result.coverUrl != "") {
         mediaFileInfo.fileURL = result.coverUrl;
         mediaFileInfo.fileFormat = result.coverFormat;
         mediaFileInfo.subDirectory = "covers";
         mediaFileInfo.existingMediaFile = search.game->getCoverPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
+    if (Settings::getInstance()->getBool("ScrapePhysicalMedia") && result.physicalmediaUrl != "") {
+        mediaFileInfo.fileURL = result.physicalmediaUrl;
+        mediaFileInfo.fileFormat = result.physicalmediaFormat;
+        mediaFileInfo.subDirectory = "physicalmedia";
+        mediaFileInfo.existingMediaFile = search.game->getPhysicalMediaPath();
         mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
@@ -206,6 +224,14 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.fileFormat = result.screenshotFormat;
         mediaFileInfo.subDirectory = "screenshots";
         mediaFileInfo.existingMediaFile = search.game->getScreenshotPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
+    if (Settings::getInstance()->getBool("ScrapeTitleScreens") && result.titlescreenUrl != "") {
+        mediaFileInfo.fileURL = result.titlescreenUrl;
+        mediaFileInfo.fileFormat = result.titlescreenFormat;
+        mediaFileInfo.subDirectory = "titlescreens";
+        mediaFileInfo.existingMediaFile = search.game->getTitleScreenPath();
         mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
@@ -400,6 +426,75 @@ void MediaDownloadHandle::update()
         return;
 
     // Download is done, save it to disk.
+
+    // There are multiple issues with box back covers at ScreenScraper. Some only contain a single
+    // color like pure black or more commonly pure green, and some are mostly transparent with just
+    // a few black lines at the bottom. The following code attempts to detect such broken images
+    // and skip them so they're not saved to disk.
+    if (Settings::getInstance()->getString("Scraper") == "screenscraper" &&
+        mMediaType == "backcovers") {
+        bool emptyImage = false;
+        FREE_IMAGE_FORMAT imageFormat = FIF_UNKNOWN;
+        std::string imageData = mReq->getContent();
+        FIMEMORY* memoryStream = FreeImage_OpenMemory(reinterpret_cast<BYTE*>(&imageData.at(0)),
+                                                      static_cast<DWORD>(imageData.size()));
+        imageFormat = FreeImage_GetFileTypeFromMemory(memoryStream, 0);
+
+        if (imageFormat != FIF_UNKNOWN) {
+            emptyImage = true;
+
+            FIBITMAP* tempImage = FreeImage_LoadFromMemory(imageFormat, memoryStream);
+            RGBQUAD firstPixel;
+            RGBQUAD currPixel;
+
+            unsigned int width = FreeImage_GetWidth(tempImage);
+            unsigned int height = FreeImage_GetHeight(tempImage);
+
+            // Skip really small images as they're obviously not valid.
+            if (width < 50) {
+                emptyImage = true;
+            }
+            else if (height < 50) {
+                emptyImage = true;
+            }
+            else {
+                // Remove the alpha channel which will convert fully transparent pixels to black.
+                if (FreeImage_GetBPP(tempImage) != 24) {
+                    FIBITMAP* convertImage = FreeImage_ConvertTo24Bits(tempImage);
+                    FreeImage_Unload(tempImage);
+                    tempImage = convertImage;
+                }
+
+                // Skip the first line as this can apparently lead to false positives.
+                FreeImage_GetPixelColor(tempImage, 0, 1, &firstPixel);
+
+                for (unsigned int x = 0; x < width; x++) {
+                    if (!emptyImage)
+                        break;
+                    // Skip the last line as well.
+                    for (unsigned int y = 1; y < height - 1; y++) {
+                        FreeImage_GetPixelColor(tempImage, x, y, &currPixel);
+                        if (currPixel.rgbBlue != firstPixel.rgbBlue ||
+                            currPixel.rgbGreen != firstPixel.rgbGreen ||
+                            currPixel.rgbRed != firstPixel.rgbRed) {
+                            emptyImage = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            FreeImage_Unload(tempImage);
+        }
+        FreeImage_CloseMemory(memoryStream);
+
+        if (emptyImage) {
+            LOG(LogWarning) << "ScreenScraper: Image does not seem to contain any data, not saving "
+                               "it to disk: \""
+                            << mSavePath << "\"";
+            setStatus(ASYNC_DONE);
+            return;
+        }
+    }
 
     // This is just a temporary workaround to avoid saving media files to disk that are
     // actually just containing error messages from the scraper service. The proper solution

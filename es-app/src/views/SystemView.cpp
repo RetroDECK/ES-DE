@@ -467,16 +467,35 @@ void SystemView::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans{getTransform() * parentTrans};
 
-    renderExtras(trans, INT16_MIN, INT16_MAX);
+    if (mCarousel.legacyZIndexMode) {
+        // Render all extras.
+        renderExtras(trans, INT16_MIN, INT16_MAX);
 
-    // Fade the screen if we're using fade transitions and we're currently transitioning.
-    // This basically renders a black rectangle on top of the currently visible extras
-    // (and beneath the carousel and help prompts).
-    if (mExtrasFadeOpacity)
-        renderFade(trans);
+        // Fade the screen if we're using fade transitions and we're currently transitioning.
+        // This basically renders a black rectangle on top of the currently visible extras
+        // (and beneath the carousel and help prompts).
+        if (mExtrasFadeOpacity)
+            renderFade(trans);
 
-    // Always render the carousel on top so that it's not faded.
-    renderCarousel(trans);
+        // Always render the carousel on top so that it's not faded.
+        renderCarousel(trans);
+    }
+    else {
+        // Render the extras that are below the carousel.
+        renderExtras(trans, INT16_MIN, mCarousel.zIndex);
+
+        // Fade the screen if we're using fade transitions and we're currently transitioning.
+        // This basically renders a black rectangle on top of the currently visible extras
+        // (and beneath the carousel and help prompts).
+        if (mExtrasFadeOpacity)
+            renderFade(trans);
+
+        // Render the carousel.
+        renderCarousel(trans);
+
+        // Render the rest of the extras.
+        renderExtras(trans, mCarousel.zIndex, INT16_MAX);
+    }
 }
 
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
@@ -547,9 +566,10 @@ void SystemView::renderCarousel(const glm::mat4& trans)
                                              mCarousel.origin.y * mCarousel.size.y * -1.0f, 0.0f});
 
     glm::vec2 clipPos{carouselTrans[3].x, carouselTrans[3].y};
-    Renderer::pushClipRect(
-        glm::ivec2{static_cast<int>(clipPos.x), static_cast<int>(clipPos.y)},
-        glm::ivec2{static_cast<int>(mCarousel.size.x), static_cast<int>(mCarousel.size.y)});
+    Renderer::pushClipRect(glm::ivec2{static_cast<int>(std::round(clipPos.x)),
+                                      static_cast<int>(std::round(clipPos.y))},
+                           glm::ivec2{static_cast<int>(std::round(mCarousel.size.x)),
+                                      static_cast<int>(std::round(mCarousel.size.y))});
 
     Renderer::setMatrix(carouselTrans);
     Renderer::drawRect(0.0f, 0.0f, mCarousel.size.x, mCarousel.size.y, mCarousel.color,
@@ -653,6 +673,11 @@ void SystemView::renderCarousel(const glm::mat4& trans)
             comp->setRotationOrigin(mCarousel.logoRotationOrigin);
         }
         comp->setScale(scale);
+        // Partial workaround for single-pixel alignment issues at some resolutions and with
+        // some logos.
+        comp->setSize(comp->getSize().x, std::ceil(comp->getSize().y));
+        comp->setPosition(comp->getPosition().x, std::round(comp->getPosition().y));
+
         comp->setOpacity(static_cast<unsigned char>(opacity));
         comp->render(logoTrans);
 
@@ -743,6 +768,7 @@ void SystemView::getDefaultElements(void)
     mCarousel.logoSize.y = 0.155f * mSize.y;
     mCarousel.maxLogoCount = 3;
     mCarousel.zIndex = 40.0f;
+    mCarousel.legacyZIndexMode = true;
 
     // System info bar.
     mSystemInfo.setSize(mSize.x, mSystemInfo.getFont()->getLetterHeight() * 2.2f);
@@ -805,5 +831,12 @@ void SystemView::getCarouselFromTheme(const ThemeData::ThemeElement* elem)
             mCarousel.logoAlignment = ALIGN_BOTTOM;
         else
             mCarousel.logoAlignment = ALIGN_CENTER;
+    }
+    if (elem->has("legacyZIndexMode")) {
+        mCarousel.legacyZIndexMode =
+            elem->get<std::string>("legacyZIndexMode").compare("true") == 0 ? true : false;
+    }
+    else {
+        mCarousel.legacyZIndexMode = true;
     }
 }

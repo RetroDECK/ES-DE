@@ -51,7 +51,7 @@ FileFilterIndex::FileFilterIndex()
         {KIDGAME_FILTER,     &mKidGameIndexAllKeys,     &mFilterByKidGame,     &mKidGameIndexFilteredKeys,     "kidgame",      false,              "",             "KIDGAME"},
         {HIDDEN_FILTER,      &mHiddenIndexAllKeys,      &mFilterByHidden,      &mHiddenIndexFilteredKeys,      "hidden",       false,              "",             "HIDDEN"},
         {BROKEN_FILTER,      &mBrokenIndexAllKeys,      &mFilterByBroken,      &mBrokenIndexFilteredKeys,      "broken",       false,              "",             "BROKEN"},
-        {CONTROLLER_FILTER,  &mControllerIndexAllKeys,  &mFilterByController,  &mControllerIndexFilteredKeys,  "controller",   false,              "",             "CONTROLLER BADGE"},
+        {CONTROLLER_FILTER,  &mControllerIndexAllKeys,  &mFilterByController,  &mControllerIndexFilteredKeys,  "controller",   false,              "",             "CONTROLLER"},
         {ALTEMULATOR_FILTER, &mAltemulatorIndexAllKeys, &mFilterByAltemulator, &mAltemulatorIndexFilteredKeys, "altemulator",  false,              "",             "ALTERNATIVE EMULATOR"}
     };
     // clang-format on

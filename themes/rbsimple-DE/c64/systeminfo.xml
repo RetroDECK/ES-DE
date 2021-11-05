@@ -15,7 +15,7 @@
             <text>CPU : MOS Technology 6510/8500 @ 0.985 MHz (PAL version)</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 64KB RAM</text>
+            <text>RAM : 64KB</text>
         </text>
         <text name="info6" extra="true">
             <text>ROM : 20KB</text>

@@ -35,7 +35,7 @@ private:
                               unsigned int& height);
     void sampleFrameColor(CImg<unsigned char>& screenshotImage, unsigned char (&frameColor)[4]);
 
-    std::string getSavePath();
+    std::string getSavePath() const;
 
     FileData* mGame;
     std::string& mResultMessage;
@@ -46,6 +46,7 @@ private:
     std::string mMarqueePath;
     std::string mBox3DPath;
     std::string mCoverPath;
+    std::string mPhysicalMediaPath;
 
     int mWidth;
     int mHeight;
@@ -53,6 +54,7 @@ private:
     bool mMarquee;
     bool mBox3D;
     bool mCover;
+    bool mPhysicalMedia;
 };
 
 #endif // ES_APP_SCRAPERS_MIXIMAGE_GENERATOR_H

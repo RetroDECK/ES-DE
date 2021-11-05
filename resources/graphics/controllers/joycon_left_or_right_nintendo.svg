@@ -9,15 +9,23 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="42"
-   height="42"
-   viewBox="0 0 11.1125 11.1125"
+   width="256"
+   height="256"
+   viewBox="0 0 67.733333 67.733333"
    version="1.1"
    id="svg4925"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="joycon_left_or_right_nintendo.svg">
   <defs
-     id="defs4919" />
+     id="defs4919">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 5.55625 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="11.1125 : 5.55625 : 1"
+       inkscape:persp3d-origin="5.55625 : 3.7041667 : 1"
+       id="perspective4841" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,9 +33,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="17.595863"
-     inkscape:cx="-0.77044279"
-     inkscape:cy="30.632636"
+     inkscape:zoom="3.8791661"
+     inkscape:cx="36.845949"
+     inkscape:cy="166.61016"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -53,10 +61,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-285.88748)">
+     transform="translate(0,-229.26665)">
     <g
        id="g4910"
-       transform="matrix(1.0578414,0,0,1.0578414,-0.32138125,-15.666888)">
+       transform="matrix(6.6685423,0,0,6.6685423,-3.1854213,-1673.2278)">
       <g
          transform="translate(-3.8154512,-1.3888992e-6)"
          id="g5517">
@@ -162,7 +170,7 @@
     </g>
     <g
        id="g4874"
-       transform="matrix(1.0578414,0,0,1.0578414,-0.32138125,-18.048138)">
+       transform="matrix(6.6685423,0,0,6.6685423,-3.1854213,-1687.5153)">
       <g
          transform="translate(-0.02566855,-1.3888992e-6)"
          id="g5474">

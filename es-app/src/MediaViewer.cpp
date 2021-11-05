@@ -41,7 +41,8 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mHasVideo = false;
     mHasImages = false;
     mCurrentImageIndex = 0;
-    mScreenShotIndex = -1;
+    mScreenshotIndex = -1;
+    mTitleScreenIndex = -1;
 
     mGame = game;
 
@@ -125,8 +126,11 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
         mImage->render(trans);
 
 #if defined(USE_OPENGL_21)
-        if (mCurrentImageIndex == mScreenShotIndex &&
+        if (mCurrentImageIndex == mScreenshotIndex &&
             Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
+            Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+        else if (mCurrentImageIndex == mTitleScreenIndex &&
+                 Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
             Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
 #endif
 
@@ -164,15 +168,23 @@ void MediaViewer::findMedia()
 
     if (!mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
         mImageFiles.push_back(mediaFile);
-        mScreenShotIndex = 0;
+        mScreenshotIndex = 0;
     }
 
     if ((mediaFile = mGame->getCoverPath()) != "")
         mImageFiles.push_back(mediaFile);
 
+    if ((mediaFile = mGame->getBackCoverPath()) != "")
+        mImageFiles.push_back(mediaFile);
+
+    if ((mediaFile = mGame->getTitleScreenPath()) != "") {
+        mImageFiles.push_back(mediaFile);
+        mTitleScreenIndex = static_cast<int>(mImageFiles.size() - 1);
+    }
+
     if (mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
         mImageFiles.push_back(mediaFile);
-        mScreenShotIndex = static_cast<int>(mImageFiles.size() - 1);
+        mScreenshotIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if ((mediaFile = mGame->getMiximagePath()) != "")

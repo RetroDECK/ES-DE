@@ -22,6 +22,7 @@ namespace PlatformIds
         "amiga",                // Commodore Amiga
         "amigacd32",            // Commodore Amiga CD32
         "amstradcpc",           // Amstrad CPC
+        "android",              // Google Android
         "apple2",               // Apple II
         "apple2gs",             // Apple IIGS
         "arcade",               // Arcade
@@ -39,6 +40,7 @@ namespace PlatformIds
         "bbcmicro",             // BBC Micro
         "c64",                  // Commodore 64
         "cavestory",            // Cave Story (NXEngine)
+        "cdimono1",             // Philips CD-i
         "cdtv",                 // Commodore CDTV
         "channelf",             // Fairchild Channel F
         "coco",                 // Tandy Color Computer
@@ -116,6 +118,7 @@ namespace PlatformIds
         "trs-80",               // Tandy TRS-80
         "uzebox",               // Uzebox
         "vectrex",              // Vectrex
+        "vic20",                // Commodore VIC-20
         "videopac",             // Philips Videopac G7000 (Magnavox Odyssey2)
         "virtualboy",           // Nintendo Virtual Boy
         "wii",                  // Nintendo Wii
