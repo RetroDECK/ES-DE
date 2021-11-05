@@ -409,11 +409,12 @@ bool FileFilterIndex::showFile(FileData* game)
     // in [] from the search string.
     if (mTextFilter != "" && mTextRemoveSystem &&
         !(Utils::String::toUpper(game->getName().substr(0, game->getName().find_last_of("[")))
-              .find(mTextFilter) != std::string::npos)) {
+              .find(Utils::String::toUpper(mTextFilter)) != std::string::npos)) {
         return false;
     }
     else if (mTextFilter != "" &&
-             !(Utils::String::toUpper(game->getName()).find(mTextFilter) != std::string::npos)) {
+             !(Utils::String::toUpper(game->getName()).find(Utils::String::toUpper(mTextFilter)) !=
+               std::string::npos)) {
         return false;
     }
 
