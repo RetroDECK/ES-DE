@@ -186,8 +186,7 @@ void SystemView::populate()
             glm::vec3 v = {denormalized.x, denormalized.y, 0.0f};
             e.data.logo->setPosition(v + offsetLogo);
             if (e.data.logoPlaceholderText)
-                e.data.logoPlaceholderText->setPosition(
-                    v + offsetLogoPlaceholderText);
+                e.data.logoPlaceholderText->setPosition(v + offsetLogoPlaceholderText);
 
             // Make background extras.
             e.data.backgroundExtras = ThemeData::makeExtras(it->getTheme(), "system", mWindow);
