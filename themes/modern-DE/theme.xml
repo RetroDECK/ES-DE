@@ -446,7 +446,14 @@ based on:       Switch Theme by Lilbud
 			<customControllerIcon controller="gamepad_nintendo_nes">./assets/controllers/classic.svg</customControllerIcon>
 			<customControllerIcon controller="gamepad_nintendo_snes">./assets/controllers/classic.svg</customControllerIcon>
 			<customControllerIcon controller="gamepad_nintendo_64">./assets/controllers/n64.svg</customControllerIcon>
+
+			<customControllerIcon controller="gamepad_sega_md_3_buttons">./assets/controllers/.svg</customControllerIcon>
+			<customControllerIcon controller="gamepad_sega_md_6_buttons">./assets/controllers/.svg</customControllerIcon>
+			<customControllerIcon controller="flight_stick_generic">./assets/controllers/.svg</customControllerIcon>
+			<customControllerIcon controller="spinner_generic">./assets/controllers/.svg</customControllerIcon>
+
 			<customControllerIcon controller="joystick_generic">./assets/controllers/joystick.svg</customControllerIcon>
+			<customControllerIcon controller="joystick_arcade_1_button">./assets/controllers/joystick-arcade.svg</customControllerIcon>
 			<customControllerIcon controller="joystick_arcade_2_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
 			<customControllerIcon controller="joystick_arcade_3_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
 			<customControllerIcon controller="joystick_arcade_4_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
@@ -460,7 +467,7 @@ based on:       Switch Theme by Lilbud
 			<customControllerIcon controller="keyboard_mouse_generic">./assets/controllers/keyboard-mouse.svg</customControllerIcon>
 			<customControllerIcon controller="steering_wheel_generic">./assets/controllers/wheel.svg</customControllerIcon>
 			<customControllerIcon controller="wii_remote_nintendo">./assets/controllers/wiimote.svg</customControllerIcon>
-			<customControllerIcon controller="wii_remote_nunchuck_nintendo">./assets/controllers/wiimote-nunchuck.svg</customControllerIcon>
+			<customControllerIcon controller="wii_remote_and_nunchuk_nintendo">./assets/controllers/wiimote-nunchuck.svg</customControllerIcon>
 			<customControllerIcon controller="joycon_left_or_right_nintendo">./assets/controllers/joycon-left.svg</customControllerIcon>
 			<customControllerIcon controller="joycon_pair_nintendo">./assets/controllers/joycon-pair.svg</customControllerIcon>
 			<customControllerIcon controller="unknown">./assets/controllers/generic.svg</customControllerIcon>
