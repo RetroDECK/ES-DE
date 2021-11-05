@@ -9,7 +9,7 @@
             <text>Year of Release : 2017</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 84 million</text>
+            <text>Units sold : 89 million</text>
         </text>
         <text name="info4" extra="true">
             <text>Best-selling game : Mario Kart 8 Deluxe</text>
@@ -24,7 +24,10 @@
             <text>Video : 256 Maxwell-based CUDA cores @ 307.2–768 MHz</text>
         </text>
         <text name="info8" extra="true">
-            <text>Screen : 6.2-inch, 1280 × 720 LCD (237 ppi)</text>
+            <text>Screen (original version) : 6.2-inch, 1280 × 720 LCD (237 ppi)</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>Screen (OLED version) : 7-inch, 1280 × 720 OLED (209.8 ppi)</text>
         </text>
     </view>
 </theme>

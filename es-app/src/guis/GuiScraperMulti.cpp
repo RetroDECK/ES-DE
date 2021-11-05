@@ -12,6 +12,7 @@
 #include "guis/GuiScraperMulti.h"
 
 #include "CollectionSystemsManager.h"
+#include "FileFilterIndex.h"
 #include "Gamelist.h"
 #include "MameNames.h"
 #include "SystemData.h"
@@ -269,9 +270,12 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
 {
     ScraperSearchParams& search = mSearchQueue.front();
 
-    GuiScraperSearch::saveMetadata(result, search.game->metadata, search.game);
+    search.system->getIndex()->removeFromIndex(search.game);
 
+    GuiScraperSearch::saveMetadata(result, search.game->metadata, search.game);
     updateGamelist(search.system);
+
+    search.system->getIndex()->addToIndex(search.game);
 
     mSearchQueue.pop();
     mCurrentGame++;

@@ -14,16 +14,23 @@
 * Populated the bundled es_systems.xml files with alternative emulator entries for most RetroArch cores
 * Added a virtual keyboard, partly based on code from batocera-emulationstation
 * Added badges that indicate favorite/completed/broken games as well as games suitable for children and those with a selected alternative emulator
-* Added game-specific controller images that are selectable via the metadata editor and displayed as a controller badge
+* Added game-specific controllers that are selectable via the metadata editor and displayed as a controller badge
+* Added scraping of title screens, box back covers and physical media images
+* Updated the media viewer to display title screens and box back cover images
+* Added physical media images to the generated miximages
+* Added an option to rotate horizontally oriented game boxes when generating miximages
+* Added size options (small/medium/large) for the boxes/covers and physical media images when generating miximages
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
+* Added scraping of controller metadata (only for ScreenScraper and only for arcade systems)
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
 * Added horizontal scrolling of long game names to the scraper GUIs
+* Removed the "Scrape" text prefix from the scraper content settings
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
-* Added filters for "Alternative emulator" and "Controller badges" and sorted the filters in the same order as the metadata editor fields
+* Added filters for "Controller" and "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
 * Added a menu option to change the application exit key combination
 * Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
@@ -44,6 +51,10 @@
 * Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
 * Added a blinking cursor to TextEditComponent
+* Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
+* rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
+* rbsimple-DE: Improved existing graphics for the dos, pc, residualvm and scummvm systems
+* Added loading of the System view to the ViewController preload function to avoid issues with theme extras texture pop-in
 * Changed the filter description "Text filter (game name)" to "Game name"
 * Removed a margin hack from TextComponent and if abbreviated strings end with a space character, that space is now removed
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
@@ -81,6 +92,7 @@
 * When scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
 * When scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* The multi-scraper did not update the filter index
 * Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
@@ -90,6 +102,7 @@
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
+* Leading and trailing whitespace characters would get included in game name filters
 * Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
 * Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
 * Fixed multiple issues where ComponentGrid would display incorrect help prompts
@@ -104,6 +117,8 @@
 * Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
+* When running really low on texture memory, the menu texture would not get rendered correctly
+* There was a tiny and randomly occuring gap between the system carousel and systemInfo bar during slide transitions between the System and Gamelist views
 * SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
 * Resizing in SwitchComponent did not reposition the image properly leading to a non-centered image

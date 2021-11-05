@@ -1,0 +1,15 @@
+<theme>
+    <formatVersion>7</formatVersion>
+
+    <view name="system">
+        <text name="info1" extra="true">
+            <text>The Symbian operating system was the dominant</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>platform for early mobile devices, including</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>smartphones of the era.</text>
+        </text>
+    </view>
+</theme>

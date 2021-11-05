@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="42"
-   height="42"
-   viewBox="0 0 11.1125 11.1125"
+   width="256"
+   height="256"
+   viewBox="0 0 67.733333 67.733333"
    version="1.1"
    id="svg4925"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16.892814"
-     inkscape:cx="-25.122961"
-     inkscape:cy="12.292821"
+     inkscape:zoom="5.2667754"
+     inkscape:cx="88.764467"
+     inkscape:cy="125.56991"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,9 +55,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-285.88748)">
+     transform="translate(0,-229.26665)">
     <g
-       id="g5117">
+       id="g5117"
+       transform="matrix(5.9358241,0,0,5.9358241,0.88574371,-1467.7111)">
       <path
          inkscape:connector-curvature="0"
          id="rect4891"
@@ -67,7 +68,7 @@
          transform="matrix(0.05395004,0,0,0.05395004,17.263409,268.3063)"
          style="fill:#868580"
          id="XMLID_697_"
-         points="-216.2,356.8 -209.7,356.8 -210.6,354.4 -216.2,354.4 -216.2,352.8 -211.3,352.8 -212.2,350.4 -222.2,350.4 -223.1,352.8 -217.8,352.8 -217.8,354.4 -223.7,354.4 -224.6,356.8 -217.8,356.8 -217.8,358.4 -225.1,358.4 -225.9,360.4 -217.8,360.4 -217.8,362 -226.5,362 -227.8,365.6 -206.2,365.6 -207.6,362 -216.2,362 -216.2,360.4 -208.3,360.4 -209,358.4 -216.2,358.4 " />
+         points="-217.8,362 -226.5,362 -227.8,365.6 -206.2,365.6 -207.6,362 -216.2,362 -216.2,360.4 -208.3,360.4 -209,358.4 -216.2,358.4 -216.2,356.8 -209.7,356.8 -210.6,354.4 -216.2,354.4 -216.2,352.8 -211.3,352.8 -212.2,350.4 -222.2,350.4 -223.1,352.8 -217.8,352.8 -217.8,354.4 -223.7,354.4 -224.6,356.8 -217.8,356.8 -217.8,358.4 -225.1,358.4 -225.9,360.4 -217.8,360.4 " />
       <path
          style="fill:#c2c2c2;fill-opacity:1;stroke:#000000;stroke-width:0.14408384;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          inkscape:connector-curvature="0"

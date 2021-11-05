@@ -56,17 +56,16 @@ void SystemView::populate()
 {
     mEntries.clear();
 
-    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); it++) {
-        const std::shared_ptr<ThemeData>& theme = (*it)->getTheme();
+    for (auto it : SystemData::sSystemVector) {
+        const std::shared_ptr<ThemeData>& theme = it->getTheme();
 
         if (mViewNeedsReload)
             getViewElements(theme);
 
-        if ((*it)->isVisible()) {
+        if (it->isVisible()) {
             Entry e;
-            e.name = (*it)->getName();
-            e.object = *it;
+            e.name = it->getName();
+            e.object = it;
 
             // Component offset. Used for positioning placeholders.
             glm::vec3 offsetLogo = {0.0f, 0.0f, 0.0f};
@@ -75,13 +74,13 @@ void SystemView::populate()
             // Make logo.
             const ThemeData::ThemeElement* logoElem = theme->getElement("system", "logo", "image");
             if (logoElem) {
-                std::string path = logoElem->get<std::string>("path");
+                auto path = logoElem->get<std::string>("path");
                 std::string defaultPath =
                     logoElem->has("default") ? logoElem->get<std::string>("default") : "";
                 if ((!path.empty() && ResourceManager::getInstance()->fileExists(path)) ||
                     (!defaultPath.empty() &&
                      ResourceManager::getInstance()->fileExists(defaultPath))) {
-                    ImageComponent* logo = new ImageComponent(mWindow, false, false);
+                    auto* logo = new ImageComponent(mWindow, false, false);
                     logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
                     logo->applyTheme(theme, "system", "logo", ThemeFlags::PATH | ThemeFlags::COLOR);
                     logo->setRotateByTargetSize(true);
@@ -97,8 +96,7 @@ void SystemView::populate()
                 glm::vec3 center = {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
 
                 // Placeholder Image.
-                const ThemeData::ThemeElement* logoElem =
-                    theme->getElement("system", "logoPlaceholderImage", "image");
+                logoElem = theme->getElement("system", "logoPlaceholderImage", "image");
                 if (logoElem) {
                     auto path = logoElem->get<std::string>("path");
                     std::string defaultPath =
@@ -106,7 +104,7 @@ void SystemView::populate()
                     if ((!path.empty() && ResourceManager::getInstance()->fileExists(path)) ||
                         (!defaultPath.empty() &&
                          ResourceManager::getInstance()->fileExists(defaultPath))) {
-                        ImageComponent* logo = new ImageComponent(mWindow, false, false);
+                        auto* logo = new ImageComponent(mWindow, false, false);
                         logo->applyTheme(theme, "system", "logoPlaceholderImage", ThemeFlags::ALL);
                         if (!logoElem->has("size"))
                             logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
@@ -122,7 +120,7 @@ void SystemView::populate()
                 if (logoPlaceholderText) {
                     // Element 'logoPlaceholderText' found in theme: place text
                     auto* text =
-                        new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
+                        new TextComponent(mWindow, it->getName(), Font::get(FONT_SIZE_LARGE),
                                           0x000000FF, ALIGN_CENTER);
                     text->setSize(mCarousel.logoSize * mCarousel.logoScale);
                     if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
@@ -133,7 +131,7 @@ void SystemView::populate()
                         text->setHorizontalAlignment(ALIGN_CENTER);
                         text->setVerticalAlignment(mCarousel.logoAlignment);
                     }
-                    text->applyTheme((*it)->getTheme(), "system", "logoPlaceholderText",
+                    text->applyTheme(it->getTheme(), "system", "logoPlaceholderText",
                                      ThemeFlags::ALL);
                     if (!e.data.logo) {
                         e.data.logo = std::shared_ptr<GuiComponent>(text);
@@ -146,11 +144,11 @@ void SystemView::populate()
                 }
                 else {
                     // Fallback to legacy centered placeholder text.
-                    TextComponent* text =
-                        new TextComponent(mWindow, (*it)->getName(), Font::get(FONT_SIZE_LARGE),
+                    auto* text =
+                        new TextComponent(mWindow, it->getName(), Font::get(FONT_SIZE_LARGE),
                                           0x000000FF, ALIGN_CENTER);
                     text->setSize(mCarousel.logoSize * mCarousel.logoScale);
-                    text->applyTheme((*it)->getTheme(), "system", "logoText",
+                    text->applyTheme(it->getTheme(), "system", "logoText",
                                      ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE |
                                          ThemeFlags::COLOR | ThemeFlags::FORCE_UPPERCASE |
                                          ThemeFlags::LINE_SPACING | ThemeFlags::TEXT);
@@ -188,11 +186,10 @@ void SystemView::populate()
             glm::vec3 v = {denormalized.x, denormalized.y, 0.0f};
             e.data.logo->setPosition(v + offsetLogo);
             if (e.data.logoPlaceholderText)
-                e.data.logoPlaceholderText->setPosition(
-                    v + offsetLogoPlaceholderText);
+                e.data.logoPlaceholderText->setPosition(v + offsetLogoPlaceholderText);
 
             // Make background extras.
-            e.data.backgroundExtras = ThemeData::makeExtras((*it)->getTheme(), "system", mWindow);
+            e.data.backgroundExtras = ThemeData::makeExtras(it->getTheme(), "system", mWindow);
 
             // Sort the extras by z-index.
             std::stable_sort(
@@ -202,7 +199,7 @@ void SystemView::populate()
             this->add(e);
         }
     }
-    if (mEntries.size() == 0) {
+    if (mEntries.empty()) {
         // Something is wrong, there is not a single system to show, check if UI mode is not full.
         if (!UIModeController::getInstance()->isUIModeFull()) {
             Settings::getInstance()->setString("UIMode", "full");
@@ -566,9 +563,10 @@ void SystemView::renderCarousel(const glm::mat4& trans)
                                              mCarousel.origin.y * mCarousel.size.y * -1.0f, 0.0f});
 
     glm::vec2 clipPos{carouselTrans[3].x, carouselTrans[3].y};
-    Renderer::pushClipRect(
-        glm::ivec2{static_cast<int>(clipPos.x), static_cast<int>(clipPos.y)},
-        glm::ivec2{static_cast<int>(mCarousel.size.x), static_cast<int>(mCarousel.size.y)});
+    Renderer::pushClipRect(glm::ivec2{static_cast<int>(std::round(clipPos.x)),
+                                      static_cast<int>(std::round(clipPos.y))},
+                           glm::ivec2{static_cast<int>(std::round(mCarousel.size.x)),
+                                      static_cast<int>(std::round(mCarousel.size.y))});
 
     Renderer::setMatrix(carouselTrans);
     Renderer::drawRect(0.0f, 0.0f, mCarousel.size.x, mCarousel.size.y, mCarousel.color,
@@ -672,6 +670,11 @@ void SystemView::renderCarousel(const glm::mat4& trans)
             comp->setRotationOrigin(mCarousel.logoRotationOrigin);
         }
         comp->setScale(scale);
+        // Partial workaround for single-pixel alignment issues at some resolutions and with
+        // some logos.
+        comp->setSize(comp->getSize().x, std::ceil(comp->getSize().y));
+        comp->setPosition(comp->getPosition().x, std::round(comp->getPosition().y));
+
         comp->setOpacity(static_cast<unsigned char>(opacity));
         comp->render(logoTrans);
 
@@ -762,6 +765,7 @@ void SystemView::getDefaultElements(void)
     mCarousel.logoSize.y = 0.155f * mSize.y;
     mCarousel.maxLogoCount = 3;
     mCarousel.zIndex = 40.0f;
+    mCarousel.legacyZIndexMode = true;
 
     // System info bar.
     mSystemInfo.setSize(mSize.x, mSystemInfo.getFont()->getLetterHeight() * 2.2f);

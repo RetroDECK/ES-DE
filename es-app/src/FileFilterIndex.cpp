@@ -51,7 +51,7 @@ FileFilterIndex::FileFilterIndex()
         {KIDGAME_FILTER,     &mKidGameIndexAllKeys,     &mFilterByKidGame,     &mKidGameIndexFilteredKeys,     "kidgame",      false,              "",             "KIDGAME"},
         {HIDDEN_FILTER,      &mHiddenIndexAllKeys,      &mFilterByHidden,      &mHiddenIndexFilteredKeys,      "hidden",       false,              "",             "HIDDEN"},
         {BROKEN_FILTER,      &mBrokenIndexAllKeys,      &mFilterByBroken,      &mBrokenIndexFilteredKeys,      "broken",       false,              "",             "BROKEN"},
-        {CONTROLLER_FILTER,  &mControllerIndexAllKeys,  &mFilterByController,  &mControllerIndexFilteredKeys,  "controller",   false,              "",             "CONTROLLER BADGE"},
+        {CONTROLLER_FILTER,  &mControllerIndexAllKeys,  &mFilterByController,  &mControllerIndexFilteredKeys,  "controller",   false,              "",             "CONTROLLER"},
         {ALTEMULATOR_FILTER, &mAltemulatorIndexAllKeys, &mFilterByAltemulator, &mAltemulatorIndexFilteredKeys, "altemulator",  false,              "",             "ALTERNATIVE EMULATOR"}
     };
     // clang-format on
@@ -409,11 +409,12 @@ bool FileFilterIndex::showFile(FileData* game)
     // in [] from the search string.
     if (mTextFilter != "" && mTextRemoveSystem &&
         !(Utils::String::toUpper(game->getName().substr(0, game->getName().find_last_of("[")))
-              .find(mTextFilter) != std::string::npos)) {
+              .find(Utils::String::toUpper(mTextFilter)) != std::string::npos)) {
         return false;
     }
     else if (mTextFilter != "" &&
-             !(Utils::String::toUpper(game->getName()).find(mTextFilter) != std::string::npos)) {
+             !(Utils::String::toUpper(game->getName()).find(Utils::String::toUpper(mTextFilter)) !=
+               std::string::npos)) {
         return false;
     }
 

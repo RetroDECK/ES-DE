@@ -60,16 +60,22 @@ struct ScraperSearchResult {
     std::string thumbnailImageUrl;
 
     std::string box3DUrl;
+    std::string backcoverUrl;
     std::string coverUrl;
     std::string marqueeUrl;
+    std::string physicalmediaUrl;
     std::string screenshotUrl;
+    std::string titlescreenUrl;
     std::string videoUrl;
 
     // Needed to pre-set the image type.
     std::string box3DFormat;
+    std::string backcoverFormat;
     std::string coverFormat;
     std::string marqueeFormat;
+    std::string physicalmediaFormat;
     std::string screenshotFormat;
+    std::string titlescreenFormat;
     std::string videoFormat;
 
     // Indicates whether any new media files were downloaded and saved.

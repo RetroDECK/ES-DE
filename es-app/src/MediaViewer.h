@@ -44,7 +44,8 @@ private:
     bool mDisplayingImage;
 
     int mCurrentImageIndex;
-    int mScreenShotIndex;
+    int mScreenshotIndex;
+    int mTitleScreenIndex;
 
     std::string mVideoFile;
     std::vector<std::string> mImageFiles;

@@ -221,7 +221,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape game names.
     auto scrape_game_names = std::make_shared<SwitchComponent>(mWindow);
     scrape_game_names->setState(Settings::getInstance()->getBool("ScrapeGameNames"));
-    s->addWithLabel("SCRAPE GAME NAMES", scrape_game_names);
+    s->addWithLabel("GAME NAMES", scrape_game_names);
     s->addSaveFunc([scrape_game_names, s] {
         if (scrape_game_names->getState() != Settings::getInstance()->getBool("ScrapeGameNames")) {
             Settings::getInstance()->setBool("ScrapeGameNames", scrape_game_names->getState());
@@ -232,7 +232,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape ratings.
     auto scrape_ratings = std::make_shared<SwitchComponent>(mWindow);
     scrape_ratings->setState(Settings::getInstance()->getBool("ScrapeRatings"));
-    s->addWithLabel("SCRAPE RATINGS", scrape_ratings);
+    s->addWithLabel("RATINGS", scrape_ratings);
     s->addSaveFunc([scrape_ratings, s] {
         if (scrape_ratings->getState() != Settings::getInstance()->getBool("ScrapeRatings")) {
             Settings::getInstance()->setBool("ScrapeRatings", scrape_ratings->getState());
@@ -249,10 +249,32 @@ void GuiScraperMenu::openContentOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
+    // Scrape controllers (arcade systems only).
+    auto scrapeControllers = std::make_shared<SwitchComponent>(mWindow);
+    scrapeControllers->setState(Settings::getInstance()->getBool("ScrapeControllers"));
+    s->addWithLabel("CONTROLLERS (ARCADE SYSTEMS ONLY)", scrapeControllers);
+    s->addSaveFunc([scrapeControllers, s] {
+        if (scrapeControllers->getState() !=
+            Settings::getInstance()->getBool("ScrapeControllers")) {
+            Settings::getInstance()->setBool("ScrapeControllers", scrapeControllers->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Controllers are not supported by TheGamesDB, so gray out the option if this scraper is
+    // selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrapeControllers->setEnabled(false);
+        scrapeControllers->setOpacity(DISABLED_OPACITY);
+        scrapeControllers->getParent()
+            ->getChild(scrapeControllers->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Scrape other metadata.
     auto scrape_metadata = std::make_shared<SwitchComponent>(mWindow);
     scrape_metadata->setState(Settings::getInstance()->getBool("ScrapeMetadata"));
-    s->addWithLabel("SCRAPE OTHER METADATA", scrape_metadata);
+    s->addWithLabel("OTHER METADATA", scrape_metadata);
     s->addSaveFunc([scrape_metadata, s] {
         if (scrape_metadata->getState() != Settings::getInstance()->getBool("ScrapeMetadata")) {
             Settings::getInstance()->setBool("ScrapeMetadata", scrape_metadata->getState());
@@ -263,7 +285,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape videos.
     auto scrape_videos = std::make_shared<SwitchComponent>(mWindow);
     scrape_videos->setState(Settings::getInstance()->getBool("ScrapeVideos"));
-    s->addWithLabel("SCRAPE VIDEOS", scrape_videos);
+    s->addWithLabel("VIDEOS", scrape_videos);
     s->addSaveFunc([scrape_videos, s] {
         if (scrape_videos->getState() != Settings::getInstance()->getBool("ScrapeVideos")) {
             Settings::getInstance()->setBool("ScrapeVideos", scrape_videos->getState());
@@ -283,7 +305,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape screenshots images.
     auto scrape_screenshots = std::make_shared<SwitchComponent>(mWindow);
     scrape_screenshots->setState(Settings::getInstance()->getBool("ScrapeScreenshots"));
-    s->addWithLabel("SCRAPE SCREENSHOT IMAGES", scrape_screenshots);
+    s->addWithLabel("SCREENSHOT IMAGES", scrape_screenshots);
     s->addSaveFunc([scrape_screenshots, s] {
         if (scrape_screenshots->getState() !=
             Settings::getInstance()->getBool("ScrapeScreenshots")) {
@@ -292,10 +314,22 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // Scrape cover images.
+    // Scrape title screen images.
+    auto scrapeTitleScreens = std::make_shared<SwitchComponent>(mWindow);
+    scrapeTitleScreens->setState(Settings::getInstance()->getBool("ScrapeTitleScreens"));
+    s->addWithLabel("TITLE SCREEN IMAGES", scrapeTitleScreens);
+    s->addSaveFunc([scrapeTitleScreens, s] {
+        if (scrapeTitleScreens->getState() !=
+            Settings::getInstance()->getBool("ScrapeTitleScreens")) {
+            Settings::getInstance()->setBool("ScrapeTitleScreens", scrapeTitleScreens->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Scrape box cover images.
     auto scrape_covers = std::make_shared<SwitchComponent>(mWindow);
     scrape_covers->setState(Settings::getInstance()->getBool("ScrapeCovers"));
-    s->addWithLabel("SCRAPE BOX COVER IMAGES", scrape_covers);
+    s->addWithLabel("BOX COVER IMAGES", scrape_covers);
     s->addSaveFunc([scrape_covers, s] {
         if (scrape_covers->getState() != Settings::getInstance()->getBool("ScrapeCovers")) {
             Settings::getInstance()->setBool("ScrapeCovers", scrape_covers->getState());
@@ -303,10 +337,31 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
+    // Scrape box back cover images.
+    auto scrapeBackCovers = std::make_shared<SwitchComponent>(mWindow);
+    scrapeBackCovers->setState(Settings::getInstance()->getBool("ScrapeBackCovers"));
+    s->addWithLabel("BOX BACK COVER IMAGES", scrapeBackCovers);
+    s->addSaveFunc([scrapeBackCovers, s] {
+        if (scrapeBackCovers->getState() != Settings::getInstance()->getBool("ScrapeBackCovers")) {
+            Settings::getInstance()->setBool("ScrapeBackCovers", scrapeBackCovers->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Box back cover images are not supported by TheGamesDB, so gray out the option if this
+    // scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrapeBackCovers->setEnabled(false);
+        scrapeBackCovers->setOpacity(DISABLED_OPACITY);
+        scrapeBackCovers->getParent()
+            ->getChild(scrapeBackCovers->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Scrape marquee images.
     auto scrape_marquees = std::make_shared<SwitchComponent>(mWindow);
     scrape_marquees->setState(Settings::getInstance()->getBool("ScrapeMarquees"));
-    s->addWithLabel("SCRAPE MARQUEE (WHEEL) IMAGES", scrape_marquees);
+    s->addWithLabel("MARQUEE (WHEEL) IMAGES", scrape_marquees);
     s->addSaveFunc([scrape_marquees, s] {
         if (scrape_marquees->getState() != Settings::getInstance()->getBool("ScrapeMarquees")) {
             Settings::getInstance()->setBool("ScrapeMarquees", scrape_marquees->getState());
@@ -317,7 +372,7 @@ void GuiScraperMenu::openContentOptions()
     // Scrape 3D box images.
     auto scrape_3dboxes = std::make_shared<SwitchComponent>(mWindow);
     scrape_3dboxes->setState(Settings::getInstance()->getBool("Scrape3DBoxes"));
-    s->addWithLabel("SCRAPE 3D BOX IMAGES", scrape_3dboxes);
+    s->addWithLabel("3D BOX IMAGES", scrape_3dboxes);
     s->addSaveFunc([scrape_3dboxes, s] {
         if (scrape_3dboxes->getState() != Settings::getInstance()->getBool("Scrape3DBoxes")) {
             Settings::getInstance()->setBool("Scrape3DBoxes", scrape_3dboxes->getState());
@@ -332,6 +387,29 @@ void GuiScraperMenu::openContentOptions()
         scrape_3dboxes->setOpacity(DISABLED_OPACITY);
         scrape_3dboxes->getParent()
             ->getChild(scrape_3dboxes->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
+    // Scrape physical media images.
+    auto scrapePhysicalMedia = std::make_shared<SwitchComponent>(mWindow);
+    scrapePhysicalMedia->setState(Settings::getInstance()->getBool("ScrapePhysicalMedia"));
+    s->addWithLabel("PHYSICAL MEDIA IMAGES", scrapePhysicalMedia);
+    s->addSaveFunc([scrapePhysicalMedia, s] {
+        if (scrapePhysicalMedia->getState() !=
+            Settings::getInstance()->getBool("ScrapePhysicalMedia")) {
+            Settings::getInstance()->setBool("ScrapePhysicalMedia",
+                                             scrapePhysicalMedia->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Physical media images are not supported by TheGamesDB, so gray out the option if this
+    // scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrapePhysicalMedia->setEnabled(false);
+        scrapePhysicalMedia->setOpacity(DISABLED_OPACITY);
+        scrapePhysicalMedia->getParent()
+            ->getChild(scrapePhysicalMedia->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
     }
 
@@ -379,6 +457,48 @@ void GuiScraperMenu::openMiximageOptions()
             Settings::getInstance()->getString("MiximageScreenshotScaling")) {
             Settings::getInstance()->setString("MiximageScreenshotScaling",
                                                miximage_scaling->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Box/cover size.
+    auto miximageBoxSize = std::make_shared<OptionListComponent<std::string>>(
+        mWindow, getHelpStyle(), "BOX SIZE", false);
+    std::string selectedBoxSize = Settings::getInstance()->getString("MiximageBoxSize");
+    miximageBoxSize->add("small", "small", selectedBoxSize == "small");
+    miximageBoxSize->add("medium", "medium", selectedBoxSize == "medium");
+    miximageBoxSize->add("large", "large", selectedBoxSize == "large");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the box size to "medium" in this case.
+    if (miximageBoxSize->getSelectedObjects().size() == 0)
+        miximageBoxSize->selectEntry(0);
+    s->addWithLabel("BOX SIZE", miximageBoxSize);
+    s->addSaveFunc([miximageBoxSize, s] {
+        if (miximageBoxSize->getSelected() !=
+            Settings::getInstance()->getString("MiximageBoxSize")) {
+            Settings::getInstance()->setString("MiximageBoxSize", miximageBoxSize->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Physical media size.
+    auto miximagePhysicalMediaSize = std::make_shared<OptionListComponent<std::string>>(
+        mWindow, getHelpStyle(), "PHYSICAL MEDIA SIZE", false);
+    std::string selectedPhysicalMediaSize =
+        Settings::getInstance()->getString("MiximagePhysicalMediaSize");
+    miximagePhysicalMediaSize->add("small", "small", selectedPhysicalMediaSize == "small");
+    miximagePhysicalMediaSize->add("medium", "medium", selectedPhysicalMediaSize == "medium");
+    miximagePhysicalMediaSize->add("large", "large", selectedPhysicalMediaSize == "large");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the physical media size to "medium" in this case.
+    if (miximagePhysicalMediaSize->getSelectedObjects().size() == 0)
+        miximagePhysicalMediaSize->selectEntry(0);
+    s->addWithLabel("PHYSICAL MEDIA SIZE", miximagePhysicalMediaSize);
+    s->addSaveFunc([miximagePhysicalMediaSize, s] {
+        if (miximagePhysicalMediaSize->getSelected() !=
+            Settings::getInstance()->getString("MiximagePhysicalMediaSize")) {
+            Settings::getInstance()->setString("MiximagePhysicalMediaSize",
+                                               miximagePhysicalMediaSize->getSelected());
             s->setNeedsSaving();
         }
     });
@@ -432,6 +552,20 @@ void GuiScraperMenu::openMiximageOptions()
         }
     });
 
+    // Whether to rotate horizontally oriented boxes.
+    auto miximageRotateBoxes = std::make_shared<SwitchComponent>(mWindow);
+    miximageRotateBoxes->setState(
+        Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes"));
+    s->addWithLabel("ROTATE HORIZONTALLY ORIENTED BOXES", miximageRotateBoxes);
+    s->addSaveFunc([miximageRotateBoxes, s] {
+        if (miximageRotateBoxes->getState() !=
+            Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes")) {
+            Settings::getInstance()->setBool("MiximageRotateHorizontalBoxes",
+                                             miximageRotateBoxes->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Whether to include marquee images.
     auto miximage_marquee = std::make_shared<SwitchComponent>(mWindow);
     miximage_marquee->setState(Settings::getInstance()->getBool("MiximageIncludeMarquee"));
@@ -469,6 +603,20 @@ void GuiScraperMenu::openMiximageOptions()
         }
     });
 
+    // Whether to include physical media images.
+    auto miximagePhysicalMedia = std::make_shared<SwitchComponent>(mWindow);
+    miximagePhysicalMedia->setState(
+        Settings::getInstance()->getBool("MiximageIncludePhysicalMedia"));
+    s->addWithLabel("INCLUDE PHYSICAL MEDIA IMAGE", miximagePhysicalMedia);
+    s->addSaveFunc([miximagePhysicalMedia, s] {
+        if (miximagePhysicalMedia->getState() !=
+            Settings::getInstance()->getBool("MiximageIncludePhysicalMedia")) {
+            Settings::getInstance()->setBool("MiximageIncludePhysicalMedia",
+                                             miximagePhysicalMedia->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Miximage offline generator.
     ComponentListRow offline_generator_row;
     offline_generator_row.elements.clear();
@@ -488,7 +636,7 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
 {
     if (mSystems->getSelectedObjects().empty()) {
         mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                                       "THE MIXIMAGE GENERATOR USES THE SAME SYSTEM\n"
+                                       "THE OFFLINE GENERATOR USES THE SAME SYSTEM\n"
                                        "SELECTIONS AS THE SCRAPER, SO PLEASE SELECT\n"
                                        "AT LEAST ONE SYSTEM TO GENERATE IMAGES FOR"));
         return;
@@ -845,6 +993,11 @@ void GuiScraperMenu::start()
             contentToScrape = true;
             break;
         }
+        if (scraperService == "screenscraper" &&
+            Settings::getInstance()->getBool("ScrapeControllers")) {
+            contentToScrape = true;
+            break;
+        }
         if (Settings::getInstance()->getBool("ScrapeMetadata")) {
             contentToScrape = true;
             break;
@@ -857,7 +1010,16 @@ void GuiScraperMenu::start()
             contentToScrape = true;
             break;
         }
+        if (Settings::getInstance()->getBool("ScrapeTitleScreens")) {
+            contentToScrape = true;
+            break;
+        }
         if (Settings::getInstance()->getBool("ScrapeCovers")) {
+            contentToScrape = true;
+            break;
+        }
+        if (scraperService == "screenscraper" &&
+            Settings::getInstance()->getBool("ScrapeBackCovers")) {
             contentToScrape = true;
             break;
         }
@@ -867,6 +1029,11 @@ void GuiScraperMenu::start()
         }
         if (scraperService == "screenscraper" &&
             Settings::getInstance()->getBool("Scrape3DBoxes")) {
+            contentToScrape = true;
+            break;
+        }
+        if (scraperService == "screenscraper" &&
+            Settings::getInstance()->getBool("ScrapePhysicalMedia")) {
             contentToScrape = true;
             break;
         }

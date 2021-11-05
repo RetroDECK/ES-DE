@@ -678,9 +678,12 @@ void GuiScraperSearch::update(int deltaTime)
                 for (unsigned int i = 0; i < results_scrape.size(); i++) {
                     if (results_scrape[i].gameID == it->gameID) {
                         results_scrape[i].box3DUrl = it->box3DUrl;
+                        results_scrape[i].backcoverUrl = it->backcoverUrl;
                         results_scrape[i].coverUrl = it->coverUrl;
                         results_scrape[i].marqueeUrl = it->marqueeUrl;
                         results_scrape[i].screenshotUrl = it->screenshotUrl;
+                        results_scrape[i].titlescreenUrl = it->titlescreenUrl;
+                        results_scrape[i].physicalmediaUrl = it->physicalmediaUrl;
                         results_scrape[i].videoUrl = it->videoUrl;
                         results_scrape[i].scraperRequestAllowance = it->scraperRequestAllowance;
                         results_scrape[i].mediaURLFetch = COMPLETED;
@@ -873,13 +876,17 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
         const std::string& key = mMetaDataDecl.at(i).key;
 
         // Skip element if the setting to not scrape metadata has been set,
-        // unless its type is rating or name.
+        // unless its type is rating, controller or name.
         if (!Settings::getInstance()->getBool("ScrapeMetadata") &&
-            (key != "rating" && key != "name"))
+            (key != "rating" && key != "controller" && key != "name"))
             continue;
 
-        // Skip saving of rating if the corresponding option has been set to false.
+        // Skip saving of rating metadata if the corresponding option has been set to false.
         if (key == "rating" && !Settings::getInstance()->getBool("ScrapeRatings"))
+            continue;
+
+        // Skip saving of controller metadata if the corresponding option has been set to false.
+        if (key == "controller" && !Settings::getInstance()->getBool("ScrapeControllers"))
             continue;
 
         // Skip saving of game name if the corresponding option has been set to false.

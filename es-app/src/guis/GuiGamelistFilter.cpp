@@ -124,8 +124,8 @@ void GuiGamelistFilter::addFiltersToMenu()
 
     // Callback function.
     auto updateVal = [this](const std::string& newVal) {
-        mTextFilterField->setValue(Utils::String::toUpper(newVal));
-        mFilterIndex->setTextFilter(Utils::String::toUpper(newVal));
+        mTextFilterField->setValue(Utils::String::trim(newVal));
+        mFilterIndex->setTextFilter(Utils::String::trim(newVal));
     };
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {

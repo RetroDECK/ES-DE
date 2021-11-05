@@ -15,6 +15,7 @@
 #include "Log.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
+#include "utils/StringUtil.h"
 
 #include "nanosvg.h"
 #include "nanosvgrast.h"
@@ -31,7 +32,6 @@ TextureData::TextureData(bool tile)
     , mHeight{0}
     , mSourceWidth{0.0f}
     , mSourceHeight{0.0f}
-    , mScaleDuringLoad{1.0f}
     , mScalable{false}
     , mLinearMagnify{false}
     , mForceRasterization{false}
@@ -63,7 +63,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     NSVGimage* svgImage{nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI)};
 
-    if (!svgImage) {
+    if (!svgImage || svgImage->width == 0 || svgImage->height == 0) {
         LOG(LogError) << "Couldn't parse SVG image";
         return false;
     }
@@ -71,7 +71,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     bool rasterize{true};
 
     // If there is no image size defined yet, then don't rasterize unless mForceRasterization has
-    // been set (this is only used by NinePatchComponent to avoid flickering menus).
+    // been set.
     if (mSourceWidth == 0.0f && mSourceHeight == 0.0f) {
         if (!mForceRasterization)
             rasterize = false;
@@ -80,8 +80,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         mSourceHeight = 64.0f * (svgImage->height / svgImage->width);
     }
 
-    mWidth = static_cast<int>(std::round(mSourceWidth * mScaleDuringLoad));
-    mHeight = static_cast<int>(std::round(mSourceHeight * mScaleDuringLoad));
+    mWidth = static_cast<int>(std::round(mSourceWidth));
+    mHeight = static_cast<int>(std::round(mSourceHeight));
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.
@@ -176,7 +176,7 @@ bool TextureData::load()
         std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
         const ResourceData& data = rm->getFileData(mPath);
         // Is it an SVG?
-        if (mPath.substr(mPath.size() - 4, std::string::npos) == ".svg") {
+        if (Utils::String::toLower(mPath.substr(mPath.size() - 4, std::string::npos)) == ".svg") {
             mScalable = true;
             std::string dataString;
             dataString.assign(std::string(reinterpret_cast<char*>(data.ptr.get()), data.length));
@@ -243,22 +243,14 @@ size_t TextureData::width()
 {
     if (mWidth == 0)
         load();
-    // If it's an SVG image, the size was correctly set to the scaled-up values during the
-    // rasterization, so only multiply by the scale factor if it's a raster file.
-    if (!mScalable)
-        return static_cast<size_t>(mWidth * mScaleDuringLoad);
-    else
-        return mWidth;
+    return static_cast<size_t>(mWidth);
 }
 
 size_t TextureData::height()
 {
     if (mHeight == 0)
         load();
-    if (!mScalable)
-        return static_cast<size_t>(mHeight * mScaleDuringLoad);
-    else
-        return mHeight;
+    return static_cast<size_t>(mHeight);
 }
 
 float TextureData::sourceWidth()

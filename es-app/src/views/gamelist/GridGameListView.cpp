@@ -600,9 +600,23 @@ void GridGameListView::removeMedia(FileData* game)
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
+    if (Utils::FileSystem::exists(game->getTitleScreenPath())) {
+        mediaType = "titlescreens";
+        path = game->getTitleScreenPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
     if (Utils::FileSystem::exists(game->getCoverPath())) {
         mediaType = "covers";
         path = game->getCoverPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    if (Utils::FileSystem::exists(game->getBackCoverPath())) {
+        mediaType = "backcovers";
+        path = game->getBackCoverPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
@@ -617,6 +631,13 @@ void GridGameListView::removeMedia(FileData* game)
     if (Utils::FileSystem::exists(game->get3DBoxPath())) {
         mediaType = "3dboxes";
         path = game->get3DBoxPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    if (Utils::FileSystem::exists(game->getPhysicalMediaPath())) {
+        mediaType = "physicalmedia";
+        path = game->getPhysicalMediaPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }

@@ -47,19 +47,29 @@ void NinePatchComponent::updateColors()
 
 void NinePatchComponent::buildVertices()
 {
+    if (mSize.x == 0.0f || mSize.y == 0.0f)
+        return;
+
     if (mVertices != nullptr)
         delete[] mVertices;
 
-    // Scale the corner size relative to the screen resolution, but keep the scale factor
-    // within reason as extreme resolutions may cause artifacts. Any "normal" resolution
-    // (e.g. from 720p to 4K) will be within these boundaries though.
-    float scaleFactor;
-    if (Renderer::getScreenWidth() > Renderer::getScreenHeight())
-        scaleFactor = glm::clamp(Renderer::getScreenHeightModifier(), 0.4f, 3.0f);
-    else
-        scaleFactor = glm::clamp(Renderer::getScreenWidthModifier(), 0.4f, 3.0f);
+    glm::vec2 relCornerSize{};
 
-    mTexture = TextureResource::get(mPath, false, false, false, true, true, scaleFactor);
+    // Don't scale the rasterized version of the frame as it would look bad.
+    if (mPath.substr(mPath.size() - 4, std::string::npos) == ".png") {
+        relCornerSize = mCornerSize;
+    }
+    else {
+        // Scale the corner size relative to the screen resolution.
+        relCornerSize = glm::round(
+            mCornerSize *
+            ((Renderer::getScreenHeightModifier() + Renderer::getScreenWidthModifier()) / 2.0f));
+    }
+
+    mTexture = TextureResource::get(mPath, false, false, false);
+    glm::vec2 texSize = relCornerSize * 3.0f;
+
+    mTexture->rasterizeAt(texSize.x, texSize.y);
 
     if (mTexture->getSize() == glm::ivec2{}) {
         mVertices = nullptr;
@@ -69,19 +79,16 @@ void NinePatchComponent::buildVertices()
 
     mVertices = new Renderer::Vertex[6 * 9];
 
-    glm::vec2 texSize{static_cast<float>(mTexture->getSize().x),
-                      static_cast<float>(mTexture->getSize().y)};
-
-    const float imgSizeX[3]{mCornerSize.x, mSize.x - mCornerSize.x * 2.0f, mCornerSize.x};
-    const float imgSizeY[3]{mCornerSize.y, mSize.y - mCornerSize.y * 2.0f, mCornerSize.y};
+    const float imgSizeX[3]{relCornerSize.x, mSize.x - relCornerSize.x * 2.0f, relCornerSize.x};
+    const float imgSizeY[3]{relCornerSize.y, mSize.y - relCornerSize.y * 2.0f, relCornerSize.y};
     const float imgPosX[3]{0, imgSizeX[0], imgSizeX[0] + imgSizeX[1]};
     const float imgPosY[3]{0, imgSizeY[0], imgSizeY[0] + imgSizeY[1]};
 
     // The "1 +" in posY and "-" in sizeY is to deal with texture coordinates having a bottom
     // left corner origin vs. verticies having a top left origin.
     // clang-format off
-    const float texSizeX[3]{mCornerSize.x / texSize.x,  (texSize.x - mCornerSize.x * 2.0f) / texSize.x,  mCornerSize.x / texSize.x};
-    const float texSizeY[3]{-mCornerSize.y / texSize.y, -(texSize.y - mCornerSize.y * 2.0f) / texSize.y, -mCornerSize.y / texSize.y};
+    const float texSizeX[3]{relCornerSize.x / texSize.x,  (texSize.x - relCornerSize.x * 2.0f) / texSize.x,  relCornerSize.x / texSize.x};
+    const float texSizeY[3]{-relCornerSize.y / texSize.y, -(texSize.y - relCornerSize.y * 2.0f) / texSize.y, -relCornerSize.y / texSize.y};
 
     const float texPosX[3]{0.0f,        texSizeX[0],        texSizeX[0] + texSizeX[1]};
     const float texPosY[3]{1.0f, 1.0f + texSizeY[0], 1.0f + texSizeY[0] + texSizeY[1]};

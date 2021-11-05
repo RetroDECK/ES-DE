@@ -208,7 +208,7 @@ const std::string FileData::getMediaDirectory()
     return mediaDirPath;
 }
 
-const std::string FileData::getMediafilePath(std::string subdirectory, std::string mediatype) const
+const std::string FileData::getMediafilePath(std::string subdirectory) const
 {
     const std::vector<std::string> extList = {".png", ".jpg"};
     std::string subFolders;
@@ -234,53 +234,76 @@ const std::string FileData::getMediafilePath(std::string subdirectory, std::stri
 const std::string FileData::getImagePath() const
 {
     // Look for a mix image (a combination of screenshot, 2D/3D box and marquee).
-    std::string image = getMediafilePath("miximages", "miximage");
+    std::string image = getMediafilePath("miximages");
     if (image != "")
         return image;
 
     // If no mix image was found, try screenshot instead.
-    image = getMediafilePath("screenshots", "screenshot");
+    image = getMediafilePath("screenshots");
+    if (image != "")
+        return image;
+
+    // If no screenshot image was found, try title screen instead.
+    image = getMediafilePath("titlescreens");
     if (image != "")
         return image;
 
     // If no screenshot was found either, try cover.
-    return getMediafilePath("covers", "cover");
+    return getMediafilePath("covers");
 }
 
 const std::string FileData::get3DBoxPath() const
 {
     // Return path to the 3D box image.
-    return getMediafilePath("3dboxes", "3dbox");
+    return getMediafilePath("3dboxes");
+}
+
+const std::string FileData::getBackCoverPath() const
+{
+    // Return path to the box back cover image.
+    return getMediafilePath("backcovers");
 }
 
 const std::string FileData::getCoverPath() const
 {
-    // Return path to the cover image.
-    return getMediafilePath("covers", "cover");
+    // Return path to the box cover image.
+    return getMediafilePath("covers");
 }
 
 const std::string FileData::getMarqueePath() const
 {
     // Return path to the marquee image.
-    return getMediafilePath("marquees", "marquee");
+    return getMediafilePath("marquees");
+}
+
+const std::string FileData::getPhysicalMediaPath() const
+{
+    // Return path to the physical media image.
+    return getMediafilePath("physicalmedia");
 }
 
 const std::string FileData::getMiximagePath() const
 {
     // Return path to the miximage.
-    return getMediafilePath("miximages", "miximage");
+    return getMediafilePath("miximages");
 }
 
 const std::string FileData::getScreenshotPath() const
 {
     // Return path to the screenshot image.
-    return getMediafilePath("screenshots", "screenshot");
+    return getMediafilePath("screenshots");
+}
+
+const std::string FileData::getTitleScreenPath() const
+{
+    // Return path to the title screen image.
+    return getMediafilePath("titlescreens");
 }
 
 const std::string FileData::getThumbnailPath() const
 {
     // Return path to the thumbnail image.
-    return getMediafilePath("thumbnails", "thumbnail");
+    return getMediafilePath("thumbnails");
 }
 
 const std::string FileData::getVideoPath() const

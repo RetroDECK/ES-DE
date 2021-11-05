@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="42"
-   height="42"
-   viewBox="0 0 11.1125 11.1125"
+   width="256"
+   height="256"
+   viewBox="0 0 67.733333 67.733333"
    version="1.1"
    id="svg4925"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
@@ -50,9 +50,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="14.89669"
-     inkscape:cx="-5.2451591"
-     inkscape:cy="30.03994"
+     inkscape:zoom="2.3222159"
+     inkscape:cx="-192.65889"
+     inkscape:cy="145.56081"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -70,7 +70,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -78,9 +78,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-285.88748)">
+     transform="translate(0,-229.26665)">
     <g
-       id="g6486">
+       id="g6486"
+       transform="matrix(6.0251718,0,0,6.0251718,0.38930592,-1492.5651)">
       <path
          inkscape:connector-curvature="0"
          d="m 7.6061742,288.87228 c 0,-0.1636 0.13386,-0.29746 0.297458,-0.29746 h 0.484651 c 0.163598,0 0.297459,0.13386 0.297459,0.29746"

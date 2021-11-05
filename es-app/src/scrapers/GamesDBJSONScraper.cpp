@@ -57,9 +57,11 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
     {CAVESTORY, "1"},
     {COLECOVISION, "31"},
     {COMMODORE_64, "40"},
+    {COMMODORE_VIC20, "4945"},
     {DAPHNE, "23"},
     {INTELLIVISION, "32"},
     {APPLE_MACINTOSH, "37"},
+    {GOOGLE_ANDROID, "4916"},
     {MICROSOFT_XBOX, "14"},
     {MICROSOFT_XBOX_360, "15"},
     {MOONLIGHT, "1"},
@@ -92,6 +94,7 @@ const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
     {PC, "1"},
     {VALVE_STEAM, "1"},
     {NEC_PCFX, "4930"},
+    {PHILIPS_CDI, "4917"},
     {SEGA_32X, "33"},
     {SEGA_CD, "21"},
     {SEGA_DREAMCAST, "16"},
@@ -378,6 +381,7 @@ void processMediaURLs(const Value& images,
         result.coverUrl = "";
         result.marqueeUrl = "";
         result.screenshotUrl = "";
+        result.titlescreenUrl = "";
 
         // Quite excessive testing for valid values, but you never know what the server has
         // returned and we don't want to crash the program due to malformed data.
@@ -399,6 +403,9 @@ void processMediaURLs(const Value& images,
                 if (mediatype == "screenshot")
                     if (gameMedia[i]["filename"].IsString())
                         result.screenshotUrl = base_url + gameMedia[i]["filename"].GetString();
+                if (mediatype == "titlescreen")
+                    if (gameMedia[i]["filename"].IsString())
+                        result.titlescreenUrl = base_url + gameMedia[i]["filename"].GetString();
             }
         }
         result.mediaURLFetch = COMPLETED;

@@ -962,6 +962,9 @@ void ViewController::preload()
         }
         (*it)->getIndex()->resetFilters();
 
+        // This makes sure we avoid texture pop-in when loading theme extras.
+        getSystemListView();
+
         if (Settings::getInstance()->getBool("PreloadGamelists"))
             getGameListView(*it)->preloadGamelist();
         else
@@ -1030,6 +1033,8 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
 
 void ViewController::reloadAll()
 {
+    cancelViewTransitions();
+
     // Clear all GameListViews.
     std::map<SystemData*, FileData*> cursorMap;
     for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++)

@@ -57,8 +57,6 @@ public:
     void setSourceSize(float width, float height);
     glm::vec2 getSize() { return glm::vec2{mWidth, mHeight}; }
 
-    // Define a factor for scaling the file when loading it (1.0f = no scaling).
-    void setScaleDuringLoad(float scale) { mScaleDuringLoad = scale; }
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool setting) { mLinearMagnify = setting; }
     // Whether to rasterize the image even if a size has not been set yet.
@@ -81,7 +79,6 @@ private:
     int mHeight;
     float mSourceWidth;
     float mSourceHeight;
-    float mScaleDuringLoad;
     bool mScalable;
     bool mLinearMagnify;
     bool mReloadable;
