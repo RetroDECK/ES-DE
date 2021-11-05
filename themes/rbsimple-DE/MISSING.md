@@ -10,6 +10,7 @@ None at the moment.
 * ags: Adventure Game Studio - system info, consolegame.svg, console.svg, controller.svg
 * amiga: Amiga - system info (needs improvement)
 * amigacd32: Amiga CD32 - consolegame.svg, console.svg, controller.svg, game.svg
+* android: Google Android - consolegame.svg, console.svg, controller.svg, game.svg
 * apple2gs: Apple IIGS - consolegame.svg, console.svg, controller.svg, game.svg
 * astrocade: Bally Astrocade - system info, consolegame.svg, console.svg, controller.svg, game.svg
 * atari5200: Atari 5200 - consolegame.svg, console.svg, controller.svg, game.svg
@@ -23,6 +24,7 @@ None at the moment.
 * auto-favorites - customized colors, consolegame.svg, (uses temporary art)
 * auto-lastplayed - customized colors, consolegame.svg, (uses temporary art)
 * bbcmicro: BBC Micro - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* cdimono1: Philips CD-i - consolegame.svg, console.svg, controller.svg, game.svg
 * cdtv: Commodore CDTV - consolegame.svg, console.svg, controller.svg, game.svg
 * chailove: Löve game engine - system info, consolegame.svg, console.svg, controller.svg
 * channelf: Fairchild Channel F - consolegame.svg, console.svg, controller.svg, game.svg
@@ -31,10 +33,12 @@ None at the moment.
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, console.svg, controller.svg, game.svg
 * desktop: Desktop applications - system info, consolegame.svg, console.svg, controller.svg
 * dragon32: Dragon 32 - consolegame.svg, console.svg, controller.svg, game.svg
+* epic: Epic Games Store - consolegame.svg, console.svg, controller.svg, game.svg
 * fba: FinalBurn Alpha - system info (needs improvement), logo.svg (needs improvement)
 * fbneo: FinalBurn Neo - system info (needs improvement), logo.svg (needs improvement)
 * gx4000: Amstrad GX4000 - consolegame.svg, console.svg, controller.svg, game.svg
 * intellivision: Intellivision - consolegame.svg, console.svg, controller.svg, game.svg
+* j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, console.svg, controller.svg, game.svg
 * kodi: Kodi home theatre software - consolegame.svg, console.svg, controller.svg
 * lutris: Lutris open gaming platform - consolegame.svg, console.svg, controller.svg, game.svg
 * macintosh: Apple Macintosh - consolegame.svg, console.svg, controller.svg, game.svg
@@ -59,7 +63,7 @@ None at the moment.
 * ps3: Sony PlayStation 3 - consolegame.svg, console.svg, controller.svg, game.svg
 * ps4: Sony PlayStation 4 - system info, consolegame.svg, console.svg, controller.svg, game.svg
 * psvita: Sony PlayStation Vita - system info, consolegame.svg, console.svg, controller.svg, game.svg
-* residualvm: ResidualVM - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* residualvm: ResidualVM - system info
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
 * satellaview: Nintendo Satellaview - consolegame.svg, console.svg, game.svg
 * saturn: Sega Saturn - consolegame.svg, console.svg, controller.svg, game.svg
@@ -69,6 +73,8 @@ None at the moment.
 * steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg
 * stratagus: Stratagus game engine - system info, consolegame.svg, console.svg, controller.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg, console.svg, game.svg
+* switch: Nintendo Switch - consolegame.svg, console.svg, controller.svg, game.svg
+* symbian: Symbian - system info (needs improvement), consolegame.svg, console.svg, controller.svg, game.svg
 * tanodragon: Tano Dragon - consolegame.svg, console.svg, controller.svg, game.svg
 * ti99: Texas Instruments TI-99 - system info, consolegame.svg, console.svg
 * tic80: TIC-80 game engine - consolegame.svg, console.svg, controller.svg
@@ -82,5 +88,5 @@ None at the moment.
 * x1:  Sharp X1 - consolegame.svg, console.svg, game.svg
 * x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
 * xbox: Microsoft Xbox - system info, controller.svg
-* xbox360: Microsoft Xbox - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* xbox360: Microsoft Xbox - consolegame.svg, console.svg, game.svg
 * zmachine: Infocom Z-machine - system info, consolegame.svg, console.svg, controller.svg

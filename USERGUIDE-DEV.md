@@ -211,7 +211,7 @@ Note that the Video view style requires that the theme supports it. If not, the 
 
 It's possible to manually set a specific gamelist view style in the UI settings entry of the main menu, but this is applied globally regardless of what media files are available per game system. The manual setting also overrides the theme-supported view styles which has the potential of making ES-DE very ugly indeed if the theme does not support the selected view style.
 
-In addition to the styles just described, there is a **Grid** view style as well, but as of ES-DE version 1.1 this is highly experimental and its use is not recommended. Future versions may update this style to a more useful state or it may be removed entirely.
+In addition to the styles just described, there is a **Grid** view style as well, but as of ES-DE version 1.2 this does not work correctly and is set as deprecated. Future ES-DE releases will remove this style entirely.
 
 If the theme supports it, there's a gamelist information field displayed in the gamelist view, showing the number of games for the system (total and favorites) as well as a folder icon if a folder has been entered. When applying any filters to the gamelist, the game counter is replaced with the amount of games filtered, as in 'filtered / total games', e.g. '19 / 77'. If there are game entries in the filter result that are marked not to be counted as games, the number of such files will be indicated as 'filtered + filtered non-games / total games', for example '23 + 4 / 77' indicating 23 normal games, 4 non-games out of a total of 77. Due to this approach it's theoretically possible that the combined filtered game amount exceeds the number of counted games in the collection, for instance '69 + 11 / 77'. This is not considered a bug and is so by design. This gamelist information field functionality is specific to EmulationStation Desktop Edition so older themes will not support this.
 
@@ -887,7 +887,7 @@ Whether to include the image of the physical media used to distribute the game, 
 
 **Offline generator**
 
-This is not a setting, but instead a GUI to generate miximages offline without going via the scraper. This tool uses the same game system selections as the scraper, so you need to select at least one system on the scraper menu before attempting to run it. All the miximage settings are applied in the same way as when generating images via the scraper. The prerequisite is that at least a screenshot exists for each game. If there is no screenshot, or if the screenshot is unreadable for some reason, the generation for that specific game will fail. There is statistics shown in the tool displaying the number of generated, overwritten, skipped and failed images. Any error message is also shown on screen as well as being saved to the es_log.txt file.
+This is not a setting, but instead a GUI to generate miximages offline without going via the scraper. This tool uses the same game system selections as the scraper, so you need to select at least one system on the scraper menu before attempting to run it. All the miximage settings are applied in the same way as when generating images via the scraper. The prerequisite is that at least a screenshot exists for each game. If there is no screenshot, or if the screenshot is unreadable for some reason, the generation for that specific game will fail. There is statistics shown in the tool displaying the number of generated, overwritten, skipped and failed images. Any error message is shown on screen as well as being saved to the es_log.txt file. Note that although the system selections are the same as for the scraper, the _Scrape these games_ filter is ignored and the generator always attempts to generate miximages for all games in a system.
 
 #### Other settings
 
@@ -1263,9 +1263,9 @@ This option sets the display to use for ES-DE for multi-monitor setups. The poss
 
 This gives you a choice between _Normal_ and _Borderless_ modes. With the borderless being more seamless as the ES-DE window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES-DE will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES-DE will run in a window. For the borderless mode, any changes to the resolution will make ES-DE run in a window.
 
-**Video player** _(Only on some builds and operating systems)_
+**Video player** _(Raspberry Pi only)_
 
-This gives the choice between FFmpeg and VLC, which is applied to the gamelist videos, the media viewer and the video screensaver. The VLC video player is not included on some builds. If this option is not available in the menu, it means that the FFmpeg video player is in use.
+This gives the choice between FFmpeg and VLC, which is applied to the gamelist videos, the media viewer and the video screensaver. For the operating systems where VLC is not included, the default FFmpeg video player is used.
 
 **Exit button combo**
 
@@ -1428,6 +1428,8 @@ With the exception of the game name text filter, all available filter values are
 Be aware that although folders can have most of the metadata values set, the filters are only applied to files (this is also true for the game name text filter). So if you for example set a filter to only display your favorite games, any folder that contains a favorite game will be displayed, and other folders which are themselves marked as favorites but that do not contain any favorite games will be hidden.
 
 The filters are always applied for the complete game system, including all folder content.
+
+Note that the game name filter is case insensitive.
 
 ### Add/remove games to this collection
 
@@ -1756,6 +1758,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | amiga1200             | Commodore Amiga 1200                           | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              |                                   |              |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           |              |                                      |
+| android               | Google Android                                 |                                   |                                   |              |                                      |
 | apple2                | Apple II                                       |                                   |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     |                                   |                                   |              |                                      |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2000,<br>MAME 2003-Plus,<br>MAME 2010,<br>FinalBurn Neo,<br>FB Alpha 2012 | Depends      | Single archive file following MAME name standard in root folder |
@@ -1773,6 +1776,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | bbcmicro              | BBC Micro                                      |                                   |                                   |              |                                      |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single disk, tape or cartridge image in root folder and/or multi-disc images in separate folder |
 | cavestory             | Cave Story (NXEngine)                          | NXEngine                          |                                   |              |                                      |
+| cdimono1              | Philips CD-i                                   |                                   |                                   |              |                                      |
 | cdtv                  | Commodore CDTV                                 |                                   |                                   |              |                                      |
 | chailove              | ChaiLove game engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
@@ -1784,6 +1788,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN | No           | In separate folder (one folder per game, with complete file structure retained) |
 | dragon32              | Dragon 32                                      |                                   |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           |                                   |              |                                      |
+| epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
 | famicom               | Nintendo Family Computer                       | Nestopia UE                       | FCEUmm,<br>Mesen,<br>QuickNES | No           | Single archive or ROM file in root folder |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
@@ -1797,6 +1802,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 |                                   |                                   |              |                                      |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
+| j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | Yes          | Single JAR file in root folder       |
 | kodi                  | Kodi home theatre software                     | N/A                               |                                   | No           |                                      |
 | lutris                | Lutris open gaming platform                    | Lutris application **(Standalone)** [U] |                             | No           | Shell script in root folder          |
 | lutro                 | Lutro game engine                              | Lutro                             |                                   |              |                                      |
@@ -1865,6 +1871,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE                        |              |                                      |
 | switch                | Nintendo Switch                                | Yuzu **(Standalone)** [UW]        |                                   | Yes          |                                      |
+| symbian               | Symbian                                        |                                   |                                   |              |                                      |
 | tanodragon            | Tano Dragon                                    |                                   |                                   |              |                                      |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST                   | Yes          |                                      |
@@ -1874,6 +1881,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | trs-80                | Tandy TRS-80                                   |                                   |                                   |              |                                      |
 | uzebox                | Uzebox                                         | Uzem                              |                                   |              |                                      |
 | vectrex               | Vectrex                                        | vecx                              |                                   |              |                                      |
+| vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   |              | Single disk, tape or cartridge image in root folder |
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   |              |                                      |
 | wii                   | Nintendo Wii                                   | Dolphin                           |                                   |              |                                      |

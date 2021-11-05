@@ -51,6 +51,10 @@
 * Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
 * Added a blinking cursor to TextEditComponent
+* Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
+* rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
+* rbsimple-DE: Improved existing graphics for the dos, pc, residualvm and scummvm systems
+* Added loading of the System view to the ViewController preload function to avoid issues with theme extras texture pop-in
 * Changed the filter description "Text filter (game name)" to "Game name"
 * Removed a margin hack from TextComponent and if abbreviated strings end with a space character, that space is now removed
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
@@ -98,6 +102,7 @@
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
+* Leading and trailing whitespace characters would get included in game name filters
 * Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
 * Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
 * Fixed multiple issues where ComponentGrid would display incorrect help prompts
