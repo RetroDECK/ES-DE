@@ -32,7 +32,14 @@ const std::map<std::string, generate_scraper_requests_func> scraper_request_func
 
 std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParams& params)
 {
-    const std::string& name = Settings::getInstance()->getString("Scraper");
+    std::string name = Settings::getInstance()->getString("Scraper");
+    // Handle a potentially invalid entry in the configuration file.
+    if (name != "screenscraper" && name != "thegamesdb") {
+        name = "screenscraper";
+        Settings::getInstance()->setString("Scraper", name);
+        Settings::getInstance()->saveFile();
+    }
+
     std::unique_ptr<ScraperSearchHandle> handle(new ScraperSearchHandle());
 
     // Check if the scraper in the settings still exists as a registered scraping source.
@@ -80,15 +87,8 @@ std::vector<std::string> getScraperList()
 
 bool isValidConfiguredScraper()
 {
-    std::string scraper = Settings::getInstance()->getString("Scraper");
-    // Handle a potentially invalid entry in the configuration file.
-    if (scraper != "screenscraper" && scraper != "thegamesdb") {
-        scraper = "screenscraper";
-        Settings::getInstance()->setString("Scraper", scraper);
-        Settings::getInstance()->saveFile();
-    }
-
-    return scraper_request_funcs.find(scraper) != scraper_request_funcs.end();
+    const std::string& name = Settings::getInstance()->getString("Scraper");
+    return scraper_request_funcs.find(name) != scraper_request_funcs.end();
 }
 
 void ScraperSearchHandle::update()
