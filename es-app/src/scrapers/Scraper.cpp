@@ -80,8 +80,15 @@ std::vector<std::string> getScraperList()
 
 bool isValidConfiguredScraper()
 {
-    const std::string& name = Settings::getInstance()->getString("Scraper");
-    return scraper_request_funcs.find(name) != scraper_request_funcs.end();
+    std::string scraper = Settings::getInstance()->getString("Scraper");
+    // Handle a potentially invalid entry in the configuration file.
+    if (scraper != "screenscraper" && scraper != "thegamesdb") {
+        scraper = "screenscraper";
+        Settings::getInstance()->setString("Scraper", scraper);
+        Settings::getInstance()->saveFile();
+    }
+
+    return scraper_request_funcs.find(scraper) != scraper_request_funcs.end();
 }
 
 void ScraperSearchHandle::update()

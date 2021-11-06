@@ -32,6 +32,11 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     // just in case the scraper from settings has vanished.
     for (auto it = scrapers.cbegin(); it != scrapers.cend(); it++)
         mScraper->add(*it, *it, *it == Settings::getInstance()->getString("Scraper"));
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the scraper to "screenscraper" in this case.
+    if (mScraper->getSelectedObjects().size() == 0)
+        mScraper->selectEntry(0);
+
     mMenu.addWithLabel("SCRAPE FROM", mScraper);
 
     // Search filters, getSearches() will generate a queue of games to scrape
