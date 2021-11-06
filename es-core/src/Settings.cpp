@@ -358,15 +358,8 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    // Prior to ES-DE v1.1, the configuration file had the .cfg suffix instead of .xml
-    const std::string legacyConfigFile =
-        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.cfg";
-
     const std::string configFile =
         Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.xml";
-
-    if (Utils::FileSystem::exists(legacyConfigFile) && !Utils::FileSystem::exists(configFile))
-        Utils::FileSystem::copyFile(legacyConfigFile, configFile, false);
 
     if (!Utils::FileSystem::exists(configFile))
         return;
