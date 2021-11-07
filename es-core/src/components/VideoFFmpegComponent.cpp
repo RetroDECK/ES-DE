@@ -1227,7 +1227,7 @@ void VideoFFmpegComponent::startVideo()
 
         // Video stream setup.
 
-#if defined(_RPI_)
+#if !defined(VIDEO_HW_DECODING)
         bool hwDecoding = false;
 #else
         bool hwDecoding = Settings::getInstance()->getBool("VideoHardwareDecoding");
