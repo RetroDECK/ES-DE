@@ -231,7 +231,7 @@ void FlexboxComponent::computeLayout()
         }
 
         // This rasterizes the SVG images so they look nice and smooth.
-        item.baseImage.setResize(item.baseImage.getSize());
+        item.baseImage.setResize(glm::ceil(item.baseImage.getSize()));
 
         itemsOnLastRow++;
         pos++;
