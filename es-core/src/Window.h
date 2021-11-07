@@ -167,6 +167,10 @@ private:
 
     std::queue<std::pair<std::string, int>> mInfoPopupQueue;
 
+#if defined(USE_OPENGL_21)
+    std::shared_ptr<TextureResource> mPostprocessedBackground;
+#endif
+
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;
     unsigned char mListScrollOpacity;
