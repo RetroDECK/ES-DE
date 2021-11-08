@@ -35,6 +35,7 @@ option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
 option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
 option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" ${CLANG_TIDY})
+option(VIDEO_HW_DECODING "Set to OFF to disable FFmpeg HW decoding" ON)
 
 if(CLANG_TIDY)
     find_program(CLANG_TIDY_BINARY NAMES clang-tidy)
@@ -58,20 +59,39 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # OpenGL setup.
 
-# Check if we're running on a Raspberry Pi.
-if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
-    message("-- Building on a Raspberry Pi (bcm_host.h found)")
-    # Setting BCMHOST seems to break OpenGL ES on the RPi 4 so set RPI instead.
-    #set(BCMHOST found)
-    set(RPI ON)
-    set(GLSYSTEM "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
-elseif(GLES OR RPI)
+if(GLES)
     set(GLSYSTEM "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
 else()
     set(GLSYSTEM "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
 endif()
 
 set_property(CACHE GLSYSTEM PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
+
+#---------------------------------------------------------------------------------------------------
+# Raspberry Pi setup.
+
+# If manually set to RPI (used for testing purposes).
+if(RPI)
+    set(VIDEO_HW_DECODING OFF)
+endif()
+
+# Raspberry Pi OS 32-bit (armv7l)
+if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
+    set(RPI ON)
+    set(RPI_32 ON)
+    set(VIDEO_HW_DECODING OFF)
+    set(BCMHOST found)
+    message("-- Building on a Raspberry Pi (32-bit OS)")
+endif()
+
+# Raspberry Pi OS 64-bit (aarch64)
+if(EXISTS "/usr/include/bcm_host.h")
+    set(RPI ON)
+    set(RPI_64 ON)
+    set(VIDEO_HW_DECODING OFF)
+    set(BCMHOST found)
+    message("-- Building on a Raspberry Pi (64-bit OS)")
+endif()
 
 #---------------------------------------------------------------------------------------------------
 # Package dependencies.
@@ -196,16 +216,20 @@ else()
     add_definitions(-DUSE_OPENGLES_10)
 endif()
 
+if(RPI)
+    add_definitions(-D_RPI_)
+endif()
+
 if(VLC_PLAYER)
     add_definitions(-DBUILD_VLC_PLAYER)
 endif()
 
-if(DEFINED BCMHOST OR RPI)
-    add_definitions(-D_RPI_)
-endif()
-
 if(DEFINED libCEC_FOUND)
     add_definitions(-DHAVE_LIBCEC)
+endif()
+
+if(VIDEO_HW_DECODING)
+    add_definitions(-DVIDEO_HW_DECODING)
 endif()
 
 # GLM library options.
@@ -279,7 +303,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     list(APPEND COMMON_INCLUDE_DIRS ${ALSA_INCLUDE_DIRS})
 endif()
 
-if(DEFINED BCMHOST OR RPI)
+if(RPI_32)
     list(APPEND COMMON_INCLUDE_DIRS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include"
                                     "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos"
                                     "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vmcs_host/linux"
@@ -358,9 +382,6 @@ endif()
 
 # Add libCEC libraries.
 if(DEFINED libCEC_FOUND)
-    if(DEFINED BCMHOST OR RPI)
-        list(APPEND COMMON_LIBRARIES bcm_host vchiq_arm)
-    endif()
     list(APPEND COMMON_LIBRARIES dl ${libCEC_LIBRARIES})
 endif()
 
@@ -369,14 +390,22 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     list(APPEND COMMON_LIBRARIES ${ALSA_LIBRARY})
 endif()
 
+# Raspberry Pi.
 if(DEFINED BCMHOST)
-    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
-    list(APPEND COMMON_LIBRARIES bcm_host brcmEGL ${OPENGLES_LIBRARIES})
-elseif(RPI)
-    link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
+    list(APPEND COMMON_LIBRARIES bcm_host vchiq_arm)
+    if(RPI_32)
+        link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
+    endif()
+endif()
+
+# Note: Building with GLES support on the Raspberry Pi currently seems to be broken.
+if(GLES AND RPI_32)
+    list(APPEND COMMON_LIBRARIES brcmEGL ${OPENGLES_LIBRARIES})
+elseif(GLES AND RPI_64)
     list(APPEND COMMON_LIBRARIES ${OPENGLES_LIBRARIES})
 endif()
 
+# OpenGL.
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     list(APPEND COMMON_LIBRARIES ${OPENGL_LIBRARIES})
 else()

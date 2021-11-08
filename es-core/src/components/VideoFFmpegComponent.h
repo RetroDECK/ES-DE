@@ -158,6 +158,8 @@ private:
 
     int mAudioFrameCount;
     int mVideoFrameCount;
+    int mVideoFrameReadCount;
+    int mVideoFrameDroppedCount;
 
     double mAccumulatedTime;
     bool mStartTimeAccumulation;

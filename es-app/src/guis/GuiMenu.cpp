@@ -1010,7 +1010,7 @@ void GuiMenu::openOtherOptions()
     }
 #endif
 
-#if !defined(_RPI_)
+#if defined(VIDEO_HW_DECODING)
     // Whether to enable hardware decoding for the FFmpeg video player.
     auto video_hardware_decoding = std::make_shared<SwitchComponent>(mWindow);
     video_hardware_decoding->setState(Settings::getInstance()->getBool("VideoHardwareDecoding"));

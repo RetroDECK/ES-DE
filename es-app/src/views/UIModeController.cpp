@@ -39,6 +39,12 @@ UIModeController::UIModeController()
 {
     mPassKeySequence = Settings::getInstance()->getString("UIMode_passkey");
     mCurrentUIMode = Settings::getInstance()->getString("UIMode");
+    // Handle a potentially invalid entry in the configuration file.
+    if (mCurrentUIMode != "full" && mCurrentUIMode != "kid" && mCurrentUIMode != "kiosk") {
+        mCurrentUIMode = "full";
+        Settings::getInstance()->setString("UIMode", mCurrentUIMode);
+        Settings::getInstance()->saveFile();
+    }
 }
 
 void UIModeController::monitorUIMode()

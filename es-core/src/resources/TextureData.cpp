@@ -105,8 +105,9 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
         nsvgDeleteRasterizer(rast);
 
-        mDataRGBA.insert(mDataRGBA.begin(), tempVector.data(),
-                         tempVector.data() + (mWidth * mHeight * 4));
+        mDataRGBA.insert(mDataRGBA.begin(), std::make_move_iterator(tempVector.data()),
+                         std::make_move_iterator(tempVector.data() + (mWidth * mHeight * 4)));
+        tempVector.erase(tempVector.begin(), tempVector.end());
 
         ImageIO::flipPixelsVert(mDataRGBA.data(), mWidth, mHeight);
         mPendingRasterization = false;
@@ -160,7 +161,8 @@ bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size
         return true;
 
     mDataRGBA.reserve(width * height * 4);
-    mDataRGBA.insert(mDataRGBA.begin(), dataRGBA, dataRGBA + (width * height * 4));
+    mDataRGBA.insert(mDataRGBA.begin(), std::make_move_iterator(dataRGBA),
+                     std::make_move_iterator(dataRGBA + (width * height * 4)));
 
     mWidth = static_cast<int>(width);
     mHeight = static_cast<int>(height);

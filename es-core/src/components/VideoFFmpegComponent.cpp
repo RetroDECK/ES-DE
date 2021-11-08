@@ -16,6 +16,7 @@
 #include "resources/TextureResource.h"
 
 #include <algorithm>
+#include <iomanip>
 
 enum AVHWDeviceType VideoFFmpegComponent::sDeviceType = AV_HWDEVICE_TYPE_NONE;
 enum AVPixelFormat VideoFFmpegComponent::sPixelFormat = AV_PIX_FMT_NONE;
@@ -165,17 +166,22 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         mPictureMutex.lock();
 
         if (!mOutputPicture.hasBeenRendered) {
-            // Copy the contents of mOutputPicture to a temporary vector in order to call
+            // Move the contents of mOutputPicture to a temporary vector in order to call
             // initFromPixels() only after the mutex unlock. This significantly reduces the
             // lock waits in outputFrames().
             size_t pictureSize = mOutputPicture.pictureRGBA.size();
-            std::vector<uint8_t> tempPictureRGBA(pictureSize);
+            std::vector<uint8_t> tempPictureRGBA;
             int pictureWidth = 0;
             int pictureHeight = 0;
 
             if (pictureSize > 0) {
-                tempPictureRGBA.insert(tempPictureRGBA.begin(), mOutputPicture.pictureRGBA.begin(),
-                                       mOutputPicture.pictureRGBA.end());
+                tempPictureRGBA.insert(tempPictureRGBA.begin(),
+                                       std::make_move_iterator(mOutputPicture.pictureRGBA.begin()),
+                                       std::make_move_iterator(mOutputPicture.pictureRGBA.end()));
+
+                mOutputPicture.pictureRGBA.erase(mOutputPicture.pictureRGBA.begin(),
+                                                 mOutputPicture.pictureRGBA.end());
+
                 pictureWidth = mOutputPicture.width;
                 pictureHeight = mOutputPicture.height;
 
@@ -528,90 +534,126 @@ void VideoFFmpegComponent::readFrames()
     if (mVideoFrameQueue.size() > 300 || mAudioFrameQueue.size() > 600)
         return;
 
+    int readLoops = 1;
+
+    // If we can't keep up the audio processing, then drop video frames as it's much worse
+    // to have stuttering audio than a lower video framerate.
+    if (mAudioStreamIndex >= 0 && mAudioFrameCount > mAudioTargetQueueSize / 2) {
+        if (static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize / 6)
+            readLoops = 5;
+        else if (static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize / 4)
+            readLoops = 3;
+        else if (static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize / 2)
+            readLoops = 2;
+    }
+
     if (mVideoCodecContext && mFormatContext) {
-        if (static_cast<int>(mVideoFrameQueue.size()) < mVideoTargetQueueSize ||
-            (mAudioStreamIndex >= 0 &&
-             static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize)) {
-            while ((readFrameReturn = av_read_frame(mFormatContext, mPacket)) >= 0) {
-                if (mPacket->stream_index == mVideoStreamIndex) {
-                    if (!avcodec_send_packet(mVideoCodecContext, mPacket) &&
-                        !avcodec_receive_frame(mVideoCodecContext, mVideoFrame)) {
+        for (int i = 0; i < readLoops; i++) {
+            if (static_cast<int>(mVideoFrameQueue.size()) < mVideoTargetQueueSize ||
+                (mAudioStreamIndex >= 0 &&
+                 static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize)) {
+                while ((readFrameReturn = av_read_frame(mFormatContext, mPacket)) >= 0) {
+                    if (mPacket->stream_index == mVideoStreamIndex) {
+                        if (!avcodec_send_packet(mVideoCodecContext, mPacket) &&
+                            !avcodec_receive_frame(mVideoCodecContext, mVideoFrame)) {
 
-                        int returnValue = 0;
+                            int returnValue = 0;
+                            mVideoFrameReadCount++;
 
-                        if (mSWDecoder) {
-                            returnValue = av_buffersrc_add_frame_flags(
-                                mVBufferSrcContext, mVideoFrame, AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT);
-                        }
-                        else {
-                            AVFrame* destFrame = nullptr;
-                            destFrame = av_frame_alloc();
-
-                            if (mVideoFrame->format == sPixelFormat) {
-                                if (av_hwframe_transfer_data(destFrame, mVideoFrame, 0) < 0) {
-                                    LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
-                                                     "Couldn't transfer decoded video frame to "
-                                                     "system memory";
-                                    av_frame_free(&destFrame);
-                                    av_packet_unref(mPacket);
-                                    break;
+                            if (mSWDecoder) {
+                                // Drop the frame if necessary.
+                                if (i == 0 || mAudioFrameCount == 0) {
+                                    returnValue = av_buffersrc_add_frame_flags(
+                                        mVBufferSrcContext, mVideoFrame,
+                                        AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT);
                                 }
                                 else {
-                                    destFrame->pts = mVideoFrame->pts;
-                                    destFrame->pkt_dts = mVideoFrame->pkt_dts;
-                                    destFrame->pict_type = mVideoFrame->pict_type;
-                                    destFrame->chroma_location = mVideoFrame->chroma_location;
-                                    destFrame->pkt_pos = mVideoFrame->pkt_pos;
-                                    destFrame->pkt_duration = mVideoFrame->pkt_duration;
-                                    destFrame->pkt_size = mVideoFrame->pkt_size;
+                                    mVideoFrameDroppedCount++;
                                 }
                             }
                             else {
-                                LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
-                                                 "Couldn't decode video frame";
+                                if (i == 0 || mAudioFrameCount == 0) {
+                                    AVFrame* destFrame = nullptr;
+                                    destFrame = av_frame_alloc();
+
+                                    if (mVideoFrame->format == sPixelFormat) {
+                                        if (av_hwframe_transfer_data(destFrame, mVideoFrame, 0) <
+                                            0) {
+                                            LOG(LogError)
+                                                << "VideoFFmpegComponent::readFrames(): "
+                                                   "Couldn't transfer decoded video frame to "
+                                                   "system memory";
+                                            av_frame_free(&destFrame);
+                                            av_packet_unref(mPacket);
+                                            break;
+                                        }
+                                        else {
+                                            destFrame->pts = mVideoFrame->pts;
+                                            destFrame->pkt_dts = mVideoFrame->pkt_dts;
+                                            destFrame->pict_type = mVideoFrame->pict_type;
+                                            destFrame->chroma_location =
+                                                mVideoFrame->chroma_location;
+                                            destFrame->pkt_pos = mVideoFrame->pkt_pos;
+                                            destFrame->pkt_duration = mVideoFrame->pkt_duration;
+                                            destFrame->pkt_size = mVideoFrame->pkt_size;
+                                        }
+                                    }
+                                    else {
+                                        LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
+                                                         "Couldn't decode video frame";
+                                    }
+
+                                    returnValue = av_buffersrc_add_frame_flags(
+                                        mVBufferSrcContext, destFrame,
+                                        AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT);
+                                    av_frame_free(&destFrame);
+                                }
+                                else {
+                                    mVideoFrameDroppedCount++;
+                                }
                             }
 
-                            returnValue = av_buffersrc_add_frame_flags(
-                                mVBufferSrcContext, destFrame, AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT);
-                            av_frame_free(&destFrame);
-                        }
+                            if (returnValue < 0) {
+                                LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
+                                                 "Couldn't add video frame to buffer source";
+                            }
 
-                        if (returnValue < 0) {
-                            LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
-                                             "Couldn't add video frame to buffer source";
+                            av_packet_unref(mPacket);
+                            break;
                         }
+                        else {
+                            av_packet_unref(mPacket);
+                        }
+                    }
+                    else if (mPacket->stream_index == mAudioStreamIndex) {
+                        if (!avcodec_send_packet(mAudioCodecContext, mPacket) &&
+                            !avcodec_receive_frame(mAudioCodecContext, mAudioFrame)) {
 
-                        av_packet_unref(mPacket);
-                        break;
+                            // We have an audio frame that needs conversion and resampling.
+                            int returnValue = av_buffersrc_add_frame_flags(
+                                mABufferSrcContext, mAudioFrame, AV_BUFFERSRC_FLAG_KEEP_REF);
+
+                            if (returnValue < 0) {
+                                LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
+                                                 "Couldn't add audio frame to buffer source";
+                            }
+
+                            av_packet_unref(mPacket);
+                            continue;
+                        }
+                        else {
+                            av_packet_unref(mPacket);
+                        }
                     }
                     else {
+                        // Ignore any stream that is not video or audio.
                         av_packet_unref(mPacket);
                     }
                 }
-                else if (mPacket->stream_index == mAudioStreamIndex) {
-                    if (!avcodec_send_packet(mAudioCodecContext, mPacket) &&
-                        !avcodec_receive_frame(mAudioCodecContext, mAudioFrame)) {
-
-                        // We have an audio frame that needs conversion and resampling.
-                        int returnValue = av_buffersrc_add_frame_flags(
-                            mABufferSrcContext, mAudioFrame, AV_BUFFERSRC_FLAG_KEEP_REF);
-
-                        if (returnValue < 0) {
-                            LOG(LogError) << "VideoFFmpegComponent::readFrames(): "
-                                             "Couldn't add audio frame to buffer source";
-                        }
-
-                        av_packet_unref(mPacket);
-                        continue;
-                    }
-                    else {
-                        av_packet_unref(mPacket);
-                    }
-                }
-                else {
-                    // Ignore any stream that is not video or audio.
-                    av_packet_unref(mPacket);
-                }
+            }
+            else {
+                // The target queue sizes have been reached.
+                break;
             }
         }
     }
@@ -649,10 +691,11 @@ void VideoFFmpegComponent::getProcessedFrames()
 
         int bufferSize = mVideoFrameResampled->width * mVideoFrameResampled->height * 4;
 
-        currFrame.frameRGBA.insert(currFrame.frameRGBA.begin(), &mVideoFrameResampled->data[0][0],
-                                   &mVideoFrameResampled->data[0][bufferSize]);
+        currFrame.frameRGBA.insert(
+            currFrame.frameRGBA.begin(), std::make_move_iterator(&mVideoFrameResampled->data[0][0]),
+            std::make_move_iterator(&mVideoFrameResampled->data[0][bufferSize]));
 
-        mVideoFrameQueue.push(currFrame);
+        mVideoFrameQueue.push(std::move(currFrame));
         av_frame_unref(mVideoFrameResampled);
     }
 
@@ -680,7 +723,7 @@ void VideoFFmpegComponent::getProcessedFrames()
                                        &mAudioFrameResampled->data[0][0],
                                        &mAudioFrameResampled->data[0][bufferSize]);
 
-        mAudioFrameQueue.push(currFrame);
+        mAudioFrameQueue.push(std::move(currFrame));
         av_frame_unref(mAudioFrameResampled);
     }
 }
@@ -751,6 +794,14 @@ void VideoFFmpegComponent::outputFrames()
                 LOG(LogDebug) << "Total video frames processed / video frame queue size: "
                               << mVideoFrameCount << " / "
                               << std::to_string(mVideoFrameQueue.size());
+                if (mVideoFrameDroppedCount > 0) {
+                    LOG(LogDebug) << "Video frames dropped: " << mVideoFrameDroppedCount << " of "
+                                  << mVideoFrameReadCount << " (" << std::setprecision(2)
+                                  << (static_cast<float>(mVideoFrameDroppedCount) /
+                                      static_cast<float>(mVideoFrameReadCount)) *
+                                         100.0f
+                                  << "%)";
+                }
             }
 
             mPictureMutex.lock();
@@ -1136,6 +1187,8 @@ void VideoFFmpegComponent::startVideo()
         mEndOfVideo = false;
         mVideoFrameCount = 0;
         mAudioFrameCount = 0;
+        mVideoFrameReadCount = 0;
+        mVideoFrameDroppedCount = 0;
         mOutputPicture = {};
 
         // Get an empty texture for rendering the video.
@@ -1174,7 +1227,7 @@ void VideoFFmpegComponent::startVideo()
 
         // Video stream setup.
 
-#if defined(_RPI_)
+#if !defined(VIDEO_HW_DECODING)
         bool hwDecoding = false;
 #else
         bool hwDecoding = Settings::getInstance()->getBool("VideoHardwareDecoding");

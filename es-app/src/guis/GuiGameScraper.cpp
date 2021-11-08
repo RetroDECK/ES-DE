@@ -133,9 +133,6 @@ GuiGameScraper::GuiGameScraper(Window* window,
                    static_cast<float>(Renderer::getScreenHeight()) * 0.04f +
                    mButtonGrid->getSize().y + Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f;
 
-    // TODO: Temporary hack, see below.
-    height -= 7.0f * Renderer::getScreenHeightModifier();
-
     setSize(width, height);
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
                 (Renderer::getScreenHeight() - mSize.y) / 2.0f);
@@ -154,17 +151,11 @@ void GuiGameScraper::onSizeChanged()
                mSize.y / 2.0f);
     mGrid.setRowHeightPerc(2, mSystemName->getFont()->getLetterHeight() / mSize.y, false);
     mGrid.setRowHeightPerc(3, 0.04f, false);
-    mGrid.setRowHeightPerc(4, ((Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f)) / mSize.y, false);
-
-    // TODO: Replace this temporary hack with a proper solution. There is some kind of rounding
-    // issue somewhere that causes a small alignment error. This code partly compensates for this
-    // at higher resolutions than 1920x1080.
-    if (Renderer::getScreenHeightModifier() > 1.0f)
-        mSize.y -= 3.0f * Renderer::getScreenHeightModifier();
+    mGrid.setRowHeightPerc(4, (Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f) / mSize.y, false);
 
     mGrid.setColWidthPerc(1, 0.04f);
 
-    mGrid.setSize(mSize);
+    mGrid.setSize(glm::round(mSize));
     mBox.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
 
     // Add some extra margins to the game name.

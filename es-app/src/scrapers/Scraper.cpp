@@ -32,7 +32,14 @@ const std::map<std::string, generate_scraper_requests_func> scraper_request_func
 
 std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParams& params)
 {
-    const std::string& name = Settings::getInstance()->getString("Scraper");
+    std::string name = Settings::getInstance()->getString("Scraper");
+    // Handle a potentially invalid entry in the configuration file.
+    if (name != "screenscraper" && name != "thegamesdb") {
+        name = "screenscraper";
+        Settings::getInstance()->setString("Scraper", name);
+        Settings::getInstance()->saveFile();
+    }
+
     std::unique_ptr<ScraperSearchHandle> handle(new ScraperSearchHandle());
 
     // Check if the scraper in the settings still exists as a registered scraping source.

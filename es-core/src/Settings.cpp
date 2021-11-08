@@ -98,7 +98,7 @@ void Settings::setDefaults()
 
     // Scraper.
     mStringMap["Scraper"] = {"screenscraper", "screenscraper"};
-    mBoolMap["ScraperUseAccountScreenScraper"] = {false, false};
+    mBoolMap["ScraperUseAccountScreenScraper"] = {true, true};
     mStringMap["ScraperUsernameScreenScraper"] = {"", ""};
     mStringMap["ScraperPasswordScreenScraper"] = {"", ""};
 
@@ -154,7 +154,11 @@ void Settings::setDefaults()
     // UI settings -> media viewer settings.
     mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
     mBoolMap["MediaViewerStretchVideos"] = {false, false};
+#if defined(_RPI_)
+    mBoolMap["MediaViewerVideoScanlines"] = {false, false};
+#else
     mBoolMap["MediaViewerVideoScanlines"] = {true, true};
+#endif
     mBoolMap["MediaViewerVideoBlur"] = {false, false};
     mBoolMap["MediaViewerScreenshotScanlines"] = {true, true};
 
@@ -177,7 +181,11 @@ void Settings::setDefaults()
     mIntMap["ScreensaverSwapVideoTimeout"] = {0, 0};
     mBoolMap["ScreensaverStretchVideos"] = {false, false};
     mBoolMap["ScreensaverVideoGameInfo"] = {true, true};
+#if defined(_RPI_)
+    mBoolMap["ScreensaverVideoScanlines"] = {false, false};
+#else
     mBoolMap["ScreensaverVideoScanlines"] = {true, true};
+#endif
     mBoolMap["ScreensaverVideoBlur"] = {false, false};
 
     mBoolMap["MenuBlurBackground"] = {true, true};
@@ -199,8 +207,8 @@ void Settings::setDefaults()
     mBoolMap["EnableMenuKidMode"] = {false, false};
 
     // Sound settings.
-    mIntMap["SoundVolumeNavigation"] = {80, 80};
-    mIntMap["SoundVolumeVideos"] = {100, 100};
+    mIntMap["SoundVolumeNavigation"] = {70, 70};
+    mIntMap["SoundVolumeVideos"] = {80, 80};
     mBoolMap["GamelistVideoAudio"] = {true, true};
     mBoolMap["MediaViewerVideoAudio"] = {true, true};
     mBoolMap["ScreensaverVideoAudio"] = {false, false};
@@ -221,7 +229,7 @@ void Settings::setDefaults()
     // Other settings.
     mStringMap["MediaDirectory"] = {"", ""};
 #if defined(_RPI_)
-    mIntMap["MaxVRAM"] = {80, 80};
+    mIntMap["MaxVRAM"] = {180, 180};
 #else
     mIntMap["MaxVRAM"] = {256, 256};
 #endif
@@ -230,12 +238,7 @@ void Settings::setDefaults()
     mStringMap["FullscreenMode"] = {"normal", "normal"};
 #endif
 #if defined(BUILD_VLC_PLAYER)
-#if defined(_RPI_)
-    // As the FFmpeg video player is not HW accelerated, use VLC as default on this weak device.
-    mStringMap["VideoPlayer"] = {"vlc", "vlc"};
-#else
     mStringMap["VideoPlayer"] = {"ffmpeg", "ffmpeg"};
-#endif
 #endif
     mStringMap["ExitButtonCombo"] = {"F4", "F4"};
     mStringMap["SaveGamelistsMode"] = {"always", "always"};
@@ -246,7 +249,7 @@ void Settings::setDefaults()
 #if defined(_WIN64)
     mBoolMap["LaunchWorkaround"] = {true, true};
 #endif
-#if !defined(_RPI_)
+#if !defined(VIDEO_HW_DECODING)
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
     mBoolMap["VideoUpscaleFrameRate"] = {false, false};
@@ -358,15 +361,8 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    // Prior to ES-DE v1.1, the configuration file had the .cfg suffix instead of .xml
-    const std::string legacyConfigFile =
-        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.cfg";
-
     const std::string configFile =
         Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.xml";
-
-    if (Utils::FileSystem::exists(legacyConfigFile) && !Utils::FileSystem::exists(configFile))
-        Utils::FileSystem::copyFile(legacyConfigFile, configFile, false);
 
     if (!Utils::FileSystem::exists(configFile))
         return;

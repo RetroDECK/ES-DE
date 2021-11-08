@@ -128,6 +128,10 @@ bool Window::init()
     mBackgroundOverlay->setResize(static_cast<float>(Renderer::getScreenWidth()),
                                   static_cast<float>(Renderer::getScreenHeight()));
 
+#if defined(USE_OPENGL_21)
+    mPostprocessedBackground = TextureResource::get("");
+#endif
+
     mListScrollFont = Font::get(FONT_SIZE_LARGE);
 
     // Update our help because font sizes probably changed.
@@ -142,6 +146,10 @@ void Window::deinit()
     // Hide all GUI elements on uninitialisation - this disable.
     for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
         (*it)->onHide();
+
+#if defined(USE_OPENGL_21)
+    mPostprocessedBackground.reset();
+#endif
 
     InputManager::getInstance()->deinit();
     ResourceManager::getInstance()->unloadAll();
@@ -429,9 +437,6 @@ void Window::render()
 #if (CLOCK_BACKGROUND_CREATION)
                 const auto backgroundStartTime = std::chrono::system_clock::now();
 #endif
-
-                std::shared_ptr<TextureResource> mPostprocessedBackground;
-                mPostprocessedBackground = TextureResource::get("");
                 unsigned char* processedTexture =
                     new unsigned char[Renderer::getScreenWidth() * Renderer::getScreenHeight() * 4];
 
