@@ -3,12 +3,14 @@
 The modern theme is a new theme for es-de that supports most latest features such as badges and controllers. The theme
 is meant to offer a modern look for es-de. The theme is designed with theme variants in mind (v1.3).
 
-We support 6 variants:
+We support 8 variants:
 
 - 4:3 dark
 - 4:3 light
 - 16:9 dark
 - 16:9 light
+- 16:10 dark
+- 16:10 light
 - 21:9 dark
 - 21:9 light
 
