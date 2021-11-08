@@ -446,18 +446,7 @@ based on:       Switch Theme by Lilbud
 			<customControllerIcon controller="gamepad_nintendo_nes">./assets/controllers/classic.svg</customControllerIcon>
 			<customControllerIcon controller="gamepad_nintendo_snes">./assets/controllers/classic.svg</customControllerIcon>
 			<customControllerIcon controller="gamepad_nintendo_64">./assets/controllers/n64.svg</customControllerIcon>
-
-			<customControllerIcon controller="gamepad_sega_md_3_buttons">./assets/controllers/.svg</customControllerIcon>
-			<customControllerIcon controller="gamepad_sega_md_6_buttons">./assets/controllers/.svg</customControllerIcon>
-			<customControllerIcon controller="flight_stick_generic">./assets/controllers/.svg</customControllerIcon>
-			<customControllerIcon controller="spinner_generic">./assets/controllers/.svg</customControllerIcon>
-
 			<customControllerIcon controller="joystick_generic">./assets/controllers/joystick.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_1_button">./assets/controllers/joystick-arcade.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_2_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_3_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_4_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
-			<customControllerIcon controller="joystick_arcade_6_buttons">./assets/controllers/joystick-arcade.svg</customControllerIcon>
 			<customControllerIcon controller="trackball_generic">./assets/controllers/trackball.svg</customControllerIcon>
 			<customControllerIcon controller="lightgun_generic">./assets/controllers/gun.svg</customControllerIcon>
 			<customControllerIcon controller="lightgun_nintendo">./assets/controllers/gun.svg</customControllerIcon>
