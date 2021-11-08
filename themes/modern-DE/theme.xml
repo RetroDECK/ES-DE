@@ -11,7 +11,7 @@ based on:       Switch Theme by Lilbud
 	<formatVersion>7</formatVersion>
 
 	<!-- includes (hard-coded variant until v1.3) -->
-	<include>./variants/light16_9/default.xml</include>
+	<include>./variants/light16_10/default.xml</include>
 	<include>./navigationsounds.xml</include>
 
 	<!-- variables -->
