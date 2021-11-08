@@ -29,13 +29,13 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
                               ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages)
 
 # Define the options.
-option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
+option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(CEC "Set to ON to enable CEC" ${CEC})
+option(VIDEO_HW_DECODING "Set to ON to enable FFmpeg HW decoding" ${VIDEO_HW_DECODING})
 option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
 option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" ${CLANG_TIDY})
-option(VIDEO_HW_DECODING "Set to OFF to disable FFmpeg HW decoding" ON)
 
 if(CLANG_TIDY)
     find_program(CLANG_TIDY_BINARY NAMES clang-tidy)
@@ -70,17 +70,11 @@ set_property(CACHE GLSYSTEM PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 #---------------------------------------------------------------------------------------------------
 # Raspberry Pi setup.
 
-# If manually set to RPI (used for testing purposes).
-if(RPI)
-    set(VIDEO_HW_DECODING OFF)
-endif()
-
 # Raspberry Pi OS 32-bit (armv7l)
 if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
     set(RPI ON)
     set(RPI_32 ON)
-    set(VIDEO_HW_DECODING OFF)
-    set(BCMHOST found)
+    set(BCMHOST ON)
     message("-- Building on a Raspberry Pi (32-bit OS)")
 endif()
 
@@ -88,8 +82,7 @@ endif()
 if(EXISTS "/usr/include/bcm_host.h")
     set(RPI ON)
     set(RPI_64 ON)
-    set(VIDEO_HW_DECODING OFF)
-    set(BCMHOST found)
+    set(BCMHOST ON)
     message("-- Building on a Raspberry Pi (64-bit OS)")
 endif()
 
@@ -220,16 +213,16 @@ if(RPI)
     add_definitions(-D_RPI_)
 endif()
 
-if(VLC_PLAYER)
-    add_definitions(-DBUILD_VLC_PLAYER)
-endif()
-
 if(DEFINED libCEC_FOUND)
     add_definitions(-DHAVE_LIBCEC)
 endif()
 
 if(VIDEO_HW_DECODING)
     add_definitions(-DVIDEO_HW_DECODING)
+endif()
+
+if(VLC_PLAYER)
+    add_definitions(-DBUILD_VLC_PLAYER)
 endif()
 
 # GLM library options.
@@ -272,6 +265,7 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
+
 if(VLC_PLAYER)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
 endif()
@@ -391,7 +385,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 # Raspberry Pi.
-if(DEFINED BCMHOST)
+if(BCMHOST)
     list(APPEND COMMON_LIBRARIES bcm_host vchiq_arm)
     if(RPI_32)
         link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")

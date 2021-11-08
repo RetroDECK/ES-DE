@@ -229,7 +229,7 @@ void Settings::setDefaults()
     // Other settings.
     mStringMap["MediaDirectory"] = {"", ""};
 #if defined(_RPI_)
-    mIntMap["MaxVRAM"] = {180, 180};
+    mIntMap["MaxVRAM"] = {184, 184};
 #else
     mIntMap["MaxVRAM"] = {256, 256};
 #endif
@@ -249,7 +249,7 @@ void Settings::setDefaults()
 #if defined(_WIN64)
     mBoolMap["LaunchWorkaround"] = {true, true};
 #endif
-#if !defined(VIDEO_HW_DECODING)
+#if defined(VIDEO_HW_DECODING)
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
     mBoolMap["VideoUpscaleFrameRate"] = {false, false};

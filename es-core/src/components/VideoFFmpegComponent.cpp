@@ -1227,10 +1227,10 @@ void VideoFFmpegComponent::startVideo()
 
         // Video stream setup.
 
-#if !defined(VIDEO_HW_DECODING)
-        bool hwDecoding = false;
-#else
+#if defined(VIDEO_HW_DECODING)
         bool hwDecoding = Settings::getInstance()->getBool("VideoHardwareDecoding");
+#else
+        bool hwDecoding = false;
 #endif
 
         mVideoStreamIndex =
