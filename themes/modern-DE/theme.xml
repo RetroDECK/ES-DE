@@ -281,10 +281,10 @@ based on:       Switch Theme by Lilbud
 			<pos>0.75 0.785</pos>
 			<size>0.04 0.03</size>
 		</rating>
-		<text name="md_lbl_lastplayed, md_lbl_playcount">
+		<text name="md_lbl_lastplayed, md_lbl_playcount, md_playcount">
 			<pos>1 1</pos>
 		</text>
-		<datetime name="md_lastplayed, md_playcount">
+		<datetime name="md_lastplayed">
 			<pos>1 1</pos>
 		</datetime>
 	</view>
@@ -425,10 +425,10 @@ based on:       Switch Theme by Lilbud
 			<pos>0.70 0.785</pos>
 			<size>0.04 0.03</size>
 		</rating>
-		<text name="md_lbl_lastplayed, md_lbl_playcount">
+		<text name="md_lbl_lastplayed, md_lbl_playcount, md_playcount">
 			<pos>1 1</pos>
 		</text>
-		<datetime name="md_lastplayed, md_playcount">
+		<datetime name="md_lastplayed">
 			<pos>1 1</pos>
 		</datetime>
 		<badges name="md_badges">
