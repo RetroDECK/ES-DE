@@ -31,7 +31,7 @@ The following operating systems have been tested with ES-DE (all for the x86 arc
 * Windows 10
 * Windows 8.1
 
-**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
+**Note:** If using a Mac with an ARM/M1 CPU you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
 ### Download
 

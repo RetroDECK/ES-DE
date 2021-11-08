@@ -33,11 +33,12 @@ To install ES-DE, just download the package or installer from [https://es-de.org
 
 The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
-* Ubuntu 20.04 to 21.04
-* Linux Mint 20
-* Manjaro 21
-* Fedora 33 Workstation
-* FreeBSD 12.2
+* Ubuntu 20.04 to 21.10
+* Linux Mint 20.2
+* Manjaro 21.1
+* Fedora 35 Workstation
+* Raspberry Pi OS 10 (Raspian) armv7l and aarch64
+* FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
 * macOS 10.14 "Mojave" to 11 "Big Sur" (ARM via Rosetta 2 is supported)
@@ -45,7 +46,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Windows 10
 * Windows 8.1
 
-**Note:** If using a Mac with an ARM CPU (e.g. M1) you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
+**Note:** If using a Mac with an ARM/M1 CPU you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
 As for display resolutions, the minimum pixel value is 224 and the maximum is 7680. This means that you can run ES-DE at for instance 320x224 all the way up to 7680x4320 (8K UHD). Vertical screen orientation is also supported, as well as ultra-wide resolutions like 3840x1440. Note that there could be some minor visual glitches when running in vertical orientation (this will be fixed in future ES-DE releases) and for the best experience you will probably need to use a customized theme set when running at extreme or unusual resolutions.
 
@@ -53,18 +54,26 @@ The installation procedure is just covered briefly here and may differ a bit for
 
 **Installing a Linux .deb package**
 
-The .deb package is intended for Linux distributions based on Debian, such as Ubuntu, Linux Mint etc. Your distribution should include a graphical package installer, but if you prefer to use the command line, run the following which will install ES-DE and resolve any dependencies:
+The .deb package is intended for Linux distributions based on Debian, such as Ubuntu, Linux Mint, Raspberry Pi OS etc. Your distribution should include a graphical package installer, but if you prefer to use the command line, run the following which will install ES-DE and resolve any dependencies:
 
 ```
-sudo apt install ./emulationstation-de-1.0.0-x64.deb
+sudo apt install ./emulationstation-de-1.2.0-x64.deb
 ```
 
 **Installing a Linux .rpm package**
 
-On Fedora you can use the graphical package installer or run this command, either method should automatically resolve the dependencies:
+On Fedora the RPM Fusion repository is a prerequisite for the installation, it can be installed like this:
 
 ```
-sudo dnf install ./emulationstation-de-1.0.0-x64.rpm
+sudo dnf install \
+https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+```
+
+Then you can use the graphical package installer or run this command, either method should automatically resolve the dependencies:
+
+```
+sudo dnf install ./emulationstation-de-1.2.0-x64.rpm
 ```
 
 **Installing on macOS and Windows**
@@ -77,7 +86,7 @@ Upon first startup, ES-DE will create its `~/.emulationstation` home directory.
 
 On Unix this means /home/\<username\>/.emulationstation/, on macOS /Users/\<username\>/.emulationstation/ and on Windows C:\Users\\<username\>\\.emulationstation\
 
-**Note:** As of ES-DE v1.1 there is no internationalization support, which means that the application will always require the physical rather than the localized path to your home directory. For instance on macOS configured for the Swedish language /Users/myusername will be the physical path but /Användare/myusername is the localized path that is actually shown in the user interface. The same is true on Windows where the directories would be C:\Users\myusername and C:\Användare\myusername respectively. If attempting to enter the localized path for any directory-related setting, ES-DE will not be able to find it. But it's always possible to use the tilde `~` symbol when referring to your home directory, which ES-DE will expand to the physical location regardless of what language you have configured for your operating system. If you're using an English-localized system, this whole point is irrelevant as the physical and localized paths are then identical.
+**Note:** As of ES-DE v1.2 there is no internationalization support, which means that the application will always require the physical rather than the localized path to your home directory. For instance on macOS configured for the Swedish language /Users/myusername will be the physical path but /Användare/myusername is the localized path that is actually shown in the user interface. The same is true on Windows where the directories would be C:\Users\myusername and C:\Användare\myusername respectively. If attempting to enter the localized path for any directory-related setting, ES-DE will not be able to find it. But it's always possible to use the tilde `~` symbol when referring to your home directory, which ES-DE will expand to the physical location regardless of what language you have configured for your operating system. If you're using an English-localized system, this whole point is irrelevant as the physical and localized paths are then identical.
 
 It's possible to override the home directory path using the --home command line option, but this is normally required only for very special situations so we can safely ignore that option for now.
 
@@ -140,7 +149,47 @@ If you don't allow this, you will not be able to place system BIOS ROMs in the R
 
 If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
 
-Another issue on macOS 11 Big Sur (and possibly other OS versions) is that when connecting a DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
+Another issue on macOS 11 Big Sur (and possibly other OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
+
+
+## Specific notes for Raspberry Pi
+
+The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MiB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
+
+In general, 720p works fine with the RPi 4, and 1080p is tolerable but not really a nice and smooth experience. Due to the relative weakness of the Rasperry Pi GPU, the video scanline rendering for the screensaver and media viewer has been disabled (it's enabled by default on all other platforms). These options can be re-enabled via the menu if you don't mind lower video framerates.
+
+Both the 32-bit (armv7l) and 64-bit (aarch64) versions of Raspberry Pi OS are supported. Although the 64-bit version of ES-DE actually runs much better than the 32-bit version (likely due to better GPU drivers for aarch64) it's still generally recommended to go for the 32-bit OS for now. The reason is that the Raspberry Pi Foundation still has not released the 64-bit version officially so it's somewhat of a beta with some functionality apparently broken. As well there seems to be issues to install RetroArch cores on this version so you would probably need to compile them from source code.
+
+At the time of writing the Snap version of RetroArch appears broken and won't start on the 32-bit OS, so the Flatpak version would have to be installed. That is accomplished using these commands:
+
+```
+sudo apt install flatpak
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+```
+
+Following this you need to reboot, and then run this command:
+
+```
+sudo flatpak install retroarch
+```
+
+Note that this will download and install a few hundred megabytes of data as there are some dependencies. Unfortunately the Flatpak environment does not seem to be properly setup either so you will have to launch RetroArch like this to install your emulator cores:
+
+```
+/var/lib/flatpak/exports/bin/org.libretro.RetroArch
+```
+
+ES-DE will however detect and launch RetroArch correctly.
+
+If the Snap version of RetroArch will be fixed in the future, it can be installed like this:
+
+```
+sudo apt-get install snapd
+sudo snap install retroarch
+```
+
+Another issue on Raspberry Pi OS is that Sony DualShock 4 controllers have problems with some button presses that don't register correctly. This has not been seen on other Linux operating systems and will hopefully be patched out in the future via an OS update.
+
 
 ## Game system customizations
 
@@ -166,10 +215,14 @@ Due to this, always make backups of at least the following directories before te
 ~/.emulationstation/collections/
 ```
 
+It's also strongly adviced to not rename an old es_settings.cfg file to es_settings.xml for use in ES-DE. Although this has been tested to some extent, it may cause undefined behavior.
+
+If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for system folders. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the `sg1000` system name, but is `sg-1000` in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme).
+
 
 ## Running on high resolution displays
 
-ES-DE fully supports high resolution displays such as 4K, 6K, 1440p, ultrawide monitors etc. But some emulators such as RetroArch will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution. On Unix it's possible to start ES-DE with the `--resolution` option to set a lower screen resolution (this will also affect the emulators) but this is not really recommended as it's highly dependent on well-written graphics drivers for proper behavior.
+ES-DE fully supports high resolution displays such as 4K, 6K, 8K, 1440p, ultrawide monitors etc. But some emulators such as RetroArch will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution. On Unix it's possible to start ES-DE with the `--resolution` option to set a lower screen resolution (this will also affect the emulators) but this is not really recommended as it's highly dependent on well-written graphics drivers for proper behavior.
 
 A better approach is to use the custom event scripts functionality to set a temporary resolution upon launching a game that will be reverted when returning to ES-DE. Such a setup is detailed in [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) for Unix, but should hopefully be possible to implement similarly on macOS and Windows.
 
@@ -907,7 +960,7 @@ Affects both overwriting of metadata as well as actual game media files on the f
 
 **Halt on invalid media files**
 
-With this setting enabled, if any media files returned by the scraper seem to be invalid, the scraping is halted and an error message is presented where it's possible to retry or cancel the scraping of the specific game. In the case of multi-scraping it's also possible to skip the game and proceed to the next one in the queue. With this setting disabled, all media files will always be accepted and saved to disk. As of ES-DE v1.1 the file verification is quite basic and future versions will improve on this by using file checksums and other file integrity checks.
+With this setting enabled, if any media files returned by the scraper seem to be invalid, the scraping is halted and an error message is presented where it's possible to retry or cancel the scraping of the specific game. In the case of multi-scraping it's also possible to skip the game and proceed to the next one in the queue. With this setting disabled, all media files will always be accepted and saved to disk. As of ES-DE v1.2 the file verification is quite basic and future versions will improve on this by using file checksums and other file integrity checks.
 
 **Search using metadata names**
 
@@ -1253,7 +1306,7 @@ This setting defines the directory for the game media, i.e. game images and vide
 
 **VRAM limit**
 
-The amount of video RAM to use for the application. Defaults to 256 MiB (80 MiB on the Raspberry Pi) which works fine most of the time when running at 1080p resolution and with a moderate amount of game systems. If running at 4K resolution or similar and with lots of game systems enabled, it's recommended to increase this number to 512 MiB or possibly more to avoid stuttering transition animations caused by unloading and loading of textures from the cache. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used by ES-DE, which is helpful to determine a reasonable value for this option. The allowed range for the settings is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.xml file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
+The amount of video RAM to use for the application. Defaults to 256 MiB (184 MiB on the Raspberry Pi) which works fine most of the time when running at 1080p resolution and with a moderate amount of game systems. If running at 4K resolution or similar and with lots of game systems enabled, it's recommended to increase this number to 512 MiB or possibly more to avoid stuttering transition animations caused by unloading and loading of textures from the cache. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used by ES-DE, which is helpful to determine a reasonable value for this option. The allowed range for the settings is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.xml file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
 **Display/monitor index (requires restart)**
 
@@ -1262,10 +1315,6 @@ This option sets the display to use for ES-DE for multi-monitor setups. The poss
 **Fullscreen mode (requires restart)** _(Unix only)_
 
 This gives you a choice between _Normal_ and _Borderless_ modes. With the borderless being more seamless as the ES-DE window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES-DE will render in full screen at the lower resolution. If a higher resolution than the screen resolution has been set, ES-DE will run in a window. For the borderless mode, any changes to the resolution will make ES-DE run in a window.
-
-**Video player** _(Raspberry Pi only)_
-
-This gives the choice between FFmpeg and VLC, which is applied to the gamelist videos, the media viewer and the video screensaver. For the operating systems where VLC is not included, the default FFmpeg video player is used.
 
 **Exit button combo**
 
@@ -1287,13 +1336,9 @@ Enabling this option makes ES-DE continue to run while a game is launched. This 
 
 There is an issue with launching games on some Windows computers, seemingly on those with AMD and Intel GPUs. The emulator will start and work correctly, but the screen will be blank. Enabling this option is a workaround for that problem, with the drawback that the screen will become white instead of black when the emulator is loading. This option is enabled by default, so experiment with disabling it for a slightly better experience. If you're using an Nvidia GPU, chances are high that it will then work fine. An alternative workaround is to enable the _Run in background (while game is launched)_ option described above, so test which gives the best result. The two options can however not be enabled at the same time. Hopefully this whole game launching issue can be resolved completely in a future ES-DE release.
 
-**FFmpeg/Video hardware decoding (experimental)** _(All platforms except Raspberry Pi)_
+**Upscale video frame rate to 60 FPS**
 
-Enabling this option offloads video decoding to the GPU. Whether this actually increases performance is another matter. As desktop-class CPUs are very capable of decoding the video streams directly, the performance may actually get worse as hardware decoding requires data to be passed back and forth between the CPU and GPU. This potential degradation is especially true for integrated GPUs, and even more so if the GPU is heavily utilized. In addition to this, most GPUs can only decode a subset of video codecs and profiles, meaning ES-DE will anyway have to fallback to software decoding when the GPU is unable to process the stream. With that said, there are still situations where hardware decoding can help, so experiment with the setting to see if it's useful for your configuration. Unfortunately hardware decoding for the FFmpeg video player is not supported on the Raspberry Pi and it will probably stay this way unless FFmpeg starts to support the MMAL decoder internally. For this device the VLC-based video player can be used instead, which supports hardware decoding.
-
-**Upscale video frame rate to 60 FPS (FFmpeg)**
-
-With this option enabled, videos with lower frame rates than 60 FPS, such as 24 and 30 will get upscaled to 60 FPS. This results in slightly smoother playback for some videos. There is a small performance hit from this option, so on weaker machines it may be necessary to disable it for fluent video playback. This setting has no effect when using the VLC video player. If the VLC video player is not included in the ES-DE build, the "(FFmpeg)" text is omitted from the setting name.
+With this option enabled, videos with lower frame rates than 60 FPS, such as 24 and 30 will get upscaled to 60 FPS. This results in slightly smoother playback for some videos. There is a small performance hit from this option, so on weaker machines it may be necessary to disable it for fluent video playback.
 
 **Preload gamelists on startup**
 
@@ -1325,7 +1370,7 @@ The window manager desktop composition can adversely affect the framerate of ES-
 
 **Display GPU statistics overlay**
 
-Displays the framerate and VRAM statistics as an overlay. You normally never need to use this unless you're debugging a performance problem or similar. **Note:** As of ES-DE v1.1 the VRAM usage statistics is not accurate. This will be addressed in a future version.
+Displays the framerate and VRAM statistics as an overlay. You normally never need to use this unless you're debugging a performance problem or similar. **Note:** As of ES-DE v1.2 the VRAM usage statistics is not accurate. This will be addressed in a future release.
 
 **Enable menu in kid mode**
 
@@ -1715,7 +1760,7 @@ Refer to the [INSTALL-DEV.md](INSTALL-DEV.md#command-line-options) document for 
 
 Note as well that the list and corresponding es_systems.xml templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
 
-The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`.
+The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`. This follows the RetroPie naming conventions (with some additions for systems that are not supported on RetroPie). So if migrating from Batocera or Recalbox, check this carefully and rename your system folders as required or ES-DE will not be able to find your games.
 
 Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be customized in the es_systems.xml file if you wish.
 

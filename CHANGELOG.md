@@ -20,6 +20,7 @@
 * Added physical media images to the generated miximages
 * Added an option to rotate horizontally oriented game boxes when generating miximages
 * Added size options (small/medium/large) for the boxes/covers and physical media images when generating miximages
+* Added support for the Raspberry Pi 4 (Raspberry Pi OS 32-bit/armv7l and 64-bit/aarch64)
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
@@ -27,6 +28,10 @@
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
 * Added horizontal scrolling of long game names to the scraper GUIs
 * Removed the "Scrape" text prefix from the scraper content settings
+* Added proper frame drop functionality to the FFmpeg video player to greatly reduce stuttering on slower machines
+* Made multiple optimizations to the FFmpeg video player to reduce CPU usage and to increase framerates on slower machines
+* Disabled the FFmpeg video player hardware decoding option (it can still be built using a CMake flag)
+* Removed the copying of es_settings.cfg to es_settings.xml as it caused issues when migrating from other EmulationStation forks
 * Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
@@ -34,6 +39,7 @@
 * Added a menu option to change the application exit key combination
 * Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
+* Added support for a more advanced system view carousel logo placeholder by allowing the combination of text and graphics for unthemed systems
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
 * Decreased the amount of text that ScrollableContainer renders above and below the starting position as content is scrolled
@@ -50,6 +56,7 @@
 * Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
 * Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
 * Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
+* Lowered the default volumes slightly for videos and navigation sounds
 * Added a blinking cursor to TextEditComponent
 * Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
 * rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
@@ -88,6 +95,8 @@
 ### Bug fixes
 
 * Setting a really small font size in a theme would crash the application
+* Setting an invalid UIMode value in the configuration file could crash the application
+* Setting an invalid scraper service value in the configuration file could crash the application
 * When scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
 * When scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
 * When scraping in interactive mode, "No games found" results could be accepted using the "A" button
