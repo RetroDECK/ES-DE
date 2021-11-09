@@ -20,9 +20,9 @@ namespace Utils
 {
     namespace CImg
     {
-        void convertRGBAToCImg(std::vector<unsigned char> imageRGBA,
+        void convertRGBAToCImg(const std::vector<unsigned char>& imageRGBA,
                                cimg_library::CImg<unsigned char>& image);
-        void convertCImgToRGBA(cimg_library::CImg<unsigned char> image,
+        void convertCImgToRGBA(const cimg_library::CImg<unsigned char>& image,
                                std::vector<unsigned char>& imageRGBA);
         void getTransparentPaddingCoords(cimg_library::CImg<unsigned char>& image,
                                          int (&imageCoords)[4]);

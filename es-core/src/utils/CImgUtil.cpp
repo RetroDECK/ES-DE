@@ -12,7 +12,7 @@ namespace Utils
 {
     namespace CImg
     {
-        void convertRGBAToCImg(std::vector<unsigned char> imageRGBA,
+        void convertRGBAToCImg(const std::vector<unsigned char>& imageRGBA,
                                cimg_library::CImg<unsigned char>& image)
         {
             // CImg does not interleave the pixels as in RGBARGBARGBA so a conversion is required.
@@ -28,15 +28,15 @@ namespace Utils
             }
         }
 
-        void convertCImgToRGBA(cimg_library::CImg<unsigned char> image,
+        void convertCImgToRGBA(const cimg_library::CImg<unsigned char>& image,
                                std::vector<unsigned char>& imageRGBA)
         {
             for (int r = image.height() - 1; r >= 0; r--) {
                 for (int c = 0; c < image.width(); c++) {
-                    imageRGBA.push_back((unsigned char)image(c, r, 0, 2));
-                    imageRGBA.push_back((unsigned char)image(c, r, 0, 1));
-                    imageRGBA.push_back((unsigned char)image(c, r, 0, 0));
-                    imageRGBA.push_back((unsigned char)image(c, r, 0, 3));
+                    imageRGBA.emplace_back((unsigned char)image(c, r, 0, 2));
+                    imageRGBA.emplace_back((unsigned char)image(c, r, 0, 1));
+                    imageRGBA.emplace_back((unsigned char)image(c, r, 0, 0));
+                    imageRGBA.emplace_back((unsigned char)image(c, r, 0, 3));
                 }
             }
         }
