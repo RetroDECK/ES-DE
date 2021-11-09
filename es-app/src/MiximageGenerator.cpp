@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  MiximageGenerator.cpp
 //
-//  Generates miximages from screenshots, marquees and 3D box/cover images.
+//  Generates miximages from screenshots, marquees, 3D boxes/covers and physical media images.
 //  Called from GuiScraperSearch and GuiOfflineGenerator.
 //
 
