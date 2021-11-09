@@ -81,7 +81,7 @@ void SystemView::populate()
                     (!defaultPath.empty() &&
                      ResourceManager::getInstance()->fileExists(defaultPath))) {
                     auto* logo = new ImageComponent(mWindow, false, false);
-                    logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
+                    logo->setMaxSize(glm::round(mCarousel.logoSize * mCarousel.logoScale));
                     logo->applyTheme(theme, "system", "logo", ThemeFlags::PATH | ThemeFlags::COLOR);
                     logo->setRotateByTargetSize(true);
                     e.data.logo = std::shared_ptr<GuiComponent>(logo);
@@ -603,7 +603,8 @@ void SystemView::renderCarousel(const glm::mat4& trans)
             break;
         }
         case HORIZONTAL_WHEEL: {
-            xOff = (mCarousel.size.x - mCarousel.logoSize.x) / 2.0f - (mCamOffset * logoSpacing.y);
+            xOff = std::round((mCarousel.size.x - mCarousel.logoSize.x) / 2.0f -
+                              (mCamOffset * logoSpacing.y));
             if (mCarousel.logoAlignment == ALIGN_TOP)
                 yOff = mCarousel.logoSize.y / 10.0f;
             else if (mCarousel.logoAlignment == ALIGN_BOTTOM)
@@ -618,7 +619,8 @@ void SystemView::renderCarousel(const glm::mat4& trans)
             logoSpacing.x = ((mCarousel.size.x - (mCarousel.logoSize.x * mCarousel.maxLogoCount)) /
                              (mCarousel.maxLogoCount)) +
                             mCarousel.logoSize.x;
-            xOff = (mCarousel.size.x - mCarousel.logoSize.x) / 2.0f - (mCamOffset * logoSpacing.x);
+            xOff = std::round((mCarousel.size.x - mCarousel.logoSize.x) / 2.0f -
+                              (mCamOffset * logoSpacing.x));
             if (mCarousel.logoAlignment == ALIGN_TOP)
                 yOff = mCarousel.logoSize.y / 10.0f;
             else if (mCarousel.logoAlignment == ALIGN_BOTTOM)
@@ -669,12 +671,16 @@ void SystemView::renderCarousel(const glm::mat4& trans)
             comp->setRotationDegrees(mCarousel.logoRotation * distance);
             comp->setRotationOrigin(mCarousel.logoRotationOrigin);
         }
-        comp->setScale(scale);
-        // Partial workaround for single-pixel alignment issues at some resolutions and with
-        // some logos.
-        comp->setSize(comp->getSize().x, std::ceil(comp->getSize().y));
-        comp->setPosition(comp->getPosition().x, std::round(comp->getPosition().y));
 
+        // When running at lower resolutions, prevent the scale-down to go all the way to the
+        // minimum value. This avoids potential single-pixel alignment issues when the logo
+        // can't be vertically placed exactly in the middle of the carousel. Although the
+        // problem theoretically exists at all resolutions, it's not visble at around 1080p
+        // and above.
+        if (std::min(mSize.x, mSize.y) < 1080.0f)
+            scale = glm::clamp(scale, 1.0f / mCarousel.logoScale + 0.01f, 1.0f);
+
+        comp->setScale(scale);
         comp->setOpacity(static_cast<unsigned char>(opacity));
         comp->render(logoTrans);
 
