@@ -88,7 +88,7 @@ public:
 
     virtual glm::vec2 getSize() const { return mSize; }
     void setSize(const glm::vec2& size) { setSize(size.x, size.y); }
-    void setSize(float w, float h);
+    void setSize(const float w, const float h);
     virtual void setResize(float width, float height) {}
     virtual void onSizeChanged() {}
 

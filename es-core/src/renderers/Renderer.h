@@ -144,23 +144,23 @@ namespace Renderer
                   const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
                   const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     SDL_Window* getSDLWindow();
-    int getWindowWidth();
-    int getWindowHeight();
-    int getScreenWidth();
-    int getScreenHeight();
-    int getScreenOffsetX();
-    int getScreenOffsetY();
-    int getScreenRotate();
-    float getScreenWidthModifier();
-    float getScreenHeightModifier();
-    float getScreenAspectRatio();
+    const int getWindowWidth();
+    const int getWindowHeight();
+    const int getScreenWidth();
+    const int getScreenHeight();
+    const int getScreenOffsetX();
+    const int getScreenOffsetY();
+    const int getScreenRotate();
+    const float getScreenWidthModifier();
+    const float getScreenHeightModifier();
+    const float getScreenAspectRatio();
 
-    unsigned int convertRGBAToABGR(unsigned int color);
-    unsigned int convertABGRToRGBA(unsigned int color);
+    const unsigned int convertRGBAToABGR(const unsigned int color);
+    const unsigned int convertABGRToRGBA(const unsigned int color);
 
     Shader* getShaderProgram(unsigned int shaderID);
-    const glm::mat4 getProjectionMatrix();
-    void shaderPostprocessing(unsigned int shaders,
+    const glm::mat4& getProjectionMatrix();
+    void shaderPostprocessing(const unsigned int shaders,
                               const Renderer::shaderParameters& parameters = shaderParameters(),
                               unsigned char* textureRGBA = nullptr);
 
@@ -180,7 +180,7 @@ namespace Renderer
     void updateTexture(const unsigned int texture,
                        const Texture::Type type,
                        const unsigned int x,
-                       const unsigned y,
+                       const unsigned int y,
                        const unsigned int width,
                        const unsigned int height,
                        void* data);

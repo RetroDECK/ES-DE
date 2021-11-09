@@ -20,11 +20,11 @@ public:
     ImageComponent(Window* window, bool forceLoad = false, bool dynamic = true);
     virtual ~ImageComponent() {}
 
-    void setDefaultImage(std::string path) { mDefaultPath = path; }
+    void setDefaultImage(const std::string& path) { mDefaultPath = path; }
 
     // Loads the image at the given filepath. Will tile if tile is true (retrieves texture
     // as tiling, creates vertices accordingly).
-    void setImage(std::string path, bool tile = false, bool linearMagnify = false);
+    void setImage(const std::string& path, bool tile = false, bool linearMagnify = false);
     // Loads an image from memory.
     void setImage(const char* data, size_t length, bool tile = false);
     // Use an already existing texture.
@@ -37,32 +37,32 @@ public:
     // zero, don't do any resizing.
     // Can be set before or after an image is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
-    void setResize(float width, float height) override;
+    void setResize(const float width, const float height) override;
     void setResize(const glm::vec2& size) { setResize(size.x, size.y); }
 
     // Resize the image to be as large as possible but fit within a box of this size.
     // Can be set before or after an image is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
-    void setMaxSize(float width, float height);
+    void setMaxSize(const float width, const float height);
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
 
-    void setMinSize(float width, float height);
+    void setMinSize(const float width, const float height);
     void setMinSize(const glm::vec2& size) { setMinSize(size.x, size.y); }
 
     glm::vec2 getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
 
     // Applied AFTER image positioning and sizing.
     // cropTop(0.2) will crop 20% of the top of the image.
-    void cropLeft(float percent);
-    void cropTop(float percent);
-    void cropRight(float percent);
-    void cropBot(float percent);
-    void crop(float left, float top, float right, float bot);
+    void cropLeft(const float percent);
+    void cropTop(const float percent);
+    void cropRight(const float percent);
+    void cropBot(const float percent);
+    void crop(const float left, const float top, const float right, const float bot);
     void uncrop();
 
     // This crops any entirely transparent areas around the actual image.
     // The arguments restrict how much the end result is allowed to be scaled.
-    void cropTransparentPadding(float maxSizeX, float maxSizeY);
+    void cropTransparentPadding(const float maxSizeX, const float maxSizeY);
 
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;

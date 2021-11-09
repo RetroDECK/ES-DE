@@ -14,61 +14,64 @@
 
 #include <pugixml.hpp>
 
-// clang-format off
-// The statistic entries must be placed at the bottom or otherwise there will be problems with
-// saving the values in GuiMetaDataEd.
-MetaDataDecl gameDecls[] = {
-// key,           type,                default,           statistic, name in GuiMetaDataEd,        prompt in GuiMetaDataEd,            shouldScrape
-{"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
-{"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter sortname",                   false},
-{"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
-{"rating",        MD_RATING,           "0",               false,     "rating",                     "enter rating",                     true},
-{"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",               "enter release date",               true},
-{"developer",     MD_STRING,           "unknown",         false,     "developer",                  "enter developer",                  true},
-{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                  "enter publisher",                  true},
-{"genre",         MD_STRING,           "unknown",         false,     "genre",                      "enter genre",                      true},
-{"players",       MD_STRING,           "unknown",         false,     "players",                    "enter number of players",          true},
-{"favorite",      MD_BOOL,             "false",           false,     "favorite",                   "enter favorite off/on",            false},
-{"completed",     MD_BOOL,             "false",           false,     "completed",                  "enter completed off/on",           false},
-{"kidgame",       MD_BOOL,             "false",           false,     "kidgame",                    "enter kidgame off/on",             false},
-{"hidden",        MD_BOOL,             "false",           false,     "hidden",                     "enter hidden off/on",              false},
-{"broken",        MD_BOOL,             "false",           false,     "broken/not working",         "enter broken off/on",              false},
-{"nogamecount",   MD_BOOL,             "false",           false,     "exclude from game counter",  "enter don't count as game off/on", false},
-{"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper", "enter no multi-scrape off/on",     false},
-{"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",       "enter hide metadata off/on",       false},
-{"playcount",     MD_INT,              "0",               false,     "times played",               "enter number of times played",     false},
-{"controller",    MD_CONTROLLER,       "",                false,     "controller",                 "select controller",                true},
-{"altemulator",   MD_ALT_EMULATOR,     "",                false,     "alternative emulator",       "select alternative emulator",      false},
-{"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
-};
+namespace
+{
+    // clang-format off
+    // The statistic entries must be placed at the bottom or otherwise there will be problems with
+    // saving the values in GuiMetaDataEd.
+    MetaDataDecl gameDecls[] = {
+    // key,           type,                default,           statistic, name in GuiMetaDataEd,        prompt in GuiMetaDataEd,            shouldScrape
+    {"name",          MD_STRING,           "",                false,     "name",                       "enter name",                       true},
+    {"sortname",      MD_STRING,           "",                false,     "sortname",                   "enter sortname",                   false},
+    {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                "enter description",                true},
+    {"rating",        MD_RATING,           "0",               false,     "rating",                     "enter rating",                     true},
+    {"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",               "enter release date",               true},
+    {"developer",     MD_STRING,           "unknown",         false,     "developer",                  "enter developer",                  true},
+    {"publisher",     MD_STRING,           "unknown",         false,     "publisher",                  "enter publisher",                  true},
+    {"genre",         MD_STRING,           "unknown",         false,     "genre",                      "enter genre",                      true},
+    {"players",       MD_STRING,           "unknown",         false,     "players",                    "enter number of players",          true},
+    {"favorite",      MD_BOOL,             "false",           false,     "favorite",                   "enter favorite off/on",            false},
+    {"completed",     MD_BOOL,             "false",           false,     "completed",                  "enter completed off/on",           false},
+    {"kidgame",       MD_BOOL,             "false",           false,     "kidgame",                    "enter kidgame off/on",             false},
+    {"hidden",        MD_BOOL,             "false",           false,     "hidden",                     "enter hidden off/on",              false},
+    {"broken",        MD_BOOL,             "false",           false,     "broken/not working",         "enter broken off/on",              false},
+    {"nogamecount",   MD_BOOL,             "false",           false,     "exclude from game counter",  "enter don't count as game off/on", false},
+    {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper", "enter no multi-scrape off/on",     false},
+    {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",       "enter hide metadata off/on",       false},
+    {"playcount",     MD_INT,              "0",               false,     "times played",               "enter number of times played",     false},
+    {"controller",    MD_CONTROLLER,       "",                false,     "controller",                 "select controller",                true},
+    {"altemulator",   MD_ALT_EMULATOR,     "",                false,     "alternative emulator",       "select alternative emulator",      false},
+    {"lastplayed",    MD_TIME,             "0",               true,      "last played",                "enter last played date",           false}
+    };
 
-MetaDataDecl folderDecls[] = {
-{"name",          MD_STRING,           "",                false,     "name",                          "enter name",                       true},
-{"desc",          MD_MULTILINE_STRING, "",                false,     "description",                   "enter description",                true},
-{"rating",        MD_RATING,           "0",               false,     "rating",                        "enter rating",                     true},
-{"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",                  "enter release date",               true},
-{"developer",     MD_STRING,           "unknown",         false,     "developer",                     "enter developer",                  true},
-{"publisher",     MD_STRING,           "unknown",         false,     "publisher",                     "enter publisher",                  true},
-{"genre",         MD_STRING,           "unknown",         false,     "genre",                         "enter genre",                      true},
-{"players",       MD_STRING,           "unknown",         false,     "players",                       "enter number of players",          true},
-{"favorite",      MD_BOOL,             "false",           false,     "favorite",                      "enter favorite off/on",            false},
-{"completed",     MD_BOOL,             "false",           false,     "completed",                     "enter completed off/on",           false},
-{"kidgame",       MD_BOOL,             "false",           false,     "kidgame (only affects badges)", "enter kidgame off/on",             false},
-{"hidden",        MD_BOOL,             "false",           false,     "hidden",                        "enter hidden off/on",              false},
-{"broken",        MD_BOOL,             "false",           false,     "broken/not working",            "enter broken off/on",              false},
-{"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper",    "enter no multi-scrape off/on",     false},
-{"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",          "enter hide metadata off/on",       false},
-{"controller",    MD_CONTROLLER,       "",                false,     "controller",                    "select controller",                true},
-{"lastplayed",    MD_TIME,             "0",               true,      "last played",                   "enter last played date",           false}
-};
-// clang-format on
+    MetaDataDecl folderDecls[] = {
+    {"name",          MD_STRING,           "",                false,     "name",                          "enter name",                       true},
+    {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                   "enter description",                true},
+    {"rating",        MD_RATING,           "0",               false,     "rating",                        "enter rating",                     true},
+    {"releasedate",   MD_DATE,             "19700101T010000", false,     "release date",                  "enter release date",               true},
+    {"developer",     MD_STRING,           "unknown",         false,     "developer",                     "enter developer",                  true},
+    {"publisher",     MD_STRING,           "unknown",         false,     "publisher",                     "enter publisher",                  true},
+    {"genre",         MD_STRING,           "unknown",         false,     "genre",                         "enter genre",                      true},
+    {"players",       MD_STRING,           "unknown",         false,     "players",                       "enter number of players",          true},
+    {"favorite",      MD_BOOL,             "false",           false,     "favorite",                      "enter favorite off/on",            false},
+    {"completed",     MD_BOOL,             "false",           false,     "completed",                     "enter completed off/on",           false},
+    {"kidgame",       MD_BOOL,             "false",           false,     "kidgame (only affects badges)", "enter kidgame off/on",             false},
+    {"hidden",        MD_BOOL,             "false",           false,     "hidden",                        "enter hidden off/on",              false},
+    {"broken",        MD_BOOL,             "false",           false,     "broken/not working",            "enter broken off/on",              false},
+    {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper",    "enter no multi-scrape off/on",     false},
+    {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",          "enter hide metadata off/on",       false},
+    {"controller",    MD_CONTROLLER,       "",                false,     "controller",                    "select controller",                true},
+    {"lastplayed",    MD_TIME,             "0",               true,      "last played",                   "enter last played date",           false}
+    };
+    // clang-format on
 
-const std::vector<MetaDataDecl> gameMDD(gameDecls,
-                                        gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
+    const std::vector<MetaDataDecl> gameMDD(gameDecls,
+                                            gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
 
-const std::vector<MetaDataDecl> folderMDD(folderDecls,
-                                          folderDecls +
-                                              sizeof(folderDecls) / sizeof(folderDecls[0]));
+    const std::vector<MetaDataDecl> folderMDD(folderDecls,
+                                              folderDecls +
+                                                  sizeof(folderDecls) / sizeof(folderDecls[0]));
+} // namespace
 
 const std::vector<MetaDataDecl>& getMDDByType(MetaDataListType type)
 {

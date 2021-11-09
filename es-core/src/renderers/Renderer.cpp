@@ -505,7 +505,7 @@ namespace Renderer
         drawTriangleStrips(vertices, 4, trans, srcBlendFactor, dstBlendFactor);
     }
 
-    unsigned int convertRGBAToABGR(const unsigned int _color)
+    const unsigned int convertRGBAToABGR(const unsigned int _color)
     {
         unsigned char red = ((_color & 0xff000000) >> 24) & 255;
         unsigned char green = ((_color & 0x00ff0000) >> 16) & 255;
@@ -515,7 +515,7 @@ namespace Renderer
         return alpha << 24 | blue << 16 | green << 8 | red;
     }
 
-    unsigned int convertABGRToRGBA(const unsigned int _color)
+    const unsigned int convertABGRToRGBA(const unsigned int _color)
     {
         unsigned char alpha = ((_color & 0xff000000) >> 24) & 255;
         unsigned char blue = ((_color & 0x00ff0000) >> 16) & 255;
@@ -542,17 +542,17 @@ namespace Renderer
             return nullptr;
     }
 
-    const glm::mat4 getProjectionMatrix() { return mProjectionMatrix; }
+    const glm::mat4& getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
-    int getWindowWidth() { return windowWidth; }
-    int getWindowHeight() { return windowHeight; }
-    int getScreenWidth() { return screenWidth; }
-    int getScreenHeight() { return screenHeight; }
-    int getScreenOffsetX() { return screenOffsetX; }
-    int getScreenOffsetY() { return screenOffsetY; }
-    int getScreenRotate() { return screenRotate; }
-    float getScreenWidthModifier() { return screenWidthModifier; }
-    float getScreenHeightModifier() { return screenHeightModifier; }
-    float getScreenAspectRatio() { return screenAspectRatio; }
+    const int getWindowWidth() { return windowWidth; }
+    const int getWindowHeight() { return windowHeight; }
+    const int getScreenWidth() { return screenWidth; }
+    const int getScreenHeight() { return screenHeight; }
+    const int getScreenOffsetX() { return screenOffsetX; }
+    const int getScreenOffsetY() { return screenOffsetY; }
+    const int getScreenRotate() { return screenRotate; }
+    const float getScreenWidthModifier() { return screenWidthModifier; }
+    const float getScreenHeightModifier() { return screenHeightModifier; }
+    const float getScreenAspectRatio() { return screenAspectRatio; }
 
 } // namespace Renderer

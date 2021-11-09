@@ -96,10 +96,10 @@ public:
     std::string getThemePath() const;
 
     std::pair<unsigned int, unsigned int> getDisplayedGameCount() const;
-    bool getScrapeFlag() { return mScrapeFlag; }
+    const bool getScrapeFlag() const { return mScrapeFlag; }
     void setScrapeFlag(bool scrapeflag) { mScrapeFlag = scrapeflag; }
 
-    std::string getAlternativeEmulator() { return mAlternativeEmulator; }
+    const std::string& getAlternativeEmulator() const { return mAlternativeEmulator; }
     void setAlternativeEmulator(const std::string& command) { mAlternativeEmulator = command; }
     std::string getLaunchCommandFromLabel(const std::string& label);
 
@@ -122,16 +122,16 @@ public:
     {
         return std::find(sSystemVector.crbegin(), sSystemVector.crend(), this);
     }
-    bool isCollection() { return mIsCollectionSystem; }
-    bool isCustomCollection() { return mIsCustomCollectionSystem; }
-    bool isGroupedCustomCollection() { return mIsGroupedCustomCollectionSystem; }
+    const bool isCollection() const { return mIsCollectionSystem; }
+    const bool isCustomCollection() const { return mIsCustomCollectionSystem; }
+    const bool isGroupedCustomCollection() const { return mIsGroupedCustomCollectionSystem; }
     void setIsGroupedCustomCollection(bool isGroupedCustom)
     {
         mIsGroupedCustomCollectionSystem = isGroupedCustom;
     };
-    bool isGameSystem() { return mIsGameSystem; }
+    const bool isGameSystem() const { return mIsGameSystem; }
 
-    bool isVisible();
+    const bool isVisible() const;
 
     static SystemData* getSystemByName(const std::string& systemName);
     SystemData* getNext() const;

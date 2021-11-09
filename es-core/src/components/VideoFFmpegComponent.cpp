@@ -695,7 +695,7 @@ void VideoFFmpegComponent::getProcessedFrames()
             currFrame.frameRGBA.begin(), std::make_move_iterator(&mVideoFrameResampled->data[0][0]),
             std::make_move_iterator(&mVideoFrameResampled->data[0][bufferSize]));
 
-        mVideoFrameQueue.push(std::move(currFrame));
+        mVideoFrameQueue.emplace(std::move(currFrame));
         av_frame_unref(mVideoFrameResampled);
     }
 
@@ -723,7 +723,7 @@ void VideoFFmpegComponent::getProcessedFrames()
                                        &mAudioFrameResampled->data[0][0],
                                        &mAudioFrameResampled->data[0][bufferSize]);
 
-        mAudioFrameQueue.push(std::move(currFrame));
+        mAudioFrameQueue.emplace(std::move(currFrame));
         av_frame_unref(mAudioFrameResampled);
     }
 }
@@ -883,18 +883,19 @@ void VideoFFmpegComponent::calculateBlackRectangle()
                 rectHeight = mSize.y;
             }
             // Populate the rectangle coordinates to be used in render().
-            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.x - rectWidth * mOrigin.x));
-            mVideoRectangleCoords.push_back(std::round(mVideoAreaPos.y - rectHeight * mOrigin.y));
-            mVideoRectangleCoords.push_back(std::round(rectWidth));
-            mVideoRectangleCoords.push_back(std::round(rectHeight));
+            mVideoRectangleCoords.emplace_back(std::round(mVideoAreaPos.x - rectWidth * mOrigin.x));
+            mVideoRectangleCoords.emplace_back(
+                std::round(mVideoAreaPos.y - rectHeight * mOrigin.y));
+            mVideoRectangleCoords.emplace_back(std::round(rectWidth));
+            mVideoRectangleCoords.emplace_back(std::round(rectHeight));
         }
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.
         else {
-            mVideoRectangleCoords.push_back(std::round(mPosition.x - mSize.x * mOrigin.x));
-            mVideoRectangleCoords.push_back(std::round(mPosition.y - mSize.y * mOrigin.y));
-            mVideoRectangleCoords.push_back(std::round(mSize.x));
-            mVideoRectangleCoords.push_back(std::round(mSize.y));
+            mVideoRectangleCoords.emplace_back(std::round(mPosition.x - mSize.x * mOrigin.x));
+            mVideoRectangleCoords.emplace_back(std::round(mPosition.y - mSize.y * mOrigin.y));
+            mVideoRectangleCoords.emplace_back(std::round(mSize.x));
+            mVideoRectangleCoords.emplace_back(std::round(mSize.y));
         }
     }
 }

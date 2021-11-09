@@ -43,7 +43,7 @@ public:
     const bool getKidgame();
     const bool getHidden();
     const bool getCountAsGame();
-    const std::pair<unsigned int, unsigned int> getGameCount() { return mGameCount; }
+    const std::pair<unsigned int, unsigned int>& getGameCount() const { return mGameCount; }
     const bool getExcludeFromScraper();
     const std::vector<FileData*> getChildrenRecursive() const;
     FileType getType() const { return mType; }
@@ -56,11 +56,11 @@ public:
     const std::vector<FileData*>& getChildren() const { return mChildren; }
     SystemData* getSystem() const { return mSystem; }
     SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
-    const bool getOnlyFoldersFlag() { return mOnlyFolders; }
-    const bool getHasFoldersFlag() { return mHasFolders; }
+    const bool getOnlyFoldersFlag() const { return mOnlyFolders; }
+    const bool getHasFoldersFlag() const { return mHasFolders; }
     static const std::string getROMDirectory();
     static const std::string getMediaDirectory();
-    const std::string getMediafilePath(std::string subdirectory) const;
+    const std::string getMediafilePath(const std::string& subdirectory) const;
     const std::string getImagePath() const;
     const std::string get3DBoxPath() const;
     const std::string getBackCoverPath() const;
@@ -73,7 +73,7 @@ public:
     const std::string getThumbnailPath() const;
     const std::string getVideoPath() const;
 
-    bool getDeletionFlag() { return mDeletionFlag; }
+    const bool getDeletionFlag() const { return mDeletionFlag; }
     void setDeletionFlag(bool setting) { mDeletionFlag = setting; }
 
     const std::vector<FileData*>& getChildrenListToDisplay();
@@ -87,17 +87,17 @@ public:
     void addChild(FileData* file); // Error if mType != FOLDER
     void removeChild(FileData* file); // Error if mType != FOLDER
 
-    bool isPlaceHolder() { return mType == PLACEHOLDER; }
+    const bool isPlaceHolder() const { return mType == PLACEHOLDER; }
 
     virtual void refreshMetadata() { return; }
 
-    virtual std::string getKey();
-    const bool isArcadeAsset();
-    const bool isArcadeGame();
-    std::string getFullPath() { return getPath(); }
+    virtual std::string getKey() { return getFileName(); }
+    const bool isArcadeAsset() const;
+    const bool isArcadeGame() const;
+    const std::string& getFullPath() const { return getPath(); }
     std::string getFileName() { return Utils::FileSystem::getFileName(getPath()); }
-    virtual FileData* getSourceFileData();
-    std::string getSystemName() const { return mSystemName; }
+    virtual FileData* getSourceFileData() { return this; }
+    const std::string& getSystemName() const { return mSystemName; }
 
     // Returns our best guess at the "real" name for this file.
     std::string getDisplayName() const;
@@ -106,7 +106,7 @@ public:
     std::string getCleanName() const;
 
     void launchGame(Window* window);
-    std::string findEmulatorPath(std::string& command);
+    const std::string findEmulatorPath(std::string& command);
 
     typedef bool ComparisonFunction(const FileData* a, const FileData* b);
     struct SortType {
@@ -128,8 +128,8 @@ public:
     void countGames(std::pair<unsigned int, unsigned int>& gameCount);
 
     void setSortTypeString(std::string typestring) { mSortTypeString = typestring; }
-    std::string getSortTypeString() { return mSortTypeString; }
-    FileData::SortType getSortTypeFromString(std::string desc);
+    const std::string& getSortTypeString() const { return mSortTypeString; }
+    const FileData::SortType& getSortTypeFromString(const std::string& desc) const;
 
 protected:
     FileData* mSourceFileData;

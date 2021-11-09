@@ -29,14 +29,14 @@ public:
     FlexboxComponent(Window* window, std::vector<FlexboxItem>& items);
 
     // Getters/setters for the layout.
-    std::string getDirection() const { return mDirection; }
+    const std::string& getDirection() const { return mDirection; }
     void setDirection(const std::string& direction)
     {
         assert(direction == "row" || direction == "column");
         mDirection = direction;
     }
 
-    std::string getAlignment() const { return mAlignment; }
+    const std::string& getAlignment() const { return mAlignment; }
     void setAlignment(const std::string& value)
     {
         assert(value == "left" || value == "right");
@@ -58,7 +58,7 @@ public:
         mLayoutValid = false;
     }
 
-    std::string getItemPlacement() const { return mItemPlacement; }
+    const std::string& getItemPlacement() const { return mItemPlacement; }
     void setItemPlacement(const std::string& value)
     {
         assert(value == "start" || value == "center" || value == "end" || value == "stretch");
@@ -66,10 +66,10 @@ public:
         mLayoutValid = false;
     }
 
-    glm::vec2 getItemMargin() const { return mItemMargin; }
+    const glm::vec2& getItemMargin() const { return mItemMargin; }
     void setItemMargin(glm::vec2 value);
 
-    glm::vec2 getOverlayPosition() const { return mOverlayPosition; }
+    const glm::vec2& getOverlayPosition() const { return mOverlayPosition; }
     void setOverlayPosition(glm::vec2 position) { mOverlayPosition = position; }
 
     float getOverlaySize() const { return mOverlaySize; }

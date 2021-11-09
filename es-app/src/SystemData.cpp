@@ -973,7 +973,7 @@ bool SystemData::createSystemDirectories()
     return false;
 }
 
-bool SystemData::isVisible()
+const bool SystemData::isVisible() const
 {
     // This function doesn't make much sense at the moment; if a system does not have any
     // games available, it will not be processed during startup and will as such not exist.

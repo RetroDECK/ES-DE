@@ -17,7 +17,7 @@ namespace Renderer
     static SDL_GLContext sdlContext = nullptr;
     static GLuint whiteTexture = 0;
 
-    static GLenum convertBlendFactor(const Blend::Factor _blendFactor)
+    inline GLenum convertBlendFactor(const Blend::Factor _blendFactor)
     {
         // clang-format off
         switch (_blendFactor) {
@@ -36,7 +36,7 @@ namespace Renderer
         // clang-format on
     }
 
-    static GLenum convertTextureType(const Texture::Type _type)
+    inline GLenum convertTextureType(const Texture::Type _type)
     {
         // clang-format off
         switch (_type) {
@@ -203,7 +203,7 @@ namespace Renderer
     void updateTexture(const unsigned int texture,
                        const Texture::Type type,
                        const unsigned int x,
-                       const unsigned y,
+                       const unsigned int y,
                        const unsigned int width,
                        const unsigned int height,
                        void* data)
@@ -246,8 +246,8 @@ namespace Renderer
                             const Blend::Factor dstBlendFactor,
                             const shaderParameters& parameters)
     {
-        float width = vertices[3].pos[0];
-        float height = vertices[3].pos[1];
+        const float width = vertices[3].pos[0];
+        const float height = vertices[3].pos[1];
 
         GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].pos));
         GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].tex));

@@ -164,7 +164,7 @@ void FlexboxComponent::computeLayout()
     if (mDirection == "row") {
         for (int y = 0; y < grid.y; y++) {
             for (int x = 0; x < grid.x; x++) {
-                itemPositions.push_back(
+                itemPositions.emplace_back(
                     glm::vec2{(x * (maxItemSize.x + mItemMargin.x) + alignRightComp),
                               y * (rowHeight + mItemMargin.y)});
             }
@@ -173,15 +173,15 @@ void FlexboxComponent::computeLayout()
     else if (mDirection == "column" && !alignRight) {
         for (int x = 0; x < grid.x; x++) {
             for (int y = 0; y < grid.y; y++) {
-                itemPositions.push_back(glm::vec2{(x * (maxItemSize.x + mItemMargin.x)),
-                                                  y * (rowHeight + mItemMargin.y)});
+                itemPositions.emplace_back(glm::vec2{(x * (maxItemSize.x + mItemMargin.x)),
+                                                     y * (rowHeight + mItemMargin.y)});
             }
         }
     }
     else { // Right-aligned.
         for (int x = 0; x < grid.x; x++) {
             for (int y = 0; y < grid.y; y++) {
-                itemPositions.push_back(
+                itemPositions.emplace_back(
                     glm::vec2{(mSize.x - (x * (maxItemSize.x + mItemMargin.x)) - maxItemSize.x),
                               y * (rowHeight + mItemMargin.y)});
             }

@@ -90,15 +90,15 @@ public:
     void deleteCollectionFiles(FileData* file);
 
     // Return whether the current theme is compatible with Automatic or Custom Collections.
-    bool isThemeGenericCollectionCompatible(bool genericCustomCollections);
-    bool isThemeCustomCollectionCompatible(std::vector<std::string> stringVector);
-    std::string getValidNewCollectionName(std::string name, int index = 0);
+    const bool isThemeGenericCollectionCompatible(bool genericCustomCollections);
+    const bool isThemeCustomCollectionCompatible(const std::vector<std::string>& stringVector);
+    std::string getValidNewCollectionName(const std::string& name, int index = 0);
 
-    void setEditMode(std::string collectionName, bool showPopup = true);
+    void setEditMode(const std::string& collectionName, bool showPopup = true);
     void exitEditMode(bool showPopup = true);
-    bool inCustomCollection(const std::string& collectionName, FileData* gameFile);
+    const bool inCustomCollection(const std::string& collectionName, FileData* gameFile);
     // Add or remove a game from a specific collection.
-    bool toggleGameInCollection(FileData* file);
+    const bool toggleGameInCollection(FileData* file);
 
     SystemData* getSystemToView(SystemData* sys);
     // Used to generate a description of the collection (all other metadata fields are hidden).
@@ -106,8 +106,8 @@ public:
     // Return the unused folders from current theme path.
     std::vector<std::string> getUnusedSystemsFromTheme();
 
-    SystemData* addNewCustomCollection(std::string name);
-    void deleteCustomCollection(std::string collectionName);
+    SystemData* addNewCustomCollection(const std::string& name);
+    void deleteCustomCollection(const std::string& collectionName);
 
     // Reactivate a game in all custom collections where it has an entry in the configuration file.
     void reactivateCustomCollectionEntry(FileData* game);
@@ -115,17 +115,19 @@ public:
     // Repopulate the collection, which is basically a forced update of its complete content.
     void repopulateCollection(SystemData* sysData);
 
-    std::map<std::string, CollectionSystemData, stringComparator> getAutoCollectionSystems()
+    const std::map<std::string, CollectionSystemData, stringComparator>& // Line break.
+    getAutoCollectionSystems() const
     {
         return mAutoCollectionSystemsData;
     }
-    std::map<std::string, CollectionSystemData, stringComparator> getCustomCollectionSystems()
+    const std::map<std::string, CollectionSystemData, stringComparator>&
+    getCustomCollectionSystems()
     {
         return mCustomCollectionSystemsData;
     }
-    SystemData* getCustomCollectionsBundle() { return mCustomCollectionsBundle; }
-    bool isEditing() { return mIsEditingCustom; }
-    std::string getEditingCollection() { return mEditingCollection; }
+    SystemData* getCustomCollectionsBundle() const { return mCustomCollectionsBundle; }
+    const bool isEditing() const { return mIsEditingCustom; }
+    const std::string& getEditingCollection() const { return mEditingCollection; }
 
 private:
     static CollectionSystemsManager* sInstance;
@@ -146,7 +148,7 @@ private:
     void initCustomCollectionSystems();
     SystemData* getAllGamesCollection();
     // Create a new empty collection system based on the name and declaration.
-    SystemData* createNewCollectionEntry(std::string name,
+    SystemData* createNewCollectionEntry(const std::string& name,
                                          CollectionSystemDecl sysDecl,
                                          bool index = true,
                                          bool custom = false);
@@ -172,10 +174,10 @@ private:
     std::vector<std::string> getUserCollectionThemeFolders();
     void trimCollectionCount(FileData* rootFolder, int limit);
     // Return whether a specific folder exists in the theme.
-    bool themeFolderExists(std::string folder);
-    bool includeFileInAutoCollections(FileData* file);
+    const bool themeFolderExists(const std::string& folder);
+    const bool includeFileInAutoCollections(FileData* file);
 
-    std::string getCustomCollectionConfigPath(std::string collectionName);
+    std::string getCustomCollectionConfigPath(const std::string& collectionName);
     std::string getCollectionsFolder();
 };
 

@@ -132,7 +132,7 @@ void ImageComponent::resize()
     onSizeChanged();
 }
 
-void ImageComponent::setImage(std::string path, bool tile, bool linearMagnify)
+void ImageComponent::setImage(const std::string& path, bool tile, bool linearMagnify)
 {
     // Always load bundled graphic resources statically, unless mForceLoad has been set.
     // This eliminates annoying texture pop-in problems that would otherwise occur.
@@ -179,7 +179,7 @@ void ImageComponent::setResize(float width, float height)
     resize();
 }
 
-void ImageComponent::setMaxSize(float width, float height)
+void ImageComponent::setMaxSize(const float width, const float height)
 {
     mTargetSize = glm::vec2{width, height};
     mTargetIsMax = true;
@@ -187,7 +187,7 @@ void ImageComponent::setMaxSize(float width, float height)
     resize();
 }
 
-void ImageComponent::setMinSize(float width, float height)
+void ImageComponent::setMinSize(const float width, const float height)
 {
     mTargetSize = glm::vec2{width, height};
     mTargetIsMax = false;
@@ -195,31 +195,31 @@ void ImageComponent::setMinSize(float width, float height)
     resize();
 }
 
-void ImageComponent::cropLeft(float percent)
+void ImageComponent::cropLeft(const float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
     mTopLeftCrop.x = percent;
 }
 
-void ImageComponent::cropTop(float percent)
+void ImageComponent::cropTop(const float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
     mTopLeftCrop.y = percent;
 }
 
-void ImageComponent::cropRight(float percent)
+void ImageComponent::cropRight(const float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
     mBottomRightCrop.x = 1.0f - percent;
 }
 
-void ImageComponent::cropBot(float percent)
+void ImageComponent::cropBot(const float percent)
 {
     assert(percent >= 0.0f && percent <= 1.0f);
     mBottomRightCrop.y = 1.0f - percent;
 }
 
-void ImageComponent::crop(float left, float top, float right, float bot)
+void ImageComponent::crop(const float left, const float top, const float right, const float bot)
 {
     cropLeft(left);
     cropTop(top);
@@ -233,7 +233,7 @@ void ImageComponent::uncrop()
     crop(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-void ImageComponent::cropTransparentPadding(float maxSizeX, float maxSizeY)
+void ImageComponent::cropTransparentPadding(const float maxSizeX, const float maxSizeY)
 {
     if (mSize == glm::vec2{})
         return;

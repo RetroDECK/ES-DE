@@ -20,7 +20,7 @@ namespace Renderer
     static SDL_GLContext sdlContext = nullptr;
     static GLuint whiteTexture = 0;
 
-    static GLenum convertBlendFactor(const Blend::Factor _blendFactor)
+    inline GLenum convertBlendFactor(const Blend::Factor _blendFactor)
     {
         // clang-format off
         switch (_blendFactor) {
@@ -39,7 +39,7 @@ namespace Renderer
         // clang-format on
     }
 
-    static GLenum convertTextureType(const Texture::Type _type)
+    inline GLenum convertTextureType(const Texture::Type _type)
     {
         // clang-format off
         switch (_type) {
@@ -148,7 +148,7 @@ namespace Renderer
     void updateTexture(const unsigned int texture,
                        const Texture::Type type,
                        const unsigned int x,
-                       const unsigned y,
+                       const unsigned int y,
                        const unsigned int width,
                        const unsigned int height,
                        void* data)

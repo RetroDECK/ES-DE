@@ -516,7 +516,8 @@ void CollectionSystemsManager::deleteCollectionFiles(FileData* file)
     }
 }
 
-bool CollectionSystemsManager::isThemeGenericCollectionCompatible(bool genericCustomCollections)
+const bool CollectionSystemsManager::isThemeGenericCollectionCompatible(
+    bool genericCustomCollections)
 {
     std::vector<std::string> cfgSys = getCollectionThemeFolders(genericCustomCollections);
     for (auto sysIt = cfgSys.cbegin(); sysIt != cfgSys.cend(); sysIt++) {
@@ -526,8 +527,8 @@ bool CollectionSystemsManager::isThemeGenericCollectionCompatible(bool genericCu
     return true;
 }
 
-bool CollectionSystemsManager::isThemeCustomCollectionCompatible(
-    std::vector<std::string> stringVector)
+const bool CollectionSystemsManager::isThemeCustomCollectionCompatible(
+    const std::vector<std::string>& stringVector)
 {
     if (isThemeGenericCollectionCompatible(true))
         return true;
@@ -548,7 +549,8 @@ bool CollectionSystemsManager::isThemeCustomCollectionCompatible(
     return true;
 }
 
-std::string CollectionSystemsManager::getValidNewCollectionName(std::string inName, int index)
+std::string CollectionSystemsManager::getValidNewCollectionName(const std::string& inName,
+                                                                int index)
 {
     std::string name = inName;
 
@@ -602,7 +604,7 @@ std::string CollectionSystemsManager::getValidNewCollectionName(std::string inNa
     return name;
 }
 
-void CollectionSystemsManager::setEditMode(std::string collectionName, bool showPopup)
+void CollectionSystemsManager::setEditMode(const std::string& collectionName, bool showPopup)
 {
     if (mCustomCollectionSystemsData.find(collectionName) == mCustomCollectionSystemsData.cend()) {
         LOG(LogError) << "Tried to edit a non-existing collection: " << collectionName;
@@ -645,8 +647,8 @@ void CollectionSystemsManager::exitEditMode(bool showPopup)
     mEditingCollectionSystemData->system->onMetaDataSavePoint();
 }
 
-bool CollectionSystemsManager::inCustomCollection(const std::string& collectionName,
-                                                  FileData* gameFile)
+const bool CollectionSystemsManager::inCustomCollection(const std::string& collectionName,
+                                                        FileData* gameFile)
 {
     auto collectionEntry = mCustomCollectionSystemsData.find(collectionName);
 
@@ -658,7 +660,7 @@ bool CollectionSystemsManager::inCustomCollection(const std::string& collectionN
     return false;
 }
 
-bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
+const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
 {
     if (file->getType() == GAME) {
         bool adding = true;
@@ -903,7 +905,7 @@ std::vector<std::string> CollectionSystemsManager::getUnusedSystemsFromTheme()
     return themeSys;
 }
 
-SystemData* CollectionSystemsManager::addNewCustomCollection(std::string name)
+SystemData* CollectionSystemsManager::addNewCustomCollection(const std::string& name)
 {
     CollectionSystemDecl decl = mCollectionSystemDeclsIndex[myCollectionsName];
     decl.themeFolder = name;
@@ -913,7 +915,7 @@ SystemData* CollectionSystemsManager::addNewCustomCollection(std::string name)
     return createNewCollectionEntry(name, decl, true, true);
 }
 
-void CollectionSystemsManager::deleteCustomCollection(std::string collectionName)
+void CollectionSystemsManager::deleteCustomCollection(const std::string& collectionName)
 {
     auto collectionEntry = mCustomCollectionSystemsData.find(collectionName);
 
@@ -1090,7 +1092,7 @@ SystemData* CollectionSystemsManager::getAllGamesCollection()
     return allSysData->system;
 }
 
-SystemData* CollectionSystemsManager::createNewCollectionEntry(std::string name,
+SystemData* CollectionSystemsManager::createNewCollectionEntry(const std::string& name,
                                                                CollectionSystemDecl sysDecl,
                                                                bool index,
                                                                bool custom)
@@ -1456,13 +1458,13 @@ void CollectionSystemsManager::trimCollectionCount(FileData* rootFolder, int lim
     }
 }
 
-bool CollectionSystemsManager::themeFolderExists(std::string folder)
+const bool CollectionSystemsManager::themeFolderExists(const std::string& folder)
 {
     std::vector<std::string> themeSys = getSystemsFromTheme();
     return std::find(themeSys.cbegin(), themeSys.cend(), folder) != themeSys.cend();
 }
 
-bool CollectionSystemsManager::includeFileInAutoCollections(FileData* file)
+const bool CollectionSystemsManager::includeFileInAutoCollections(FileData* file)
 {
     // We exclude non-game files from collections (i.e. "kodi", entries from non-game systems).
     // If/when there are more in the future, maybe this can be a more complex method, with a
@@ -1470,7 +1472,8 @@ bool CollectionSystemsManager::includeFileInAutoCollections(FileData* file)
     return file->getName() != "kodi" && file->getSystem()->isGameSystem();
 }
 
-std::string CollectionSystemsManager::getCustomCollectionConfigPath(std::string collectionName)
+std::string CollectionSystemsManager::getCustomCollectionConfigPath(
+    const std::string& collectionName)
 {
     return getCollectionsFolder() + "/custom-" + collectionName + ".cfg";
 }

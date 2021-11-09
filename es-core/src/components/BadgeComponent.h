@@ -30,7 +30,7 @@ public:
     };
 
     static void populateGameControllers();
-    std::vector<std::string> getBadgeTypes() { return mBadgeTypes; }
+    const std::vector<std::string>& getBadgeTypes() const { return mBadgeTypes; }
     void setBadges(const std::vector<BadgeInfo>& badges);
     static const std::vector<GameControllers>& getGameControllers()
     {

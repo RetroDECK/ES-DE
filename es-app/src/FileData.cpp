@@ -142,7 +142,7 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
     std::vector<FileData*> childrenRecursive;
 
     for (auto it = mChildrenByFilename.cbegin(); it != mChildrenByFilename.cend(); it++) {
-        childrenRecursive.push_back((*it).second);
+        childrenRecursive.emplace_back((*it).second);
         // Recurse through any subdirectories.
         if ((*it).second->getType() == FOLDER) {
             std::vector<FileData*> childrenSubdirectory = (*it).second->getChildrenRecursive();
@@ -208,7 +208,7 @@ const std::string FileData::getMediaDirectory()
     return mediaDirPath;
 }
 
-const std::string FileData::getMediafilePath(std::string subdirectory) const
+const std::string FileData::getMediafilePath(const std::string& subdirectory) const
 {
     const std::vector<std::string> extList = {".png", ".jpg"};
     std::string subFolders;
@@ -336,7 +336,7 @@ const std::vector<FileData*>& FileData::getChildrenListToDisplay()
         mFilteredChildren.clear();
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
             if (idx->showFile((*it))) {
-                mFilteredChildren.push_back(*it);
+                mFilteredChildren.emplace_back(*it);
             }
         }
         return mFilteredChildren;
@@ -357,9 +357,9 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
         if ((*it)->getType() & typeMask) {
             if (!displayedOnly || !idx->isFiltered() || idx->showFile(*it)) {
                 if (countAllGames)
-                    out.push_back(*it);
+                    out.emplace_back(*it);
                 else if ((*it)->getCountAsGame())
-                    out.push_back(*it);
+                    out.emplace_back(*it);
             }
         }
         if ((*it)->getChildren().size() > 0) {
@@ -370,7 +370,7 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
             else {
                 for (auto it2 = subChildren.cbegin(); it2 != subChildren.cend(); it2++) {
                     if ((*it2)->getCountAsGame())
-                        out.push_back(*it2);
+                        out.emplace_back(*it2);
                 }
             }
         }
@@ -388,11 +388,11 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
         if (includeFolders && (*it)->getType() == FOLDER) {
             if (!(respectExclusions && (*it)->getExcludeFromScraper()))
-                out.push_back(*it);
+                out.emplace_back(*it);
         }
         else if ((*it)->getType() == GAME) {
             if (!(respectExclusions && (*it)->getExcludeFromScraper()))
-                out.push_back(*it);
+                out.emplace_back(*it);
         }
 
         // If the flag has been passed to exclude directories recursively, then skip the entire
@@ -410,9 +410,7 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
     return out;
 }
 
-std::string FileData::getKey() { return getFileName(); }
-
-const bool FileData::isArcadeAsset()
+const bool FileData::isArcadeAsset() const
 {
     const std::string stem = Utils::FileSystem::getStem(mPath);
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
@@ -420,15 +418,13 @@ const bool FileData::isArcadeAsset()
             (MameNames::getInstance()->isBios(stem) || MameNames::getInstance()->isDevice(stem)));
 }
 
-const bool FileData::isArcadeGame()
+const bool FileData::isArcadeGame() const
 {
     const std::string stem = Utils::FileSystem::getStem(mPath);
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
                          mSystem->hasPlatformId(PlatformIds::SNK_NEO_GEO))) &&
             (!MameNames::getInstance()->isBios(stem) && !MameNames::getInstance()->isDevice(stem)));
 }
-
-FileData* FileData::getSourceFileData() { return this; }
 
 void FileData::addChild(FileData* file)
 {
@@ -438,7 +434,7 @@ void FileData::addChild(FileData* file)
     const std::string key = file->getKey();
     if (mChildrenByFilename.find(key) == mChildrenByFilename.cend()) {
         mChildrenByFilename[key] = file;
-        mChildren.push_back(file);
+        mChildren.emplace_back(file);
         file->mParent = this;
     }
 }
@@ -511,10 +507,10 @@ void FileData::sort(ComparisonFunction& comparator,
     if (foldersOnTop) {
         for (unsigned int i = 0; i < mChildren.size(); i++) {
             if (mChildren[i]->getType() == FOLDER) {
-                mChildrenFolders.push_back(mChildren[i]);
+                mChildrenFolders.emplace_back(mChildren[i]);
             }
             else {
-                mChildrenOthers.push_back(mChildren[i]);
+                mChildrenOthers.emplace_back(mChildren[i]);
                 mOnlyFolders = false;
             }
         }
@@ -628,15 +624,15 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
 
         if (foldersOnTop && mChildren[i]->getType() == FOLDER) {
             if (!mChildren[i]->getFavorite())
-                mChildrenFolders.push_back(mChildren[i]);
+                mChildrenFolders.emplace_back(mChildren[i]);
             else
-                mChildrenFavoritesFolders.push_back(mChildren[i]);
+                mChildrenFavoritesFolders.emplace_back(mChildren[i]);
         }
         else if (mChildren[i]->getFavorite()) {
-            mChildrenFavorites.push_back(mChildren[i]);
+            mChildrenFavorites.emplace_back(mChildren[i]);
         }
         else {
-            mChildrenOthers.push_back(mChildren[i]);
+            mChildrenOthers.emplace_back(mChildren[i]);
         }
 
         if (mChildren[i]->getType() != FOLDER)
@@ -751,7 +747,7 @@ void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
     mGameCount = gameCount;
 }
 
-FileData::SortType FileData::getSortTypeFromString(std::string desc)
+const FileData::SortType& FileData::getSortTypeFromString(const std::string& desc) const
 {
     std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
 
@@ -1149,7 +1145,7 @@ void FileData::launchGame(Window* window)
     gameToUpdate->mSystem->onMetaDataSavePoint();
 }
 
-std::string FileData::findEmulatorPath(std::string& command)
+const std::string FileData::findEmulatorPath(std::string& command)
 {
     // Extract the emulator executable from the launch command string. There are two ways
     // that the emulator can be defined in es_systems.xml, either using the find rules in

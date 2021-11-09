@@ -111,7 +111,7 @@ void GuiComponent::setOrigin(float x, float y)
     onOriginChanged();
 }
 
-void GuiComponent::setSize(float w, float h)
+void GuiComponent::setSize(const float w, const float h)
 {
     if (mSize.x == w && mSize.y == h)
         return;
