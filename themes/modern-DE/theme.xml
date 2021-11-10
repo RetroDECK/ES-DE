@@ -138,11 +138,6 @@ based on:       Switch Theme by Lilbud
 		</image>
 	</view>
 	<view name="video">
-		<image name="md_marquee">
-			<origin>0.5 0.5</origin>
-			<pos>0.494 0.68</pos>
-			<maxSize>0.268 0.228</maxSize>
-		</image>
 		<video name="md_video">
 			<pos>0.494 0.358</pos>
 			<maxSize>0.268 0.367</maxSize>
@@ -337,6 +332,11 @@ based on:       Switch Theme by Lilbud
 			<alignment>right</alignment>
 			<fontPath>${mainFont}</fontPath>
 		</text>
+		<image name="md_marquee">
+			<origin>0.5 0.5</origin>
+			<pos>0.494 0.68</pos>
+			<maxSize>0.268 0.228</maxSize>
+		</image>
 
 		<!-- metadata panel (right) -->
 		<image name="md_background" extra="true">
