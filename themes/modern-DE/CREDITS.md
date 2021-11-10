@@ -1,4 +1,4 @@
-The EmulationStation theme 'modern-DE' is based on '[es-theme-switch](https://github.com/lilbud/es-theme-switch)' by lilbud. The theme was modified for es-de by Sophia Hadash.
+The EmulationStation theme 'modern-DE' is based on '[es-theme-switch](https://github.com/lilbud/es-theme-switch)' by lilbud. The theme was modified for ES-DE by Sophia Hadash.
 
 
 Credits

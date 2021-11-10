@@ -1,7 +1,7 @@
 # Modern-DE Theme for Emulationstation Desktop Edition
 
-The modern theme is a new theme for es-de that supports most latest features such as badges and controllers. The theme
-is meant to offer a modern look for es-de. The theme is designed with theme variants in mind (v1.3).
+The modern theme is a new theme for ES-DE that supports most latest features such as badges and controllers. The theme
+is meant to offer a modern look for ES-DE. The theme is designed with theme variants in mind (v1.3).
 
 We support 8 variants:
 
