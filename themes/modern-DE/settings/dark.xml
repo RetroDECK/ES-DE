@@ -75,7 +75,7 @@ based on:       Switch Theme by Lilbud
 		<textlist name="gamelist">
 			<selectedColor>${mainColor}</selectedColor>
 			<primaryColor>${secondaryColor}</primaryColor>
-			<secondaryColor>${secondaryColor}</secondaryColor>
+			<secondaryColor>${tertiaryColor}</secondaryColor>
 			<selectorColor>00000000</selectorColor>
 		</textlist>
 	</view>
@@ -97,7 +97,7 @@ based on:       Switch Theme by Lilbud
 		<textlist name="gamelist">
 			<selectedColor>${mainColor}</selectedColor>
 			<primaryColor>${secondaryColor}</primaryColor>
-			<secondaryColor>${secondaryColor}</secondaryColor>
+			<secondaryColor>${tertiaryColor}</secondaryColor>
 			<selectorColor>${mainColor}</selectorColor>
 		</textlist>
 		<text name="gamelistInfo">

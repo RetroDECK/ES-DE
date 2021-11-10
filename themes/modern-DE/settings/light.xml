@@ -17,6 +17,7 @@ based on:       Switch Theme by Lilbud
 		<mainColor>334ff0</mainColor>
 		<highlightColor>23caca</highlightColor>
 		<secondaryColor>222222</secondaryColor>
+		<tertiaryColor>555555</tertiaryColor>
 		<systemColor>3aa5ab</systemColor>
 		<placeholderColor>ffffff</placeholderColor>
 	</variables>
@@ -73,7 +74,7 @@ based on:       Switch Theme by Lilbud
 		<textlist name="gamelist">
 			<selectedColor>${mainColor}</selectedColor>
 			<primaryColor>${secondaryColor}</primaryColor>
-			<secondaryColor>${secondaryColor}</secondaryColor>
+			<secondaryColor>${tertiaryColor}</secondaryColor>
 			<selectorColor>00000000</selectorColor>
 		</textlist>
 	</view>
@@ -95,7 +96,7 @@ based on:       Switch Theme by Lilbud
 		<textlist name="gamelist">
 			<selectedColor>${mainColor}</selectedColor>
 			<primaryColor>${secondaryColor}</primaryColor>
-			<secondaryColor>${secondaryColor}</secondaryColor>
+			<secondaryColor>${tertiaryColor}</secondaryColor>
 			<selectorColor>${mainColor}</selectorColor>
 		</textlist>
 		<text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_lbl_rating, md_developer, md_publisher, md_genre, md_players, md_playcount, md_releasedate, md_description">
