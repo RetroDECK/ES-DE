@@ -151,6 +151,11 @@ void GuiGamelistFilter::addFiltersToMenu()
          it != decls.cend(); it++) {
         FilterIndexType type = (*it).type; // Type of filter.
 
+        // Don't include the alternative emulators if the corresponding setting has been disabled.
+        if (type == ALTEMULATOR_FILTER &&
+            !Settings::getInstance()->getBool("AlternativeEmulatorPerGame"))
+            continue;
+
         std::map<std::string, int>* allKeys = (*it).allIndexKeys;
 
         bool exclusiveSelect = false;

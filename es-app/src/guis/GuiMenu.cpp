@@ -1069,6 +1069,8 @@ void GuiMenu::openOtherOptions()
             Settings::getInstance()->setBool("AlternativeEmulatorPerGame",
                                              alternativeEmulatorPerGame->getState());
             s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
         }
     });
 

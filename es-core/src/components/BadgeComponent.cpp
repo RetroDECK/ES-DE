@@ -104,6 +104,13 @@ void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
             [badge](FlexboxComponent::FlexboxItem item) { return item.label == badge.badgeType; });
 
         if (it != mFlexboxItems.end()) {
+
+            // Don't show the alternative emulator badge if the corresponding setting has been
+            // disabled.
+            if (badge.badgeType == "altemulator" &&
+                !Settings::getInstance()->getBool("AlternativeEmulatorPerGame"))
+                continue;
+
             it->visible = true;
             if (badge.gameController != "" &&
                 badge.gameController != it->overlayImage.getTexture()->getTextureFilePath()) {
