@@ -8,6 +8,18 @@
 
 ### Release overview
 
+The 1.2 release introduces multiple new features and brings extensive bug fixing and lots of other small improvements. Support for alternative emulators has been added which can be selected system-wide or per game. These alternative emulators are added to the es_systems.xml file, making it easy to expand or customize the configuration. For this release, most of the available RetroArch cores have been preconfigured.
+
+A virtual keyboard has been added (some code borrowed from Batocera.linux) which is fully integrated and can be used to input text via a game controller. By introducing this feature, a keyboard should now be completely optional for day-to-day use.
+
+Another new feature is support for badges that display icons in the gamelist view indicating favorite games, completed games, game-specific controllers etc. Note that these badges require support from the theme set. And on the topic of theme sets, a new theme named modern-DE has been included with the installation as an alternative to the default rbsimple-DE theme.
+
+The scraper has been improved and expanded, and in addition to the previously supported media it can now scrape box back covers, title screens and physical media images (cartridges, diskettes, tapes, CD-ROMs etc.). These physical media images are also included in the generated miximages, although that can be disabled using a menu option.
+
+As for supported platforms, v1.2 brings official support for the Raspberry Pi 4/400, both for the 32-bit (armv7l) and 64-bit (aarch64) versions of Raspberry Pi OS.
+
+Apart from all the above, a huge amount of work has gone into fixing bugs, refactoring the code and optimizing for performance. The language standard has been increased from C++14 to C++17 and the built-in vector and matrix data types and functions have been replaced with the GLM (OpenGL Mathematics) library equivalents.
+
 ### Detailed list of changes
 
 * Added alternative emulators support where additional emulators can be defined in es_systems.xml and be selected system-wide or per game via the user interface
@@ -21,6 +33,7 @@
 * Added an option to rotate horizontally oriented game boxes when generating miximages
 * Added size options (small/medium/large) for the boxes/covers and physical media images when generating miximages
 * Added support for the Raspberry Pi 4 (Raspberry Pi OS 32-bit/armv7l and 64-bit/aarch64)
+* Bundled the new alternative theme "modern-DE" which supports all the latest features from this release
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
@@ -32,44 +45,43 @@
 * Made multiple optimizations to the FFmpeg video player to reduce CPU usage and to increase framerates on slower machines
 * Disabled the FFmpeg video player hardware decoding option (it can still be built using a CMake flag)
 * Removed the copying of es_settings.cfg to es_settings.xml as it caused issues when migrating from other EmulationStation forks
-* Improved the gamelist filter screen to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
-* Grayed out all fields in the gamelist filter screen where there is no data to filter, previously some fields were removed entirely and some could still be used
-* Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher and Alternative emulator.
+* Improved the gamelist filter GUI to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
+* Grayed out all fields in the gamelist filter GUI where there is no data to filter, previously some fields were removed entirely and some could still be used
 * Added filters for "Controller" and "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
+* Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher, Controller and Alternative emulator
 * Added a menu option to change the application exit key combination
 * Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
-* Added support for a more advanced system view carousel logo placeholder by allowing the combination of text and graphics for unthemed systems
-* Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and icon colors, upper/lower/camel case and custom spacing
+* Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
+* Added support for a more advanced system view carousel logo placeholder (for unthemed systems) by allowing the combination of text and graphics
+* Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and dimmed icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
 * Decreased the amount of text that ScrollableContainer renders above and below the starting position as content is scrolled
 * Made the game name and description stop scrolling when running the media viewer, the screensaver or when running in the background while a game is launched
 * Added notification popups when plugging in or removing controllers
 * Made large optimizations to the SVG rendering which reduces application startup time dramatically when many systems are populated
-* Changed to loading the default theme set rbsimple-DE instead of the first available theme if the currently configured theme is missing
-* Added support for using the left and right trigger buttons in the help prompts
+* Changed to loading the default theme set rbsimple-DE instead of the first available theme if the currently configured theme set is missing
+* Added support for displaying the left and right trigger buttons in the help prompts
 * Removed the "Choose" entry from the help prompts in the gamelist view
 * Replaced a number of help prompt hacks with proper solutions
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
-* Changed the font size for the custom collection deletion screen to the same size as for all other menus
+* Changed the font size for the custom collection deletion screen to use the same size as all other menus
 * Added support for upscaling bitmap images using linear filtering
 * Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
-* Moved the Media Viewer and Screensaver settings higher in the UI Settings menu
-* Moved the game media directory setting to the top of the Other Settings menu, following the new Alternative Emulators entry
+* Moved the Media viewer and Screensaver settings higher in the UI settings menu
+* Moved the game media directory setting to the top of the Other settings menu, following the new Alternative emulators entry
 * Lowered the default volumes slightly for videos and navigation sounds
-* Added a blinking cursor to TextEditComponent
-* Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
-* rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
-* rbsimple-DE: Improved existing graphics for the dos, pc, residualvm and scummvm systems
-* Added loading of the System view to the ViewController preload function to avoid issues with theme extras texture pop-in
-* Changed the filter description "Text filter (game name)" to "Game name"
-* Removed a margin hack from TextComponent and if abbreviated strings end with a space character, that space is now removed
+* Added loading of the System view to the ViewController preload function to decrease theme extras texture pop-in
+* Changed the filter description "Text filter (game name)" to simply "Game name"
+* Removed a margin hack from TextComponent
+* If abbreviated strings end with a space character, that space is now removed (TextComponent)
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
 * Added support for a maximum name length to OptionListComponent (non-multiselect only) with an abbreviation of the name if it exceeds this value
-* Added support for key repeat to OptionListComponent, making it possible to cycle through the options by holding the left or right button
+* Added support for key repeat to OptionListComponent, making it possible to cycle through the options by holding the left and right buttons
 * Added key repeat for the "Jump to" and "Sort games by" selectors on the game options menu
 * Added key repeat when editing the "Release date" entry in the metadata editor (DateTimeEditComponent)
 * Added support for setting the Kidgame metadata flag for folders (which will only affect the badges)
+* Added a blinking cursor to TextEditComponent
 * Achieved a massive speed improvement for OptionListComponent by not resizing each added MenuComponent row (most notable in the filter GUI)
 * Made multiple optimizations to the GUI components by removing lots of unnecessary function calls for sizing, placement, opacity changes etc.
 * Simplified the logic for info popups and prepared the code for the future "multiple popups" feature
@@ -85,12 +97,16 @@
 * Added a function to generate MD5 hashes
 * Made an optimization for SVG graphics to avoid a lot of unnecessary re-rasterizations
 * Moved the "complex" mode functionality from GuiComplexTextEditPopup into GuiTextEditPopup and removed the source files for the former
-* Replaced the String::Utils::trim function with better code and removed some inline text trimming throughout the application
+* Updated the String::Utils::trim function with better code and removed some inline text trimming throughout the application
 * Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags
 * Fixed a lot of compiler warnings introduced by the -Wall and -Wpedantic flags
 * Changed the language standard from C++14 to C++17
 * Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
 * Changed two clang-format rules related to braced lists and reformatted the codebase
+* Bundled the October 2021 release of the Mozilla TLS/SSL certificates
+* Updated the MAME index files to include ROMs up to MAME version 0.237
+* rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
+* rbsimple-DE: Improved existing graphics for the dos, pc, residualvm and scummvm systems
 
 ### Bug fixes
 
@@ -106,7 +122,7 @@
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
 * The line spacing for TextListComponent was incorrectly calculated for some resolutions such as 2560x1440
-* Fixed multiple issues with scaling of images which lead to various inconsistencies and sometimes cut-off graphics
+* Fixed multiple issues with scaling of images which led to various inconsistencies and sometimes cut-off graphics
 * Removing games from custom collections did not remove their filter index entries
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
@@ -127,6 +143,7 @@
 * Disabling a collection while its gamelist was displayed would lead to a slide transition from a black screen if a gamelist on startup had been set
 * When marking a game to not be counted in the metadata editor and the game was part of a custom collection, no collection disabling notification was displayed
 * When running really low on texture memory, the menu texture would not get rendered correctly
+* At low screen resolutions, logos on the System view carousel would sometimes jump down a pixel when scaling down
 * There was a tiny and randomly occuring gap between the system carousel and systemInfo bar during slide transitions between the System and Gamelist views
 * SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
@@ -356,7 +373,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * Added support for Clang/LLVM, made the application build with no errors or warnings using this compiler (Unix and macOS only)
 * Added support for both MSVC and MinGW (GCC) on Windows
 * License files are now included for all the libraries and resources that are bundled with the application
-* Updated the MAME ROM index files to include ROMs up to MAME version 0.230 and created scripts to easily generate these index files in the future
+* Updated the MAME index files to include ROMs up to MAME version 0.230 and created scripts to easily generate these index files in the future
 * Greatly expanded the application documentation (which is hosted in the ES-DE repository on GitLab)
 
 ### Bug fixes

@@ -26,12 +26,12 @@ The following operating systems have been tested with ES-DE (all for the x86 arc
 * FreeBSD 12.2
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 10.14 "Mojave" to 11 "Big Sur" (ARM via Rosetta 2 is supported)
+* macOS 10.14 "Mojave" to 11 "Big Sur" (M1 via Rosetta 2 is supported)
 * macOS 10.11 "El Capitan" (v1.0 release only)
 * Windows 10
 * Windows 8.1
 
-**Note:** If using a Mac with an ARM/M1 CPU you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
+**Note:** If using a Mac with an M1 CPU you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
 ### Download
 
