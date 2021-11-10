@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0230.xml -->
+<!-- Last updated with information from MAME driver file mame0237.xml -->
 <bios>3dobios</bios>
 <bios>airlbios</bios>
 <bios>aleck64</bios>
@@ -67,6 +67,7 @@
 <bios>playch10</bios>
 <bios>psarc95</bios>
 <bios>pyson</bios>
+<bios>recel</bios>
 <bios>sammymdl</bios>
 <bios>segasp</bios>
 <bios>sfcbox</bios>

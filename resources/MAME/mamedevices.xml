@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0230.xml -->
+<!-- Last updated with information from MAME driver file mame0237.xml -->
 <device>22vp931</device>
 <device>3c505</device>
 <device>3xtwin</device>
@@ -31,22 +31,30 @@
 <device>a2ap16a</device>
 <device>a2ap16</device>
 <device>a2aplcrd</device>
+<device>a2booti</device>
+<device>a2bufgrapplerplusa</device>
+<device>a2bufgrapplerplus</device>
 <device>a2cffa02</device>
 <device>a2cffa2</device>
 <device>a2corvus</device>
 <device>a2diskii</device>
 <device>a2diskiing</device>
 <device>a2focdrv</device>
+<device>a2grappler</device>
 <device>a2grapplerplus</device>
 <device>a2hsscsi</device>
 <device>a2iwm</device>
 <device>a2iwm_flop</device>
+<device>a2lancegs</device>
 <device>a2memexp</device>
 <device>a2mouse</device>
 <device>a2parprn</device>
 <device>a2pic</device>
+<device>a2q68</device>
+<device>a2q68plus</device>
 <device>a2ramfac</device>
 <device>a2scsi</device>
+<device>a2sd</device>
 <device>a2sider1</device>
 <device>a2sider2</device>
 <device>a2ssc</device>
@@ -114,6 +122,8 @@
 <device>abc_uni800</device>
 <device>abc_unidisk</device>
 <device>acb2072</device>
+<device>ace_sp_reelctrl</device>
+<device>ace_sp_reelctrl_pcp</device>
 <device>acorn_vdu80</device>
 <device>acs8600_ics</device>
 <device>adam_ddp</device>
@@ -136,6 +146,7 @@
 <device>aha1542</device>
 <device>aha1740</device>
 <device>aha1742a</device>
+<device>alice_mcx128</device>
 <device>alto2_cpu</device>
 <device>amiga_ar1</device>
 <device>amiga_ar2</device>
@@ -154,6 +165,7 @@
 <device>at_keybc</device>
 <device>atom_discpack</device>
 <device>ax208</device>
+<device>basf7100_kbd</device>
 <device>bbc_acorn1770</device>
 <device>bbc_acorn8271</device>
 <device>bbc_ams3</device>
@@ -203,6 +215,7 @@
 <device>bbc_tube_80186</device>
 <device>bbc_tube_80286</device>
 <device>bbc_tube_a500</device>
+<device>bbc_tube_arm7</device>
 <device>bbc_tube_arm</device>
 <device>bbc_tube_casper</device>
 <device>bbc_tube_cms6809</device>
@@ -222,6 +235,7 @@
 <device>bbc_weddb2</device>
 <device>bbc_weddb3</device>
 <device>betadisk</device>
+<device>bingoct</device>
 <device>bluechip</device>
 <device>bml3kanji</device>
 <device>bml3mp1802</device>
@@ -278,9 +292,15 @@
 <device>cchip</device>
 <device>ccs7710</device>
 <device>cd6809_fdc</device>
+<device>cd90_015</device>
+<device>cd90_351</device>
+<device>cd90_640</device>
 <device>cdd2000</device>
 <device>cdr4210</device>
 <device>cdrn820s</device>
+<device>cdu415</device>
+<device>cdu561_25</device>
+<device>cdu75s</device>
 <device>cffa1</device>
 <device>cga</device>
 <device>cga_iskr1030m</device>
@@ -312,6 +332,9 @@
 <device>coco_rs232</device>
 <device>coco_ssc</device>
 <device>coco_t4426</device>
+<device>coco_wpk2</device>
+<device>coco_wpk</device>
+<device>coco_wpkrs</device>
 <device>compiskb</device>
 <device>comx_clm</device>
 <device>comx_eb</device>
@@ -333,6 +356,8 @@
 <device>cpc_smartwatch</device>
 <device>cpc_ssa1</device>
 <device>cpc_transtape</device>
+<device>cq90_028</device>
+<device>crd254sh</device>
 <device>crt9028_000</device>
 <device>crvfdc01</device>
 <device>crvfdc02</device>
@@ -372,7 +397,10 @@
 <device>dragon_fdc</device>
 <device>dragon_jcbsnd</device>
 <device>dragon_jcbspch</device>
+<device>dragon_serial</device>
 <device>dragon_sprites</device>
+<device>ds1001</device>
+<device>dsd4432</device>
 <device>dsp1bleg</device>
 <device>dsp1leg</device>
 <device>dsp1leg_hi</device>
@@ -397,6 +425,7 @@
 <device>electron_ap1</device>
 <device>electron_ap6</device>
 <device>electron_m2105</device>
+<device>electron_mc68k</device>
 <device>electron_mode7</device>
 <device>electron_plus1</device>
 <device>electron_plus3</device>
@@ -493,6 +522,7 @@
 <device>jvs13551</device>
 <device>k573_dio</device>
 <device>k573dio</device>
+<device>k573kara</device>
 <device>k573mcr</device>
 <device>k573msu</device>
 <device>k573npu</device>
@@ -524,6 +554,7 @@
 <device>list.txt</device>
 <device>lk201</device>
 <device>lm24014h</device>
+<device>lrk331</device>
 <device>lux10828</device>
 <device>lux21046</device>
 <device>lux21056</device>
@@ -554,6 +585,7 @@
 <device>mackbd_m0120p</device>
 <device>mb90082</device>
 <device>mbc55x_kbd</device>
+<device>mc10_mcx128</device>
 <device>mc1502_rom</device>
 <device>md_kbd</device>
 <device>md_rom_svp</device>
@@ -566,6 +598,7 @@
 <device>minichif</device>
 <device>mm1kb</device>
 <device>mm5740</device>
+<device>mockingboardd</device>
 <device>model1io2</device>
 <device>model1io</device>
 <device>mpcb030</device>
@@ -590,6 +623,7 @@
 <device>msmt094</device>
 <device>ms_natural</device>
 <device>msx_cart_bm_012</device>
+<device>msx_cart_easispeech</device>
 <device>msx_cart_sfg01</device>
 <device>msx_cart_sfg05</device>
 <device>msx_moonsound</device>
@@ -614,6 +648,8 @@
 <device>namcoc74</device>
 <device>namcoc75</device>
 <device>namcoc76</device>
+<device>nanoreseau_mo</device>
+<device>nanoreseau_to</device>
 <device>nb_48gc</device>
 <device>nb_824gc</device>
 <device>nb_aenet</device>
@@ -642,6 +678,10 @@
 <device>omti8621isa</device>
 <device>oric_jasmin</device>
 <device>oric_microdisc</device>
+<device>osa_analyst</device>
+<device>osa_maestroa</device>
+<device>osa_maestro</device>
+<device>osa_sparc</device>
 <device>p1_fdc</device>
 <device>p1_hdc</device>
 <device>p1_rom</device>
@@ -649,9 +689,15 @@
 <device>pa7246</device>
 <device>pc1512kb</device>
 <device>pc1640_iga</device>
+<device>pc80s31</device>
+<device>pc80s31k</device>
+<device>pc9801_118</device>
 <device>pc9801_26</device>
+<device>pc9801_55l</device>
+<device>pc9801_55u</device>
 <device>pc9801_86</device>
 <device>pc9801_spb</device>
+<device>pc98_otomichan_kai</device>
 <device>pcd_kbd</device>
 <device>pcd_video</device>
 <device>pcx_video</device>
@@ -740,6 +786,7 @@
 <device>sed1200fb</device>
 <device>sed1278_0b</device>
 <device>sed1330</device>
+<device>sega837_14438</device>
 <device>segabill</device>
 <device>segadimm</device>
 <device>seganetw</device>
@@ -763,6 +810,7 @@
 <device>sns_rom_sgb</device>
 <device>sns_seta10leg</device>
 <device>sns_seta11leg</device>
+<device>softcard3</device>
 <device>spc1000_fdd_exp</device>
 <device>spectrum_beta128</device>
 <device>spectrum_betacbi</device>
@@ -813,6 +861,7 @@
 <device>tanbus_vid8082</device>
 <device>tandy2kb</device>
 <device>technica</device>
+<device>tek410x_kbd</device>
 <device>tetriskr_cga</device>
 <device>tgui9680</device>
 <device>ti99_bwg</device>
@@ -866,6 +915,7 @@
 <device>vtech_fdc</device>
 <device>vtech_rs232</device>
 <device>vtech_rtty</device>
+<device>vtech_sdloader</device>
 <device>vtech_wordpro</device>
 <device>vz_rs232</device>
 <device>vz_rtty</device>
@@ -883,7 +933,10 @@
 <device>x820kb</device>
 <device>xt446</device>
 <device>xtide</device>
+<device>ym2413</device>
+<device>ym2423</device>
 <device>ym2608</device>
+<device>ymf281</device>
 <device>z8671</device>
 <device>z8682</device>
 <device>zorba_kbd</device>
