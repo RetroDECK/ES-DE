@@ -157,7 +157,7 @@ namespace Utils
             (wchar_t)0xFF4B, (wchar_t)0xFF4C, (wchar_t)0xFF4D, (wchar_t)0xFF4E, (wchar_t)0xFF4F,
             (wchar_t)0xFF50, (wchar_t)0xFF51, (wchar_t)0xFF52, (wchar_t)0xFF53, (wchar_t)0xFF54,
             (wchar_t)0xFF55, (wchar_t)0xFF56, (wchar_t)0xFF57, (wchar_t)0xFF58, (wchar_t)0xFF59,
-            (wchar_t)0xFF5A};
+            (wchar_t)0xFF5A, (wchar_t)0x0000};
 
         static wchar_t unicodeUppercase[] = {
             (wchar_t)0x0041, (wchar_t)0x0042, (wchar_t)0x0043, (wchar_t)0x0044, (wchar_t)0x0045,
@@ -293,7 +293,7 @@ namespace Utils
             (wchar_t)0xFF2B, (wchar_t)0xFF2C, (wchar_t)0xFF2D, (wchar_t)0xFF2E, (wchar_t)0xFF2F,
             (wchar_t)0xFF30, (wchar_t)0xFF31, (wchar_t)0xFF32, (wchar_t)0xFF33, (wchar_t)0xFF34,
             (wchar_t)0xFF35, (wchar_t)0xFF36, (wchar_t)0xFF37, (wchar_t)0xFF38, (wchar_t)0xFF39,
-            (wchar_t)0xFF3A};
+            (wchar_t)0xFF3A, (wchar_t)0x0000};
 
         unsigned int chars2Unicode(const std::string& stringArg, size_t& cursor)
         {
