@@ -173,7 +173,7 @@ based on:       Switch Theme by Lilbud
 		<!-- games panel -->
 		<imagegrid name="gamegrid">
 			<pos>0.06 0.218</pos>
-			<size>0.63 594</size>
+			<size>0.63 0.594</size>
 			<margin>0.006 0.006</margin>
 			<padding>0 0</padding>
 			<autoLayoutSelectedZoom>1</autoLayoutSelectedZoom>
