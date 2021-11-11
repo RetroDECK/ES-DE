@@ -94,7 +94,7 @@ Note that low-level ALSA sound support has been removed from ES-DE which means t
 
 Use pkg to install the dependencies:
 ```
-pkg install git pkgconf cmake sdl2 ffmpeg freeimage pugixml
+pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage pugixml
 ```
 
 If building with the optional VLC video player, the following package is also needed:

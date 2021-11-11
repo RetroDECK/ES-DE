@@ -130,6 +130,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Leading and trailing whitespace characters would get included in game name filters
 * Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
 * Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
+* If a theme used the forceUppercase property for a TextListComponent, this value was always set to true even if the theme defined it as false
 * Fixed multiple issues where ComponentGrid would display incorrect help prompts
 * Help prompts were missing for the "Rating" and "Release date" fields in the metadata editor
 * There was some strange behavior in DateTimeEditComponent when changing the date all the way down to 1970-01-01
@@ -147,6 +148,8 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * There was a tiny and randomly occuring gap between the system carousel and systemInfo bar during slide transitions between the System and Gamelist views
 * SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
+* Buttons were not sized and padded consistently across different screen resolutions
+* OptionListComponent arrows were not padded consistently across different screen resolutions
 * Resizing in SwitchComponent did not reposition the image properly leading to a non-centered image
 * Horizontal sizing of the TextComponent input field was not consistent across different screen resolutions
 * The sizing of the metadata editor was strange, which was clearly visible when activating the Ctrl+G debug mode
