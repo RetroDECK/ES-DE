@@ -11,8 +11,9 @@
 #include "Settings.h"
 #include "components/ButtonComponent.h"
 
-#define BUTTON_GRID_VERT_PADDING 32.0f
-#define BUTTON_GRID_HORIZ_PADDING 10.0f
+#define BUTTON_GRID_VERT_PADDING std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.915f)
+#define BUTTON_GRID_HORIZ_PADDING                                                                  \
+    std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.283f)
 
 #define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f)
 
@@ -89,8 +90,7 @@ void MenuComponent::setTitle(std::string title, const std::shared_ptr<Font>& fon
 float MenuComponent::getButtonGridHeight() const
 {
     return (mButtonGrid ? mButtonGrid->getSize().y :
-                          Font::get(FONT_SIZE_MEDIUM)->getHeight() +
-                              (BUTTON_GRID_VERT_PADDING * Renderer::getScreenHeightModifier()));
+                          Font::get(FONT_SIZE_MEDIUM)->getHeight() + BUTTON_GRID_VERT_PADDING);
 }
 
 void MenuComponent::updateSize()
@@ -162,22 +162,18 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(
         std::make_shared<ComponentGrid>(window, glm::ivec2{static_cast<int>(buttons.size()), 2});
 
     // Initialize to padding.
-    float buttonGridWidth =
-        BUTTON_GRID_HORIZ_PADDING * Renderer::getScreenWidthModifier() * buttons.size();
+    float buttonGridWidth = BUTTON_GRID_HORIZ_PADDING * buttons.size();
+
     for (int i = 0; i < static_cast<int>(buttons.size()); i++) {
         buttonGrid->setEntry(buttons.at(i), glm::ivec2{i, 0}, true, false);
         buttonGridWidth += buttons.at(i)->getSize().x;
     }
     for (unsigned int i = 0; i < buttons.size(); i++)
-        buttonGrid->setColWidthPerc(
-            i, (buttons.at(i)->getSize().x +
-                BUTTON_GRID_HORIZ_PADDING * Renderer::getScreenWidthModifier()) /
-                   buttonGridWidth);
+        buttonGrid->setColWidthPerc(i, (buttons.at(i)->getSize().x + BUTTON_GRID_HORIZ_PADDING) /
+                                           buttonGridWidth);
 
     buttonGrid->setSize(buttonGridWidth,
-                        buttons.at(0)->getSize().y +
-                            (BUTTON_GRID_VERT_PADDING * Renderer::getScreenHeightModifier()) +
-                            2.0f);
+                        buttons.at(0)->getSize().y + BUTTON_GRID_VERT_PADDING + 2.0f);
     // Spacer row to deal with dropshadow to make buttons look centered.
     buttonGrid->setRowHeightPerc(1, 2.0f / buttonGrid->getSize().y);
 
