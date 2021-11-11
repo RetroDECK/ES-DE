@@ -166,10 +166,14 @@ void SliderComponent::onValueChanged()
         barHeight = 1;
 
     // Resize the knob one pixel if necessary to keep the bar centered.
-    if (barHeight % 2 == 0 && static_cast<int>(mKnob.getSize().y) % 2 != 0)
+    if (barHeight % 2 == 0 && static_cast<int>(mKnob.getSize().y) % 2 != 0) {
         mKnob.setResize(mKnob.getSize().x - 1.0f, mKnob.getSize().y - 1.0f);
-    else if (barHeight == 1 && static_cast<int>(mKnob.getSize().y) % 2 == 0)
+        setSize(getSize().x, getSize().y - 1.0f);
+    }
+    else if (barHeight == 1 && static_cast<int>(mKnob.getSize().y) % 2 == 0) {
         mKnob.setResize(mKnob.getSize().x - 1.0f, mKnob.getSize().y - 1);
+        setSize(getSize().x, getSize().y - 1.0f);
+    }
 
     mBarHeight = static_cast<float>(barHeight);
 
