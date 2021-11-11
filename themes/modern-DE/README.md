@@ -30,7 +30,7 @@ The theme is based on '[es-theme-switch](https://github.com/lilbud/es-theme-swit
 The following changes to the theme are made:
 
 - support for 4:3, 16:9, 21:9 resolutions
-- graphics for all es-de supported systems
+- graphics for all ES-DE supported systems
 - placeholder styling for unknown systems
 - badges icons (broken, favorite, etc...)
 - controller icons
