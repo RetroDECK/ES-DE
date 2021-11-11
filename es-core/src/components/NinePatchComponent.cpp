@@ -10,6 +10,7 @@
 
 #include "Log.h"
 #include "ThemeData.h"
+#include "resources/Font.h"
 #include "resources/TextureResource.h"
 
 NinePatchComponent::NinePatchComponent(Window* window,
@@ -60,10 +61,10 @@ void NinePatchComponent::buildVertices()
         relCornerSize = mCornerSize;
     }
     else {
-        // Scale the corner size relative to the screen resolution.
+        // Scale the corner size relative to the screen resolution (using the medium sized
+        // default font as size reference).
         relCornerSize = glm::round(
-            mCornerSize *
-            ((Renderer::getScreenHeightModifier() + Renderer::getScreenWidthModifier()) / 2.0f));
+            mCornerSize * (Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.0568f / 2.0f));
     }
 
     mTexture = TextureResource::get(mPath, false, false, false);
