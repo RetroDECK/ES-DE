@@ -264,7 +264,11 @@ void VideoFFmpegComponent::frameProcessing()
 
     while (mIsPlaying && !mPause && videoFilter && (!mAudioCodecContext || audioFilter)) {
         readFrames();
+        if (!mIsPlaying)
+            break;
         getProcessedFrames();
+        if (!mIsPlaying)
+            break;
         outputFrames();
 
         // This 1 ms wait makes sure that the thread does not consume all available CPU cycles.
