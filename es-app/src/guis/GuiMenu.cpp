@@ -965,13 +965,26 @@ void GuiMenu::openOtherOptions()
     });
 
 #if defined(_WIN64)
-    // Hide taskbar during the ES program session.
+    // Hide taskbar during the program session.
     auto hide_taskbar = std::make_shared<SwitchComponent>(mWindow);
     hide_taskbar->setState(Settings::getInstance()->getBool("HideTaskbar"));
     s->addWithLabel("HIDE TASKBAR (REQUIRES RESTART)", hide_taskbar);
     s->addSaveFunc([hide_taskbar, s] {
         if (hide_taskbar->getState() != Settings::getInstance()->getBool("HideTaskbar")) {
             Settings::getInstance()->setBool("HideTaskbar", hide_taskbar->getState());
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
+#if defined(__APPLE__)
+    // macOS Monterey VSync bug workaround (hack for broken OpenGL drivers).
+    auto vsyncWorkaround = std::make_shared<SwitchComponent>(mWindow);
+    vsyncWorkaround->setState(Settings::getInstance()->getBool("VSyncWorkaround"));
+    s->addWithLabel("MACOS MONTEREY VSYNC BUG WORKAROUND", vsyncWorkaround);
+    s->addSaveFunc([vsyncWorkaround, s] {
+        if (vsyncWorkaround->getState() != Settings::getInstance()->getBool("VSyncWorkaround")) {
+            Settings::getInstance()->setBool("VSyncWorkaround", vsyncWorkaround->getState());
             s->setNeedsSaving();
         }
     });
