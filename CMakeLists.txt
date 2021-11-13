@@ -36,6 +36,7 @@ option(CEC "Set to ON to enable CEC" ${CEC})
 option(VIDEO_HW_DECODING "Set to ON to enable FFmpeg HW decoding" ${VIDEO_HW_DECODING})
 option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
 option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" ${CLANG_TIDY})
+option(ASAN "Set to ON to build using AddressSanitizer" ${ASAN})
 
 if(CLANG_TIDY)
     find_program(CLANG_TIDY_BINARY NAMES clang-tidy)
@@ -182,6 +183,15 @@ else()
             set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
         endif()
     endif()
+endif()
+
+if(ASAN)
+    message("-- Building with AddressSanitizer")
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /fsanitize=address")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+        endif()
 endif()
 
 # The following removes half of the ranlib warnings on macOS regarding no symbols for files
