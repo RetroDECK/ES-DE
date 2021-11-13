@@ -26,9 +26,12 @@
 #include <cmath>
 #include <fstream>
 
-const std::map<std::string, generate_scraper_requests_func> scraper_request_funcs{
-    {"thegamesdb", &thegamesdb_generate_json_scraper_requests},
-    {"screenscraper", &screenscraper_generate_scraper_requests}};
+namespace
+{
+    const std::map<std::string, generate_scraper_requests_func> scraper_request_funcs{
+        {"thegamesdb", &thegamesdb_generate_json_scraper_requests},
+        {"screenscraper", &screenscraper_generate_scraper_requests}};
+}
 
 std::unique_ptr<ScraperSearchHandle> startScraperSearch(const ScraperSearchParams& params)
 {

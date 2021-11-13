@@ -23,146 +23,149 @@
 
 using namespace PlatformIds;
 
-// List of systems and their IDs from:
-// https://www.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
-const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
-    {THREEDO, 29},
-    {COMMODORE_AMIGA, 64},
-    {COMMODORE_AMIGA_CD32, 130},
-    {AMSTRAD_CPC, 65},
-    {AMSTRAD_GX4000, 87},
-    {APPLE_II, 86},
-    {APPLE_IIGS, 217},
-    {ARCADE, 75},
-    {ATARI_800, 43},
-    {ATARI_2600, 26},
-    {ATARI_5200, 40},
-    {ATARI_7800, 41},
-    {ATARI_JAGUAR, 27},
-    {ATARI_JAGUAR_CD, 171},
-    {ATARI_LYNX, 28},
-    {ATARI_ST, 42},
-    {ATARI_XE, 43},
-    {ATOMISWAVE, 53},
-    {BBC_MICRO, 37},
-    {CAVESTORY, 135},
-    {COLECOVISION, 48},
-    {COMMODORE_64, 66},
-    {COMMODORE_CDTV, 129},
-    {COMMODORE_VIC20, 73},
-    {DAPHNE, 49},
-    {INTELLIVISION, 115},
-    {GAMEENGINE_LUTRO, 206},
-    {APPLE_MACINTOSH, 146},
-    {GOOGLE_ANDROID, 63},
-    {MICROSOFT_XBOX, 32},
-    {MICROSOFT_XBOX_360, 33},
-    {MOONLIGHT, 138},
-    {MSX, 113},
-    {MSX2, 116},
-    {MSX_TURBO_R, 118},
-    {SNK_NEO_GEO, 142},
-    {SNK_NEO_GEO_CD, 142},
-    {SNK_NEO_GEO_POCKET, 25},
-    {SNK_NEO_GEO_POCKET_COLOR, 82},
-    {NINTENDO_3DS, 17},
-    {NINTENDO_64, 14},
-    {NINTENDO_DS, 15},
-    {NINTENDO_FAMICOM, 3},
-    {NINTENDO_FAMICOM_DISK_SYSTEM, 106},
-    {NINTENDO_ENTERTAINMENT_SYSTEM, 3},
-    {FAIRCHILD_CHANNELF, 80},
-    {NINTENDO_GAME_BOY, 9},
-    {NINTENDO_GAME_BOY_ADVANCE, 12},
-    {NINTENDO_GAME_BOY_COLOR, 10},
-    {NINTENDO_GAMECUBE, 13},
-    {NINTENDO_WII, 16},
-    {NINTENDO_WII_U, 18},
-    {NINTENDO_VIRTUAL_BOY, 11},
-    {NINTENDO_GAME_AND_WATCH, 52},
-    {NINTENDO_POKEMON_MINI, 211},
-    {NINTENDO_SATELLAVIEW, 107},
-    {NINTENDO_SWITCH, 225},
-    {BANDAI_SUFAMI_TURBO, 108},
-    {DOS, 135},
-    {PC, 135},
-    {VALVE_STEAM, 135},
-    {NEC_PCFX, 72},
-    {PHILIPS_CDI, 133},
-    {GAMEENGINE_OPENBOR, 214},
-    {TANGERINE_ORIC, 131},
-    {GAMEENGINE_SCUMMVM, 123},
-    {SEGA_32X, 19},
-    {SEGA_CD, 20},
-    {SEGA_DREAMCAST, 23},
-    {SEGA_GAME_GEAR, 21},
-    {SEGA_GENESIS, 1},
-    {SEGA_MASTER_SYSTEM, 2},
-    {SEGA_MEGA_DRIVE, 1},
-    {SEGA_SATURN, 22},
-    {SEGA_SG1000, 109},
-    {SHARP_X1, 220},
-    {SHARP_X68000, 79},
-    {GAMEENGINE_SOLARUS, 223},
-    {SONY_PLAYSTATION, 57},
-    {SONY_PLAYSTATION_2, 58},
-    {SONY_PLAYSTATION_3, 59},
-    {SONY_PLAYSTATION_VITA, 62},
-    {SONY_PLAYSTATION_PORTABLE, 61},
-    {SAMCOUPE, 213},
-    {SUPER_NINTENDO, 4},
-    {NEC_SUPERGRAFX, 105},
-    {GAMEENGINE_TIC80, 222},
-    {NEC_PC_8800, 221},
-    {NEC_PC_9800, 208},
-    {NEC_PC_ENGINE, 31},
-    {NEC_PC_ENGINE_CD, 114},
-    {BANDAI_WONDERSWAN, 45},
-    {BANDAI_WONDERSWAN_COLOR, 46},
-    {SINCLAIR_ZX_SPECTRUM, 76},
-    {SINCLAIR_ZX81_SINCLAR, 77},
-    {VIDEOPAC_ODYSSEY2, 104},
-    {VECTREX, 102},
-    {TANDY_TRS80, 144},
-    {TANDY_COLOR_COMPUTER, 144},
-    {SEGA_NAOMI, 56},
-    {THOMSON_MOTO, 141},
-    {UZEBOX, 216},
-    {SPECTRAVIDEO, 218},
-    {PALM_OS, 219}};
-
-// Helper XML parsing method, finding a node-by-name recursively.
-pugi::xml_node find_node_by_name_re(const pugi::xml_node& node,
-                                    const std::vector<std::string> node_names)
+namespace
 {
+    // List of systems and their IDs from:
+    // https://www.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
+    const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
+        {THREEDO, 29},
+        {COMMODORE_AMIGA, 64},
+        {COMMODORE_AMIGA_CD32, 130},
+        {AMSTRAD_CPC, 65},
+        {AMSTRAD_GX4000, 87},
+        {APPLE_II, 86},
+        {APPLE_IIGS, 217},
+        {ARCADE, 75},
+        {ATARI_800, 43},
+        {ATARI_2600, 26},
+        {ATARI_5200, 40},
+        {ATARI_7800, 41},
+        {ATARI_JAGUAR, 27},
+        {ATARI_JAGUAR_CD, 171},
+        {ATARI_LYNX, 28},
+        {ATARI_ST, 42},
+        {ATARI_XE, 43},
+        {ATOMISWAVE, 53},
+        {BBC_MICRO, 37},
+        {CAVESTORY, 135},
+        {COLECOVISION, 48},
+        {COMMODORE_64, 66},
+        {COMMODORE_CDTV, 129},
+        {COMMODORE_VIC20, 73},
+        {DAPHNE, 49},
+        {INTELLIVISION, 115},
+        {GAMEENGINE_LUTRO, 206},
+        {APPLE_MACINTOSH, 146},
+        {GOOGLE_ANDROID, 63},
+        {MICROSOFT_XBOX, 32},
+        {MICROSOFT_XBOX_360, 33},
+        {MOONLIGHT, 138},
+        {MSX, 113},
+        {MSX2, 116},
+        {MSX_TURBO_R, 118},
+        {SNK_NEO_GEO, 142},
+        {SNK_NEO_GEO_CD, 142},
+        {SNK_NEO_GEO_POCKET, 25},
+        {SNK_NEO_GEO_POCKET_COLOR, 82},
+        {NINTENDO_3DS, 17},
+        {NINTENDO_64, 14},
+        {NINTENDO_DS, 15},
+        {NINTENDO_FAMICOM, 3},
+        {NINTENDO_FAMICOM_DISK_SYSTEM, 106},
+        {NINTENDO_ENTERTAINMENT_SYSTEM, 3},
+        {FAIRCHILD_CHANNELF, 80},
+        {NINTENDO_GAME_BOY, 9},
+        {NINTENDO_GAME_BOY_ADVANCE, 12},
+        {NINTENDO_GAME_BOY_COLOR, 10},
+        {NINTENDO_GAMECUBE, 13},
+        {NINTENDO_WII, 16},
+        {NINTENDO_WII_U, 18},
+        {NINTENDO_VIRTUAL_BOY, 11},
+        {NINTENDO_GAME_AND_WATCH, 52},
+        {NINTENDO_POKEMON_MINI, 211},
+        {NINTENDO_SATELLAVIEW, 107},
+        {NINTENDO_SWITCH, 225},
+        {BANDAI_SUFAMI_TURBO, 108},
+        {DOS, 135},
+        {PC, 135},
+        {VALVE_STEAM, 135},
+        {NEC_PCFX, 72},
+        {PHILIPS_CDI, 133},
+        {GAMEENGINE_OPENBOR, 214},
+        {TANGERINE_ORIC, 131},
+        {GAMEENGINE_SCUMMVM, 123},
+        {SEGA_32X, 19},
+        {SEGA_CD, 20},
+        {SEGA_DREAMCAST, 23},
+        {SEGA_GAME_GEAR, 21},
+        {SEGA_GENESIS, 1},
+        {SEGA_MASTER_SYSTEM, 2},
+        {SEGA_MEGA_DRIVE, 1},
+        {SEGA_SATURN, 22},
+        {SEGA_SG1000, 109},
+        {SHARP_X1, 220},
+        {SHARP_X68000, 79},
+        {GAMEENGINE_SOLARUS, 223},
+        {SONY_PLAYSTATION, 57},
+        {SONY_PLAYSTATION_2, 58},
+        {SONY_PLAYSTATION_3, 59},
+        {SONY_PLAYSTATION_VITA, 62},
+        {SONY_PLAYSTATION_PORTABLE, 61},
+        {SAMCOUPE, 213},
+        {SUPER_NINTENDO, 4},
+        {NEC_SUPERGRAFX, 105},
+        {GAMEENGINE_TIC80, 222},
+        {NEC_PC_8800, 221},
+        {NEC_PC_9800, 208},
+        {NEC_PC_ENGINE, 31},
+        {NEC_PC_ENGINE_CD, 114},
+        {BANDAI_WONDERSWAN, 45},
+        {BANDAI_WONDERSWAN_COLOR, 46},
+        {SINCLAIR_ZX_SPECTRUM, 76},
+        {SINCLAIR_ZX81_SINCLAR, 77},
+        {VIDEOPAC_ODYSSEY2, 104},
+        {VECTREX, 102},
+        {TANDY_TRS80, 144},
+        {TANDY_COLOR_COMPUTER, 144},
+        {SEGA_NAOMI, 56},
+        {THOMSON_MOTO, 141},
+        {UZEBOX, 216},
+        {SPECTRAVIDEO, 218},
+        {PALM_OS, 219}};
 
-    for (const std::string& _val : node_names) {
-        pugi::xpath_query query_node_name((static_cast<std::string>("//") + _val).c_str());
-        pugi::xpath_node_set results = node.select_nodes(query_node_name);
+    // Helper XML parsing method, finding a node-by-name recursively. Not currently used.
+    //    pugi::xml_node find_node_by_name_re(const pugi::xml_node& node,
+    //                                        const std::vector<std::string> node_names)
+    //    {
+    //        for (const std::string& _val : node_names) {
+    //            pugi::xpath_query query_node_name((static_cast<std::string>("//") +
+    //            _val).c_str()); pugi::xpath_node_set results = node.select_nodes(query_node_name);
+    //
+    //            if (results.size() > 0)
+    //                return results.first().node();
+    //        }
+    //
+    //        return pugi::xml_node();
+    //    }
 
-        if (results.size() > 0)
-            return results.first().node();
-    }
-
-    return pugi::xml_node();
-}
-
-// Help XML parsing method, finding an direct child XML node starting from the parent and
-// filtering by an attribute value list.
-pugi::xml_node find_child_by_attribute_list(const pugi::xml_node& node_parent,
-                                            const std::string& node_name,
-                                            const std::string& attribute_name,
-                                            const std::vector<std::string> attribute_values)
-{
-    for (auto _val : attribute_values) {
-        for (pugi::xml_node node : node_parent.children(node_name.c_str())) {
-            if (node.attribute(attribute_name.c_str()).value() == _val)
-                return node;
+    // Help XML parsing method, finding an direct child XML node starting from the parent and
+    // filtering by an attribute value list.
+    pugi::xml_node find_child_by_attribute_list(const pugi::xml_node& node_parent,
+                                                const std::string& node_name,
+                                                const std::string& attribute_name,
+                                                const std::vector<std::string> attribute_values)
+    {
+        for (auto _val : attribute_values) {
+            for (pugi::xml_node node : node_parent.children(node_name.c_str())) {
+                if (node.attribute(attribute_name.c_str()).value() == _val)
+                    return node;
+            }
         }
+
+        return pugi::xml_node(nullptr);
     }
 
-    return pugi::xml_node(nullptr);
-}
+} // namespace
 
 void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
                                              std::queue<std::unique_ptr<ScraperRequest>>& requests,
