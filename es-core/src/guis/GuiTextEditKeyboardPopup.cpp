@@ -237,7 +237,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
         }
     }
 
-    mGrid.setEntry(mKeyboardGrid, glm::ivec2{0, yPos + 1}, true, true, glm::ivec2{2, 4});
+    mGrid.setEntry(mKeyboardGrid, glm::ivec2{0, yPos + 1}, true, true, glm::ivec2{1, 4});
 
     float textHeight = mText->getFont()->getHeight();
     // If the multiLine option has been set, then include three lines of text on screen.
