@@ -38,6 +38,8 @@ ComponentGrid::~ComponentGrid()
 
 float ComponentGrid::getColWidth(int col)
 {
+    assert(col >= 0 && col < mGridSize.x);
+
     if (mColWidths[col] != 0)
         return mColWidths[col] * mSize.x;
 
@@ -55,6 +57,8 @@ float ComponentGrid::getColWidth(int col)
 
 float ComponentGrid::getRowHeight(int row)
 {
+    assert(row >= 0 && row < mGridSize.y);
+
     if (mRowHeights[row] != 0)
         return mRowHeights[row] * mSize.y;
 
