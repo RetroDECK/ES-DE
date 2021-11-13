@@ -187,6 +187,14 @@ cmake -DCMAKE_BUILD_TYPE=Profiling .
 make
 ```
 
+To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
+make
+```
+
+This tool isn't very useful without debug symbols so only include it for a Debug or Profiling build. Both Clang and GCC support this tool.
+
 As for more advanced debugging, Valgrind is a very powerful and useful tool which can analyze many aspects of the application. Be aware that some of the Valgrind tools should be run with an optimized build, and some with optimizations turned off. Refer to the Valgrind documentation for more information.
 
 The most common tool is Memcheck to check for memory leaks, which you run like this:
@@ -519,6 +527,19 @@ make
 ```
 Keep in mind that the debug version will be much slower due to all compiler optimizations being disabled.
 
+To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
+make
+```
+
+This tool isn't very useful without debug symbols so only include it for a Debug or Profiling build. Both Clang and GCC support this tool.
+
+Specifically on macOS it seems as if AddressSanitizer generates a lot of false positives regarding container overflows, so it may be necessary to ignore these:
+```
+export ASAN_OPTIONS=detect_container_overflow=0
+```
+
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
 After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC was enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using _make install_. It's only needed to be able to run the binary from the build directory. You should add this to your shell profile file to avoid having to set it each time you open a new terminal window:
@@ -749,20 +770,29 @@ Download the Visual Studio Build Tools (choose Visual Studio Community edition):
 
 It seems as if Microsoft has dropped support for installing the Build Tools without the Visual Studio IDE, at least I've been unable to find a way to exclude it. But I just pretend it's not installed and use VSCode instead which works perfectly fine.
 
-During installation, choose the Desktop development with C++ workload with the following options (version details excluded):
+During installation, choose the Desktop development with C++ workload with the following options (version details may differ):
 
 ```
-MSVC and x64/x86 build tools
+MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
 Windows 10 SDK
 Just-In-Time debugger
+C++ AddressSanitizer
+```
+
+If you will only use MSVC and not MinGW, then also add this option:
+```
 C++ CMake tools for Windows
 ```
 
-If you intend to use both MinGW and MSVC on the same machine, it's probably better to exclude CMake and install it manually as described in the MinGW setup instructions below.
+If not installing the CMake version supplied by Microsoft, you need to make sure that you have a recent version on your machine or CMake will not be able to detect MSVC correctly.
 
-The way the MSVC environment works is that a specific developer shell is provided where the build environment is properly configured. You open this from the Start menu via `Visual Studio 2019` -> `Visual Studio tools` -> `VC` -> `x64 Native Tools Command Prompt for VS 2019`.
+As well you may need to install the latest version of Microsoft Visual C++ Redistributable which can be downloaded here:\
+https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redis
 
-It's very important to choose the x64-specific shell and not the x86 variant, as ES-DE will only compile as a 64-bit application.
+
+The way the MSVC environment works is that a specific developer shell is provided where the build environment is properly configured. You open this from the Start menu via `Visual Studio 2022` -> `Visual Studio tools` -> `VC` -> `x64 Native Tools Command Prompt for VS 2022 Current`.
+
+It's important to choose the x64-specific shell and not the x86 variant, as ES-DE will only compile as a 64-bit application.
 
 **MinGW (GCC) setup:**
 
@@ -772,9 +802,12 @@ Download the following packages and install them:
 
 [https://cmake.org/download](https://cmake.org/download)
 
+Download the _MinGW-w64 based_ version of GCC: \
 [https://jmeubank.github.io/tdm-gcc](https://jmeubank.github.io/tdm-gcc)
 
 After installation, make a copy of `TDM-GCC-64\bin\mingw32-make` to `make` just for convenience.
+
+Version 9.2.0 of MinGW has been confirmed to work fine, but 10.3.0 appears broken as it causes huge performance problems for the FFmpeg function avfilter_graph_free() with execution times going from milliseconds to hundreds of milliseconds or even seconds.
 
 Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW distribution should work fine though.
 
@@ -1054,6 +1087,12 @@ cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include .
 nmake
 ```
 
+To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
+```
+cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include -DASAN=on .
+nmake
+```
+
 For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
 
 Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this in depth.
@@ -1063,7 +1102,7 @@ Be aware that MSVC links against different VC++ libraries for debug and release 
 To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
 ```
 cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../include -DVLC_PLAYER=on .
-make
+nmake
 ```
 
 **Building ES-DE using MinGW:**
@@ -1081,6 +1120,8 @@ Or for a debug build:
 cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
+
+Unfortunately AddressSanitizer does not seem to be supported with MinGW.
 
 For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 

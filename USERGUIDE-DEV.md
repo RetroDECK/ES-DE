@@ -41,12 +41,14 @@ The following operating systems have been tested (all for the x86 architecture u
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 10.14 "Mojave" to 11 "Big Sur" (M1 via Rosetta 2 is supported)
+* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor via Rosetta 2 is supported)
 * macOS 10.11 "El Capitan" (v1.0 release only)
 * Windows 10
 * Windows 8.1
 
-**Note:** If using a Mac with an M1 CPU you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
+If using a Mac with an M1 processor you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
+
+If using macOS Monterey, there has been a quite serious OpenGL bug introduced by Apple which causes problems for ES-DE. A workaround for this issue is discussed [below](USERGUIDE-DEV.md#specific-notes-for-macos).
 
 As for display resolutions, the minimum pixel value is 224 and the maximum is 7680. This means that you can run ES-DE at for instance 320x224 all the way up to 7680x4320 (8K UHD). Vertical screen orientation is also supported, as well as ultra-wide resolutions like 3840x1440. Note that there could be some minor visual glitches when running in vertical orientation (this will be fixed in future ES-DE releases) and for the best experience you will probably need to use a customized theme set when running at extreme or unusual resolutions.
 
@@ -152,6 +154,8 @@ If you don't allow this, you will not be able to place system BIOS ROMs in the R
 If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
 
 Another issue on macOS 11 Big Sur (and possibly other OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers.
+
+In macOS 12 Monterey there has been a quite serious OpenGL driver bug introduced by Apple which disables VSync, making the operating system always try to render as many frames as it can. This slows down ES-DE quite a lot and consumes lots of machine resources. The issue is discussed [here](https://github.com/libsdl-org/SDL/issues/4918). There is a temporary workaround available which can be enabled via the _macOS Monterey VSync bug workaround_ setting in the _Other settings_ menu. This will add a short 10 millisecond delay after each frame if the last frame was swapped in less than 3 milliseconds. It's not a proper fix but it should at least make ES-DE usable on Monterey until Apple releases a patch for the bug.
 
 
 ## Specific notes for Raspberry Pi
@@ -1180,7 +1184,7 @@ Options specific to the video screensaver.
 
 **Swap videos after (seconds)**
 
-For how long to play videos before changing to the next game. Allowed range is between 0 and 120 seconds in 2-second increments. If set to 0 (which is the default value), the next game will be selected after the entire video has finished playing.
+For how long to play videos before changing to the next game. Allowed range is between 0 and 120 seconds in 2-second increments. If set to 0 (which is the default value), the next game will be selected after the entire video has finished playing. If set to a higher value than the length of a game video, it will loop until reaching the swap time.
 
 **Stretch videos to screen resolution**
 
@@ -1331,6 +1335,10 @@ The metadata for a game is updated by scraping or by manual editing using the me
 **Hide taskbar (requires restart)** _(Windows only)_
 
 With this setting enabled, the taskbar will be hidden when launching ES-DE, and it will be restored when the application exits. This can make for a more seamless experience as the taskbar could otherwise flash by briefly when launching and when returning from games. But it can potentially cause issues on some Windows installations so it's disabled by default.
+
+**macOS Monterey VSync bug workaround** _(macOS only and hopefully only temporary)_
+
+In macOS 12 Monterey an OpenGL driver bug was introduced that causes VSync to always be disabled. This makes the operating system try to render as many frames as it can which slows down ES-DE quite a lot as well as consuming lots of machine resources. By enabling this setting, a small 10 millisecond delay will be introduced after each frame if it took less than 3 milliseconds to swap the last one. This is not a proper solution, and it's not an accurate solution but it's at least something until Apple (hopefully) fixes the bug via an OS update. Earlier macOS versions are unaffected by this issue. To check if you have this problem, enable the _Display GPU statistics overlay_ setting and if your FPS counter shows really high numbers (like in the hundreds of frames per second) then enable this option and the FPS counter should decrease significantly.
 
 **Run in background (while game is launched)**
 

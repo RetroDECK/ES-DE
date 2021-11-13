@@ -102,6 +102,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Fixed a lot of compiler warnings introduced by the -Wall and -Wpedantic flags
 * Changed the language standard from C++14 to C++17
 * Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
+* Added a CMake option to build with AddressSanitizer
 * Changed two clang-format rules related to braced lists and reformatted the codebase
 * Bundled the October 2021 release of the Mozilla TLS/SSL certificates
 * Updated the MAME index files to include ROMs up to MAME version 0.237
