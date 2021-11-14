@@ -50,7 +50,7 @@ help2man --section 6 --no-info --include $TEMPFILE_INPUT $ESBINARY > $TEMPFILE_O
 
 # Manual string replacements, these may need to be modified if changes are made to the
 # command line --help output.
-cat $TEMPFILE_OUTPUT | sed s/"EmulationStation Desktop Edition, Emulator Front\\\-end"/""/g | \
+cat $TEMPFILE_OUTPUT | sed s/"EmulationStation Desktop Edition, Emulator Frontend"/""/g | \
 sed s/"Set to at least"/".br\nSet to at least"/ > $TARGET_FILENAME
 
 gzip -9 $TARGET_FILENAME
