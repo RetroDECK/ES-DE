@@ -179,7 +179,9 @@ bool TextureData::load()
         const ResourceData& data = rm->getFileData(mPath);
         // Is it an SVG?
         if (Utils::String::toLower(mPath.substr(mPath.size() - 4, std::string::npos)) == ".svg") {
+            std::unique_lock<std::mutex> lock(mMutex);
             mScalable = true;
+            lock.unlock();
             std::string dataString;
             dataString.assign(std::string(reinterpret_cast<char*>(data.ptr.get()), data.length));
             retval = initSVGFromMemory(dataString);
@@ -243,35 +245,51 @@ void TextureData::releaseRAM()
 
 size_t TextureData::width()
 {
-    if (mWidth == 0)
+    std::unique_lock<std::mutex> lock(mMutex);
+    if (mWidth == 0) {
+        lock.unlock();
         load();
+    }
     return static_cast<size_t>(mWidth);
 }
 
 size_t TextureData::height()
 {
-    if (mHeight == 0)
+    std::unique_lock<std::mutex> lock(mMutex);
+    if (mHeight == 0) {
+        lock.unlock();
         load();
+    }
     return static_cast<size_t>(mHeight);
 }
 
 float TextureData::sourceWidth()
 {
-    if (mSourceWidth == 0)
+    std::unique_lock<std::mutex> lock(mMutex);
+    if (mSourceWidth == 0) {
+        lock.unlock();
         load();
+    }
     return mSourceWidth;
 }
 
 float TextureData::sourceHeight()
 {
-    if (mSourceHeight == 0)
+    std::unique_lock<std::mutex> lock(mMutex);
+    if (mSourceHeight == 0) {
+        lock.unlock();
         load();
+    }
     return mSourceHeight;
 }
 
 void TextureData::setSourceSize(float width, float height)
 {
-    if (mScalable) {
+    std::unique_lock<std::mutex> lock(mMutex);
+    bool scalable = mScalable;
+    lock.unlock();
+
+    if (scalable) {
         if ((mSourceWidth != width) || (mSourceHeight != height)) {
             mSourceWidth = width;
             mSourceHeight = height;
@@ -283,6 +301,7 @@ void TextureData::setSourceSize(float width, float height)
 
 size_t TextureData::getVRAMUsage()
 {
+    std::unique_lock<std::mutex> lock(mMutex);
     if (mTextureID != 0 || !mDataRGBA.empty())
         return mWidth * mHeight * 4;
     else

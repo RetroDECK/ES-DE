@@ -16,7 +16,7 @@
 TextureDataManager::TextureDataManager()
 {
     unsigned char data[5 * 5 * 4];
-    mBlank = std::shared_ptr<TextureData>(new TextureData(false));
+    mBlank = std::make_shared<TextureData>(false);
     for (int i = 0; i < (5 * 5); i++) {
         data[i * 4] = (i % 2) * 255;
         data[i * 4 + 1] = (i % 2) * 255;
@@ -36,7 +36,7 @@ TextureDataManager::~TextureDataManager()
 std::shared_ptr<TextureData> TextureDataManager::add(const TextureResource* key, bool tiled)
 {
     remove(key);
-    std::shared_ptr<TextureData> data(new TextureData(tiled));
+    std::shared_ptr<TextureData> data = std::make_shared<TextureData>(tiled);
     mTextures.push_front(data);
     mTextureLookup[key] = mTextures.cbegin();
     return data;
@@ -158,11 +158,13 @@ TextureLoader::TextureLoader()
 TextureLoader::~TextureLoader()
 {
     // Just abort any waiting texture.
+    std::unique_lock<std::mutex> lock(mMutex);
     mTextureDataQ.clear();
     mTextureDataLookup.clear();
 
     // Exit the thread.
     mExit = true;
+    lock.unlock();
     mEvent.notify_one();
     mThread->join();
     mThread.reset();
@@ -170,7 +172,9 @@ TextureLoader::~TextureLoader()
 
 void TextureLoader::threadProc()
 {
-    while (!mExit) {
+    bool exit = false;
+
+    while (!exit) {
         std::shared_ptr<TextureData> textureData;
         {
             // Wait for an event to say there is something in the queue.
@@ -195,6 +199,7 @@ void TextureLoader::threadProc()
                 mTextureDataLookup.erase(mTextureDataLookup.find(textureData.get()));
             }
         }
+        exit = mExit;
     }
 }
 
