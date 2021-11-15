@@ -13,7 +13,6 @@
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
-#include "AudioManager.h"
 #include "FileData.h"
 #include "Log.h"
 #include "SystemData.h"

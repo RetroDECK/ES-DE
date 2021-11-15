@@ -10,7 +10,6 @@
 
 #include "FileData.h"
 
-#include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"

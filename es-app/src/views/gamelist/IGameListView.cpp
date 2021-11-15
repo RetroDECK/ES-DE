@@ -8,7 +8,6 @@
 
 #include "views/gamelist/IGameListView.h"
 
-#include "AudioManager.h"
 #include "Sound.h"
 #include "Window.h"
 #include "guis/GuiGamelistOptions.h"
