@@ -11,14 +11,14 @@
 #define ES_CORE_SETTINGS_H
 
 #include <map>
+#include <memory>
 #include <string>
 
 //	This is a singleton for storing settings.
 class Settings
 {
 public:
-    static Settings* getInstance();
-    static void deinit();
+    static std::shared_ptr<Settings> getInstance();
 
     void loadFile();
     void saveFile();
@@ -39,8 +39,6 @@ public:
     bool setString(const std::string& name, const std::string& value);
 
 private:
-    static Settings* sInstance;
-
     Settings();
 
     //	Clear everything and load default values.

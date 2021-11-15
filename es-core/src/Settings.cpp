@@ -19,46 +19,47 @@
 #include <pugixml.hpp>
 #include <vector>
 
-Settings* Settings::sInstance = nullptr;
-
-// These values are NOT saved to es_settings.xml since they're not set via
-// the in-program settings menu. Most can be set using command-line arguments,
-// but some are debug flags that are either hardcoded or set by internal debug
-// functions.
-std::vector<std::string> settingsSkipSaving
+namespace
 {
-    // clang-format off
-    // These options can be set using command-line arguments:
-    "WindowWidth",          // Set via --resolution [width] [height]
-    "WindowHeight",         // set via --resolution [width] [height]
-    "ParseGamelistOnly"     // --gamelist-only
-    "IgnoreGamelist",       // --ignore-gamelist
-    "SplashScreen",         // --no-splash
-    "Debug",                // --debug
-    #if !defined(_WIN64)
-    "Windowed",             // --windowed
-    #endif
-    "VSync",                // --vsync [1/on or 0/off]
-    "ForceFull",            // --force-full
-    "ForceKiosk",           // --force-kiosk
-    "ForceKid",             // --force-kid
+    // These values are NOT saved to es_settings.xml since they're not set via
+    // the in-program settings menu. Most can be set using command-line arguments,
+    // but some are debug flags that are either hardcoded or set by internal debug
+    // functions.
+    std::vector<std::string> settingsSkipSaving
+    {
+        // clang-format off
+        // These options can be set using command-line arguments:
+        "WindowWidth",          // Set via --resolution [width] [height]
+        "WindowHeight",         // set via --resolution [width] [height]
+        "ParseGamelistOnly"     // --gamelist-only
+        "IgnoreGamelist",       // --ignore-gamelist
+        "SplashScreen",         // --no-splash
+        "Debug",                // --debug
+        #if !defined(_WIN64)
+        "Windowed",             // --windowed
+        #endif
+        "VSync",                // --vsync [1/on or 0/off]
+        "ForceFull",            // --force-full
+        "ForceKiosk",           // --force-kiosk
+        "ForceKid",             // --force-kid
 
-    // These options are not shown in the --help text and are intended
-    // for debugging and testing purposes:
-    "ScreenWidth",          // Set via --screensize [width] [height]
-    "ScreenHeight",         // set via --screensize [width] [height]
-    "ScreenOffsetX",        // Set via --screenoffset [X] [Y]
-    "ScreenOffsetY",        // Set via --screenoffset [X] [Y]
-    "ScreenRotate",         // --screenrotate [0-3]
+        // These options are not shown in the --help text and are intended
+        // for debugging and testing purposes:
+        "ScreenWidth",          // Set via --screensize [width] [height]
+        "ScreenHeight",         // set via --screensize [width] [height]
+        "ScreenOffsetX",        // Set via --screenoffset [X] [Y]
+        "ScreenOffsetY",        // Set via --screenoffset [X] [Y]
+        "ScreenRotate",         // --screenrotate [0-3]
 
-    // These options are not configurable from the command-line:
-    "DebugGrid",
-    "DebugText",
-    "DebugImage",
-    "SplashScreenProgress",
-    "ScraperFilter"
-    // clang-format on
-};
+        // These options are not configurable from the command-line:
+        "DebugGrid",
+        "DebugText",
+        "DebugImage",
+        "SplashScreenProgress",
+        "ScraperFilter"
+        // clang-format on
+    };
+} // namespace
 
 Settings::Settings()
 {
@@ -67,20 +68,10 @@ Settings::Settings()
     loadFile();
 }
 
-Settings* Settings::getInstance()
+std::shared_ptr<Settings> Settings::getInstance()
 {
-    if (sInstance == nullptr)
-        sInstance = new Settings();
-
-    return sInstance;
-}
-
-void Settings::deinit()
-{
-    if (sInstance) {
-        delete sInstance;
-        sInstance = nullptr;
-    }
+    static std::shared_ptr<Settings> instance{std::shared_ptr<Settings>(new Settings)};
+    return instance;
 }
 
 void Settings::setDefaults()
