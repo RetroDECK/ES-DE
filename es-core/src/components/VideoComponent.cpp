@@ -90,9 +90,12 @@ void VideoComponent::setImage(std::string path)
 
 void VideoComponent::onShow()
 {
+    std::unique_lock<std::mutex> playerLock(mPlayerMutex);
     mBlockPlayer = false;
     mPause = false;
     mShowing = true;
+    playerLock.unlock();
+
     manageState();
 }
 
@@ -110,22 +113,31 @@ void VideoComponent::onStopVideo()
 
 void VideoComponent::onPauseVideo()
 {
+    std::unique_lock<std::mutex> playerLock(mPlayerMutex);
     mBlockPlayer = true;
     mPause = true;
+    playerLock.unlock();
+
     manageState();
 }
 
 void VideoComponent::onUnpauseVideo()
 {
+    std::unique_lock<std::mutex> playerLock(mPlayerMutex);
     mBlockPlayer = false;
     mPause = false;
+    playerLock.unlock();
+
     manageState();
 }
 
 void VideoComponent::onScreensaverActivate()
 {
+    std::unique_lock<std::mutex> playerLock(mPlayerMutex);
     mBlockPlayer = true;
     mPause = true;
+    playerLock.unlock();
+
     if (Settings::getInstance()->getString("ScreensaverType") == "dim")
         stopVideo();
     else
@@ -158,15 +170,20 @@ void VideoComponent::onGameLaunchedDeactivate()
 void VideoComponent::topWindow(bool isTop)
 {
     if (isTop) {
+        std::unique_lock<std::mutex> playerLock(mPlayerMutex);
         mBlockPlayer = false;
         mPause = false;
+        playerLock.unlock();
+
         // Stop video when closing the menu to force a reload of the
         // static image (if the theme is configured as such).
         stopVideo();
     }
     else {
+        std::unique_lock<std::mutex> playerLock(mPlayerMutex);
         mBlockPlayer = true;
         mPause = true;
+        playerLock.unlock();
     }
     manageState();
 }

@@ -102,8 +102,8 @@ public:
 protected:
     virtual void onScroll() override
     {
-        if (!NavigationSounds::getInstance()->isPlayingThemeNavigationSound(SCROLLSOUND))
-            NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+            NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     }
     virtual void onCursorChanged(const CursorState& state) override;
 

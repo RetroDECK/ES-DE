@@ -12,7 +12,6 @@
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
-#include "AudioManager.h"
 #include "Sound.h"
 #include "views/ViewController.h"
 
@@ -59,7 +58,7 @@ bool MediaViewer::startMediaViewer(FileData* game)
 
 void MediaViewer::stopMediaViewer()
 {
-    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+    NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     ViewController::get()->onStopVideo();
 
     if (mVideo) {
@@ -197,7 +196,7 @@ void MediaViewer::findMedia()
 void MediaViewer::showNext()
 {
     if (mHasImages && mCurrentImageIndex != static_cast<int>(mImageFiles.size()) - 1)
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
 
     bool showedVideo = false;
 
@@ -229,7 +228,7 @@ void MediaViewer::showNext()
 void MediaViewer::showPrevious()
 {
     if ((mHasVideo && mDisplayingImage) || (!mHasVideo && mCurrentImageIndex != 0))
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
 
     if (mCurrentImageIndex == 0 && !mHasVideo) {
         return;

@@ -77,7 +77,7 @@ protected:
     void onCursorChanged(const CursorState& state) override;
     virtual void onScroll() override
     {
-        NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
     }
 
 private:

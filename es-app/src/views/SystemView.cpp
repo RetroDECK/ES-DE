@@ -284,14 +284,14 @@ bool SystemView::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input)) {
             stopScrolling();
             ViewController::get()->goToGameList(getSelected());
-            NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
+            NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
             return true;
         }
         if (Settings::getInstance()->getBool("RandomAddButton") &&
             (config->isMappedTo("leftthumbstickclick", input) ||
              config->isMappedTo("rightthumbstickclick", input))) {
             // Get a random system and jump to it.
-            NavigationSounds::getInstance()->playThemeNavigationSound(SYSTEMBROWSESOUND);
+            NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
             setCursor(SystemData::getRandomSystem(getSelected()));
             return true;
         }

@@ -12,6 +12,7 @@
 #include "GuiComponent.h"
 #include "components/ImageComponent.h"
 
+#include <mutex>
 #include <string>
 
 class MediaViewer;
@@ -109,6 +110,7 @@ private:
 protected:
     Window* mWindow;
     ImageComponent mStaticImage;
+    std::mutex mPlayerMutex;
 
     unsigned mVideoWidth;
     unsigned mVideoHeight;

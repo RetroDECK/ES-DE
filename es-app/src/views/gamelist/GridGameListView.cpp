@@ -168,15 +168,15 @@ bool GridGameListView::input(InputConfig* config, Input input)
     if (input.value == 0 &&
         (config->isMappedLike("left", input) || config->isMappedLike("right", input) ||
          (config->isMappedLike("up", input)) || (config->isMappedLike("down", input))))
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
 
     if (input.value != 0 && config->isMappedLike("righttrigger", input)) {
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
         mGrid.setCursor(mGrid.getLast());
     }
 
     if (input.value != 0 && config->isMappedLike("lefttrigger", input)) {
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
         mGrid.setCursor(mGrid.getFirst());
     }
 

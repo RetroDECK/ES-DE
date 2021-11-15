@@ -114,7 +114,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 // It's a folder.
                 if (cursor->getChildren().size() > 0) {
                     ViewController::get()->cancelViewTransitions();
-                    NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
+                    NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
                     mCursorStack.push(cursor);
                     populateList(cursor->getChildrenListToDisplay(), cursor);
 
@@ -140,7 +140,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                         updateHelpPrompts();
                 }
                 else {
-                    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                    NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 }
             }
 
@@ -151,7 +151,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             if (mCursorStack.size()) {
                 // Save the position to the cursor stack history.
                 mCursorStackHistory.push_back(getCursor());
-                NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(BACKSOUND);
                 populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay(),
                              mCursorStack.top()->getParent());
                 setCursor(mCursorStack.top());
@@ -161,7 +161,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     updateHelpPrompts();
             }
             else {
-                NavigationSounds::getInstance()->playThemeNavigationSound(BACKSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(BACKSOUND);
                 onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
@@ -178,14 +178,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedTo("x", input)) {
             if (getCursor()->getType() == PLACEHOLDER) {
-                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 return true;
             }
             else if (config->isMappedTo("x", input) &&
                      mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
                      mCursorStack.empty() &&
                      ViewController::get()->getState().viewing == ViewController::GAME_LIST) {
-                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 // Jump to the randomly selected game.
                 if (mRandomGame) {
                     stopListScrolling();
@@ -197,7 +197,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             else if (mRoot->getSystem()->isGameSystem()) {
                 stopListScrolling();
                 ViewController::get()->cancelViewTransitions();
-                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 mWindow->startMediaViewer(getCursor());
                 return true;
             }
@@ -228,7 +228,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER) {
                 stopListScrolling();
                 // Jump to a random game.
-                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 FileData* randomGame = getCursor()->getSystem()->getRandomGame(getCursor());
                 if (randomGame)
                     setCursor(randomGame);
@@ -241,7 +241,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                  ViewController::get()->getState().viewing == ViewController::GAME_LIST) {
             // Jump to the randomly selected game.
             if (mRandomGame) {
-                NavigationSounds::getInstance()->playThemeNavigationSound(SELECTSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
                 // If there is already an mCursorStackHistory entry for the collection, then
                 // remove it so we don't get multiple entries.
                 std::vector<FileData*> listEntries =
@@ -257,7 +257,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 updateHelpPrompts();
             }
             else {
-                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
             }
         }
         else if (config->isMappedTo("y", input) &&
@@ -272,19 +272,19 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             if (CollectionSystemsManager::get()->isEditing() &&
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                 getCursor()->getParent()->getPath() == "collections") {
-                NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(FAVORITESOUND);
                 mWindow->queueInfoPopup("CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS", 4000);
             }
             // Notify the user if attempting to add a placeholder to a custom collection.
             if (CollectionSystemsManager::get()->isEditing() &&
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() == PLACEHOLDER) {
-                NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(FAVORITESOUND);
                 mWindow->queueInfoPopup("CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS", 4000);
             }
             else if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                      getCursor()->getParent()->getPath() != "collections") {
                 if (getCursor()->getType() == GAME || getCursor()->getType() == FOLDER)
-                    NavigationSounds::getInstance()->playThemeNavigationSound(FAVORITESOUND);
+                    NavigationSounds::getInstance().playThemeNavigationSound(FAVORITESOUND);
                 // When marking or unmarking a game as favorite, don't jump to the new position
                 // it gets after the gamelist sorting. Instead retain the cursor position in the
                 // list using the logic below.
@@ -474,7 +474,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 }
             }
             else if (config->isMappedTo("y", input) && getCursor()->isPlaceHolder()) {
-                NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
             }
         }
     }

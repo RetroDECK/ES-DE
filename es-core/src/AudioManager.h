@@ -11,6 +11,7 @@
 
 #include <SDL2/SDL_audio.h>
 #include <memory>
+#include <mutex>
 #include <vector>
 
 class Sound;
@@ -19,13 +20,13 @@ class AudioManager
 {
 public:
     virtual ~AudioManager();
-    static std::shared_ptr<AudioManager>& getInstance();
+    static AudioManager& getInstance();
 
     void init();
     void deinit();
 
-    void registerSound(std::shared_ptr<Sound>& sound);
-    void unregisterSound(std::shared_ptr<Sound>& sound);
+    void registerSound(std::shared_ptr<Sound> sound);
+    void unregisterSound(std::shared_ptr<Sound> sound);
 
     void play();
     void stop();
@@ -35,25 +36,33 @@ public:
     void processStream(const void* samples, unsigned count);
     void clearStream();
 
-    void muteStream() { sMuteStream = true; }
-    void unmuteStream() { sMuteStream = false; }
+    void muteStream()
+    {
+        std::unique_lock<std::mutex> audioLock{mAudioLock};
+        sMuteStream = true;
+    }
+    void unmuteStream()
+    {
+        std::unique_lock<std::mutex> audioLock{mAudioLock};
+        sMuteStream = false;
+    }
 
     bool getHasAudioDevice() { return sHasAudioDevice; }
 
-    static SDL_AudioDeviceID sAudioDevice;
-    static SDL_AudioSpec sAudioFormat;
+    inline static SDL_AudioDeviceID sAudioDevice = 0;
+    inline static SDL_AudioSpec sAudioFormat;
 
 private:
     AudioManager();
 
     static void mixAudio(void* unused, Uint8* stream, int len);
     static void mixAudio2(void* unused, Uint8* stream, int len);
-    static SDL_AudioStream* sConversionStream;
-    static std::vector<std::shared_ptr<Sound>> sSoundVector;
-    static std::shared_ptr<AudioManager> sInstance;
-    static bool sMuteStream;
-    static bool sHasAudioDevice;
-    static bool mIsClearingStream;
+
+    inline static std::mutex mAudioLock;
+    inline static SDL_AudioStream* sConversionStream;
+    inline static std::vector<std::shared_ptr<Sound>> sSoundVector;
+    inline static bool sMuteStream = false;
+    inline static bool sHasAudioDevice = true;
 };
 
 #endif // ES_CORE_AUDIO_MANAGER_H

@@ -12,7 +12,6 @@
 
 #include "views/ViewController.h"
 
-#include "AudioManager.h"
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
@@ -413,7 +412,7 @@ void ViewController::goToNextGameList()
     assert(mState.viewing == GAME_LIST);
     SystemData* system = getState().getSystem();
     assert(system);
-    NavigationSounds::getInstance()->playThemeNavigationSound(QUICKSYSSELECTSOUND);
+    NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
     mNextSystem = true;
     goToGameList(system->getNext());
 }
@@ -423,7 +422,7 @@ void ViewController::goToPrevGameList()
     assert(mState.viewing == GAME_LIST);
     SystemData* system = getState().getSystem();
     assert(system);
-    NavigationSounds::getInstance()->playThemeNavigationSound(QUICKSYSSELECTSOUND);
+    NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
     mNextSystem = false;
     goToGameList(system->getPrev());
 }
@@ -717,7 +716,7 @@ void ViewController::launch(FileData* game)
     if (durationString != "disabled")
         mWindow->displayLaunchScreen(game->getSourceFileData());
 
-    NavigationSounds::getInstance()->playThemeNavigationSound(LAUNCHSOUND);
+    NavigationSounds::getInstance().playThemeNavigationSound(LAUNCHSOUND);
 
     // This is just a dummy animation in order for the launch screen or notification popup
     // to be displayed briefly, and for the navigation sound playing to be able to complete.
@@ -976,13 +975,13 @@ void ViewController::preload()
     bool themeSoundSupport = false;
     for (SystemData* system : SystemData::sSystemVector) {
         if (system->getTheme()->hasView("all")) {
-            NavigationSounds::getInstance()->loadThemeNavigationSounds(system->getTheme());
+            NavigationSounds::getInstance().loadThemeNavigationSounds(system->getTheme().get());
             themeSoundSupport = true;
             break;
         }
     }
     if (!SystemData::sSystemVector.empty() && !themeSoundSupport)
-        NavigationSounds::getInstance()->loadThemeNavigationSounds(nullptr);
+        NavigationSounds::getInstance().loadThemeNavigationSounds(nullptr);
 }
 
 void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
@@ -1070,17 +1069,17 @@ void ViewController::reloadAll()
 
     // Load navigation sounds, either from the theme if it supports it, or otherwise from
     // the bundled fallback sound files.
-    NavigationSounds::getInstance()->deinit();
+    NavigationSounds::getInstance().deinit();
     bool themeSoundSupport = false;
     for (SystemData* system : SystemData::sSystemVector) {
         if (system->getTheme()->hasView("all")) {
-            NavigationSounds::getInstance()->loadThemeNavigationSounds(system->getTheme());
+            NavigationSounds::getInstance().loadThemeNavigationSounds(system->getTheme().get());
             themeSoundSupport = true;
             break;
         }
     }
     if (!SystemData::sSystemVector.empty() && !themeSoundSupport)
-        NavigationSounds::getInstance()->loadThemeNavigationSounds(nullptr);
+        NavigationSounds::getInstance().loadThemeNavigationSounds(nullptr);
 
     mCurrentView->onShow();
     updateHelpPrompts();

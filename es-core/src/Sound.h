@@ -30,7 +30,7 @@ public:
     void loadFile(const std::string& path);
 
     void play();
-    bool isPlaying() const { return playing; }
+    bool isPlaying() const { return mPlaying; }
     void stop();
 
     const Uint8* getData() const { return mSampleData; }
@@ -39,7 +39,7 @@ public:
     Uint32 getLength() const { return mSampleLength; }
 
     static std::shared_ptr<Sound> get(const std::string& path);
-    static std::shared_ptr<Sound> getFromTheme(const std::shared_ptr<ThemeData>& theme,
+    static std::shared_ptr<Sound> getFromTheme(ThemeData* const theme,
                                                const std::string& view,
                                                const std::string& elem);
 
@@ -52,7 +52,7 @@ private:
     Uint8* mSampleData;
     Uint32 mSamplePos;
     Uint32 mSampleLength;
-    bool playing;
+    bool mPlaying;
 };
 
 enum NavigationSoundsID {
@@ -68,16 +68,15 @@ enum NavigationSoundsID {
 class NavigationSounds
 {
 public:
-    static NavigationSounds* getInstance();
+    static NavigationSounds& getInstance();
 
     void deinit();
-    void loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme);
+    void loadThemeNavigationSounds(ThemeData* const theme);
     void playThemeNavigationSound(NavigationSoundsID soundID);
     bool isPlayingThemeNavigationSound(NavigationSoundsID soundID);
 
 private:
-    static NavigationSounds* sInstance;
-    std::vector<std::shared_ptr<Sound>> navigationSounds;
+    std::vector<std::shared_ptr<Sound>> mNavigationSounds;
 };
 
 #endif // ES_CORE_SOUND_H

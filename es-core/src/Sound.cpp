@@ -15,8 +15,6 @@
 #include "ThemeData.h"
 #include "resources/ResourceManager.h"
 
-NavigationSounds* NavigationSounds::sInstance = nullptr;
-
 std::map<std::string, std::shared_ptr<Sound>> Sound::sMap;
 
 std::shared_ptr<Sound> Sound::get(const std::string& path)
@@ -26,16 +24,16 @@ std::shared_ptr<Sound> Sound::get(const std::string& path)
         return it->second;
 
     std::shared_ptr<Sound> sound = std::shared_ptr<Sound>(new Sound(path));
-    AudioManager::getInstance()->registerSound(sound);
+    AudioManager::getInstance().registerSound(sound);
     sMap[path] = sound;
     return sound;
 }
 
-std::shared_ptr<Sound> Sound::getFromTheme(const std::shared_ptr<ThemeData>& theme,
+std::shared_ptr<Sound> Sound::getFromTheme(ThemeData* const theme,
                                            const std::string& view,
                                            const std::string& element)
 {
-    if (!theme) {
+    if (theme == nullptr) {
         LOG(LogDebug) << "Sound::getFromTheme(): Using fallback sound file for \"" << element
                       << "\"";
         return get(ResourceManager::getInstance()->getResourcePath(":/sounds/" + element + ".wav"));
@@ -57,7 +55,7 @@ Sound::Sound(const std::string& path)
     : mSampleData(nullptr)
     , mSamplePos(0)
     , mSampleLength(0)
-    , playing(false)
+    , mPlaying(false)
 {
     loadFile(path);
 }
@@ -127,7 +125,7 @@ void Sound::init()
 
 void Sound::deinit()
 {
-    playing = false;
+    mPlaying = false;
 
     if (mSampleData != nullptr) {
         SDL_LockAudioDevice(AudioManager::sAudioDevice);
@@ -148,28 +146,28 @@ void Sound::play()
     if (!Settings::getInstance()->getBool("NavigationSounds"))
         return;
 
-    if (!AudioManager::getInstance()->getHasAudioDevice())
+    if (!AudioManager::getInstance().getHasAudioDevice())
         return;
 
     SDL_LockAudioDevice(AudioManager::sAudioDevice);
 
-    if (playing)
+    if (mPlaying)
         // Replay from start. rewind the sample to the beginning.
         mSamplePos = 0;
     else
         // Flag our sample as playing.
-        playing = true;
+        mPlaying = true;
 
     SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
     // Tell the AudioManager to start playing samples.
-    AudioManager::getInstance()->play();
+    AudioManager::getInstance().play();
 }
 
 void Sound::stop()
 {
     // Flag our sample as not playing and rewind its position.
     SDL_LockAudioDevice(AudioManager::sAudioDevice);
-    playing = false;
+    mPlaying = false;
     mSamplePos = 0;
     SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
 }
@@ -179,34 +177,27 @@ void Sound::setPosition(Uint32 newPosition)
     mSamplePos = newPosition;
     if (mSamplePos >= mSampleLength) {
         // Got to or beyond the end of the sample. stop playing.
-        playing = false;
+        mPlaying = false;
         mSamplePos = 0;
     }
 }
 
-NavigationSounds* NavigationSounds::getInstance()
+NavigationSounds& NavigationSounds::getInstance()
 {
-    if (sInstance == nullptr)
-        sInstance = new NavigationSounds();
-
-    return sInstance;
+    static NavigationSounds instance;
+    return instance;
 }
 
 void NavigationSounds::deinit()
 {
-    if (sInstance) {
-        for (auto sound : navigationSounds) {
-            AudioManager::getInstance()->unregisterSound(sound);
-            sound->deinit();
-        }
-        navigationSounds.clear();
-        delete sInstance;
+    for (auto sound : mNavigationSounds) {
+        AudioManager::getInstance().unregisterSound(sound);
+        sound->deinit();
     }
-
-    sInstance = nullptr;
+    mNavigationSounds.clear();
 }
 
-void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData>& theme)
+void NavigationSounds::loadThemeNavigationSounds(ThemeData* const theme)
 {
     if (theme) {
         LOG(LogDebug) << "NavigationSounds::loadThemeNavigationSounds(): "
@@ -218,21 +209,21 @@ void NavigationSounds::loadThemeNavigationSounds(const std::shared_ptr<ThemeData
                "Theme set does not include navigation sound support, using fallback sounds";
     }
 
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowse"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselect"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "select"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "back"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "scroll"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "favorite"));
-    navigationSounds.push_back(Sound::getFromTheme(theme, "all", "launch"));
+    mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "systembrowse"));
+    mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "quicksysselect"));
+    mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "select"));
+    mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "back"));
+    mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "scroll"));
+    mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "favorite"));
+    mNavigationSounds.push_back(Sound::getFromTheme(theme, "all", "launch"));
 }
 
 void NavigationSounds::playThemeNavigationSound(NavigationSoundsID soundID)
 {
-    NavigationSounds::getInstance()->navigationSounds[soundID]->play();
+    NavigationSounds::getInstance().mNavigationSounds[soundID]->play();
 }
 
 bool NavigationSounds::isPlayingThemeNavigationSound(NavigationSoundsID soundID)
 {
-    return NavigationSounds::getInstance()->navigationSounds[soundID]->isPlaying();
+    return NavigationSounds::getInstance().mNavigationSounds[soundID]->isPlaying();
 }

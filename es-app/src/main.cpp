@@ -704,8 +704,7 @@ int main(int argc, char* argv[])
     MameNames::deinit();
     CollectionSystemsManager::deinit();
     SystemData::deleteSystems();
-    NavigationSounds::getInstance()->deinit();
-    Settings::deinit();
+    NavigationSounds::getInstance().deinit();
 
 #if defined(FREEIMAGE_LIB)
     // Call this ONLY when linking with FreeImage as a static library.

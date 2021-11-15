@@ -15,7 +15,6 @@
 #if defined(BUILD_VLC_PLAYER)
 #include "components/VideoVlcComponent.h"
 #endif
-#include "AudioManager.h"
 #include "InputManager.h"
 #include "Log.h"
 #include "Sound.h"
@@ -219,7 +218,7 @@ void Window::input(InputConfig* config, Input input)
                 else if (config->isMappedTo("y", input) && input.value != 0) {
                     // Jump to the game in its gamelist, but do not launch it.
                     stopScreensaver();
-                    NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+                    NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                     mScreensaver->goToGame();
                     // To force handling the wake up process.
                     mSleeping = true;

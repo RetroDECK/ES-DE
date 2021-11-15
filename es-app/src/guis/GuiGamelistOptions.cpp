@@ -310,7 +310,7 @@ GuiGamelistOptions::~GuiGamelistOptions()
     }
 
     if (mSystem->getRootFolder()->getChildren().size() != 0 && mSystem->getName() != "recent")
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
 }
 
 void GuiGamelistOptions::openGamelistFilter()
@@ -356,7 +356,7 @@ void GuiGamelistOptions::startEditMode()
     }
 
     if (mSystem->getRootFolder()->getChildren().size() == 0)
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     delete this;
 }
 
@@ -364,7 +364,7 @@ void GuiGamelistOptions::exitEditMode()
 {
     CollectionSystemsManager::get()->exitEditMode();
     if (mSystem->getRootFolder()->getChildren().size() == 0)
-        NavigationSounds::getInstance()->playThemeNavigationSound(SCROLLSOUND);
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     delete this;
 }
 
