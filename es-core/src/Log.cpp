@@ -7,6 +7,7 @@
 //
 
 #include "Log.h"
+#include "utils/StringUtil.h"
 
 void Log::init()
 {
@@ -19,7 +20,7 @@ void Log::init()
 void Log::open()
 {
 #if defined(_WIN64)
-    file.open(Utils::String::stringToWideString(getLogPath()).c_str());
+    sFile.open(Utils::String::stringToWideString(getLogPath()).c_str());
 #else
     sFile.open(getLogPath().c_str());
 #endif
