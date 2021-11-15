@@ -3,20 +3,10 @@
 //  EmulationStation Desktop Edition
 //  Log.cpp
 //
-//  Log handling.
+//  Log output.
 //
 
 #include "Log.h"
-
-#include "Platform.h"
-#include "utils/StringUtil.h"
-
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-
-LogLevel Log::reportingLevel = LogInfo;
-std::ofstream file;
 
 void Log::init()
 {
@@ -31,7 +21,7 @@ void Log::open()
 #if defined(_WIN64)
     file.open(Utils::String::stringToWideString(getLogPath()).c_str());
 #else
-    file.open(getLogPath().c_str());
+    sFile.open(getLogPath().c_str());
 #endif
 }
 
@@ -46,40 +36,39 @@ std::ostringstream& Log::get(LogLevel level)
 #else
     localtime_r(&t, &tm);
 #endif
-    os << std::put_time(&tm, "%b %d %T ") << logLevelMap[level] << ":\t";
-    messageLevel = level;
+    mOutStringStream << std::put_time(&tm, "%b %d %T ") << mLogLevelMap[level] << ":\t";
+    mMessageLevel = level;
 
-    return os;
+    return mOutStringStream;
 }
 
 void Log::flush()
 {
-    // This runs on application exit.
-    file.flush();
+    // Flush file.
+    sFile.flush();
 }
 
 void Log::close()
 {
-    if (file.is_open())
-        file.close();
+    if (sFile.is_open())
+        sFile.close();
 }
 
 Log::~Log()
 {
-    os << std::endl;
+    mOutStringStream << std::endl;
 
-    if (!file.is_open()) {
+    if (!sFile.is_open()) {
         // Not open yet, print to stdout.
         std::cerr << "Error: Tried to write to log file before it was open, "
                      "the following won't be logged:\n";
-        std::cerr << os.str();
+        std::cerr << mOutStringStream.str();
         return;
     }
 
-    file << os.str();
+    sFile << mOutStringStream.str();
 
-    // If it's an error, also print to console.
-    // Print all messages if using --debug.
-    if (messageLevel == LogError || reportingLevel >= LogDebug)
-        std::cerr << os.str();
+    // If it's an error or the --debug flag has been set, then print to the console as well.
+    if (mMessageLevel == LogError || sReportingLevel >= LogDebug)
+        std::cerr << mOutStringStream.str();
 }

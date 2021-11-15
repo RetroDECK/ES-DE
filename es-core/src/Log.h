@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Log.h
 //
-//  Log handling.
+//  Log output.
 //
 
 #ifndef ES_CORE_LOG_H
@@ -11,6 +11,9 @@
 
 #include "utils/FileSystemUtil.h"
 
+#include <fstream>
+#include <iomanip>
+#include <iostream>
 #include <map>
 #include <sstream>
 
@@ -33,8 +36,8 @@ public:
     ~Log();
     std::ostringstream& get(LogLevel level = LogInfo);
 
-    static LogLevel getReportingLevel() { return reportingLevel; }
-    static void setReportingLevel(LogLevel level) { reportingLevel = level; }
+    static LogLevel getReportingLevel() { return sReportingLevel; }
+    static void setReportingLevel(LogLevel level) { sReportingLevel = level; }
     static std::string getLogPath()
     {
         return Utils::FileSystem::getHomePath() + "/.emulationstation/es_log.txt";
@@ -46,17 +49,17 @@ public:
     static void close();
 
 protected:
-    std::ostringstream os;
+    std::ostringstream mOutStringStream;
 
 private:
-    std::map<LogLevel, std::string> logLevelMap{// Log level indicators.
-                                                {LogError, "Error"},
-                                                {LogWarning, "Warn"},
-                                                {LogInfo, "Info"},
-                                                {LogDebug, "Debug"}};
-
-    static LogLevel reportingLevel;
-    LogLevel messageLevel;
+    std::map<LogLevel, std::string> mLogLevelMap{// Log level indicators.
+                                                 {LogError, "Error"},
+                                                 {LogWarning, "Warn"},
+                                                 {LogInfo, "Info"},
+                                                 {LogDebug, "Debug"}};
+    inline static std::ofstream sFile;
+    inline static LogLevel sReportingLevel = LogInfo;
+    LogLevel mMessageLevel;
 };
 
 #endif // ES_CORE_LOG_H
