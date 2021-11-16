@@ -907,10 +907,11 @@ std::vector<std::string> CollectionSystemsManager::getUnusedSystemsFromTheme()
 
 SystemData* CollectionSystemsManager::addNewCustomCollection(const std::string& name)
 {
-    CollectionSystemDecl decl = mCollectionSystemDeclsIndex[myCollectionsName];
+    CollectionSystemDecl decl = {mCollectionSystemDeclsIndex[myCollectionsName]};
     decl.themeFolder = name;
     decl.name = name;
     decl.fullName = name;
+    decl.isCustom = true;
 
     return createNewCollectionEntry(name, decl, true, true);
 }

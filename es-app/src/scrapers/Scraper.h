@@ -42,6 +42,11 @@ struct ScraperSearchParams {
 struct ScraperSearchResult {
     ScraperSearchResult()
         : mdl(GAME_METADATA)
+        , scraperRequestAllowance{0}
+        , mediaURLFetch{NOT_STARTED}
+        , thumbnailDownloadStatus{NOT_STARTED}
+        , mediaFilesDownloadStatus{NOT_STARTED}
+        , savedNewMedia{false}
     {
     }
 
@@ -52,9 +57,9 @@ struct ScraperSearchResult {
     // within a given time period.
     unsigned int scraperRequestAllowance;
 
-    enum downloadStatus mediaURLFetch = NOT_STARTED;
-    enum downloadStatus thumbnailDownloadStatus = NOT_STARTED;
-    enum downloadStatus mediaFilesDownloadStatus = NOT_STARTED;
+    enum downloadStatus mediaURLFetch;
+    enum downloadStatus thumbnailDownloadStatus;
+    enum downloadStatus mediaFilesDownloadStatus;
 
     std::string thumbnailImageData; // Thumbnail cache, this will contain the entire image.
     std::string thumbnailImageUrl;

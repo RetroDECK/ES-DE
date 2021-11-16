@@ -94,7 +94,8 @@ void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
     // Save the visibility status to know whether any badges changed.
     for (auto& item : mFlexboxItems) {
         prevVisibility[item.label] = item.visible;
-        prevController[item.label] = item.overlayImage.getTexture()->getTextureFilePath();
+        if (item.overlayImage.getTexture() != nullptr)
+            prevController[item.label] = item.overlayImage.getTexture()->getTextureFilePath();
         item.visible = false;
     }
 
@@ -112,8 +113,12 @@ void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
                 continue;
 
             it->visible = true;
-            if (badge.gameController != "" &&
-                badge.gameController != it->overlayImage.getTexture()->getTextureFilePath()) {
+
+            std::string texturePath;
+            if (it->overlayImage.getTexture() != nullptr)
+                texturePath = it->overlayImage.getTexture()->getTextureFilePath();
+
+            if (badge.gameController != "" && badge.gameController != texturePath) {
 
                 auto it2 = std::find_if(sGameControllers.begin(), sGameControllers.end(),
                                         [badge](GameControllers gameController) {
