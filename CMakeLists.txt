@@ -186,6 +186,11 @@ else()
     endif()
 endif()
 
+# Raspberry Pi model 3 and higher (ARM Cortex-A53 minimum).
+if(BCMHOST)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -latomic -mcpu=cortex-a53 -mfpu=neon-fp-armv8")
+endif()
+
 if(ASAN AND TSAN)
     message(FATAL_ERROR "-- AddressSanitizer and ThreadSanitizer can't be combined")
 endif()
