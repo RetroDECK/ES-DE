@@ -188,8 +188,10 @@ else()
 endif()
 
 # Raspberry Pi model 3 and higher (ARM Cortex-A53 minimum).
-if(BCMHOST)
+if(RPI_32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -latomic -mcpu=cortex-a53 -mfpu=neon-fp-armv8")
+elseif(RPI_64)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -latomic -mcpu=cortex-a53")
 endif()
 
 if(ASAN AND TSAN)
