@@ -12,7 +12,7 @@
 #include "GuiComponent.h"
 #include "components/ImageComponent.h"
 
-#include <mutex>
+#include <atomic>
 #include <string>
 
 class MediaViewer;
@@ -110,7 +110,6 @@ private:
 protected:
     Window* mWindow;
     ImageComponent mStaticImage;
-    std::mutex mPlayerMutex;
 
     unsigned mVideoWidth;
     unsigned mVideoHeight;
@@ -124,9 +123,9 @@ protected:
     std::string mPlayingVideoPath;
     unsigned mStartTime;
     bool mStartDelayed;
-    bool mIsPlaying;
-    bool mIsActuallyPlaying;
-    bool mPause;
+    std::atomic<bool> mIsPlaying;
+    std::atomic<bool> mIsActuallyPlaying;
+    std::atomic<bool> mPause;
     bool mShowing;
     bool mDisable;
     bool mMediaViewerMode;

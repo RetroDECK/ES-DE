@@ -16,8 +16,8 @@
 #include "Settings.h"
 #include "resources/TextureResource.h"
 
+#include <atomic>
 #include <memory>
-#include <mutex>
 #include <queue>
 
 class FileData;
@@ -192,8 +192,7 @@ private:
     bool mCachedBackground;
     bool mInvalidatedCachedBackground;
 
-    int mVideoPlayerCount;
-    std::mutex mVideoCountMutex;
+    std::atomic<int> mVideoPlayerCount;
 
     float mTopScale;
     bool mRenderedHelpPrompts;

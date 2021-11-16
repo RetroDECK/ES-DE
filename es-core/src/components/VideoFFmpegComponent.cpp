@@ -130,10 +130,8 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
     if (mIsPlaying && mFormatContext) {
         unsigned int color;
-        std::unique_lock<std::mutex> pictureLock(mPictureMutex);
-        bool decodedFrame = mDecodedFrame;
-        pictureLock.unlock();
-        if (decodedFrame && mFadeIn < 1) {
+
+        if (mDecodedFrame && mFadeIn < 1) {
             const unsigned int fadeIn = static_cast<int>(mFadeIn * 255.0f);
             color =
                 Renderer::convertRGBAToABGR((fadeIn << 24) | (fadeIn << 16) | (fadeIn << 8) | 255);
@@ -162,13 +160,11 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         for (int i = 0; i < 4; i++)
             vertices[i].pos = glm::round(vertices[i].pos);
 
-        pictureLock.lock();
-
         // This is needed to avoid a slight gap before the video starts playing.
-        if (!mDecodedFrame) {
-            pictureLock.unlock();
+        if (!mDecodedFrame)
             return;
-        }
+
+        std::unique_lock<std::mutex> pictureLock(mPictureMutex);
 
         if (!mOutputPicture.hasBeenRendered) {
             // Move the contents of mOutputPicture to a temporary vector in order to call
@@ -238,11 +234,12 @@ void VideoFFmpegComponent::updatePlayer()
     }
 
     if (mIsActuallyPlaying && mStartTimeAccumulation) {
-        mAccumulatedTime +=
+        mAccumulatedTime =
+            mAccumulatedTime +
             static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(
                                     std::chrono::high_resolution_clock::now() - mTimeReference)
                                     .count()) /
-            1000000000.0l;
+                1000000000.0l;
     }
 
     mTimeReference = std::chrono::high_resolution_clock::now();
@@ -268,18 +265,16 @@ void VideoFFmpegComponent::frameProcessing()
     if (mAudioCodecContext)
         audioFilter = setupAudioFilters();
 
-    bool isPlaying = true;
-    bool pause = false;
-
-    while (isPlaying && !pause && videoFilter && (!mAudioCodecContext || audioFilter)) {
+    while (mIsPlaying && !mPause && videoFilter && (!mAudioCodecContext || audioFilter)) {
         readFrames();
-        getProcessedFrames();
-        outputFrames();
+        if (!mIsPlaying)
+            break;
 
-        std::unique_lock<std::mutex> playerLock(mPlayerMutex);
-        isPlaying = mIsPlaying;
-        pause = mPause;
-        playerLock.unlock();
+        getProcessedFrames();
+        if (!mIsPlaying)
+            break;
+
+        outputFrames();
 
         // This 1 ms wait makes sure that the thread does not consume all available CPU cycles.
         SDL_Delay(1);
@@ -672,10 +667,8 @@ void VideoFFmpegComponent::readFrames()
         }
     }
 
-    if (readFrameReturn < 0) {
-        std::unique_lock<std::mutex> playerLock(mPlayerMutex);
+    if (readFrameReturn < 0)
         mEndOfVideo = true;
-    }
 }
 
 void VideoFFmpegComponent::getProcessedFrames()
@@ -761,11 +754,7 @@ void VideoFFmpegComponent::outputFrames()
     // Process the audio frames that have a PTS value below mAccumulatedTime (plus a small
     // buffer to avoid underflows).
     while (!mAudioFrameQueue.empty()) {
-        std::unique_lock<std::mutex> audioLock(mAudioMutex);
-        auto accumulatedTime = mAccumulatedTime;
-        audioLock.unlock();
-
-        if (mAudioFrameQueue.front().pts < accumulatedTime + AUDIO_BUFFER) {
+        if (mAudioFrameQueue.front().pts < mAccumulatedTime + AUDIO_BUFFER) {
             // Enable only when needed, as this generates a lot of debug output.
             if (DEBUG_VIDEO) {
                 LOG(LogDebug) << "Processing audio frame with PTS: "
@@ -787,7 +776,7 @@ void VideoFFmpegComponent::outputFrames()
 
             if (outputSound) {
                 // The audio is output to AudioManager from updatePlayer() in the main thread.
-                audioLock.lock();
+                std::unique_lock<std::mutex> audioLock(mAudioMutex);
 
                 mOutputAudio.insert(mOutputAudio.end(),
                                     mAudioFrameQueue.front().resampledData.begin(),
@@ -803,19 +792,11 @@ void VideoFFmpegComponent::outputFrames()
         }
     }
 
-    std::unique_lock<std::mutex> playerLock(mPlayerMutex);
-    bool isActuallyPlaying = mIsActuallyPlaying;
-    playerLock.unlock();
-
     // Process all available video frames that have a PTS value below mAccumulatedTime.
     // But if more than one frame is processed here, it means that the computer can't
     // keep up for some reason.
-    while (isActuallyPlaying && !mVideoFrameQueue.empty()) {
-        std::unique_lock<std::mutex> audioLock(mAudioMutex);
-        double accumulatedTime = mAccumulatedTime;
-        audioLock.unlock();
-
-        if (mVideoFrameQueue.front().pts < accumulatedTime) {
+    while (mIsActuallyPlaying && !mVideoFrameQueue.empty()) {
+        if (mVideoFrameQueue.front().pts < mAccumulatedTime) {
             // Enable only when needed, as this generates a lot of debug output.
             if (DEBUG_VIDEO) {
                 LOG(LogDebug) << "Processing video frame with PTS: "
@@ -843,7 +824,7 @@ void VideoFFmpegComponent::outputFrames()
             // can't keep up. This approach primarily decreases stuttering for videos with frame
             // rates close to, or at, the rendering frame rate, for example 59.94 and 60 FPS.
             if (mDecodedFrame && !mOutputPicture.hasBeenRendered) {
-                double timeDifference = accumulatedTime - mVideoFrameQueue.front().pts -
+                double timeDifference = mAccumulatedTime - mVideoFrameQueue.front().pts -
                                         mVideoFrameQueue.front().frameDuration * 2.0l;
                 if (timeDifference < mVideoFrameQueue.front().frameDuration) {
                     pictureLock.unlock();
@@ -1408,13 +1389,11 @@ void VideoFFmpegComponent::startVideo()
 
 void VideoFFmpegComponent::stopVideo()
 {
-    std::unique_lock<std::mutex> playerLock(mPlayerMutex);
     mIsPlaying = false;
     mIsActuallyPlaying = false;
     mStartDelayed = false;
     mPause = false;
     mEndOfVideo = false;
-    playerLock.unlock();
     mTexture.reset();
 
     if (mFrameProcessingThread) {
@@ -1459,11 +1438,7 @@ void VideoFFmpegComponent::pauseVideo()
 
 void VideoFFmpegComponent::handleLooping()
 {
-    std::unique_lock<std::mutex> playerLock(mPlayerMutex);
-    bool endOfVideo = mEndOfVideo;
-    playerLock.unlock();
-
-    if (mIsPlaying && endOfVideo) {
+    if (mIsPlaying && mEndOfVideo) {
         // If the screensaver video swap time is set to 0, it means we should
         // skip to the next game when the video has finished playing.
         if (mScreensaverMode &&

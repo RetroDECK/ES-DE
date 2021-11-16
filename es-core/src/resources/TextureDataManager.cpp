@@ -161,10 +161,11 @@ TextureLoader::~TextureLoader()
     std::unique_lock<std::mutex> lock(mMutex);
     mTextureDataQ.clear();
     mTextureDataLookup.clear();
+    lock.unlock();
 
     // Exit the thread.
     mExit = true;
-    lock.unlock();
+
     mEvent.notify_one();
     mThread->join();
     mThread.reset();
@@ -172,9 +173,7 @@ TextureLoader::~TextureLoader()
 
 void TextureLoader::threadProc()
 {
-    bool exit = false;
-
-    while (!exit) {
+    while (!mExit) {
         std::shared_ptr<TextureData> textureData;
         {
             // Wait for an event to say there is something in the queue.
@@ -199,7 +198,6 @@ void TextureLoader::threadProc()
                 mTextureDataLookup.erase(mTextureDataLookup.find(textureData.get()));
             }
         }
-        exit = mExit;
     }
 }
 

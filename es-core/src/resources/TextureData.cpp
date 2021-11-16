@@ -179,9 +179,7 @@ bool TextureData::load()
         const ResourceData& data = rm->getFileData(mPath);
         // Is it an SVG?
         if (Utils::String::toLower(mPath.substr(mPath.size() - 4, std::string::npos)) == ".svg") {
-            std::unique_lock<std::mutex> lock(mMutex);
             mScalable = true;
-            lock.unlock();
             std::string dataString;
             dataString.assign(std::string(reinterpret_cast<char*>(data.ptr.get()), data.length));
             retval = initSVGFromMemory(dataString);
@@ -285,11 +283,7 @@ float TextureData::sourceHeight()
 
 void TextureData::setSourceSize(float width, float height)
 {
-    std::unique_lock<std::mutex> lock(mMutex);
-    bool scalable = mScalable;
-    lock.unlock();
-
-    if (scalable) {
+    if (mScalable) {
         if ((mSourceWidth != width) || (mSourceHeight != height)) {
             mSourceWidth = width;
             mSourceHeight = height;

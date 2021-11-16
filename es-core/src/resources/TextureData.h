@@ -11,6 +11,7 @@
 
 #include "utils/MathUtil.h"
 
+#include <atomic>
 #include <cmath>
 #include <mutex>
 #include <string>
@@ -79,7 +80,7 @@ private:
     int mHeight;
     float mSourceWidth;
     float mSourceHeight;
-    bool mScalable;
+    std::atomic<bool> mScalable;
     bool mLinearMagnify;
     bool mReloadable;
     bool mForceRasterization;

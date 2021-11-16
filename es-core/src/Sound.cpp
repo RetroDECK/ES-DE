@@ -151,16 +151,12 @@ void Sound::play()
 
     SDL_LockAudioDevice(AudioManager::sAudioDevice);
 
-    std::unique_lock<std::mutex> playerLock(mMutex);
-
     if (mPlaying)
         // Replay from start. rewind the sample to the beginning.
         mSamplePos = 0;
     else
         // Flag our sample as playing.
         mPlaying = true;
-
-    playerLock.unlock();
 
     SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
     // Tell the AudioManager to start playing samples.
@@ -171,7 +167,6 @@ void Sound::stop()
 {
     // Flag our sample as not playing and rewind its position.
     SDL_LockAudioDevice(AudioManager::sAudioDevice);
-    std::unique_lock<std::mutex> playerLock(mMutex);
     mPlaying = false;
     mSamplePos = 0;
     SDL_UnlockAudioDevice(AudioManager::sAudioDevice);
@@ -182,7 +177,6 @@ void Sound::setPosition(Uint32 newPosition)
     mSamplePos = newPosition;
     if (mSamplePos >= mSampleLength) {
         // Got to or beyond the end of the sample. stop playing.
-        std::unique_lock<std::mutex> playerLock(mMutex);
         mPlaying = false;
         mSamplePos = 0;
     }

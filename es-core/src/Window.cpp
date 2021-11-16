@@ -799,26 +799,14 @@ void Window::closeLaunchScreen()
     mRenderLaunchScreen = false;
 }
 
-void Window::increaseVideoPlayerCount()
-{
-    mVideoCountMutex.lock();
-    mVideoPlayerCount++;
-    mVideoCountMutex.unlock();
-}
+void Window::increaseVideoPlayerCount() { mVideoPlayerCount++; }
 
-void Window::decreaseVideoPlayerCount()
-{
-    mVideoCountMutex.lock();
-    mVideoPlayerCount--;
-    mVideoCountMutex.unlock();
-}
+void Window::decreaseVideoPlayerCount() { mVideoPlayerCount--; }
 
 int Window::getVideoPlayerCount()
 {
     int videoPlayerCount;
-    mVideoCountMutex.lock();
     videoPlayerCount = mVideoPlayerCount;
-    mVideoCountMutex.unlock();
     return videoPlayerCount;
 }
 

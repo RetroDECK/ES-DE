@@ -9,6 +9,7 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_DATA_MANAGER_H
 #define ES_CORE_RESOURCES_TEXTURE_DATA_MANAGER_H
 
+#include <atomic>
 #include <condition_variable>
 #include <list>
 #include <map>
@@ -41,7 +42,7 @@ private:
     std::unique_ptr<std::thread> mThread;
     std::mutex mMutex;
     std::condition_variable mEvent;
-    bool mExit;
+    std::atomic<bool> mExit;
 };
 
 //

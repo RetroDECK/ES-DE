@@ -10,8 +10,8 @@
 #define ES_CORE_AUDIO_MANAGER_H
 
 #include <SDL2/SDL_audio.h>
+#include <atomic>
 #include <memory>
-#include <mutex>
 #include <vector>
 
 class Sound;
@@ -36,16 +36,8 @@ public:
     void processStream(const void* samples, unsigned count);
     void clearStream();
 
-    void muteStream()
-    {
-        std::unique_lock<std::mutex> audioLock{mAudioLock};
-        sMuteStream = true;
-    }
-    void unmuteStream()
-    {
-        std::unique_lock<std::mutex> audioLock{mAudioLock};
-        sMuteStream = false;
-    }
+    void muteStream() { sMuteStream = true; }
+    void unmuteStream() { sMuteStream = false; }
 
     bool getHasAudioDevice() { return sHasAudioDevice; }
 
@@ -58,10 +50,9 @@ private:
     static void mixAudio(void* unused, Uint8* stream, int len);
     static void mixAudio2(void* unused, Uint8* stream, int len);
 
-    inline static std::mutex mAudioLock;
     inline static SDL_AudioStream* sConversionStream;
     inline static std::vector<std::shared_ptr<Sound>> sSoundVector;
-    inline static bool sMuteStream = false;
+    inline static std::atomic<bool> sMuteStream = false;
     inline static bool sHasAudioDevice = true;
 };
 

@@ -11,9 +11,9 @@
 #define ES_CORE_SOUND_H
 
 #include <SDL2/SDL_audio.h>
+#include <atomic>
 #include <map>
 #include <memory>
-#include <mutex>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -31,11 +31,7 @@ public:
     void loadFile(const std::string& path);
 
     void play();
-    bool isPlaying() const
-    {
-        std::unique_lock<std::mutex> playerLock(mMutex);
-        return mPlaying;
-    }
+    bool isPlaying() const { return mPlaying; }
     void stop();
 
     const Uint8* getData() const { return mSampleData; }
@@ -51,14 +47,13 @@ public:
 private:
     Sound(const std::string& path = "");
 
-    inline static std::mutex mMutex;
     static std::map<std::string, std::shared_ptr<Sound>> sMap;
     std::string mPath;
     SDL_AudioSpec mSampleFormat;
     Uint8* mSampleData;
     Uint32 mSamplePos;
     Uint32 mSampleLength;
-    bool mPlaying;
+    std::atomic<bool> mPlaying;
 };
 
 enum NavigationSoundsID {

@@ -23,6 +23,7 @@ extern "C" {
 #include <libavutil/imgutils.h>
 }
 
+#include <atomic>
 #include <chrono>
 #include <mutex>
 #include <queue>
@@ -161,10 +162,10 @@ private:
     int mVideoFrameReadCount;
     int mVideoFrameDroppedCount;
 
-    double mAccumulatedTime;
-    bool mStartTimeAccumulation;
-    bool mDecodedFrame;
-    bool mEndOfVideo;
+    std::atomic<double> mAccumulatedTime;
+    std::atomic<bool> mStartTimeAccumulation;
+    std::atomic<bool> mDecodedFrame;
+    std::atomic<bool> mEndOfVideo;
     bool mSWDecoder;
 };
 
