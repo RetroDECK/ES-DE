@@ -270,7 +270,7 @@ bool SystemData::populateFolder(FileData* folder)
         return false;
 
     for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
-         it != dirContent.cend(); it++) {
+         it != dirContent.cend(); ++it) {
         filePath = *it;
 
         // Skip any recursive symlinks as those would hang the application at various places.
@@ -350,7 +350,7 @@ void SystemData::indexAllGameFilters(const FileData* folder)
     const std::vector<FileData*>& children = folder->getChildren();
 
     for (std::vector<FileData*>::const_iterator it = children.cbegin(); // Line break.
-         it != children.cend(); it++) {
+         it != children.cend(); ++it) {
         switch ((*it)->getType()) {
             case GAME:
                 mFilterIndex->addToIndex(*it);
@@ -550,7 +550,7 @@ bool SystemData::loadConfig()
 
             std::vector<std::string> platformStrs = readList(platformList);
             std::vector<PlatformIds::PlatformId> platformIds;
-            for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); it++) {
+            for (auto it = platformStrs.cbegin(); it != platformStrs.cend(); ++it) {
                 std::string str = *it;
                 PlatformIds::PlatformId platformId = PlatformIds::getPlatformId(str);
 
@@ -623,7 +623,7 @@ bool SystemData::loadConfig()
                 std::vector<FileData*> recursiveGames =
                     newSys->getRootFolder()->getChildrenRecursive();
                 onlyHidden = true;
-                for (auto it = recursiveGames.cbegin(); it != recursiveGames.cend(); it++) {
+                for (auto it = recursiveGames.cbegin(); it != recursiveGames.cend(); ++it) {
                     if ((*it)->getType() != FOLDER) {
                         onlyHidden = (*it)->getHidden();
                         if (!onlyHidden)
@@ -668,7 +668,7 @@ std::string SystemData::getLaunchCommandFromLabel(const std::string& label)
 
 void SystemData::deleteSystems()
 {
-    for (unsigned int i = 0; i < sSystemVector.size(); i++)
+    for (unsigned int i = 0; i < sSystemVector.size(); ++i)
         delete sSystemVector.at(i);
 
     sSystemVector.clear();
@@ -896,7 +896,7 @@ bool SystemData::createSystemDirectories()
                 systemInfoFile << (commands.size() == 2 ? "Alternative launch command:" :
                                                           "Alternative launch commands:")
                                << std::endl;
-                for (auto it = commands.cbegin() + 1; it != commands.cend(); it++)
+                for (auto it = commands.cbegin() + 1; it != commands.cend(); ++it)
                     systemInfoFile << (*it) << std::endl;
                 systemInfoFile << std::endl;
             }
@@ -999,7 +999,7 @@ SystemData* SystemData::getNext() const
     // As we are starting in a valid gamelistview, this will
     // always succeed, even if we have to come full circle.
     do {
-        it++;
+        ++it;
         if (it == sSystemVector.cend())
             it = sSystemVector.cbegin();
     } while (!(*it)->isVisible());
@@ -1014,7 +1014,7 @@ SystemData* SystemData::getPrev() const
     // As we are starting in a valid gamelistview, this will
     // always succeed, even if we have to come full circle.
     do {
-        it++;
+        ++it;
         if (it == sSystemVector.crend())
             it = sSystemVector.crbegin();
     } while (!(*it)->isVisible());
@@ -1071,9 +1071,9 @@ std::string SystemData::getThemePath() const
 SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
 {
     unsigned int total = 0;
-    for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); it++) {
+    for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); ++it) {
         if ((*it)->isGameSystem())
-            total++;
+            ++total;
     }
 
     if (total < 2)
@@ -1089,10 +1089,10 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
         std::uniform_int_distribution<int> uniform_dist(0, total - 1);
         int target = uniform_dist(engine);
 
-        for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); it++) {
+        for (auto it = sSystemVector.cbegin(); it != sSystemVector.cend(); ++it) {
             if ((*it)->isGameSystem()) {
                 if (target > 0) {
-                    target--;
+                    --target;
                 }
                 else {
                     randomSystem = (*it);
@@ -1140,7 +1140,7 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
             if (gameList[i]->getType() == FOLDER)
                 gameList.erase(gameList.begin() + i);
             else
-                i++;
+                ++i;
         } while (i < gameList.size());
     }
 
@@ -1191,7 +1191,7 @@ void SystemData::sortSystem(bool reloadGamelist, bool jumpToFirstRow)
     // Assign the sort type to all grouped custom collections.
     if (mIsCollectionSystem && mFullName == "collections") {
         for (auto it = rootFolder->getChildren().begin(); // Line break.
-             it != rootFolder->getChildren().end(); it++) {
+             it != rootFolder->getChildren().end(); ++it) {
             setupSystemSortType((*it)->getSystem()->getRootFolder());
         }
     }
@@ -1262,7 +1262,7 @@ void SystemData::setupSystemSortType(FileData* rootFolder)
 {
     // If DefaultSortOrder is set to something, check that it is actually a valid value.
     if (Settings::getInstance()->getString("DefaultSortOrder") != "") {
-        for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
+        for (unsigned int i = 0; i < FileSorts::SortTypes.size(); ++i) {
             if (FileSorts::SortTypes.at(i).description ==
                 Settings::getInstance()->getString("DefaultSortOrder")) {
                 rootFolder->setSortTypeString(

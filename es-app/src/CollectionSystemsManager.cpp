@@ -65,7 +65,7 @@ CollectionSystemsManager::CollectionSystemsManager(Window* window)
         systemDecls, systemDecls + sizeof(systemDecls) / sizeof(systemDecls[0]));
 
     for (std::vector<CollectionSystemDecl>::const_iterator it = tempSystemDecl.cbegin();
-         it != tempSystemDecl.cend(); it++)
+         it != tempSystemDecl.cend(); ++it)
         mCollectionSystemDeclsIndex[(*it).name] = (*it);
 
     // Setup the standard environment.
@@ -101,7 +101,7 @@ CollectionSystemsManager::~CollectionSystemsManager()
     // Delete all custom collections.
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              mCustomCollectionSystemsData.cbegin();
-         it != mCustomCollectionSystemsData.cend(); it++)
+         it != mCustomCollectionSystemsData.cend(); ++it)
         delete it->second.system;
 
     // Delete the custom collections bundle.
@@ -110,7 +110,7 @@ CollectionSystemsManager::~CollectionSystemsManager()
 
     // Delete the auto collections systems.
     for (auto it = mAutoCollectionSystemsData.cbegin(); // Line break.
-         it != mAutoCollectionSystemsData.cend(); it++)
+         it != mAutoCollectionSystemsData.cend(); ++it)
         delete (*it).second.system;
 
     delete mCollectionEnvData;
@@ -176,7 +176,7 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
         configFileIn.close();
 
         for (std::unordered_map<std::string, FileData*>::const_iterator it = games.cbegin();
-             it != games.cend(); it++) {
+             it != games.cend(); ++it) {
             std::string path = it->first;
             // If the ROM path of the game begins with the path from the setting
             // ROMDirectory (or the default ROM directory), then replace it with %ROMPATH%.
@@ -199,7 +199,7 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
         configFileOut.open(getCustomCollectionConfigPath(name));
 #endif
 
-        for (auto it = fileGameEntries.cbegin(); it != fileGameEntries.cend(); it++)
+        for (auto it = fileGameEntries.cbegin(); it != fileGameEntries.cend(); ++it)
             configFileOut << (*it) << std::endl;
 
         configFileOut.close();
@@ -236,7 +236,7 @@ void CollectionSystemsManager::loadEnabledListFromSettings()
     // Iterate the map.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator it =
              mAutoCollectionSystemsData.begin();
-         it != mAutoCollectionSystemsData.end(); it++) {
+         it != mAutoCollectionSystemsData.end(); ++it) {
         it->second.isEnabled = (std::find(autoSelected.cbegin(), autoSelected.cend(), it->first) !=
                                 autoSelected.cend());
     }
@@ -250,7 +250,7 @@ void CollectionSystemsManager::loadEnabledListFromSettings()
     // Iterate the map.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator it =
              mCustomCollectionSystemsData.begin();
-         it != mCustomCollectionSystemsData.end(); it++) {
+         it != mCustomCollectionSystemsData.end(); ++it) {
         it->second.isEnabled = (std::find(customSelected.cbegin(), customSelected.cend(),
                                           it->first) != customSelected.cend());
         if (it->second.isEnabled)
@@ -281,7 +281,7 @@ void CollectionSystemsManager::updateSystemsList()
 
     // Create views for collections, before reload.
     for (auto sysIt = SystemData::sSystemVector.cbegin(); // Line break.
-         sysIt != SystemData::sSystemVector.cend(); sysIt++) {
+         sysIt != SystemData::sSystemVector.cend(); ++sysIt) {
         if ((*sysIt)->isCollection())
             ViewController::get()->getGameListView((*sysIt));
     }
@@ -317,7 +317,7 @@ void CollectionSystemsManager::refreshCollectionSystems(FileData* file,
                           mCustomCollectionSystemsData.cend());
 
     for (auto sysDataIt = allCollections.cbegin(); // Line break.
-         sysDataIt != allCollections.cend(); sysDataIt++) {
+         sysDataIt != allCollections.cend(); ++sysDataIt) {
         if (sysDataIt->second.isEnabled || (refreshDisabledAutoCollections &&
                                             !sysDataIt->second.system->isGroupedCustomCollection()))
             updateCollectionSystem(file, sysDataIt->second);
@@ -496,7 +496,7 @@ void CollectionSystemsManager::deleteCollectionFiles(FileData* file)
     allCollections.insert(mCustomCollectionSystemsData.cbegin(),
                           mCustomCollectionSystemsData.cend());
 
-    for (auto sysDataIt = allCollections.begin(); sysDataIt != allCollections.end(); sysDataIt++) {
+    for (auto sysDataIt = allCollections.begin(); sysDataIt != allCollections.end(); ++sysDataIt) {
         if (sysDataIt->second.isPopulated) {
             const std::unordered_map<std::string, FileData*>& children =
                 (sysDataIt->second.system)->getRootFolder()->getChildrenByFilename();
@@ -520,7 +520,7 @@ const bool CollectionSystemsManager::isThemeGenericCollectionCompatible(
     bool genericCustomCollections)
 {
     std::vector<std::string> cfgSys = getCollectionThemeFolders(genericCustomCollections);
-    for (auto sysIt = cfgSys.cbegin(); sysIt != cfgSys.cend(); sysIt++) {
+    for (auto sysIt = cfgSys.cbegin(); sysIt != cfgSys.cend(); ++sysIt) {
         if (!themeFolderExists(*sysIt))
             return false;
     }
@@ -542,7 +542,7 @@ const bool CollectionSystemsManager::isThemeCustomCollectionCompatible(
             return true;
     }
 
-    for (auto sysIt = stringVector.cbegin(); sysIt != stringVector.cend(); sysIt++) {
+    for (auto sysIt = stringVector.cbegin(); sysIt != stringVector.cend(); ++sysIt) {
         if (!themeFolderExists(*sysIt))
             return false;
     }
@@ -591,7 +591,7 @@ std::string CollectionSystemsManager::getValidNewCollectionName(const std::strin
     systemsInUse.insert(systemsInUse.cend(), customSys.cbegin(), customSys.cend());
     systemsInUse.insert(systemsInUse.cend(), userSys.cbegin(), userSys.cend());
 
-    for (auto sysIt = systemsInUse.cbegin(); sysIt != systemsInUse.cend(); sysIt++) {
+    for (auto sysIt = systemsInUse.cbegin(); sysIt != systemsInUse.cend(); ++sysIt) {
         if (*sysIt == name) {
             if (index > 0)
                 name = name.substr(0, name.size() - 4);
@@ -639,7 +639,7 @@ void CollectionSystemsManager::exitEditMode(bool showPopup)
     mEditingCollection = "Favorites";
 
     // Remove all tick marks from the games that are part of the collection.
-    for (auto it = SystemData::sSystemVector.begin(); it != SystemData::sSystemVector.end(); it++) {
+    for (auto it = SystemData::sSystemVector.begin(); it != SystemData::sSystemVector.end(); ++it) {
         ViewController::get()->getGameListView((*it))->onFileChanged(
             ViewController::get()->getGameListView((*it))->getCursor(), false);
     }
@@ -796,7 +796,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         std::mt19937 engine{randDev()};
         unsigned int target;
 
-        for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int i = 0; i < 3; ++i) {
             std::uniform_int_distribution<int> uniform_dist(0, gameCount - 1 - i);
             target = uniform_dist(engine);
             gamesListRandom.push_back(gamesList[target]);
@@ -900,7 +900,7 @@ std::vector<std::string> CollectionSystemsManager::getUnusedSystemsFromTheme()
         if (std::find(systemsInUse.cbegin(), systemsInUse.cend(), *sysIt) != systemsInUse.cend())
             sysIt = themeSys.erase(sysIt);
         else
-            sysIt++;
+            ++sysIt;
     }
     return themeSys;
 }
@@ -963,7 +963,7 @@ void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
     // game would be missing if the collection was enabled during the program session.
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              mCustomCollectionSystemsData.cbegin();
-         it != mCustomCollectionSystemsData.cend(); it++) {
+         it != mCustomCollectionSystemsData.cend(); ++it) {
         std::string path = getCustomCollectionConfigPath(it->first);
         if (Utils::FileSystem::exists(path)) {
 #if defined(_WIN64)
@@ -987,7 +987,7 @@ void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
 void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
 {
     for (auto it = mAutoCollectionSystemsData.cbegin(); // Line break.
-         it != mAutoCollectionSystemsData.cend(); it++) {
+         it != mAutoCollectionSystemsData.cend(); ++it) {
         if ((*it).second.system == sysData) {
             LOG(LogDebug) << "CollectionSystemsManager::repopulateCollection(): "
                              "Repopulating auto collection \""
@@ -1034,7 +1034,7 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
     }
 
     for (auto it = mCustomCollectionSystemsData.cbegin(); // Line break.
-         it != mCustomCollectionSystemsData.cend(); it++) {
+         it != mCustomCollectionSystemsData.cend(); ++it) {
         if ((*it).second.system == sysData) {
             LOG(LogDebug) << "CollectionSystemsManager::repopulateCollection(): "
                              "Repopulating custom collection '"
@@ -1068,7 +1068,7 @@ void CollectionSystemsManager::initAutoCollectionSystems()
 {
     for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator it =
              mCollectionSystemDeclsIndex.cbegin();
-         it != mCollectionSystemDeclsIndex.cend(); it++) {
+         it != mCollectionSystemDeclsIndex.cend(); ++it) {
         CollectionSystemDecl sysDecl = it->second;
 
         if (!sysDecl.isCustom)
@@ -1079,7 +1079,7 @@ void CollectionSystemsManager::initAutoCollectionSystems()
 void CollectionSystemsManager::initCustomCollectionSystems()
 {
     std::vector<std::string> systems = getCollectionsFromConfigFolder();
-    for (auto nameIt = systems.cbegin(); nameIt != systems.cend(); nameIt++) {
+    for (auto nameIt = systems.cbegin(); nameIt != systems.cend(); ++nameIt) {
         addNewCustomCollection(*nameIt);
     }
 }
@@ -1124,11 +1124,11 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
     FileData* rootFolder = newSys->getRootFolder();
     FileFilterIndex* index = newSys->getIndex();
     for (auto sysIt = SystemData::sSystemVector.cbegin(); // Line break.
-         sysIt != SystemData::sSystemVector.cend(); sysIt++) {
+         sysIt != SystemData::sSystemVector.cend(); ++sysIt) {
         // We won't iterate all collections.
         if ((*sysIt)->isGameSystem() && !(*sysIt)->isCollection()) {
             std::vector<FileData*> files = (*sysIt)->getRootFolder()->getFilesRecursive(GAME);
-            for (auto gameIt = files.cbegin(); gameIt != files.cend(); gameIt++) {
+            for (auto gameIt = files.cbegin(); gameIt != files.cend(); ++gameIt) {
                 bool include = includeFileInAutoCollections((*gameIt));
 
                 switch (sysDecl.type) {
@@ -1256,14 +1256,14 @@ void CollectionSystemsManager::removeCollectionsFromDisplayedSystems()
         if ((*sysIt)->isCollection())
             sysIt = SystemData::sSystemVector.erase(sysIt);
         else
-            sysIt++;
+            ++sysIt;
     }
 
     // Remove all custom collections in bundle.
     // This should not delete the objects from memory!
     FileData* customRoot = mCustomCollectionsBundle->getRootFolder();
     std::vector<FileData*> mChildren = customRoot->getChildren();
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
         customRoot->removeChild(*it);
     }
     // Clear index.
@@ -1278,7 +1278,7 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
     // Add auto enabled collections.
     for (std::map<std::string, CollectionSystemData, stringComparator>::iterator it =
              colSystemData->begin();
-         it != colSystemData->end(); it++) {
+         it != colSystemData->end(); ++it) {
         if (it->second.isEnabled) {
             // Check if populated, otherwise populate.
             if (!it->second.isPopulated) {
@@ -1383,7 +1383,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromTheme()
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(themePath);
 
         for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
-             it != dirContent.cend(); it++) {
+             it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isDirectory(*it)) {
                 // ... here you have a directory.
                 std::string folder = *it;
@@ -1406,7 +1406,7 @@ std::vector<std::string> CollectionSystemsManager::getCollectionsFromConfigFolde
     if (Utils::FileSystem::exists(configPath)) {
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(configPath);
         for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
-             it != dirContent.cend(); it++) {
+             it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isRegularFile(*it)) {
                 // It's a file.
                 std::string filename = Utils::FileSystem::getFileName(*it);
@@ -1431,7 +1431,7 @@ std::vector<std::string> CollectionSystemsManager::getCollectionThemeFolders(boo
     std::vector<std::string> systems;
     for (std::map<std::string, CollectionSystemDecl, stringComparator>::const_iterator it =
              mCollectionSystemDeclsIndex.cbegin();
-         it != mCollectionSystemDeclsIndex.cend(); it++) {
+         it != mCollectionSystemDeclsIndex.cend(); ++it) {
         CollectionSystemDecl sysDecl = it->second;
         if (sysDecl.isCustom == custom)
             systems.push_back(sysDecl.themeFolder);
@@ -1444,7 +1444,7 @@ std::vector<std::string> CollectionSystemsManager::getUserCollectionThemeFolders
     std::vector<std::string> systems;
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              mCustomCollectionSystemsData.cbegin();
-         it != mCustomCollectionSystemsData.cend(); it++)
+         it != mCustomCollectionSystemsData.cend(); ++it)
         systems.push_back(it->second.decl.themeFolder);
     return systems;
 }

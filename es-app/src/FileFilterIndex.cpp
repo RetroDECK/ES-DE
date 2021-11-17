@@ -93,10 +93,10 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
         indexStructDecls + sizeof(indexStructDecls) / sizeof(indexStructDecls[0]));
 
     for (std::vector<IndexImportStructure>::const_iterator indexesIt = indexImportDecl.cbegin();
-         indexesIt != indexImportDecl.cend(); indexesIt++) {
+         indexesIt != indexImportDecl.cend(); ++indexesIt) {
         for (std::map<std::string, int>::const_iterator sourceIt =
                  (*indexesIt).sourceIndex->cbegin();
-             sourceIt != (*indexesIt).sourceIndex->cend(); sourceIt++) {
+             sourceIt != (*indexesIt).sourceIndex->cend(); ++sourceIt) {
             if ((*indexesIt).destinationIndex->find((*sourceIt).first) ==
                 (*indexesIt).destinationIndex->cend()) {
                 // Entry doesn't exist.
@@ -289,13 +289,13 @@ void FileFilterIndex::setFilter(FilterIndexType type, std::vector<std::string>* 
     }
     else {
         for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
-             it != filterDataDecl.cend(); it++) {
+             it != filterDataDecl.cend(); ++it) {
             if ((*it).type == type) {
                 FilterDataDecl filterData = (*it);
                 *(filterData.filteredByRef) = values->size() > 0;
                 filterData.currentFilteredKeys->clear();
                 for (std::vector<std::string>::const_iterator vit = values->cbegin();
-                     vit != values->cend(); vit++) {
+                     vit != values->cend(); ++vit) {
                     // Check if it exists.
                     if (filterData.allIndexKeys->find(*vit) != filterData.allIndexKeys->cend()) {
                         filterData.currentFilteredKeys->push_back(std::string(*vit));
@@ -320,7 +320,7 @@ void FileFilterIndex::setTextFilter(std::string textFilter)
 void FileFilterIndex::clearAllFilters()
 {
     for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
-         it != filterDataDecl.cend(); it++) {
+         it != filterDataDecl.cend(); ++it) {
         FilterDataDecl filterData = (*it);
         *(filterData.filteredByRef) = false;
         filterData.currentFilteredKeys->clear();
@@ -393,7 +393,7 @@ bool FileFilterIndex::showFile(FileData* game)
         std::vector<FileData*> children = game->getChildren();
         // Iterate through all of the children, until there's a match.
         for (std::vector<FileData*>::const_iterator it = children.cbegin(); it != children.cend();
-             it++) {
+             ++it) {
             if (showFile(*it))
                 return true;
         }
@@ -422,7 +422,7 @@ bool FileFilterIndex::showFile(FileData* game)
         nameMatch = true;
 
     for (std::vector<FilterDataDecl>::const_iterator it = filterDataDecl.cbegin();
-         it != filterDataDecl.cend(); it++) {
+         it != filterDataDecl.cend(); ++it) {
         FilterDataDecl filterData = (*it);
         if (filterData.primaryKey == "kidgame" && UIModeController::getInstance()->isUIModeKid()) {
             return (getIndexableKey(game, filterData.type, false) != "FALSE");
@@ -482,10 +482,10 @@ bool FileFilterIndex::isKeyBeingFilteredBy(std::string key, FilterIndexType type
         mCompletedIndexFilteredKeys, mKidGameIndexFilteredKeys,    mHiddenIndexFilteredKeys,
         mBrokenIndexFilteredKeys,    mControllerIndexFilteredKeys, mAltemulatorIndexFilteredKeys};
 
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 12; ++i) {
         if (filterTypes[i] == type) {
             for (std::vector<std::string>::const_iterator it = filterKeysList[i].cbegin();
-                 it != filterKeysList[i].cend(); it++) {
+                 it != filterKeysList[i].cend(); ++it) {
                 if (key == (*it))
                     return true;
             }

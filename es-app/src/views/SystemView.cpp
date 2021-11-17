@@ -644,7 +644,7 @@ void SystemView::renderCarousel(const glm::mat4& trans)
     }
 
     for (int i = center - logoCount / 2 + bufferLeft; // Line break.
-         i <= center + logoCount / 2 + bufferRight; i++) {
+         i <= center + logoCount / 2 + bufferRight; ++i) {
         int index = i;
 
         while (index < 0)
@@ -709,7 +709,7 @@ void SystemView::renderExtras(const glm::mat4& trans, float lower, float upper)
                            glm::ivec2{static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
 
     for (int i = extrasCenter + logoBuffersLeft[bufferIndex];
-         i <= extrasCenter + logoBuffersRight[bufferIndex]; i++) {
+         i <= extrasCenter + logoBuffersRight[bufferIndex]; ++i) {
         int index = i;
         while (index < 0)
             index += static_cast<int>(mEntries.size());
@@ -730,7 +730,7 @@ void SystemView::renderExtras(const glm::mat4& trans, float lower, float upper)
                 glm::ivec2{static_cast<int>(extrasTrans[3].x), static_cast<int>(extrasTrans[3].y)},
                 glm::ivec2{static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
             SystemViewData data = mEntries.at(index).data;
-            for (unsigned int j = 0; j < data.backgroundExtras.size(); j++) {
+            for (unsigned int j = 0; j < data.backgroundExtras.size(); ++j) {
                 GuiComponent* extra = data.backgroundExtras[j];
                 if (extra->getZIndex() >= lower && extra->getZIndex() < upper)
                     extra->render(extrasTrans);

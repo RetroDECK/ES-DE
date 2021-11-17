@@ -72,7 +72,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
     mList.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());
     if (files.size() > 0) {
-        for (auto it = files.cbegin(); it != files.cend(); it++) {
+        for (auto it = files.cbegin(); it != files.cend(); ++it) {
             if (!mFirstGameEntry && (*it)->getType() == GAME)
                 mFirstGameEntry = (*it);
             // Add a leading tick mark icon to the game name if it's part of the custom collection

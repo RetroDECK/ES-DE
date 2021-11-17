@@ -762,7 +762,7 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
             red += screenshotImage(c, r, 0, 0);
             green += screenshotImage(c, r, 0, 1);
             blue += screenshotImage(c, r, 0, 2);
-            counter++;
+            ++counter;
         }
 
         if (counter > 0) {

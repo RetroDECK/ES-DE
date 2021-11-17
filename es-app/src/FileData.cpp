@@ -140,7 +140,7 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
 {
     std::vector<FileData*> childrenRecursive;
 
-    for (auto it = mChildrenByFilename.cbegin(); it != mChildrenByFilename.cend(); it++) {
+    for (auto it = mChildrenByFilename.cbegin(); it != mChildrenByFilename.cend(); ++it) {
         childrenRecursive.emplace_back((*it).second);
         // Recurse through any subdirectories.
         if ((*it).second->getType() == FOLDER) {
@@ -221,7 +221,7 @@ const std::string FileData::getMediafilePath(const std::string& subdirectory) co
                                  subFolders + "/" + getDisplayName();
 
     // Look for an image file in the media directory.
-    for (size_t i = 0; i < extList.size(); i++) {
+    for (size_t i = 0; i < extList.size(); ++i) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -319,7 +319,7 @@ const std::string FileData::getVideoPath() const
         getMediaDirectory() + mSystemName + "/videos" + subFolders + "/" + getDisplayName();
 
     // Look for media in the media directory.
-    for (size_t i = 0; i < extList.size(); i++) {
+    for (size_t i = 0; i < extList.size(); ++i) {
         std::string mediaPath = tempPath + extList[i];
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -333,7 +333,7 @@ const std::vector<FileData*>& FileData::getChildrenListToDisplay()
     FileFilterIndex* idx = mSystem->getIndex();
     if (idx->isFiltered() || UIModeController::getInstance()->isUIModeKid()) {
         mFilteredChildren.clear();
-        for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+        for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
             if (idx->showFile((*it))) {
                 mFilteredChildren.emplace_back(*it);
             }
@@ -352,7 +352,7 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
     std::vector<FileData*> out;
     FileFilterIndex* idx = mSystem->getIndex();
 
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
         if ((*it)->getType() & typeMask) {
             if (!displayedOnly || !idx->isFiltered() || idx->showFile(*it)) {
                 if (countAllGames)
@@ -367,7 +367,7 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
                 out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
             }
             else {
-                for (auto it2 = subChildren.cbegin(); it2 != subChildren.cend(); it2++) {
+                for (auto it2 = subChildren.cbegin(); it2 != subChildren.cend(); ++it2) {
                     if ((*it2)->getCountAsGame())
                         out.emplace_back(*it2);
                 }
@@ -384,7 +384,7 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
 {
     std::vector<FileData*> out;
 
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
         if (includeFolders && (*it)->getType() == FOLDER) {
             if (!(respectExclusions && (*it)->getExcludeFromScraper()))
                 out.emplace_back(*it);
@@ -443,7 +443,7 @@ void FileData::removeChild(FileData* file)
     assert(mType == FOLDER);
     assert(file->getParent() == this);
     mChildrenByFilename.erase(file->getKey());
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
         if (*it == file) {
             file->mParent = nullptr;
             mChildren.erase(it);
@@ -484,7 +484,7 @@ void FileData::sort(ComparisonFunction& comparator,
                      !(*it)->getSystem()->isGroupedCustomCollection())
                 it = mChildren.erase(it);
             else
-                it++;
+                ++it;
         }
     }
 
@@ -492,7 +492,7 @@ void FileData::sort(ComparisonFunction& comparator,
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
         std::pair<unsigned int, unsigned int> tempGameCount = {};
-        for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+        for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
             if ((*it)->getChildren().size() > 0)
                 (*it)->sort(comparator, gameCount);
             tempGameCount.first += gameCount.first;
@@ -504,7 +504,7 @@ void FileData::sort(ComparisonFunction& comparator,
     }
 
     if (foldersOnTop) {
-        for (unsigned int i = 0; i < mChildren.size(); i++) {
+        for (unsigned int i = 0; i < mChildren.size(); ++i) {
             if (mChildren[i]->getType() == FOLDER) {
                 mChildrenFolders.emplace_back(mChildren[i]);
             }
@@ -545,13 +545,13 @@ void FileData::sort(ComparisonFunction& comparator,
         std::stable_sort(mChildren.begin(), mChildren.end(), comparator);
     }
 
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
         // Game count, which will be displayed in the system view.
         if ((*it)->getType() == GAME && (*it)->getCountAsGame()) {
             if (!isKidMode || (isKidMode && (*it)->getKidgame())) {
-                gameCount.first++;
+                ++gameCount.first;
                 if ((*it)->getFavorite())
-                    gameCount.second++;
+                    ++gameCount.second;
             }
         }
 
@@ -589,7 +589,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
         std::pair<unsigned int, unsigned int> tempGameCount = {};
-        for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+        for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
             if ((*it)->getChildren().size() > 0)
                 (*it)->sortFavoritesOnTop(comparator, gameCount);
             tempGameCount.first += gameCount.first;
@@ -600,7 +600,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
         return;
     }
 
-    for (unsigned int i = 0; i < mChildren.size(); i++) {
+    for (unsigned int i = 0; i < mChildren.size(); ++i) {
         // If the option to hide hidden games has been set and the game is hidden,
         // then skip it. Normally games are hidden during loading of the gamelists in
         // Gamelist::parseGamelist() and this code should only run when a user has marked
@@ -615,9 +615,9 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
         // Game count, which will be displayed in the system view.
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
             if (!isKidMode || (isKidMode && mChildren[i]->getKidgame())) {
-                gameCount.first++;
+                ++gameCount.first;
                 if (mChildren[i]->getFavorite())
-                    gameCount.second++;
+                    ++gameCount.second;
             }
         }
 
@@ -681,13 +681,13 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
 
     // Iterate through any child favorite folders.
     for (auto it = mChildrenFavoritesFolders.cbegin(); // Line break.
-         it != mChildrenFavoritesFolders.cend(); it++) {
+         it != mChildrenFavoritesFolders.cend(); ++it) {
         if ((*it)->getChildren().size() > 0)
             (*it)->sortFavoritesOnTop(comparator, gameCount);
     }
 
     // Iterate through any child folders.
-    for (auto it = mChildrenFolders.cbegin(); it != mChildrenFolders.cend(); it++) {
+    for (auto it = mChildrenFolders.cbegin(); it != mChildrenFolders.cend(); ++it) {
         if ((*it)->getChildren().size() > 0)
             (*it)->sortFavoritesOnTop(comparator, gameCount);
     }
@@ -696,7 +696,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     // could be empty. So due to this, step through all mChildren and see if there are
     // any folders that we need to iterate.
     if (mChildrenFavoritesFolders.size() == 0 && mChildrenFolders.size() == 0) {
-        for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++) {
+        for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
             if ((*it)->getChildren().size() > 0)
                 (*it)->sortFavoritesOnTop(comparator, gameCount);
         }
@@ -731,12 +731,12 @@ void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
     (Settings::getInstance()->getString("UIMode") == "kid" ||
      Settings::getInstance()->getBool("ForceKid"));
 
-    for (unsigned int i = 0; i < mChildren.size(); i++) {
+    for (unsigned int i = 0; i < mChildren.size(); ++i) {
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
             if (!isKidMode || (isKidMode && mChildren[i]->getKidgame())) {
-                gameCount.first++;
+                ++gameCount.first;
                 if (mChildren[i]->getFavorite())
-                    gameCount.second++;
+                    ++gameCount.second;
             }
         }
         // Iterate through any folders.
@@ -750,7 +750,7 @@ const FileData::SortType& FileData::getSortTypeFromString(const std::string& des
 {
     std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
 
-    for (unsigned int i = 0; i < FileSorts::SortTypes.size(); i++) {
+    for (unsigned int i = 0; i < FileSorts::SortTypes.size(); ++i) {
         const FileData::SortType& sort = FileSorts::SortTypes.at(i);
         if (sort.description == desc)
             return sort;
@@ -936,7 +936,7 @@ void FileData::launchGame(Window* window)
             else {
                 if (hasQuotationMark) {
                     command = command.replace(emuPathPos + quotationMarkPos, 1, "");
-                    emuPathPos--;
+                    --emuPathPos;
                     command = command.replace(emuPathPos, 1, "");
                 }
                 coreFile = Utils::FileSystem::getEscapedPath(coreFile);

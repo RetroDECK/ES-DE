@@ -42,7 +42,7 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
     screensavers.push_back("black");
     screensavers.push_back("slideshow");
     screensavers.push_back("video");
-    for (auto it = screensavers.cbegin(); it != screensavers.cend(); it++)
+    for (auto it = screensavers.cbegin(); it != screensavers.cend(); ++it)
         screensaver_type->add(*it, *it,
                               Settings::getInstance()->getString("ScreensaverType") == *it);
     addWithLabel("SCREENSAVER TYPE", screensaver_type);

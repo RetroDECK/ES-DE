@@ -91,8 +91,8 @@ MetaDataList::MetaDataList(MetaDataListType type)
     , mWasChanged(false)
 {
     const std::vector<MetaDataDecl>& mdd = getMDD();
-    for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++)
-        set(iter->key, iter->defaultValue);
+    for (auto it = mdd.cbegin(); it != mdd.cend(); ++it)
+        set(it->key, it->defaultValue);
 }
 
 MetaDataList MetaDataList::createFromXML(MetaDataListType type,
@@ -103,17 +103,17 @@ MetaDataList MetaDataList::createFromXML(MetaDataListType type,
 
     const std::vector<MetaDataDecl>& mdd = mdl.getMDD();
 
-    for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
-        pugi::xml_node md = node.child(iter->key.c_str());
+    for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
+        pugi::xml_node md = node.child(it->key.c_str());
         if (md && !md.text().empty()) {
             // If it's a path, resolve relative paths.
             std::string value = md.text().get();
-            if (iter->type == MD_PATH)
+            if (it->type == MD_PATH)
                 value = Utils::FileSystem::resolveRelativePath(value, relativeTo, true);
-            mdl.set(iter->key, value);
+            mdl.set(it->key, value);
         }
         else {
-            mdl.set(iter->key, iter->defaultValue);
+            mdl.set(it->key, it->defaultValue);
         }
     }
     return mdl;
@@ -125,17 +125,17 @@ void MetaDataList::appendToXML(pugi::xml_node& parent,
 {
     const std::vector<MetaDataDecl>& mdd = getMDD();
 
-    for (auto mddIter = mdd.cbegin(); mddIter != mdd.cend(); mddIter++) {
-        auto mapIter = mMap.find(mddIter->key);
+    for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
+        auto mapIter = mMap.find(it->key);
         if (mapIter != mMap.cend()) {
             // We have this value!
             // If it's just the default (and we ignore defaults), don't write it.
-            if (ignoreDefaults && mapIter->second == mddIter->defaultValue)
+            if (ignoreDefaults && mapIter->second == it->defaultValue)
                 continue;
 
             // Try and make paths relative if we can.
             std::string value = mapIter->second;
-            if (mddIter->type == MD_PATH)
+            if (it->type == MD_PATH)
                 value = Utils::FileSystem::createRelativePath(value, relativeTo, true);
 
             parent.append_child(mapIter->first.c_str()).text().set(value.c_str());

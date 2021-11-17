@@ -177,7 +177,7 @@ bool parseArgs(int argc, char* argv[])
 
     // We need to process --home before any call to Settings::getInstance(),
     // because settings are loaded from the home path.
-    for (int i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "--home") == 0) {
             if (i >= argc - 1) {
                 std::cerr << "Error: No home path supplied with \'--home'\n";
@@ -202,10 +202,10 @@ bool parseArgs(int argc, char* argv[])
         }
     }
 
-    for (int i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; ++i) {
         // Skip past --home flag as we already processed it.
         if (strcmp(argv[i], "--home") == 0) {
-            i++; // Skip the argument value.
+            ++i; // Skip the argument value.
             continue;
         }
         if (strcmp(argv[i], "--display") == 0) {
@@ -216,7 +216,7 @@ bool parseArgs(int argc, char* argv[])
             int DisplayIndex = atoi(argv[i + 1]);
             Settings::getInstance()->setInt("DisplayIndex", DisplayIndex);
             settingsNeedSaving = true;
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "--resolution") == 0) {
             if (i >= argc - 2) {
@@ -271,7 +271,7 @@ bool parseArgs(int argc, char* argv[])
             }
             int rotate = atoi(argv[i + 1]);
             Settings::getInstance()->setInt("ScreenRotate", rotate);
-            i++;
+            ++i;
         }
         // On Unix, enable settings for the fullscreen mode.
         // On macOS and Windows only windowed mode is supported.
@@ -302,7 +302,7 @@ bool parseArgs(int argc, char* argv[])
             }
             bool vSync = (vSyncValue == "on" || vSyncValue == "1") ? true : false;
             Settings::getInstance()->setBool("VSync", vSync);
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "--max-vram") == 0) {
             if (i >= argc - 1) {
@@ -312,7 +312,7 @@ bool parseArgs(int argc, char* argv[])
             int maxVRAM = atoi(argv[i + 1]);
             Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
             settingsNeedSaving = true;
-            i++;
+            ++i;
         }
         else if (strcmp(argv[i], "--no-splash") == 0) {
             Settings::getInstance()->setBool("SplashScreen", false);

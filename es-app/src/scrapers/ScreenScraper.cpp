@@ -195,7 +195,7 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
     std::vector<unsigned short> p_ids;
 
     // Get the IDs of each platform from the ScreenScraper list.
-    for (auto platformIt = platforms.cbegin(); platformIt != platforms.cend(); platformIt++) {
+    for (auto platformIt = platforms.cbegin(); platformIt != platforms.cend(); ++platformIt) {
         auto mapIt = screenscraper_platformid_map.find(*platformIt);
 
         if (mapIt != screenscraper_platformid_map.cend()) {
@@ -222,7 +222,7 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
     auto last = std::unique(p_ids.begin(), p_ids.end());
     p_ids.erase(last, p_ids.end());
 
-    for (auto platform = p_ids.cbegin(); platform != p_ids.cend(); platform++) {
+    for (auto platform = p_ids.cbegin(); platform != p_ids.cend(); ++platform) {
         path += "&systemeid=";
         path += HttpReq::urlEncode(std::to_string(*platform));
         requests.push(
@@ -266,7 +266,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
     // returned instead of a valid game name, and retrying a second time returns the proper
     // name. But it's basically impossible to know which is the case, and we really can't
     // compensate for errors in the scraper service.
-    for (auto it = results.cbegin(); it != results.cend(); it++) {
+    for (auto it = results.cbegin(); it != results.cend(); ++it) {
         std::string gameName = Utils::String::toUpper((*it).mdl.get("name"));
         if (gameName.substr(0, 12) == "ZZZ(NOTGAME)") {
             LOG(LogWarning) << "ScreenScraperRequest - Received \"ZZZ(notgame)\" as game name, "
@@ -637,7 +637,7 @@ void ScreenScraperRequest::processList(const pugi::xml_document& xmldoc,
     // Otherwise if the first platform returns >= 7 games
     // but the second platform contains the relevant game,
     // the relevant result would not be shown.
-    for (int i = 0; game && i < MAX_SCRAPER_RESULTS; i++) {
+    for (int i = 0; game && i < MAX_SCRAPER_RESULTS; ++i) {
         std::string id = game.child("id").text().get();
         std::string name = game.child("nom").text().get();
         std::string platformId = game.child("systemeid").text().get();

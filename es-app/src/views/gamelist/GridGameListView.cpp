@@ -217,7 +217,7 @@ void GridGameListView::populateList(const std::vector<FileData*>& files, FileDat
     mGrid.clear();
     mHeaderText.setText(mRoot->getSystem()->getFullName());
     if (files.size() > 0) {
-        for (auto it = files.cbegin(); it != files.cend(); it++) {
+        for (auto it = files.cbegin(); it != files.cend(); ++it) {
             if (!firstGameEntry && (*it)->getType() == GAME)
                 firstGameEntry = (*it);
             mGrid.add((*it)->getName(), getImagePath(*it), *it);
@@ -250,7 +250,7 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         "md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer",  "md_lbl_publisher",
         "md_lbl_genre",  "md_lbl_players",     "md_lbl_lastplayed", "md_lbl_playcount"};
 
-    for (unsigned int i = 0; i < labels.size(); i++)
+    for (unsigned int i = 0; i < labels.size(); ++i)
         labels[i]->applyTheme(theme, getName(), lblElements[i], ALL);
 
     initMDValues();
@@ -260,7 +260,7 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                                             "md_publisher",  "md_genre",       "md_players",
                                             "md_lastplayed", "md_playcount"};
 
-    for (unsigned int i = 0; i < values.size(); i++)
+    for (unsigned int i = 0; i < values.size(); ++i)
         values[i]->applyTheme(theme, getName(), valElements[i], ALL ^ ThemeFlags::TEXT);
 
     mDescContainer.applyTheme(theme, getName(), "md_description",
@@ -304,7 +304,7 @@ void GridGameListView::initMDLabels()
     const float colSize = (mSize.x * 0.48f) / colCount;
     const float rowPadding = 0.01f * mSize.y;
 
-    for (unsigned int i = 0; i < components.size(); i++) {
+    for (unsigned int i = 0; i < components.size(); ++i) {
         const unsigned int row = i % rowCount;
         glm::vec3 pos{};
         if (row == 0) {
@@ -340,7 +340,7 @@ void GridGameListView::initMDValues()
     float bottom = 0.0f;
 
     const float colSize = (mSize.x * 0.48f) / 2.0f;
-    for (unsigned int i = 0; i < labels.size(); i++) {
+    for (unsigned int i = 0; i < labels.size(); ++i) {
         const float heightDiff = (labels[i]->getSize().y - values[i]->getSize().y) / 2.0f;
         values[i]->setPosition(labels[i]->getPosition() +
                                glm::vec3{labels[i]->getSize().x, heightDiff, 0.0f});
@@ -486,7 +486,7 @@ void GridGameListView::updateInfoPanel()
     std::vector<TextComponent*> labels = getMDLabels();
     comps.insert(comps.cend(), labels.cbegin(), labels.cend());
 
-    for (auto it = comps.cbegin(); it != comps.cend(); it++) {
+    for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
         GuiComponent* comp = *it;
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.

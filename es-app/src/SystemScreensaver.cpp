@@ -433,13 +433,13 @@ void SystemScreensaver::update(int deltaTime)
 void SystemScreensaver::generateImageList()
 {
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); it++) {
+         it != SystemData::sSystemVector.cend(); ++it) {
         // We only want nodes from game systems that are not collections.
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
         std::vector<FileData*> allFiles = (*it)->getRootFolder()->getFilesRecursive(GAME, true);
-        for (auto it2 = allFiles.begin(); it2 != allFiles.end(); it2++) {
+        for (auto it2 = allFiles.cbegin(); it2 != allFiles.cend(); ++it2) {
             std::string imagePath = (*it2)->getImagePath();
             if (imagePath != "")
                 mImageFiles.push_back((*it2));
@@ -450,13 +450,13 @@ void SystemScreensaver::generateImageList()
 void SystemScreensaver::generateVideoList()
 {
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); it++) {
+         it != SystemData::sSystemVector.cend(); ++it) {
         // We only want nodes from game systems that are not collections.
         if (!(*it)->isGameSystem() || (*it)->isCollection())
             continue;
 
         std::vector<FileData*> allFiles = (*it)->getRootFolder()->getFilesRecursive(GAME, true);
-        for (auto it2 = allFiles.begin(); it2 != allFiles.end(); it2++) {
+        for (auto it2 = allFiles.cbegin(); it2 != allFiles.cend(); ++it2) {
             std::string videoPath = (*it2)->getVideoPath();
             if (videoPath != "")
                 mVideoFiles.push_back((*it2));
@@ -479,7 +479,7 @@ void SystemScreensaver::generateCustomImageList()
         Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(
             imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
 
-        for (auto it = dirContent.begin(); it != dirContent.end(); it++) {
+        for (auto it = dirContent.begin(); it != dirContent.end(); ++it) {
             if (Utils::FileSystem::isRegularFile(*it)) {
                 if (imageFilter.find(Utils::FileSystem::getExtension(*it)) != std::string::npos)
                     mImageCustomFiles.push_back(*it);

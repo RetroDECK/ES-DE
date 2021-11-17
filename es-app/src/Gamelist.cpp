@@ -78,7 +78,7 @@ FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType
             treeNode = folder;
         }
 
-        path_it++;
+        ++path_it;
     }
 
     return nullptr;
@@ -146,7 +146,7 @@ void parseGamelist(SystemData* system)
 
     std::vector<std::string> tagList = {"game", "folder"};
     FileType typeList[2] = {GAME, FOLDER};
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 2; ++i) {
         std::string tag = tagList[i];
         FileType type = typeList[i];
         for (pugi::xml_node fileNode = root.child(tag.c_str()); fileNode;
@@ -331,7 +331,7 @@ void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
         std::vector<FileData*> files = rootFolder->getFilesRecursive(GAME | FOLDER);
         // Iterate through all files, checking if they're already in the XML file.
         for (std::vector<FileData*>::const_iterator fit = files.cbegin(); // Line break.
-             fit != files.cend(); fit++) {
+             fit != files.cend(); ++fit) {
             const std::string tag = ((*fit)->getType() == GAME) ? "game" : "folder";
 
             // Do not touch if it wasn't changed and is not flagged for deletion.
@@ -357,7 +357,7 @@ void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
                     // Found it
                     root.remove_child(fileNode);
                     if ((*fit)->getDeletionFlag())
-                        numUpdated++;
+                        ++numUpdated;
                     break;
                 }
             }
@@ -366,7 +366,7 @@ void updateGamelist(SystemData* system, bool updateAlternativeEmulator)
             if (!(*fit)->getDeletionFlag()) {
                 addFileDataNode(root, *fit, tag, system);
                 (*fit)->metadata.resetChangedFlag();
-                numUpdated++;
+                ++numUpdated;
             }
         }
 

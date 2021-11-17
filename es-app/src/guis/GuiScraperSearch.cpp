@@ -123,7 +123,7 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
     mMD_Grid = std::make_shared<ComponentGrid>(
         mWindow, glm::ivec2{2, static_cast<int>(mMD_Pairs.size() * 2 - 1)});
     unsigned int i = 0;
-    for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); it++) {
+    for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
         mMD_Grid->setEntry(it->first, glm::ivec2{0, i}, false, true);
         mMD_Grid->setEntry(it->second, glm::ivec2{1, i}, false, it->resize);
         i += 2;
@@ -246,14 +246,14 @@ void GuiScraperSearch::resizeMetadata()
 
         // Update label fonts.
         float maxLblWidth = 0;
-        for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); it++) {
+        for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
             it->first->setFont(fontLbl);
             it->first->setSize(0, 0);
             if (it->first->getSize().x > maxLblWidth)
                 maxLblWidth = it->first->getSize().x + (16.0f * Renderer::getScreenWidthModifier());
         }
 
-        for (unsigned int i = 0; i < mMD_Pairs.size(); i++)
+        for (unsigned int i = 0; i < mMD_Pairs.size(); ++i)
             mMD_Grid->setRowHeightPerc(
                 i * 2, (fontLbl->getLetterHeight() + (2.0f * Renderer::getScreenHeightModifier())) /
                            mMD_Grid->getSize().y);
@@ -386,7 +386,7 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
         mFoundGame = true;
         ComponentListRow row;
 
-        for (size_t i = 0; i < results.size(); i++) {
+        for (size_t i = 0; i < results.size(); ++i) {
             row.elements.clear();
             row.addElement(
                 std::make_shared<TextComponent>(
@@ -434,7 +434,7 @@ void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status s
         Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mRetrySearch = true;
-        mRetryCount++;
+        ++mRetryCount;
         LOG(LogError) << "GuiScraperSearch: Attempting automatic retry " << mRetryCount << " of "
                       << FAILED_VERIFICATION_RETRIES;
         return;
@@ -652,7 +652,7 @@ void GuiScraperSearch::update(int deltaTime)
             }
             else {
                 std::string gameIDs;
-                for (auto it = mScraperResults.cbegin(); it != mScraperResults.cend(); it++)
+                for (auto it = mScraperResults.cbegin(); it != mScraperResults.cend(); ++it)
                     gameIDs += it->gameID + ',';
 
                 // Remove the last comma
@@ -674,8 +674,8 @@ void GuiScraperSearch::update(int deltaTime)
             mScraperResults.clear();
 
             // Combine the intial scrape results with the media URL results.
-            for (auto it = results_media.cbegin(); it != results_media.cend(); it++) {
-                for (unsigned int i = 0; i < results_scrape.size(); i++) {
+            for (auto it = results_media.cbegin(); it != results_media.cend(); ++it) {
+                for (unsigned int i = 0; i < results_scrape.size(); ++i) {
                     if (results_scrape[i].gameID == it->gameID) {
                         results_scrape[i].box3DUrl = it->box3DUrl;
                         results_scrape[i].backcoverUrl = it->backcoverUrl;
@@ -867,7 +867,7 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
     if (defaultName == metadata.get("name"))
         hasDefaultName = true;
 
-    for (unsigned int i = 0; i < mMetaDataDecl.size(); i++) {
+    for (unsigned int i = 0; i < mMetaDataDecl.size(); ++i) {
 
         // Skip elements that are tagged not to be scraped.
         if (!mMetaDataDecl.at(i).shouldScrape)

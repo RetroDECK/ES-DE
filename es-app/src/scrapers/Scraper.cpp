@@ -82,7 +82,7 @@ std::unique_ptr<ScraperSearchHandle> startMediaURLsFetch(const std::string& game
 std::vector<std::string> getScraperList()
 {
     std::vector<std::string> list;
-    for (auto it = scraper_request_funcs.cbegin(); it != scraper_request_funcs.cend(); it++)
+    for (auto it = scraper_request_funcs.cbegin(); it != scraper_request_funcs.cend(); ++it)
         list.push_back(it->first);
 
     return list;
@@ -257,7 +257,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
 #endif
     }
 
-    for (auto it = scrapeFiles.cbegin(); it != scrapeFiles.cend(); it++) {
+    for (auto it = scrapeFiles.cbegin(); it != scrapeFiles.cend(); ++it) {
 
         std::string ext;
 
@@ -384,7 +384,7 @@ void MDResolveHandle::update()
             it = mFuncs.erase(it);
             continue;
         }
-        it++;
+        ++it;
     }
 
     if (mFuncs.empty())
@@ -477,11 +477,11 @@ void MediaDownloadHandle::update()
                 // Skip the first line as this can apparently lead to false positives.
                 FreeImage_GetPixelColor(tempImage, 0, 1, &firstPixel);
 
-                for (unsigned int x = 0; x < width; x++) {
+                for (unsigned int x = 0; x < width; ++x) {
                     if (!emptyImage)
                         break;
                     // Skip the last line as well.
-                    for (unsigned int y = 1; y < height - 1; y++) {
+                    for (unsigned int y = 1; y < height - 1; ++y) {
                         FreeImage_GetPixelColor(tempImage, x, y, &currPixel);
                         if (currPixel.rgbBlue != firstPixel.rgbBlue ||
                             currPixel.rgbGreen != firstPixel.rgbGreen ||

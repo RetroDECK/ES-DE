@@ -217,7 +217,7 @@ void MediaViewer::showNext()
     if ((mVideo || showedVideo) && !mDisplayingImage)
         mCurrentImageIndex = 0;
     else if (static_cast<int>(mImageFiles.size()) > mCurrentImageIndex + 1)
-        mCurrentImageIndex++;
+        ++mCurrentImageIndex;
 
     if (mVideo)
         mDisplayingImage = true;
@@ -248,7 +248,7 @@ void MediaViewer::showPrevious()
         mImage = nullptr;
     }
 
-    mCurrentImageIndex--;
+    --mCurrentImageIndex;
     showImage(mCurrentImageIndex);
 }
 

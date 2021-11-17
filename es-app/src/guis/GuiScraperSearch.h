@@ -86,7 +86,7 @@ public:
     void decreaseScrapeCount()
     {
         if (mScrapeCount > 0)
-            mScrapeCount--;
+            --mScrapeCount;
     }
     void unsetRefinedSearch() { mRefinedSearch = false; }
     bool getRefinedSearch() { return mRefinedSearch; }

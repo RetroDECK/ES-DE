@@ -56,7 +56,7 @@ void GuiSettings::save()
     if (!mSaveFuncs.size())
         return;
 
-    for (auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); it++)
+    for (auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); ++it)
         (*it)();
 
     if (mNeedsSaving)
@@ -72,7 +72,7 @@ void GuiSettings::save()
 
     if (mNeedsSorting) {
         for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
-             it++) {
+             ++it) {
             if (!(!mNeedsSortingCollections && (*it)->isCollection()))
                 (*it)->sortSystem(true);
 
@@ -84,7 +84,7 @@ void GuiSettings::save()
 
     if (mNeedsResetFilters) {
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-             it != SystemData::sSystemVector.cend(); it++) {
+             it != SystemData::sSystemVector.cend(); ++it) {
             if ((*it)->getThemeFolder() == "custom-collections") {
                 for (FileData* customSystem : (*it)->getRootFolder()->getChildrenListToDisplay())
                     customSystem->getSystem()->getIndex()->resetFilters();

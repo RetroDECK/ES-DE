@@ -104,7 +104,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         mJumpToLetterList->setKeyRepeat(true, 650, 200);
 
         // Populate the quick selector.
-        for (unsigned int i = 0; i < mFirstLetterIndex.size(); i++) {
+        for (unsigned int i = 0; i < mFirstLetterIndex.size(); ++i) {
             mJumpToLetterList->add(mFirstLetterIndex[i], mFirstLetterIndex[i], 0);
             if (mFirstLetterIndex[i] == mCurrentFirstCharacter)
                 mJumpToLetterList->selectEntry(i);
@@ -129,7 +129,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
             if (!root->getSystem()->isCollection())
                 numSortTypes -= 2;
 
-            for (unsigned int i = 0; i < numSortTypes; i++) {
+            for (unsigned int i = 0; i < numSortTypes; ++i) {
                 const FileData::SortType& sort = FileSorts::SortTypes.at(i);
                 if (sort.description == sortType)
                     mListSort->add(sort.description, &sort, true);
@@ -350,7 +350,7 @@ void GuiGamelistOptions::startEditMode()
     // Display the indication icons which show what games are part of the custom collection
     // currently being edited. This is done cheaply using onFileChanged() which will trigger
     // populateList().
-    for (auto it = SystemData::sSystemVector.begin(); it != SystemData::sSystemVector.end(); it++) {
+    for (auto it = SystemData::sSystemVector.begin(); it != SystemData::sSystemVector.end(); ++it) {
         ViewController::get()->getGameListView((*it))->onFileChanged(
             ViewController::get()->getGameListView((*it))->getCursor(), false);
     }
@@ -393,7 +393,7 @@ void GuiGamelistOptions::openMetaDataEd()
 
         // Manually reset all the metadata values, set the name to the actual file/folder name.
         const std::vector<MetaDataDecl>& mdd = file->metadata.getMDD();
-        for (auto it = mdd.cbegin(); it != mdd.cend(); it++) {
+        for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
             if (it->key == "name") {
                 if (file->isArcadeGame()) {
                     // If it's a MAME or Neo Geo game, expand the game name accordingly.
@@ -465,7 +465,7 @@ void GuiGamelistOptions::jumpToLetter()
     const std::vector<FileData*>& files =
         getGamelist()->getCursor()->getParent()->getChildrenListToDisplay();
 
-    for (unsigned int i = 0; i < files.size(); i++) {
+    for (unsigned int i = 0; i < files.size(); ++i) {
         if (mFavoritesSorting && (mFirstLetterIndex.front() == ViewController::FAVORITE_CHAR ||
                                   mFirstLetterIndex.front() == ViewController::FOLDER_CHAR)) {
             if (static_cast<char>(toupper(files.at(i)->getSortName().front())) == letter &&
@@ -501,7 +501,7 @@ void GuiGamelistOptions::jumpToFirstRow()
             getGamelist()->getCursor()->getParent()->getChildrenListToDisplay();
         // Select the first game that is not a folder, unless it's a folder-only list in
         // which case the first line overall is selected.
-        for (auto it = files.cbegin(); it != files.cend(); it++) {
+        for (auto it = files.cbegin(); it != files.cend(); ++it) {
             if (!mOnlyHasFolders && mFoldersOnTop && (*it)->getType() == FOLDER) {
                 continue;
             }

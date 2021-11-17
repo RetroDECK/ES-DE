@@ -178,7 +178,7 @@ GuiScraperMulti::~GuiScraperMulti()
     if (mTotalSuccessful > 0) {
         // Sort all systems to possibly update their view style from Basic to Detailed or Video.
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-             it != SystemData::sSystemVector.cend(); it++) {
+             it != SystemData::sSystemVector.cend(); ++it) {
             (*it)->sortSystem();
         }
     }
@@ -278,8 +278,8 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
     search.system->getIndex()->addToIndex(search.game);
 
     mSearchQueue.pop();
-    mCurrentGame++;
-    mTotalSuccessful++;
+    ++mCurrentGame;
+    ++mTotalSuccessful;
     CollectionSystemsManager::get()->refreshCollectionSystems(search.game);
     doNextSearch();
 }
@@ -287,8 +287,8 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
 void GuiScraperMulti::skip()
 {
     mSearchQueue.pop();
-    mCurrentGame++;
-    mTotalSkipped++;
+    ++mCurrentGame;
+    ++mTotalSkipped;
     mSearchComp->decreaseScrapeCount();
     mSearchComp->unsetRefinedSearch();
     doNextSearch();

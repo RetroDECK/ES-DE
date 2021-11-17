@@ -108,23 +108,23 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     mGrid.setEntry(mScrollDown, glm::ivec2{1, 1}, false, false, glm::ivec2{1, 1});
 
     // Populate list.
-    for (auto iter = mdd.cbegin(); iter != mdd.cend(); iter++) {
+    for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
         std::shared_ptr<GuiComponent> ed;
-        std::string currentKey = iter->key;
-        std::string originalValue = mMetaData->get(iter->key);
+        std::string currentKey = it->key;
+        std::string originalValue = mMetaData->get(it->key);
         std::string gamePath;
 
         // Don't add statistics.
-        if (iter->isStatistic)
+        if (it->isStatistic)
             continue;
 
         // Don't show the alternative emulator entry if the corresponding option has been disabled.
         if (!Settings::getInstance()->getBool("AlternativeEmulatorPerGame") &&
-            iter->type == MD_ALT_EMULATOR) {
+            it->type == MD_ALT_EMULATOR) {
             ed = std::make_shared<TextComponent>(
                 window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
             assert(ed);
-            ed->setValue(mMetaData->get(iter->key));
+            ed->setValue(mMetaData->get(it->key));
             mEditors.push_back(ed);
             continue;
         }
@@ -133,12 +133,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         // entry instead of for instance the spacer. That is so because ComponentList
         // always looks for the help prompt at the back of the element stack.
         ComponentListRow row;
-        auto lbl =
-            std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(iter->displayName),
-                                            Font::get(FONT_SIZE_SMALL), 0x777777FF);
+        auto lbl = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(it->displayName),
+                                                   Font::get(FONT_SIZE_SMALL), 0x777777FF);
         row.addElement(lbl, true); // Label.
 
-        switch (iter->type) {
+        switch (it->type) {
             case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
                 // Make the switches slightly smaller.
@@ -195,7 +194,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
-                const std::string title = iter->displayPrompt;
+                const std::string title = it->displayPrompt;
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [ed, originalValue](const std::string& newVal) {
@@ -279,7 +278,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
-                const std::string title = iter->displayPrompt;
+                const std::string title = it->displayPrompt;
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
@@ -417,8 +416,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
-                bool multiLine = iter->type == MD_MULTILINE_STRING;
-                const std::string title = iter->displayPrompt;
+                bool multiLine = it->type == MD_MULTILINE_STRING;
+                const std::string title = it->displayPrompt;
 
                 gamePath = Utils::FileSystem::getStem(mScraperParams.game->getPath());
 
@@ -473,18 +472,18 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         assert(ed);
         mList->addRow(row);
 
-        if (iter->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry == true) {
+        if (it->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry == true) {
             ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
         }
-        else if (iter->type == MD_CONTROLLER && mMetaData->get(iter->key) != "") {
-            std::string displayName = BadgeComponent::getDisplayName(mMetaData->get(iter->key));
+        else if (it->type == MD_CONTROLLER && mMetaData->get(it->key) != "") {
+            std::string displayName = BadgeComponent::getDisplayName(mMetaData->get(it->key));
             if (displayName != "unknown")
                 ed->setValue(displayName);
             else
-                ed->setValue(ViewController::EXCLAMATION_CHAR + " " + mMetaData->get(iter->key));
+                ed->setValue(ViewController::EXCLAMATION_CHAR + " " + mMetaData->get(it->key));
         }
         else {
-            ed->setValue(mMetaData->get(iter->key));
+            ed->setValue(mMetaData->get(it->key));
         }
 
         mEditors.push_back(ed);
@@ -609,7 +608,7 @@ void GuiMetaDataEd::save()
     bool hideGameWhileHidden = false;
     bool setGameAsCounted = false;
 
-    for (unsigned int i = 0; i < mEditors.size(); i++) {
+    for (unsigned int i = 0; i < mEditors.size(); ++i) {
         if (mMetaDataDecl.at(i).isStatistic)
             continue;
 
@@ -730,7 +729,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
     // the values previously saved for the game.
-    for (unsigned int i = 0; i < mEditors.size(); i++) {
+    for (unsigned int i = 0; i < mEditors.size(); ++i) {
         const std::string& key = mMetaDataDecl.at(i).key;
         if (metadata->get(key) != mEditors[i]->getValue())
             metadata->set(key, mEditors[i]->getValue());
@@ -739,7 +738,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     GuiScraperSearch::saveMetadata(result, *metadata, mScraperParams.game);
 
     // Update the list with the scraped metadata values.
-    for (unsigned int i = 0; i < mEditors.size(); i++) {
+    for (unsigned int i = 0; i < mEditors.size(); ++i) {
         const std::string& key = mMetaDataDecl.at(i).key;
         if (key == "controller" && metadata->get(key) != "") {
             std::string displayName = BadgeComponent::getDisplayName(metadata->get(key));
@@ -765,7 +764,7 @@ void GuiMetaDataEd::close()
 {
     // Find out if the user made any changes.
     bool metadataUpdated = false;
-    for (unsigned int i = 0; i < mEditors.size(); i++) {
+    for (unsigned int i = 0; i < mEditors.size(); ++i) {
         const std::string& key = mMetaDataDecl.at(i).key;
         std::string mMetaDataValue = mMetaData->get(key);
         std::string mEditorsValue = mEditors.at(i)->getValue();

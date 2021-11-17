@@ -123,7 +123,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     // Check if there is an entry in the cursor stack history matching any entry
                     // in the currect folder. If so, select that entry.
                     for (auto it = mCursorStackHistory.begin(); // Line break.
-                         it != mCursorStackHistory.end(); it++) {
+                         it != mCursorStackHistory.end(); ++it) {
                         if (std::find(listEntries.begin(), listEntries.end(), *it) !=
                             listEntries.end()) {
                             newCursor = *it;
@@ -246,7 +246,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 // remove it so we don't get multiple entries.
                 std::vector<FileData*> listEntries =
                     mRandomGame->getSystem()->getRootFolder()->getChildrenListToDisplay();
-                for (auto it = mCursorStackHistory.begin(); it != mCursorStackHistory.end(); it++) {
+                for (auto it = mCursorStackHistory.begin(); it != mCursorStackHistory.end(); ++it) {
                     if (std::find(listEntries.begin(), listEntries.end(), *it) !=
                         listEntries.end()) {
                         mCursorStackHistory.erase(it);
@@ -465,7 +465,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     // onFileChanged() which will trigger populateList().
                     if (isEditing) {
                         for (auto it = SystemData::sSystemVector.begin();
-                             it != SystemData::sSystemVector.end(); it++) {
+                             it != SystemData::sSystemVector.end(); ++it) {
                             ViewController::get()->getGameListView((*it))->onFileChanged(
                                 ViewController::get()->getGameListView((*it))->getCursor(), false);
                         }
@@ -541,7 +541,7 @@ void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>&
     bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
 
     // Find out if there are only favorites and/or only folders in the list.
-    for (auto it = files.begin(); it != files.end(); it++) {
+    for (auto it = files.begin(); it != files.end(); ++it) {
         if (!((*it)->getFavorite()))
             onlyFavorites = false;
         if (!((*it)->getType() == FOLDER))
@@ -549,7 +549,7 @@ void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>&
     }
 
     // Build the index.
-    for (auto it = files.begin(); it != files.end(); it++) {
+    for (auto it = files.begin(); it != files.end(); ++it) {
         if ((*it)->getType() == FOLDER && (*it)->getFavorite() && favoritesSorting &&
             !onlyFavorites) {
             hasFavorites = true;

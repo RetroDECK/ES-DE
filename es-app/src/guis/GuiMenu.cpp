@@ -103,7 +103,7 @@ void GuiMenu::openUIOptions()
         mWindow, getHelpStyle(), "GAMELIST ON STARTUP", false);
     startup_system->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); it++) {
+         it != SystemData::sSystemVector.cend(); ++it) {
         if ((*it)->getName() != "retropie") {
             // If required, abbreviate the system name so it doesn't overlap the setting name.
             float maxNameLength = mSize.x * 0.48f;
@@ -153,7 +153,7 @@ void GuiMenu::openUIOptions()
     transitions.push_back("slide");
     transitions.push_back("fade");
     transitions.push_back("instant");
-    for (auto it = transitions.cbegin(); it != transitions.cend(); it++)
+    for (auto it = transitions.cbegin(); it != transitions.cend(); ++it)
         transition_style->add(*it, *it,
                               Settings::getInstance()->getString("TransitionStyle") == *it);
     s->addWithLabel("TRANSITION STYLE", transition_style);
@@ -174,7 +174,7 @@ void GuiMenu::openUIOptions()
             selectedSet = themeSets.cbegin();
         auto theme_set = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
                                                                             "THEME SET", false);
-        for (auto it = themeSets.cbegin(); it != themeSets.cend(); it++) {
+        for (auto it = themeSets.cbegin(); it != themeSets.cend(); ++it) {
             // If required, abbreviate the theme set name so it doesn't overlap the setting name.
             float maxNameLength = mSize.x * 0.62f;
             theme_set->add(it->first, it->first, it == selectedSet, maxNameLength);
@@ -215,7 +215,7 @@ void GuiMenu::openUIOptions()
         setMode = "kid";
     else
         setMode = Settings::getInstance()->getString("UIMode");
-    for (auto it = uiModes.cbegin(); it != uiModes.cend(); it++)
+    for (auto it = uiModes.cbegin(); it != uiModes.cend(); ++it)
         ui_mode->add(*it, *it, setMode == *it);
     s->addWithLabel("UI MODE", ui_mode);
     s->addSaveFunc([ui_mode, this, s] {
@@ -253,7 +253,7 @@ void GuiMenu::openUIOptions()
                     Settings::getInstance()->saveFile();
                     UIModeController::getInstance()->setCurrentUIMode(selectedMode);
                     for (auto it = SystemData::sSystemVector.cbegin();
-                         it != SystemData::sSystemVector.cend(); it++) {
+                         it != SystemData::sSystemVector.cend(); ++it) {
                         if ((*it)->getThemeFolder() == "custom-collections") {
                             for (FileData* customSystem :
                                  (*it)->getRootFolder()->getChildrenListToDisplay())
@@ -293,7 +293,7 @@ void GuiMenu::openUIOptions()
         std::make_shared<SortList>(mWindow, getHelpStyle(), "DEFAULT SORT ORDER", false);
     // Exclude the System sort options.
     unsigned int numSortTypes = static_cast<unsigned int>(FileSorts::SortTypes.size() - 2);
-    for (unsigned int i = 0; i < numSortTypes; i++) {
+    for (unsigned int i = 0; i < numSortTypes; ++i) {
         if (FileSorts::SortTypes[i].description ==
             Settings::getInstance()->getString("DefaultSortOrder")) {
             sortOrder = FileSorts::SortTypes[i].description;
@@ -304,7 +304,7 @@ void GuiMenu::openUIOptions()
     // sort order 'filename, ascending'.
     if (sortOrder == "")
         sortOrder = Settings::getInstance()->getDefaultString("DefaultSortOrder");
-    for (unsigned int i = 0; i < numSortTypes; i++) {
+    for (unsigned int i = 0; i < numSortTypes; ++i) {
         const FileData::SortType& sort = FileSorts::SortTypes[i];
         if (sort.description == sortOrder)
             default_sort_order->add(sort.description, &sort, true);
@@ -861,7 +861,7 @@ void GuiMenu::openOtherOptions()
     displayIndex.push_back("2");
     displayIndex.push_back("3");
     displayIndex.push_back("4");
-    for (auto it = displayIndex.cbegin(); it != displayIndex.cend(); it++)
+    for (auto it = displayIndex.cbegin(); it != displayIndex.cend(); ++it)
         display_index->add(*it, *it,
                            Settings::getInstance()->getInt("DisplayIndex") == atoi((*it).c_str()));
     s->addWithLabel("DISPLAY/MONITOR INDEX (REQUIRES RESTART)", display_index);
@@ -881,7 +881,7 @@ void GuiMenu::openOtherOptions()
     std::vector<std::string> screenmode;
     screenmode.push_back("normal");
     screenmode.push_back("borderless");
-    for (auto it = screenmode.cbegin(); it != screenmode.cend(); it++)
+    for (auto it = screenmode.cbegin(); it != screenmode.cend(); ++it)
         fullscreen_mode->add(*it, *it, Settings::getInstance()->getString("FullscreenMode") == *it);
     s->addWithLabel("FULLSCREEN MODE (REQUIRES RESTART)", fullscreen_mode);
     s->addSaveFunc([fullscreen_mode, s] {
@@ -943,7 +943,7 @@ void GuiMenu::openOtherOptions()
     saveModes.push_back("on exit");
     saveModes.push_back("always");
     saveModes.push_back("never");
-    for (auto it = saveModes.cbegin(); it != saveModes.cend(); it++) {
+    for (auto it = saveModes.cbegin(); it != saveModes.cend(); ++it) {
         save_gamelist_mode->add(*it, *it,
                                 Settings::getInstance()->getString("SaveGamelistsMode") == *it);
     }
@@ -957,7 +957,7 @@ void GuiMenu::openOtherOptions()
             // be changes that will otherwise be lost.
             if (Settings::getInstance()->getString("SaveGamelistsMode") == "always") {
                 for (auto it = SystemData::sSystemVector.cbegin();
-                     it != SystemData::sSystemVector.cend(); it++)
+                     it != SystemData::sSystemVector.cend(); ++it)
                     (*it)->writeMetaData();
             }
             s->setNeedsSaving();

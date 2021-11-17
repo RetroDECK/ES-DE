@@ -183,7 +183,7 @@ void thegamesdb_generate_json_scraper_requests(
             bool first = true;
             platformQueryParam += "&filter%5Bplatform%5D=";
             for (auto platformIt = platforms.cbegin(); // Line break.
-                 platformIt != platforms.cend(); platformIt++) {
+                 platformIt != platforms.cend(); ++platformIt) {
                 auto mapIt = gamesdb_new_platformid_map.find(*platformIt);
                 if (mapIt != gamesdb_new_platformid_map.cend()) {
                     if (!first)
@@ -258,7 +258,7 @@ namespace
 
         std::string out = "";
         bool first = true;
-        for (int i = 0; i < static_cast<int>(v.Size()); i++) {
+        for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
 
             if (mapIt == resources.gamesdb_new_developers_map.cend())
@@ -280,7 +280,7 @@ namespace
 
         std::string out = "";
         bool first = true;
-        for (int i = 0; i < static_cast<int>(v.Size()); i++) {
+        for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
 
             if (mapIt == resources.gamesdb_new_publishers_map.cend())
@@ -302,7 +302,7 @@ namespace
 
         std::string out = "";
         bool first = true;
-        for (int i = 0; i < static_cast<int>(v.Size()); i++) {
+        for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
 
             if (mapIt == resources.gamesdb_new_genres_map.cend())
@@ -375,7 +375,7 @@ void processMediaURLs(const Value& images,
     ScraperSearchResult result;
 
     // Step through each game ID in the JSON server response.
-    for (auto it = images.MemberBegin(); it != images.MemberEnd(); it++) {
+    for (auto it = images.MemberBegin(); it != images.MemberEnd(); ++it) {
         result.gameID = it->name.GetString();
         const Value& gameMedia = images[it->name];
         result.coverUrl = "";
@@ -386,7 +386,7 @@ void processMediaURLs(const Value& images,
         // Quite excessive testing for valid values, but you never know what the server has
         // returned and we don't want to crash the program due to malformed data.
         if (gameMedia.IsArray()) {
-            for (SizeType i = 0; i < gameMedia.Size(); i++) {
+            for (SizeType i = 0; i < gameMedia.Size(); ++i) {
                 std::string mediatype;
                 std::string mediaside;
                 if (gameMedia[i]["type"].IsString())
@@ -455,7 +455,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         // Find how many more requests we can make before the scraper
         // request allowance counter is reset.
         if (doc.HasMember("remaining_monthly_allowance") && doc.HasMember("extra_allowance")) {
-            for (size_t i = 0; i < results.size(); i++) {
+            for (size_t i = 0; i < results.size(); ++i) {
                 results[i].scraperRequestAllowance =
                     doc["remaining_monthly_allowance"].GetInt() + doc["extra_allowance"].GetInt();
             }
@@ -476,7 +476,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     const Value& games = doc["data"]["games"];
     resources.ensureResources();
 
-    for (int i = 0; i < static_cast<int>(games.Size()); i++) {
+    for (int i = 0; i < static_cast<int>(games.Size()); ++i) {
         auto& v = games[i];
         try {
             processGame(v, results);

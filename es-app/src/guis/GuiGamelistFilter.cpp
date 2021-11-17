@@ -71,7 +71,7 @@ void GuiGamelistFilter::initializeMenu()
     for (std::map<FilterIndexType,
                   std::shared_ptr<OptionListComponent<std::string>>>::const_iterator it =
              mFilterOptions.cbegin();
-         it != mFilterOptions.cend(); it++) {
+         it != mFilterOptions.cend(); ++it) {
         std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         std::vector<std::string> filters = optionList->getSelectedObjects();
         mInitialFilters.push_back(filters);
@@ -84,7 +84,7 @@ void GuiGamelistFilter::resetAllFilters()
     for (std::map<FilterIndexType,
                   std::shared_ptr<OptionListComponent<std::string>>>::const_iterator it =
              mFilterOptions.cbegin();
-         it != mFilterOptions.cend(); it++) {
+         it != mFilterOptions.cend(); ++it) {
         std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         optionList->selectNone();
     }
@@ -148,7 +148,7 @@ void GuiGamelistFilter::addFiltersToMenu()
     std::vector<FilterDataDecl> decls = mFilterIndex->getFilterDataDecls();
 
     for (std::vector<FilterDataDecl>::const_iterator it = decls.cbegin(); // Line break.
-         it != decls.cend(); it++) {
+         it != decls.cend(); ++it) {
         FilterIndexType type = (*it).type; // Type of filter.
 
         // Don't include the alternative emulators if the corresponding setting has been disabled.
@@ -226,7 +226,7 @@ void GuiGamelistFilter::applyFilters()
     for (std::map<FilterIndexType,
                   std::shared_ptr<OptionListComponent<std::string>>>::const_iterator it =
              mFilterOptions.cbegin();
-         it != mFilterOptions.cend(); it++) {
+         it != mFilterOptions.cend(); ++it) {
         std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
         std::vector<std::string> filters = optionList->getSelectedObjects();
         auto iteratorDistance = std::distance(mFilterOptions.cbegin(), it);

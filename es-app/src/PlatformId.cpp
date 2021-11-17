@@ -143,7 +143,7 @@ namespace PlatformIds
         if (str == "")
             return PLATFORM_UNKNOWN;
 
-        for (unsigned int i = 1; i < PLATFORM_COUNT; i++) {
+        for (unsigned int i = 1; i < PLATFORM_COUNT; ++i) {
             if (platformNames[i] == str)
                 return (PlatformId)i;
         }

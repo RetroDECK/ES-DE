@@ -29,7 +29,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
         labelSizeX += 8.0f * Renderer::getScreenHeightModifier();
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); it++) {
+         it != SystemData::sSystemVector.cend(); ++it) {
 
         // Only include systems that have at least two command entries, unless the system
         // has an invalid entry.

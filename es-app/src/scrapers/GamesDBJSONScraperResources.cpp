@@ -93,7 +93,7 @@ void TheGamesDBJSONRequestResources::ensureResources()
     if (checkLoaded())
         return;
 
-    for (int i = 0; i < MAX_WAIT_ITER; i++) {
+    for (int i = 0; i < MAX_WAIT_ITER; ++i) {
 
         if (gamesdb_developers_resource_request &&
             saveResource(gamesdb_developers_resource_request.get(), gamesdb_new_developers_map,
@@ -191,8 +191,8 @@ int TheGamesDBJSONRequestResources::loadResource(std::unordered_map<int, std::st
     }
     auto& data = doc["data"][resource_name.c_str()];
 
-    for (Value::ConstMemberIterator itr = data.MemberBegin(); itr != data.MemberEnd(); itr++) {
-        auto& entry = itr->value;
+    for (Value::ConstMemberIterator it = data.MemberBegin(); it != data.MemberEnd(); ++it) {
+        auto& entry = it->value;
         if (!entry.IsObject() || !entry.HasMember("id") || !entry["id"].IsInt() ||
             !entry.HasMember("name") || !entry["name"].IsString())
             continue;

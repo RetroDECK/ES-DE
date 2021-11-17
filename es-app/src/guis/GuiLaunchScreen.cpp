@@ -149,7 +149,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     float totalRowHeight = 0.0f;
 
     // Hack to adjust the window height to the row boundary.
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 7; ++i)
         totalRowHeight += mGrid->getRowHeight(i);
 
     setSize(mSize.x, totalRowHeight);

@@ -55,7 +55,7 @@ void UIModeController::monitorUIMode()
         mCurrentUIMode = uimode;
         // Reset filters and sort gamelists (which will update the game counter).
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-             it != SystemData::sSystemVector.cend(); it++) {
+             it != SystemData::sSystemVector.cend(); ++it) {
             (*it)->sortSystem(true);
             (*it)->getIndex()->resetFilters();
             if ((*it)->getThemeFolder() == "custom-collections") {
@@ -90,7 +90,7 @@ bool UIModeController::inputIsMatch(InputConfig* config, Input input)
     for (auto valstring : mInputVals) {
         if (config->isMappedLike(valstring, input) &&
             (mPassKeySequence[mPassKeyCounter] == valstring[0])) {
-            mPassKeyCounter++;
+            ++mPassKeyCounter;
             return true;
         }
     }

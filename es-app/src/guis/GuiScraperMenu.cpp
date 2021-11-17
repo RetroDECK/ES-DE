@@ -30,7 +30,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     std::vector<std::string> scrapers = getScraperList();
     // Select either the first entry or the one read from the settings,
     // just in case the scraper from settings has vanished.
-    for (auto it = scrapers.cbegin(); it != scrapers.cend(); it++)
+    for (auto it = scrapers.cbegin(); it != scrapers.cend(); ++it)
         mScraper->add(*it, *it, *it == Settings::getInstance()->getString("Scraper"));
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the scraper to "screenscraper" in this case.
@@ -104,7 +104,7 @@ GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
     // Add systems (all systems with an existing platform ID are listed).
     mSystems = std::make_shared<OptionListComponent<SystemData*>>(mWindow, getHelpStyle(),
                                                                   "SCRAPE THESE SYSTEMS", true);
-    for (unsigned int i = 0; i < SystemData::sSystemVector.size(); i++) {
+    for (unsigned int i = 0; i < SystemData::sSystemVector.size(); ++i) {
         if (!SystemData::sSystemVector[i]->hasPlatformId(PlatformIds::PLATFORM_IGNORE)) {
             mSystems->add(SystemData::sSystemVector[i]->getFullName(), SystemData::sSystemVector[i],
                           !SystemData::sSystemVector[i]->getPlatformIds().empty());
@@ -155,9 +155,9 @@ GuiScraperMenu::~GuiScraperMenu()
     // remembered throughout the program session.
     std::vector<SystemData*> sys = mSystems->getSelectedObjects();
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); it++) {
+         it != SystemData::sSystemVector.cend(); ++it) {
         (*it)->setScrapeFlag(false);
-        for (auto it_sys = sys.cbegin(); it_sys != sys.cend(); it_sys++) {
+        for (auto it_sys = sys.cbegin(); it_sys != sys.cend(); ++it_sys) {
             if ((*it)->getFullName() == (*it_sys)->getFullName())
                 (*it)->setScrapeFlag(true);
         }
@@ -658,7 +658,7 @@ void GuiScraperMenu::openOfflineGenerator(GuiSettings* settings)
     std::queue<FileData*> gameQueue;
     std::vector<SystemData*> systems = mSystems->getSelectedObjects();
 
-    for (auto sys = systems.cbegin(); sys != systems.cend(); sys++) {
+    for (auto sys = systems.cbegin(); sys != systems.cend(); ++sys) {
         std::vector<FileData*> games = (*sys)->getRootFolder()->getChildrenRecursive();
 
         // Sort the games by "filename, ascending".
@@ -953,7 +953,7 @@ void GuiScraperMenu::pressedStart()
         mMenu.save();
 
     std::vector<SystemData*> sys = mSystems->getSelectedObjects();
-    for (auto it = sys.cbegin(); it != sys.cend(); it++) {
+    for (auto it = sys.cbegin(); it != sys.cend(); ++it) {
         if ((*it)->getPlatformIds().empty()) {
             std::string warningString;
             if (sys.size() == 1) {
@@ -1070,12 +1070,12 @@ std::queue<ScraperSearchParams> GuiScraperMenu::getSearches(std::vector<SystemDa
                                                             GameFilterFunc selector)
 {
     std::queue<ScraperSearchParams> queue;
-    for (auto sys = systems.cbegin(); sys != systems.cend(); sys++) {
+    for (auto sys = systems.cbegin(); sys != systems.cend(); ++sys) {
         std::vector<FileData*> games = (*sys)->getRootFolder()->getScrapeFilesRecursive(
             Settings::getInstance()->getBool("ScraperIncludeFolders"),
             Settings::getInstance()->getBool("ScraperExcludeRecursively"),
             Settings::getInstance()->getBool("ScraperRespectExclusions"));
-        for (auto game = games.cbegin(); game != games.cend(); game++) {
+        for (auto game = games.cbegin(); game != games.cend(); ++game) {
             if (selector((*sys), (*game))) {
                 ScraperSearchParams search;
                 search.game = *game;

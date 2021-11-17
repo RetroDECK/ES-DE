@@ -51,7 +51,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     // Add automatic systems.
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              autoSystems.cbegin();
-         it != autoSystems.cend(); it++)
+         it != autoSystems.cend(); ++it)
         collection_systems_auto->add(it->second.decl.fullName, it->second.decl.name,
                                      it->second.isEnabled);
     addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
@@ -100,7 +100,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     // Add custom systems.
     for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
              customSystems.cbegin();
-         it != customSystems.cend(); it++)
+         it != customSystems.cend(); ++it)
         collection_systems_custom->add(it->second.decl.fullName, it->second.decl.name,
                                        it->second.isEnabled);
 
@@ -168,7 +168,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                 std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
                                                                    "SELECT THEME FOLDER", true);
             // Add custom systems.
-            for (auto it = unusedFolders.cbegin(); it != unusedFolders.cend(); it++) {
+            for (auto it = unusedFolders.cbegin(); it != unusedFolders.cend(); ++it) {
                 ComponentListRow row;
                 std::string name = *it;
                 std::function<void()> createCollectionCall = [this, name] {
@@ -238,7 +238,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
             std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(), "", true);
         for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
                  customSystems.cbegin();
-             it != customSystems.cend(); it++) {
+             it != customSystems.cend(); ++it) {
             ComponentListRow row;
             std::string name = (*it).first;
             std::function<void()> deleteCollectionCall = [this, name] {
@@ -259,7 +259,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                         // Create the configuration file entry. If the collection to be
                         // deleted was activated, then exclude it.
                         for (auto it = selectedCustomCollections.begin();
-                             it != selectedCustomCollections.end(); it++) {
+                             it != selectedCustomCollections.end(); ++it) {
                             if ((*it) != name) {
                                 if ((*it) != selectedCustomCollections.front() &&
                                     collectionsConfigEntry != "")

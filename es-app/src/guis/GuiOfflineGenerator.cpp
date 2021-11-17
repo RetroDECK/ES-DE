@@ -251,11 +251,11 @@ void GuiOfflineGenerator::update(int deltaTime)
                 mMiximageGeneratorThread.join();
             mMiximageGenerator.reset();
             if (!mGeneratorFuture.get()) {
-                mImagesGenerated++;
+                ++mImagesGenerated;
                 TextureResource::manualUnload(mGame->getMiximagePath(), false);
                 mProcessingVal->setText("");
                 if (mOverwriting) {
-                    mImagesOverwritten++;
+                    ++mImagesOverwritten;
                     mOverwriting = false;
                 }
             }
@@ -263,10 +263,10 @@ void GuiOfflineGenerator::update(int deltaTime)
                 std::string errorMessage = mResultMessage + " (" + mGameName + ")";
                 mLastErrorVal->setText(errorMessage);
                 LOG(LogInfo) << "GuiOfflineGenerator: " << errorMessage;
-                mGamesFailed++;
+                ++mGamesFailed;
             }
             mGame = nullptr;
-            mGamesProcessed++;
+            ++mGamesProcessed;
         }
     }
 
@@ -284,8 +284,8 @@ void GuiOfflineGenerator::update(int deltaTime)
 
         if (!Settings::getInstance()->getBool("MiximageOverwrite") &&
             mGame->getMiximagePath() != "") {
-            mGamesProcessed++;
-            mGamesSkipped++;
+            ++mGamesProcessed;
+            ++mGamesSkipped;
             mSkippedVal->setText(std::to_string(mGamesSkipped));
         }
         else {

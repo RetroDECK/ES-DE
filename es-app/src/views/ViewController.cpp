@@ -249,7 +249,7 @@ void ViewController::goToStart(bool playTransition)
     auto requestedSystem = Settings::getInstance()->getString("StartupSystem");
     if ("" != requestedSystem && "retropie" != requestedSystem) {
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-             it != SystemData::sSystemVector.cend(); it++) {
+             it != SystemData::sSystemVector.cend(); ++it) {
             if ((*it)->getName() == requestedSystem) {
                 goToGameList(*it);
                 if (!playTransition)
@@ -769,7 +769,7 @@ std::shared_ptr<IGameListView> ViewController::getGameListView(SystemData* syste
 
     if (selectedViewStyle == AUTOMATIC) {
         std::vector<FileData*> files = system->getRootFolder()->getFilesRecursive(GAME | FOLDER);
-        for (auto it = files.cbegin(); it != files.cend(); it++) {
+        for (auto it = files.cbegin(); it != files.cend(); ++it) {
             if (themeHasVideoView && !(*it)->getVideoPath().empty()) {
                 selectedViewStyle = VIDEO;
                 break;
@@ -920,7 +920,7 @@ void ViewController::render(const glm::mat4& parentTrans)
         getSystemListView()->render(trans);
 
     // Draw the gamelists.
-    for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++) {
+    for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); ++it) {
         // Same thing as for the system view, limit the rendering only to what needs to be drawn.
         if (it->second == mCurrentView || (it->second == mPreviousView && isCameraMoving())) {
             // Clipping.
@@ -951,7 +951,7 @@ void ViewController::preload()
     unsigned int systemCount = static_cast<int>(SystemData::sSystemVector.size());
 
     for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
-         it++) {
+         ++it) {
         if (Settings::getInstance()->getBool("SplashScreen") &&
             Settings::getInstance()->getBool("SplashScreenProgress")) {
             mWindow->renderLoadingScreen(
@@ -986,7 +986,7 @@ void ViewController::preload()
 
 void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
 {
-    for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++) {
+    for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); ++it) {
         if (it->second.get() == view) {
             bool isCurrent = (mCurrentView == it->second);
             SystemData* system = it->first;
@@ -1036,14 +1036,14 @@ void ViewController::reloadAll()
 
     // Clear all GameListViews.
     std::map<SystemData*, FileData*> cursorMap;
-    for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); it++)
+    for (auto it = mGameListViews.cbegin(); it != mGameListViews.cend(); ++it)
         cursorMap[it->first] = it->second->getCursor();
 
     mGameListViews.clear();
     mCurrentView = nullptr;
 
     // Load themes, create GameListViews and reset filters.
-    for (auto it = cursorMap.cbegin(); it != cursorMap.cend(); it++) {
+    for (auto it = cursorMap.cbegin(); it != cursorMap.cend(); ++it) {
         it->first->loadTheme();
         it->first->getIndex()->resetFilters();
         getGameListView(it->first)->setCursor(it->second);
