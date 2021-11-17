@@ -26,6 +26,7 @@ EmulationStation.exe
 emulationstation.core
 
 # Profiling data
+callgrind.out.*
 gmon.out
 
 # Patch/diff files
