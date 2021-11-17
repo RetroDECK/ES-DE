@@ -826,7 +826,7 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
             // required as TheGamesDB does not support searches using the short MAME names.
             if (params.game->isArcadeGame() &&
                 Settings::getInstance()->getString("Scraper") == "thegamesdb")
-                searchString = MameNames::getInstance()->getCleanName(params.game->getCleanName());
+                searchString = MameNames::getInstance().getCleanName(params.game->getCleanName());
             else
                 searchString = params.game->getCleanName();
         }
@@ -859,7 +859,7 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
     // Get the default name, which is either the MAME name or the name of the physical file
     // or directory.
     if (scrapedGame->isArcadeGame())
-        defaultName = MameNames::getInstance()->getCleanName(scrapedGame->getCleanName());
+        defaultName = MameNames::getInstance().getCleanName(scrapedGame->getCleanName());
     else
         defaultName = Utils::FileSystem::getStem(scrapedGame->getFileName());
 

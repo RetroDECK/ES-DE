@@ -12,45 +12,50 @@
 #ifndef ES_CORE_MAMENAMES_H
 #define ES_CORE_MAMENAMES_H
 
+#include "utils/StringUtil.h"
+
+#include <algorithm>
+#include <map>
 #include <string>
 #include <vector>
 
-// Expand MAME names to full game names.
+// Expand MAME names to full game names and lookup device and BIOS entries.
 class MameNames
 {
 public:
-    static void init();
-    static void deinit();
-    static MameNames* getInstance();
-    std::string getRealName(const std::string& _mameName);
-    std::string getCleanName(const std::string& _mameName);
-    const bool isBios(const std::string& _biosName)
+    static MameNames& getInstance();
+
+    std::string getRealName(const std::string& mameName)
     {
-        return MameNames::find(mMameBioses, _biosName);
+        std::string name = mNamePairs[mameName];
+        if (name == "")
+            return mameName;
+        else
+            return name;
     }
-    const bool isDevice(const std::string& _deviceName)
+
+    std::string getCleanName(const std::string& mameName)
     {
-        return MameNames::find(mMameDevices, _deviceName);
+        return Utils::String::removeParenthesis(getRealName(mameName));
+    }
+
+    const bool isBios(const std::string& biosName)
+    {
+        return std::find(mMameBioses.cbegin(), mMameBioses.cend(), biosName) != mMameBioses.cend();
+    }
+
+    const bool isDevice(const std::string& deviceName)
+    {
+        return std::find(mMameDevices.cbegin(), mMameDevices.cend(), deviceName) !=
+               mMameDevices.cend();
     }
 
 private:
-    struct NamePair {
-        std::string mameName;
-        std::string realName;
-    };
-
-    typedef std::vector<NamePair> namePairVector;
-
     MameNames();
-    ~MameNames() {}
 
-    static MameNames* sInstance;
-
-    namePairVector mNamePairs;
+    std::unordered_map<std::string, std::string> mNamePairs;
     std::vector<std::string> mMameBioses;
     std::vector<std::string> mMameDevices;
-
-    const bool find(const std::vector<std::string> devices, const std::string& name);
 };
 
 #endif // ES_CORE_MAMENAMES_H

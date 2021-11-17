@@ -397,8 +397,8 @@ void GuiGamelistOptions::openMetaDataEd()
             if (it->key == "name") {
                 if (file->isArcadeGame()) {
                     // If it's a MAME or Neo Geo game, expand the game name accordingly.
-                    file->metadata.set(
-                        it->key, MameNames::getInstance()->getCleanName(file->getCleanName()));
+                    file->metadata.set(it->key,
+                                       MameNames::getInstance().getCleanName(file->getCleanName()));
                 }
                 else {
                     file->metadata.set(it->key, file->getDisplayName());

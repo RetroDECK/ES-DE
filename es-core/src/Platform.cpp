@@ -262,7 +262,6 @@ void emergencyShutdown()
 {
     LOG(LogError) << "Critical - Performing emergency shutdown...";
 
-    MameNames::deinit();
     // Most of the SDL deinitialization is done in Renderer.
     Renderer::deinit();
     Log::flush();

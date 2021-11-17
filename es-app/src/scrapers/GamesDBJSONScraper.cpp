@@ -157,7 +157,7 @@ void thegamesdb_generate_json_scraper_requests(
                 // arcade game and if so expand to the full game name. This is required as
                 // TheGamesDB has issues with searching using the short MAME names.
                 if (params.game->isArcadeGame())
-                    cleanName = MameNames::getInstance()->getCleanName(params.game->getCleanName());
+                    cleanName = MameNames::getInstance().getCleanName(params.game->getCleanName());
                 else
                     cleanName = params.game->getCleanName();
             }

@@ -230,7 +230,7 @@ void GuiScraperMulti::doNextSearch()
             Settings::getInstance()->getString("Scraper") == "thegamesdb")
             scrapeName =
                 Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath()) + " (" +
-                MameNames::getInstance()->getCleanName(mSearchQueue.front().game->getCleanName()) +
+                MameNames::getInstance().getCleanName(mSearchQueue.front().game->getCleanName()) +
                 ")";
         else
             scrapeName = Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath());

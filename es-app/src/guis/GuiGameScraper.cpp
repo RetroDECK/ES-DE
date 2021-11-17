@@ -38,9 +38,9 @@ GuiGameScraper::GuiGameScraper(Window* window,
     else {
         if (params.game->isArcadeGame() &&
             Settings::getInstance()->getString("Scraper") == "thegamesdb")
-            scrapeName =
-                Utils::FileSystem::getFileName(mSearchParams.game->getPath()) + " (" +
-                MameNames::getInstance()->getCleanName(mSearchParams.game->getCleanName()) + ")";
+            scrapeName = Utils::FileSystem::getFileName(mSearchParams.game->getPath()) + " (" +
+                         MameNames::getInstance().getCleanName(mSearchParams.game->getCleanName()) +
+                         ")";
         else
             scrapeName = Utils::FileSystem::getFileName(mSearchParams.game->getPath());
     }

@@ -47,7 +47,7 @@ FileData::FileData(FileType type,
              system->hasPlatformId(PlatformIds::SNK_NEO_GEO)) &&
             metadata.getType() != FOLDER_METADATA) {
             // If it's a MAME or Neo Geo game, expand the game name accordingly.
-            metadata.set("name", MameNames::getInstance()->getCleanName(getCleanName()));
+            metadata.set("name", MameNames::getInstance().getCleanName(getCleanName()));
         }
         else {
             if (metadata.getType() == FOLDER_METADATA && Utils::FileSystem::isHidden(mPath)) {
@@ -414,7 +414,7 @@ const bool FileData::isArcadeAsset() const
     const std::string stem = Utils::FileSystem::getStem(mPath);
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
                          mSystem->hasPlatformId(PlatformIds::SNK_NEO_GEO))) &&
-            (MameNames::getInstance()->isBios(stem) || MameNames::getInstance()->isDevice(stem)));
+            (MameNames::getInstance().isBios(stem) || MameNames::getInstance().isDevice(stem)));
 }
 
 const bool FileData::isArcadeGame() const
@@ -422,7 +422,7 @@ const bool FileData::isArcadeGame() const
     const std::string stem = Utils::FileSystem::getStem(mPath);
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
                          mSystem->hasPlatformId(PlatformIds::SNK_NEO_GEO))) &&
-            (!MameNames::getInstance()->isBios(stem) && !MameNames::getInstance()->isDevice(stem)));
+            (!MameNames::getInstance().isBios(stem) && !MameNames::getInstance().isDevice(stem)));
 }
 
 void FileData::addChild(FileData* file)

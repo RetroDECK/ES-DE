@@ -596,7 +596,7 @@ int main(int argc, char* argv[])
     }
 
     AudioManager::getInstance();
-    MameNames::init();
+    MameNames::getInstance();
     loadSystemsReturnCode loadSystemsStatus = loadSystemConfigFile();
 
     if (loadSystemsStatus) {
@@ -701,7 +701,6 @@ int main(int argc, char* argv[])
         delete window.peekGui();
     window.deinit();
 
-    MameNames::deinit();
     CollectionSystemsManager::deinit();
     SystemData::deleteSystems();
     NavigationSounds::getInstance().deinit();
