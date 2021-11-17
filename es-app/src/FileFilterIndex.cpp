@@ -656,7 +656,7 @@ void FileFilterIndex::manageIndexEntry(std::map<std::string, int>* index,
             //            LOG(LogDebug) << "Couldn't find entry in index! " << key;
         }
         else {
-            (index->at(key))--;
+            --(index->at(key));
             if (index->at(key) <= 0) {
                 index->erase(key);
             }
@@ -667,6 +667,6 @@ void FileFilterIndex::manageIndexEntry(std::map<std::string, int>* index,
         if (index->find(key) == index->cend())
             (*index)[key] = 1;
         else
-            (index->at(key))++;
+            ++(index->at(key));
     }
 }
