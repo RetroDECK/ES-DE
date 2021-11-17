@@ -107,11 +107,11 @@ void InputManager::init()
     int numJoysticks = SDL_NumJoysticks();
 
     // Make sure that every joystick is actually supported by the GameController API.
-    for (int i = 0; i < numJoysticks; i++)
+    for (int i = 0; i < numJoysticks; ++i)
         if (!SDL_IsGameController(i))
-            numJoysticks--;
+            --numJoysticks;
 
-    for (int i = 0; i < numJoysticks; i++)
+    for (int i = 0; i < numJoysticks; ++i)
         addControllerByDeviceIndex(nullptr, i);
 
     SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
@@ -126,7 +126,7 @@ void InputManager::deinit()
     if (!initialized())
         return;
 
-    for (auto it = mControllers.cbegin(); it != mControllers.cend(); it++)
+    for (auto it = mControllers.cbegin(); it != mControllers.cend(); ++it)
         SDL_GameControllerClose(it->second);
 
     mControllers.clear();
@@ -283,15 +283,15 @@ std::string InputManager::getTemporaryConfigPath()
 int InputManager::getNumConfiguredDevices()
 {
     int num = 0;
-    for (auto it = mInputConfigs.cbegin(); it != mInputConfigs.cend(); it++)
+    for (auto it = mInputConfigs.cbegin(); it != mInputConfigs.cend(); ++it)
         if (it->second->isConfigured())
-            num++;
+            ++num;
 
     if (mKeyboardInputConfig->isConfigured())
-        num++;
+        ++num;
 
     if (mCECInputConfig->isConfigured())
-        num++;
+        ++num;
 
     return num;
 }
@@ -663,10 +663,10 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
     int numAxes = SDL_JoystickNumAxes(joy);
     int numButtons = SDL_JoystickNumButtons(joy);
 
-    for (int axis = 0; axis < numAxes; axis++)
+    for (int axis = 0; axis < numAxes; ++axis)
         mPrevAxisValues[std::make_pair(joyID, axis)] = 0;
 
-    for (int button = 0; button < numButtons; button++)
+    for (int button = 0; button < numButtons; ++button)
         mPrevButtonValues[std::make_pair(joyID, button)] = -1;
 }
 
@@ -691,7 +691,7 @@ void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID j
 
     // Delete mPrevAxisValues for the device.
     int axisEntries = static_cast<int>(mPrevAxisValues.size());
-    for (int i = 0; i < axisEntries; i++) {
+    for (int i = 0; i < axisEntries; ++i) {
         auto entry = mPrevAxisValues.find(std::make_pair(joyID, i));
         if (entry != mPrevAxisValues.end()) {
             mPrevAxisValues.erase(entry);
@@ -700,7 +700,7 @@ void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID j
 
     // Delete mPrevButtonValues for the device.
     int buttonEntries = static_cast<int>(mPrevButtonValues.size());
-    for (int i = 0; i < buttonEntries; i++) {
+    for (int i = 0; i < buttonEntries; ++i) {
         auto entry = mPrevButtonValues.find(std::make_pair(joyID, i));
         if (entry != mPrevButtonValues.end()) {
             mPrevButtonValues.erase(entry);

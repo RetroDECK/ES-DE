@@ -50,7 +50,7 @@ InputType InputConfig::stringToInputType(const std::string& type)
 
 std::string InputConfig::toLower(std::string str)
 {
-    for (unsigned int i = 0; i < str.length(); i++)
+    for (unsigned int i = 0; i < str.length(); ++i)
         str[i] = static_cast<char>(tolower(str[i]));
 
     return str;
@@ -121,8 +121,8 @@ std::vector<std::string> InputConfig::getMappedTo(Input input)
     std::vector<std::string> maps;
 
     typedef std::map<std::string, Input>::const_iterator it_type;
-    for (it_type iterator = mNameMap.cbegin(); iterator != mNameMap.cend(); iterator++) {
-        Input chk = iterator->second;
+    for (it_type it = mNameMap.cbegin(); it != mNameMap.cend(); ++it) {
+        Input chk = it->second;
 
         if (!chk.configured)
             continue;
@@ -130,10 +130,10 @@ std::vector<std::string> InputConfig::getMappedTo(Input input)
         if (chk.device == input.device && chk.type == input.type && chk.id == input.id) {
             if (input.type == TYPE_AXIS) {
                 if (input.value == 0 || chk.value == input.value)
-                    maps.push_back(iterator->first);
+                    maps.push_back(it->first);
             }
             else {
-                maps.push_back(iterator->first);
+                maps.push_back(it->first);
             }
         }
     }
@@ -205,14 +205,14 @@ void InputConfig::writeToXML(pugi::xml_node& parent)
     cfg.append_attribute("deviceGUID") = mDeviceGUID.c_str();
 
     typedef std::map<std::string, Input>::const_iterator it_type;
-    for (it_type iterator = mNameMap.cbegin(); iterator != mNameMap.cend(); iterator++) {
-        if (!iterator->second.configured)
+    for (it_type it = mNameMap.cbegin(); it != mNameMap.cend(); ++it) {
+        if (!it->second.configured)
             continue;
 
         pugi::xml_node input = cfg.append_child("input");
-        input.append_attribute("name") = iterator->first.c_str();
-        input.append_attribute("type") = inputTypeToString(iterator->second.type).c_str();
-        input.append_attribute("id").set_value(iterator->second.id);
-        input.append_attribute("value").set_value(iterator->second.value);
+        input.append_attribute("name") = it->first.c_str();
+        input.append_attribute("type") = inputTypeToString(it->second.type).c_str();
+        input.append_attribute("id").set_value(it->second.id);
+        input.append_attribute("value").set_value(it->second.value);
     }
 }

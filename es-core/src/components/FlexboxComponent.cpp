@@ -162,8 +162,8 @@ void FlexboxComponent::computeLayout()
 
     // Lay out the grid.
     if (mDirection == "row") {
-        for (int y = 0; y < grid.y; y++) {
-            for (int x = 0; x < grid.x; x++) {
+        for (int y = 0; y < grid.y; ++y) {
+            for (int x = 0; x < grid.x; ++x) {
                 itemPositions.emplace_back(
                     glm::vec2{(x * (maxItemSize.x + mItemMargin.x) + alignRightComp),
                               y * (rowHeight + mItemMargin.y)});
@@ -171,16 +171,16 @@ void FlexboxComponent::computeLayout()
         }
     }
     else if (mDirection == "column" && !alignRight) {
-        for (int x = 0; x < grid.x; x++) {
-            for (int y = 0; y < grid.y; y++) {
+        for (int x = 0; x < grid.x; ++x) {
+            for (int y = 0; y < grid.y; ++y) {
                 itemPositions.emplace_back(glm::vec2{(x * (maxItemSize.x + mItemMargin.x)),
                                                      y * (rowHeight + mItemMargin.y)});
             }
         }
     }
     else { // Right-aligned.
-        for (int x = 0; x < grid.x; x++) {
-            for (int y = 0; y < grid.y; y++) {
+        for (int x = 0; x < grid.x; ++x) {
+            for (int y = 0; y < grid.y; ++y) {
                 itemPositions.emplace_back(
                     glm::vec2{(mSize.x - (x * (maxItemSize.x + mItemMargin.x)) - maxItemSize.x),
                               y * (rowHeight + mItemMargin.y)});
@@ -233,8 +233,8 @@ void FlexboxComponent::computeLayout()
         // This rasterizes the SVG images so they look nice and smooth.
         item.baseImage.setResize(item.baseImage.getSize());
 
-        itemsOnLastRow++;
-        pos++;
+        ++itemsOnLastRow;
+        ++pos;
     }
 
     // Apply right-align to the items if we're using row mode.

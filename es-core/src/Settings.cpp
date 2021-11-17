@@ -312,16 +312,16 @@ void Settings::setDefaults()
 template <typename K, typename V>
 void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& type)
 {
-    for (auto iter = map.cbegin(); iter != map.cend(); iter++) {
+    for (auto it = map.cbegin(); it != map.cend(); ++it) {
         // Key is on the "don't save" list, so don't save it.
-        if (std::find(settingsSkipSaving.cbegin(), settingsSkipSaving.cend(), iter->first) !=
+        if (std::find(settingsSkipSaving.cbegin(), settingsSkipSaving.cend(), it->first) !=
             settingsSkipSaving.cend()) {
             continue;
         }
 
         pugi::xml_node node = doc.append_child(type.c_str());
-        node.append_attribute("name").set_value(iter->first.c_str());
-        node.append_attribute("value").set_value(iter->second.second);
+        node.append_attribute("name").set_value(it->first.c_str());
+        node.append_attribute("value").set_value(it->second.second);
     }
 }
 
@@ -337,10 +337,10 @@ void Settings::saveFile()
     saveMap<std::string, std::pair<int, int>>(doc, mIntMap, "int");
     saveMap<std::string, std::pair<float, float>>(doc, mFloatMap, "float");
 
-    for (auto iter = mStringMap.cbegin(); iter != mStringMap.cend(); iter++) {
+    for (auto it = mStringMap.cbegin(); it != mStringMap.cend(); ++it) {
         pugi::xml_node node = doc.append_child("string");
-        node.append_attribute("name").set_value(iter->first.c_str());
-        node.append_attribute("value").set_value(iter->second.second.c_str());
+        node.append_attribute("name").set_value(it->first.c_str());
+        node.append_attribute("value").set_value(it->second.second.c_str());
     }
 
 #if defined(_WIN64)

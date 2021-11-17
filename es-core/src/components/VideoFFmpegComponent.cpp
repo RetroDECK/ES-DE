@@ -157,7 +157,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         // clang-format on
 
         // Round vertices.
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; ++i)
             vertices[i].pos = glm::round(vertices[i].pos);
 
         // This is needed to avoid a slight gap before the video starts playing.
@@ -557,7 +557,7 @@ void VideoFFmpegComponent::readFrames()
     }
 
     if (mVideoCodecContext && mFormatContext) {
-        for (int i = 0; i < readLoops; i++) {
+        for (int i = 0; i < readLoops; ++i) {
             if (static_cast<int>(mVideoFrameQueue.size()) < mVideoTargetQueueSize ||
                 (mAudioStreamIndex >= 0 &&
                  static_cast<int>(mAudioFrameQueue.size()) < mAudioTargetQueueSize)) {
@@ -567,7 +567,7 @@ void VideoFFmpegComponent::readFrames()
                             !avcodec_receive_frame(mVideoCodecContext, mVideoFrame)) {
 
                             int returnValue = 0;
-                            mVideoFrameReadCount++;
+                            ++mVideoFrameReadCount;
 
                             if (mSWDecoder) {
                                 // Drop the frame if necessary.
@@ -577,7 +577,7 @@ void VideoFFmpegComponent::readFrames()
                                         AV_BUFFERSRC_FLAG_NO_CHECK_FORMAT);
                                 }
                                 else {
-                                    mVideoFrameDroppedCount++;
+                                    ++mVideoFrameDroppedCount;
                                 }
                             }
                             else {
@@ -618,7 +618,7 @@ void VideoFFmpegComponent::readFrames()
                                     av_frame_free(&destFrame);
                                 }
                                 else {
-                                    mVideoFrameDroppedCount++;
+                                    ++mVideoFrameDroppedCount;
                                 }
                             }
 
@@ -785,7 +785,7 @@ void VideoFFmpegComponent::outputFrames()
                 audioLock.unlock();
             }
             mAudioFrameQueue.pop();
-            mAudioFrameCount++;
+            ++mAudioFrameCount;
         }
         else {
             break;
@@ -846,7 +846,7 @@ void VideoFFmpegComponent::outputFrames()
             pictureLock.unlock();
 
             mVideoFrameQueue.pop();
-            mVideoFrameCount++;
+            ++mVideoFrameCount;
         }
         else {
             break;
@@ -1006,7 +1006,7 @@ bool VideoFFmpegComponent::decoderInitHW()
     }
 
     // 50 is just an arbitrary number so we don't potentially get stuck in an endless loop.
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 50; ++i) {
         const AVCodecHWConfig* config = avcodec_get_hw_config(mHardwareCodec, i);
         if (!config) {
             LOG(LogDebug) << "VideoFFmpegComponent::decoderInitHW(): Hardware decoder \""
@@ -1038,7 +1038,7 @@ bool VideoFFmpegComponent::decoderInitHW()
 
         const enum AVPixelFormat* pixelFormats;
 
-        for (pixelFormats = pix_fmts; *pixelFormats != -1; pixelFormats++)
+        for (pixelFormats = pix_fmts; *pixelFormats != -1; ++pixelFormats)
             if (*pixelFormats == sPixelFormat)
                 return static_cast<enum AVPixelFormat>(sPixelFormat);
 
@@ -1100,7 +1100,7 @@ bool VideoFFmpegComponent::decoderInitHW()
                     // For some videos we need to process at least one extra frame to verify
                     // that the hardware encoder can actually be used, otherwise the fallback
                     // to software decoding would take place when it's not necessary.
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 3; ++i) {
                         if (avcodec_receive_frame(checkCodecContext, checkFrame) < 0) {
                             av_packet_unref(checkPacket);
                             while (av_read_frame(mFormatContext, checkPacket) == 0) {

@@ -220,7 +220,7 @@ void VideoVlcComponent::render(const glm::mat4& parentTrans)
         // clang-format on
 
         // Round vertices.
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; ++i)
             vertices[i].pos = glm::round(vertices[i].pos);
 
         // Build a texture for the video frame.
@@ -363,7 +363,7 @@ void VideoVlcComponent::startVideo()
                     // Wait for a maximum of 1 second for the media parsing.
                     // This maximum time is quite excessive as this step should normally
                     // be completed in 15 - 30 ms or so.
-                    for (int i = 0; i < 200; i++) {
+                    for (int i = 0; i < 200; ++i) {
                         if (libvlc_media_get_parsed_status(mMedia))
                             break;
                         SDL_Delay(5);
@@ -372,7 +372,7 @@ void VideoVlcComponent::startVideo()
 
                 libvlc_media_track_t** tracks;
                 track_count = libvlc_media_tracks_get(mMedia, &tracks);
-                for (unsigned track = 0; track < track_count; track++) {
+                for (unsigned track = 0; track < track_count; ++track) {
                     if (tracks[track]->i_type == libvlc_track_video) {
                         mVideoWidth = tracks[track]->video->i_width;
                         mVideoHeight = tracks[track]->video->i_height;
@@ -456,7 +456,7 @@ void VideoVlcComponent::startVideo()
                         // video player audio volume is apparently not properly handled by libVLC.
                         // This maximum time is quite excessive as this step should normally
                         // be completed in 4 - 16 ms or so even on slower machines.
-                        for (int i = 0; i < 50; i++) {
+                        for (int i = 0; i < 50; ++i) {
                             state = libvlc_media_player_get_state(mMediaPlayer);
                             if (state == libvlc_Playing) {
                                 // This additional delay is needed to prevent some kind of race

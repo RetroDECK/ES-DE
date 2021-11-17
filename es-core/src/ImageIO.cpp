@@ -45,12 +45,12 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
                     // Loop through scanlines and add all pixel data to the return vector.
                     // This is necessary, because width*height*bpp might not be == pitch.
                     unsigned char* tempData = new unsigned char[width * height * 4];
-                    for (size_t i = 0; i < height; i++) {
+                    for (size_t i = 0; i < height; ++i) {
                         const BYTE* scanLine = FreeImage_GetScanLine(fiBitmap, static_cast<int>(i));
                         memcpy(tempData + (i * width * 4), scanLine, width * 4);
                     }
                     // Convert from BGRA to RGBA.
-                    for (size_t i = 0; i < width * height; i++) {
+                    for (size_t i = 0; i < width * height; ++i) {
                         RGBQUAD bgra = reinterpret_cast<RGBQUAD*>(tempData)[i];
                         RGBQUAD rgba;
                         rgba.rgbBlue = bgra.rgbRed;
@@ -83,8 +83,8 @@ void ImageIO::flipPixelsVert(unsigned char* imagePx, const size_t& width, const 
 {
     unsigned int temp;
     unsigned int* arr = reinterpret_cast<unsigned int*>(imagePx);
-    for (size_t y = 0; y < height / 2; y++) {
-        for (size_t x = 0; x < width; x++) {
+    for (size_t y = 0; y < height / 2; ++y) {
+        for (size_t x = 0; x < width; ++x) {
             temp = arr[x + (y * width)];
             arr[x + (y * width)] = arr[x + (height * width) - ((y + 1) * width)];
             arr[x + (height * width) - ((y + 1) * width)] = temp;

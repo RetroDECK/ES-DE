@@ -63,7 +63,7 @@ namespace Renderer
         mProgramID = glCreateProgram();
 
         // Compile and attach all shaders that have been loaded.
-        for (auto it = shaderVector.cbegin(); it != shaderVector.cend(); it++) {
+        for (auto it = shaderVector.cbegin(); it != shaderVector.cend(); ++it) {
             GLuint currentShader = glCreateShader(std::get<2>(*it));
             GLchar const* shaderCodePtr = std::get<1>(*it).c_str();
 

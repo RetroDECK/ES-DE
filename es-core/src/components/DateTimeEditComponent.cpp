@@ -124,17 +124,17 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
         }
 
         if (mTime != 0 && config->isMappedLike("right", input) && input.value) {
-            mEditIndex++;
+            ++mEditIndex;
             if (mEditIndex >= static_cast<int>(mCursorBoxes.size()))
-                mEditIndex--;
+                --mEditIndex;
             mKeyRepeatDir = 0;
             return true;
         }
 
         if (mTime != 0 && config->isMappedLike("left", input) && input.value) {
-            mEditIndex--;
+            --mEditIndex;
             if (mEditIndex < 0)
-                mEditIndex++;
+                ++mEditIndex;
             mKeyRepeatDir = 0;
             return true;
         }

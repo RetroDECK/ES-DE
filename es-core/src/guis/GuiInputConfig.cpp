@@ -84,7 +84,7 @@ GuiInputConfig::GuiInputConfig(Window* window,
     mList = std::make_shared<ComponentList>(mWindow);
     mGrid.setEntry(mList, glm::ivec2{0, 5}, true, true);
 
-    for (int i = 0; i < inputCount; i++) {
+    for (int i = 0; i < inputCount; ++i) {
         ComponentListRow row;
 
         // Icon.

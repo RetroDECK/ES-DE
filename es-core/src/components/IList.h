@@ -174,7 +174,7 @@ public:
     // Returns true if successful (select is in our list), false if not.
     bool setCursor(const UserData& obj)
     {
-        for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
+        for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
             if ((*it).object == obj) {
                 mCursor = static_cast<int>(it - mEntries.cbegin());
                 onCursorChanged(CURSOR_STOPPED);
@@ -190,7 +190,7 @@ public:
 
     bool remove(const UserData& obj)
     {
-        for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
+        for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
             if ((*it).object == obj) {
                 remove(it);
                 return true;
@@ -206,7 +206,7 @@ protected:
     void remove(typename std::vector<Entry>::const_iterator& it)
     {
         if (mCursor > 0 && it - mEntries.cbegin() <= mCursor) {
-            mCursor--;
+            --mCursor;
             onCursorChanged(CURSOR_STOPPED);
         }
 
@@ -267,18 +267,18 @@ protected:
         int scrollCount = 0;
         while (mScrollCursorAccumulator >= mTierList.tiers[mScrollTier].scrollDelay) {
             mScrollCursorAccumulator -= mTierList.tiers[mScrollTier].scrollDelay;
-            scrollCount++;
+            ++scrollCount;
         }
 
         // Should we go to the next scrolling tier?
         while (mScrollTier < mTierList.count - 1 &&
                mScrollTierAccumulator >= mTierList.tiers[mScrollTier].length) {
             mScrollTierAccumulator -= mTierList.tiers[mScrollTier].length;
-            mScrollTier++;
+            ++mScrollTier;
         }
 
         // Actually perform the scrolling.
-        for (int i = 0; i < scrollCount; i++)
+        for (int i = 0; i < scrollCount; ++i)
             scroll(mScrollVelocity);
     }
 

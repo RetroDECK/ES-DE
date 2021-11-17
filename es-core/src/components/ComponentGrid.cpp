@@ -24,9 +24,9 @@ ComponentGrid::ComponentGrid(Window* window, const glm::ivec2& gridDimensions)
     mColWidths = new float[gridDimensions.x];
     mRowHeights = new float[gridDimensions.y];
 
-    for (int x = 0; x < gridDimensions.x; x++)
+    for (int x = 0; x < gridDimensions.x; ++x)
         mColWidths[x] = 0;
-    for (int y = 0; y < gridDimensions.y; y++)
+    for (int y = 0; y < gridDimensions.y; ++y)
         mRowHeights[y] = 0;
 }
 
@@ -46,10 +46,10 @@ float ComponentGrid::getColWidth(int col)
     // Calculate automatic width.
     float freeWidthPerc = 1;
     int between = 0;
-    for (int x = 0; x < mGridSize.x; x++) {
+    for (int x = 0; x < mGridSize.x; ++x) {
         freeWidthPerc -= mColWidths[x]; // If it's 0 it won't do anything.
         if (mColWidths[x] == 0)
-            between++;
+            ++between;
     }
 
     return (freeWidthPerc * mSize.x) / static_cast<float>(between);
@@ -65,10 +65,10 @@ float ComponentGrid::getRowHeight(int row)
     // Calculate automatic height.
     float freeHeightPerc = 1;
     int between = 0;
-    for (int y = 0; y < mGridSize.y; y++) {
+    for (int y = 0; y < mGridSize.y; ++y) {
         freeHeightPerc -= mRowHeights[y]; // If it's 0 it won't do anything.
         if (mRowHeights[y] == 0)
-            between++;
+            ++between;
     }
 
     return (freeHeightPerc * mSize.y) / static_cast<float>(between);
@@ -122,7 +122,7 @@ void ComponentGrid::setEntry(const std::shared_ptr<GuiComponent>& comp,
 
 bool ComponentGrid::removeEntry(const std::shared_ptr<GuiComponent>& comp)
 {
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
+    for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         if (it->component == comp) {
             removeChild(comp.get());
             mCells.erase(it);
@@ -137,9 +137,9 @@ void ComponentGrid::updateCellComponent(const GridEntry& cell)
 {
     // Size.
     glm::vec2 size{0.0f};
-    for (int x = cell.pos.x; x < cell.pos.x + cell.dim.x; x++)
+    for (int x = cell.pos.x; x < cell.pos.x + cell.dim.x; ++x)
         size.x += getColWidth(x);
-    for (int y = cell.pos.y; y < cell.pos.y + cell.dim.y; y++)
+    for (int y = cell.pos.y; y < cell.pos.y + cell.dim.y; ++y)
         size.y += getRowHeight(y);
 
     if (cell.resize && size != glm::vec2{} && cell.component->getSize() != size)
@@ -147,9 +147,9 @@ void ComponentGrid::updateCellComponent(const GridEntry& cell)
 
     // Find top left corner.
     glm::vec3 pos{};
-    for (int x = 0; x < cell.pos.x; x++)
+    for (int x = 0; x < cell.pos.x; ++x)
         pos.x += getColWidth(x);
-    for (int y = 0; y < cell.pos.y; y++)
+    for (int y = 0; y < cell.pos.y; ++y)
         pos.y += getRowHeight(y);
 
     // Center component.
@@ -168,20 +168,20 @@ void ComponentGrid::updateSeparators()
     glm::vec2 pos;
     glm::vec2 size;
 
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
+    for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         if (!it->border && !drawAll)
             continue;
 
         // Find component position + size.
         pos = glm::vec2{};
         size = glm::vec2{};
-        for (int x = 0; x < it->pos.x; x++)
+        for (int x = 0; x < it->pos.x; ++x)
             pos[0] += getColWidth(x);
-        for (int y = 0; y < it->pos.y; y++)
+        for (int y = 0; y < it->pos.y; ++y)
             pos[1] += getRowHeight(y);
-        for (int x = it->pos.x; x < it->pos.x + it->dim.x; x++)
+        for (int x = it->pos.x; x < it->pos.x + it->dim.x; ++x)
             size[0] += getColWidth(x);
-        for (int y = it->pos.y; y < it->pos.y + it->dim.y; y++)
+        for (int y = it->pos.y; y < it->pos.y + it->dim.y; ++y)
             size[1] += getRowHeight(y);
 
         if (size == glm::vec2{})
@@ -224,7 +224,7 @@ void ComponentGrid::updateSeparators()
 
 void ComponentGrid::onSizeChanged()
 {
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++)
+    for (auto it = mCells.cbegin(); it != mCells.cend(); ++it)
         updateCellComponent(*it);
 
     updateSeparators();
@@ -234,7 +234,7 @@ const ComponentGrid::GridEntry* ComponentGrid::getCellAt(int x, int y) const
 {
     assert(x >= 0 && x < mGridSize.x && y >= 0 && y < mGridSize.y);
 
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
+    for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         int xmin = it->pos.x;
         int xmax = xmin + it->dim.x;
         int ymin = it->pos.y;
@@ -281,7 +281,7 @@ void ComponentGrid::resetCursor()
     if (!mCells.size())
         return;
 
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
+    for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         if (it->canFocus) {
             glm::ivec2 origCursor = mCursor;
             mCursor = it->pos;
@@ -414,7 +414,7 @@ void ComponentGrid::update(int deltaTime)
 {
     // Update everything.
     const GridEntry* cursorEntry = getCellAt(mCursor);
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
+    for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         if (it->updateType == UPDATE_ALWAYS ||
             (it->updateType == UPDATE_WHEN_SELECTED && cursorEntry == &(*it))) {
             it->component->update(deltaTime);
@@ -429,7 +429,7 @@ void ComponentGrid::render(const glm::mat4& parentTrans)
     renderChildren(trans);
 
     // Draw cell separators.
-    for (size_t i = 0; i < mSeparators.size(); i++) {
+    for (size_t i = 0; i < mSeparators.size(); ++i) {
         Renderer::setMatrix(trans);
         Renderer::drawRect(mSeparators[i][0], mSeparators[i][1], mSeparators[i][2],
                            mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);
@@ -458,7 +458,7 @@ void ComponentGrid::onCursorMoved(glm::ivec2 from, glm::ivec2 to)
 
 void ComponentGrid::setCursorTo(const std::shared_ptr<GuiComponent>& comp)
 {
-    for (auto it = mCells.cbegin(); it != mCells.cend(); it++) {
+    for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         if (it->component == comp) {
             glm::ivec2 oldCursor{mCursor};
             mCursor = it->pos;

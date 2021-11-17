@@ -94,7 +94,7 @@ namespace Renderer
             displayIndex = 0;
         }
         else {
-            displayIndex--;
+            --displayIndex;
         }
 
         int availableDisplays = SDL_GetNumVideoDisplays();
@@ -286,7 +286,7 @@ namespace Renderer
         shaderFiles.push_back(":/shaders/glsl/blur_vertical.glsl");
         shaderFiles.push_back(":/shaders/glsl/scanlines.glsl");
 
-        for (auto it = shaderFiles.cbegin(); it != shaderFiles.cend(); it++) {
+        for (auto it = shaderFiles.cbegin(); it != shaderFiles.cend(); ++it) {
             Shader* loadShader = new Shader();
 
             loadShader->loadShaderFile(*it, GL_VERTEX_SHADER);
@@ -307,7 +307,7 @@ namespace Renderer
     static void destroyWindow()
     {
 #if defined(USE_OPENGL_21)
-        for (auto it = sShaderProgramVector.cbegin(); it != sShaderProgramVector.cend(); it++)
+        for (auto it = sShaderProgramVector.cbegin(); it != sShaderProgramVector.cend(); ++it)
             delete *it;
 #endif
 
@@ -492,7 +492,7 @@ namespace Renderer
         // clang-format on
 
         // Round vertices.
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; ++i)
             vertices[i].pos = glm::round(vertices[i].pos);
 
         if (opacity < 1.0) {
@@ -533,7 +533,7 @@ namespace Renderer
         // of shifts required to reach 0.
         while (shaderID > 0) {
             shaderID = shaderID >> 1;
-            index++;
+            ++index;
         }
 
         if (sShaderProgramVector.size() > index - 1)

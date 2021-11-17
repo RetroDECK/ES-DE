@@ -136,7 +136,7 @@ void RatingComponent::updateColors()
 {
     const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; ++i)
         mVertices[i].col = color;
 }
 
@@ -158,7 +158,7 @@ void RatingComponent::render(const glm::mat4& parentTrans)
         if (mUnfilledTexture->bind()) {
             if (mUnfilledColor != mColorShift) {
                 const unsigned int color = Renderer::convertRGBAToABGR(mUnfilledColor);
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 8; ++i)
                     mVertices[i].col = color;
             }
 

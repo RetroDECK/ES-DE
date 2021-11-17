@@ -156,10 +156,10 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     std::vector<std::vector<std::shared_ptr<ButtonComponent>>> buttonList;
 
     // Create keyboard.
-    for (int i = 0; i < static_cast<int>(kbLayout.size()) / 4; i++) {
+    for (int i = 0; i < static_cast<int>(kbLayout.size()) / 4; ++i) {
         std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-        for (int j = 0; j < static_cast<int>(kbLayout[i].size()); j++) {
+        for (int j = 0; j < static_cast<int>(kbLayout[i].size()); ++j) {
             std::string lower = kbLayout[4 * i][j];
             if (lower.empty() || lower == "-rowspan-" || lower == "-colspan-")
                 continue;
@@ -215,9 +215,9 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
             buttons.push_back(button);
 
             int colSpan = 1;
-            for (int cs = j + 1; cs < static_cast<int>(kbLayout[i].size()); cs++) {
+            for (int cs = j + 1; cs < static_cast<int>(kbLayout[i].size()); ++cs) {
                 if (std::string(kbLayout[4 * i][cs]) == "-colspan-")
-                    colSpan++;
+                    ++colSpan;
                 else
                     break;
             }
@@ -225,7 +225,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
             int rowSpan = 1;
             for (int cs = (4 * i) + 4; cs < static_cast<int>(kbLayout.size()); cs += 4) {
                 if (std::string(kbLayout[cs][j]) == "-rowspan-")
-                    rowSpan++;
+                    ++rowSpan;
                 else
                     break;
             }

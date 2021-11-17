@@ -76,14 +76,14 @@ public:
     void setFont(const std::shared_ptr<Font>& font)
     {
         mFont = font;
-        for (auto it = mEntries.begin(); it != mEntries.end(); it++)
+        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
             it->data.textCache.reset();
     }
 
     void setUppercase(bool uppercase)
     {
         mUppercase = uppercase;
-        for (auto it = mEntries.begin(); it != mEntries.end(); it++)
+        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
             it->data.textCache.reset();
     }
 
@@ -228,7 +228,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         glm::ivec2{static_cast<int>(std::round(dim.x - mHorizontalMargin * 2.0f)),
                    static_cast<int>(std::round(dim.y))});
 
-    for (int i = startEntry; i < listCutoff; i++) {
+    for (int i = startEntry; i < listCutoff; ++i) {
         typename IList<TextListData, T>::Entry& entry = mEntries.at(static_cast<unsigned int>(i));
 
         unsigned int color;

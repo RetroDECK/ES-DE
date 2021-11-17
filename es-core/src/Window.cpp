@@ -82,7 +82,7 @@ void Window::pushGui(GuiComponent* gui)
 
 void Window::removeGui(GuiComponent* gui)
 {
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it) {
         if (*it == gui) {
             it = mGuiStack.erase(it);
 
@@ -143,7 +143,7 @@ bool Window::init()
 void Window::deinit()
 {
     // Hide all GUI elements on uninitialisation - this disable.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
         (*it)->onHide();
 
 #if defined(USE_OPENGL_21)
@@ -310,7 +310,7 @@ void Window::update(int deltaTime)
     }
 
     mFrameTimeElapsed += deltaTime;
-    mFrameCountElapsed++;
+    ++mFrameCountElapsed;
     if (mFrameTimeElapsed > 500) {
         mAverageDeltaTime = mFrameTimeElapsed / mFrameCountElapsed;
 
@@ -646,7 +646,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
 
     std::map<std::string, bool> inputSeenMap;
     std::map<std::string, int> mappedToSeenMap;
-    for (auto it = prompts.cbegin(); it != prompts.cend(); it++) {
+    for (auto it = prompts.cbegin(); it != prompts.cend(); ++it) {
         // Only add it if the same icon hasn't already been added.
         if (inputSeenMap.emplace(it->first, true).second) {
             // This symbol hasn't been seen yet, what about the action name?
@@ -697,7 +697,7 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
                           aVal = i;
                       if (b.first == map[i])
                           bVal = i;
-                      i++;
+                      ++i;
                   }
 
                   return aVal > bVal;
@@ -727,7 +727,7 @@ void Window::startScreensaver()
 {
     if (mScreensaver && !mRenderScreensaver) {
         // Tell the GUI components the screensaver is starting.
-        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
             (*it)->onScreensaverActivate();
 
         setAllowTextScrolling(false);
@@ -744,7 +744,7 @@ bool Window::stopScreensaver()
         setAllowTextScrolling(true);
 
         // Tell the GUI components the screensaver has stopped.
-        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++) {
+        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it) {
             (*it)->onScreensaverDeactivate();
             // If the menu is open, pause the video so it won't start playing beneath the menu.
             if (mGuiStack.front() != mGuiStack.back())
@@ -799,9 +799,9 @@ void Window::closeLaunchScreen()
     mRenderLaunchScreen = false;
 }
 
-void Window::increaseVideoPlayerCount() { mVideoPlayerCount++; }
+void Window::increaseVideoPlayerCount() { ++mVideoPlayerCount; }
 
-void Window::decreaseVideoPlayerCount() { mVideoPlayerCount--; }
+void Window::decreaseVideoPlayerCount() { --mVideoPlayerCount; }
 
 int Window::getVideoPlayerCount()
 {
@@ -813,7 +813,7 @@ int Window::getVideoPlayerCount()
 void Window::setLaunchedGame()
 {
     // Tell the GUI components that a game has been launched.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
         (*it)->onGameLaunchedActivate();
 
     mGameLaunchedState = true;
@@ -822,7 +822,7 @@ void Window::setLaunchedGame()
 void Window::unsetLaunchedGame()
 {
     // Tell the GUI components that the user is back in ES-DE again.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); it++)
+    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
         (*it)->onGameLaunchedDeactivate();
 
     mGameLaunchedState = false;

@@ -17,7 +17,7 @@ TextureDataManager::TextureDataManager()
 {
     unsigned char data[5 * 5 * 4];
     mBlank = std::make_shared<TextureData>(false);
-    for (int i = 0; i < (5 * 5); i++) {
+    for (int i = 0; i < (5 * 5); ++i) {
         data[i * 4] = (i % 2) * 255;
         data[i * 4 + 1] = (i % 2) * 255;
         data[i * 4 + 2] = (i % 2) * 255;
@@ -132,7 +132,7 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
 
     size_t max_texture = settingVRAM * 1024 * 1024;
 
-    for (auto it = mTextures.crbegin(); it != mTextures.crend(); it++) {
+    for (auto it = mTextures.crbegin(); it != mTextures.crend(); ++it) {
         if (size < max_texture)
             break;
         (*it)->releaseVRAM();

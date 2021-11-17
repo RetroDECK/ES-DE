@@ -60,7 +60,7 @@ GuiMsgBox::GuiMsgBox(Window* window,
         mAcceleratorFunc = mButtons.front()->getPressedFunc();
     }
     else {
-        for (auto it = mButtons.cbegin(); it != mButtons.cend(); it++) {
+        for (auto it = mButtons.cbegin(); it != mButtons.cend(); ++it) {
             if (Utils::String::toUpper((*it)->getText()) == "OK" ||
                 Utils::String::toUpper((*it)->getText()) == "NO") {
                 mAcceleratorFunc = (*it)->getPressedFunc();

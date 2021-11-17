@@ -37,9 +37,9 @@ namespace Scripting
         if (Utils::FileSystem::exists(scriptDir))
             scriptDirList.push_back(scriptDir);
 
-        for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); dirIt++) {
+        for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); ++dirIt) {
             std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
-            for (auto it = scripts.cbegin(); it != scripts.cend(); it++) {
+            for (auto it = scripts.cbegin(); it != scripts.cend(); ++it) {
                 std::string arg1Quotation;
                 std::string arg2Quotation;
                 // Add quotation marks around the arguments as long as these are not already

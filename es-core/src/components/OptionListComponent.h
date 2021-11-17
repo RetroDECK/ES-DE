@@ -164,7 +164,7 @@ public:
     std::vector<T> getSelectedObjects()
     {
         std::vector<T> ret;
-        for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
+        for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
             if (it->selected)
                 ret.push_back(it->object);
         }
@@ -219,14 +219,14 @@ public:
 
     void selectAll()
     {
-        for (unsigned int i = 0; i < mEntries.size(); i++)
+        for (unsigned int i = 0; i < mEntries.size(); ++i)
             mEntries.at(i).selected = true;
         onSelectedChanged();
     }
 
     void selectNone()
     {
-        for (unsigned int i = 0; i < mEntries.size(); i++)
+        for (unsigned int i = 0; i < mEntries.size(); ++i)
             mEntries.at(i).selected = false;
         onSelectedChanged();
     }
@@ -240,7 +240,7 @@ public:
     unsigned int getSelectedId()
     {
         assert(mMultiSelect == false);
-        for (unsigned int i = 0; i < mEntries.size(); i++) {
+        for (unsigned int i = 0; i < mEntries.size(); ++i) {
             if (mEntries.at(i).selected)
                 return i;
         }
@@ -333,7 +333,7 @@ private:
         }
         else {
             // Display the selected entry and left/right option arrows.
-            for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
+            for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
                 if (it->selected) {
                     if (it->maxNameLength > 0.0f &&
                         Font::get(FONT_SIZE_MEDIUM)->sizeText(Utils::String::toUpper(it->name)).x >
@@ -441,7 +441,7 @@ private:
             std::vector<ImageComponent*> checkBoxes;
             std::vector<TextComponent*> textEntries;
 
-            for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); it++) {
+            for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); ++it) {
                 row.elements.clear();
                 auto textComponent = std::make_shared<TextComponent>(
                     mWindow, Utils::String::toUpper(it->name), font, 0x777777FF);
@@ -481,7 +481,7 @@ private:
                         // When selecting a row and the exclusive selection flag has been set,
                         // gray out and disable all other rows.
                         if (mParent->mMultiExclusiveSelect) {
-                            for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
+                            for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
 
                                 bool isSelected = mParent->mEntries[cursorId].selected;
 
@@ -529,7 +529,7 @@ private:
             if (mParent->mMultiSelect) {
                 if (!mParent->mMultiExclusiveSelect) {
                     mMenu.addButton("SELECT ALL", "select all", [this, checkBoxes] {
-                        for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
+                        for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
                             mParent->mEntries.at(i).selected = true;
                             checkBoxes.at(i)->setImage(CHECKED_PATH);
                         }
@@ -538,7 +538,7 @@ private:
                 }
 
                 mMenu.addButton("SELECT NONE", "select none", [this, checkBoxes, textEntries] {
-                    for (unsigned int i = 0; i < mParent->mEntries.size(); i++) {
+                    for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
                         mParent->mEntries.at(i).selected = false;
                         checkBoxes.at(i)->setImage(UNCHECKED_PATH);
                         if (mParent->mMultiExclusiveSelect) {

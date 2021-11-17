@@ -24,7 +24,7 @@ void AnimatedImageComponent::load(const AnimationDef* def)
 
     assert(def->frameCount >= 1);
 
-    for (size_t i = 0; i < def->frameCount; i++) {
+    for (size_t i = 0; i < def->frameCount; ++i) {
         if (def->frames[i].path != "" &&
             !ResourceManager::getInstance()->fileExists(def->frames[i].path)) {
             LOG(LogError) << "Missing animation frame " << i << " (\"" << def->frames[i].path
@@ -54,7 +54,7 @@ void AnimatedImageComponent::reset()
 
 void AnimatedImageComponent::onSizeChanged()
 {
-    for (auto it = mFrames.cbegin(); it != mFrames.cend(); it++) {
+    for (auto it = mFrames.cbegin(); it != mFrames.cend(); ++it) {
         it->first->setResize(mSize.x, mSize.y);
     }
 }
@@ -67,7 +67,7 @@ void AnimatedImageComponent::update(int deltaTime)
     mFrameAccumulator += deltaTime;
 
     while (mFrames.at(mCurrentFrame).second <= mFrameAccumulator) {
-        mCurrentFrame++;
+        ++mCurrentFrame;
 
         if (mCurrentFrame == static_cast<int>(mFrames.size())) {
             if (mLoop) {
@@ -76,7 +76,7 @@ void AnimatedImageComponent::update(int deltaTime)
             }
             else {
                 // Done, stop at last frame.
-                mCurrentFrame--;
+                --mCurrentFrame;
                 mEnabled = false;
                 break;
             }

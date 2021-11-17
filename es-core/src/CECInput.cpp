@@ -137,7 +137,7 @@ CECInput::CECInput()
         return;
     }
 
-    for (int i = 0; i < numAdapters; i++)
+    for (int i = 0; i < numAdapters; ++i)
         LOG(LogDebug) << "CEC adapter: " << i << " path: " << adapters[i].strComPath
                       << " name: " << adapters[i].strComName;
 

@@ -33,7 +33,7 @@ GuiComponent::GuiComponent(Window* window)
     , mEnabled(true)
     , mTransform(Renderer::getIdentity())
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; i++)
+    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
         mAnimationMap[i] = nullptr;
 }
 
@@ -46,13 +46,13 @@ GuiComponent::~GuiComponent()
     if (mParent)
         mParent->removeChild(this);
 
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->setParent(nullptr);
 }
 
 bool GuiComponent::input(InputConfig* config, Input input)
 {
-    for (unsigned int i = 0; i < getChildCount(); i++) {
+    for (unsigned int i = 0; i < getChildCount(); ++i) {
         if (getChild(i)->input(config, input))
             return true;
     }
@@ -62,13 +62,13 @@ bool GuiComponent::input(InputConfig* config, Input input)
 
 void GuiComponent::updateSelf(int deltaTime)
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; i++)
+    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
         advanceAnimation(i, deltaTime);
 }
 
 void GuiComponent::updateChildren(int deltaTime)
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->update(deltaTime);
 }
 
@@ -89,7 +89,7 @@ void GuiComponent::render(const glm::mat4& parentTrans)
 
 void GuiComponent::renderChildren(const glm::mat4& transform) const
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->render(transform);
 }
 
@@ -147,7 +147,7 @@ void GuiComponent::removeChild(GuiComponent* cmp)
 
     cmp->setParent(nullptr);
 
-    for (auto i = mChildren.cbegin(); i != mChildren.cend(); i++) {
+    for (auto i = mChildren.cbegin(); i != mChildren.cend(); ++i) {
         if (*i == cmp) {
             mChildren.erase(i);
             return;
@@ -179,7 +179,7 @@ void GuiComponent::setOpacity(unsigned char opacity)
         return;
 
     mOpacity = opacity;
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); it++)
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
         (*it)->setOpacity(opacity);
 }
 
@@ -216,8 +216,8 @@ const glm::mat4& GuiComponent::getTransform()
 
 void GuiComponent::textInput(const std::string& text)
 {
-    for (auto iter = mChildren.cbegin(); iter != mChildren.cend(); iter++)
-        (*iter)->textInput(text);
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
+        (*it)->textInput(text);
 }
 
 void GuiComponent::setAnimation(Animation* anim,
@@ -299,13 +299,13 @@ bool GuiComponent::advanceAnimation(unsigned char slot, unsigned int time)
 
 void GuiComponent::stopAllAnimations()
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; i++)
+    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
         stopAnimation(i);
 }
 
 void GuiComponent::cancelAllAnimations()
 {
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; i++)
+    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
         cancelAnimation(i);
 }
 
@@ -370,60 +370,60 @@ void GuiComponent::updateHelpPrompts()
 
 void GuiComponent::onShow()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onShow();
 }
 
 void GuiComponent::onHide()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onHide();
 }
 
 void GuiComponent::onStopVideo()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onStopVideo();
 }
 
 void GuiComponent::onPauseVideo()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onPauseVideo();
 }
 
 void GuiComponent::onUnpauseVideo()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onUnpauseVideo();
 }
 
 void GuiComponent::onScreensaverActivate()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onScreensaverActivate();
 }
 
 void GuiComponent::onScreensaverDeactivate()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onScreensaverDeactivate();
 }
 
 void GuiComponent::onGameLaunchedActivate()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onGameLaunchedActivate();
 }
 
 void GuiComponent::onGameLaunchedDeactivate()
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onGameLaunchedDeactivate();
 }
 
 void GuiComponent::topWindow(bool isTop)
 {
-    for (unsigned int i = 0; i < getChildCount(); i++)
+    for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->topWindow(isTop);
 }

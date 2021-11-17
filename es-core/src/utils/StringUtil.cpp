@@ -328,7 +328,7 @@ namespace Utils
             }
             else {
                 // Error, invalid character.
-                cursor++;
+                ++cursor;
             }
 
             return result;
@@ -394,7 +394,7 @@ namespace Utils
             size_t result = cursor;
 
             while (result < stringArg.length()) {
-                result++;
+                ++result;
 
                 // Break if current character is not 10xxxxxx
                 if ((stringArg[result] & 0xC0) != 0x80)
@@ -409,7 +409,7 @@ namespace Utils
             size_t result = cursor;
 
             while (result > 0) {
-                result--;
+                --result;
 
                 // Break if current character is not 10xxxxxx
                 if ((stringArg[result] & 0xC0) != 0x80)
@@ -424,11 +424,11 @@ namespace Utils
             size_t result = cursor;
 
             if (amount > 0) {
-                for (int i = 0; i < amount; i++)
+                for (int i = 0; i < amount; ++i)
                     result = nextCursor(stringArg, result);
             }
             else if (amount < 0) {
-                for (int i = amount; i < 0; i++)
+                for (int i = amount; i < 0; ++i)
                     result = prevCursor(stringArg, result);
             }
 
@@ -445,7 +445,7 @@ namespace Utils
                 // Normal UTF-8 ASCII character.
                 if (checkCharType <= 0x7F) {
                     stringLower += static_cast<char>(tolower(stringArg[i]));
-                    i++;
+                    ++i;
                 }
                 // Four-byte Unicode character, no case conversion done.
                 else if (checkCharType >= 0xF0) {
@@ -498,7 +498,7 @@ namespace Utils
                 // Normal UTF-8 ASCII character.
                 if (checkCharType <= 0x7F) {
                     stringUpper += static_cast<char>(toupper(stringArg[i]));
-                    i++;
+                    ++i;
                 }
                 // Four-byte Unicode character, no case conversion done.
                 else if (checkCharType >= 0xF0) {
@@ -546,7 +546,7 @@ namespace Utils
             std::string line = stringArg;
             bool active = true;
 
-            for (int i = 0; line[i] != '\0'; i++) {
+            for (int i = 0; line[i] != '\0'; ++i) {
                 if (std::isalpha(line[i])) {
                     if (active) {
                         line[i] = Utils::String::toUpper(std::string(1, line[i]))[0];
@@ -691,7 +691,7 @@ namespace Utils
             }
 
             for (std::vector<std::string>::const_iterator it = vectorArg.cbegin();
-                 it != vectorArg.cend(); it++)
+                 it != vectorArg.cend(); ++it)
                 resultString += (resultString.length() ? delimiter : "") + (*it);
 
             return resultString;
@@ -701,7 +701,7 @@ namespace Utils
         {
             std::string buffer = input;
 
-            for (size_t i = 0; i < input.size(); i++)
+            for (size_t i = 0; i < input.size(); ++i)
                 buffer[i] = input[i] ^ key[i];
 
             return buffer;

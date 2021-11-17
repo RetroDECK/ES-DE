@@ -170,7 +170,7 @@ void HelpComponent::assignIcons()
                 }
             }
         }
-        it++;
+        ++it;
     }
 }
 
@@ -216,7 +216,7 @@ void HelpComponent::updateGrid()
     // State variable indicating whether gui is dimmed.
     bool isDimmed = mWindow->isBackgroundDimmed();
 
-    for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); it++) {
+    for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); ++it) {
         auto icon = std::make_shared<ImageComponent>(mWindow);
         icon->setImage(getIconTexture(it->first.c_str()), false);
         icon->setColorShift(isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor);
@@ -242,7 +242,7 @@ void HelpComponent::updateGrid()
 
     mGrid->setSize(width, height);
 
-    for (unsigned int i = 0; i < icons.size(); i++) {
+    for (unsigned int i = 0; i < icons.size(); ++i) {
         const int col = i * 4;
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(
@@ -285,7 +285,7 @@ void HelpComponent::setOpacity(unsigned char opacity)
 {
     GuiComponent::setOpacity(opacity);
 
-    for (unsigned int i = 0; i < mGrid->getChildCount(); i++)
+    for (unsigned int i = 0; i < mGrid->getChildCount(); ++i)
         mGrid->getChild(i)->setOpacity(opacity);
 }
 

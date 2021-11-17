@@ -106,7 +106,7 @@ namespace Utils
             // Encodes unsigned int input into unsigned char output. Assumes len is a multiple of 4.
             auto encodeFunc = [](unsigned char output[], const unsigned int input[],
                                  unsigned int len) {
-                for (unsigned int i = 0, j = 0; j < len; i++, j += 4) {
+                for (unsigned int i = 0, j = 0; j < len; ++i, j += 4) {
                     output[j] = input[i] & 0xff;
                     output[j + 1] = (input[i] >> 8) & 0xff;
                     output[j + 2] = (input[i] >> 16) & 0xff;
@@ -134,7 +134,7 @@ namespace Utils
 
             // Convert to hex string.
             char buf[33];
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 16; ++i)
                 sprintf(buf + i * 2, "%02x", digest[i]);
             buf[32] = 0;
 
@@ -152,7 +152,7 @@ namespace Utils
 
             // Update number of bits.
             if ((count[0] += (length << 3)) < (length << 3))
-                count[1]++;
+                ++count[1];
             count[1] += (length >> 29);
 
             // Number of bytes we need to fill in buffer.
@@ -188,7 +188,7 @@ namespace Utils
             unsigned int x[16]{};
 
             // Encodes unsigned int input into unsigned char output. Assumes len is a multiple of 4.
-            for (unsigned int i = 0, j = 0; j < 64; i++, j += 4)
+            for (unsigned int i = 0, j = 0; j < 64; ++i, j += 4)
                 x[i] = (static_cast<unsigned int>(block[j])) |
                        ((static_cast<unsigned int>(block[j + 1])) << 8) |
                        ((static_cast<unsigned int>(block[j + 2])) << 16) |

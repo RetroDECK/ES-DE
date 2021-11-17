@@ -70,7 +70,7 @@ public:
     void setFiles(const std::deque<std::string>& deque)
     {
         *this << "From theme \"" << deque.front() << "\"";
-        for (auto it = deque.cbegin() + 1; it != deque.cend(); it++)
+        for (auto it = deque.cbegin() + 1; it != deque.cend(); ++it)
             *this << " -> \"" << (*it) << "\"";
     }
 };

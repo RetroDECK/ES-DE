@@ -25,7 +25,7 @@ std::string HttpReq::urlEncode(const std::string& s)
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
 
     std::string escaped = "";
-    for (size_t i = 0; i < s.length(); i++) {
+    for (size_t i = 0; i < s.length(); ++i) {
         if (unreserved.find_first_of(s[i]) != std::string::npos) {
             escaped.push_back(s[i]);
         }

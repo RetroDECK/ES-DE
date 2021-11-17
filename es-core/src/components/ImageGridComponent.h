@@ -204,7 +204,7 @@ template <typename T> void ImageGridComponent<T>::update(int deltaTime)
     GuiComponent::update(deltaTime);
     listUpdate(deltaTime);
 
-    for (auto it = mTiles.begin(); it != mTiles.end(); it++)
+    for (auto it = mTiles.begin(); it != mTiles.end(); ++it)
         (*it)->update(deltaTime);
 }
 
@@ -236,7 +236,7 @@ template <typename T> void ImageGridComponent<T>::render(const glm::mat4& parent
 
     // Render all the tiles but the selected one.
     std::shared_ptr<GridTileComponent> selectedTile = nullptr;
-    for (auto it = mTiles.begin(); it != mTiles.end(); it++) {
+    for (auto it = mTiles.begin(); it != mTiles.end(); ++it) {
         std::shared_ptr<GridTileComponent> tile = (*it);
         // If it's the selected image, keep it for later, otherwise render it now.
         if (tile->isSelected())
@@ -336,7 +336,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
                 // mEntries are already loaded at this point, so we need to update them with
                 // the new game image texture.
-                for (auto it = mEntries.begin(); it != mEntries.end(); it++) {
+                for (auto it = mEntries.begin(); it != mEntries.end(); ++it) {
                     if ((*it).data.texturePath == oldDefaultGameTexture)
                         (*it).data.texturePath = mDefaultGameTexture;
                 }
@@ -355,7 +355,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
                 // mEntries are already loaded at this point, so we need to update them with
                 // the new folder image texture.
-                for (auto it = mEntries.begin(); it != mEntries.end(); it++) {
+                for (auto it = mEntries.begin(); it != mEntries.end(); ++it) {
                     if ((*it).data.texturePath == oldDefaultFolderTexture)
                         (*it).data.texturePath = mDefaultFolderTexture;
                 }
@@ -440,7 +440,7 @@ template <typename T> void ImageGridComponent<T>::onCursorChanged(const CursorSt
         if (newIdx >= 0 && newIdx < static_cast<int>(mTiles.size()))
             newTile = mTiles[newIdx];
 
-        for (auto it = mTiles.begin(); it != mTiles.end(); it++) {
+        for (auto it = mTiles.begin(); it != mTiles.end(); ++it) {
             if ((*it)->isSelected() && *it != oldTile && *it != newTile) {
                 startPos = 0;
                 (*it)->setSelected(false, false, nullptr);
@@ -553,8 +553,8 @@ template <typename T> void ImageGridComponent<T>::buildTiles()
     int Y;
 
     // Layout tile size and position.
-    for (int y = 0; y < (vert ? mGridDimension.y : mGridDimension.x); y++) {
-        for (int x = 0; x < (vert ? mGridDimension.x : mGridDimension.y); x++) {
+    for (int y = 0; y < (vert ? mGridDimension.y : mGridDimension.x); ++y) {
+        for (int x = 0; x < (vert ? mGridDimension.x : mGridDimension.y); ++x) {
             // Create tiles.
             auto tile = std::make_shared<GridTileComponent>(mWindow);
 
@@ -589,7 +589,7 @@ void ImageGridComponent<T>::updateTiles(bool ascending,
 
     // Stop updating the tiles at highest scroll speed.
     if (mScrollTier == 3) {
-        for (int ti = 0; ti < static_cast<int>(mTiles.size()); ti++) {
+        for (int ti = 0; ti < static_cast<int>(mTiles.size()); ++ti) {
             std::shared_ptr<GridTileComponent> tile = mTiles.at(ti);
 
             tile->setSelected(false);
@@ -601,7 +601,7 @@ void ImageGridComponent<T>::updateTiles(bool ascending,
 
     // Temporarily store the previous textures so that they can't be unloaded.
     std::vector<std::shared_ptr<TextureResource>> previousTextures;
-    for (int ti = 0; ti < static_cast<int>(mTiles.size()); ti++) {
+    for (int ti = 0; ti < static_cast<int>(mTiles.size()); ++ti) {
         std::shared_ptr<GridTileComponent> tile = mTiles.at(ti);
         previousTextures.push_back(tile->getTexture());
     }

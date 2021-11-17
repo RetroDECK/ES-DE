@@ -44,7 +44,7 @@ void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
     this->add(e);
 
     for (auto it = mEntries.back().data.elements.cbegin();
-         it != mEntries.back().data.elements.cend(); it++)
+         it != mEntries.back().data.elements.cend(); ++it)
         addChild(it->component.get());
 
     updateElementSize(mEntries.back().data);
@@ -58,7 +58,7 @@ void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
 
 void ComponentList::onSizeChanged()
 {
-    for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++) {
+    for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
         updateElementSize(it->data);
         updateElementPosition(it->data);
     }
@@ -169,7 +169,7 @@ void ComponentList::update(int deltaTime)
 
         // Update our currently selected row.
         for (auto it = mEntries.at(mCursor).data.elements.cbegin();
-             it != mEntries.at(mCursor).data.elements.cend(); it++) {
+             it != mEntries.at(mCursor).data.elements.cend(); ++it) {
             it->component->update(deltaTime);
             rowWidth += it->component->getSize().x;
         }
@@ -214,14 +214,14 @@ void ComponentList::onCursorChanged(const CursorState& state)
     // Update the selector bar position.
     // In the future this might be animated.
     mSelectorBarOffset = 0;
-    for (int i = 0; i < mCursor; i++)
+    for (int i = 0; i < mCursor; ++i)
         mSelectorBarOffset += getRowHeight(mEntries.at(i).data);
 
     updateCameraOffset();
 
     // This is terribly inefficient but we don't know what we came from so...
     if (size()) {
-        for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++)
+        for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it)
             it->data.elements.back().component->onFocusLost();
 
         mEntries.at(mCursor).data.elements.back().component->onFocusGained();
@@ -261,7 +261,7 @@ void ComponentList::updateCameraOffset()
                 }
                 break;
             }
-            i++;
+            ++i;
         }
 
         if (mCameraOffset < oldCameraOffset &&
@@ -305,7 +305,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
     bool drawAll;
-    for (size_t i = 0; i < mEntries.size(); i++) {
+    for (size_t i = 0; i < mEntries.size(); ++i) {
 
         if (mLoopRows && mFocused && mLoopOffset > 0) {
             loopTrans =
@@ -314,7 +314,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
         auto& entry = mEntries.at(i);
         drawAll = !mFocused || i != static_cast<unsigned int>(mCursor);
-        for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); it++) {
+        for (auto it = entry.data.elements.cbegin(); it != entry.data.elements.cend(); ++it) {
             if (drawAll || it->invert_when_selected) {
                 auto renderLoopFunc = [&]() {
                     // Needed to avoid flickering when returning to the start position.
@@ -392,7 +392,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
                                Renderer::Blend::ONE);
         }
 
-        for (auto it = drawAfterCursor.cbegin(); it != drawAfterCursor.cend(); it++)
+        for (auto it = drawAfterCursor.cbegin(); it != drawAfterCursor.cend(); ++it)
             (*it)->render(trans);
 
         // Reset matrix if one of these components changed it.
@@ -402,7 +402,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     // Draw separators.
     float y = 0;
-    for (unsigned int i = 0; i < mEntries.size(); i++) {
+    for (unsigned int i = 0; i < mEntries.size(); ++i) {
         Renderer::drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
                            0xC6C7C6FF, 0xC6C7C6FF, false, opacity, trans);
         y += getRowHeight(mEntries.at(i).data);
@@ -417,7 +417,7 @@ float ComponentList::getRowHeight(const ComponentListRow& row) const
 {
     // Returns the highest component height found in the row.
     float height = 0;
-    for (unsigned int i = 0; i < row.elements.size(); i++) {
+    for (unsigned int i = 0; i < row.elements.size(); ++i) {
         if (row.elements.at(i).component->getSize().y > height)
             height = row.elements.at(i).component->getSize().y;
     }
@@ -428,7 +428,7 @@ float ComponentList::getRowHeight(const ComponentListRow& row) const
 float ComponentList::getTotalRowHeight() const
 {
     float height = 0;
-    for (auto it = mEntries.cbegin(); it != mEntries.cend(); it++)
+    for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it)
         height += getRowHeight(it->data);
 
     return height;
@@ -437,14 +437,14 @@ float ComponentList::getTotalRowHeight() const
 void ComponentList::updateElementPosition(const ComponentListRow& row)
 {
     float yOffset = 0;
-    for (auto it = mEntries.cbegin(); it != mEntries.cend() && &it->data != &row; it++)
+    for (auto it = mEntries.cbegin(); it != mEntries.cend() && &it->data != &row; ++it)
         yOffset += getRowHeight(it->data);
 
     // Assumes updateElementSize has already been called.
     float rowHeight = getRowHeight(row);
     float x = mHorizontalPadding / 2.0f;
 
-    for (unsigned int i = 0; i < row.elements.size(); i++) {
+    for (unsigned int i = 0; i < row.elements.size(); ++i) {
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.
@@ -458,7 +458,7 @@ void ComponentList::updateElementSize(const ComponentListRow& row)
     float width = mSize.x - mHorizontalPadding;
     std::vector<std::shared_ptr<GuiComponent>> resizeVec;
 
-    for (auto it = row.elements.cbegin(); it != row.elements.cend(); it++) {
+    for (auto it = row.elements.cbegin(); it != row.elements.cend(); ++it) {
         if (it->resize_width)
             resizeVec.push_back(it->component);
         else
@@ -467,7 +467,7 @@ void ComponentList::updateElementSize(const ComponentListRow& row)
 
     // Redistribute the "unused" width equally among the components with resize_width set to true.
     width = width / resizeVec.size();
-    for (auto it = resizeVec.cbegin(); it != resizeVec.cend(); it++)
+    for (auto it = resizeVec.cbegin(); it != resizeVec.cend(); ++it)
         (*it)->setSize(width, (*it)->getSize().y);
 }
 
@@ -489,7 +489,7 @@ std::vector<HelpPrompt> ComponentList::getHelpPrompts()
 
     if (size() > 1) {
         bool addMovePrompt = true;
-        for (auto it = prompts.cbegin(); it != prompts.cend(); it++) {
+        for (auto it = prompts.cbegin(); it != prompts.cend(); ++it) {
             if (it->first == "up/down" || it->first == "up/down/left/right") {
                 addMovePrompt = false;
                 break;

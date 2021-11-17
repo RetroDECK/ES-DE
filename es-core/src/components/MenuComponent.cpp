@@ -72,7 +72,7 @@ void MenuComponent::save()
     if (!mSaveFuncs.size())
         return;
 
-    for (auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); it++)
+    for (auto it = mSaveFuncs.cbegin(); it != mSaveFuncs.cend(); ++it)
         (*it)();
 
     if (mNeedsSaving) {
@@ -108,7 +108,7 @@ void MenuComponent::updateSize()
                 height += rowHeight;
             else
                 break;
-            i++;
+            ++i;
         }
     }
 
@@ -164,11 +164,11 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(
     // Initialize to padding.
     float buttonGridWidth = BUTTON_GRID_HORIZ_PADDING * buttons.size();
 
-    for (int i = 0; i < static_cast<int>(buttons.size()); i++) {
+    for (int i = 0; i < static_cast<int>(buttons.size()); ++i) {
         buttonGrid->setEntry(buttons.at(i), glm::ivec2{i, 0}, true, false);
         buttonGridWidth += buttons.at(i)->getSize().x;
     }
-    for (unsigned int i = 0; i < buttons.size(); i++)
+    for (unsigned int i = 0; i < buttons.size(); ++i)
         buttonGrid->setColWidthPerc(i, (buttons.at(i)->getSize().x + BUTTON_GRID_HORIZ_PADDING) /
                                            buttonGridWidth);
 

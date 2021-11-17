@@ -39,10 +39,10 @@ void NinePatchComponent::updateColors()
     const unsigned int edgeColor = Renderer::convertRGBAToABGR(mEdgeColor);
     const unsigned int centerColor = Renderer::convertRGBAToABGR(mCenterColor);
 
-    for (int i = 0; i < 6 * 9; i++)
+    for (int i = 0; i < 6 * 9; ++i)
         mVertices[i].col = edgeColor;
 
-    for (int i = 6 * 4; i < 6; i++)
+    for (int i = 6 * 4; i < 6; ++i)
         mVertices[(6 * 4) + i].col = centerColor;
 }
 
@@ -97,7 +97,7 @@ void NinePatchComponent::buildVertices()
 
     int v = 0;
 
-    for (int slice = 0; slice < 9; slice++) {
+    for (int slice = 0; slice < 9; ++slice) {
         const int sliceX{slice % 3};
         const int sliceY{slice / 3};
         const glm::vec2 imgPos{imgPosX[sliceX], imgPosY[sliceY]};
@@ -113,7 +113,7 @@ void NinePatchComponent::buildVertices()
         // clang-format on
 
         // Round vertices.
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < 5; ++i)
             mVertices[v + i].pos = glm::round(mVertices[v + i].pos);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.

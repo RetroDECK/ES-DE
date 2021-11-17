@@ -48,10 +48,10 @@ void Font::initLibrary()
 size_t Font::getMemUsage() const
 {
     size_t memUsage = 0;
-    for (auto it = mTextures.cbegin(); it != mTextures.cend(); it++)
+    for (auto it = mTextures.cbegin(); it != mTextures.cend(); ++it)
         memUsage += it->textureSize.x * it->textureSize.y * 4;
 
-    for (auto it = mFaceCache.cbegin(); it != mFaceCache.cend(); it++)
+    for (auto it = mFaceCache.cbegin(); it != mFaceCache.cend(); ++it)
         memUsage += it->second->data.length;
 
     return memUsage;
@@ -69,7 +69,7 @@ size_t Font::getTotalMemUsage()
         }
 
         total += it->second.lock()->getMemUsage();
-        it++;
+        ++it;
     }
 
     return total;
@@ -94,7 +94,7 @@ Font::Font(int size, const std::string& path)
         initLibrary();
 
     // Always initialize ASCII characters.
-    for (unsigned int i = 32; i < 128; i++)
+    for (unsigned int i = 32; i < 128; ++i)
         getGlyph(i);
 
     clearFaceCache();
@@ -134,7 +134,7 @@ std::shared_ptr<Font> Font::get(int size, const std::string& path)
 
 void Font::unloadTextures()
 {
-    for (auto it = mTextures.begin(); it != mTextures.end(); it++)
+    for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
         it->deinitTexture();
 }
 
@@ -260,7 +260,7 @@ FT_Face Font::getFaceForChar(unsigned int id)
 
     // Look through our current font + fallback fonts to see if any have the
     // glyph we're looking for.
-    for (unsigned int i = 0; i < fallbackFonts.size() + 1; i++) {
+    for (unsigned int i = 0; i < fallbackFonts.size() + 1; ++i) {
         auto fit = mFaceCache.find(i);
 
         // Doesn't exist yet.
@@ -347,11 +347,11 @@ Font::Glyph* Font::getGlyph(unsigned int id)
 void Font::rebuildTextures()
 {
     // Recreate OpenGL textures.
-    for (auto it = mTextures.begin(); it != mTextures.end(); it++)
+    for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
         it->initTexture();
 
     // Re-upload the texture data.
-    for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); it++) {
+    for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); ++it) {
         FT_Face face = getFaceForChar(it->first);
         FT_GlyphSlot glyphSlot = face->glyph;
 
@@ -379,7 +379,7 @@ void Font::renderTextCache(TextCache* cache)
         return;
     }
 
-    for (auto it = cache->vertexLists.cbegin(); it != cache->vertexLists.cend(); it++) {
+    for (auto it = cache->vertexLists.cbegin(); it != cache->vertexLists.cend(); ++it) {
         assert(*it->textureIdPtr != 0);
 
         auto vertexList = *it;
@@ -658,7 +658,7 @@ TextCache* Font::buildTextCache(const std::string& text,
                        convertedColor};
 
         // Round vertices.
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i < 5; ++i)
             vertices[i].pos = glm::round(vertices[i].pos);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
@@ -674,7 +674,7 @@ TextCache* Font::buildTextCache(const std::string& text,
     cache->metrics = {sizeText(text, lineSpacing)};
 
     unsigned int i = 0;
-    for (auto it = vertMap.cbegin(); it != vertMap.cend(); it++) {
+    for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
         TextCache::VertexList& vertList = cache->vertexLists.at(i);
 
         vertList.textureIdPtr = &it->first->textureId;
@@ -700,8 +700,8 @@ void TextCache::setColor(unsigned int color)
 {
     const unsigned int convertedColor = Renderer::convertRGBAToABGR(color);
 
-    for (auto it = vertexLists.begin(); it != vertexLists.end(); it++)
-        for (auto it2 = it->verts.begin(); it2 != it->verts.end(); it2++)
+    for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it)
+        for (auto it2 = it->verts.begin(); it2 != it->verts.end(); ++it2)
             it2->col = convertedColor;
 }
 

@@ -483,7 +483,7 @@ namespace Renderer
 
         GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
 
-        for (size_t i = 0; i < shaderList.size(); i++) {
+        for (size_t i = 0; i < shaderList.size(); ++i) {
             vertices[0].shaders = shaderList[i];
             int shaderPasses = 1;
             // For the blur shaders there is an optional variable to set the number of passes
@@ -493,7 +493,7 @@ namespace Renderer
                 shaderPasses = parameters.blurPasses;
             }
 
-            for (int p = 0; p < shaderPasses; p++) {
+            for (int p = 0; p < shaderPasses; ++p) {
                 GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO));
 
                 // Attach the texture to the shader framebuffer.

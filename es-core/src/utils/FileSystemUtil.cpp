@@ -214,7 +214,7 @@ namespace Utils
 
             std::string pathTest;
 
-            for (auto it = pathList.cbegin(); it != pathList.cend(); it++) {
+            for (auto it = pathList.cbegin(); it != pathList.cend(); ++it) {
                 pathTest = it->c_str() + ("/" + executable);
                 if (exists(pathTest))
                     return it->c_str();
@@ -317,10 +317,10 @@ namespace Utils
 
                     if ((offset == 0) || (escapedPath[offset - 1] != '\\')) {
                         escapedPath.insert(offset, 1, '\\');
-                        start++;
+                        ++start;
                     }
                 }
-                invalidChar++;
+                ++invalidChar;
             }
             return escapedPath;
 #endif
@@ -343,7 +343,7 @@ namespace Utils
                 scan = false;
 
                 for (stringList::const_iterator it = pathList.cbegin(); it != pathList.cend();
-                     it++) {
+                     ++it) {
                     // Ignore empty.
                     if ((*it).empty())
                         continue;
@@ -377,7 +377,7 @@ namespace Utils
                         else
                             canonicalPath = getParent(canonicalPath) + "/" + resolved;
 
-                        for (++it; it != pathList.cend(); it++)
+                        for (++it; it != pathList.cend(); ++it)
                             canonicalPath += (canonicalPath.size() == 0) ? (*it) : ("/" + (*it));
 
                         scan = true;
