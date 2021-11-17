@@ -15,8 +15,8 @@
 #include "utils/StringUtil.h"
 
 #include <algorithm>
-#include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 // Expand MAME names to full game names and lookup device and BIOS entries.
