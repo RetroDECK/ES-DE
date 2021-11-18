@@ -70,7 +70,7 @@ Settings::Settings()
 
 std::shared_ptr<Settings> Settings::getInstance()
 {
-    static std::shared_ptr<Settings> instance{std::shared_ptr<Settings>(new Settings)};
+    static std::shared_ptr<Settings> instance{new Settings()};
     return instance;
 }
 
