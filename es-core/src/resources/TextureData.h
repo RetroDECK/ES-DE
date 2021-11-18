@@ -56,7 +56,7 @@ public:
     float sourceWidth();
     float sourceHeight();
     void setSourceSize(float width, float height);
-    glm::vec2 getSize() { return glm::vec2{mWidth, mHeight}; }
+    glm::vec2 getSize() { return glm::vec2{static_cast<int>(mWidth), static_cast<int>(mHeight)}; }
 
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool setting) { mLinearMagnify = setting; }
@@ -72,19 +72,21 @@ public:
 
 private:
     std::mutex mMutex;
+
     bool mTile;
     std::string mPath;
-    unsigned int mTextureID;
+    std::atomic<unsigned int> mTextureID;
     std::vector<unsigned char> mDataRGBA;
-    int mWidth;
-    int mHeight;
-    float mSourceWidth;
-    float mSourceHeight;
+    std::atomic<int> mWidth;
+    std::atomic<int> mHeight;
+    std::atomic<float> mSourceWidth;
+    std::atomic<float> mSourceHeight;
     std::atomic<bool> mScalable;
+    std::atomic<bool> mHasRGBAData;
+    std::atomic<bool> mPendingRasterization;
     bool mLinearMagnify;
     bool mReloadable;
     bool mForceRasterization;
-    bool mPendingRasterization;
 };
 
 #endif // ES_CORE_RESOURCES_TEXTURE_DATA_H

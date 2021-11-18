@@ -33,9 +33,10 @@ TextureData::TextureData(bool tile)
     , mSourceWidth{0.0f}
     , mSourceHeight{0.0f}
     , mScalable{false}
+    , mHasRGBAData{false}
+    , mPendingRasterization{false}
     , mLinearMagnify{false}
     , mForceRasterization{false}
-    , mPendingRasterization{false}
 {
 }
 
@@ -55,9 +56,9 @@ void TextureData::initFromPath(const std::string& path)
 
 bool TextureData::initSVGFromMemory(const std::string& fileData)
 {
-    // If already initialized then don't process it again.
     std::unique_lock<std::mutex> lock{mMutex};
 
+    // If already initialized then don't process it again.
     if (!mDataRGBA.empty())
         return true;
 
@@ -111,6 +112,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
         ImageIO::flipPixelsVert(mDataRGBA.data(), mWidth, mHeight);
         mPendingRasterization = false;
+        mHasRGBAData = true;
     }
     else {
         // TODO: Fix this properly instead of using the single byte texture workaround.
@@ -125,15 +127,15 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
 bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t length)
 {
-    size_t width;
-    size_t height;
-
     // If already initialized then don't process it again.
     {
         std::unique_lock<std::mutex> lock(mMutex);
         if (!mDataRGBA.empty())
             return true;
     }
+
+    size_t width;
+    size_t height;
 
     std::vector<unsigned char> imageRGBA = ImageIO::loadFromMemoryRGBA32(
         static_cast<const unsigned char*>(fileData), length, width, height);
@@ -166,6 +168,8 @@ bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size
 
     mWidth = static_cast<int>(width);
     mHeight = static_cast<int>(height);
+    mHasRGBAData = true;
+
     return true;
 }
 
@@ -196,7 +200,8 @@ bool TextureData::isLoaded()
 {
     std::unique_lock<std::mutex> lock(mMutex);
     if (!mDataRGBA.empty() || mTextureID != 0)
-        return true;
+        if (mHasRGBAData || mPendingRasterization || mTextureID != 0)
+            return true;
 
     return false;
 }
@@ -238,14 +243,13 @@ void TextureData::releaseRAM()
     if (!mDataRGBA.empty()) {
         mDataRGBA.clear();
         mDataRGBA.swap(swapVector);
+        mHasRGBAData = false;
     }
 }
 
 size_t TextureData::width()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
     if (mWidth == 0) {
-        lock.unlock();
         load();
     }
     return static_cast<size_t>(mWidth);
@@ -253,9 +257,7 @@ size_t TextureData::width()
 
 size_t TextureData::height()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
     if (mHeight == 0) {
-        lock.unlock();
         load();
     }
     return static_cast<size_t>(mHeight);
@@ -263,9 +265,7 @@ size_t TextureData::height()
 
 float TextureData::sourceWidth()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
     if (mSourceWidth == 0) {
-        lock.unlock();
         load();
     }
     return mSourceWidth;
@@ -273,9 +273,7 @@ float TextureData::sourceWidth()
 
 float TextureData::sourceHeight()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
     if (mSourceHeight == 0) {
-        lock.unlock();
         load();
     }
     return mSourceHeight;
@@ -295,8 +293,7 @@ void TextureData::setSourceSize(float width, float height)
 
 size_t TextureData::getVRAMUsage()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
-    if (mTextureID != 0 || !mDataRGBA.empty())
+    if (mHasRGBAData || mTextureID != 0)
         return mWidth * mHeight * 4;
     else
         return 0;

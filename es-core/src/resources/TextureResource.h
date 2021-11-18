@@ -40,7 +40,7 @@ public:
     std::vector<unsigned char> getRawRGBAData();
 
     // Has the image been loaded but not yet been rasterized as the size was not known?
-    bool getPendingRasterization()
+    bool getPendingRasterization() const
     {
         return (mTextureData != nullptr ? mTextureData->getPendingRasterization() : false);
     }
