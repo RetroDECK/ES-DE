@@ -778,9 +778,10 @@ void VideoFFmpegComponent::outputFrames()
                 // The audio is output to AudioManager from updatePlayer() in the main thread.
                 std::unique_lock<std::mutex> audioLock(mAudioMutex);
 
-                mOutputAudio.insert(mOutputAudio.end(),
-                                    mAudioFrameQueue.front().resampledData.begin(),
-                                    mAudioFrameQueue.front().resampledData.end());
+                mOutputAudio.insert(
+                    mOutputAudio.end(),
+                    std::make_move_iterator(mAudioFrameQueue.front().resampledData.begin()),
+                    std::make_move_iterator(mAudioFrameQueue.front().resampledData.end()));
 
                 audioLock.unlock();
             }
@@ -833,9 +834,10 @@ void VideoFFmpegComponent::outputFrames()
             }
 
             mOutputPicture.pictureRGBA.clear();
-            mOutputPicture.pictureRGBA.insert(mOutputPicture.pictureRGBA.begin(),
-                                              mVideoFrameQueue.front().frameRGBA.begin(),
-                                              mVideoFrameQueue.front().frameRGBA.end());
+            mOutputPicture.pictureRGBA.insert(
+                mOutputPicture.pictureRGBA.begin(),
+                std::make_move_iterator(mVideoFrameQueue.front().frameRGBA.begin()),
+                std::make_move_iterator(mVideoFrameQueue.front().frameRGBA.end()));
 
             mOutputPicture.width = mVideoFrameQueue.front().width;
             mOutputPicture.height = mVideoFrameQueue.front().height;
