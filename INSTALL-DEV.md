@@ -193,9 +193,26 @@ cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
 make
 ```
 
-This tool isn't very useful without debug symbols so only include it for a Debug or Profiling build. Both Clang and GCC support this tool.
+To enable ThreadSanitizer which helps with identifying data races for multi-threaded code, build with the TSAN option:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
+make
+```
 
-As for more advanced debugging, Valgrind is a very powerful and useful tool which can analyze many aspects of the application. Be aware that some of the Valgrind tools should be run with an optimized build, and some with optimizations turned off. Refer to the Valgrind documentation for more information.
+To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
+make
+```
+
+To get stack traces printed as well, set this environmental variable:
+```
+export UBSAN_OPTIONS=print_stacktrace=1
+```
+
+These tools aren't very useful without debug symbols so only use them for a Debug or Profiling build. Clang and GCC support all three tools. Note that ASAN and TSAN can't be combined.
+
+As for advanced debugging, Valgrind is a very powerful and useful tool which can analyze many aspects of the application. Be aware that some of the Valgrind tools should be run with an optimized build, and some with optimizations turned off. Refer to the Valgrind documentation for more information.
 
 The most common tool is Memcheck to check for memory leaks, which you run like this:
 
@@ -533,7 +550,24 @@ cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
 make
 ```
 
-This tool isn't very useful without debug symbols so only include it for a Debug or Profiling build. Both Clang and GCC support this tool.
+To enable ThreadSanitizer which helps with identifying data races for multi-threaded code, build with the TSAN option:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
+make
+```
+
+To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
+```
+cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
+make
+```
+
+To get stack traces printed as well, set this environmental variable:
+```
+export UBSAN_OPTIONS=print_stacktrace=1
+```
+
+These tools aren't very useful without debug symbols so only use them for a Debug or Profiling build. Note that ASAN and TSAN can't be combined.
 
 Specifically on macOS it seems as if AddressSanitizer generates a lot of false positives regarding container overflows, so it may be necessary to ignore these:
 ```
@@ -1093,6 +1127,8 @@ cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include -DASAN=on .
 nmake
 ```
 
+ThreadSanitizer and UndefinedBehaviorSanitizer aren't available for the MSVC compiler.
+
 For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
 
 Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this in depth.
@@ -1121,7 +1157,7 @@ cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Deb
 make
 ```
 
-Unfortunately AddressSanitizer does not seem to be supported with MinGW.
+Unfortunately AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer do not seem to be supported with MinGW.
 
 For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 

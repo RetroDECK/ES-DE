@@ -95,14 +95,14 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Replaced all built-in matrix and vector data types and functions with GLM library equivalents
 * Replaced some additional math functions and moved the remaining built-in functions to a math utility namespace
 * Added a function to generate MD5 hashes
+* Improved thread safety at multiple places throughout the codebase
 * Made an optimization for SVG graphics to avoid a lot of unnecessary re-rasterizations
-* Moved the "complex" mode functionality from GuiComplexTextEditPopup into GuiTextEditPopup and removed the source files for the former
-* Updated the String::Utils::trim function with better code and removed some inline text trimming throughout the application
+* Lots of other general code refactoring
 * Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags
 * Fixed a lot of compiler warnings introduced by the -Wall and -Wpedantic flags
 * Changed the language standard from C++14 to C++17
 * Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
-* Added a CMake option to build with AddressSanitizer
+* Added CMake options to build with AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer
 * Changed two clang-format rules related to braced lists and reformatted the codebase
 * Bundled the October 2021 release of the Mozilla TLS/SSL certificates
 * Updated the MAME index files to include ROMs up to MAME version 0.237
@@ -129,6 +129,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
 * Leading and trailing whitespace characters would get included in game name filters
+* Fixed multiple data races throughout the codebase caused by insufficient thread safety
 * Game name (text) filters were matching the system names for collection systems if the "Show system names in collections" setting was enabled
 * Brackets such as () and [] were filtered from game names in collection systems if the "Show system names in collections" setting was enabled
 * If a theme used the forceUppercase property for a TextListComponent, this value was always set to true even if the theme defined it as false
