@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>org.es_de.emulationstation-de</id>
+    <name>EmulationStation Desktop Edition</name>
+    <summary>Emulator Frontend</summary>
+    <description>
+        <p>EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and
+           launching games from your multi-platform game collection. It's intended
+           to be used in conjunction with emulators such as the RetroArch cores.</p>
+    </description>
+    <launchable type="desktop-id">emulationstation.desktop</launchable>
+    <categories>
+        <category>Game</category>
+        <category>Emulator</category>
+    </categories>
+    <content_rating type="oars-1.0" />
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>MIT</project_license>
+    <url type="homepage">https://es-de.org</url>
+    <url type="bugtracker">https://gitlab.com/leonstyhre/emulationstation-de/-/issues</url>
+    <url type="help">https://gitlab.com/leonstyhre/emulationstation-de/-/blob/master/USERGUIDE.md</url>
+    <url type="donation">https://es-de.org/#Donations</url>
+    <screenshots>
+        <screenshot type="default">
+            <caption>ES-DE System View</caption>
+            <image type="source" width="1280" height="720">https://es-de.org/images/ES-DE_01_small.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>ES-DE Gamelist View</caption>
+            <image type="source" width="1280" height="720">https://es-de.org/images/ES-DE_02_small.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>ES-DE Scraper</caption>
+            <image type="source" width="1280" height="720">https://es-de.org/images/ES-DE_03_small.png</image>
+        </screenshot>
+        <screenshot>
+            <caption>ES-DE Theme Support</caption>
+            <image type="source" width="1280" height="720">https://es-de.org/images/ES-DE_04_small.png</image>
+        </screenshot>
+    </screenshots>
+    <releases>
+        <release version="1.1.0" date="2021-08-10">
+            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+        </release>
+        <release version="1.0.1" date="2021-05-01">
+            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+        </release>
+    </releases>
+</component>

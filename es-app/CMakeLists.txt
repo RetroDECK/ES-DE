@@ -269,10 +269,12 @@ else()
     endif()
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.desktop
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.desktop
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.svg
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.appdata.xml
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes

@@ -1,11 +1,10 @@
 [Desktop Entry]
-Version=1.2.0-beta2-dev
 Name=EmulationStation Desktop Edition
 GenericName=Emulator Frontend
 Type=Application
-Comment=Emulator Frontend
 Icon=emulationstation
 Exec=emulationstation
+Version=1.0
 Terminal=false
 StartupNotify=true
 Hidden=false
