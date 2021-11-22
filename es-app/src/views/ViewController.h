@@ -119,9 +119,6 @@ public:
     std::shared_ptr<SystemView> getSystemListView();
     void removeGameListView(SystemData* system);
 
-    // Whether to run in the background while a game is launched.
-    bool runInBackground(SystemData* system);
-
     // Font Awesome symbols.
     static const std::string CONTROLLER_CHAR;
     static const std::string CROSSEDCIRCLE_CHAR;

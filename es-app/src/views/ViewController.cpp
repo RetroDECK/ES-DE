@@ -662,18 +662,6 @@ void ViewController::onFileChanged(FileData* file, bool reloadGameList)
         it->second->onFileChanged(file, reloadGameList);
 }
 
-bool ViewController::runInBackground(SystemData* system)
-{
-    // Running in the background is required for Steam games as Steam itself may start together
-    // with the game. In that situation ES-DE would wait until the whole Steam application was
-    // shut down before it would resume. I.e. it would not be enough to just stop the game.
-    if (system->hasPlatformId(PlatformIds::VALVE_STEAM) ||
-        Settings::getInstance()->getBool("RunInBackground"))
-        return true;
-    else
-        return false;
-}
-
 void ViewController::launch(FileData* game)
 {
     if (game->getType() != GAME) {
@@ -841,12 +829,12 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mLockInput)
         return true;
 
-    // For Steam games or if enabling the "RunInBackground" setting, ES-DE will run in the
-    // background while a game is launched. If we're in this state and then register some
-    // input, it means that the user is back in ES-DE. Therefore unset the game launch flag
-    // and update all the GUI components. This will re-enable the video player and let the
-    // screensaver start on schedule again. Also re-enable scrolling for TextListComponent
-    // and ScrollableContainer.
+    // If using the %RUNINBACKGROUND% variable in a launch command or if enabling the
+    // RunInBackground setting, ES-DE will run in the background while a game is launched.
+    // If we're in this state and then register some input, it means that the user is back in ES-DE.
+    // Therefore unset the game launch flag and update all the GUI components. This will re-enable
+    // the video player and scrolling of game names and game descriptions as well as letting the
+    // screensaver start on schedule.
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
         mWindow->unsetLaunchedGame();
@@ -1018,10 +1006,11 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
         }
     }
 
-    // For Steam games or if enabling the "RunInBackground" setting, ES-DE will run in the
-    // background while a game is launched. If this flag has been set, then update all the
-    // GUI components. This will disable the video player and prevent the screensaver from
-    // starting on schedule.
+    // If using the %RUNINBACKGROUND% variable in a launch command or if enabling the
+    // RunInBackground setting, ES-DE will run in the background while a game is launched.
+    // If this flag has been set, then update all the GUI components. This will block the
+    // video player, prevent scrolling of game names and game descriptions and prevent the
+    // screensaver from starting on schedule.
     if (mWindow->getGameLaunchedState())
         mWindow->setLaunchedGame();
 
