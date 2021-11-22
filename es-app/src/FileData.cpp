@@ -818,10 +818,24 @@ void FileData::launchGame(Window* window)
     const std::string baseName = Utils::FileSystem::getStem(getPath());
     const std::string romRaw = Utils::FileSystem::getPreferredPath(getPath());
     const std::string esPath = Utils::FileSystem::getExePath();
+    bool runInBackground = false;
 
-#if defined(_WIN64)
-    bool hideWindow = false;
-#endif
+    // In addition to the global RunInBackground setting it's possible to define this flag
+    // per launch command in es_systems.xml.
+    size_t inBackgroundPos = command.find("%RUNINBACKGROUND%");
+
+    if (inBackgroundPos != std::string::npos) {
+        runInBackground = true;
+        command = Utils::String::replace(command, "%RUNINBACKGROUND%", "");
+        // Trim any leading whitespaces as they could cause the script execution to fail.
+        command.erase(command.begin(), std::find_if(command.begin(), command.end(), [](char c) {
+                          return !std::isspace(static_cast<unsigned char>(c));
+                      }));
+    }
+
+    // The global setting always applies.
+    if (Settings::getInstance()->getBool("RunInBackground"))
+        runInBackground = true;
 
     std::string coreEntry;
     std::string coreName;
@@ -831,10 +845,14 @@ void FileData::launchGame(Window* window)
     std::vector<std::string> emulatorCorePaths;
 
 #if defined(_WIN64)
+    bool hideWindow = false;
+
     // If the %HIDEWINDOW% variable is defined, we pass a flag to launchGameWindows() to
     // hide the window. This is intended primarily for hiding console windows when launching
     // scripts (used for example by Steam games and source ports).
-    if (command.substr(0, 12) == "%HIDEWINDOW%") {
+    size_t hideWindowPos = command.find("%HIDEWINDOW%");
+
+    if (hideWindowPos != std::string::npos) {
         hideWindow = true;
         command = Utils::String::replace(command, "%HIDEWINDOW%", "");
         // Trim any leading whitespaces as they could cause the script execution to fail.
@@ -1059,10 +1077,9 @@ void FileData::launchGame(Window* window)
     // from the game.
 
 #if defined(_WIN64)
-    if (!(Settings::getInstance()->getBool("LaunchWorkaround") ||
-          ViewController::get()->runInBackground(mSystem)))
+    if (!(Settings::getInstance()->getBool("LaunchWorkaround") || runInBackground))
 #else
-    if (!ViewController::get()->runInBackground(mSystem))
+    if (!runInBackground)
 #endif
         Renderer::swapBuffers();
 
@@ -1077,10 +1094,10 @@ void FileData::launchGame(Window* window)
     // Possibly keep ES-DE running in the background while the game is launched.
 
 #if defined(_WIN64)
-    returnValue = launchGameWindows(Utils::String::stringToWideString(command),
-                                    ViewController::get()->runInBackground(mSystem), hideWindow);
+    returnValue =
+        launchGameWindows(Utils::String::stringToWideString(command), runInBackground, hideWindow);
 #else
-    returnValue = launchGameUnix(command, ViewController::get()->runInBackground(mSystem));
+    returnValue = launchGameUnix(command, runInBackground);
 #endif
     // Notify the user in case of a failed game launch using a popup window.
     if (returnValue != 0) {
@@ -1095,10 +1112,10 @@ void FileData::launchGame(Window* window)
         // Stop showing the game launch notification.
         window->stopInfoPopup();
 #if defined(_WIN64)
-        // For some game systems or if the "RunInBackground" setting has been enabled, keep
-        // ES-DE running while the game is launched. This pauses any video and keeps the
-        // screensaver from getting activated.
-        if (ViewController::get()->runInBackground(mSystem))
+        // If the RunInBackground setting has been enabled or if the %RUNINBACKGROUND% variable has
+        // been set for the specific launch command, then block the video player, stop scrolling
+        // game names and descriptions and keep the screensaver from getting activated.
+        if (runInBackground)
             window->setLaunchedGame();
         else
             // Normalize deltaTime so that the screensaver does not start immediately
@@ -1106,8 +1123,9 @@ void FileData::launchGame(Window* window)
             window->normalizeNextUpdate();
 #else
         // For some game systems we need to keep ES-DE running while the game is launched.
-        // This pauses any video and keeps the screensaver from getting activated.
-        if (ViewController::get()->runInBackground(mSystem))
+        // This blocks the video player, stops the scrolling of game names and descriptions and
+        // keeps the screensaver from getting activated.
+        if (runInBackground)
             window->setLaunchedGame();
         // Normalize deltaTime so that the screensaver does not start immediately
         // when returning from the game.
@@ -1119,7 +1137,7 @@ void FileData::launchGame(Window* window)
 
     // Unless we're running in the background while the game is launched, re-enable the text
     // scrolling that was disabled in ViewController.
-    if (!ViewController::get()->runInBackground(mSystem))
+    if (!runInBackground)
         window->setAllowTextScrolling(true);
 
     // Update number of times the game has been launched.
@@ -1159,6 +1177,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
 
 #if defined(_WIN64)
     std::vector<std::string> emulatorWinRegistryPaths;
+    std::vector<std::string> emulatorWinRegistryValues;
 #endif
     std::vector<std::string> emulatorSystemPaths;
     std::vector<std::string> emulatorStaticPaths;
@@ -1175,6 +1194,8 @@ const std::string FileData::findEmulatorPath(std::string& command)
 #if defined(_WIN64)
         emulatorWinRegistryPaths =
             SystemData::sFindRules.get()->mEmulators[emulatorEntry].winRegistryPaths;
+        emulatorWinRegistryValues =
+            SystemData::sFindRules.get()->mEmulators[emulatorEntry].winRegistryValues;
 #endif
         emulatorSystemPaths = SystemData::sFindRules.get()->mEmulators[emulatorEntry].systemPaths;
         emulatorStaticPaths = SystemData::sFindRules.get()->mEmulators[emulatorEntry].staticPaths;
@@ -1206,7 +1227,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
                                      KEY_QUERY_VALUE, &registryKey);
         }
 
-        // If the key exists, then try to retrieve the value.
+        // If the key exists, then try to retrieve its default value.
         if (keyStatus == ERROR_SUCCESS) {
             pathStatus = RegGetValue(registryKey, nullptr, nullptr, RRF_RT_REG_SZ, nullptr,
                                      &registryPath, &pathSize);
@@ -1224,6 +1245,51 @@ const std::string FileData::findEmulatorPath(std::string& command)
                 command.replace(0, endPos + 1, registryPath);
                 RegCloseKey(registryKey);
                 return registryPath;
+            }
+        }
+        RegCloseKey(registryKey);
+    }
+
+    for (std::string value : emulatorWinRegistryValues) {
+        // Search for the defined value in the Windows Registry.
+        std::string registryValueKey =
+            Utils::String::replace(Utils::FileSystem::getParent(value), "/", "\\");
+        std::string registryValue = Utils::FileSystem::getFileName(value);
+
+        HKEY registryKey;
+        LSTATUS keyStatus = -1;
+        LSTATUS pathStatus = -1;
+        char path[1024]{};
+        DWORD pathSize = 1024;
+
+        // First look in HKEY_CURRENT_USER.
+        keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER, registryValueKey.c_str(), 0, KEY_QUERY_VALUE,
+                                 &registryKey);
+
+        // If not found, then try in HKEY_LOCAL_MACHINE.
+        if (keyStatus != ERROR_SUCCESS) {
+            keyStatus = RegOpenKeyEx(HKEY_LOCAL_MACHINE, registryValueKey.c_str(), 0,
+                                     KEY_QUERY_VALUE, &registryKey);
+        }
+
+        // If the key exists, then try to retrieve the defined value.
+        if (keyStatus == ERROR_SUCCESS) {
+            pathStatus =
+                RegGetValue(registryKey, nullptr, reinterpret_cast<LPCSTR>(registryValue.c_str()),
+                            RRF_RT_REG_SZ, nullptr, &path, &pathSize);
+        }
+        else {
+            RegCloseKey(registryKey);
+            continue;
+        }
+
+        // That a value was found does not guarantee that the emulator binary actually exists,
+        // so check for that as well.
+        if (pathStatus == ERROR_SUCCESS) {
+            if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
+                command.replace(0, endPos + 1, path);
+                RegCloseKey(registryKey);
+                return path;
             }
         }
         RegCloseKey(registryKey);

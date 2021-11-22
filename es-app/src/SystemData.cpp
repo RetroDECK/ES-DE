@@ -112,8 +112,8 @@ void FindRules::loadFindRules()
                 continue;
             }
 #if defined(_WIN64)
-            if (ruleType != "winregistrypath" && ruleType != "systempath" &&
-                ruleType != "staticpath") {
+            if (ruleType != "winregistrypath" && ruleType != "winregistryvalue" &&
+                ruleType != "systempath" && ruleType != "staticpath") {
 #else
             if (ruleType != "systempath" && ruleType != "staticpath") {
 #endif
@@ -131,6 +131,8 @@ void FindRules::loadFindRules()
 #if defined(_WIN64)
                 else if (ruleType == "winregistrypath")
                     emulatorRules.winRegistryPaths.push_back(entryValue);
+                else if (ruleType == "winregistryvalue")
+                    emulatorRules.winRegistryValues.push_back(entryValue);
 #endif
             }
         }
