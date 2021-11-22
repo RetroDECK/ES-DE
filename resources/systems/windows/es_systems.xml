@@ -1152,7 +1152,7 @@
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%\steam</path>
         <extension>.bat</extension>
-        <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
+        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>
     </system>

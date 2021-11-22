@@ -1144,7 +1144,7 @@
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%/steam</path>
         <extension>.sh</extension>
-        <command>zsh %ROM%</command>
+        <command>%RUNINBACKGROUND% zsh %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>
     </system>
