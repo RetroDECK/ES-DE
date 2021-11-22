@@ -19,6 +19,11 @@
             <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
             <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
             <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
+            <!-- Steam release at some reasonable locations -->
+            <entry>C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
             <!-- Portable installation -->
             <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
