@@ -64,6 +64,16 @@ void ScrollableContainer::reset()
     mAutoScrollResetAccumulator = 0;
     mAutoScrollAccumulator = -mAutoScrollDelay + mAutoScrollSpeed;
     mAtEnd = false;
+    // This is needed to resize to the font height boundary when we keep running in the background
+    // while launching games.
+    if (!mChildren.empty()) {
+        float combinedHeight{
+            mChildren.front()->getFont()->getHeight(mChildren.front()->getLineSpacing())};
+        if (mChildren.front()->getSize().y > mSize.y) {
+            float numLines{mSize.y / combinedHeight};
+            mSize.y = floorf(numLines) * combinedHeight;
+        }
+    }
 }
 
 void ScrollableContainer::update(int deltaTime)
