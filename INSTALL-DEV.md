@@ -47,7 +47,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
 ```
 If building with the optional VLC video player, the following packages are also needed:
 
@@ -1555,12 +1555,14 @@ Below is an overview of the file layout with various examples. For the command t
         expanded to the directory of the ES-DE executable. -->
         <command>"%ESPATH%\RetroArch\retroarch.exe" -L "%ESPATH%\RetroArch\cores\snes9x_libretro.dll" %ROM%</command>
 
-        <!-- An example on Unix which launches a script, this is for example used by source ports, Steam games etc. -->
-        <command>bash %ROM%</command>
+        <!-- An example on Unix which launches a script, this is for example used by source ports, Steam games etc. The %RUNINBACKGROUND%
+        variable does exactly what it sounds like, it keeps ES-DE running in the background while a game is launched. This is required
+        for launching Steam games properly. -->
+        <command>%RUNINBACKGROUND% bash %ROM%</command>
 
         <!-- The equivalent configuration as above, but for Windows.
-        The optional %HIDEWINDOW% variable is used to hide the console window, which would otherwise be visible when launching the game. -->
-        <command>%HIDEWINDOW% cmd /C %ROM%</command>
+        The optional %HIDEWINDOW% variable is used to hide the console window, which would otherwise be visible when launching games. -->
+        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
 
         <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
         The entry is case insensitive as it will be converted to lower case during startup.
@@ -1597,7 +1599,9 @@ The following variables are expanded for the `command` tag:
 
 `%CORE_` - This utilizes the core find rules as defined in `es_find_rules.xml`. This is the recommended way to configure the launch command.
 
-`%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching the game. It needs to be placed first in the command tag.
+`%RUNINBACKGROUND%` - When this variable is present, ES-DE will continue to run in the background while a game is launched. This will also prevent the gamelist video from playing, the screensaver from starting, and the game name and game description from scrolling. This functionality is required for some systems such as Valve Steam. The variable can be placed anywhere in the launch command.
+
+`%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching games. The variable can be placed anywhere in the launch command.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
@@ -1734,20 +1738,6 @@ Here's an example es_find_rules.xml file for Unix:
             <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu</entry>
-            <entry>org.yuzu_emu.yuzu</entry>
-            <entry>yuzu.AppImage</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/Applications/yuzu.AppImage</entry>
-            <entry>~/.local/bin/yuzu.AppImage</entry>
-            <entry>~/bin/yuzu.AppImage</entry>
-        </rule>
-    </emulator>
     <core name="RETROARCH">
         <rule type="corepath">
             <!-- Snap package -->
@@ -1768,29 +1758,53 @@ Here's an example es_find_rules.xml file for Unix:
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="DOSBOX_STAGING">
+        <rule type="systempath">
+            <entry>dosbox-staging</entry>
+            <entry>io.github.dosbox-staging</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu</entry>
+            <entry>org.yuzu_emu.yuzu</entry>
+            <entry>yuzu.AppImage</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/Applications/yuzu.AppImage</entry>
+            <entry>~/.local/bin/yuzu.AppImage</entry>
+            <entry>~/bin/yuzu.AppImage</entry>
+        </rule>
+    </emulator>
 </ruleList>
 ```
 
-It's pretty straightforward, there are currently three rules supported for finding emulators, `winregistrypath`, `systempath` and `staticpath` and there is one rule supported for finding the emulator cores, `corepath`.
+It's pretty straightforward, there are currently four rules supported for finding emulators, `winregistrypath`, `winregistryvalue`, `systempath` and `staticpath` and there is one rule supported for finding the emulator cores, `corepath`.
 
-Of these, `winregistrypath` is only available on Windows, and attempting to use the rule on any other operating system will generate a warning in the log file when processing the es_find_fules.xml file.
+Of these, `winregistrypath` and `winregistryvalue` are only available on Windows, and attempting to use the rule on any other operating system will generate a warning in the log file when processing the es_find_rules.xml file.
 
 The `name` attribute must correspond to the command tags in es_systems.xml, take for example this line:
 
 ```xml
-<command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
+<command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
 ```
 
 Here %EMULATOR_ and %CORE_ are followed by the string RETROARCH which corresponds to the name attribute in es_find_rules.xml. The name is case sensitive but it's recommended to use uppercase names to make the variables feel consistent (%EMULATOR_retroarch% doesn't look so pretty).
 
 Of course this makes it possible to add any number of emulators to the configuration file.
 
-The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe` will be searched for. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the key actually exists, and if not, it will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
+The `winregistrypath` rule searches the Windows Registry "App Paths" keys for the emulators defined in the `<entry>` tags. If for example this tag is set to `retroarch.exe`, a search will be performed for the key `SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\retroarch.exe`. HKEY_CURRENT_USER is tried first, and if no key is found there, HKEY_LOCAL_MACHINE is tried as well. In addition to this, ES-DE will check that the binary defined in the default value for the key actually exists. If not, it will proceed with the next rule. Be aware that the App Paths keys are added by the emulators during their installation, and although RetroArch does add this key, not all emulators do.
 
+The `winregistryvalue` rule will search for the specific registry value, and if it exists, it will use that value as the path to the emulator binary. HKEY_CURRENT_USER will be tried first, followed by HKEY_LOCAL_MACHINE. In the same manner as `winregistrypath`, ES-DE will check that the binary defined in the registry value actually exists. If not, it will proceed with the next rule. For example, if setting the `<entry>` tag for this rule to `SOFTWARE\Valve\Steam\SteamExe`, the emulator binary would be set to `c:\program files (x86)\steam\steam.exe`, assuming that's where Steam has been installed. As this rule can be used to query any value in the Registry, it's a quite powerful tool to locate various emulators and applications.
 
 The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag.
 
-The winregistrypath rules are always processed first, followed by systempath and then staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
+The winregistrypath rules are always processed first, followed by winregistryvalue, then systempath and finally staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
 
 As for `corepath` this rule is simply a path to search for the emulator core.
 
@@ -1821,6 +1835,11 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
+    <emulator name="DOSBOX_STAGING">
+        <rule type="staticpath">
+            <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
+        </rule>
+    </emulator>
 </ruleList>
 ```
 
@@ -1846,6 +1865,11 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
             <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
             <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
+            <!-- Steam release at some default locations -->
+            <entry>C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
+            <entry>D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
             <!-- Portable installation -->
             <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
@@ -1853,6 +1877,11 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
         </rule>
     </emulator>
+    <core name="RETROARCH">
+        <rule type="corepath">
+            <entry>%EMUPATH%\cores</entry>
+        </rule>
+    </core>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="systempath">
@@ -1865,11 +1894,6 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
     </emulator>
-    <core name="RETROARCH">
-        <rule type="corepath">
-            <entry>%EMUPATH%\cores</entry>
-        </rule>
-    </core>
 </ruleList>
 ```
 

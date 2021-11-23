@@ -143,6 +143,21 @@ There will be a lot of directories created if using the es_systems.xml file bund
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
+## Using the Steam release of RetroArch
+
+On Windows it's no problem to use the Steam release of RetroArch although you may have to add the location manually to your Path environment variable. By default the following locations will be searched:
+```
+C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
+D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
+C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
+D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
+```
+
+If you have installed RetroArch at another location, simply start the Settings application, search for _path_ in the _Find a setting_ field and choose _Edit environment variables for your account_. Edit the _Path_ variable and add the directory where RetroArch is installed. This is required as there is no apparent way for ES-DE to find where RetroArch has been installed by the Steam application.
+
+Unfortunately on Linux it's at the moment not possible to run the Steam release of RetroArch due to technical reasons. This RetroArch release runs as a type of container which can't be executed from ES-DE while correctly passing the necessary core and game options. Similarly it's not possible to launch RetroArch via the Steam application either as there seems to be a bug in Steam or RetroArch that prevents blankspaces from being present in game ROM files when passed as arguments (this works fine on Windows so it's definitely a Linux-specific issue and as well the same problem occurs if attempting to manually enter the launch command from a terminal window).
+
+
 ## Specific notes for macOS
 
 On macOS, the first time you launch a game from within ES-DE, the operating system will present you with a security option with the following description:
@@ -1246,7 +1261,7 @@ This setting gives the ability to choose between the controller types _Xbox, Xbo
 
 **Only accept input from first controller**
 
-If enabling this option, only the first controller detected during startup will send its input to ES-DE. This is a good way to limit potential chaos with mutliple users fighting over which games to start. Disconnecting and reconnecting controllers while ES-DE is running may change what is considered the first controller. This setting does not affect the emulators in any way, it's only applied to ES-DE.
+If enabling this option, only the first controller detected during startup will send its input to ES-DE (the keyboard input is unaffected by this setting and will be enabled regardless). This is a good way to limit potential chaos with multiple persons fighting over which games to start. Disconnecting and reconnecting controllers while ES-DE is running may change what is considered the first controller. This setting does not affect the emulators in any way, it's only applied to ES-DE.
 
 **Configure keyboard and controllers**
 
@@ -1844,7 +1859,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | daphne                | Daphne Arcade Laserdisc Emulator               |                                   |                                   |              |                                      |
 | desktop               | Desktop applications                           | N/A                               |                                   | No           |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
-| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN | No           | In separate folder (one folder per game, with complete file structure retained) |
+| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM] | No           | In separate folder (one folder per game, with complete file structure retained) |
 | dragon32              | Dragon 32                                      |                                   |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           |                                   |              |                                      |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
@@ -1896,7 +1911,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | openbor               | OpenBOR game engine                            |                                   |                                   |              |                                      |
 | oric                  | Tangerine Computer Systems Oric                |                                   |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
-| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN        | No           | In separate folder (one folder per game, with complete file structure retained) |
+| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM] | No           | In separate folder (one folder per game, with complete file structure retained) |
 | pc88                  | NEC PC-8800 series                             | QUASI88                           |                                   |              |                                      |
 | pc98                  | NEC PC-9800 series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |

@@ -36,6 +36,8 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Bundled the new alternative theme "modern-DE" which supports all the latest features from this release
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
+* Added a "winregistryvalue" find rule for Windows which can be used to retrieve emulator installation locations from arbitrary Windows Registry keys
+* Added a %RUNINBACKGROUND% es_systems.xml variable and removed the hardcoded run in background logic for the Valve Steam system
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
 * Added scraping of controller metadata (only for ScreenScraper and only for arcade systems)
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
