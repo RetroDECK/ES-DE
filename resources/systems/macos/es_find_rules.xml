@@ -14,4 +14,9 @@
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
+    <emulator name="DOSBOX_STAGING">
+        <rule type="staticpath">
+            <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
+        </rule>
+    </emulator>
 </ruleList>

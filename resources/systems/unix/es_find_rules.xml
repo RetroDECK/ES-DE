@@ -14,20 +14,6 @@
             <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
         </rule>
     </emulator>
-    <emulator name="YUZU">
-        <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu</entry>
-            <entry>org.yuzu_emu.yuzu</entry>
-            <entry>yuzu.AppImage</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/Applications/yuzu.AppImage</entry>
-            <entry>~/.local/bin/yuzu.AppImage</entry>
-            <entry>~/bin/yuzu.AppImage</entry>
-        </rule>
-    </emulator>
     <core name="RETROARCH">
         <rule type="corepath">
             <!-- Snap package -->
@@ -48,4 +34,27 @@
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="DOSBOX_STAGING">
+        <rule type="systempath">
+            <entry>dosbox-staging</entry>
+            <entry>io.github.dosbox-staging</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
+        </rule>
+    </emulator>
+    <emulator name="YUZU">
+        <!-- Nintendo Switch emulator Yuzu -->
+        <rule type="systempath">
+            <entry>yuzu</entry>
+            <entry>org.yuzu_emu.yuzu</entry>
+            <entry>yuzu.AppImage</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/Applications/yuzu.AppImage</entry>
+            <entry>~/.local/bin/yuzu.AppImage</entry>
+            <entry>~/bin/yuzu.AppImage</entry>
+        </rule>
+    </emulator>
 </ruleList>
