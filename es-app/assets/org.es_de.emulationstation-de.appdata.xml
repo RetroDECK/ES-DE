@@ -2,7 +2,7 @@
 <component type="desktop-application">
     <id>org.es_de.emulationstation-de</id>
     <name>EmulationStation Desktop Edition</name>
-    <summary>Emulator Frontend</summary>
+    <summary>Emulator frontend</summary>
     <description>
         <p>EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and
            launching games from your multi-platform game collection. It's intended
