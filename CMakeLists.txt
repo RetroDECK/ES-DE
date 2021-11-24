@@ -39,7 +39,6 @@ option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" ${CL
 option(ASAN "Set to ON to build with AddressSanitizer" ${ASAN})
 option(TSAN "Set to ON to build with ThreadSanitizer" ${TSAN})
 option(UBSAN "Set to ON to build with UndefinedBehaviorSanitizer" ${UBSAN})
-option(SNAP_BUILD "Set to ON for a Snap package build" ${SNAP_BUILD})
 
 if(CLANG_TIDY)
     find_program(CLANG_TIDY_BINARY NAMES clang-tidy)
@@ -284,11 +283,7 @@ if(NOT WIN32 AND NOT APPLE)
         endif()
     endif()
     message("-- Installation prefix is set to " ${CMAKE_INSTALL_PREFIX})
-    if(SNAP_BUILD)
-        add_definitions(-DES_INSTALL_PREFIX="/var/lib/snapd/snap/emulationstation/current${CMAKE_INSTALL_PREFIX}")
-    else()
-        add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
-    endif()
+    add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 endif()
 
 # For Windows, set the minimum OS version to Windows 7.
