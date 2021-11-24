@@ -281,6 +281,10 @@ else()
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
+    if(SNAP_BUILD)
+        install(PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/assets/snap-launcher.sh
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+    endif()
 endif()
 
 include(InstallRequiredSystemLibraries)
