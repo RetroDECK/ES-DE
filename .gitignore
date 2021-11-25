@@ -22,6 +22,10 @@ emulationstation
 EmulationStation
 EmulationStation.exe
 
+# AppImage
+AppDir
+*.AppImage
+
 # Core dumps
 emulationstation.core
 
