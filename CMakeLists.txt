@@ -32,6 +32,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
 option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
 option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
+option(BUNDLED_CERTS "Set to ON to use bundled TLS/SSL certificates" ${BUNDLED_CERTS})
 option(CEC "Set to ON to enable CEC" ${CEC})
 option(VIDEO_HW_DECODING "Set to ON to enable FFmpeg HW decoding" ${VIDEO_HW_DECODING})
 option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
@@ -252,6 +253,10 @@ endif()
 
 if(RPI)
     add_definitions(-D_RPI_)
+endif()
+
+if(BUNDLED_CERTS OR WIN32)
+    add_definitions(-DUSE_BUNDLED_CERTIFICATES)
 endif()
 
 if(DEFINED libCEC_FOUND)

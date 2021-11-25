@@ -59,7 +59,7 @@ HttpReq::HttpReq(const std::string& url)
 
     mHandle = curl_easy_init();
 
-#if defined(_WIN64)
+#if defined(USE_BUNDLED_CERTIFICATES)
     // On Windows, use the bundled cURL TLS/SSL certificates (which actually come from the
     // Mozilla project). There is a possibility to use the OS provided Schannel certificates
     // but I haven't been able to get this to work and it also seems to be problematic on
