@@ -8,7 +8,7 @@
            launching games from your multi-platform game collection. It's intended
            to be used in conjunction with emulators such as the RetroArch cores.</p>
     </description>
-    <launchable type="desktop-id">emulationstation.desktop</launchable>
+    <launchable type="desktop-id">org.es_de.emulationstation-de.desktop</launchable>
     <categories>
         <category>Game</category>
         <category>Emulator</category>
