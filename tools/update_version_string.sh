@@ -10,13 +10,12 @@
 #  The script has to be run from within the tools directory.
 #
 #  Example use:
-#  ./update_version_string.sh 1 0 0 beta1
+#  ./update_version_string.sh 1 2 0 beta1
 #
 #  The following files are updated by this script:
 #  es-app/CMakeLists.txt
 #  es-app/src/EmulationStation.h
 #  es-app/assets/EmulationStation-DE_Info.plist
-#  es-app/assets/emulationstation.desktop
 #
 #  This script is only intended to be used on Linux systems.
 #
@@ -99,15 +98,6 @@ mv $TEMPFILE $MODIFYFILE
 MODIFYSTRING=$(grep "<string>${OLDVERSION}" $MODIFYFILE)
 MODIFYSTRING=$(echo $MODIFYSTRING | sed s/".........$"//)
 NEWSTRING="<string>${1}.${2}.${3}${SUFFIX}"
-
-cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
-mv $TEMPFILE $MODIFYFILE
-
-##### emulationstation.desktop
-
-MODIFYFILE=../es-app/assets/emulationstation.desktop
-MODIFYSTRING=$(grep "Version=" $MODIFYFILE)
-NEWSTRING="Version=${1}.${2}.${3}${SUFFIX}"
 
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
 mv $TEMPFILE $MODIFYFILE
