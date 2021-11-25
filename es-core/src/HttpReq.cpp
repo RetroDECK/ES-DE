@@ -60,10 +60,14 @@ HttpReq::HttpReq(const std::string& url)
     mHandle = curl_easy_init();
 
 #if defined(USE_BUNDLED_CERTIFICATES)
-    // On Windows, use the bundled cURL TLS/SSL certificates (which actually come from the
-    // Mozilla project). There is a possibility to use the OS provided Schannel certificates
-    // but I haven't been able to get this to work and it also seems to be problematic on
-    // older Windows versions.
+    // Use the bundled cURL TLS/SSL certificates (which actually come from the Mozilla project).
+    // This is enabled by default on Windows. Although there is a possibility to use the OS
+    // provided Schannel certificates I haven't been able to get this to work, and it also seems
+    // to be problematic on older Windows versions.
+    // The bundled certificates are also required on Linux when building an AppImage package as
+    // distributions such as Debian, Ubuntu, Linux Mint and Manjaro place the TLS certificates in
+    // a different directory than for example Fedora and openSUSE. This makes cURL unusable on
+    // these latter operating systems unless the bundled file is used.
     curl_easy_setopt(mHandle, CURLOPT_CAINFO,
                      ResourceManager::getInstance()
                          ->getResourcePath(":/certificates/curl-ca-bundle.crt")
