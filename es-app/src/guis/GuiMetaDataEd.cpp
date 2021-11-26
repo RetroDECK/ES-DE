@@ -14,6 +14,7 @@
 #include "FileData.h"
 #include "FileFilterIndex.h"
 #include "Gamelist.h"
+#include "MameNames.h"
 #include "SystemData.h"
 #include "Window.h"
 #include "components/ButtonComponent.h"
@@ -21,6 +22,7 @@
 #include "components/DateTimeEditComponent.h"
 #include "components/MenuComponent.h"
 #include "components/RatingComponent.h"
+
 #include "components/SwitchComponent.h"
 #include "components/TextComponent.h"
 #include "guis/GuiGameScraper.h"
@@ -422,12 +424,16 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 gamePath = Utils::FileSystem::getStem(mScraperParams.game->getPath());
 
                 // OK callback (apply new value to ed).
-                auto updateVal = [ed, currentKey, originalValue,
-                                  gamePath](const std::string& newVal) {
+                auto updateVal = [ed, currentKey, originalValue, gamePath,
+                                  scraperParams](const std::string& newVal) {
                     // If the user has entered a blank game name, then set the name to the ROM
                     // filename (minus the extension).
                     if (currentKey == "name" && newVal == "") {
-                        ed->setValue(gamePath);
+                        if (scraperParams.game->isArcadeGame())
+                            ed->setValue(MameNames::getInstance().getCleanName(
+                                scraperParams.game->getCleanName()));
+                        else
+                            ed->setValue(gamePath);
                         if (gamePath == originalValue)
                             ed->setColor(DEFAULT_TEXTCOLOR);
                         else
