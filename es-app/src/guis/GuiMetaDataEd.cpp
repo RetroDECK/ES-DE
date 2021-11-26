@@ -22,7 +22,6 @@
 #include "components/DateTimeEditComponent.h"
 #include "components/MenuComponent.h"
 #include "components/RatingComponent.h"
-
 #include "components/SwitchComponent.h"
 #include "components/TextComponent.h"
 #include "guis/GuiGameScraper.h"
