@@ -273,6 +273,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
                             Settings::getInstance()->getString("CollectionSystemsCustom")) {
                             Settings::getInstance()->setString("CollectionSystemsCustom",
                                                                collectionsConfigEntry);
+                            if (selectedCustomCollections.size() == 1 &&
+                                Settings::getInstance()->getString("StartupSystem") ==
+                                    "collections")
+                                Settings::getInstance()->setString("StartupSystem", "");
                             setNeedsSaving();
                             setNeedsGoToStart();
                         }

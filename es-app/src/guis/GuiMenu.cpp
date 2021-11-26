@@ -99,24 +99,28 @@ void GuiMenu::openUIOptions()
     auto s = new GuiSettings(mWindow, "UI SETTINGS");
 
     // Optionally start in selected system/gamelist.
-    auto startup_system = std::make_shared<OptionListComponent<std::string>>(
+    auto startupSystem = std::make_shared<OptionListComponent<std::string>>(
         mWindow, getHelpStyle(), "GAMELIST ON STARTUP", false);
-    startup_system->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
+    startupSystem->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
         if ((*it)->getName() != "retropie") {
             // If required, abbreviate the system name so it doesn't overlap the setting name.
             float maxNameLength = mSize.x * 0.48f;
-            startup_system->add((*it)->getFullName(), (*it)->getName(),
-                                Settings::getInstance()->getString("StartupSystem") ==
-                                    (*it)->getName(),
-                                maxNameLength);
+            startupSystem->add((*it)->getFullName(), (*it)->getName(),
+                               Settings::getInstance()->getString("StartupSystem") ==
+                                   (*it)->getName(),
+                               maxNameLength);
         }
     }
-    s->addWithLabel("GAMELIST ON STARTUP", startup_system);
-    s->addSaveFunc([startup_system, s] {
-        if (startup_system->getSelected() != Settings::getInstance()->getString("StartupSystem")) {
-            Settings::getInstance()->setString("StartupSystem", startup_system->getSelected());
+    // This can probably not happen but as an extra precaution select the "NONE" entry if no
+    // entry is selected.
+    if (startupSystem->getSelectedObjects().size() == 0)
+        startupSystem->selectEntry(0);
+    s->addWithLabel("GAMELIST ON STARTUP", startupSystem);
+    s->addSaveFunc([startupSystem, s] {
+        if (startupSystem->getSelected() != Settings::getInstance()->getString("StartupSystem")) {
+            Settings::getInstance()->setString("StartupSystem", startupSystem->getSelected());
             s->setNeedsSaving();
         }
     });
