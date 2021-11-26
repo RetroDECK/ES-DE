@@ -148,6 +148,15 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
         }
     });
 
+    // If there are no custom collections, then gray out this menu entry.
+    if (customSystems.empty()) {
+        collection_systems_custom->setEnabled(false);
+        collection_systems_custom->setOpacity(DISABLED_OPACITY);
+        collection_systems_custom->getParent()
+            ->getChild(collection_systems_custom->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Create custom collection from theme.
     std::vector<std::string> unusedFolders =
         CollectionSystemsManager::get()->getUnusedSystemsFromTheme();
