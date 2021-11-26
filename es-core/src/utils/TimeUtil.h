@@ -10,18 +10,13 @@
 #ifndef ES_CORE_UTILS_TIME_UTIL_H
 #define ES_CORE_UTILS_TIME_UTIL_H
 
-#if defined(__FreeBSD__) || defined(__OpenBSD__)
 #include <ctime>
-#endif
-
 #include <string>
 
 namespace Utils
 {
     namespace Time
     {
-        constexpr static int DEFAULT_TIMEVALUE = 0;
-
         class DateTime
         {
         public:

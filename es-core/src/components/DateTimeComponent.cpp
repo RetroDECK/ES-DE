@@ -70,8 +70,8 @@ void DateTimeComponent::onTextChanged()
 std::string DateTimeComponent::getDisplayString() const
 {
     if (mDisplayRelative) {
-        // Relative time.
-        if (mTime.getTime() == 0)
+        // Workaround to handle Unix epoch for different time zones.
+        if (mTime.getTime() < 82800)
             return "never";
 
         Utils::Time::DateTime now(Utils::Time::now());

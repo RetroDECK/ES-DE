@@ -532,7 +532,7 @@ void GuiScraperSearch::updateInfoPane()
         }
         // Set the release date to this value to force DateTimeEditComponent to put a
         // blank instead of the text 'unknown' prior to the scrape result being returned.
-        mMD_ReleaseDate->setValue("19700101T010101");
+        mMD_ReleaseDate->setValue("19710101T010101");
         mMD_Developer->setText("");
         mMD_Publisher->setText("");
         mMD_Genre->setText("");
@@ -906,7 +906,7 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
             continue;
 
         // Make sure to set releasedate to the proper default value.
-        if (key == "releasedate" && metadata.get(key) == "19700101T010000")
+        if (key == "releasedate" && metadata.get(key) == "19700101T000000")
             metadata.set(key, mMetaDataDecl.at(i).defaultValue);
 
         // Overwrite all the other values if the flag to overwrite data has been set.

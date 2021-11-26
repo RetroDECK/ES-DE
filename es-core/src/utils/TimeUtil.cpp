@@ -9,8 +9,6 @@
 
 #include "utils/TimeUtil.h"
 
-#include <time.h>
-
 namespace Utils
 {
     namespace Time
@@ -23,7 +21,7 @@ namespace Utils
 #else
             mTimeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0};
 #endif
-            mIsoString = "00000000T000000";
+            mIsoString = "19000101T000000";
         }
 
         DateTime::DateTime(const time_t& time)
@@ -46,7 +44,12 @@ namespace Utils
 
         void DateTime::setTime(const time_t& time)
         {
-            mTime = (time < 0) ? 0 : time;
+            // Workaround to handle Unix epoch for different time zones.
+            if (time < 82800)
+                mTime = 0;
+            else
+                mTime = time;
+
 #if defined(_WIN64)
             localtime_s(&mTimeStruct, &mTime);
 #else
@@ -94,8 +97,8 @@ namespace Utils
 #endif
             size_t parsedChars = 0;
 
-            if (string == "19700101T010000")
-                return mktime(&timeStruct);
+            if (string == "19700101T000000")
+                return 0;
 
             while (*f && (parsedChars < string.length())) {
                 if (*f == '%') {
@@ -173,6 +176,10 @@ namespace Utils
 
         std::string timeToString(const time_t& time, const std::string& format)
         {
+            // Workaround to handle Unix epoch for different time zones.
+            if (time < 82800)
+                return "19700101T000000";
+
             const char* f = format.c_str();
             tm timeStruct;
 #if defined(_WIN64)

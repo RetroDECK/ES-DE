@@ -63,9 +63,9 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
             // Started editing.
             mTimeBeforeEdit = mTime;
 
-            // Initialize to now if unset.
-            if (mTime.getTime() == Utils::Time::DEFAULT_TIMEVALUE) {
-                mTime = Utils::Time::stringToTime("19990101T0101");
+            // Initialize to the arbitrary value 1999-01-01 if unset.
+            if (mTime == 0) {
+                mTime = Utils::Time::stringToTime("19990101T000000");
                 updateTextCache();
             }
         }
@@ -307,6 +307,13 @@ void DateTimeEditComponent::changeDate()
 {
     tm new_tm = mTime;
 
+    if (mTime.getIsoString() == "19700101T000000")
+#if defined(_WIN64)
+        new_tm = {0, 0, 0, 1, 0, 70, 0, 0, -1};
+#else
+        new_tm = {0, 0, 0, 1, 0, 70, 0, 0, -1, 0, 0};
+#endif
+
     // ISO 8601 date format.
     if (mEditIndex == 0) {
         new_tm.tm_year += mKeyRepeatDir;
@@ -338,7 +345,10 @@ void DateTimeEditComponent::changeDate()
     if (new_tm.tm_mday > days_in_month)
         new_tm.tm_mday = days_in_month;
 
-    mTime = new_tm;
+    if (mktime(&new_tm) <= 0)
+        mTime = 0;
+    else
+        mTime = new_tm;
 
     updateTextCache();
 }
@@ -351,7 +361,7 @@ void DateTimeEditComponent::updateTextCache()
 
     // Hack to set date string to blank instead of 'unknown'.
     // The calling function simply needs to set this string using setValue().
-    if (mTime.getIsoString() == "19700101T010101") {
+    if (mTime.getIsoString() == "19710101T010101") {
         dispString = "";
     }
     else {
