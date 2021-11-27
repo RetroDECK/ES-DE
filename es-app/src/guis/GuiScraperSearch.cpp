@@ -379,7 +379,6 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
                 row.makeAcceptInputHandler(mSkipCallback);
 
             mResultList->addRow(row);
-            mGrid.resetCursor();
         }
     }
     else {
@@ -395,7 +394,6 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
             row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
             mResultList->addRow(row);
         }
-        mGrid.resetCursor();
     }
 
     mBlockAccept = false;
