@@ -23,11 +23,12 @@ The following operating systems have been tested (all for the x86 architecture u
 * Linux Mint 20.2
 * Manjaro 21.1
 * Fedora 35 Workstation
+* elementary OS 6
 * Raspberry Pi OS 10 (armv7l and aarch64)
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor via Rosetta 2 is supported)
+* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
 * macOS 10.11 "El Capitan" (v1.0 release only)
 * Windows 10
 * Windows 8.1
@@ -57,6 +58,8 @@ The latest prerelease version is 1.2.0-beta1 (released 2021-11-14)
 | Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-beta1-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488809/download)|
 | macOS DMG installer | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-beta1-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488824/download)|
 | Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.2.0-beta1-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488825/download)|
+
+Flatpak will not be supported as this packaging system is too restrictive with its sandbox approach, making ES-DE virtually useless as it can't freely locate and launch emulators on the system.
 
 Unfortunately due to technical reasons, v1.0.1 (released 2021-05-01) will be the last version for legacy macOS.
 

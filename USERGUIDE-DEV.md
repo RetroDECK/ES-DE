@@ -37,11 +37,12 @@ The following operating systems have been tested (all for the x86 architecture u
 * Linux Mint 20.2
 * Manjaro 21.1
 * Fedora 35 Workstation
+* elementary OS 6
 * Raspberry Pi OS 10 (armv7l and aarch64)
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor via Rosetta 2 is supported)
+* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
 * macOS 10.11 "El Capitan" (v1.0 release only)
 * Windows 10
 * Windows 8.1
@@ -79,6 +80,15 @@ sudo dnf install ./emulationstation-de-1.2.0-x64.rpm
 ```
 
 Of course the file name will differ slightly depending on the architecture, the example above is for the x64/x86 platform.
+
+**Running a Linux AppImage file**
+
+In addition to the .deb and .rpm packages covered above, ES-DE is also available as an AppImage which should be usable on most modern x86 64-bit Linux distributions. After download you have to set the file as executable, such as this:
+```
+chmod +x emulationstation-de-1.2.0-x64.AppImage
+```
+
+ Following this you can launch ES-DE by double-clicking on the file using your file manager. It's also possible to run it from a terminal window. All command line options work as if installed as an ordinary package.
 
 **Installing on macOS and Windows**
 
@@ -143,9 +153,14 @@ There will be a lot of directories created if using the es_systems.xml file bund
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
 
+## Disabling game systems
+
+The way ES-DE works is that it will always try to load any system for which there are game files available, so to disable a system it needs to be hidden from ES-DE. This is easily accomplished by renaming the game directory to something that is not recognized, for example changing `~/ROMs/c64` to `~/ROMs/c64_DISABLED`. Another approach is to create a subdirectory named DISABLED (or whatever name you prefer that is not matching a supported system) in the ROMs directory and move the game folder there, such as `~/ROMs/DISABLED/c64`. This makes it easy to disable and re-enable game systems in ES-DE. Note that the gamelist and any game media files are retained while the system is disabled so this is an entirely safe thing to do.
+
+
 ## Using the Steam release of RetroArch
 
-On Windows it's no problem to use the Steam release of RetroArch although you may have to add the location manually to your Path environment variable. By default the following locations will be searched:
+On Windows it's no problem to use the Steam release of RetroArch although you may have to add the installation location manually to your Path environment variable. By default the following locations will be searched:
 ```
 C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
 D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
@@ -1282,7 +1297,7 @@ This lets you enable or disable the automatic game collections _All games, Favor
 
 **Custom game collections**
 
-This lets you enable or disable your own custom game collections.
+This lets you enable or disable your own custom game collections. If there are no custom collections available, this menu entry will be grayed out.
 
 **Create new custom collection from theme** _(Entry only visible if the ability is provided by the theme set)_
 

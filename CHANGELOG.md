@@ -43,6 +43,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
 * Added horizontal scrolling of long game names to the scraper GUIs
 * Removed the "Scrape" text prefix from the scraper content settings
+* Setting a blank name for an arcade game in the metadata editor now sets the value to the MAME expanded name instead of the physical file name
 * Added proper frame drop functionality to the FFmpeg video player to greatly reduce stuttering on slower machines
 * Made multiple optimizations to the FFmpeg video player to reduce CPU usage and to increase framerates on slower machines
 * Disabled the FFmpeg video player hardware decoding option (it can still be built using a CMake flag)
@@ -52,6 +53,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added filters for "Controller" and "Alternative emulator" and sorted the filters in the same order as the metadata editor fields
 * Added the ability to filter on blank/unknown values for Genre, Player, Developer, Publisher, Controller and Alternative emulator
 * Added a menu option to change the application exit key combination
+* If there are no custom collections, the "Custom game collections" menu entry is now grayed out
 * Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
@@ -99,6 +101,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added a function to generate MD5 hashes
 * Improved thread safety at multiple places throughout the codebase
 * Made an optimization for SVG graphics to avoid a lot of unnecessary re-rasterizations
+* Added a script to generate an AppImage on Linux
 * Lots of other general code refactoring
 * Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags
 * Fixed a lot of compiler warnings introduced by the -Wall and -Wpedantic flags
@@ -114,18 +117,21 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 ### Bug fixes
 
 * Setting a really small font size in a theme would crash the application
+* Deleting the last custom collection could crash the application if the grouped "collections" system was set as the startup gamelist
 * Setting an invalid UIMode value in the configuration file could crash the application
 * Setting an invalid scraper service value in the configuration file could crash the application
 * When scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
 * When scraping in interactive mode, the game counter was not decreased when skipping games, making it impossible to skip the final games in the queue
 * When scraping in interactive mode, "No games found" results could be accepted using the "A" button
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
+* When scraping in interactive mode, the first result row would get focused after the search completed even if the cursor was moved to a button beneath the list
 * The multi-scraper did not update the filter index
 * Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
 * The line spacing for TextListComponent was incorrectly calculated for some resolutions such as 2560x1440
 * Fixed multiple issues with scaling of images which led to various inconsistencies and sometimes cut-off graphics
+* The system time zone was not taken into consideration when using the Unix epoch which lead to various strange problems in the metadata editor
 * Removing games from custom collections did not remove their filter index entries
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
@@ -438,6 +444,6 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.
 
-* On Fedora 35 an issue has been observed where the screen turns completely black when starting ES-DE for the first time. A workaround for this is to simply exit the application with F4 or Alt+F4 and starting it again. Everything should then render correctly, and any subsequent startups will work fine including after suspending/resuming the computer. It's currently unclear if this is limited to only some graphics drivers or if it's a general issue under Fedora and/or Wayland.
+* On Fedora 35 an issue has been observed where the screen turns completely black or flickers intensely when starting ES-DE for the first time. A workaround for this is to simply exit the application with F4 or Alt+F4 and starting it again. Everything should then render correctly, and any subsequent startups will work fine including after suspending/resuming the computer. It's currently unclear if this is limited to only some graphics drivers or if it's a general issue under Fedora and/or Wayland.
 
 * Sometimes when RetroArch has been upgraded to a newer version, it apparently requires a startup to get properly initialized. When ES-DE starts RetroArch it always does so by passing some specific emulator core parameters, which does not seem to initialize RetroArch after such an upgrade. What happens in this case is that the RetroArch loading screen will be shown and then it will quit right back to ES-DE. If confirmed to be the case, this is not an ES-DE issue but a RetroArch issue and starting RetroArch separately once should fix the problem.

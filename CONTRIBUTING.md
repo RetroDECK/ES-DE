@@ -33,8 +33,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Virtual (on-screen) keyboard
 * Support for the Raspberry Pi 4 (Raspberry Pi OS)
 * Add GLM library dependency for matrix and vector operations, decommission the built-in functions
-* Add to more Linux repositories, BSD ports collections etc.
-* Flatpak and Snap releases on Linux
+* AppImage release on Linux
 
 #### v1.3
 
