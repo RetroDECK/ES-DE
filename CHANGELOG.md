@@ -101,6 +101,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added a function to generate MD5 hashes
 * Improved thread safety at multiple places throughout the codebase
 * Made an optimization for SVG graphics to avoid a lot of unnecessary re-rasterizations
+* Made all dependencies build in-tree on macOS instead of having to rely on Homebrew-supplied libraries
 * Added a script to generate an AppImage on Linux
 * Lots of other general code refactoring
 * Increased the warning level for Clang/LLVM and GCC by adding -Wall, -Wpedantic and some additional flags

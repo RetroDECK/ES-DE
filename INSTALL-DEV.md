@@ -450,15 +450,13 @@ sudo dnf install ./emulationstation-de-1.2.0-x64.rpm
 
 ## Building on macOS
 
-EmulationStation for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main problem is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, [Homebrew](https://brew.sh), is detailed below.
-
-As for code editing, I use [VSCode](https://code.visualstudio.com). I suppose Xcode could be used instead but I have no experience with this tool and no interest in it as I want to use the same tools for all the operating systems that I develop on.
+ES-DE for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main problem is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, [Homebrew](https://brew.sh), is detailed below.
 
 **Setting up the build tools:**
 
 Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command `clang`. This will open a dialog that will let you download and install the tools.
 
-Following this, install the Homebrew package manager which will greatly simplify the rest of the installation. Install it by runing the following in a terminal window:
+Following this, install the Homebrew package manager which will simplify the installation of some additional required packages. Run the following in a terminal window:
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
@@ -466,10 +464,10 @@ Be aware that Homebrew can be really slow, especially when it compiles packages 
 
 **Package installation with Homebrew:**
 
-Install the required tools and dependencies:
+Install the required tools:
 
 ```
-brew install clang-format cmake pkg-config nasm fdk-aac libvpx sdl2 freeimage freetype pugixml
+brew install clang-format cmake pkg-config nasm yasm
 ```
 
 If building with the optional VLC video player, then run this as well:
@@ -478,26 +476,13 @@ If building with the optional VLC video player, then run this as well:
 brew install --cask vlc
 ```
 
-**Compiling FFmpeg:**
-
-The FFmpeg build distributed via Homebrew has a lot of dependencies we don't need, and which would make it very difficult to package the application. Instead we will build this software with only some limited options:
-
-```
-git clone https://github.com/FFmpeg/FFmpeg.git
-cd FFmpeg
-git checkout n4.4
-./configure --prefix=/usr/local --enable-gpl --enable-nonfree --enable-shared --enable-libfdk-aac --enable-libvpx
-make
-sudo make install
-```
-
 **Some additional/optional steps:**
 
 Enable developer mode to avoid annoying password requests when attaching the debugger to a process:
 ```
 sudo /usr/sbin/DevToolsSecurity --enable
 ```
-It makes me wonder who designed this functionality and what was their thinking, I've never seen anything like this on any of the other systems I've been developing on.
+It makes me wonder who designed this functionality and what was their thinking, quite strange.
 
 If required, define SDKROOT. This is only needed if during compilation you get error messages regarding missing include files. Running the following will properly setup the development environment paths:
 ```
@@ -514,10 +499,31 @@ To clone the source repository, run the following:
 git clone https://gitlab.com/leonstyhre/emulationstation-de.git
 ```
 
-Then generate the Makefile and build the software:
+For macOS all dependencies are built in-tree in the `external` directory tree. There are two scripts in the tools directory that automate this entirely. They are executed such as this:
 
 ```
 cd emulationstation-de
+tools/macOS_dependencies_setup.sh
+tools/macOS_dependencies_build.sh
+```
+This can take quite a while as multiple packages are downloaded and compiled. Re-running macOS_dependencies_setup.sh will delete and download all dependencies again, and running macOS_dependencies_build.sh will clean and rebuild all packages. If you want to recompile a single package, make sure to first set the MACOSX_DEPLOYMENT_TARGET variable:
+```
+export MACOSX_DEPLOYMENT_TARGET=10.14
+```
+
+Then manually recompile the package, for example:
+```
+cd external/pugixml
+rm CMakeCache.txt
+cmake .
+make clean
+make
+cp libpugixml.a ../..
+```
+
+After all dependencies have been built, generate the Makefile and build ES-DE:
+
+```
 cmake .
 make
 ```
@@ -583,7 +589,9 @@ export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
 
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
-Be aware that the approach taken for macOS has the limitation that you can't build for previous operating system versions. You can certainly set CMAKE_OSX_DEPLOYMENT_TARGET to whatever version you like, but the problem is that the Homebrew libraries will most likely not work on earlier macOS versions. In theory this can be worked around by building all these libraries yourself with a lower deployment target, but it's hardly worth the effort. It's better to build on the lowest OS version that should be supported and rely on forward compatibility.
+**Building for the M1 (ARM) processor:**
+
+The build steps detailed above should in theory work identically on an M1 processor but possibly some of the dependencies will not build correctly and may need manual patching. Cross-compiling using an Intel processor has been attempted but failed due to multiple issues with depedencies refusing to build. Whenever we'll get access to an M1 Mac the build will be done on this architecture.
 
 **Code signing:**
 
@@ -602,73 +610,23 @@ Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy bui
 
 To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add 'legacy' to the DMG installer file name when running CPack.
 
-You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for.
+You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for. And finally CMAKE_OSX_DEPLOYMENT_TARGET needs to be updated in tools/macOS_dependencies_build.sh.
 
 Due to issues with getting FFmpeg to compile on some older macOS versions, ES-DE v1.0.1 is the last version where a legacy build has been tested.
 
 **Installing:**
 
-As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. Copy the following .dylib files from their respective installation directories to the emulationstation-de build directory:
+As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. This is almost completely automated by the build scripts.
 
+The only exceptions are these libraries for the optional VLC video player:
 ```
-libavcodec.58.dylib
-libavfilter.7.dylib
-libavformat.58.dylib
-libavutil.56.dylib
-libpostproc.55.dylib
-libswresample.3.dylib
-libswscale.5.dylib
-libfdk-aac.2.dylib
-libSDL2-2.0.0.dylib
-libfreeimage.dylib
-libfreetype.6.dylib
-libpng16.16.dylib
-libvlc.dylib            (only if building with the VLC video player)
-libvlccore.dylib        (only if building with the VLC video player)
+libvlc.dylib
+libvlccore.dylib
 ```
 
-All except the VLC libraries should be located in /usr/local/lib. The VLC libraries should be located in /Applications/VLC.app/Contents/MacOS/lib/
+If building the VLC video player, copy these files from the /Applications/VLC.app/Contents/MacOS/lib/ directory to the emulationstation-de build folder.
 
-Note that the filenames could be slightly different depending on what versions you have installed on your system.
-
-After copying the libraries to the build directory, set their permissions like this:
-```
-chmod 755 ./*.dylib
-```
-
-There are some secondary internal dependencies between some of these library files, and these are baked into the files as absolute paths. As such we need to rewrite these to rpaths (relative paths) which is done using the install_name_tool command.
-
-A script is available to automate this: `tools/macOS_change_dylib_rpaths.sh`
-
-Simply run the following:
-```
-cd emulationstation-de
-tools/macOS_change_dylib_rpaths.sh
-Found file libfreetype.6.dylib - changing to rpaths
-Found file libavcodec.58.dylib - changing to rpaths
-Found file libavfilter.7.dylib - changing to rpaths
-Found file libavformat.58.dylib - changing to rpaths
-Found file libpostproc.55.dylib - changing to rpaths
-Found file libswresample.3.dylib - changing to rpaths
-Found file libswscale.5.dylib - changing to rpaths
-```
-
-Verify that it worked as expected by running the otool command, for example `otool -L libfreetype.6.dylib` should show something like the following:
-
-```
-libfreetype.6.dylib:
-	/usr/local/opt/freetype/lib/libfreetype.6.dylib (compatibility version 24.0.0, current version 24.2.0)
-	/usr/lib/libbz2.1.0.dylib (compatibility version 1.0.0, current version 1.0.5)
-	@rpath/libpng16.16.dylib (compatibility version 54.0.0, current version 54.0.0)
-	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.5)
-	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1226.10.1)
-```
-
-It's unclear why the first line shows a reference to itself, and this line apparently can't be modified using the install_name_tool command. It doesn't matter though and the application will work fine even if this path does not exist on the system.
-
-You of course only need to change the absolute paths to rpaths once, well at least until you replace the libraries in case of moving to a newer version or so.
-
-In addition to these libraries, if building with the optional VLC video player, you need to create a `plugins` directory and copy over the following libraries, which are normally located in `/Applications/VLC.app/Contents/MacOS/plugins/`:
+In addition to these you need to create a `plugins` directory and copy over the following libraries, which are located in /Applications/VLC.app/Contents/MacOS/plugins/:
 
 ```
 libadummy_plugin.dylib
@@ -698,20 +656,20 @@ This will be the directory structure for the installation (the VLC-related files
 ```
 /Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/EmulationStation
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.0.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavcodec.58.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavfilter.7.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavformat.58.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavutil.56.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfdk-aac.2.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreeimage.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreetype.6.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpng16.16.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpostproc.55.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswresample.3.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswscale.5.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlc.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlccore.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbis.0.4.9.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbisenc.2.0.12.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/plugins/*
 /Applications/EmulationStation Desktop Edition.app/Contents/Resources/EmulationStation-DE.icns
 /Applications/EmulationStation Desktop Edition.app/Contents/Resources/LICENSE
@@ -751,40 +709,6 @@ CPack: - Install project: emulationstation-de []
 CPack: Create package
 CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.2.0-x64.dmg generated.
 ```
-
-Generating .dmg installers on older version of macOS seems to make them forward compatible to a pretty good extent, for instance building on El Capitan seems to generate an application that is usable on Catalina and Big Sur. The other way around is not true due to the use of dependencies from the Homebrew repository.
-
-**Special considerations regarding run-paths:**
-
-Even after considerable effort I've been unable to make CMake natively set correct rpaths for the EmulationStation binary on macOS. Therefore a hack/workaround is in place that uses install_name_tool to change absolute paths to rpaths for most of the bundled libraries.
-
-This is certainly not perfect as the versions of the libraries are hardcoded inside es-app/CMakeLists.txt. Therefore always check that all the rpaths are set correctly if you intend to create a .dmg image that will be used on other computers than your own.
-
-Simply run `otool -L EmulationStation` and verify that the result looks something like this:
-
-```
-./EmulationStation:
-        /usr/lib/libcurl.4.dylib (compatibility version 7.0.0, current version 9.0.0)
-        @rpath/libavcodec.58.dylib (compatibility version 58.0.0, current version 58.134.100)
-        @rpath/libavfilter.7.dylib (compatibility version 7.0.0, current version 7.110.100)
-        @rpath/libavformat.58.dylib (compatibility version 58.0.0, current version 58.76.100)
-        @rpath/libavutil.56.dylib (compatibility version 56.0.0, current version 56.70.100)
-        @rpath/libfreeimage.dylib (compatibility version 3.0.0, current version 3.18.0)
-        @rpath/libfreetype.6.dylib (compatibility version 24.0.0, current version 24.4.0)
-        @rpath/libSDL2-2.0.0.dylib (compatibility version 15.0.0, current version 15.0.0)
-        /System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa (compatibility version 1.0.0, current version 23.0.0)
-        @rpath/libvlc.dylib (compatibility version 12.0.0, current version 12.0.0)
-        /System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL (compatibility version 1.0.0, current version 1.0.0)
-        /usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.4)
-        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.250.1)
-```
-
-If any of the lines that should start with @rpath instead has an absolute path, then you have a problem and need to modify the install_name_tools parameters in es-app/CMakeLists.txt.
-
-This is what an incorrect line would look like:
-
-`/usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib (compatibility version 13.0.0, current version 13.0.0)`
-
 
 ## Building on Windows
 
