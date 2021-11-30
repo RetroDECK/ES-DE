@@ -196,26 +196,6 @@ elseif(APPLE)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns DESTINATION ../Resources)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist DESTINATION .. RENAME Info.plist)
 
-    # Another hack/workaround. I have not been able to find any way whatsover to force the
-    # linker to use rpaths for all shared libraries instead of absolute paths. So instead
-    # we're running install_name_tool as a post-build command to manually change the absolute
-    # paths to the rpaths for these libraries. The worst thing about this approach is that
-    # the library version needs to be manually changed here depending on what's installed
-    # on your system (e.g. if using libSDL2-2.1.0.dylib instead of libSDL2-2.0.0.dylib).
-    # This problem definitely needs to be resolved properly at a later date.
-    add_custom_command(TARGET EmulationStation POST_BUILD COMMAND ${CMAKE_INSTALL_NAME_TOOL}
-                       -change /usr/local/lib/libavcodec.58.dylib @rpath/libavcodec.58.dylib
-                       -change /usr/local/lib/libavfilter.7.dylib @rpath/libavfilter.7.dylib
-                       -change /usr/local/lib/libavformat.58.dylib @rpath/libavformat.58.dylib
-                       -change /usr/local/lib/libavutil.56.dylib @rpath/libavutil.56.dylib
-                       -change /usr/local/lib/libswresample.3.dylib @rpath/libswresample.3.dylib
-                       -change /usr/local/lib/libswscale.5.dylib @rpath/libswscale.5.dylib
-                       -change /usr/local/opt/freeimage/lib/libfreeimage.dylib @rpath/libfreeimage.dylib
-                       -change /usr/local/opt/freetype/lib/libfreetype.6.dylib @rpath/libfreetype.6.dylib
-                       -change /usr/local/opt/libpng/lib/libpng16.16.dylib @rpath/libpng16.16.dylib
-                       -change /usr/local/opt/sdl2/lib/libSDL2-2.0.0.dylib @rpath/libSDL2-2.0.0.dylib
-                       $<TARGET_FILE:EmulationStation>)
-
     set(APPLE_DYLIB_PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE
                                 GROUP_READ GROUP_EXECUTE
                                 WORLD_READ WORLD_EXECUTE)
@@ -236,13 +216,13 @@ elseif(APPLE)
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfdk-aac.2.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libfreeimage.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libvorbis.0.4.9.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libvorbisenc.2.0.12.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpng16.16.dylib
-        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
 
     if(VLC_PLAYER)

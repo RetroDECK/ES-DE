@@ -1,0 +1,12 @@
+# macOS in-tree build of dependencies
+FFmpeg
+SDL
+fdk-aac
+freeimage
+freetype
+libpng
+libvpx
+ogg
+opus
+pugixml
+vorbis

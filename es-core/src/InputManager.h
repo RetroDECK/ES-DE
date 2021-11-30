@@ -13,7 +13,7 @@
 
 #include <SDL2/SDL.h>
 
-#if defined(__linux__) || defined(_WIN64)
+#if defined(__linux__) || defined(_WIN64) || defined(__APPLE__)
 #include <SDL2/SDL_joystick.h>
 #else
 #include "SDL_joystick.h"

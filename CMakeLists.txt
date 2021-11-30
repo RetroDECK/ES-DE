@@ -101,7 +101,12 @@ else()
 endif()
 
 # Skip package dependency checks if we're on Windows.
-if(NOT WIN32)
+if(APPLE)
+    if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/FFmpeg)
+        message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
+    endif()
+    find_package(CURL REQUIRED)
+elseif(NOT WIN32)
     find_package(CURL REQUIRED)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
@@ -301,19 +306,28 @@ endif()
 # Include files.
 
 set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
-                        ${FFMPEG_INCLUDE_DIRS}
-                        ${FreeImage_INCLUDE_DIRS}
-                        ${FREETYPE_INCLUDE_DIRS}
-                        ${PUGIXML_INCLUDE_DIRS}
-                        ${SDL2_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/glm
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
 
-if(VLC_PLAYER)
-    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
+if(APPLE)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/FFmpeg
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freeimage/FreeImage/Source
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL)
+else()
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${FFMPEG_INCLUDE_DIRS}
+                            ${FreeImage_INCLUDE_DIRS}
+                            ${FREETYPE_INCLUDE_DIRS}
+                            ${PUGIXML_INCLUDE_DIRS})
+    if(VLC_PLAYER)
+        set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
+    endif()
 endif()
 
 # For Windows we need to add local include files for the dependency packages.
@@ -353,16 +367,19 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # Dependency libraries.
 
-if(NOT WIN32)
-    set(COMMON_LIBRARIES ${CURL_LIBRARIES}
-                         ${FFMPEG_LIBRARIES}
-                         ${FreeImage_LIBRARIES}
-                         ${FREETYPE_LIBRARIES}
-                         ${PUGIXML_LIBRARIES}
-                         ${SDL2_LIBRARY})
-    if(VLC_PLAYER)
-        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${VLC_LIBRARIES})
-    endif()
+if(APPLE)
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
+                         ${CURL_LIBRARIES}
+                         ${PROJECT_SOURCE_DIR}/libavcodec.58.dylib
+                         ${PROJECT_SOURCE_DIR}/libavfilter.7.dylib
+                         ${PROJECT_SOURCE_DIR}/libavformat.58.dylib
+                         ${PROJECT_SOURCE_DIR}/libavutil.56.dylib
+                         ${PROJECT_SOURCE_DIR}/libswresample.3.dylib
+                         ${PROJECT_SOURCE_DIR}/libswscale.5.dylib
+                         ${PROJECT_SOURCE_DIR}/libfreeimage.a
+                         ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
+                         ${PROJECT_SOURCE_DIR}/libpugixml.a
+                         ${PROJECT_SOURCE_DIR}/libSDL2-2.0.dylib)
 elseif(WIN32)
     if(DEFINED MSVC)
         set(COMMON_LIBRARIES "${PROJECT_SOURCE_DIR}/avcodec.lib"
@@ -401,6 +418,16 @@ elseif(WIN32)
         if(VLC_PLAYER)
             set(COMMON_LIBRARIES ${COMMON_LIBRARIES} "${PROJECT_SOURCE_DIR}/libvlc.dll")
         endif()
+    endif()
+else()
+    set(COMMON_LIBRARIES ${CURL_LIBRARIES}
+                         ${FFMPEG_LIBRARIES}
+                         ${FreeImage_LIBRARIES}
+                         ${FREETYPE_LIBRARIES}
+                         ${PUGIXML_LIBRARIES}
+                         ${SDL2_LIBRARY})
+    if(VLC_PLAYER)
+        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${VLC_LIBRARIES})
     endif()
 endif()
 
