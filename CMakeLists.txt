@@ -328,7 +328,8 @@ else()
                             ${FFMPEG_INCLUDE_DIRS}
                             ${FreeImage_INCLUDE_DIRS}
                             ${FREETYPE_INCLUDE_DIRS}
-                            ${PUGIXML_INCLUDE_DIRS})
+                            ${PUGIXML_INCLUDE_DIRS}
+                            ${SDL2_INCLUDE_DIR})
     if(VLC_PLAYER)
         set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
     endif()
