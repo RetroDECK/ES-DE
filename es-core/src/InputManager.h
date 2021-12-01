@@ -12,12 +12,7 @@
 #define ES_CORE_INPUT_MANAGER_H
 
 #include <SDL2/SDL.h>
-
-#if defined(__linux__) || defined(_WIN64) || defined(__APPLE__)
 #include <SDL2/SDL_joystick.h>
-#else
-#include "SDL_joystick.h"
-#endif
 
 #include <map>
 #include <memory>
