@@ -276,6 +276,10 @@ if(VLC_PLAYER)
     add_definitions(-DBUILD_VLC_PLAYER)
 endif()
 
+if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
+    add_definitions(-DLEGACY_MACOS)
+endif()
+
 # GLM library options.
 add_definitions(-DGLM_FORCE_CXX17)
 add_definitions(-DGLM_FORCE_XYZW_ONLY)
