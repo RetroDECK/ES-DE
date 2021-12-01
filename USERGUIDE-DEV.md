@@ -43,7 +43,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * NetBSD 9.1
 * OpenBSD 6.8
 * macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
-* macOS 10.11 "El Capitan" (v1.0 release only)
+* macOS 10.11 "El Capitan" (legacy release)
 * Windows 10
 * Windows 8.1
 
@@ -185,7 +185,7 @@ If you accidentally refused ES-DE the folder access, you can fix this by opening
 
 Another issue on macOS 11 Big Sur (and possibly older OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers. The issue appears to be resolved in macOS Monterey.
 
-In macOS 12 Monterey there has been a quite serious OpenGL driver bug introduced by Apple which disables VSync, making the operating system always try to render as many frames as it can. This slows down ES-DE quite a lot and consumes lots of machine resources. The issue is discussed [here](https://github.com/libsdl-org/SDL/issues/4918). There is a temporary workaround available which can be enabled via the _macOS Monterey VSync bug workaround_ setting in the _Other settings_ menu. This will add a short 10 millisecond delay after each frame if the last frame was swapped in less than 3 milliseconds. It's not a proper fix but it should at least make ES-DE usable on Monterey until Apple releases a patch for the bug.
+In macOS 12 Monterey there has been a quite serious OpenGL driver bug introduced by Apple which disables VSync, making the operating system always try to render as many frames as it can. This slows down ES-DE quite a lot and consumes lots of machine resources. The issue is discussed [here](https://github.com/libsdl-org/SDL/issues/4918). There is a temporary workaround available via the _macOS Monterey VSync bug workaround_ setting in the _Other settings_ menu (which is enabled by default). This will add a short 10 millisecond delay after each frame if the last frame was swapped in less than 3 milliseconds. It's not a proper fix but it should at least make ES-DE usable on Monterey until Apple releases a patch for the bug.
 
 
 ## Specific notes for Raspberry Pi
@@ -1368,7 +1368,7 @@ With this setting enabled, the taskbar will be hidden when launching ES-DE, and 
 
 **macOS Monterey VSync bug workaround** _(macOS only and hopefully only temporary)_
 
-In macOS 12 Monterey an OpenGL driver bug was introduced that causes VSync to always be disabled. This makes the operating system try to render as many frames as it can which slows down ES-DE quite a lot as well as consuming lots of machine resources. By enabling this setting, a small 10 millisecond delay will be introduced after each frame if it took less than 3 milliseconds to swap the last one. This is not a proper solution, and it's not an accurate solution but it's at least something until Apple (hopefully) fixes the bug via an OS update. Earlier macOS versions are unaffected by this issue. To check if you have this problem, enable the _Display GPU statistics overlay_ setting and if your FPS counter shows really high numbers (like in the hundreds of frames per second) then enable this option and the FPS counter should decrease significantly.
+In macOS 12 Monterey an OpenGL driver bug was introduced that causes VSync to always be disabled. This makes the operating system try to render as many frames as it can which slows down ES-DE quite a lot as well as consuming lots of machine resources. Using this setting (which is enabled by default), a small 10 millisecond delay is introduced after each frame if it took less than 3 milliseconds to swap the last one. This is not a proper solution, and it's not an accurate solution but it's at least something until Apple hopefully fixes the bug via an OS update. Earlier macOS releases are unaffected by this issue. To check if you have this problem, disable the setting and then enable the _Display GPU statistics overlay_ option. If your FPS counter shows really high numbers (like in the hundreds of frames per second) then the issue is present on your machine.
 
 **Run in background (while game is launched)**
 
