@@ -237,7 +237,7 @@ void Settings::setDefaults()
     mBoolMap["HideTaskbar"] = {false, false};
 #endif
 #if defined(__APPLE__)
-    mBoolMap["VSyncWorkaround"] = {false, false};
+    mBoolMap["VSyncWorkaround"] = {true, true};
 #endif
     mBoolMap["RunInBackground"] = {false, false};
 #if defined(_WIN64)
