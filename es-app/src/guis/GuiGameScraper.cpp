@@ -19,13 +19,15 @@
 #include "views/ViewController.h"
 
 GuiGameScraper::GuiGameScraper(Window* window,
-                               ScraperSearchParams params,
-                               std::function<void(const ScraperSearchResult&)> doneFunc)
+                               ScraperSearchParams& params,
+                               std::function<void(const ScraperSearchResult&)> doneFunc,
+                               bool& savedMediaAndAborted)
     : GuiComponent(window)
     , mClose(false)
     , mGrid(window, glm::ivec2{2, 6})
     , mBox(window, ":/graphics/frame.svg")
     , mSearchParams(params)
+    , mSavedMediaAndAborted(savedMediaAndAborted)
 {
     addChild(&mBox);
     addChild(&mGrid);
@@ -169,12 +171,10 @@ bool GuiGameScraper::input(InputConfig* config, Input input)
     if (config->isMappedTo("b", input) && input.value) {
         if (mSearch->getSavedNewMedia()) {
             // If the user aborted the scraping but there was still some media downloaded,
-            // then force an unload of the textures for the game image and marquee, and make
-            // an update of the game entry. Otherwise the images would not get updated until
-            // the user scrolls up and down the gamelist.
-            TextureResource::manualUnload(mSearchParams.game->getImagePath(), false);
-            TextureResource::manualUnload(mSearchParams.game->getMarqueePath(), false);
-            ViewController::get()->onFileChanged(mSearchParams.game, true);
+            // then flag to GuiMetaDataEd that the image and marquee textures need to be
+            // manually unloaded and that the gamelist needs to be reloaded. Otherwise the
+            // images would not get updated until the user scrolls up and down the gamelist.
+            mSavedMediaAndAborted = true;
         }
         delete this;
         return true;

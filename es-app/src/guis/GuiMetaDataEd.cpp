@@ -52,6 +52,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     , mClearGameFunc{clearGameFunc}
     , mDeleteGameFunc{deleteGameFunc}
     , mMediaFilesUpdated{false}
+    , mSavedMediaAndAborted{false}
     , mInvalidEmulatorEntry{false}
 {
     mControllerBadges = BadgeComponent::getGameControllers();
@@ -719,7 +720,8 @@ void GuiMetaDataEd::save()
 void GuiMetaDataEd::fetch()
 {
     GuiGameScraper* scr = new GuiGameScraper(
-        mWindow, mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1));
+        mWindow, mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1),
+        mSavedMediaAndAborted);
     mWindow->pushGui(scr);
 }
 
@@ -791,11 +793,11 @@ void GuiMetaDataEd::close()
 
     std::function<void()> closeFunc;
     closeFunc = [this] {
-        if (mMediaFilesUpdated) {
+        if (mMediaFilesUpdated || mSavedMediaAndAborted) {
             // Always reload the gamelist if media files were updated, even if the user
-            // chose to not save any metadata changes. Also manually unload the game image
-            // and marquee, as otherwise they would not get updated until the user scrolls up
-            // and down the gamelist.
+            // chose to not save any metadata changes or aborted the scraping. Also manually
+            // unload the game image and marquee, as otherwise they would not get updated
+            // until the user scrolls up and down the gamelist.
             TextureResource::manualUnload(mScraperParams.game->getImagePath(), false);
             TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
             ViewController::get()->reloadGameListView(mScraperParams.system);

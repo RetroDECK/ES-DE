@@ -71,6 +71,7 @@ private:
     std::function<void()> mDeleteGameFunc;
 
     bool mMediaFilesUpdated;
+    bool mSavedMediaAndAborted;
     bool mInvalidEmulatorEntry;
 };
 
